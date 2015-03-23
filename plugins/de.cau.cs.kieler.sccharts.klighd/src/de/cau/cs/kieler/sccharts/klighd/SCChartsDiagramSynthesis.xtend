@@ -223,6 +223,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     private var regionCounter = 0
     private static val int PORTFONTSIZE = 10
     private static val int LABELFONTSIZE = 10
+    // color for signals (same as state header color, but not used/implemented)    
+    private static val KColor SIGNAL_COLOR = RENDERING_FACTORY.createKColor() => [
+        it.red = 255; it.green = 231; it.blue = 214;
+    ]
 
     // -------------------------------------------------------------------------
     // The Main entry transform function   
@@ -944,24 +948,24 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             node.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT)
             node.addLayoutParam(Properties::THOROUGHNESS, 100)
             node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::BRANDES_KOEPF)
-            println("children: " + node.children)
             for (n : d.nodes) {
                 if (n instanceof DefineNode) {
                     //skip
-                    println("DefineNode: " + n)
                 } else {
                     // translate reference/call nodes
-                    println("else: " + n)
                     node.children += n.translate;
                 }
             }
-            println("children: " + node.children)
             // translate all direct dataflow equations
             for (eq: d.equations) {
-                println("eq: " + eq + ", " + eq.valuedObject)
                 val vo = eq.valuedObject
                 node.children += vo.createNode(node) => [
-                    it.addPolygon.createOutputNodeShape
+                    it.addPolygon.createOutputNodeShape => [
+//                        if (vo.signal) {
+//                            it.background = SIGNAL_COLOR
+//                        }
+                    ]
+                    println("vo: " + vo)
                     it.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                     it.addDefaultLayoutParameter
                     //add Port
@@ -971,15 +975,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     it.createLabel(it).configureInsideTopCenteredNodeLabel(
                         vo.reference.serialize as String, LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                     val expr = eq.expression
-                    println("children: " + node.children)
                     node.children += expr.translate(d.equations.indexOf(eq), node, d)
                         
                 ]
             }
-            println("children: " + node.children)
-            node.children.forEach[
-                println(it + ", " + it.id + ", " )
-            ]
+            
             node.addCollapseExpand(d.label)
             
         ]
@@ -1029,7 +1029,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         return n
     }
     
-    val commutativeOps = newArrayList("+", "*", "&", "|")
+    val commutativeOps = newArrayList("+", "*", "&", "|", "==", "<>")
     
     private def dispatch KNode translate(Expression expr, int index, KNode parentNode, Dataflow d) {
         val nNode = expr.createNode(parentNode).putToLookUpWith(expr)
@@ -1206,34 +1206,56 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         ]
                     ]
                     parentNode.children += inputNode
-//                    nNode.remove
                     return inputNode
                 } else {
-                    println("i'm here")
                     val eqNode = d.equations.get(index).node
+                    var KNode node = null
                     if (eqNode instanceof CallNode) {
-                        val cNode = d.equations.get(index).node as CallNode
-                        cNode.getNode().createEdge(expr) => [
-                            it.source = cNode.getNode()
-                            it.target = voRef.getNode(parentNode)
-                            it.sourcePort = cNode.getNode().getPort(expr.valuedObject.reference.portMap)
-                            it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
-                            it.createEdgeStyle
-                        ]
+                        node = (eqNode as CallNode).getNode()
+                    } else if (eqNode instanceof ReferenceNode) {
+                        node = (eqNode as ReferenceNode).getNode()
                     }
-                    if (eqNode instanceof ReferenceNode) {
-                        val refNode = (eqNode as ReferenceNode).getNode()//trn.getNode()
-                        //val trn_vo = refVo
-                        refNode.createEdge(expr) => [ //trn.getNode().createEdge(vo) => [
-                            it.source = refNode //trn_node
-                            it.target = voRef.getNode(parentNode)
-                            it.sourcePort = refNode.getPort(expr.valuedObject.reference.portMap) //trn_vo.reference.portMap)
-                            it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
-                            it.createEdgeStyle
-                            println("refNode: " + refNode + ", " + voRef.getNode(parentNode))
-                        ]
-                    }
-                    // reicht das schon, damit keine unsichtbaren nodes zurückgegeben werden?
+                    val KNode srcNode = node 
+                    voRef.getNode(parentNode).KRendering.remove
+                    voRef.getNode(parentNode).addPolygon.createOutputNodeShape
+                    voRef.getNode(parentNode).addDefaultLayoutParameter
+                    srcNode.createEdge(expr) => [
+                        it.source = srcNode//.getNode()
+                        it.target = voRef.getNode(parentNode)
+                        it.sourcePort = srcNode.getPort(expr.valuedObject.reference.portMap)
+                        it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
+                        it.createEdgeStyle
+                    ]
+                    
+//                    if (eqNode instanceof CallNode) {
+//                        val cNode = (eqNode as CallNode).getNode()//d.equations.get(index).node as CallNode
+//                        voRef.getNode(parentNode).KRendering.remove
+//                        voRef.getNode(parentNode).addPolygon.createOutputNodeShape
+//                        voRef.getNode(parentNode).addDefaultLayoutParameter
+//                        cNode.getNode().createEdge(expr) => [
+//                            it.source = cNode//.getNode()
+//                            it.target = voRef.getNode(parentNode)
+//                            it.sourcePort = cNode.getPort(expr.valuedObject.reference.portMap)
+//                            it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
+//                            it.createEdgeStyle
+//                        ]
+//                    }
+//                    if (eqNode instanceof ReferenceNode) {
+//                        val refNode = (eqNode as ReferenceNode).getNode()//trn.getNode()
+//                        voRef.getNode(parentNode).KRendering.remove
+//                        voRef.getNode(parentNode).addPolygon.createOutputNodeShape
+//                        voRef.getNode(parentNode).addDefaultLayoutParameter
+//                        //val trn_vo = refVo
+//                        refNode.createEdge(expr) => [ //trn.getNode().createEdge(vo) => [
+//                            it.source = refNode //trn_node
+//                            it.target = voRef.getNode(parentNode)
+//                            it.sourcePort = refNode.getPort(expr.valuedObject.reference.portMap) //trn_vo.reference.portMap)
+//                            it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
+//                            it.createEdgeStyle
+//                        ]
+//                    }
+                    // return eqNode instead of nNode, because it is not used and would create
+                    // needles whitespace in klighd
                     return eqNode.node
                 }
             }
@@ -1348,7 +1370,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 // expr = ValuedObjectReference: it.valuedObject = current input
                 val vo = expr.valuedObject
                 val voRef = (callNode as CallNode).callReference.valuedObjects.get(voIndex)
-                // add ports to dummy node to create an edge from input to output
+                // add ports to dummy node (nNode) to create an edge from input to output
                 // inside(!) the call node
                 nNode.addPort(vo, PortSide::EAST, 1)
                 nNode.addPort(voRef, PortSide::WEST, 1)
@@ -1433,10 +1455,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     // Transform a Node
     public def dispatch KNode translate(Node n) {
         val nNode = n.createNode().putToLookUpWith(n)
-        println("nNode: " + nNode)
         // translate specific ReferenceNode elements
         if (n instanceof ReferenceNode) {
-            nNode.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT * 1.5f)
+            nNode.setMinimalNodeSize(MINIMALNODEWIDTH * 2, MINIMALNODEHEIGHT * 1.5f)
             nNode.createDefaultNodeShape
             
             val refNode = (n as ReferenceNode)
@@ -1467,14 +1488,17 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             ]
             val refInputSize = refInputs.size
             refNode.parameters.forEach[ p|
-                if (refNode.parameters.indexOf(p) >= refInputSize) {
-                    // if a call has more parameters than the referenced node: skip 
-                } else {
+                if (refNode.parameters.indexOf(p) < refInputSize) {
+                    
+//                }
+//                if (refNode.parameters.indexOf(p) >= refInputSize) {
+//                    // if a call has more parameters than the referenced node: skip 
+//                } else {
                     // else: add child nodes and edges if not already created
                     if (p instanceof ValuedObjectReference) {
                         val param = (p as ValuedObjectReference).valuedObject 
                         dNode.children += param.createNode(dNode) => [ inNode|
-                            println("inNode: " + inNode)
+                            println("p: " + param + ", " + dNode)
                             inNode.addPolygon.createInputNodeShape
                             inNode.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                             inNode.addDefaultLayoutParameter
@@ -1550,9 +1574,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             ]
             val refInputSize = refInputs.size
             call.parameters.forEach[ p|
-                if (call.parameters.indexOf(p) >= refInputSize) {
-                    // if a call has more parameters than the called node: skip 
-                } else {
+                if (call.parameters.indexOf(p) < refInputSize) {
+                    /* add child nodes and edges if not already craeted
+                     * only if the index of the parameter 
+                     * is less then the number of inputs of the define node 
+                     */
+//                }
+//                if (call.parameters.indexOf(p) >= refInputSize) {
+//                    // if a call has more parameters than the called node: skip 
+//                } else {
                     // else: add child nodes and edges if not already created
                     if (p instanceof ValuedObjectReference) {
                         val param = (p as ValuedObjectReference).valuedObject 

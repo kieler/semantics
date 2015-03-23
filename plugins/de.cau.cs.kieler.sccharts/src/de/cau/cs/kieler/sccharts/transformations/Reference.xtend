@@ -248,7 +248,7 @@ class Reference {
 //                    }
                 }
                 // recursive call at the end of the method, not already here
-//                (newState.referencedScope as State).transform
+                (newState.referencedScope as State).transform
             }
 			// transform call nodes
 			val assignmentMapping = <String, Assignment> newHashMap
@@ -276,7 +276,9 @@ class Reference {
                     
                     val newState2 = newRegion.createState("_" + dataflow.ID + idCounter)
                     newState2.label = dataflow.label + idCounter + "_end"
-                    newState2.setFinal
+                    // change comments on next two lines for "old" version
+//                    newState2.setFinal
+                    createNewTransition(newState2, newState)
                     
                     val transition = createNewTransition(newState, newState2)
                     transition.setImmediate
@@ -576,8 +578,7 @@ class Reference {
                     assignmentList += createNewAssignment(eq.valuedObject, eq.expression)
                 }
             }
-//            println("al: " + assignmentList)
-//            println("ps: " + parentState)
+
             if (!assignmentList.empty) {
                 // => create new region with initial and final state for each expression
                 val rRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
@@ -589,14 +590,16 @@ class Reference {
                     
                 val newState2 = rRegion.createState("_" + dataflow.id + idCounter)
                 newState2.label = dataflow.label + idCounter + "_end"
-                newState2.setFinal
+                // change comment on next two lines for "old" version
+//                newState2.setFinal
+                createNewTransition(newState2, newState)
                     
                 regionCounter = regionCounter + 1
                 idCounter = idCounter + 1
                 
                 val transition = createNewTransition(newState, newState2)
                 transition.setImmediate
-                                    
+                
                 for (assign: assignmentList) {
                     transition.effects += assign
                 }
