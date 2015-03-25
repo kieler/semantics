@@ -474,9 +474,9 @@ public class TimingAnalysis extends Job {
         Iterator<Region> regionIterator = timingLabelList.keySet().iterator();
         while (regionIterator.hasNext()) {
             Region currentRegion = regionIterator.next();
-            if (!(currentRegion == null)) {         
-            regionLabelStringMap.put(currentRegion, deepValues.get(currentRegion) + " / "
-                    + flatValues.get(currentRegion));
+            if (!(currentRegion == null)) {
+                regionLabelStringMap.put(currentRegion, deepValues.get(currentRegion) + " / "
+                        + flatValues.get(currentRegion));
             } else {
                 Integer WCRT = 0;
                 Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();
@@ -500,7 +500,7 @@ public class TimingAnalysis extends Job {
      * @param flatValues
      *            Mapping of Regions to their flat timing values.
      * @param deepValues
-     *            Mapping of Regions to their hierarchical timing values.
+     *            Mapping of Regions to their hierarchical timing values. Empty on first call.
      */
     private void calculateDeepTimingValues(State state, HashMap<Region, Integer> flatValues,
             HashMap<Region, Integer> deepValues) {
