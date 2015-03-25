@@ -407,7 +407,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
                 }
                 if (feature.isGroupOrAlternative) {
                     it.addChildArea().setGridPlacementData() => [
-                        from(LEFT, 3, 0, TOP, 3, 0).to(RIGHT, 3, 0, BOTTOM, 3, 0)
+                        from(LEFT, -6, 0, TOP, -6, 0).to(RIGHT, -6, 0, BOTTOM, -6, 0)
                         minCellHeight = 5;
                         minCellWidth = 5;
                     ];
