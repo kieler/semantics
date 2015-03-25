@@ -58,6 +58,11 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         return (o as EObject).eIsProxy()
     }
     
+    /*
+     * If the context is a ReferenceNode, return a list of all SCCharts (states) in the current
+     * resourceSet (the project folder).
+     * This method is only slightly modified from the already existing method for referencing sccharts.
+     */
     public def IScope scope_referenceNode_referencedScope(EObject context, EReference reference) {
         val superScope = super.getScope(context.eContainer, reference)
         val res = context.eResource
@@ -78,33 +83,41 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         }
         return IScope.NULLSCOPE;
     }
+//    
+//    /*
+//     * 
+//     */
+//    public def IScope scope_callNode_callReference(EObject context, EReference reference) {
+//        println("ganz neu: " + context)
+//        val superScope = super.getScope(context.eContainer, reference)
+//        val res = context.eResource
+//        if (res != null) {
+//            val resSet = res.resourceSet
+//            if (resSet != null) {
+//                val callRef = <DefineNode>newArrayList
+//                for (r: resSet.resources) {
+//                    val contentList = r.contents.filter(e|e instanceof DefineNode).toList
+//                    if (!contentList.nullOrEmpty) {
+//                        for (content: contentList) {
+//                            callRef += content as DefineNode
+//                        }
+//                    }
+//                }
+//                return Scopes.scopeFor(callRef, nameProvider, superScope)
+//            }
+//        }
+//        return IScope.NULLSCOPE
+//    }
     
-    public def IScope scope_callNode_callReference(EObject context, EReference reference) {
-        println("ganz neu: " + context)
-        val superScope = super.getScope(context.eContainer, reference)
-        val res = context.eResource
-        if (res != null) {
-            val resSet = res.resourceSet
-            if (resSet != null) {
-                val callRef = <DefineNode>newArrayList
-                for (r: resSet.resources) {
-                    val contentList = r.contents.filter(e|e instanceof DefineNode).toList
-                    if (!contentList.nullOrEmpty) {
-                        for (content: contentList) {
-                            callRef += content as DefineNode
-                        }
-                    }
-                }
-                return Scopes.scopeFor(callRef, nameProvider, superScope)
-            }
-        }
-        return IScope.NULLSCOPE
-    }
-    
+    /*
+     * If an equation refers to an output of a node this method is called
+     * If the context of the equation.node is a ReferenceNode, then return a list of 
+     * all outputs of the referenced SCChart.
+     * If it's a CallNode then return a list of all outputs of the called DefineNode.
+     */
     public def IScope equation_ValuedObjectReferenceScope(EObject context, EReference reference) {
         var EObject theContext = context;
         val obj = theContext.eGet(pack.equation_Node, true)
-        val test = theContext.eGet(pack.equation_ValuedObject, true)
         if (!isProxy(obj)) {
             // case of RefNode: get outputs of referencedScope (scchart)
             if (obj instanceof ReferenceNode) {
@@ -127,54 +140,47 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
                 return Scopes.scopeFor(voIterable)
             }
         } else {
-//            println("nullScope")
             return IScope.NULLSCOPE
         }
     }
     
-    
+    /*
+     * This seems not to be the right position to find out all possible nodes for an equation
+     * with a reference to a node and its according outputs.
+     * The context is the super state, not the dataflow, and I didn't find a way yet how to get the 
+     * current dataflow concurrency where the equation is modelled.
+     * At this point it would only be possible to return a list of all nodes of all dataflows.
+     * But only if the created nodeList would be returned correctly.
+     * The nodeList is not empty, but when trying to return a scopeFor(nodeList), the scope is empty.
+     * I dond't know why, because it works for valuedObjects.
+     */
     public def IScope scope_Equation_node(EObject context, EReference reference) {
-//        println("test " + context)
         val s = context as State
-        val d = s.concurrencies.filter(typeof(Dataflow)).toList
         val nodeList = <Node>newArrayList
         s.concurrencies.filter(typeof(Dataflow)).forEach[
             nodeList += it.nodes.filter(typeof(ReferenceNode))
         ]
-//        println("nl: " + nodeList)
-//        println("scope for nl: " + Scopes.scopeFor(nodeList))
         
         val voIterable = <ValuedObject>newArrayList
         s.declarations.filter[it.output].forEach[
             voIterable += valuedObjects
         ]
-//        println("voi: " + voIterable)
-//        println("scope for vo: " + Scopes.scopeFor(voIterable))
 //        return Scopes.scopeFor(nodeList)
         return null 
     }
     
+    
+    /*
+     * Differ between ValuedObjectReferences depending on the context which they are called from.
+     * Currently just needed for equations with a node reference and to determine the according outputs. 
+     */
     public def IScope scope_ValuedObjectReference_valuedObject(EObject context, EReference reference) {
-//		if (context instanceof ReferenceNode) {
-//		    //return testReferenceNode_SenderScope(context, reference)
-//		} // DataflowFeature: direct modelling
-//		else if (context instanceof Dataflow) {
-//		    println("DF: " + context + ", " + reference)
-//		    var df = context as Dataflow
-//		    //println("dfn: " + df.nodes.filter(e|e instanceof DefineNode))
-////		    println("con: " + context.eContainer)
-//		    val s = context.eContainer as State
-////		    println(s.getScope(reference).allElements)
-//		    //return dataflow_ValuedObjectScope(context, reference)
-//		}
         if (context instanceof Equation) {
             return equation_ValuedObjectReferenceScope(context, reference)
         }
         return null;
     }
     
-    
-        
     public def IScope scope_Scope_referencedScope(EObject context, EReference reference) {
         val superScope = super.getScope(context.eContainer, reference)
         val res = context.eResource
