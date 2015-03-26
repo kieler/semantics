@@ -66,7 +66,10 @@ import de.cau.cs.kieler.sccharts.tsccharts.handler.FileWriter;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.RequestType;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.TimingRequestResult;
 import de.cau.cs.kieler.scg.Assignment;
+import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scg.ControlFlow;
+import de.cau.cs.kieler.scg.Entry;
+import de.cau.cs.kieler.scg.Exit;
 import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
@@ -79,6 +82,8 @@ import de.cau.cs.kieler.scg.ScgFactory;
 public class TimingAnalysis extends Job {
 
     public static final boolean DEBUG = true;
+
+    private String pluginId = "de.cau.cs.kieler.sccharts.tsccharts";
 
     private FileWriter fileWriter = new FileWriter();
 
@@ -163,7 +168,7 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-        
+
         KielerCompilerContext context = new KielerCompilerContext("SCGSEQUENTIALIZE", scchart);
         context.setPrerequirements(true);
         context.tracing = true;
@@ -182,14 +187,14 @@ public class TimingAnalysis extends Job {
                     System.out.println(currentError.getMessage() + "\n");
                 }
             }
-            return Status.CANCEL_STATUS;
+            return new Status(IStatus.ERROR, pluginId, "SCG sequentialization failed.");
         }
 
         SCGraph scg = (SCGraph) compilationResult.getEObject();
 
         if (compilationResult.tracing == null) {
-            System.out.println("Tracing is not activated for the given model.\n");
-            return Status.CANCEL_STATUS;
+            return new Status(IStatus.ERROR, pluginId,
+                    "The tracing is not activated for the given model.");
         }
 
         // Step 2: Analyse tracing relation into a node to region mapping
@@ -311,7 +316,7 @@ public class TimingAnalysis extends Job {
                     System.out.println(currentError.getMessage() + "\n");
                 }
             }
-            return Status.CANCEL_STATUS;
+            return new Status(IStatus.ERROR, pluginId, "The code generation failed.");
         }
 
         String code = compilationResult.getString();
@@ -360,20 +365,18 @@ public class TimingAnalysis extends Job {
             // wait for the timing analysis tool to complete its job
             pr.waitFor();
         } catch (IOException e) {
-            System.out.println("Error: Timing analysis tool could not be invoked.");
-            e.printStackTrace();
+            return new Status(IStatus.ERROR, pluginId,
+                    "The timing analysis tool could not be invoked.");
         } catch (InterruptedException e) {
-            System.out
-                    .println("The thread for timing analysis tool invocation has been interrupted.");
-            e.printStackTrace();
+            return new Status(IStatus.ERROR, pluginId,
+                    "The timing analysis tool invokation was interrupted");
         }
 
         // Refresh to make sure the .c file can be found
         try {
             ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
         } catch (CoreException e) {
-            System.out.println("The refreshing of files could not be completed.");
-            e.printStackTrace();
+            return new Status(IStatus.ERROR, pluginId, "Files could not be refreshed.");
         }
 
         // Step 6: Retrieve timing data and associate with regions
@@ -389,7 +392,14 @@ public class TimingAnalysis extends Job {
         String taPath = taFile.replace("file:", "");
 
         //
-        timingAnnotationProvider.getTimingInformation(resultList, taPath);
+        int timingInformationFetch =
+                timingAnnotationProvider.getTimingInformation(resultList, taPath);
+        if (timingInformationFetch == 1) {
+            return new Status(IStatus.ERROR, pluginId, "The timing information file was not found");
+        } else if (timingInformationFetch == 2) {
+            return new Status(IStatus.ERROR, pluginId,
+                    "An IO error occurred while timing information was retrieved from file.");
+        }
         extractTimingLabels(RequestType.FWCET, resultList, timingLabels, timingResults,
                 tppRegionMap, scchart);
 
@@ -570,16 +580,19 @@ public class TimingAnalysis extends Job {
                 Iterators.filter(
                         ModelingUtil.eAllContentsOfType2(scg, Node.class, ControlFlow.class),
                         ControlFlow.class);
+        // get the SCG nodes in fixed traversing order (top to bottom, then branch first)
+        LinkedList<ControlFlow> edgeList = getEdgesInFixedTraversingOrder(scg);
+        Iterator<ControlFlow> edgeListIterator = edgeList.iterator();
         ArrayList<Link> redirectedEdges = new ArrayList<Link>();
         // insertion starts with TPP(1);
         int tppCounter = 1;
-        while (edgeIter.hasNext()) {
+        while (edgeListIterator.hasNext()) {
             if (tppCounter == 13) {
                 // avoid a TPP with the number 13, as this one has a special meaning for the timing
                 // analysis tool prototype
                 tppCounter = 1 + tppCounter;
             }
-            ControlFlow currentEdge = edgeIter.next();
+            ControlFlow currentEdge = edgeListIterator.next();
             Node edgeTarget = currentEdge.getTarget();
             // get the region the target node of the edge stems from
             Region targetRegion = nodeRegionMapping.get(edgeTarget);
@@ -643,6 +656,81 @@ public class TimingAnalysis extends Job {
             }
         }
         return tppCounter - 1;
+    }
+
+    /**
+     * Creates a linked list of all controlflow edges of a sequential scg in fixed traversing order,
+     * meaning top to bottom, then-branches first.
+     * 
+     * @param The
+     *            sequential SCG
+     * @return The linked list with all controlflow edges in the graph traversal order top to
+     *         bottom, then branches first.
+     */
+    private LinkedList<ControlFlow> getEdgesInFixedTraversingOrder(SCGraph scg) {
+        LinkedList<ControlFlow> edgeList = new LinkedList<ControlFlow>();
+        // Find start entry node
+        Iterator<Entry> entryIter =
+                Iterators.filter(ModelingUtil.eAllContentsOfType2(scg, Node.class), Entry.class);
+        Node entry = null;
+        while (entryIter.hasNext()) {
+            Entry currentEntry = entryIter.next();
+            if (currentEntry.getIncoming().size() == 0) {
+                entry = (Node) currentEntry;
+            }
+        }
+        traverseSequentialGraphEdges(entry, edgeList);
+        return edgeList;
+    }
+
+    /**
+     * Recursive method to collect the edges of a sequential SCG in the traversing order top to
+     * bottom, then branch first. The method relies on the special structure of the sequential SCG:
+     * there are no nested conditionals and only the then branches of a conditional have content.
+     * Assumes that there are no empty then branches.
+     * 
+     * @param currentNode
+     *            The sequential SCG entry node, else the currentNode
+     * @param edgeList
+     *            The list to add the edges in traversing order, empty in initial call
+     */
+    private void traverseSequentialGraphEdges(Node currentNode, LinkedList<ControlFlow> edgeList) {
+        // There is only one Entry node in a sequential SCG, this is the start call
+        if (currentNode instanceof Entry) {
+            ControlFlow outgoingEdge = ((Entry) currentNode).getNext();
+            edgeList.add(outgoingEdge);
+            traverseSequentialGraphEdges(outgoingEdge.getTarget(), edgeList);
+        } else {
+            // There is only one Exit node in a sequential SCG, if we reach it, we are finished.
+            if (currentNode instanceof Exit) {
+                return;
+            } else {
+                if (currentNode instanceof Conditional) {
+                    // We do then branch first order
+                    ControlFlow thenEdge = ((Conditional) currentNode).getThen();
+                    edgeList.add(thenEdge);
+                    traverseSequentialGraphEdges(thenEdge.getTarget(), edgeList);
+                } else {
+                    if (currentNode instanceof Assignment) {
+                        ControlFlow outgoingEdge = ((Assignment)currentNode).getNext();
+                        edgeList.add(outgoingEdge);
+                        // check whether this node ends a then branch, if so, add the else edge to the 
+                        // list also
+                        EList<Link> targetIncomingList = outgoingEdge.getTarget().getIncoming();
+                        if (targetIncomingList.size() > 1) {
+                            Iterator<Link> incomingEdgeIterator = targetIncomingList.iterator();
+                            while (incomingEdgeIterator.hasNext()) {
+                                Link currentLink = incomingEdgeIterator.next();
+                                if (!(currentLink == outgoingEdge)) {
+                                    edgeList.add((ControlFlow)currentLink);
+                                }
+                            }
+                        }
+                            traverseSequentialGraphEdges(outgoingEdge.getTarget(), edgeList);
+                    }
+                }
+            }
+        }
     }
 
     /**

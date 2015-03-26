@@ -132,8 +132,11 @@ class TimingAnnotationProvider {
          *            an answer to, as the values will be stored in reading order.
          *  @param uri
          *            Determines the timing analysis response file to be read.
+         *  @return
+         *        returns 1 for file not found, 2 for IOExeption, 0 else.
          */
-    def void getTimingInformation(LinkedList<TimingRequestResult> resultList, String uri) {
+    def int getTimingInformation(LinkedList<TimingRequestResult> resultList, String uri) {
+        var int ret = 0;
         var BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(uri));
@@ -156,12 +159,16 @@ class TimingAnnotationProvider {
                 resultList.get(lineNumber).setResult(results);
                 lineNumber = lineNumber + 1;
             }
+            return ret;
         } catch (FileNotFoundException e) {
             System.out.println("Timing information could not be found.");
             e.printStackTrace();
-            return;
+            ret = 1;
+            return ret;
         } catch (IOException e) {
             e.printStackTrace();
+            ret = 1;
+            return ret;
         } finally {
             if (br != null) {
                 try {
