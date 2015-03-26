@@ -52,7 +52,8 @@
             dependencies="SCLTOSCG"
             id="ESTERELTOSCL"
             method="transform"
-            name="SCL">
+            name="SCL"
+            producesDependencies="SCLTOSCG">
       </transformationMethod>
       <transformationGroup
             alternatives="true"
@@ -76,7 +77,8 @@
             dependencies="SCLTOSCG"
             id="ESTERELTOSCL_OPT"
             method="transformOpt"
-            name="SCL Optimized">
+            name="SCL Optimized"
+            producesDependencies="SCLTOSCG">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.esterel.scl.transformations.SclToEsterelTransformation"
