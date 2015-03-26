@@ -58,6 +58,8 @@ import java.util.Set
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.kexpressions.StringValue
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.KielerCompilerContext
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -66,7 +68,7 @@ import de.cau.cs.kieler.core.kexpressions.StringValue
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class SCGTransformation { 
+class SCGTransformation extends Transformation { 
 
     @Inject
     extension KExpressionsExtension
@@ -732,6 +734,29 @@ class SCGTransformation {
     // Apply conversion to the default case
     def dispatch Expression convertToSCGExpression(Expression expression) {
         createExpression
+    }
+    
+    override transform(EObject eObject, KielerCompilerContext context) {
+        if (eObject instanceof SCGraph) {
+            return (eObject as SCGraph).processSCG
+        } else {
+            return (eObject as State).transformSCG
+        }
+    }
+    
+    def SCGraph processSCG(SCGraph scg) {
+        val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(typeof(SuperfluousForkRemover))
+        val newSCG = superfluousForkRemover.optimize(scg)
+        
+        // SCG thread path types
+        val threadPathTypes = (newSCG.nodes.head as Entry).getThreadControlFlowTypes
+        for(entry:threadPathTypes.keySet) {
+            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
+                entry.addAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+            }
+        } 
+        
+        newSCG
     }
 
    // -------------------------------------------------------------------------   
