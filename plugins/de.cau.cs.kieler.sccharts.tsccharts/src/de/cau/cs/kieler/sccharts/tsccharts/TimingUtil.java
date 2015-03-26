@@ -27,8 +27,10 @@ import de.cau.cs.kieler.sccharts.State;
 public class TimingUtil {
 
     /**
+     * Calculates for each region its hierarchical depth.
+     * 
      * @param scchart
-     * @return
+     * @return A map assigning each region its depth
      */
     public static HashMap<Region, Integer> createRegionDepthMap(State scchart) {
         HashMap<Region, Integer> map = new HashMap<Region, Integer>();
@@ -39,6 +41,8 @@ public class TimingUtil {
     }
 
     /**
+     * Calculates recursively the hierarchical depth of regions.
+     * 
      * @param map
      * @param depth
      * @param region
