@@ -224,13 +224,13 @@ public class TimingAnalysis extends Job {
                                 Region newRegionCandidate = (Region) targetElement;
                                 int candidateDepth = regionDepth.get(newRegionCandidate);
                                 /*
-                                 * If new region candidate has a strictly smaller depth than the
+                                 * If new region candidate has a strictly greater depth than the
                                  * current region the new candidate becomes the region this node is
                                  * associated with. Otherwise the region is contained in the new
                                  * candidate and is ignored. Assumption: No node is mapped to
                                  * elements in parallel Regions
                                  */
-                                if (candidateDepth < depth) {
+                                if (candidateDepth > depth) {
                                     region = newRegionCandidate;
                                     depth = candidateDepth;
                                 }
