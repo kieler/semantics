@@ -26,12 +26,16 @@ import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.util.Pair
+import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
+import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.kitt.tracing.TracingTreeExtensions
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
 import de.cau.cs.kieler.kitt.tracingtree.EObjectWrapper
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper
+import de.cau.cs.kieler.klighd.IViewer
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.Collection
@@ -43,10 +47,7 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.klighd.actions.AbstractTracingSelectionAction.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import static extension de.cau.cs.kieler.kitt.tracing.TracingManager.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
-import de.cau.cs.kieler.klighd.IViewer
 
 /**
  * Adds tracing edges from mappings to a diagram.
@@ -76,7 +77,7 @@ class TracingVisualizer {
 
     /** Checks if tracing information exists for the given model */
     def boolean hasTracingInformation(Object model, KNode diagram, ViewContext viewContext) {
-        if (model instanceof EObject && (model as EObject).tracingActivated) {
+        if (model instanceof EObject && (viewContext.tracing != null || model instanceof ModelWrapper)) {
 
             //If model is traced model directly
             return true;
@@ -85,8 +86,12 @@ class TracingVisualizer {
             //If model is a wrapper around a traced model marked as TRACED_MODEL_ROOT_NODE
             return diagram.eAllContentsOfType2(typeof(KNode)).filter [
                 (it as KNode).getData(KLayoutData)?.getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)
-            ].findFirst[viewContext.getSourceElement(it).tracingActivated] != null;
+            ].findFirst[viewContext.tracing != null || model instanceof ModelWrapper] != null;
         }
+    }
+
+    private def Tracing tracing(ViewContext viewContext) {
+        return viewContext.getProperty(KiCoProperties.COMPILATION_RESULT)?.tracing;
     }
 
     /** Removed all tracing edges from the diagram  */
@@ -274,13 +279,14 @@ class TracingVisualizer {
                 ];
             }
         } else { //Other models
+            val tracing = viewContext.tracing;
 
             //get all traced models contained in this model
             val tracedModelMap = diagram.eAllContentsOfType2(typeof(KNode)).filter [
                 (it as KNode).getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE);
             ].map[it as KNode].fold(newHashMap()) [ map, node |
                 val model = viewContext.getSourceElement(node);
-                if (model != null && model.tracingActivated) {
+                if (model != null && tracing.tracingChain.models.contains(model)) {
                     map.put(model, node);
                 }
                 return map;
@@ -291,12 +297,12 @@ class TracingVisualizer {
                 val equivalenceClasses = new TracingMapping(null);
                 val selection = diagram.getTracingSelection(viewContext);
                 if (selection != null) { //resolve mapping if source target are selected
-                    val mapping = getMapping(selection.first, selection.second);
+                    val mapping = tracing.getMapping(selection.first, selection.second);
                     mapping.entries.iterator.addTracingEdges(viewContext, tracedModelMap.get(selection.first),
                         equivalenceClasses);
                     traceMap.putAll(mapping);
                 } else { //dont resolve -> show all
-                    val chain = tracedModelMap.keySet.head.tracingChain;
+                    val chain = tracing.tracingChain;
                     if (!chain.models.empty) {
 
                         //Iterate over all step in the chain apply mappings
@@ -319,7 +325,7 @@ class TracingVisualizer {
                                         if (tracedModelMap.containsKey(next)) {
 
                                             //create edges
-                                            val mapping = getMapping(item, next)
+                                            val mapping = tracing.getMapping(item, next)
                                             mapping.entries.iterator.addTracingEdges(viewContext,
                                                 tracedModelMap.get(item), equivalenceClasses);
                                             traceMap.putAll(mapping);

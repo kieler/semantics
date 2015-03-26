@@ -220,6 +220,7 @@ class TracingChain {
             return emptyMultiMap;
         } else {
             val mapping = HashMultimap.create();
+
             //initial mapping
             if (reverse) {
                 chain.reverse;
@@ -235,15 +236,15 @@ class TracingChain {
                         it.internalMapping;
                     }
                 //Replace all values by new values of additional joined (next) mapping
-                keys.forEach [
+                keys.forEach [ key |
                     //resolve elementTransformation for all values and replace value
-                    val values = mapping.get(it).map [
+                    val values = mapping.get(key).map [
                         map.get(it)
                     ].fold(new HashSet) [ first, second | //fold new values into one set
                         first.addAll(second);
                         first; //return first as container of next folding
                     ];
-                    mapping.replaceValues(it, values);
+                    mapping.replaceValues(key, values);
                 ];
             ];
             return mapping;

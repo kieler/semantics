@@ -18,6 +18,7 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 import de.cau.cs.kieler.kico.CompilationResult;
+import de.cau.cs.kieler.kico.IntermediateResult;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 
 /**
@@ -86,20 +87,19 @@ public class KiCoModelChain {
      */
     public KiCoModelChain(Object sourceModel, final CompilationResult compilationResult, final String modelName,
             KiCoSelection selection) {
-        ListIterator<String> trans = selection.getSelection().listIterator();
         models.add(sourceModel);
         collapse.put(sourceModel, false);
-        for (Object model : compilationResult.getIntermediateResults()) {
+        for (IntermediateResult ir : compilationResult.getIntermediateResults()) {
+            Object model = ir.getResult();
             if (model instanceof String) {
                 model = new KiCoCodePlaceHolder(modelName, (String) model);
             } else if(model == null) {
                 model = new KiCoMessageModel("Missing Model");
             }
-            if(!models.contains(model)){
-                String nextTrans = trans.hasNext() ? trans.next(): "";
-                tranformations.add(nextTrans);
+            if(!models.contains(model)) {
+                tranformations.add(ir.getTransformationID());
                 models.add(model);
-                collapse.put(model, true);
+                collapse.put(model, false);//true
             }
         }
         collapse.put(models.getLast(), false);

@@ -14,17 +14,18 @@
 package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.Assignment
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.Binding
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Reference Transformation.
@@ -67,7 +68,8 @@ class Reference {
         targetRootState;
     }
 
-    def void transformReference(State state, State targetRootState) {        
+    def void transformReference(State state, State targetRootState) {
+        state.setDefaultTrace       
         // Referenced scopes are always SCCharts
         // Each referenced state must be contained in a region.
         val newState = (state.referencedScope as State).copyState => [ 
@@ -87,23 +89,23 @@ class Reference {
                 for(binding : state.bindings) {
                     if (eObject instanceof Assignment) {
                         val assignment = (eObject as Assignment);
-                        val assignmentCopy = assignment.copy;
+                        val assignmentCopy = assignment.nontracingCopy;
                         if (assignment.valuedObject.name == binding.formal.name) {
                            assignment.valuedObject = binding.actual
                         }
                         assignment.indices.clear
                         for (index : assignmentCopy.indices) {
-                            assignment.indices.add(index.copy);
+                            assignment.indices.add(index.nontracingCopy.rtrace(binding));
                         }
                     } else if (eObject instanceof ValuedObjectReference) {
                         val valuedObjectReference = (eObject as ValuedObjectReference);
-                        val valuedObjectReferenceCopy = valuedObjectReference.copy
+                        val valuedObjectReferenceCopy = valuedObjectReference.nontracingCopy
                         if (valuedObjectReference.valuedObject.name == binding.formal.name) {
                             valuedObjectReference.valuedObject = binding.actual
                         }
                         valuedObjectReference.indices.clear
                         for (index : valuedObjectReferenceCopy.indices) {
-                            valuedObjectReference.indices.add(index.copy);
+                            valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding));
                         }
                     } else if (eObject instanceof Binding) {
                         val bing = eObject as Binding

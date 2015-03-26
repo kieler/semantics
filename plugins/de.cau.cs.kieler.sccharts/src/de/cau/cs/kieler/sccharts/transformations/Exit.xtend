@@ -18,8 +18,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts Exit Transformation.
@@ -68,6 +68,7 @@ class Exit {
             if (finalStates.size > 1) {
                 val firstFinalState = finalStates.get(0)
                 for (finalState : finalStates) {
+                    finalState.setDefaultTrace //All following states etc. will be traced to state
                     if (finalState != firstFinalState) {
                         finalState.setNotFinal
                         finalState.createImmediateTransitionTo(firstFinalState)
@@ -80,6 +81,8 @@ class Exit {
     // Traverse all states and transform macro states that have actions to transform
     def void transformExit(State state, State targetRootState) {
         if (!state.exitActions.nullOrEmpty && !state.final) {
+            
+            state.setDefaultTrace //All following states etc. will be traced to state
 
             val stateOutgoingTransitions = state.outgoingTransitions.size
             var State firstState

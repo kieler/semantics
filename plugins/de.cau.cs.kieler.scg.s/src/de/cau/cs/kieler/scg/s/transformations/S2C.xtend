@@ -38,7 +38,7 @@ class S2C {
 
             if (eObject instanceof Program) {
                 //KITT Transformation does not support tracing
-                TransformationTracing.finishTransformationTracing(eObject, eObject);
+                TransformationTracing.skipTransformationTracing(eObject);
                 
                 val de.cau.cs.kieler.s.sc.xtend.S2C transform2 = Guice.createInjector().getInstance(typeof(de.cau.cs.kieler.s.sc.xtend.S2C));
                 var String cProgram = transform2.transform(eObject as Program).toString();

@@ -84,7 +84,7 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.kico.klighd.KiCoKLighDProperties
+import de.cau.cs.kieler.kico.KiCoProperties
 import java.util.Set
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
@@ -428,7 +428,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // Connect the model to the scope provider for the serialization.
         scopeProvider.parent = model;
 
-        compilationResult = this.usedContext.getProperty(KiCoKLighDProperties.COMPILATION_RESULT)
+        compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
         if (compilationResult != null) {
             val PILR = compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head
             if (PILR != null) PIL_Nodes += PILR.criticalNodes

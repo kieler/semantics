@@ -70,6 +70,7 @@ import com.google.common.collect.Maps;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.kico.CompilationResult;
+import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerException;
@@ -80,7 +81,6 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
-import de.cau.cs.kieler.kitt.tracing.TracingManager;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
 import de.cau.cs.kieler.klighd.KlighdPlugin;
@@ -967,16 +967,12 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     // stop already running (now deprecated) compilation
                     if (currentCompilation != null) {
                         currentCompilation.cancel();
-                    }
-                    
-                    if(doTracing){// KITT
-                        TracingManager.activateTracing(sourceModel);
-                    }                   
+                    }         
                     
                     // create compilation job
                     currentCompilation =
                             new KiCoAsynchronousCompilation(this, (EObject) sourceModel,
-                                    activeEditor.getTitle(), transformations);
+                                    activeEditor.getTitle(), transformations, doTracing);
                     currentCompilationResult = null;                    
                     currentModel = currentCompilation.getModel();
                     // start
@@ -1162,7 +1158,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 }
 
                 // Give model synthesis access to the compilation result
-                properties.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
+                properties.setProperty(KiCoProperties.COMPILATION_RESULT, compilationResult);
                 publishCurrentModelInformation(model, compilationResult);
 
                 // the (re)initialization case
@@ -1173,7 +1169,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
             } else {
                 // Give model synthesis access to the compilation result
-                vc.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
+                vc.setProperty(KiCoProperties.COMPILATION_RESULT, compilationResult);
                 publishCurrentModelInformation(model, compilationResult);
                 // update case (keeps options and sidebar)
                 success = DiagramViewManager.updateView(this.getViewer().getViewContext(), model) != null;

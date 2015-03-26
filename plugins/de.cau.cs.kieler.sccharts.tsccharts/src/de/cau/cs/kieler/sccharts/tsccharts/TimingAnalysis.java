@@ -54,8 +54,8 @@ import de.cau.cs.kieler.core.krendering.VerticalAlignment;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerException;
-import de.cau.cs.kieler.kitt.tracing.TracingManager;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.util.ModelingUtil;
 import de.cau.cs.kieler.sccharts.Region;
@@ -163,10 +163,11 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-
-        TracingManager.activateTracing(scchart);
-        CompilationResult compilationResult =
-                KielerCompiler.compile("SCGSEQUENTIALIZE", scchart, true, false);
+        
+        KielerCompilerContext context = new KielerCompilerContext("SCGSEQUENTIALIZE", scchart);
+        context.setPrerequirements(true);
+        context.tracing = true;
+        CompilationResult compilationResult = KielerCompiler.compile(context);
 
         if (!(compilationResult.getEObject() instanceof SCGraph)
                 || compilationResult.getPostponedErrors().size() > 0) {
@@ -186,7 +187,7 @@ public class TimingAnalysis extends Job {
 
         SCGraph scg = (SCGraph) compilationResult.getEObject();
 
-        if (!TracingManager.isTracingActivated(scg)) {
+        if (compilationResult.tracing == null) {
             System.out.println("Tracing is not activated for the given model.\n");
             return Status.CANCEL_STATUS;
         }
@@ -198,7 +199,7 @@ public class TimingAnalysis extends Job {
             return Status.CANCEL_STATUS;
         }
 
-        Multimap<Object, Object> tracing = TracingManager.getMapping(scg, scchart);
+        Multimap<Object, Object> tracing = compilationResult.tracing.getMapping(scg, scchart);
         HashMap<Node, Region> nodeRegionMapping =
                 new HashMap<Node, Region>(tracing.keySet().size());
         for (Object oringinElement : tracing.keySet()) {

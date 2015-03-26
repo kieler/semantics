@@ -17,15 +17,14 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.DoubleValue
-
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 /**
  * SCCharts Const Transformation.
  * 
@@ -70,7 +69,9 @@ class Const {
 
         for (const : constObjects.toList.immutableCopy) {
             val replacement = const.initialValue
-            state.replaceAllReferencesWithCopy(const, replacement.copy)
+            replacement.trace(const)
+            replacement.trace(const.declaration)
+            state.replaceAllReferencesWithCopy(const, replacement)
             if (const.declaration.hasAnnotation(HOSTCODE_ANNOTATION)) {
                 state.eAllContents.filter(typeof(TextExpression)).forEach [
                     var replacementString = ""
