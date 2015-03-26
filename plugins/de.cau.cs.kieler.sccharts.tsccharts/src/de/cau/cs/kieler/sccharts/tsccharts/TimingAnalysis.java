@@ -163,7 +163,7 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-        
+
         KielerCompilerContext context = new KielerCompilerContext("SCGSEQUENTIALIZE", scchart);
         context.setPrerequirements(true);
         context.tracing = true;
@@ -202,61 +202,38 @@ public class TimingAnalysis extends Job {
         Multimap<Object, Object> tracing = compilationResult.tracing.getMapping(scg, scchart);
         HashMap<Node, Region> nodeRegionMapping =
                 new HashMap<Node, Region>(tracing.keySet().size());
+        HashMap<Region, Integer> regionDepth = TimingUtil.createRegionDepthMap(scchart);
         for (Object oringinElement : tracing.keySet()) {
             if (oringinElement instanceof Node) {
                 Collection<Object> targetElements = tracing.get(oringinElement);
                 Region region = null;
+                int depth = -1;
                 for (Object targetObj : targetElements) {
                     EObject targetElement = (EObject) targetObj;
                     /*
                      * If the associated element is NOT a macro state (refinement due to entry node
-                     * mappings) a region is searched to associate this node to
+                     * mappings in tracing in combination with guards) a region is searched to
+                     * associate this node to. Except the macro state is the only associated
+                     * element.
                      */
                     if (!(targetElement instanceof State && (scchartsExtension
-                            .hasInnerStatesOrRegions((State) targetElement) || scchartsExtension
-                            .hasInnerActions((State) targetElement)))
-                            && targetElements.size() > 1) {
+                            .hasInnerStatesOrRegions((State) targetElement)))
+                            || targetElements.size() == 1) {
                         while (targetElement != null) {
                             if (targetElement instanceof Region) {
-                                if (region != null && region != targetElement) {
-                                    EObject parentTest = region.eContainer();
-                                    while (parentTest != null) {
-                                        /*
-                                         * If new region candidate contains region the new candidate
-                                         * becomes the region this node is associated with.
-                                         * Otherwise the region already contains the new candidate.
-                                         * Assumtion: No node is mapped to elements in paralell
-                                         * Regions
-                                         */
-                                        if (parentTest instanceof Region
-                                                && parentTest == targetElement) {
-                                            region = (Region) parentTest;
-                                            break;
-                                        }
-                                        parentTest = parentTest.eContainer();
-                                    }
-                                    /*
-                                     * In this case the tracing associates multiple regions with the
-                                     * current node. If one of the regions is directly contained
-                                     * (depth 1) in the other take the inner one
-                                     */
-                                    // if (region.getStates().contains(targetElement.eContainer()))
-                                    // {
-                                    // // new one is inner region
-                                    // region = (Region) targetElement;
-                                    // break;
-                                    // } else if (((Region) targetElement).getStates().contains(
-                                    // region.eContainer())) {
-                                    // // old one is inner region so keep it
-                                    // break;
-                                    // } else {
-                                    // // encapsulation depth higher than 1 or no encapsulation
-                                    // throw new Error(
-                                    // "Tracing associates multiple inconsistent regions "
-                                    // + "with a scg node");
-                                    // }
+                                Region newRegionCandidate = (Region) targetElement;
+                                int candidateDepth = regionDepth.get(newRegionCandidate);
+                                /*
+                                 * If new region candidate has a strictly smaller depth than the
+                                 * current region the new candidate becomes the region this node is
+                                 * associated with. Otherwise the region is contained in the new
+                                 * candidate and is ignored. Assumption: No node is mapped to
+                                 * elements in parallel Regions
+                                 */
+                                if (candidateDepth < depth) {
+                                    region = newRegionCandidate;
+                                    depth = candidateDepth;
                                 }
-                                region = (Region) targetElement;
                                 break;
                             } else {
                                 targetElement = targetElement.eContainer();
@@ -389,9 +366,9 @@ public class TimingAnalysis extends Job {
         String taPath = taFile.replace("file:", "");
 
         //
-        timingAnnotationProvider.getTimingInformation(resultList, taPath);
-        extractTimingLabels(RequestType.FWCET, resultList, timingLabels, timingResults,
-                tppRegionMap, scchart);
+//        timingAnnotationProvider.getTimingInformation(resultList, taPath);
+//        extractTimingLabels(RequestType.FWCET, resultList, timingLabels, timingResults,
+//                tppRegionMap, scchart);
 
         // Step 7: Feedback information back to the diagram
 
