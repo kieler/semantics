@@ -17,7 +17,7 @@
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.s.transformations.SCG2S"
-            dependencies="S2TARGET"
+            producesDependencies="S2TARGET"
             id="SCG2S"
             method="transform"
             name="S Code">

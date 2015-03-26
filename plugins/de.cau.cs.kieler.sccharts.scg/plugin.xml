@@ -73,9 +73,9 @@
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.scg.SCGTransformation"
-            dependencies="SCGDEP"
+            producesDependencies="SCGDEP"
             id="SCG"
-            method="transformSCG"
+            method="transform"
             name="SCG">
       </transformationMethod>
       <transformationGroup

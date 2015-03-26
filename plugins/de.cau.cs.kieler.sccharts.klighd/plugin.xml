@@ -21,46 +21,11 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.kiml.layoutConfigs">
-      <staticConfig
-            class="de.cau.cs.kieler.sccharts.State"
-            option="de.cau.cs.kieler.spacing"
-            value="1.0">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.sccharts.State"
-            option="de.cau.cs.kieler.borderSpacing"
-            value="2.0">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.sccharts.State"
-            option="de.cau.cs.kieler.sizeConstraint"
-            value="[MINIMUM_SIZE, DEFAULT_MINIMUM_SIZE]">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.sccharts.State"
-            option="de.cau.cs.kieler.expandNodes"
-            value="true">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.sccharts.State"
-            option="de.cau.cs.kieler.interactive"
-            value="true">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.sccharts.Region"
-            option="de.cau.cs.kieler.spacing"
-            value="40.0">
-      </staticConfig>
       <!-- option
             class="de.cau.cs.kieler.sccharts.Region"
             option="de.cau.cs.kieler.borderSpacing"
             value="1.0">
       </option -->
-      <staticConfig
-            class="de.cau.cs.kieler.sccharts.Region"
-            option="de.cau.cs.kieler.direction"
-            value="RIGHT">
-      </staticConfig>
       <semanticConfig
             class="de.cau.cs.kieler.sccharts.Scope"
             config="de.cau.cs.kieler.sccharts.klighd.layout.HVLayoutConfig">

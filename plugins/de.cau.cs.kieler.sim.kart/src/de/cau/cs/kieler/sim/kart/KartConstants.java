@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
+
 /**
  * Contains nearly all Strings KART uses internally for configuration or to interact with the user.
  * 
@@ -26,14 +28,16 @@ public final class KartConstants {
     public static final String PLUGINID = "de.cau.cs.kieler.sim.kart";
 
     /** The Constant KART_REPLAY_DATACOMPONENT_ID_START. */
-    public static final String KART_REPLAY_DATACOMPONENT_ID_START = "de.cau.cs.kieler.sim.kart.replay";
+    public static final String KART_REPLAY_DATACOMPONENT_ID_START =
+            "de.cau.cs.kieler.sim.kart.replay";
 
     /** The Constant KART_VALIDATION_DATACOMPONENT_ID_START. */
     public static final String KART_VALIDATION_DATACOMPONENT_ID_START = "de.cau.cs.kieler.sim.kart"
             + ".validation";
 
     /** The Constant KART_EXTENSION_MESSAGEDIALOG. */
-    public static final String KART_EXTENSION_MESSAGEDIALOG = "de.cau.cs.kieler.sim.kart.MessageDialog";
+    public static final String KART_EXTENSION_MESSAGEDIALOG =
+            "de.cau.cs.kieler.sim.kart.MessageDialog";
 
     /** The Constant KIEM_PROPERTY_REPLAY_NUMBER. */
     public static final int KIEM_PROPERTY_REPLAY_NUMBER = 6;
@@ -125,7 +129,8 @@ public final class KartConstants {
     public static final String ERR_NOTRACE = "The trace file does not contain a trace number ";
 
     /** The Constant ERR_JSON. */
-    public static final String ERR_JSON = "Could not build JSON object with signals read from ESO file";
+    public static final String ERR_JSON =
+            "Could not build JSON object with signals read from ESO file";
 
     /** The Constant ERR_EMPTYESO. */
     public static final String ERR_EMPTYESO = "Trace file is empty or does not exist.";
@@ -142,7 +147,7 @@ public final class KartConstants {
 
     /** The Constant ERR_NOTDELETE_TITLE. */
     public static final String ERR_NOTDELETE_TITLE = "Trace file could not be deleted";
-    
+
     /** The Constant ERR_NOTFOUND. */
     public static final String ERR_NOTFOUND = "The trace file could not be found. Do you want to"
             + " switch to training mode?";
@@ -151,8 +156,9 @@ public final class KartConstants {
     public static final String OVERWRITE_TITLE = "Overwrite trace file?";
 
     /** The Constant OVERWRITE. */
-    public static final String OVERWRITE = "Do you want to replace the current trace file with this "
-            + "trace? If not, the current trace will be appended to the existing trace file";
+    public static final String OVERWRITE =
+            "Do you want to replace the current trace file with this "
+                    + "trace? If not, the current trace will be appended to the existing trace file";
 
     /** The Constant ERR_SILENT. */
     public static final boolean ERR_SILENT = true;
@@ -168,6 +174,9 @@ public final class KartConstants {
 
     /** The Constant VAR_EOT. */
     public static final String VAR_EOT = "eot";
+
+    /** The Constant VAR_TRACE. */
+    public static final String VAR_TRACE = "trace";
 
     /** The Constant DEF_CONFIGVAR. */
     public static final String DEF_CONFIGVAR = "kartConfig";

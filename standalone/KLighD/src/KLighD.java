@@ -52,6 +52,7 @@ public class KLighD {
         String inputFile = null;
         String outputFile = null;
         ArrayList<String> includeFiles = new ArrayList<String>();
+        String ext = null;
 
         if (args.length < 1 || args[0].startsWith("-")) {
             System.out
@@ -66,7 +67,7 @@ public class KLighD {
                             + "Example 2:\n"
                             + "  java -jar KLighD.jar 4444 -f FILE.sct -o model.png \n"
                             + "Example 3:\n"
-                            + "  java -jar KLighD.jar render.sccharts.com -f FILE.sct -o model.png \n" + "\n"
+                            + "  java -jar KLighD.jar render.sccharts.com -f FILE.sct -o model.png \n" 
                             + "Example 4:\n"
                             + "  java -jar KLighD.jar localhost:4444 FILE.sct -o model.kgx -r kgx \n" + "\n"
                             + "Options:\n" + "-f <filename> : Use a specific input file\n"
@@ -117,6 +118,11 @@ public class KLighD {
                     if (c + 1 < args.length) {
                         inputFile = args[c + 1];
                         c++;
+                        
+                        int i = inputFile.lastIndexOf('.');
+                        if (i > 0) {
+                            ext = inputFile.substring(i+1).toLowerCase();
+                        }
                     }
                 } else if (option.equals("-i") || option.equals("--include")) {
                     if (c + 1 < args.length) {
@@ -164,7 +170,7 @@ public class KLighD {
         }
         // System.out.println("model: " + model);
 
-        RenderResult renderResult = remoteRender(host, port, outputFile, render, scale, models);
+        RenderResult renderResult = remoteRender(host, port, outputFile, render, scale, models, ext);
 
         if (outputFile == null || outputFile.trim().equals("")) {
             try {
@@ -279,7 +285,7 @@ public class KLighD {
      */
     @SuppressWarnings("deprecation")
     public static RenderResult remoteRender(String host, int port, String outputFile,
-            String render, String scale, ArrayList<String> models) {
+            String render, String scale, ArrayList<String> models, String ext) {
         RenderResult result = new RenderResult(new byte[0], "");
 
         try {
@@ -290,7 +296,12 @@ public class KLighD {
                     query += "&include" + (c - 1) + "=" + URLEncoder.encode(models.get(1));
                 }
             }
-            query += "&scale=" + scale;
+            if (ext != null && ext.length() > 0) {
+                ext = "&ext=" + ext;
+            } else {
+                ext = "";
+            }
+            query += ext + "&scale=" + scale;
             query += "&render=" + render;
 
             String urlString = "http://" + host + ":" + port + "?" + query;

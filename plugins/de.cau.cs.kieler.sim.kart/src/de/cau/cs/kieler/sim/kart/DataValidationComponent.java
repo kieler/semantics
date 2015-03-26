@@ -21,14 +21,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.kart.engine.DefaultValidationEngine;
 import de.cau.cs.kieler.sim.kart.engine.IValidationEngine;
@@ -135,6 +138,8 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
      * take place
      */
     private boolean eot;
+    
+    private int tracenum;
 
     // -------------------------------------------------------------------------
 
@@ -206,28 +211,34 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
                 possiblyDisplayOverwriteFileDialog(file);
             }
 
-            TraceWriter writer = new TraceWriter(recInputs, simOutputs, simVariables,
-                    esoFilePath.toString());
-            writer.doWrite();
+            String txtOutputString = "";
+            IPath txtOutputPath = new Path(esoFilePath.toString());
+            IFile txtOutputFile = ModelUtil.convertIPathToIFile(txtOutputPath);
+            txtOutputString = ModelUtil.getAbsoluteFilePath(txtOutputFile);
 
-            // Set training mode flag to false
-            List<DataComponentWrapper> components = KiemPlugin.getDefault()
-                    .getDataComponentWrapperList();
-            Iterator<DataComponentWrapper> it = components.iterator();
+            TraceWriter writer =
+                    new TraceWriter(recInputs, simOutputs, simVariables, txtOutputString);
+            
+            writer.doWrite(tracenum);
 
-            while (it.hasNext()) {
-                DataComponentWrapper c = it.next();
-
-                if (c.getDataComponent().getClass().getName()
-                        .equals(DataReplayComponent.DATA_REPLAY_COMPONENT_ID)) {
-                    KiemProperty[] props = c.getProperties();
-                    for (KiemProperty p : props) {
-                        if (p.getKey().equals(KartConstants.TRAINMODE)) {
-                            p.setValue("false");
-                        }
-                    }
-                }
-            }
+//            // Set training mode flag to false
+//            List<DataComponentWrapper> components =
+//                    KiemPlugin.getDefault().getDataComponentWrapperList();
+//            Iterator<DataComponentWrapper> it = components.iterator();
+//
+//            while (it.hasNext()) {
+//                DataComponentWrapper c = it.next();
+//
+//                if (c.getDataComponent().getClass().getName()
+//                        .equals(DataReplayComponent.DATA_REPLAY_COMPONENT_ID)) {
+//                    KiemProperty[] props = c.getProperties();
+//                    for (KiemProperty p : props) {
+//                        if (p.getKey().equals(KartConstants.TRAINMODE)) {
+//                            p.setValue("false");
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 
@@ -243,14 +254,15 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
      */
     private void possiblyDisplayOverwriteFileDialog(final File file)
             throws KiemInitializationException {
-        IConfigurationElement[] contributors = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor(KartConstants.KART_EXTENSION_MESSAGEDIALOG);
+        IConfigurationElement[] contributors =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        KartConstants.KART_EXTENSION_MESSAGEDIALOG);
 
         if (contributors.length > 0) {
             try {
                 TimeoutThread.setAwaitUserRepsonse(true);
-                IMessageDialog msg = (IMessageDialog) (contributors[0]
-                        .createExecutableExtension("class"));
+                IMessageDialog msg =
+                        (IMessageDialog) (contributors[0].createExecutableExtension("class"));
                 if (msg.question(KartConstants.OVERWRITE_TITLE, KartConstants.OVERWRITE)) {
                     if (!file.delete()) {
                         throw new KiemInitializationException(KartConstants.ERR_NOTDELETE_TITLE,
@@ -354,18 +366,18 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
     @Override
     public KiemProperty[] provideProperties() {
         KiemProperty[] properties = new KiemProperty[KartConstants.KIEM_PROPERTY_VALIDATION_NUMBER];
-        properties[KartConstants.KIEM_PROPERTY_VALIDATION_CONFIGVAR] = new KiemProperty(
-                KartConstants.CONFIGVAR, KartConstants.DEF_CONFIGVAR);
-        properties[KartConstants.KIEM_PROPERTY_VALIDATION_OUTPUTVAR] = new KiemProperty(
-                KartConstants.OUTPUTVAR, KartConstants.DEF_OUTPUTVAR);
-        properties[KartConstants.KIEM_PROPERTY_VALIDATION_PREVINVAR] = new KiemProperty(
-                KartConstants.PREVINVAR, KartConstants.DEF_PREVINVAR);
-        properties[KartConstants.KIEM_PROPERTY_VALIDATION_VALVAR] = new KiemProperty(
-                KartConstants.VALVAR, KartConstants.DEF_VALVAR);
-        properties[KartConstants.KIEM_PROPERTY_VALIDATION_SIGNALVAR] = new KiemProperty(
-                KartConstants.SIGNALVAR, KartConstants.DEF_SIGNALVAR);
-        properties[KartConstants.KIEM_PROPERTY_VALIDATION_IGNOREEXTRA] = new KiemProperty(
-                KartConstants.IGNOREEXTRA, false);
+        properties[KartConstants.KIEM_PROPERTY_VALIDATION_CONFIGVAR] =
+                new KiemProperty(KartConstants.CONFIGVAR, KartConstants.DEF_CONFIGVAR);
+        properties[KartConstants.KIEM_PROPERTY_VALIDATION_OUTPUTVAR] =
+                new KiemProperty(KartConstants.OUTPUTVAR, KartConstants.DEF_OUTPUTVAR);
+        properties[KartConstants.KIEM_PROPERTY_VALIDATION_PREVINVAR] =
+                new KiemProperty(KartConstants.PREVINVAR, KartConstants.DEF_PREVINVAR);
+        properties[KartConstants.KIEM_PROPERTY_VALIDATION_VALVAR] =
+                new KiemProperty(KartConstants.VALVAR, KartConstants.DEF_VALVAR);
+        properties[KartConstants.KIEM_PROPERTY_VALIDATION_SIGNALVAR] =
+                new KiemProperty(KartConstants.SIGNALVAR, KartConstants.DEF_SIGNALVAR);
+        properties[KartConstants.KIEM_PROPERTY_VALIDATION_IGNOREEXTRA] =
+                new KiemProperty(KartConstants.IGNOREEXTRA, false);
         return properties;
     }
 
@@ -443,6 +455,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
             }
             trainingMode = ((Boolean) config.get(KartConstants.VAR_TRAINMODE)).booleanValue();
             eot = ((Boolean) config.get(KartConstants.VAR_EOT)).booleanValue();
+            tracenum = ((Integer) config.get(KartConstants.VAR_TRACE)).intValue();
         } catch (JSONException e) {
             throw new KiemExecutionException(
                     "Could not update configuration. Are the KART components positioned "
@@ -474,8 +487,8 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
                 Object obj = json.get(field);
                 if (obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj)) {
                     // it's a signal
-                    if (JSONSignalValues.isPresent(obj)
-                            && recInputs.get((int) step - 1) != null &&  !recInputs.get((int) step - 1).containsKey(field)) {
+                    if (JSONSignalValues.isPresent(obj) && recInputs.get((int) step - 1) != null
+                            && !recInputs.get((int) step - 1).containsKey(field)) {
                         if (JSONSignalValues.getSignalValue(obj) == null) {
                             signals.put(field, null);
                         } else {

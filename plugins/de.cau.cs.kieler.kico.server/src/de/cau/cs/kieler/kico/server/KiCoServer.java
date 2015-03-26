@@ -15,16 +15,19 @@ package de.cau.cs.kieler.kico.server;
 
 //import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.kico.CompilationResult;
+import de.cau.cs.kieler.kico.IntermediateResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kico.Transformation;
 import de.cau.cs.kieler.server.HttpHeader;
 import de.cau.cs.kieler.server.HttpQuery;
 import de.cau.cs.kieler.server.HttpRequest;
@@ -79,7 +82,6 @@ public class KiCoServer extends HttpServer {
         if (request.header().isMethodPOST()) {
             query = request.body().getFormQueryData();
         }
-        
 
         // Check the query
         if (query.getValue("model").length() > 0) {
@@ -87,16 +89,34 @@ public class KiCoServer extends HttpServer {
             // Parse options
             boolean verbose = false;
             boolean strict = false;
+            boolean performance = false;
             String verboseString = query.getValue("verbose");
+            String ext = null; // by default no extension is given, if an extension is given use
+                               // this!
             if (verboseString.toLowerCase().equals("true")
                     || verboseString.toLowerCase().equals("t")
                     || verboseString.toLowerCase().equals("1")) {
                 verbose = true;
             }
+            String performanceString = query.getValue("performance");
+            if (performanceString.trim().length() > 0) {
+                performanceString = performanceString.trim();
+                // an example performanceString may be "%ALL,%CODEGENERATION,%ENTRY,%SCG"
+                // it includes %ALL or %TRANSFORMATIONID and the return value will be this string
+                // where
+                // %TRANSFORMATIONID is replaced by the time in ms which the transformation with
+                // this id took
+                // or %ALL is replaced by the sum of the overall compilation.
+                performance = true;
+            }
             String strictString = query.getValue("strict");
             if (strictString.toLowerCase().equals("true") || strictString.toLowerCase().equals("t")
                     || strictString.toLowerCase().equals("1")) {
                 strict = true;
+            }
+            String extString = query.getValue("ext");
+            if (extString.trim().length() > 0) {
+                ext = extString.toLowerCase().trim();
             }
 
             // Read all models in "model" and "include1", "include2", ...
@@ -117,42 +137,77 @@ public class KiCoServer extends HttpServer {
             debug("Models read");
 
             String transformationIDs = query.getValue("transformations");
-            
+
             // Parse models
             EObject mainModel = null;
             KielerCompilerContext context = new KielerCompilerContext(transformationIDs, mainModel);
             for (int i = models.size() - 1; i >= 0; i--) {
                 boolean isMainModel = (i == 0);
                 String model = models.get(i);
-                EObject eObject = KiCoUtil.parse(model, context, isMainModel);
+                EObject eObject = KiCoUtil.parse(model, context, isMainModel, ext);
                 if (isMainModel) {
                     mainModel = eObject;
                 }
             }
-            debug("Model parsed");
-
-            context.setVerboseMode(verbose);
-            context.setPrerequirements(!strict);
-            context.setMainResource(mainModel.eResource());
-
-            // process the model
-            CompilationResult compilationResult = KielerCompiler.compile(context);
-            debug("Model compiled");
-
-            Object compiledModel = compilationResult.getObject();
-
+            
+            
+            // answer with compiled & serialized model
+            String lastError = "";
+            String lastWarning = "";
             String serializedCompiledModel = "";
-            if (compiledModel != null) {
-                serializedCompiledModel = compiledModel.toString();
-                if (compiledModel instanceof EObject) {
-                    serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel, context, false);
+            if (mainModel == null) {
+                lastError = "Model cannot be parsed.";
+                serializedCompiledModel = lastError;
+                lastWarning = "";
+                debug("Model not parsed");
+            } else {
+                debug("Model parsed");
+                context.setVerboseMode(verbose);
+                context.setPrerequirements(!strict);
+                context.setMainResource(mainModel.eResource());
+
+                // process the model
+                CompilationResult compilationResult = KielerCompiler.compile(context);
+
+                if (performance) {
+                    List<IntermediateResult> results = compilationResult.getIntermediateResults();
+                    long durationAll = 0;
+                    for (int c = 0; c < results.size(); c++) {
+                        durationAll += (results.get(c)).getDuration();
+                    }
+                    performanceString = performanceString.replace("%ALL", durationAll + "");
+                    // modelname,durationsum,
+                    for (int c = 0; c < results.size(); c++) {
+                        IntermediateResult result = (results.get(c));
+                        String transformationID = result.getTransformationID();
+                        long duration = result.getDuration();
+                        if (transformationID != null && transformationID.length() > 0) {
+                            performanceString =
+                                    performanceString.replace("%" + transformationID, duration + "");
+                        }
+                    }
+                    serializedCompiledModel = performanceString + "\n";
+                    debug("Model compiled with performance test");
+                } else {
+                    // no performance test, serialize
+                    debug("Model compiled");
+                    Object compiledModel = compilationResult.getObject();
+                    if (compiledModel != null) {
+                        serializedCompiledModel = compiledModel.toString();
+                        if (compiledModel instanceof EObject) {
+                            serializedCompiledModel =
+                                    KiCoUtil.serialize((EObject) compiledModel, context, false);
+                        }
+                        debug("Model serialized");
+                    }
                 }
-                debug("Model serialized");
+                
+                lastError = compilationResult.getAllErrors();
+                lastWarning = compilationResult.getAllWarnings();
             }
 
+
             // answer with compiled & serialized model
-            String lastError = compilationResult.getAllErrors();
-            String lastWarning = compilationResult.getAllWarnings();
             if (lastError != null) {
                 debug("Errors serialized:");
                 debug(lastError);
@@ -170,8 +225,9 @@ public class KiCoServer extends HttpServer {
             responseHeader.setStatusOk();
             responseHeader.setTypeTextPlain();
             responseHeader.setHeaderField("Access-Control-Allow-Origin", "*");
-            responseHeader.setHeaderField("Access-Control-Expose-Headers", "compile-error,compile-warning");
-            //responseHeader.setHeaderField("Access-Control-Allow-Headers", "*");
+            responseHeader.setHeaderField("Access-Control-Expose-Headers",
+                    "compile-error,compile-warning");
+            // responseHeader.setHeaderField("Access-Control-Allow-Headers", "*");
             HttpResponse response = new HttpResponse();
             response.setHeader(responseHeader);
             if (lastError.length() > 0) {

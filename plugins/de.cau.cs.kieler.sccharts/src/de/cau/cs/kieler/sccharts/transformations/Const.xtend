@@ -35,8 +35,8 @@ import de.cau.cs.kieler.core.kexpressions.DoubleValue
  */
 class Const {
 
-	@Inject
-	extension AnnotationsExtensions
+    @Inject
+    extension AnnotationsExtensions
 
     @Inject
     extension KExpressionsExtension
@@ -46,7 +46,7 @@ class Const {
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
-    
+
     static private final String HOSTCODE_ANNOTATION = "alterHostcode"
 
     //-------------------------------------------------------------------------
@@ -64,27 +64,31 @@ class Const {
     }
 
     def void transformConst(State state) {
-        val constObjects = state.valuedObjects.filter[
-        	isConst && initialValue != null
+        val constObjects = state.valuedObjects.filter [
+            isConst && initialValue != null
         ].toList
-        
+
         for (const : constObjects.toList.immutableCopy) {
-        	val replacement = const.initialValue
-        	state.replaceAllReferencesWithCopy(const, replacement.copy)
-        	if (const.declaration.hasAnnotation(HOSTCODE_ANNOTATION)) {
-        		state.eAllContents.filter(typeof(TextExpression)).forEach[
-        			var replacementString = ""
-        			if (replacement instanceof IntValue) replacementString = (replacement as IntValue).value.toString
-        			else if (replacement instanceof BoolValue) replacementString = (replacement as BoolValue).value.toString
-        			else if (replacement instanceof FloatValue) replacementString = (replacement as FloatValue).value.toString
-        			else if (replacement instanceof DoubleValue) replacementString = (replacement as DoubleValue).value.toString
-        			else if (replacement instanceof TextExpression) replacementString = (replacement as TextExpression).text
-        			text = text.replaceAll(const.name, replacementString)
-        		]
-        	}
-        	const.delete
-		}  
-		      	
+            val replacement = const.initialValue
+            state.replaceAllReferencesWithCopy(const, replacement.copy)
+            if (const.declaration.hasAnnotation(HOSTCODE_ANNOTATION)) {
+                state.eAllContents.filter(typeof(TextExpression)).forEach [
+                    var replacementString = ""
+                    if (replacement instanceof IntValue)
+                        replacementString = (replacement as IntValue).value.toString
+                    else if (replacement instanceof BoolValue)
+                        replacementString = (replacement as BoolValue).value.toString
+                    else if (replacement instanceof FloatValue)
+                        replacementString = (replacement as FloatValue).value.toString
+                    else if(replacement instanceof DoubleValue) replacementString = (replacement as DoubleValue).value.
+                        toString else if(replacement instanceof TextExpression) replacementString = (replacement as TextExpression).
+                        text
+                    text = text.replaceAll(const.name, replacementString)
+                ]
+            }
+            const.delete
+        }
+
     }
 
 }
