@@ -4,7 +4,7 @@
     editorDirectory="/de.cau.cs.kieler.sim.eso.editor/src" modelPluginID="de.cau.cs.kieler.sim.eso"
     forceOverwrite="true" modelName="Eso" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.sim.eso.edit"
-    editorPluginID="de.cau.cs.kieler.sim.eso.editor" runtimeVersion="2.9">
+    editorPluginID="de.cau.cs.kieler.sim.eso.editor" runtimeVersion="2.10">
   <genPackages prefix="Eso" basePackage="de.cau.cs.kieler.sim.eso" disposableProviderFactory="true"
       ecorePackage="Eso.ecore#/">
     <genClasses ecoreClass="Eso.ecore#//tracelist">

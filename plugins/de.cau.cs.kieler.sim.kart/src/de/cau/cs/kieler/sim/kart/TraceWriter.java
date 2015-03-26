@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.BufferedWriter;
@@ -22,10 +25,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 /**
@@ -80,16 +87,44 @@ public class TraceWriter {
     /**
      * Actually start writing the output file. If the file already exists, a new trace is appended
      * to it.
-     * 
-     * @throws KiemInitializationException
-     *             when either the size of the input and out signal lists do not match or when an
-     *             error during writing the file occurs
-     * 
+     *
+     * @param updateTrace the update trace or -1 if just append
+     * @throws KiemInitializationException when either the size of the input and out signal lists do not match or when an
+     * error during writing the file occurs
      */
-    public void doWrite() throws KiemInitializationException {
+    public void doWrite(int updateTrace) throws KiemInitializationException {
         try {
-            PrintWriter outWriter = new PrintWriter(new BufferedWriter(new FileWriter(filename,
-                    true)));
+            
+            String filenameTmp = filename + ".tmp";
+            File originalFile = new File(filename);
+            File tmpFile = new File(filenameTmp);
+            
+            int traceCnt = -1;
+            String tail = ""; // everything after the trace!
+            PrintWriter outWriter = null;
+            if (updateTrace > -1) {
+                // copy everything up to updateTrace
+                outWriter = new PrintWriter(new BufferedWriter(new FileWriter(filenameTmp,
+                        true)));                
+                BufferedReader br = new BufferedReader(new FileReader(originalFile));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    if (line.trim().startsWith("!") && line.trim().endsWith("reset;")) {
+                        traceCnt++;  
+                    }
+                    if (traceCnt < updateTrace) {
+                        outWriter.println(line);
+                    }
+                    if (traceCnt > updateTrace) {
+                        tail += line + "\n";
+                    }
+                }
+                br.close();
+            } else {
+                outWriter = new PrintWriter(new BufferedWriter(new FileWriter(filename,
+                        true)));                
+            }
+            
 
             if (inputs.size() != outputs.size()) {
                 outWriter.close();
@@ -100,14 +135,33 @@ public class TraceWriter {
 
             outWriter.println("! reset;");
             for (int i = 0; i < inputs.size(); i++) {
-                outWriter.println(getSignalString(inputs.get(i)));
+                String signalLine = getSignalString(inputs.get(i)).trim();
+                if (signalLine.length() > 0) {
+                    outWriter.println(signalLine);
+                }
                 outWriter.println(getOutputSignalString(outputs.get(i)));
-                outWriter.println(getSpecialString(variables.get(i)));
+                String varLine = getSpecialString(variables.get(i)).trim();
+                if (varLine.length() > 0) {
+                    outWriter.println(varLine);
+                }
                 outWriter.println(";");
+            }
+            
+            // append all other traces
+            if (updateTrace > -1) {
+                outWriter.print(tail);
             }
 
             outWriter.close();
 
+            if (updateTrace > -1) {
+                // delete original file
+                originalFile.delete();
+                // rename 
+                tmpFile.renameTo(originalFile);
+            }
+
+            
             IConfigurationElement[] contributors = Platform.getExtensionRegistry()
                     .getConfigurationElementsFor("de.cau.cs.kieler.sim.kart.Refresh");
 

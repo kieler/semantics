@@ -41,7 +41,7 @@ public class KartPlugin implements BundleActivator {
      */
     private static final String ESO_FILE_RESET_TRACE_ID1 = "!";
     private static final String ESO_FILE_RESET_TRACE_ID2 = "reset;";
-
+    
     // ---------------------------------------------------------------------
 
     /**
