@@ -181,7 +181,8 @@
             dependencies="SCGDEP"
             id="SCLTOSCG"
             method="transform"
-            name="SCG">
+            name="SCG"
+            producesDependencies="SCGDEP">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
