@@ -45,7 +45,7 @@ class SurfaceDepth extends Transformation {
         return SCChartsTransformation::SURFACEDEPTH_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::SURFACEDEPTH_ID
     }
 

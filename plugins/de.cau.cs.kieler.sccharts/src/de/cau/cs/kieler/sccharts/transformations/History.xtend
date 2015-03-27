@@ -47,7 +47,7 @@ class History extends Transformation {
         return SCChartsTransformation::HISTORY_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::HISTORY_ID
     }
 

@@ -75,7 +75,7 @@ public class TransformationFeature extends Feature {
      * 
      * @return the handling transformation
      */
-    public Set<Transformation> getHandlingTransformations() {
+    public Set<Transformation> getExpandingTransformations() {
         return Sets.newHashSet(transformation);
     }
 
@@ -87,7 +87,7 @@ public class TransformationFeature extends Feature {
      * @return the not handling transformations
      */
     public Set<Transformation> getNotHandlingTransformations(boolean ignoreInherited) {
-        Feature linkedFeature = transformation.getHandleFeature();
+        Feature linkedFeature = transformation.getExpandsFeature();
         HashSet<Transformation> returnSet = new HashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
             for (Feature transformationNotHandlingFeature : transformation

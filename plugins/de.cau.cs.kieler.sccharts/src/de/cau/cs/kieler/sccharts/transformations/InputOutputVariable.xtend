@@ -42,7 +42,7 @@ class InputOutputVariable extends Transformation {
         return SCChartsTransformation::INPUTOUTPUT_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::INITIALIZATION_ID
     }
 

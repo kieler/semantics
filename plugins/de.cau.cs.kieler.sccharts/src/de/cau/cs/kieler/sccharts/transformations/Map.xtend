@@ -42,7 +42,7 @@ class Map extends Transformation {
         return SCChartsTransformation::MAP_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::MAP_ID
     }
 

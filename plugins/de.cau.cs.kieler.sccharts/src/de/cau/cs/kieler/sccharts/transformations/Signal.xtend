@@ -47,7 +47,7 @@ class Signal extends Transformation {
         return SCChartsTransformation::SIGNAL_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::SIGNAL_ID
     }
 

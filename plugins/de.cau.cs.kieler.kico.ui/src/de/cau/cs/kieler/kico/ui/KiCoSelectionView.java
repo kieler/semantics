@@ -438,7 +438,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
         for (String selected : selection.getDisabledTransformationIds()) {
             Transformation transformation = KielerCompiler.getTransformation(selected);
-            Feature feature = transformation.getHandleFeature();
+            Feature feature = transformation.getExpandsFeature();
             if (feature.isAlternative()) {
                 // resolve a TransformationFeature instead
                 feature = resolveFeature("T_" + selected);
@@ -542,7 +542,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         String featureId = feature.getId();
         String transformationId = featureId;
         if (!(feature instanceof TransformationFeature)) {
-            Set<Transformation> transformations = feature.getHandlingTransformations();
+            Set<Transformation> transformations = feature.getExpandingTransformations();
             if (!transformations.isEmpty()) {
                 transformationId = transformations.iterator().next().getId();
             }

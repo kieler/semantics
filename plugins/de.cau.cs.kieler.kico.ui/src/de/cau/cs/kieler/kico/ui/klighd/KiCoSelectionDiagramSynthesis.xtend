@@ -191,7 +191,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
                 // if this is a feature that consists of alternatives
                 else if (other.isAlternative && feature instanceof TransformationFeature) {
                     val transformationToSearchFor = (feature as TransformationFeature).transformation;
-                    val otherHandlingTransformations = other.handlingTransformations;
+                    val otherHandlingTransformations = other.expandingTransformations;
                     if (transformationToSearchFor != null) {
                         if (otherHandlingTransformations.contains(transformationToSearchFor)) {
 
@@ -239,7 +239,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
         debug("Feature " + feature.id + " produces: ")
 
         // (A)
-        for (transformation : feature.handlingTransformations) {
+        for (transformation : feature.expandingTransformations) {
             debug("   Transformation " + transformation.id + " produces: ")
             for (producedFeature : transformation.producesFeatures) {
                 debug("     - Feature " + producedFeature.id)
@@ -251,7 +251,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
         // (B)
         var transformations = feature.getNotHandlingTransformations(false);
         for (transformation : transformations) {
-            returnList.add(transformation.handleFeature);
+            returnList.add(transformation.expandsFeature);
         }
         returnList;
     }
@@ -266,7 +266,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
             //node.setLayoutOption(LayoutOptions::SPACING, 0f);
             if (feature.alternative) {
 
-                for (transformation : feature.handlingTransformations) {
+                for (transformation : feature.expandingTransformations) {
                     val child = new TransformationFeature(transformation)
                     transformationFeatureMap.put(transformation, child)
                     visibleFeatures.add(child)

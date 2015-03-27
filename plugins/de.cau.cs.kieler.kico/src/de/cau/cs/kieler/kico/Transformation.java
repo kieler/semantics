@@ -52,7 +52,7 @@ public abstract class Transformation implements ITransformation {
     private Set<Feature> cachedNoInheritedResolvedNotHandlesFeatures = null;
 
     /** The cached handles feature. */
-    private Feature cachedHandlesFeature = null;
+    private Feature cachedExpandsFeature = null;
 
     /** The central processor list. */
     private List<ProcessorOption> processorOptions = new ArrayList<ProcessorOption>();
@@ -85,16 +85,16 @@ public abstract class Transformation implements ITransformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the feature that this transformation handles.
+     * Gets the feature that this transformation expands.
      * 
      * @return the handle feature
      */
-    public Feature getHandleFeature() {
-        if (cachedHandlesFeature != null) {
-            return cachedHandlesFeature;
+    public Feature getExpandsFeature() {
+        if (cachedExpandsFeature != null) {
+            return cachedExpandsFeature;
         }
-        cachedHandlesFeature = KielerCompiler.getFeature(getHandleFeatureId());
-        return cachedHandlesFeature;
+        cachedExpandsFeature = KielerCompiler.getFeature(getExpandsFeatureId());
+        return cachedExpandsFeature;
     }
 
     // -------------------------------------------------------------------------
@@ -189,7 +189,7 @@ public abstract class Transformation implements ITransformation {
         // META DEPENDENCY ADDITION: We need to add all features that are declared as not-manageable
         // by ANY feature group
         // our feature is part of! We inherit here all these not-handles dependencies!
-        Feature ourFeature = this.getHandleFeature();
+        Feature ourFeature = this.getExpandsFeature();
         for (FeatureGroup featureGroup : ourFeature.getAllParentFeatureGroups()) {
             for (Feature inheritNotHandles : featureGroup.getNotHandlesFeatures()) {
                 if (inheritNotHandles.isGroup()) {

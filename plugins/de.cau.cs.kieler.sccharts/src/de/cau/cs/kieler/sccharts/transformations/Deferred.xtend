@@ -42,7 +42,7 @@ class Deferred extends Transformation {
         return SCChartsTransformation::DEFERRED_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::DEFERRED_ID
     }
 

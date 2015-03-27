@@ -49,7 +49,7 @@ class AbortWTODeep extends Transformation {
     //        return SCChartsTransformation::ABORTWTO_NAME;
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
 
     //        return SCChartsFeature::ABORT_ID;

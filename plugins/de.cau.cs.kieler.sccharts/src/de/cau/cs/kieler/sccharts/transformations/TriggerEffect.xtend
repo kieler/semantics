@@ -42,7 +42,7 @@ class TriggerEffect extends Transformation {
         return SCChartsTransformation::TRIGGEREFFECT_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::TRIGGEREFFECT_ID
     }
 

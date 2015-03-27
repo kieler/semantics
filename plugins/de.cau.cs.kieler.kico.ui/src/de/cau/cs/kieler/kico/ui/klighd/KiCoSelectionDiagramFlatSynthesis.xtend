@@ -169,7 +169,7 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
             }
 
             if (!(elem instanceof FeatureGroup)) {
-                for (Transformation transformation : elem.handlingTransformations) {
+                for (Transformation transformation : elem.expandingTransformations) {
                     val kNode2 = transformation.translate;
                     knode.children.add(kNode2)
                 }
@@ -294,7 +294,7 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
                     it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
                 ];
                 var transSource = transformation
-                var transDest = transformation.handleFeature
+                var transDest = transformation.expandsFeature
                 if (transSource != null && transDest != null) {
                     debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'")
                     if (!(connected.contains(transSource.hashCode + transDest.hashCode))) {

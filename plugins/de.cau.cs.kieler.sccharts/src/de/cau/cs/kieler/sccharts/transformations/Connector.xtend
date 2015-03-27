@@ -41,7 +41,7 @@ class Connector extends Transformation {
         return SCChartsTransformation::CONNECTOR_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::CONNECTOR_ID
     }
 

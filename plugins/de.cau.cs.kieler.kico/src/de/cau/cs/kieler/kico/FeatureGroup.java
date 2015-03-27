@@ -95,23 +95,23 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the list of transformations that are able to handle the features of this feature group.
+     * Gets the list of transformations that are able to expand the features of this feature group.
      * 
      * @return the alternative transformations
      */
-    public Set<Transformation> getHandlingTransformations() {
-        if (cachedHandlingTransformations != null) {
-            return cachedHandlingTransformations;
+    public Set<Transformation> getExpandingTransformations() {
+        if (cachedExpandingTransformations != null) {
+            return cachedExpandingTransformations;
         }
-        cachedHandlingTransformations = new HashSet<Transformation>();
+        cachedExpandingTransformations = new HashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
             for (Feature feature : this.getResolvedFeatures()) {
-                if (transformation.getHandleFeature() == feature) {
-                    cachedHandlingTransformations.add(transformation);
+                if (transformation.getExpandsFeature() == feature) {
+                    cachedExpandingTransformations.add(transformation);
                 }
             }
         }
-        return cachedHandlingTransformations;
+        return cachedExpandingTransformations;
     }
 
     // -------------------------------------------------------------------------

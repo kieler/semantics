@@ -52,7 +52,7 @@ class Pre extends Transformation {
         return SCChartsTransformation::PRE_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::PRE_ID
     }
 

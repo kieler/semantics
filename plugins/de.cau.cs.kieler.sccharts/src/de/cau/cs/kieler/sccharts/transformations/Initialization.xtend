@@ -46,7 +46,7 @@ class Initialization extends Transformation {
         return SCChartsTransformation::INITIALIZATION_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::INITIALIZATION_ID
     }
 

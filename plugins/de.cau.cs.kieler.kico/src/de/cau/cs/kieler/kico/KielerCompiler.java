@@ -325,7 +325,7 @@ public class KielerCompiler {
                         context.setCurrentTransformationProgressMonitor(subMonitor);
                         
                         // Possibly skip this transformation if the feature is not present
-                        Feature feature = transformation.getHandleFeature();
+                        Feature feature = transformation.getExpandsFeature();
                         if (feature.doIsContained(transformedObject)) {
                             // FEATURE FOUND: PROCESSING
                             KiCoPlugin.logInfo("PERFORM TRANSFORMATION: " + compilationTransformationId);

@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.EObject;
 public abstract class Feature implements IFeature {
 
     /** The cached handling/alternative transformations. */
-    protected Set<Transformation> cachedHandlingTransformations = null;
+    protected Set<Transformation> cachedExpandingTransformations = null;
 
     /** The cached producing transformations. */
     protected Set<Transformation> cachedProducingTransformations = null;
@@ -166,7 +166,7 @@ public abstract class Feature implements IFeature {
         }
 
         // Check produced features
-        for (Transformation transformation : fromFeature.getHandlingTransformations()) {
+        for (Transformation transformation : fromFeature.getExpandingTransformations()) {
             for (Feature producedFeature : transformation.getProducesFeatures()) {
                 // producedFeature == feature that is (possibly) produced by a transformation
                 // handling the fromFeature, so fromFeature must be transformed before
@@ -184,7 +184,7 @@ public abstract class Feature implements IFeature {
 
         // Check not handled by features
         for (Transformation transformation : fromFeature.getNotHandlingTransformations(ignoreInherited)) {
-            Feature notHandledByFeature = transformation.getHandleFeature();
+            Feature notHandledByFeature = transformation.getExpandsFeature();
             // notHandledByFeature == feature whose transformation cannot handle the fromFeature, so
             // fromFeature must be transformed before notHandledByFeature.
             Set<Feature> moreFeatures =
@@ -219,7 +219,7 @@ public abstract class Feature implements IFeature {
         }
 
         // Check produced features
-        for (Transformation transformation : fromFeature.getHandlingTransformations()) {
+        for (Transformation transformation : fromFeature.getExpandingTransformations()) {
             for (Feature producedFeature : transformation.getProducesFeatures()) {
                 // producedFeature == feature that is (possibly) produced by a transformation
                 // handling the fromFeature, so fromFeature must be transformed before
@@ -232,7 +232,7 @@ public abstract class Feature implements IFeature {
 
         // Check not handled by features
         for (Transformation transformation : fromFeature.getNotHandlingTransformations(ignoreInherited)) {
-            Feature notHandledByFeature = transformation.getHandleFeature();
+            Feature notHandledByFeature = transformation.getExpandsFeature();
             // notHandledByFeature == feature whose transformation cannot handle the fromFeature, so
             // fromFeature must be transformed before notHandledByFeature.
             if (existsProduceNotHandledByPathTo(notHandledByFeature, targetFeature, ignoreInherited)) {
@@ -253,17 +253,17 @@ public abstract class Feature implements IFeature {
      * 
      * @return the alternative transformations
      */
-    public Set<Transformation> getHandlingTransformations() {
-        if (cachedHandlingTransformations != null) {
-            return cachedHandlingTransformations;
+    public Set<Transformation> getExpandingTransformations() {
+        if (cachedExpandingTransformations != null) {
+            return cachedExpandingTransformations;
         }
-        cachedHandlingTransformations = new HashSet<Transformation>();
+        cachedExpandingTransformations = new HashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
-            if (transformation.getHandleFeature() == this) {
-                cachedHandlingTransformations.add(transformation);
+            if (transformation.getExpandsFeature() == this) {
+                cachedExpandingTransformations.add(transformation);
             }
         }
-        return cachedHandlingTransformations;
+        return cachedExpandingTransformations;
     }
 
     // -------------------------------------------------------------------------
@@ -340,7 +340,7 @@ public abstract class Feature implements IFeature {
         // return true;
         // }
         // return false;
-        return ((!(this instanceof FeatureGroup)) && (this.getHandlingTransformations().size() > 1));
+        return ((!(this instanceof FeatureGroup)) && (this.getExpandingTransformations().size() > 1));
     }
 
     // -------------------------------------------------------------------------

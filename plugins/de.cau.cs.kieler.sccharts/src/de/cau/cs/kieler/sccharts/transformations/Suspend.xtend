@@ -42,7 +42,7 @@ class Suspend extends Transformation {
         return SCChartsTransformation::SUSPEND_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::SUSPEND_ID
     }
 

@@ -42,7 +42,7 @@ class CountDelay extends Transformation {
         return SCChartsTransformation::COUNTDELAY_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::COUNTDELAY_ID
     }
 

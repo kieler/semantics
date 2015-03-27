@@ -47,7 +47,7 @@ class Abort extends Transformation {
         return SCChartsTransformation::ABORT_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::ABORT_ID
     }
 

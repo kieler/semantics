@@ -50,7 +50,7 @@ class Reference extends Transformation {
         return SCChartsTransformation::REFERENCE_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::REFERENCE_ID
     }
 

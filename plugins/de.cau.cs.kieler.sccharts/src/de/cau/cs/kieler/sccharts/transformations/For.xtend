@@ -42,7 +42,7 @@ class For extends Transformation {
         return SCChartsTransformation::FOR_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::FOR_ID
     }
 

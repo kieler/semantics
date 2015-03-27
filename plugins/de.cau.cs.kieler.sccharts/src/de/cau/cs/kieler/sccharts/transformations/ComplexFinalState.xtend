@@ -44,7 +44,7 @@ class ComplexFinalState extends Transformation {
         return SCChartsTransformation::COMPLEXFINALSTATE_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::COMPLEXFINALSTATE_ID
     }
 

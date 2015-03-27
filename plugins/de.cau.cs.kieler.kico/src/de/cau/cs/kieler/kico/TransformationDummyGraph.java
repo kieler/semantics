@@ -104,7 +104,7 @@ public class TransformationDummyGraph {
                 if (transformation != null) {
                     addTransformationToGraph(transformation);
                     // Remember selection
-                    selectedFeatures.add(transformation.getHandleFeature());
+                    selectedFeatures.add(transformation.getExpandsFeature());
                 }
             } else {
                 // We now know that selectedId is a feature. If it is a FeatureGroup we have
@@ -222,7 +222,7 @@ public class TransformationDummyGraph {
             // This might be an incorrect specified feature ID, try to ignore it
             return null;
         }
-        Set<Transformation> handlingTransformations = feature.getHandlingTransformations();
+        Set<Transformation> handlingTransformations = feature.getExpandingTransformations();
         // First search any selected transformation (if any)
         // First search the preferred transformation
         for (Transformation handlingTransformation : handlingTransformations) {
@@ -336,7 +336,7 @@ public class TransformationDummyGraph {
             // Consider produce relationships
             for (Feature producedFeature : dummyB.transformation.getProducesFeatures()) {
                 for (Transformation producedFeatureHandlingTransformation : producedFeature
-                        .getHandlingTransformations()) {
+                        .getExpandingTransformations()) {
                     TransformationDummy dummyC =
                             getTransformationDummy(producedFeatureHandlingTransformation);
                     if (dummyC != null) {
@@ -349,7 +349,7 @@ public class TransformationDummyGraph {
             // Consider not handles relationships
             for (Feature notHandlesFeature : dummyB.transformation.getNotHandlesFeatures(false)) {
                 for (Transformation notHandlesFeatureHandlingTransformation : notHandlesFeature
-                        .getHandlingTransformations()) {
+                        .getExpandingTransformations()) {
                     TransformationDummy dummyA =
                             getTransformationDummy(notHandlesFeatureHandlingTransformation);
                     if (dummyA != null) {

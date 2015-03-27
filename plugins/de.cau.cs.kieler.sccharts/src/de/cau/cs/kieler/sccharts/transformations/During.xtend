@@ -45,7 +45,7 @@ class During extends Transformation {
         return SCChartsTransformation::DURING_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::DURING_ID
     }
 

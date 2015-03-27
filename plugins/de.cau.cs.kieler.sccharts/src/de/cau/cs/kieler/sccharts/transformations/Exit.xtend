@@ -44,7 +44,7 @@ class Exit extends Transformation {
         return SCChartsTransformation::EXIT_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::EXIT_ID
     }
 

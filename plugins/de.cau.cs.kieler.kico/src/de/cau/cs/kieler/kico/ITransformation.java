@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This interface defines what a concrete transformation must supply. This is an ID, an optional
- * name, an optional list of produced features, an optional list of not handled features and the
- * central list of processors that constitute this transformation.
+ * This interface defines what a concrete transformation must supply. This is an ID, a feature that
+ * it expands, an optional name, an optional list of produced features, an optional list of not
+ * handled features and the central list of processors that constitute this transformation.
  * 
  * @author cmot
  * @kieler.design 2015-03-09 proposed
@@ -48,12 +48,14 @@ public interface ITransformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Supply the feature that this transformation is going to handle. Note that if there is more
-     * than one transformation handling one feature, then there will
+     * Supply the feature that this transformation is going to expand. Note that if there is more
+     * than one transformation expanding one feature, then these transformations are alternative and
+     * only one of them can be processed during compilation. This is determined by the
+     * transformation preference.
      * 
      * @return the string
      */
-    public String getHandleFeatureId();
+    public String getExpandsFeatureId();
 
     // -------------------------------------------------------------------------
 

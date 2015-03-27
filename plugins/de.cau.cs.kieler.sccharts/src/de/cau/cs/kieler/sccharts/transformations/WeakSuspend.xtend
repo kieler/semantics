@@ -44,7 +44,7 @@ class WeakSuspend extends Transformation {
         return SCChartsTransformation::WEAKSUSPEND_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::WEAKSUSPEND_ID
     }
 

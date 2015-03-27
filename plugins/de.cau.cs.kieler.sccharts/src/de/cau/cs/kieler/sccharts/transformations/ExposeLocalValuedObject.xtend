@@ -41,7 +41,7 @@ class ExposeLocalValuedObject extends Transformation {
         return SCChartsTransformation::EXPOSELOCALVALUEDOBJECT_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::EXPOSELOCALVALUEDOBJECT_ID
     }
 

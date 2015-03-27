@@ -49,7 +49,7 @@ class Const extends Transformation {
         return SCChartsTransformation::CONST_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::CONST_ID
     }
 

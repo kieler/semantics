@@ -44,7 +44,7 @@ class Termination extends Transformation {
         return SCChartsTransformation::TERMINATION_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::TERMINATION_ID
     }
 

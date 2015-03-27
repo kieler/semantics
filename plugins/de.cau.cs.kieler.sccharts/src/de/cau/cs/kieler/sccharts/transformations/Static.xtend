@@ -41,7 +41,7 @@ class Static extends Transformation {
         return SCChartsTransformation::STATIC_NAME
     }
 
-    override getHandleFeatureId() {
+    override getExpandsFeatureId() {
         return SCChartsFeature::STATIC_ID
     }
 
