@@ -350,36 +350,55 @@ class TimingAnnotationProvider {
         val returnList = new LinkedList<TimingRequestResult>();
         var i = 0 as int
         stringBuilder.append("\n\n# Analysis Requests");
+        appendFWCETAndLWCETRequest("entry", 1.toString(), returnList, stringBuilder);
         for (i = 1; i < highestTPP; i = i + 1) {
             // there is no TPP with the number 13 (as this has special meaning for prototype analysis 
             // tool)
             if (!(i == 12) && !(i == 13)){
-            var timingRequestResult1 = new TimingRequestResult();
-            var timingRequestResult2 = new TimingRequestResult();
-            var int successor = i + 1;
-            stringBuilder.append("\n");
-            stringBuilder.append("FWCET " + i + " " + successor + "\nLWCET " + i + " " + successor);
-            timingRequestResult1.setRequestType(RequestType.FWCET);
-            timingRequestResult1.setStartPoint(i.toString());
-            timingRequestResult1.setEndPoint(successor.toString());
-            returnList.add(timingRequestResult1);
-            timingRequestResult2.setRequestType(RequestType.LWCET);
-            timingRequestResult2.setStartPoint(i.toString());
-            timingRequestResult2.setEndPoint(successor.toString());
-            returnList.add(timingRequestResult2);
-        }       
+              appendFWCETAndLWCETRequest(i.toString(), (i+1).toString(), returnList, stringBuilder);
+        } else {
+            if (i == 12) {
+            appendFWCETAndLWCETRequest(i.toString(), (i + 2).toString, returnList, stringBuilder);
+            }
+        }      
         }
-        stringBuilder.append("\nFWCET " + i + " exit\nLWCET " + i + " exit");
-        var timingRequestResultFinal1 = new TimingRequestResult();
-        var timingRequestResultFinal2 = new TimingRequestResult();
-        timingRequestResultFinal1.setRequestType(RequestType.FWCET);
-        timingRequestResultFinal2.setRequestType(RequestType.LWCET);
-        timingRequestResultFinal1.setStartPoint(i.toString());
-        timingRequestResultFinal2.setStartPoint(i.toString());
-        timingRequestResultFinal1.setEndPoint("exit");
-        timingRequestResultFinal2.setEndPoint("exit");
-        returnList.add(timingRequestResultFinal1);
-        returnList.add(timingRequestResultFinal2);
+         appendFWCETAndLWCETRequest(i.toString(), "exit", returnList, stringBuilder);
         return returnList;
     }
+    
+    /**
+     * Method adds FWCET and LWCET requests for a specific pair of Timing Program points 
+     * (given as string representations of their TPP numbers) to a stringBuilder, which is part of 
+     * building a timing analysis request file (.ta). Also, results for the requests are prepared in 
+     * the result list, analysis values will be added later.
+     * 
+     * @param startPoint
+     *       String representation of the TPP that starts the code part, for which the analysis is to 
+     *       be requested.
+     * @param endPoint
+     *       String representation of the TPP that starts the code part, for which the analysis is to
+     *       be requested.
+     * @param resultList
+     *       A list of TimingRequestResults, to which the prepared results for the requests are to be 
+     *       stored.
+     * @param stringBuilder
+     *       The String Builder, to which the requests are appended.
+     */
+    def appendFWCETAndLWCETRequest(String startPoint, String endPoint, 
+        LinkedList<TimingRequestResult> resultList, StringBuilder stringBuilder) {
+            var timingRequestResult1 = new TimingRequestResult();
+            var timingRequestResult2 = new TimingRequestResult();
+            stringBuilder.append("\n");
+            stringBuilder.append("FWCET " + startPoint + " " + endPoint + "\nLWCET " + startPoint 
+                + " " + endPoint);
+            timingRequestResult1.setRequestType(RequestType.FWCET);
+            timingRequestResult1.setStartPoint(startPoint);
+            timingRequestResult1.setEndPoint(endPoint);
+            resultList.add(timingRequestResult1);
+            timingRequestResult2.setRequestType(RequestType.LWCET);
+            timingRequestResult2.setStartPoint(startPoint.toString());
+            timingRequestResult2.setEndPoint(endPoint.toString());
+            resultList.add(timingRequestResult2);
+    }
+    
 }

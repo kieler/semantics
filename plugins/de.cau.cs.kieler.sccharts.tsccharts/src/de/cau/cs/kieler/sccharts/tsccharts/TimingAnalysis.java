@@ -258,12 +258,10 @@ public class TimingAnalysis extends Job {
         }
         HashMap<Integer, Region> tppRegionMap = new HashMap<Integer, Region>();
 
-        // It is normal that some nodes of the SCG will be mapped to null, because they belong to
-        // the
+        // It is normal that some nodes of the SCG will be mapped to null, because they belong to the
         // SCChart itself not to a Region of the SCChart (they cannot be attributed to the outermost
-        // Region in the root state, because there may be several of those). So create a dummy
-        // region
-        // to represent the SCChart in Timing Analysis.
+        // Region in the root state, because there may be several of those). So create a dummy region
+        // to represent the SCChart in Timing Analysis. Will be mapped to TPP "entry", represented by 0
         Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
         scchartDummyRegion.setId("SCChartDummyRegion");
 
@@ -329,7 +327,7 @@ public class TimingAnalysis extends Job {
                         stringBuilder);
         // just debug, may be removed
         System.out.println(stringBuilder.toString());
-
+        
         // .ta file string complete, write it to file
         String requestFile = uri.replace(".sct", ".ta");
         String requestFilePath = requestFile.replace("file:", "");
@@ -363,8 +361,7 @@ public class TimingAnalysis extends Job {
             return Status.CANCEL_STATUS;
         }
 
-        // construct uri, where the analysis file will deposit the response file (.ta)
-        State state = scchart;
+        // construct uri, where the analysis tool will deposit the response file (.ta)
         String taFile = uri.replace(".sct", ".ta.out");
         String taPath = taFile.replace("file:", "");
 
@@ -443,8 +440,14 @@ public class TimingAnalysis extends Job {
         while (resultListIterator.hasNext()) {
             TimingRequestResult currentResult = resultListIterator.next();
             if (currentResult.getRequestType() == requestType) {
-                Region resultRegion =
+                Region resultRegion;
+                if (!(currentResult.getStartPoint().equals("entry"))){
+                resultRegion =
                         tppRegionMap.get(Integer.parseInt(currentResult.getStartPoint()));
+                } else {
+                resultRegion =
+                        tppRegionMap.get(0);
+                }
                 if (flatValues.get(resultRegion) == null) {
                     flatValues
                             .put(resultRegion, Integer.parseInt(currentResult.getResult().get(0)));
@@ -552,10 +555,6 @@ public class TimingAnalysis extends Job {
     private int insertTPP(SCGraph scg, HashMap<Node, Region> nodeRegionMapping,
             HashMap<Integer, Region> tppRegionMap, Region scchartDummyRegion) {
         // Get all edges of the sequential scg
-        Iterator<ControlFlow> edgeIter =
-                Iterators.filter(
-                        ModelingUtil.eAllContentsOfType2(scg, Node.class, ControlFlow.class),
-                        ControlFlow.class);
         // get the SCG nodes in fixed traversing order (top to bottom, then branch first)
         LinkedList<ControlFlow> edgeList = getEdgesInFixedTraversingOrder(scg);
         Iterator<ControlFlow> edgeListIterator = edgeList.iterator();
