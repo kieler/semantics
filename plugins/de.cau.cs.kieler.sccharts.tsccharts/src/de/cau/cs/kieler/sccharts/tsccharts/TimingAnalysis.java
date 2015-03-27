@@ -316,7 +316,7 @@ public class TimingAnalysis extends Job {
         fileWriter.writeToFile(code, codeTargetFilePath);
 
         // get assumptions
-        String assumptionFile = uri.replace(".sct", ".ass");
+        String assumptionFile = uri.replace(".sct", ".asu");
         String assumptionFilePath = assumptionFile.replace("file:", "");
         StringBuilder stringBuilder = new StringBuilder();
         timingAnnotationProvider.getAssumptions(assumptionFilePath, stringBuilder);
