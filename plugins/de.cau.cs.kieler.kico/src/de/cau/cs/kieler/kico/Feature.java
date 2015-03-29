@@ -136,21 +136,27 @@ public abstract class Feature implements IFeature {
      * 
      * @param targetFeature
      *            the target feature
+     * @param ignoreInherited
+     *            the ignore inherited
      * @return true, if successful
      */
-    public final boolean existsProduceNotHandledByPathTo(Feature targetFeature, boolean ignoreInherited) {
+    public final boolean existsProduceNotHandledByPathTo(Feature targetFeature,
+            boolean ignoreInherited) {
         return existsProduceNotHandledByPathTo(this, targetFeature, ignoreInherited);
     }
 
     /**
-     * Checks if there exists a path on produce-dependencies or nothandledby-dependencies from this
-     * feature to a target Feature.
+     * Returns a possibly existing path of features on produce-dependencies or
+     * nothandledby-dependencies from this feature to a target Feature if one exists.
      * 
      * @param targetFeature
      *            the target feature
-     * @return true, if successful
+     * @param ignoreInherited
+     *            the ignore inherited
+     * @return the produce not handled by path to
      */
-    public final Set<Feature> getProduceNotHandledByPathTo(Feature targetFeature, boolean ignoreInherited) {
+    public final Set<Feature> getProduceNotHandledByPathTo(Feature targetFeature,
+            boolean ignoreInherited) {
         return getProduceNotHandledByPathTo(this, targetFeature, ignoreInherited);
     }
 
@@ -172,7 +178,8 @@ public abstract class Feature implements IFeature {
                 // handling the fromFeature, so fromFeature must be transformed before
                 // producedFeature.
                 Set<Feature> moreFeatures =
-                        getProduceNotHandledByPathTo(producedFeature, targetFeature, ignoreInherited);
+                        getProduceNotHandledByPathTo(producedFeature, targetFeature,
+                                ignoreInherited);
                 if (moreFeatures.size() > 0) {
                     // Return the collected features
                     returnFeatures.addAll(moreFeatures);
@@ -183,12 +190,14 @@ public abstract class Feature implements IFeature {
         }
 
         // Check not handled by features
-        for (Transformation transformation : fromFeature.getNotHandlingTransformations(ignoreInherited)) {
+        for (Transformation transformation : fromFeature
+                .getNotHandlingTransformations(ignoreInherited)) {
             Feature notHandledByFeature = transformation.getExpandsFeature();
             // notHandledByFeature == feature whose transformation cannot handle the fromFeature, so
             // fromFeature must be transformed before notHandledByFeature.
             Set<Feature> moreFeatures =
-                    getProduceNotHandledByPathTo(notHandledByFeature, targetFeature, ignoreInherited);
+                    getProduceNotHandledByPathTo(notHandledByFeature, targetFeature,
+                            ignoreInherited);
             if (moreFeatures.size() > 0) {
                 // Return the collected features
                 returnFeatures.addAll(moreFeatures);
@@ -212,7 +221,8 @@ public abstract class Feature implements IFeature {
      *            the target feature
      * @return true, if successful
      */
-    private final boolean existsProduceNotHandledByPathTo(Feature fromFeature, Feature targetFeature, boolean ignoreInherited) {
+    private final boolean existsProduceNotHandledByPathTo(Feature fromFeature,
+            Feature targetFeature, boolean ignoreInherited) {
         // Recursion ends here, we have found a path
         if (fromFeature == targetFeature) {
             return true;
@@ -231,7 +241,8 @@ public abstract class Feature implements IFeature {
         }
 
         // Check not handled by features
-        for (Transformation transformation : fromFeature.getNotHandlingTransformations(ignoreInherited)) {
+        for (Transformation transformation : fromFeature
+                .getNotHandlingTransformations(ignoreInherited)) {
             Feature notHandledByFeature = transformation.getExpandsFeature();
             // notHandledByFeature == feature whose transformation cannot handle the fromFeature, so
             // fromFeature must be transformed before notHandledByFeature.
@@ -304,12 +315,14 @@ public abstract class Feature implements IFeature {
         cachedNoInheritedNotHandlingTransformations = new HashSet<Transformation>();
         cachedNotHandlingTransformations = new HashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
-            for (Feature transformationNotHandlingFeature : transformation.getNotHandlesFeatures(true)) {
+            for (Feature transformationNotHandlingFeature : transformation
+                    .getNotHandlesFeatures(true)) {
                 if (transformationNotHandlingFeature == this) {
                     cachedNoInheritedNotHandlingTransformations.add(transformation);
                 }
             }
-            for (Feature transformationNotHandlingFeature : transformation.getNotHandlesFeatures(false)) {
+            for (Feature transformationNotHandlingFeature : transformation
+                    .getNotHandlesFeatures(false)) {
                 if (transformationNotHandlingFeature == this) {
                     cachedNotHandlingTransformations.add(transformation);
                 }
@@ -445,21 +458,23 @@ public abstract class Feature implements IFeature {
         cachedAllFeatureGroups.addAll(getAllParentFeatureGroups(this));
 
         return cachedAllFeatureGroups;
-     }
-    
+    }
+
     // ---------------------------------
-    
+
     /**
      * Gets the set of feature groups this feature belongs to recursively following all groups up to
      * the top most. Private helper method.
-     *
-     * @param group the group
+     * 
+     * @param group
+     *            the group
      * @return the all parent feature groups
      */
     private Set<FeatureGroup> getAllParentFeatureGroups(Feature featureContainedByGroup) {
         HashSet<FeatureGroup> returnSet = new HashSet<FeatureGroup>();
         for (Feature feature : KielerCompiler.getFeatures()) {
-            if (feature.isGroup() && feature.asGroup().getFeatures().contains(featureContainedByGroup)) {
+            if (feature.isGroup()
+                    && feature.asGroup().getFeatures().contains(featureContainedByGroup)) {
                 // Add parent
                 returnSet.add(feature.asGroup());
                 // Continue with parent
