@@ -253,7 +253,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
             
             if (SHORTEN_LABELS.booleanValue) {
-                addLayoutParam(LabelLayoutOptions::LABEL_SIZE_MODIFIER, new TruncatingLabelSizeModifier())
+                addLayoutParam(LabelLayoutOptions::LABEL_SIZE_MODIFIER, new TransitionLabelSizeModifier())
             }
             children += rootState.translate
         ] 
@@ -277,7 +277,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             node.addLayoutParam(LayoutOptions::LABEL_SPACING, 50F)
             node.setLayoutOption(LayoutOptions::SPACING, 40f);
             if (SHORTEN_LABELS.booleanValue) {
-                node.addLayoutParam(LabelLayoutOptions::LABEL_SIZE_MODIFIER, new TruncatingLabelSizeModifier())
+                node.addLayoutParam(LabelLayoutOptions::LABEL_SIZE_MODIFIER, new TransitionLabelSizeModifier())
             }
             if (loadLazy) {
                 node.setLayoutOption(KlighdProperties::EXPAND, false);       
