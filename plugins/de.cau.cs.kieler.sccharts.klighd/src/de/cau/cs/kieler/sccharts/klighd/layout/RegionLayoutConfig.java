@@ -65,7 +65,8 @@ public class RegionLayoutConfig extends SemanticLayoutConfig{
         }
         if (semanticElem instanceof Region) {
             if (layoutOption.equals(LayoutOptions.ALGORITHM)) {
-                return "de.cau.cs.kieler.graphviz.dot";
+//                return "de.cau.cs.kieler.graphviz.dot";
+                return "de.cau.cs.kieler.klay.layered";
             }
         }        
         return null;

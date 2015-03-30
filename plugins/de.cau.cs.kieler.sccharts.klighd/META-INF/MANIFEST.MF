@@ -23,6 +23,7 @@ Require-Bundle: com.google.guava;bundle-version="10.0.1",
  de.cau.cs.kieler.kiml.graphviz.layouter;bundle-version="0.6.3",
  de.cau.cs.kieler.sccharts.s;bundle-version="0.1.0",
  de.cau.cs.kieler.kico;bundle-version="0.1.0",
- de.cau.cs.kieler.kico.ui;bundle-version="0.1.0"
+ de.cau.cs.kieler.kico.ui;bundle-version="0.1.0",
+ de.cau.cs.kieler.klay.layered
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 
