@@ -249,7 +249,7 @@ class CommonExtension {
      * @return 
      *          entry node which should perform the join
      */
-    private def Node findLowestExit(LinkedList<Node> entrynodes, HashMap<Node, Integer> nodePriorities){
+    def Node findLowestExit(LinkedList<Node> entrynodes, HashMap<Node, Integer> nodePriorities){
         var lowestExit = entrynodes.head
         for (e : entrynodes){
             if (nodePriorities.get((e as Entry).exit) < nodePriorities.get((lowestExit as Entry).exit)){
@@ -276,7 +276,7 @@ class CommonExtension {
      * @return 
      *          entry node which should inherit the tsID of the parent
      */
-    private def Node findFirstEntry(LinkedList<Node> entrynodes, HashMap<Node, Integer> nodePriorities){
+    def Node findFirstEntry(LinkedList<Node> entrynodes, HashMap<Node, Integer> nodePriorities){
         var firstEntry = entrynodes.head
         for (e : entrynodes){
             if (nodePriorities.get(firstEntry) < nodePriorities.get(e)){

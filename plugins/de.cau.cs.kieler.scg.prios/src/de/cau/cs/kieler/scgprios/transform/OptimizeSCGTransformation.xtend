@@ -54,7 +54,7 @@ class OptimizeSCGTransformation extends Transformation{
      *          Returns the modified root element
      */
     override transform(EObject eObject, KielerCompilerContext context) {
-        return optimizeThreads(eObject as SCGraph, context)
+        return eObject //optimizeThreads(eObject as SCGraph, context)
     }
     
     /**

@@ -19,6 +19,7 @@ import java.util.Stack
 import java.util.LinkedList
 import de.cau.cs.kieler.scgprios.extensions.CommonExtension
 import com.google.inject.Inject
+import java.util.HashMap
 
 /**
  * This class determines the strongly connected components of an SCG
@@ -36,6 +37,7 @@ class SCC {
     private var sccList = <LinkedList<Node>> newLinkedList   // list of sccs
     private var pointStack = new Stack<Node>                 // stack
     private var int i = 0
+    private var remainingNodes = <Node> newLinkedList
    
     /**
      * Use Tarjan's algorithm to find strongly connected components
@@ -49,20 +51,21 @@ class SCC {
      */ 
     def LinkedList<LinkedList<Node>> findSCC(List<Node> nodelist){
         // nodes that have not been visited yet and might not be connected to the graph
-        var remainingVertices = nodelist as Iterable<Node>
+        //var remainingVertices = nodelist as Iterable<Node>
         sccList.clear
         number.clear
         lowlink.clear
+        remainingNodes.addAll(nodelist)
        
         // if there are nodes which have not been visited yet
-        while (!remainingVertices.empty){
+        while (!remainingNodes.empty){
             i = 0
             pointStack.clear
             //take first node, which has not been visited yet and
             //find all nodes which are strongly connected
-            strongconnect(remainingVertices.head())
+            strongconnect(remainingNodes.head())
             //update remaining vertices
-            remainingVertices = remainingVertices.filter[(!number.containsKey(it))]   
+            remainingNodes.remove(remainingNodes.head)  
         }
         sccList
     }
@@ -93,6 +96,7 @@ class SCC {
             // Move to further to next node
             if (!number.containsKey(child)) {
                 strongconnect(child)
+                remainingNodes.remove(child)
                 // save in list lowlink: current node and min of lowlink of currentnode and child
                 lowlink.put(currentNode, min(lowlink.get(currentNode).intValue(), lowlink.get(child).intValue()))
             } else {
@@ -117,6 +121,18 @@ class SCC {
             sccList.addLast(ssc)
 
         }
+    }
+    
+    def HashMap<Node,Integer> createSCCLookUpTable (LinkedList<LinkedList<Node>> sccs){
+        var i = 0;
+        var lookUpSCC = <Node,Integer> newHashMap
+        for (scc : sccs){
+            for (s : scc){
+                lookUpSCC.put(s,i)
+            }
+            i = i+1;
+        }
+        return lookUpSCC
     }
           
 }

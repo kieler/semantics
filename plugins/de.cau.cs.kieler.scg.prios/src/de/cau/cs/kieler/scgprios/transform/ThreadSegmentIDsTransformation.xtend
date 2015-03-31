@@ -82,15 +82,18 @@ class ThreadSegmentIDsTransformation extends Transformation{
         
         // if previous results exist, optimize node priorities
         if (!nodePriosRes.empty){
-            
+       
             var nodes = graph.nodes
             var nodePrios = (nodePriosRes.head as NodePriorityResult).priorityMap
+            
+            // cleanup
+            context.compilationResult.ancillaryData.remove(nodePriosRes)
             
             // calculate ThreadSegmentIDs
             var optTsids = calculateTSIDs(nodes, nodePrios)
             var threadSegmentIDResult = new ThreadSegmentIDResult()
             threadSegmentIDResult.priorityMap = optTsids
-            context.compilationResult.ancillaryData += threadSegmentIDResult
+            //context.compilationResult.ancillaryData += threadSegmentIDResult
             
             // calculate PrioIDs (without optimization)
             // this should help the user to understand how the threadSegmentIDs 

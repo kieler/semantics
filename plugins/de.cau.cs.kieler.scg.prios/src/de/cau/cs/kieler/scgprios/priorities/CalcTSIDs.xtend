@@ -62,6 +62,7 @@ class CalcTSIDs {
         var nodesOfPath = <Node> newLinkedList
         
         numberThreadSegments(rootnode,(entrynodes.length - forknodes.length),nodePriorities,nodesOfPath)
+        correctTSIDs(nodes);
         
         tsIDs
     }
@@ -82,16 +83,16 @@ class CalcTSIDs {
      */
     private def void numberThreadSegments(Node node, int i, HashMap<Node,Integer> nodePriorities, LinkedList<Node> nodesOfPath){
        
-        var newPath = new LinkedList(nodesOfPath)
+        var newPath = nodesOfPath.clone as LinkedList<Node>//new LinkedList(nodesOfPath)
         // prevent from endless loops 
         // (if the node has already been visited during the current pass - terminate)
-        if (!nodesOfPath.contains(node) && (!(tsIDs.containsKey(node) && (tsIDs.get(node) < i)))){
+        if (!nodesOfPath.contains(node) && (!(tsIDs.containsKey(node) && (tsIDs.get(node) <= i)))){
             // add node to current path
             newPath.add(node)
             
-            // do terminate for join nodes
-            // join nodes are considered by their corresponding fork nodes
-            if (!(node instanceof Join)){
+//            // do terminate for join nodes
+//            // join nodes are considered by their corresponding fork nodes
+//            if (!(node instanceof Join)){
                 
                 // If node is instance of Exit, tsID is the value i
                 // This might be called twice per node: In case, that the exit node is not connected
@@ -107,7 +108,8 @@ class CalcTSIDs {
                 // assignment of a too high tsID will not cause any harm
                 } else if (node instanceof Entry){
                     tsIDs.put(node,i)
-                    numberThreadSegments(((node as Entry).exit), i, nodePriorities, newPath)
+                    tsIDs.put((node as Entry).exit,i)
+                    //numberThreadSegments(((node as Entry).exit), i, nodePriorities, newPath)
                     numberThreadSegments(((node as Entry).next.target), i, nodePriorities, newPath)
                     
                 // call this function for the for all children (depth first search until reaching the 
@@ -127,13 +129,16 @@ class CalcTSIDs {
                     for (e : entrynodes){
                         var newTSID = nextTSID
                         nextTSID = nextTSID - 1;
+                        System.out.println("Next thread segment ID: "+nextTSID)
                         numberThreadSegments(e, newTSID, nodePriorities, emptyPath)             
                   
                     }
                     var joinpriority = tsIDs.get((entrynodes.last as Entry).exit)
                     tsIDs.put((node as Fork).join,joinpriority)
-                    numberThreadSegments((node as Fork).join.next.target, joinpriority, nodePriorities, newPath)
+                    newPath.add((node as Fork).join)
                     entrynodes.addFirst(firstentry)
+                    numberThreadSegments(((node as Fork).join.next.target), joinpriority, nodePriorities, newPath)
+                    
                 
                 // for all other nodes, assign the delivered ID i as tsID to that node and call
                 // this function for all child nodes
@@ -141,18 +146,43 @@ class CalcTSIDs {
                 // higher tsID
                 } else {
                     tsIDs.put(node,i)
-                    var pathLength = newPath.length
+                    //var pathLength = newPath.length
                     for (c : getAllChildrenOfNode(node)){
-                        var individualPath = <Node> newLinkedList
-                        individualPath.addAll(newPath.subList(0,pathLength))
-                        numberThreadSegments(c, i, nodePriorities, individualPath)
+                        //var individualPath = <Node> newLinkedList
+                        //individualPath.addAll(newPath.subList(0,pathLength))
+                        numberThreadSegments(c, i, nodePriorities, newPath)
                     }
                 
             }
             
             } 
-        } 
+        //} 
         
+    }
+    
+    private def correctTSIDs (List<Node> nodes){
+        var correctTSID = 1
+        var sortedNodes = nodes.sortBy[tsIDs.get(it)]
+        var currentTSID = tsIDs.get(sortedNodes.head)
+        for (s : sortedNodes){
+            // it might be correct... otherwise correct it
+           if (currentTSID != correctTSID){
+               // node belongs the the same thread segment as the previous node
+               if (currentTSID == tsIDs.get(s)){
+                   tsIDs.put(s,correctTSID)
+               } else {
+                   // node does not belong to the same thread segment as the previous node
+                   correctTSID = correctTSID + 1 // new thread segment number
+                   currentTSID = tsIDs.get(s)
+                   // is it correct now?
+                   if (currentTSID != correctTSID){
+                        if (currentTSID == tsIDs.get(s)){
+                            tsIDs.put(s,correctTSID)
+                        }
+                    }
+                } 
+            }
+        }
     } 
     
 }

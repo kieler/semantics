@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.scgprios.results.ResultingSCCPartitions
 import de.cau.cs.kieler.scgprios.results.NodePriorityResult
 import com.google.inject.Inject
+import de.cau.cs.kieler.scgprios.results.SCCLookUpTableResult
 
 /**
  * This class is part of the SCGPRIO transformation chain. This chain is used to check the scheduling
@@ -85,16 +86,25 @@ class NodePrioritiesTransformation extends Transformation{
         var scheduling = new Scheduling
         if (scheduling.scheduleexists(sccs)) {
             
+            System.out.println("Schedule exists")
+            
+            // create lookup table for scc
+            var sccLookUpTable = createSCCLookUpTable(sccs)
+            var sccLookUpTableResult = new SCCLookUpTableResult
+            sccLookUpTableResult.priorityMap = sccLookUpTable
+            context.compilationResult.ancillaryData += sccLookUpTableResult
+            
             // add resulting strongly connected components to KielerCompilerContext
             var resultingSCCPartitions = new ResultingSCCPartitions
             resultingSCCPartitions.SCCPartitions = sccs
             context.compilationResult.ancillaryData += resultingSCCPartitions
 
             // calculate node priorities
-            var results = calculateNodePriorities(sccs)
+            var results = calculateNodePriorities(sccs, sccLookUpTable)
             var nodePriorityResult = new NodePriorityResult()
             nodePriorityResult.priorityMap = results
             context.compilationResult.ancillaryData += nodePriorityResult
+            
             
         } else {
             

@@ -54,7 +54,7 @@ class OptimizeNodePriorities {
      * @return 
      *          updated list of node priorities
      */
-    public def optimizeNodePriorities(HashMap<Node,Integer> nodePrios, LinkedList<LinkedList<Node>> sccs){
+    public def optimizeNodePriorities(HashMap<Node,Integer> nodePrios, LinkedList<LinkedList<Node>> sccs, HashMap<Node,Integer> sccLookUpTable){
         
         newNodePriorities.clear
         nodePriorities = nodePrios
@@ -62,7 +62,7 @@ class OptimizeNodePriorities {
         
         // find a higher priority for all exit and surface nodes
         for (n : surfaceAndExitNodes){ 
-            findHigherPriority(nodePriorities.get(n), n, sccs)
+            findHigherPriority(nodePriorities.get(n), n, sccs, sccLookUpTable)
         }
         
         // update list
@@ -92,7 +92,7 @@ class OptimizeNodePriorities {
      * @return
      *          (optimized) node priority of node in question
      */
-    private def int findHigherPriority(int priorityOfExitOrSurfaceNode, Node currentNode, LinkedList<LinkedList<Node>> sccs) {
+    private def int findHigherPriority(int priorityOfExitOrSurfaceNode, Node currentNode, LinkedList<LinkedList<Node>> sccs, HashMap<Node,Integer> sccLookUpTable) {
         
         // current node has higher priority than exitOrSurfaceNode
         // return priority of that node
@@ -110,10 +110,11 @@ class OptimizeNodePriorities {
         } else {
            
             // find all incoming dependencies
-            var scc = sccs.filter[it.contains(currentNode)].head
-            var incomingDependencies = false
+            var scc = sccs.get(sccLookUpTable.get(currentNode))//sccs.filter[it.contains(currentNode)].head
+            //var incomingDependencies = false
             var incomingList = new LinkedList<Link>
             
+            // find parents of scc
             for (s : scc){
                 var newIncomingList = (s as Node).incoming
                 for (n : newIncomingList){
@@ -123,15 +124,19 @@ class OptimizeNodePriorities {
                 }
             }
             
-            for (i : incomingList) {
-                if (i instanceof Dependency && (i as Dependency).concurrent && !((i as Dependency).confluent)) {
-                    incomingDependencies = true
-                }
-            }
+//            for (i : incomingList) {
+//                if (i instanceof Dependency && (i as Dependency).concurrent && !((i as Dependency).confluent)) {
+//                    incomingDependencies = true
+//                }
+//            }
+            
+            var incomingDependencies = incomingList.exists[it instanceof Dependency && (it as Dependency).concurrent && !((it as Dependency).confluent)]
 
             // if there are incoming dependencies, return priority of current node
             if (incomingDependencies) {
-                newNodePriorities.put(currentNode, nodePriorities.get(currentNode))
+                for (s : scc){
+                    newNodePriorities.put(s, nodePriorities.get(currentNode))
+                }
                 return nodePriorities.get(currentNode)
 
             } else {
@@ -142,9 +147,7 @@ class OptimizeNodePriorities {
                 for (i : incomingList){
                     if (i instanceof ControlFlow){
                         var node = i.eContainer 
-                        if (!(node instanceof Surface)){
-                            parentsOfNode.add(node as Node)
-                        }
+                        parentsOfNode.add(node as Node)
                     }
                 }  
 
@@ -162,7 +165,7 @@ class OptimizeNodePriorities {
                         if (newNodePriorities.containsKey(n)) {
                             results.add(newNodePriorities.get(n))
                         } else {
-                            var r = findHigherPriority(priorityOfExitOrSurfaceNode, n, sccs)
+                            var r = findHigherPriority(priorityOfExitOrSurfaceNode, n, sccs, sccLookUpTable)
                             results.add(r)
                         }
                     }
@@ -174,7 +177,6 @@ class OptimizeNodePriorities {
                             res = r
                         }
                     }
-                    newNodePriorities.put(currentNode, res)
                     
                     for (s : scc){
                         newNodePriorities.put(s, res)
@@ -208,15 +210,15 @@ class OptimizeNodePriorities {
             for (cf : controlflow) {
                 entrynodes.add(cf.target)
             }
-            var sortedEntryNodes = sortEntryNodes(entrynodes, nodePriorities)
-             
-            var firstentrynode = sortedEntryNodes.head as Entry
-            var joiningnode = sortedEntryNodes.last as Entry
+            val firstEntry = findFirstEntry(entrynodes, nodePriorities) as Entry
+            entrynodes.remove(firstEntry)
             
-            if (nodePriorities.get(firstentrynode.exit) < nodePriorities.get(joiningnode.exit)){
-                nodePriorities.put(joiningnode.exit,nodePriorities.get(firstentrynode.exit))
+            if (nodePriorities.get(firstEntry.exit) == nodePriorities.get(firstEntry.exit.next.target)){
+                if(!(entrynodes.exists[nodePriorities.get((it as Entry).exit)<nodePriorities.get((firstEntry as Entry).exit)])){
+                    nodePriorities.put(entrynodes.last,nodePriorities.get(firstEntry.exit.next.target))
+                }
             }
-            
+  
         }
 
     }

@@ -34,6 +34,7 @@ class CalcNodePrios {
     extension SCCExtension
  
     private var nodePriorityList = <Node,Integer>newHashMap
+    private var remainingNodes = <LinkedList<Node>>newLinkedList
     
     /**
      * Starts calculation of the longest path for all nodes. The longest path is equal to the node 
@@ -44,17 +45,16 @@ class CalcNodePrios {
      * @return
      *          HashMap, which contains the nodes and their corresponding priorities
      */
-    public def HashMap<Node,Integer> calculateNodePriorities (LinkedList<LinkedList<Node>> sccs){
+    public def HashMap<Node,Integer> calculateNodePriorities (LinkedList<LinkedList<Node>> sccs, HashMap<Node,Integer> sccLookUpTable){
 
         nodePriorityList.clear
-        var remainingNodes = sccs as Iterable<LinkedList<Node>>
+        remainingNodes = sccs.clone as LinkedList<LinkedList<Node>>
         
         while (!remainingNodes.empty){
-            longestPath(remainingNodes.head, sccs)
+            longestPath(remainingNodes.head, sccs, sccLookUpTable)
             // as the graph might not be connected, ensure that all nodes get their priority
-            remainingNodes = sccs.filter[!nodePriorityList.containsKey(it.head())]
+            remainingNodes.remove(0)
         }
-        
         nodePriorityList
     }
 
@@ -68,7 +68,7 @@ class CalcNodePrios {
      * @param sccs
      *          nodes of SCG represented as a list of strongly connected components
      */
-    private def void longestPath(LinkedList<Node> sccPartition, LinkedList<LinkedList<Node>> sccs) {
+    private def void longestPath(LinkedList<Node> sccPartition, LinkedList<LinkedList<Node>> sccs, HashMap<Node,Integer> sccLookUpTable) {
         
         var children = new LinkedList<Node>
         var dependencies = new LinkedList<Node>
@@ -81,8 +81,10 @@ class CalcNodePrios {
         for (child : children) {
             if (!nodePriorityList.containsKey(child)) {
                 // get scc of child
-                var childSCC = sccs.filter[it.contains(child)].head
-                longestPath(childSCC, sccs)
+                var index = sccLookUpTable.get(child)
+                var childSCC = sccs.get(index)//sccs.filter[it.contains(child)].head
+                longestPath(childSCC, sccs, sccLookUpTable)
+                remainingNodes.remove(index)
                 nodePriority = max(nodePriority, nodePriorityList.get(child))
             } else {
                 nodePriority = max(nodePriority, nodePriorityList.get(child))
@@ -93,8 +95,10 @@ class CalcNodePrios {
         for (d : dependencies) {
             if (!nodePriorityList.containsKey(d)) {
                 // get scc of dependency node
-                var dependencySCC = sccs.filter[it.contains(d)].head
-                longestPath(dependencySCC, sccs)
+                var index = sccLookUpTable.get(d)
+                var dependencySCC = sccs.get(index)//sccs.filter[it.contains(d)].head
+                longestPath(dependencySCC, sccs, sccLookUpTable)
+                remainingNodes.remove(index)
                 nodePriority = max(nodePriority, nodePriorityList.get(d) + 1)
             } else {
                 nodePriority = max(nodePriority, nodePriorityList.get(d) + 1)

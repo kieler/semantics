@@ -68,11 +68,6 @@ class SCLPSimulationSCChart {
 	#include "cJSON.c"
 	
 	#include "scchart.c"
-	
-	#define RESET()    do {                    \
-	  _notInitial = 0;                    \
-	  tickCnt = 0;                    \
-	  } while (0)
 
 	cJSON* output = 0;
 	''' 
@@ -135,7 +130,7 @@ void writeOutputs() {
 
    // Generate the main function.
    def mainFunction(State scchart) {
-   	'''
+   	'''  	
 int main(int argc, const char* argv[]) {
         RESET();
 		output = cJSON_CreateObject();

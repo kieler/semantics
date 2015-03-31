@@ -21,6 +21,7 @@ import de.cau.cs.kieler.scgprios.optimizations.OptimizeNodePriorities
 import de.cau.cs.kieler.scgprios.results.ResultingSCCPartitions
 import de.cau.cs.kieler.scgprios.results.NodePriorityResult
 import com.google.inject.Inject
+import de.cau.cs.kieler.scgprios.results.SCCLookUpTableResult
 
 /**
  * This class is part of the SCGPRIO transformation chain. This chain is used to check the scheduling
@@ -73,15 +74,21 @@ class OptimizedNodePriortiesTransformation extends Transformation{
         // get previous results
         var sccsRes = context.compilationResult.ancillaryData.filter[it instanceof ResultingSCCPartitions]
         var nodePriosRes = context.compilationResult.ancillaryData.filter[it instanceof NodePriorityResult]
+        var sccLookUpTableRes = context.compilationResult.ancillaryData.filter[it instanceof SCCLookUpTableResult]
         
         // if previous results exist, optimize node priorities
         if (!sccsRes.empty || !nodePriosRes.empty){
             
             var sccs = (sccsRes.head as ResultingSCCPartitions).SCCPartitions
+            var sccLookUpTable = (sccLookUpTableRes.head as SCCLookUpTableResult).priorityMap
             var nodePrios = (nodePriosRes.head as NodePriorityResult).priorityMap
             
+            // cleanup 
+            context.compilationResult.ancillaryData.remove(sccsRes)
+            context.compilationResult.ancillaryData.remove(sccLookUpTableRes)
+            
             // optimize node priorities
-            var optNodePrios = optimizeNodePriorities(nodePrios, sccs)
+            var optNodePrios = optimizeNodePriorities(nodePrios, sccs, sccLookUpTable)
             
             nodePrios = optNodePrios
             

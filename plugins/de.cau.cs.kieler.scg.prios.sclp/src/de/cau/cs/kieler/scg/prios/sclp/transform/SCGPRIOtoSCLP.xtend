@@ -129,7 +129,7 @@ class SCGPRIOtoSCLP{
     
     #define _SC_ID_MAX «maxPrioID.toString»
     #include "scl_p.h"
-    #include "sc.h"                      
+    //#include "sc.h"                      
     '''
     }
     
@@ -254,7 +254,7 @@ class SCGPRIOtoSCLP{
      */
     private def dispatch String transformNode(Entry entry) {
         // rootnode?
-        if (entry.incoming.filter[it instanceof ControlFlow].length > 0){
+        if (entry.incoming.exists[it instanceof ControlFlow]){
             var threadLabel = threadLabelList.get(entry)
             if (!((entry.next.target instanceof Surface) && (prioIDs.get(entry) != prioIDs.get((entry.next.target as Surface).depth)))){
                 gotoLabelList.put(entry.next.target, threadLabel)
@@ -453,7 +453,8 @@ class SCGPRIOtoSCLP{
     
     /**
      * Generate a label which identifies the thread
-     * If a unique regionname exists, that name is taken
+     * If a unique regionname exists, that name is taken but 
+     * all whitespaces within the names are removed.
      * Otherwise the regionname is modified until it is unique
      * If no regionname exists, a new label is created
      * 
@@ -462,7 +463,7 @@ class SCGPRIOtoSCLP{
      * 
      */
     private def String generateThreadLabel(Node node){
-        var regionlabel = getStringAnnotationValue(node,"regionName")
+        var regionlabel = (getStringAnnotationValue(node,"regionName")).replaceAll("\\s+","")
         if (regionlabel.nullOrEmpty){
             threadLabelNumber = (threadLabelNumber + 1)
             '''tLabel_«(threadLabelNumber -1).toString»'''
@@ -631,7 +632,7 @@ class SCGPRIOtoSCLP{
     * thread, it is enough to wait for those priorities, which are higher than the 
     * priority of the exit node of the thread which performs the join.
     * To sum up: 
-    * - all priorities from all nodes of the thread are considered, if they are bigger than
+    * - all priorities from all nodes of the thread are considered, if they are smaller than
     *   the priority of the exit node of the thread, which performs the join
     * - the priorities of all depth nodes are considered
     * 

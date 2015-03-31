@@ -6,6 +6,7 @@ package de.cau.cs.kieler.scgprios.extensions
 import java.util.LinkedList
 import de.cau.cs.kieler.scg.Node
 import com.google.inject.Inject
+import java.util.HashMap
 
 /**
  * This class contains common methods, which are working with strongly connected components
