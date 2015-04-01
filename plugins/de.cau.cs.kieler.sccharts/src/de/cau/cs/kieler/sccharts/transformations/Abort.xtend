@@ -304,7 +304,6 @@ class Abort {
 
     // Traverse all states 
     def void transformAbortNoWTO(State state, State targetRootState) {
-        state.setDefaultTrace;
         // (a) more than one transitions outgoing OR
         // (b) ONE outgoing transition AND
         //     + not a termination transition without any trigger
@@ -316,6 +315,7 @@ class Abort {
 
         //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
         if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
+            state.outgoingTransitions.setDefaultTrace;
             val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
 
             // Remember all outgoing transitions and regions (important: do not consider regions without inner states! => regions2)
@@ -337,7 +337,6 @@ class Abort {
  
             // .. || stateHasUntransformedTransitions : for conditional terminations!
             if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
-            
                 // Only create a control region in the WTO case if there is at least one conditional termination
                 // or a delayed termination
                 var State doneState
@@ -377,7 +376,7 @@ class Abort {
 
                 var Expression terminationTrigger;
 
-                state.setDefaultTrace;
+                state.outgoingTransitions.setDefaultTrace;
                 // For each region encapsulate it into a _Main state and add a _Term variable
                 // also to the terminationTrigger
                 for (region : regions) {
@@ -467,7 +466,7 @@ class Abort {
 
             }
 
-            state.setDefaultTrace;
+            state.outgoingTransitions.setDefaultTrace;
             // Create a single outgoing normal termination to a new connector state
             val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueNameCached(nameCache).
                 setTypeConnector
