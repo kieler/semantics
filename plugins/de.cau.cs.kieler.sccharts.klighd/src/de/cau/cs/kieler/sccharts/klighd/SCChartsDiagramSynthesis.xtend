@@ -75,10 +75,12 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
 import de.cau.cs.kieler.sccharts.LocalAction
-import de.cau.cs.kieler.kiml.labels.LabelLayoutOptions
-import de.cau.cs.kieler.klighd.labels.TruncatingLabelSizeModifier
 import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
+import de.cau.cs.kieler.klighd.DisplayedActionData
+import de.cau.cs.kieler.kiml.labels.LabelManagementOptions
+import de.cau.cs.kieler.klighd.labels.TruncatingLabelManager
+import de.cau.cs.kieler.klighd.actions.ManageLabelsAction
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -150,9 +152,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     private static val SynthesisOption SHOW_LABELS = SynthesisOption::createCheckOption("Transition labels",
         true);
     
-    private static val SynthesisOption SHORTEN_LABELS = SynthesisOption::createCheckOption("Shorten labels",
-        false);
-
     private static val SynthesisOption SHOW_DEPENDENCIES = SynthesisOption::createCheckOption(
         "Dependencies && optimized priorities", false);
 
@@ -170,7 +169,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     private static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadow", true);
 
     override public getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHORTEN_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
+        return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
             SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW);
     }
 
@@ -180,6 +179,16 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name])
             ,new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
         );
+    }
+    
+    // -------------------------------------------------------------------------
+    // Displayed actions
+    
+    private static val DisplayedActionData MANAGE_LABELS_ACTION = DisplayedActionData.create(
+        ManageLabelsAction.ID, "Manage Labels");
+    
+    override public getDisplayedActions() {
+        return newLinkedList(MANAGE_LABELS_ACTION)
     }
 
     // -------------------------------------------------------------------------
@@ -251,10 +260,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
               // ATTENTION: DO NOT use graphiz on outermost root node, this will result in suspicious layout bugs!!!
 //            addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot") 
             addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
-            
-            if (SHORTEN_LABELS.booleanValue) {
-                addLayoutParam(LabelLayoutOptions::LABEL_SIZE_MODIFIER, new TransitionLabelSizeModifier())
-            }
+            addLayoutParam(LabelManagementOptions::LABEL_MANAGER,
+                 new TransitionLabelManager(false))
             children += rootState.translate
         ] 
         var time = (System.currentTimeMillis - timestamp) as float
@@ -276,9 +283,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
             node.addLayoutParam(LayoutOptions::LABEL_SPACING, 50F)
             node.setLayoutOption(LayoutOptions::SPACING, 40f);
-            if (SHORTEN_LABELS.booleanValue) {
-                node.addLayoutParam(LabelLayoutOptions::LABEL_SIZE_MODIFIER, new TransitionLabelSizeModifier())
-            }
+            node.addLayoutParam(LabelManagementOptions::LABEL_MANAGER,
+                new TransitionLabelManager(false));
             if (loadLazy) {
                 node.setLayoutOption(KlighdProperties::EXPAND, false);       
                      

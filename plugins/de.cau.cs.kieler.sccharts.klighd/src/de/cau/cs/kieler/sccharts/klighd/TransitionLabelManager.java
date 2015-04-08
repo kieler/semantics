@@ -18,52 +18,47 @@ import org.eclipse.swt.graphics.FontData;
 import de.cau.cs.kieler.core.kgraph.KLabel;
 import de.cau.cs.kieler.core.math.KVector;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
-import de.cau.cs.kieler.kiml.labels.ILabelSizeModifier;
-import de.cau.cs.kieler.kiml.labels.LabelLayoutOptions;
+import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
 import de.cau.cs.kieler.klighd.microlayout.Bounds;
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil;
 
 /**
- * Modifies the size of labels by truncating them once the target width is reached. This is done for
- * both, the conditions and the actions.
+ * Modifies the size of labels by truncating them once the target width is reached. This label
+ * manager knows that transition labels can consist of two parts: the trigger and the action. Both
+ * are taken into consideration when shortening the label.
  * 
  * @author cds
  */
-public final class TransitionLabelSizeModifier implements ILabelSizeModifier {
+public final class TransitionLabelManager extends AbstractKlighdLabelManager {
     
     /** The string appended to a truncated label text. */
     private static final String ELLIPSES = "...";
     
     
     /**
+     * Create a new instance that is either switched on or off initially. If it is switched off, the
+     * user will need to explicitly switch it on.
+     * 
+     * @param initiallyActive whether the label size modifier is switched on or not.
+     */
+    public TransitionLabelManager(final boolean initiallyActive) {
+        super(initiallyActive);
+    }
+    
+    
+    //////////////////////////////////////////////////////////////////////////////////////////
+    // Label Size Modification
+    
+    /**
      * {@inheritDoc}
      */
-    public KVector resizeLabelToWidth(final Object label, final double targetWidth) {
-        // Check if it's a KLabel
-        if (label instanceof KLabel) {
-            KLabel kLabel = (KLabel) label;
-            
-            // Find the label's size
-            final KShapeLayout labelLayout = kLabel.getData(KShapeLayout.class);
-            
-            if (labelLayout.getWidth() > targetWidth) {
-                // Label exceeds target width, so shorten it
-                KVector labelSize = truncateTransitionLabel(kLabel, targetWidth);
-                
-                // DEBUG START
-                System.out.println("Shortened label: "
-                        + "(" + labelLayout.getWidth() + "," + labelLayout.getHeight() + ") -> "
-                        + labelSize);
-                // DEBUG END
-                
-                // Make sure KLighD knows that we shortened the label
-                if (labelSize != null) {
-                    labelLayout.setProperty(LabelLayoutOptions.LABEL_TEXT_CHANGED, true);
-                }
-                return labelSize;
-            } else {
-                return null;
-            }
+    @Override
+    protected KVector doResizeLabelToWidth(KLabel label, double targetWidth) {
+        final KShapeLayout labelLayout = label.getData(KShapeLayout.class);
+        
+        if (labelLayout.getWidth() > targetWidth) {
+            // Label exceeds target width, so shorten it
+            return truncateTransitionLabel(label, targetWidth);
         } else {
             return null;
         }
