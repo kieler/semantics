@@ -13,9 +13,8 @@
  */
 package de.cau.cs.kieler.kitt.klighd.tracing.internal;
 
-import java.util.List;
+import java.util.Set;
 
-import de.cau.cs.kieler.core.krendering.KStyle;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.core.util.Pair;
@@ -45,10 +44,9 @@ public final class InternalTracingProperties {
     /**
      * Indicates Tracing visualization mode of a diagram in its ViewContext.
      */
-    public static final IProperty<TracingMode> VISUALIZATION_MODE =
-            new Property<TracingMode>(
-                    "de.cau.cs.kieler.kitt.klighd.tracing.internal.visualization.mode",
-                    TracingMode.NO_TRACING);
+    public static final IProperty<TracingMode> VISUALIZATION_MODE = new Property<TracingMode>(
+            "de.cau.cs.kieler.kitt.klighd.tracing.internal.visualization.mode",
+            TracingMode.NO_TRACING);
 
     /**
      * Contains applied mappings.
@@ -63,6 +61,13 @@ public final class InternalTracingProperties {
     public static final IProperty<TracingMapping> DIAGRAM_EQUIVALENCE_CLASSES =
             new Property<TracingMapping>(
                     "de.cau.cs.kieler.kitt.klighd.tracing.internal.equivalence.classes", null);
+    
+    /**
+     * The set of models which are visible in the diagram and have attached tracing edges.
+     */
+    public static final IProperty<Set<Object>> VISIBLE_TRACED_MODELS =
+            new Property<Set<Object>>(
+                    "de.cau.cs.kieler.kitt.klighd.tracing.internal.models", null);
 
     // -- KGraph Properties --
     // ----------------------------
@@ -73,25 +78,7 @@ public final class InternalTracingProperties {
      * pair in source model which is the source and target element of this edge.
      */
     public static final IProperty<Pair<Object, Object>> TRACING_EDGE =
-            new Property<Pair<Object, Object>>("de.cau.cs.kieler.kitt.klighd.tracing.internal.edge", null);
-
-    /**
-     * Marks an node as selected as source in a tracing resolve selection.
-     */
-    public static final IProperty<Boolean> SOURCE_SELECTION = new Property<Boolean>(
-            "de.cau.cs.kieler.kitt.klighd.tracing.internal.selection.source", false);
-
-    /**
-     * Marks an node as selected as target in a tracing resolve selection.
-     */
-    public static final IProperty<Boolean> TARGET_SELECTION = new Property<Boolean>(
-            "de.cau.cs.kieler.kitt.klighd.tracing.internal.selection.target", false);
-
-    /**
-     * Holds the highlighting styles for an diagram element.
-     */
-    public static final IProperty<List<? extends KStyle>> SELECTION_HIGHLIGHTING =
-            new Property<List<? extends KStyle>>(
-                    "de.cau.cs.kieler.kitt.klighd.tracing.internal.selection.highlighting", null);
+            new Property<Pair<Object, Object>>(
+                    "de.cau.cs.kieler.kitt.klighd.tracing.internal.edge", null);
 
 }

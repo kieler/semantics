@@ -9,7 +9,6 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: com.google.inject,
  org.eclipse.ui.ide,
  org.eclipse.core.resources,
- org.eclipse.core.expressions,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.edit.ui,
  org.eclipse.emf.ecore.edit,
@@ -19,6 +18,5 @@ Require-Bundle: com.google.inject,
  de.cau.cs.kieler.kitt,
  de.cau.cs.kieler.kico
 Bundle-Activator: de.cau.cs.kieler.kitt.klighd.KittKlighdPlugin
-Export-Package: de.cau.cs.kieler.kitt.klighd.actions,
- de.cau.cs.kieler.kitt.klighd.tracing,
+Export-Package: de.cau.cs.kieler.kitt.klighd.tracing,
  de.cau.cs.kieler.kitt.klighd.tracing.internal;x-internal:=true

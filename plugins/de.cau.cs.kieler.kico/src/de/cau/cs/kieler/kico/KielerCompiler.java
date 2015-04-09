@@ -904,6 +904,7 @@ public class KielerCompiler {
         
         if(context.tracing){ //TODO delete when kico is redesigned
             context.getCompilationResult().tracing = new Tracing();
+            System.out.println("TRACING active");
         }
 
         // If not inplace then produce a copy of the input EObject

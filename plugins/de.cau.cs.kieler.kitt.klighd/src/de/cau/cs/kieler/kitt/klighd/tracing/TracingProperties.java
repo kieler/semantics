@@ -23,7 +23,7 @@ import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
 
 /**
- * Contains Properties for marking tracing diagrams.
+ * Contains Properties for marking elements in tracing diagrams or related ViewContext.
  * 
  * @author als
  * @kieler.design 2014-08-19 proposedw
@@ -67,7 +67,7 @@ public final class TracingProperties {
      * elements (which have no explicit association).
      */
     public static final IProperty<Integer> VISUALIZATION_EQUIVALENCE_CLASS_DEPTH =
-            new Property<Integer>("de.cau.cs.kieler.kitt.klighd.tracing.equivalence.depth", 1);
+            new Property<Integer>("de.cau.cs.kieler.kitt.klighd.tracing.equivalence.depth", 0);
 
     // -- KGraph Properties --
     // ----------------------------

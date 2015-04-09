@@ -16,7 +16,7 @@ public class KiTTPlugin extends AbstractUIPlugin {
 	
 
 	/** Debug flag */
-	public static boolean DEBUG = true;
+	public static boolean DEBUG = false;
 	
 	/**
 	 * The constructor
