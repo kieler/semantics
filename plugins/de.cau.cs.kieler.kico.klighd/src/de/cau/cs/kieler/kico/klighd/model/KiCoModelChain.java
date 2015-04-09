@@ -97,7 +97,7 @@ public class KiCoModelChain {
                 model = new KiCoMessageModel("Missing Model");
             }
             if(!models.contains(model)) {
-                tranformations.add(ir.getTransformationID());
+//                tranformations.add(ir.getTransformationID());
                 models.add(model);
                 collapse.put(model, false);//true
             }

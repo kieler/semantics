@@ -28,7 +28,6 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.kitt.klighd.actions.MemorizedCollapseExpandAction
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption
 import de.cau.cs.kieler.klighd.KlighdConstants
@@ -79,8 +78,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
     extension KColorExtensions
 
     // -------------------------------------------------------------------------
-    private static val KColor BG_COLOR_1 = RENDERING_FACTORY.createKColor() => [it.color = Colors.CHOCOLATE_1];
-    private static val KColor BG_COLOR_2 = RENDERING_FACTORY.createKColor() => [it.color = Colors.CHOCOLATE_3];
+    private static val KColor BG_COLOR = RENDERING_FACTORY.createKColor() => [red = 255; green = 202; blue = 119];
     private static val KColor SHADOW_COLOR = RENDERING_FACTORY.createKColor() => [it.color = Colors.BLACK];
 
     override public getDisplayedSynthesisOptions() {
@@ -140,8 +138,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         //if label is not null a parent node is created and model diagram is added in collapsed child area
         if (!chain.blankMode) {
 
-            node.setLayoutOption(KlighdProperties::EXPAND,
-                MemorizedCollapseExpandAction.isExpanded(model, !chain.collapse.get(model)));
+            node.setLayoutOption(KlighdProperties::EXPAND, !chain.collapse.get(model));
 
             //Expanded Rectangle
             node.createFigure() => [
@@ -152,8 +149,8 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                     it.fontSize = 9
                     //center
                     it.setSurroundingSpaceGrid(5, 0);
-                    it.addSingleClickAction(MemorizedCollapseExpandAction.ID);
-                    it.addDoubleClickAction(MemorizedCollapseExpandAction.ID);
+                    it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
                 it.addRectangle => [
                     it.setGridPlacementData.from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
@@ -170,8 +167,8 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                 it.addText("[Show Model]") => [
                     it.foreground = "blue".color
                     it.fontSize = 9
-                    it.addSingleClickAction(MemorizedCollapseExpandAction.ID);
-                    it.addDoubleClickAction(MemorizedCollapseExpandAction.ID);
+                    it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                     it.setSurroundingSpace(5, 0);
                 ];
             ];
@@ -245,7 +242,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         val figure = node.addRoundedRectangle(8, 8, 1);
         figure.lineWidth = 1;
         figure.foreground = Colors.GRAY;
-        figure.setBackgroundGradient(BG_COLOR_1.copy, BG_COLOR_2.copy, 90);
+        figure.background = BG_COLOR;
 
         //add shadow
         figure.shadow = SHADOW_COLOR.copy;
