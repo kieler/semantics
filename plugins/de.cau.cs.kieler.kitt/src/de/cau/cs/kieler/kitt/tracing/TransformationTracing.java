@@ -35,8 +35,8 @@ import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
 /**
  * Tracing API for transformations.
  * <p>
- * Non of the tracing functions in the API will have any effect if transformation is not started on
- * a model with activated tracing.
+ * Non of the tracing functions in the API will have any effect if tracing is not started vie
+ * {@link Tracing.startTransformationTracing}
  * <p>
  * Supports tracing in multiple concurrent transformations.
  * 
@@ -46,6 +46,12 @@ import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
  */
 public class TransformationTracing {
 
+    /**
+     * This adapter handels default tracing when elements are added or removed from the transformaed
+     * model.
+     * 
+     * @author als
+     */
     private static class AutomaticTracingAdapter extends EContentAdapter {
         private TracingMapping mapping;
         private boolean active = false;
@@ -127,18 +133,26 @@ public class TransformationTracing {
         }
     }
 
+    /**
+     * Stores the Tracing class object and indicated that an active transformation is running in the
+     * key thread
+     */
     private static HashMap<Thread, Tracing> activeTracings = new HashMap<Thread, Tracing>(8);
+    /** Stores the TracingMapping for the active transformation threads */
     private static HashMap<Thread, TracingMapping> tracingMappings =
             new HashMap<Thread, TracingMapping>(8);
+    /** Stores the AutomaticTracingAdapter for the active transformation threads */
     private static HashMap<Thread, AutomaticTracingAdapter> tracingAdapter =
             new HashMap<Thread, AutomaticTracingAdapter>(8);
+    /** Stores the list of registered default tracing targets for the active transformation threads */
     private static HashMap<Thread, List<EObject>> tracingDefaults =
             new HashMap<Thread, List<EObject>>(8);
+    /** Stores the map of applied default tracings for the active transformation threads */
     private static HashMap<Thread, HashMultimap<EObject, EObject>> appiledDefaultTracings =
             new HashMap<Thread, HashMultimap<EObject, EObject>>(8);
 
     /**
-     * Starts a new transformation tracing in the current thread if traing is activated for the
+     * Starts a new transformation tracing in the current thread if tracing is activated for the
      * given model.
      * 
      * @param sourceModel

@@ -52,6 +52,7 @@ class TracingTreeExtensions {
 
     // -------------------------------------------------------------------------
     // ModelWrapper Utilities
+    
     /** 
 	 * Returns root node of tree.
 	 * @param modelNode any model-node in tree

@@ -111,7 +111,10 @@ class TracingReport {
 
     def void failOnIncompleteMapping() {
         if (sourceElementInTragetMapping.empty && sourceElementNotInMapping.empty && sourceElementNotInModel.empty) {
-            throw new Exception("Incomplete Mapping");
+            throw new Exception("Incomplete TracingMapping");
+        }
+        if(!validMapping){
+            throw new Exception("Invalid TracingMapping");
         }
     }
 

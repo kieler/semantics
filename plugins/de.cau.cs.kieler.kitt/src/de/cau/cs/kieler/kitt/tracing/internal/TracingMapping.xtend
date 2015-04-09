@@ -46,7 +46,7 @@ class TracingMapping {
     private var String title = null;
 
     /** 
-     * If deleghate is given the transformation is inplace
+     * If delegate is given the transformation is inplace
      * and all tracing relations will be applied to the delegated TracingMapping
      */
     private val TracingMapping delegate;
