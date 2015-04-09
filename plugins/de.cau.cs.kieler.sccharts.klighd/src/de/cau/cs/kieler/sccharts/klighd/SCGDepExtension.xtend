@@ -32,7 +32,6 @@ import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingEdgeNode
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
-import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
@@ -45,6 +44,7 @@ import de.cau.cs.kieler.scg.RelativeWrite_Read
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Write_Write
 import java.util.HashMap
+import java.util.HashSet
 import org.eclipse.emf.ecore.EObject
 
 import static extension com.google.common.base.Predicates.*
@@ -70,6 +70,7 @@ class SCGDepExtension {
     extension KContainerRenderingExtensions
 
     val HashMap<KNode, SourceModelTrackingAdapter> adapters = newHashMap;
+    val HashSet<de.cau.cs.kieler.core.util.Pair<EObject,EObject>> cache = newHashSet;
 
     def prepareSCGDependcyEdges(KNode rootNode) {
         val adapter = new SourceModelTrackingAdapter();
@@ -147,7 +148,13 @@ class SCGDepExtension {
                 if(dependency instanceof AbsoluteWrite_Read) it.foreground = Colors.GREEN
                 if(dependency instanceof RelativeWrite_Read) it.foreground = Colors.GREEN
                 if(dependency instanceof AbsoluteWrite_RelativeWrite) it.foreground = Colors.GREEN
-                if(dependency instanceof Write_Write) it.foreground = Colors.RED
+                if(cache.contains(new de.cau.cs.kieler.core.util.Pair(target, source))){
+                    it.invisible = true;
+                }
+                if(dependency instanceof Write_Write){
+                   it.foreground = Colors.RED;
+                   cache.add(new de.cau.cs.kieler.core.util.Pair(source, target)) 
+                } 
                 it.lineWidth = 2
                 it.lineStyle = LineStyle::DASH
                 it.addArrowDecorator
