@@ -24,10 +24,11 @@ import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import java.util.Iterator
 import java.util.List
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.util.Iterator
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Pre Transformation.
@@ -104,7 +105,7 @@ class Pre {
                             action.getPreValExpression(valuedObject).hasNext).hasNext);
 
         for (preValuedObject : ImmutableList::copyOf(allPreValuedObjects)) {
-
+            preValuedObject.setDefaultTrace
             val newPre = state.createValuedObject(GENERATED_PREFIX + "pre" + GENERATED_PREFIX + preValuedObject.name).
                 uniqueNameCached(nameCache)
             newPre.applyAttributes(preValuedObject)

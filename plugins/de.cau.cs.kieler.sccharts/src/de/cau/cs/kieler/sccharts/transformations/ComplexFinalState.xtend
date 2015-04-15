@@ -21,6 +21,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.ArrayList
 import java.util.List
 
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+
 /**
  * SCCharts ComplexFinalState Transformation.
  * 
@@ -86,6 +89,7 @@ class ComplexFinalState {
         //                    e.allContainedStates.size > 0 || e.entryActions.size > 0 || e.duringActions.size > 0 ||
         //                    e.exitActions.size > 0)).toList()
         val complexFinalStates = globalComplexFinalStates.filter[it.parentRegion.parentState == state].toList
+        state.setDefaultTrace
 
         if (!complexFinalStates.nullOrEmpty) {
 

@@ -18,7 +18,8 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -55,12 +56,14 @@ class WeakSuspend {
     def void transformWeakSuspend(State state, State targetRootState) {
 
         val weakSuspends = state.suspendActions.filter[weak].toList
-
+        weakSuspends.setDefaultTrace
+        
         if (!weakSuspends.nullOrEmpty) {
             val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "weakSuspend").setTypeBool.uniqueName
             weakSuspendFlag.setInitialValue(FALSE)
 
             for (weakSuspend : weakSuspends.immutableCopy) {
+                weakSuspend.setDefaultTrace
                 val duringAction = state.createDuringAction
                 duringAction.setImmediate(weakSuspend.immediate)
                 duringAction.setTrigger(weakSuspend.trigger.copy)
@@ -68,6 +71,7 @@ class WeakSuspend {
                 state.localActions.remove(weakSuspend)
             }
 
+            weakSuspends.setDefaultTrace
             for (region : state.allContainedRegions.immutableCopy) {
                 val subStates = region.states.immutableCopy
                 val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName

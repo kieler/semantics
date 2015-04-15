@@ -19,6 +19,11 @@ import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import java.util.List
+import org.eclipse.emf.ecore.EObject
+
 /**
  * SCCharts Deferred Transformation.
  * 
@@ -62,7 +67,12 @@ class Deferred {
 
         // If there are any such transitions 
         if (!incomingDeferredTransitions.nullOrEmpty) {
-
+            if(isTracingActive){
+                val List<EObject> sources = newLinkedList()
+                sources.addAll(state.incomingTransitions.filter[deferred])
+                sources.add(state)
+                sources.setDefaultTrace
+            }
             // Add a new deferVariable to the outer state, set it initially to FALSE and
             // add a during action in the state to reset it to FALSE
             val deferVariable = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "deferred").setTypeBool.
@@ -75,7 +85,7 @@ class Deferred {
             // setting the deferVariable to true when entering the state 
             for (transition : incomingDeferredTransitions) {
                 transition.setDeferred(false)
-                transition.addEffect(deferVariable.assign(TRUE))
+                transition.addEffect(deferVariable.assign(TRUE)).trace(state, transition)
             }
 
             // Prevent any immediate internal behavior of the state and any immediate outgoing

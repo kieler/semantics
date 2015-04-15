@@ -19,6 +19,9 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+
 /**
  * SCCharts CountDelay Transformation.
  * 
@@ -55,6 +58,7 @@ class CountDelay {
     // This will encode count delays in transitions.
     def void transformCountDelay(Transition transition, State targetRootState) {
         if (transition.delay > 1) {
+            transition.setDefaultTrace
             val sourceState = transition.sourceState
             val parentState = sourceState.parentRegion.parentState
 

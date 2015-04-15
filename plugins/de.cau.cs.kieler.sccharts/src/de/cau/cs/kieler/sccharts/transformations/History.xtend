@@ -24,6 +24,9 @@ import java.util.ArrayList
 import java.util.List
 import de.cau.cs.kieler.sccharts.Region
 
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+
 /**
  * SCCharts History Transformation.
  * 
@@ -64,6 +67,7 @@ class History {
         val historyTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[isHistory])
         val deepHistoryTransitions = historyTransitions.filter[!isDeepHistory]
         val nonHistoryTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[!isHistory])
+        historyTransitions.setDefaultTrace
 
         if (historyTransitions != null && historyTransitions.size > 0 && state.regions != null && state.regions.size > 0) {
             var int initialValue
@@ -107,7 +111,7 @@ class History {
 
                     // Reset deepStateEnums
                     for (stateEnum : stateEnumsDeep) {
-                        transition.addEffect(stateEnum.assign(initialValue.createIntValue))
+                        transition.addEffect(stateEnum.assign(initialValue.createIntValue)).trace(transition)
                     }
                 }
                 transition.setHistory(HistoryType::RESET)

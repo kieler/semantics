@@ -19,6 +19,8 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 /**
  * SCCharts Suspend Transformation.
  * 
@@ -64,6 +66,7 @@ class Suspend {
 
     def void transformSuspend(State state, State targetRootState) {
         for (suspension : state.suspendActions.filter[!weak].toList.immutableCopy) {
+            suspension.setDefaultTrace
             val suspendTrigger = suspension.trigger;
             val notSuspendTrigger = not(suspendTrigger)
             val immediateSuspension = suspension.isImmediate;

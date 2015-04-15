@@ -19,7 +19,8 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts Termination Transformation.
@@ -82,6 +83,7 @@ class Termination {
         // This is the special case where we must taken care of a normal termination 
         val terminationTransition = state.getTerminationTransitions;
         if (terminationTransition != null) {
+            terminationTransition.setDefaultTrace
             val otherTransitions = state.outgoingTransitions.filter(e|e.type != TransitionType::TERMINATION);
 
             terminationTransition.setType(TransitionType::WEAKABORT);
