@@ -151,7 +151,9 @@ class GuardCreator extends AbstractGuardCreator {
     // -------------------------------------------------------------------------    
     override SCGraph createGuards(SCGraph scg, KielerCompilerContext context) {
 
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)) {
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
+            || scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)
+        ) {
             return scg
         }
 
@@ -160,7 +162,7 @@ class GuardCreator extends AbstractGuardCreator {
 
         val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = Guice.createInjector().
             getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-        context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
+        context.compilationResult.getAuxiliaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
 
         //        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
         /**

@@ -95,6 +95,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     private static val Injector i = ActionsStandaloneSetup::doSetup();
     private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
+    
+    // a global diagram option "@BlackWhite"
+    private boolean globalBWOption = false;
+    private final String GLOBALBWOPTION = "BlackWhite";
 
     // -------------------------------------------------------------------------
     // We need some extensions 
@@ -228,12 +232,25 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         val timestamp = System.currentTimeMillis
         System.out.println("Started SCCharts synthesis...")
         
-		if (model instanceof Region) {
-		    val region = (model as Region).translate(false)
-		    var time = (System.currentTimeMillis - timestamp) as float
-            System.out.println("SCCharts synthesis (regions) finished (time elapsed: "+(time / 1000)+"s).")
-		    return region
+		val rootState = (model as State);
+		
+		
+		// Search for global diagram options
+		for (de.cau.cs.kieler.core.annotations.Annotation a : rootState.annotations) {
+		    if (a.name.equals(GLOBALBWOPTION)) {
+		        globalBWOption = true;
+		    }
 		}
+		
+		
+        if (model instanceof Region) {
+            val region = (model as Region).translate(false)
+            var time = (System.currentTimeMillis - timestamp) as float
+            System.out.println("SCCharts synthesis (regions) finished (time elapsed: "+(time / 1000)+"s).")
+            return region
+        }
+        
+        
 		
 		
         val rootNode = createNode() => [
@@ -243,7 +260,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             // ATTENTION: DO NOT use graphiz on outermost root node, this will result in suspicious layout bugs!!!
 //            addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot") 
             addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
-            children += (model as State).translate
+            children += rootState.translate
         ] 
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("SCCharts synthesis finished (time elapsed: "+(time / 1000)+"s).")
@@ -421,7 +438,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                 if (word.keyword) {
                     it.setForeground(KEYWORD.copy)
-                    if (PAPER_BW.booleanValue) {
+                    if (PAPER_BW.booleanValue || globalBWOption) {
                         it.setForeground("black".color)    
                     }
                     it.setFontBold(true)
@@ -436,7 +453,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                 if (remainingText2.keyword) {
                     it.setForeground(KEYWORD.copy)
-                    if (PAPER_BW.booleanValue) {
+                    if (PAPER_BW.booleanValue || globalBWOption) {
                         it.setForeground("black".color)    
                     }
                     it.setFontBold(true)
@@ -472,13 +489,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             val connector = s.type == StateType::CONNECTOR;
             val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations(valuedObjectCache) && !s.referencedState) 17 else 8;
             var lineWidth = if(s.isInitial) 3 else 1;
-            if (PAPER_BW.booleanValue) {
+            if (PAPER_BW.booleanValue || globalBWOption) {
                 lineWidth = lineWidth + 1;
             }
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
             figure.lineWidth = lineWidth;
-            figure.foreground = if(s.isInitial || s.isFinal || PAPER_BW.booleanValue) "black".color else "gray".color
-            if (!PAPER_BW.booleanValue && SHOW_SHADOW.booleanValue && !connector) {
+            figure.foreground = if(s.isInitial || s.isFinal || PAPER_BW.booleanValue || globalBWOption) "black".color else "gray".color
+            if (!(PAPER_BW.booleanValue || globalBWOption) && SHOW_SHADOW.booleanValue && !connector) {
                 figure.shadow = "black".color;
                 figure.shadow.XOffset = 4;
                 figure.shadow.YOffset = 4;
@@ -511,7 +528,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     if (s.referencedState) 
                         it.background.alpha = 0
                     else {
-                        if (!PAPER_BW.booleanValue) {
+                        if (!(PAPER_BW.booleanValue || globalBWOption)) {
                             it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                         }
                     }
@@ -522,7 +539,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 ]
             else
                 figure => [
-                    if (!PAPER_BW.booleanValue) {
+                    if (!(PAPER_BW.booleanValue || globalBWOption)) {
                         it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                     } else {
                         if (s.hasInnerStatesOrRegions) {
@@ -629,7 +646,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
                         it.fontSize = 11;
                         it.setFontBold(true);
-                        if (PAPER_BW.booleanValue) {
+                        if (PAPER_BW.booleanValue || globalBWOption) {
                             it.setGridPlacementData().from(LEFT, 10, 0, TOP, 9f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
                         } else {
                             it.setGridPlacementData().from(LEFT, 9, 0, TOP, 9f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
@@ -764,7 +781,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     node.children += r.translate(false);
             } 
             if (s.isReferencedState) {
-                if (!PAPER_BW.booleanValue) {
+                if (!(PAPER_BW.booleanValue || globalBWOption)) {
                     figure.setBackgroundGradient("#fefef0".color, "#e0b0099".color, 90.0f);
                 } else {
                     figure.setBackground("#fefef0".color)
@@ -872,7 +889,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         return line.addEllipse() => [
             it.lineWidth = 1;
             it.background = "red".color
-            if (PAPER_BW.booleanValue) {
+            if (PAPER_BW.booleanValue || globalBWOption) {
                 it.background = "gray".color
             }
             it.setDecoratorPlacementData(10, 10, 4, 0, false);
@@ -883,7 +900,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         return line.addEllipse() => [
             it.lineWidth = 1;
             it.background = "red".color
-            if (PAPER_BW.booleanValue) {
+            if (PAPER_BW.booleanValue || globalBWOption) {
                 it.background = "gray".color
             }
             it.setDecoratorPlacementData(10, 10, -4 + offset, 1, false);
@@ -894,7 +911,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         return line.drawTriangle() => [
             it.lineWidth = 1;
             it.background = "green".color
-            if (PAPER_BW.booleanValue) {
+            if (PAPER_BW.booleanValue || globalBWOption) {
                 it.background = "gray".color
             }
             it.setDecoratorPlacementData(11, 11, 5, 0, true);

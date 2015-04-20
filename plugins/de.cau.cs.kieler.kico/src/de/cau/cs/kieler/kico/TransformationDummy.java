@@ -13,16 +13,15 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 /**
- * This class represents a transformation dummy for fast processing transformation dependencies.
+ * This class represents a transformation dummy for fast processing transformation dependencies. For
+ * fast processing all attributes of this class are public. Only for internal KiCo usage!
  * 
  * @author cmot
- * @kieler.design 2014-03-11 proposed
- * @kieler.rating 2014-03-11 proposed yellow
+ * @kieler.design 2015-03-11 proposed
+ * @kieler.rating 2015-03-11 proposed yellow
  * 
  */
 public class TransformationDummy {
@@ -37,34 +36,33 @@ public class TransformationDummy {
     public Transformation transformation;
 
     /** The id. */
-    public String id;
-    
+    public String transformationId;
+
     /** The parent graph/list if any */
-    public List<TransformationDummy> parent = null;
+    public TransformationDummyGraph graph = null;
 
     /** The marked. */
     public boolean marked = false;
-    
+
     public int order = -1;
-    
-    public TransformationDummy() {
 
-    }
+    // -------------------------------------------------------------------------
 
-    public boolean isGroup() {
-        boolean returnValue = (transformation instanceof TransformationGroup);
-        return returnValue;
-    }
-
-    public boolean isAlternative() {
-        if (isGroup() && ((TransformationGroup) transformation).isAlternatives()) {
-            return true;
-        }
-        return false;
-    }
-    
-    public TransformationDummy(Transformation transformation) {
-        this.id = transformation.getId();
+    /**
+     * Instantiates a new transformation dummy that belongs to a graph and represents a certain
+     * transformation.
+     * 
+     * @param graph
+     *            the graph
+     * @param transformation
+     *            the transformation
+     */
+    public TransformationDummy(TransformationDummyGraph graph, Transformation transformation) {
+        this.graph = graph;
         this.transformation = transformation;
+        this.transformationId = transformation.getId();
     }
+
+    // -------------------------------------------------------------------------
+
 }

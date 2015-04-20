@@ -18,7 +18,9 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
@@ -29,8 +31,36 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Termination {
+class Termination extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::TERMINATION_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::TERMINATION_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::TERMINATION_ID
+    }
+
+    override getProducesFeatureIds() {
+
+        // TODO: Check
+        return Sets.newHashSet()
+    }
+
+    override getNotHandlesFeatureIds() {
+
+        // TODO: Check
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -65,7 +95,7 @@ class Termination {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach[ targetState |
+        targetRootState.getAllStates.forEach [ targetState |
             targetState.transformTermination(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;

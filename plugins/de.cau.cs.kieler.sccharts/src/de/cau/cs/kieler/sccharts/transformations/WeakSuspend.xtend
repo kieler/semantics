@@ -17,7 +17,10 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
@@ -28,8 +31,33 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class WeakSuspend {
+class WeakSuspend extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::WEAKSUSPEND_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::WEAKSUSPEND_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::WEAKSUSPEND_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::DEFERRED_ID, SCChartsFeature::STATIC_ID, SCChartsFeature::DURING_ID,
+            SCChartsFeature::COMPLEXFINALSTATE_ID, SCChartsFeature::INITIALIZATION_ID, SCChartsFeature::ENTRY_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 

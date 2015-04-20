@@ -23,11 +23,10 @@ import com.google.inject.Inject;
 
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.IntermediateResult;
-import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kico.Transformation;
+import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.server.HttpHeader;
 import de.cau.cs.kieler.server.HttpQuery;
 import de.cau.cs.kieler.server.HttpRequest;
@@ -150,6 +149,8 @@ public class KiCoServer extends HttpServer {
                 }
             }
             
+            // Validate the selection
+            context.validateSelection();
             
             // answer with compiled & serialized model
             String lastError = "";
@@ -163,14 +164,14 @@ public class KiCoServer extends HttpServer {
             } else {
                 debug("Model parsed");
                 context.setVerboseMode(verbose);
-                context.setPrerequirements(!strict);
+                context.setAdvancedSelect(!strict);
                 context.setMainResource(mainModel.eResource());
 
                 // process the model
                 CompilationResult compilationResult = KielerCompiler.compile(context);
 
                 if (performance) {
-                    List<IntermediateResult> results = compilationResult.getIntermediateResults();
+                    List<TransformationIntermediateResult> results = compilationResult.getTransformationIntermediateResults();
                     long durationAll = 0;
                     for (int c = 0; c < results.size(); c++) {
                         durationAll += (results.get(c)).getDuration();
@@ -179,7 +180,7 @@ public class KiCoServer extends HttpServer {
                     // modelname,durationsum,
                     for (int c = 0; c < results.size(); c++) {
                         IntermediateResult result = (results.get(c));
-                        String transformationID = result.getTransformationID();
+                        String transformationID = result.getId();
                         long duration = result.getDuration();
                         if (transformationID != null && transformationID.length() > 0) {
                             performanceString =

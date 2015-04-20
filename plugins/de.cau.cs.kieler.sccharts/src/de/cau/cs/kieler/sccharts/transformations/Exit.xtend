@@ -20,7 +20,9 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 /**
  * SCCharts Exit Transformation.
  * 
@@ -28,8 +30,32 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Exit {
+class Exit extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::EXIT_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::EXIT_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::EXIT_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::ABORT_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -51,12 +77,12 @@ class Exit {
         val targetRootState = rootState.fixAllPriorities;
 
         // Prepare all states so that each reagion has at most one final state
-        targetRootState.getAllStates.toList.forEach[ targetState |
+        targetRootState.getAllStates.toList.forEach [ targetState |
             targetState.prepareExit(targetRootState);
         ]
 
         // Traverse all states
-        targetRootState.getAllStates.toList.forEach[ targetState |
+        targetRootState.getAllStates.toList.forEach [ targetState |
             targetState.transformExit(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;

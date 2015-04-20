@@ -29,7 +29,9 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 /**
  * SCCharts Pre Transformation.
  * 
@@ -37,18 +39,45 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Pre {
+class Pre extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::PRE_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::PRE_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::PRE_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::INITIALIZATION_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
     @Inject
     extension SCChartsExtension
 
+    @Inject
+    extension de.cau.cs.kieler.sccharts.features.Pre
+
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
-    
-    private val nameCache = <String> newArrayList
+
+    private val nameCache = <String>newArrayList
 
     //-------------------------------------------------------------------------
     //--                        P R E -  O P E R A T O R                     --
@@ -58,38 +87,10 @@ class Pre {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach[ targetState |
+        targetRootState.getAllStates.forEach [ targetState |
             targetState.transformPre(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
-    }
-
-    // Return a list of Pre Expressions for an action that references the valuedObject
-    def Iterator<OperatorExpression> getPreExpression(Action action, ValuedObject valuedObject) {
-        val List<OperatorExpression> returnPreExpressions = <OperatorExpression>newLinkedList;
-        val preExpressions = action.eAllContents.filter(typeof(OperatorExpression)).filter(
-            e|
-                (e.operator == OperatorType::PRE) && (e.subExpressions.size() == 1) &&
-                    (e.subExpressions.get(0) instanceof ValuedObjectReference) &&
-                    ((e.subExpressions.get(0) as ValuedObjectReference).valuedObject == valuedObject)
-        );
-        preExpressions
-    }
-
-    // Return a list of Pre Expressions for an action that references the value of a valuedObject
-    def Iterator<OperatorExpression> getPreValExpression(Action action, ValuedObject valuedObject) {
-        val List<OperatorExpression> returnPreValExpressions = <OperatorExpression>newLinkedList;
-        val preValExpressions = action.eAllContents.filter(typeof(OperatorExpression)).filter(
-            e|
-                (e.operator == OperatorType::PRE) && (e.subExpressions.size() == 1) &&
-                    (e.subExpressions.get(0) instanceof OperatorExpression) &&
-                    ((e.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) &&
-                    ((e.subExpressions.get(0) as OperatorExpression).subExpressions.size() == 1) &&
-                    ((e.subExpressions.get(0) as OperatorExpression).subExpressions.get(0) instanceof ValuedObjectReference) && (((e.
-                        subExpressions.get(0) as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).
-                        valuedObject == valuedObject)
-        );
-        preValExpressions
     }
 
     // Traverse all states that might declare a valuedObject that is used with the PRE operator

@@ -2,20 +2,24 @@ package de.cau.cs.kieler.kico.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
+import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.KiCoPlugin;
-import de.cau.cs.kieler.kico.Transformation;
+import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
 
 /**
@@ -98,36 +102,42 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 try {
                     label = editors[i].getAttribute("label").trim();
                 } catch (Exception e) {
-                    //ignore
+                    // ignore
                 }
                 String priority = "0";
                 try {
                     priority = editors[i].getAttribute("priority").trim();
                 } catch (Exception e) {
-                    //ignore
+                    // ignore
                 }
-                String transformationIDs = editors[i].getAttribute("transformations");
-                
-                ArrayList<String> transformations = new ArrayList<String>();
-                // The special case where we want to add ALL registered transformations 
-                if (transformationIDs.equals("ALL")) {
-                   for (Transformation transformation :  KiCoPlugin.getInstance().getRegisteredTransformations().values()) {
-                       transformations.add(transformation.getId());
-                   }
+                String featuresIDs = editors[i].getAttribute("features");
+                String preferredIDs = editors[i].getAttribute("preferred");
+
+                ArrayList<String> features = new ArrayList<String>();
+                // The special case where we want to add ALL registered transformations
+                if (featuresIDs.equals("ALL")) {
+                    for (Feature feature : KielerCompiler.getFeatures()) {
+                        features.add(feature.getId());
+                    }
                 } else {
-                    String[] transformationIDsArray = transformationIDs.split(",");
-                    for (String transformationID : transformationIDsArray) {
-                        transformations.add(transformationID.trim());
+                    String[] featureIDsArray = featuresIDs.split(",");
+                    for (String featureID : featureIDsArray) {
+                        features.add(featureID.trim());
                     }
                 }
 
+                ArrayList<String> preferred = new ArrayList<String>();
+                // The special case where we want to add ALL registered transformations
+                String[] preferredIDsArray = preferredIDs.split(",");
+                for (String preferredID : preferredIDsArray) {
+                    preferred.add(preferredID.trim());
+                }
 
                 // The case for ANY editor
                 if (editorID == null || editorID.equals("*") || editorID.equals("")) {
                     editorID = "*";
                 }
-                
-                
+
                 CompileChains compileChains = returnHashMap.get(editorID);
                 if (compileChains == null) {
                     compileChains = new CompileChains(editorID);
@@ -136,10 +146,10 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 CompileChain item = new CompileChain();
                 item.setPriority(priority);
                 item.label = label;
-                item.transformations = transformations;
+                item.features = features;
+                item.preferred = preferred;
                 compileChains.insertItem(item);
 
-                
             } catch (Exception e) {
                 this.showWarning(editors[i].getContributor().getName() + " could not be loaded.",
                         null, e, true);
@@ -265,4 +275,26 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * Gets the currently active model.
+     * 
+     * @return the active model
+     */
+    public static EObject getActiveModel() {
+        // The following is WRONG! We don't want a (possibly) compiled model here but the plain
+        // model from the editor!
+        // final IPath modelViewPath = new Path("de.cau.cs.kieler.kico.klighd.view");
+        // // TODO: There should be a better mechanism to get the currently active model!
+        // EObject model = KiemPlugin.getOpenedModelRootObjects().get(modelViewPath);
+        XtextEditor xtextEditor = EditorUtils.getActiveXtextEditor();
+        if (xtextEditor == null) {
+            return null;
+        }
+        EObject model = XtextModelingUtil.getModelFromXtextEditor(xtextEditor, true);
+        return model;
+    }
+
+    // -------------------------------------------------------------------------
+
 }

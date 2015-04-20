@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 /**
  * This class implements the exception used in the KielerCompiler to gather all warnings and errors.
@@ -30,19 +28,27 @@ public class KielerCompilerException extends Exception {
     private static final long serialVersionUID = -2363146434608966197L;
 
     /** The transformation id that caused the exception. */
-    private String transformationID;
+    private String transformationId;
+
+    /** The processor id that caused the exception. */
+    private String processorId;
 
     // -------------------------------------------------------------------------
 
     /**
      * Instantiates a new kieler compiler exception.
      * 
-     * @param transformationID
+     * @param processorId
+     *            the processor id
+     * @param transformationId
      *            the transformation id
+     * @param message
+     *            the message
      */
-    public KielerCompilerException(String transformationID, String errorMessage) {
-        super(errorMessage);
-        this.transformationID = transformationID;
+    public KielerCompilerException(String processorId, String transformationId, String message) {
+        super(message);
+        this.processorId = processorId;
+        this.transformationId = transformationId;
     }
 
     // -------------------------------------------------------------------------
@@ -50,13 +56,29 @@ public class KielerCompilerException extends Exception {
     /**
      * Instantiates a new kieler compiler exception.
      * 
-     * @param transformationID
+     * @param processorId
+     *            the processor id
+     * @param transformationId
      *            the transformation id
+     * @param exception
+     *            the exception
      */
-    public KielerCompilerException(String transformationID, Exception exception) {
+    public KielerCompilerException(String processorId, String transformationId, Exception exception) {
         super(exception.getMessage(), exception.getCause());
         this.setStackTrace(exception.getStackTrace());
-        this.transformationID = transformationID;
+        this.processorId = processorId;
+        this.transformationId = transformationId;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the processor id of the processor that caused the exception.
+     * 
+     * @return the processor id
+     */
+    public String getProcessorId() {
+        return processorId;
     }
 
     // -------------------------------------------------------------------------
@@ -66,8 +88,8 @@ public class KielerCompilerException extends Exception {
      * 
      * @return the transformation id
      */
-    public String getTransformationID() {
-        return transformationID;
+    public String getTransformationId() {
+        return transformationId;
     }
 
     // -------------------------------------------------------------------------
@@ -78,23 +100,7 @@ public class KielerCompilerException extends Exception {
      * @return the stack trace
      */
     public String getStackTraceString() {
-        return KielerCompilerException.getStackTraceString(this);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the stack trace of an exception as a string.
-     * 
-     * @param t
-     *            the t
-     * @return the error stack trace
-     */
-    public static String getStackTraceString(Throwable t) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        t.printStackTrace(pw);
-        return sw.toString(); // stack trace as a string
+        return KiCoUtil.getStackTraceString(this);
     }
 
     // -------------------------------------------------------------------------

@@ -20,6 +20,9 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.ArrayList
 import java.util.List
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
@@ -31,8 +34,32 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class ComplexFinalState {
+class ComplexFinalState extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::COMPLEXFINALSTATE_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::COMPLEXFINALSTATE_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::COMPLEXFINALSTATE_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::ABORT_ID, SCChartsFeature::INITIALIZATION_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -41,7 +68,6 @@ class ComplexFinalState {
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
-
 
     //-------------------------------------------------------------------------
     //--              C O M P L E X   F I N A L   S T A T E                  --
@@ -64,15 +90,13 @@ class ComplexFinalState {
         var targetRootState = rootState.fixAllPriorities;
 
         //Find all possible complex final states
-        val globalFinalStates = targetRootState.getAllStates.filter(
-            e |
-                e.isFinal)
-                
+        val globalFinalStates = targetRootState.getAllStates.filter(e|e.isFinal)
+
         val globalComplexFinalStates = globalFinalStates.filter(
-            e |
-                ((!e.outgoingTransitions.nullOrEmpty && e.allContainedStates.size > 0))
-                 || e.entryActions.size > 0 || e.duringActions.size > 0 || e.exitActions.size > 0).toList
-                
+            e|
+                ((!e.outgoingTransitions.nullOrEmpty && e.allContainedStates.size > 0)) || e.entryActions.size > 0 ||
+                    e.duringActions.size > 0 || e.exitActions.size > 0).toList
+
         // Traverse all states containing complex final states
         for (targetState : globalComplexFinalStates.map[it.parentRegion.parentState].toList) {
             targetState.transformComplexFinalState(rootState, globalComplexFinalStates);

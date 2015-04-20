@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,22 +13,13 @@
  */
 package de.cau.cs.kieler.kico;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
+ * This class holds information about the intermediate results of processors. 
+ * 
+ * @kieler.design 2015-03-09 proposed
+ * @kieler.rating 2015-03-09 proposed yellow
  * @author cmot
- * @kieler.design 2014-03-11 proposed
- * @kieler.rating 2014-03-11 proposed yellow
-
- *
+ * 
  */
-public class TransformationWrapper extends Transformation {
-
-    /**
-     * {@inheritDoc}
-     */
-    public EObject transform(EObject eObject, KielerCompilerContext context) {
-        return null;
-    }
-
+public class ProcessorIntermediateResult extends IntermediateResult {
 }

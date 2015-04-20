@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -15,75 +15,354 @@ package de.cau.cs.kieler.kico;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.ecore.EObject;
 
 /**
  * An instance of this class represents a registered transformation that may be called indirectly by
- * invoking the KielerCompiler.compile() method.
+ * invoking the KielerCompiler.compile() method. It consists of a list of processors which are
+ * called one by another when invoking the transform() method.
  * 
  * @author cmot
- * @kieler.design 2014-03-11 proposed
- * @kieler.rating 2014-03-11 proposed yellow
+ * @kieler.design 2015-03-09 proposed
+ * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
-public abstract class Transformation {
-
-    /** The configuration element for accessing the plug-in ID. */
-    private IConfigurationElement configEle;
-
-    /** The transformation method */
-    private Method transformationMethod = null;
-
-    /** The transformation instance, if this is a wrapper only. May be guiced for the injected case. */
-    private Object transformationInstance = null;
-
-    /** The name. */
-    private String name = null;
-
-    /** The id. */
-    private String id = null;
-
-    /** The method. */
-    private String method = null;
+public abstract class Transformation implements ITransformation {
 
     /** The produces dependencies. */
-    private List<String> producesDependencies = new ArrayList<String>();
+    private Set<Feature> cachedProducesFeatures = null;
+
+    /** The produces dependencies. */
+    private Set<Feature> cachedResolvedProducesFeatures = null;
 
     /** The not handles dependencies. */
-    private List<String> notHandlesDependencies = new ArrayList<String>();
+    private Set<Feature> cachedNotHandlesFeatures = null;
 
-    /** The pre processors. */
-    private List<ProcessorOption> preProcessors = new ArrayList<ProcessorOption>();
+    /** The inherited not handles dependencies from feature groups. */
+    private Set<Feature> cachedNoInheritedNotHandlesFeatures = null;
 
-    /** The post processors. */
-    private List<ProcessorOption> postProcessors = new ArrayList<ProcessorOption>();
+    /** The not handles dependencies. */
+    private Set<Feature> cachedResolvedNotHandlesFeatures = null;
+
+    /** The not handles dependencies. */
+    private Set<Feature> cachedNoInheritedResolvedNotHandlesFeatures = null;
+
+    /** The cached handles feature. */
+    private Feature cachedExpandsFeature = null;
+
+    /** The central processor list. */
+    private List<ProcessorOption> processorOptions = new ArrayList<ProcessorOption>();
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new transformation.
+     */
+    public Transformation() {
+        // By default add the default processor option that will be used to refer to the
+        // transformation method itself
+        processorOptions.add(ProcessorOption.getDefaultThisProcessorOption());
+    }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the argument parameter type.
+     * This method may be overridden to optionally supply a human readable name for this
+     * transformation. The default implementation will return the id in place of the name.
+     * 
+     * @return the name
+     */
+    public String getName() {
+        return getId();
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the feature that this transformation expands.
+     * 
+     * @return the handle feature
+     */
+    public Feature getExpandsFeature() {
+        if (cachedExpandsFeature != null) {
+            return cachedExpandsFeature;
+        }
+        cachedExpandsFeature = KielerCompiler.getFeature(getExpandsFeatureId());
+        return cachedExpandsFeature;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of produces features that indirectly represent dependencies to other
+     * transformations.
+     * 
+     * @return the dependencies
+     */
+    public Set<Feature> getProducesFeatures() {
+        if (cachedProducesFeatures != null) {
+            return cachedProducesFeatures;
+        }
+        cachedProducesFeatures = new HashSet<Feature>();
+        for (String featureId : this.getProducesFeatureIds()) {
+            Feature feature = KielerCompiler.getFeature(featureId);
+            if (feature == null) {
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "Transformation '" + this.getId()
+                        + "' references a feature '" + featureId
+                        + "' it produces, but this feature cannot be found.", null);
+            } else {
+                if (feature.isGroup()) {
+                    // add all features of this group!
+                    for (Feature innerFeature : feature.asGroup().getResolvedFeatures()) {
+                        cachedNotHandlesFeatures.add(innerFeature);
+                    }
+                } else {
+                    cachedProducesFeatures.add(feature);
+                }
+            }
+        }
+        return cachedProducesFeatures;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of produces features that indirectly represent dependencies to other
+     * transformations. All items are fully resolved so each item can only be a Feature and not a
+     * FeatureGroup.
+     * 
+     * @return the features
+     */
+    public Set<Feature> getResolvedProducesFeatures() {
+        if (cachedResolvedProducesFeatures != null) {
+            return cachedResolvedProducesFeatures;
+        }
+        cachedResolvedProducesFeatures = Feature.resolveFeatures(getProducesFeatures());
+        return cachedResolvedProducesFeatures;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of features that cannot be handled by this transformation which also indirectly
+     * represent dependencies to other transformations.
+     * 
+     * @param ignoreInherited
+     *            the ignore inherited
+     * @return the dependencies
+     */
+    public Set<Feature> getNotHandlesFeatures(boolean ignoreInherited) {
+        if (cachedNotHandlesFeatures != null) {
+            if (ignoreInherited) {
+                return cachedNoInheritedNotHandlesFeatures;
+            } else {
+                return cachedNotHandlesFeatures;
+            }
+        }
+        cachedNotHandlesFeatures = new HashSet<Feature>();
+        cachedNoInheritedNotHandlesFeatures = new HashSet<Feature>();
+        for (String featureId : this.getNotHandlesFeatureIds()) {
+            Feature feature = KielerCompiler.getFeature(featureId);
+            if (feature == null) {
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "Transformation '" + this.getId()
+                        + "' references a feature '" + featureId
+                        + "' it cannot handle, but this feature cannot be found.", null);
+            } else {
+                if (feature.isGroup()) {
+                    // add all features of this group!
+                    for (Feature innerFeature : feature.asGroup().getResolvedFeatures()) {
+                        cachedNotHandlesFeatures.add(innerFeature);
+                        cachedNoInheritedNotHandlesFeatures.add(innerFeature);
+                    }
+                } else {
+                    cachedNotHandlesFeatures.add(feature);
+                    cachedNoInheritedNotHandlesFeatures.add(feature);
+                }
+            }
+        }
+        // META DEPENDENCY ADDITION: We need to add all features that are declared as not-manageable
+        // by ANY feature group
+        // our feature is part of! We inherit here all these not-handles dependencies!
+        Feature ourFeature = this.getExpandsFeature();
+        for (FeatureGroup featureGroup : ourFeature.getAllParentFeatureGroups()) {
+            for (Feature inheritNotHandles : featureGroup.getNotHandlesFeatures()) {
+                if (inheritNotHandles.isGroup()) {
+                    for (Feature innerInheritNotHandles : inheritNotHandles.asGroup()
+                            .getResolvedFeatures()) {
+                        cachedNotHandlesFeatures.add(innerInheritNotHandles);
+                    }
+                } else {
+                    cachedNotHandlesFeatures.add(inheritNotHandles);
+                }
+            }
+
+        }
+        if (ignoreInherited) {
+            return cachedNoInheritedNotHandlesFeatures;
+        } else {
+            return cachedNotHandlesFeatures;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of features that cannot be handled by this transformation which also indirectly
+     * represent dependencies to other transformations. All items are fully resolved so each item
+     * can only be a Feature and not a FeatureGroup.
+     * 
+     * @return the features
+     */
+    public Set<Feature> getResolvedNotHandlesFeatures(boolean ignoreInherited) {
+        if (cachedResolvedNotHandlesFeatures != null) {
+            if (ignoreInherited) {
+                return cachedNoInheritedResolvedNotHandlesFeatures;
+            } else {
+                return cachedResolvedNotHandlesFeatures;
+            }
+        }
+        if (ignoreInherited) {
+            cachedNoInheritedResolvedNotHandlesFeatures =
+                    Feature.resolveFeatures(getNotHandlesFeatures(true));
+            return cachedNoInheritedResolvedNotHandlesFeatures;
+        } else {
+            cachedResolvedNotHandlesFeatures =
+                    Feature.resolveFeatures(getNotHandlesFeatures(false));
+            return cachedResolvedNotHandlesFeatures;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the central list of processors which this transformation consists of.
+     * 
+     * @return the dependencies
+     */
+    public List<ProcessorOption> getProcessorOptions() {
+        return processorOptions;
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the argument parameter type of the first processor.
+     * 
+     * @return the argument parameter type of the first processor
+     */
+    public Class<?> getParameterType() {
+        if (processorOptions.size() > 0) {
+            ProcessorOption firstProcessorOption = processorOptions.get(0);
+            if (firstProcessorOption == ProcessorOption.getDefaultThisProcessorOption()) {
+                return getTransformationMethodParameterType();
+            }
+            // Ask KiCo for processor and return the getParameterType
+            Processor processor =
+                    KielerCompiler.getProcessor(firstProcessorOption.getProcessorId());
+            return processor.getParameterType();
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the return argument type of the last processor.
+     * 
+     * @return the return argument type of the last processor
+     */
+    public Class<?> getReturnType() {
+        if (processorOptions.size() > 0) {
+            ProcessorOption lastProcessorOption = processorOptions.get(processorOptions.size() - 1);
+            if (lastProcessorOption == ProcessorOption.getDefaultThisProcessorOption()) {
+                return getTransformationMethodReturnType();
+            }
+            // Ask KiCo for processor and return the getReturnType
+            Processor processor = KielerCompiler.getProcessor(lastProcessorOption.getProcessorId());
+            return processor.getReturnType();
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Non-Inplace transformations should return false here. The default value is true and the more
+     * efficient strategy. However, if a transformation, i.e., a processor within the transformation
+     * requires to work on a real copy of the model then the transformation implementation should
+     * return false here an KiCo will provide the transformation with a copy of the model as input.
+     * Override this method to return false;
+     * 
+     * @return false ONLY if the model transformation really requires a copy of the model as the
+     *         input. Typically model transformations should return true here for faster processing.
+     */
+    public boolean isInplace() {
+        return true;
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * The transform method can be overridden by a transformation to simplify the transformation
+     * definition. the default processor option (which by default is the only processor option in
+     * the list of processor options) refers to this transform() method. Other processor options may
+     * be added before and after this transform method. Note: If the default processor option is
+     * removed this transform() method may not be considered. It is mainly a design decision choice
+     * if a transformation should only be build from re-usable processors or also carry a
+     * main-processor (represented by the default processor option). This method should not be
+     * called directly!
+     * 
+     * @param eObject
+     *            the e object
+     * @param context
+     *            the context
+     * @return the object
+     */
+    public Object transform(final EObject eObject, final KielerCompilerContext context) {
+        // Either this method is overridden, or the transform method (w/o a context)
+        return transform(eObject);
+    }
+
+    // --------------------------------------------
+
+    /**
+     * The transform method can be overridden by a transformation to simplify the transformation
+     * definition. the default processor option (which by default is the only processor option in
+     * the list of processor options) refers to this transform() method. Other processor options may
+     * be added before and after this transform method. Note: If the default processor option is
+     * removed this transform() method may not be considered. It is mainly a design decision choice
+     * if a transformation should only be build from re-usable processors or also carry a
+     * main-processor (represented by the default processor option). This method should not be
+     * called directly!
+     * 
+     * @param eObject
+     *            the e object
+     * @return the object
+     */
+    public Object transform(final EObject eObject) {
+        return eObject;
+    }
+
+    // --------------------------------------------
+
+    /**
+     * Gets the argument parameter type for the transform method.
      * 
      * @return the argument parameter type
      */
-    public Class<?> getParameterType() {
-        Method transformMethod = null;
-        if (method == null) {
-            try {
-                transformMethod =
-                        ((Transformation) transformationInstance).getClass().getMethod("transform",
-                                EObject.class);
-            } catch (Exception e) {
-                return null;
-            }
-        } else {
-            transformMethod = transformationMethod;
-        }
+    public Class<?> getTransformationMethodParameterType() {
+        Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId());
         if (transformMethod == null) {
-            throw (new RuntimeException("The declared transformation method '" + method
-                    + "' of transformation '" + id
+            throw (new RuntimeException("The transformation method of transformation '" + getId()
                     + "' was not found. If you declared a method you must not extend the "
                     + "Transformation abstract class at the same time."));
         }
@@ -94,199 +373,24 @@ public abstract class Transformation {
         return null;
     }
 
-    // -------------------------------------------------------------------------
+    // --------------------------------------------
 
     /**
-     * Implements the transformation from EObject to EObject.
-     */
-    public abstract EObject transform(EObject eObject, KielerCompilerContext context);
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the configuration element. This method is needed to instantiate several component
-     * instances only.
+     * Gets the return argument type for the transform method.
      * 
-     * @param configEleParam
-     *            the new configuration element
+     * @return the return argument type
      */
-    public final void setConfigurationElemenet(final IConfigurationElement configEleParam) {
-        this.configEle = configEleParam;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the configuration element. This method is needed to instantiate several component
-     * instances only.
-     * 
-     * @return the configuration element
-     */
-    public final IConfigurationElement getConfigurationElement() {
-        return this.configEle;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the transformation method that contains the transform method specified. This class
-     * instance then is just a wrapper for this transformation instance.
-     * 
-     * @param object
-     *            the new transformation instance
-     */
-    void setTransformationMethod(Method method) {
-        transformationMethod = method;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the transformation instance that contains the transform method specified. This class
-     * instance then is just a wrapper for this transformation instance.
-     * 
-     * @param object
-     *            the new transformation instance
-     */
-    void setTransformationInstance(Object object) {
-        transformationInstance = object;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the name of the transformation.
-     * 
-     * @param name
-     *            the new name
-     */
-    void setName(String name) {
-        this.name = name;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the id of this transformation.
-     * 
-     * @param id
-     *            the new id
-     */
-    void setId(String id) {
-        this.id = id.trim();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the method name that will be called when doTransform() is called. Set this to null if
-     * the class implements the ITransformation interface.
-     * 
-     * @param method
-     *            the new method
-     */
-    void setMethod(String method) {
-        this.method = method;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the list of transformation IDs that represent produces dependencies to other
-     * transformations.
-     * 
-     * @param dependencies
-     *            the new dependencies
-     */
-    void setProducesDependencies(List<String> dependencies) {
-        this.producesDependencies = dependencies;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the list of transformation IDs that represent not handles dependencies to other
-     * transformations.
-     * 
-     * @param dependencies
-     *            the new dependencies
-     */
-    void setNotHandlesDependencies(List<String> dependencies) {
-        this.notHandlesDependencies = dependencies;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the list of transformation IDs that represent dependencies to other transformations.
-     * 
-     * @return the dependencies
-     */
-    public List<String> getNotHandlesDependencies() {
-        return notHandlesDependencies;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the list of produces transformation IDs that represent dependencies to other
-     * transformations.
-     * 
-     * @return the dependencies
-     */
-    public List<String> getProducesDependencies() {
-        return producesDependencies;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the list of pre processors.
-     * 
-     * @return the dependencies
-     */
-    public List<ProcessorOption> getPreProcessors() {
-        return preProcessors;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the list of post processors.
-     * 
-     * @return the dependencies
-     */
-    public List<ProcessorOption> getPostProcessors() {
-        return postProcessors;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the id of the transformation.
-     * 
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the name of this transformation. If the name is null then it returns the id that must no
-     * be null at any time.
-     * 
-     * @return the name
-     */
-    public String getName() {
-        if (name != null) {
-            return name;
-        } else {
-            return id;
+    public Class<?> getTransformationMethodReturnType() {
+        Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId());
+        if (transformMethod == null) {
+            throw (new RuntimeException("The transformation method of transformation '" + getId()
+                    + "' was not found. If you declared a method you must not extend the "
+                    + "Transformation abstract class at the same time."));
         }
+        return transformMethod.getReturnType();
     }
 
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
@@ -297,25 +401,99 @@ public abstract class Transformation {
      *            the e object
      * @return the e object
      */
-    public final Object doTransform(EObject eObject, KielerCompilerContext context)
-            throws Exception {
-        if (method == null) {
-            // A Transformation instance with the standard transformation method
-            return ((Transformation) transformationInstance).transform(eObject, context);
-        } else {
-            // Some other class instance with an individual transformation method
-            Object result;
-            try {
-                // First try WITH context
-                result = transformationMethod.invoke(transformationInstance, eObject, context);
-            } catch (java.lang.IllegalArgumentException e) {
-                // Then try WITHOUT context
-                result = transformationMethod.invoke(transformationInstance, eObject);
+    public final Object doTransform(final EObject eObject, final KielerCompilerContext context) {
+        EObject eObjectResult = null;
+
+        for (ProcessorOption processorOption : getProcessorOptions()) {
+            String transformationId = this.getId();
+            Processor processor = null;
+            String processorId = "TRANSFORM_METHOD";
+            if (processorOption != ProcessorOption.getDefaultThisProcessorOption()) {
+                // Ask KiCo for processor
+                processor = KielerCompiler.getProcessor(processorOption.getProcessorId());
+                processorId = processor.getId();
             }
-            return result;
+
+            if (processorOption.isOptional()) {
+                // Check context whether processorOption is enabled in the
+                boolean isEnabled =
+                        context.getSelection().isProcessorOptionEnabled(
+                                processorOption.getProcessorOptionId());
+                if (!isEnabled) {
+                    // If the optional processor is disabled then continue with the next processor
+                    continue;
+                }
+            }
+
+            TransformationIntermediateResult transformationIntermediateResult =
+                    context.getCompilationResult().getLastIntermediateResult();
+
+            ProcessorIntermediateResult processorIntermediateResult =
+                    new ProcessorIntermediateResult();
+            processorIntermediateResult.setId(processorId);
+            transformationIntermediateResult.addSubIntermediateResult(processorIntermediateResult);
+            processorIntermediateResult.setDuration(-1);
+
+            long start = 0;
+            long end = 0;
+
+            try {
+                // Call the transform method if the default processor option, otherwise call the
+                // processor
+                Object result = null;
+                if (processorOption == ProcessorOption.getDefaultThisProcessorOption()) {
+                    // Process the next processor
+                    start = System.currentTimeMillis();
+                    Method transformMethod =
+                            KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId());
+                    if (transformMethod.getParameterTypes().length == 2) {
+                        // first try more specific method
+                        result = transformMethod.invoke(this, eObject, context);
+                    } else {
+                        // fall back to single parameter method otherwise
+                        result = transformMethod.invoke(this, eObject);
+                    }
+                    // result = this.transform(eObjectParam, context);
+                    end = System.currentTimeMillis();
+                } else {
+                    // Process the next processor
+                    start = System.currentTimeMillis();
+                    // result = processor.process(eObjectParam, context);
+                    Method processMethod =
+                            KiCoUtil.getSpecificProcessMethodOrFallBack(processor, getId());
+                    if (processMethod.getParameterTypes().length == 2) {
+                        // first try more specific method
+                        result = processMethod.invoke(this, eObject, context);
+                    } else {
+                        // fall back to single parameter method otherwise
+                        result = processMethod.invoke(this, eObject);
+                    }
+                    end = System.currentTimeMillis();
+                }
+
+                // Add to compilation result
+                processorIntermediateResult.setResult(result);
+
+                // Add performance result
+                processorIntermediateResult.setDuration(end - start);
+
+                // Inspect the result: If it is an EObject make it the next eObject, if not return
+                // it.
+                if (result instanceof EObject) {
+                    eObjectResult = (EObject) result;
+                } else {
+                    return result;
+                }
+            } catch (Exception exception) {
+                context.getCompilationResult().addPostponedError(
+                        new KielerCompilerException(processorId, transformationId, exception));
+            }
         }
 
+        // return the last EObject after applying this chain of processors to the input eObject
+        return eObjectResult;
     }
 
     // -------------------------------------------------------------------------
+
 }

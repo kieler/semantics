@@ -17,6 +17,9 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 /**
  * SCCharts ExposeLocalValuedObject Transformation.
@@ -25,8 +28,32 @@ import de.cau.cs.kieler.sccharts.State
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class ExposeLocalValuedObject {
+class ExposeLocalValuedObject extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::EXPOSELOCALVALUEDOBJECT_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::EXPOSELOCALVALUEDOBJECT_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::EXPOSELOCALVALUEDOBJECT_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet();
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::SIGNAL_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
 

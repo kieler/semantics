@@ -25,7 +25,8 @@ import de.cau.cs.kieler.core.krendering.KRendering;
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
-import de.cau.cs.kieler.kico.TransformationDummy;
+import de.cau.cs.kieler.kico.Feature;
+import de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis;
 import de.cau.cs.kieler.klighd.ViewContext;
 
 /**
@@ -44,11 +45,58 @@ public abstract class KiCoKlighdAction {
     public static KRenderingExtensions kRenderingExtensions = new KRenderingExtensions();
 
     /** The transformation dummy2 k node. */
-    private static HashMap<TransformationDummy, KRoundedRectangle> transformationDummyKRoundedRectangle =
-            new HashMap<TransformationDummy, KRoundedRectangle>();
-    private static HashMap<TransformationDummy, KText> transformationDummy2KText =
-            new HashMap<TransformationDummy, KText>();
+    private static HashMap<Feature, KRoundedRectangle> FeatureKRoundedRectangle =
+            new HashMap<Feature, KRoundedRectangle>();
+    private static HashMap<Feature, KText> Feature2KText = new HashMap<Feature, KText>();
 
+    protected static final int NORMAL = 0;
+    protected static final int SELECT = 1;
+    protected static final int AUTOSELECT = 2;
+    protected static final int DISABLE = 3;
+
+    private static final KColor TEXTFG[] = { KiCoSelectionDiagramSynthesis.BLACK,
+            KiCoSelectionDiagramSynthesis.WHITE, KiCoSelectionDiagramSynthesis.WHITE,
+            KiCoSelectionDiagramSynthesis.DARKGRAY };
+    private static final KColor TEXTBG[] = { KiCoSelectionDiagramSynthesis.BLUE1,
+            KiCoSelectionDiagramSynthesis.BLUE3, KiCoSelectionDiagramSynthesis.BLUE3b,
+            KiCoSelectionDiagramSynthesis.GRAY1 };
+    private static final KColor STATE1[] = { KiCoSelectionDiagramSynthesis.BLUE1,
+            KiCoSelectionDiagramSynthesis.BLUE3, KiCoSelectionDiagramSynthesis.BLUE3b,
+            KiCoSelectionDiagramSynthesis.GRAY1 };
+    private static final KColor STATE2[] = { KiCoSelectionDiagramSynthesis.BLUE2,
+            KiCoSelectionDiagramSynthesis.BLUE4, KiCoSelectionDiagramSynthesis.BLUE3b,
+            KiCoSelectionDiagramSynthesis.GRAY1 };
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Clear cached elements. Should be called if view context changes!
+     */
+    public static void clearCache() {
+        Feature2KText.clear();
+        FeatureKRoundedRectangle.clear();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Colorize a state and its label color according to the following scheme: colorschema
+     * 0=default, 1=select, 2=autoselect, 3=disabled.
+     * 
+     * @param feature
+     *            the feature
+     * @param viewContext
+     *            the view context
+     * @param COLORSCHEMA
+     *            the colorschema 0=default, 1=select, 2=autoselect, 3=disabled
+     */
+    protected static void colorize(Feature feature, ViewContext context, int colorScheme) {
+        setLabelColor(feature, context, TEXTFG[colorScheme], TEXTBG[colorScheme]);
+        setStateColor(feature, context, STATE1[colorScheme], STATE2[colorScheme]);
+    }
+
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
@@ -99,54 +147,53 @@ public abstract class KiCoKlighdAction {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the KText element for a transformationDummy.
+     * Gets the KText element for a Feature.
      * 
-     * @param transformationDummy
+     * @param Feature
      *            the transformation dummy
      * @param context
      *            the context
      * @return the k text
      */
-    public static KText getKText(final TransformationDummy transformationDummy,
-            final ViewContext context) {
-        if (!transformationDummy2KText.containsKey(transformationDummy)) {
-            KText kText = context.getTargetElement(transformationDummy, KText.class);
-            transformationDummy2KText.put(transformationDummy, kText);
+    public static KText getKText(final Feature Feature, final ViewContext context) {
+        if (!Feature2KText.containsKey(Feature)) {
+            KText kText = context.getTargetElement(Feature, KText.class);
+            Feature2KText.put(Feature, kText);
         }
 
-        return transformationDummy2KText.get(transformationDummy);
+        return Feature2KText.get(Feature);
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the KRoundedRectangle for a transformationDummy.
+     * Gets the KRoundedRectangle for a Feature.
      * 
-     * @param transformationDummy
+     * @param Feature
      *            the transformation dummy
      * @param context
      *            the context
      * @return the k rounded rectangle
      */
-    public static KRoundedRectangle getKRoundedRectangle(
-            final TransformationDummy transformationDummy, final ViewContext context) {
-        if (!transformationDummyKRoundedRectangle.containsKey(transformationDummy)) {
-            // KNode kNode = context.getViewContext().getTargetElement(transformationDummy,
+    public static KRoundedRectangle getKRoundedRectangle(final Feature Feature,
+            final ViewContext context) {
+        if (!FeatureKRoundedRectangle.containsKey(Feature)) {
+            // KNode kNode = context.getViewContext().getTargetElement(Feature,
             // KNode.class);
             KRoundedRectangle kRoundedRectangle =
-                    context.getTargetElement(transformationDummy, KRoundedRectangle.class);
+                    context.getTargetElement(Feature, KRoundedRectangle.class);
             // KRoundedRectangle kRoundedRectangle = getRectangle(kNode);
-            transformationDummyKRoundedRectangle.put(transformationDummy, kRoundedRectangle);
+            FeatureKRoundedRectangle.put(Feature, kRoundedRectangle);
         }
-        return transformationDummyKRoundedRectangle.get(transformationDummy);
+        return FeatureKRoundedRectangle.get(Feature);
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the label foreground & background color for a transformationDummy.
+     * Sets the label foreground & background color for a Feature.
      * 
-     * @param transformationDummy
+     * @param Feature
      *            the transformation dummy
      * @param context
      *            the context
@@ -155,9 +202,9 @@ public abstract class KiCoKlighdAction {
      * @param backgroundColor
      *            the background color
      */
-    public static void setLabelColor(final TransformationDummy transformationDummy,
-            final ViewContext context, KColor foregroundColor, KColor backgroundColor) {
-        KText kText = getKText(transformationDummy, context);
+    public static void setLabelColor(final Feature Feature, final ViewContext context,
+            KColor foregroundColor, KColor backgroundColor) {
+        KText kText = getKText(Feature, context);
         if (kText != null) {
             kRenderingExtensions.setForeground(kText, copy(foregroundColor));
             kRenderingExtensions.setSelectionBackground(kText, copy(backgroundColor));
@@ -168,9 +215,9 @@ public abstract class KiCoKlighdAction {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the gradient color of a state for a transformationDummy.
+     * Sets the gradient color of a state for a Feature.
      * 
-     * @param transformationDummy
+     * @param Feature
      *            the transformation dummy
      * @param context
      *            the context
@@ -179,12 +226,13 @@ public abstract class KiCoKlighdAction {
      * @param color2
      *            the color2
      */
-    public static void setStateColor(final TransformationDummy transformationDummy,
-            final ViewContext context, KColor color1, KColor color2) {
-        KRoundedRectangle rect = getKRoundedRectangle(transformationDummy, context);
+    public static void setStateColor(final Feature Feature, final ViewContext context,
+            KColor color1, KColor color2) {
+        KRoundedRectangle rect = getKRoundedRectangle(Feature, context);
         if (rect != null) {
             kRenderingExtensions.setBackgroundGradient(rect, copy(color1), copy(color2), 90);
-            kRenderingExtensions.setSelectionBackgroundGradient(rect, copy(color1), copy(color2), 90);
+            kRenderingExtensions.setSelectionBackgroundGradient(rect, copy(color1), copy(color2),
+                    90);
         }
     }
 
@@ -202,5 +250,6 @@ public abstract class KiCoKlighdAction {
     }
 
     // -------------------------------------------------------------------------
+
 
 }

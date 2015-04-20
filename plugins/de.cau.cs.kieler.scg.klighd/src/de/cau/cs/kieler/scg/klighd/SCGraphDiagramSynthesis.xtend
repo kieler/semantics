@@ -430,7 +430,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
         compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
         if (compilationResult != null) {
-            val PILR = compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head
+            val PILR = compilationResult.getAuxiliaryData.filter(typeof(PotentialInstantaneousLoopResult)).head
             if (PILR != null) PIL_Nodes += PILR.criticalNodes
         }
 

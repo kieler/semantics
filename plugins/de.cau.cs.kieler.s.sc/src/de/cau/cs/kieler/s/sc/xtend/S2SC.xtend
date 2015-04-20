@@ -90,7 +90,7 @@ class S2SC {
    def scHeader(Program program) {
    	'''
 	/*****************************************************************************/
-	/*                 G E N E R A T E D     S C    C O D E                     */
+	/*                 G E N E R A T E D      S C    C O D E                     */
 	/*****************************************************************************/
 	/* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
 	/*                                                                           */

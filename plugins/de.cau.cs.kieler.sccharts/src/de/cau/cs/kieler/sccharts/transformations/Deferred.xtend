@@ -18,6 +18,9 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
@@ -31,8 +34,32 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Deferred {
+class Deferred extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::DEFERRED_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::DEFERRED_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::DEFERRED_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::DURING_ID, SCChartsFeature::INITIALIZATION_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -56,7 +83,7 @@ class Deferred {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.allStates.forEach[ targetTransition |
+        targetRootState.allStates.forEach [ targetTransition |
             targetTransition.transformDeferredState;
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
@@ -104,24 +131,23 @@ class Deferred {
         }
     }
 
-    //       
-    // -- FORMER IMPLEMENTATION --
-    // 
-    // For all deferred transitions T from S1 to S2, create a new State _S
-    // create a new transition _T from _S to S2 and change T's target to _S.
-    // Remove the deferred flag from T.
-    //
-    //     def void transformDeferred(Transition transition) {
-    //         if (transition.deferred) {
-    //             // Create a new state _S
-    //             val _S = transition.targetState.parentRegion.createState(transition.id("_S"))
-    //             // Create a new transition _T
-    //             _S.createTransitionTo(transition.targetState)
-    //             // Re-target transition T
-    //             transition.setTargetState(_S)
-    //             // Remove deferred flag
-    //             transition.setDeferred(false)
-    //         }
-    //     }
-    
+//       
+// -- FORMER IMPLEMENTATION --
+// 
+// For all deferred transitions T from S1 to S2, create a new State _S
+// create a new transition _T from _S to S2 and change T's target to _S.
+// Remove the deferred flag from T.
+//
+//     def void transformDeferred(Transition transition) {
+//         if (transition.deferred) {
+//             // Create a new state _S
+//             val _S = transition.targetState.parentRegion.createState(transition.id("_S"))
+//             // Create a new transition _T
+//             _S.createTransitionTo(transition.targetState)
+//             // Re-target transition T
+//             transition.setTargetState(_S)
+//             // Remove deferred flag
+//             transition.setDeferred(false)
+//         }
+//     }
 }

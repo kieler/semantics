@@ -6,7 +6,6 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kico.ui.KiCoUIPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.kico;bundle-version="0.1.0",
  com.google.guava;bundle-version="10.0.1",
  javax.inject;bundle-version="1.0.0",
  de.cau.cs.kieler.core.model,
@@ -25,7 +24,9 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.kiml.graphviz.layouter;bundle-version="0.6.3",
  de.cau.cs.kieler.klighd.ui;bundle-version="0.3.1",
  org.eclipse.xtext.ui;bundle-version="2.3.0",
- de.cau.cs.kieler.klay.layered
+ de.cau.cs.kieler.klay.layered,
+ de.cau.cs.kieler.kico,
+ de.cau.cs.kieler.sim.kiem
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kico.ui

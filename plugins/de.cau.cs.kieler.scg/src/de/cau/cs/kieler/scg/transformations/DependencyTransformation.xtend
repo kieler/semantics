@@ -42,6 +42,9 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
  * about the schedulability of a given SCG. This is done in several key steps. Contrary to the first 
@@ -75,11 +78,16 @@ class DependencyTransformation extends Transformation {
     
     @Inject
     extension KExpressionsExtension
+    
+    @Inject
+    extension AnnotationsExtensions    
 
 
     // -------------------------------------------------------------------------
     // -- Globals 
     // -------------------------------------------------------------------------
+    
+    public static val ANNOTATION_DEPENDENCYRANSFORMATION = "dependencies"
     
     /** 
      * threadNodeCache caches the entry nodes a specific node belongs to w.r.t. hierarchy
@@ -117,7 +125,7 @@ class DependencyTransformation extends Transformation {
      *          the root element of the input model
      * @return Returns the root element of the transformed model.
      */    
-	override transform(EObject eObject, KielerCompilerContext context) {
+	override doTransform(EObject eObject, KielerCompilerContext context) {
         return transformSCGToSCGDEP(eObject as SCGraph)
     }
 	
@@ -132,6 +140,12 @@ class DependencyTransformation extends Transformation {
      * @return Returns a copy of the scg enriched with dependency information.
      */   
     def SCGraph transformSCGToSCGDEP(SCGraph scg) {
+
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
+            || scg.hasAnnotation(DependencyTransformation::ANNOTATION_DEPENDENCYRANSFORMATION)
+        ) {
+            return scg
+        }
         
         // Since KiCo may use the transformation instance several times, we must clear the caches manually. 
         threadNodeCache.clear
@@ -269,6 +283,10 @@ class DependencyTransformation extends Transformation {
         	if (i % 100 == 0) System.out.print("o")
       	 }
       	 System.out.println("o")
+
+        scg => [
+            annotations += createStringAnnotation(ANNOTATION_DEPENDENCYRANSFORMATION, "")
+        ]     
 
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Dependency analysis finished (overall time elapsed: "+(time / 1000)+"s).")  

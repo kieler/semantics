@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg.analyzer
 
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 
 /**
  * @author ssm
@@ -21,7 +21,7 @@ import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
  * @kieler.rating 2013-12-02 proposed yellow
  */
  
-abstract class AbstractAnalyzerResult extends AbstractKielerCompilerAncillaryData {
+abstract class AbstractAnalyzerResult extends AbstractKielerCompilerAuxiliaryData {
 	
 }
 

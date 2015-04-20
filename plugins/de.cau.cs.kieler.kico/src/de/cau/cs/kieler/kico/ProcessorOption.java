@@ -13,10 +13,10 @@
  */
 package de.cau.cs.kieler.kico;
 
-
 /**
- * An processor option item as a pair of a processor ID combined with a boolean indicating if this
- * processor is optional (for the defined transformation) or not.
+ * An processor option is mainly a reference to a processor. Additionally there can be defined an ID
+ * to switch the option on or off together with a default value whether the option is enabled or not
+ * (if it is not switched on or off specifically.
  * 
  * @author cmot
  * @kieler.design 2014-03-11 proposed
@@ -25,20 +25,78 @@ package de.cau.cs.kieler.kico;
  */
 class ProcessorOption {
 
-    private String id;
-    private boolean optional;
+    /** The id of the processor. */
+    private String processorId;
+
+    /**
+     * The optional processorOptionId string can be used to switch the processor option on or off in
+     * a compile call.
+     */
+    private String processorOptionId;
+
+    /**
+     * The defaultEnabled flag tells if the processor is enabled by default. Note that the processor
+     * needs to be optional, otherwise defaultEnabled will be ignored.
+     */
+    private boolean defaultEnabled;
+
+    /** The default this processor option. */
+    private static ProcessorOption defaultThisProcessorOption = null;
 
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new processor option.
-     *
-     * @param id the id
-     * @param optional the optional
+     * Returns the single default this processor option that is used in transformations to refer to
+     * the transformation method.
+     * 
+     * @return the default this processor option
      */
-    public ProcessorOption(String id, boolean optional) {
-        this.id = id;
-        this.optional = optional;
+    public static ProcessorOption getDefaultThisProcessorOption() {
+        if (defaultThisProcessorOption == null) {
+            defaultThisProcessorOption =
+                    new ProcessorOption("TRANSFORMATION_METHOD");
+        }
+        return defaultThisProcessorOption;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new processor option. This processor option cannot be switched off and hence
+     * has no switchId.
+     * 
+     * @param processorId
+     *            the id
+     * @param processorOptionId
+     *            the optional
+     * @param defaultEnabled
+     *            the default enabled
+     */
+    public ProcessorOption(String processorId) {
+        this.processorId = processorId;
+        this.processorOptionId = null;
+        this.defaultEnabled = true;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new processor option. The optional processorOptionId string can be used to
+     * switch the processor option on or off explicitly in a compile call. The defaultEnabled flag
+     * tells if the processor is enabled by default. Note that the processor needs to be optional,
+     * otherwise defaultEnabled will be ignored.
+     * 
+     * @param processorId
+     *            the id
+     * @param switchId
+     *            the optional
+     * @param defaultEnabled
+     *            the default enabled
+     */
+    public ProcessorOption(String processorId, String processorOptionId, boolean defaultEnabled) {
+        this.processorId = processorId;
+        this.processorOptionId = processorOptionId;
+        this.defaultEnabled = defaultEnabled;
     }
 
     // -------------------------------------------------------------------------
@@ -48,19 +106,44 @@ class ProcessorOption {
      * 
      * @return the string
      */
-    public String getId() {
-        return id;
+    public String getProcessorId() {
+        return processorId;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Returns whether the processor is optional. 
-     *
+     * Returns whether the processor is optional in this context and can be switched on or off by
+     * its processorOptionId.
+     * 
      * @return true, if is optional
      */
     public boolean isOptional() {
-        return optional;
+        return (processorOptionId != null);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the optional processorOptionId string which can be used to switch the processor option
+     * on or off in a compile call.
+     * 
+     * @return the switch id
+     */
+    public String getProcessorOptionId() {
+        return processorOptionId;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns whether the processor is enabled by default if it is an optional processor in this
+     * context.
+     * 
+     * @return true, if is optional
+     */
+    public boolean isDefaultEnabled() {
+        return defaultEnabled;
     }
 
     // -------------------------------------------------------------------------

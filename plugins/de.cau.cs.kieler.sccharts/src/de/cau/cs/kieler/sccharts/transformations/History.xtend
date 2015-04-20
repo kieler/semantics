@@ -23,6 +23,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.ArrayList
 import java.util.List
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
@@ -34,8 +37,32 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class History {
+class History extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::HISTORY_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::HISTORY_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::HISTORY_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::STATIC_ID, SCChartsFeature::INITIALIZATION_ID, SCChartsFeature::ENTRY_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -55,7 +82,7 @@ class History {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach [ targetState  |
+        targetRootState.getAllStates.forEach [ targetState |
             targetState.transformHistory(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
@@ -80,8 +107,9 @@ class History {
                 regionsDeep = state.allContainedRegions
             }
 
-            for ( region : regionsDeep.toList) {
+            for (region : regionsDeep.toList) {
                 var counter = 0
+
                 // FIXME: stateEnum should be static
                 val stateEnum = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + state.id).setTypeInt.
                     uniqueName

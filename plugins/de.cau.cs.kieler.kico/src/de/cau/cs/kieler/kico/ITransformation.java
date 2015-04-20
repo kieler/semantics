@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -14,13 +14,16 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.List;
-
-import org.eclipse.emf.ecore.EObject;
+import java.util.Set;
 
 /**
+ * This interface defines what a concrete transformation must supply. This is an ID, a feature that
+ * it expands, an optional name, an optional list of produced features, an optional list of not
+ * handled features and the central list of processors that constitute this transformation.
+ * 
  * @author cmot
- * @kieler.design 2014-03-11 proposed
- * @kieler.rating 2014-03-11 proposed yellow
+ * @kieler.design 2015-03-09 proposed
+ * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
 public interface ITransformation {
@@ -35,8 +38,8 @@ public interface ITransformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a name for this transformation. If null is returned then the id will be
-     * used inplace of the name.
+     * Optionally supply a human readable name for this transformation. If null is returned then the
+     * id will be used in place of the name.
      * 
      * @return the string
      */
@@ -45,59 +48,65 @@ public interface ITransformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a list of transformation IDs whose features this transformation produces.
-     * This means that for a full compilation these features must be transformed afterwards. Be
-     * advised to use the minimal set of transformation IDs here. Transformations specified here
-     * will be forced to run afterwards. If null is returned then this means there are no produces
-     * dependencies.
+     * Supply the feature that this transformation is going to expand. Note that if there is more
+     * than one transformation expanding one feature, then these transformations are alternative and
+     * only one of them can be processed during compilation. This is determined by the
+     * transformation preference.
      * 
-     * @return the list
+     * @return the string
      */
-    public List<String> getProducesDependencies();
+    public String getExpandsFeatureId();
 
     // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a list of transformation IDs whose features cannot be handled by this
-     * transformation. Be advised to use the minimal set of transformation IDs here. Transformations
-     * specified here will be forced to run before. If null is returned then this means there are no
-     * not handles dependencies.
+     * Optionally supply a set of feature IDs this transformation (potentially) produces. This means
+     * that for a full compilation these features must be transformed afterwards. Be advised to use
+     * the minimal set of feature IDs here. Transformations indirectly specified here will be forced
+     * to run afterwards. If null is returned then this means there are no produces dependencies.
      * 
      * @return the list
      */
-    public List<String> getNotHandlesDependencies();
+    public Set<String> getProducesFeatureIds();
 
     // -------------------------------------------------------------------------
 
     /**
-     * Central transform method that implements the transformation. It should return an EObject if
-     * there are any following transformations. A code generation will finally return a String
-     * object.
+     * Optionally supply a set of feature IDs in order to specify features that cannot be handled by
+     * this transformation. Be advised to use the minimal set of feature IDs here. Transformations
+     * indirectly specified here will be forced to run before this transformation. If null is
+     * returned then this means there are no not handles dependencies.
      * 
-     * @param eObject
-     *            the e object
-     * @return the e object
+     * @return the list
      */
-    public Object transform(EObject eObject);
+    public Set<String> getNotHandlesFeatureIds();
 
     // -------------------------------------------------------------------------
 
     /**
-     * Define a list of post processor IDs that can or must run in the defined order AFTER this
-     * transformation is applied. If null is returned then no post processors should run.
+     * Define a list of processors options (processor IDs + optional flag) that constitute this
+     * transformation in order to handle the defined feature. These processors will be run in the
+     * here defined order if this transformation is applied to a model. If null is returned then no
+     * processors should run.
      * 
      * @return the list
      */
-    public List<ProcessorOption> postProcessors();
+    public List<ProcessorOption> getProcessorOptions();
 
     // -------------------------------------------------------------------------
 
     /**
-     * Define a list of pre processor IDs that can or must run in the defined order BEFORE the
-     * transformation is applied. If null is returned then no post processors should run.
+     * Non-Inplace transformations should return false here. The default value is true and the more
+     * efficient strategy. However, if a transformation, i.e., a processor within the transformation
+     * requires to work on a real copy of the model then the transformation implementation should
+     * return false here an KiCo will provide the transformation with a copy of the model as input.
+     * Override this method to return false;
      * 
-     * @return the list
+     * @return false ONLY if the model transformation really requires a copy of the model as the
+     *         input. Typically model transformations should return true here for faster processing.
      */
-    public List<ProcessorOption> preProcessors();
+    public boolean isInplace();
+
+    // -------------------------------------------------------------------------
 
 }

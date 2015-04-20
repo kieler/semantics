@@ -100,12 +100,12 @@ public class KiCoAsynchronousCompilation extends Job {
             // compile with progress monitor
             KielerCompilerContext context =
                     new KielerCompilerContext(transformations.getSelectionString(), (EObject) sourceModel);
-            context.setPrerequirements(transformations.isAdvanced());
+            context.setAdvancedSelect(transformations.isAdvanced());
             context.setInplace(false);
             context.setProgressMonitor(monitor);
             context.tracing = tracing;
             // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo selection view
-            context.setCreateDummyResource(true);
+            context.setCreateDummyResource(false);
             result = KielerCompiler.compile(context);
 
             if (monitor.isCanceled()) {

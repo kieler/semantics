@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,89 +13,119 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.util.List;
+import java.lang.reflect.Method;
+
+import org.eclipse.emf.ecore.EObject;
 
 /**
- * An instance of this class represents a registered processor which can run before or after a
- * transformation. It is called indirectly when invoking the KielerCompiler.compile() method.
+ * An instance of this class represents a registered processor which can run as a part of a
+ * transformation. It is called indirectly when invoking the KielerCompiler.compile() method which
+ * calls transformation's transform() method.
  * 
  * @author cmot
- * @kieler.design 2015-02-11 proposed
- * @kieler.rating 2015-02-11 proposed yellow
+ * @kieler.design 2015-03-09 proposed
+ * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
-public abstract class Processor extends Transformation {
+public abstract class Processor implements IProcessor {
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
-     * A processor has no handles dependencies. This method should not be called.
+     * This method may be overridden to optionally supply a human readable name for this processor.
+     * The default implementation will return the id in place of the name.
      * 
-     * @param dependencies
-     *            the new dependencies
+     * @return the name
      */
-    final void setNotHandlesDependencies(List<String> dependencies) {
-        throw new RuntimeException("A processor cannot have any no not handles dependencies");
+    public String getName() {
+        return getId();
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * A processor has no produce dependencies. This method should not be called.
+     * The central process method should be overridden by a specific processor. The default method
+     * does nothing but returning the given EOject. This method should not be called directly!
      * 
-     * @param dependencies
-     *            the new dependencies
+     * @param eObject
+     *            the e object
+     * @param context
+     *            the context
+     * @return the object
      */
-    final void setProducesDependencies(List<String> dependencies) {
-        throw new RuntimeException("A processor cannot have any no produces dependencies");
+    public Object process(final EObject eObject, final KielerCompilerContext context) {
+        // Either this method is overridden, or the transform method (w/o a context)
+        return process(eObject);
+    }
+
+    // --------------------------------------------
+
+    /**
+     * The central process method should be overridden by a specific processor. The default method
+     * does nothing but returning the given EOject. This method should not be called directly!
+     * 
+     * @param eObject
+     *            the e object
+     * @return the object
+     */
+    public Object process(final EObject eObject) {
+        return eObject;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * A processor has no not handles dependencies.
+     * Gets the argument parameter type.
      * 
-     * @return the dependencies
+     * @return the argument parameter type
      */
-    final public List<String> getNotHandlesDependencies() {
-        // TODO: This may be a possible and necessary extension, to consider dependencies of
-        // processors in the future.
+    public Class<?> getParameterType() {
+        Method transformMethod = null;
+        try {
+            transformMethod =
+                    ((Processor) this).getClass().getMethod("process", EObject.class,
+                            KielerCompilerContext.class);
+        } catch (Exception e) {
+            return null;
+        }
+        if (transformMethod == null) {
+            throw (new RuntimeException("The process method of processor '" + getId()
+                    + "' was not found. If you declared a method you must not extend the "
+                    + "Transformation abstract class at the same time."));
+        }
+        Class<?>[] classArray = transformMethod.getParameterTypes();
+        if (classArray.length > 0) {
+            return classArray[0];
+        }
         return null;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * A processor has no produce dependencies.
+     * Gets the return argument type.
      * 
-     * @return the dependencies
+     * @return the return argument type
      */
-    final public List<String> getProducesDependencies() {
-        // TODO: This may be a possible and necessary extension, to consider dependencies of
-        // processors in the future.
-        return null;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * A processor cannot have further pre processors.
-     * 
-     * @return the dependencies
-     */
-    final public List<ProcessorOption> getPreProcessors() {
-        return null;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * A processor cannot have further post processors.
-     * 
-     * @return the dependencies
-     */
-    final public List<ProcessorOption> getPostProcessors() {
-        return null;
+    public Class<?> getReturnType() {
+        Method transformMethod = null;
+        try {
+            transformMethod =
+                    ((Processor) this).getClass().getMethod("process", EObject.class,
+                            KielerCompilerContext.class);
+        } catch (Exception e) {
+            return null;
+        }
+        if (transformMethod == null) {
+            throw (new RuntimeException("The process method of processor '" + getId()
+                    + "' was not found. If you declared a method you must not extend the "
+                    + "Transformation abstract class at the same time."));
+        }
+        return transformMethod.getReturnType();
     }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
+
 }

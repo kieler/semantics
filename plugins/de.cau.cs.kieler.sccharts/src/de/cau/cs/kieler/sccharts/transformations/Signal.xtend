@@ -24,6 +24,9 @@ import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 /**
  * SCCharts Signal Transformation.
@@ -32,8 +35,32 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Signal {
+class Signal extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::SIGNAL_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::SIGNAL_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::SIGNAL_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::DURING_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet();
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -63,7 +90,7 @@ class Signal {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach[ targetState |
+        targetRootState.getAllStates.forEach [ targetState |
             targetState.transformSignal(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
@@ -168,6 +195,7 @@ class Signal {
             // Do not do this for only-input-variables.
             if (!presentVariable.isInput) {
                 val duringAction = state.createDuringAction
+
                 //duringAction.setTrigger(TRUE) (implicit true)
                 duringAction.createAssignment(presentVariable, FALSE)
                 duringAction.setImmediate(true)
