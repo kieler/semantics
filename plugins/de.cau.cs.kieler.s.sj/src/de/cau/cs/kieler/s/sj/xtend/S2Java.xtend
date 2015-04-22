@@ -345,7 +345,11 @@ class S2Java {
    // Expand a ASSIGNMENT instruction.
    def dispatch CharSequence expand(Assignment assignment) {
        if (assignment.expression instanceof FunctionCall) {
-          return '''«assignment.expression.expand»;'''
+           var returnValue = '''«assignment.expression.expand»;'''
+            if (assignment.variable != null) {
+                returnValue = '''«assignment.variable.expand» = ''' + returnValue
+            }            
+           return returnValue 
        }
        else if (!assignment.indices.nullOrEmpty) {
           var returnValue = '''«assignment.variable.expand »'''

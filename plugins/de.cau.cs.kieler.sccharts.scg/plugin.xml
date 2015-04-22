@@ -75,7 +75,7 @@
             class="de.cau.cs.kieler.sccharts.scg.SCGTransformation"
             producesDependencies="SCGDEP"
             id="SCG"
-            method="transformSCG"
+            method="transform"
             name="SCG">
       </transformationMethod>
       <transformationGroup
