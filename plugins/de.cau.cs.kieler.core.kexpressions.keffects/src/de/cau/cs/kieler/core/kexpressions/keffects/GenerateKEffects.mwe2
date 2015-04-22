@@ -1,12 +1,12 @@
-module de.cau.cs.kieler.core.kexpressions.KExpressions
+module de.cau.cs.kieler.core.kexpressions.keffects.KEffects
 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/de/cau/cs/kieler/core/kexpressions/KExpressions.xtext"
-var file.extensions = "expr"
-var projectName = "de.cau.cs.kieler.core.kexpressions"
+var grammarURI = "classpath:/de/cau/cs/kieler/core/kexpressions/keffects/KEffects.xtext"
+var file.extensions = "keffect"
+var projectName = "de.cau.cs.kieler.core.kexpressions.keffects"
 var runtimeProject = "../${projectName}"
 
 Workflow {
@@ -14,8 +14,10 @@ Workflow {
 		platformUri = "${runtimeProject}/.."
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage"
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.KExpressionsPackage"
-		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
+		registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.genmodel"
 	}
 	
 	component = DirectoryCleaner {
