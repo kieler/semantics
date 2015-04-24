@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
-import de.cau.cs.kieler.kitt.tracing.Tracing;
+import de.cau.cs.kieler.core.properties.MapPropertyHolder;
 
 /**
  * This class implements the context of a KielerCompiler call.
@@ -31,7 +31,10 @@ import de.cau.cs.kieler.kitt.tracing.Tracing;
  * @kieler.design 2015-03-09 proposed
  * @kieler.rating 2015-03-09 proposed yellow
  */
-public class KielerCompilerContext {
+public class KielerCompilerContext extends MapPropertyHolder {
+
+    /** the serial version UID. */
+    private static final long serialVersionUID = -6086745674842248093L;
 
     /** The (intermediate) compilation result. */
     CompilationResult compilationResult = null;
@@ -81,8 +84,6 @@ public class KielerCompilerContext {
 
     /** The progress monitor for the currently called transformation. */
     private KielerCompilerProgressMonitor currentTransformationProgressMonitor = null;
-    
-    public boolean tracing; //TODO delete when kico is redesigned
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
