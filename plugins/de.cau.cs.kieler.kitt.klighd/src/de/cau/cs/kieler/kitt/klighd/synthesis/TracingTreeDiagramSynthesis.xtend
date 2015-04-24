@@ -29,7 +29,6 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption
 import de.cau.cs.kieler.kitt.tracing.TracingTreeExtensions
 import de.cau.cs.kieler.kitt.tracingtree.EObjectWrapper
@@ -44,6 +43,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.util.List
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 
 /**
  * KLighD visualization for TraingTrees and EObjectsCollections in ModelWrappers.
@@ -224,7 +224,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
 
         //Add subdiagram to collapseable child area
         node.children += subDiagramNode;
-        node.setLayoutOption(TracingProperties.TRACED_MODEL_ROOT_NODE, true);
+        node.setLayoutOption(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE, true);
 
         //add child to root once 
         root.children += node;

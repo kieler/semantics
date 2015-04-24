@@ -29,7 +29,6 @@ import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
 import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.kitt.tracing.TracingTreeExtensions
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
@@ -47,6 +46,7 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 
 /**
  * Adds tracing edges from mappings to a diagram.
@@ -85,14 +85,14 @@ class TracingVisualizer {
             //If model is a wrapper around a traced model marked as TRACED_MODEL_ROOT_NODE
             return diagram.KNodeIterator.
                 filter [
-                    it.getData(KLayoutData)?.getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)
+                    it.getData(KLayoutData)?.getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)
                 ].exists[viewContext.tracing != null || model instanceof ModelWrapper];
         }
     }
 
     /** Returns the tracing stored in the compilation result of the ViewContext */
     private def Tracing tracing(ViewContext viewContext) {
-        return viewContext.getProperty(KiCoProperties.COMPILATION_RESULT)?.tracing;
+        return viewContext.getProperty(KiCoProperties.COMPILATION_RESULT)?.getAuxiliaryData(Tracing).head as Tracing;
     }
 
     /** Removed all tracing edges from the diagram */
@@ -256,7 +256,7 @@ class TracingVisualizer {
         if (tracing != null) {
             return diagram.KNodeIterator.filter [
                 val node = it as KNode;
-                node.getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE) &&
+                node.getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE) &&
                     viewContext.viewer.isExpanded(node);
             ].map[it as KNode].fold(newHashMap()) [ map, node |
                 val model = viewContext.getSourceElement(node);
@@ -362,10 +362,10 @@ class TracingVisualizer {
             var Map<EObjectWrapper, EObject> _targetInstanceMap = null;
             val sourceModelRootNode = viewContext.getTargetElements(source).findFirst[
                 it instanceof KNode &&
-                    (it as KNode).getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
+                    (it as KNode).getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
             val targetModelRootNode = viewContext.getTargetElements(target).findFirst[
                 it instanceof KNode &&
-                    (it as KNode).getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
+                    (it as KNode).getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
             if (!source.transient && sourceModelRootNode != null && source.rootObject.EObject != null) {
                 _sourceInstanceMap = source.modelInstanceMapping(source.rootObject.EObject);
             }
@@ -396,12 +396,12 @@ class TracingVisualizer {
     private def createTracingEdges(Object source, Object target, KNode attachNode, ViewContext viewContext,
         TracingMapping equivalenceClasses) {
         val origin = new Pair(source, target);
-        val predicate = Predicates.or(viewContext.getProperty(TracingProperties.VISUALIZATION_PREDICATE),
+        val predicate = Predicates.or(viewContext.getProperty(TracingVisualizationProperties.VISUALIZATION_PREDICATE),
             [
                 if (it instanceof KGraphElement) {
-                    return (it as KGraphElement).getData(KLayoutData).getProperty(TracingProperties.TRACING_NODE);
+                    return (it as KGraphElement).getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACING_NODE);
                 } else if (it instanceof KRendering) {
-                    return (it as KRendering).getProperty(TracingProperties.TRACING_NODE);
+                    return (it as KRendering).getProperty(TracingVisualizationProperties.TRACING_NODE);
                 } else {
                     return false;
                 }
@@ -420,7 +420,7 @@ class TracingVisualizer {
 
         //If no diagram element is associated with the given model element its container is used to find an appropriate representation
         if (elements.empty && modelElement instanceof EObject) {
-            val maxDepth = viewContext.getProperty(TracingProperties.VISUALIZATION_EQUIVALENCE_CLASS_DEPTH);
+            val maxDepth = viewContext.getProperty(TracingVisualizationProperties.VISUALIZATION_EQUIVALENCE_CLASS_DEPTH);
             var depth = 0;
             var next = (modelElement as EObject)
             while (elements.empty && next != null && depth < maxDepth) {

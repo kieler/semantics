@@ -30,12 +30,12 @@ import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
  * @kieler.rating 2014-08-19 proposed yellow
  * 
  */
-public final class TracingProperties {
+public final class TracingVisualizationProperties {
 
     /**
      * Privates constructor to prevent instantiation.
      */
-    private TracingProperties() {
+    private TracingVisualizationProperties() {
     }
 
     // -- ViewContext Properties --
@@ -53,7 +53,7 @@ public final class TracingProperties {
                             // visualize all KGraphElements but not TRACED_MODEL_ROOT_NODEs
                             if (eObject instanceof KGraphElement) {
                                 return !((KGraphElement) eObject).getData(KLayoutData.class)
-                                        .getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE);
+                                        .getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE);
                             }
                             return false;
                         }

@@ -42,7 +42,6 @@ import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
@@ -79,6 +78,7 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
 import de.cau.cs.kieler.sccharts.LocalAction
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -673,7 +673,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             it.invisible = true;
                             it.addRectangle => [
                                 it.associateWith(tg);
-                                it.setProperty(TracingProperties.TRACING_NODE, true);
+                                it.setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
                                     0);
@@ -738,7 +738,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             it.invisible = true;
                             it.addRectangle => [
                                 it.associateWith(action);
-                                it.setProperty(TracingProperties.TRACING_NODE, true);
+                                it.setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                                 if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,

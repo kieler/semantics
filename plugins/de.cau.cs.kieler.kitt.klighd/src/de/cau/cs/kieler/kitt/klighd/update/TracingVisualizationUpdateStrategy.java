@@ -40,7 +40,7 @@ import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties;
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTracingProperties;
@@ -110,7 +110,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
             KGraphElement affectedElement = change.getAffectedElement();
             if (affectedElement instanceof KNode
                     && affectedElement.getData(KLayoutData.class).getProperty(
-                            TracingProperties.TRACED_MODEL_ROOT_NODE)) {
+                            TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)) {
                 ViewContext viewContext = change.getViewContext();
                 Set<Object> tracedModels =
                         viewContext.getProperty(InternalTracingProperties.VISIBLE_TRACED_MODELS);
