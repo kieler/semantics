@@ -14,12 +14,15 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.core.util.Pair;
-import de.cau.cs.kieler.kitt.tracing.Tracing;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Collections2;
 
 /**
  * This class is the extended version of the transformation result including intermediate results
@@ -51,15 +54,14 @@ public class CompilationResult {
     private String allWarnings = null;
     
     /** Auxiliary data. */
-    private List<AbstractKielerCompilerAuxiliaryData> auxiliaryData = 
-            new ArrayList<AbstractKielerCompilerAuxiliaryData>();
+    private Set<AbstractKielerCompilerAuxiliaryData> auxiliaryData = 
+            new HashSet<AbstractKielerCompilerAuxiliaryData>();
 
     /**
      * Indicates that the compilation is done and no further compilation steps are needed or
      * possible.
      */
     private boolean currentTransformationDone = false;
-    public Tracing tracing;//TODO delete when kico is redesigned
 
     // -------------------------------------------------------------------------
 
@@ -385,25 +387,36 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the auxiliary data.
-     *
-     * @return the auxiliary data
+     * Gets the auxiliary data by its type.
+     * 
+     * @param type
+     * @return collection of auxiliary data with matching type
      */
-    public List<AbstractKielerCompilerAuxiliaryData> getAuxiliaryData() {
-        return auxiliaryData;
+    public Collection<AbstractKielerCompilerAuxiliaryData> getAuxiliaryData(
+            Class<? extends AbstractKielerCompilerAuxiliaryData> type) {
+        return Collections2.filter(auxiliaryData, Predicates.instanceOf(type));
     }
-
-    // -------------------------------------------------------------------------
 
     /**
-     * Sets the auxiliary data.
+     * Adds given auxiliary data.
      *
-     * @param auxiliaryData the auxiliary data to set
+     * @param data
+     *            new data to add to set
+     * @return true if the data set did not already contain the data
      */
-    public void setAuxiliaryData(List<AbstractKielerCompilerAuxiliaryData> auxiliaryData) {
-        this.auxiliaryData = auxiliaryData;
+    public boolean addAuxiliaryData(AbstractKielerCompilerAuxiliaryData data) {
+        return auxiliaryData.add(data);
     }
 
-    // -------------------------------------------------------------------------
-    
+    /**
+     * Removed given auxiliary data if existing
+     *
+     * @param data
+     *            to remove from set
+     * @return true if this set contained the specified element
+     */
+    public boolean removeAuxiliaryData(AbstractKielerCompilerAuxiliaryData data) {
+        return auxiliaryData.remove(data);
+    }
+
 }
