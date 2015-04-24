@@ -486,7 +486,7 @@ public abstract class Transformation implements ITransformation {
             } finally {
                 // Invoke post hooks
                 for (IHook hook : KielerCompiler.getHooks()) {
-                    Object hookResult = hook.postProcessor(result, context);
+                    Object hookResult = hook.postProcessor(processorInput, result, context);
                     if(hookResult != null){
                         result = hookResult;
                     }

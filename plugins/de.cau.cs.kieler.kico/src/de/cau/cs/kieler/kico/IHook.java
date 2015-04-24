@@ -66,7 +66,7 @@ public interface IHook {
      * 
      * @return the model
      */
-    public Object postTransformation(Object model, KielerCompilerContext context);
+    public Object postTransformation(EObject input, Object result, KielerCompilerContext context);
 
     // -------------------------------------------------------------------------
     
@@ -85,7 +85,7 @@ public interface IHook {
      * 
      * @return the model
      */
-    public Object postProcessor(Object model, KielerCompilerContext context);
+    public Object postProcessor(EObject input, Object result, KielerCompilerContext context);
 
     // -------------------------------------------------------------------------
     

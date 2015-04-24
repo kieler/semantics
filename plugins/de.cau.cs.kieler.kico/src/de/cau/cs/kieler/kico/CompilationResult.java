@@ -392,9 +392,10 @@ public class CompilationResult {
      * @param type
      * @return collection of auxiliary data with matching type
      */
-    public Collection<AbstractKielerCompilerAuxiliaryData> getAuxiliaryData(
+    public List<AbstractKielerCompilerAuxiliaryData> getAuxiliaryData(
             Class<? extends AbstractKielerCompilerAuxiliaryData> type) {
-        return Collections2.filter(auxiliaryData, Predicates.instanceOf(type));
+        return new ArrayList<AbstractKielerCompilerAuxiliaryData>(Collections2.filter(auxiliaryData,
+                Predicates.instanceOf(type)));
     }
 
     /**

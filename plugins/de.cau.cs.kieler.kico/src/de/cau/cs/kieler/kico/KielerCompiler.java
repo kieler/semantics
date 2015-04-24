@@ -418,7 +418,7 @@ public class KielerCompiler {
 
         // Invoke post hooks
         for (IHook hook : getHooks()) {
-            Object hookResult = hook.postTransformation(result, context);
+            Object hookResult = hook.postTransformation(transformationInput, result, context);
             if(hookResult != null){
                 result = hookResult;
             }
