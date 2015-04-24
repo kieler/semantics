@@ -24,5 +24,11 @@
             class="de.cau.cs.kieler.kitt.tracingtree.TracingTreePackage"
             genModel="model/TracingTree.genmodel"/>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.hook">
+      <hookClass
+            class="de.cau.cs.kieler.kitt.tracing.internal.CompilerIntegration">
+      </hookClass>
+   </extension>
 
 </plugin>

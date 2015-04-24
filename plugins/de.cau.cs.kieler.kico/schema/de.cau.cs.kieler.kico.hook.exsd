@@ -50,7 +50,7 @@ This extension point allowes the contribution of a compiler transformation to th
                   The implementing class for this specific hook. It specifies postTransform, preTransform, preProcessor, postProcessor, preSnapshot and postSnapshot methods that may modify or inspect the given EObject model. A hook should also define an indentifier and a name to enable or disable it. If no human readable name is provided then the ID is taken as the name.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.Hook:de.cau.cs.kieler.kico.IHook"/>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.kico.IHook"/>
                </appinfo>
             </annotation>
          </attribute>
