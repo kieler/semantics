@@ -437,10 +437,20 @@ public abstract class Transformation implements ITransformation {
             long start = 0;
             long end = 0;
 
+            EObject processorInput = eObject;
+            Object result = null;
+            
+            // Invoke pre hooks
+            for (IHook hook : KielerCompiler.getHooks()) {
+                EObject hookResult = hook.preTransformation(processorInput, context);
+                if(hookResult != null){
+                    processorInput = hookResult;
+                }
+            }
+            
             try {
                 // Call the transform method if the default processor option, otherwise call the
                 // processor
-                Object result = null;
                 if (processorOption == ProcessorOption.getDefaultThisProcessorOption()) {
                     // Process the next processor
                     start = System.currentTimeMillis();
@@ -448,10 +458,10 @@ public abstract class Transformation implements ITransformation {
                             KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId());
                     if (transformMethod.getParameterTypes().length == 2) {
                         // first try more specific method
-                        result = transformMethod.invoke(this, eObject, context);
+                        result = transformMethod.invoke(this, processorInput, context);
                     } else {
                         // fall back to single parameter method otherwise
-                        result = transformMethod.invoke(this, eObject);
+                        result = transformMethod.invoke(this, processorInput);
                     }
                     // result = this.transform(eObjectParam, context);
                     end = System.currentTimeMillis();
@@ -463,14 +473,25 @@ public abstract class Transformation implements ITransformation {
                             KiCoUtil.getSpecificProcessMethodOrFallBack(processor, getId());
                     if (processMethod.getParameterTypes().length == 2) {
                         // first try more specific method
-                        result = processMethod.invoke(this, eObject, context);
+                        result = processMethod.invoke(this, processorInput, context);
                     } else {
                         // fall back to single parameter method otherwise
-                        result = processMethod.invoke(this, eObject);
+                        result = processMethod.invoke(this, processorInput);
                     }
                     end = System.currentTimeMillis();
                 }
-
+            } catch (Exception exception) {
+                context.getCompilationResult().addPostponedError(
+                        new KielerCompilerException(processorId, transformationId, exception));
+            } finally {
+                // Invoke post hooks
+                for (IHook hook : KielerCompiler.getHooks()) {
+                    Object hookResult = hook.postProcessor(result, context);
+                    if(hookResult != null){
+                        result = hookResult;
+                    }
+                }
+                
                 // Add to compilation result
                 processorIntermediateResult.setResult(result);
 
@@ -484,9 +505,6 @@ public abstract class Transformation implements ITransformation {
                 } else {
                     return result;
                 }
-            } catch (Exception exception) {
-                context.getCompilationResult().addPostponedError(
-                        new KielerCompilerException(processorId, transformationId, exception));
             }
         }
 

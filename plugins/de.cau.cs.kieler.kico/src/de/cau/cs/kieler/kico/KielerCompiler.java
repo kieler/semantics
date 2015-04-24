@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import de.cau.cs.kieler.kitt.tracing.TransformationTracing;
 
 /**
  * This is the main class of the Kieler Compiler (KiCo) Project that aims to provide an
@@ -143,7 +142,7 @@ public class KielerCompiler {
      *            the id
      * @return the hook
      */
-    public static Hook getHook(String id) {
+    static Hook getHook(String id) {
         return KiCoPlugin.getHook(id, false);
     }
 
@@ -154,7 +153,7 @@ public class KielerCompiler {
      * 
      * @return the hooks
      */
-    public static Set<Hook> getHooks() {
+    static Set<Hook> getHooks() {
         Map<String, Hook> map = KiCoPlugin.getRegisteredHooks(false);
         Set<Hook> set = new HashSet<Hook>();
         for (Entry<String, Hook> entry : map.entrySet()) {
@@ -197,9 +196,9 @@ public class KielerCompiler {
             context.setMainResource(transformationEObject.eResource());
         }
         
-        if(context.tracing){ //TODO delete when kico is redesigned
-            //context.getCompilationResult().tracing = new Tracing();
-            System.out.println("TRACING active");
+        // Invoke hooks
+        for (IHook hook : getHooks()) {
+            hook.preCompilation(context);
         }
 
         // If not inplace then produce a copy of the input EObject
@@ -390,7 +389,6 @@ public class KielerCompiler {
 
         long start = 0;
         long end = 0;
-        Object object = null;
         Resource res = transformedObject.eResource();
         if (context.isCreateDummyResource()) {
             // If we should create a dummy resource then save it after each successful
@@ -403,32 +401,36 @@ public class KielerCompiler {
             }
             res = context.getMainResource();
         }
+        
+        EObject transformationInput = transformedObject;
+        
+        // Invoke pre hooks
+        for (IHook hook : getHooks()) {
+            EObject hookResult = hook.preTransformation(transformationInput, context);
+            if(hookResult != null){
+                transformationInput = hookResult;
+            }
+        }
 
-        //TODO tracing
-        // Perform transformation and traces all steps
-        //if (context.tracing) {
-        //      context.getCompilationResult().tracing.startTransformationTracing(transformedObject, transformationID);
-        //}
         start = System.currentTimeMillis();
-        //try{
-        object = transformation.doTransform(transformedObject, context);
+        Object result = transformation.doTransform(transformationInput, context);
         end = System.currentTimeMillis();
-//} catch (Exception exception) {
-//            context.getCompilationResult().addPostponedError(
-//                    new KielerCompilerException(transformationID, exception));
-//        } finally {
-//            if (context.tracing) {
-//                context.getCompilationResult().tracing.finishTransformationTracing(transformedObject, object);
- //           }
-//        }
+
+        // Invoke post hooks
+        for (IHook hook : getHooks()) {
+            Object hookResult = hook.postTransformation(result, context);
+            if(hookResult != null){
+                result = hookResult;
+            }
+        }
 
         // Add to compilation result
-        intermediateResult.setResult(object);
+        intermediateResult.setResult(result);
 
         // Add performance result
         intermediateResult.setDuration(end - start);
 
-        if (object != null) {
+        if (result != null) {
             // If this is the FIRST successful transformation AND we are NOT in
             // verbose mode
             // then clear all possibly previous errors
@@ -437,7 +439,7 @@ public class KielerCompiler {
                 context.getCompilationResult().resetPostponedErrors();
             }
 
-            if (!(object instanceof EObject)) {
+            if (!(result instanceof EObject)) {
                 // in this case we CANNOT do any further transformation calls
                 // which require the return value of doTransform to be an EObject
                 context.getCompilationResult().setCurrentTransformationDone(true);
@@ -455,14 +457,20 @@ public class KielerCompiler {
      * @return copy model
      */
     private static EObject copy(EObject original, KielerCompilerContext context) {
-//TDOD remove tracing dependency
-        if (context.tracing) {
-            context.getCompilationResult().tracing.startTransformationTracing(original, false);
-            EObject copy = TransformationTracing.tracedCopy(original);
-            context.getCompilationResult().tracing.finishTransformationTracing(original, copy);
-            return copy;
-        } else {
+        EObject copy = null;
+
+        for (IHook hook : getHooks()) {
+            EObject hookCopy = hook.copy(original, context);
+            if (copy != null) {
+                throw new IllegalStateException("Multiple hooks try to perfom model copy");
+            }
+            if (hookCopy != null) {
+                copy = hookCopy;
+            }
+        }
+        if (copy == null) {
             return EcoreUtil.copy(original);
         }
+        return copy;
     }
 }

@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kico;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * An instance of this class represents a registered hook which can run during compilation
  * manipulating the model in between transformations.
@@ -38,5 +40,14 @@ public abstract class Hook implements IHook {
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public EObject copy(EObject model, KielerCompilerContext context) {
+        return null;
+    }
+    
+    
 
 }

@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * This interface defines what a concrete hook is. A hook is an EObject processing or
  * observation unit that is invoked before/after each transformation, processor or snapshot.
  * 
- * @author cmot
+ * @author cmot, als
  * @kieler.design 2015-03-09 proposed
  * @kieler.rating 2015-03-09 proposed yellow
  * 
@@ -42,24 +42,31 @@ public interface IHook {
      * @return the string
      */
     public String getName();
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Is invoked before each a compilation starts for the given context.
+     */
+    public void preCompilation(KielerCompilerContext context);
 
     // -------------------------------------------------------------------------
 
     /**
      * Is invoked before each transformation. An EObject can be modified or inspected.
      * 
-     * @return the list
+     * @return the model
      */
-    public EObject preTransformation(EObject model);
+    public EObject preTransformation(EObject model, KielerCompilerContext context);
 
     // -------------------------------------------------------------------------
 
     /**
      * Is invoked after each transformation. An EObject can be modified or inspected.
      * 
-     * @return the list
+     * @return the model
      */
-    public EObject postTransformation(EObject model);
+    public Object postTransformation(Object model, KielerCompilerContext context);
 
     // -------------------------------------------------------------------------
     
@@ -69,16 +76,16 @@ public interface IHook {
      * 
      * @return the list
      */
-    public EObject preProcessor(EObject model);
+    public EObject preProcessor(EObject model, KielerCompilerContext context);
 
     // -------------------------------------------------------------------------
 
     /**
      * Is invoked after each processor. An EObject can be modified or inspected.
      * 
-     * @return the list
+     * @return the model
      */
-    public EObject postProcessor(EObject model);
+    public Object postProcessor(Object model, KielerCompilerContext context);
 
     // -------------------------------------------------------------------------
     
@@ -86,18 +93,29 @@ public interface IHook {
     /**
      * Is invoked before each snapshot. An EObject can be modified or inspected.
      * 
-     * @return the list
+     * @return the model
      */
-    public EObject preSnapshot(EObject model);
+    public EObject preSnapshot(EObject model, KielerCompilerContext context);
 
     // -------------------------------------------------------------------------
 
     /**
      * Is invoked after each snapshot. An EObject can be modified or inspected.
      * 
-     * @return the list
+     * @return the model
      */
-    public EObject postSnapshot(EObject model);
+    public EObject postSnapshot(EObject model, KielerCompilerContext context);
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Is invoked to perform a copy of the model. If return value is not null the returned value
+     * will be taken as the effective copy. If more than one hook wants to perform the copy an
+     * RuntimeException will be raised.
+     * 
+     * @return the copy
+     */
+    public EObject copy(EObject model, KielerCompilerContext context);
 
     // -------------------------------------------------------------------------
     
