@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
+import de.cau.cs.kieler.kitt.tracing.Tracing;
 import de.cau.cs.kieler.klighd.IViewer;
 
 /**
@@ -103,7 +104,9 @@ public class KiCoAsynchronousCompilation extends Job {
             context.setAdvancedSelect(transformations.isAdvanced());
             context.setInplace(false);
             context.setProgressMonitor(monitor);
-            context.tracing = tracing;
+            if (tracing) {
+                context.setProperty(Tracing.ACTIVE_TRACING, true);
+            }
             // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo selection view
             context.setCreateDummyResource(false);
             result = KielerCompiler.compile(context);

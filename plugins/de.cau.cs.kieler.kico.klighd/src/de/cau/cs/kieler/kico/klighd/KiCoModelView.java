@@ -73,6 +73,7 @@ import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerException;
 import de.cau.cs.kieler.kico.ResourceExtension;
@@ -1096,9 +1097,6 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, "de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationUpdateStrategy");
                 
                 //save previous synthesis options to restore later
-                KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
-                properties.setProperty(KlighdProperties.EDGES_FIRST, true);
-
                 if (vc != null) {
                     ISynthesis usedSynthesis = vc.getDiagramSynthesis();
                     if (usedSynthesis != null) {
