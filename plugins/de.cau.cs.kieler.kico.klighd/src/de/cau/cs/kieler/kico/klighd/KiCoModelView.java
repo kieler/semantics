@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.WeakHashMap;
@@ -52,11 +51,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
@@ -70,7 +67,6 @@ import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoProperties;
@@ -81,7 +77,6 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
-import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.klighd.IViewer;
@@ -93,7 +88,6 @@ import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.internal.ISynthesis;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
-import de.cau.cs.kieler.klighd.util.KlighdProperties;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination;
