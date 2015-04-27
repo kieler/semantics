@@ -26,11 +26,13 @@ import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingEdgeNode
+import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.util.KlighdProperties
@@ -70,7 +72,7 @@ class SCGDepExtension {
     extension KContainerRenderingExtensions
 
     val HashMap<KNode, SourceModelTrackingAdapter> adapters = newHashMap;
-    val HashSet<de.cau.cs.kieler.core.util.Pair<EObject,EObject>> cache = newHashSet;
+    val HashSet<Pair<EObject, EObject>> cache = newHashSet;
 
     def prepareSCGDependcyEdges(KNode rootNode) {
         val adapter = new SourceModelTrackingAdapter();
@@ -82,8 +84,7 @@ class SCGDepExtension {
         val tracking = adapters.get(rootNode);
         if (tracking != null) {
             val context = new KielerCompilerContext("SCGDEP", scc);
-            context.prerequirements = true;
-            context.tracing = true;
+            context.setProperty(Tracing.ACTIVE_TRACING, true);
             val result = KielerCompiler.compile(context);
             val compiledModel = result.object;
             val attachNode = rootNode.children.head;
@@ -105,21 +106,25 @@ class SCGDepExtension {
             if (compiledModel instanceof SCGraph && attachNode != null) {
                 val scg = compiledModel as SCGraph;
 
-                val mapping = result.tracing.getMapping(scg, scc);
+                val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
                 if (mapping != null) {
                     val filterDiagramPredicate = KLabel.instanceOf.or(KRectangle.instanceOf);
                     val filterModelPredicate = Action.instanceOf.or(ValuedObject.instanceOf);
                     for (Assignment asng : scg.nodes.filter(Assignment)) {
                         val sources = mapping.get(asng).filter(filterModelPredicate).fold(newHashSet()) [ list, item |
                             list.addAll(tracking.getTargetElements(item).filter(filterDiagramPredicate));
-                            list.addAll(equivalenceClasses.getTargets(item).filter(EObject).filter(filterDiagramPredicate).toList);
+                            list.addAll(
+                                equivalenceClasses.getTargets(item).filter(EObject).filter(filterDiagramPredicate).
+                                    toList);
                             list;
                         ];
                         for (Dependency dep : asng.dependencies) {
                             if (!dep.confluent && dep.concurrent) {
                                 val targets = mapping.get(dep.target).filter(filterModelPredicate).fold(newHashSet()) [ list, item |
                                     list.addAll(tracking.getTargetElements(item).filter(filterDiagramPredicate));
-                                    list.addAll(equivalenceClasses.getTargets(item).filter(EObject).filter(filterDiagramPredicate));
+                                    list.addAll(
+                                        equivalenceClasses.getTargets(item).filter(EObject).filter(
+                                            filterDiagramPredicate));
                                     list;
                                 ];
                                 for (EObject source : sources) {
@@ -148,13 +153,13 @@ class SCGDepExtension {
                 if(dependency instanceof AbsoluteWrite_Read) it.foreground = Colors.GREEN
                 if(dependency instanceof RelativeWrite_Read) it.foreground = Colors.GREEN
                 if(dependency instanceof AbsoluteWrite_RelativeWrite) it.foreground = Colors.GREEN
-                if(cache.contains(new de.cau.cs.kieler.core.util.Pair(target, source))){
+                if (cache.contains(new Pair(target, source))) {
                     it.invisible = true;
                 }
-                if(dependency instanceof Write_Write){
-                   it.foreground = Colors.RED;
-                   cache.add(new de.cau.cs.kieler.core.util.Pair(source, target)) 
-                } 
+                if (dependency instanceof Write_Write) {
+                    it.foreground = Colors.RED;
+                    cache.add(new Pair(source, target))
+                }
                 it.lineWidth = 2
                 it.lineStyle = LineStyle::DASH
                 it.addArrowDecorator
