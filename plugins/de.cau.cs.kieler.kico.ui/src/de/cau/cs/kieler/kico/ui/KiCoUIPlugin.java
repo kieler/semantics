@@ -231,6 +231,7 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
     private String getErrorWarningMessage(final String textMessage, final String pluginID,
             final Exception exception) {
         String message = "";
+        String pluginID2 = getPluginID(textMessage, pluginID, exception);
 
         if (textMessage != null) {
             message = textMessage + message;
@@ -241,11 +242,11 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
         }
 
         // do not post the same message twice
-        if ((exception != null) && (textMessage != null)
+        if ((exception != null) && (textMessage != null) && exception.getMessage() != null
                 && (exception.getMessage().startsWith(textMessage))) {
-            message = "" + pluginID + "";
+            message = "" + pluginID2 + "";
         } else {
-            message += " (" + pluginID + ")";
+            message += " (" + pluginID2 + ")";
         }
         return message;
     }
