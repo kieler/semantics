@@ -110,27 +110,33 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 } catch (Exception e) {
                     // ignore
                 }
+                
                 String featuresIDs = editors[i].getAttribute("features");
-                String preferredIDs = editors[i].getAttribute("preferred");
-
                 ArrayList<String> features = new ArrayList<String>();
-                // The special case where we want to add ALL registered transformations
-                if (featuresIDs.equals("ALL")) {
-                    for (Feature feature : KielerCompiler.getFeatures()) {
-                        features.add(feature.getId());
-                    }
-                } else {
-                    String[] featureIDsArray = featuresIDs.split(",");
-                    for (String featureID : featureIDsArray) {
-                        features.add(featureID.trim());
+                
+                if (featuresIDs != null) {
+                    // The special case where we want to add ALL registered transformations
+                    if (featuresIDs.equals("ALL")) {
+                        for (Feature feature : KielerCompiler.getFeatures()) {
+                            features.add(feature.getId());
+                        }
+                    } else {
+                        String[] featureIDsArray = featuresIDs.split(",");
+                        for (String featureID : featureIDsArray) {
+                            features.add(featureID.trim());
+                        }
                     }
                 }
 
+                String preferredIDs = editors[i].getAttribute("preferred");
                 ArrayList<String> preferred = new ArrayList<String>();
-                // The special case where we want to add ALL registered transformations
-                String[] preferredIDsArray = preferredIDs.split(",");
-                for (String preferredID : preferredIDsArray) {
-                    preferred.add(preferredID.trim());
+
+                if (preferredIDs != null) {
+                    // The special case where we want to add ALL registered transformations
+                    String[] preferredIDsArray = preferredIDs.split(",");
+                    for (String preferredID : preferredIDsArray) {
+                        preferred.add(preferredID.trim());
+                    }
                 }
 
                 // The case for ANY editor
