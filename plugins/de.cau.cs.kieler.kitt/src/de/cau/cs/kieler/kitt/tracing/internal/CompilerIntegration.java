@@ -29,8 +29,8 @@ import de.cau.cs.kieler.kitt.tracing.TransformationTracing;
  * This class integrates Tracing into KiCo. It is registered as hook via extension point.
  * 
  * @author als
- * @kieler.design 2015-02-25 proposed
- * @kieler.rating 2015-02-25 proposed yellow
+ * @kieler.design 2015-04-27 proposed 
+ * @kieler.rating 2015-04-27 proposed yellow
  *
  */
 public class CompilerIntegration implements IHook {
