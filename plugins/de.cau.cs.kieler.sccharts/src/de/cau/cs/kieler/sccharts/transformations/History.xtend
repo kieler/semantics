@@ -14,21 +14,20 @@
 package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.ArrayList
 import java.util.List
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.kico.Transformation
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
-import com.google.common.collect.Sets
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts History Transformation.

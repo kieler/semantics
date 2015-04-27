@@ -13,17 +13,17 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
-import de.cau.cs.kieler.kico.Transformation
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import com.google.common.collect.Sets
-
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts During Transformation.
