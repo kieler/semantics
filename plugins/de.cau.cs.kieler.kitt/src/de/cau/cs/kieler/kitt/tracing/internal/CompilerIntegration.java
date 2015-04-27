@@ -73,7 +73,9 @@ public class CompilerIntegration implements IHook {
             // Start transformation tracing for given model and the current transformation
             List<TransformationIntermediateResult> transformations =
                     context.getCompilationResult().getTransformationIntermediateResults();
-            ((Tracing) context.getCompilationResult().getAuxiliaryData(Tracing.class).get(0))
+            context.getCompilationResult()
+                    .getAuxiliaryData(Tracing.class)
+                    .get(0)
                     .startTransformationTracing(model,
                             transformations.get(transformations.size() - 1).getId());
         }
@@ -86,7 +88,7 @@ public class CompilerIntegration implements IHook {
     public EObject postTransformation(EObject input, Object result, KielerCompilerContext context) {
         if (context.getProperty(Tracing.ACTIVE_TRACING)) {
             // Finish transformation tracing for given model and the intermediate result
-            ((Tracing) context.getCompilationResult().getAuxiliaryData(Tracing.class).get(0))
+            context.getCompilationResult().getAuxiliaryData(Tracing.class).get(0)
                     .finishTransformationTracing(input, result);
         }
         return null;
@@ -127,8 +129,7 @@ public class CompilerIntegration implements IHook {
     public EObject copy(EObject model, KielerCompilerContext context) {
         if (context.getProperty(Tracing.ACTIVE_TRACING)) {
             // Perform a traced copy as transformation
-            Tracing tracing =
-                    (Tracing) context.getCompilationResult().getAuxiliaryData(Tracing.class).get(0);
+            Tracing tracing = context.getCompilationResult().getAuxiliaryData(Tracing.class).get(0);
             tracing.startTransformationTracing(model, false);
             EObject copy = TransformationTracing.tracedCopy(model);
             tracing.finishTransformationTracing(model, copy);
