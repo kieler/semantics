@@ -102,7 +102,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
     /** Map from editors (hash) to selected transformations. */
     private HashMap<Integer, KiCoSelection> compilerSelection =
             new HashMap<Integer, KiCoSelection>();
-    /** Acitve editor the primary model view is listrening to */
+    /** Active editor the primary model view is listening to */
     private IEditorPart activeEditor = null;
     /** List of registered listeners */
     private HashSet<IActiveEditorListener> listeners = new HashSet<IActiveEditorListener>();
@@ -388,7 +388,8 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
      * Adds a listener for changes of the active editor. Has no effect if an identical listener is
      * already registered.
      * 
-     * @param listener listener to add
+     * @param listener
+     *            listener to add
      */
     public static void addActiveEditorListener(IActiveEditorListener listener) {
         getInstance().listeners.add(listener);
@@ -398,7 +399,8 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
      * Removes the given listener from the ModelViewManager. Has no effect if an identical listener
      * is not registered.
      * 
-     * @param listener listener to remove
+     * @param listener
+     *            listener to remove
      */
     public static void removeActiveEditorListener(IActiveEditorListener listener) {
         getInstance().listeners.remove(listener);
