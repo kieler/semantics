@@ -86,7 +86,7 @@ class DependencyTransformation extends Transformation {
     // -- Globals 
     // -------------------------------------------------------------------------
     
-    public static val ANNOTATION_DEPENDENCYRANSFORMATION = "dependencies"
+    public static val ANNOTATION_DEPENDENCYTRANSFORMATION = "dependencies"
     
     /** 
      * threadNodeCache caches the entry nodes a specific node belongs to w.r.t. hierarchy
@@ -141,7 +141,7 @@ class DependencyTransformation extends Transformation {
     def SCGraph transformSCGToSCGDEP(SCGraph scg) {
 
         if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
-            || scg.hasAnnotation(DependencyTransformation::ANNOTATION_DEPENDENCYRANSFORMATION)
+            || scg.hasAnnotation(DependencyTransformation::ANNOTATION_DEPENDENCYTRANSFORMATION)
         ) {
             return scg
         }
@@ -284,7 +284,7 @@ class DependencyTransformation extends Transformation {
       	 System.out.println("o")
 
         scg => [
-            annotations += createStringAnnotation(ANNOTATION_DEPENDENCYRANSFORMATION, "")
+            annotations += createStringAnnotation(ANNOTATION_DEPENDENCYTRANSFORMATION, "")
         ]     
 
         time = (System.currentTimeMillis - timestamp) as float
