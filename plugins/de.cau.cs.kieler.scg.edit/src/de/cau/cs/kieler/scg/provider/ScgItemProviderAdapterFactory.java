@@ -382,6 +382,52 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.DataDependency} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected DataDependencyItemProvider dataDependencyItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.DataDependency}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createDataDependencyAdapter() {
+        if (dataDependencyItemProvider == null) {
+            dataDependencyItemProvider = new DataDependencyItemProvider(this);
+        }
+
+        return dataDependencyItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.ControlDependency} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ControlDependencyItemProvider controlDependencyItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.ControlDependency}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createControlDependencyAdapter() {
+        if (controlDependencyItemProvider == null) {
+            controlDependencyItemProvider = new ControlDependencyItemProvider(this);
+        }
+
+        return controlDependencyItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.AbsoluteWrite_Read} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -723,6 +769,8 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
         if (exitItemProvider != null) exitItemProvider.dispose();
         if (controlFlowItemProvider != null) controlFlowItemProvider.dispose();
         if (dependencyItemProvider != null) dependencyItemProvider.dispose();
+        if (dataDependencyItemProvider != null) dataDependencyItemProvider.dispose();
+        if (controlDependencyItemProvider != null) controlDependencyItemProvider.dispose();
         if (absoluteWrite_ReadItemProvider != null) absoluteWrite_ReadItemProvider.dispose();
         if (relativeWrite_ReadItemProvider != null) relativeWrite_ReadItemProvider.dispose();
         if (absoluteWrite_RelativeWriteItemProvider != null) absoluteWrite_RelativeWriteItemProvider.dispose();

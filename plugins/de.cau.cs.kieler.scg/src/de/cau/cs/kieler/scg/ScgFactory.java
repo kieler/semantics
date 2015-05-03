@@ -150,6 +150,24 @@ public interface ScgFactory extends EFactory {
     Dependency createDependency();
 
     /**
+     * Returns a new object of class '<em>Data Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Data Dependency</em>'.
+     * @generated
+     */
+    DataDependency createDataDependency();
+
+    /**
+     * Returns a new object of class '<em>Control Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Control Dependency</em>'.
+     * @generated
+     */
+    ControlDependency createControlDependency();
+
+    /**
      * Returns a new object of class '<em>Absolute Write Read</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

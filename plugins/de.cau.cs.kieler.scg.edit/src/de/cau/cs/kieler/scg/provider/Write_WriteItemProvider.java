@@ -27,7 +27,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * <!-- end-user-doc -->
  * @generated
  */
-public class Write_WriteItemProvider extends DependencyItemProvider {
+public class Write_WriteItemProvider extends DataDependencyItemProvider {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->

@@ -13,27 +13,27 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
+import de.cau.cs.kieler.scg.ControlDependency;
 import de.cau.cs.kieler.scg.ScgPackage;
-import de.cau.cs.kieler.scg.Write_Write;
 
 import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Write Write</b></em>'.
+ * An implementation of the model object '<em><b>Control Dependency</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * </p>
  *
  * @generated
  */
-public class Write_WriteImpl extends DataDependencyImpl implements Write_Write {
+public class ControlDependencyImpl extends DependencyImpl implements ControlDependency {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected Write_WriteImpl() {
+    protected ControlDependencyImpl() {
         super();
     }
 
@@ -44,7 +44,7 @@ public class Write_WriteImpl extends DataDependencyImpl implements Write_Write {
      */
     @Override
     protected EClass eStaticClass() {
-        return ScgPackage.Literals.WRITE_WRITE;
+        return ScgPackage.Literals.CONTROL_DEPENDENCY;
     }
 
-} //Write_WriteImpl
+} //ControlDependencyImpl

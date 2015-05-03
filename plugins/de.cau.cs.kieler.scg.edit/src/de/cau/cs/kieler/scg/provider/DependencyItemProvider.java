@@ -14,16 +14,11 @@
 package de.cau.cs.kieler.scg.provider;
 
 
-import de.cau.cs.kieler.scg.Dependency;
-import de.cau.cs.kieler.scg.ScgPackage;
 import java.util.Collection;
 import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
  * This is the item provider adapter for a {@link de.cau.cs.kieler.scg.Dependency} object.
@@ -53,54 +48,8 @@ public class DependencyItemProvider extends LinkItemProvider {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addConcurrentPropertyDescriptor(object);
-            addConfluentPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
-    }
-
-    /**
-     * This adds a property descriptor for the Concurrent feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addConcurrentPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_Dependency_concurrent_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Dependency_concurrent_feature", "_UI_Dependency_type"),
-                 ScgPackage.Literals.DEPENDENCY__CONCURRENT,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Confluent feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addConfluentPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_Dependency_confluent_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Dependency_confluent_feature", "_UI_Dependency_type"),
-                 ScgPackage.Literals.DEPENDENCY__CONFLUENT,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
     }
 
     /**
@@ -122,8 +71,7 @@ public class DependencyItemProvider extends LinkItemProvider {
      */
     @Override
     public String getText(Object object) {
-        Dependency dependency = (Dependency)object;
-        return getString("_UI_Dependency_type") + " " + dependency.isConcurrent();
+        return getString("_UI_Dependency_type");
     }
     
 
@@ -137,13 +85,6 @@ public class DependencyItemProvider extends LinkItemProvider {
     @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
-
-        switch (notification.getFeatureID(Dependency.class)) {
-            case ScgPackage.DEPENDENCY__CONCURRENT:
-            case ScgPackage.DEPENDENCY__CONFLUENT:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-                return;
-        }
         super.notifyChanged(notification);
     }
 

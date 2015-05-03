@@ -70,6 +70,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
             case ScgPackage.EXIT: return createExit();
             case ScgPackage.CONTROL_FLOW: return createControlFlow();
             case ScgPackage.DEPENDENCY: return createDependency();
+            case ScgPackage.DATA_DEPENDENCY: return createDataDependency();
+            case ScgPackage.CONTROL_DEPENDENCY: return createControlDependency();
             case ScgPackage.ABSOLUTE_WRITE_READ: return createAbsoluteWrite_Read();
             case ScgPackage.RELATIVE_WRITE_READ: return createRelativeWrite_Read();
             case ScgPackage.ABSOLUTE_WRITE_RELATIVE_WRITE: return createAbsoluteWrite_RelativeWrite();
@@ -243,6 +245,26 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     public Dependency createDependency() {
         DependencyImpl dependency = new DependencyImpl();
         return dependency;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DataDependency createDataDependency() {
+        DataDependencyImpl dataDependency = new DataDependencyImpl();
+        return dataDependency;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ControlDependency createControlDependency() {
+        ControlDependencyImpl controlDependency = new ControlDependencyImpl();
+        return controlDependency;
     }
 
     /**

@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class AbsoluteWrite_RelativeWriteImpl extends DependencyImpl implements AbsoluteWrite_RelativeWrite {
+public class AbsoluteWrite_RelativeWriteImpl extends DataDependencyImpl implements AbsoluteWrite_RelativeWrite {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

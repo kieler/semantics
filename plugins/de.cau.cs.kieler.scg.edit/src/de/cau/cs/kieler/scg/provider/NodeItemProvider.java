@@ -197,7 +197,7 @@ public class NodeItemProvider extends AnnotatableItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (ScgPackage.Literals.NODE__DEPENDENCIES,
-                 ScgFactory.eINSTANCE.createDependency()));
+                 ScgFactory.eINSTANCE.createDataDependency()));
 
         newChildDescriptors.add
             (createChildParameter

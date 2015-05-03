@@ -95,6 +95,7 @@ import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.klay.layered.properties.InternalProperties
 import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -1147,8 +1148,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private def Dependency synthesizeDependency(Dependency dependency) {
 
         // If non concurrent dependency are hidden and the given dependency is not concurrent, exit at once.
-        if(!SHOW_NONCONCURRENT.booleanValue && !dependency.isConcurrent) return dependency;
-        if(!SHOW_CONFLUENT.booleanValue && dependency.confluent) return dependency;
+        if(dependency instanceof DataDependency) {
+            val dataDependency = dependency as DataDependency
+            if(!SHOW_NONCONCURRENT.booleanValue && !dataDependency.isConcurrent) return dependency;
+            if(!SHOW_CONFLUENT.booleanValue && dataDependency.confluent) return dependency;    
+        }
 
         if(!SHOW_DEPENDENCY_WRITE_WRITE.booleanValue && dependency instanceof Write_Write) return dependency;
         if(!SHOW_DEPENDENCY_ABSWRITE_RELWRITE.booleanValue && dependency instanceof AbsoluteWrite_RelativeWrite) return dependency;

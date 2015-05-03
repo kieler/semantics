@@ -133,6 +133,14 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
                 return createDependencyAdapter();
             }
             @Override
+            public Adapter caseDataDependency(DataDependency object) {
+                return createDataDependencyAdapter();
+            }
+            @Override
+            public Adapter caseControlDependency(ControlDependency object) {
+                return createControlDependencyAdapter();
+            }
+            @Override
             public Adapter caseAbsoluteWrite_Read(AbsoluteWrite_Read object) {
                 return createAbsoluteWrite_ReadAdapter();
             }
@@ -375,6 +383,34 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDependencyAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.DataDependency <em>Data Dependency</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.DataDependency
+     * @generated
+     */
+    public Adapter createDataDependencyAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ControlDependency <em>Control Dependency</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.ControlDependency
+     * @generated
+     */
+    public Adapter createControlDependencyAdapter() {
         return null;
     }
 

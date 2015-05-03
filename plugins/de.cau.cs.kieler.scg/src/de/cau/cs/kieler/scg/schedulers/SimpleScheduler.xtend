@@ -30,6 +30,7 @@ import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.ScheduledBlock
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -110,7 +111,7 @@ class SimpleScheduler extends AbstractScheduler {
                 
         // Basically, perform the same test for dependency. We cannot create a guard expression 
         // if any block containing a dependency is still in our list.
-        for(dependency : schedulingBlock.dependencies) {
+        for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
             if (dependency.concurrent && !dependency.confluent) {
 				val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
     	      	if (!placedBlocks.contains(sBlock)) { return false }
@@ -132,7 +133,7 @@ class SimpleScheduler extends AbstractScheduler {
                    		 sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
                 }
             }
-            for(dependency : schedulingBlock.dependencies) {
+            for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
                 if (dependency.concurrent && !dependency.confluent) {
 					val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
 					if (!topologicalSortVisited.contains(sBlock)) {

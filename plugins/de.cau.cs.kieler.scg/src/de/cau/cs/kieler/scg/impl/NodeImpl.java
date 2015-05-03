@@ -3,24 +3,17 @@
 package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
-
-import de.cau.cs.kieler.scg.Dependency;
+import de.cau.cs.kieler.scg.DataDependency;
 import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.ScgPackage;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -79,7 +72,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * @generated
      * @ordered
      */
-    protected EList<Dependency> dependencies;
+    protected EList<DataDependency> dependencies;
 
     /**
      * <!-- begin-user-doc -->
@@ -138,9 +131,9 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Dependency> getDependencies() {
+    public EList<DataDependency> getDependencies() {
         if (dependencies == null) {
-            dependencies = new EObjectContainmentEList<Dependency>(Dependency.class, this, ScgPackage.NODE__DEPENDENCIES);
+            dependencies = new EObjectContainmentEList<DataDependency>(DataDependency.class, this, ScgPackage.NODE__DEPENDENCIES);
         }
         return dependencies;
     }
@@ -212,7 +205,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 return;
             case ScgPackage.NODE__DEPENDENCIES:
                 getDependencies().clear();
-                getDependencies().addAll((Collection<? extends Dependency>)newValue);
+                getDependencies().addAll((Collection<? extends DataDependency>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);

@@ -180,9 +180,28 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case ScgPackage.DATA_DEPENDENCY: {
+                DataDependency dataDependency = (DataDependency)theEObject;
+                T result = caseDataDependency(dataDependency);
+                if (result == null) result = caseDependency(dataDependency);
+                if (result == null) result = caseLink(dataDependency);
+                if (result == null) result = caseAnnotatable(dataDependency);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ScgPackage.CONTROL_DEPENDENCY: {
+                ControlDependency controlDependency = (ControlDependency)theEObject;
+                T result = caseControlDependency(controlDependency);
+                if (result == null) result = caseDependency(controlDependency);
+                if (result == null) result = caseLink(controlDependency);
+                if (result == null) result = caseAnnotatable(controlDependency);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case ScgPackage.ABSOLUTE_WRITE_READ: {
                 AbsoluteWrite_Read absoluteWrite_Read = (AbsoluteWrite_Read)theEObject;
                 T result = caseAbsoluteWrite_Read(absoluteWrite_Read);
+                if (result == null) result = caseDataDependency(absoluteWrite_Read);
                 if (result == null) result = caseDependency(absoluteWrite_Read);
                 if (result == null) result = caseLink(absoluteWrite_Read);
                 if (result == null) result = caseAnnotatable(absoluteWrite_Read);
@@ -192,6 +211,7 @@ public class ScgSwitch<T> extends Switch<T> {
             case ScgPackage.RELATIVE_WRITE_READ: {
                 RelativeWrite_Read relativeWrite_Read = (RelativeWrite_Read)theEObject;
                 T result = caseRelativeWrite_Read(relativeWrite_Read);
+                if (result == null) result = caseDataDependency(relativeWrite_Read);
                 if (result == null) result = caseDependency(relativeWrite_Read);
                 if (result == null) result = caseLink(relativeWrite_Read);
                 if (result == null) result = caseAnnotatable(relativeWrite_Read);
@@ -201,6 +221,7 @@ public class ScgSwitch<T> extends Switch<T> {
             case ScgPackage.ABSOLUTE_WRITE_RELATIVE_WRITE: {
                 AbsoluteWrite_RelativeWrite absoluteWrite_RelativeWrite = (AbsoluteWrite_RelativeWrite)theEObject;
                 T result = caseAbsoluteWrite_RelativeWrite(absoluteWrite_RelativeWrite);
+                if (result == null) result = caseDataDependency(absoluteWrite_RelativeWrite);
                 if (result == null) result = caseDependency(absoluteWrite_RelativeWrite);
                 if (result == null) result = caseLink(absoluteWrite_RelativeWrite);
                 if (result == null) result = caseAnnotatable(absoluteWrite_RelativeWrite);
@@ -210,6 +231,7 @@ public class ScgSwitch<T> extends Switch<T> {
             case ScgPackage.WRITE_WRITE: {
                 Write_Write write_Write = (Write_Write)theEObject;
                 T result = caseWrite_Write(write_Write);
+                if (result == null) result = caseDataDependency(write_Write);
                 if (result == null) result = caseDependency(write_Write);
                 if (result == null) result = caseLink(write_Write);
                 if (result == null) result = caseAnnotatable(write_Write);
@@ -448,6 +470,36 @@ public class ScgSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDependency(Dependency object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Data Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Data Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDataDependency(DataDependency object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Control Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Control Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseControlDependency(ControlDependency object) {
         return null;
     }
 

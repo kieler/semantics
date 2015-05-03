@@ -885,59 +885,133 @@ public interface ScgPackage extends EPackage {
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.DependencyImpl <em>Dependency</em>}' class.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.scg.impl.DependencyImpl
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDependency()
      * @generated
      */
-	int DEPENDENCY = 12;
+    int DEPENDENCY = 12;
 
-	/**
+    /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int DEPENDENCY__ANNOTATIONS = LINK__ANNOTATIONS;
+    int DEPENDENCY__ANNOTATIONS = LINK__ANNOTATIONS;
 
-	/**
+    /**
      * The feature id for the '<em><b>Target</b></em>' reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int DEPENDENCY__TARGET = LINK__TARGET;
+    int DEPENDENCY__TARGET = LINK__TARGET;
 
-	/**
-     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int DEPENDENCY__CONCURRENT = LINK_FEATURE_COUNT + 0;
-
-	/**
-     * The feature id for the '<em><b>Confluent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int DEPENDENCY__CONFLUENT = LINK_FEATURE_COUNT + 1;
-
-	/**
+    /**
      * The number of structural features of the '<em>Dependency</em>' class.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int DEPENDENCY_FEATURE_COUNT = LINK_FEATURE_COUNT + 2;
+    int DEPENDENCY_FEATURE_COUNT = LINK_FEATURE_COUNT + 0;
 
-	/**
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.DataDependencyImpl <em>Data Dependency</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scg.impl.DataDependencyImpl
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDataDependency()
+     * @generated
+     */
+    int DATA_DEPENDENCY = 13;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__CONCURRENT = DEPENDENCY_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__CONFLUENT = DEPENDENCY_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Data Dependency</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 2;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ControlDependencyImpl <em>Control Dependency</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scg.impl.ControlDependencyImpl
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getControlDependency()
+     * @generated
+     */
+    int CONTROL_DEPENDENCY = 14;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+
+    /**
+     * The number of structural features of the '<em>Control Dependency</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.AbsoluteWrite_ReadImpl <em>Absolute Write Read</em>}' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -945,7 +1019,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getAbsoluteWrite_Read()
      * @generated
      */
-	int ABSOLUTE_WRITE_READ = 13;
+	int ABSOLUTE_WRITE_READ = 15;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -954,7 +1028,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ABSOLUTE_WRITE_READ__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+	int ABSOLUTE_WRITE_READ__ANNOTATIONS = DATA_DEPENDENCY__ANNOTATIONS;
 
 	/**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -963,7 +1037,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ABSOLUTE_WRITE_READ__TARGET = DEPENDENCY__TARGET;
+	int ABSOLUTE_WRITE_READ__TARGET = DATA_DEPENDENCY__TARGET;
 
 	/**
      * The feature id for the '<em><b>Concurrent</b></em>' attribute.
@@ -972,7 +1046,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ABSOLUTE_WRITE_READ__CONCURRENT = DEPENDENCY__CONCURRENT;
+	int ABSOLUTE_WRITE_READ__CONCURRENT = DATA_DEPENDENCY__CONCURRENT;
 
 	/**
      * The feature id for the '<em><b>Confluent</b></em>' attribute.
@@ -981,7 +1055,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ABSOLUTE_WRITE_READ__CONFLUENT = DEPENDENCY__CONFLUENT;
+	int ABSOLUTE_WRITE_READ__CONFLUENT = DATA_DEPENDENCY__CONFLUENT;
 
 	/**
      * The number of structural features of the '<em>Absolute Write Read</em>' class.
@@ -990,7 +1064,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ABSOLUTE_WRITE_READ_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+	int ABSOLUTE_WRITE_READ_FEATURE_COUNT = DATA_DEPENDENCY_FEATURE_COUNT + 0;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.RelativeWrite_ReadImpl <em>Relative Write Read</em>}' class.
@@ -1000,7 +1074,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getRelativeWrite_Read()
      * @generated
      */
-	int RELATIVE_WRITE_READ = 14;
+	int RELATIVE_WRITE_READ = 16;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1009,7 +1083,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int RELATIVE_WRITE_READ__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+	int RELATIVE_WRITE_READ__ANNOTATIONS = DATA_DEPENDENCY__ANNOTATIONS;
 
 	/**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -1018,7 +1092,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int RELATIVE_WRITE_READ__TARGET = DEPENDENCY__TARGET;
+	int RELATIVE_WRITE_READ__TARGET = DATA_DEPENDENCY__TARGET;
 
 	/**
      * The feature id for the '<em><b>Concurrent</b></em>' attribute.
@@ -1027,7 +1101,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int RELATIVE_WRITE_READ__CONCURRENT = DEPENDENCY__CONCURRENT;
+	int RELATIVE_WRITE_READ__CONCURRENT = DATA_DEPENDENCY__CONCURRENT;
 
 	/**
      * The feature id for the '<em><b>Confluent</b></em>' attribute.
@@ -1036,7 +1110,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int RELATIVE_WRITE_READ__CONFLUENT = DEPENDENCY__CONFLUENT;
+	int RELATIVE_WRITE_READ__CONFLUENT = DATA_DEPENDENCY__CONFLUENT;
 
 	/**
      * The number of structural features of the '<em>Relative Write Read</em>' class.
@@ -1045,7 +1119,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int RELATIVE_WRITE_READ_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+	int RELATIVE_WRITE_READ_FEATURE_COUNT = DATA_DEPENDENCY_FEATURE_COUNT + 0;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.AbsoluteWrite_RelativeWriteImpl <em>Absolute Write Relative Write</em>}' class.
@@ -1055,7 +1129,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getAbsoluteWrite_RelativeWrite()
      * @generated
      */
-	int ABSOLUTE_WRITE_RELATIVE_WRITE = 15;
+	int ABSOLUTE_WRITE_RELATIVE_WRITE = 17;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1064,7 +1138,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ABSOLUTE_WRITE_RELATIVE_WRITE__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+	int ABSOLUTE_WRITE_RELATIVE_WRITE__ANNOTATIONS = DATA_DEPENDENCY__ANNOTATIONS;
 
 	/**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -1073,7 +1147,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ABSOLUTE_WRITE_RELATIVE_WRITE__TARGET = DEPENDENCY__TARGET;
+	int ABSOLUTE_WRITE_RELATIVE_WRITE__TARGET = DATA_DEPENDENCY__TARGET;
 
 	/**
      * The feature id for the '<em><b>Concurrent</b></em>' attribute.
@@ -1082,7 +1156,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ABSOLUTE_WRITE_RELATIVE_WRITE__CONCURRENT = DEPENDENCY__CONCURRENT;
+	int ABSOLUTE_WRITE_RELATIVE_WRITE__CONCURRENT = DATA_DEPENDENCY__CONCURRENT;
 
 	/**
      * The feature id for the '<em><b>Confluent</b></em>' attribute.
@@ -1091,7 +1165,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ABSOLUTE_WRITE_RELATIVE_WRITE__CONFLUENT = DEPENDENCY__CONFLUENT;
+	int ABSOLUTE_WRITE_RELATIVE_WRITE__CONFLUENT = DATA_DEPENDENCY__CONFLUENT;
 
 	/**
      * The number of structural features of the '<em>Absolute Write Relative Write</em>' class.
@@ -1100,7 +1174,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ABSOLUTE_WRITE_RELATIVE_WRITE_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+	int ABSOLUTE_WRITE_RELATIVE_WRITE_FEATURE_COUNT = DATA_DEPENDENCY_FEATURE_COUNT + 0;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.Write_WriteImpl <em>Write Write</em>}' class.
@@ -1110,7 +1184,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getWrite_Write()
      * @generated
      */
-	int WRITE_WRITE = 16;
+	int WRITE_WRITE = 18;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1119,7 +1193,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int WRITE_WRITE__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+	int WRITE_WRITE__ANNOTATIONS = DATA_DEPENDENCY__ANNOTATIONS;
 
 	/**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -1128,7 +1202,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int WRITE_WRITE__TARGET = DEPENDENCY__TARGET;
+	int WRITE_WRITE__TARGET = DATA_DEPENDENCY__TARGET;
 
 	/**
      * The feature id for the '<em><b>Concurrent</b></em>' attribute.
@@ -1137,7 +1211,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int WRITE_WRITE__CONCURRENT = DEPENDENCY__CONCURRENT;
+	int WRITE_WRITE__CONCURRENT = DATA_DEPENDENCY__CONCURRENT;
 
 	/**
      * The feature id for the '<em><b>Confluent</b></em>' attribute.
@@ -1146,7 +1220,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int WRITE_WRITE__CONFLUENT = DEPENDENCY__CONFLUENT;
+	int WRITE_WRITE__CONFLUENT = DATA_DEPENDENCY__CONFLUENT;
 
 	/**
      * The number of structural features of the '<em>Write Write</em>' class.
@@ -1155,7 +1229,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int WRITE_WRITE_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+	int WRITE_WRITE_FEATURE_COUNT = DATA_DEPENDENCY_FEATURE_COUNT + 0;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl <em>Basic Block</em>}' class.
@@ -1165,7 +1239,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBasicBlock()
      * @generated
      */
-	int BASIC_BLOCK = 17;
+	int BASIC_BLOCK = 19;
 
 	/**
      * The feature id for the '<em><b>Scheduling Blocks</b></em>' containment reference list.
@@ -1256,7 +1330,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getSchedulingBlock()
      * @generated
      */
-	int SCHEDULING_BLOCK = 18;
+	int SCHEDULING_BLOCK = 20;
 
 	/**
      * The feature id for the '<em><b>Nodes</b></em>' reference list.
@@ -1311,7 +1385,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getPredecessor()
      * @generated
      */
-	int PREDECESSOR = 19;
+	int PREDECESSOR = 21;
 
 	/**
      * The feature id for the '<em><b>Basic Block</b></em>' reference.
@@ -1357,7 +1431,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleBlock()
      * @generated
      */
-	int SCHEDULE_BLOCK = 20;
+	int SCHEDULE_BLOCK = 22;
 
 	/**
      * The feature id for the '<em><b>Scheduling Block</b></em>' reference.
@@ -1394,7 +1468,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getSchedule()
      * @generated
      */
-	int SCHEDULE = 21;
+	int SCHEDULE = 23;
 
 	/**
      * The feature id for the '<em><b>Schedule Blocks</b></em>' containment reference list.
@@ -1422,7 +1496,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getGuard()
      * @generated
      */
-	int GUARD = 22;
+	int GUARD = 24;
 
 	/**
      * The feature id for the '<em><b>Valued Object</b></em>' containment reference.
@@ -1504,7 +1578,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBranchType()
      * @generated
      */
-	int BRANCH_TYPE = 23;
+	int BRANCH_TYPE = 25;
 
 
 	/**
@@ -1938,36 +2012,56 @@ public interface ScgPackage extends EPackage {
 	/**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Dependency <em>Dependency</em>}'.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return the meta object for class '<em>Dependency</em>'.
      * @see de.cau.cs.kieler.scg.Dependency
      * @generated
      */
-	EClass getDependency();
+    EClass getDependency();
 
-	/**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Dependency#isConcurrent <em>Concurrent</em>}'.
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.DataDependency <em>Data Dependency</em>}'.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Data Dependency</em>'.
+     * @see de.cau.cs.kieler.scg.DataDependency
+     * @generated
+     */
+    EClass getDataDependency();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.DataDependency#isConcurrent <em>Concurrent</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Concurrent</em>'.
-     * @see de.cau.cs.kieler.scg.Dependency#isConcurrent()
-     * @see #getDependency()
+     * @see de.cau.cs.kieler.scg.DataDependency#isConcurrent()
+     * @see #getDataDependency()
      * @generated
      */
-	EAttribute getDependency_Concurrent();
+    EAttribute getDataDependency_Concurrent();
 
-	/**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Dependency#isConfluent <em>Confluent</em>}'.
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.DataDependency#isConfluent <em>Confluent</em>}'.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Confluent</em>'.
-     * @see de.cau.cs.kieler.scg.Dependency#isConfluent()
-     * @see #getDependency()
+     * @see de.cau.cs.kieler.scg.DataDependency#isConfluent()
+     * @see #getDataDependency()
      * @generated
      */
-	EAttribute getDependency_Confluent();
+    EAttribute getDataDependency_Confluent();
 
-	/**
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ControlDependency <em>Control Dependency</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Control Dependency</em>'.
+     * @see de.cau.cs.kieler.scg.ControlDependency
+     * @generated
+     */
+    EClass getControlDependency();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_Read <em>Absolute Write Read</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2721,30 +2815,50 @@ public interface ScgPackage extends EPackage {
 		/**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.DependencyImpl <em>Dependency</em>}' class.
          * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.scg.impl.DependencyImpl
          * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDependency()
          * @generated
          */
-		EClass DEPENDENCY = eINSTANCE.getDependency();
+        EClass DEPENDENCY = eINSTANCE.getDependency();
 
-		/**
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.DataDependencyImpl <em>Data Dependency</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.impl.DataDependencyImpl
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDataDependency()
+         * @generated
+         */
+        EClass DATA_DEPENDENCY = eINSTANCE.getDataDependency();
+
+        /**
          * The meta object literal for the '<em><b>Concurrent</b></em>' attribute feature.
          * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
          * @generated
          */
-		EAttribute DEPENDENCY__CONCURRENT = eINSTANCE.getDependency_Concurrent();
+        EAttribute DATA_DEPENDENCY__CONCURRENT = eINSTANCE.getDataDependency_Concurrent();
 
-		/**
+        /**
          * The meta object literal for the '<em><b>Confluent</b></em>' attribute feature.
          * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
          * @generated
          */
-		EAttribute DEPENDENCY__CONFLUENT = eINSTANCE.getDependency_Confluent();
+        EAttribute DATA_DEPENDENCY__CONFLUENT = eINSTANCE.getDataDependency_Confluent();
 
-		/**
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ControlDependencyImpl <em>Control Dependency</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.impl.ControlDependencyImpl
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getControlDependency()
+         * @generated
+         */
+        EClass CONTROL_DEPENDENCY = eINSTANCE.getControlDependency();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.AbsoluteWrite_ReadImpl <em>Absolute Write Read</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

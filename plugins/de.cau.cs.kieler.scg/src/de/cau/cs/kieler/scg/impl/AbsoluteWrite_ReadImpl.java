@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class AbsoluteWrite_ReadImpl extends DependencyImpl implements AbsoluteWrite_Read {
+public class AbsoluteWrite_ReadImpl extends DataDependencyImpl implements AbsoluteWrite_Read {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

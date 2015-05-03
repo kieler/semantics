@@ -14,27 +14,28 @@
 package de.cau.cs.kieler.scg.provider;
 
 
-import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite;
 import java.util.Collection;
 import java.util.List;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.scg.ControlDependency} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class AbsoluteWrite_RelativeWriteItemProvider extends DataDependencyItemProvider {
+public class ControlDependencyItemProvider extends DependencyItemProvider {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public AbsoluteWrite_RelativeWriteItemProvider(AdapterFactory adapterFactory) {
+    public ControlDependencyItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -54,14 +55,14 @@ public class AbsoluteWrite_RelativeWriteItemProvider extends DataDependencyItemP
     }
 
     /**
-     * This returns AbsoluteWrite_RelativeWrite.gif.
+     * This returns ControlDependency.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/AbsoluteWrite_RelativeWrite"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ControlDependency"));
     }
 
     /**
@@ -72,8 +73,7 @@ public class AbsoluteWrite_RelativeWriteItemProvider extends DataDependencyItemP
      */
     @Override
     public String getText(Object object) {
-        AbsoluteWrite_RelativeWrite absoluteWrite_RelativeWrite = (AbsoluteWrite_RelativeWrite)object;
-        return getString("_UI_AbsoluteWrite_RelativeWrite_type") + " " + absoluteWrite_RelativeWrite.isConcurrent();
+        return getString("_UI_ControlDependency_type");
     }
     
 

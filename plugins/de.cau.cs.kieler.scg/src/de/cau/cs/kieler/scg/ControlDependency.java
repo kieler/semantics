@@ -16,13 +16,13 @@ package de.cau.cs.kieler.scg;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Write Write</b></em>'.
+ * A representation of the model object '<em><b>Control Dependency</b></em>'.
  * <!-- end-user-doc -->
  *
  *
- * @see de.cau.cs.kieler.scg.ScgPackage#getWrite_Write()
+ * @see de.cau.cs.kieler.scg.ScgPackage#getControlDependency()
  * @model
  * @generated
  */
-public interface Write_Write extends DataDependency {
-} // Write_Write
+public interface ControlDependency extends Dependency {
+} // ControlDependency
