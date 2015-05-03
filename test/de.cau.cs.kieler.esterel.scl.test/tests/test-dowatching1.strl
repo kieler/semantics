@@ -1,0 +1,24 @@
+module test_dowatching1:
+input A;
+input B;
+input C;
+output X;
+output Y;
+
+do
+  nothing
+watching A;
+emit X;
+do
+  do
+    pause
+  watching B timeout
+    do
+      nothing
+    watching [A and B];
+    halt
+  end timeout
+watching C;
+emit Y
+
+end module

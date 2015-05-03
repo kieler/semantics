@@ -10,7 +10,7 @@ import de.cau.cs.kieler.scl.scl.Instruction;
 import de.cau.cs.kieler.scl.scl.InstructionStatement;
 import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
-import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.SclFactory;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
@@ -77,7 +77,7 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     switch (eClass.getClassifierID())
     {
-      case SclPackage.PROGRAM: return createProgram();
+      case SclPackage.SCL_PROGRAM: return createSCLProgram();
       case SclPackage.STATEMENT: return createStatement();
       case SclPackage.EMPTY_STATEMENT: return createEmptyStatement();
       case SclPackage.INSTRUCTION_STATEMENT: return createInstructionStatement();
@@ -100,10 +100,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Program createProgram()
+  public SCLProgram createSCLProgram()
   {
-    ProgramImpl program = new ProgramImpl();
-    return program;
+    SCLProgramImpl sclProgram = new SCLProgramImpl();
+    return sclProgram;
   }
 
   /**

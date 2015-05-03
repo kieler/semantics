@@ -1,0 +1,115 @@
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+SWITCH_ON SECOND 
+% Output: 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: 
+;
+SECOND COTTON 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: 
+;
+SILK SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;

@@ -1,0 +1,19 @@
+module test_trap8:
+output A;
+output B;
+
+trap T1,
+     T2 in
+  pause;
+  emit A;
+  exit T2
+  ||
+  pause;
+  exit T1
+handle T1 do
+   emit A
+handle T2 do
+   emit B
+end trap
+
+end module

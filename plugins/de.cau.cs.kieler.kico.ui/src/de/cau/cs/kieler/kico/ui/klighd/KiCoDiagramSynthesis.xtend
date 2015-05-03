@@ -150,6 +150,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             return new Pair(-1, null)
         }
         if (dest.container == source.container) {
+
             // if this is a group-internal transition
             return new Pair(cnt, source)
         } else {
@@ -185,6 +186,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             return new Pair(-1, null)
         }
         if (dest.container == source.container) {
+
             // if this is a group-internal transition
             return new Pair(cnt, dest)
         } else {
@@ -208,7 +210,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     // -------------------------------------------------------------------------
     // Remember which super states already are connected (render just a single connection)
     private static ArrayList<Integer> connected = new ArrayList<Integer>();
-    
+
     // The Main entry transform function   
     override transform(List<TransformationDummy> model) {
         connected.clear
@@ -319,7 +321,6 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                         transDest = transformationDummy.getHierarchicalDest(dest)
 
                         if (transSource != null && transDest != null) {
-
                             debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'" )
                             if (!(connected.contains(transSource.hashCode + transDest.hashCode))) {
                                 //System.out.println(" DO   CONT '" + transSource.id + "' TO '" + transDest.id + "'  ::: " + connected.toString);

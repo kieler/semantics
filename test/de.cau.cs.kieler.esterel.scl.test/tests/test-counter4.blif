@@ -1,0 +1,35 @@
+# A four-bit binary counter
+
+.model counter4
+.outputs c8 c4 c2 c1
+
+.latch c8q c8 0
+.latch c4q c4 0
+.latch c2q c2 0
+.latch c1q c1 0
+
+.names c1 c1q
+0 1
+
+.names c1 c2inv
+1 1
+
+.names c2inv c2 c2q
+01 1
+10 1
+
+.names c1 c2 c4inv
+11 1
+
+.names c4inv c4 c4q
+00 0
+11 0
+
+.names c1 c2 c4 c8inv
+111 1
+
+.names c8inv c8 c8q
+01 1
+10 1
+
+.end

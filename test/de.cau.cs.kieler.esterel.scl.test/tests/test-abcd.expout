@@ -1,0 +1,176 @@
+module abcd:
+input A;
+input B;
+input C;
+input D;
+input LOCK;
+output A_PRESELECTED_ON;
+output B_PRESELECTED_ON;
+output C_PRESELECTED_ON;
+output D_PRESELECTED_ON;
+output A_PRESELECTED_OFF;
+output B_PRESELECTED_OFF;
+output C_PRESELECTED_OFF;
+output D_PRESELECTED_OFF;
+output A_LOCKED_ON;
+output B_LOCKED_ON;
+output C_LOCKED_ON;
+output D_LOCKED_ON;
+output A_LOCKED_OFF;
+output B_LOCKED_OFF;
+output C_LOCKED_OFF;
+output D_LOCKED_OFF;
+
+signal LOCKED,
+       UNLOCKED,
+       PRESELECTED in
+    emit A_PRESELECTED_OFF;
+    emit A_LOCKED_OFF;
+    loop
+      trap BACK_TO_MAIN_LOOP in
+        trap PRESELECTED in
+          loop
+            do
+              await A do
+                exit PRESELECTED
+              end await
+            upto LOCKED;
+            await UNLOCKED
+          end loop
+        end trap;
+        loop
+          emit PRESELECTED;
+          emit A_PRESELECTED_ON;
+          do
+            await 
+              case A
+              case PRESELECTED
+            end await;
+            emit A_PRESELECTED_OFF;
+            exit BACK_TO_MAIN_LOOP
+          watching LOCK timeout
+            emit A_PRESELECTED_OFF;
+            emit LOCKED;
+            emit A_LOCKED_ON;
+            await LOCK do
+              emit A_LOCKED_OFF;
+              emit UNLOCKED
+            end await
+          end timeout
+        end loop
+      end trap
+    end loop
+  ||
+    emit B_PRESELECTED_OFF;
+    emit B_LOCKED_OFF;
+    loop
+      trap BACK_TO_MAIN_LOOP in
+        trap PRESELECTED in
+          loop
+            do
+              await B do
+                exit PRESELECTED
+              end await
+            upto LOCKED;
+            await UNLOCKED
+          end loop
+        end trap;
+        loop
+          emit PRESELECTED;
+          emit B_PRESELECTED_ON;
+          do
+            await 
+              case B
+              case PRESELECTED
+            end await;
+            emit B_PRESELECTED_OFF;
+            exit BACK_TO_MAIN_LOOP
+          watching LOCK timeout
+            emit B_PRESELECTED_OFF;
+            emit LOCKED;
+            emit B_LOCKED_ON;
+            await LOCK do
+              emit B_LOCKED_OFF;
+              emit UNLOCKED
+            end await
+          end timeout
+        end loop
+      end trap
+    end loop
+  ||
+    emit C_PRESELECTED_OFF;
+    emit C_LOCKED_OFF;
+    loop
+      trap BACK_TO_MAIN_LOOP in
+        trap PRESELECTED in
+          loop
+            do
+              await C do
+                exit PRESELECTED
+              end await
+            upto LOCKED;
+            await UNLOCKED
+          end loop
+        end trap;
+        loop
+          emit PRESELECTED;
+          emit C_PRESELECTED_ON;
+          do
+            await 
+              case C
+              case PRESELECTED
+            end await;
+            emit C_PRESELECTED_OFF;
+            exit BACK_TO_MAIN_LOOP
+          watching LOCK timeout
+            emit C_PRESELECTED_OFF;
+            emit LOCKED;
+            emit C_LOCKED_ON;
+            await LOCK do
+              emit C_LOCKED_OFF;
+              emit UNLOCKED
+            end await
+          end timeout
+        end loop
+      end trap
+    end loop
+  ||
+    emit D_PRESELECTED_OFF;
+    emit D_LOCKED_OFF;
+    loop
+      trap BACK_TO_MAIN_LOOP in
+        trap PRESELECTED in
+          loop
+            do
+              await D do
+                exit PRESELECTED
+              end await
+            upto LOCKED;
+            await UNLOCKED
+          end loop
+        end trap;
+        loop
+          emit PRESELECTED;
+          emit D_PRESELECTED_ON;
+          do
+            await 
+              case D
+              case PRESELECTED
+            end await;
+            emit D_PRESELECTED_OFF;
+            exit BACK_TO_MAIN_LOOP
+          watching LOCK timeout
+            emit D_PRESELECTED_OFF;
+            emit LOCKED;
+            emit D_LOCKED_ON;
+            await LOCK do
+              emit D_LOCKED_OFF;
+              emit UNLOCKED
+            end await
+          end timeout
+        end loop
+      end trap
+    end loop
+end signal
+
+end module

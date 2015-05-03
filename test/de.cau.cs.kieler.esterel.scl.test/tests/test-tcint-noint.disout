@@ -1,0 +1,668 @@
+module tcint:
+input SEL;
+input WRITE;
+input ACK;
+input ERR;
+input RESET;
+input ADB22;
+input ADB23;
+input ADB24;
+output RDY;
+output RREQ;
+output WREQ;
+output CONFLICT;
+input Fi_FF;
+input Fi_PAF;
+input Fi_HF;
+input Fo_EF;
+input Fo_PAE;
+input Fo_HF;
+input PomIoDone;
+output WPomAdCyc;
+output RPomAdCyc;
+output WFifo;
+output PopRFifo;
+output pOEnRFifo;
+output TagFlag;
+output TCRegInOE;
+output TCRegInCkE;
+output TCRegOutOE;
+output TCRegOutCkDis;
+output ExtBufDir;
+output ExtBufOE;
+output RomAD;
+output RomCE;
+output RomOE;
+output LcaOE;
+input SetDMAReadAddressReady;
+input DMAReadOver;
+input SetDMAWriteAddressReady;
+input DMAWriteOver;
+
+signal pHostDrives,
+       pRomDrives,
+       pPamDrives,
+       pLcaDrives,
+       pDriveTBC,
+       pRREQ,
+       pWREQ,
+       DMAReadAddressReady,
+       DMAWriteAddressReady,
+       ConflictOnSEL,
+       AcceptSEL in
+    loop
+      if (pRREQ) {
+        abort
+          loop
+            pause
+          end loop
+        when tick;
+        emit RREQ
+      } else {
+        abort
+          loop
+            pause
+          end loop
+        when tick
+      }
+    end loop
+  ||
+    loop
+      if (pWREQ) {
+        abort
+          loop
+            pause
+          end loop
+        when tick;
+        emit WREQ
+      } else {
+        abort
+          loop
+            pause
+          end loop
+        when tick
+      }
+    end loop
+  ||
+      loop
+        emit TCRegInCkE;
+        pause
+      end loop
+    ||
+      loop
+        emit RomCE;
+        pause
+      end loop
+    ||
+      loop
+        if (pDriveTBC) {
+          abort
+            loop
+              pause
+            end loop
+          when tick;
+          emit TCRegOutOE
+        } else {
+          abort
+            loop
+              pause
+            end loop
+          when tick
+        }
+      end loop
+    ||
+      loop
+        trap EndOfHostDrives in
+          [
+            abort
+              loop
+                pause
+              end loop
+            when tick;
+            [
+              loop
+                emit TCRegInOE;
+                pause
+              end loop
+            ||
+              loop
+                emit ExtBufDir;
+                pause
+              end loop
+            ||
+              loop
+                emit ExtBufOE;
+                pause
+              end loop
+            ]
+          ||
+            abort
+              loop
+                pause
+              end loop
+            when [pPamDrives or pRomDrives or pLcaDrives] do
+              exit EndOfHostDrives
+            end abort
+          ]
+        end trap;
+        if (pPamDrives) {
+          trap EndOfPamDrives in
+            [
+              abort
+                loop
+                  pause
+                end loop
+              when tick;
+              loop
+                emit ExtBufOE;
+                pause
+              end loop
+            ||
+              abort
+                loop
+                  pause
+                end loop
+              when pHostDrives do
+                exit EndOfPamDrives
+              end abort
+            ]
+          end trap
+        } else {
+          if (pRomDrives) {
+            trap EndOfRomDrives in
+              [
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                loop
+                  emit RomOE;
+                  pause
+                end loop
+              ||
+                abort
+                  loop
+                    pause
+                  end loop
+                when pHostDrives do
+                  exit EndOfRomDrives
+                end abort
+              ]
+            end trap
+          } else {
+            if (pLcaDrives) {
+              trap EndOfLcaDrives in
+                [
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when tick;
+                  loop
+                    emit LcaOE;
+                    pause
+                  end loop
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when pHostDrives do
+                    exit EndOfLcaDrives
+                  end abort
+                ]
+              end trap
+            }
+          }
+        }
+      end loop
+  ||
+      loop
+        abort
+          loop
+            pause
+          end loop
+        when SetDMAReadAddressReady;
+        abort
+          loop
+            emit DMAReadAddressReady;
+            pause
+          end loop
+        when DMAReadOver
+      end loop
+    ||
+      loop
+        abort
+          loop
+            pause
+          end loop
+        when SetDMAWriteAddressReady;
+        abort
+          loop
+            emit DMAWriteAddressReady;
+            pause
+          end loop
+        when DMAWriteOver
+      end loop
+  ||
+    signal RejectSEL in
+        loop
+          abort
+            loop
+              pause
+            end loop
+          when ConflictOnSEL;
+          abort
+            every immediate SEL do
+              emit RejectSEL
+            end every
+          when AcceptSEL
+        end loop
+      ||
+        loop
+          if (RejectSEL) {
+            abort
+              loop
+                pause
+              end loop
+            when tick;
+            emit RDY;
+            emit CONFLICT
+          } else {
+            abort
+              loop
+                pause
+              end loop
+            when tick
+          }
+        end loop
+    end signal
+  ||
+    abort
+      loop
+        pause
+      end loop
+    when tick;
+    loop
+      abort
+        loop
+          pause
+        end loop
+      when
+        case immediate [Fo_HF and DMAWriteAddressReady] do
+          emit ConflictOnSEL;
+          trap AlmostEndOfDmaWrite in
+            [
+              loop
+                emit pWREQ;
+                pause
+              end loop
+            ||
+              emit pLcaDrives;
+              abort
+                loop
+                  pause
+                end loop
+              when tick;
+              emit pPamDrives;
+              [
+                loop
+                  emit pOEnRFifo;
+                  pause
+                end loop
+              ||
+                emit PopRFifo;
+                trap AckReceived in
+                  [
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when tick;
+                    loop
+                      emit TCRegOutCkDis;
+                      pause
+                    end loop
+                  ||
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when immediate ACK do
+                      exit AckReceived
+                    end abort
+                  ]
+                end trap;
+                emit AcceptSEL;
+                emit pDriveTBC;
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                emit PopRFifo;
+                emit pDriveTBC;
+                exit AlmostEndOfDmaWrite
+              ]
+            ]
+          end trap;
+          emit pHostDrives;
+          abort
+            loop
+              pause
+            end loop
+          when tick;
+          emit pDriveTBC;
+          abort
+            loop
+              pause
+            end loop
+          when tick
+        case immediate [not Fi_HF and DMAReadAddressReady] do
+          emit ConflictOnSEL;
+          trap EndOfDmaRead in
+            [
+              trap WordCount in
+                  loop
+                    emit pRREQ;
+                    pause
+                  end loop
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when ACK;
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when tick;
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when tick;
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when tick;
+                  exit WordCount
+              end trap
+            ||
+              emit pLcaDrives;
+              abort
+                loop
+                  pause
+                end loop
+              when tick;
+              emit pHostDrives;
+              trap AckReceived in
+                [
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when tick;
+                  loop
+                    emit TCRegOutCkDis;
+                    pause
+                  end loop
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when immediate ACK do
+                    exit AckReceived
+                  end abort
+                ]
+              end trap;
+              emit AcceptSEL;
+              emit pDriveTBC;
+              abort
+                loop
+                  pause
+                end loop
+              when ACK;
+              trap NotAck in
+                [
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when tick;
+                  loop
+                    emit WFifo;
+                    pause
+                  end loop
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when [not ACK] do
+                    exit NotAck
+                  end abort
+                ]
+              end trap;
+              exit EndOfDmaRead
+            ]
+          end trap
+        case immediate SEL do
+          emit TagFlag;
+          trap ReadSharedEnd,
+               WriteSharedEnd in
+            if (SEL and WRITE and not ADB24 and ADB23 and not ADB22) {
+              abort
+                loop
+                  pause
+                end loop
+              when tick;
+              emit WPomAdCyc;
+              abort
+                loop
+                  pause
+                end loop
+              when PomIoDone;
+              abort
+                loop
+                  pause
+                end loop
+              when tick;
+              abort
+                loop
+                  pause
+                end loop
+              when tick;
+              emit RDY;
+              abort
+                loop
+                  pause
+                end loop
+              when tick
+            } else {
+              if (SEL and not WRITE and not ADB24 and ADB23 and not ADB22) {
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                emit pPamDrives;
+                emit RPomAdCyc;
+                abort
+                  loop
+                    pause
+                  end loop
+                when PomIoDone;
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                exit ReadSharedEnd
+              } else {
+                if (SEL and WRITE and ADB24) {
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when tick;
+                  emit RDY;
+                  emit WFifo;
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when tick;
+                  emit WFifo;
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when tick
+                } else {
+                  if (SEL and not WRITE and ADB24) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when tick;
+                    emit pPamDrives;
+                    emit pOEnRFifo;
+                    emit PopRFifo;
+                    emit WFifo;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when tick;
+                    exit ReadSharedEnd
+                  } else {
+                    if (SEL and WRITE and not ADB24 and ADB23 and ADB22) {
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when tick;
+                      emit RDY;
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when tick;
+                      emit WFifo;
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when tick
+                    } else {
+                      if (SEL and not WRITE and not ADB24 and ADB23 and ADB22) {
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when tick;
+                        emit pPamDrives;
+                        emit pOEnRFifo;
+                        emit PopRFifo;
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when tick;
+                        exit ReadSharedEnd
+                      } else {
+                        if (SEL and not WRITE and not ADB24 and not ADB23 and not ADB22) {
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when tick;
+                          emit pRomDrives;
+                          emit RomAD;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when tick;
+                          abort
+                            loop
+                              emit RomOE;
+                              pause
+                            end loop
+                          when tick;
+                          emit RomOE;
+                          exit ReadSharedEnd
+                        } else {
+                          if (SEL and WRITE and not ADB24 and not ADB23 and ADB22) {
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when tick;
+                            emit RDY;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when tick
+                          } else {
+                            if (SEL and not WRITE and not ADB24 and not ADB23 and ADB22) {
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when tick;
+                              emit pLcaDrives;
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when tick;
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when tick;
+                              exit ReadSharedEnd
+                            } else {
+                              loop
+                                pause
+                              end loop
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          handle ReadSharedEnd or WriteSharedEnd do
+            [
+              if (ReadSharedEnd) {
+                emit pDriveTBC;
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                emit RDY;
+                emit pHostDrives;
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick
+              }
+            ]
+          end trap
+      end abort
+    end loop
+end signal
+
+end module

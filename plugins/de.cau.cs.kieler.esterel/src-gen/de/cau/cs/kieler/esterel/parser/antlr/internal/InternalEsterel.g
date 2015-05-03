@@ -2924,11 +2924,11 @@ ruleAtomicStatement returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicStatementAccess().getSustainParserRuleCall_20()); 
+        newCompositeNode(grammarAccess.getAtomicStatementAccess().getWeakSuspendParserRuleCall_20()); 
     }
-    this_Sustain_20=ruleSustain
+    this_WeakSuspend_20=ruleWeakSuspend
     { 
-        $current = $this_Sustain_20.current; 
+        $current = $this_WeakSuspend_20.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -2937,11 +2937,11 @@ ruleAtomicStatement returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicStatementAccess().getTrapParserRuleCall_21()); 
+        newCompositeNode(grammarAccess.getAtomicStatementAccess().getSustainParserRuleCall_21()); 
     }
-    this_Trap_21=ruleTrap
+    this_Sustain_21=ruleSustain
     { 
-        $current = $this_Trap_21.current; 
+        $current = $this_Sustain_21.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -2950,11 +2950,11 @@ ruleAtomicStatement returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicStatementAccess().getLocalVariableParserRuleCall_22()); 
+        newCompositeNode(grammarAccess.getAtomicStatementAccess().getTrapParserRuleCall_22()); 
     }
-    this_LocalVariable_22=ruleLocalVariable
+    this_Trap_22=ruleTrap
     { 
-        $current = $this_LocalVariable_22.current; 
+        $current = $this_Trap_22.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -2963,11 +2963,24 @@ ruleAtomicStatement returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAtomicStatementAccess().getWeakAbortParserRuleCall_23()); 
+        newCompositeNode(grammarAccess.getAtomicStatementAccess().getLocalVariableParserRuleCall_23()); 
     }
-    this_WeakAbort_23=ruleWeakAbort
+    this_LocalVariable_23=ruleLocalVariable
     { 
-        $current = $this_WeakAbort_23.current; 
+        $current = $this_LocalVariable_23.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAtomicStatementAccess().getWeakAbortParserRuleCall_24()); 
+    }
+    this_WeakAbort_24=ruleWeakAbort
+    { 
+        $current = $this_WeakAbort_24.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -7026,6 +7039,75 @@ ruleSuspend returns [EObject current=null]
 
 
 
+// Entry rule entryRuleWeakSuspend
+entryRuleWeakSuspend returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getWeakSuspendRule()); }
+	 iv_ruleWeakSuspend=ruleWeakSuspend 
+	 { $current=$iv_ruleWeakSuspend.current; } 
+	 EOF 
+;
+
+// Rule WeakSuspend
+ruleWeakSuspend returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='weak' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getWeakSuspendAccess().getWeakKeyword_0());
+    }
+	otherlv_1='suspend' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getWeakSuspendAccess().getSuspendKeyword_1());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getWeakSuspendAccess().getStatementStatementParserRuleCall_2_0()); 
+	    }
+		lv_statement_2_0=ruleStatement		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getWeakSuspendRule());
+	        }
+       		set(
+       			$current, 
+       			"statement",
+        		lv_statement_2_0, 
+        		"Statement");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_3='when' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getWeakSuspendAccess().getWhenKeyword_3());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getWeakSuspendAccess().getDelayDelayExprParserRuleCall_4_0()); 
+	    }
+		lv_delay_4_0=ruleDelayExpr		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getWeakSuspendRule());
+	        }
+       		set(
+       			$current, 
+       			"delay",
+        		lv_delay_4_0, 
+        		"DelayExpr");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+;
+
+
+
+
+
 // Entry rule entryRuleSustain
 entryRuleSustain returns [EObject current=null] 
 	:
@@ -7481,6 +7563,10 @@ ruleLocalVariable returns [EObject current=null]
 )
 )?)
 ;
+
+
+
+
 
 
 

@@ -1,0 +1,52 @@
+module RUNNER:
+input METER;
+input SECOND;
+input MORNING;
+input LAP;
+input STEP;
+input HEART_BEAT;
+output WALK;
+output RUN;
+output JUMP;
+output GO_TO_WORK;
+output GO_TO_HOSPITAL;
+relation SECOND # METER # STEP;
+relation MORNING => SECOND;
+relation LAP => METER;
+
+trap HEART_ATTACK in
+  every MORNING do
+    do
+      loop
+        do
+          emit WALK
+        upto 100 METER;
+        signal HEART_ATTACK in
+          [
+            do
+              do
+                every STEP do
+                  emit JUMP
+                end every
+              upto 15 SECOND;
+              emit RUN
+            watching HEART_ATTACK timeout
+              exit HEART_ATTACK
+            end timeout
+          ||
+            loop
+              await SECOND do
+                emit HEART_ATTACK
+              end await
+            each HEART_BEAT
+          ]
+        end signal
+      each LAP
+    upto 2 LAP;
+    emit GO_TO_WORK
+  end every
+handle HEART_ATTACK do
+  emit GO_TO_HOSPITAL
+end trap
+
+end module

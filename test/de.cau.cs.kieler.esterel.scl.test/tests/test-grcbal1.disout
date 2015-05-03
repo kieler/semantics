@@ -1,0 +1,20 @@
+module test_grcbal1:
+input A;
+output B;
+output C;
+
+if (A) {
+    emit B
+  ||
+    if (C) {
+      
+    } else {
+      
+    }
+} else {
+  if (B) {
+    emit C
+  }
+}
+
+end module

@@ -1,0 +1,114 @@
+module RSFlipFlop:
+input SET : boolean;
+input RESET : boolean;
+output ITERATE;
+output ITERATE12;
+output Q : boolean;
+output NQ : boolean;
+
+signal O_OR1 := false : boolean,
+       O_OR2 := false : boolean,
+       O_NOT1 := false : boolean,
+       O_NOT2 := false : boolean,
+       O_PORT12 := false : boolean in
+    run OR [
+      signal SET / a,
+             O_NOT2 / b,
+             O_OR1 / out ]
+  ||
+    run OR [
+      signal RESET / b,
+             O_PORT12 / a,
+             O_OR2 / out ]
+  ||
+    run NOT [
+      signal O_OR1 / v,
+             O_NOT1 / out ]
+  ||
+    run NOT [
+      signal O_OR2 / v,
+             O_NOT2 / out ]
+  ||
+    run BOOLPORT [
+      signal O_NOT1 / IN,
+             O_PORT12 / OUT,
+             ITERATE12 / ITERATE ]
+  ||
+    every O_NOT1 do
+      emit NQ(?O_NOT1)
+    end every
+  ||
+    every O_NOT2 do
+      emit Q(?O_NOT2)
+    end every
+  ||
+    loop
+      await ITERATE12;
+      emit ITERATE
+    end loop
+end signal
+
+end module
+
+module OR:
+function calc_or(boolean, boolean) : boolean;
+input a : boolean;
+input b : boolean;
+output out : boolean;
+
+loop
+  await 
+    case a
+    case b
+  end await;
+  var rv : boolean in
+    rv := calc_or(?a, ?b);
+    emit out(rv)
+  end var
+end loop
+
+end module
+
+module NOT:
+function calc_not(boolean) : boolean;
+input v : boolean;
+output out : boolean;
+
+loop
+  await v;
+  var rv : boolean in
+    rv := calc_not(?v);
+    emit out(rv)
+  end var
+end loop
+
+end module
+
+module BOOLPORT:
+procedure dump()(boolean, boolean);
+input IN : boolean;
+output OUT : boolean;
+output ITERATE;
+
+var old := false : boolean,
+    value := false : boolean in
+  emit OUT(false);
+  await IN;
+  old := ?IN;
+  emit ITERATE;
+  pause;
+  emit OUT(old);
+  loop
+    await IN;
+    value := ?IN;
+    call dump()(old, value);
+    if value <> old then
+      emit ITERATE;
+      pause;
+      emit OUT(value);
+      old := value
+    end if
+  end loop
+end var
+
+end module

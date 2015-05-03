@@ -1,0 +1,12 @@
+module test_suspend8:
+input A;
+output B;
+
+suspend
+  loop
+    emit B;
+    pause
+  end loop
+when immediate [not A]
+
+end module

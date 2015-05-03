@@ -149,6 +149,7 @@ public class KIEMModelSelectionCombination implements
                 // add to opened model files
                 KiemPlugin.getOpenedModelFiles().add(inputModelPath);
                 EObject rootObject = getInputModelEObject(editorPart);
+
                 if (rootObject != null) {
                     KiemPlugin.getOpenedModelRootObjects().put(inputModelPath, rootObject);
                 }

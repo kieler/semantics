@@ -10,7 +10,7 @@ import de.cau.cs.kieler.scl.scl.Instruction;
 import de.cau.cs.kieler.scl.scl.InstructionStatement;
 import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
-import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
@@ -87,9 +87,9 @@ public class SclAdapterFactory extends AdapterFactoryImpl
     new SclSwitch<Adapter>()
     {
       @Override
-      public Adapter caseProgram(Program object)
+      public Adapter caseSCLProgram(SCLProgram object)
       {
-        return createProgramAdapter();
+        return createSCLProgramAdapter();
       }
       @Override
       public Adapter caseStatement(Statement object)
@@ -174,16 +174,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Program <em>Program</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.SCLProgram <em>SCL Program</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.Program
+   * @see de.cau.cs.kieler.scl.scl.SCLProgram
    * @generated
    */
-  public Adapter createProgramAdapter()
+  public Adapter createSCLProgramAdapter()
   {
     return null;
   }

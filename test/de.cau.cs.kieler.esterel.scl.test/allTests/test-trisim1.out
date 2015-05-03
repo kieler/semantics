@@ -1,0 +1,22 @@
+module test_trisim:
+input A;
+input C;
+output B;
+output D;
+
+loop
+    present A then
+      emit B
+    end present
+  ||
+    present C then
+      emit B
+    end present;
+    pause;
+    present C then
+      emit D
+    end present;
+    pause
+end loop
+
+end module
