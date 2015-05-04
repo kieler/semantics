@@ -41,7 +41,7 @@
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.DependencyTransformation"
-            producesDependencies="SCGBBGROUP"
+            producesDependencies="SCGBBGROUP,SCPDG"
             id="SCGDEP"
             method="transform"
             name="Dependencies">
@@ -86,6 +86,12 @@
             id="SCGSEQUENTIALIZE"
             method="sequentialize"
             name="Sequentialize">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.transformations.SCPDGTransformation"
+            id="SCPDG"
+            method="transform"
+            name="SCPDG">
       </transformationMethod>
    </extension>
 

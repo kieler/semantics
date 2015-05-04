@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.rating 2015-05-03 proposed yellow
  */
 
-class SCGPDGTransformation extends Transformation {
+class SCPDGTransformation extends Transformation {
     
     // -------------------------------------------------------------------------
     // -- Injections 
