@@ -225,12 +225,11 @@ class S2C {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''    void tick(){
-       g0 = _GO;
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
-       _GO = 0;
        «program.setPreVariables»
+       _GO = 0;
        return;
     }
     '''
@@ -288,7 +287,11 @@ class S2C {
    // Expand a ASSIGNMENT instruction.
    def dispatch CharSequence expand(Assignment assignment) {
        if (assignment.expression instanceof FunctionCall) {
-          return '''«assignment.expression.expand»;'''
+           var returnValue = '''«assignment.expression.expand»;'''
+            if (assignment.variable != null) {
+                returnValue = '''«assignment.variable.expand» = ''' + returnValue
+            }            
+           return returnValue 
        }
        else if (!assignment.indices.nullOrEmpty) {
           var returnValue = '''«assignment.variable.expand »'''

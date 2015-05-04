@@ -13,5 +13,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.edit;visibility:=reexport,
  de.cau.cs.kieler.core.annotations;visibility:=reexport,
  de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
- de.cau.cs.kieler.core.annotations.edit
+ de.cau.cs.kieler.core.annotations.edit;visibility:=reexport
 Bundle-ActivationPolicy: lazy

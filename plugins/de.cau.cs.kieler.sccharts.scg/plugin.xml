@@ -73,25 +73,26 @@
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.scg.SCGTransformation"
-            dependencies="SCGDEP"
+            producesDependencies="SCGDEP"
             id="SCG"
-            method="transformSCG"
+            method="transform"
             name="SCG">
       </transformationMethod>
       <transformationGroup
             id="SCGRAPH"
             isCategory="true"
             name="SCGraph"
-            transformations="SCG, SCGDEP, SCGBBGROUP, SCGSCHEDGROUP, SCGSEQGROUP">
+            transformations="SCG, SCGDEP, SCGBBGROUP, SCGSCHEDULE, SCGSEQUENTIALIZE, SCGGC">
       </transformationGroup>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.extension">
-      <ResourceExtensionInformation
+      <ExtensionInformation
             className="SCGraph"
+            editor_id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
             extensionName="scg"
             isXMI="true">
-      </ResourceExtensionInformation>
+      </ExtensionInformation>
    </extension>
 
 

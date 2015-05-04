@@ -37,7 +37,7 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         de.cau.cs.kieler.s.services.SGrammarAccess f = (de.cau.cs.kieler.s.services.SGrammarAccess) getGrammarAccess();
         
         // Linebreaks after Program
-        c.setLinewrap(2).after(f.getProgramAccess().getRightParenthesisKeyword_4());
+        c.setLinewrap(2).after(f.getProgramAccess().getRightParenthesisKeyword_5());
         
         // Indentation for Signal, Input, Output declaration parts
         //c.setIndentationIncrement().after(f.getProgramAccess().getSignalsKeyword_7_0());
@@ -49,7 +49,7 @@ public class SFormatter extends AbstractDeclarativeFormatter {
 
         // Each Signal, Input, Output declaration part in a new line
 //        c.setLinewrap(1).before(f.getValuedObjectRule());
-        c.setLinewrap().after(f.getDeclarationAccess().getSemicolonKeyword_3());
+        c.setLinewrap().after(f.getDeclarationAccess().getSemicolonKeyword_4());
         
         // Put ";" in a new line, one line separates Sig/In/Out parts
         //c.setLinewrap(1).after(f.getProgramAccess().getSignalsKeyword_7_0());
@@ -64,11 +64,11 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         //c.setLinewrap(1).after(f.getProgramAccess().getSemicolonKeyword_5_2());
         
         // Linebreaks after STATE 
-        c.setIndentation(f.getStateAccess().getLeftCurlyBracketKeyword_4(), 
-        		         f.getStateAccess().getRightCurlyBracketKeyword_7());
-        c.setLinewrap().after(f.getStateAccess().getLeftCurlyBracketKeyword_4());
-        c.setLinewrap().before(f.getStateAccess().getRightCurlyBracketKeyword_7());
-        c.setLinewrap(2).before(f.getStateAccess().getStateKeyword_0());
+        c.setIndentation(f.getStateAccess().getLeftCurlyBracketKeyword_5(), 
+        		         f.getStateAccess().getRightCurlyBracketKeyword_8());
+        c.setLinewrap().after(f.getStateAccess().getLeftCurlyBracketKeyword_5());
+        c.setLinewrap().before(f.getStateAccess().getRightCurlyBracketKeyword_8());
+        c.setLinewrap(2).before(f.getStateAccess().getStateKeyword_1());
 
         // Linebreaks after Instructions
         c.setLinewrap(1).before(f.getInstructionRule());
@@ -86,28 +86,26 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         
         
         // No spae before ( for state and instructions
-        //c.setNoSpace().before(f.getStateAccess().getLeftParenthesisKeyword_1());
-        c.setNoSpace().before(f.getAbortAccess().getLeftParenthesisKeyword_2());
+//        c.setNoSpace().before(f.getAbortAccess().getLeftParenthesisKeyword_2());
         c.setNoSpace().before(f.getEmitAccess().getLeftParenthesisKeyword_1());
         c.setNoSpace().before(f.getEmitAccess().getLeftParenthesisKeyword_3_0());
-        //c.setNoSpace().before(f.getIfAccess().getLeftParenthesisKeyword_1());
-        c.setNoSpace().before(f.getJoinAccess().getLeftParenthesisKeyword_2());
-        c.setNoSpace().before(f.getPauseAccess().getLeftParenthesisKeyword_2());
-        c.setNoSpace().before(f.getTermAccess().getLeftParenthesisKeyword_2());
-        c.setNoSpace().before(f.getHaltAccess().getLeftParenthesisKeyword_2());
+//        c.setNoSpace().before(f.getJoinAccess().getLeftParenthesisKeyword_2());
+//        c.setNoSpace().before(f.getPauseAccess().getLeftParenthesisKeyword_2());
+//        c.setNoSpace().before(f.getTermAccess().getLeftParenthesisKeyword_2());
+//        c.setNoSpace().before(f.getHaltAccess().getLeftParenthesisKeyword_2());
         c.setNoSpace().before(f.getTransAccess().getLeftParenthesisKeyword_1());
         c.setNoSpace().before(f.getForkAccess().getLeftParenthesisKeyword_1());
         c.setNoSpace().before(f.getPrioAccess().getLeftParenthesisKeyword_1());
         
         // No space behind ( and before ) for state identifier and instruction
-        c.setNoSpace().after(f.getProgramAccess().getLeftParenthesisKeyword_2());
-        c.setNoSpace().before(f.getProgramAccess().getRightParenthesisKeyword_4());
+        c.setNoSpace().after(f.getProgramAccess().getLeftParenthesisKeyword_3());
+        c.setNoSpace().before(f.getProgramAccess().getRightParenthesisKeyword_5());
         
-        c.setNoSpace().after(f.getStateAccess().getLeftParenthesisKeyword_1());
-        c.setNoSpace().before(f.getStateAccess().getRightParenthesisKeyword_3());
+        c.setNoSpace().after(f.getStateAccess().getLeftParenthesisKeyword_2());
+        c.setNoSpace().before(f.getStateAccess().getRightParenthesisKeyword_4());
         
-        c.setNoSpace().after(f.getPauseAccess().getLeftParenthesisKeyword_2());
-        c.setNoSpace().before(f.getPauseAccess().getRightParenthesisKeyword_4());
+//        c.setNoSpace().after(f.getPauseAccess().getLeftParenthesisKeyword_2());
+//        c.setNoSpace().before(f.getPauseAccess().getRightParenthesisKeyword_4());
 
         c.setNoSpace().after(f.getEmitAccess().getLeftParenthesisKeyword_1());
         c.setNoSpace().after(f.getEmitAccess().getLeftParenthesisKeyword_3_0());
@@ -117,14 +115,14 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         c.setNoSpace().after(f.getIfAccess().getLeftParenthesisKeyword_1());
         c.setNoSpace().before(f.getIfAccess().getRightParenthesisKeyword_4());
 
-        c.setNoSpace().after(f.getJoinAccess().getLeftParenthesisKeyword_2());
-        c.setNoSpace().before(f.getJoinAccess().getRightParenthesisKeyword_4());
+//        c.setNoSpace().after(f.getJoinAccess().getLeftParenthesisKeyword_2());
+//        c.setNoSpace().before(f.getJoinAccess().getRightParenthesisKeyword_4());
+//
+//        c.setNoSpace().after(f.getTermAccess().getLeftParenthesisKeyword_2());
+//        c.setNoSpace().before(f.getTermAccess().getRightParenthesisKeyword_4());
 
-        c.setNoSpace().after(f.getTermAccess().getLeftParenthesisKeyword_2());
-        c.setNoSpace().before(f.getTermAccess().getRightParenthesisKeyword_4());
-
-        c.setNoSpace().after(f.getHaltAccess().getLeftParenthesisKeyword_2());
-        c.setNoSpace().before(f.getHaltAccess().getRightParenthesisKeyword_4());
+//        c.setNoSpace().after(f.getHaltAccess().getLeftParenthesisKeyword_2());
+//        c.setNoSpace().before(f.getHaltAccess().getRightParenthesisKeyword_4());
 
         c.setNoSpace().after(f.getTransAccess().getLeftParenthesisKeyword_1());
         c.setNoSpace().before(f.getTransAccess().getRightParenthesisKeyword_3());
@@ -135,7 +133,7 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         c.setNoSpace().before(f.getForkAccess().getCommaKeyword_3());
 
         // No space before ; separating instructions
-        c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_6_1());
+        c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_7_1());
         c.setNoSpace().before(f.getIfAccess().getSemicolonKeyword_6_1());
         
         // No space in prio instructions
@@ -145,7 +143,7 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         /*
          * DECLARATIONS
          */
-        c.setNoSpace().before(f.getDeclarationAccess().getSemicolonKeyword_3());
+        c.setNoSpace().before(f.getDeclarationAccess().getSemicolonKeyword_4());
     
     }
 }

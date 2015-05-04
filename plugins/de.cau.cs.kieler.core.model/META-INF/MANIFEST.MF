@@ -19,6 +19,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.core.model.adapter,
+ de.cau.cs.kieler.core.model.codegeneration,
  de.cau.cs.kieler.core.model.handlers,
  de.cau.cs.kieler.core.model.m2m,
  de.cau.cs.kieler.core.model.notify,

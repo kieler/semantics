@@ -34,55 +34,55 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ScheduledBlock extends EObject {
 	/**
-     * Returns the value of the '<em><b>Scheduling Block</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Scheduling Block</b></em>' reference.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Scheduling Block</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Scheduling Block</em>' reference.
-     * @see #setSchedulingBlock(SchedulingBlock)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getScheduledBlock_SchedulingBlock()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Scheduling Block</em>' reference.
+	 * @see #setSchedulingBlock(SchedulingBlock)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getScheduledBlock_SchedulingBlock()
+	 * @model
+	 * @generated
+	 */
 	SchedulingBlock getSchedulingBlock();
 
 	/**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.ScheduledBlock#getSchedulingBlock <em>Scheduling Block</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.ScheduledBlock#getSchedulingBlock <em>Scheduling Block</em>}' reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Scheduling Block</em>' reference.
-     * @see #getSchedulingBlock()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Scheduling Block</em>' reference.
+	 * @see #getSchedulingBlock()
+	 * @generated
+	 */
 	void setSchedulingBlock(SchedulingBlock value);
 
 	/**
-     * Returns the value of the '<em><b>Schizophrenic</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Schizophrenic</b></em>' attribute.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Schizophrenic</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Schizophrenic</em>' attribute.
-     * @see #setSchizophrenic(boolean)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getScheduledBlock_Schizophrenic()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Schizophrenic</em>' attribute.
+	 * @see #setSchizophrenic(boolean)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getScheduledBlock_Schizophrenic()
+	 * @model
+	 * @generated
+	 */
 	boolean isSchizophrenic();
 
 	/**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.ScheduledBlock#isSchizophrenic <em>Schizophrenic</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.ScheduledBlock#isSchizophrenic <em>Schizophrenic</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Schizophrenic</em>' attribute.
-     * @see #isSchizophrenic()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Schizophrenic</em>' attribute.
+	 * @see #isSchizophrenic()
+	 * @generated
+	 */
 	void setSchizophrenic(boolean value);
 
 } // ScheduledBlock

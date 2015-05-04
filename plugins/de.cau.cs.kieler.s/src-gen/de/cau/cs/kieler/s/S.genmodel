@@ -4,7 +4,7 @@
     editorDirectory="/de.cau.cs.kieler.s.editor/src" modelPluginID="de.cau.cs.kieler.s"
     forceOverwrite="true" modelName="S" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.s.edit"
-    editorPluginID="de.cau.cs.kieler.s.editor" runtimeVersion="2.9" usedGenPackages="../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    editorPluginID="de.cau.cs.kieler.s.editor" runtimeVersion="2.10" usedGenPackages="platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <genPackages prefix="S" basePackage="de.cau.cs.kieler.s" disposableProviderFactory="true"
       ecorePackage="S.ecore#/">
     <genClasses ecoreClass="S.ecore#//Program">
@@ -15,6 +15,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/states"/>
     </genClasses>
     <genClasses ecoreClass="S.ecore#//State">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//State/annotations"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//State/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//State/declarations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//State/instructions"/>

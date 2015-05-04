@@ -39,6 +39,9 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -73,11 +76,16 @@ class DependencyTransformation extends Transformation {
     
     @Inject
     extension KExpressionsExtension
+    
+    @Inject
+    extension AnnotationsExtensions    
 
 
     // -------------------------------------------------------------------------
     // -- Globals 
     // -------------------------------------------------------------------------
+    
+    public static val ANNOTATION_DEPENDENCYRANSFORMATION = "dependencies"
     
     /** 
      * threadNodeCache caches the entry nodes a specific node belongs to w.r.t. hierarchy
@@ -100,6 +108,8 @@ class DependencyTransformation extends Transformation {
     
     protected var dependencyCounter = 0
     protected var concurrentDependencyCounter = 0
+    
+    private static val SKIPIDENTICALDEPENDENCIES = true
     
     
     // -------------------------------------------------------------------------
@@ -128,6 +138,12 @@ class DependencyTransformation extends Transformation {
      * @return Returns a copy of the scg enriched with dependency information.
      */   
     def SCGraph transformSCGToSCGDEP(SCGraph scg) {
+
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
+            || scg.hasAnnotation(DependencyTransformation::ANNOTATION_DEPENDENCYRANSFORMATION)
+        ) {
+            return scg
+        }
         
         // Since KiCo may use the transformation instance several times, we must clear the caches manually. 
         threadNodeCache.clear
@@ -266,6 +282,10 @@ class DependencyTransformation extends Transformation {
       	 }
       	 System.out.println("o")
 
+        scg => [
+            annotations += createStringAnnotation(ANNOTATION_DEPENDENCYRANSFORMATION, "")
+        ]     
+
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Dependency analysis finished (overall time elapsed: "+(time / 1000)+"s).")  
         System.out.println("Dependencies: " + dependencyCounter + " (concurrent: " + concurrentDependencyCounter + ")")
@@ -320,12 +340,17 @@ class DependencyTransformation extends Transformation {
                 // If a dependency was created, add the target, the concurrency state and update the 
                 // assignment.
                 if (dependency != null) {
-                    dependency.target = node;
                     if (assignment.areConcurrent(node)) dependency.concurrent = true
                     if (assignment.areConfluent(node)) dependency.confluent = true
-                    assignment.dependencies.add(dependency);
-                    dependencyCounter = dependencyCounter + 1
-                    if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
+                    dependency.target = node;
+                    if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.dependencyExists(dependency)) {
+                        assignment.dependencies.add(dependency);
+                        dependencyCounter = dependencyCounter + 1
+                        if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
+                    } else {
+                        dependency.target = null
+                        dependency.remove
+                    }
                 }
             }
         ]
@@ -339,15 +364,34 @@ class DependencyTransformation extends Transformation {
                 else dependency = ScgFactory::eINSTANCE.createRelativeWrite_Read    
             }
             if (dependency != null) {
-                dependency.target = node;
                 if (assignment.areConcurrent(node)) dependency.concurrent = true
-                assignment.dependencies.add(dependency);
-                dependencyCounter = dependencyCounter + 1
-                if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
+                dependency.target = node;
+                if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.dependencyExists(dependency)) {
+                    assignment.dependencies.add(dependency);
+                    dependencyCounter = dependencyCounter + 1
+                    if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
+                } else {
+                    dependency.target = null
+                    dependency.remove
+                }
             }
         ]
         
         assignment
+    }
+    
+    private def boolean dependencyExists(List<Dependency> dependencies, Dependency dependency) {
+        for(d : dependencies) {
+            if (
+                d.class == dependency.class &&
+                d.target == dependency.target &&
+                d.concurrent == dependency.concurrent &&
+                d.confluent == dependency.confluent
+            ) {
+                return true
+            }            
+        }
+        return false
     }
     
     /**

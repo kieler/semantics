@@ -28,6 +28,8 @@ import java.util.List
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
 import de.cau.cs.kieler.scg.BasicBlock
 import java.util.Set
+import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.SCGraph
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -86,7 +88,7 @@ class HybridSynchronizer extends AbstractSynchronizer {
     // -- Synchronizer
     // -------------------------------------------------------------------------	
 	
-	override protected build(Join join) {
+	override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
     	// Create a new SynchronizerData class which holds the data to return.
         val data = new SynchronizerData()
 		
@@ -125,7 +127,6 @@ class HybridSynchronizer extends AbstractSynchronizer {
         
         data.guardExpression.expression = data.guardExpression.expression.and(exitExpression.not)
         
-        data		
 	}
     
     override isSynchronizable(Iterable<ThreadPathType> threadPathTypes) {
@@ -136,14 +137,14 @@ class HybridSynchronizer extends AbstractSynchronizer {
         return SYNCHRONIZER_ID
     }
     
-    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache,
-    	List<AbstractKielerCompilerAncillaryData> ancillaryData
-    ) {
-        <Predecessor> newHashSet
-    }    
-    
-	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-		<Predecessor> newHashSet
-	}    
+//    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache,
+//    	List<AbstractKielerCompilerAncillaryData> ancillaryData
+//    ) {
+//        <Predecessor> newHashSet
+//    }    
+//    
+//	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+//		<Predecessor> newHashSet
+//	}    
 		
 }

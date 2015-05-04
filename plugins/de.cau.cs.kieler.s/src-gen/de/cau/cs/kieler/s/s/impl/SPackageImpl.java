@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.s.s.Abort;
@@ -299,9 +301,19 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getState_Annotations()
+  {
+    return (EReference)stateEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getState_Name()
   {
-    return (EAttribute)stateEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)stateEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -311,7 +323,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    */
   public EReference getState_Declarations()
   {
-    return (EReference)stateEClass.getEStructuralFeatures().get(1);
+    return (EReference)stateEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -321,7 +333,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    */
   public EReference getState_Instructions()
   {
-    return (EReference)stateEClass.getEStructuralFeatures().get(2);
+    return (EReference)stateEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -742,6 +754,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     createEReference(programEClass, PROGRAM__STATES);
 
     stateEClass = createEClass(STATE);
+    createEReference(stateEClass, STATE__ANNOTATIONS);
     createEAttribute(stateEClass, STATE__NAME);
     createEReference(stateEClass, STATE__DECLARATIONS);
     createEReference(stateEClass, STATE__INSTRUCTIONS);
@@ -825,6 +838,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
+    AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
     KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
     // Create type parameters
@@ -832,6 +846,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    programEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
     hostCodeInstructionEClass.getESuperTypes().add(this.getInstruction());
     assignmentEClass.getESuperTypes().add(this.getInstruction());
     prioEClass.getESuperTypes().add(this.getInstruction());
@@ -856,6 +871,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     initEReference(getProgram_States(), this.getState(), null, "states", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(stateEClass, State.class, "State", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getState_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getState_Name(), ecorePackage.getEString(), "name", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_Instructions(), this.getInstruction(), null, "instructions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

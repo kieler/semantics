@@ -44,6 +44,13 @@ This extension point allowes to define which KiCo transformations should be visi
          </documentation>
       </annotation>
       <complexType>
+         <attribute name="label" type="string">
+            <annotation>
+               <documentation>
+                  A short label string describing the compile chain for being displayed in the selection combo.
+               </documentation>
+            </annotation>
+         </attribute>
          <attribute name="editor" type="string">
             <annotation>
                <documentation>
@@ -53,14 +60,28 @@ Leaving the editor ID empty means that the registered transformations will be vi
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="priority" type="string">
+            <annotation>
+               <documentation>
+                  An integer valued describing the priority of a compile selection.
+               </documentation>
+            </annotation>
+         </attribute>
          <attribute name="transformations" type="string">
             <annotation>
                <documentation>
-                  A comma separated list of transformation IDs that should be visible within the KiCo.Ui (KIELER Compiler Selection) View when the defined editor is active.
+                  A comma separated list of transformation IDs that should be visible within the KiCo.Ui (KIELER Compiler Selection) View when the defined editor is active. Enter &quot;ALL&quot; iff you whish to make all registered KiCo transformations visible.
                </documentation>
                <appinfo>
                   <meta.attribute translatable="true"/>
                </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="priorized" type="string">
+            <annotation>
+               <documentation>
+                  A comma separated list of transformation IDs of alternatives that should be priorized when an alternative group is selected.
+               </documentation>
             </annotation>
          </attribute>
       </complexType>

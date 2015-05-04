@@ -38,6 +38,8 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -66,14 +68,20 @@ class BasicBlockTransformation extends Transformation {
     
     @Inject
     extension SCGControlFlowExtensions
+    
+    @Inject
+    extension AnnotationsExtensions
          
          
     // -------------------------------------------------------------------------
     // -- Constants
     // -------------------------------------------------------------------------
     
-    protected val String GUARDPREFIX = "g"
+    public static val ANNOTATION_BASICBLOCKTRANSFORMATION = "basicBlocks" 
     
+    public static val String GUARDPREFIX = "g"
+    
+	protected val SPLITSCHEDULINGBLOCKSATENTRY = false
 
     // -------------------------------------------------------------------------
     // -- Globals
@@ -110,6 +118,13 @@ class BasicBlockTransformation extends Transformation {
      */
     public def SCGraph transformSCGDEPToSCGBB(SCGraph scg) {
         
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
+            || scg.hasAnnotation(BasicBlockTransformation::ANNOTATION_BASICBLOCKTRANSFORMATION)
+            || !scg.basicBlocks.empty
+        ) {
+            return scg
+        }
+        
         // Since KiCo may use the transformation instance several times, we must clear the caches manually. 
         processedNodes.clear     
         basicBlockNodeMapping.clear
@@ -125,6 +140,10 @@ class BasicBlockTransformation extends Transformation {
         val basicBlockCache = <BasicBlock> newLinkedList
         scg.createBasicBlocks(scg.nodes.head, 0, basicBlockCache)
         scg.basicBlocks += basicBlockCache
+        
+        scg => [
+            annotations += createStringAnnotation(ANNOTATION_BASICBLOCKTRANSFORMATION, "")
+        ]        
         
         val time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).")    
@@ -366,6 +385,11 @@ class BasicBlockTransformation extends Transformation {
         /** If the block begins with a join node, mark the block as synchronizer block. */
         if (nodeList.head instanceof Join) { 
             basicBlock.synchronizerBlock = true
+            for (predecessor : predecessorBlocks) {
+                if (predecessor.deadBlock) {
+                    basicBlock.deadBlock = true
+                }
+            }
         }
         if (nodeList.head instanceof Entry) { 
             basicBlock.entryBlock = true
@@ -440,7 +464,9 @@ class BasicBlockTransformation extends Transformation {
                 
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
                 block.guard = newGuard
+                block.label = newGuard.valuedObject.name
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
+                newGuard.schedulingBlockLink = block
             }
             // Add the node to the scheduling block.
             block.nodes.add(node)
@@ -455,7 +481,7 @@ class BasicBlockTransformation extends Transformation {
     
     protected def boolean schedulingBlockSplitter(Node node, Node lastNode) {
         (!node.incoming.filter(typeof(Dependency)).filter[ concurrent && !confluent].empty) ||
-        (lastNode instanceof Entry)
+        (SPLITSCHEDULINGBLOCKSATENTRY && (lastNode instanceof Entry))
     } 
     
     /**

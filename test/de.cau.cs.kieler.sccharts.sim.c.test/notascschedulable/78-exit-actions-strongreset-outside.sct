@@ -1,0 +1,11 @@
+scchart _78_exit_actions_strongreset_outside
+"78-exit-actions-strongreset-outside" {
+  output signal pure X0;
+  output signal pure Y0;
+  input signal pure R;
+
+  initial state M0 {
+    exit / Y0;
+  }
+  o-> M0 with R / X0;
+}

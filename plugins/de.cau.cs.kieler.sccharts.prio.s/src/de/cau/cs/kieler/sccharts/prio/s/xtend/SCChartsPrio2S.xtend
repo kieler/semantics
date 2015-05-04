@@ -20,13 +20,16 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
-import de.cau.cs.kieler.sccharts.codegen.dependencies.dependency.DependencyFactory
-import de.cau.cs.kieler.sccharts.codegen.dependencies.dependency.NodeType
-import de.cau.cs.kieler.sccharts.codegen.dependencies.xtend.SCCharts2Dependenies
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.DependencyFactory
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.NodeType
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.util.stdlib.TraceComponent
-import de.cau.cs.kieler.core.kexpressions.Signal
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.prio.dependencies.xtend.SCCharts2Dependencies
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import com.google.inject.Inject
 
 /**
  * Converts a SyncChart into an S program.
@@ -39,9 +42,21 @@ class SCChartsPrio2S {
     
     extension de.cau.cs.kieler.sccharts.prio.s.xtend.Helper Helper = 
          Guice::createInjector().getInstance(typeof(Helper))
-    extension de.cau.cs.kieler.sccharts.codegen.dependencies.xtend.SCCharts2Dependenies SCCharts2Dependenies = 
-         Guice::createInjector().getInstance(typeof(SCCharts2Dependenies))
-         
+    extension SCCharts2Dependencies SCCharts2Dependenies = 
+         Guice::createInjector().getInstance(typeof(SCCharts2Dependencies))
+    
+    // -------------------------------------------------------------------------
+    // Other extensions necessary
+    
+    @Inject
+    extension KExpressionsExtension
+
+    //@Inject
+    //extension SExtension
+    
+    @Inject
+    extension SCChartsExtension
+    
     static String LabelSymbol = "L"
     static String LocalSignalSymbol = "S"
 
@@ -49,18 +64,18 @@ class SCChartsPrio2S {
     // ==                                        M A I N   T R A N S F O R M A T I O N                     ==
     // ======================================================================================================
 
-    def create target : SFactory::eINSTANCE.createProgram() transform (Region rootRegion) {
-        val rootState = rootRegion.states.head();
+    def create target : SFactory::eINSTANCE.createProgram() transform (State rootState) {
+        //val rootState = rootRegion.states.head();
 
         // clear traces
         TraceComponent::clearTrace();
         
         // dependency analysis
         val dependencies = DependencyFactory::eINSTANCE.createDependencies();
-        SCCharts2Dependenies.transform(dependencies, rootRegion);
+        SCCharts2Dependenies.transform(dependencies, rootState);
         
         // set highest priority
-        target.setPriority(dependencies.nodes.size);
+        target.setPriority(dependencies.nodes.size + 1);
         
         // create mapping from SyncChart states to dependency nodes
         for (node : dependencies.nodes) {
@@ -76,35 +91,38 @@ class SCChartsPrio2S {
         target.setName(rootState.id)
 
         // add interface signals to s program (as the root state's signals)
-        for (ssignal : rootState.signals) {
-            target.signals.add(ssignal.transform);
+        for (sValuedObject : rootState.valuedObjects) {
+            target.addValuedObject(sValuedObject.transform);
         }
         
         // add all local signals also to s program (as the root state's signals)
         for (region : rootState.regions) {
-            val localSignals = region.eAllContents().toIterable().filter(typeof(Signal)).toList();
-            for (localSignal : localSignals) {
-                val ssignal = localSignal.transform;
-                val ssignalName = (localSignal.eContainer as State).getHierarchicalName(LocalSignalSymbol) + "_" + localSignal.name;
-                ssignal.setName(ssignalName);
-                target.signals.add(ssignal);
+            val localValuedObjects = region.eAllContents().toIterable().filter(typeof(ValuedObject)).toList();
+            for (localValuedObject : localValuedObjects) {
+                val sValuedObject = localValuedObject.transform;
+                val sValuedObjectName = (sValuedObject.eContainer.eContainer as State).getHierarchicalName(LocalSignalSymbol) + "_" + localValuedObject.name;
+                sValuedObject.setName(sValuedObjectName);
+                target.valuedObjects.add(sValuedObject);
             }
         }
 
-        // add interface variables to s program (as the global host code)
-        target.setGlobalHostCodeInstruction(rootState.getStateVariables);
+//        // add interface variables to s program (as the global host code)
+//        target.setGlobalHostCodeInstruction(rootState.getStateVariables);
         
         // order SyncChart states according to their dependency priority  (strong nodes)
         // w.r.t. this order, the root state should be the one to start with (the priority assignment has to ensure that
         // it has the maximal priority, followed by priorities of unconnected nodes, followed by other connected nodes.
-        val dependencyPrioritySortedStates = rootRegion.getAllStates.sort(e1, e2 | compareTraceDependencyPriority(e1, e2));
+        val dependencyPrioritySortedStates = rootState.getAllContainedStates.toList.sort(e1, e2 | compareTraceDependencyPriority(e1, e2));
+        
+        
         
         // create all states and their mapping
         for (state : dependencyPrioritySortedStates) {
-            val sStateSurface = state.createSStateSurface(state.isRootState);
-            val sStateDepth   = state.createSStateDepth(state.isRootState);
-            val sStateJoin = state.createSStateJoin(state.isRootState);
-            val sStateExtraSurface = state.createSStateExtraSurface(state.isRootState);
+            val isRoot = state.isRootState
+            val sStateSurface = state.createSStateSurface(isRoot);
+            val sStateDepth   = state.createSStateDepth(isRoot);
+            val sStateJoin = state.createSStateJoin(isRoot);
+            val sStateExtraSurface = state.createSStateExtraSurface(isRoot);
 
             // possibly normal termination (for parallel regions)
             if (state.needsJoinSState) {
@@ -135,7 +153,7 @@ class SCChartsPrio2S {
         }
         
         // handle transitions (as states are created now and gotos can be mapped)
-        for (state : rootRegion.getAllStates) {
+        for (state : rootState.getAllContainedStates.toList) {
             val sStateSurface = state.surfaceSState
             val sStateDepth = state.depthSState
             state.fillSStateSurface(sStateSurface); 
@@ -185,11 +203,11 @@ class SCChartsPrio2S {
         val regardedTransitionListStrong = state.strongTransitionsOrdered.filter(e|e.isImmediate);
         val regardedTransitionListWeak = state.weakTransitionsOrdered.filter(e|e.isImmediate);
         
-        if (!state.rootState) {
+        if (!state.isRootState) {
           // first reset possible defined local (output) signals here
           for (signal : state.signals.filter(e | !e.isInput)) {
               val ssignal = SFactory::eINSTANCE.createLocalSignal();
-              val sSignal = TraceComponent::getSingleTraceTarget(signal, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal;
+              val sSignal = TraceComponent::getSingleTraceTarget(signal, "ValuedObject") as de.cau.cs.kieler.core.kexpressions.ValuedObject;
               ssignal.setSignal(sSignal);
               sState.instructions.add(ssignal);
           }
@@ -207,27 +225,27 @@ class SCChartsPrio2S {
             for (region : state.regions) {
                 val initialState = region.initialState;
                 val sfork = SFactory::eINSTANCE.createFork();
-                sfork.setThread(initialState.surfaceSState)
+                sfork.setContinuation(initialState.surfaceSState)
                 sfork.setPriority(initialState.getHighestDependencyStrong);
                 sState.instructions.add(sfork);
             }
             // if there is no immediate weak transition, we do not need an extra surface!
-            if (!state.needsExtraSurfaceSState) {
+            if (!state.isRootState && !state.needsExtraSurfaceSState) {
                 // fork join thread with same priority as current thread or proceed with depth
                 val sfork = SFactory::eINSTANCE.createFork();
                 if (state.needsJoinSState) {
-                    sfork.setThread(state.joinSState)
+                    sfork.setContinuation(state.joinSState)
                 }
                 else {
-                    sfork.setThread(state.depthSState)
+                    sfork.setContinuation(state.depthSState)
                 }
                 sfork.setPriority(state.highestDependencyStrong);
                 sState.instructions.add(sfork);
             }
-            else {
+            else if (!state.isRootState) {
                 // fork extra surface thread (instead of join/depth thread!) with same priority as current thread
                 val sfork = SFactory::eINSTANCE.createFork();
-                sfork.setThread(state.extraSurfaceSState);
+                sfork.setContinuation(state.extraSurfaceSState);
                 sfork.setPriority(state.highestDependencyStrong);
                 sState.instructions.add(sfork);
             }
@@ -401,7 +419,7 @@ class SCChartsPrio2S {
             val sabort = SFactory::eINSTANCE.createAbort();
             
             // handle transition trigger - convert to s-expression
-            if (transition.type == TransitionType::NORMALTERMINATION) {
+            if (transition.type == TransitionType::TERMINATION) {
                 val sjoin = SFactory::eINSTANCE.createJoin();
                 // if not joined yet - continue at state depth
                 sjoin.setContinuation(transition.sourceState.depthSState);

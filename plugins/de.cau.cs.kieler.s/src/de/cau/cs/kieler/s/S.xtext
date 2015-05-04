@@ -8,14 +8,15 @@ grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.core.kexpressions.KExpression
 //import 'http://kieler.cs.cau.de/expressions' as expressions --> wrong
 //import 'http://kieler.cs.cau.de/annotations' as annotations
 
+import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 //import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore" as annotations
 
 generate s "http://www.cau.de/cs/kieler/s"
 
-
-Program :
+Program:
+    (annotations += Annotation)* 
 	'synchronous program' name = ID '(' priority=INT ')'
 //	((signals += Signal) (signals += Signal)*)?
 //	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
@@ -27,6 +28,9 @@ Program :
 	(states += State)+
 ;
 
+MetamodelManipulationRule returns annotations::Annotatable:
+    Program
+;
 
 
 //Annotation:
@@ -40,6 +44,7 @@ Program :
 
 
 State:
+    (annotations += Annotation)*
 	'state' '(' name = ID ')' '{'
     (declarations += Declaration)*
 	(instructions += Instruction';')*
@@ -49,7 +54,7 @@ State:
 // TODO: ensure signal AND variable declaration in top level....
 
 Declaration returns kexpressions::Declaration:
-//    (annotations+=Annotation)*
+    (annotations+=Annotation)*
     (
         ((extern?='extern')?
         (static?='static')?
@@ -76,7 +81,7 @@ Declaration returns kexpressions::Declaration:
 
 
 ValuedObject returns kexpressions::ValuedObject:
-//    (annotations+=Annotation)*
+    (annotations+=Annotation)*
     name=ID
     ('[' cardinalities+=INT ']')* 
     ('=' initialValue=Expression)?
@@ -140,24 +145,24 @@ Fork :
 // Joining Threads
 Join : 
 	{Join}
-	'join' '('continuation=[State]?')'
+	'join' ('('continuation=[State]')')?
 ;
    
 
 // Simple instructions
 Pause :
 	{Pause} 
-	'pause''('continuation=[State]?')'
+	'pause'('('continuation=[State]')')?
 ;
   
 Term : 
 	{Term}
-	'term''('continuation=[State]?')'
+	'term'('('continuation=[State]')')?
 ;
   
 Halt : 
 	{Halt}
-	'halt''('continuation=[State]?')'
+	'halt'('('continuation=[State]')')?
 ;
   
   
@@ -171,7 +176,7 @@ Emit:
   
 Abort : 
 	{Abort}
-	'abort''('continuation=[State]?')'
+	'abort'('('continuation=[State]')')?
 ;
 
 // Conditioned execution of instructions  

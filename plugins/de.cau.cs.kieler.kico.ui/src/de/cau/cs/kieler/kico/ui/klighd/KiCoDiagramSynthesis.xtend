@@ -49,6 +49,22 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationDummy>> {
 
+    static final boolean DEBUG = false;
+
+    def static void debug(String debugText) {
+        debug(debugText, true);
+    }
+
+    def static void debug(String debugText, boolean lineBreak) {
+        if (DEBUG) {
+            if (lineBreak) {
+                System.out.println(debugText);
+            } else {
+                System.out.print(debugText);
+            }
+        }
+    }
+     
     // -------------------------------------------------------------------------
     // We need some extensions 
     @Inject
@@ -134,7 +150,6 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             return new Pair(-1, null)
         }
         if (dest.container == source.container) {
-
             // if this is a group-internal transition
             return new Pair(cnt, source)
         } else {
@@ -170,7 +185,6 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             return new Pair(-1, null)
         }
         if (dest.container == source.container) {
-
             // if this is a group-internal transition
             return new Pair(cnt, dest)
         } else {
@@ -194,7 +208,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     // -------------------------------------------------------------------------
     // Remember which super states already are connected (render just a single connection)
     private static ArrayList<Integer> connected = new ArrayList<Integer>();
-
+    
     // The Main entry transform function   
     override transform(List<TransformationDummy> model) {
         connected.clear
@@ -306,7 +320,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
 
                         if (transSource != null && transDest != null) {
 
-                            //System.out.println(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'" )
+                            debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'" )
                             if (!(connected.contains(transSource.hashCode + transDest.hashCode))) {
                                 //System.out.println(" DO   CONT '" + transSource.id + "' TO '" + transDest.id + "'  ::: " + connected.toString);
                                 connected.add(transSource.hashCode + transDest.hashCode)

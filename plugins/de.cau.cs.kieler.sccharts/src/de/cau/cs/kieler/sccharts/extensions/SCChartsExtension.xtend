@@ -230,6 +230,11 @@ class SCChartsExtension {
         region.parentState.getRootState
     }
 
+    // Returns true iff the state contains regions.
+    def boolean isHierarchical(State state) {
+        state.regions.size > 0;
+    }    
+
     
     def State createSCChart() {
          SCChartsFactory::eINSTANCE.createState
@@ -983,11 +988,17 @@ class SCChartsExtension {
     def String getHierarchicalName(State state) {
         state.getHierarchicalName(null)
     }
-
-    def String getHierarchicalName(State state, String StartSymbol) {
+    def String getHierarchicalName(State state, String startSymbol) {
+        if (state.isRootState) {
+            return "root"
+        } else {
+            return getHierarchicalNameHelper(state, startSymbol);
+        }
+    }
+    def String getHierarchicalNameHelper(State state, String startSymbol) {
         if (state.parentRegion != null) {
             if (state.parentRegion.parentState != null) {
-                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName(StartSymbol);
+                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalNameHelper(startSymbol);
                 var regionId = state.parentRegion.id.removeSpecialCharacters;
                 var stateId = state.id.removeSpecialCharacters;
 
@@ -1005,15 +1016,15 @@ class SCChartsExtension {
                 if (state.parentRegion.parentState.regions.size > 1) {
                     return higherHierarchyReturnedName + regionId + "_" + stateId;
                 } else {
-
+ 
                     // this is the simplified case, where there is just one region and we can
                     // omit the region id
                     return higherHierarchyReturnedName + stateId;
                 }
             }
         }
-        if (StartSymbol != null) {
-            return StartSymbol; // +  "_";
+        if (startSymbol != null) {
+            return startSymbol; // +  "_";
         }
         return ""
     }

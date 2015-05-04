@@ -13,7 +13,7 @@ FOR AN UPDATED VERSION OF THIS DESCRIPTION AND ADDITIONAL INFORMATION PLEASE SEE
 &lt;/B&gt;
 &lt;BR&gt;&lt;BR&gt;
 
-This extension point allowes the contribution of a resource extension for serialization to the KIELER project.
+This extension point allows the contribution of a resource extension for serialization to the KIELER project.
       </documentation>
    </annotation>
 
@@ -74,6 +74,13 @@ This extension point allowes the contribution of a resource extension for serial
             <annotation>
                <documentation>
                   
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="editor_id" type="string">
+            <annotation>
+               <documentation>
+                  ID of the editor associated with this extension. e.g.: org.eclipse.ui.DefaultTextEditor
                </documentation>
             </annotation>
          </attribute>

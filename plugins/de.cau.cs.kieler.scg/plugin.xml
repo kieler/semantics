@@ -41,21 +41,21 @@
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.DependencyTransformation"
-            dependencies="SCGBBGROUP"
+            producesDependencies="SCGBBGROUP"
             id="SCGDEP"
             method="transform"
             name="Dependencies">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformation"
-            dependencies="SCGSCHEDGROUP"
+            producesDependencies="SCGGC"
             id="SCGBB"
             method="transform"
             name="BasicBlocks">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformationSCplus"
-            dependencies="SCGSCHEDGROUP"
+            producesDependencies="SCGGC"
             id="SCGBBSCPLUS"
             method="transform"
             name="BasicBlocksSCplus">
@@ -66,52 +66,26 @@
             name="Basic Blocks"
             transformations="SCGBB, SCGBBSCPLUS">
       </transformationGroup>
-      <transformationGroup
-            alternatives="true"
-            id="SCGSCHEDGROUP"
-            name="Scheduler"
-            transformations="SCGSCHEDDELAYAWARE, SCGSCHEDSIMPLE, SCGSCHEDTHREADAWARE">
-      </transformationGroup>
       <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.SimpleScheduler"
-            dependencies="SCGSEQGROUP"
-            id="SCGSCHEDSIMPLE"
-            method="schedule"
-            name="Simple">
+            class="de.cau.cs.kieler.scg.guardCreation.GuardCreator"
+            producesDependencies="SCGSCHEDULE"
+            id="SCGGC"
+            method="transform"
+            name="Guards">
       </transformationMethod>
       <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.DelayAwareScheduler"
-            dependencies="SCGSEQGROUP"
-            id="SCGSCHEDDELAYAWARE"
+            class="de.cau.cs.kieler.scg.schedulers.GuardScheduler"
+            producesDependencies="SCGSEQUENTIALIZE"
+            id="SCGSCHEDULE"
             method="schedule"
-            name="Delay Aware">
+            name="Scheduling">
       </transformationMethod>
       <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.ThreadAwareScheduler"
-            dependencies="SCGSEQGROUP"
-            id="SCGSCHEDTHREADAWARE"
-            method="schedule"
-            name="Thread Aware">
-      </transformationMethod>
-      <transformationGroup
-            alternatives="true"
-            id="SCGSEQGROUP"
-            name="Sequentializer"
-            transformations="SCGSEQSIMPLE, SCGSEQHYBRID">
-      </transformationGroup>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer"
-            dependencies="SCG2S"
-            id="SCGSEQSIMPLE"
+            class="de.cau.cs.kieler.scg.sequentializer.GuardSequentializer"
+            producesDependencies="SCG2S"
+            id="SCGSEQUENTIALIZE"
             method="sequentialize"
-            name="Simple">
-      </transformationMethod>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.sequentializer.HybridSequentializer"
-            dependencies="SCG2S"
-            id="SCGSEQHYBRID"
-            method="sequentialize"
-            name="Hybrid">
+            name="Sequentialize">
       </transformationMethod>
    </extension>
 

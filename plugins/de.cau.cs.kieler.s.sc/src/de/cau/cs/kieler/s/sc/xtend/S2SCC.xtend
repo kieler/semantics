@@ -55,6 +55,7 @@ import de.cau.cs.kieler.s.extensions.SExtension
 class S2SCC { 
     
     public static String bufferSize;
+    public static String includeHeader;
     
     @Inject
     extension KExpressionsExtension    
@@ -120,10 +121,12 @@ class S2SCC {
 
     #include "cJSON.h"
     
-    «/* Signal constants */»
+    «includeHeader»
+    
+    /* Signal constants */
     «sSignalConstants(program)»
     
-   «/* Variables */»
+    /* Variables */
     «sVariables(program)»    
     
     // Highest thread id in use;
@@ -245,6 +248,30 @@ class S2SCC {
   «ENDFOR»
  '''
    }
+   
+   
+   // Generate variables.
+   def sVariablesOLD(Program program) {
+       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+          «FOR signal : declaration.valuedObjects»
+            «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+              «IF signal.isArray»
+                «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
+                «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
+                «FOR card : signal.cardinalities»}}«ENDFOR»
+                «ELSE»
+                  = «signal.initialValue.expand» 
+                «ENDIF»«ENDIF»;
+            
+            «IF program.usesPre(signal)»
+                «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+            «ENDIF»
+        «ENDFOR»
+        «ENDFOR»
+        '''
+   }
+   
+      
 
    // Generate PRE variables setter.
    def setPreVariables(Program program) {
@@ -254,10 +281,9 @@ class S2SCC {
 
 
    def dispatch expand(ValueType valueType) {
-       if (valueType == ValueType::BOOL) {
+       if ((valueType == ValueType::BOOL) || (valueType == ValueType::PURE))  {
            return '''int'''
-       }
-       else {
+       } else {
            return '''«valueType»'''
        }
    }
@@ -792,7 +818,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    def dispatch CharSequence expand(BoolValue expression) {
         '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
    }
-
+   
    // Expand an object reference.
    def dispatch CharSequence expand(ValuedObjectReference valuedObjectReference) {
         '''«valuedObjectReference.valuedObject.expand»'''

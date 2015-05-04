@@ -24,6 +24,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
+import de.cau.cs.kieler.sccharts.impl.AssignmentImpl
 
 /** 
  * SCCharts DependencyTransformation Extension builds up a sorted list of dependencies between states
@@ -54,8 +55,12 @@ class DependencyTransformation {
         statesJoin2DependencyNodes = new HashMap<State, DependencyNode>
 
         // Go thru all states and create a dependency representation for it (DepenedencyState)
-        for (state : rootState.allContainedStates.toIterable) {
-            if (state != rootState.getRootState) {
+        for (state : rootState.getAllStates.toIterable) {
+
+            //if (state != rootState.getRootState) {
+            if (!states2DependencyNodes.containsKey(state)) {
+//                System.out.println("XXX " + state.id);
+
                 val dependencyNode = (new DependencyNode(state)).map(state, false)
                 dependencyNodes.add(dependencyNode)
                 if (state.hasInnerStatesOrRegions) {
@@ -66,15 +71,32 @@ class DependencyTransformation {
                     dependencyNodes.add(joinDependencyState)
                 }
             }
+
+        //}
         }
 
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
+
         // Go thru all regions and states recursively and build up dependencies
-        for (region : rootState.regions) {
-            region.transformDependencies(dependencies)
+        rootState.transformDependencies(dependencies);
+
+//                for (region : rootState.regions) {
+//                    region.transformDependencies(dependencies)
+//                }
+
+
+        for (dependency : dependencies) {
+           System.out.println("XXXX dependency " + dependency.stateDepending.state.id + " -> " +  dependency.stateToDependOn.state.id);
         }
+
 
         // Topological Sort
         dependencyNodes.topologicalSort(dependencies)
+
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
+        for (dependencyNode : dependencyNodes) {
+            System.out.println("XXXX dependencyNode for " + dependencyNode.state.id + " : p=" + dependencyNode.priority + ", o=" + dependencyNode.order + ", join=" + dependencyNode.isJoin);
+        }
 
         dependencyGraph
     }
@@ -106,7 +128,8 @@ class DependencyTransformation {
 
                 for (action : allActions) {
                     for (effect : action.effects) {
-                        if (effect instanceof Emission && ((effect as Emission).valuedObject == valuedObject)) {
+                        if ((effect instanceof Emission && ((effect as Emission).valuedObject == valuedObject))
+                         || effect instanceof AssignmentImpl && ((effect as AssignmentImpl).valuedObject == valuedObject)) {
 
                             // We consider only SCG normalized SCCharts, hence only transitions
                             if (action instanceof Transition) {
@@ -127,29 +150,37 @@ class DependencyTransformation {
     // This method returns true if two states have a common fork/macro state but are in
     // a different thread.
     ArrayList<State> visited = new ArrayList<State>
+
     def private boolean canReach(State state, State state2) {
+
         // Clear visited hash map
         visited.clear
+
         // Start with state and try to reach state2
         return state.canReach(state2, state)
     }
 
     def private boolean canReach(State state, State state2, State tmpState) {
+
         // Test if visited
         if (visited.contains(tmpState)) {
             return false
         }
+
         // Mark as visited
         visited.add(tmpState)
+
         // This is a HIT
         if (state2 == tmpState) {
             return true
         }
+
         // Follow control flow
         for (transition : tmpState.outgoingTransitions) {
             if (state.canReach(state2, transition.targetState)) {
                 return true
             }
+
             // Hierarchical extension FORK
             if (transition.targetState.hasInnerStatesOrRegions) {
                 for (region : transition.targetState.regions) {
@@ -161,10 +192,12 @@ class DependencyTransformation {
                 }
             }
         }
+
         // Hierarchical extension JOIN
         if (tmpState.isFinal && tmpState.parentRegion != null) {
             val tmpStateParent = tmpState.parentRegion.parentState
             if (tmpStateParent != null) {
+
                 // We know that tmpStateParent must be hierarchical because tmpState is IN one of its
                 // regions.
                 if (!tmpStateParent.outgoingTransitions.nullOrEmpty) {
@@ -196,25 +229,32 @@ class DependencyTransformation {
 
         // Data dependencies
         for (transition : state.outgoingTransitions) {
+            
             // It is important to consider only those states, that are in a different thread
-            for (stateToDependOn : transition.statesToDependOn.filter(e | e.isDifferentThread(state))) {
+            for (stateToDependOn : transition.statesToDependOn.filter(e|e.isDifferentThread(state))) {
                 val newDataDependency = new DataDependency(state.dependencyNode, stateToDependOn.dependencyNode)
+//                System.out.println("newDataDependency " + newDataDependency.stateDepending.state.id + "->" + newDataDependency.stateToDependOn.state.id); 
                 dependencies.add(newDataDependency)
             }
         }
 
+//        System.out.println("Consider incoming transitions of state: " + state.id + " (" + state.incomingTransitions.size + ")")  ;
+
         // Control Flow dependencies
         for (transition : state.incomingTransitions) {
+//            System.out.println("State: " + state.id + " <- " + transition.sourceState.id);
             if (state.hasInnerStatesOrRegions) {
                 for (region : state.regions) {
                     for (initialState : region.states.filter[isInitial]) {
                         val newControlFlowDependency = new ControlflowDependency(initialState.dependencyNode,
                             state.dependencyNode)
+//                        System.out.println("newControlFlowDependency1 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
                         dependencies.add(newControlFlowDependency)
                     }
                     for (finalState : region.states.filter[isFinal]) {
                         val newControlFlowDependency = new ControlflowDependency(state.joinDependencyState,
                             finalState.dependencyNode)
+//                        System.out.println("newControlFlowDependency2 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
                         dependencies.add(newControlFlowDependency)
                     }
                 }
@@ -223,11 +263,13 @@ class DependencyTransformation {
                 val newControlFlowDependency = new ControlflowDependency(state.dependencyNode,
                     transition.sourceState.joinDependencyState)
                 dependencies.add(newControlFlowDependency)
+//                System.out.println("newControlFlowDependency3 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
             } else {
                 if (transition.isImmediate) {
                     val newControlFlowDependency = new ControlflowDependency(state.dependencyNode,
                         transition.sourceState.dependencyNode)
                     dependencies.add(newControlFlowDependency)
+//                System.out.println("newControlFlowDependency4 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
                 }
             }
 
@@ -287,7 +329,7 @@ class DependencyTransformation {
 
     // Get a list of states sorted by their order with highest order first.
     def public List<DependencyNode> getOrderSortedStates(List<DependencyNode> dependencyNodes) {
-        dependencyNodes.sort(e1, e2|compareOrders(e1, e2));
+        dependencyNodes.sort(e1, e2|compareOrdersRespectingRoot(e1, e2));
     }
 
     // Compare two priorities.
@@ -305,6 +347,22 @@ class DependencyTransformation {
             -1
         } else {
             1
+        }
+    }
+
+
+    // Compare two orders but respect a root before all other nodes
+    def private int compareOrdersRespectingRoot(DependencyNode e1, DependencyNode e2) {
+        if (!e1.isJoin && e1.state.isRootState) {
+            return -1;
+        }
+        if (!e2.isJoin && e2.state.isRootState) {
+            return 1
+        }
+        if (e1.getOrder > e2.getOrder) {
+            return  -1
+        } else {
+           return  1
         }
     }
 
@@ -351,18 +409,18 @@ class DependencyTransformation {
         // Calculate priorities for all connected nodes (including the root)
         // now start with priority 0                                   
         // It is necessary that this is the only instance           
-        var PriorityAndOrder tmpPrioOrder = new PriorityAndOrder(0, 0);
+        var PriorityAndOrder tmpPrioAndOrder = new PriorityAndOrder(0, 0);
         val dependencyNodesWithoutOutgoingEdges = allDependencyStates.filter(
             e|
                 e.outgoingDependencies(dependencies).nullOrEmpty && !e.incomingDependencies(dependencies).nullOrEmpty
         )
 
         for (dependencyNode : dependencyNodesWithoutOutgoingEdges) {
-            dependencyNode.visit(tmpPrioOrder, dependencies);
+            dependencyNode.visit(tmpPrioAndOrder, dependencies);
         }
-
+ 
         // Visit these unconnected nodes (these have prio -1) with the max-priority
-        var maxPrioOrder = tmpPrioOrder
+        var maxPrioOrder = tmpPrioAndOrder
         for (dependencyNode : dependencyNodesWithNoEdges) {
             dependencyNode.visit(maxPrioOrder, dependencies);
         }
@@ -371,34 +429,35 @@ class DependencyTransformation {
     }
 
     // Visit helper function for topological sorting the dependency nodes.
-    def private void visit(DependencyNode dependencyNode, PriorityAndOrder prioOrder,
+    def private void visit(DependencyNode dependencyNode, PriorityAndOrder prioAndOrder,
         List<Dependency> dependencies) {
         if (dependencyNode.getPriority == -1) {
             dependencyNode.setPriority(-2);
-            var tmpPrioOrder = prioOrder;
+            var tmpPrioAndOrder = prioAndOrder;
             for (incomingDependency : dependencyNode.incomingDependencies(dependencies)) {
                 val nextNode = incomingDependency.stateDepending
                 if (nextNode != dependencyNode) {
-                    nextNode.visit(tmpPrioOrder, dependencies);
+                    nextNode.visit(tmpPrioAndOrder, dependencies);
                 }
             }
-            dependencyNode.setPriority((tmpPrioOrder.priority + 1));
-            dependencyNode.setOrder((tmpPrioOrder.order + 1));
-            tmpPrioOrder.incrementOrder
+            dependencyNode.setPriority((tmpPrioAndOrder.priority + 1));
+            dependencyNode.setOrder((tmpPrioAndOrder.order + 1));
+            tmpPrioAndOrder.incrementOrder
 
             // =============================
             // Optimization for dependencies
             // =============================
             // This implicitly forms (splitted-) "basic blocks" of the same priority
             if (dependencyNode.outgoingDependencies(dependencies).filter(typeof(DataDependency)).size != 0 ||
-                dependencyNode.state.isFinal ||  dependencyNode.state.isInitial || dependencyNode.state.hasInnerStatesOrRegions 
-            ) {
-                tmpPrioOrder.incrementPriority
+                dependencyNode.state.isFinal || dependencyNode.state.isInitial ||
+                dependencyNode.state.hasInnerStatesOrRegions) {
+                tmpPrioAndOrder.incrementPriority
             }
             return // tmpPrioOrder;
         } else {
-//            prioOrder.setOrder(dependencyNode.order)
-//            prioOrder.setPriority(dependencyNode.priority)
+
+            //            prioOrder.setOrder(dependencyNode.order)
+            //            prioOrder.setPriority(dependencyNode.priority)
             return //prioOrder; // new PriorityAndOrder(dependencyNode.priority, dependencyNode.order);
         }
     }

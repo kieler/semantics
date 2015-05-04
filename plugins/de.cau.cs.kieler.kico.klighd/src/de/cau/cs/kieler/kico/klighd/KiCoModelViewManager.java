@@ -333,12 +333,13 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
     private int isValidModelEditor(IEditorPart editor) {
         EObject model = getModelFromModelEditor(editor);
         if (model != null) {
-            if (!Iterables.isEmpty(KlighdDataManager.getInstance().getAvailableSyntheses(
-                    model.getClass()))) {
-                return 1;
-            } else {
-                return 0;
-            }
+//            if (!Iterables.isEmpty(KlighdDataManager.getInstance().getAvailableSyntheses(
+//                    model.getClass()))) {
+//                return 1;
+//            } else {
+//                return 0;
+//            }
+          return 1;
         }
         return 2;// Undecidable if model is null
     }
@@ -388,12 +389,12 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
      *            the editor to filter for
      * @return List of KiCoModelView associated with editor
      */
-    @SuppressWarnings("unchecked")
     public List<KiCoModelView> getModelViews(final IEditorPart editor) {
         if (editor != null) {
-            return Lists.newArrayList(Iterables.filter(modelViews, new Predicate() {
-                public boolean apply(Object view) {
-                    return ((KiCoModelView)view).getActiveEditor().equals(editor);
+            return Lists.newArrayList(Iterables.filter(modelViews, new Predicate<KiCoModelView>(){
+                public boolean apply(KiCoModelView view) {
+                    IEditorPart activeEditor = view.getActiveEditor();
+                    return activeEditor != null && activeEditor.equals(editor);
                 }
             }));
         }

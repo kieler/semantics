@@ -6,9 +6,6 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kico.KiCoPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore,
- com.google.inject,
- org.eclipse.emf,
  org.eclipse.xtext,
  org.eclipse.ui;resolution:=optional,
  de.cau.cs.kieler.core

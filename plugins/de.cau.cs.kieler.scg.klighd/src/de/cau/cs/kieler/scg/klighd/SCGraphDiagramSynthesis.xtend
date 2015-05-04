@@ -87,6 +87,14 @@ import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDProperties
 import java.util.Set
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.core.krendering.Colors
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
+import de.cau.cs.kieler.klay.layered.properties.InternalProperties
+import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -173,7 +181,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     /** Inject analysis extensions. */
     @Inject
-    extension AnalysesVisualization
+    extension SCGDeclarationExtensions
 
     // -------------------------------------------------------------------------
     // -- KlighD Options
@@ -246,6 +254,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val SynthesisOption SHOW_DEPENDENCY_WRITE_WRITE = SynthesisOption::createCheckOption(
         DEPENDENCYFILTERSTRING_WRITE_WRITE, true);
 
+    /** Show sausage folding */
+    private static val SynthesisOption SHOW_SAUSAGE_FOLDING = SynthesisOption::createCheckOption(
+        "Sausage Folding", true);
+
     /** Show absolute write-relative write dependencies */
     private static val SynthesisOption SHOW_DEPENDENCY_ABSWRITE_RELWRITE = SynthesisOption::
         createCheckOption(DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE, true);
@@ -281,6 +293,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             CONTROLFLOW_THICKNESS,
             SynthesisOption::createSeparator("Dependency Filter"),
             SHOW_DEPENDENCY_WRITE_WRITE,
+            SHOW_SAUSAGE_FOLDING,
             SHOW_DEPENDENCY_ABSWRITE_RELWRITE,
             SHOW_DEPENDENCY_WRITE_READ,
             SHOW_DEPENDENCY_RELWRITE_READ,
@@ -338,6 +351,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 144; it.green = 144; it.blue = 144;]
     private static val KColor SCHEDULING_SCHEDULINGEDGE = RENDERING_FACTORY.createKColor() =>
         [it.red = 128; it.green = 0; it.blue = 253;]
+    private static val KColor SCHEDULING_DEADCODE = RENDERING_FACTORY.createKColor() =>
+        [it.red = 128; it.green = 128; it.blue = 128;]
     private static val int SCHEDULING_SCHEDULINGEDGE_ALPHA = 96
 
     private static val KColor PROBLEM_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
@@ -352,6 +367,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val String SCGPORTID_HIERARCHYPORTS = "hierarchyPorts"
     private static val String SCGPORTID_INCOMINGDEPENDENCY = "incomingDependency"
     private static val String SCGPORTID_OUTGOINGDEPENDENCY = "outgoingDependency"
+    private static val String ANNOTATIONRECTANGLE = "caRectangle"
 
     /** Constants for annotations */
     private static val String ANNOTATION_BRANCH = "branch"
@@ -394,6 +410,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private int orientation;
     
     private int sequentializedSCGCounter = 0
+    
+    private SCGraph SCGraph;
 
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
@@ -416,7 +434,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (PILR != null) PIL_Nodes += PILR.criticalNodes
         }
 
-        // Invoke the synthesis.3
+        // Invoke the synthesis.
+        SCGraph = model
         val timestamp = System.currentTimeMillis
         System.out.println("Started SCG synthesis...")
         val newModel = model.synthesize();
@@ -446,17 +465,36 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             else
                 node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT)
             node.setLayoutOption(LayoutOptions::SPACING, 25f);
-            node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-            node.addLayoutParam(Properties::THOROUGHNESS, 100)
-            node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
+            node.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+            node.setLayoutOption(Properties::THOROUGHNESS, 100)
+            node.setLayoutOption(LayoutOptions::SEPARATE_CC, false);
+            if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
+                node.setLayoutOption(Properties::SAUSAGE_FOLDING, true)
+                node.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
+            }
+            
+            
+            //Suasage folding on/off
+            if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
+                node.addLayoutParam(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH);
+                node.addLayoutParam(Properties::SAUSAGE_FOLDING, true);
+            }
             
             val threadTypes = <Entry, ThreadPathType> newHashMap
             
             // Synthesize all children             
             for (n : scg.nodes) { 
                 if (n instanceof Surface) { node.children += n.synthesize }
-                if (n instanceof Assignment) { node.children += n.synthesize }
+                if (n instanceof Assignment) { 
+                    val aNode = n.synthesize
+                    node.children += aNode
+//                    if ((n as Assignment).hasAnnotation(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)) {
+//                        val bNode = (n as Assignment).synthesizeConditionalAssignmentAnnotation
+//                        node.children += bNode
+//                        aNode.synthesizeConditionalAssignmentLink(bNode)
+//                    }                    
+                }
                 if (n instanceof Entry) { 
                     if (n.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
                         threadTypes.put((n as Entry), n.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2)
@@ -527,11 +565,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     allNext.map[target].filter(typeof(Entry)).forEach [ entry |
                         if (entry != null) {
                             val regionLabel = entry.getStringAnnotationValue(ANNOTATION_REGIONNAME)
-                            entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY) => [
+                            entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY, null) => [
                             	var text = ""
-                                if (!regionLabel.nullOrEmpty) text = regionLabel + " - "
                                 val threadPathType = threadTypes.get(entry)
-                                text = text + threadPathType.toString2
+                                if (threadPathType != null) {
+                                    if (!regionLabel.nullOrEmpty) text = regionLabel + " - "
+                                    text = text + threadPathType.toString2
+                                }
                                 
                                     addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
                                         it.foreground = REGIONLABEL.copy;
@@ -581,6 +621,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Straightforward rectangle drawing
             val figure = node.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH).background = "white".color;
             (figure) => [
+                putToLookUpWith(assignment)
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 // Serialize the assignment
@@ -623,6 +664,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOING, 37, 24, 0, PortSide::SOUTH)
                 node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 24, 0, PortSide::SOUTH)
+                node.addPort("DEBUGPORT", MINIMALWIDTH, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
             } else {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 1, PortSide::EAST)
@@ -631,6 +673,51 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
         ]
     }
+    
+    private def KNode synthesizeConditionalAssignmentAnnotation(Assignment assignment) {
+//        val VOName = assignment.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
+//        val VO = SCGraph.findValuedObjectByName(VOName)
+//        val kNode = assignment.createNode(VO).putToLookUpWith(VO) => [ node |
+//            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75)
+//            
+//            node.addPort("DEBUGPORT", 0, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
+//            
+//            node.setLayoutOption(LayoutOptions.COMMENT_BOX, true)
+//        ]
+//        val figure = kNode.addRectangle().setLineWidth(LINEWIDTH).background = Colors::YELLOW;
+//        (figure) => [ 
+//            node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT) 
+//            
+//            val assignmentStr = "false"
+//            it.addText(assignmentStr).putToLookUpWith(VO).setSurroundingSpace(4, 0, 2, 0) => [
+//                if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75);
+//            ] 
+//        ]
+//        kNode 
+    }  
+    
+    private def KEdge synthesizeConditionalAssignmentLink(KNode aNode, KNode bNode) {
+//        val kEdge = createNewEdge() => [ edge |
+//            // Get and set source and target information.
+//            var sourceNode = aNode
+//            var targetNode = bNode
+//            edge.source = sourceNode
+//            edge.target = targetNode
+//            edge.sourcePort = aNode.getPort("DEBUGPORT")
+//            edge.targetPort = bNode.getPort("DEBUGPORT")            
+//            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::POLYLINE)
+//            if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75);
+//
+//            edge.addPolyline(1.0f) => [
+//                it.lineStyle = LineStyle::DOT
+//                it.foreground = Colors::GRAY
+//            ]
+//            
+////            edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
+//        ]
+//        
+//        kEdge
+    }    
 
     /**
 	 * This dispatch method is triggered when a conditional must be synthesized.
@@ -643,8 +730,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return conditional.createNode().putToLookUpWith(conditional) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Draw a diamond figure for conditionals.
-            val figure = node.addPolygon().createDiamondShape()
+            val figure = node.addPolygon.createDiamondShape
             figure => [
+                putToLookUpWith(conditional)
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 // Serialize the condition in the conditional
                 if (conditional.condition != null)
@@ -1113,7 +1201,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      * 			the kindof grouping that should be applied.
      * @return Returns the container KNode.
      */
-    private def KNode createHierarchy(List<Node> nodes, int nodeGrouping) {
+    private def KNode createHierarchy(List<Node> nodes, int nodeGrouping, EObject contextObject) {
 
         // Gather mandatory information.
         val firstNode = nodes.head
@@ -1152,7 +1240,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if (nodeGrouping == NODEGROUPING_BASICBLOCK) {
 //            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
-                it.lineStyle = LineStyle::SOLID
+                lineStyle = LineStyle::SOLID
+                associateWith(contextObject)
             ]
             kContainer.KRendering.foreground = BASICBLOCKBORDER.copy;
             kContainer.KRendering.foreground.alpha = Math.round(255f)
@@ -1162,7 +1251,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if (nodeGrouping == NODEGROUPING_SCHEDULINGBLOCK) {
 //            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
-                it.lineStyle = LineStyle::SOLID
+                lineStyle = LineStyle::SOLID
+                associateWith(contextObject)
             ]
             kContainer.KRendering.foreground = SCHEDULINGBLOCKBORDER.copy;
             kContainer.KRendering.foreground.alpha = Math.round(255f)
@@ -1235,30 +1325,65 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         val schedulingBlockMapping = new HashMap<SchedulingBlock, KNode>
 
         val bbContainerList = new HashMap<BasicBlock, KNode>()
-        for (bb : scg.basicBlocks) {
+        for (basicBlock : scg.basicBlocks) {
             if (SHOW_BASICBLOCKS.booleanValue) {
                 val bbNodes = <Node>newLinkedList
-                bb.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
-                val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
-                bbContainerList.put(bb, bbContainer)
+                basicBlock.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
+                val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK, basicBlock)
+                bbContainerList.put(basicBlock, bbContainer)
 //                val bbName = serializer.serialize(bb.guards.head.reference)
-                val bbName = bb.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
-                bbContainer.addOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
+                var bbName = basicBlock.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
+                
+                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
+                	val expText = serializer.serialize(basicBlock.schedulingBlocks.head.guard.expression.copy.fix)	
+//                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
+					bbName = bbName + "\n" + expText                	
+                }
+                
+                bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER.copy
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
-                for (schedulingBlock : bb.schedulingBlocks) {
-                    val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
+                for (schedulingBlock : basicBlock.schedulingBlocks) {
+                    val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK, schedulingBlock)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
 //                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
-                     val sbName = schedulingBlock.guard.valuedObject.name //reference.valuedObject.name
-                    sbContainer.addOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER
+                     var sbName = "<null>"
+                     if (!schedulingBlock.label.nullOrEmpty) {
+                         sbName = schedulingBlock.label + " "
+                     }
+                     if (schedulingBlock.guard != null) { 
+                         if (schedulingBlock.guard.valuedObject.name != schedulingBlock.label) {
+                            sbName = sbName + "(" + schedulingBlock.guard.valuedObject.name + ")"//reference.valuedObject.name
+                         }
+                     }
+
+	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
+	                    var expText = "<null>"
+	                    if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
+        	            	expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)
+    	            	}	
+//        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
+						sbName = sbName + "\n" + expText       
+					}
+            	    
+                	sbName.createLabel(sbContainer).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
+                	
+                    if (basicBlock.deadBlock) {
+                        sbContainer.getData(typeof(KRoundedRectangle)) => [
+                            it.lineStyle = LineStyle::SOLID
+                            it.foreground = SCHEDULING_DEADCODE.copy
+                        ]
+                        sbContainer.KRendering.background = SCHEDULING_DEADCODE.copy
+                        sbContainer.KRendering.background.alpha = 128
+                    }
                 }
         }
 
         if (scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue) {
             var Node source = null
             var Node target = null
-            for (node : scg.schedules.head.scheduleNodes) {
+            for (scheduleBlock : scg.schedules.head.scheduleBlocks) {
+                for (node : scheduleBlock.schedulingBlock.nodes) {                
                 target = node
                 if (target != null && source != null) {
 
@@ -1283,17 +1408,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     }
                 }
                 source = target
+                }
             }
 
             // not schedulable blocks!
             // TODO: draw not scheduled blocks
             
-            if (SHOW_SCHEDULINGBLOCKS.booleanValue) {
+            if (scg.hasSchedulingData && SHOW_SCHEDULINGBLOCKS.booleanValue) {
                 val usBlocks = scg.getAllSchedulingBlocks
-                scg.schedules.head.getScheduledBlocks.forEach[ 
-                    if (!it.schizophrenic) 
-                        usBlocks.remove(it.schedulingBlock)
+                scg.schedules.head.scheduleBlocks.forEach[ 
+//                    if (!it.schizophrenic) {
+//                        val scheduledBlocks = usBlocks.filter[ e | e.guard == it].toList
+                        usBlocks -= it.schedulingBlock
+//                    } 
                 ]
+                for(deadGuard : scg.guards.filter[ dead ]) {
+                    val deadBlocks = usBlocks.filter[ e | e.guard == deadGuard].toList
+                    usBlocks -= deadBlocks
+                }
                 usBlocks.forEach [
                     val node = schedulingBlockMapping.get(it)
                     node.getData(typeof(KRoundedRectangle)) => [

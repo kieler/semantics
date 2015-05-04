@@ -61,7 +61,7 @@ public class KiCoPlugin extends Plugin {
     private static KiCoPlugin plugin;
     
     /** The resource extension cached. */
-    private static HashMap<String, Pair<String, Boolean>> resourceExtensionCached = null;
+    private static HashMap<String, ResourceExtension> resourceExtensionCached = null;
 
     /**
      * The parent shell iff a GUI is used. This shell may be used to prompt a save-dialog to save
@@ -212,7 +212,8 @@ public class KiCoPlugin extends Plugin {
                 String id = transformations[i].getAttribute("id");
                 String name = transformations[i].getAttribute("name");
                 String method = transformations[i].getAttribute("method");
-                String dependenciesString = transformations[i].getAttribute("dependencies");
+                String producesDependenciesString = transformations[i].getAttribute("producesDependencies");
+                String notHandlesDependenciesString = transformations[i].getAttribute("notHandlesDependencies");
                 String transformationsString = transformations[i].getAttribute("transformations");
                 String alternativesString = transformations[i].getAttribute("alternatives");
 
@@ -226,11 +227,12 @@ public class KiCoPlugin extends Plugin {
                     // The Transformation is defined as a GROUP by its dependencies
                     transformation = new TransformationGroup();
 
-                    // Internally transformations of groups are represented as dependencies!
+                    // Internally transformations of groups are represented as produces dependencies!
+                    // Rationale: If a group is selected, these transformations are applied
                     if (transformationsString != null) {
                         String[] dependenciesArray = transformationsString.split(",");
                         for (String dependency : dependenciesArray) {
-                            transformation.getDependencies().add(dependency.trim());
+                            transformation.getProducesDependencies().add(dependency.trim());
                         }
                     }
 
@@ -287,10 +289,17 @@ public class KiCoPlugin extends Plugin {
                     transformation.setMethod(method);
                 }
 
-                if (dependenciesString != null) {
-                    String[] dependenciesArray = dependenciesString.split(",");
+                if (producesDependenciesString != null) {
+                    String[] dependenciesArray = producesDependenciesString.split(",");
                     for (String dependency : dependenciesArray) {
-                        transformation.getDependencies().add(dependency.trim());
+                        transformation.getProducesDependencies().add(dependency.trim());
+                    }
+                }
+
+                if (notHandlesDependenciesString != null) {
+                    String[] dependenciesArray = notHandlesDependenciesString.split(",");
+                    for (String dependency : dependenciesArray) {
+                        transformation.getNotHandlesDependencies().add(dependency.trim());
                     }
                 }
 
@@ -311,7 +320,7 @@ public class KiCoPlugin extends Plugin {
      * @param forceReload the force reload
      * @return the registered resource extensions
      */
-    public HashMap<String, Pair<String, Boolean>> getRegisteredResourceExtensions(boolean forceReload) {
+    public HashMap<String, ResourceExtension> getRegisteredResourceExtensions(boolean forceReload) {
         
         if (resourceExtensionCached != null && !forceReload) {
             return resourceExtensionCached;
@@ -320,7 +329,7 @@ public class KiCoPlugin extends Plugin {
         IConfigurationElement[] resourceExtensions =
                 Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_EXTENSION_POINT_ID);
 
-        resourceExtensionCached = new HashMap<String, Pair<String, Boolean>>();
+        resourceExtensionCached = new HashMap<String, ResourceExtension>();
 
         for (int i = 0; i < resourceExtensions.length; i++) {
             try {
@@ -328,7 +337,8 @@ public class KiCoPlugin extends Plugin {
                 String className = resourceExtensions[i].getAttribute("className");
                 String extension = resourceExtensions[i].getAttribute("extensionName");
                 String isXMI = resourceExtensions[i].getAttribute("isXMI");
-                resourceExtensionCached.put(className, new Pair<String, Boolean>(extension, isXMI.toLowerCase().equals("true")));
+                String editorID = resourceExtensions[i].getAttribute("editor_id");
+                resourceExtensionCached.put(className, new ResourceExtension(className, extension, isXMI.toLowerCase().equals("true"), editorID));
 
                 if (DEBUG) {
                      System.out.println("KiCo register resource extension: "
@@ -354,17 +364,17 @@ public class KiCoPlugin extends Plugin {
      *            the intermediate result
      * @return the resource extension
      */
-    public String getResourceExtension(Object model) {
-        HashMap<String, Pair<String, Boolean>> resourceExtensionMap =
+    public ResourceExtension getResourceExtension(Object model) {
+        HashMap<String, ResourceExtension> resourceExtensionMap =
                 KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
-        Pair<String, Boolean> specificExtension = null;
+        ResourceExtension specificExtension = null;
         if (model instanceof EObject) {
             specificExtension = resourceExtensionMap.get(((EObject) model).eClass().getName());
         } else {
             specificExtension = resourceExtensionMap.get(model.getClass().getSimpleName());
         }
         if (specificExtension != null) {
-            return specificExtension.getFirst();
+            return specificExtension;
         }
         return null;
     }

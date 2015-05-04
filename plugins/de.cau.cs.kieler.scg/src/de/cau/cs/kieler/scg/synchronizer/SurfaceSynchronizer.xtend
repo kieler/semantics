@@ -37,6 +37,11 @@ import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
 import java.util.List
 import de.cau.cs.kieler.scg.BasicBlock
 import java.util.Set
+import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
+import de.cau.cs.kieler.scg.Depth
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -68,7 +73,23 @@ import java.util.Set
  */
 
 class SurfaceSynchronizer extends AbstractSynchronizer {
- 
+
+    static final boolean DEBUG = false;
+
+    def static void debug(String debugText) {
+        debug(debugText, true);
+    }
+
+    def static void debug(String debugText, boolean lineBreak) {
+        if (DEBUG) {
+            if (lineBreak) {
+                System.out.println(debugText);
+            } else {
+                System.out.print(debugText);
+            }
+        }
+    }
+     
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
@@ -87,6 +108,9 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 
     @Inject
     extension AnnotationsExtensions
+    
+    @Inject
+    extension KExpressionsSerializeExtension
    
     protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
     protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
@@ -113,9 +137,12 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	 * @return
 	 * 		Returns a {@code SynchronizerData} class including all mandatory data for the scheduler.
 	 */  
-    override protected SynchronizerData build(Join join) {
+    override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
     	// Create a new SynchronizerData class which holds the data to return.
-        var data = new SynchronizerData() => [ setJoin(join) ]
+        var data = new SynchronizerData() => [ 
+            setJoin(join)
+            setGuard(guard)
+        ]
 		
 		// Since we are working we completely enriched SCGs, we can use the SCG extensions 
 		// to retrieve the scheduling block of the join node in question.
@@ -123,7 +150,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 
-        data.guardExpression.valuedObject = joinSB.guard.valuedObject
+//        data.guardExpression.valuedObject = joinSB.guard.valuedObject
 
 		// Create a new expression that determines if at least on thread exits in this tick instance.
 		// At first this simple scheduler assumes that the fork node spawns more than one thread.
@@ -136,6 +163,16 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 //        data.guardExpression.expression = FALSE
         
 		data.fixEmptyExpressions.fixSynchronizerExpression
+		
+		guard.expression = data.guardExpression.expression
+		for(emptyExp : data.guardExpression.emptyExpressions) {
+			val newGuard = ScgFactory::eINSTANCE.createGuard
+            newGuard.valuedObject = emptyExp.valuedObject
+            newGuard.expression = emptyExp.expression
+            scg.guards += newGuard
+            
+            debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
+		}
     }
     
     protected def SynchronizerData createEmptyExpressions(SynchronizerData data, OperatorExpression terminationExpression) {
@@ -170,7 +207,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	            data.predecessors.add(exitSB)
 	            
 	            // Now, retrieve all surfaces of the actual thread.
-	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
+	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Depth)).toList
 	            
 	            // If there are surface, build an empty expression.
 	            if (threadSurfaces.size>0) {
@@ -182,6 +219,11 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	            	 * SynchronizerData structure since the object has to be added to the list of 
 	            	 * valued objects in the SCG. 
 	            	 */
+	            	 val graph = data.join.graph
+	            	while (graph.guardExists(exitSB.guard.valuedObject.name + '_e' + exitNodeCount)) {
+	            	    exitNodeCount = exitNodeCount + 1
+	            	} 
+	            	 
 	      			val emptyExp = new EmptyExpression()  
 	      			emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
 	      			emptyExp.valuedObject.name = exitSB.guard.valuedObject.name + '_e' + exitNodeCount
@@ -321,7 +363,8 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             while(sExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
                 val eExp = new EmptyExpression()  
                 eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
-                eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+//                eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+                eExp.valuedObject.name = data.guard.valuedObject.name + "_fix" + fixcnt
                 data.valuedObjects.add(eExp.valuedObject)
                 val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
                 subExp.setOperator(OperatorType::AND)
@@ -341,7 +384,8 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         	    while(tExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
     	            val eExp = new EmptyExpression()  
 	                eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
-                	eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+//                    eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+                    eExp.valuedObject.name = data.guard.valuedObject.name + "_fix" + fixcnt
             	    data.valuedObjects.add(eExp.valuedObject)
         	        val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
     	            subExp.setOperator(OperatorType::OR)
@@ -375,30 +419,37 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         synchronizable
     }
     
-    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
-    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-        val excludeSet = <Predecessor> newHashSet
-
-        val predecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
-        
-        var delayFound = false
-        for(entry:join.getEntryNodes) {
-            val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
-            if (t != ThreadPathType::INSTANTANEOUS) {
-                delayFound = true
-            } else {
-                excludeSet += predecessors.filter[ it.basicBlock == schedulingBlockCache.get(entry.exit).basicBlock ]
-            }
+    protected def boolean guardExists(SCGraph scg, String name) {
+        for(g : scg.guards) {
+            if (g.valuedObject.name == name) return true
         }
-       
-        if (!delayFound) { 
-            excludeSet.clear
-        }
-        return excludeSet
+        return false
     }
     
-	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-		<Predecessor> newHashSet
-	}    
+//    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
+//    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+//        val excludeSet = <Predecessor> newHashSet
+//
+//        val predecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
+//        
+//        var delayFound = false
+//        for(entry:join.getEntryNodes) {
+//            val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
+//            if (t != ThreadPathType::INSTANTANEOUS) {
+//                delayFound = true
+//            } else {
+//                excludeSet += predecessors.filter[ it.basicBlock == schedulingBlockCache.get(entry.exit).basicBlock ]
+//            }
+//        }
+//       
+//        if (!delayFound) { 
+//            excludeSet.clear
+//        }
+//        return excludeSet
+//    }
+//    
+//	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+//		<Predecessor> newHashSet
+//	}    
     
 }
