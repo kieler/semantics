@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
-public abstract class Hook implements IHook {
+public abstract class AbstractHook implements IHook {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------

@@ -98,7 +98,7 @@ public class KiCoPlugin extends Plugin {
     private static HashMap<String, Transformation> transformationsCached = null;
 
     /** The cached registered hooks. */
-    private static HashMap<String, Hook> hooksCached = null;
+    private static HashMap<String, IHook> hooksCached = null;
 
     /** The cached resource extensions. */
     private static HashMap<String, ResourceExtension> resourceExtensionsCached = null;
@@ -357,7 +357,7 @@ public class KiCoPlugin extends Plugin {
      * 
      * @return the registered processors
      */
-    public static HashMap<String, Hook> getRegisteredHooks(boolean forceReload) {
+    public static HashMap<String, IHook> getRegisteredHooks(boolean forceReload) {
         // Return the cache if there is any and not forced to reload
         if (hooksCached != null && !forceReload) {
             return hooksCached;
@@ -367,14 +367,14 @@ public class KiCoPlugin extends Plugin {
                 Platform.getExtensionRegistry().getConfigurationElementsFor(
                         CREEPER_EXTENSION_POINT_ID);
         // Clear the cache
-        hooksCached = new HashMap<String, Hook>();
+        hooksCached = new HashMap<String, IHook>();
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             String className = extension.getName();
             try {
-                Hook instance = (Hook) extension.createExecutableExtension("class");
+                IHook instance = (IHook) extension.createExecutableExtension("class");
                 // Handle the case that wee need Google Guice for instantiation
-                instance = (Hook) getGuiceInstance(instance);                
+                instance = (IHook) getGuiceInstance(instance);                
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (hooksCached.containsKey(id)) {
@@ -543,8 +543,8 @@ public class KiCoPlugin extends Plugin {
      *            the force reload flag
      * @return the hook
      */
-    public static Hook getHook(String id, boolean forceReload) {
-        HashMap<String, Hook> cache = getRegisteredHooks(forceReload);
+    public static IHook getHook(String id, boolean forceReload) {
+        HashMap<String, IHook> cache = getRegisteredHooks(forceReload);
         if (!cache.containsKey(id)) {
             KiCoUtil.logWarning(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the hook with ID '" + id
                     + "'", null);
@@ -560,7 +560,7 @@ public class KiCoPlugin extends Plugin {
      *            the id
      * @return the hook
      */
-    public static Hook getHook(String id) {
+    public static IHook getHook(String id) {
         return getHook(id, false);
     }
 
