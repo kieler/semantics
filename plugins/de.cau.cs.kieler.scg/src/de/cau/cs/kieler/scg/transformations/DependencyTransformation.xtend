@@ -344,7 +344,7 @@ class DependencyTransformation extends Transformation {
                     if (assignment.areConcurrent(node)) dependency.concurrent = true
                     if (assignment.areConfluent(node)) dependency.confluent = true
                     dependency.target = node;
-                    if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.dataDependencyExists(dependency)) {
+                    if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.filter(DataDependency).dataDependencyExists(dependency)) {
                         assignment.dependencies.add(dependency);
                         dependencyCounter = dependencyCounter + 1
                         if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
@@ -367,7 +367,7 @@ class DependencyTransformation extends Transformation {
             if (dependency != null) {
                 if (assignment.areConcurrent(node)) dependency.concurrent = true
                 dependency.target = node;
-                if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.dataDependencyExists(dependency)) {
+                if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.filter(DataDependency).dataDependencyExists(dependency)) {
                     assignment.dependencies.add(dependency);
                     dependencyCounter = dependencyCounter + 1
                     if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
@@ -381,7 +381,7 @@ class DependencyTransformation extends Transformation {
         assignment
     }
     
-    private def boolean dataDependencyExists(List<DataDependency> dependencies, DataDependency dependency) {
+    private def boolean dataDependencyExists(Iterable<DataDependency> dependencies, DataDependency dependency) {
         for(d : dependencies) {
             if (
                 d.class == dependency.class &&
