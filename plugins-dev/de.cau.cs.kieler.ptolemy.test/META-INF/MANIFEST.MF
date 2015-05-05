@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ptolemy Test
+Bundle-SymbolicName: de.cau.cs.kieler.ptolemy.test;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.ptolemy.test.PtolemyTestPlugin
+Bundle-Vendor: Kiel University
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.sim.kiem,
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent,
+ de.cau.cs.kieler.sim.ptolemy,
+ org.ptolemy,
+ org.ptolemy.moml,
+ de.cau.cs.kieler.sim.signals
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
