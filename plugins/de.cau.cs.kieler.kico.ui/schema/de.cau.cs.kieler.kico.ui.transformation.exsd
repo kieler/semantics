@@ -77,13 +77,6 @@ Leaving the editor ID empty means that the registered transformations will be vi
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="priorized" type="string">
-            <annotation>
-               <documentation>
-                  A comma separated list of transformation IDs of alternatives that should be priorized when an alternative group is selected.
-               </documentation>
-            </annotation>
-         </attribute>
       </complexType>
    </element>
 

@@ -1,0 +1,27 @@
+module test_grcbal2:
+input A;
+input B;
+output C;
+output D;
+output E;
+
+loop
+  if (A) {
+    [
+      emit C
+    ||
+      if (D) {
+        
+      } else {
+        emit E
+      }
+    ]
+  } else {
+    if (B or C) {
+      emit D
+    }
+  };
+  pause
+end loop
+
+end module

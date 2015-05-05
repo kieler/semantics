@@ -1,0 +1,62 @@
+module stest:
+inputoutput A;
+inputoutput B;
+inputoutput C;
+output D;
+output X;
+output Y;
+output Z;
+output W;
+output T;
+output E;
+
+loop
+  abort
+      loop
+        present A then
+          pause
+        end present;
+        signal SS in
+          present B then
+            emit SS;
+            emit Z
+          else
+            pause
+          end present;
+          emit T;
+          signal S in
+            present SS then
+              emit Y;
+              emit S
+            end present;
+            present S then
+              emit X
+            end present;
+            pause;
+            emit W
+          end signal;
+          present B then
+            emit SS
+          end present
+        end signal;
+        emit E
+      end loop
+    ||
+      every 3 tick do
+        emit A
+      end every
+    ||
+      every 5 tick do
+        emit B
+      end every
+    ||
+      every 11 tick do
+        emit A;
+        emit B;
+        pause;
+        emit A
+      end every
+  when 100 tick
+end loop
+
+end module

@@ -1,0 +1,213 @@
+module Counter:
+input T;
+input S;
+input S0;
+input S1;
+input S2;
+input S3;
+output B0;
+output B1;
+output B2;
+output B3;
+output ALARM;
+
+signal R,
+       T5,
+       C0,
+       C1,
+       C2,
+       A0,
+       A1,
+       A2 in
+    every 5 T do
+      emit T5
+    end every
+  ||
+    loop
+      abort
+        loop
+          abort
+            loop
+              pause
+            end loop
+          when T5;
+          abort
+            loop
+              emit B0;
+              pause
+            end loop
+          when T5;
+          emit C0;
+          abort
+            loop
+              emit B0;
+              pause
+            end loop
+          when T5;
+          abort
+            loop
+              pause
+            end loop
+          when T5;
+          emit C0
+        end loop;
+        loop
+          pause
+        end loop
+      when R
+    end loop
+  ||
+    loop
+      abort
+        loop
+          abort
+            loop
+              pause
+            end loop
+          when C0;
+          abort
+            loop
+              emit B1;
+              pause
+            end loop
+          when C0;
+          emit C1;
+          abort
+            loop
+              emit B1;
+              pause
+            end loop
+          when C0;
+          abort
+            loop
+              pause
+            end loop
+          when C0;
+          emit C1
+        end loop;
+        loop
+          pause
+        end loop
+      when R
+    end loop
+  ||
+    loop
+      abort
+        loop
+          abort
+            loop
+              pause
+            end loop
+          when C1;
+          abort
+            loop
+              emit B2;
+              pause
+            end loop
+          when C1;
+          emit C2;
+          abort
+            loop
+              emit B2;
+              pause
+            end loop
+          when C1;
+          abort
+            loop
+              pause
+            end loop
+          when C1;
+          emit C2
+        end loop;
+        loop
+          pause
+        end loop
+      when R
+    end loop
+  ||
+    signal SMEM,
+           SMEM1 in
+        loop
+          if (SMEM) {
+            pause;
+            emit SMEM1
+          } else {
+            pause
+          }
+        end loop
+      ||
+        loop
+          if (S) {
+            if (S0) {
+              emit SMEM
+            }
+          } else {
+            if (SMEM1) {
+              emit SMEM
+            }
+          };
+          if (tick and (SMEM and B0 or not SMEM and not B0)) {
+            emit A0
+          };
+          pause
+        end loop
+    end signal
+  ||
+    signal SMEM,
+           SMEM1 in
+        loop
+          if (SMEM) {
+            pause;
+            emit SMEM1
+          } else {
+            pause
+          }
+        end loop
+      ||
+        loop
+          if (S) {
+            if (S1) {
+              emit SMEM
+            }
+          } else {
+            if (SMEM1) {
+              emit SMEM
+            }
+          };
+          if (A0 and (SMEM and B1 or not SMEM and not B1)) {
+            emit A1
+          };
+          pause
+        end loop
+    end signal
+  ||
+    signal SMEM,
+           SMEM1 in
+        loop
+          if (SMEM) {
+            pause;
+            emit SMEM1
+          } else {
+            pause
+          }
+        end loop
+      ||
+        loop
+          if (S) {
+            if (S2) {
+              emit SMEM
+            }
+          } else {
+            if (SMEM1) {
+              emit SMEM
+            }
+          };
+          if (A1 and (SMEM and B2 or not SMEM and not B2)) {
+            emit A2
+          };
+          pause
+        end loop
+    end signal
+end signal
+
+end module

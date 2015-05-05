@@ -42,6 +42,7 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -85,7 +86,7 @@ class DependencyTransformation extends Transformation {
     // -- Globals 
     // -------------------------------------------------------------------------
     
-    public static val ANNOTATION_DEPENDENCYRANSFORMATION = "dependencies"
+    public static val ANNOTATION_DEPENDENCYTRANSFORMATION = "dependencies"
     
     /** 
      * threadNodeCache caches the entry nodes a specific node belongs to w.r.t. hierarchy
@@ -140,7 +141,7 @@ class DependencyTransformation extends Transformation {
     def SCGraph transformSCGToSCGDEP(SCGraph scg) {
 
         if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
-            || scg.hasAnnotation(DependencyTransformation::ANNOTATION_DEPENDENCYRANSFORMATION)
+            || scg.hasAnnotation(DependencyTransformation::ANNOTATION_DEPENDENCYTRANSFORMATION)
         ) {
             return scg
         }
@@ -283,7 +284,7 @@ class DependencyTransformation extends Transformation {
       	 System.out.println("o")
 
         scg => [
-            annotations += createStringAnnotation(ANNOTATION_DEPENDENCYRANSFORMATION, "")
+            annotations += createStringAnnotation(ANNOTATION_DEPENDENCYTRANSFORMATION, "")
         ]     
 
         time = (System.currentTimeMillis - timestamp) as float
@@ -318,7 +319,7 @@ class DependencyTransformation extends Transformation {
         // Filter all other assignments.
         assignments.forEach[ node |
             if (node != assignment) {
-                var Dependency dependency = null
+                var DataDependency dependency = null
                 // If they write to the same variable...
                 if (node.isSameScalar(assignment)) {
                     // Check absolute / relative writes and add the corresponding dependency.
@@ -343,7 +344,7 @@ class DependencyTransformation extends Transformation {
                     if (assignment.areConcurrent(node)) dependency.concurrent = true
                     if (assignment.areConfluent(node)) dependency.confluent = true
                     dependency.target = node;
-                    if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.dependencyExists(dependency)) {
+                    if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.filter(DataDependency).dataDependencyExists(dependency)) {
                         assignment.dependencies.add(dependency);
                         dependencyCounter = dependencyCounter + 1
                         if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
@@ -358,7 +359,7 @@ class DependencyTransformation extends Transformation {
         // Basically, do the same stuff with conditionals as target. 
         // Since conditionals will never write to a variable, it is sufficient to check the reader.
         conditionals.forEach[ node |
-            var Dependency dependency = null
+            var DataDependency dependency = null
             if (node.isReader(assignment)) {
                 if (iAmAbsoluteWriter) dependency = ScgFactory::eINSTANCE.createAbsoluteWrite_Read
                 else dependency = ScgFactory::eINSTANCE.createRelativeWrite_Read    
@@ -366,7 +367,7 @@ class DependencyTransformation extends Transformation {
             if (dependency != null) {
                 if (assignment.areConcurrent(node)) dependency.concurrent = true
                 dependency.target = node;
-                if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.dependencyExists(dependency)) {
+                if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.filter(DataDependency).dataDependencyExists(dependency)) {
                     assignment.dependencies.add(dependency);
                     dependencyCounter = dependencyCounter + 1
                     if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
@@ -380,7 +381,7 @@ class DependencyTransformation extends Transformation {
         assignment
     }
     
-    private def boolean dependencyExists(List<Dependency> dependencies, Dependency dependency) {
+    private def boolean dataDependencyExists(Iterable<DataDependency> dependencies, DataDependency dependency) {
         for(d : dependencies) {
             if (
                 d.class == dependency.class &&

@@ -24,5 +24,5 @@ package de.cau.cs.kieler.scg;
  * @model
  * @generated
  */
-public interface RelativeWrite_Read extends Dependency {
+public interface RelativeWrite_Read extends DataDependency {
 } // RelativeWrite_Read

@@ -36,6 +36,7 @@ import de.cau.cs.kieler.scg.ScheduledBlock
 import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -135,7 +136,7 @@ class DelayAwareScheduler extends SimpleScheduler {
                 
         // Basically, perform the same test for dependency. We cannot create a guard expression 
         // if any block containing a dependency is still in our list.
-        for(dependency : schedulingBlock.dependencies) {
+        for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
             if (dependency.concurrent && !dependency.confluent) {
                 val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
                     if (
@@ -213,7 +214,7 @@ class DelayAwareScheduler extends SimpleScheduler {
 //	            	}
 //            	}
 //           	}
-            for(dependency : schedulingBlock.dependencies) {
+            for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
                 if (dependency.concurrent && !dependency.confluent) {
                     val sb = schedulingBlockCache.get(dependency.eContainer as Node)
                     preceedingSchizo.put(sb, true)

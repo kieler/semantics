@@ -1,0 +1,20 @@
+module test_abort3:
+output A;
+output B;
+output C;
+
+  abort
+    pause;
+    pause;
+    pause;
+    emit A
+  when 2 B do
+    emit C
+  end abort
+||
+  pause;
+  emit B;
+  pause;
+  emit B
+
+end module

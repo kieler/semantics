@@ -1,0 +1,37 @@
+! reset;
+
+% Output: 
+;
+A 
+% Output: 
+;
+C 
+% Output: B(1) 
+;
+
+% Output: 
+;
+A 
+% Output: B(1) 
+;
+C 
+% Output: D(1) 
+;
+A C 
+% Output: B(1) 
+;
+
+% Output: 
+;
+A C 
+% Output: B(1) 
+;
+A C 
+% Output: D(1) 
+;
+A C 
+% Output: B(1) 
+;
+A C 
+% Output: D(1) 
+;

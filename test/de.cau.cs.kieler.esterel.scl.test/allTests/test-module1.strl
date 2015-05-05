@@ -1,0 +1,11 @@
+module foo:
+
+nothing
+
+end module
+
+module bar:
+
+nothing
+
+end module

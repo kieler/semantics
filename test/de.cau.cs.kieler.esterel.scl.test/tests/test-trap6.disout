@@ -1,0 +1,29 @@
+module test_trap6:
+output A;
+output B;
+
+trap T1 : integer,
+     T2 := 3 : integer,
+     T3 in
+    pause
+  ||
+    exit T1(5)
+  ||
+    exit T2(8)
+  ||
+    exit T3
+handle T1 or T2 or T3 do
+    if (T1) {
+      emit A
+    }
+  ||
+    if (T2) {
+      emit B
+    }
+  ||
+    if (T3) {
+      
+    }
+end trap
+
+end module

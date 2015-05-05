@@ -1,0 +1,24 @@
+module Test_Run4:
+
+signal A,
+       B,
+       C in
+  nothing
+end signal;
+signal D,
+       E in
+  run Foo
+end signal;
+signal F,
+       G in
+  pause
+end signal
+
+end module
+
+module Foo:
+inputoutput D;
+
+emit D
+
+end module

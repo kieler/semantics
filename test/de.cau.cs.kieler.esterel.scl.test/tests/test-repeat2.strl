@@ -1,0 +1,10 @@
+module test_repeat2:
+input A;
+output B;
+
+positive repeat 5 times
+  emit B;
+  await A
+end repeat
+
+end module

@@ -1,0 +1,10 @@
+module test_halt1:
+
+loop
+  pause
+end loop;
+loop
+  pause
+end loop
+
+end module

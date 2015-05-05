@@ -1,0 +1,11 @@
+module test_signal9:
+output A := true : boolean;
+output a : boolean;
+output b : boolean;
+
+signal B := true : boolean in
+  emit a(?A);
+  emit b(?B)
+end signal
+
+end module

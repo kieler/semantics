@@ -1,0 +1,80 @@
+module instr:
+
+% Problem is that code to emit newtmp is never generated.
+
+input pc : integer;
+input stop;
+output RS : integer;
+output RT : integer;
+output RD : integer;
+output bubble;
+output value : integer;
+
+output HELP;
+
+function InstrFetch (integer, integer) : integer; % IF(PC, var)
+function RegRead (integer) : integer; % register value
+function RegWrite (integer, integer): integer;
+function add (integer, integer): integer; % add integer signal values
+var dest := -1 : integer, src1 := -1 : integer, src2 := -1 : integer,
+IDdest := -1 : integer, IDsrc1 := -1 : integer, IDsrc2 := -1 : integer,
+EXdest := -1 : integer, EXsrc1 := -1 : integer, EXsrc2 := -1 : integer,
+WBdest := -1 : integer, WBsrc1 := -1 : integer, WBsrc2 := -1 : integer,
+IDreg1 := 0 : integer, IDreg2 := 0 : integer,
+EXreg1 := 0 : integer, EXreg2 := 0 : integer,
+temp2 := 0 :integer in
+
+signal newtmp : integer in
+%, IDr1 :integer, IDr2 : integer in
+
+  loop
+    dest := InstrFetch(?pc, 0);
+    src1 := InstrFetch(?pc, 1);
+    src2 := InstrFetch(?pc, 2);
+    if IDdest = src1 or IDdest = src2 or EXdest = src1 or EXdest = src2  then
+	WBsrc1 := EXsrc1; WBsrc2 := EXsrc2; WBdest := EXdest;
+	EXsrc1 := IDsrc1; EXsrc2 := IDsrc2; EXdest := IDdest;
+	IDsrc1 := -1;     IDsrc2 := -1;     IDdest := -1;
+	emit bubble;
+    else 
+	WBsrc1 := EXsrc1; WBsrc2 := EXsrc2; WBdest := EXdest;
+	EXsrc1 := IDsrc1; EXsrc2 := IDsrc2; EXdest := IDdest;
+	IDsrc1 := src1;   IDsrc2 := src2;   IDdest := dest;
+    end if;
+    pause;
+end loop
+||
+loop
+  EXreg1 := IDreg1;
+  EXreg2 := IDreg2;
+  if IDsrc1 <> -1 and IDsrc2 <> -1 then
+	IDreg1 := RegRead(IDsrc1);
+	IDreg2 := RegRead(IDsrc2);
+  end if;
+  pause;
+  %emit IDr1(IDreg1);
+  %emit IDr2(IDreg2);
+end loop
+||
+loop
+  var temp := -1 : integer in
+    if EXsrc1 <> -1 and EXsrc2 <> -1 then
+  	  %temp := add(?IDr1,?IDr2);
+	  temp := add(EXreg1,EXreg2);
+    end if;
+    pause;
+    emit newtmp(temp);
+    emit HELP
+  end var
+end loop
+||
+loop
+  if WBsrc1 <> -1 and WBsrc2 <> -1 then
+ 	emit value(RegWrite(WBdest, ?newtmp));
+  end if;
+  pause;
+end loop
+
+end signal
+end var
+end module

@@ -1,0 +1,9 @@
+module test_signal3:
+input s1;
+output s2;
+
+signal s3 in
+  emit s3
+end signal
+
+end module

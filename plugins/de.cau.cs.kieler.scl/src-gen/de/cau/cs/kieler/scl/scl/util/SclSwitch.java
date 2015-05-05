@@ -10,7 +10,7 @@ import de.cau.cs.kieler.scl.scl.Instruction;
 import de.cau.cs.kieler.scl.scl.InstructionStatement;
 import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
-import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
@@ -84,11 +84,11 @@ public class SclSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case SclPackage.PROGRAM:
+      case SclPackage.SCL_PROGRAM:
       {
-        Program program = (Program)theEObject;
-        T result = caseProgram(program);
-        if (result == null) result = caseStatementSequence(program);
+        SCLProgram sclProgram = (SCLProgram)theEObject;
+        T result = caseSCLProgram(sclProgram);
+        if (result == null) result = caseStatementSequence(sclProgram);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -192,17 +192,17 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Program</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>SCL Program</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Program</em>'.
+   * @return the result of interpreting the object as an instance of '<em>SCL Program</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseProgram(Program object)
+  public T caseSCLProgram(SCLProgram object)
   {
     return null;
   }

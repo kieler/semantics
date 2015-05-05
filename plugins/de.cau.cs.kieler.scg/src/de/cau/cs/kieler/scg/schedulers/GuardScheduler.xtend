@@ -46,6 +46,7 @@ import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.ScheduleBlock
 import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -164,7 +165,7 @@ class GuardScheduler extends AbstractScheduler {
             }
 
             if (schedulingBlock != null) {
-                val dependencies = schedulingBlock.getAllDependencies(scg)
+                val dependencies = schedulingBlock.getAllDataDependencies(scg)
                 if (!dependencies.empty) {
                     debug(indent + "Scheduling block" + schedulingBlock.label + " has dependencies: ", false)
                     for (dependency : dependencies) {
@@ -380,8 +381,8 @@ class GuardScheduler extends AbstractScheduler {
         scg
     }
 
-    private def Set<Dependency> getAllDependencies(SchedulingBlock schedulingBlock, SCGraph scg) {
-        val returnSet = <Dependency>newHashSet;
+    private def Set<DataDependency> getAllDataDependencies(SchedulingBlock schedulingBlock, SCGraph scg) {
+        val returnSet = <DataDependency>newHashSet;
 
         //    	val guard = schedulingBlock.guard
         //    	for (sb : scg.allSchedulingBlocks) {
@@ -390,7 +391,7 @@ class GuardScheduler extends AbstractScheduler {
         //    		}
         //    	} 
         //(schedulingBlock.eContainer as BasicBlock).schedulingBlocks.forEach[ returnSet += it.dependencies ]
-        returnSet += schedulingBlock.dependencies
+        returnSet += schedulingBlock.dependencies.filter(typeof(DataDependency))
 
         returnSet
     }

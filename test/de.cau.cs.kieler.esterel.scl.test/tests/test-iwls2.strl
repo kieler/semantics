@@ -1,0 +1,36 @@
+module test_iwls2:
+input b;
+input c;
+input d;
+output e;
+output f;
+output g;
+output h;
+output i;
+output j;
+output k;
+
+loop
+  abort
+    pause;
+    emit e;
+    pause;
+    emit f
+  when b;
+  abort
+    pause;
+    emit g;
+    pause;
+    emit h;
+    pause;
+    emit i
+  when c;
+  abort
+    pause;
+    emit j;
+    pause;
+    emit k
+  when d
+end loop
+
+end module
