@@ -13,33 +13,18 @@ Export-Package: de.cau.cs.kieler.c;uses:="org.antlr.v4.runtime,org.antlr.v4.runt
  org.abego.treelayout.internal.util.java.lang.string,
  org.abego.treelayout.internal.util.java.util,
  org.abego.treelayout.util;uses:="org.abego.treelayout",
- org.antlr.v4.runtime;
-  uses:="org.antlr.v4.runtime.dfa,
-   org.antlr.v4.runtime.tree.pattern,
-   org.antlr.v4.runtime.atn,
-   org.antlr.v4.runtime.misc,
-   org.antlr.v4.runtime.tree",
+ org.antlr.v4.runtime; uses:="org.antlr.v4.runtime.dfa,  org.antlr.v4.runtime.tree.pattern,  org.antlr.v4.runtime.atn,  org.antlr.v4.runtime.misc,  org.antlr.v4.runtime.tree",
  org.antlr.v4.runtime.atn;uses:="org.antlr.v4.runtime,org.antlr.v4.runtime.dfa,org.antlr.v4.runtime.misc",
  org.antlr.v4.runtime.dfa;uses:="org.antlr.v4.runtime,org.antlr.v4.runtime.atn",
- org.antlr.v4.runtime.misc;
-  uses:="org.antlr.v4.runtime,
-   javax.swing,
-   javax.lang.model,
-   javax.annotation.processing",
+ org.antlr.v4.runtime.misc; uses:="org.antlr.v4.runtime,  javax.swing,  javax.lang.model,  javax.annotation.processing",
  org.antlr.v4.runtime.tree;uses:="org.antlr.v4.runtime,org.antlr.v4.runtime.misc",
- org.antlr.v4.runtime.tree.gui;
-  uses:="org.abego.treelayout,
-   javax.swing,
-   javax.swing.filechooser,
-   new org.antlr.v4.runtime.tree.gui,
-   javax.swing.event,
-   org.antlr.v4.runtime.tree",
+ org.antlr.v4.runtime.tree.gui; uses:="org.abego.treelayout,  javax.swing,  javax.swing.filechooser,  new org.antlr.v4.runtime.tree.gui,  javax.swing.event,  org.antlr.v4.runtime.tree",
  org.antlr.v4.runtime.tree.pattern;uses:="org.antlr.v4.runtime,org.antlr.v4.runtime.misc,org.antlr.v4.runtime.tree",
- org.antlr.v4.runtime.tree.xpath;
-  uses:="org.antlr.v4.runtime,
-   org.antlr.v4.runtime.dfa,
-   org.antlr.v4.runtime.atn,
-   org.antlr.v4.runtime.tree"
+ org.antlr.v4.runtime.tree.xpath; uses:="org.antlr.v4.runtime,  org.antlr.v4.runtime.dfa,  org.antlr.v4.runtime.atn,  org.antlr.v4.runtime.tree"
 Class-Path: antlr-runtime-4.5.jar
-Bundle-ClassPath: antlr-runtime-4.5.jar,
- .
+Bundle-ClassPath: antlr-runtime-4.5.jar,.
+Require-Bundle: org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib
+
