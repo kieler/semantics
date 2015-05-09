@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.sccharts.targetman.ui;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
@@ -30,7 +32,22 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class TargetDialog extends Dialog {
 
-    IFile sctFile;
+    private IFile sctFile;
+
+    // ////////////////////////////////////////////////////////////////
+    // Property IDs
+    private static QualifiedName COMPILE_ON_SAVE_PROPERTY_ID = new QualifiedName(
+            TargetManagementPlugin.PLUGIN_ID, "compileOnSave");
+    private static QualifiedName TARGET_LANGUAGE_PROPERTY_ID = new QualifiedName(
+            TargetManagementPlugin.PLUGIN_ID, "targetLanguage");
+    private static QualifiedName TARGET_PATH_PROPERTY_ID = new QualifiedName(
+            TargetManagementPlugin.PLUGIN_ID, "targetPath");
+
+    // ////////////////////////////////////////////////////////////////
+    // GUI
+    private Button chkCompileOnSave;
+    private Combo cmbLanguage;
+    private FileChooser fileChooser;
 
     /**
      * @param parentShell
@@ -43,38 +60,62 @@ public class TargetDialog extends Dialog {
     }
 
     protected Control createDialogArea(Composite parent) {
-        Composite composite = (Composite)super.createDialogArea(parent);
-        
-        // TODO: init with the real data for the sct file 
-        
+        Composite composite = (Composite) super.createDialogArea(parent);
+
+        boolean isCompileOnSave = true;
+        String targetLanguage = "Java";
+        String targetPath = sctFile.getLocation() + ".target";;
+
+        try {
+            String s;
+            s = sctFile.getPersistentProperty(COMPILE_ON_SAVE_PROPERTY_ID);
+            if(s != null)
+                isCompileOnSave = Boolean.parseBoolean(s);
+            
+            s = sctFile.getPersistentProperty(TARGET_LANGUAGE_PROPERTY_ID);
+            if(s != null)
+                targetLanguage = s;
+            
+            s = sctFile.getPersistentProperty(TARGET_PATH_PROPERTY_ID);
+            if(s != null)
+                targetPath = s;
+        } catch (CoreException e) {
+            e.printStackTrace();
+        }
+
         // Checkbox
-        Button chkCompileOnSave = new Button(composite, SWT.CHECK);
+        chkCompileOnSave = new Button(composite, SWT.CHECK);
         chkCompileOnSave.setText("Compile on saving");
-        chkCompileOnSave.setSelection(true);
-        
+        chkCompileOnSave.setSelection(isCompileOnSave);
+
         // Layout
         Composite innerComposite = new Composite(composite, SWT.NONE);
         innerComposite.setLayout(new GridLayout(2, false));
-        
+
         // Language
         Label lblLanguage = new Label(innerComposite, SWT.NONE);
         lblLanguage.setText("Target Language");
-        Combo cmbLanguage = new Combo(innerComposite, SWT.NONE);
+        cmbLanguage = new Combo(innerComposite, SWT.NONE);
         cmbLanguage.add("Java");
         cmbLanguage.add("C");
         cmbLanguage.add("Esperanto");
-        cmbLanguage.select(0);
-        
+        if(targetLanguage.equals("Java")){
+            cmbLanguage.select(0);
+        } else if(targetLanguage.equals("C")){
+            cmbLanguage.select(1);
+        } if(targetLanguage.equals("Esperanto")){
+            cmbLanguage.select(2);
+        } else{
+            cmbLanguage.select(0);
+        }
         // Path
         Label lblPath = new Label(innerComposite, SWT.NONE);
         lblPath.setText("Output file");
-        FileChooser fileChooser = new FileChooser(innerComposite);
-        
-        String defaultTargetFile= sctFile.getLocation()+".target";
-        fileChooser.getTextControl().setText(defaultTargetFile);
-        
+        fileChooser = new FileChooser(innerComposite);
+        fileChooser.getTextControl().setText(targetPath);
+
         return composite;
-     }
+    }
 
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
@@ -82,7 +123,14 @@ public class TargetDialog extends Dialog {
     }
 
     protected void okPressed() {
-        System.out.println("OK pressed!");
+        try {
+            sctFile.setPersistentProperty(COMPILE_ON_SAVE_PROPERTY_ID,
+                    Boolean.toString(chkCompileOnSave.getSelection()));
+            sctFile.setPersistentProperty(TARGET_LANGUAGE_PROPERTY_ID, cmbLanguage.getText());
+            sctFile.setPersistentProperty(TARGET_PATH_PROPERTY_ID, fileChooser.getText());
+        } catch (CoreException e) {
+            e.printStackTrace();
+        }
         super.okPressed();
     }
 }
