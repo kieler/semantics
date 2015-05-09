@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER SCCharts Target Management Ui
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.targetman.ui;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.sccharts.targetman.ui.TargetManagementPlugin
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources;bundle-version="3.9.1"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
