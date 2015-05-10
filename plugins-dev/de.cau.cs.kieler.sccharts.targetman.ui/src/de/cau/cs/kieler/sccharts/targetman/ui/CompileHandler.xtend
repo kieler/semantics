@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
@@ -20,20 +20,42 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.ui.handlers.HandlerUtil
 
-public class OpenTargetDialogHandler extends AbstractHandler {
+import static de.cau.cs.kieler.sccharts.targetman.ui.PropertyIds.*
 
-    override Object execute(ExecutionEvent event) throws ExecutionException {
+/**
+ * @author aas
+ * 
+ */
+class CompileHandler extends AbstractHandler {
+
+    override execute(ExecutionEvent event) throws ExecutionException {
+
         val selection = HandlerUtil.getCurrentSelection(event)
         if (selection instanceof IStructuredSelection) {
             val element = (selection as IStructuredSelection).getFirstElement()
             if (element instanceof IFile) {
-                val file = element as IFile
-                
-                val dialog = new TargetDialog(HandlerUtil.getActiveShell(event), file)
-                dialog.open()
+                compile(element as IFile)
             }
         }
+
         return selection
     }
 
+    def void compile(IFile file) {
+        val compileOnSave = file.getPersistentProperty(COMPILE_ON_SAVE_PROPERTY_ID)
+        val targetLanguage = file.getPersistentProperty(TARGET_LANGUAGE_PROPERTY_ID)
+        val targetPath = file.getPersistentProperty(TARGET_PATH_PROPERTY_ID)
+
+        if (compileOnSave == null || targetLanguage == null || targetPath == null) {
+            println("Can't compile SCT file '" + file.name + "'." +
+                "\nSet the compilation target via right click > Set SCT Target.")
+
+            return;
+        }
+
+        println("TODO: Compile SCT file to target")
+        println("   compile on save: " + compileOnSave)
+        println("   target language: " + targetLanguage)
+        println("   target path: " + targetPath)
+    }
 }

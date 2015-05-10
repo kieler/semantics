@@ -26,6 +26,8 @@ import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Shell
 
+import static de.cau.cs.kieler.sccharts.targetman.ui.PropertyIds.*
+
 /**
  * @author aas
  *
@@ -33,14 +35,7 @@ import org.eclipse.swt.widgets.Shell
 class TargetDialog extends Dialog {
     private IFile sctFile
 
-    // ////////////////////////////////////////////////////////////////
-    // Property IDs
-    static val QualifiedName COMPILE_ON_SAVE_PROPERTY_ID = new QualifiedName(
-            TargetManagementPlugin.PLUGIN_ID, "compileOnSave")
-    static val QualifiedName TARGET_LANGUAGE_PROPERTY_ID = new QualifiedName(
-            TargetManagementPlugin.PLUGIN_ID, "targetLanguage")
-    static val QualifiedName TARGET_PATH_PROPERTY_ID = new QualifiedName(
-            TargetManagementPlugin.PLUGIN_ID, "targetPath")
+    
 
     // ////////////////////////////////////////////////////////////////
     // GUI
