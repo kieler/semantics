@@ -152,7 +152,7 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
 
             } catch (Exception e) {
                 this.showWarning(editors[i].getContributor().getName() + " could not be loaded.",
-                        null, e, true);
+                        "", e, true);
             }
         }
         return returnHashMap;
@@ -241,7 +241,7 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
         }
 
         // do not post the same message twice
-        if ((exception != null) && (textMessage != null)
+        if ((exception != null) && (textMessage != null) && exception.getMessage() != null
                 && (exception.getMessage().startsWith(textMessage))) {
             message = "" + pluginID + "";
         } else {
