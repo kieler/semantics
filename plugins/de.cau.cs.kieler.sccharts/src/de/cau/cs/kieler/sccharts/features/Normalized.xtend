@@ -11,39 +11,36 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.featuregroups
+package de.cau.cs.kieler.sccharts.features
 
-import com.google.common.collect.Sets
-import de.cau.cs.kieler.kico.FeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.kico.Feature
+import de.cau.cs.kieler.sccharts.State
 
 /**
- * Core SCCharts Feature Group.
+ * SCCharts Normalized Feature.
  * 
- * @author cmot
+ * @author als
  * @kieler.design 2015-03-12 proposed 
  * @kieler.rating 2015-03-12 proposed yellow
  */
-class Core extends FeatureGroup {
+class Normalized extends Feature {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsFeatureGroup::CORE_ID
+        return SCChartsFeature::NORMALIZED_ID
     }
 
     override getName() {
-        return SCChartsFeatureGroup::CORE_NAME
+        return SCChartsFeature::NORMALIZED_NAME
     }
 
-    override getFeatureIds() {
-        Sets.newHashSet(SCChartsFeature::TRIGGEREFFECT_ID, SCChartsFeature::SURFACEDEPTH_ID)
+    //-------------------------------------------------------------------------
+
+    // This method checks, if this feature is contained in a model
+    def isContained(State model) {
+        return true
     }
 
-//    override getNotHandlesFeatureIds() {
-//        Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID);
-//    }
-
-//-------------------------------------------------------------------------
 }

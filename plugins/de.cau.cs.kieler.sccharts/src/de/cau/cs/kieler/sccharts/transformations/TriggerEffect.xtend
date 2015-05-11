@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
@@ -52,12 +53,13 @@ class TriggerEffect extends Transformation {
     }
 
     // THIS IS NOW DONE INDIRECTLY BY DECLARING META DEPENDENCIES ON FEATURE GROUPS
-    //override getNotHandlesFeatureIds() {
-    //    return Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID)
-    //}
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet()
+        return Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID)
     }
+    
+//    override getNotHandlesFeatureIds() {
+//        return Sets.newHashSet()
+//    }
 
     //-------------------------------------------------------------------------    
     @Inject

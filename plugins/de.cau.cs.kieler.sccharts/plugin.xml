@@ -77,7 +77,7 @@
               class="de.cau.cs.kieler.sccharts.transformations.Initialization">
         </transformationClass>
         <transformationClass
-              class="de.cau.cs.kieler.sccharts.transformations.InputOutput">
+              class="de.cau.cs.kieler.sccharts.transformations.InputOutputVariable">
         </transformationClass>
         <transformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Pre">
@@ -190,6 +190,9 @@
         <featureGroupClass
               class="de.cau.cs.kieler.sccharts.featuregroups.SyncCharts">
         </featureGroupClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Normalized">
+        </featureClass>
      </extension>   
 
 
