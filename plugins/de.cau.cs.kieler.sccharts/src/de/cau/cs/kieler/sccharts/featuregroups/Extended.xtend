@@ -41,9 +41,5 @@ class Extended extends FeatureGroup {
             SCChartsFeatureGroup::SYNCCHARTS_ID, SCChartsFeatureGroup::SCADEQUARTZESTEREL_ID)
     }
 
-    override getNotHandlesFeatureIds() {
-        Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID);
-    }
-
 //-------------------------------------------------------------------------
 }

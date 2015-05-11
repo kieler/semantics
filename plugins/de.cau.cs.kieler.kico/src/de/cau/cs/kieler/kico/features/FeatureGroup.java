@@ -53,15 +53,6 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
     private Set<Feature> cachedNotHandlesFeatures = null;
 
     // -------------------------------------------------------------------------
-    
-    /**
-     * {@inheritDoc}
-     */
-    public Set<String> getNotHandlesFeatureIds() {
-        return Sets.newHashSet();
-    }
-
-    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
@@ -231,32 +222,6 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
         }
         cachedResolvedFeaturesAll = Feature.resolveFeaturesAll(getFeatures());
         return cachedResolvedFeaturesAll;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the set of features that not a single transformation of features part of this group is
-     * able to handle. This can be features or feature groups again. All transformation should
-     * inherit these not-handles features.
-     * 
-     * @return the features
-     */
-    public Set<Feature> getNotHandlesFeatures() {
-        if (cachedNotHandlesFeatures != null) {
-            return cachedNotHandlesFeatures;
-        }
-        cachedNotHandlesFeatures = new HashSet<Feature>();
-        for (String featureId : this.getNotHandlesFeatureIds()) {
-            Feature feature = KielerCompiler.getFeature(featureId);
-            if (feature == null) {
-                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "Feature '" + this.getId()
-                        + "' references a feature '" + featureId + "' that cannot be found.", null);
-            } else {
-                cachedNotHandlesFeatures.add(feature);
-            }
-        }
-        return cachedNotHandlesFeatures;
     }
 
     // -------------------------------------------------------------------------

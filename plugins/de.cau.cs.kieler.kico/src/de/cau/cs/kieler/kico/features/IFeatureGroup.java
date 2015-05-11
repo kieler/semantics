@@ -57,16 +57,4 @@ public interface IFeatureGroup {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Here groups or individual features can be defined that NOT A SINGLE transformation for
-     * features of this group is able to handle. This is a simple way of defining an order of groups
-     * of features. All transformations of features of this group will inherit these not handled
-     * features! The default implementation will return an empty set. Override to declare these meta
-     * dependencies.
-     * 
-     * @return the features that are contained in this feature group
-     */
-    public Set<String> getNotHandlesFeatureIds();
-
-    // -------------------------------------------------------------------------
 }

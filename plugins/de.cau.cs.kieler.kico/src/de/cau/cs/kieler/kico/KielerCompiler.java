@@ -148,7 +148,7 @@ public class KielerCompiler {
      *            the id
      * @return the hook
      */
-    static IHook getHook(String id) {
+    public static IHook getHook(String id) {
         return KiCoPlugin.getHook(id, false);
     }
 
@@ -159,7 +159,7 @@ public class KielerCompiler {
      * 
      * @return the hooks
      */
-    static Set<IHook> getHooks() {
+    public static Set<IHook> getHooks() {
         Map<String, IHook> map = KiCoPlugin.getRegisteredHooks(false);
         Set<IHook> set = new HashSet<IHook>();
         for (Entry<String, IHook> entry : map.entrySet()) {

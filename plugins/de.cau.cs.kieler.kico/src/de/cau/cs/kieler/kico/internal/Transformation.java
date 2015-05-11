@@ -198,23 +198,6 @@ public abstract class Transformation implements ITransformation {
                 }
             }
         }
-        // META DEPENDENCY ADDITION: We need to add all features that are declared as not-manageable
-        // by ANY feature group
-        // our feature is part of! We inherit here all these not-handles dependencies!
-        Feature ourFeature = this.getExpandsFeature();
-        for (FeatureGroup featureGroup : ourFeature.getAllParentFeatureGroups()) {
-            for (Feature inheritNotHandles : featureGroup.getNotHandlesFeatures()) {
-                if (inheritNotHandles.isGroup()) {
-                    for (Feature innerInheritNotHandles : inheritNotHandles.asGroup()
-                            .getResolvedFeatures()) {
-                        cachedNotHandlesFeatures.add(innerInheritNotHandles);
-                    }
-                } else {
-                    cachedNotHandlesFeatures.add(inheritNotHandles);
-                }
-            }
-
-        }
         if (ignoreInherited) {
             return cachedNoInheritedNotHandlesFeatures;
         } else {

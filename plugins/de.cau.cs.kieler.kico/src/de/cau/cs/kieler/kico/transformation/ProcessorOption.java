@@ -23,7 +23,7 @@ package de.cau.cs.kieler.kico.transformation;
  * @kieler.rating 2014-03-11 proposed yellow
  * 
  */
-class ProcessorOption {
+public class ProcessorOption {
 
     /** The id of the processor. */
     private String processorId;
