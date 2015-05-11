@@ -11,9 +11,11 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico;
+package de.cau.cs.kieler.kico.transformation;
 
 import org.eclipse.emf.ecore.EObject;
+
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 
 /**
  * This interface defines what a concrete hook is. A hook is an EObject processing or

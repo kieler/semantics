@@ -11,10 +11,12 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico;
+package de.cau.cs.kieler.kico.internal;
 
 import java.util.List;
 import java.util.Set;
+
+import de.cau.cs.kieler.kico.transformation.ProcessorOption;
 
 /**
  * This interface defines what a concrete transformation must supply. This is an ID, a feature that

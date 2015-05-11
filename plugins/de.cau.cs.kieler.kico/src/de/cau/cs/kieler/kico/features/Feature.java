@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico;
+package de.cau.cs.kieler.kico.features;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -19,6 +19,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+
+import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
+import de.cau.cs.kieler.kico.internal.Transformation;
 
 /**
  * An instance of this class represents a registered feature a transformation can declare to handle,
@@ -115,8 +119,10 @@ public abstract class Feature implements IFeature {
         Method transformMethod = KiCoUtil.getSpecificIsContainedMethodOrFallBack(this, getId());
         boolean result;
         try {
-            result = (Boolean) transformMethod.invoke(this, model);
-            return result;
+            if (transformMethod != null && transformMethod.getParameterTypes()[0].isInstance(model)) {
+                result = (Boolean) transformMethod.invoke(this, model);
+                return result;
+            }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (IllegalArgumentException e) {

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico;
+package de.cau.cs.kieler.kico.internal;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -20,6 +20,18 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+
+import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kico.KielerCompilerException;
+import de.cau.cs.kieler.kico.TransformationIntermediateResult;
+import de.cau.cs.kieler.kico.features.Feature;
+import de.cau.cs.kieler.kico.features.FeatureGroup;
+import de.cau.cs.kieler.kico.transformation.IHook;
+import de.cau.cs.kieler.kico.transformation.Processor;
+import de.cau.cs.kieler.kico.transformation.ProcessorIntermediateResult;
+import de.cau.cs.kieler.kico.transformation.ProcessorOption;
 
 /**
  * An instance of this class represents a registered transformation that may be called indirectly by

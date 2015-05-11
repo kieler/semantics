@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico;
+package de.cau.cs.kieler.kico.features;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +19,11 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.common.collect.Sets;
+
+import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
+import de.cau.cs.kieler.kico.internal.Transformation;
 
 /**
  * An instance of this class represents a registered feature group a transformation can declare to

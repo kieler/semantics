@@ -23,6 +23,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import de.cau.cs.kieler.core.properties.MapPropertyHolder;
+import de.cau.cs.kieler.kico.features.Feature;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
+import de.cau.cs.kieler.kico.internal.Transformation;
+import de.cau.cs.kieler.kico.internal.TransformationDummy;
+import de.cau.cs.kieler.kico.internal.TransformationDummyGraph;
 
 /**
  * This class implements the context of a KielerCompiler call.

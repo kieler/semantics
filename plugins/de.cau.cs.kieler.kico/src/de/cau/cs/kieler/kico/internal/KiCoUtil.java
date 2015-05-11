@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico;
+package de.cau.cs.kieler.kico.internal;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -44,6 +44,12 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kico.features.Feature;
+import de.cau.cs.kieler.kico.features.FeatureGroup;
+import de.cau.cs.kieler.kico.transformation.Processor;
 
 /**
  * This class is a collection of utility methods for handling models in/with KiCo.

@@ -25,6 +25,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import de.cau.cs.kieler.kico.features.Feature;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
+import de.cau.cs.kieler.kico.internal.Transformation;
+import de.cau.cs.kieler.kico.transformation.IHook;
+import de.cau.cs.kieler.kico.transformation.Processor;
+
 
 /**
  * This is the main class of the Kieler Compiler (KiCo) Project that aims to provide an

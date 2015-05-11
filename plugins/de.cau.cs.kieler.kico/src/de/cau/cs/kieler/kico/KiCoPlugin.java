@@ -32,6 +32,13 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.kico.features.Feature;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
+import de.cau.cs.kieler.kico.internal.ResourceExtension;
+import de.cau.cs.kieler.kico.internal.Transformation;
+import de.cau.cs.kieler.kico.transformation.IHook;
+import de.cau.cs.kieler.kico.transformation.Processor;
+
 /**
  * The activator class controls the plug-in life cycle.
  * 

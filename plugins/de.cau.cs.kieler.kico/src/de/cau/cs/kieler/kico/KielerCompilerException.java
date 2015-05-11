@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kico;
 
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
+
 
 /**
  * This class implements the exception used in the KielerCompiler to gather all warnings and errors.

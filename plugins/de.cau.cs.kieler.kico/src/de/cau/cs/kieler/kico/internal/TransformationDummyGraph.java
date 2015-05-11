@@ -11,13 +11,20 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico;
+package de.cau.cs.kieler.kico.internal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kico.KielerCompilerSelection;
+import de.cau.cs.kieler.kico.features.Feature;
+import de.cau.cs.kieler.kico.features.FeatureGroup;
 
 /**
  * This class represents a transformation dummy graph for fast processing transformation
