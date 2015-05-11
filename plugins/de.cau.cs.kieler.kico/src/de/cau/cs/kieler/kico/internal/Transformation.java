@@ -25,12 +25,12 @@ import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerException;
+import de.cau.cs.kieler.kico.ProcessorIntermediateResult;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.features.FeatureGroup;
 import de.cau.cs.kieler.kico.transformation.IHook;
 import de.cau.cs.kieler.kico.transformation.Processor;
-import de.cau.cs.kieler.kico.transformation.ProcessorIntermediateResult;
 import de.cau.cs.kieler.kico.transformation.ProcessorOption;
 
 /**
