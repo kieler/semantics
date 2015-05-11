@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scg.transformations
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
@@ -22,6 +23,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -32,18 +34,17 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -65,6 +66,30 @@ import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
  */
 
 class DependencyTransformation extends Transformation {
+
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    
+    override getId() {
+        return SCGTransformations::DEPENDENCY_ID
+    }
+
+    override getName() {
+        return SCGTransformations::DEPENDENCY_ID
+    }
+
+    override getExpandsFeatureId() {
+        return SCGFeatures::DEPENDENCY_ID
+    }
+
+    override getProducesFeatureIds() {
+        return newHashSet()
+    }
+
+    override getNotHandlesFeatureIds() {
+        return newHashSet()
+    }
     
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -86,9 +111,7 @@ class DependencyTransformation extends Transformation {
     // -------------------------------------------------------------------------
     // -- Globals 
     // -------------------------------------------------------------------------
-    
-    public static val ANNOTATION_DEPENDENCYRANSFORMATION = "dependencies"
-    
+        
     /** 
      * threadNodeCache caches the entry nodes a specific node belongs to w.r.t. hierarchy
      * The entry node list is mainly used to speed up the efficiency of concurrency tests.
@@ -125,7 +148,7 @@ class DependencyTransformation extends Transformation {
      *          the root element of the input model
      * @return Returns the root element of the transformed model.
      */    
-	override doTransform(EObject eObject, KielerCompilerContext context) {
+	override transform(EObject eObject, KielerCompilerContext context) {
         return transformSCGToSCGDEP(eObject as SCGraph)
     }
 	
@@ -140,12 +163,12 @@ class DependencyTransformation extends Transformation {
      * @return Returns a copy of the scg enriched with dependency information.
      */   
     def SCGraph transformSCGToSCGDEP(SCGraph scg) {
-
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
-            || scg.hasAnnotation(DependencyTransformation::ANNOTATION_DEPENDENCYRANSFORMATION)
-        ) {
-            return scg
-        }
+        // KiCo does this check via feature isContained
+        //if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
+        //    || scg.hasAnnotation(DependencyTransformation::ANNOTATION_DEPENDENCYRANSFORMATION)
+        //) {
+        //    return scg
+        //}
         
         // Since KiCo may use the transformation instance several times, we must clear the caches manually. 
         threadNodeCache.clear
@@ -284,9 +307,7 @@ class DependencyTransformation extends Transformation {
       	 }
       	 System.out.println("o")
 
-        scg => [
-            annotations += createStringAnnotation(ANNOTATION_DEPENDENCYRANSFORMATION, "")
-        ]     
+        scg.addAnnotation(SCGFeatures.DEPENDENCY_ID, SCGFeatures.DEPENDENCY_NAME)   
 
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Dependency analysis finished (overall time elapsed: "+(time / 1000)+"s).")  

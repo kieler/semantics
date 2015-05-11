@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.EObject
  */
 abstract class AbstractScheduler extends Transformation {
 
-    override doTransform(EObject eObject, KielerCompilerContext context) {
+    override transform(EObject eObject, KielerCompilerContext context) {
         return schedule(eObject as SCGraph, context)
     }
 

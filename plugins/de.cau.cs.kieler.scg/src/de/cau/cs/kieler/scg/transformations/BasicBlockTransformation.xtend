@@ -14,8 +14,10 @@
 package de.cau.cs.kieler.scg.transformations
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
@@ -32,16 +34,15 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import java.util.HashMap
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -63,6 +64,30 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
  */
 
 class BasicBlockTransformation extends Transformation {
+
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    
+    override getId() {
+        return SCGTransformations::BASICBLOCK_ID
+    }
+
+    override getName() {
+        return SCGTransformations::BASICBLOCK_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCGFeatures::DEPENDENCY_ID
+    }
+
+    override getProducesFeatureIds() {
+        return newHashSet(SCGFeatures::BASICBLOCK_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return newHashSet()
+    }
     
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -78,9 +103,7 @@ class BasicBlockTransformation extends Transformation {
     // -------------------------------------------------------------------------
     // -- Constants
     // -------------------------------------------------------------------------
-    
-    public static val ANNOTATION_BASICBLOCKTRANSFORMATION = "basicBlocks" 
-    
+        
     public static val String GUARDPREFIX = "g"
     
 	protected val SPLITSCHEDULINGBLOCKSATENTRY = false
@@ -104,7 +127,7 @@ class BasicBlockTransformation extends Transformation {
      *          the root element of the input model
      * @return Returns the root element of the transformed model.
      */      
-	override doTransform(EObject eObject, KielerCompilerContext context) {
+	override transform(EObject eObject, KielerCompilerContext context) {
         return transformSCGDEPToSCGBB(eObject as SCGraph)
     }
     
@@ -119,13 +142,13 @@ class BasicBlockTransformation extends Transformation {
      * 			if the first node of the SCG is not an entry node.
      */
     public def SCGraph transformSCGDEPToSCGBB(SCGraph scg) {
-        
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
-            || scg.hasAnnotation(BasicBlockTransformation::ANNOTATION_BASICBLOCKTRANSFORMATION)
-            || !scg.basicBlocks.empty
-        ) {
-            return scg
-        }
+        // KiCo does this check via feature isContained
+        //if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
+        //    || scg.hasAnnotation(BasicBlockTransformation::ANNOTATION_BASICBLOCKTRANSFORMATION)
+        //    || !scg.basicBlocks.empty
+        //) {
+        //    return scg
+        //}
         
         // Since KiCo may use the transformation instance several times, we must clear the caches manually. 
         processedNodes.clear     
@@ -157,9 +180,7 @@ class BasicBlockTransformation extends Transformation {
             }
         }
 
-        scg => [
-            annotations += createStringAnnotation(ANNOTATION_BASICBLOCKTRANSFORMATION, "")
-        ]   
+        scg.addAnnotation(SCGFeatures.BASICBLOCK_ID, SCGFeatures.BASICBLOCK_NAME)
         
         val time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).")    

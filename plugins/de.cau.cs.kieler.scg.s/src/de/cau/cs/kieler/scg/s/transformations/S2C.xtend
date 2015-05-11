@@ -13,11 +13,12 @@
  */
 package de.cau.cs.kieler.scg.s.transformations
 
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.s.s.Program
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.model.codegeneration.SimpleCBeautifier
+import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.kitt.tracing.TransformationTracing
+import de.cau.cs.kieler.s.s.Program
+import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 
 /**
  * Transform SCG 2 C code via S code. Do basic primitive beautifying for small models
@@ -25,29 +26,51 @@ import de.cau.cs.kieler.kitt.tracing.TransformationTracing
  * @author ssm, cmot
  *
  */
-class S2C {
+class S2C extends Transformation {
+
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return CodeGenerationTransformations::S2C_ID
+    }
+
+    override getName() {
+        return CodeGenerationTransformations::S2C_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return CodeGenerationFeatures::S_CODE_ID
+    }
+
+    override getProducesFeatureIds() {
+        return newHashSet(CodeGenerationFeatures::TARGET_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return newHashSet()
+    }
+
+    // -------------------------------------------------------------------------   
     
-        /**
-         * Transform the incoming SCG to C code. If the eObject is not an SCG then just return it.
-         *
-         * @param eObject the e object
-         * @return the object
-         */
-        def public Object transform(EObject eObject) {
-            
-            if (eObject instanceof Program) {
-                //KITT Transformation does not support tracing
-                TransformationTracing.skipTransformationTracing(eObject);
-                
-                val de.cau.cs.kieler.s.sc.xtend.S2C transform2 = Guice.createInjector().getInstance(typeof(de.cau.cs.kieler.s.sc.xtend.S2C));
-                var String cProgram = transform2.transform(eObject as Program).toString();
-                
-                cProgram = SimpleCBeautifier.beautify(cProgram, "   ");
-                
-                return cProgram;
-            }
-            
-            return eObject;
-        }    
-    
+    /**
+     * Transform the incoming SCG to C code. If the eObject is not an SCG then just return it.
+     *
+     * @param eObject the e object
+     * @return the object
+     */
+    def public Object transform(Program program) {
+
+        //KITT Transformation does not support tracing
+        TransformationTracing.skipTransformationTracing(program);
+
+        val de.cau.cs.kieler.s.sc.xtend.S2C transform2 = Guice.createInjector().getInstance(
+            typeof(de.cau.cs.kieler.s.sc.xtend.S2C));
+        var String cProgram = transform2.transform(program as Program).toString();
+
+        cProgram = SimpleCBeautifier.beautify(cProgram, "   ");
+
+        return cProgram
+    }
+
 }

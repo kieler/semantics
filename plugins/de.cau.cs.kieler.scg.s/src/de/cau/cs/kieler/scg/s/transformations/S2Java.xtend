@@ -13,10 +13,11 @@
  */
 package de.cau.cs.kieler.scg.s.transformations
 
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.s.s.Program
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.model.codegeneration.SimpleCBeautifier
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.s.s.Program
+import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 
 /**
  * Transform S 2 Java code via S code. Do basic primitive beautifying for small models
@@ -24,30 +25,51 @@ import de.cau.cs.kieler.core.model.codegeneration.SimpleCBeautifier
  * @author cmot
  *
  */
-class S2Java {
+class S2Java extends Transformation {
+
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
     
-        /**
-         * Transform the incoming SCG to Java code. If the eObject is not an SCG then just return it.
-         *
-         * @param eObject the e object
-         * @return the object
-         */
-        def public Object transform(EObject eObject) {
-            
-            if (eObject instanceof Program) {
-                
-                val program = eObject as Program
-                val className = program.name.replace("_", "").replace("!", "").replace("#", "").replace("-", "").replace("=", "").replace("=", "")
-                
-                val de.cau.cs.kieler.s.sj.xtend.S2Java transform2 = Guice.createInjector().getInstance(typeof(de.cau.cs.kieler.s.sj.xtend.S2Java));
-                var String cProgram = transform2.transform(program, className).toString();
-                
-                cProgram = SimpleCBeautifier.beautify(cProgram, "   ");
-                
-                return cProgram;
-            }
-            
-            return eObject;
-        }    
+    override getId() {
+        return CodeGenerationTransformations::S2JAVA_ID
+    }
+
+    override getName() {
+        return CodeGenerationTransformations::S2JAVA_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return CodeGenerationFeatures::S_CODE_ID
+    }
+
+    override getProducesFeatureIds() {
+        return newHashSet(CodeGenerationFeatures::TARGET_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return newHashSet()
+    }
+
+    // -------------------------------------------------------------------------  
     
+    /**
+     * Transform the incoming SCG to Java code. If the eObject is not an SCG then just return it.
+     *
+     * @param eObject the e object
+     * @return the object
+     */
+    def public Object transform(Program program) {
+        val className = program.name.replace("_", "").replace("!", "").replace("#", "").replace("-", "").replace("=", "").
+            replace("=", "")
+
+        val de.cau.cs.kieler.s.sj.xtend.S2Java transform2 = Guice.createInjector().getInstance(
+            typeof(de.cau.cs.kieler.s.sj.xtend.S2Java));
+        var String cProgram = transform2.transform(program, className).toString();
+
+        cProgram = SimpleCBeautifier.beautify(cProgram, "   ");
+
+        return cProgram;
+    }
+
 }

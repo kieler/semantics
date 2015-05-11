@@ -13,10 +13,30 @@
  */
  package de.cau.cs.kieler.sccharts.scg
 
+import com.google.inject.Guice
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.Parameter
+import de.cau.cs.kieler.core.kexpressions.StringValue
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.Effect
+import de.cau.cs.kieler.sccharts.FunctionCallEffect
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.TextEffect
+import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
@@ -33,32 +53,20 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.optimizer.SuperfluousForkRemover
+import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
+import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.scg.optimizer.SuperfluousForkRemover
-import com.google.inject.Guice
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.Parameter
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import java.util.Set
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.kexpressions.StringValue
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -67,7 +75,33 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class SCGTransformation { 
+class SCGTransformation extends Transformation {
+    
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    
+    override getId() {
+        return SCGTransformations::SCC2SCG_ID
+    }
+
+    override getName() {
+        return SCGTransformations::SCC2SCG_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::NORMALIZED_ID
+    }
+
+    override getProducesFeatureIds() {
+        return newHashSet(SCGFeatures::BASIC_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return newHashSet(SCChartsFeatureGroup::CORE_ID)
+    }
+    
+    //-------------------------------------------------------------------------
 
     @Inject
     extension KExpressionsExtension
@@ -497,7 +531,7 @@ class SCGTransformation {
             transition.setDefaultTrace
             scopeProvider.parent = transition.sourceState
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
-            val effect = transition.effects.get(0) as de.cau.cs.kieler.sccharts.Effect
+            val effect = transition.effects.get(0) as Effect
             if (effect instanceof de.cau.cs.kieler.sccharts.Assignment) {
                 // For hostcode e.g. there is no need for a valued object - it is allowed to be null
                 val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
@@ -512,11 +546,11 @@ class SCGTransformation {
                 	]
                 }
             }
-            else if (effect instanceof de.cau.cs.kieler.sccharts.TextEffect) {
-                assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.TextEffect).convertToSCGExpression.trace(transition, effect))
+            else if (effect instanceof TextEffect) {
+                assignment.setAssignment((effect as TextEffect).convertToSCGExpression.trace(transition, effect))
             } 
-            else if (effect instanceof de.cau.cs.kieler.sccharts.FunctionCallEffect) {
-                assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
+            else if (effect instanceof FunctionCallEffect) {
+                assignment.setAssignment((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
             }
         }
         else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {

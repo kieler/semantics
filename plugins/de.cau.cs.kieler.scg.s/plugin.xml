@@ -3,43 +3,15 @@
 <plugin>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.s.transformations.S2C"
-            id="S2C"
-            method="transform"
-            name="C Code">
-      </transformationMethod>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.s.transformations.S2Java"
-            id="S2JAVA"
-            method="transform"
-            name="Java Code">
-      </transformationMethod>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.s.transformations.SCG2S"
-            producesDependencies="S2TARGET"
-            id="SCG2S"
-            method="transform"
-            name="S Code">
-      </transformationMethod>
-      <transformationGroup
-            alternatives="true"
-            id="S2TARGET"
-            name="Target"
-            transformations="S2C, S2JAVA, S2ARDUINO">
-      </transformationGroup>
-      <transformationGroup
-            alternatives="false"
-            id="CODEGENERATION"
-            name="Code Generation"
-            transformations="SCG2S, S2TARGET">
-      </transformationGroup>
-      <transformationMethod
-            class="de.cau.cs.kieler.s.sc.ArduinoGenerator"
-            id="S2ARDUINO"
-            method="transform"
-            name="Arduino Code">
-      </transformationMethod>
+      <transformationClass
+            class="de.cau.cs.kieler.scg.s.transformations.S2C">
+      </transformationClass>
+      <transformationClass
+            class="de.cau.cs.kieler.scg.s.transformations.S2Java">
+      </transformationClass>
+      <transformationClass
+            class="de.cau.cs.kieler.scg.s.transformations.SCG2S">
+      </transformationClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.extension">
@@ -49,6 +21,18 @@
             extensionName="s"
             isXMI="false">
       </ExtensionInformation>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.feature">
+      <featureClass
+            class="de.cau.cs.kieler.scg.s.features.SCode">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.s.features.Target">
+      </featureClass>
+      <featureGroupClass
+            class="de.cau.cs.kieler.scg.s.features.CodeGenerationFeatureGroup">
+      </featureGroupClass>
    </extension>
 
 </plugin>

@@ -19,8 +19,8 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.scg.SCGraph
-import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import org.eclipse.emf.ecore.EObject
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -42,7 +42,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
  */
 
 abstract class AbstractGuardCreator extends Transformation {
-    
+        
     @Inject
     extension KExpressionsExtension
         
@@ -65,7 +65,7 @@ abstract class AbstractGuardCreator extends Transformation {
     // -- Sequentializer 
     // -------------------------------------------------------------------------            
 	
-    override doTransform(EObject eObject, KielerCompilerContext context) {
+    override transform(EObject eObject, KielerCompilerContext context) {
         createGuards(eObject as SCGraph, context)
     }
 	
