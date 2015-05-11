@@ -19,9 +19,9 @@ import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData;
 import de.cau.cs.kieler.kico.CompilationResult;
-import de.cau.cs.kieler.kico.IHook;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
+import de.cau.cs.kieler.kico.transformation.IHook;
 import de.cau.cs.kieler.kitt.tracing.Tracing;
 import de.cau.cs.kieler.kitt.tracing.TransformationTracing;
 
