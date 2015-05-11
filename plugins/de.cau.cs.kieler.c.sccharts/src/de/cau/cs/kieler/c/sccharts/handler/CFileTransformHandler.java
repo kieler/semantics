@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.eclipse.cdt.core.model.CoreModel;
+import org.eclipse.cdt.core.model.ITranslationUnit;
+import org.eclipse.cdt.ui.CDTUITools;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
@@ -16,12 +19,18 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.c.CParser.PrimaryExpressionContext;
 import de.cau.cs.kieler.c.parser.KielerCParser;
+import de.cau.cs.kieler.c.sccharts.CDTProcessor;
 import de.cau.cs.kieler.c.sccharts.PECProcessor;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.SCChartsPlugin;
@@ -107,10 +116,18 @@ public class CFileTransformHandler extends AbstractConvertModelHandler {
 	    } // end while
 	    System.out.println(all);
 	                
-	    PrimaryExpressionContext pec = KielerCParser.parse(all);
+//	    PrimaryExpressionContext pec = KielerCParser.parse(all);
+	    Object CObject = null;
+	    ITranslationUnit tu = (ITranslationUnit) CoreModel.getDefault().create(file);
+//	    IWorkbench w = PlatformUI.getWorkbench();
+//	    IWorkbenchWindow ww = w.getActiveWorkbenchWindow();
+//	    IWorkbenchPage wp = ww.getActivePage();
+//	    IEditorPart e= wp.getActiveEditor();
+	 // Access translation unit of the editor.
+//	    tu= (ITranslationUnit) CDTUITools.getEditorInputCElement(e.getEditorInput());
 	    
-	    PECProcessor PECProcessor = Guice.createInjector().getInstance(PECProcessor.class);	  
-	    State rootState = PECProcessor.procecess(pec);
+	    CDTProcessor CDTProcessor = Guice.createInjector().getInstance(CDTProcessor.class);	  
+	    State rootState = (State) CDTProcessor.transform(tu);
 	    
 	    URI input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 	    URI output = URI.createURI(input.toString());
@@ -130,8 +147,8 @@ public class CFileTransformHandler extends AbstractConvertModelHandler {
 	            openEditorSync((Object) transformedModel);
 	        }
                 postProcess(transformedObject);
-	    } catch (IOException e) {
-	        throw new ExecutionException("Cannot write output SCChart file: " + e.getMessage());
+	    } catch (IOException e2) {
+	        throw new ExecutionException("Cannot write output SCChart file: " + e2.getMessage());
 	    }
 	    
 	} catch (CoreException e) {
