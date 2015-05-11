@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.kico.ui;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
-import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
+import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**

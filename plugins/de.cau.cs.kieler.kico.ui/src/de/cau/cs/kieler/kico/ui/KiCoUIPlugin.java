@@ -17,9 +17,9 @@ import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
-import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
 
 /**

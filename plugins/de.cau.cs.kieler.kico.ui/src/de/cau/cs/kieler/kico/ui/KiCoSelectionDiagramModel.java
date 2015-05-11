@@ -17,9 +17,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kico.Transformation;
+import de.cau.cs.kieler.kico.features.Feature;
+import de.cau.cs.kieler.kico.internal.Transformation;
 
 /**
  * An instance of this class represents a selection diagram for the KiCo.ui KLighD view. It is a

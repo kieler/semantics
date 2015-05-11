@@ -18,9 +18,9 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.KielerCompiler;
-import de.cau.cs.kieler.kico.Transformation;
+import de.cau.cs.kieler.kico.features.Feature;
+import de.cau.cs.kieler.kico.internal.Transformation;
 
 /**
  * This is a wrapper class so that transformations can be used seamles as Features in the diagram
