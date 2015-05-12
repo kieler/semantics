@@ -32,6 +32,9 @@ import java.util.Set
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Conditional
 
 /** 
  * 
@@ -66,6 +69,9 @@ class SCPDGTransformation extends Transformation {
     public static val ANNOTATION_SCPDGTRANSFORMATION = "scpdg"
     
     var Entry programEntry;
+    var hasSurface = false;
+    var Surface dummySurface
+    var Depth dummyDepth
         
     
     // -------------------------------------------------------------------------
@@ -93,7 +99,30 @@ class SCPDGTransformation extends Transformation {
 
     	val cfs = <ControlFlow> newHashSet;
     	programEntry = (scg.nodes.head as Entry)
+        
+        
+        hasSurface = !scg.nodes.forall[node|
+            if(node instanceof Surface){
+                dummySurface = node
+                dummyDepth = dummySurface.depth
+                return false
+            }
+            return true
+        ]
+        
+        
+//        scg.nodes.forEach[node|
+//            if(node instanceof Depth){
+//                cfs += (node as Depth).allNext
+//            }
+//        ]
+        
         programEntry.transformSCPDG(cfs, scg, context)
+        
+        cfs.clear
+        
+        if(hasSurface)
+            dummyDepth.transformSCPDG(cfs,scg,context)
         
         scg => [
             annotations += createStringAnnotation(ANNOTATION_SCPDGTRANSFORMATION, "")
@@ -102,10 +131,45 @@ class SCPDGTransformation extends Transformation {
         scg
     }
     
+    private def Node getNextControlFlowNode(Node node){
+        val next = node.nextNode
+        if(next instanceof Surface){
+            return dummySurface
+        } else if (next instanceof Depth){
+            return dummySurface.depth
+        } else if(next == programEntry.exit){
+            return next
+        } else if(next instanceof Conditional){
+            return next
+        }
+        return next.nextControlFlowNode
+    }
+    
+    private def Node nextNode(Node node){
+        if(node instanceof Entry){
+            return (node as Entry).next.target
+        }
+        if(node instanceof Depth){
+            return (node as Depth).next.target
+        }
+        if(node instanceof Exit){
+            return (node as Exit).next.target
+        }
+        if(node instanceof Assignment){
+            return (node as Assignment).next.target
+        }
+        if(node instanceof Fork){
+            return (node as Fork).join
+        }
+        if(node instanceof Join){
+            return (node as Join).next.target
+        }
+        return null
+    }
+    
     private def dispatch transformSCPDG(Entry entry, Set<ControlFlow> controlFlows, SCGraph scg, KielerCompilerContext context) {
     	controlFlows += entry.allNext
-    	entry.next = null
-    	val exitNode = entry.exit
+    	//entry.next = null
     	
     	while(!controlFlows.empty) {
     		val cf = controlFlows.head
@@ -114,23 +178,72 @@ class SCPDGTransformation extends Transformation {
     		
     		val cdTarget = node.transformSCPDG(controlFlows, scg, context)
     		
-    		if ((cdTarget != null) && !(cdTarget instanceof Exit)) {
+    		if ((cdTarget != null) && !(cdTarget instanceof Exit) && !(cdTarget instanceof Surface)) {
 				ScgFactory::eINSTANCE.createControlDependency => [
 					target = cdTarget as Node
 					entry.dependencies += it
 				]
 				ScgFactory::eINSTANCE.createControlDependency => [
-					setTarget(exitNode);
-					(cdTarget as Node).dependencies += it
+                    val Node cfnode = (cdTarget as Node).nextControlFlowNode
+                    setTarget(cfnode);
+                    (cdTarget as Node).dependencies += it
 				]
 			}
     		
     	}	
     }
     
+    private def dispatch transformSCPDG(Surface surface, Set<ControlFlow> controlFlows, SCGraph scg,
+        KielerCompilerContext context) {
+        controlFlows += surface.allNext
+        if (surface != dummySurface) {
+            scg.nodes.remove(surface)
+            return null
+        }
+        surface
+            
+    }
+    
+    private def dispatch transformSCPDG(Depth depth, Set<ControlFlow> controlFlows, SCGraph scg,
+        KielerCompilerContext context) {
+        val exitNode = programEntry.exit
+
+        scg.nodes.forEach [ node |
+            if (node instanceof Depth) {
+                controlFlows += (node as Depth).allNext;
+                (node as Depth).next = null
+            }
+        ]
+
+        while (!controlFlows.empty) {
+            val cf = controlFlows.head
+            val node = cf.target
+            controlFlows.remove(cf)
+
+            if (!(node instanceof Depth) || node == dummyDepth) {
+                val cdTarget = node.transformSCPDG(controlFlows, scg, context)
+
+                if ((cdTarget != null) && !(cdTarget instanceof Exit) && !(cdTarget instanceof Depth)) {
+                    ScgFactory::eINSTANCE.createControlDependency => [
+                        target = cdTarget as Node
+                        depth.dependencies += it
+                    ]
+                    ScgFactory::eINSTANCE.createControlDependency => [
+                        val Node cfnode = (cdTarget as Node).nextControlFlowNode
+                        setTarget(cfnode);
+                        (cdTarget as Node).dependencies += it
+                    ]
+                }
+            } else {
+                controlFlows += node.allNext
+            }
+
+        }
+    }
+    
     private def dispatch Node transformSCPDG(Exit exit, Set<ControlFlow> controlFlows, SCGraph scg, KielerCompilerContext context) {
     	controlFlows += exit.allNext
-    	exit.next = null    
+    	//exit.next = null    
     	if (exit.entry != programEntry) {
     		scg.nodes.remove(exit)
     		return null
@@ -140,7 +253,7 @@ class SCPDGTransformation extends Transformation {
 
     private def dispatch Node transformSCPDG(Assignment assignment, Set<ControlFlow> controlFlows, SCGraph scg, KielerCompilerContext context) {
     	controlFlows += assignment.allNext
-    	assignment.next = null
+    	//assignment.next = null
     	assignment
     }
 
@@ -150,14 +263,14 @@ class SCPDGTransformation extends Transformation {
     		(e as Entry).next = null
     		scg.nodes.remove(e)
     	]
-    	fork.next.clear
+    	//fork.next.clear
     	scg.nodes.remove(fork)
     	null
     }
 
     private def dispatch Node transformSCPDG(Join join, Set<ControlFlow> controlFlows, SCGraph scg, KielerCompilerContext context) {
     	controlFlows += join.allNext
-    	join.next = null    	
+    	//join.next = null    	
     	scg.nodes.remove(join)
     	null
     }
