@@ -15,28 +15,26 @@ package de.cau.cs.kieler.scg.transformations
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.Transformation
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ControlFlow
-import java.util.Set
-import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.Depth
-import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import java.util.Set
 import org.eclipse.emf.common.util.BasicEList
-import de.cau.cs.kieler.scg.ControlDependency
+import org.eclipse.emf.ecore.EObject
 
 /** 
  * 
@@ -52,11 +50,11 @@ class SCPDGTransformation extends Transformation {
     @Inject
     extension SCGControlFlowExtensions
 
-    @Inject
-    extension SCGThreadExtensions
-
-    @Inject
-    extension KExpressionsExtension
+//    @Inject
+//    extension SCGThreadExtensions
+//
+//    @Inject
+//    extension KExpressionsExtension
 
     @Inject
     extension AnnotationsExtensions
@@ -280,8 +278,6 @@ class SCPDGTransformation extends Transformation {
     private def dispatch Node transformSCPDG(Assignment assignment, Set<ControlFlow> controlFlows, SCGraph scg,
         KielerCompilerContext context) {
         controlFlows += assignment.allNext
-
-        //assignment.next = null
         assignment
     }
 
@@ -310,7 +306,8 @@ class SCPDGTransformation extends Transformation {
     def private boolean existsNonTrivialDependency(Node root, Node target) {
         val dependend = new BasicEList
         root.dependencies.forEach [ depend |
-            dependend.add(depend.target)
+            if (target != depend.target)
+                dependend.add(depend.target)
         ]
 
         while (!dependend.empty) {
