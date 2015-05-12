@@ -35,6 +35,18 @@ import org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTIfStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression
+import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTReturnStatement
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import org.eclipse.cdt.core.dom.ast.IASTExpression
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTExpressionStatement
+import de.cau.cs.kieler.sccharts.Dataflow
+import de.cau.cs.kieler.sccharts.TransitionType
 
 /**
  * @author ssm
@@ -48,7 +60,12 @@ class CDTProcessor {
     @Inject
     extension SCChartsExtension
     
+    public static val RETURNVONAME = "return"
+    
+    val VOSet = <ValuedObject> newHashSet
     var _trc = 0
+    
+    var Declaration globalDeclaration 
     
     def EObject transform(ITranslationUnit translationUnit) {
         if (translationUnit == null) {
@@ -61,6 +78,8 @@ class CDTProcessor {
         } else {
             return null
         }
+        
+        VOSet.clear
         
         val astRoot = ast.children.head
         
@@ -89,6 +108,7 @@ class CDTProcessor {
         val returnValue = kex.createValuedObject => [
             name = "return"
             returnDeclaration.valuedObjects += it
+            VOSet += it
         ]
         
         // create the scchart model for the function 
@@ -113,6 +133,10 @@ class CDTProcessor {
             model.declarations += it
         ]
         
+        globalDeclaration = kex.createDeclaration => [
+            type = ValueType::INT
+        ] 
+        
 //  org.eclipse.cdt.internal.core.dom.parser.c.CASTParameterDeclaration@46333ade
 //   org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclSpecifier@4d5de8d3
 //   org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator@50609c53
@@ -123,6 +147,7 @@ class CDTProcessor {
               kex.createValuedObject => [
                   name = iName
                   inputDeclaration.valuedObjects += it
+                  VOSet += it
               ]  
         ]
         
@@ -131,6 +156,10 @@ class CDTProcessor {
             compound.transformCompound(null, model) => [
                 initial = true
             ]
+        }
+        
+        if (!globalDeclaration.valuedObjects.empty) {
+            model.declarations += globalDeclaration
         }
         
         model
@@ -142,10 +171,6 @@ class CDTProcessor {
             newState = scc.createState => [ s |
                 s.id = "_S" + trC
                 s.label = s.id
-
-                s.concurrencies += scc.createRegion => [
-                    id = "_r" + trC
-                ]
             
                 parentState.concurrencies.filter(typeof(Region)).head.states += s
             ]
@@ -163,41 +188,65 @@ class CDTProcessor {
 //     org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer@60243ef3
 //      0        
         
+        stateF.concurrencies += scc.createRegion => [
+            id = "_r" + trC
+        ]
+        stateF.concurrencies += scc.createDataflow => [
+            id = "_d" + trC
+        ]
+        
+        
         val declarations = cs.children.filter(typeof(CASTDeclarationStatement))
         if (!declarations.empty) {
-            val localDeclaration = kex.createDeclaration => [
-                type = ValueType::INT
-                static = true
-                stateF.declarations += it
-            ]
-        
-            declarations.forEach[ decls |
+            for(decls : declarations) {
               val simpleDecl = decls.children.filter(typeof(CASTSimpleDeclaration)).head
               val decl = simpleDecl.children.filter(typeof(CASTDeclarator)).head
-              val iName = decl.children.head.toString
-              val lVar = kex.createValuedObject => [
-                  name = iName
-                  localDeclaration.valuedObjects += it
-              ]  
-              val init = decl.children.filter(typeof(CASTEqualsInitializer))
-              if (!init.empty) {
-                 lVar.initialValue = createIntValue(Integer.parseInt(init.head.children.head.toString))
-              }
-            ]
+              
+              decl.createDataflow(stateF)
+//              val iName = decl.children.head.toString
+//              val lVar = kex.createValuedObject => [
+//                  name = iName
+//                  VOSet += it
+//              ]  
+//              val init = decl.children.filter(typeof(CASTEqualsInitializer))
+//              if (!init.empty) {
+//                 lVar.initialValue = createIntValue(Integer.parseInt(init.head.children.head.toString))
+//              }
+//              globalDeclaration.valuedObjects += lVar
+            }
         }      
+
+
+        var actualState = stateF
+        for(statement : cs.children) {
+            if (statement instanceof CASTIfStatement) {
+                actualState = (statement as CASTIfStatement).transformIf(actualState)
+            }
+            if (statement instanceof CASTReturnStatement) {
+                actualState = (statement as CASTReturnStatement).transformReturn(actualState)
+            }
+            if (statement instanceof CASTExpressionStatement) {
+                (statement as CASTExpressionStatement).transformExpression(actualState)
+            }
+        }
         
-        val ifStatements = cs.children.filter(typeof(CASTIfStatement))
-        for(ifs : ifStatements) {
-            ifs.transformIf(stateF)
-        }  
+        stateF.concurrencies.immutableCopy.forEach [
+            if (it instanceof Region) {
+                if ((it as Region).states.empty) stateF.concurrencies.remove(it)
+            }
+            if (it instanceof Dataflow) {
+                val df = it as Dataflow 
+                if (df.nodes.empty && df.equations.empty) stateF.concurrencies.remove(it)
+            }
+        ]
         
         stateF
     }
     
-    def transformIf(CASTIfStatement ifStatement, State state) {
+    def State transformIf(CASTIfStatement ifStatement, State state) {
         val ifs = ifStatement
         val exp = ifs.children.filter(typeof(CASTBinaryExpression)).head
-//            val kExp = exp.createKExpression
+            val kExp = exp.createKExpression
 
             val trueState = scc.createState => [ s |
                 s.id = state.id + trC + "T"
@@ -222,18 +271,193 @@ class CDTProcessor {
                 
                 state.parentRegion.states += s
             ]            
+
+            val connectorState = scc.createState => [ s |
+                s.id = state.id + trC
+                s.label = s.id
+                s.setTypeConnector
             
-             val trueTrans = scc.createTransition => [
+                s.concurrencies += scc.createRegion => [
+                    id = s.id + "_r"
+                    label = ""
+                ]
+                
+                state.parentRegion.states += s
+            ]            
+            
+            val trueTrans = scc.createTransition => [
                 targetState = trueState
                 immediate = true
                 state.outgoingTransitions += it
+                trigger = kExp
             ]  
             
             val falseTrans = scc.createTransition => [
                 targetState = falseState
                 immediate = true
                 state.outgoingTransitions += it
-            ]                  
+            ]    
+            
+            val trueConnector = scc.createTransition => [
+                targetState = connectorState
+                immediate = true
+                trueState.outgoingTransitions += it
+                type == TransitionType::TERMINATION
+            ]  
+            
+            val falseConnector = scc.createTransition => [
+                targetState = connectorState
+                immediate = true
+                falseState.outgoingTransitions += it
+                type == TransitionType::TERMINATION
+            ]  
+            
+        (ifs.thenClause as CASTCompoundStatement).transformCompound(trueState, state)        
+        (ifs.elseClause as CASTCompoundStatement).transformCompound(falseState, state)        
+            
+        connectorState                         
+    }
+    
+    def State transformReturn(CASTReturnStatement returnStatement, State state) {
+        
+        val returnState = scc.createState => [ s |
+            s.id = state.id + trC
+            s.label = s.id
+            s.final = true
+            state.parentRegion.states += s
+            
+//                s.concurrencies += scc.createRegion => [
+//                    id = s.id + "_r"
+//                    label = ""
+//                ]            
+                s.concurrencies += scc.createDataflow => [
+                    id = s.id + "_d"
+                    label = ""
+                ]            
+        ]
+        state.outgoingTransitions += scc.createTransition => [
+            targetState = returnState
+            immediate = true
+        ]        
+        
+//        val returnAssignment = scc.createAssignment => [
+//            valuedObject = VOSet.filter[name.equals(RETURNVONAME)].head
+//            expression = returnStatement.returnValue.createKExpression 
+//        ]
+        
+        val df = returnState.dataflow
+        
+        val eq = scc.createEquation
+        eq.valuedObject = VOSet.filter[name.equals(RETURNVONAME)].head
+        eq.expression = returnStatement.returnValue.createKExpression 
+        
+        df.equations += eq        
+        
+//        (returnState.incomingTransitions.head.eContainer as State).createEntryAction.addAssignment(returnAssignment)
+//        returnState.createEntryAction.addAssignment(returnAssignment)
+            
+        returnState      
+    }
+    
+    def transformExpression(CASTExpressionStatement es, State state) {
+//   org.eclipse.cdt.internal.core.dom.parser.c.CASTCompoundStatement@7f6adc09
+//    org.eclipse.cdt.internal.core.dom.parser.c.CASTExpressionStatement@40941439
+//     org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression@39bbcb4e
+//      org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@58208b7e
+//       fh
+//      org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@40a62a65
+//       n
+        if (es.expression instanceof CASTBinaryExpression) {
+            val exp = es.expression as CASTBinaryExpression
+            exp.createDataflow(state)  
+        }
+        null     
+     }
+     
+    def createDataflow(CASTBinaryExpression exp, State state) {
+//   org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression@7940791
+//    org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@77cc47a
+//     n
+//    1
+        val df = state.dataflow
+        
+        val eq = scc.createEquation
+        eq.valuedObject = (exp.operand1 as CASTIdExpression).createVOReference.valuedObject
+        eq.expression = exp.operand2.createKExpression
+        
+        df.equations += eq
+    }   
+    
+    def createDataflow(CASTDeclarator declarator, State state) {
+//        org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator@50429fba
+//         tmp
+//         org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer@46049580
+//          org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@56f32a69
+//           fh        
+        
+        val iName = declarator.children.head.toString
+        val lVar = kex.createValuedObject => [
+            name = iName
+            VOSet += it
+        ]
+        globalDeclaration.valuedObjects += lVar        
+        
+        val init = declarator.initializer
+        if (init != null) {
+            val value = init.children.head
+            var Expression kExp
+            if (value instanceof CASTIdExpression) {
+                kExp = (value as CASTIdExpression).createKExpression
+            } else {
+                kExp = createIntValue(Integer.parseInt(value.toString))
+            }
+            val df = state.dataflow
+        
+            val eq = scc.createEquation
+            eq.valuedObject = lVar
+            eq.expression = kExp
+        
+            df.equations += eq        
+        }
+    }  
+    
+    def Expression createKExpression(IASTExpression exp) {
+        if (exp instanceof CASTIdExpression) {
+            return (exp as CASTIdExpression).createVOReference
+        } else {
+            return Integer.parseInt(exp.toString).createIntValue
+        }        
+    }    
+    
+    def Expression createKExpression(CASTBinaryExpression exp) {
+//   org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression@7940791
+//    org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@77cc47a
+//     n
+//    1
+        val opExp = kex.createOperatorExpression
+        
+        if (exp.operator == IASTBinaryExpression::op_lessEqual) opExp.operator = OperatorType::LEQ
+        else if (exp.operator == IASTBinaryExpression::op_greaterEqual) opExp.operator = OperatorType::GEQ
+        else if (exp.operator == IASTBinaryExpression::op_lessThan) opExp.operator = OperatorType::LT
+        else if (exp.operator == IASTBinaryExpression::op_greaterThan) opExp.operator = OperatorType::GT
+        
+        for(arg : exp.children) {
+            if (arg instanceof CASTIdExpression) {
+                opExp.subExpressions += (arg as CASTIdExpression).createVOReference
+            } else {
+                opExp.subExpressions += Integer.parseInt(arg.toString).createIntValue
+            }
+        }    
+
+        opExp   
+    }
+    
+    def ValuedObjectReference createVOReference(CASTIdExpression idExp) {
+        val VO = VOSet.filter[name.equals(idExp.children.head.toString)].head
+        if (VO != null) {
+            return VO.reference
+        }
+        return null
     }
     
     def printASTNodes(Iterable<IASTNode> nodes, String indent) {
@@ -263,6 +487,10 @@ class CDTProcessor {
     
     private def Region getRegion(State state) {
         state.concurrencies.filter(typeof(Region)).head
+    }
+
+    private def Dataflow getDataflow(State state) {
+        state.concurrencies.filter(typeof(Dataflow)).head
     }
     
     private def State getParent(State state) {
