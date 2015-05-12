@@ -38,8 +38,8 @@ import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.features.FeatureGroup;
-import de.cau.cs.kieler.kico.internal.TransformationDummyGraph;
 import de.cau.cs.kieler.kico.internal.Transformation;
+import de.cau.cs.kieler.kico.internal.TransformationDummyGraph;
 import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis;
@@ -829,8 +829,15 @@ public class KiCoSelectionView extends DiagramViewPart {
             }
 
             public void partOpened(IWorkbenchPartReference partRef) {
-                // TODO Auto-generated method stub
-
+                // This takes care of updating the selection view even if its open AFTER the active
+                // editor preventing the view from being blank
+                IWorkbenchPart part = partRef.getPart(false);
+                if (part != null) {
+                    if (part instanceof KiCoSelectionView) {
+                        updateView(partRef.getPage().getReference(
+                                partRef.getPage().getActiveEditor()));
+                    }
+                }
             }
 
             public void partInputChanged(IWorkbenchPartReference partRef) {
