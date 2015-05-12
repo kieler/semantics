@@ -179,7 +179,6 @@ class SCPDGTransformation extends Transformation {
     
     private def dispatch transformSCPDG(Entry entry, Set<ControlFlow> controlFlows, SCGraph scg, KielerCompilerContext context) {
     	controlFlows += entry.allNext
-    	//entry.next = null
     	
     	while(!controlFlows.empty) {
     		val cf = controlFlows.head
@@ -202,7 +201,8 @@ class SCPDGTransformation extends Transformation {
 			
 			node.removeNext
     		
-    	}	
+    	}
+    	entry.next = null	
     }
     
     private def removeNext(Node node){
@@ -239,9 +239,7 @@ class SCPDGTransformation extends Transformation {
         KielerCompilerContext context) {
         controlFlows += depth.allNext;
         if (dummySurface.depth != depth){
-            depth.removeNext
             scg.nodes.remove(depth)
-            controlFlows.remove(depth)
             return null
         }
 
@@ -263,8 +261,11 @@ class SCPDGTransformation extends Transformation {
                     (cdTarget as Node).dependencies += it
                 ]
             }
+            
+            node.removeNext
 
         }
+        depth.removeNext
     }
     
     private def dispatch Node transformSCPDG(Exit exit, Set<ControlFlow> controlFlows, SCGraph scg, KielerCompilerContext context) {
