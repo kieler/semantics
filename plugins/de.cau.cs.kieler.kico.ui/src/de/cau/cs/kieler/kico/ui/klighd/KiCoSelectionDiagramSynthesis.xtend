@@ -85,7 +85,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
         if (source == null || dest == null) {
             return new Pair(-1, null)
         }
-        if (dest.container == source.container) {
+        if (dest.container == source.container|| !source.container.isVisible) {
 
             // if this is a group-internal transition
             return new Pair(cnt, source)
@@ -124,7 +124,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
         if (source == null || dest == null) {
             return new Pair(-1, null)
         }
-        if (dest.container == source.container) {
+        if (dest.container == source.container || !dest.container.isVisible) {
 
             // if this is a group-internal transition
             return new Pair(cnt, dest)
@@ -420,7 +420,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
 
                         //Calculate hierarchical source + destination (prevents inter level transitions)
                         transSource = feature.getHierarchicalSource(dest)
-                        transDest = feature.getHierarchicalDest(dest)
+                        transDest = transSource.getHierarchicalDest(dest)
 
                         //System.out.println("== HIERACHICALLY FROM " + transSource.id + " TO " + transDest.id)
                         if (transSource != null && transDest != null) {
