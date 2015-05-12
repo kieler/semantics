@@ -64,16 +64,12 @@ class DelayAwareScheduler extends SimpleScheduler {
         return null //SCGTransformations::SCHEDULING_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCGFeatures::GUARD_ID
+    override getProducedFeatureId() {
+        return SCGFeatures::SCHEDULING_ID
     }
 
-    override getProducesFeatureIds() {
-        return newHashSet(SCGFeatures::SCHEDULING_ID)
-    }
-
-    override getNotHandlesFeatureIds() {
-        return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::GUARD_ID)
     }
     
     // -------------------------------------------------------------------------

@@ -41,7 +41,6 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.optimizer.CopyPropagation
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerSelector
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
@@ -83,16 +82,12 @@ class GuardCreator extends AbstractGuardCreator {
         return SCGTransformations::GUARD_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCGFeatures::BASICBLOCK_ID
+    override getProducedFeatureId() {
+        return SCGFeatures::GUARD_ID
     }
 
-    override getProducesFeatureIds() {
-        return newHashSet(SCGFeatures::GUARD_ID)
-    }
-
-    override getNotHandlesFeatureIds() {
-        return newHashSet()
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::BASICBLOCK_ID)
     }
 
     //-------------------------------------------------------------------------

@@ -25,7 +25,6 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List

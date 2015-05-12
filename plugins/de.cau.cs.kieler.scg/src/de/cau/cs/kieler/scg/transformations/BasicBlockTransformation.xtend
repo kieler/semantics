@@ -18,7 +18,7 @@ import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.Conditional
@@ -37,7 +37,6 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import java.util.HashMap
 import java.util.List
 import org.eclipse.emf.ecore.EObject
@@ -63,7 +62,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  * @kieler.rating 2013-10-24 proposed yellow
  */
 
-class BasicBlockTransformation extends Transformation {
+class BasicBlockTransformation extends AbstractProductionTransformation {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -77,16 +76,12 @@ class BasicBlockTransformation extends Transformation {
         return SCGTransformations::BASICBLOCK_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCGFeatures::DEPENDENCY_ID
+    override getProducedFeatureId() {
+        return SCGFeatures::BASICBLOCK_ID
     }
 
-    override getProducesFeatureIds() {
-        return newHashSet(SCGFeatures::BASICBLOCK_ID)
-    }
-
-    override getNotHandlesFeatureIds() {
-        return newHashSet()
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::DEPENDENCY_ID)
     }
     
     // -------------------------------------------------------------------------

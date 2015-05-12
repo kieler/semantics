@@ -79,16 +79,12 @@ class GuardSequentializer extends AbstractSequentializer {
         return SCGTransformations::SEQUENTIALIZE_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCGFeatures::SCHEDULING_ID
+    override getProducedFeatureId() {
+        return SCGFeatures::SEQUENTIALIZE_ID
     }
 
-    override getProducesFeatureIds() {
-        return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
-    }
-
-    override getNotHandlesFeatureIds() {
-        return newHashSet()
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::SCHEDULING_ID)
     }
 
     // -------------------------------------------------------------------------

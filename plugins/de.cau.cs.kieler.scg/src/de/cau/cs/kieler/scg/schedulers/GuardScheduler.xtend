@@ -34,7 +34,6 @@ import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
 import java.util.List
@@ -71,16 +70,12 @@ class GuardScheduler extends AbstractScheduler {
         return SCGTransformations::SCHEDULING_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCGFeatures::GUARD_ID
+    override getProducedFeatureId() {
+        return SCGFeatures::SCHEDULING_ID
     }
 
-    override getProducesFeatureIds() {
-        return newHashSet(SCGFeatures::SCHEDULING_ID)
-    }
-
-    override getNotHandlesFeatureIds() {
-        return newHashSet()
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::GUARD_ID)
     }
 
     //-------------------------------------------------------------------------

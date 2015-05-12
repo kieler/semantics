@@ -17,7 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import org.eclipse.emf.ecore.EObject
@@ -41,7 +41,7 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.rating 2013-01-21 proposed yellow
  */
 
-abstract class AbstractGuardCreator extends Transformation {
+abstract class AbstractGuardCreator extends AbstractProductionTransformation {
         
     @Inject
     extension KExpressionsExtension

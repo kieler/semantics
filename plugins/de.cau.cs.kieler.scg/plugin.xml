@@ -39,24 +39,24 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
-      <transformationClass
+      <productionTransformationClass
             class="de.cau.cs.kieler.scg.transformations.DependencyTransformation">
-      </transformationClass>
-      <transformationClass
+      </productionTransformationClass>
+      <productionTransformationClass
             class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformation">
-      </transformationClass>
-      <transformationClass
+      </productionTransformationClass>
+      <productionTransformationClass
             class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformationSCplus">
-      </transformationClass>
-      <transformationClass
+      </productionTransformationClass>
+      <productionTransformationClass
             class="de.cau.cs.kieler.scg.guardCreation.GuardCreator">
-      </transformationClass>
-      <transformationClass
+      </productionTransformationClass>
+      <productionTransformationClass
             class="de.cau.cs.kieler.scg.schedulers.GuardScheduler">
-      </transformationClass>
-      <transformationClass
+      </productionTransformationClass>
+      <productionTransformationClass
             class="de.cau.cs.kieler.scg.sequentializer.GuardSequentializer">
-      </transformationClass>
+      </productionTransformationClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.feature">

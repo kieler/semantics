@@ -24,7 +24,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -37,7 +37,6 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
@@ -65,7 +64,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2013-10-23 proposed yellow
  */
 
-class DependencyTransformation extends Transformation {
+class DependencyTransformation extends AbstractProductionTransformation {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -79,16 +78,12 @@ class DependencyTransformation extends Transformation {
         return SCGTransformations::DEPENDENCY_ID
     }
 
-    override getExpandsFeatureId() {
+    override getProducedFeatureId() {
         return SCGFeatures::DEPENDENCY_ID
     }
 
-    override getProducesFeatureIds() {
-        return newHashSet()
-    }
-
-    override getNotHandlesFeatureIds() {
-        return newHashSet()
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::BASIC_ID)
     }
     
     // -------------------------------------------------------------------------

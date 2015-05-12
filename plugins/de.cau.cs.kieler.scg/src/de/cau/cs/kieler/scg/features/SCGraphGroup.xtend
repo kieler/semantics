@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg.features
 
-import de.cau.cs.kieler.kico.FeatureGroup
+import de.cau.cs.kieler.kico.features.FeatureGroup
 
 /**
  * @author als
