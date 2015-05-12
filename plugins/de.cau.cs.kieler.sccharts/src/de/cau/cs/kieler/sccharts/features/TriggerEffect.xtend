@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.features
 
-import de.cau.cs.kieler.kico.Feature
+import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
 
 /**

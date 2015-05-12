@@ -13,16 +13,32 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.sccharts.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import de.cau.cs.kieler.sccharts.Action;
+import de.cau.cs.kieler.sccharts.Assignment;
+import de.cau.cs.kieler.sccharts.Binding;
+import de.cau.cs.kieler.sccharts.DuringAction;
+import de.cau.cs.kieler.sccharts.Emission;
+import de.cau.cs.kieler.sccharts.EntryAction;
+import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.For;
+import de.cau.cs.kieler.sccharts.FunctionCallEffect;
+import de.cau.cs.kieler.sccharts.HistoryType;
+import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.SCChartsFactory;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
+import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.StateType;
+import de.cau.cs.kieler.sccharts.SuspendAction;
+import de.cau.cs.kieler.sccharts.TextEffect;
+import de.cau.cs.kieler.sccharts.Transition;
+import de.cau.cs.kieler.sccharts.TransitionType;
 
 /**
  * <!-- begin-user-doc -->

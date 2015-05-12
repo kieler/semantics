@@ -13,15 +13,10 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.TextExpression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
+import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 
 /**
  * <!-- begin-user-doc -->

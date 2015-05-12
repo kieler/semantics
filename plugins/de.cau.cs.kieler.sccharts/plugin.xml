@@ -37,72 +37,72 @@
      </extension>
      <extension
            point="de.cau.cs.kieler.kico.transformation">
-        <transformationClass
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Abort">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.AbortWTO">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.ComplexFinalState">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Connector">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Const">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.CountDelay">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Deferred">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.During">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Entry">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Exit">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.For">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.History">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Initialization">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.InputOutputVariable">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Pre">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Reference">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Signal">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Static">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.SurfaceDepth">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Suspend">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.TriggerEffect">
-        </transformationClass>
-        <transformationClass
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.WeakSuspend">
-        </transformationClass>
+        </expansionTransformationClass>
      </extension>
      <extension
            point="de.cau.cs.kieler.kico.feature">
@@ -190,9 +190,6 @@
         <featureGroupClass
               class="de.cau.cs.kieler.sccharts.featuregroups.SyncCharts">
         </featureGroupClass>
-        <featureClass
-              class="de.cau.cs.kieler.sccharts.features.Normalized">
-        </featureClass>
      </extension>   
 
 

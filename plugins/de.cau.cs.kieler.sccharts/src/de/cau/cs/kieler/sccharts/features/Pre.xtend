@@ -14,16 +14,16 @@
 package de.cau.cs.kieler.sccharts.features
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kico.Feature
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.features.Feature
+import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import java.util.Iterator
-import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.OperatorType
 
 /**
  * SCCharts Pre Feature.

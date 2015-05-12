@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.featuregroups
 
 import com.google.common.collect.Sets
-import de.cau.cs.kieler.kico.FeatureGroup
+import de.cau.cs.kieler.kico.features.FeatureGroup
 
 /**
  * SCCharts Feature Group.

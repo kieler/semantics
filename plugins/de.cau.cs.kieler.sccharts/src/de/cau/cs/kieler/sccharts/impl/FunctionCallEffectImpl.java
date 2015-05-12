@@ -13,12 +13,11 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl;
+import org.eclipse.emf.ecore.EClass;
 
+import de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl;
 import de.cau.cs.kieler.sccharts.FunctionCallEffect;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
-
-import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->

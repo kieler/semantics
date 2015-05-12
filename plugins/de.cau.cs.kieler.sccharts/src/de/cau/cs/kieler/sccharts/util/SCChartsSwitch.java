@@ -13,18 +13,32 @@
  */
 package de.cau.cs.kieler.sccharts.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.Switch;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
-
-import de.cau.cs.kieler.sccharts.*;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-
-import org.eclipse.emf.ecore.util.Switch;
+import de.cau.cs.kieler.sccharts.Action;
+import de.cau.cs.kieler.sccharts.Assignment;
+import de.cau.cs.kieler.sccharts.Binding;
+import de.cau.cs.kieler.sccharts.DuringAction;
+import de.cau.cs.kieler.sccharts.Effect;
+import de.cau.cs.kieler.sccharts.Emission;
+import de.cau.cs.kieler.sccharts.EntryAction;
+import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.For;
+import de.cau.cs.kieler.sccharts.FunctionCallEffect;
+import de.cau.cs.kieler.sccharts.LocalAction;
+import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
+import de.cau.cs.kieler.sccharts.Scope;
+import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.SuspendAction;
+import de.cau.cs.kieler.sccharts.TextEffect;
+import de.cau.cs.kieler.sccharts.Transition;
 
 /**
  * <!-- begin-user-doc -->

@@ -14,10 +14,10 @@
 package de.cau.cs.kieler.sccharts.features
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kico.Feature
+import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.StateType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 /**
  * SCCharts Connector Feature.

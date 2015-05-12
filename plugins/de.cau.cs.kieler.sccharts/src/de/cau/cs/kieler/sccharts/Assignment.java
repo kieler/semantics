@@ -13,9 +13,10 @@
  */
 package de.cau.cs.kieler.sccharts;
 
+import org.eclipse.emf.common.util.EList;
+
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
