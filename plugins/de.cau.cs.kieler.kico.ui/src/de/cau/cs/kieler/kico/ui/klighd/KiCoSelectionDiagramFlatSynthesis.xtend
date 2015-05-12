@@ -22,9 +22,9 @@ import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.kico.Feature
-import de.cau.cs.kieler.kico.FeatureGroup
-import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.features.Feature
+import de.cau.cs.kieler.kico.features.FeatureGroup
+import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel

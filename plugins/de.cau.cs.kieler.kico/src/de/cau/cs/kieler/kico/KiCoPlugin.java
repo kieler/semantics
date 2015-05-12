@@ -35,7 +35,7 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.internal.ResourceExtension;
-import de.cau.cs.kieler.kico.internal.TransformationHandler;
+import de.cau.cs.kieler.kico.internal.Transformation;
 import de.cau.cs.kieler.kico.transformation.IHook;
 import de.cau.cs.kieler.kico.transformation.Processor;
 
@@ -102,7 +102,7 @@ public class KiCoPlugin extends Plugin {
     private static HashMap<String, Feature> featuresCached = null;
 
     /** The cached registered transformations. */
-    private static HashMap<String, TransformationHandler> transformationsCached = null;
+    private static HashMap<String, Transformation> transformationsCached = null;
 
     /** The cached registered hooks. */
     private static HashMap<String, IHook> hooksCached = null;
@@ -318,7 +318,7 @@ public class KiCoPlugin extends Plugin {
      * 
      * @return the registered transformations
      */
-    public static HashMap<String, TransformationHandler> getRegisteredTransformations(boolean forceReload) {
+    public static HashMap<String, Transformation> getRegisteredTransformations(boolean forceReload) {
         // Return the cache if there is any and not forced to reload
         if (transformationsCached != null && !forceReload) {
             return transformationsCached;
@@ -328,15 +328,15 @@ public class KiCoPlugin extends Plugin {
                 Platform.getExtensionRegistry().getConfigurationElementsFor(
                         TRANSFORMATION_EXTENSION_POINT_ID);
         // Clear the cache
-        transformationsCached = new HashMap<String, TransformationHandler>();
+        transformationsCached = new HashMap<String, Transformation>();
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             String className = extension.getName();
             try {
-                TransformationHandler instance =
-                        (TransformationHandler) extension.createExecutableExtension("class");
+                Transformation instance =
+                        (Transformation) extension.createExecutableExtension("class");
                 // Handle the case that wee need Google Guice for instantiation
-                instance = (TransformationHandler) getGuiceInstance(instance);                
+                instance = (Transformation) getGuiceInstance(instance);                
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (transformationsCached.containsKey(id)) {
@@ -519,8 +519,8 @@ public class KiCoPlugin extends Plugin {
      *            the force reload flag
      * @return the transformation
      */
-    public static TransformationHandler getTransformation(String id, boolean forceReload) {
-        HashMap<String, TransformationHandler> cache = getRegisteredTransformations(forceReload);
+    public static Transformation getTransformation(String id, boolean forceReload) {
+        HashMap<String, Transformation> cache = getRegisteredTransformations(forceReload);
         if (!cache.containsKey(id)) {
             KiCoUtil.logWarning(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the transformation with ID '"
                     + id + "'", null);
@@ -536,7 +536,7 @@ public class KiCoPlugin extends Plugin {
      *            the id
      * @return the transformation
      */
-    public static TransformationHandler getTransformation(String id) {
+    public static Transformation getTransformation(String id) {
         return getTransformation(id, false);
     }
 

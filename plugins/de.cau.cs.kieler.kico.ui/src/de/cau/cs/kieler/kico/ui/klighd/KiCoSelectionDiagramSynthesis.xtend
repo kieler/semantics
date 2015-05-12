@@ -22,9 +22,9 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.util.Pair
-import de.cau.cs.kieler.kico.Feature
-import de.cau.cs.kieler.kico.FeatureGroup
 import de.cau.cs.kieler.kico.KielerCompiler
+import de.cau.cs.kieler.kico.features.Feature
+import de.cau.cs.kieler.kico.features.FeatureGroup
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
@@ -40,7 +40,6 @@ import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
-//import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
  * 

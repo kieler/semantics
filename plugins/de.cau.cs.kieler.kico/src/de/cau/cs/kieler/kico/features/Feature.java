@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
-import de.cau.cs.kieler.kico.internal.TransformationHandler;
+import de.cau.cs.kieler.kico.internal.Transformation;
 
 /**
  * An instance of this class represents a registered feature a transformation can declare to handle,
@@ -36,16 +36,16 @@ import de.cau.cs.kieler.kico.internal.TransformationHandler;
 public abstract class Feature implements IFeature {
 
     /** The cached handling/alternative transformations. */
-    protected Set<TransformationHandler> cachedExpandingTransformations = null;
+    protected Set<Transformation> cachedExpandingTransformations = null;
 
     /** The cached producing transformations. */
-    protected Set<TransformationHandler> cachedProducingTransformations = null;
+    protected Set<Transformation> cachedProducingTransformations = null;
 
     /** The cached not handling transformations. */
-    protected Set<TransformationHandler> cachedNotHandlingTransformations = null;
+    protected Set<Transformation> cachedNotHandlingTransformations = null;
 
     /** The cached not handling transformations. */
-    protected Set<TransformationHandler> cachedNoInheritedNotHandlingTransformations = null;
+    protected Set<Transformation> cachedNoInheritedNotHandlingTransformations = null;
 
     /** The cached parent feature groups this feature belongs to. */
     protected Set<FeatureGroup> cachedFeatureGroups = null;
@@ -178,7 +178,7 @@ public abstract class Feature implements IFeature {
         }
 
         // Check produced features
-        for (TransformationHandler transformation : fromFeature.getExpandingTransformations()) {
+        for (Transformation transformation : fromFeature.getExpandingTransformations()) {
             for (Feature producedFeature : transformation.getProducesFeatures()) {
                 // producedFeature == feature that is (possibly) produced by a transformation
                 // handling the fromFeature, so fromFeature must be transformed before
@@ -196,7 +196,7 @@ public abstract class Feature implements IFeature {
         }
 
         // Check not handled by features
-        for (TransformationHandler transformation : fromFeature
+        for (Transformation transformation : fromFeature
                 .getNotHandlingTransformations(ignoreInherited)) {
             Feature notHandledByFeature = transformation.getExpandsFeature();
             // notHandledByFeature == feature whose transformation cannot handle the fromFeature, so
@@ -235,7 +235,7 @@ public abstract class Feature implements IFeature {
         }
 
         // Check produced features
-        for (TransformationHandler transformation : fromFeature.getExpandingTransformations()) {
+        for (Transformation transformation : fromFeature.getExpandingTransformations()) {
             for (Feature producedFeature : transformation.getProducesFeatures()) {
                 // producedFeature == feature that is (possibly) produced by a transformation
                 // handling the fromFeature, so fromFeature must be transformed before
@@ -247,7 +247,7 @@ public abstract class Feature implements IFeature {
         }
 
         // Check not handled by features
-        for (TransformationHandler transformation : fromFeature
+        for (Transformation transformation : fromFeature
                 .getNotHandlingTransformations(ignoreInherited)) {
             Feature notHandledByFeature = transformation.getExpandsFeature();
             // notHandledByFeature == feature whose transformation cannot handle the fromFeature, so
@@ -270,12 +270,12 @@ public abstract class Feature implements IFeature {
      * 
      * @return the alternative transformations
      */
-    public Set<TransformationHandler> getExpandingTransformations() {
+    public Set<Transformation> getExpandingTransformations() {
         if (cachedExpandingTransformations != null) {
             return cachedExpandingTransformations;
         }
-        cachedExpandingTransformations = new HashSet<TransformationHandler>();
-        for (TransformationHandler transformation : KielerCompiler.getTransformations()) {
+        cachedExpandingTransformations = new HashSet<Transformation>();
+        for (Transformation transformation : KielerCompiler.getTransformations()) {
             if (transformation.getExpandsFeature() == this) {
                 cachedExpandingTransformations.add(transformation);
             }
@@ -290,12 +290,12 @@ public abstract class Feature implements IFeature {
      * 
      * @return the producing transformations
      */
-    public Set<TransformationHandler> getProducingTransformations() {
+    public Set<Transformation> getProducingTransformations() {
         if (cachedProducingTransformations != null) {
             return cachedProducingTransformations;
         }
-        cachedProducingTransformations = new HashSet<TransformationHandler>();
-        for (TransformationHandler transformation : KielerCompiler.getTransformations()) {
+        cachedProducingTransformations = new HashSet<Transformation>();
+        for (Transformation transformation : KielerCompiler.getTransformations()) {
             if (transformation.getProducesFeatures() == this) {
                 cachedProducingTransformations.add(transformation);
             }
@@ -310,7 +310,7 @@ public abstract class Feature implements IFeature {
      * 
      * @return the not handling transformations
      */
-    public Set<TransformationHandler> getNotHandlingTransformations(boolean ignoreInherited) {
+    public Set<Transformation> getNotHandlingTransformations(boolean ignoreInherited) {
         if (cachedNotHandlingTransformations != null) {
             if (ignoreInherited) {
                 return cachedNoInheritedNotHandlingTransformations;
@@ -318,9 +318,9 @@ public abstract class Feature implements IFeature {
                 return cachedNotHandlingTransformations;
             }
         }
-        cachedNoInheritedNotHandlingTransformations = new HashSet<TransformationHandler>();
-        cachedNotHandlingTransformations = new HashSet<TransformationHandler>();
-        for (TransformationHandler transformation : KielerCompiler.getTransformations()) {
+        cachedNoInheritedNotHandlingTransformations = new HashSet<Transformation>();
+        cachedNotHandlingTransformations = new HashSet<Transformation>();
+        for (Transformation transformation : KielerCompiler.getTransformations()) {
             for (Feature transformationNotHandlingFeature : transformation
                     .getNotHandlesFeatures(true)) {
                 if (transformationNotHandlingFeature == this) {

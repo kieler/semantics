@@ -23,7 +23,7 @@ import com.google.common.collect.Sets;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
-import de.cau.cs.kieler.kico.internal.TransformationHandler;
+import de.cau.cs.kieler.kico.internal.Transformation;
 
 /**
  * An instance of this class represents a registered feature group a transformation can declare to
@@ -95,12 +95,12 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
      * 
      * @return the alternative transformations
      */
-    public Set<TransformationHandler> getExpandingTransformations() {
+    public Set<Transformation> getExpandingTransformations() {
         if (cachedExpandingTransformations != null) {
             return cachedExpandingTransformations;
         }
-        cachedExpandingTransformations = new HashSet<TransformationHandler>();
-        for (TransformationHandler transformation : KielerCompiler.getTransformations()) {
+        cachedExpandingTransformations = new HashSet<Transformation>();
+        for (Transformation transformation : KielerCompiler.getTransformations()) {
             for (Feature feature : this.getResolvedFeatures()) {
                 if (transformation.getExpandsFeature() == feature) {
                     cachedExpandingTransformations.add(transformation);
@@ -117,12 +117,12 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
      * 
      * @return the producing transformations
      */
-    public Set<TransformationHandler> getProducingTransformations() {
+    public Set<Transformation> getProducingTransformations() {
         if (cachedProducingTransformations != null) {
             return cachedProducingTransformations;
         }
-        cachedProducingTransformations = new HashSet<TransformationHandler>();
-        for (TransformationHandler transformation : KielerCompiler.getTransformations()) {
+        cachedProducingTransformations = new HashSet<Transformation>();
+        for (Transformation transformation : KielerCompiler.getTransformations()) {
             for (Feature feature : this.getResolvedFeatures()) {
                 if (transformation.getProducesFeatures() == feature) {
                     cachedProducingTransformations.add(transformation);
@@ -140,7 +140,7 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
      * 
      * @return the not handling transformations
      */
-    public Set<TransformationHandler> getNotHandlingTransformations(boolean ignoreInherited) {
+    public Set<Transformation> getNotHandlingTransformations(boolean ignoreInherited) {
         if (cachedNotHandlingTransformations != null) {
             if (ignoreInherited) {
                 return cachedNoInheritedNotHandlingTransformations;
@@ -148,9 +148,9 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
                 return cachedNotHandlingTransformations;
             }
         }
-        cachedNoInheritedNotHandlingTransformations = new HashSet<TransformationHandler>();
-        cachedNotHandlingTransformations = new HashSet<TransformationHandler>();
-        for (TransformationHandler transformation : KielerCompiler.getTransformations()) {
+        cachedNoInheritedNotHandlingTransformations = new HashSet<Transformation>();
+        cachedNotHandlingTransformations = new HashSet<Transformation>();
+        for (Transformation transformation : KielerCompiler.getTransformations()) {
             for (Feature feature : this.getResolvedFeatures()) {
                 if (transformation.getNotHandlesFeatures(true).contains(feature)) {
                     cachedNoInheritedNotHandlingTransformations.add(transformation);

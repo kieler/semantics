@@ -47,7 +47,7 @@ import de.cau.cs.kieler.kico.transformation.ProcessorOption;
  * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
-public class TransformationHandler implements ITransformation {
+public class Transformation implements ITransformation {
 
     /** The produces dependencies. */
     private Set<Feature> cachedProducesFeatures = null;
@@ -74,7 +74,7 @@ public class TransformationHandler implements ITransformation {
     private final List<ProcessorOption> processorOptions = new ArrayList<ProcessorOption>();
 
     /** The transformation this class handles */
-    private final ITransformation transformation;
+    private final ITransformation delegate;
 
     /** This flag indicates a transformation producing a freatue instead of expanding it. */
     private boolean production = false;
@@ -85,8 +85,8 @@ public class TransformationHandler implements ITransformation {
     /**
      * Instantiates a raw transformation handler.
      */
-    private TransformationHandler(ITransformation transformation) {
-        this.transformation = transformation;
+    private Transformation(ITransformation transformation) {
+        this.delegate = transformation;
         if (transformation instanceof AbstractExpansionTransformation
                 || transformation instanceof AbstractProductionTransformation) {
             /*
@@ -104,7 +104,7 @@ public class TransformationHandler implements ITransformation {
     /**
      * Instantiates a new transformation handling expansion transformations.
      */
-    public TransformationHandler(IExpansionTransformation expansionTransformation) {
+    public Transformation(IExpansionTransformation expansionTransformation) {
         this((ITransformation) expansionTransformation);
         this.production = true;
     }
@@ -112,7 +112,7 @@ public class TransformationHandler implements ITransformation {
     /**
      * Instantiates a new transformation handling production transformations.
      */
-    public TransformationHandler(IProductionTransformation productionTransformation) {
+    public Transformation(IProductionTransformation productionTransformation) {
         this((ITransformation) productionTransformation);
     }
 
@@ -123,21 +123,21 @@ public class TransformationHandler implements ITransformation {
      * @see de.cau.cs.kieler.kico.transformation.ITransformation#getId()
      */
     public String getId() {
-        return transformation.getId();
+        return delegate.getId();
     }
 
     /**
      * @see de.cau.cs.kieler.kico.transformation.ITransformation#getName()
      */
     public String getName() {
-        return transformation.getName();
+        return delegate.getName();
     }
 
     /**
      * @see de.cau.cs.kieler.kico.transformation.ITransformation#isInplace()
      */
     public boolean isInplace() {
-        return transformation.isInplace();
+        return delegate.isInplace();
     }
 
     // -------------------------------------------------------------------------
@@ -173,9 +173,9 @@ public class TransformationHandler implements ITransformation {
         String expandsFeatureID;
         if (production) {
             // In production transformations the expanded feature is produced instead of expanded
-            expandsFeatureID = ((IProductionTransformation) transformation).getProducesFeatureId();
+            expandsFeatureID = ((IProductionTransformation) delegate).getProducesFeatureId();
         } else {
-            expandsFeatureID = ((IExpansionTransformation) transformation).getExpandsFeatureId();
+            expandsFeatureID = ((IExpansionTransformation) delegate).getExpandsFeatureId();
         }
         cachedExpandsFeature = KielerCompiler.getFeature(expandsFeatureID);
         if (cachedExpandsFeature == null) {
@@ -201,7 +201,7 @@ public class TransformationHandler implements ITransformation {
         cachedProducesFeatures = new HashSet<Feature>();
         if (!production) {
             // Only expansion transformation have the concept of additional produced features
-            for (String featureId : ((IExpansionTransformation) transformation)
+            for (String featureId : ((IExpansionTransformation) delegate)
                     .getProducesFeatureIds()) {
                 Feature feature = KielerCompiler.getFeature(featureId);
                 if (feature == null) {
@@ -267,17 +267,17 @@ public class TransformationHandler implements ITransformation {
              * In production transformation the required features are also not handled features
              * because the have to produced or removed before.
              */
-            Set<String> ids = ((IProductionTransformation) transformation).getRequiredFeatureIds();
+            Set<String> ids = ((IProductionTransformation) delegate).getRequiredFeatureIds();
             if (ids != null) {
                 notHandlesFeatureIDs.addAll(ids);
             }
             // Merge with normal not handled features
-            ids = ((IProductionTransformation) transformation).getNotHandlesFeatureIds();
+            ids = ((IProductionTransformation) delegate).getNotHandlesFeatureIds();
             if (ids != null) {
                 notHandlesFeatureIDs.addAll(ids);
             }
         } else {
-            Set<String> ids = ((IExpansionTransformation) transformation).getNotHandlesFeatureIds();
+            Set<String> ids = ((IExpansionTransformation) delegate).getNotHandlesFeatureIds();
             if (ids != null) {
                 notHandlesFeatureIDs.addAll(ids);
             }
@@ -386,7 +386,7 @@ public class TransformationHandler implements ITransformation {
      */
     public Class<?> getTransformationMethodParameterType() {
         Method transformMethod =
-                KiCoUtil.getSpecificTransformationMethodOrFallBack(transformation, getId());
+                KiCoUtil.getSpecificTransformationMethodOrFallBack(delegate, getId());
         if (transformMethod == null) {
             throw (new RuntimeException("The transformation method of transformation '" + getId()
                     + "' was not found. If you declared a method you must not extend the "
@@ -408,7 +408,7 @@ public class TransformationHandler implements ITransformation {
      */
     public Class<?> getTransformationMethodReturnType() {
         Method transformMethod =
-                KiCoUtil.getSpecificTransformationMethodOrFallBack(transformation, getId());
+                KiCoUtil.getSpecificTransformationMethodOrFallBack(delegate, getId());
         if (transformMethod == null) {
             throw (new RuntimeException("The transformation method of transformation '" + getId()
                     + "' was not found. If you declared a method you must not extend the "

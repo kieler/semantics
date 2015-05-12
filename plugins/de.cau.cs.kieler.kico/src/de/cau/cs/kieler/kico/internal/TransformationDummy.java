@@ -33,7 +33,7 @@ public class TransformationDummy {
     public HashSet<TransformationDummy> reverseDependencies = new HashSet<TransformationDummy>();
 
     /** The transformation. */
-    public TransformationHandler transformation;
+    public Transformation transformation;
 
     /** The id. */
     public String transformationId;
@@ -57,7 +57,7 @@ public class TransformationDummy {
      * @param transformation
      *            the transformation
      */
-    public TransformationDummy(TransformationDummyGraph graph, TransformationHandler transformation) {
+    public TransformationDummy(TransformationDummyGraph graph, Transformation transformation) {
         this.graph = graph;
         this.transformation = transformation;
         this.transformationId = transformation.getId();

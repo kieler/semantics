@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
-import de.cau.cs.kieler.kico.internal.TransformationHandler;
+import de.cau.cs.kieler.kico.internal.Transformation;
 import de.cau.cs.kieler.kico.transformation.IHook;
 import de.cau.cs.kieler.kico.transformation.Processor;
 
@@ -119,7 +119,7 @@ public class KielerCompiler {
      *            the id
      * @return the transformation
      */
-    public static TransformationHandler getTransformation(String id) {
+    public static Transformation getTransformation(String id) {
         return KiCoPlugin.getTransformation(id, false);
     }
 
@@ -130,10 +130,10 @@ public class KielerCompiler {
      * 
      * @return the transformations
      */
-    public static Set<TransformationHandler> getTransformations() {
-        Map<String, TransformationHandler> map = KiCoPlugin.getRegisteredTransformations(false);
-        Set<TransformationHandler> set = new HashSet<TransformationHandler>();
-        for (Entry<String, TransformationHandler> entry : map.entrySet()) {
+    public static Set<Transformation> getTransformations() {
+        Map<String, Transformation> map = KiCoPlugin.getRegisteredTransformations(false);
+        Set<Transformation> set = new HashSet<Transformation>();
+        for (Entry<String, Transformation> entry : map.entrySet()) {
             set.add(entry.getValue());
         }
         return set;
@@ -218,7 +218,7 @@ public class KielerCompiler {
 
         // Compute and retrieve the compilation chain. This method hides all the tough work figuring
         // out the right transformations based on the selection.
-        List<TransformationHandler> compilationTransformations = context.getTransformationChain(true);
+        List<Transformation> compilationTransformations = context.getTransformationChain(true);
 
         // The progress monitor is optional and may be null!
         IProgressMonitor monitor = context.getProgressMonitor();
@@ -234,7 +234,7 @@ public class KielerCompiler {
         // transformationEObject from the context
         EObject transformedObject = transformationEObject;
 
-        for (TransformationHandler transformation : compilationTransformations) {
+        for (Transformation transformation : compilationTransformations) {
             // Reset the done flag for the next transformation step
             context.getCompilationResult().setCurrentTransformationDone(false);
 
@@ -310,7 +310,7 @@ public class KielerCompiler {
      * @return the object
      */
     private static void performTransformationTask(final EObject transformedObject,
-            TransformationHandler transformation, KielerCompilerContext context, int doneWork,
+            Transformation transformation, KielerCompilerContext context, int doneWork,
             int totalWork) {
         if (transformation != null) {
             String compilationTransformationId = transformation.getId();
@@ -387,7 +387,7 @@ public class KielerCompiler {
      * @return the object
      */
     private static void performTransformation(final EObject transformedObject,
-            final TransformationHandler transformation, final KielerCompilerContext context,
+            final Transformation transformation, final KielerCompilerContext context,
             final KielerCompilerProgressMonitor subMonitor) {
         
         // Add a new transformation intermediate result. It is important to do this BEFORE the call
