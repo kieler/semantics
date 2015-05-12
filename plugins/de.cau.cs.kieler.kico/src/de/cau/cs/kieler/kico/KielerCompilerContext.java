@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import de.cau.cs.kieler.core.properties.MapPropertyHolder;
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
-import de.cau.cs.kieler.kico.internal.Transformation;
+import de.cau.cs.kieler.kico.internal.TransformationHandler;
 import de.cau.cs.kieler.kico.internal.TransformationDummy;
 import de.cau.cs.kieler.kico.internal.TransformationDummyGraph;
 
@@ -73,7 +73,7 @@ public class KielerCompilerContext extends MapPropertyHolder {
     private ArrayList<EObject> includedModels = new ArrayList<EObject>();
 
     /** The calculated transformation chain used for compilation. */
-    private List<Transformation> compilationChain = null;
+    private List<TransformationHandler> compilationChain = null;
 
     /** The internal graph. */
     private TransformationDummyGraph graph = null;
@@ -123,7 +123,7 @@ public class KielerCompilerContext extends MapPropertyHolder {
         for (String id : selection.getSelectedFeatureAndTransformationIds()) {
             if (id.startsWith("T_")) {
                 id = id.substring(2);
-                Transformation transformation = KielerCompiler.getTransformation(id);
+                TransformationHandler transformation = KielerCompiler.getTransformation(id);
                 if (transformation == null) {
                     this.getCompilationResult().addPostponedWarning(
                             new KielerCompilerException("KieleCompiler", "KielerCompiler",
@@ -340,7 +340,7 @@ public class KielerCompilerContext extends MapPropertyHolder {
      *            the force update
      * @return the transformation chain
      */
-    public List<Transformation> getTransformationChain(boolean forceUpdate) {
+    public List<TransformationHandler> getTransformationChain(boolean forceUpdate) {
         if (compilationChain == null || forceUpdate) {
             recomputeTransformationChain(true);
         }
@@ -362,7 +362,7 @@ public class KielerCompilerContext extends MapPropertyHolder {
      */
     public TransformationDummyGraph recomputeTransformationChain(boolean forceUpdate) {
         graph = new TransformationDummyGraph(this);
-        compilationChain = new ArrayList<Transformation>();
+        compilationChain = new ArrayList<TransformationHandler>();
         List<TransformationDummy> dummies = graph.getTransformationDummies(forceUpdate);
         for (TransformationDummy dummy : dummies) {
             compilationChain.add(dummy.transformation);

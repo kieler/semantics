@@ -49,6 +49,7 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.features.FeatureGroup;
+import de.cau.cs.kieler.kico.transformation.ITransformation;
 import de.cau.cs.kieler.kico.transformation.Processor;
 
 /**
@@ -503,12 +504,12 @@ public class KiCoUtil {
      *            the transformation id
      * @return the specific transformation method or fall back
      */
-    public static Method getSpecificTransformationMethodOrFallBack(Object object,
+    public static Method getSpecificTransformationMethodOrFallBack(ITransformation transformation,
             String transformationId) {
         Method transformMethod = null;
         Method fallbackMethod = null; // is the EObject method
         try {
-            Method[] methods = ((Transformation) object).getClass().getMethods();
+            Method[] methods = transformation.getClass().getMethods();
             for (Method m : methods) {
                 if (m.getName().equals("transform")) {
                     // now look if the second parameter is EObject or more specific

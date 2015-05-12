@@ -11,19 +11,14 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.internal;
+package de.cau.cs.kieler.kico.transformation;
 
 import java.util.List;
-import java.util.Set;
-
-import de.cau.cs.kieler.kico.transformation.ProcessorOption;
 
 /**
- * This interface defines what a concrete transformation must supply. This is an ID, a feature that
- * it expands, an optional name, an optional list of produced features, an optional list of not
- * handled features and the central list of processors that constitute this transformation.
+ * This interface defines what a general transformation must supply.
  * 
- * @author cmot
+ * @author cmot, als
  * @kieler.design 2015-03-09 proposed
  * @kieler.rating 2015-03-09 proposed yellow
  * 
@@ -46,42 +41,6 @@ public interface ITransformation {
      * @return the string
      */
     public String getName();
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Supply the feature that this transformation is going to expand. Note that if there is more
-     * than one transformation expanding one feature, then these transformations are alternative and
-     * only one of them can be processed during compilation. This is determined by the
-     * transformation preference.
-     * 
-     * @return the string
-     */
-    public String getExpandsFeatureId();
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Optionally supply a set of feature IDs this transformation (potentially) produces. This means
-     * that for a full compilation these features must be transformed afterwards. Be advised to use
-     * the minimal set of feature IDs here. Transformations indirectly specified here will be forced
-     * to run afterwards. If null is returned then this means there are no produces dependencies.
-     * 
-     * @return the list
-     */
-    public Set<String> getProducesFeatureIds();
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Optionally supply a set of feature IDs in order to specify features that cannot be handled by
-     * this transformation. Be advised to use the minimal set of feature IDs here. Transformations
-     * indirectly specified here will be forced to run before this transformation. If null is
-     * returned then this means there are no not handles dependencies.
-     * 
-     * @return the list
-     */
-    public Set<String> getNotHandlesFeatureIds();
 
     // -------------------------------------------------------------------------
 
@@ -110,5 +69,4 @@ public interface ITransformation {
     public boolean isInplace();
 
     // -------------------------------------------------------------------------
-
 }

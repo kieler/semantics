@@ -47,7 +47,7 @@ public class ProcessorOption {
 
     /**
      * Returns the single default this processor option that is used in transformations to refer to
-     * the transformation method.
+     * the transformation method contained in the transformation class.
      * 
      * @return the default this processor option
      */

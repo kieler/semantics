@@ -24,9 +24,10 @@ This extension point allowes the contribution of a compiler transformation to th
          </appinfo>
       </annotation>
       <complexType>
-         <sequence minOccurs="0" maxOccurs="unbounded">
-            <element ref="transformationClass" minOccurs="0" maxOccurs="unbounded"/>
-         </sequence>
+         <choice minOccurs="0" maxOccurs="unbounded">
+            <element ref="expansionTransformationClass" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="productionTransformationClass" minOccurs="0" maxOccurs="unbounded"/>
+         </choice>
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
@@ -37,20 +38,40 @@ This extension point allowes the contribution of a compiler transformation to th
       </complexType>
    </element>
 
-   <element name="transformationClass">
+   <element name="expansionTransformationClass">
       <annotation>
          <documentation>
-            A class file that implements an interface declaring a transform() method, an id() method, a name(), and a produces or not handles dependencies() methods.
+            A class file that implements the interface for a expansion transformation.
          </documentation>
       </annotation>
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The implementing class for this specific transformations. It must satisfy the interface ITransformation and implement Transformation.
+                  The implementing class for this specific transformations. It must satisfy the interface IExpansionTransformation.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.Transformation:de.cau.cs.kieler.kico.ITransformation"/>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.kico.transformation.IExpansionTransformation"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="productionTransformationClass">
+      <annotation>
+         <documentation>
+            A class file that implements the interface for a production transformation.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The implementing class for this specific transformations. It must satisfy the interface IProductionTransformation.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.kico.transformation.IProductionTransformation"/>
                </appinfo>
             </annotation>
          </attribute>

@@ -49,7 +49,4 @@ public abstract class AbstractHook implements IHook {
     public EObject copy(EObject model, KielerCompilerContext context) {
         return null;
     }
-    
-    
-
 }

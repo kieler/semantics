@@ -28,8 +28,12 @@ import de.cau.cs.kieler.kico.KielerCompilerException;
 import de.cau.cs.kieler.kico.ProcessorIntermediateResult;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.kico.features.Feature;
-import de.cau.cs.kieler.kico.features.FeatureGroup;
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation;
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation;
+import de.cau.cs.kieler.kico.transformation.IExpansionTransformation;
 import de.cau.cs.kieler.kico.transformation.IHook;
+import de.cau.cs.kieler.kico.transformation.IProductionTransformation;
+import de.cau.cs.kieler.kico.transformation.ITransformation;
 import de.cau.cs.kieler.kico.transformation.Processor;
 import de.cau.cs.kieler.kico.transformation.ProcessorOption;
 
@@ -43,7 +47,7 @@ import de.cau.cs.kieler.kico.transformation.ProcessorOption;
  * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
-public abstract class Transformation implements ITransformation {
+public class TransformationHandler implements ITransformation {
 
     /** The produces dependencies. */
     private Set<Feature> cachedProducesFeatures = null;
@@ -67,30 +71,91 @@ public abstract class Transformation implements ITransformation {
     private Feature cachedExpandsFeature = null;
 
     /** The central processor list. */
-    private List<ProcessorOption> processorOptions = new ArrayList<ProcessorOption>();
+    private final List<ProcessorOption> processorOptions = new ArrayList<ProcessorOption>();
+
+    /** The transformation this class handles */
+    private final ITransformation transformation;
+
+    /** This flag indicates a transformation producing a freatue instead of expanding it. */
+    private boolean production = false;
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new transformation.
+     * Instantiates a raw transformation handler.
      */
-    public Transformation() {
-        // By default add the default processor option that will be used to refer to the
-        // transformation method itself
-        processorOptions.add(ProcessorOption.getDefaultThisProcessorOption());
+    private TransformationHandler(ITransformation transformation) {
+        this.transformation = transformation;
+        if (transformation instanceof AbstractExpansionTransformation
+                || transformation instanceof AbstractProductionTransformation) {
+            /*
+             * If the transformation is instance of one of the abstract classes it may have an
+             * overridden transform method. Thus add the default processor option that will be used
+             * to refer to the transformation method itself
+             */
+            processorOptions.add(ProcessorOption.getDefaultThisProcessorOption());
+        }
+        if (transformation.getProcessorOptions() != null) {
+            processorOptions.addAll(transformation.getProcessorOptions());
+        }
+    }
+
+    /**
+     * Instantiates a new transformation handling expansion transformations.
+     */
+    public TransformationHandler(IExpansionTransformation expansionTransformation) {
+        this((ITransformation) expansionTransformation);
+        this.production = true;
+    }
+
+    /**
+     * Instantiates a new transformation handling production transformations.
+     */
+    public TransformationHandler(IProductionTransformation productionTransformation) {
+        this((ITransformation) productionTransformation);
+    }
+
+    // -------------------------------------------------------------------------
+    // -- Delegation of ITransformation Interface
+
+    /**
+     * @see de.cau.cs.kieler.kico.transformation.ITransformation#getId()
+     */
+    public String getId() {
+        return transformation.getId();
+    }
+
+    /**
+     * @see de.cau.cs.kieler.kico.transformation.ITransformation#getName()
+     */
+    public String getName() {
+        return transformation.getName();
+    }
+
+    /**
+     * @see de.cau.cs.kieler.kico.transformation.ITransformation#isInplace()
+     */
+    public boolean isInplace() {
+        return transformation.isInplace();
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * This method may be overridden to optionally supply a human readable name for this
-     * transformation. The default implementation will return the id in place of the name.
-     * 
-     * @return the name
+     * @see de.cau.cs.kieler.kico.transformation.ITransformation#getProcessorOptions()
      */
-    public String getName() {
-        return getId();
+    public List<ProcessorOption> getProcessorOptions() {
+        return processorOptions;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return indicates if this transformation in a production transformation
+     */
+    public boolean isProduction() {
+        return production;
     }
 
     // -------------------------------------------------------------------------
@@ -105,7 +170,19 @@ public abstract class Transformation implements ITransformation {
         if (cachedExpandsFeature != null) {
             return cachedExpandsFeature;
         }
-        cachedExpandsFeature = KielerCompiler.getFeature(getExpandsFeatureId());
+        String expandsFeatureID;
+        if (production) {
+            // In production transformations the expanded feature is produced instead of expanded
+            expandsFeatureID = ((IProductionTransformation) transformation).getProducesFeatureId();
+        } else {
+            expandsFeatureID = ((IExpansionTransformation) transformation).getExpandsFeatureId();
+        }
+        cachedExpandsFeature = KielerCompiler.getFeature(expandsFeatureID);
+        if (cachedExpandsFeature == null) {
+            KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "Transformation '" + this.getId()
+                    + "' references a feature '" + expandsFeatureID
+                    + "' it expands, but this feature cannot be found.", null);
+        }
         return cachedExpandsFeature;
     }
 
@@ -122,20 +199,24 @@ public abstract class Transformation implements ITransformation {
             return cachedProducesFeatures;
         }
         cachedProducesFeatures = new HashSet<Feature>();
-        for (String featureId : this.getProducesFeatureIds()) {
-            Feature feature = KielerCompiler.getFeature(featureId);
-            if (feature == null) {
-                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "Transformation '" + this.getId()
-                        + "' references a feature '" + featureId
-                        + "' it produces, but this feature cannot be found.", null);
-            } else {
-                if (feature.isGroup()) {
-                    // add all features of this group!
-                    for (Feature innerFeature : feature.asGroup().getResolvedFeatures()) {
-                        cachedNotHandlesFeatures.add(innerFeature);
-                    }
+        if (!production) {
+            // Only expansion transformation have the concept of additional produced features
+            for (String featureId : ((IExpansionTransformation) transformation)
+                    .getProducesFeatureIds()) {
+                Feature feature = KielerCompiler.getFeature(featureId);
+                if (feature == null) {
+                    KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "Transformation '" + this.getId()
+                            + "' references a feature '" + featureId
+                            + "' it produces, but this feature cannot be found.", null);
                 } else {
-                    cachedProducesFeatures.add(feature);
+                    if (feature.isGroup()) {
+                        // add all features of this group!
+                        for (Feature innerFeature : feature.asGroup().getResolvedFeatures()) {
+                            cachedNotHandlesFeatures.add(innerFeature);
+                        }
+                    } else {
+                        cachedProducesFeatures.add(feature);
+                    }
                 }
             }
         }
@@ -179,7 +260,30 @@ public abstract class Transformation implements ITransformation {
         }
         cachedNotHandlesFeatures = new HashSet<Feature>();
         cachedNoInheritedNotHandlesFeatures = new HashSet<Feature>();
-        for (String featureId : this.getNotHandlesFeatureIds()) {
+
+        Set<String> notHandlesFeatureIDs = new HashSet<String>();
+        if (production) {
+            /*
+             * In production transformation the required features are also not handled features
+             * because the have to produced or removed before.
+             */
+            Set<String> ids = ((IProductionTransformation) transformation).getRequiredFeatureIds();
+            if (ids != null) {
+                notHandlesFeatureIDs.addAll(ids);
+            }
+            // Merge with normal not handled features
+            ids = ((IProductionTransformation) transformation).getNotHandlesFeatureIds();
+            if (ids != null) {
+                notHandlesFeatureIDs.addAll(ids);
+            }
+        } else {
+            Set<String> ids = ((IExpansionTransformation) transformation).getNotHandlesFeatureIds();
+            if (ids != null) {
+                notHandlesFeatureIDs.addAll(ids);
+            }
+        }
+        // Find features
+        for (String featureId : notHandlesFeatureIDs) {
             Feature feature = KielerCompiler.getFeature(featureId);
             if (feature == null) {
                 KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "Transformation '" + this.getId()
@@ -237,18 +341,6 @@ public abstract class Transformation implements ITransformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the central list of processors which this transformation consists of.
-     * 
-     * @return the dependencies
-     */
-    public List<ProcessorOption> getProcessorOptions() {
-        return processorOptions;
-    }
-
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-
-    /**
      * Gets the argument parameter type of the first processor.
      * 
      * @return the argument parameter type of the first processor
@@ -287,75 +379,14 @@ public abstract class Transformation implements ITransformation {
         return null;
     }
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * Non-Inplace transformations should return false here. The default value is true and the more
-     * efficient strategy. However, if a transformation, i.e., a processor within the transformation
-     * requires to work on a real copy of the model then the transformation implementation should
-     * return false here an KiCo will provide the transformation with a copy of the model as input.
-     * Override this method to return false;
-     * 
-     * @return false ONLY if the model transformation really requires a copy of the model as the
-     *         input. Typically model transformations should return true here for faster processing.
-     */
-    public boolean isInplace() {
-        return true;
-    }
-
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-
-    /**
-     * The transform method can be overridden by a transformation to simplify the transformation
-     * definition. the default processor option (which by default is the only processor option in
-     * the list of processor options) refers to this transform() method. Other processor options may
-     * be added before and after this transform method. Note: If the default processor option is
-     * removed this transform() method may not be considered. It is mainly a design decision choice
-     * if a transformation should only be build from re-usable processors or also carry a
-     * main-processor (represented by the default processor option). This method should not be
-     * called directly!
-     * 
-     * @param eObject
-     *            the e object
-     * @param context
-     *            the context
-     * @return the object
-     */
-    public Object transform(final EObject eObject, final KielerCompilerContext context) {
-        // Either this method is overridden, or the transform method (w/o a context)
-        return transform(eObject);
-    }
-
-    // --------------------------------------------
-
-    /**
-     * The transform method can be overridden by a transformation to simplify the transformation
-     * definition. the default processor option (which by default is the only processor option in
-     * the list of processor options) refers to this transform() method. Other processor options may
-     * be added before and after this transform method. Note: If the default processor option is
-     * removed this transform() method may not be considered. It is mainly a design decision choice
-     * if a transformation should only be build from re-usable processors or also carry a
-     * main-processor (represented by the default processor option). This method should not be
-     * called directly!
-     * 
-     * @param eObject
-     *            the e object
-     * @return the object
-     */
-    public Object transform(final EObject eObject) {
-        return eObject;
-    }
-
-    // --------------------------------------------
-
     /**
      * Gets the argument parameter type for the transform method.
      * 
      * @return the argument parameter type
      */
     public Class<?> getTransformationMethodParameterType() {
-        Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId());
+        Method transformMethod =
+                KiCoUtil.getSpecificTransformationMethodOrFallBack(transformation, getId());
         if (transformMethod == null) {
             throw (new RuntimeException("The transformation method of transformation '" + getId()
                     + "' was not found. If you declared a method you must not extend the "
@@ -376,7 +407,8 @@ public abstract class Transformation implements ITransformation {
      * @return the return argument type
      */
     public Class<?> getTransformationMethodReturnType() {
-        Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId());
+        Method transformMethod =
+                KiCoUtil.getSpecificTransformationMethodOrFallBack(transformation, getId());
         if (transformMethod == null) {
             throw (new RuntimeException("The transformation method of transformation '" + getId()
                     + "' was not found. If you declared a method you must not extend the "
@@ -402,11 +434,15 @@ public abstract class Transformation implements ITransformation {
         for (ProcessorOption processorOption : getProcessorOptions()) {
             String transformationId = this.getId();
             Processor processor = null;
-            String processorId = "TRANSFORM_METHOD";
+            String processorId = "UNKNOWN_PROCESSOR";
             if (processorOption != ProcessorOption.getDefaultThisProcessorOption()) {
                 // Ask KiCo for processor
                 processor = KielerCompiler.getProcessor(processorOption.getProcessorId());
-                processorId = processor.getId();
+                if (processor.getId() != null) {
+                    processorId = processor.getId();
+                }
+            } else {
+                processorId = processorOption.getProcessorId();
             }
 
             if (processorOption.isOptional()) {
@@ -434,15 +470,15 @@ public abstract class Transformation implements ITransformation {
 
             EObject processorInput = eObject;
             Object result = null;
-            
+
             // Invoke pre hooks
             for (IHook hook : KielerCompiler.getHooks()) {
                 EObject hookResult = hook.preTransformation(processorInput, context);
-                if(hookResult != null){
+                if (hookResult != null) {
                     processorInput = hookResult;
                 }
             }
-            
+
             try {
                 // Call the transform method if the default processor option, otherwise call the
                 // processor
@@ -482,11 +518,11 @@ public abstract class Transformation implements ITransformation {
                 // Invoke post hooks
                 for (IHook hook : KielerCompiler.getHooks()) {
                     Object hookResult = hook.postProcessor(processorInput, result, context);
-                    if(hookResult != null){
+                    if (hookResult != null) {
                         result = hookResult;
                     }
                 }
-                
+
                 // Add to compilation result
                 processorIntermediateResult.setResult(result);
 

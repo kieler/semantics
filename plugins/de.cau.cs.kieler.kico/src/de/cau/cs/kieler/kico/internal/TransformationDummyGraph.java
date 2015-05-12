@@ -102,7 +102,7 @@ public class TransformationDummyGraph {
         // Go thru all selected Ids
         for (String selectedId : selection.getSelectedFeatureAndTransformationIds()) {
             // A preferred, not disabled transformation handling a feature or a transformation
-            Transformation transformation = null;
+            TransformationHandler transformation = null;
             // Test if this id is a transformation already
             if (selectedId.startsWith("T_")) {
                 // If this is a transformation already, remove the T_ - marker
@@ -191,7 +191,7 @@ public class TransformationDummyGraph {
      *            the context
      */
     private void addFeatureToGraph(Feature feature) {
-        Transformation transformation =
+        TransformationHandler transformation =
                 getTransformationHandlingFeature(feature.getId(), context.getSelection());
         if (transformation != null) {
             addTransformationToGraph(transformation);
@@ -211,17 +211,17 @@ public class TransformationDummyGraph {
      *            the feature id
      * @return the transformation handling feature
      */
-    public static Transformation getTransformationHandlingFeature(String featureId,
+    public static TransformationHandler getTransformationHandlingFeature(String featureId,
             KielerCompilerSelection selection) {
         // A preferred, not disabled transformation handling a feature or a transformation
-        Transformation transformation = null;
+        TransformationHandler transformation = null;
         // A non-preferred but not disabled transformation used if there is no preferred one
         // found
-        Transformation backupTransformation = null;
+        TransformationHandler backupTransformation = null;
         // Take the disabledFallback ONLY if no selected/backup can be found, this means a throwing
         // a warning because
         // run time errors when compiling an skipping a transformation might arise
-        Transformation disabledFallbackTransformation = null;
+        TransformationHandler disabledFallbackTransformation = null;
         // If this is a feature, then find the first preferred transformation that is not
         // disabled
         Feature feature = KielerCompiler.getFeature(featureId);
@@ -229,10 +229,10 @@ public class TransformationDummyGraph {
             // This might be an incorrect specified feature ID, try to ignore it
             return null;
         }
-        Set<Transformation> handlingTransformations = feature.getExpandingTransformations();
+        Set<TransformationHandler> handlingTransformations = feature.getExpandingTransformations();
         // First search any selected transformation (if any)
         // First search the preferred transformation
-        for (Transformation handlingTransformation : handlingTransformations) {
+        for (TransformationHandler handlingTransformation : handlingTransformations) {
             String handlingTransformationId = handlingTransformation.getId();
             if (selection.isTransformationSelected(handlingTransformationId)) {
                 // the transformation selected, so we take it :-)
@@ -241,7 +241,7 @@ public class TransformationDummyGraph {
         }
         // Then search the preferred transformation (IF transformation is still NULL)
         if (transformation == null) {
-            for (Transformation handlingTransformation : handlingTransformations) {
+            for (TransformationHandler handlingTransformation : handlingTransformations) {
                 String handlingTransformationId = handlingTransformation.getId();
                 if (!selection.isTransformationDisabled(handlingTransformationId)) {
                     // the transformation is not disabled
@@ -305,7 +305,7 @@ public class TransformationDummyGraph {
      * @param transformationId
      *            the transformation id
      */
-    private void addTransformationToGraph(Transformation transformation) {
+    private void addTransformationToGraph(TransformationHandler transformation) {
         for (TransformationDummy transformationDummy : transformationDummies) {
             if (transformationDummy.transformation == transformation) {
                 // Already in the graph, leave
@@ -342,7 +342,7 @@ public class TransformationDummyGraph {
         for (TransformationDummy dummyB : this.transformationDummies) {
             // Consider produce relationships
             for (Feature producedFeature : dummyB.transformation.getProducesFeatures()) {
-                for (Transformation producedFeatureHandlingTransformation : producedFeature
+                for (TransformationHandler producedFeatureHandlingTransformation : producedFeature
                         .getExpandingTransformations()) {
                     TransformationDummy dummyC =
                             getTransformationDummy(producedFeatureHandlingTransformation);
@@ -355,7 +355,7 @@ public class TransformationDummyGraph {
 
             // Consider not handles relationships
             for (Feature notHandlesFeature : dummyB.transformation.getNotHandlesFeatures(false)) {
-                for (Transformation notHandlesFeatureHandlingTransformation : notHandlesFeature
+                for (TransformationHandler notHandlesFeatureHandlingTransformation : notHandlesFeature
                         .getExpandingTransformations()) {
                     TransformationDummy dummyA =
                             getTransformationDummy(notHandlesFeatureHandlingTransformation);
@@ -378,7 +378,7 @@ public class TransformationDummyGraph {
      *            the transformation
      * @return the transformation dummy
      */
-    private TransformationDummy getTransformationDummy(Transformation transformation) {
+    private TransformationDummy getTransformationDummy(TransformationHandler transformation) {
         for (TransformationDummy dummy : this.transformationDummies) {
             if (dummy.transformation == transformation) {
                 return dummy;
