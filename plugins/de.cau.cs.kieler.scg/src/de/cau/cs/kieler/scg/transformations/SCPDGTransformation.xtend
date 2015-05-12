@@ -270,8 +270,6 @@ class SCPDGTransformation extends Transformation {
     private def dispatch Node transformSCPDG(Exit exit, Set<ControlFlow> controlFlows, SCGraph scg,
         KielerCompilerContext context) {
         controlFlows += exit.allNext
-
-        //exit.next = null    
         if (exit.entry != programEntry) {
             scg.nodes.remove(exit)
             return null
