@@ -120,10 +120,16 @@ class SCPDGTransformation extends Transformation {
         programEntry.transformSCPDG(cfs, scg, context)
         
         cfs.clear
-        
-        if(hasSurface)
-            dummyDepth.transformSCPDG(cfs,scg,context)
-        
+
+        if (hasSurface) {
+            scg.nodes.forEach [ node |
+                if (node instanceof Depth && node != dummyDepth) {
+                    cfs += (node as Depth).next
+                }
+            ]
+
+            dummyDepth.transformSCPDG(cfs, scg, context)
+        }
         scg => [
             annotations += createStringAnnotation(ANNOTATION_SCPDGTRANSFORMATION, "")
         ]     
@@ -133,6 +139,10 @@ class SCPDGTransformation extends Transformation {
     
     private def Node getNextControlFlowNode(Node node){
         val next = node.nextNode
+        if(next == null){
+            //System.out.println(node.class.simpleName)
+            return null
+        }
         if(next instanceof Surface){
             return dummySurface
         } else if (next instanceof Depth){
@@ -189,8 +199,29 @@ class SCPDGTransformation extends Transformation {
                     (cdTarget as Node).dependencies += it
 				]
 			}
+			
+			node.removeNext
     		
     	}	
+    }
+    
+    private def removeNext(Node node){
+        
+        if(node instanceof Entry){
+            (node as Entry).next = null
+        }
+        if(node instanceof Depth){
+            (node as Depth).next = null
+        }
+        if(node instanceof Exit){
+            (node as Exit).next = null
+        }
+        if(node instanceof Assignment){
+            (node as Assignment).next = null
+        }
+        if(node instanceof Join){
+            (node as Join).next = null
+        }
     }
     
     private def dispatch transformSCPDG(Surface surface, Set<ControlFlow> controlFlows, SCGraph scg,
@@ -206,36 +237,31 @@ class SCPDGTransformation extends Transformation {
     
     private def dispatch transformSCPDG(Depth depth, Set<ControlFlow> controlFlows, SCGraph scg,
         KielerCompilerContext context) {
-        val exitNode = programEntry.exit
-
-        scg.nodes.forEach [ node |
-            if (node instanceof Depth) {
-                controlFlows += (node as Depth).allNext;
-                (node as Depth).next = null
-            }
-        ]
+        controlFlows += depth.allNext;
+        if (dummySurface.depth != depth){
+            depth.removeNext
+            scg.nodes.remove(depth)
+            controlFlows.remove(depth)
+            return null
+        }
 
         while (!controlFlows.empty) {
             val cf = controlFlows.head
             val node = cf.target
             controlFlows.remove(cf)
 
-            if (!(node instanceof Depth) || node == dummyDepth) {
-                val cdTarget = node.transformSCPDG(controlFlows, scg, context)
+            val cdTarget = node.transformSCPDG(controlFlows, scg, context)
 
-                if ((cdTarget != null) && !(cdTarget instanceof Exit) && !(cdTarget instanceof Depth)) {
-                    ScgFactory::eINSTANCE.createControlDependency => [
-                        target = cdTarget as Node
-                        depth.dependencies += it
-                    ]
-                    ScgFactory::eINSTANCE.createControlDependency => [
-                        val Node cfnode = (cdTarget as Node).nextControlFlowNode
-                        setTarget(cfnode);
-                        (cdTarget as Node).dependencies += it
-                    ]
-                }
-            } else {
-                controlFlows += node.allNext
+            if ((cdTarget != null) && !(cdTarget instanceof Exit) && !(cdTarget instanceof Depth)) {
+                ScgFactory::eINSTANCE.createControlDependency => [
+                    target = cdTarget as Node
+                    depth.dependencies += it
+                ]
+                ScgFactory::eINSTANCE.createControlDependency => [
+                    val Node cfnode = (cdTarget as Node).nextControlFlowNode
+                    setTarget(cfnode);
+                    (cdTarget as Node).dependencies += it
+                ]
             }
 
         }
