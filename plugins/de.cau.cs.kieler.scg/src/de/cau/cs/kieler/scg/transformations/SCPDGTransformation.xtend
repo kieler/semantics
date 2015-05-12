@@ -35,6 +35,8 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Conditional
+import org.eclipse.emf.common.util.BasicEList
+import de.cau.cs.kieler.scg.ControlDependency
 
 /** 
  * 
@@ -80,7 +82,9 @@ class SCPDGTransformation extends Transformation {
      * @return Returns the root element of the transformed model.
      */
     override transform(EObject eObject, KielerCompilerContext context) {
-        return transformSCGToSCPDG(eObject as SCGraph, context)
+        val SCGraph scg = transformSCGToSCPDG(eObject as SCGraph, context)
+        scg.removeUnnecessaryDependencies
+        return scg
     }
 
     def SCGraph transformSCGToSCPDG(SCGraph scg, KielerCompilerContext context) {
@@ -102,24 +106,27 @@ class SCPDGTransformation extends Transformation {
             return true
         ]
 
-        //        scg.nodes.forEach[node|
-        //            if(node instanceof Depth){
-        //                cfs += (node as Depth).allNext
-        //            }
-        //        ]
         programEntry.transformSCPDG(cfs, scg, context)
 
         cfs.clear
+
+        val unusedDepth = new BasicEList
 
         if (hasSurface) {
             scg.nodes.forEach [ node |
                 if (node instanceof Depth && node != dummyDepth) {
                     cfs += (node as Depth).next
+                    unusedDepth.add(node)
                 }
             ]
 
             dummyDepth.transformSCPDG(cfs, scg, context)
         }
+
+        unusedDepth.forEach [ node |
+            scg.nodes.remove(node)
+        ]
+
         scg => [
             annotations += createStringAnnotation(ANNOTATION_SCPDGTRANSFORMATION, "")
         ]
@@ -300,6 +307,61 @@ class SCPDGTransformation extends Transformation {
         //join.next = null    	
         scg.nodes.remove(join)
         null
+    }
+
+    def private boolean existsNonTrivialDependency(Node root, Node target) {
+        val dependend = new BasicEList
+        root.dependencies.forEach [ depend |
+            dependend.add(depend.target)
+        ]
+
+        while (!dependend.empty) {
+            val node = dependend.head
+            if (!node.dependencies.forall [ dependency |
+                dependend.add(dependency.target)
+                dependency.target != target
+            ]) {
+                return true
+            }
+            dependend.remove(node)
+        }
+        false
+    }
+
+    def private SCGraph removeUnnecessaryDependencies(SCGraph scg) {
+        scg.nodes.forEach [ node |
+            node.removeUnnecessaryDependencies
+        ]
+
+        return scg
+    }
+
+    def private removeUnnecessaryDependencies(Node node) {
+        val unnecessaryDependencies = new BasicEList
+        node.dependencies.forEach [ dependcy |
+            if (dependcy instanceof ControlDependency) {
+                if (!node.dependencies.forall [ depend |
+                    if (depend != dependcy && depend.target == dependcy.target) {
+
+                        return false
+
+                    }
+                    true
+                ]) {
+
+                    unnecessaryDependencies.add(dependcy)
+                }
+
+                if (existsNonTrivialDependency(node, dependcy.target)) {
+
+                    unnecessaryDependencies.add(dependcy)
+                }
+            }
+        ]
+
+        unnecessaryDependencies.forEach [ dependency |
+            node.dependencies.remove(dependency)
+        ]
     }
 
 }

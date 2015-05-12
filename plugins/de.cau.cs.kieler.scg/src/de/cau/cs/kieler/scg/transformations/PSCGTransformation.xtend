@@ -11,7 +11,7 @@ class PSCGTransformation extends Transformation {
         return transformSCPDGtoPSCG(eObject as SCGraph, context)
     }
     
-    def SCGraph transformSCPDGtoPSCG(SCGraph graph, KielerCompilerContext context) {
+    def SCGraph transformSCPDGtoPSCG(SCGraph scg, KielerCompilerContext context) {
         
     }
     
