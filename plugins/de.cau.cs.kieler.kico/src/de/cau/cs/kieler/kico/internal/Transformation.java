@@ -486,13 +486,13 @@ public class Transformation implements ITransformation {
                     // Process the next processor
                     start = System.currentTimeMillis();
                     Method transformMethod =
-                            KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId());
+                            KiCoUtil.getSpecificTransformationMethodOrFallBack(delegate, getId());
                     if (transformMethod.getParameterTypes().length == 2) {
                         // first try more specific method
-                        result = transformMethod.invoke(this, processorInput, context);
+                        result = transformMethod.invoke(delegate, processorInput, context);
                     } else {
                         // fall back to single parameter method otherwise
-                        result = transformMethod.invoke(this, processorInput);
+                        result = transformMethod.invoke(delegate, processorInput);
                     }
                     // result = this.transform(eObjectParam, context);
                     end = System.currentTimeMillis();

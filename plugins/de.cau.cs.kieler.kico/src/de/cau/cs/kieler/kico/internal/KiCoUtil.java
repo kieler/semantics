@@ -427,7 +427,8 @@ public class KiCoUtil {
         // Calculate the features, go thru all features and request isContained
         Set<Feature> featureList = new HashSet<Feature>();
         for (Feature feature : KielerCompiler.getFeatures()) {
-            if ((!(feature instanceof FeatureGroup)) && feature.doIsContained(model)) {
+            //check if a feature is contained an can be expanded or if it is requested to be produced
+            if ((!(feature instanceof FeatureGroup)) && (feature.doIsContained(model) ^ feature.isProduction())) {
                 featureList.add(feature);
             }
         }

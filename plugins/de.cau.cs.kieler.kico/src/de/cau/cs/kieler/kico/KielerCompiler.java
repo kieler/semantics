@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.osgi.service.log.LogEntry;
 
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
@@ -365,6 +366,11 @@ public class KielerCompiler {
                         int additional = 100 - subMonitor.getPercentDone();
                         monitor.worked(additional);
                     } else {
+                        KiCoPlugin.getInstance().showError(
+                                "Broken compile chain. Transformation "
+                                        + compilationTransformationId
+                                        + " cannot handle input type "
+                                        + transformedObject.getClass().getName());
                         // MUST flag this to be finished otherwise
                         context.getCompilationResult().setCurrentTransformationDone(true);
                     }
