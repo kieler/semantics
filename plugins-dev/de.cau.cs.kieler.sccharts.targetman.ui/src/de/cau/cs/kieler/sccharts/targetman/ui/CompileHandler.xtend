@@ -13,14 +13,24 @@
  */
 package de.cau.cs.kieler.sccharts.targetman.ui
 
+import de.cau.cs.kieler.kico.KielerCompiler
+import de.cau.cs.kieler.kico.klighd.KiCoModelViewManager
+import java.io.File
+import java.io.FileReader
+import java.io.FileWriter
+import java.io.PrintWriter
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 import org.eclipse.core.resources.IFile
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.ui.handlers.HandlerUtil
 
 import static de.cau.cs.kieler.sccharts.targetman.ui.PropertyIds.*
+import freemarker.template.Configuration
+import freemarker.template.Template
+import freemarker.template.Version
 
 /**
  * @author aas
@@ -29,22 +39,30 @@ import static de.cau.cs.kieler.sccharts.targetman.ui.PropertyIds.*
 class CompileHandler extends AbstractHandler {
 
     override execute(ExecutionEvent event) throws ExecutionException {
-
         val selection = HandlerUtil.getCurrentSelection(event)
         if (selection instanceof IStructuredSelection) {
             val element = (selection as IStructuredSelection).getFirstElement()
             if (element instanceof IFile) {
-                compile(element as IFile)
+                val model = KiCoModelViewManager.getModelFromModelEditor(HandlerUtil.getActiveEditor(event))
+                compileToTarget(model, element as IFile)
             }
         }
 
         return selection
     }
 
-    def void compile(IFile file) {
+    def void compileToTarget(EObject model, IFile file) {
+        // Check that parameters are OK
+        if (file == null || model == null) {
+            println("No SCT file or model to compile!")
+            return
+        }
+
+        // Load and check properties
         val compileOnSave = file.getPersistentProperty(COMPILE_ON_SAVE_PROPERTY_ID)
         val targetLanguage = file.getPersistentProperty(TARGET_LANGUAGE_PROPERTY_ID)
         val targetPath = file.getPersistentProperty(TARGET_PATH_PROPERTY_ID)
+        val templatePath = file.getPersistentProperty(TEMPLATE_PATH_PROPERTY_ID)
 
         if (compileOnSave == null || targetLanguage == null || targetPath == null) {
             println("Can't compile SCT file '" + file.name + "'." +
@@ -53,9 +71,47 @@ class CompileHandler extends AbstractHandler {
             return;
         }
 
-        println("TODO: Compile SCT file to target")
-        println("   compile on save: " + compileOnSave)
-        println("   target language: " + targetLanguage)
-        println("   target path: " + targetPath)
+        // Compile
+        val languageToTransformationIDMapping = #{"Java" -> "S2JAVA", "C" -> "S2C"}
+        val transformationID= languageToTransformationIDMapping.get(targetLanguage)
+        if(transformationID != null){
+            val result = KielerCompiler.compile(#[transformationID], #[], model, true, false)
+            // Flush compilation result to target file
+            if (result != null) {
+                if(templatePath != null && templatePath != ""){
+                    // Use template
+                    val templateReader = new FileReader(new File(templatePath))
+                    val cfg = new Configuration(new Version(2, 3, 0))
+                    val template = new Template("tmp", templateReader, cfg)
+                    val outputWriter = new FileWriter(new File(targetPath))
+                    template.process(#{"sct_code" -> result.string}, outputWriter)
+                    templateReader.close()
+                    outputWriter.close()
+                } else {
+                    // Write directly to file
+                    val writer = new PrintWriter(targetPath, "UTF-8");
+                    writer.print(result.string)
+                    writer.close()
+                }
+            }
+        } else {
+            println("Can't find transformationID for SCT target language '" + targetLanguage +"'.")
+        }
     }
+
+    def EObject getModelFromFile(IFile file) {
+        // TODO:
+        /*
+         * new StandaloneSetup().setPlatformUri("../");
+         * var Injector injector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
+         * var XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
+         * resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+         * var Resource resource = resourceSet.createResource(URI.createURI("dummy:/example.mydsl"));
+         * var InputStream in = new ByteArrayInputStream("type foo type bar".getBytes());
+         * resource.load(in, resourceSet.getLoadOptions());
+         * var EObject model = resource.getContents().get(0);
+         */
+        return null
+    }
+
 }

@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts.targetman.ui
 
+
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.CoreException
-import org.eclipse.core.runtime.QualifiedName
 import org.eclipse.jface.dialogs.Dialog
 import org.eclipse.swt.SWT
 import org.eclipse.swt.layout.GridLayout
@@ -42,6 +42,7 @@ class TargetDialog extends Dialog {
     var Button chkCompileOnSave
     var Combo cmbLanguage
     var FileChooser fileChooser
+    var FileChooser templateFileChooser
 
     /**
      * @param parentShell
@@ -57,7 +58,8 @@ class TargetDialog extends Dialog {
         var isCompileOnSave = true
         var targetLanguage = "Java"
         var targetPath = sctFile.getLocation() + ".target"
-
+        var templatePath = ""
+        
         try {
             var s = ""
             s = sctFile.getPersistentProperty(COMPILE_ON_SAVE_PROPERTY_ID)
@@ -71,11 +73,15 @@ class TargetDialog extends Dialog {
             s = sctFile.getPersistentProperty(TARGET_PATH_PROPERTY_ID)
             if(s != null)
                 targetPath = s
+                
+            s = sctFile.getPersistentProperty(TEMPLATE_PATH_PROPERTY_ID)
+            if(s != null)
+                templatePath = s
         } catch (CoreException e) {
             e.printStackTrace()
         }
 
-        // Checkbox
+        // Compile on save
         chkCompileOnSave = new Button(composite, SWT.CHECK)
         chkCompileOnSave.setText("Compile on saving")
         chkCompileOnSave.setSelection(isCompileOnSave)
@@ -102,7 +108,13 @@ class TargetDialog extends Dialog {
         lblPath.setText("Output file")
         fileChooser = new FileChooser(innerComposite)
         fileChooser.getTextControl().setText(targetPath)
-
+        
+        // Template
+        val lblTemplatePath = new Label(innerComposite, SWT.NONE)
+        lblTemplatePath.setText("Template file")
+        templateFileChooser = new FileChooser(innerComposite)
+        templateFileChooser.getTextControl().setText(templatePath)
+        
         return composite
     }
     
@@ -117,6 +129,7 @@ class TargetDialog extends Dialog {
                     Boolean.toString(chkCompileOnSave.getSelection()));
             sctFile.setPersistentProperty(TARGET_LANGUAGE_PROPERTY_ID, cmbLanguage.getText());
             sctFile.setPersistentProperty(TARGET_PATH_PROPERTY_ID, fileChooser.getText());
+            sctFile.setPersistentProperty(TEMPLATE_PATH_PROPERTY_ID, templateFileChooser.getText());
         } catch (CoreException e) {
             e.printStackTrace();
         }

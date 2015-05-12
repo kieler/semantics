@@ -27,4 +27,6 @@ class PropertyIds {
             TargetManagementPlugin.PLUGIN_ID, "targetLanguage")
     public static val QualifiedName TARGET_PATH_PROPERTY_ID = new QualifiedName(
             TargetManagementPlugin.PLUGIN_ID, "targetPath")
+    public static val QualifiedName TEMPLATE_PATH_PROPERTY_ID = new QualifiedName(
+            TargetManagementPlugin.PLUGIN_ID, "templatePath")
 }
