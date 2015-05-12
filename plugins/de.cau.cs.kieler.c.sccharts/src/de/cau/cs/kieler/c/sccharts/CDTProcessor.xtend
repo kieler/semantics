@@ -33,6 +33,8 @@ import org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarationStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclaration
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTIfStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression
 
 /**
  * @author ssm
@@ -126,7 +128,9 @@ class CDTProcessor {
         
         val compound = function.children.filter(typeof(CASTCompoundStatement)).head
         if (compound != null) {
-            compound.transformCompound(model, model)
+            compound.transformCompound(null, model) => [
+                initial = true
+            ]
         }
         
         model
@@ -139,9 +143,8 @@ class CDTProcessor {
                 s.id = "_S" + trC
                 s.label = s.id
 
-                scc.createRegion => [
+                s.concurrencies += scc.createRegion => [
                     id = "_r" + trC
-                    s.concurrencies += it
                 ]
             
                 parentState.concurrencies.filter(typeof(Region)).head.states += s
@@ -164,6 +167,7 @@ class CDTProcessor {
         if (!declarations.empty) {
             val localDeclaration = kex.createDeclaration => [
                 type = ValueType::INT
+                static = true
                 stateF.declarations += it
             ]
         
@@ -180,9 +184,56 @@ class CDTProcessor {
                  lVar.initialValue = createIntValue(Integer.parseInt(init.head.children.head.toString))
               }
             ]
-        }        
+        }      
         
-        state
+        val ifStatements = cs.children.filter(typeof(CASTIfStatement))
+        for(ifs : ifStatements) {
+            ifs.transformIf(stateF)
+        }  
+        
+        stateF
+    }
+    
+    def transformIf(CASTIfStatement ifStatement, State state) {
+        val ifs = ifStatement
+        val exp = ifs.children.filter(typeof(CASTBinaryExpression)).head
+//            val kExp = exp.createKExpression
+
+            val trueState = scc.createState => [ s |
+                s.id = state.id + trC + "T"
+                s.label = s.id
+            
+                s.concurrencies += scc.createRegion => [
+                    id = s.id + "_r"
+                    label = ""
+                ]
+                
+                state.parentRegion.states += s
+            ]
+            
+            val falseState = scc.createState => [ s |
+                s.id = state.id + trC + "F"
+                s.label = s.id
+            
+                s.concurrencies += scc.createRegion => [
+                    id = s.id + "_r"
+                    label = ""
+                ]
+                
+                state.parentRegion.states += s
+            ]            
+            
+             val trueTrans = scc.createTransition => [
+                targetState = trueState
+                immediate = true
+                state.outgoingTransitions += it
+            ]  
+            
+            val falseTrans = scc.createTransition => [
+                targetState = falseState
+                immediate = true
+                state.outgoingTransitions += it
+            ]                  
     }
     
     def printASTNodes(Iterable<IASTNode> nodes, String indent) {
@@ -208,6 +259,14 @@ class CDTProcessor {
     
     private def kex() {
         KExpressionsFactory::eINSTANCE
+    }
+    
+    private def Region getRegion(State state) {
+        state.concurrencies.filter(typeof(Region)).head
+    }
+    
+    private def State getParent(State state) {
+        state.parentRegion.parentState
     }
     
     private def int trC() {
