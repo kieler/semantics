@@ -36,7 +36,9 @@ import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.internal.ResourceExtension;
 import de.cau.cs.kieler.kico.internal.Transformation;
+import de.cau.cs.kieler.kico.transformation.IExpansionTransformation;
 import de.cau.cs.kieler.kico.transformation.IHook;
+import de.cau.cs.kieler.kico.transformation.IProductionTransformation;
 import de.cau.cs.kieler.kico.transformation.Processor;
 
 /**
@@ -331,22 +333,29 @@ public class KiCoPlugin extends Plugin {
         transformationsCached = new HashMap<String, Transformation>();
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
-            String className = extension.getName();
+            String className = extension.getAttribute("class");
             try {
-                Transformation instance =
-                        (Transformation) extension.createExecutableExtension("class");
-                // Handle the case that wee need Google Guice for instantiation
-                instance = (Transformation) getGuiceInstance(instance);                
-                String id = instance.getId();
-                className += " (" + id + ")";
+                Object rawTransformation = extension.createExecutableExtension("class");
+                Transformation transformation;
+                if (extension.getName().startsWith("production")) {//productionTransformationClass
+                    transformation =
+                            new Transformation(
+                                    (IProductionTransformation) getGuiceInstance(rawTransformation));
+                } else {//extensionTransformationClass
+                    transformation =
+                            new Transformation(
+                                    (IExpansionTransformation) getGuiceInstance(rawTransformation));
+                }
+                String id = transformation.getId();
                 if (transformationsCached.containsKey(id)) {
                     KiCoUtil.logError(KiCoPlugin.PLUGIN_ID,
                             "KiCo failed to register transformation: " + extension + " for class "
-                                    + className + " because this ID is already taken.", null);
+                                    + className + " (" + id + ")"
+                                    + " because this ID is already taken.", null);
                 } else {
-                    transformationsCached.put(id, instance);
+                    transformationsCached.put(id, transformation);
                     logInfo("KiCo register transformation: " + extension + " for class "
-                            + className);
+                            + className + " (" + id + ")");
                 }
             } catch (Exception e) {
                 KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register transformation: "

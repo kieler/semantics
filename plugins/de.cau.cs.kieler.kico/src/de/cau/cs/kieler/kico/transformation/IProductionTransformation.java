@@ -33,7 +33,7 @@ public interface IProductionTransformation extends ITransformation {
      * 
      * @return the string
      */
-    public String getProducesFeatureId();
+    public String getProducedFeatureId();
 
     // -------------------------------------------------------------------------
 

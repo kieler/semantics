@@ -106,7 +106,6 @@ public class Transformation implements ITransformation {
      */
     public Transformation(IExpansionTransformation expansionTransformation) {
         this((ITransformation) expansionTransformation);
-        this.production = true;
     }
 
     /**
@@ -114,6 +113,7 @@ public class Transformation implements ITransformation {
      */
     public Transformation(IProductionTransformation productionTransformation) {
         this((ITransformation) productionTransformation);
+        this.production = true;
     }
 
     // -------------------------------------------------------------------------
@@ -173,7 +173,7 @@ public class Transformation implements ITransformation {
         String expandsFeatureID;
         if (production) {
             // In production transformations the expanded feature is produced instead of expanded
-            expandsFeatureID = ((IProductionTransformation) delegate).getProducesFeatureId();
+            expandsFeatureID = ((IProductionTransformation) delegate).getProducedFeatureId();
         } else {
             expandsFeatureID = ((IExpansionTransformation) delegate).getExpandsFeatureId();
         }
