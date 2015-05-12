@@ -47,12 +47,14 @@ import de.cau.cs.kieler.core.kexpressions.Declaration
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTExpressionStatement
 import de.cau.cs.kieler.sccharts.Dataflow
 import de.cau.cs.kieler.sccharts.TransitionType
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.KielerCompilerContext
 
 /**
  * @author ssm
  *
  */
-class CDTProcessor {
+class CDTProcessor extends Transformation {
     
     @Inject
     extension KExpressionsExtension
@@ -66,6 +68,14 @@ class CDTProcessor {
     var _trc = 0
     
     var Declaration globalDeclaration 
+    
+    override String getId() {
+        return "C2SCT";
+    }
+    
+    override transform(EObject eObject, KielerCompilerContext context) {
+        eObject
+    }    
     
     def EObject transform(ITranslationUnit translationUnit) {
         if (translationUnit == null) {
@@ -501,6 +511,8 @@ class CDTProcessor {
         _trc = _trc + 1
         _trc
     }
+    
+
     
 //    private createExpression    
 }
