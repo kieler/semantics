@@ -115,17 +115,6 @@ class BasicBlockTransformation extends AbstractProductionTransformation {
     // -- Transformation method
     // -------------------------------------------------------------------------
     
-    /** 
-     * Generic model transformation interface.
-     * 
-     * @param eObject
-     *          the root element of the input model
-     * @return Returns the root element of the transformed model.
-     */      
-	override transform(EObject eObject, KielerCompilerContext context) {
-        return transformSCGDEPToSCGBB(eObject as SCGraph)
-    }
-    
     /**
      * transformSCGDEPToSCGBB executes the transformation of an SCG with dependency information to an
      * SCG enriched with basic block information.
@@ -136,7 +125,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation {
      * @throws UnsupportedSCGException
      * 			if the first node of the SCG is not an entry node.
      */
-    public def SCGraph transformSCGDEPToSCGBB(SCGraph scg) {
+    public def SCGraph transform(SCGraph scg) {
         // KiCo does this check via feature isContained
         //if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
         //    || scg.hasAnnotation(BasicBlockTransformation::ANNOTATION_BASICBLOCKTRANSFORMATION)

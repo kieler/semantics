@@ -37,8 +37,8 @@ import org.eclipse.emf.ecore.EObject
  */
 abstract class AbstractScheduler extends AbstractProductionTransformation {
 
-    override transform(EObject eObject, KielerCompilerContext context) {
-        return schedule(eObject as SCGraph, context)
+    public def transform(SCGraph scg, KielerCompilerContext context) {
+        return schedule(scg, context)
     }
 
     protected abstract def SchedulingConstraints orderSchedulingBlocks(SCGraph scg);

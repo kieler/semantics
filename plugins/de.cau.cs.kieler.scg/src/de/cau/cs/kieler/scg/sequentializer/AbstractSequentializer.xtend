@@ -63,8 +63,8 @@ abstract class AbstractSequentializer extends AbstractProductionTransformation {
     // -- Sequentializer 
     // -------------------------------------------------------------------------            
 	
-    override transform(EObject eObject, KielerCompilerContext context) {
-        sequentialize(eObject as SCGraph, context)
+    public def transform(SCGraph scg, KielerCompilerContext context) {
+        sequentialize(scg, context)
     }
 	
 	abstract def SCGraph sequentialize(SCGraph scg, KielerCompilerContext context)

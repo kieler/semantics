@@ -135,19 +135,6 @@ class DependencyTransformation extends AbstractProductionTransformation {
     // -------------------------------------------------------------------------
     // -- Transformation method
     // -------------------------------------------------------------------------
-
-    /** 
-     * Generic model transformation interface.
-     * 
-     * @param eObject
-     *          the root element of the input model
-     * @return Returns the root element of the transformed model.
-     */    
-	override transform(EObject eObject, KielerCompilerContext context) {
-        return transformSCGToSCGDEP(eObject as SCGraph)
-    }
-	
-
 	
     /**
      * transformSCGToSCGDEP executes the transformation from a standard SCG to 
@@ -157,7 +144,7 @@ class DependencyTransformation extends AbstractProductionTransformation {
      * 			the originating source scg
      * @return Returns a copy of the scg enriched with dependency information.
      */   
-    def SCGraph transformSCGToSCGDEP(SCGraph scg) {
+    def SCGraph transform(SCGraph scg) {
         // KiCo does this check via feature isContained
         //if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
         //    || scg.hasAnnotation(DependencyTransformation::ANNOTATION_DEPENDENCYRANSFORMATION)

@@ -65,8 +65,8 @@ abstract class AbstractGuardCreator extends AbstractProductionTransformation {
     // -- Sequentializer 
     // -------------------------------------------------------------------------            
 	
-    override transform(EObject eObject, KielerCompilerContext context) {
-        createGuards(eObject as SCGraph, context)
+    public def transform(SCGraph scg, KielerCompilerContext context) {
+        createGuards(scg , context)
     }
 	
 	abstract def SCGraph createGuards(SCGraph scg, KielerCompilerContext context)
