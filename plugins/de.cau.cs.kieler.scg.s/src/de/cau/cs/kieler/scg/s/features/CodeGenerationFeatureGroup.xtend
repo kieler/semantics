@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg.s.features
 
-import de.cau.cs.kieler.kico.FeatureGroup
+import de.cau.cs.kieler.kico.features.FeatureGroup
 
 /**
  * Code Generation Feature Group.

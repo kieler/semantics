@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg.s.features
 
-import de.cau.cs.kieler.kico.Feature
+import de.cau.cs.kieler.kico.features.Feature
 
 /**
  * SCG BasicBlock Feature.

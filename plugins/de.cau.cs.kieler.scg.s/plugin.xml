@@ -3,15 +3,15 @@
 <plugin>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
-      <transformationClass
+      <productionTransformationClass
             class="de.cau.cs.kieler.scg.s.transformations.S2C">
-      </transformationClass>
-      <transformationClass
+      </productionTransformationClass>
+      <productionTransformationClass
             class="de.cau.cs.kieler.scg.s.transformations.S2Java">
-      </transformationClass>
-      <transformationClass
+      </productionTransformationClass>
+      <productionTransformationClass
             class="de.cau.cs.kieler.scg.s.transformations.SCG2S">
-      </transformationClass>
+      </productionTransformationClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.extension">

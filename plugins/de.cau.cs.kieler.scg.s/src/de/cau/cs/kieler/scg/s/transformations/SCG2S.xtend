@@ -22,7 +22,7 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.Program
@@ -34,12 +34,12 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.HashMap
 import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 
 /**
  * Transform SCG to S
@@ -49,7 +49,7 @@ import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
  * @kieler.rating 2014-01-08 proposed yellow
  *
  */
-class SCG2S extends Transformation {
+class SCG2S extends AbstractProductionTransformation {
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -63,16 +63,12 @@ class SCG2S extends Transformation {
         return CodeGenerationTransformations::SCG2S_NAME
     }
 
-    override getExpandsFeatureId() {
-        return SCGFeatures::SEQUENTIALIZE_ID
+    override getProducedFeatureId() {
+        return CodeGenerationFeatures::S_CODE_ID
     }
 
-    override getProducesFeatureIds() {
-        return newHashSet(CodeGenerationFeatures::S_CODE_ID)
-    }
-
-    override getNotHandlesFeatureIds() {
-        return newHashSet()
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
     }
 
     // -------------------------------------------------------------------------

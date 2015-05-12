@@ -15,7 +15,7 @@ package de.cau.cs.kieler.scg.s.transformations
 
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.model.codegeneration.SimpleCBeautifier
-import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 
@@ -25,7 +25,7 @@ import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
  * @author cmot
  *
  */
-class S2Java extends Transformation {
+class S2Java extends AbstractProductionTransformation {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -39,16 +39,12 @@ class S2Java extends Transformation {
         return CodeGenerationTransformations::S2JAVA_NAME
     }
 
-    override getExpandsFeatureId() {
-        return CodeGenerationFeatures::S_CODE_ID
+    override getProducedFeatureId() {
+        return CodeGenerationFeatures::TARGET_ID
     }
 
-    override getProducesFeatureIds() {
-        return newHashSet(CodeGenerationFeatures::TARGET_ID)
-    }
-
-    override getNotHandlesFeatureIds() {
-        return newHashSet()
+    override getRequiredFeatureIds() {
+        return newHashSet(CodeGenerationFeatures::S_CODE_ID)
     }
 
     // -------------------------------------------------------------------------  
