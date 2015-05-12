@@ -203,7 +203,7 @@ class SCGTransformation extends AbstractProductionTransformation {
     //-------------------------------------------------------------------------
     // @requires: none
     // Transforming Local ValuedObjects.
-    def SCGraph transformSCG(State rootState) {
+    def SCGraph transform(State rootState) {
 
         System.out.print("Beginning preparation of the SCG generation phase...");
         var timestamp = System.currentTimeMillis
