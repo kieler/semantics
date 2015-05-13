@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.targetman.ui
+package de.cau.cs.kieler.sccharts.targetman
 
 
 import org.eclipse.core.resources.IFile
@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Shell
 
-import static de.cau.cs.kieler.sccharts.targetman.ui.PropertyIds.*
+import static de.cau.cs.kieler.sccharts.targetman.PropertyIds.*
 
 /**
  * @author aas

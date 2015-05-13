@@ -7,7 +7,7 @@
             allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
-               commandId="de.cau.cs.kieler.sccharts.targetman.ui.openTargetDialog"
+               commandId="de.cau.cs.kieler.sccharts.targetman.openTargetDialog"
                label="Set SCT Target"
                style="push">
             <visibleWhen
@@ -30,7 +30,7 @@
             allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
-               commandId="de.cau.cs.kieler.sccharts.targetman.ui.compile"
+               commandId="de.cau.cs.kieler.sccharts.targetman.compile"
                label="Compile SCT"
                style="push">
             <visibleWhen
@@ -53,13 +53,13 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="de.cau.cs.kieler.sccharts.targetman.ui.OpenTargetDialogHandler"
-            id="de.cau.cs.kieler.sccharts.targetman.ui.openTargetDialog"
+            defaultHandler="de.cau.cs.kieler.sccharts.targetman.OpenTargetDialogHandler"
+            id="de.cau.cs.kieler.sccharts.targetman.openTargetDialog"
             name="Open SCT Target Dialog">
       </command>
       <command
-            defaultHandler="de.cau.cs.kieler.sccharts.targetman.ui.CompileHandler"
-            id="de.cau.cs.kieler.sccharts.targetman.ui.compile"
+            defaultHandler="de.cau.cs.kieler.sccharts.targetman.CompileHandler"
+            id="de.cau.cs.kieler.sccharts.targetman.compile"
             name="Compile SCT">
       </command>
    </extension>

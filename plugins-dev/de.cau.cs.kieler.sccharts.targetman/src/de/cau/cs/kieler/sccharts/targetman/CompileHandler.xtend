@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.targetman.ui
+package de.cau.cs.kieler.sccharts.targetman
 
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.klighd.KiCoModelViewManager
@@ -27,10 +27,10 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.ui.handlers.HandlerUtil
 
-import static de.cau.cs.kieler.sccharts.targetman.ui.PropertyIds.*
+import static de.cau.cs.kieler.sccharts.targetman.PropertyIds.*
+import freemarker.template.Version
 import freemarker.template.Configuration
 import freemarker.template.Template
-import freemarker.template.Version
 
 /**
  * @author aas
@@ -73,12 +73,12 @@ class CompileHandler extends AbstractHandler {
 
         // Compile
         val languageToTransformationIDMapping = #{"Java" -> "S2JAVA", "C" -> "S2C"}
-        val transformationID= languageToTransformationIDMapping.get(targetLanguage)
-        if(transformationID != null){
+        val transformationID = languageToTransformationIDMapping.get(targetLanguage)
+        if (transformationID != null) {
             val result = KielerCompiler.compile(#[transformationID], #[], model, true, false)
             // Flush compilation result to target file
             if (result != null) {
-                if(templatePath != null && templatePath != ""){
+                if (templatePath != null && templatePath != "") {
                     // Use template
                     val templateReader = new FileReader(new File(templatePath))
                     val cfg = new Configuration(new Version(2, 3, 0))
@@ -95,7 +95,7 @@ class CompileHandler extends AbstractHandler {
                 }
             }
         } else {
-            println("Can't find transformationID for SCT target language '" + targetLanguage +"'.")
+            println("Can't find transformationID for SCT target language '" + targetLanguage + "'.")
         }
     }
 
