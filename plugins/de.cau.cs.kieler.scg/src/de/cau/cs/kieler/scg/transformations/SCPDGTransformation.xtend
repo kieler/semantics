@@ -17,6 +17,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.scg.AbsoluteWrite_Read
+import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlDependency
@@ -27,20 +29,17 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.RelativeWrite_Read
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.Write_Write
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import java.util.HashSet
 import java.util.Set
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.ecore.EObject
-import java.util.HashSet
-import de.cau.cs.kieler.scg.Dependency
-import de.cau.cs.kieler.scg.AbsoluteWrite_Read
-import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
-import de.cau.cs.kieler.scg.RelativeWrite_Read
-import de.cau.cs.kieler.scg.Write_Write
 
 /** 
  * 
@@ -98,6 +97,10 @@ class SCPDGTransformation extends Transformation {
             scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)) {
             return scg
         }
+        val oldSCGNodes = newHashSet()
+        scg.nodes.forEach[node|
+            oldSCGNodes.add(node)
+        ]
 
         val cfs = <ControlFlow>newHashSet;
         programEntry = (scg.nodes.head as Entry)
@@ -134,6 +137,11 @@ class SCPDGTransformation extends Transformation {
         depthsToDelete.forEach [ depth |
             scg.nodes.remove(depth.surface)
             scg.nodes.remove(depth)
+        ]
+        
+        oldSCGNodes.forEach[node|
+            if(node != programEntry && node != programEntry.exit)
+                scg.nodes.remove(node)
         ]
 
         scg => [
@@ -189,7 +197,8 @@ class SCPDGTransformation extends Transformation {
         val nodeMap = <Node, Node>newHashMap()
         nodes.forEach [ node |
             val Node newNode = (node.createNode as Node)
-            newNodes += newNode
+            if (newNode != null)
+                newNodes += newNode
             nodeMap.put(node, newNode)
         ]
 
@@ -203,19 +212,39 @@ class SCPDGTransformation extends Transformation {
         (newNodes as Set<Node>)
     }
 
-    def private dispatch createDependency(AbsoluteWrite_Read absWR, Node root, Node target) {
+    def private dispatch createDependency(AbsoluteWrite_Read absWR, Node root, Node targetNode) {
+        ScgFactory::eINSTANCE.createAbsoluteWrite_Read => [
+            target = targetNode
+            root.dependencies.add(it)
+        ]
     }
 
-    def private dispatch createDependency(AbsoluteWrite_RelativeWrite absWrW, Node root, Node target) {
+    def private dispatch createDependency(AbsoluteWrite_RelativeWrite absWrW, Node root, Node targetNode) {
+        ScgFactory::eINSTANCE.createAbsoluteWrite_RelativeWrite => [
+            target = targetNode
+            root.dependencies.add(it)
+        ]
     }
 
-    def private dispatch createDependency(RelativeWrite_Read rWR, Node root, Node target) {
+    def private dispatch createDependency(RelativeWrite_Read rWR, Node root, Node targetNode) {
+        ScgFactory::eINSTANCE.createRelativeWrite_Read => [
+            target = targetNode
+            root.dependencies.add(it)
+        ]
     }
 
-    def private dispatch createDependency(Write_Write wW, Node root, Node target) {
+    def private dispatch createDependency(Write_Write wW, Node root, Node targetNode) {
+        ScgFactory::eINSTANCE.createWrite_Write => [
+            target = targetNode
+            root.dependencies.add(it)
+        ]
     }
 
-    def private dispatch createDependency(ControlDependency conDep, Node root, Node target) {
+    def private dispatch createDependency(ControlDependency conDep, Node root, Node targetNode) {
+        ScgFactory::eINSTANCE.createControlDependency => [
+            target = targetNode
+            root.dependencies.add(it)
+        ]
     }
 
     private def Set<ControlFlow> convertTick(Set<ControlFlow> controlFlows, Node firstNode, SCGraph scg,
@@ -268,152 +297,176 @@ class SCPDGTransformation extends Transformation {
 
         val targetNode = tempTargetNode
 
+        ScgFactory::eINSTANCE.createControlDependency => [
+            target = targetNode
+            firstNode.dependencies.add(it)
+        ]
+
         this.nodes.put(firstNode, clone(nodes))
 
         val nodes2 = this.nodes.get(firstNode)
 
         nodes2.forEach [ node |
-            //TODO refactor
+            ScgFactory::eINSTANCE.createControlDependency => [
+                target = node
+                firstNode.dependencies.add(it)
             ]
-            controlFlows
-        }
-
-        private def dispatch createNode(Assignment assignment) {
-        }
-
-        private def dispatch createNode(Conditional assignment) {
-        }
-
-        private def dispatch transformSCPDG(Entry entry, Set<ControlFlow> controlFlows, SCGraph scg,
-            KielerCompilerContext context) {
-            controlFlows += entry.allNext
-
-            entry
-        }
-
-        private def removeNext(Node node) {
-
-            if (node instanceof Entry) {
-                (node as Entry).next = null
-            }
-            if (node instanceof Depth) {
-                (node as Depth).next = null
-            }
-            if (node instanceof Exit) {
-                (node as Exit).next = null
-            }
-            if (node instanceof Assignment) {
-                (node as Assignment).next = null
-            }
-            if (node instanceof Join) {
-                (node as Join).next = null
-            }
-        }
-
-        private def dispatch transformSCPDG(Surface surface, Set<ControlFlow> controlFlows, SCGraph scg,
-            KielerCompilerContext context) {
-
-            controlFlows += surface.allNext
-            surface
-
-        }
-
-        private def dispatch transformSCPDG(Depth depth, Set<ControlFlow> controlFlows, SCGraph scg,
-            KielerCompilerContext context) {
-            controlFlows += depth.allNext;
-        }
-
-        private def dispatch Node transformSCPDG(Exit exit, Set<ControlFlow> controlFlows, SCGraph scg,
-            KielerCompilerContext context) {
-            controlFlows += exit.allNext
-            if (exit.entry != programEntry) {
-                scg.nodes.remove(exit)
-                return null
-            }
-            exit
-        }
-
-        private def dispatch Node transformSCPDG(Assignment assignment, Set<ControlFlow> controlFlows, SCGraph scg,
-            KielerCompilerContext context) {
-            controlFlows += assignment.allNext
-            assignment
-        }
-
-        private def dispatch Node transformSCPDG(Fork fork, Set<ControlFlow> controlFlows, SCGraph scg,
-            KielerCompilerContext context) {
-            fork.allNext.map[target].forEach[controlFlows += allNext]
-            fork.allNext.map[target].forEach [ e |
-                (e as Entry).next = null
-                scg.nodes.remove(e)
+            ScgFactory::eINSTANCE.createControlDependency => [
+                target = targetNode
+                node.dependencies.add(it)
             ]
+        ]
 
-            scg.nodes.remove(fork)
-            null
+        nodes2.add(firstNode)
+        nodes2.removeUnnecessaryDependencies
+
+        nodes2.forEach [ node |
+            scg.nodes.add(node)
+        ]
+        controlFlows
+    }
+
+    private def dispatch createNode(Assignment assignmentOld) {
+        ScgFactory::eINSTANCE.createAssignment => [
+            
+            assignment = assignmentOld.assignment
+            isInitial = assignmentOld.isIsInitial
+        ]
+    }
+
+    private def dispatch createNode(Conditional assignment) {
+    }
+
+    private def dispatch transformSCPDG(Entry entry, Set<ControlFlow> controlFlows, SCGraph scg,
+        KielerCompilerContext context) {
+        controlFlows += entry.allNext
+
+        entry
+    }
+
+    private def removeNext(Node node) {
+
+        if (node instanceof Entry) {
+            (node as Entry).next = null
         }
-
-        private def dispatch Node transformSCPDG(Join join, Set<ControlFlow> controlFlows, SCGraph scg,
-            KielerCompilerContext context) {
-            controlFlows += join.allNext
-
-            scg.nodes.remove(join)
-            null
+        if (node instanceof Depth) {
+            (node as Depth).next = null
         }
-
-        def private boolean existsNonTrivialDependency(Node root, Node target) {
-            val dependend = new BasicEList
-            root.dependencies.forEach [ depend |
-                if (target != depend.target)
-                    dependend.add(depend.target)
-            ]
-
-            while (!dependend.empty) {
-                val node = dependend.head
-                if (!node.dependencies.forall [ dependency |
-                    dependend.add(dependency.target)
-                    dependency.target != target
-                ]) {
-                    return true
-                }
-                dependend.remove(node)
-            }
-            false
+        if (node instanceof Exit) {
+            (node as Exit).next = null
         }
-
-        def private SCGraph removeUnnecessaryDependencies(SCGraph scg) {
-            scg.nodes.forEach [ node |
-                node.removeUnnecessaryDependencies
-            ]
-
-            return scg
+        if (node instanceof Assignment) {
+            (node as Assignment).next = null
         }
-
-        def private removeUnnecessaryDependencies(Node node) {
-            val unnecessaryDependencies = new BasicEList
-            node.dependencies.forEach [ dependcy |
-                if (dependcy instanceof ControlDependency) {
-                    if (!node.dependencies.forall [ depend |
-                        if (depend != dependcy && depend.target == dependcy.target) {
-
-                            return false
-
-                        }
-                        true
-                    ]) {
-
-                        unnecessaryDependencies.add(dependcy)
-                    }
-
-                    if (existsNonTrivialDependency(node, dependcy.target)) {
-
-                        unnecessaryDependencies.add(dependcy)
-                    }
-                }
-            ]
-
-            unnecessaryDependencies.forEach [ dependency |
-                node.dependencies.remove(dependency)
-            ]
+        if (node instanceof Join) {
+            (node as Join).next = null
         }
+    }
+
+    private def dispatch transformSCPDG(Surface surface, Set<ControlFlow> controlFlows, SCGraph scg,
+        KielerCompilerContext context) {
+
+        controlFlows += surface.allNext
+        surface
 
     }
-    
+
+    private def dispatch transformSCPDG(Depth depth, Set<ControlFlow> controlFlows, SCGraph scg,
+        KielerCompilerContext context) {
+        controlFlows += depth.allNext;
+    }
+
+    private def dispatch Node transformSCPDG(Exit exit, Set<ControlFlow> controlFlows, SCGraph scg,
+        KielerCompilerContext context) {
+        controlFlows += exit.allNext
+        if (exit.entry != programEntry) {
+            scg.nodes.remove(exit)
+            return null
+        }
+        exit
+    }
+
+    private def dispatch Node transformSCPDG(Assignment assignment, Set<ControlFlow> controlFlows, SCGraph scg,
+        KielerCompilerContext context) {
+        controlFlows += assignment.allNext
+        assignment
+    }
+
+    private def dispatch Node transformSCPDG(Fork fork, Set<ControlFlow> controlFlows, SCGraph scg,
+        KielerCompilerContext context) {
+        fork.allNext.map[target].forEach[controlFlows += allNext]
+        fork.allNext.map[target].forEach [ e |
+            (e as Entry).next = null
+            scg.nodes.remove(e)
+        ]
+
+        scg.nodes.remove(fork)
+        null
+    }
+
+    private def dispatch Node transformSCPDG(Join join, Set<ControlFlow> controlFlows, SCGraph scg,
+        KielerCompilerContext context) {
+        controlFlows += join.allNext
+
+        scg.nodes.remove(join)
+        null
+    }
+
+    def private boolean existsNonTrivialDependency(Node root, Node target) {
+        val dependend = new BasicEList
+        root.dependencies.forEach [ depend |
+            if (target != depend.target)
+                dependend.add(depend.target)
+        ]
+
+        while (!dependend.empty) {
+            val node = dependend.head
+            if (!node.dependencies.forall [ dependency |
+                dependend.add(dependency.target)
+                dependency.target != target
+            ]) {
+                return true
+            }
+            dependend.remove(node)
+        }
+        false
+    }
+
+    def private Set<Node> removeUnnecessaryDependencies(Set<Node> scg) {
+        scg.forEach [ node |
+            node.removeUnnecessaryDependencies
+        ]
+
+        return scg
+    }
+
+
+    def private removeUnnecessaryDependencies(Node node) {
+        val unnecessaryDependencies = new BasicEList
+        node.dependencies.forEach [ dependcy |
+            if (dependcy instanceof ControlDependency) {
+                if (!node.dependencies.forall [ depend |
+                    if (depend != dependcy && depend.target == dependcy.target) {
+
+                        return false
+
+                    }
+                    true
+                ]) {
+
+                    unnecessaryDependencies.add(dependcy)
+                }
+
+                if (existsNonTrivialDependency(node, dependcy.target)) {
+
+                    unnecessaryDependencies.add(dependcy)
+                }
+            }
+        ]
+
+        unnecessaryDependencies.forEach [ dependency |
+            node.dependencies.remove(dependency)
+        ]
+    }
+
+}
