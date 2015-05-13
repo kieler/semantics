@@ -265,17 +265,11 @@ class SCPDGTransformation extends Transformation {
         }
     }
 
-    /**
- * TODO rewrite
- */
+   
     private def dispatch transformSCPDG(Surface surface, Set<ControlFlow> controlFlows, SCGraph scg,
         KielerCompilerContext context) {
 
-        //        controlFlows += surface.allNext
-        //        if (surface != dummySurface) {
-        //            scg.nodes.remove(surface)
-        //            return null
-        //        }
+        controlFlows += surface.allNext
         surface
 
     }
