@@ -53,7 +53,7 @@ class During {
         targetRootState.getAllStates.toList.forEach[ targetState |
             targetState.transformDuring(targetRootState);
         ]
-        targetRootState;//.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
@@ -139,7 +139,14 @@ class During {
                 transition1.setImmediate(true);
                 if (immediateDuringAction) {
                     // In case of immediate during action, copy the trigger and effect
-                    transition1.setTrigger(duringAction.trigger.copy);
+                    if (duringAction.trigger != null) {
+                        transition1.setTrigger(duringAction.trigger.copy);
+                        // if the during action has a trigger we need a second immediate 
+                        // default path to the final state!
+                        val transition1b = initialState.createTransitionTo(finalState);  
+                        transition1b.setImmediate(true);
+                    }
+                    
                     for (action : duringAction.effects) {
                         transition1.addEffect(action.copy);
                     }
