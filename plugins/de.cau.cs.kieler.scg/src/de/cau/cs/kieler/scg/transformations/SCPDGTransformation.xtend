@@ -98,7 +98,7 @@ class SCPDGTransformation extends Transformation {
             return scg
         }
         val oldSCGNodes = newHashSet()
-        scg.nodes.forEach[node|
+        scg.nodes.forEach [ node |
             oldSCGNodes.add(node)
         ]
 
@@ -138,9 +138,9 @@ class SCPDGTransformation extends Transformation {
             scg.nodes.remove(depth.surface)
             scg.nodes.remove(depth)
         ]
-        
-        oldSCGNodes.forEach[node|
-            if(node != programEntry && node != programEntry.exit)
+
+        oldSCGNodes.forEach [ node |
+            if (node != programEntry && node != programEntry.exit)
                 scg.nodes.remove(node)
         ]
 
@@ -151,47 +151,45 @@ class SCPDGTransformation extends Transformation {
         scg
     }
 
-    private def Node getNextControlFlowNode(Node node) {
-        val next = node.nextNode
-        if (next == null) {
-
-            //System.out.println(node.class.simpleName)
-            return null
-        }
-        if (next instanceof Surface) {
-            return next
-        } else if (next instanceof Depth) {
-            return next
-        } else if (next == programEntry.exit) {
-            return next
-        } else if (next instanceof Conditional) {
-            return next
-        }
-        return next.nextControlFlowNode
-    }
-
-    private def Node nextNode(Node node) {
-        if (node instanceof Entry) {
-            return (node as Entry).next.target
-        }
-        if (node instanceof Depth) {
-            return (node as Depth).next.target
-        }
-        if (node instanceof Exit) {
-            return (node as Exit).next.target
-        }
-        if (node instanceof Assignment) {
-            return (node as Assignment).next.target
-        }
-        if (node instanceof Fork) {
-            return (node as Fork).join
-        }
-        if (node instanceof Join) {
-            return (node as Join).next.target
-        }
-        return null
-    }
-
+    //    private def Node getNextControlFlowNode(Node node) {
+    //        val next = node.nextNode
+    //        if (next == null) {
+    //
+    //            //System.out.println(node.class.simpleName)
+    //            return null
+    //        }
+    //        if (next instanceof Surface) {
+    //            return next
+    //        } else if (next instanceof Depth) {
+    //            return next
+    //        } else if (next == programEntry.exit) {
+    //            return next
+    //        } else if (next instanceof Conditional) {
+    //            return next
+    //        }
+    //        return next.nextControlFlowNode
+    //    }
+    //    private def Node nextNode(Node node) {
+    //        if (node instanceof Entry) {
+    //            return (node as Entry).next.target
+    //        }
+    //        if (node instanceof Depth) {
+    //            return (node as Depth).next.target
+    //        }
+    //        if (node instanceof Exit) {
+    //            return (node as Exit).next.target
+    //        }
+    //        if (node instanceof Assignment) {
+    //            return (node as Assignment).next.target
+    //        }
+    //        if (node instanceof Fork) {
+    //            return (node as Fork).join
+    //        }
+    //        if (node instanceof Join) {
+    //            return (node as Join).next.target
+    //        }
+    //        return null
+    //    }
     private def Set<Node> clone(Set<Node> nodes) {
         val newNodes = <Node>newHashSet()
         val nodeMap = <Node, Node>newHashMap()
@@ -328,13 +326,13 @@ class SCPDGTransformation extends Transformation {
 
     private def dispatch createNode(Assignment assignmentOld) {
         ScgFactory::eINSTANCE.createAssignment => [
-            
             assignment = assignmentOld.assignment
             isInitial = assignmentOld.isIsInitial
         ]
     }
 
-    private def dispatch createNode(Conditional assignment) {
+    private def dispatch createNode(Conditional conditional) {
+        ScgFactory::eINSTANCE.createConditional => []
     }
 
     private def dispatch transformSCPDG(Entry entry, Set<ControlFlow> controlFlows, SCGraph scg,
@@ -400,7 +398,6 @@ class SCPDGTransformation extends Transformation {
             scg.nodes.remove(e)
         ]
 
-        scg.nodes.remove(fork)
         null
     }
 
@@ -408,8 +405,15 @@ class SCPDGTransformation extends Transformation {
         KielerCompilerContext context) {
         controlFlows += join.allNext
 
-        scg.nodes.remove(join)
         null
+    }
+
+    private def dispatch Node transformSCPDG(Conditional conditional, Set<ControlFlow> controlFlows, SCGraph scg,
+        KielerCompilerContext context) {
+
+        controlFlows += conditional.allNext
+
+        conditional
     }
 
     def private boolean existsNonTrivialDependency(Node root, Node target) {
@@ -439,7 +443,6 @@ class SCPDGTransformation extends Transformation {
 
         return scg
     }
-
 
     def private removeUnnecessaryDependencies(Node node) {
         val unnecessaryDependencies = new BasicEList
