@@ -97,6 +97,9 @@ import de.cau.cs.kieler.klay.layered.properties.InternalProperties
 import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.ControlDependency
+import de.cau.cs.kieler.scg.ConditionalDependency
+import de.cau.cs.kieler.scg.ThenDependency
+import de.cau.cs.kieler.scg.ElseDependency
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -347,6 +350,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 255; it.green = 0; it.blue = 0;]
     private static val KColor DEPENDENCY_CONTROL = RENDERING_FACTORY.createKColor() =>
         [it.red = 0; it.green = 192; it.blue = 192;]
+    private static val KColor DEPENDENCY_THEN = RENDERING_FACTORY.createKColor() =>
+        [it.red = 50; it.green = 192; it.blue = 192]
+    private static val KColor DEPENDENCY_ELSE = RENDERING_FACTORY.createKColor() =>
+        [it.red = 150; it.green = 192; it.blue = 192]
     private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor() =>
         [it.red = 255; it.green = 0; it.blue = 0;]
     private static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor() =>
@@ -1189,12 +1196,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             	]
             }
             else if (dependency instanceof ControlDependency) {
-	            edge.addRoundedBendsPolyline(8, 2) => [
-    	            // ... and use the predefined color for the different dependency types.    
-        	        it.foreground = DEPENDENCY_CONTROL.copy
-                	it.lineStyle = LineStyle::DOT
-                	it.addArrowDecorator
-            	]
+                edge.addRoundedBendsPolyline(8, 2) => [
+                    // ... and use the predefined color for the different dependency types.    
+                    it.foreground = DEPENDENCY_CONTROL.copy
+                    it.lineStyle = LineStyle::DOT
+                    it.addArrowDecorator
+                ]
+            }
+            else if (dependency instanceof ConditionalDependency) {
+                edge.addRoundedBendsPolyline(8, 2) => [
+                    // ... and use the predefined color for the different dependency types.    
+                    if(dependency instanceof ThenDependency) it.foreground = DEPENDENCY_THEN.copy
+                    if(dependency instanceof ElseDependency) it.foreground = DEPENDENCY_ELSE.copy
+                    it.lineStyle = LineStyle::DOT
+                    it.addArrowDecorator
+                ]
             }
             // If dependency edges are layouted, use the dependency ports to attach the edges.
             if ((LAYOUT_DEPENDENCIES.booleanValue) || (isSCPDG)) {
