@@ -33,57 +33,57 @@ package de.cau.cs.kieler.scg;
  */
 public interface DataDependency extends Dependency {
     /**
-	 * Returns the value of the '<em><b>Concurrent</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Concurrent</b></em>' attribute.
+     * The default value is <code>"false"</code>.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Concurrent</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Concurrent</em>' attribute.
-	 * @see #setConcurrent(boolean)
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getDataDependency_Concurrent()
-	 * @model default="false"
-	 * @generated
-	 */
+     * @return the value of the '<em>Concurrent</em>' attribute.
+     * @see #setConcurrent(boolean)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getDataDependency_Concurrent()
+     * @model default="false"
+     * @generated
+     */
     boolean isConcurrent();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scg.DataDependency#isConcurrent <em>Concurrent</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.DataDependency#isConcurrent <em>Concurrent</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Concurrent</em>' attribute.
-	 * @see #isConcurrent()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Concurrent</em>' attribute.
+     * @see #isConcurrent()
+     * @generated
+     */
     void setConcurrent(boolean value);
 
     /**
-	 * Returns the value of the '<em><b>Confluent</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Confluent</b></em>' attribute.
+     * The default value is <code>"false"</code>.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Confluent</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Confluent</em>' attribute.
-	 * @see #setConfluent(boolean)
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getDataDependency_Confluent()
-	 * @model default="false"
-	 * @generated
-	 */
+     * @return the value of the '<em>Confluent</em>' attribute.
+     * @see #setConfluent(boolean)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getDataDependency_Confluent()
+     * @model default="false"
+     * @generated
+     */
     boolean isConfluent();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scg.DataDependency#isConfluent <em>Confluent</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.DataDependency#isConfluent <em>Confluent</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Confluent</em>' attribute.
-	 * @see #isConfluent()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Confluent</em>' attribute.
+     * @see #isConfluent()
+     * @generated
+     */
     void setConfluent(boolean value);
 
 } // DataDependency

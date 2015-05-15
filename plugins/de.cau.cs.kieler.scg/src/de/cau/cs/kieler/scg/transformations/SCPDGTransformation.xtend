@@ -101,7 +101,9 @@ class SCPDGTransformation extends Transformation {
         scg.nodes.forEach [ node |
             oldSCGNodes.add(node)
         ]
-
+        
+        
+        
         val cfs = <ControlFlow>newHashSet;
         programEntry = (scg.nodes.head as Entry)
 
@@ -151,45 +153,10 @@ class SCPDGTransformation extends Transformation {
         scg
     }
 
-    //    private def Node getNextControlFlowNode(Node node) {
-    //        val next = node.nextNode
-    //        if (next == null) {
-    //
-    //            //System.out.println(node.class.simpleName)
-    //            return null
-    //        }
-    //        if (next instanceof Surface) {
-    //            return next
-    //        } else if (next instanceof Depth) {
-    //            return next
-    //        } else if (next == programEntry.exit) {
-    //            return next
-    //        } else if (next instanceof Conditional) {
-    //            return next
-    //        }
-    //        return next.nextControlFlowNode
-    //    }
-    //    private def Node nextNode(Node node) {
-    //        if (node instanceof Entry) {
-    //            return (node as Entry).next.target
-    //        }
-    //        if (node instanceof Depth) {
-    //            return (node as Depth).next.target
-    //        }
-    //        if (node instanceof Exit) {
-    //            return (node as Exit).next.target
-    //        }
-    //        if (node instanceof Assignment) {
-    //            return (node as Assignment).next.target
-    //        }
-    //        if (node instanceof Fork) {
-    //            return (node as Fork).join
-    //        }
-    //        if (node instanceof Join) {
-    //            return (node as Join).next.target
-    //        }
-    //        return null
-    //    }
+    private def generateConditinalDependencys(SCGraph scg) {
+        scg
+    }
+
     private def Set<Node> clone(Set<Node> nodes) {
         val newNodes = <Node>newHashSet()
         val nodeMap = <Node, Node>newHashMap()
@@ -325,14 +292,19 @@ class SCPDGTransformation extends Transformation {
     }
 
     private def dispatch createNode(Assignment assignmentOld) {
-        ScgFactory::eINSTANCE.createAssignment => [
-            assignment = assignmentOld.assignment
-            isInitial = assignmentOld.isIsInitial
+        ScgFactory::eINSTANCE.createAssignment => [ newAssignment |
+            assignmentOld.indices.forEach [ indic |
+                newAssignment.indices.add(indic)
+            ]
+            newAssignment.assignment = assignmentOld.assignment
+            newAssignment.isInitial = assignmentOld.isIsInitial
         ]
     }
 
     private def dispatch createNode(Conditional conditional) {
-        ScgFactory::eINSTANCE.createConditional => []
+        ScgFactory::eINSTANCE.createConditional => [ newConditional |
+            newConditional.condition = conditional.condition
+        ]
     }
 
     private def dispatch transformSCPDG(Entry entry, Set<ControlFlow> controlFlows, SCGraph scg,

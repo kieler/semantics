@@ -21,390 +21,423 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     /**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static ScgFactory init() {
-		try {
-			ScgFactory theScgFactory = (ScgFactory)EPackage.Registry.INSTANCE.getEFactory(ScgPackage.eNS_URI);
-			if (theScgFactory != null) {
-				return theScgFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new ScgFactoryImpl();
-	}
+        try {
+            ScgFactory theScgFactory = (ScgFactory)EPackage.Registry.INSTANCE.getEFactory(ScgPackage.eNS_URI);
+            if (theScgFactory != null) {
+                return theScgFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new ScgFactoryImpl();
+    }
 
     /**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ScgFactoryImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-			case ScgPackage.SC_GRAPH: return createSCGraph();
-			case ScgPackage.NODE: return createNode();
-			case ScgPackage.CONDITIONAL: return createConditional();
-			case ScgPackage.SURFACE: return createSurface();
-			case ScgPackage.DEPTH: return createDepth();
-			case ScgPackage.ASSIGNMENT: return createAssignment();
-			case ScgPackage.FORK: return createFork();
-			case ScgPackage.JOIN: return createJoin();
-			case ScgPackage.LINK: return createLink();
-			case ScgPackage.ENTRY: return createEntry();
-			case ScgPackage.EXIT: return createExit();
-			case ScgPackage.CONTROL_FLOW: return createControlFlow();
-			case ScgPackage.DEPENDENCY: return createDependency();
-			case ScgPackage.DATA_DEPENDENCY: return createDataDependency();
-			case ScgPackage.CONTROL_DEPENDENCY: return createControlDependency();
-			case ScgPackage.ABSOLUTE_WRITE_READ: return createAbsoluteWrite_Read();
-			case ScgPackage.RELATIVE_WRITE_READ: return createRelativeWrite_Read();
-			case ScgPackage.ABSOLUTE_WRITE_RELATIVE_WRITE: return createAbsoluteWrite_RelativeWrite();
-			case ScgPackage.WRITE_WRITE: return createWrite_Write();
-			case ScgPackage.BASIC_BLOCK: return createBasicBlock();
-			case ScgPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
-			case ScgPackage.PREDECESSOR: return createPredecessor();
-			case ScgPackage.SCHEDULE_BLOCK: return createScheduleBlock();
-			case ScgPackage.SCHEDULE: return createSchedule();
-			case ScgPackage.GUARD: return createGuard();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eClass.getClassifierID()) {
+            case ScgPackage.SC_GRAPH: return createSCGraph();
+            case ScgPackage.NODE: return createNode();
+            case ScgPackage.CONDITIONAL: return createConditional();
+            case ScgPackage.SURFACE: return createSurface();
+            case ScgPackage.DEPTH: return createDepth();
+            case ScgPackage.ASSIGNMENT: return createAssignment();
+            case ScgPackage.FORK: return createFork();
+            case ScgPackage.JOIN: return createJoin();
+            case ScgPackage.LINK: return createLink();
+            case ScgPackage.ENTRY: return createEntry();
+            case ScgPackage.EXIT: return createExit();
+            case ScgPackage.CONTROL_FLOW: return createControlFlow();
+            case ScgPackage.DEPENDENCY: return createDependency();
+            case ScgPackage.CONDITIONAL_DEPENDENCY: return createConditionalDependency();
+            case ScgPackage.THEN_DEPENDENCY: return createThenDependency();
+            case ScgPackage.ELSE_DEPENDENCY: return createElseDependency();
+            case ScgPackage.DATA_DEPENDENCY: return createDataDependency();
+            case ScgPackage.CONTROL_DEPENDENCY: return createControlDependency();
+            case ScgPackage.ABSOLUTE_WRITE_READ: return createAbsoluteWrite_Read();
+            case ScgPackage.RELATIVE_WRITE_READ: return createRelativeWrite_Read();
+            case ScgPackage.ABSOLUTE_WRITE_RELATIVE_WRITE: return createAbsoluteWrite_RelativeWrite();
+            case ScgPackage.WRITE_WRITE: return createWrite_Write();
+            case ScgPackage.BASIC_BLOCK: return createBasicBlock();
+            case ScgPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
+            case ScgPackage.PREDECESSOR: return createPredecessor();
+            case ScgPackage.SCHEDULE_BLOCK: return createScheduleBlock();
+            case ScgPackage.SCHEDULE: return createSchedule();
+            case ScgPackage.GUARD: return createGuard();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object createFromString(EDataType eDataType, String initialValue) {
-		switch (eDataType.getClassifierID()) {
-			case ScgPackage.BRANCH_TYPE:
-				return createBranchTypeFromString(eDataType, initialValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eDataType.getClassifierID()) {
+            case ScgPackage.BRANCH_TYPE:
+                return createBranchTypeFromString(eDataType, initialValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String convertToString(EDataType eDataType, Object instanceValue) {
-		switch (eDataType.getClassifierID()) {
-			case ScgPackage.BRANCH_TYPE:
-				return convertBranchTypeToString(eDataType, instanceValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eDataType.getClassifierID()) {
+            case ScgPackage.BRANCH_TYPE:
+                return convertBranchTypeToString(eDataType, instanceValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Node createNode() {
-		NodeImpl node = new NodeImpl();
-		return node;
-	}
+        NodeImpl node = new NodeImpl();
+        return node;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Conditional createConditional() {
-		ConditionalImpl conditional = new ConditionalImpl();
-		return conditional;
-	}
+        ConditionalImpl conditional = new ConditionalImpl();
+        return conditional;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Surface createSurface() {
-		SurfaceImpl surface = new SurfaceImpl();
-		return surface;
-	}
+        SurfaceImpl surface = new SurfaceImpl();
+        return surface;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Depth createDepth() {
-		DepthImpl depth = new DepthImpl();
-		return depth;
-	}
+        DepthImpl depth = new DepthImpl();
+        return depth;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Assignment createAssignment() {
-		AssignmentImpl assignment = new AssignmentImpl();
-		return assignment;
-	}
+        AssignmentImpl assignment = new AssignmentImpl();
+        return assignment;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Fork createFork() {
-		ForkImpl fork = new ForkImpl();
-		return fork;
-	}
+        ForkImpl fork = new ForkImpl();
+        return fork;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Join createJoin() {
-		JoinImpl join = new JoinImpl();
-		return join;
-	}
+        JoinImpl join = new JoinImpl();
+        return join;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Link createLink() {
-		LinkImpl link = new LinkImpl();
-		return link;
-	}
+        LinkImpl link = new LinkImpl();
+        return link;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SCGraph createSCGraph() {
-		SCGraphImpl scGraph = new SCGraphImpl();
-		return scGraph;
-	}
+        SCGraphImpl scGraph = new SCGraphImpl();
+        return scGraph;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Entry createEntry() {
-		EntryImpl entry = new EntryImpl();
-		return entry;
-	}
+        EntryImpl entry = new EntryImpl();
+        return entry;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Exit createExit() {
-		ExitImpl exit = new ExitImpl();
-		return exit;
-	}
+        ExitImpl exit = new ExitImpl();
+        return exit;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ControlFlow createControlFlow() {
-		ControlFlowImpl controlFlow = new ControlFlowImpl();
-		return controlFlow;
-	}
+        ControlFlowImpl controlFlow = new ControlFlowImpl();
+        return controlFlow;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Dependency createDependency() {
-		DependencyImpl dependency = new DependencyImpl();
-		return dependency;
-	}
+        DependencyImpl dependency = new DependencyImpl();
+        return dependency;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
+    public ConditionalDependency createConditionalDependency() {
+        ConditionalDependencyImpl conditionalDependency = new ConditionalDependencyImpl();
+        return conditionalDependency;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ThenDependency createThenDependency() {
+        ThenDependencyImpl thenDependency = new ThenDependencyImpl();
+        return thenDependency;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ElseDependency createElseDependency() {
+        ElseDependencyImpl elseDependency = new ElseDependencyImpl();
+        return elseDependency;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public DataDependency createDataDependency() {
-		DataDependencyImpl dataDependency = new DataDependencyImpl();
-		return dataDependency;
-	}
+        DataDependencyImpl dataDependency = new DataDependencyImpl();
+        return dataDependency;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ControlDependency createControlDependency() {
-		ControlDependencyImpl controlDependency = new ControlDependencyImpl();
-		return controlDependency;
-	}
+        ControlDependencyImpl controlDependency = new ControlDependencyImpl();
+        return controlDependency;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public AbsoluteWrite_Read createAbsoluteWrite_Read() {
-		AbsoluteWrite_ReadImpl absoluteWrite_Read = new AbsoluteWrite_ReadImpl();
-		return absoluteWrite_Read;
-	}
+        AbsoluteWrite_ReadImpl absoluteWrite_Read = new AbsoluteWrite_ReadImpl();
+        return absoluteWrite_Read;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public RelativeWrite_Read createRelativeWrite_Read() {
-		RelativeWrite_ReadImpl relativeWrite_Read = new RelativeWrite_ReadImpl();
-		return relativeWrite_Read;
-	}
+        RelativeWrite_ReadImpl relativeWrite_Read = new RelativeWrite_ReadImpl();
+        return relativeWrite_Read;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public AbsoluteWrite_RelativeWrite createAbsoluteWrite_RelativeWrite() {
-		AbsoluteWrite_RelativeWriteImpl absoluteWrite_RelativeWrite = new AbsoluteWrite_RelativeWriteImpl();
-		return absoluteWrite_RelativeWrite;
-	}
+        AbsoluteWrite_RelativeWriteImpl absoluteWrite_RelativeWrite = new AbsoluteWrite_RelativeWriteImpl();
+        return absoluteWrite_RelativeWrite;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Write_Write createWrite_Write() {
-		Write_WriteImpl write_Write = new Write_WriteImpl();
-		return write_Write;
-	}
+        Write_WriteImpl write_Write = new Write_WriteImpl();
+        return write_Write;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public BasicBlock createBasicBlock() {
-		BasicBlockImpl basicBlock = new BasicBlockImpl();
-		return basicBlock;
-	}
+        BasicBlockImpl basicBlock = new BasicBlockImpl();
+        return basicBlock;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SchedulingBlock createSchedulingBlock() {
-		SchedulingBlockImpl schedulingBlock = new SchedulingBlockImpl();
-		return schedulingBlock;
-	}
+        SchedulingBlockImpl schedulingBlock = new SchedulingBlockImpl();
+        return schedulingBlock;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Predecessor createPredecessor() {
-		PredecessorImpl predecessor = new PredecessorImpl();
-		return predecessor;
-	}
+        PredecessorImpl predecessor = new PredecessorImpl();
+        return predecessor;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ScheduleBlock createScheduleBlock() {
-		ScheduleBlockImpl scheduleBlock = new ScheduleBlockImpl();
-		return scheduleBlock;
-	}
+        ScheduleBlockImpl scheduleBlock = new ScheduleBlockImpl();
+        return scheduleBlock;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Schedule createSchedule() {
-		ScheduleImpl schedule = new ScheduleImpl();
-		return schedule;
-	}
+        ScheduleImpl schedule = new ScheduleImpl();
+        return schedule;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Guard createGuard() {
-		GuardImpl guard = new GuardImpl();
-		return guard;
-	}
+        GuardImpl guard = new GuardImpl();
+        return guard;
+    }
 
                 /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public BranchType createBranchTypeFromString(EDataType eDataType, String initialValue) {
-		BranchType result = BranchType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
+        BranchType result = BranchType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String convertBranchTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
+        return instanceValue == null ? null : instanceValue.toString();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ScgPackage getScgPackage() {
-		return (ScgPackage)getEPackage();
-	}
+        return (ScgPackage)getEPackage();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @deprecated
-	 * @generated
-	 */
+     * @deprecated
+     * @generated
+     */
     @Deprecated
     public static ScgPackage getPackage() {
-		return ScgPackage.eINSTANCE;
-	}
+        return ScgPackage.eINSTANCE;
+    }
 
 } //ScgFactoryImpl

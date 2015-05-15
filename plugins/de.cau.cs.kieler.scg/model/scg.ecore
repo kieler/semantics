@@ -80,6 +80,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ControlFlow" eSuperTypes="#//Link"/>
   <eClassifiers xsi:type="ecore:EClass" name="Dependency" eSuperTypes="#//Link"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConditionalDependency" eSuperTypes="#//Dependency"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ThenDependency" eSuperTypes="#//ConditionalDependency"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ElseDependency" eSuperTypes="#//ConditionalDependency"/>
   <eClassifiers xsi:type="ecore:EClass" name="DataDependency" eSuperTypes="#//Dependency">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="concurrent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>
