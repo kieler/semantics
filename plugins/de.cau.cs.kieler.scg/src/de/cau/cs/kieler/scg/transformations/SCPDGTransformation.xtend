@@ -40,6 +40,9 @@ import java.util.HashSet
 import java.util.Set
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scg.ConditionalDependency
+import de.cau.cs.kieler.scg.ThenDependency
+import de.cau.cs.kieler.scg.ElseDependency
 
 /** 
  * 
@@ -101,9 +104,9 @@ class SCPDGTransformation extends Transformation {
         scg.nodes.forEach [ node |
             oldSCGNodes.add(node)
         ]
-        
-        
-        
+
+        scg.generateConditinalDependencys
+
         val cfs = <ControlFlow>newHashSet;
         programEntry = (scg.nodes.head as Entry)
 
@@ -124,10 +127,8 @@ class SCPDGTransformation extends Transformation {
             cfs.convertTick(tick, scg, context)
         }
 
-        scg.nodes.forEach [ node |
-            node.removeNext
-        ]
-
+        programEntry.next  = null
+        
         val depthsToDelete = newHashSet()
 
         keys.forEach [ key |
@@ -154,6 +155,32 @@ class SCPDGTransformation extends Transformation {
     }
 
     private def generateConditinalDependencys(SCGraph scg) {
+        scg.nodes.forEach [ node |
+            if (node instanceof Conditional) {
+                val Conditional cond = node
+                ScgFactory::eINSTANCE.createThenDependency => [
+                    target = cond.then.target
+                    cond.dependencies.add(it)
+                ]
+                cond.then.target.allNext.forEach [ targetNode |
+                    ScgFactory::eINSTANCE.createThenDependency => [
+                        target = targetNode.target
+                        cond.dependencies.add(it)
+                    ]
+                ]
+                
+                ScgFactory::eINSTANCE.createElseDependency => [
+                    target = cond.^else.target
+                    cond.dependencies.add(it)
+                ]
+                cond.^else.target.allNext.forEach [ targetNode |
+                    ScgFactory::eINSTANCE.createElseDependency => [
+                        target = targetNode.target
+                        cond.dependencies.add(it)
+                    ]
+                ]
+            }
+        ]
         scg
     }
 
@@ -314,24 +341,7 @@ class SCPDGTransformation extends Transformation {
         entry
     }
 
-    private def removeNext(Node node) {
-
-        if (node instanceof Entry) {
-            (node as Entry).next = null
-        }
-        if (node instanceof Depth) {
-            (node as Depth).next = null
-        }
-        if (node instanceof Exit) {
-            (node as Exit).next = null
-        }
-        if (node instanceof Assignment) {
-            (node as Assignment).next = null
-        }
-        if (node instanceof Join) {
-            (node as Join).next = null
-        }
-    }
+   
 
     private def dispatch transformSCPDG(Surface surface, Set<ControlFlow> controlFlows, SCGraph scg,
         KielerCompilerContext context) {
@@ -391,7 +401,7 @@ class SCPDGTransformation extends Transformation {
     def private boolean existsNonTrivialDependency(Node root, Node target) {
         val dependend = new BasicEList
         root.dependencies.forEach [ depend |
-            if (target != depend.target)
+            if (target != depend.target && !(depend instanceof ConditionalDependency))
                 dependend.add(depend.target)
         ]
 
@@ -399,7 +409,7 @@ class SCPDGTransformation extends Transformation {
             val node = dependend.head
             if (!node.dependencies.forall [ dependency |
                 dependend.add(dependency.target)
-                dependency.target != target
+                dependency.target != target && !(dependency instanceof ConditionalDependency)
             ]) {
                 return true
             }
@@ -436,6 +446,17 @@ class SCPDGTransformation extends Transformation {
 
                     unnecessaryDependencies.add(dependcy)
                 }
+            }
+            
+            if(dependcy instanceof ThenDependency){
+                node.dependencies.forEach[checkElse|
+                    if(checkElse instanceof ElseDependency){
+                        if(dependcy.target == checkElse.target){
+                            unnecessaryDependencies.add(dependcy)
+                            unnecessaryDependencies.add(checkElse)
+                        }
+                    }
+                ]
             }
         ]
 
