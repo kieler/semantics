@@ -137,6 +137,8 @@ class During {
                 val transition1 = initialState.createTransitionTo(finalState)
                 transition1.setDelay(duringAction.delay);
                 transition1.setImmediate(true);
+                val transition2 = finalState.createTransitionTo(initialState)
+                transition2.setImmediate(false);
                 if (immediateDuringAction) {
                     // In case of immediate during action, copy the trigger and effect
                     if (duringAction.trigger != null) {
@@ -150,12 +152,12 @@ class During {
                     for (action : duringAction.effects) {
                         transition1.addEffect(action.copy);
                     }
-                }
-                val transition2 = finalState.createTransitionTo(finalState)
-                transition2.setImmediate(false);
-                transition2.setTrigger(duringAction.trigger.copy);
-                for (action : duringAction.effects) {
-                    transition2.addEffect(action.copy);
+                } else {
+                   // non immediate during 
+                    transition2.setTrigger(duringAction.trigger.copy);
+                    for (action : duringAction.effects) {
+                        transition2.addEffect(action.copy);
+                    }
                 }
 
                 // After transforming during actions, erase them
