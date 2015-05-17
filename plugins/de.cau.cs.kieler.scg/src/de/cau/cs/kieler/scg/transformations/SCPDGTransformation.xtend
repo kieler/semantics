@@ -21,9 +21,11 @@ import de.cau.cs.kieler.scg.AbsoluteWrite_Read
 import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ConditionalDependency
 import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.ElseDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
@@ -33,16 +35,13 @@ import de.cau.cs.kieler.scg.RelativeWrite_Read
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.ThenDependency
 import de.cau.cs.kieler.scg.Write_Write
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
-import java.util.HashSet
 import java.util.Set
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scg.ConditionalDependency
-import de.cau.cs.kieler.scg.ThenDependency
-import de.cau.cs.kieler.scg.ElseDependency
 
 /** 
  * 
@@ -88,6 +87,10 @@ class SCPDGTransformation extends Transformation {
      * @return Returns the root element of the transformed model.
      */
     override transform(EObject eObject, KielerCompilerContext context) {
+        breaks.clear
+        nodes.clear
+        keys.clear
+        ticksToConvert.clear
         val SCGraph scg = transformSCGToSCPDG(eObject as SCGraph, context)
 
         //        scg.removeUnnecessaryDependencies
@@ -104,8 +107,6 @@ class SCPDGTransformation extends Transformation {
         scg.nodes.forEach [ node |
             oldSCGNodes.add(node)
         ]
-
-        scg.generateConditinalDependencys
 
         val cfs = <ControlFlow>newHashSet;
         programEntry = (scg.nodes.head as Entry)
@@ -127,26 +128,24 @@ class SCPDGTransformation extends Transformation {
             cfs.convertTick(tick, scg, context)
         }
 
-        programEntry.next  = null
-        
-        val depthsToDelete = newHashSet()
+        programEntry.next = null
 
-        keys.forEach [ key |
-            breaks.get(key).forEach [ break |
-                depthsToDelete += break
-            ]
-        ]
-
-        depthsToDelete.forEach [ depth |
-            scg.nodes.remove(depth.surface)
-            scg.nodes.remove(depth)
-        ]
-
+        //        val depthsToDelete = newHashSet()
+        //
+        //        keys.forEach [ key |
+        //            breaks.get(key).forEach [ break |
+        //                depthsToDelete += break
+        //            ]
+        //        ]
+        //
+        //        depthsToDelete.forEach [ depth |
+        //            scg.nodes.remove(depth.surface)
+        //            scg.nodes.remove(depth)
+        //        ]
         oldSCGNodes.forEach [ node |
             if (node != programEntry && node != programEntry.exit)
                 scg.nodes.remove(node)
         ]
-
         scg => [
             annotations += createStringAnnotation(ANNOTATION_SCPDGTRANSFORMATION, "")
         ]
@@ -154,105 +153,16 @@ class SCPDGTransformation extends Transformation {
         scg
     }
 
-    private def generateConditinalDependencys(SCGraph scg) {
-        scg.nodes.forEach [ node |
-            if (node instanceof Conditional) {
-                val Conditional cond = node
-                ScgFactory::eINSTANCE.createThenDependency => [
-                    target = cond.then.target
-                    cond.dependencies.add(it)
-                ]
-                cond.then.target.allNext.forEach [ targetNode |
-                    ScgFactory::eINSTANCE.createThenDependency => [
-                        target = targetNode.target
-                        cond.dependencies.add(it)
-                    ]
-                ]
-                
-                ScgFactory::eINSTANCE.createElseDependency => [
-                    target = cond.^else.target
-                    cond.dependencies.add(it)
-                ]
-                cond.^else.target.allNext.forEach [ targetNode |
-                    ScgFactory::eINSTANCE.createElseDependency => [
-                        target = targetNode.target
-                        cond.dependencies.add(it)
-                    ]
-                ]
-            }
-        ]
-        scg
-    }
-
-    private def Set<Node> clone(Set<Node> nodes) {
-        val newNodes = <Node>newHashSet()
-        val nodeMap = <Node, Node>newHashMap()
-        nodes.forEach [ node |
-            val Node newNode = (node.createNode as Node)
-            if (newNode != null)
-                newNodes += newNode
-            nodeMap.put(node, newNode)
-        ]
-
-        nodes.forEach [ node |
-            node.dependencies.forEach [ dependency |
-                if (nodes.contains(dependency.target)) {
-                    createDependency(dependency, nodeMap.get(node), nodeMap.get(dependency.target))
-                }
-            ]
-        ]
-        (newNodes as Set<Node>)
-    }
-
-    def private dispatch createDependency(AbsoluteWrite_Read absWR, Node root, Node targetNode) {
-        ScgFactory::eINSTANCE.createAbsoluteWrite_Read => [
-            target = targetNode
-            root.dependencies.add(it)
-        ]
-    }
-
-    def private dispatch createDependency(AbsoluteWrite_RelativeWrite absWrW, Node root, Node targetNode) {
-        ScgFactory::eINSTANCE.createAbsoluteWrite_RelativeWrite => [
-            target = targetNode
-            root.dependencies.add(it)
-        ]
-    }
-
-    def private dispatch createDependency(RelativeWrite_Read rWR, Node root, Node targetNode) {
-        ScgFactory::eINSTANCE.createRelativeWrite_Read => [
-            target = targetNode
-            root.dependencies.add(it)
-        ]
-    }
-
-    def private dispatch createDependency(Write_Write wW, Node root, Node targetNode) {
-        ScgFactory::eINSTANCE.createWrite_Write => [
-            target = targetNode
-            root.dependencies.add(it)
-        ]
-    }
-
-    def private dispatch createDependency(ControlDependency conDep, Node root, Node targetNode) {
-        ScgFactory::eINSTANCE.createControlDependency => [
-            target = targetNode
-            root.dependencies.add(it)
-        ]
-    }
-
     private def Set<ControlFlow> convertTick(Set<ControlFlow> controlFlows, Node firstNode, SCGraph scg,
         KielerCompilerContext context) {
 
-        val depths = new HashSet
-        val nodes = new HashSet
-        val depth = new HashSet
+        val depthMap = newHashMap
+        val nodes = newHashSet
+        val depth = newHashSet
         while (!controlFlows.empty) {
             val cf = controlFlows.head
             val node = cf.target
             controlFlows.remove(cf)
-            if (node instanceof Depth)
-                depths += (node as Depth)
-            if (node instanceof Surface)
-                depths += (node as Surface).depth
             val cdTarget = node.transformSCPDG(controlFlows, scg, context)
             if ((cdTarget != null) && !(cdTarget instanceof Exit) && !(cdTarget instanceof Surface)) {
                 nodes += (cdTarget as Node)
@@ -260,62 +170,251 @@ class SCPDGTransformation extends Transformation {
             }
         }
 
-        keys.forEach [ keys |
-            val break = breaks.get(keys)
-            if (break.size == depths.size && depth.size == 0) {
-                if (break.forall[dep|depths.contains(dep)]) {
-                    depth.add(keys)
-                }
+        var Set<Set<Depth>> nextDe = null
 
+        if (firstNode == programEntry) {
+            nextDe = newHashSet(firstNode).generateDepths
+        } else {
+            val Set<Node> theseDetphs = newHashSet()
+            this.breaks.get(firstNode).forEach [ dep |
+                theseDetphs += (dep as Depth).next.target
+            ]
+            nextDe = theseDetphs.generateDepths
+
+        }
+
+        nextDe.forEach [ set |
+            if (!set.empty) {
+                if (this.keys.empty || this.keys.forall [ key |
+                    val knownset = this.breaks.get(key)
+                    if (knownset.size == set.size && knownset.containsAll(set)) {
+                        depthMap.put(key, set)
+                        depth.add(key)
+                        return false
+                    } else {
+                        return true
+                    }
+                ]) {
+                    val newDepth = ScgFactory::eINSTANCE.createDepth => [
+                        surface = ScgFactory::eINSTANCE.createSurface
+                    ]
+                    depthMap.put(newDepth, set)
+                    depth.add(newDepth)
+                    this.breaks.put(newDepth, (set as Set<Depth>))
+                    this.keys.add(newDepth)
+                    this.ticksToConvert.add(newDepth)
+                }
             }
         ]
-        if (depth.empty && !depths.empty) {
-            val dep = ScgFactory::eINSTANCE.createDepth => [
-                surface = ScgFactory::eINSTANCE.createSurface => []
-            ]
 
-            depth.add(dep)
-            breaks.put(dep, depths)
-            keys += dep
-            ticksToConvert += dep
-        }
+        nodes.forEach [ node |
+            if (node instanceof Conditional) {
+                val controlNodesThen = nextControlflowNode(node.then.target)
+                val controlNodesElse = nextControlflowNode(node.^else.target)
+                val depthNodesThen = newHashSet()
+                val depthNodesElse = newHashSet()
+                val depthNodesThenKeys = newHashSet()
+                val depthNodesElseKeys = newHashSet()
+                controlNodesThen.forEach [ controlNode |
+                    if (controlNode instanceof Depth) {
+                        depthNodesThen.add(controlNode)
+                    }
+                ]
 
-        var Node tempTargetNode = null
-        if (depth.empty) {
-            tempTargetNode = programEntry.exit
-        } else {
-            tempTargetNode = depth.head.surface
-        }
+                controlNodesElse.forEach [ controlNode |
+                    if (controlNode instanceof Depth) {
+                        depthNodesElse.add(controlNode)
+                    }
+                ]
 
-        val targetNode = tempTargetNode
+                this.keys.forEach [ key |
+                    if (this.breaks.get(key).containsAll(depthNodesElse)) {
+                        depthNodesElseKeys += key
+                    }
+                    if (this.breaks.get(key).containsAll(depthNodesThen)) {
+                        depthNodesThenKeys += key
+                    }
+                ]
 
-        ScgFactory::eINSTANCE.createControlDependency => [
-            target = targetNode
-            firstNode.dependencies.add(it)
+                depthNodesElseKeys.forEach [ key |
+                    ScgFactory::eINSTANCE.createElseDependency => [
+                        target = key.surface
+                        node.dependencies += it
+                    ]
+                ]
+
+                depthNodesThenKeys.forEach [ key |
+                    ScgFactory::eINSTANCE.createThenDependency => [
+                        target = key.surface
+                        node.dependencies += it
+                    ]
+                ]
+                ScgFactory::eINSTANCE.createElseDependency => [
+                    target = node.^else.target
+                    node.dependencies += it
+                ]
+
+                ScgFactory::eINSTANCE.createThenDependency => [
+                    target = node.then.target
+                    node.dependencies += it
+                ]
+
+                node.then.target.allNext.forEach [ cf |
+                    val targetNode = cf.target
+                    ScgFactory::eINSTANCE.createThenDependency => [
+                        target = targetNode
+                        node.dependencies += it
+                    ]
+                ]
+
+                node.^else.target.allNext.forEach [ cf |
+                    val targetNode = cf.target
+                    ScgFactory::eINSTANCE.createElseDependency => [
+                        target = targetNode
+                        node.dependencies += it
+                    ]
+                ]
+
+                depthNodesElseKeys.forEach [ targetNode |
+                    ScgFactory::eINSTANCE.createElseDependency => [
+                        target = targetNode.surface
+                        node.dependencies += it
+                    ]
+                ]
+
+                depthNodesThenKeys.forEach [ targetNode |
+                    ScgFactory::eINSTANCE.createThenDependency => [
+                        target = targetNode.surface
+                        node.dependencies += it
+                    ]
+                ]
+            }
         ]
 
-        this.nodes.put(firstNode, clone(nodes))
-
-        val nodes2 = this.nodes.get(firstNode)
-
-        nodes2.forEach [ node |
-            ScgFactory::eINSTANCE.createControlDependency => [
-                target = node
-                firstNode.dependencies.add(it)
-            ]
+        if (depth.empty) {
+            val targetNode = programEntry.exit
             ScgFactory::eINSTANCE.createControlDependency => [
                 target = targetNode
-                node.dependencies.add(it)
+                firstNode.dependencies.add(it)
             ]
-        ]
+            this.nodes.put(firstNode, clone(nodes))
 
-        nodes2.add(firstNode)
-        nodes2.removeUnnecessaryDependencies
+            val nodes2 = this.nodes.get(firstNode)
 
-        nodes2.forEach [ node |
-            scg.nodes.add(node)
-        ]
+            nodes2.forEach [ node |
+                ScgFactory::eINSTANCE.createControlDependency => [
+                    target = node
+                    firstNode.dependencies.add(it)
+                ]
+                ScgFactory::eINSTANCE.createControlDependency => [
+                    target = targetNode
+                    node.dependencies.add(it)
+                ]
+            ]
+            nodes2.add(firstNode)
+            nodes2.removeUnnecessaryDependencies
+
+            nodes2.forEach [ node |
+                scg.nodes.add(node)
+            ]
+        } else if (depth.size == 1) {
+            var Node temptargetNode = depth.head.surface
+
+            val targetNode = temptargetNode
+
+            ScgFactory::eINSTANCE.createControlDependency => [
+                target = targetNode
+                firstNode.dependencies.add(it)
+            ]
+            this.nodes.put(firstNode, clone(nodes))
+
+            val nodes2 = this.nodes.get(firstNode)
+
+            nodes2.forEach [ node |
+                ScgFactory::eINSTANCE.createControlDependency => [
+                    target = node
+                    firstNode.dependencies.add(it)
+                ]
+                ScgFactory::eINSTANCE.createControlDependency => [
+                    target = targetNode
+                    node.dependencies.add(it)
+                ]
+            ]
+            nodes2.add(firstNode)
+            nodes2.removeUnnecessaryDependencies
+
+            nodes2.forEach [ node |
+                scg.nodes.add(node)
+            ]
+        } else {
+            this.nodes.put(firstNode, clone(nodes))
+
+            val nodes2 = this.nodes.get(firstNode)
+
+            nodes2.forEach [ node |
+                ScgFactory::eINSTANCE.createControlDependency => [
+                    target = node
+                    firstNode.dependencies.add(it)
+                ]
+            ]
+            nodes2.add(firstNode)
+            nodes2.removeUnnecessaryDependencies
+
+            nodes2.forEach [ node |
+                scg.nodes.add(node)
+            ]
+        }
+
         controlFlows
+    }
+
+    private def Set<Set<Depth>> generateDepths(Set<Node> nodesLocal) {
+        val Set<Depth> newNodes = newHashSet()
+        val Set<Set<Depth>> existing = newHashSet()
+        nodesLocal.forEach [ node |
+            node.nextControlflowNode.forEach [ controlnode |
+                if (controlnode instanceof Depth) {
+                    newNodes += controlnode
+                } else if (controlnode instanceof Conditional) {
+                    val oldExisting = newHashSet()
+                    oldExisting.addAll(existing)
+                    existing.clear
+                    val  Set<Set<Depth>> test = newHashSet(controlnode.then.target).generateDepths
+                    test.forEach [ set |
+                        oldExisting.forEach [ oldSet |
+                            val newSet = newHashSet()
+                            newSet.addAll(set)
+                            newSet.addAll(oldSet)
+                            existing.add(newSet)
+                        ]
+                        if(oldExisting.empty){
+                            existing.add(set)
+                        }
+                    ]
+                    val  Set<Set<Depth>> test2 = newHashSet(controlnode.^else.target).generateDepths
+                    test2.forEach [ set |
+                        oldExisting.forEach [ oldSet |
+                            val newSet = newHashSet()
+                            newSet.addAll(set)
+                            newSet.addAll(oldSet)
+                            existing.add(newSet)
+                        ]
+                        if(oldExisting.empty){
+                            existing.add(set)
+                        }
+                    ]
+                }
+            ]
+            if (existing.empty) {
+                existing.add(newNodes)
+            } else {
+
+                existing.forEach [ set |
+                    set.addAll(newNodes)
+                ]
+            }
+        ]
+        existing
     }
 
     private def dispatch createNode(Assignment assignmentOld) {
@@ -323,6 +422,7 @@ class SCPDGTransformation extends Transformation {
             assignmentOld.indices.forEach [ indic |
                 newAssignment.indices.add(indic)
             ]
+            newAssignment.valuedObject = assignmentOld.valuedObject
             newAssignment.assignment = assignmentOld.assignment
             newAssignment.isInitial = assignmentOld.isIsInitial
         ]
@@ -341,8 +441,6 @@ class SCPDGTransformation extends Transformation {
         entry
     }
 
-   
-
     private def dispatch transformSCPDG(Surface surface, Set<ControlFlow> controlFlows, SCGraph scg,
         KielerCompilerContext context) {
 
@@ -354,6 +452,7 @@ class SCPDGTransformation extends Transformation {
     private def dispatch transformSCPDG(Depth depth, Set<ControlFlow> controlFlows, SCGraph scg,
         KielerCompilerContext context) {
         controlFlows += depth.allNext;
+        depth
     }
 
     private def dispatch Node transformSCPDG(Exit exit, Set<ControlFlow> controlFlows, SCGraph scg,
@@ -375,11 +474,11 @@ class SCPDGTransformation extends Transformation {
     private def dispatch Node transformSCPDG(Fork fork, Set<ControlFlow> controlFlows, SCGraph scg,
         KielerCompilerContext context) {
         fork.allNext.map[target].forEach[controlFlows += allNext]
-        fork.allNext.map[target].forEach [ e |
-            (e as Entry).next = null
-            scg.nodes.remove(e)
-        ]
 
+        //        fork.allNext.map[target].forEach [ e |
+        //            (e as Entry).next = null
+        //            scg.nodes.remove(e)
+        //        ]
         null
     }
 
@@ -447,11 +546,10 @@ class SCPDGTransformation extends Transformation {
                     unnecessaryDependencies.add(dependcy)
                 }
             }
-            
-            if(dependcy instanceof ThenDependency){
-                node.dependencies.forEach[checkElse|
-                    if(checkElse instanceof ElseDependency){
-                        if(dependcy.target == checkElse.target){
+            if (dependcy instanceof ThenDependency) {
+                node.dependencies.forEach [ checkElse |
+                    if (checkElse instanceof ElseDependency) {
+                        if (dependcy.target == checkElse.target) {
                             unnecessaryDependencies.add(dependcy)
                             unnecessaryDependencies.add(checkElse)
                         }
@@ -462,6 +560,126 @@ class SCPDGTransformation extends Transformation {
 
         unnecessaryDependencies.forEach [ dependency |
             node.dependencies.remove(dependency)
+        ]
+    }
+
+    private dispatch def Set<Node> nextControlflowNode(Assignment assigment) {
+        return assigment.next.target.nextControlflowNode
+    }
+
+    private dispatch def Set<Node> nextControlflowNode(Entry entry) {
+        val test = newHashSet()
+        entry.allNext.forEach [ cf |
+            test.addAll(cf.target.nextControlflowNode)
+        ]
+        test
+    }
+
+    private dispatch def Set<Node> nextControlflowNode(Join join) {
+        return join.next.target.nextControlflowNode
+    }
+
+    private dispatch def Set<Node> nextControlflowNode(Conditional cond) {
+        return newHashSet(cond)
+    }
+
+    private dispatch def Set<Node> nextControlflowNode(Exit exit) {
+        if (exit == programEntry.exit)
+            return newHashSet(exit)
+        return exit.next.target.nextControlflowNode
+    }
+
+    private dispatch def Set<Node> nextControlflowNode(Surface surface) {
+        return newHashSet(surface.depth)
+    }
+
+    private dispatch def Set<Node> nextControlflowNode(Depth depth) {
+        return newHashSet(depth)
+    }
+
+    private dispatch def Set<Node> nextControlflowNode(Fork fork) {
+        val result = newHashSet
+        fork.next.forEach [ cf |
+            cf.target.nextControlflowNode.forEach [ cfn |
+                result += cfn
+            ]
+        ]
+        return result
+
+    }
+
+    private def Set<Node> clone(Set<Node> nodes) {
+        val newNodes = <Node>newHashSet()
+        val nodeMap = <Node, Node>newHashMap()
+        nodes.forEach [ node |
+            val Node newNode = (node.createNode as Node)
+            if (newNode != null)
+                newNodes += newNode
+            nodeMap.put(node, newNode)
+        ]
+
+        nodes.forEach [ node |
+            if (node instanceof Conditional) {
+                node.dependencies.forEach [ dependency |
+                    createDependency(dependency, nodeMap.get(node), dependency.target)
+                ]
+            } else {
+                node.dependencies.forEach [ dependency |
+                    if (nodes.contains(dependency.target)) {
+                        createDependency(dependency, nodeMap.get(node), nodeMap.get(dependency.target))
+                    }
+                ]
+            }
+        ]
+        (newNodes as Set<Node>)
+    }
+
+    def private dispatch createDependency(AbsoluteWrite_Read absWR, Node root, Node targetNode) {
+        ScgFactory::eINSTANCE.createAbsoluteWrite_Read => [
+            target = targetNode
+            root.dependencies.add(it)
+        ]
+    }
+
+    def private dispatch createDependency(AbsoluteWrite_RelativeWrite absWrW, Node root, Node targetNode) {
+        ScgFactory::eINSTANCE.createAbsoluteWrite_RelativeWrite => [
+            target = targetNode
+            root.dependencies.add(it)
+        ]
+    }
+
+    def private dispatch createDependency(RelativeWrite_Read rWR, Node root, Node targetNode) {
+        ScgFactory::eINSTANCE.createRelativeWrite_Read => [
+            target = targetNode
+            root.dependencies.add(it)
+        ]
+    }
+
+    def private dispatch createDependency(Write_Write wW, Node root, Node targetNode) {
+        ScgFactory::eINSTANCE.createWrite_Write => [
+            target = targetNode
+            root.dependencies.add(it)
+        ]
+    }
+
+    def private dispatch createDependency(ControlDependency conDep, Node root, Node targetNode) {
+        ScgFactory::eINSTANCE.createControlDependency => [
+            target = targetNode
+            root.dependencies.add(it)
+        ]
+    }
+
+    def private dispatch createDependency(ThenDependency then, Node root, Node targetNode) {
+        ScgFactory::eINSTANCE.createThenDependency => [
+            target = targetNode
+            root.dependencies.add(it)
+        ]
+    }
+
+    def private dispatch createDependency(ElseDependency elseDepend, Node root, Node targetNode) {
+        ScgFactory::eINSTANCE.createElseDependency => [
+            target = targetNode
+            root.dependencies.add(it)
         ]
     }
 

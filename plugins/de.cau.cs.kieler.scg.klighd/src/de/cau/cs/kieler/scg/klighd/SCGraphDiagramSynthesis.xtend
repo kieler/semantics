@@ -535,7 +535,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if(it instanceof Fork) (it as Fork).getNext().forEach[synthesizeControlFlow("")]
                 if (it instanceof Conditional) {
                     (it as Conditional).then?.synthesizeControlFlow(SCGPORTID_OUTGOING_THEN)
-                    (it as Conditional).^else.synthesizeControlFlow(SCGPORTID_OUTGOING_ELSE)
+                    (it as Conditional).^else?.synthesizeControlFlow(SCGPORTID_OUTGOING_ELSE)
                 }
                 
                 // If the dependency edges shall be layouted as well, they must be drawn before any 
