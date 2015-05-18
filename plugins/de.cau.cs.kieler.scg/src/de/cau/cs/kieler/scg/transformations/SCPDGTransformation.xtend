@@ -403,6 +403,10 @@ class SCPDGTransformation extends Transformation {
                             existing.add(set)
                         }
                     ]
+                } else if(controlnode instanceof Join){
+                    /*TODO: fill with code
+                     * 
+                     */
                 }
             ]
             if (existing.empty) {
@@ -576,7 +580,7 @@ class SCPDGTransformation extends Transformation {
     }
 
     private dispatch def Set<Node> nextControlflowNode(Join join) {
-        return join.next.target.nextControlflowNode
+        newHashSet(join)
     }
 
     private dispatch def Set<Node> nextControlflowNode(Conditional cond) {
