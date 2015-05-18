@@ -158,7 +158,7 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
 
             } catch (Exception e) {
                 this.showWarning(editors[i].getContributor().getName() + " could not be loaded.",
-                        null, e, true);
+                        "", e, true);
             }
         }
         return returnHashMap;
