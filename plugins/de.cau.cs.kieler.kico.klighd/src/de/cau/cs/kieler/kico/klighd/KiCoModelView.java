@@ -1152,7 +1152,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 initialize(model, null, properties);
                 success = true;
                 // reset layout to resolve KISEMA-905
-                resetLayoutConfig();
+                resetLayoutConfig(false);
 
             } else {
                 // Give model synthesis access to the compilation result
