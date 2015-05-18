@@ -16,7 +16,6 @@ package de.cau.cs.kieler.scg.s.transformations
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.model.codegeneration.SimpleCBeautifier
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.TransformationTracing
 import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 
@@ -56,9 +55,6 @@ class S2C extends AbstractProductionTransformation {
      * @return the object
      */
     def public Object transform(Program program) {
-
-        //KITT Transformation does not support tracing
-        TransformationTracing.skipTransformationTracing(program);
 
         val de.cau.cs.kieler.s.sc.xtend.S2C transform2 = Guice.createInjector().getInstance(
             typeof(de.cau.cs.kieler.s.sc.xtend.S2C));

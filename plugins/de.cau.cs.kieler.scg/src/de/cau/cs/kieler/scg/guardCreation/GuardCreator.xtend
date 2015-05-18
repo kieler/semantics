@@ -24,6 +24,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.Conditional
@@ -67,7 +68,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  * @kieler.design 2013-12-05 proposed 
  * @kieler.rating 2013-12-05 proposed yellow
  */
-class GuardCreator extends AbstractGuardCreator {
+class GuardCreator extends AbstractGuardCreator implements Traceable {
     
         
     //-------------------------------------------------------------------------

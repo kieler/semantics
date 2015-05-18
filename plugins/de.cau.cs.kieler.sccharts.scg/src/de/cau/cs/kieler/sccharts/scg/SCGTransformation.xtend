@@ -31,6 +31,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Effect
 import de.cau.cs.kieler.sccharts.FunctionCallEffect
 import de.cau.cs.kieler.sccharts.Region
@@ -40,7 +41,6 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
 import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import de.cau.cs.kieler.scg.Assignment
@@ -75,7 +75,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class SCGTransformation extends AbstractProductionTransformation {
+class SCGTransformation extends AbstractProductionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --

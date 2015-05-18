@@ -21,6 +21,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.State
@@ -36,7 +37,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Signal extends AbstractExpansionTransformation {
+class Signal extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --

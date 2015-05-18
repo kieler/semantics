@@ -22,6 +22,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Guard
@@ -56,7 +57,7 @@ import java.util.Set
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-class GuardScheduler extends AbstractScheduler {
+class GuardScheduler extends AbstractScheduler implements Traceable {
         
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --

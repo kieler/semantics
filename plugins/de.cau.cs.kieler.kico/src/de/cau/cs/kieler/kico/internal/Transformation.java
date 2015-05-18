@@ -141,6 +141,14 @@ public class Transformation implements ITransformation {
     }
 
     // -------------------------------------------------------------------------
+    
+    
+    /**
+     * @return The transformation performing the actual transformation
+     */
+    public ITransformation getDelegate() {
+        return delegate;
+    }
 
     /**
      * @see de.cau.cs.kieler.kico.transformation.ITransformation#getProcessorOptions()
@@ -473,7 +481,7 @@ public class Transformation implements ITransformation {
 
             // Invoke pre hooks
             for (IHook hook : KielerCompiler.getHooks()) {
-                EObject hookResult = hook.preTransformation(processorInput, context);
+                EObject hookResult = hook.preProcessor(processorInput, context, processor);
                 if (hookResult != null) {
                     processorInput = hookResult;
                 }
@@ -517,7 +525,7 @@ public class Transformation implements ITransformation {
             } finally {
                 // Invoke post hooks
                 for (IHook hook : KielerCompiler.getHooks()) {
-                    Object hookResult = hook.postProcessor(processorInput, result, context);
+                    Object hookResult = hook.postProcessor(processorInput, result, context, processor);
                     if (hookResult != null) {
                         result = hookResult;
                     }

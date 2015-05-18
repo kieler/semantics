@@ -17,8 +17,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.Conditional
@@ -39,7 +39,6 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
 import java.util.List
-import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
@@ -62,7 +61,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  * @kieler.rating 2013-10-24 proposed yellow
  */
 
-class BasicBlockTransformation extends AbstractProductionTransformation {
+class BasicBlockTransformation extends AbstractProductionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --

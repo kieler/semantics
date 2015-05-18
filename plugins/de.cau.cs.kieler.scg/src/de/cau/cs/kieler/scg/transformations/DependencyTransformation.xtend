@@ -23,8 +23,8 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -40,7 +40,6 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
-import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -64,7 +63,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2013-10-23 proposed yellow
  */
 
-class DependencyTransformation extends AbstractProductionTransformation {
+class DependencyTransformation extends AbstractProductionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --

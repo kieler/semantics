@@ -423,7 +423,7 @@ public class KielerCompiler {
         
         // Invoke pre hooks
         for (IHook hook : getHooks()) {
-            EObject hookResult = hook.preTransformation(transformationInput, context);
+            EObject hookResult = hook.preTransformation(transformationInput, context, transformation.getDelegate());
             if(hookResult != null){
                 transformationInput = hookResult;
             }
@@ -435,7 +435,7 @@ public class KielerCompiler {
 
         // Invoke post hooks
         for (IHook hook : getHooks()) {
-            Object hookResult = hook.postTransformation(transformationInput, result, context);
+            Object hookResult = hook.postTransformation(transformationInput, result, context, transformation.getDelegate());
             if(hookResult != null){
                 result = hookResult;
             }

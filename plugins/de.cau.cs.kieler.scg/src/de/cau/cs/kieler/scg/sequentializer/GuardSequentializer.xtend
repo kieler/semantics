@@ -21,6 +21,7 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
@@ -65,7 +66,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  * @kieler.rating 2013-12-05 proposed yellow
  */
 
-class GuardSequentializer extends AbstractSequentializer {
+class GuardSequentializer extends AbstractSequentializer implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --

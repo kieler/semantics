@@ -13,15 +13,15 @@
  */
 package de.cau.cs.kieler.kitt.tracing.internal;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.kico.transformation.IHook;
+import de.cau.cs.kieler.kico.transformation.IProcessor;
+import de.cau.cs.kieler.kico.transformation.ITransformation;
+import de.cau.cs.kieler.kitt.tracing.Traceable;
 import de.cau.cs.kieler.kitt.tracing.Tracing;
 import de.cau.cs.kieler.kitt.tracing.TransformationTracing;
 
@@ -29,7 +29,7 @@ import de.cau.cs.kieler.kitt.tracing.TransformationTracing;
  * This class integrates Tracing into KiCo. It is registered as hook via extension point.
  * 
  * @author als
- * @kieler.design 2015-04-27 proposed 
+ * @kieler.design 2015-04-27 proposed
  * @kieler.rating 2015-04-27 proposed yellow
  *
  */
@@ -68,16 +68,12 @@ public class CompilerIntegration implements IHook {
     /**
      * {@inheritDoc}
      */
-    public EObject preTransformation(EObject model, KielerCompilerContext context) {
-        if (context.getProperty(Tracing.ACTIVE_TRACING)) {
+    public EObject preTransformation(EObject model, KielerCompilerContext context,
+            ITransformation transformation) {
+        if (context.getProperty(Tracing.ACTIVE_TRACING) && transformation instanceof Traceable) {
             // Start transformation tracing for given model and the current transformation
-            List<TransformationIntermediateResult> transformations =
-                    context.getCompilationResult().getTransformationIntermediateResults();
-            context.getCompilationResult()
-                    .getAuxiliaryData(Tracing.class)
-                    .get(0)
-                    .startTransformationTracing(model,
-                            transformations.get(transformations.size() - 1).getId());
+            context.getCompilationResult().getAuxiliaryData(Tracing.class).get(0)
+                    .startTransformationTracing(model, transformation.getId());
         }
         return null;
     }
@@ -85,8 +81,9 @@ public class CompilerIntegration implements IHook {
     /**
      * {@inheritDoc}
      */
-    public EObject postTransformation(EObject input, Object result, KielerCompilerContext context) {
-        if (context.getProperty(Tracing.ACTIVE_TRACING)) {
+    public EObject postTransformation(EObject input, Object result, KielerCompilerContext context,
+            ITransformation transformation) {
+        if (context.getProperty(Tracing.ACTIVE_TRACING) && transformation instanceof Traceable) {
             // Finish transformation tracing for given model and the intermediate result
             context.getCompilationResult().getAuxiliaryData(Tracing.class).get(0)
                     .finishTransformationTracing(input, result);
@@ -97,7 +94,7 @@ public class CompilerIntegration implements IHook {
     /**
      * {@inheritDoc}
      */
-    public EObject preProcessor(EObject model, KielerCompilerContext context) {
+    public EObject preProcessor(EObject model, KielerCompilerContext context, IProcessor processor) {
         // Not supported yet!
         return null;
     }
@@ -105,7 +102,8 @@ public class CompilerIntegration implements IHook {
     /**
      * {@inheritDoc}
      */
-    public Object postProcessor(EObject input, Object result, KielerCompilerContext context) {
+    public Object postProcessor(EObject input, Object result, KielerCompilerContext context,
+            IProcessor processor) {
         // Not supported yet!
         return null;
     }

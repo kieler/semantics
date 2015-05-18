@@ -59,7 +59,7 @@ public interface IHook {
      * 
      * @return the model
      */
-    public EObject preTransformation(EObject model, KielerCompilerContext context);
+    public EObject preTransformation(EObject model, KielerCompilerContext context, ITransformation transformation);
 
     // -------------------------------------------------------------------------
 
@@ -68,7 +68,7 @@ public interface IHook {
      * 
      * @return the model
      */
-    public Object postTransformation(EObject input, Object result, KielerCompilerContext context);
+    public Object postTransformation(EObject input, Object result, KielerCompilerContext context, ITransformation transformation);
 
     // -------------------------------------------------------------------------
     
@@ -78,7 +78,7 @@ public interface IHook {
      * 
      * @return the list
      */
-    public EObject preProcessor(EObject model, KielerCompilerContext context);
+    public EObject preProcessor(EObject model, KielerCompilerContext context, IProcessor processor);
 
     // -------------------------------------------------------------------------
 
@@ -87,7 +87,7 @@ public interface IHook {
      * 
      * @return the model
      */
-    public Object postProcessor(EObject input, Object result, KielerCompilerContext context);
+    public Object postProcessor(EObject input, Object result, KielerCompilerContext context, IProcessor processor);
 
     // -------------------------------------------------------------------------
     

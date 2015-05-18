@@ -16,6 +16,7 @@
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
@@ -46,7 +47,7 @@ import java.util.List
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-abstract class SimpleScheduler extends AbstractScheduler {
+abstract class SimpleScheduler extends AbstractScheduler implements Traceable {
         
     // -------------------------------------------------------------------------
     // -- Injections 

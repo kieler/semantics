@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.transformations
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
@@ -31,7 +32,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class TriggerEffect extends AbstractExpansionTransformation {
+class TriggerEffect extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
