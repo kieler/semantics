@@ -44,8 +44,9 @@ import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
 import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
+import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
-import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
 
@@ -100,8 +101,8 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
     /** List of open KiCoModelViews. */
     private LinkedList<KiCoModelView> modelViews = new LinkedList<KiCoModelView>();
     /** Map from editors (hash) to selected transformations. */
-    private HashMap<Integer, KiCoSelection> compilerSelection =
-            new HashMap<Integer, KiCoSelection>();
+    private HashMap<Integer, Pair<KielerCompilerSelection, Boolean>> compilerSelection =
+            new HashMap<Integer, Pair<KielerCompilerSelection, Boolean>>();
     /** Active editor the primary model view is listening to */
     private IEditorPart activeEditor = null;
     /** List of registered listeners */
@@ -274,13 +275,21 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
     };
 
     /** PropertyChangeListener to get changes of selected transformations in KiCoSelectionView. */
-    public void selectionChange(KiCoSelection newSelection) {
-        if (newSelection != null
-                && !newSelection.equals(compilerSelection.put(newSelection.getEditorID(),
-                        newSelection))) {
+    public void selectionChange(int editorID, Pair<KielerCompilerSelection, Boolean> selection) {
+        Pair<KielerCompilerSelection, Boolean> newSelection =
+                selection == null ? null : new Pair<KielerCompilerSelection, Boolean>(selection
+                        .getFirst().clone(), selection.getSecond());
+        Pair<KielerCompilerSelection, Boolean> previouseSelection =
+                compilerSelection.put(editorID, newSelection);
+        if (newSelection != null && !newSelection.equals(previouseSelection)) {
             // update model views
             for (KiCoModelView modelView : modelViews) {
-                modelView.updateModel(ChangeEvent.TRANSFORMATIONS);
+                modelView.updateModel(ChangeEvent.SELECTION);
+            }
+        } else if (newSelection != previouseSelection) { // Selection changed to null
+            // update model views
+            for (KiCoModelView modelView : modelViews) {
+                modelView.updateModel(ChangeEvent.SELECTION);
             }
         }
     }
@@ -329,7 +338,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
      * 
      * @param editor
      */
-    KiCoSelection getSelection(final IEditorPart activeEditor) {
+    Pair<KielerCompilerSelection, Boolean> getSelection(final IEditorPart activeEditor) {
         return compilerSelection.get(activeEditor.hashCode());
     }
 

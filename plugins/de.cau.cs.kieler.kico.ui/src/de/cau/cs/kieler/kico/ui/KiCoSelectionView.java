@@ -33,6 +33,7 @@ import com.google.common.collect.Iterables;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
@@ -128,10 +129,6 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /** The selected compile chain per editor instance. */
     static HashMap<Integer, Integer> selectedCompileChainIndex = new HashMap<Integer, Integer>();
-
-    /** The auto-calculated required transformations per editor instance. */
-    static HashMap<Integer, List<String>> requiredTransformations =
-            new HashMap<Integer, List<String>>();
 
     /** The advanced mode auto selects required transformations. */
     public static boolean advancedMode = true;
@@ -1269,10 +1266,11 @@ public class KiCoSelectionView extends DiagramViewPart {
      * Notifies all listeners about the new selection
      */
     public static void notifySelectionChangeEventListener() {
-        KiCoSelection currentSelection =
-                new KiCoSelection(getActiveEditorID(), getSelectionModel(getActiveEditorID()),
-                        requiredTransformations.get(getActiveEditorID()), advancedMode);
-        selectionEventManger.fireSelectionChangeEvent(currentSelection);
+        int id = getActiveEditorID();
+        KielerCompilerSelection selection = getSelectionModel(id).getContext().getSelection();
+        selectionEventManger.fireSelectionChangeEvent(id,
+                selection == null || selection.equals(null) ? null
+                        : new Pair<KielerCompilerSelection, Boolean>(selection, advancedMode));
     }
 
     // -------------------------------------------------------------------------

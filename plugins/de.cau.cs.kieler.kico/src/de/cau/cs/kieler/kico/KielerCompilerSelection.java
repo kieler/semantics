@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.common.collect.Sets;
+
 /**
  * Instances of this class represent user selections for interactive compilation. Users may give
  * just command line string arguments that can be parsed.
@@ -490,5 +492,41 @@ public class KielerCompilerSelection {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return selectedFeatureAndTransformationIds.isEmpty();
+        }
+        if(getClass() == obj.getClass()) {
+            KielerCompilerSelection other = (KielerCompilerSelection) obj;
+            return Sets.symmetricDifference(Sets.newHashSet(selectedFeatureAndTransformationIds), Sets.newHashSet(other.selectedFeatureAndTransformationIds)).isEmpty() &&
+                   Sets.symmetricDifference(Sets.newHashSet(disabledTransformationIds), Sets.newHashSet(other.disabledTransformationIds)).isEmpty() &&
+                   Sets.symmetricDifference(Sets.newHashSet(preferredTransformationIds), Sets.newHashSet(other.preferredTransformationIds)).isEmpty() &&
+                   Sets.symmetricDifference(Sets.newHashSet(enabledProcessorOptionIds), Sets.newHashSet(other.enabledProcessorOptionIds)).isEmpty() &&
+                   Sets.symmetricDifference(Sets.newHashSet(disabledProcessorOptionIds), Sets.newHashSet(other.disabledProcessorOptionIds)).isEmpty();                   
+        }
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public KielerCompilerSelection clone() {
+        KielerCompilerSelection kcs = new KielerCompilerSelection();
+        kcs.selectedFeatureAndTransformationIds.addAll(selectedFeatureAndTransformationIds);
+        kcs.disabledTransformationIds.addAll(disabledTransformationIds);
+        kcs.preferredTransformationIds.addAll(preferredTransformationIds);
+        kcs.enabledProcessorOptionIds.addAll(enabledProcessorOptionIds);
+        kcs.disabledProcessorOptionIds.addAll(disabledProcessorOptionIds);
+        return kcs;
+    }
+    
+    
 
 }

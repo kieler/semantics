@@ -67,17 +67,18 @@ import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KielerCompilerException;
+import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.internal.ResourceExtension;
 import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
-import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
@@ -111,7 +112,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * 
      */
     public enum ChangeEvent {
-        SAVED, DISPLAY_MODE, TRANSFORMATIONS, ACTIVE_EDITOR, COMPILE, COMPILATION_FINISHED
+        SAVED, DISPLAY_MODE, SELECTION, ACTIVE_EDITOR, COMPILE, COMPILATION_FINISHED
     }
 
     /** Viewer ID **/
@@ -172,10 +173,10 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     /** The action for toggling compile. */
     private Action actionPinToggle;
     /** String currently saved transformations. */
-    private KiCoSelection transformations = KiCoSelection.EMPTY_SELECTION;
+    private Pair<KielerCompilerSelection, Boolean> selection = null;
     /** Map with pinned transformations */
-    private WeakHashMap<IEditorPart, KiCoSelection> pinnedTransformations =
-            new WeakHashMap<IEditorPart, KiCoSelection>();
+    private WeakHashMap<IEditorPart, Pair<KielerCompilerSelection, Boolean>> pinnedTransformations =
+            new WeakHashMap<IEditorPart, Pair<KielerCompilerSelection, Boolean>>();
 
     /** The action for forking view. */
     private Action actionFork;
@@ -427,11 +428,11 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             public void run() {
                 if (activeEditor != null) {
                     if (isChecked()) {
-                        pinnedTransformations.put(activeEditor, transformations);
+                        pinnedTransformations.put(activeEditor, selection);
                     } else {
                         pinnedTransformations.remove(activeEditor);
                         // update model due to possible changed of transformation configuration
-                        updateModel(ChangeEvent.TRANSFORMATIONS);
+                        updateModel(ChangeEvent.SELECTION);
                     }
                 }
             }
@@ -743,7 +744,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 child.actionSideBySideToggle.setChecked(displaySideBySide);
                 // adopt transformation settings
                 child.pinnedTransformations =
-                        new WeakHashMap<IEditorPart, KiCoSelection>(pinnedTransformations);
+                        new WeakHashMap<IEditorPart, Pair<KielerCompilerSelection, Boolean>>(pinnedTransformations);
                 // synchronization settings cannot be adopted
 
                 // tracing
@@ -811,7 +812,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * transformation
      */
     private void updatePinToggleButton() {
-        actionPinToggle.setEnabled(!transformations.isEmpty());
+        actionPinToggle.setEnabled(selection != null);
         actionPinToggle.setChecked(pinnedTransformations.containsKey(activeEditor));
     }
 
@@ -834,7 +835,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // change event flags
             boolean is_active_editor_update = change == ChangeEvent.ACTIVE_EDITOR;
             boolean is_save_update = change == ChangeEvent.SAVED;
-            boolean is_transformation_update = change == ChangeEvent.TRANSFORMATIONS;
+            boolean is_selection_update = change == ChangeEvent.SELECTION;
             boolean is_display_mode_update = change == ChangeEvent.DISPLAY_MODE;
             boolean is_compile_update =
                     change == ChangeEvent.COMPILE || change == ChangeEvent.COMPILATION_FINISHED;
@@ -860,43 +861,36 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             }
 
             // Evaluate if current transformation configuration should be asked
-            boolean do_get_transformations = false;
-            do_get_transformations |= is_transformation_update;
-            do_get_transformations |= is_active_editor_update;
-            do_get_transformations |= is_compile_update && compileModel;
+            boolean do_get_selection = false;
+            do_get_selection |= is_selection_update;
+            do_get_selection |= is_active_editor_update;
+            do_get_selection |= is_compile_update && compileModel;
 
             // Indicates of the current transformation configuration differs from previous
             // configuration
-            boolean transformations_changed = false;
+            boolean selection_changed = false;
 
             // get new transformations if necessary
-            if (do_get_transformations) {
+            if (do_get_selection) {
                 KiCoModelViewManager mvm = KiCoModelViewManager.getInstance();
                 if (mvm != null) {
                     // if there is a pinned transformation for active editor take pinned one else
                     // take selected ones
-                    KiCoSelection newTransformations = null;
+                    Pair<KielerCompilerSelection, Boolean> newSelection = null;
                     if (pinnedTransformations.containsKey(activeEditor)) {
-                        newTransformations = pinnedTransformations.get(activeEditor);
-                        // null pointer is indicator for no selection
-                        if (newTransformations.isEmpty()) {
-                            newTransformations = KiCoSelection.EMPTY_SELECTION;
-                        }
+                        newSelection = pinnedTransformations.get(activeEditor);
                     } else {
-                        newTransformations = mvm.getSelection(activeEditor);
+                        newSelection = mvm.getSelection(activeEditor);
                     }
                     // check if selection changed
-                    if (newTransformations == null) {
-                        if (transformations != KiCoSelection.EMPTY_SELECTION) {
-                            transformations_changed |= true;
-                            transformations = KiCoSelection.EMPTY_SELECTION;
-                            ;
+                    if (newSelection != null) {
+                        if (!newSelection.equals(selection)) {
+                            selection_changed |= true;
+                            selection = newSelection;
                         }
-                    } else {
-                        if (!newTransformations.equals(transformations)) {
-                            transformations_changed |= true;
-                            transformations = newTransformations;
-                        }
+                    } else if (newSelection != selection) {
+                        selection_changed |= true;
+                        selection = newSelection;
                     }
                 }
             }
@@ -907,13 +901,13 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // Evaluate if compilation is needed
             boolean do_compile = false;
             // -- compile only if something changed
-            do_compile |= transformations_changed;
+            do_compile |= selection_changed;
             do_compile |= is_active_editor_update;
             do_compile |= is_save_update;
             do_compile |= is_compile_update;
             do_compile |= is_display_mode_update;
             // -- But only if:
-            do_compile &= !transformations.isEmpty();
+            do_compile &= selection != null;
             do_compile &= compileModel;
 
             Object previousCurrentModel = currentModel;
@@ -931,7 +925,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     // create compilation job
                     currentCompilation =
                             new KiCoAsynchronousCompilation(this, (EObject) sourceModel,
-                                    activeEditor.getTitle(), transformations, doTracing);
+                                    activeEditor.getTitle(), selection, doTracing);
                     currentCompilationResult = null;
                     currentModel = currentCompilation.getModel();
                     // start
@@ -974,7 +968,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 } else {// This is not the most recent compilation
                     return;
                 }
-            } else if (!is_transformation_update || transformations_changed) {
+            } else if (!is_selection_update || selection_changed) {
                 currentModel = sourceModel;
                 currentCompilationResult = null;
                 // drop any existing compilation
@@ -989,7 +983,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 if (displayTracingChain && currentCompilationResult != null) {
                     currentModel =
                             new KiCoModelChain(sourceModel, currentCompilationResult,
-                                    activeEditor.getTitle(), transformations);
+                                    activeEditor.getTitle(), selection.getFirst());
                 } else {
                     currentModel = new KiCoModelChain(sourceModel, currentModel);
                 }
@@ -1008,10 +1002,10 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             do_update_diagram |= do_compile;
             do_update_diagram |= is_display_mode_update;
             // should compile but no transformations are selected
-            do_update_diagram |= is_compile_update && !transformations.isEmpty();
+            do_update_diagram |= is_compile_update && selection != null;
             // compile and transformations changed to null
             do_update_diagram |=
-                    compileModel && transformations.isEmpty() && transformations_changed;
+                    compileModel && selection == null && selection_changed;
 
             boolean is_buisness_model = true;
             is_buisness_model &= !(currentModel instanceof KiCoErrorModel);
