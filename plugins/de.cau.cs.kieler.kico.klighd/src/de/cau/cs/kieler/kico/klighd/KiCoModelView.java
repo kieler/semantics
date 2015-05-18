@@ -63,6 +63,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.util.StringInputStream;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
@@ -79,8 +80,15 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
+import de.cau.cs.kieler.kiml.config.CompoundLayoutConfig;
+import de.cau.cs.kieler.kiml.config.ILayoutConfig;
+import de.cau.cs.kieler.kiml.config.LayoutContext;
+import de.cau.cs.kieler.kiml.config.VolatileLayoutConfig;
+import de.cau.cs.kieler.kiml.options.Direction;
+import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.klighd.IViewer;
+import de.cau.cs.kieler.klighd.KlighdConstants;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
 import de.cau.cs.kieler.klighd.KlighdPlugin;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
@@ -1029,6 +1037,22 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             currentCompilationResult = null;
             currentModel = new KiCoMessageModel("No model in active editor");
             updateDiagram(currentModel, true, null);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ILayoutConfig getLayoutConfig() {
+        ViewContext viewContext = this.getViewContext();
+        if (viewContext.getInputModel() instanceof KiCoModelChain) {
+            return new CompoundLayoutConfig(Lists.newArrayList(super.getLayoutConfig(),
+                    new VolatileLayoutConfig(KlighdConstants.SIDE_BAR_LAYOUT_CONFIG_PRIORITY + 1)
+                            .setValue(LayoutOptions.DIRECTION, viewContext.getViewModel(),
+                                    LayoutContext.DIAGRAM_PART, Direction.RIGHT)));
+        } else {
+            return super.getLayoutConfig();
         }
     }
 

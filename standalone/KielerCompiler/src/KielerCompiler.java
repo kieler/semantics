@@ -65,7 +65,7 @@ public class KielerCompiler {
                             + "== KielerCompiler ==\n"
                             + "====================\n"
                             + "Usage: \n"
-                            + "  KielerCompiler <host>:<port> [Options] <transformation 1> ... <transformation n>\n"
+                            + "  KielerCompiler <host>:<port> [Options] <ID_1> ... <ID_n>\n"
                             + "Example 1:\n"
                             + "  cat <FILE.sct> | java -jar KielerCompiler.jar localhost:5555 EXTENDED CORE > code.c\n"
                             + "Example 2:\n"
@@ -80,7 +80,7 @@ public class KielerCompiler {
                             + "-i <filename> : Use each specific additional included input file that is referenced\n"
                             + "-o <filename> : Use a specific output file\n"
                             + "-a <filename> : Use a specific output file to append\n"
-                            + "-v            : Use verbose compilation, more error messages\n"
+                            + "-v            : Use verbose compilation, warning/error messages\n"
                             + "-s            : Use strict mode in which only selected transformations are applied\n"
                             + "-p pattern    : Make a performance test where pattern is a string in which %TRANSFORMATIONID will be replaced by the ms that the transformation with this ID took during compilation.\n");
             return;

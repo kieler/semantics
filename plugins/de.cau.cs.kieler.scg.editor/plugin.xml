@@ -51,8 +51,10 @@
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
             editor="de.cau.cs.kieler.scg.presentation.ScgEditorID"
-            features="SCGRAPH, SCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGGC, SCGSCHEDULE, SCGSEQUENTIALIZE, SCGBBGROUP, SCGSCHEDGROUP,CODEGENERATION, SCG2S, SCG2C">
-      </editor>
+            label="Netlist Compilation"
+            priority="100"
+            features="scg, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, codegeneration, s, s.target"
+            preferred="scg.basicblock.sc, s.c"></editor>
    </extension>
 
 </plugin>

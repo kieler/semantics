@@ -83,7 +83,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
         targetRootState.getAllStates.toList.forEach [ targetState |
             targetState.transformDuring(targetRootState);
         ]
-        targetRootState; //.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
@@ -115,7 +115,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
             if (hasOutgoingTerminations) {
                state.transformDuringComplexFinalStates(targetRootState)
             } else {
-               state.transformDuringSimple(targetRootState)
+              state.transformDuringSimple(targetRootState)
             }
             
           }
@@ -167,17 +167,28 @@ class During extends AbstractExpansionTransformation implements Traceable {
                 val finalState = region.createFinalState(GENERATED_PREFIX + "F");
                 val transition1 = initialState.createTransitionTo(finalState)
                 transition1.setDelay(duringAction.delay);
-                transition1.setImmediate(immediateDuringAction);
-                transition1.setTrigger(duringAction.trigger.copy);
+                transition1.setImmediate(true);
+                val transition2 = finalState.createTransitionTo(initialState)
+                transition2.setImmediate(false);
                 if (immediateDuringAction) {
+                    // In case of immediate during action, copy the trigger and effect
+                    if (duringAction.trigger != null) {
+                        transition1.setTrigger(duringAction.trigger.copy);
+                        // if the during action has a trigger we need a second immediate 
+                        // default path to the final state!
+                        val transition1b = initialState.createTransitionTo(finalState);  
+                        transition1b.setImmediate(true);
+                    }
+                    
                     for (action : duringAction.effects) {
                         transition1.addEffect(action.copy);
                     }
-                }
-                val transition2 = finalState.createTransitionTo(finalState)
-                transition2.setImmediate(false);
-                for (action : duringAction.effects) {
-                    transition2.addEffect(action.copy);
+                } else {
+                   // non immediate during 
+                    transition2.setTrigger(duringAction.trigger.copy);
+                    for (action : duringAction.effects) {
+                        transition2.addEffect(action.copy);
+                    }
                 }
 
                 // After transforming during actions, erase them

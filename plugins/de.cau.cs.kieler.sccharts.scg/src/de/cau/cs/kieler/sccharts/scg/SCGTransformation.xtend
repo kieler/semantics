@@ -201,8 +201,29 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     //-------------------------------------------------------------------------
     //--             T R A N S F O R M      T O    S C G                     --
     //-------------------------------------------------------------------------
-    // @requires: none
-    // Transforming Local ValuedObjects.
+
+  //override transform(EObject eObject, KielerCompilerContext context) {
+  //    if (eObject instanceof SCGraph) {
+  //        return (eObject as SCGraph).processSCG
+  //    } else {
+  //        return (eObject as State).transformSCG
+  //    }
+  //}
+    
+  //def SCGraph processSCG(SCGraph scg) {
+  //    val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(typeof(SuperfluousForkRemover))
+  //    val newSCG = superfluousForkRemover.optimize(scg)
+  //    
+  //    // SCG thread path types
+  //    val threadPathTypes = (newSCG.nodes.head as Entry).getThreadControlFlowTypes
+  //    for(entry:threadPathTypes.keySet) {
+  //        if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
+  //            entry.addAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+  //        }
+  //    }
+  //    newSCG
+  //}
+
     def SCGraph transform(State rootState) {
 
         System.out.print("Beginning preparation of the SCG generation phase...");

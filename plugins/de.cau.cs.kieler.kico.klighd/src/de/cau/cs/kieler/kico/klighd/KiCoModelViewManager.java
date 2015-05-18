@@ -378,12 +378,12 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
      *            the editor to filter for
      * @return List of KiCoModelView associated with editor
      */
-    @SuppressWarnings("unchecked")
     public List<KiCoModelView> getModelViews(final IEditorPart editor) {
         if (editor != null) {
-            return Lists.newArrayList(Iterables.filter(modelViews, new Predicate() {
-                public boolean apply(Object view) {
-                    return ((KiCoModelView) view).getActiveEditor().equals(editor);
+            return Lists.newArrayList(Iterables.filter(modelViews, new Predicate<KiCoModelView>(){
+                public boolean apply(KiCoModelView view) {
+                    IEditorPart activeEditor = view.getActiveEditor();
+                    return activeEditor != null && activeEditor.equals(editor);
                 }
             }));
         }
