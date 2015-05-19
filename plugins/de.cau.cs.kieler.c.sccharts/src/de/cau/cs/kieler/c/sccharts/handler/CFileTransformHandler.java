@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 
 import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.cdt.core.model.ITranslationUnit;
-import org.eclipse.cdt.ui.CDTUITools;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
@@ -19,19 +18,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.c.CParser.PrimaryExpressionContext;
-import de.cau.cs.kieler.c.parser.KielerCParser;
 import de.cau.cs.kieler.c.sccharts.CDTProcessor;
-import de.cau.cs.kieler.c.sccharts.PECProcessor;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.SCChartsPlugin;
 import de.cau.cs.kieler.sccharts.State;
@@ -116,15 +107,7 @@ public class CFileTransformHandler extends AbstractConvertModelHandler {
 	    } // end while
 	    System.out.println(all);
 	                
-//	    PrimaryExpressionContext pec = KielerCParser.parse(all);
-	    Object CObject = null;
 	    ITranslationUnit tu = (ITranslationUnit) CoreModel.getDefault().create(file);
-//	    IWorkbench w = PlatformUI.getWorkbench();
-//	    IWorkbenchWindow ww = w.getActiveWorkbenchWindow();
-//	    IWorkbenchPage wp = ww.getActivePage();
-//	    IEditorPart e= wp.getActiveEditor();
-	 // Access translation unit of the editor.
-//	    tu= (ITranslationUnit) CDTUITools.getEditorInputCElement(e.getEditorInput());
 	    
 	    CDTProcessor CDTProcessor = Guice.createInjector().getInstance(CDTProcessor.class);	  
 	    State rootState = (State) CDTProcessor.transform(tu);
