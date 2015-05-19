@@ -42,6 +42,7 @@ import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import java.util.Set
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.ecore.EObject
+import java.util.HashMap
 
 /** 
  * 
@@ -72,6 +73,7 @@ class SCPDGTransformation extends Transformation {
 
     var Entry programEntry;
     val breaks = <Depth, Set<Depth>>newHashMap()
+    val joins = <Depth, Set<ControlFlow>>newHashMap()
     val nodes = <Node, Set<Node>>newHashMap()
     val keys = <Depth>newHashSet()
     val ticksToConvert = <Depth>newHashSet()
@@ -170,6 +172,9 @@ class SCPDGTransformation extends Transformation {
             }
         }
 
+        /**
+ * TODO neu schreiben, Joins müssen mitbeachtet werden
+ */
         var Set<Set<Depth>> nextDe = null
 
         if (firstNode == programEntry) {
@@ -368,6 +373,118 @@ class SCPDGTransformation extends Transformation {
         controlFlows
     }
 
+    private def Set<Depth> computeBreaks(Set<Node> nodesLocal) {
+        val Set<Depth> keysUsed = newHashSet()
+        val Set<ControlFlow> start = newHashSet()
+
+        nodesLocal.forEach [ node |
+            start.addAll(node.allNext)
+        ]
+
+        val Set<Set<ControlFlow>> endings = start.innerComputeBreaks
+
+        endings.forEach [ set |
+            val Set<Depth> reachedDepth = newHashSet()
+            val Set<Join> reachedJoin = newHashSet()
+            val Set<ControlFlow> cf2Join = newHashSet()
+            do {
+                while (!set.empty) {
+
+                    val controlFlow = set.head
+                    set.remove(controlFlow)
+                    val target = controlFlow.target
+                    if (target instanceof Depth) {
+                        reachedDepth.add(target)
+                    } else if (target instanceof Join) {
+                        reachedJoin.add(target)
+                        cf2Join.add(controlFlow)
+                    }
+                }
+                val Set<Join> unreachedJoin = newHashSet()
+                reachedJoin.forEach [ join |
+                    if (cf2Join.containsAll(join.incoming)) {
+                        cf2Join.removeAll(join.incoming)
+                    } else {
+                        unreachedJoin.add(join)
+                    }
+                ]
+                unreachedJoin.forEach [ join |
+                    reachedJoin.remove(join)
+                ]
+                
+                
+
+            } while (!reachedJoin.empty)
+        ]
+
+        keysUsed
+    }
+
+    private def Set<Set<ControlFlow>> innerComputeBreaks(Set<ControlFlow> controlFlow) {
+        val Set<ControlFlow> newCF = newHashSet()
+        val Set<Set<ControlFlow>> existing = newHashSet()
+
+        controlFlow.forEach [ currentCF |
+            val node = currentCF.target
+            if (!node.isControlNode) {
+                node.allNext.forEach [ cf |
+                    newCF.addAll(nextControlflow(cf))
+                ]
+
+            } else {
+                if (node instanceof Conditional) {
+                    val oldExisting = newHashSet()
+                    oldExisting.addAll(existing)
+                    existing.clear
+                    val Set<Set<ControlFlow>> test = newHashSet(node.then).innerComputeBreaks
+                    test.forEach [ set |
+                        oldExisting.forEach [ oldSet |
+                            val newSet = newHashSet()
+                            newSet.addAll(set)
+                            newSet.addAll(oldSet)
+                            existing.add(newSet)
+                        ]
+                        if (oldExisting.empty) {
+                            existing.add(set)
+                        }
+                    ]
+
+                    val Set<Set<ControlFlow>> test2 = newHashSet(node.^else).innerComputeBreaks
+                    test2.forEach [ set |
+                        oldExisting.forEach [ oldSet |
+                            val newSet = newHashSet()
+                            newSet.addAll(set)
+                            newSet.addAll(oldSet)
+                            existing.add(newSet)
+                        ]
+                        if (oldExisting.empty) {
+                            existing.add(set)
+                        }
+                    ]
+
+                } else {
+                    newCF.add(currentCF)
+                }
+            }
+        ]
+        existing.forEach [ set |
+            set.addAll(newCF)
+        ]
+        existing
+
+    }
+
+    private def boolean isControlNode(Node node) {
+        if (node == null)
+            return false
+        if (node instanceof Depth || node instanceof Surface || node instanceof Conditional || node instanceof Join)
+            return true
+        if (node == programEntry || node == programEntry.exit)
+            return true
+        false
+
+    }
+
     private def Set<Set<Depth>> generateDepths(Set<Node> nodesLocal) {
         val Set<Depth> newNodes = newHashSet()
         val Set<Set<Depth>> existing = newHashSet()
@@ -379,7 +496,7 @@ class SCPDGTransformation extends Transformation {
                     val oldExisting = newHashSet()
                     oldExisting.addAll(existing)
                     existing.clear
-                    val  Set<Set<Depth>> test = newHashSet(controlnode.then.target).generateDepths
+                    val Set<Set<Depth>> test = newHashSet(controlnode.then.target).generateDepths
                     test.forEach [ set |
                         oldExisting.forEach [ oldSet |
                             val newSet = newHashSet()
@@ -387,11 +504,11 @@ class SCPDGTransformation extends Transformation {
                             newSet.addAll(oldSet)
                             existing.add(newSet)
                         ]
-                        if(oldExisting.empty){
+                        if (oldExisting.empty) {
                             existing.add(set)
                         }
                     ]
-                    val  Set<Set<Depth>> test2 = newHashSet(controlnode.^else.target).generateDepths
+                    val Set<Set<Depth>> test2 = newHashSet(controlnode.^else.target).generateDepths
                     test2.forEach [ set |
                         oldExisting.forEach [ oldSet |
                             val newSet = newHashSet()
@@ -399,11 +516,11 @@ class SCPDGTransformation extends Transformation {
                             newSet.addAll(oldSet)
                             existing.add(newSet)
                         ]
-                        if(oldExisting.empty){
+                        if (oldExisting.empty) {
                             existing.add(set)
                         }
                     ]
-                } else if(controlnode instanceof Join){
+                } else if (controlnode instanceof Join) {
                     /*TODO: fill with code
                      * 
                      */
@@ -565,6 +682,22 @@ class SCPDGTransformation extends Transformation {
         unnecessaryDependencies.forEach [ dependency |
             node.dependencies.remove(dependency)
         ]
+    }
+
+    private def Set<ControlFlow> nextControlflow(ControlFlow cf) {
+        if (cf.target instanceof Depth || cf.target instanceof Conditional || cf.target instanceof Join) {
+            return newHashSet(cf)
+        }
+        if (cf.target instanceof Exit) {
+            if (cf.target == programEntry.exit) {
+                return newHashSet(cf)
+            }
+        }
+        val set = newHashSet()
+        cf.target.allNext.forEach [ controlFlow |
+            set.addAll(nextControlflow(controlFlow))
+        ]
+        set
     }
 
     private dispatch def Set<Node> nextControlflowNode(Assignment assigment) {
