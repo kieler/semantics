@@ -383,7 +383,9 @@ class SCPDGTransformation extends Transformation {
 
         val Set<Set<ControlFlow>> endings = start.innerComputeBreaks
 
-        endings.forEach [ set |
+        while(!endings.empty){ 
+            val set = endings.head
+            endings.remove(set)
             val Set<Depth> reachedDepth = newHashSet()
             val Set<Join> reachedJoin = newHashSet()
             val Set<ControlFlow> cf2Join = newHashSet()
@@ -411,11 +413,19 @@ class SCPDGTransformation extends Transformation {
                 unreachedJoin.forEach [ join |
                     reachedJoin.remove(join)
                 ]
+                val Set<ControlFlow> newCF = newHashSet()
+                reachedJoin.forEach[join|
+                    newCF.add(join.next)
+                ]
                 
+                val Set<Set<ControlFlow>> newOnes = newCF.innerComputeBreaks
                 
+                if(newOnes.size == 1){
+                    
+                }
 
             } while (!reachedJoin.empty)
-        ]
+        }
 
         keysUsed
     }
