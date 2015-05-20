@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.provider;
 
 
-import de.cau.cs.kieler.sccharts.LocalAction;
+import de.cau.cs.kieler.sccharts.IterateAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import java.util.Collection;
@@ -23,21 +23,15 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.sccharts.LocalAction} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.sccharts.IterateAction} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class LocalActionItemProvider
-    extends ActionItemProvider {
+public class IterateActionItemProvider extends ActionItemProvider {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -51,7 +45,7 @@ public class LocalActionItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public LocalActionItemProvider(AdapterFactory adapterFactory) {
+    public IterateActionItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -71,6 +65,17 @@ public class LocalActionItemProvider
     }
 
     /**
+     * This returns IterateAction.gif.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object getImage(Object object) {
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/IterateAction"));
+    }
+
+    /**
      * This returns the label text for the adapted class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -78,9 +83,10 @@ public class LocalActionItemProvider
      */
     @Override
     public String getText(Object object) {
-        LocalAction localAction = (LocalAction)object;
-        return getString("_UI_LocalAction_type") + " " + localAction.getDelay();
+        IterateAction iterateAction = (IterateAction)object;
+        return getString("_UI_IterateAction_type") + " " + iterateAction.getDelay();
     }
+    
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached

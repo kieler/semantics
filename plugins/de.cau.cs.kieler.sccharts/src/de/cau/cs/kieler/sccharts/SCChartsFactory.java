@@ -220,6 +220,15 @@ public interface SCChartsFactory extends EFactory {
     SuspendAction createSuspendAction();
 
     /**
+     * Returns a new object of class '<em>Iterate Action</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Iterate Action</em>'.
+     * @generated
+     */
+    IterateAction createIterateAction();
+
+    /**
      * Returns a new object of class '<em>For</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -184,6 +184,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createSuspendActionAdapter();
             }
             @Override
+            public Adapter caseIterateAction(IterateAction object) {
+                return createIterateActionAdapter();
+            }
+            @Override
             public Adapter caseFor(For object) {
                 return createForAdapter();
             }
@@ -542,6 +546,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createSuspendActionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.IterateAction <em>Iterate Action</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.IterateAction
+     * @generated
+     */
+    public Adapter createIterateActionAdapter() {
         return null;
     }
 

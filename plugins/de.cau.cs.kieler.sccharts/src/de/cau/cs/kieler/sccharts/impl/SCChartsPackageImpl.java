@@ -35,6 +35,7 @@ import de.cau.cs.kieler.sccharts.FuncCall;
 import de.cau.cs.kieler.sccharts.FunctionCallEffect;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.InputNode;
+import de.cau.cs.kieler.sccharts.IterateAction;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.Node;
 import de.cau.cs.kieler.sccharts.OutputNode;
@@ -236,6 +237,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass suspendActionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass iterateActionEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -1007,6 +1015,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getIterateAction() {
+        return iterateActionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getFor() {
         return forEClass;
     }
@@ -1208,6 +1225,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         suspendActionEClass = createEClass(SUSPEND_ACTION);
         createEAttribute(suspendActionEClass, SUSPEND_ACTION__WEAK);
 
+        iterateActionEClass = createEClass(ITERATE_ACTION);
+
         forEClass = createEClass(FOR);
         createEReference(forEClass, FOR__LOOP_VARIABLE);
         createEAttribute(forEClass, FOR__FROM);
@@ -1278,6 +1297,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         duringActionEClass.getESuperTypes().add(this.getLocalAction());
         exitActionEClass.getESuperTypes().add(this.getLocalAction());
         suspendActionEClass.getESuperTypes().add(this.getLocalAction());
+        iterateActionEClass.getESuperTypes().add(this.getAction());
 
         // Initialize classes and features; add operations and parameters
         initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1376,6 +1396,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(suspendActionEClass, SuspendAction.class, "SuspendAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getSuspendAction_Weak(), ecorePackage.getEBoolean(), "weak", null, 0, 1, SuspendAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(iterateActionEClass, IterateAction.class, "IterateAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(forEClass, For.class, "For", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getFor_LoopVariable(), theKExpressionsPackage.getValuedObject(), null, "loopVariable", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

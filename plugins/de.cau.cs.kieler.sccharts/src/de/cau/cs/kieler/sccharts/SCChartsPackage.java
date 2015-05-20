@@ -1235,7 +1235,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFor()
      * @generated
      */
-    int FOR = 23;
+    int FOR = 24;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1760,6 +1760,79 @@ public interface SCChartsPackage extends EPackage {
     int SUSPEND_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.IterateActionImpl <em>Iterate Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.IterateActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getIterateAction()
+     * @generated
+     */
+    int ITERATE_ACTION = 23;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ITERATE_ACTION__ANNOTATIONS = ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ITERATE_ACTION__EFFECTS = ACTION__EFFECTS;
+
+    /**
+     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ITERATE_ACTION__TRIGGER = ACTION__TRIGGER;
+
+    /**
+     * The feature id for the '<em><b>Delay</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ITERATE_ACTION__DELAY = ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ITERATE_ACTION__LABEL = ACTION__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ITERATE_ACTION__IMMEDIATE = ACTION__IMMEDIATE;
+
+    /**
+     * The number of structural features of the '<em>Iterate Action</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ITERATE_ACTION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Loop Variable</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1812,7 +1885,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
      * @generated
      */
-    int STATE_TYPE = 24;
+    int STATE_TYPE = 25;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
@@ -1822,7 +1895,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
      * @generated
      */
-    int TRANSITION_TYPE = 25;
+    int TRANSITION_TYPE = 26;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -1832,7 +1905,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 26;
+    int HISTORY_TYPE = 27;
 
     /**
      * The meta object id for the '<em>Parsable</em>' data type.
@@ -1842,7 +1915,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
      * @generated
      */
-    int PARSABLE = 27;
+    int PARSABLE = 28;
 
 
     /**
@@ -2637,6 +2710,16 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getSuspendAction_Weak();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.IterateAction <em>Iterate Action</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Iterate Action</em>'.
+     * @see de.cau.cs.kieler.sccharts.IterateAction
+     * @generated
+     */
+    EClass getIterateAction();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.For <em>For</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3390,6 +3473,16 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute SUSPEND_ACTION__WEAK = eINSTANCE.getSuspendAction_Weak();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.IterateActionImpl <em>Iterate Action</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.IterateActionImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getIterateAction()
+         * @generated
+         */
+        EClass ITERATE_ACTION = eINSTANCE.getIterateAction();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ForImpl <em>For</em>}' class.

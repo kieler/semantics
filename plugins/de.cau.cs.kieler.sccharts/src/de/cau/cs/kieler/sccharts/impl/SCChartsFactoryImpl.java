@@ -95,6 +95,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.DURING_ACTION: return createDuringAction();
             case SCChartsPackage.EXIT_ACTION: return createExitAction();
             case SCChartsPackage.SUSPEND_ACTION: return createSuspendAction();
+            case SCChartsPackage.ITERATE_ACTION: return createIterateAction();
             case SCChartsPackage.FOR: return createFor();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -341,6 +342,16 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public SuspendAction createSuspendAction() {
         SuspendActionImpl suspendAction = new SuspendActionImpl();
         return suspendAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IterateAction createIterateAction() {
+        IterateActionImpl iterateAction = new IterateActionImpl();
+        return iterateAction;
     }
 
     /**
