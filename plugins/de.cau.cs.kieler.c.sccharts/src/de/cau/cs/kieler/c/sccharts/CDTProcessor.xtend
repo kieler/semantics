@@ -54,6 +54,11 @@ import org.eclipse.core.resources.IResource
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.cdt.internal.ui.editor.CEditor
 import org.eclipse.ui.IEditorPart
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTForStatement
+import de.cau.cs.kieler.sccharts.Assignment
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTUnaryExpression
+import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 
 /**
  * @author ssm
@@ -243,13 +248,16 @@ class CDTProcessor extends Transformation {
         var actualState = stateF
         for(statement : cs.children) {
             if (statement instanceof CASTIfStatement) {
-                actualState = (statement as CASTIfStatement).transformIf(actualState)
+                actualState = statement.transformIf(actualState)
             }
             if (statement instanceof CASTReturnStatement) {
-                actualState = (statement as CASTReturnStatement).transformReturn(actualState)
+                actualState = statement.transformReturn(actualState)
             }
             if (statement instanceof CASTExpressionStatement) {
-                (statement as CASTExpressionStatement).transformExpression(actualState)
+                statement.transformExpression(actualState)
+            }
+            if (statement instanceof CASTForStatement) {
+            	statement.transformFor(actualState)
             }
         }
         
@@ -339,6 +347,83 @@ class CDTProcessor extends Transformation {
         (ifs.elseClause as CASTCompoundStatement).transformCompound(falseState, state)        
             
         connectorState                         
+    }
+    
+    def State transformFor(CASTForStatement forStatement, State state) {
+//    	    for(int i=2; i<=n; i++) {
+//    org.eclipse.cdt.internal.core.dom.parser.c.CASTForStatement@52b20f80
+//     org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarationStatement@2817c6ea
+//      org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclaration@31044136
+//       org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclSpecifier@e55595e
+//       org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator@55e31ac
+//        i
+//        org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer@6b0f15f4
+//         2
+//     org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression@2b6a7d15
+//      org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@5c3a03f7
+//       i
+//      org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@64da7c6e
+//       n
+//     org.eclipse.cdt.internal.core.dom.parser.c.CASTUnaryExpression@441f4d7c
+//      org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@63182ad4
+//       i
+//     org.eclipse.cdt.internal.core.dom.parser.c.CASTCompoundStatement@47a3f71f
+		val f = forStatement
+		
+		val localDeclaration = kex.createDeclaration => [
+			type = ValueType::INT
+			state.declarations += it
+		]
+		val iterateAction = state.createImmediateIterateAction
+		
+		val initializationExp = f.initializerStatement as CASTDeclarationStatement
+        val counterVO = initializationExp.createValuedObjectFromDeclarationStatement(true) 
+		localDeclaration.valuedObjects += counterVO		
+		VOSet += counterVO
+		
+		val conditionExp = f.conditionExpression
+		iterateAction.trigger = conditionExp.createKExpression
+		
+		val iterateExp = f.iterationExpression as CASTUnaryExpression
+		val iterateAssignment = iterateExp.createAssignment 
+		iterateAction.addAssignment(iterateAssignment)
+		
+		val body = f.body as CASTCompoundStatement
+		
+		body.transformCompound(state, state)
+    	
+    	state
+    }
+    
+    def ValuedObject createValuedObjectFromDeclarationStatement(CASTDeclarationStatement declaration, boolean withInitializationPart) {
+        val simpleDecl = declaration.children.filter(typeof(CASTSimpleDeclaration)).head
+        val decl = simpleDecl.children.filter(typeof(CASTDeclarator)).head
+              
+        val VO = decl.createValuedObjectFromDeclarator
+        
+        if (withInitializationPart) {
+              val init = decl.children.filter(typeof(CASTEqualsInitializer))
+              if (!init.empty) {
+                 VO.initialValue = createIntValue(Integer.parseInt(init.head.children.head.toString))
+              }
+        }
+        
+        VO
+    }
+    
+    def ValuedObject createValuedObjectFromDeclarator(CASTDeclarator declarator) {
+//        org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator@50429fba
+//         tmp
+//         org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer@46049580
+//          org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@56f32a69
+//           fh        
+        
+        val iName = declarator.children.head.toString
+        val lVar = kex.createValuedObject => [
+            name = iName
+        ]
+        
+        lVar    	
     }
     
     def State transformReturn(CASTReturnStatement returnStatement, State state) {
@@ -447,6 +532,9 @@ class CDTProcessor extends Transformation {
     def Expression createKExpression(IASTExpression exp) {
         if (exp instanceof CASTIdExpression) {
             return (exp as CASTIdExpression).createVOReference
+        } else
+        if (exp instanceof CASTBinaryExpression) {
+			return (exp as CASTBinaryExpression).createKExpression        	
         } else {
             return Integer.parseInt(exp.toString).createIntValue
         }        
@@ -473,6 +561,21 @@ class CDTProcessor extends Transformation {
         }    
 
         opExp   
+    }
+    
+    def Assignment createAssignment(CASTUnaryExpression unary) {
+    	val assignment = scc.createAssignment
+    	
+    	val VOR = (unary.operand as CASTIdExpression).createVOReference
+    	assignment.valuedObject = VOR.valuedObject
+    	assignment.expression = kex.createOperatorExpression => [
+    		subExpressions += VOR
+    		subExpressions += 1.createIntValue
+    	]
+    	if (unary.operator == IASTUnaryExpression::op_postFixIncr) (assignment.expression as OperatorExpression).operator  = OperatorType::ADD
+    	else if (unary.operator == IASTUnaryExpression::op_postFixDecr) (assignment.expression as OperatorExpression).operator  = OperatorType::SUB
+    	
+    	assignment
     }
     
     def ValuedObjectReference createVOReference(CASTIdExpression idExp) {

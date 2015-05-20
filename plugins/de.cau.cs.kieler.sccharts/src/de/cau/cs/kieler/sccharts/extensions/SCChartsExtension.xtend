@@ -55,6 +55,7 @@ import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.sccharts.Binding
 import de.cau.cs.kieler.sccharts.Dataflow
 import de.cau.cs.kieler.sccharts.Concurrency
+import de.cau.cs.kieler.sccharts.IterateAction
 
 /**
  * SCCharts Extensions.
@@ -797,6 +798,20 @@ class SCChartsExtension {
     // Create an immediate suspend action for a state.
     def SuspendAction createImmediateSuspendAction(State state) {
         val action = state.createSuspendAction
+        action.setImmediate(true);
+        action
+    }
+    
+    // Create an iterate action for a state.
+    def IterateAction createIterateAction(State state) {
+        val action = SCChartsFactory::eINSTANCE.createIterateAction
+        state.localActions.add(action);
+        action
+    }
+
+    // Create an immediate iterate action for a state.
+    def IterateAction createImmediateIterateAction(State state) {
+        val action = state.createIterateAction
         action.setImmediate(true);
         action
     }
