@@ -321,6 +321,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
             return true;
         }
         return true;
+//        return false;
     }
 
     /**
