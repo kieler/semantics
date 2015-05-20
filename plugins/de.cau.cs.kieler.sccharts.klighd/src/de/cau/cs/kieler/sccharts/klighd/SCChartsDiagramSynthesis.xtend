@@ -431,7 +431,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             (text == "exit") || (text == "signal") || (text == "int") || (text == "bool") ||
             (text == "float") || (text == "unsigned") || (text == "immediate") || (text == "input") ||
             (text == "output") || (text == "pre") || (text == "val") || (text == "combine") || (text == "static") || 
-            (text == "const") || (text == "extern")
+            (text == "const") || (text == "extern") || (text == "iterate")
     }
 
     // Get a list of words of a text String parsed by a regular expression.
