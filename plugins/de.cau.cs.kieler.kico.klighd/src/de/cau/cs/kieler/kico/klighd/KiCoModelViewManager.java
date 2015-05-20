@@ -40,14 +40,15 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.inject.Guice;
 
+import de.cau.cs.kieler.c.sccharts.CDTProcessor;
 import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
 import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
-import de.cau.cs.kieler.klighd.KlighdDataManager;
 
 /**
  * Observes workspace and manages KiCoModelViews
@@ -319,7 +320,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
         if (part instanceof XtextEditor || part instanceof IEditingDomainProvider) {
             return true;
         }
-        return false;
+        return true;
     }
 
     /**
@@ -333,13 +334,13 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
     private int isValidModelEditor(IEditorPart editor) {
         EObject model = getModelFromModelEditor(editor);
         if (model != null) {
-//            if (!Iterables.isEmpty(KlighdDataManager.getInstance().getAvailableSyntheses(
-//                    model.getClass()))) {
-//                return 1;
-//            } else {
-//                return 0;
-//            }
-          return 1;
+            // if (!Iterables.isEmpty(KlighdDataManager.getInstance().getAvailableSyntheses(
+            // model.getClass()))) {
+            // return 1;
+            // } else {
+            // return 0;
+            // }
+            return 1;
         }
         return 2;// Undecidable if model is null
     }
@@ -375,6 +376,9 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
             if (!resources.isEmpty() && !resources.get(0).getContents().isEmpty()) {
                 model = EcoreUtil.getRootContainer(resources.get(0).getContents().get(0));
             }
+        } else {
+            CDTProcessor CDTProcessor = Guice.createInjector().getInstance(CDTProcessor.class);
+            model = CDTProcessor.createFromEditor(editor);
         }
         return model;
     }
@@ -391,7 +395,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
      */
     public List<KiCoModelView> getModelViews(final IEditorPart editor) {
         if (editor != null) {
-            return Lists.newArrayList(Iterables.filter(modelViews, new Predicate<KiCoModelView>(){
+            return Lists.newArrayList(Iterables.filter(modelViews, new Predicate<KiCoModelView>() {
                 public boolean apply(KiCoModelView view) {
                     IEditorPart activeEditor = view.getActiveEditor();
                     return activeEditor != null && activeEditor.equals(editor);

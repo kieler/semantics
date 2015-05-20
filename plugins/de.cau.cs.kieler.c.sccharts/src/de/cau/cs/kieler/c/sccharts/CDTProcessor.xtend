@@ -49,6 +49,11 @@ import de.cau.cs.kieler.sccharts.Dataflow
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import org.eclipse.cdt.core.model.CoreModel
+import org.eclipse.core.resources.IResource
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.cdt.internal.ui.editor.CEditor
+import org.eclipse.ui.IEditorPart
 
 /**
  * @author ssm
@@ -75,6 +80,14 @@ class CDTProcessor extends Transformation {
     
     override transform(EObject eObject, KielerCompilerContext context) {
         eObject
+    }
+    
+    def EObject createFromEditor(IEditorPart editor) {
+        val cEditor = editor as CEditor
+        val tu = cEditor.translationUnit
+//        val ITranslationUnit tu = CoreModel.getDefault().create as ITranslationUnit
+        
+        tu.transform as State
     }    
     
     def EObject transform(ITranslationUnit translationUnit) {
