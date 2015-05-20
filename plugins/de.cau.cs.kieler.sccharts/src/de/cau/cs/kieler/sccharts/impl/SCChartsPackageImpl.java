@@ -1297,7 +1297,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         duringActionEClass.getESuperTypes().add(this.getLocalAction());
         exitActionEClass.getESuperTypes().add(this.getLocalAction());
         suspendActionEClass.getESuperTypes().add(this.getLocalAction());
-        iterateActionEClass.getESuperTypes().add(this.getAction());
+        iterateActionEClass.getESuperTypes().add(this.getLocalAction());
 
         // Initialize classes and features; add operations and parameters
         initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

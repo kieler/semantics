@@ -275,6 +275,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
             case SCChartsPackage.ITERATE_ACTION: {
                 IterateAction iterateAction = (IterateAction)theEObject;
                 T result = caseIterateAction(iterateAction);
+                if (result == null) result = caseLocalAction(iterateAction);
                 if (result == null) result = caseAction(iterateAction);
                 if (result == null) result = caseAnnotatable(iterateAction);
                 if (result == null) result = defaultCase(theEObject);

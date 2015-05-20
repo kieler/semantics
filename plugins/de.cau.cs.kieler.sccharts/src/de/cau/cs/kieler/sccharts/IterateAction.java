@@ -42,7 +42,7 @@ package de.cau.cs.kieler.sccharts;
  * @model
  * @generated
  */
-public interface IterateAction extends Action {
+public interface IterateAction extends LocalAction {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

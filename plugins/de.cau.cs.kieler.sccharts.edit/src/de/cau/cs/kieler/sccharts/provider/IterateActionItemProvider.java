@@ -31,7 +31,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * <!-- end-user-doc -->
  * @generated
  */
-public class IterateActionItemProvider extends ActionItemProvider {
+public class IterateActionItemProvider extends LocalActionItemProvider {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

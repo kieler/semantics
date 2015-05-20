@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class IterateActionImpl extends ActionImpl implements IterateAction {
+public class IterateActionImpl extends LocalActionImpl implements IterateAction {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

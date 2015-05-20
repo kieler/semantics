@@ -257,6 +257,11 @@ public class ScopeItemProvider
 
         newChildDescriptors.add
             (createChildParameter
+                (SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS,
+                 SCChartsFactory.eINSTANCE.createIterateAction()));
+
+        newChildDescriptors.add
+            (createChildParameter
                 (SCChartsPackage.Literals.SCOPE__BINDINGS,
                  SCChartsFactory.eINSTANCE.createBinding()));
 

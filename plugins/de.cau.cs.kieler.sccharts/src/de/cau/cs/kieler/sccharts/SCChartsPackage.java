@@ -1776,7 +1776,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ITERATE_ACTION__ANNOTATIONS = ACTION__ANNOTATIONS;
+    int ITERATE_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
@@ -1785,7 +1785,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ITERATE_ACTION__EFFECTS = ACTION__EFFECTS;
+    int ITERATE_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
 
     /**
      * The feature id for the '<em><b>Trigger</b></em>' containment reference.
@@ -1794,7 +1794,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ITERATE_ACTION__TRIGGER = ACTION__TRIGGER;
+    int ITERATE_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
 
     /**
      * The feature id for the '<em><b>Delay</b></em>' attribute.
@@ -1803,7 +1803,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ITERATE_ACTION__DELAY = ACTION__DELAY;
+    int ITERATE_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -1812,7 +1812,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ITERATE_ACTION__LABEL = ACTION__LABEL;
+    int ITERATE_ACTION__LABEL = LOCAL_ACTION__LABEL;
 
     /**
      * The feature id for the '<em><b>Immediate</b></em>' attribute.
@@ -1821,7 +1821,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ITERATE_ACTION__IMMEDIATE = ACTION__IMMEDIATE;
+    int ITERATE_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
      * The number of structural features of the '<em>Iterate Action</em>' class.
@@ -1830,7 +1830,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ITERATE_ACTION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 0;
+    int ITERATE_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Loop Variable</b></em>' reference.

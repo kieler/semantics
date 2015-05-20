@@ -236,7 +236,7 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="weak" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IterateAction" eSuperTypes="#//Action">
+  <eClassifiers xsi:type="ecore:EClass" name="IterateAction" eSuperTypes="#//LocalAction">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Action represents some effect that is executed under some&#xA;certain condition. The condition or sometimes called guard is&#xA;the trigger which simply is any boolean {@link Expression} over&#xA;{@link Signal}s or {@link Variable}s. Note that Actions may also be used&#xA;in contexts, where no trigger or resp. effects are allowed. E.g.&#xA;a suspensionTrigger has no effect.&#xA;&lt;p>&#xA;The effects of an Action are either {@link Assignment}, {@link Emission} or escaping&#xA;to an {@link TextEffect}.&#xA;&lt;p>&#xA;An Action has a String label that represents the trigger and the effects&#xA;list in a textual representation. The user of the &#xA;model is required to synchronize the label with the actual&#xA;trigger and effects objects. For the sccharts graphical editor&#xA;this is done by using an Xtext grammar/parser."/>
     </eAnnotations>
