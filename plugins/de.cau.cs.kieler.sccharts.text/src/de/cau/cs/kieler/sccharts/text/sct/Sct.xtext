@@ -196,7 +196,7 @@ ReferenceNode returns sccharts::ReferenceNode:
 // ---------------------------------------------------------------------------------------------------
 
 LocalAction returns sccharts::LocalAction:
-    EntryAction | DuringAction | ExitAction | SuspendAction
+    EntryAction | DuringAction | ExitAction | SuspendAction | IterateAction
 ;    
     
 // ---------------------------------------------------------------------------------------------------

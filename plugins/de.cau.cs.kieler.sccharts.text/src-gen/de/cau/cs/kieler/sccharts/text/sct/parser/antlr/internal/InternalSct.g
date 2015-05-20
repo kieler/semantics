@@ -2182,6 +2182,19 @@ ruleLocalAction returns [EObject current=null]
         $current = $this_SuspendAction_3.current; 
         afterParserOrEnumRuleCall();
     }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getLocalActionAccess().getIterateActionParserRuleCall_4()); 
+    }
+    this_IterateAction_4=ruleIterateAction
+    { 
+        $current = $this_IterateAction_4.current; 
+        afterParserOrEnumRuleCall();
+    }
 )
 ;
 
@@ -3341,6 +3354,121 @@ ruleSuspendAction returns [EObject current=null]
 )?(	otherlv_5=';' 
     {
     	newLeafNode(otherlv_5, grammarAccess.getSuspendActionAccess().getSemicolonKeyword_5());
+    }
+)?)
+;
+
+
+
+
+
+// Entry rule entryRuleIterateAction
+entryRuleIterateAction returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getIterateActionRule()); }
+	 iv_ruleIterateAction=ruleIterateAction 
+	 { $current=$iv_ruleIterateAction.current; } 
+	 EOF 
+;
+
+// Rule IterateAction
+ruleIterateAction returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getIterateActionAccess().getIterateActionAction_0(),
+            $current);
+    }
+)(
+(
+		lv_immediate_1_0=	'immediate' 
+    {
+        newLeafNode(lv_immediate_1_0, grammarAccess.getIterateActionAccess().getImmediateImmediateKeyword_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getIterateActionRule());
+	        }
+       		setWithLastConsumed($current, "immediate", true, "immediate");
+	    }
+
+)
+)?	otherlv_2='iterate' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getIterateActionAccess().getIterateKeyword_2());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getIterateActionAccess().getTriggerBoolExpressionParserRuleCall_3_0()); 
+	    }
+		lv_trigger_3_0=ruleBoolExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getIterateActionRule());
+	        }
+       		set(
+       			$current, 
+       			"trigger",
+        		lv_trigger_3_0, 
+        		"BoolExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?(	otherlv_4='/' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getIterateActionAccess().getSolidusKeyword_4_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getIterateActionAccess().getEffectsEffectParserRuleCall_4_1_0()); 
+	    }
+		lv_effects_5_0=ruleEffect		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getIterateActionRule());
+	        }
+       		add(
+       			$current, 
+       			"effects",
+        		lv_effects_5_0, 
+        		"Effect");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(	otherlv_6=';' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getIterateActionAccess().getSemicolonKeyword_4_2_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getIterateActionAccess().getEffectsEffectParserRuleCall_4_2_1_0()); 
+	    }
+		lv_effects_7_0=ruleEffect		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getIterateActionRule());
+	        }
+       		add(
+       			$current, 
+       			"effects",
+        		lv_effects_7_0, 
+        		"Effect");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*)?(	otherlv_8=';' 
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getIterateActionAccess().getSemicolonKeyword_5());
     }
 )?)
 ;

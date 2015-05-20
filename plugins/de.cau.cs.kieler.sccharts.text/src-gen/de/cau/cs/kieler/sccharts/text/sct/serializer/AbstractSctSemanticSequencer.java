@@ -34,6 +34,7 @@ import de.cau.cs.kieler.sccharts.Equation;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.FunctionCallEffect;
+import de.cau.cs.kieler.sccharts.IterateAction;
 import de.cau.cs.kieler.sccharts.ReferenceNode;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -448,6 +449,13 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				if(context == grammarAccess.getEffectRule() ||
 				   context == grammarAccess.getFunctionCallEffectRule()) {
 					sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.ITERATE_ACTION:
+				if(context == grammarAccess.getIterateActionRule() ||
+				   context == grammarAccess.getLocalActionRule()) {
+					sequence_IterateAction(context, (IterateAction) semanticObject); 
 					return; 
 				}
 				else break;

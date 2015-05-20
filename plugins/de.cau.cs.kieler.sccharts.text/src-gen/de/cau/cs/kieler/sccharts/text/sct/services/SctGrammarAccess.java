@@ -1437,14 +1437,15 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDuringActionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cExitActionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cSuspendActionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cIterateActionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		// LocalAction
 		//returns sccharts::LocalAction:
-		//	EntryAction | DuringAction | ExitAction | SuspendAction;
+		//	EntryAction | DuringAction | ExitAction | SuspendAction | IterateAction;
 		public ParserRule getRule() { return rule; }
 
-		//EntryAction | DuringAction | ExitAction | SuspendAction
+		//EntryAction | DuringAction | ExitAction | SuspendAction | IterateAction
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//EntryAction
@@ -1458,6 +1459,9 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 		//SuspendAction
 		public RuleCall getSuspendActionParserRuleCall_3() { return cSuspendActionParserRuleCall_3; }
+
+		//IterateAction
+		public RuleCall getIterateActionParserRuleCall_4() { return cIterateActionParserRuleCall_4; }
 	}
 
 	public class TransitionElements extends AbstractParserRuleElementFinder {
@@ -2412,7 +2416,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------------------------------------------------------------------------------------------
 	// LocalAction
 	//returns sccharts::LocalAction:
-	//	EntryAction | DuringAction | ExitAction | SuspendAction;
+	//	EntryAction | DuringAction | ExitAction | SuspendAction | IterateAction;
 	public LocalActionElements getLocalActionAccess() {
 		return pLocalAction;
 	}
@@ -2576,6 +2580,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSuspendActionRule() {
 		return getSuspendActionAccess().getRule();
+	}
+
+	//IterateAction returns sccharts::IterateAction:
+	//	{sccharts::IterateAction} immediate?="immediate"? "iterate" trigger=BoolExpression? ("/" effects+=Effect (";"
+	//	effects+=Effect)*)? ";"?;
+	public ActionsGrammarAccess.IterateActionElements getIterateActionAccess() {
+		return gaActions.getIterateActionAccess();
+	}
+	
+	public ParserRule getIterateActionRule() {
+		return getIterateActionAccess().getRule();
 	}
 
 	//Effect returns sccharts::Effect:
