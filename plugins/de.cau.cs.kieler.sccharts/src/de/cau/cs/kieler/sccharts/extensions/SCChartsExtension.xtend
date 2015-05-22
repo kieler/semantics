@@ -188,6 +188,19 @@ class SCChartsExtension {
 // The top-most element is an SCChart which is a State.
 // If necessary, these function should be re-implemented.
 
+    // Checks if all regions have at least one final state. Note that the final
+    // state may not be reachable and this method conservatively still returns
+    // true. It only returns fals iff there is at least one region without
+    // a final state.
+    def boolean regionsMayTerminate(State state) {
+        for (region : state.regions) {
+            if (region.allFinalStates.nullOrEmpty) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 	def boolean isRootState(State state) {
 		state.parentRegion == null
 	}
