@@ -665,16 +665,22 @@ class SCChartsExtension {
 
     def State fixAllTextualOrdersByPriorities(State state) {
         for (containedState : state.allContainedStatesList) {
-            //Old implementation unnecessarily touching every element every
-//            val transitions = containedState.outgoingTransitions.sortBy[priority].immutableCopy;
-//            for (transition : transitions) {
-//                //System.out.println(transition.sourceState.id + "->" + transition.targetState.id + " : " + transition.priority)
-//                containedState.outgoingTransitions.remove(transition)
-//                containedState.outgoingTransitions.add(transition) 
-//                transition.setPriority(0)
-//            }
+            //Old implementation unnecessarily touching every element every causing decresing tracing performance
+            val transitions = containedState.outgoingTransitions.sortBy[priority].immutableCopy;
+            for (transition : transitions) {
+                //System.out.println(transition.sourceState.id + "->" + transition.targetState.id + " : " + transition.priority)
+                containedState.outgoingTransitions.remove(transition)
+                containedState.outgoingTransitions.add(transition) 
+                transition.setPriority(0)
+            }
             //als: New implementation avoids calls of remove and add
-            containedState.outgoingTransitions.sort([first, second | first.priority - second.priority ]);
+            // This throws an exception because EList seems not sortable
+            //java.lang.IllegalArgumentException: The 'no duplicates' constraint is violated
+            //    at org.eclipse.emf.common.util.AbstractEList.set(AbstractEList.java:264)
+            //    at org.eclipse.emf.common.util.AbstractEList$EListIterator.doSet(AbstractEList.java:959)
+            //    at org.eclipse.emf.common.util.AbstractEList$EListIterator.set(AbstractEList.java:937)
+            //    at java.util.Collections.sort(Collections.java:221)
+            //containedState.outgoingTransitions.sort([first, second | first.priority - second.priority ]);
         }
         state
     }
