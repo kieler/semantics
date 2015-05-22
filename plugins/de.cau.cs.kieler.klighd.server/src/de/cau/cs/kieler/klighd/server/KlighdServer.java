@@ -33,7 +33,7 @@ import de.cau.cs.kieler.core.kgraph.KGraphData;
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.impl.KGraphDataImpl;
-import de.cau.cs.kieler.kico.KiCoUtil;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kiml.service.KimlServicePlugin;
 import de.cau.cs.kieler.kiml.util.KimlUtil;
