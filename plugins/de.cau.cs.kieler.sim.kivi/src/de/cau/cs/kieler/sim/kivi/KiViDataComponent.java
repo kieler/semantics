@@ -51,7 +51,7 @@ import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.impl.KRoundedRectangleImpl;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
-import de.cau.cs.kieler.kico.KiCoUtil;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
