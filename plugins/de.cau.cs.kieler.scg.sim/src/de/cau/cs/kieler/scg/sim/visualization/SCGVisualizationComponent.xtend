@@ -62,6 +62,7 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.guardCreation.GuardCreator
 import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
+import de.cau.cs.kieler.scg.features.SCGFeatures
 
 /**
  * @author ssm als
@@ -111,7 +112,7 @@ class SCGVisualizationComponent extends JSONObjectDataComponent {
         
             for (context : contexts) {
                 val scg = context.inputModel as SCGraph
-                if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)) {
+                if (scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
                     for (node : scg.nodes.filter(typeof(Assignment)).filter[valuedObject != null]) {
                         if (node.valuedObject.name.startsWith(BasicBlockTransformation::GUARDPREFIX)) {
                             guardMapping.putAll(node.valuedObject.name,
