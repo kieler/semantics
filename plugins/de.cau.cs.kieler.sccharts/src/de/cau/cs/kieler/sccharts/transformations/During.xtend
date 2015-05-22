@@ -75,6 +75,10 @@ class During {
         // when exiting it
         // calling transformDuringEx()
         
+        // Modification 21.05.2015: Decision in Meeting: Root-State has an implicit
+        // termination transition!
+        // For the root state we want the complex final state transition 
+        
         
         if (state.duringActions != null && state.duringActions.size > 0) {
             val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
@@ -82,7 +86,7 @@ class During {
             
             // If the state has outgoing terminations, we need to finalize the during
             // actions in case we end the states over these transitions
-            if (hasOutgoingTerminations) {
+            if ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate) {
                state.transformDuringComplexFinalStates(targetRootState)
             } else {
               state.transformDuringSimple(targetRootState)
