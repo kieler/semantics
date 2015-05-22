@@ -1159,8 +1159,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 vc.setProperty(KiCoProperties.COMPILATION_RESULT, compilationResult);
                 publishCurrentModelInformation(model, compilationResult);
                 // update case (keeps options and sidebar)
-                success =
-                        DiagramViewManager.updateView(this.getViewer().getViewContext(), model) != null;
+                success = LightDiagramServices.updateDiagram(this.getViewer().getViewContext(), model);
             }
 
             // stop listening
