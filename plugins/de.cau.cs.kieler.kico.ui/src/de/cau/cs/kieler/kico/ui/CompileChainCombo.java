@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kico.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.action.ControlContribution;
@@ -94,12 +93,12 @@ public class CompileChainCombo extends ControlContribution {
             combo.addSelectionListener(new SelectionListener() {
 
                 public void widgetSelected(SelectionEvent e) {
-                    KiCoSelectionView.getInstance().updateVisibleTransformations(
+                    KiCoSelectionView.getInstance().updateVisibleFeatures(
                             combo.getSelectionIndex());
                 }
 
                 public void widgetDefaultSelected(SelectionEvent e) {
-                    KiCoSelectionView.getInstance().updateVisibleTransformations(
+                    KiCoSelectionView.getInstance().updateVisibleFeatures(
                             combo.getSelectionIndex());
                 }
             });

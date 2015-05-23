@@ -13,24 +13,16 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.sccharts.For;
-import de.cau.cs.kieler.sccharts.Region;
-import de.cau.cs.kieler.sccharts.SCChartsPackage;
-import de.cau.cs.kieler.sccharts.Scope;
-
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.sccharts.For;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 /**
  * <!-- begin-user-doc -->

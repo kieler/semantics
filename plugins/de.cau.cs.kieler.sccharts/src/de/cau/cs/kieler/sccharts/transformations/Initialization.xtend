@@ -13,12 +13,17 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Initialization Transformation.
@@ -27,8 +32,32 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Initialization {
+class Initialization extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::INITIALIZATION_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::INITIALIZATION_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::INITIALIZATION_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::ENTRY_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -59,6 +88,7 @@ class Initialization {
 
         if (!valuedObjects.nullOrEmpty) {
             for (valuedObject : valuedObjects) {
+                valuedObject.setDefaultTrace
                 val entryAction = state.createEntryAction
                 entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
                 valuedObject.setInitialValue(null)

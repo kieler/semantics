@@ -13,12 +13,11 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl;
+import org.eclipse.emf.ecore.EClass;
 
+import de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.TextEffect;
-
-import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->

@@ -13,13 +13,18 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Exit Transformation.
@@ -28,8 +33,32 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Exit {
+class Exit extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::EXIT_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::EXIT_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::EXIT_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::ABORT_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -51,12 +80,12 @@ class Exit {
         val targetRootState = rootState.fixAllPriorities;
 
         // Prepare all states so that each reagion has at most one final state
-        targetRootState.getAllStates.toList.forEach[ targetState |
+        targetRootState.getAllStates.toList.forEach [ targetState |
             targetState.prepareExit(targetRootState);
         ]
 
         // Traverse all states
-        targetRootState.getAllStates.toList.forEach[ targetState |
+        targetRootState.getAllStates.toList.forEach [ targetState |
             targetState.transformExit(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
@@ -68,6 +97,7 @@ class Exit {
             if (finalStates.size > 1) {
                 val firstFinalState = finalStates.get(0)
                 for (finalState : finalStates) {
+                    finalState.setDefaultTrace //All following states etc. will be traced to state
                     if (finalState != firstFinalState) {
                         finalState.setNotFinal
                         finalState.createImmediateTransitionTo(firstFinalState)
@@ -80,6 +110,8 @@ class Exit {
     // Traverse all states and transform macro states that have actions to transform
     def void transformExit(State state, State targetRootState) {
         if (!state.exitActions.nullOrEmpty && !state.final) {
+            
+            state.setDefaultTrace //All following states etc. will be traced to state
 
             val stateOutgoingTransitions = state.outgoingTransitions.size
             var State firstState

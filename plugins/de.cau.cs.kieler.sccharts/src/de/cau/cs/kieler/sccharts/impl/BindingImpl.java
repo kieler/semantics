@@ -13,19 +13,15 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-
-import de.cau.cs.kieler.sccharts.Binding;
-import de.cau.cs.kieler.sccharts.SCChartsPackage;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
+
+import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.sccharts.Binding;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 /**
  * <!-- begin-user-doc -->

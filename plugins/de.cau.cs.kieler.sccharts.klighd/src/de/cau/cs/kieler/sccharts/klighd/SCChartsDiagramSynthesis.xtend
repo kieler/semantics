@@ -46,17 +46,20 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
 import de.cau.cs.kieler.sccharts.s.DataDependency
 import de.cau.cs.kieler.sccharts.s.DependencyGraph
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
@@ -75,6 +78,7 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
 import de.cau.cs.kieler.sccharts.LocalAction
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -130,6 +134,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     
     @Inject
     extension SCChartsSerializeExtension
+    
+    @Inject 
+    extension SCGDepExtension
 
     // -------------------------------------------------------------------------
     // Transformation options   
@@ -156,7 +163,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         "Reference Expansion", true);
         
     private static val SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption::createCheckOption(
-        "Adaptive Zoom", false);        
+        "Adaptive Zoom", false);
+        
+    private static val SynthesisOption SHOW_SCG_DEPENDENCIES = SynthesisOption::createCheckOption(
+        "SCG Dependencies", false);        
+
+    private static val SynthesisOption SHOW_TIMING = SynthesisOption::createCheckOption(
+        "Timing Analysis", false);
 
     DependencyGraph dependencyGraph = null
 
@@ -164,7 +177,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW);
+            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW, SHOW_SCG_DEPENDENCIES, SHOW_TIMING);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -241,13 +254,24 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 		
 		
         val rootNode = createNode() => [
-              // ATTENTION: DO NOT use graphiz on outermost root node, this will result in suspicious layout bugs!!!
+            if (SHOW_SCG_DEPENDENCIES.booleanValue) {
+                it.prepareSCGDependcyEdges;
+            }
+            // ATTENTION: DO NOT use graphiz on outermost root node, this will result in suspicious layout bugs!!!
 //            addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot") 
             addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
             children += rootState.translate
         ] 
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("SCCharts synthesis finished (time elapsed: "+(time / 1000)+"s).")
+        
+        if(SHOW_SCG_DEPENDENCIES.booleanValue){
+            rootNode.addSCGDependcyEdges(model as State);
+        }
+        
+        if(SHOW_TIMING.booleanValue){
+            TimingAnalysis.startAnalysis((model as State), rootNode);
+        }
         
         return rootNode
     }
@@ -284,6 +308,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 //                return;
 //            }
             node.addRectangle() => [
+                it.associateWith(r)
                 it.setAsExpandedView;
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
                 it.setSurroundingSpace(2, 0);
@@ -304,6 +329,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
             ];
             node.addRectangle() => [
+                it.associateWith(r)
                 it.setAsCollapsedView;
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
                 it.setSurroundingSpace(4, 0);
@@ -506,7 +532,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                         }
                     }
-                    it.shadow = null
+                    it.shadow = null as KColor
                     it.lineWidth = if(s.isInitial) 1 else 1;
                     it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset,
                         0);
@@ -646,6 +672,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         it.addRectangle => [
                             it.invisible = true;
                             it.addRectangle => [
+                                it.associateWith(tg);
+                                it.setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
                                     0);
@@ -709,6 +737,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         it.addRectangle => [
                             it.invisible = true;
                             it.addRectangle => [
+                                it.associateWith(action);
+                                it.setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                                 if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,

@@ -84,7 +84,7 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.kico.klighd.KiCoKLighDProperties
+import de.cau.cs.kieler.kico.KiCoProperties
 import java.util.Set
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
@@ -434,9 +434,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // Connect the model to the scope provider for the serialization.
         scopeProvider.parent = model;
 
-        compilationResult = this.usedContext.getProperty(KiCoKLighDProperties.COMPILATION_RESULT)
+        compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
         if (compilationResult != null) {
-            val PILR = compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head
+            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
             if (PILR != null) PIL_Nodes += PILR.criticalNodes
         }
 
@@ -1352,7 +1352,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (SHOW_BASICBLOCKS.booleanValue) {
                 val bbNodes = <Node>newLinkedList
                 basicBlock.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
-                val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK, basicBlock)
+                val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK, basicBlock).associateWith(basicBlock)
                 bbContainerList.put(basicBlock, bbContainer)
 //                val bbName = serializer.serialize(bb.guards.head.reference)
                 var bbName = basicBlock.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
@@ -1367,7 +1367,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
                 for (schedulingBlock : basicBlock.schedulingBlocks) {
-                    val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK, schedulingBlock)
+                    val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK, schedulingBlock).associateWith(schedulingBlock)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
 //                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
                      var sbName = "<null>"
@@ -1389,7 +1389,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 						sbName = sbName + "\n" + expText       
 					}
             	    
-                	sbName.createLabel(sbContainer).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
+                	sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
                 	
                     if (basicBlock.deadBlock) {
                         sbContainer.getData(typeof(KRoundedRectangle)) => [

@@ -13,11 +13,17 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts CountDelay Transformation.
@@ -26,8 +32,32 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class CountDelay {
+class CountDelay extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::COUNTDELAY_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::COUNTDELAY_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::COUNTDELAY_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::DURING_ID, SCChartsFeature::ENTRY_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -55,11 +85,12 @@ class CountDelay {
     // This will encode count delays in transitions.
     def void transformCountDelay(Transition transition, State targetRootState) {
         if (transition.delay > 1) {
+            transition.setDefaultTrace
             val sourceState = transition.sourceState
             val parentState = sourceState.parentRegion.parentState
 
             val counter = parentState.createVariable(GENERATED_PREFIX + "counter").setTypeInt.uniqueName
-            
+
             //Add entry action
             val entryAction = sourceState.createEntryAction
             entryAction.addEffect(counter.assign(0.createIntValue))
@@ -67,7 +98,6 @@ class CountDelay {
             // The during action MUST be added to the PARENT state NOT the SOURCE state because
             // otherwise (for a strong abort) taking the strong abort transition would not be
             // allowed to be triggered from inside!
-
             // Add during action
             val duringAction = parentState.createDuringAction
             duringAction.setTrigger(transition.trigger)

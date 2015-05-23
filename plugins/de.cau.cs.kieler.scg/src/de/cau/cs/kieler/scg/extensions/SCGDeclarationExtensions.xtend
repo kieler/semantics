@@ -21,8 +21,9 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.SCGraph
 import java.util.HashMap
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -106,7 +107,7 @@ class SCGDeclarationExtensions {
     
     public def void copyDeclarations(SCGraph source, SCGraph target) {
     	for (declaration : source.declarations) {
-    		val newDeclaration = createDeclaration(declaration)
+    		val newDeclaration = createDeclaration(declaration).trace(declaration)
     		declaration.valuedObjects.forEach[ copyValuedObject(newDeclaration) ]
     		target.declarations += newDeclaration
     	}
