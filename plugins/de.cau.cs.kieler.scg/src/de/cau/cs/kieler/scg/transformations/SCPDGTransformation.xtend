@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
@@ -32,6 +31,9 @@ import java.util.Set
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.scg.features.SCGFeatures
 
 /** 
  * 
@@ -40,7 +42,7 @@ import de.cau.cs.kieler.scg.Join
  * @kieler.rating 2015-05-03 proposed yellow
  */
 
-class SCPDGTransformation extends Transformation {
+class SCPDGTransformation extends AbstractProductionTransformation implements Traceable {
     
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -63,10 +65,26 @@ class SCPDGTransformation extends Transformation {
     // -- Globals 
     // -------------------------------------------------------------------------
     
-    public static val ANNOTATION_SCPDGTRANSFORMATION = "scpdg"
+//    public static val ANNOTATION_SCPDGTRANSFORMATION = "scpdg"
     
     var Entry programEntry;
+    
+    override getId() {
+        return SCGTransformations::SCPDG_ID
+    }
+
+    override getName() {
+        return SCGTransformations::SCPDG_NAME
+    }    
         
+    override getProducedFeatureId() {
+        return SCGFeatures::SCPDG_ID
+    }
+    
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::DEPENDENCY_ID)
+    }
+
     
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -85,19 +103,17 @@ class SCPDGTransformation extends Transformation {
     
     def SCGraph transformSCGToSCPDG(SCGraph scg, KielerCompilerContext context) {
 
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
-            || scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)
-        ) {
-            return scg
-        }
+//        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
+//            || scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)
+//        ) {
+//            return scg
+//        }
 
     	val cfs = <ControlFlow> newHashSet;
     	programEntry = (scg.nodes.head as Entry)
         programEntry.transformSCPDG(cfs, scg, context)
         
-        scg => [
-            annotations += createStringAnnotation(ANNOTATION_SCPDGTRANSFORMATION, "")
-        ]     
+        scg.addAnnotation(SCGFeatures.SCPDG_ID, SCGFeatures.SCPDG_NAME)   
 
         scg
     }
@@ -161,5 +177,5 @@ class SCPDGTransformation extends Transformation {
     	scg.nodes.remove(join)
     	null
     }
-    
+        
 }
