@@ -13,32 +13,39 @@
  */
 package de.cau.cs.kieler.scg.optimizations
 
-import de.cau.cs.kieler.kico.Transformation
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.kico.KielerCompiler
+import de.cau.cs.kieler.kico.transformation.ITransformation
+import de.cau.cs.kieler.kico.transformation.ProcessorOption
+import de.cau.cs.kieler.scg.processors.SCGProcessors
 
 /**
  * Deletes conditionals with constant value, unreachable nodes until all eliminated.
  * Resolves unused variables to constants
  * 
- * @author krat
+ * @author krat ssm 
+ * @kieler.design 2015-05-25 proposed 
+ * @kieler.rating 2015-05-25 proposed yellow
  *
  */
-class Optimize extends Transformation {
+class Optimize implements ITransformation {
     
-    override transform(EObject eObject, KielerCompilerContext context) {
-        var scg = eObject as SCGraph
-        var oldNodes = 0
-        while (oldNodes != scg.nodes.length) {
-            System.out.println("Iterating...")
-            oldNodes = scg.nodes.length
-            scg =  KielerCompiler.compile("UNUSED_VARIABLES", scg, false, false).EObject as SCGraph
-            scg =  KielerCompiler.compile("CONSTCONDS", scg, false, false).EObject as SCGraph
-            scg =  KielerCompiler.compile("UNREACHABLE_NODES", scg, false, false).EObject as SCGraph
-        }
-        scg
+    override getId() {
+        return "scg.optimizations.esterel.all"
+    }
+    
+    override getName() {
+        return "Esterel Optimizations"
+    }
+    
+    override getProcessorOptions() {
+        <ProcessorOption>newArrayList => [
+            it += new ProcessorOption(SCGProcessors.REPLACEUNUSEDVARIABLES_ID)
+            it += new ProcessorOption(SCGProcessors.CONSTANTCONDITIONALS_ID)
+            it += new ProcessorOption(SCGProcessors.UNREACHABLENODES_ID)
+        ]
+    }
+    
+    override isInplace() {
+        true
     }
     
 }
