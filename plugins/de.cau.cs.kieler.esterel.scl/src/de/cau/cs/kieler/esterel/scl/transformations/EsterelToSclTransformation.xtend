@@ -67,7 +67,6 @@ import de.cau.cs.kieler.esterel.esterel.WeakAbortInstance
 import de.cau.cs.kieler.esterel.kexpressions.ISignal
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Pause
@@ -88,6 +87,9 @@ import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
 import de.cau.cs.kieler.esterel.esterel.Constant
 import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.scl.features.SCLFeatures
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
@@ -100,10 +102,12 @@ import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls
  * Further informations and examples for the actual transformation rules can be found in the Stash
  * repository Papers/strl2scl.
  * 
- * @author krat
+ * @author krat ssm
+ * @kieler.design 2015-05-25 proposed 
  * @kieler.rating yellow 2015-03-14 review KI-63 by ssm, ima, cmot
+ * 
  */
-class EsterelToSclTransformation extends Transformation {
+class EsterelToSclTransformation extends AbstractProductionTransformation implements Traceable {
 
     @Inject
     extension KExpressionsExtension
@@ -156,6 +160,19 @@ class EsterelToSclTransformation extends Transformation {
     // List of transformation functions to manipulate pauses and join
     var Stack<(StatementSequence)=>StatementSequence> pauseTransformation
     var Stack<(StatementSequence)=>StatementSequence> joinTransformation
+    
+    override getId() {
+        return EsterelTransformations.SCL_ID
+    }
+
+    override getName() {
+        return EsterelTransformations.SCL_NAME
+    }
+    
+    override getProducedFeatureId() {
+        return SCLFeatures.BASIC_ID
+    }
+
 
     /**
      * Generic transformation method for KiCo. Compile without optimized ouput variable resetting
@@ -1963,12 +1980,5 @@ class EsterelToSclTransformation extends Transformation {
 
         targetStatementSequence
     }
-
-    override getId() {
-        "ESTERELTOSCL"
-    }
-
-    override getName() {
-        "SCL"
-    }
+    
 }
