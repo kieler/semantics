@@ -33,7 +33,7 @@ import static de.cau.cs.kieler.sccharts.targetman.PropertyIds.*
  *
  */
 class TargetDialog extends Dialog {
-    private IFile sctFile
+    var IFile sctFile
 
     
 

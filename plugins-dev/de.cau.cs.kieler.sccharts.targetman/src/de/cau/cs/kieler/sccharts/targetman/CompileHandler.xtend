@@ -101,16 +101,6 @@ class CompileHandler extends AbstractHandler {
 
     def EObject getModelFromFile(IFile file) {
         // TODO:
-        /*
-         * new StandaloneSetup().setPlatformUri("../");
-         * var Injector injector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
-         * var XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
-         * resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-         * var Resource resource = resourceSet.createResource(URI.createURI("dummy:/example.mydsl"));
-         * var InputStream in = new ByteArrayInputStream("type foo type bar".getBytes());
-         * resource.load(in, resourceSet.getLoadOptions());
-         * var EObject model = resource.getContents().get(0);
-         */
         return null
     }
 
