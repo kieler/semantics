@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            delegate="de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration"
+            id="de.cau.cs.kieler.sccharts.launchconfig.scchartsLaunchConfiguration"
+            modes="run,debug"
+            name="SCCharts Application"
+            public="true">
+      </launchConfigurationType>
+   </extension>
+
+</plugin>

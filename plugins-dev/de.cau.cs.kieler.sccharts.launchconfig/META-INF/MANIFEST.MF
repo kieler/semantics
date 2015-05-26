@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER SCCharts Launch Configuration
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.launchconfig;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.debug.core;bundle-version="3.9.1",
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPoliBundle-Vendor: Christian-Albrechts-Universität zu Kiel
+cy: lazy
+Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.sccharts.launchconfig
+

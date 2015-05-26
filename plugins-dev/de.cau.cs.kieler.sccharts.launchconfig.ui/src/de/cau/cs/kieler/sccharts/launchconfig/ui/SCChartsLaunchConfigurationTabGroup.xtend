@@ -1,0 +1,18 @@
+package de.cau.cs.kieler.sccharts.launchconfig.ui
+
+import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup
+import org.eclipse.debug.ui.CommonTab
+import org.eclipse.debug.ui.ILaunchConfigurationDialog
+import org.eclipse.debug.ui.ILaunchConfigurationTab
+
+class SCChartsLaunchConfigurationTabGroup extends AbstractLaunchConfigurationTabGroup {
+
+    override void createTabs(ILaunchConfigurationDialog dialog, String mode) {
+        var sctTab = new SCTCompilationTab()
+        var execTab = new ExecuteTab()
+        var commonTab = new CommonTab()
+        var tabs = (#[sctTab, execTab, commonTab] as ILaunchConfigurationTab[])
+        setTabs(tabs)
+    }
+
+}
