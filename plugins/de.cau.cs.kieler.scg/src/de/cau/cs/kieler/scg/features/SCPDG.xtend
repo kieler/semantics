@@ -26,7 +26,7 @@ import de.cau.cs.kieler.scg.SCGraph
  * @kieler.rating 2015-05-23 proposed yellow
  *
  */
-class Guard extends Feature {
+class SCPDG extends Feature {
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
