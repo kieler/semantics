@@ -145,7 +145,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         add.addSelectionListener(
             new SelectionAdapter() {
                 override void widgetSelected(SelectionEvent e) {
-                    val dialog = new ResourceSelectionDialog(shell, ResourcesPlugin.getWorkspace().getRoot(), "")
+                    val dialog = new ResourceSelectionDialog(shell, ResourcesPlugin.getWorkspace().getRoot(), "Select SCT files that should be compiled.")
                     dialog.open()
 
                     val results = dialog.result
@@ -160,7 +160,19 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
                             val resource = results.get(i) as IResource
                             val path = resource.location.toOSString
                             val name = resource.name
-                            newInput.add(new SCTCompilationData(path, name))
+
+                            // The ResourceSelectionDialog does not provide filter funcionality so we do this here manually
+                            var isOK = resource.fileExtension.toLowerCase == "sct"
+                            for (SCTCompilationData d : currentInput) {
+                                if (d.path == path)
+                                    isOK = false
+                            }
+
+                            // Add if not filtered
+                            if (isOK)
+                                newInput.add(new SCTCompilationData(path, name))
+                            else
+                                println("Resource '" + resource.name + "' is no SCT file or already in list!")
                         }
                         list.input = newInput
                     }
@@ -352,7 +364,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
     }
 
     override initializeFrom(ILaunchConfiguration configuration) {
-        list.input= SCTCompilationData.loadAllFromConfiguration(configuration)
+        list.input = SCTCompilationData.loadAllFromConfiguration(configuration)
     }
 
     override performApply(ILaunchConfigurationWorkingCopy configuration) {
@@ -362,7 +374,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
 
             datas.forEach [
                 // it.applyToConfiguration(configuration)
-                configuration.setAttribute(LaunchConfiguration.ATTR_SCT_FILE + "." + it.path, it.getPropertyMap())
+                configuration.setAttribute(LaunchConfiguration.ATTR_SCT_FILEDATA + "." + it.path, it.getPropertyMap())
 
                 sctFiles += it.path
             ]

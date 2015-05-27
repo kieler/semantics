@@ -73,7 +73,7 @@ class SCTCompilationData {
         val List<String> sctFiles = configuration.getAttribute(LaunchConfiguration.ATTR_SCT_FILES, #[])
         val List<SCTCompilationData> datas = newArrayList()
         sctFiles.forEach [
-            val Map<String, String> map = configuration.getAttribute(LaunchConfiguration.ATTR_SCT_FILE + "." + it,
+            val Map<String, String> map = configuration.getAttribute(LaunchConfiguration.ATTR_SCT_FILEDATA + "." + it,
                 new HashMap())
 
             if (map != null && !map.isEmpty) {
