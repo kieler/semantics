@@ -18,6 +18,8 @@ import java.util.List
 import java.util.Map
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.xtend.lib.annotations.Accessors
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 
 /** 
  * @author aas
@@ -50,39 +52,36 @@ class SCTCompilationData {
     private var String wrapperCodeTargetPath = ""
     @Accessors
     private var String wrapperCodeSnippetsDirectory = ""
-
-    def Map<String, String> getPropertyMap() {
-        return #{"path" -> path, "name" -> name, "targetLanguage" -> targetLanguage,
-            "targetPath" -> targetPath, "targetTemplate" -> targetTemplate,
-            "wrapperCodeTemplate" -> wrapperCodeTemplate, "wrapperCodeTargetPath" -> wrapperCodeTargetPath,
-            "wrapperCodeSnippetsDirectory" -> wrapperCodeSnippetsDirectory}
-    }
-    
-    def loadFromPropertyMap(Map<String, String> map) {
-        path = map.get("path")
-        name = map.get("name")
-        targetLanguage = map.get("targetLanguage")
-        targetPath = map.get("targetPath")
-        targetTemplate = map.get("targetTemplate")
-        wrapperCodeTemplate = map.get("wrapperCodeTemplate")
-        wrapperCodeTargetPath = map.get("wrapperCodeTargetPath")
-        wrapperCodeSnippetsDirectory = map.get("wrapperCodeSnippetsDirectory")
-    }
     
     static def List<SCTCompilationData> loadAllFromConfiguration(ILaunchConfiguration configuration){
         val List<String> sctFiles = configuration.getAttribute(LaunchConfiguration.ATTR_SCT_FILES, #[])
         val List<SCTCompilationData> datas = newArrayList()
         sctFiles.forEach [
-            val Map<String, String> map = configuration.getAttribute(LaunchConfiguration.ATTR_SCT_FILEDATA + "." + it,
-                new HashMap())
-
-            if (map != null && !map.isEmpty) {
-                val data = new SCTCompilationData()
-                data.loadFromPropertyMap(map)
+            val data = SCTCompilationData.fromJSON(it)
+            if(data != null)
                 datas += data
-            }
-
-        ]
+        ] 
         return datas
     }
+    
+    def applyToConfiguration(ILaunchConfiguration configuration){
+        // TODO: Why can't I use setAttribute here?!
+        //configuration.setAttribute
+    }
+    
+    def String toJSON(){
+        val gson = new Gson()
+        return gson.toJson(this)
+    }
+    
+    static def SCTCompilationData fromJSON(String json){
+        val gson = new Gson()
+        try{
+            val data = gson.fromJson(json, typeof(SCTCompilationData))
+            return data
+        }catch(JsonSyntaxException e){
+            println("Malformed JSON syntax:"+json)
+            return null
+        }
+    } 
 }

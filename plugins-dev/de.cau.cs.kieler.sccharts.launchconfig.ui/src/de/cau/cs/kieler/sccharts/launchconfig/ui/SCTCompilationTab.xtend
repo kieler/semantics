@@ -371,12 +371,9 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         val datas = list.input as List<SCTCompilationData>
         if (datas != null && !datas.isEmpty) {
             val List<String> sctFiles = newArrayList()
-
+                
             datas.forEach [
-                // it.applyToConfiguration(configuration)
-                configuration.setAttribute(LaunchConfiguration.ATTR_SCT_FILEDATA + "." + it.path, it.getPropertyMap())
-
-                sctFiles += it.path
+                sctFiles += it.toJSON
             ]
             configuration.setAttribute(LaunchConfiguration.ATTR_SCT_FILES, sctFiles)
         }

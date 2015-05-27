@@ -23,7 +23,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate2 {
     public static val ATTR_RUN_COMMAND = "de.cau.cs.kieler.scchart.launchconfig.execute.command.run"
 
     public static val ATTR_SCT_FILES = "de.cau.cs.kieler.scchart.launchconfig.sct.files"
-    public static val ATTR_SCT_FILEDATA = "de.cau.cs.kieler.scchart.launchconfig.sct.filedata"
 
     override void launch(ILaunchConfiguration configuration, String mode, ILaunch launch,
         IProgressMonitor monitor) throws CoreException {
