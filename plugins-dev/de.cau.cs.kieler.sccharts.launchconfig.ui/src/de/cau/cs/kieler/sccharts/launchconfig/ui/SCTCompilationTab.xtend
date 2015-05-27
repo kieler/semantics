@@ -77,7 +77,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
     override createControl(Composite parent) {
         var Composite comp = new Composite(parent, SWT.NONE)
         setControl(comp)
-
+ 
         comp.setLayout(new GridLayout(1, true))
         comp.setFont(parent.getFont())
 
@@ -136,6 +136,8 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
                 updateControls(currentData)
             }
         });
+
+        
 
         // Buttons
         val bcomp = SWTFactory.createComposite(comp, comp.getFont(), 1, 3, GridData.HORIZONTAL_ALIGN_END, 0, 0)
@@ -207,8 +209,8 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         // Target language
         val languageComp = SWTFactory.createComposite(comp, parent.getFont(), 8, 3, GridData.HORIZONTAL_ALIGN_BEGINNING,
             0, 0)
-        SWTFactory.createLabel(languageComp, "Language", 4)
-        targetLanguage = SWTFactory.createCombo(languageComp, SWT.DROP_DOWN, 3, #["Java", "C"])
+        SWTFactory.createLabel(languageComp, "Language", 5)
+        targetLanguage = SWTFactory.createCombo(languageComp, SWT.DEFAULT, 5, #["Java", "C"])
         targetLanguage.addSelectionListener(new SelectionListener() {
 
             override widgetDefaultSelected(SelectionEvent e) {

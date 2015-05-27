@@ -20,6 +20,7 @@ import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.xtend.lib.annotations.Accessors
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
+import org.eclipse.core.variables.VariablesPlugin
 
 /** 
  * @author aas
@@ -60,13 +61,9 @@ class SCTCompilationData {
             val data = SCTCompilationData.fromJSON(it)
             if(data != null)
                 datas += data
-        ] 
+        ]
+        
         return datas
-    }
-    
-    def applyToConfiguration(ILaunchConfiguration configuration){
-        // TODO: Why can't I use setAttribute here?!
-        //configuration.setAttribute
     }
     
     def String toJSON(){

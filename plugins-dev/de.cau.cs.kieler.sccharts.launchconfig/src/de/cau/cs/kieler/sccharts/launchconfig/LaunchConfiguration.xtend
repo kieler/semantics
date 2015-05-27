@@ -11,10 +11,12 @@ import java.io.FileWriter
 import java.io.PrintWriter
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate2
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.ui.console.MessageConsole
 
 class LaunchConfiguration implements ILaunchConfigurationDelegate2 {
 
@@ -86,15 +88,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate2 {
                         writer.print(result.string)
                         writer.close()
                     }
-//                } catch(FileNotFoundException e){
-//                    e.printStackTrace()
-//                } catch(UnsupportedEncodingException e){
-//                    e.printStackTrace()
-//                } catch(IOException e){
-//                    e.printStackTrace()
-//                } catch(SecurityException e){
-//                    e.printStackTrace()
-//                }
                 } catch (Exception e) {
                     e.printStackTrace()
                 }
@@ -106,14 +99,33 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate2 {
 
     private def execCommand(String cmdLine) {
         if (cmdLine != null && cmdLine != "") {
-            try{
-                // TODO: Run process and fill eclipse console with output
-                //val p = Runtime.getRuntime().exec(cmdLine)
-                //println("Process finished with exit code "+p.exitValue)
+            try {
+                val man = VariablesPlugin.getDefault.stringVariableManager
+                val fullCommand = man.performStringSubstitution(cmdLine)
+
+            // TODO: Run process and fill eclipse console with output
+            // val p = Runtime.getRuntime().exec(cmdLine)
+            // println("Process finished with exit code "+p.exitValue)
             } catch (Exception e) {
-                println("Error running command '"+cmdLine+"'")
+                println("Error running command '" + cmdLine + "'")
                 e.printStackTrace()
             }
         }
+    }
+
+    private def MessageConsole findConsole(String name) {
+//        val plugin = ConsolePlugin.getDefault();
+//        val conMan = plugin.getConsoleManager();
+//        val existing = conMan.getConsoles();
+//        for (var i = 0; i < existing.length; i++) {
+//            if (name.equals(existing.get(i).getName())) {
+//                return existing.get(i) as MessageConsole
+//            }
+//        }
+//        
+//        // no console found, so create a new one
+//        val myConsole = new MessageConsole("MyConsole", null)
+//        conMan.addConsoles(#[myConsole])
+//        return myConsole;
     }
 }

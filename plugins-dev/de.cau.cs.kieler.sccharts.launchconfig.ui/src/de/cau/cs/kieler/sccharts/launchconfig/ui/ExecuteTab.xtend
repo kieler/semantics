@@ -59,7 +59,6 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     override void createControl(Composite parent) {
         var Composite comp = new Composite(parent, SWT.NONE)
         setControl(comp)
-        
    
         comp.setLayout(new GridLayout(1, true))
         comp.setFont(parent.getFont())
