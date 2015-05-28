@@ -113,8 +113,11 @@ public class CompileChains {
         /** The priority. */
         public int priority = 0;
 
-        /** The visible transformations. */
-        public List<String> transformations = new ArrayList<String>();
+        /** The visible features. */
+        public List<String> features = new ArrayList<String>();
+
+        /** The preferred transformations. */
+        public List<String> preferred = new ArrayList<String>();
 
         public void setPriority(String priority) {
             try {

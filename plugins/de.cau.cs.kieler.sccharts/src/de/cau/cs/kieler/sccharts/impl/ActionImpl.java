@@ -13,28 +13,22 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
-
-import de.cau.cs.kieler.core.kexpressions.Expression;
-
-import de.cau.cs.kieler.sccharts.Action;
-import de.cau.cs.kieler.sccharts.Effect;
-import de.cau.cs.kieler.sccharts.SCChartsPackage;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.sccharts.Action;
+import de.cau.cs.kieler.sccharts.Effect;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 /**
  * <!-- begin-user-doc -->

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <factory
+            uri="http://kieler.cs.cau.de/tracingtree/0.1.0"
+            class="de.cau.cs.kieler.kitt.klighd.editor.TracingTreeItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>   
+   <extension point="org.eclipse.ui.editors">
+      <editor
+            id="de.cau.cs.kieler.kitt.klighd.editor.TracingTreeEditorID"
+            name="%_UI_TracingTreeEditor_label"
+            icon="icons/full/TracingTreeModelFile.gif"
+            extensions="kitt"
+            class="de.cau.cs.kieler.kitt.klighd.editor.TracingTreeEditor"
+            contributorClass="de.cau.cs.kieler.kitt.klighd.editor.TracingTreeActionBarContributor">
+      </editor>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+   <diagramSynthesis
+         class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kitt.klighd.synthesis.TracingTreeDiagramSynthesis"
+         id="de.cau.cs.kieler.kitt.klighd.syntheses.TracingTreeDiagramSynthesis">
+   </diagramSynthesis>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.extensions">
+      <updateStrategy
+            class="de.cau.cs.kieler.kitt.klighd.update.TracingVisualizationUpdateStrategy"
+            id="de.cau.cs.kieler.kitt.klighd.update.TracingVisualizationUpdateStrategy">
+      </updateStrategy>
+   </extension>
+</plugin>

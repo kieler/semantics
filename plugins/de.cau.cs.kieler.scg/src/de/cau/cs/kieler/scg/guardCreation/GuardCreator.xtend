@@ -13,53 +13,42 @@
  */
 package de.cau.cs.kieler.scg.guardCreation
 
+import com.google.inject.Guice
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
+import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
-import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Predecessor
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.Schedule
 import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.optimizer.CopyPropagation
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerSelector
+import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
 import java.util.List
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.ScheduledBlock
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import java.util.Set
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
-import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
-import de.cau.cs.kieler.scg.Guard
-import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
-import com.google.inject.Guice
-import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
-import de.cau.cs.kieler.scg.optimizer.CopyPropagation
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -79,8 +68,33 @@ import de.cau.cs.kieler.scg.optimizer.CopyPropagation
  * @kieler.design 2013-12-05 proposed 
  * @kieler.rating 2013-12-05 proposed yellow
  */
-class GuardCreator extends AbstractGuardCreator {
+class GuardCreator extends AbstractGuardCreator implements Traceable {
+    
+        
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    
+    override getId() {
+        return SCGTransformations::GUARD_ID
+    }
 
+    override getName() {
+        return SCGTransformations::GUARD_NAME
+    }
+
+    override getProducedFeatureId() {
+        return SCGFeatures::GUARD_ID
+    }
+
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::BASICBLOCK_ID)
+    }
+
+    //-------------------------------------------------------------------------
+
+
+    //TODO Fix this shitty logging stuff
     static final boolean DEBUG = false;
 
     def static void debug(String debugText) {
@@ -149,19 +163,19 @@ class GuardCreator extends AbstractGuardCreator {
     // -- Guard Creator
     // -------------------------------------------------------------------------    
     override SCGraph createGuards(SCGraph scg, KielerCompilerContext context) {
-
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
-            || scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)
-        ) {
-            return scg
-        }
+        // KiCo does this check via feature isContained
+        //if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
+        //    || scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)
+        //) {
+        //    return scg
+        //}
 
         val timestamp = System.currentTimeMillis
         compilerContext = context
 
         val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = Guice.createInjector().
             getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-        context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
+        context.compilationResult.addAuxiliaryData(potentialInstantaneousLoopAnalyzer.analyze(scg))
 
         //        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
         /**
@@ -454,11 +468,13 @@ class GuardCreator extends AbstractGuardCreator {
     } */
     // --- CREATE GUARDS: GO BLOCK 
     protected def void createGoBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
+        guard.setDefaultTrace
         guard.expression = scg.findValuedObjectByName(GOGUARDNAME).reference
     }
 
     // --- CREATE GUARDS: DEPTH BLOCK 
     protected def void createDepthBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
+        guard.setDefaultTrace
         guard.expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             setOperator(OperatorType::PRE)
             subExpressions.add(schedulingBlock.basicBlock.preGuard.reference)
@@ -467,7 +483,7 @@ class GuardCreator extends AbstractGuardCreator {
 
     // --- CREATE GUARDS: SYNCHRONIZER BLOCK 
     protected def void createSynchronizerBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
-
+        guard.setDefaultTrace
         // The simple scheduler uses the SurfaceSynchronizer. 
         // The result of the synchronizer is stored in the synchronizerData class joinData.
         val join = schedulingBlock.nodes.head as Join
@@ -497,6 +513,7 @@ class GuardCreator extends AbstractGuardCreator {
 
     // --- CREATE GUARDS: STANDARD BLOCK 
     protected def void createStandardBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
+        guard.setDefaultTrace
         val basicBlock = schedulingBlock.basicBlock
 
         val relevantPredecessors = <Predecessor>newHashSet
@@ -542,6 +559,7 @@ class GuardCreator extends AbstractGuardCreator {
     // --- CREATE GUARDS: SUBSEQUENT SCHEDULING BLOCK 
     protected def void createSubsequentSchedulingBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock,
         SCGraph scg) {
+        guard.setDefaultTrace
         if (guard.schizophrenic && schedulingBlock.basicBlock.entryBlock) {
             guard.expression = FALSE
         } else {
@@ -563,7 +581,7 @@ class GuardCreator extends AbstractGuardCreator {
      */
     protected def Expression predecessorExpression(Guard guard, Predecessor predecessor, SchedulingBlock schedulingBlock,
         SCGraph scg) {
-
+        guard.setDefaultTrace
         // Return a solely reference as expression if the predecessor is not a conditional
         if (predecessor.branchType == BranchType::NORMAL) {
             return predecessor.basicBlock.schedulingBlocks.last.guard.valuedObject.reference

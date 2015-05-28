@@ -13,11 +13,10 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
-import de.cau.cs.kieler.core.kexpressions.Expression;
-
 import org.eclipse.emf.common.util.EList;
+
+import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 /**
  * <!-- begin-user-doc -->
