@@ -1096,7 +1096,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
             // listen for internal klighd errors
             lastException = null;
-            Platform.addLogListener(this);
+//            Platform.addLogListener(this);
 
             // get available synthesis
             ISynthesis synthesis =
