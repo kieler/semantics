@@ -79,6 +79,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -137,6 +138,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     
     @Inject 
     extension SCGDepExtension
+    
+    @Inject 
+    extension SCGLoopExtension
 
     // -------------------------------------------------------------------------
     // Transformation options   
@@ -167,9 +171,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         
     private static val SynthesisOption SHOW_SCG_DEPENDENCIES = SynthesisOption::createCheckOption(
         "SCG Dependencies", false);        
-
-    private static val SynthesisOption SHOW_TIMING = SynthesisOption::createCheckOption(
-        "Timing Analysis", false);
+        
+    private static val SynthesisOption SHOW_SCG_LOOPS = SynthesisOption::createCheckOption(
+        "SCG Loops", false);
 
     DependencyGraph dependencyGraph = null
 
@@ -177,7 +181,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW, SHOW_SCG_DEPENDENCIES, SHOW_TIMING);
+            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW, SHOW_SCG_DEPENDENCIES, SHOW_SCG_LOOPS);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -251,12 +255,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         }
         
         
-		
-		
+        val tracking = new SourceModelTrackingAdapter();
         val rootNode = createNode() => [
-            if (SHOW_SCG_DEPENDENCIES.booleanValue) {
-                it.prepareSCGDependcyEdges;
-            }
+            it.eAdapters.add(tracking);
             // ATTENTION: DO NOT use graphiz on outermost root node, this will result in suspicious layout bugs!!!
 //            addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot") 
             addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
@@ -266,12 +267,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         System.out.println("SCCharts synthesis finished (time elapsed: "+(time / 1000)+"s).")
         
         if(SHOW_SCG_DEPENDENCIES.booleanValue){
-            rootNode.addSCGDependcyEdges(model as State);
+            rootNode.addSCGDependcyEdges(model as State, tracking);
         }
         
-        if(SHOW_TIMING.booleanValue){
-            TimingAnalysis.startAnalysis((model as State), rootNode);
+        if(SHOW_SCG_LOOPS.booleanValue){
+            rootNode.addSCGLoopHighlighting(model as State, tracking);
         }
+        
+//        rootNode.eAdapters.remove(tracking)
         
         return rootNode
     }
