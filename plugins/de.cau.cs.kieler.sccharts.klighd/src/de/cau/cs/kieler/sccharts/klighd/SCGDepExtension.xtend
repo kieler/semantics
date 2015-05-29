@@ -29,6 +29,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kico.KielerCompilerSelection
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingEdgeNode
@@ -38,6 +39,7 @@ import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.scg.AbsoluteWrite_Read
 import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
 import de.cau.cs.kieler.scg.Assignment
@@ -45,6 +47,7 @@ import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.RelativeWrite_Read
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Write_Write
+import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
 import java.util.HashSet
 import org.eclipse.emf.ecore.EObject
@@ -72,20 +75,12 @@ class SCGDepExtension {
     @Inject
     extension KContainerRenderingExtensions
 
-    val HashMap<KNode, SourceModelTrackingAdapter> adapters = newHashMap;
     val HashSet<Pair<EObject, EObject>> cache = newHashSet;
 
-    def prepareSCGDependcyEdges(KNode rootNode) {
-        val adapter = new SourceModelTrackingAdapter();
-        rootNode.eAdapters.add(adapter);
-        adapters.put(rootNode, adapter)
-    }
-
-    def addSCGDependcyEdges(KNode rootNode, State scc) {
-        val tracking = adapters.get(rootNode);
-        if (tracking != null) {
-            val context = new KielerCompilerContext("SCGDEP", scc);
+    def addSCGDependcyEdges(KNode rootNode, State scc, SourceModelTrackingAdapter tracking) {
+            val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID, scc);
             context.setProperty(Tracing.ACTIVE_TRACING, true);
+            context.advancedSelect = true;
             val result = KielerCompiler.compile(context);
             val compiledModel = result.object;
             val attachNode = rootNode.children.head;
@@ -139,8 +134,6 @@ class SCGDepExtension {
                     }
                 }
             }
-            rootNode.eAdapters.remove(tracking)
-        }
         return rootNode
     }
 

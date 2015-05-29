@@ -171,20 +171,24 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
             simpleDelegate.update(baseModel, newModel, viewContext);
         }
 
-        SynthesisOption option = TracingSynthesisOption.getSynthesisOption();
-        // Assumption: DisplayedSynthesisOptions are already loaded into ViewContext on configuring
-        if (viewContext.getDisplayedSynthesisOptions().contains(option)) {
-            // Assumption: SynthesisOptions are preset earlier and there is at most one option
-            // Activate tracing in currrent mode
-            TracingMode mode = TracingMode.getTracingMode(viewContext.getOptionValue(option));
-            enableVisualization(mode, baseModel, viewContext);
-            viewContext.setProperty(InternalTracingProperties.VISUALIZATION_MODE, mode);
-        } else {
-            // disable tracing when a diagram without tracing options is present
-            viewContext.setProperty(InternalTracingProperties.VISUALIZATION_MODE,
-                    TracingMode.NO_TRACING);
-            viewContext.setProperty(InternalTracingProperties.MAPPING, null);
-            viewContext.setProperty(InternalTracingProperties.DIAGRAM_EQUIVALENCE_CLASSES, null);
+        if (baseModel != null && !baseModel.getChildren().isEmpty()) {
+            SynthesisOption option = TracingSynthesisOption.getSynthesisOption();
+            // Assumption: DisplayedSynthesisOptions are already loaded into ViewContext on
+            // configuring
+            if (viewContext.getDisplayedSynthesisOptions().contains(option)) {
+                // Assumption: SynthesisOptions are preset earlier and there is at most one option
+                // Activate tracing in currrent mode
+                TracingMode mode = TracingMode.getTracingMode(viewContext.getOptionValue(option));
+                enableVisualization(mode, baseModel, viewContext);
+                viewContext.setProperty(InternalTracingProperties.VISUALIZATION_MODE, mode);
+            } else {
+                // disable tracing when a diagram without tracing options is present
+                viewContext.setProperty(InternalTracingProperties.VISUALIZATION_MODE,
+                        TracingMode.NO_TRACING);
+                viewContext.setProperty(InternalTracingProperties.MAPPING, null);
+                viewContext
+                        .setProperty(InternalTracingProperties.DIAGRAM_EQUIVALENCE_CLASSES, null);
+            }
         }
     }
 

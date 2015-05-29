@@ -185,14 +185,24 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         } catch (Exception e) {
             //fallthrou
         }
-        if (subDiagramNode == null && model instanceof EObject) { //component synthesis
+        if ((subDiagramNode == null || subDiagramNode.children.isEmpty) && model instanceof EObject) { //component synthesis
             subDiagramNode = createNode();
             val modelObject = model as EObject;
+            subDiagramNode.children += modelObject.translateEObject
             subDiagramNode.children += modelObject.eAllContents.map [
-                it.translateEObject;
+                val child = it.translateEObject;
+                val container = it.eContainer;
+                if (container != null) {
+                    createEdge => [
+                        it.source = container.translateEObject;
+                        it.target = child;
+                        it.addPolyline.addArrowDecorator;
+                    ]
+                }
+                return child;
             ].toIterable;
         }
-        if (subDiagramNode != null) {
+        if (subDiagramNode != null && !subDiagramNode.children.isEmpty) {
 
             // prevent adding of rectangle by adding an invisible own one.
             subDiagramNode.addRectangle.invisible = true;
@@ -204,8 +214,8 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         return node;
     }
 
-    private def KNode translateEObject(EObject object) {
-        val node = object.createNode.associateWith(object);
+    private def create node : object.createNode translateEObject(EObject object) {
+        node.associateWith(object);
 
         //create and add colored rectangle for this node
         val figure = node.createFigure;
@@ -231,8 +241,6 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                 it.suppressSelectability;
             ];
         ]
-
-        return node;
     }
 
     /**

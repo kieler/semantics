@@ -92,7 +92,7 @@ class TracingVisualizer {
 
     /** Returns the tracing stored in the compilation result of the ViewContext */
     private def Tracing tracing(ViewContext viewContext) {
-        return viewContext.getProperty(KiCoProperties.COMPILATION_RESULT)?.getAuxiliaryData(Tracing).head;
+        return (viewContext.getProperty(KiCoProperties.COMPILATION_RESULT)?.getAuxiliaryData(Tracing)?:emptyList).head;
     }
 
     /** Removed all tracing edges from the diagram */
