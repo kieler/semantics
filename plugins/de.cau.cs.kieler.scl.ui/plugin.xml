@@ -314,7 +314,7 @@
              editor="de.cau.cs.kieler.scl.SCL"
              features="scg, scl.scg, codegeneration, s, s.target"
              label="Netlist Compilation (SCL)"
-             preferred="s.c"
+             preferred="s.c, scl.basic"
              priority="100">
        </editor>
     </extension>
