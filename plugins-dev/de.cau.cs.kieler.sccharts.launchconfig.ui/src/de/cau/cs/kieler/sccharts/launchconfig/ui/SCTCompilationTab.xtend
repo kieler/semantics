@@ -137,8 +137,6 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
             }
         });
 
-        
-
         // Buttons
         val bcomp = SWTFactory.createComposite(comp, comp.getFont(), 1, 3, GridData.HORIZONTAL_ALIGN_END, 0, 0)
 
@@ -368,6 +366,12 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
     override initializeFrom(ILaunchConfiguration configuration) {
         list.input = SCTCompilationData.loadAllFromConfiguration(configuration)
     }
+    
+    override activated(ILaunchConfigurationWorkingCopy workingCopy) {
+        super.activated(workingCopy)
+        currentData= null
+        enableControls(false)
+    }
 
     override performApply(ILaunchConfigurationWorkingCopy configuration) {
         val datas = list.input as List<SCTCompilationData>
@@ -375,7 +379,8 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
             val List<String> sctFiles = newArrayList()
                 
             datas.forEach [
-                sctFiles += it.toJSON
+                sctFiles += it.path
+                configuration.setAttribute(it.path, it.attributeMap)
             ]
             configuration.setAttribute(LaunchConfiguration.ATTR_SCT_FILES, sctFiles)
         }

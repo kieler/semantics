@@ -13,14 +13,11 @@
  */
 package de.cau.cs.kieler.sccharts.launchconfig
 
-import java.util.HashMap
 import java.util.List
-import java.util.Map
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
-import org.eclipse.core.variables.VariablesPlugin
+import java.util.Map
+import java.util.HashMap
 
 /** 
  * @author aas
@@ -40,7 +37,7 @@ class SCTCompilationData {
     @Accessors
     private var String name = ""
     @Accessors
-    private var String targetLanguage = "Java"
+    private var String targetLanguage = ""
     @Accessors
     private var String targetPath = ""
     @Accessors
@@ -58,27 +55,29 @@ class SCTCompilationData {
         val List<String> sctFiles = configuration.getAttribute(LaunchConfiguration.ATTR_SCT_FILES, #[])
         val List<SCTCompilationData> datas = newArrayList()
         sctFiles.forEach [
-            val data = SCTCompilationData.fromJSON(it)
-            if(data != null)
-                datas += data
+            val data = new SCTCompilationData()
+            data.path = it
+            data.loadAttributesFromMap(configuration.getAttribute(data.path, new HashMap()))
+            
+            datas += data
         ]
         
         return datas
     }
     
-    def String toJSON(){
-        val gson = new Gson()
-        return gson.toJson(this)
+    def loadAttributesFromMap(Map<String, String> map) {
+        val classObject = typeof(SCTCompilationData)
+        for(f : classObject.declaredFields){
+            f.set(this, map.get(f.name))
+        }
     }
     
-    static def SCTCompilationData fromJSON(String json){
-        val gson = new Gson()
-        try{
-            val data = gson.fromJson(json, typeof(SCTCompilationData))
-            return data
-        }catch(JsonSyntaxException e){
-            println("Malformed JSON syntax:"+json)
-            return null
+    def Map<String, String> getAttributeMap(){
+        val map = new HashMap<String, String>()
+        val classObject = typeof(SCTCompilationData)
+        for(f : classObject.declaredFields){
+            map.put(f.name, f.get(this).toString())
         }
-    } 
+        return map
+    }
 }
