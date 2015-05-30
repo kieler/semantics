@@ -71,5 +71,11 @@
          </command>
       </menuContribution>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <productionTransformationClass
+            class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation">
+      </productionTransformationClass>
+   </extension>
 
 </plugin>

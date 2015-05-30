@@ -25,9 +25,6 @@ public class EsterelTransformations {
   
     public final static String SCL_ID = "esterel.scl";
     public final static String SCL_NAME = "SCL";
-
-    public final static String SCG_ID = "esterel.scg";
-    public final static String SCG_NAME = "SCG";
     
     public final static String SCLTOESTEREL_ID = "scl.esterel";
     public final static String SCLTOESTEREL_NAME = "Esterel";

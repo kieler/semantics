@@ -19,6 +19,12 @@
            isXMI="false">
      </ExtensionInformation>
   </extension>
+  <extension
+        point="de.cau.cs.kieler.kico.feature">
+     <featureClass
+           class="de.cau.cs.kieler.esterel.features.Esterel">
+     </featureClass>
+  </extension>
   <!--extension
         point="org.eclipse.ui.menus">
      <menuContribution
