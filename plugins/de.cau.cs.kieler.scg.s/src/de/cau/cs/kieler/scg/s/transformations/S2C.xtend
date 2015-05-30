@@ -13,10 +13,11 @@
  */
 package de.cau.cs.kieler.scg.s.transformations
 
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.s.s.Program
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.model.codegeneration.SimpleCBeautifier
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.s.s.Program
+import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 
 /**
  * Transform SCG 2 C code via S code. Do basic primitive beautifying for small models
@@ -24,27 +25,44 @@ import de.cau.cs.kieler.core.model.codegeneration.SimpleCBeautifier
  * @author ssm, cmot
  *
  */
-class S2C {
+class S2C extends AbstractProductionTransformation {
+
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return CodeGenerationTransformations::S2C_ID
+    }
+
+    override getName() {
+        return CodeGenerationTransformations::S2C_NAME
+    }
+
+    override getProducedFeatureId() {
+        return CodeGenerationFeatures::TARGET_ID
+    }
+
+    override getRequiredFeatureIds() {
+        return newHashSet(CodeGenerationFeatures::S_CODE_ID)
+    }
+
+    // -------------------------------------------------------------------------   
     
-        /**
-         * Transform the incoming SCG to C code. If the eObject is not an SCG then just return it.
-         *
-         * @param eObject the e object
-         * @return the object
-         */
-        def public Object transform(EObject eObject) {
-            
-            if (eObject instanceof Program) {
-                
-                val de.cau.cs.kieler.s.sc.xtend.S2C transform2 = Guice.createInjector().getInstance(typeof(de.cau.cs.kieler.s.sc.xtend.S2C));
-                var String cProgram = transform2.transform(eObject as Program).toString();
-                
-                cProgram = SimpleCBeautifier.beautify(cProgram, "   ");
-                
-                return cProgram;
-            }
-            
-            return eObject;
-        }    
-    
+    /**
+     * Transform the incoming SCG to C code. If the eObject is not an SCG then just return it.
+     *
+     * @param eObject the e object
+     * @return the object
+     */
+    def public Object transform(Program program) {
+
+        val de.cau.cs.kieler.s.sc.xtend.S2C transform2 = Guice.createInjector().getInstance(
+            typeof(de.cau.cs.kieler.s.sc.xtend.S2C));
+        var String cProgram = transform2.transform(program as Program).toString();
+
+        cProgram = SimpleCBeautifier.beautify(cProgram, "   ");
+
+        return cProgram
+    }
+
 }

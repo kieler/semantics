@@ -33,7 +33,6 @@ import java.util.Map
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
 import java.util.List
 import de.cau.cs.kieler.scg.BasicBlock
 import java.util.Set
@@ -42,6 +41,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
 import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler

@@ -14,38 +14,31 @@
 package de.cau.cs.kieler.scg.schedulers
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
-import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.ScheduleBlock
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
-import java.util.ArrayList
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
+import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
 import java.util.List
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
-import com.google.inject.Guice
-import de.cau.cs.kieler.scg.ScheduledBlock
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
-import de.cau.cs.kieler.scg.Guard
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
 import java.util.Set
-import de.cau.cs.kieler.scg.Dependency
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import java.util.Comparator
-import java.util.Collections
-import java.util.Arrays
-import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.ScheduleBlock
-import de.cau.cs.kieler.scg.ControlFlow
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -64,8 +57,32 @@ import de.cau.cs.kieler.scg.ControlFlow
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-class GuardScheduler extends AbstractScheduler {
+class GuardScheduler extends AbstractScheduler implements Traceable {
+        
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    
+    override getId() {
+        return SCGTransformations::SCHEDULING_ID
+    }
 
+    override getName() {
+        return SCGTransformations::SCHEDULING_NAME
+    }
+
+    override getProducedFeatureId() {
+        return SCGFeatures::SCHEDULING_ID
+    }
+
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::GUARD_ID)
+    }
+
+    //-------------------------------------------------------------------------
+
+
+    //TODO Fix this shitty logging stuff
     static final boolean DEBUG = false;
 
     def static void debug(String debugText) {
@@ -319,10 +336,10 @@ class GuardScheduler extends AbstractScheduler {
 	 * @return Returns the enriched SCG model.
 	 */
     override public SCGraph schedule(SCGraph scg, KielerCompilerContext context) {
-
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)) {
-            return scg
-        }
+        // KiCo does this check via feature isContained
+        // if (scg.hasAnnotation(SCGFeatures.SCHEDULING_ID)) {
+        //     return scg
+        // }
 
         // Create a new schedule using the scgsched factory.
         val schedule = ScgFactory::eINSTANCE.createSchedule
@@ -368,7 +385,7 @@ class GuardScheduler extends AbstractScheduler {
         if (!schedulable) {
             if (context != null) {
                 context.getCompilationResult().addPostponedWarning(
-                    new KielerCompilerException(getId(), "The SCG is NOT ASC-schedulable!"));
+                    new KielerCompilerException(getId(), getId(), "The SCG is NOT ASC-schedulable!"));
             }
             System::out.println("The SCG is NOT ASC-schedulable!")
             scg.schedules.add(schedule)
@@ -376,7 +393,8 @@ class GuardScheduler extends AbstractScheduler {
             System::out.println("The SCG is ASC-schedulable.")
             scg.schedules.add(schedule)
         }
-
+        
+        scg.addAnnotation(SCGFeatures.SCHEDULING_ID, SCGFeatures.SCHEDULING_NAME);
         scg
     }
 

@@ -238,6 +238,17 @@ function compileText() {
 		  	  clearErrors();
 		  }
 
+          var warningMsg = xmlhttp.getResponseHeader("compile-warning");
+          if (warningMsg != null) {
+              var resultWarning = document.getElementById("resultWarning");
+              var resultWarningDiv = document.getElementById("resultWarningDiv");
+              resultWarningDiv.style.display="block";
+              resultWarning.value = replaceAll(decodeURIComponent(warningMsg), "+", " ");
+          } else {
+              clearWarnings();
+          }
+
+
 		  if (doUpdateImage) {
 		  		updateImage();
 	      }
@@ -253,6 +264,13 @@ function clearErrors() {
 			  var resultErrorDiv = document.getElementById("resultErrorDiv");
 	  	  	  resultErrorDiv.style.display="none";
 			  resultError.value = "";
+}
+
+function clearWarnings() {
+              var resultWarning = document.getElementById("resultWarning");
+              var resultWarningDiv = document.getElementById("resultWarningDiv");
+              resultWarningDiv.style.display="none";
+              resultWarning.value = "";
 }
 
 
@@ -562,6 +580,10 @@ scchart ABRO {
           <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF8888"></textarea>
 		  <br>
 		 </div>
+        <div id="resultWarningDiv" style="font:24px bold; display: none">
+          <textarea name="resultWarning" cols="70" rows="4" id="resultWarning" readonly=true style="background-color: #FFFB88"></textarea>
+          <br>
+         </div>
 		<div id="resultImageDiv" style="font:24px bold; display: none">
         <img src="xxx" name="resultImage" id="resultImage"/></div>
 		<div id="resultTextDiv" style="font:24px bold; display: block">

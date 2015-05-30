@@ -13,9 +13,16 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl;
 import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.Assignment;
 import de.cau.cs.kieler.sccharts.Binding;
@@ -25,7 +32,6 @@ import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.For;
-import de.cau.cs.kieler.sccharts.FuncCall;
 import de.cau.cs.kieler.sccharts.FunctionCallEffect;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.LocalAction;
@@ -39,14 +45,6 @@ import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.TextEffect;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.TransitionType;
-
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc -->

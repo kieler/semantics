@@ -13,10 +13,10 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import org.eclipse.emf.ecore.EClass;
+
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
-
-import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
