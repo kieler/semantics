@@ -16,6 +16,7 @@ package de.cau.cs.kieler.esterel.scl.transformations
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
@@ -32,6 +33,7 @@ import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.AwaitCase
 import de.cau.cs.kieler.esterel.esterel.AwaitInstance
 import de.cau.cs.kieler.esterel.esterel.Block
+import de.cau.cs.kieler.esterel.esterel.Constant
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.esterel.ConstantRenaming
 import de.cau.cs.kieler.esterel.esterel.Do
@@ -49,6 +51,7 @@ import de.cau.cs.kieler.esterel.esterel.LocalVariable
 import de.cau.cs.kieler.esterel.esterel.Loop
 import de.cau.cs.kieler.esterel.esterel.LoopDelay
 import de.cau.cs.kieler.esterel.esterel.Nothing
+import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls
 import de.cau.cs.kieler.esterel.esterel.Parallel
 import de.cau.cs.kieler.esterel.esterel.Present
 import de.cau.cs.kieler.esterel.esterel.PresentCaseList
@@ -65,8 +68,13 @@ import de.cau.cs.kieler.esterel.esterel.Trap
 import de.cau.cs.kieler.esterel.esterel.WeakAbort
 import de.cau.cs.kieler.esterel.esterel.WeakAbortInstance
 import de.cau.cs.kieler.esterel.kexpressions.ISignal
+import de.cau.cs.kieler.esterel.kexpressions.IVariable
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.scl.extensions.SCLExtensions
+import de.cau.cs.kieler.scl.features.SCLFeatures
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Pause
@@ -82,14 +90,6 @@ import java.util.Stack
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
-import de.cau.cs.kieler.esterel.kexpressions.IVariable
-import de.cau.cs.kieler.core.kexpressions.CombineOperator
-import de.cau.cs.kieler.scl.extensions.SCLExtensions
-import de.cau.cs.kieler.esterel.esterel.Constant
-import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.scl.features.SCLFeatures
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started

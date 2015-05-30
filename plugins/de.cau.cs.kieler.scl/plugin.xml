@@ -186,7 +186,7 @@
    <extension
          point="de.cau.cs.kieler.kico.feature">
       <featureClass
-            class="de.cau.cs.kieler.scl.feature.SCL">
+            class="de.cau.cs.kieler.scl.features.SCL">
       </featureClass>
    </extension>
    <extension
