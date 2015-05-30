@@ -194,6 +194,9 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
             0, 0)
         SWTFactory.createLabel(languageComp, "Language", 5)
         
+        // Create ComboViewer
+        targetLanguage = new ComboViewer(comp, SWT.DEFAULT)
+        
         // Fetch possible targets from KiCo
         var Set<Transformation> transformations
         val feature = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
@@ -202,12 +205,14 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
             transformations = feature.expandingTransformations
         }
         
-        targetLanguage = new ComboViewer(comp, SWT.DEFAULT)
+        // Fill combo
         targetLanguage.contentProvider = ArrayContentProvider.instance
         targetLanguage.input = transformations
-        if(transformations.size > 0)
+        if(transformations != null && transformations.size > 0){
             targetLanguage.selection = new StructuredSelection(transformations.get(0))
+        }
         
+        // Label provider
         targetLanguage.labelProvider = new LabelProvider() {
             override String getText(Object element) {
                 val data = (element as Transformation)
@@ -218,6 +223,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
             }
         }
         
+        // Selection listener
         targetLanguage.addSelectionChangedListener(new ISelectionChangedListener{
             
             override selectionChanged(SelectionChangedEvent event) {
