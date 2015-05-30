@@ -13,12 +13,14 @@
  */
 package de.cau.cs.kieler.sccharts.launchconfig.ui
 
+import de.cau.cs.kieler.kico.KielerCompiler
+import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
 import de.cau.cs.kieler.sccharts.launchconfig.SCTCompilationData
+import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
-import java.util.HashMap
 import java.util.List
-import java.util.Map
+import java.util.Set
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IPath
@@ -26,29 +28,28 @@ import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
+import org.eclipse.jface.viewers.ArrayContentProvider
+import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ISelectionChangedListener
-import org.eclipse.jface.viewers.IStructuredContentProvider
+import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.viewers.ListViewer
 import org.eclipse.jface.viewers.SelectionChangedEvent
-import org.eclipse.jface.viewers.Viewer
+import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
-import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Button
-import org.eclipse.swt.widgets.Combo
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ContainerSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
-import org.eclipse.jface.viewers.IStructuredSelection
-import org.eclipse.jface.viewers.StructuredSelection
 
 /**
  * @author aas
@@ -58,7 +59,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
 
     private var ListViewer list
 
-    private var Combo targetLanguage
+    private var ComboViewer targetLanguage
     private var Text targetPath
     private var Button browseTargetPath
 
@@ -99,23 +100,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         list.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
 
         // Content provider
-        list.setContentProvider(new IStructuredContentProvider() {
-
-            override Object[] getElements(Object inputElement) {
-                if (inputElement != null) {
-                    return (inputElement as List<SCTCompilationData>).toArray
-                } else {
-                    return newArrayOfSize(0)
-                }
-            }
-
-            override void dispose() {
-            }
-
-            override inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-            }
-
-        });
+        list.setContentProvider(ArrayContentProvider.instance);
 
         // Label provider
         list.setLabelProvider(new LabelProvider() {
@@ -208,17 +193,44 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         val languageComp = SWTFactory.createComposite(comp, parent.getFont(), 8, 3, GridData.HORIZONTAL_ALIGN_BEGINNING,
             0, 0)
         SWTFactory.createLabel(languageComp, "Language", 5)
-        targetLanguage = SWTFactory.createCombo(languageComp, SWT.DEFAULT, 5, #["Java", "C"])
-        targetLanguage.addSelectionListener(new SelectionListener() {
-
-            override widgetDefaultSelected(SelectionEvent e) {
+        
+        // Fetch possible targets from KiCo
+        var Set<Transformation> transformations
+        val feature = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
+        println(feature)
+        if(feature != null){
+            transformations = feature.expandingTransformations
+        }
+        
+        targetLanguage = new ComboViewer(comp, SWT.DEFAULT)
+        targetLanguage.contentProvider = ArrayContentProvider.instance
+        targetLanguage.input = transformations
+        if(transformations.size > 0)
+            targetLanguage.selection = new StructuredSelection(transformations.get(0))
+        
+        targetLanguage.labelProvider = new LabelProvider() {
+            override String getText(Object element) {
+                val data = (element as Transformation)
+                if (data != null)
+                    return data.name
+                else
+                    return ""
             }
-
-            override widgetSelected(SelectionEvent e) {
-                currentData.targetLanguage = targetLanguage.text
-                updateLaunchConfigurationDialog();
+        }
+        
+        targetLanguage.addSelectionChangedListener(new ISelectionChangedListener{
+            
+            override selectionChanged(SelectionChangedEvent event) {
+                val selection = event.selection as IStructuredSelection
+                if (selection != null){
+                    val trans = selection.firstElement as Transformation
+                    if(trans != null){
+                        currentData.targetLanguage = trans.id
+                        updateLaunchConfigurationDialog();    
+                    }
+                }
             }
-
+            
         })
 
         // Target path
@@ -392,10 +404,14 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
     private def updateControls(SCTCompilationData data) {
         enableControls(data != null)
         if (data != null) {
-            // Target
-            val index = targetLanguage.indexOf(data.targetLanguage)
-            if (index != -1)
-                targetLanguage.select(index)
+            // Target language
+            if(targetLanguage.input != null){
+                for(transformation : targetLanguage.input as Iterable<Transformation>){
+                    if(transformation.id == data.targetLanguage){
+                        targetLanguage.selection = new StructuredSelection(transformation)
+                    }
+                }
+            }
 
             targetPath.text = data.targetPath
             targetTemplate.text = data.targetTemplate
@@ -408,7 +424,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
     }
 
     private def enableControls(boolean enable) {
-        val controls = #[targetLanguage, targetPath, targetTemplate, wrapperCodeTemplate, wrapperCodeTarget,
+        val List<Control> controls = #[targetLanguage.combo, targetPath, targetTemplate, wrapperCodeTemplate, wrapperCodeTarget,
             wrapperCodeSnippets, browseTargetPath, browseTargetTemplate, browseWrapperCodeSnippets,
             browseWrapperCodeTarget, browseWrapperCodeTemplate]
         controls.forEach[it.enabled = enable]

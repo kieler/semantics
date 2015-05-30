@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl
+import freemarker.template.TemplateExceptionHandler
 
 class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
@@ -70,12 +71,10 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         }
 
         if (model != null) {
-            val languageToTransformationIDMapping = #{"Java" -> "S2JAVA", "C" -> "S2C"}
-            val transformationID = languageToTransformationIDMapping.get(data.targetLanguage)
-            if (transformationID != null) {
+            if (data.targetLanguage != null && data.targetLanguage != "") {
                 // Compile sct
-                val context = new KielerCompilerContext(#[transformationID], #[], model)
-                val result = KielerCompiler.compile(#[transformationID], #[], model, true, false)
+                val context = new KielerCompilerContext("T_"+data.targetLanguage, model)
+                val result = KielerCompiler.compile(context)
 
                 // Flush compilation result to target
                 if (result != null && result.string != null) {
@@ -84,6 +83,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                             // Use template
                             val reader = new FileReader(new File(data.targetTemplate))
                             val cfg = new Configuration(new Version(2, 3, 0))
+                            cfg.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
+                            
                             val template = new Template("tmp", reader, cfg)
                             val writer = new FileWriter(new File(data.targetPath))
                             template.process(#{"sct_code" -> result.string}, writer)
