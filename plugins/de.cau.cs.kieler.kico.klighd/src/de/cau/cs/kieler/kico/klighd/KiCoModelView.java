@@ -1131,7 +1131,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                                 recentSynthesisOptions.put(usedSynthesis, optionsMap);
                             }
                             for (SynthesisOption option : options) {
-                                if (synthesis.getDisplayedSynthesisOptions().contains(option)) {
+                                if (usedSynthesis.getDisplayedSynthesisOptions().contains(option)) {
                                     optionsMap.put(option, vc.getOptionValue(option));
                                 }
                             }
