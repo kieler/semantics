@@ -33,7 +33,6 @@ import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.FunctionCallEffect;
 import de.cau.cs.kieler.sccharts.LocalAction;
-import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
@@ -140,29 +139,29 @@ public class SCChartsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case SCChartsPackage.CONCURRENCY: {
-				Concurrency concurrency = (Concurrency)theEObject;
-				T result = caseConcurrency(concurrency);
-				if (result == null) result = caseScope(concurrency);
-				if (result == null) result = caseAnnotatable(concurrency);
+			case SCChartsPackage.REGION2: {
+				Region2 region2 = (Region2)theEObject;
+				T result = caseRegion2(region2);
+				if (result == null) result = caseScope(region2);
+				if (result == null) result = caseAnnotatable(region2);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case SCChartsPackage.REGION: {
-				Region region = (Region)theEObject;
-				T result = caseRegion(region);
-				if (result == null) result = caseConcurrency(region);
-				if (result == null) result = caseScope(region);
-				if (result == null) result = caseAnnotatable(region);
+			case SCChartsPackage.CONTROLFLOW_REGION: {
+				ControlflowRegion controlflowRegion = (ControlflowRegion)theEObject;
+				T result = caseControlflowRegion(controlflowRegion);
+				if (result == null) result = caseRegion2(controlflowRegion);
+				if (result == null) result = caseScope(controlflowRegion);
+				if (result == null) result = caseAnnotatable(controlflowRegion);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case SCChartsPackage.DATAFLOW: {
-				Dataflow dataflow = (Dataflow)theEObject;
-				T result = caseDataflow(dataflow);
-				if (result == null) result = caseConcurrency(dataflow);
-				if (result == null) result = caseScope(dataflow);
-				if (result == null) result = caseAnnotatable(dataflow);
+			case SCChartsPackage.DATAFLOW_REGION: {
+				DataflowRegion dataflowRegion = (DataflowRegion)theEObject;
+				T result = caseDataflowRegion(dataflowRegion);
+				if (result == null) result = caseRegion2(dataflowRegion);
+				if (result == null) result = caseScope(dataflowRegion);
+				if (result == null) result = caseAnnotatable(dataflowRegion);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -367,21 +366,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
 	}
 
     /**
-	 * Returns the result of interpreting the object as an instance of '<em>Region</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Region</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T caseRegion(Region object) {
-		return null;
-	}
-
-    /**
 	 * Returns the result of interpreting the object as an instance of '<em>Node</em>'.
 	 * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -457,21 +441,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
 	}
 
     /**
-	 * Returns the result of interpreting the object as an instance of '<em>Dataflow</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Dataflow</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T caseDataflow(Dataflow object) {
-		return null;
-	}
-
-    /**
 	 * Returns the result of interpreting the object as an instance of '<em>Binding</em>'.
 	 * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -502,21 +471,51 @@ public class SCChartsSwitch<T> extends Switch<T> {
 	}
 
     /**
-	 * Returns the result of interpreting the object as an instance of '<em>Concurrency</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Region2</em>'.
 	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Concurrency</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Region2</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-    public T caseConcurrency(Concurrency object) {
+	public T caseRegion2(Region2 object) {
 		return null;
 	}
 
-    /**
+				/**
+	 * Returns the result of interpreting the object as an instance of '<em>Controlflow Region</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Controlflow Region</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseControlflowRegion(ControlflowRegion object) {
+		return null;
+	}
+
+				/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dataflow Region</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dataflow Region</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDataflowRegion(DataflowRegion object) {
+		return null;
+	}
+
+				/**
 	 * Returns the result of interpreting the object as an instance of '<em>Transition</em>'.
 	 * <!-- begin-user-doc -->
      * This implementation returns null;

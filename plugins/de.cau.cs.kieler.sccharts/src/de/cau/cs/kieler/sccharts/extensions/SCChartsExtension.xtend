@@ -25,7 +25,6 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.sccharts.Binding
-import de.cau.cs.kieler.sccharts.Dataflow
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.Effect
 import de.cau.cs.kieler.sccharts.Emission
@@ -34,7 +33,6 @@ import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.IterateAction
 import de.cau.cs.kieler.sccharts.LocalAction
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
@@ -52,6 +50,8 @@ import org.eclipse.emf.ecore.EObject
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DataflowRegion
 
 /**
  * SCCharts Extensions.
@@ -93,16 +93,16 @@ class SCChartsExtension {
 //        state.regions.filter(typeof(Controlflow)).toList
 //    }
     
-    def List<Region> getRegions(State state) {
-        state.concurrencies.filter(typeof(Region)).toList
+    def List<ControlflowRegion> getControlflowRegions(State state) {
+        state.regions.filter(typeof(ControlflowRegion)).toList
     }
 
 //    def List<Dataflow> getDataflows(State state) {
 //        state.regions.filter(typeof(Dataflow)).toList
 //    }
     
-    def List<Dataflow> getDataflows(State state) {
-        state.concurrencies.filter(typeof(Dataflow)).toList
+    def List<DataflowRegion> getDataflows(State state) {
+        state.regions.filter(typeof(DataflowRegion)).toList
     }
 
     def static <T> T convertInstanceOfObject(Object o, Class<T> clazz) {
@@ -136,7 +136,7 @@ class SCChartsExtension {
     // Returns a list of all contained States.
     def List<State> getAllContainedStatesList(State state) {
         <State> newLinkedList => [ l |
-            state.regions.forEach[ r | 
+            state.regions.filter(ControlflowRegion).forEach[ r | 
                 r.states.forEach[ s | 
                     l += s; 
                     l += s.getAllContainedStatesList
@@ -156,8 +156,8 @@ class SCChartsExtension {
     }
 
     // Return the list of all contained Regions.
-    def List<Region> getAllContainedRegions(Scope scope) {
-        scope.eAllContents().filter(typeof(Region)).toList()
+    def List<ControlflowRegion> getAllContainedControlflowRegions(Scope scope) {
+        scope.eAllContents().filter(typeof(ControlflowRegion)).toList()
     }
 
     // Return the list of all contained Transitions.
@@ -216,7 +216,7 @@ class SCChartsExtension {
     // true. It only returns fals iff there is at least one region without
     // a final state.
     def boolean regionsMayTerminate(State state) {
-        for (region : state.regions) {
+        for (region : state.regions.filter(ControlflowRegion)) {
             if (region.allFinalStates.nullOrEmpty) {
                 return false;
             }
@@ -234,7 +234,7 @@ class SCChartsExtension {
     }
 
     // Return the root state.
-    def State getRootState(Region region) {
+    def State getRootState(ControlflowRegion region) {
         // There should exactly be one state in the root region
         region.parentState.getRootState
     }
@@ -251,8 +251,8 @@ class SCChartsExtension {
     }
 
     // Gets the list of non-empty regions
-    def List<Region> getRegions2(State state) {
-        val list = state.regions.filter(e | !e.empty ).toList
+    def List<ControlflowRegion> getControlflowRegions2(State state) {
+        val list = state.regions.filter(ControlflowRegion).filter[!empty].toList
         list
     }
     
@@ -293,13 +293,13 @@ class SCChartsExtension {
         state
     }
 
-    def State createState(Region region, String id, String label) {
+    def State createState(ControlflowRegion region, String id, String label) {
         val state = createState(id)
         region.states.add(state)
         state
     }
 
-    def State createState(Region region, String id) {
+    def State createState(ControlflowRegion region, String id) {
         val state = createState(id)
         state.setLabel(id)
         region.states.add(state)
@@ -311,7 +311,7 @@ class SCChartsExtension {
     def private dispatch boolean uniqueNameTest(State state, String newName) {
         state.parentRegion.states.filter[it != state && id == newName].size == 0
     }
-    def private dispatch boolean uniqueNameTest(Region region, String newName) {
+    def private dispatch boolean uniqueNameTest(ControlflowRegion region, String newName) {
         region.parentState.regions.filter[it != region && id == newName].size == 0
     }
     def private boolean uniqueNameTest(ValuedObject valuedObject, State state, String newName) {
@@ -392,7 +392,7 @@ class SCChartsExtension {
     }
 
 
-    def Region uniqueName(Region region) {
+    def ControlflowRegion uniqueName(ControlflowRegion region) {
         val originalId = region.id
         var String newName = region.uniqueNameHelper(originalId)
         if (originalId != newName) {
@@ -402,7 +402,7 @@ class SCChartsExtension {
         region
     }
     
-    def Region uniqueNameCached(Region region, List<String> uniquieNameCache) {
+    def ControlflowRegion uniqueNameCached(ControlflowRegion region, List<String> uniquieNameCache) {
         val originalId = region.id
         var String newName = region.uniqueNameHelperCached(originalId, uniquieNameCache)
         if (originalId != newName) {
@@ -459,15 +459,15 @@ class SCChartsExtension {
         createState(id).setFinal
     }
     
-    def State createInitialState(Region region, String id) {
+    def State createInitialState(ControlflowRegion region, String id) {
         region.createState(id).setInitial
     }
     
-    def State createFinalState(Region region, String id) {
+    def State createFinalState(ControlflowRegion region, String id) {
         region.createState(id).setFinal
     }
     
-    def State getInitialState(Region region) {
+    def State getInitialState(ControlflowRegion region) {
         var initialStates = region.states.filter[isInitial]
         if (initialStates.size > 0) {
             return initialStates.get(0)
@@ -475,16 +475,16 @@ class SCChartsExtension {
         return null
     }
     
-    def State[] getAllFinalStates(Region region) {
+    def State[] getAllFinalStates(ControlflowRegion region) {
         region.states.filter[isFinal]
     }
     
-    def State[] getFinalStates(Region region) {
-        region.allFinalStates.filter[outgoingTransitions.size == 0 && !hasInnerStatesOrRegions && entryActions.size == 0 && duringActions.size == 0 && exitActions.size == 0]
+    def State[] getFinalStates(ControlflowRegion region) {
+        region.allFinalStates.filter[outgoingTransitions.size == 0 && !hasInnerStatesOrControlflowRegions && entryActions.size == 0 && duringActions.size == 0 && exitActions.size == 0]
     }
     
     // Get the first (simple) final state if the region contains any, otherwise return null.
-    def State getFinalState(Region region) {
+    def State getFinalState(ControlflowRegion region) {
         val finalStates = region.getFinalStates
         if (finalStates.size > 0)
             return finalStates.get(0)
@@ -493,7 +493,7 @@ class SCChartsExtension {
     }
 
     // Get any final state if the region already contains a final state, otherwise create a final state.
-    def State retrieveFinalState(Region region, String id) {
+    def State retrieveFinalState(ControlflowRegion region, String id) {
         val finalState = region.getFinalState
         if (finalState != null) {
             return finalState
@@ -536,42 +536,42 @@ class SCChartsExtension {
     }
 
     //========== REGIONS ===========
-    def Region createRegion(String id) {
-        val controlflow = SCChartsFactory::eINSTANCE.createRegion();
+    def ControlflowRegion createControlflowRegion(String id) {
+        val controlflow = SCChartsFactory::eINSTANCE.createControlflowRegion();
         controlflow.setId(id)
         controlflow.setLabel("")
         controlflow
     }
 
-    def Region createRegion(State state, String id) {
-        val region = createRegion(id)
+    def ControlflowRegion createRegion(State state, String id) {
+        val region = createControlflowRegion(id)
         // ATTENTION: if this is the first region and there already is an IMPLICIT region
         // e.g. because of inner actions, then return THIS region only!
 //        if (state.regions.size == 1 && state.regions.get(0).allContainedStates.size == 0) {
 //            return state.regions.get(0)
 //        }
-        state.concurrencies += region
+        state.regions += region
         region
     }
 
-    def Region setLabel2(Region region, String label) {
+    def ControlflowRegion setLabel2(ControlflowRegion region, String label) {
         region.setLabel(label)
         region
     }
     
-    def boolean regionsNotEmpty(State state) {
-   	  for(r:state.regions){
+    def boolean controlflowRegionsNotEmpty(State state) {
+   	  for(r:state.regions.filter(ControlflowRegion)){
    	  	if (r.states.size>0) return true
    	  }
    	  false
     }
     
-    def boolean empty(Region region) {
+    def boolean empty(ControlflowRegion region) {
       region.states.size == 0
    }    
 
-    def boolean hasInnerStatesOrRegions(State state) {
-        return ((state.regions != null && state.regions.size != 0 && state.regionsNotEmpty))
+    def boolean hasInnerStatesOrControlflowRegions(State state) {
+        return ((state.regions != null && state.regions.size != 0 && state.controlflowRegionsNotEmpty))
     }
 
     // These are actions that expand to INNER content like during or exit actions.
@@ -1088,7 +1088,7 @@ class SCChartsExtension {
     //-------------------------------------------------------------------------
     // This fixes halt states and adds an explicit delayed self transition
     def State fixPossibleHaltStates(State rootState, List<State> stateList) {
-        val haltStates = stateList.filter[!hasInnerStatesOrRegions && outgoingTransitions.nullOrEmpty && !final]
+        val haltStates = stateList.filter[!hasInnerStatesOrControlflowRegions && outgoingTransitions.nullOrEmpty && !final]
         
         for (haltState : haltStates) {
             haltState.createTransitionTo(haltState).trace(haltState)
@@ -1105,7 +1105,7 @@ class SCChartsExtension {
         val nonReachabledStates = rootState.allContainedStates.filter[!isStateReachable].toList
         
         for (nonReachabledState : nonReachabledStates.immutableCopy) {
-            val parentRegion = (nonReachabledState.eContainer as Region)
+            val parentRegion = (nonReachabledState.eContainer as ControlflowRegion)
             parentRegion.states.remove(nonReachabledState)
         }
         rootState
@@ -1315,7 +1315,7 @@ class SCChartsExtension {
     	while (container != null) {
     		var EList<Declaration> declarations = null
     		if (container instanceof State) declarations = (container as State).declarations
-    		else if (container instanceof Region) declarations = (container as Region).declarations
+    		else if (container instanceof ControlflowRegion) declarations = (container as ControlflowRegion).declarations
     		if (!declarations.nullOrEmpty) for (declaration : declarations) {
     			val valuedObject = declaration.findValuedObjectByName(name)
     			if (valuedObject != null) return valuedObject

@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * SCCharts Termination Transformation.
@@ -144,7 +145,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
 
             // Walk thru all regions that must terminate and create one termination valuedObject per
             // region. For the weak abort create a conjunction of these valuedObjects as the trigger.
-            for (region : state.regions) {
+            for (region : state.regions.filter(ControlflowRegion)) {
 
                 // Setup the auxiliary termination valuedObject indicating that a normal termination
                 // should be taken.

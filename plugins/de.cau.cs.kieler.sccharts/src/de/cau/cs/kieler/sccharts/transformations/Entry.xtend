@@ -23,6 +23,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * SCCharts Entry Transformation.
@@ -97,7 +98,7 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
                 }
                 firstState = connector
                 lastState = state
-            } else if (!state.hasInnerStatesOrRegions) {
+            } else if (!state.hasInnerStatesOrControlflowRegions) {
                 state.regions.clear // FIX: need to erase dummy single region
                 val region = state.createRegion(GENERATED_PREFIX + "Entry")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
@@ -107,8 +108,8 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
                     exitState.outgoingTransitions.add(transition)
                 }
                 state.createTransitionTo(exitState).setTypeTermination
-            } else if (state.regions.size == 1) {
-                val region = state.regions.get(0)
+            } else if (state.regions.filter(ControlflowRegion).size == 1) {
+                val region = state.regions.filter(ControlflowRegion).get(0)
                 lastState = region.states.filter[initial].get(0) //every region MUST have an initial state
                 lastState.setNotInitial
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName

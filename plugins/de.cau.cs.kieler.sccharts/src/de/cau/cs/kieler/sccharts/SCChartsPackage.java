@@ -345,16 +345,6 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
-	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.sccharts.impl.RegionImpl
-	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion()
-	 * @generated
-	 */
-    int REGION = 6;
-
-    /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.BindingImpl <em>Binding</em>}' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -456,15 +446,15 @@ public interface SCChartsPackage extends EPackage {
     int STATE__TYPE = SCOPE_FEATURE_COUNT + 0;
 
     /**
-	 * The feature id for the '<em><b>Concurrencies</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Regions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int STATE__CONCURRENCIES = SCOPE_FEATURE_COUNT + 1;
+	int STATE__REGIONS = SCOPE_FEATURE_COUNT + 1;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Parent Region</b></em>' container reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -519,205 +509,333 @@ public interface SCChartsPackage extends EPackage {
     int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 7;
 
     /**
-	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ConcurrencyImpl <em>Concurrency</em>}' class.
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.Region2Impl <em>Region2</em>}' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.sccharts.impl.ConcurrencyImpl
-	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getConcurrency()
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.sccharts.impl.Region2Impl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion2()
 	 * @generated
 	 */
-    int CONCURRENCY = 5;
+	int REGION2 = 5;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int CONCURRENCY__ANNOTATIONS = SCOPE__ANNOTATIONS;
+	int REGION2__ANNOTATIONS = SCOPE__ANNOTATIONS;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int CONCURRENCY__ID = SCOPE__ID;
+	int REGION2__ID = SCOPE__ID;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int CONCURRENCY__LABEL = SCOPE__LABEL;
+	int REGION2__LABEL = SCOPE__LABEL;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int CONCURRENCY__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
+	int REGION2__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int CONCURRENCY__REFERENCED_SCOPE = SCOPE__REFERENCED_SCOPE;
+	int REGION2__REFERENCED_SCOPE = SCOPE__REFERENCED_SCOPE;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int CONCURRENCY__BINDINGS = SCOPE__BINDINGS;
+	int REGION2__BINDINGS = SCOPE__BINDINGS;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int CONCURRENCY__DECLARATIONS = SCOPE__DECLARATIONS;
+	int REGION2__DECLARATIONS = SCOPE__DECLARATIONS;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>For</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int CONCURRENCY__FOR = SCOPE__FOR;
+	int REGION2__FOR = SCOPE__FOR;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Parent State</b></em>' container reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int CONCURRENCY__PARENT_STATE = SCOPE_FEATURE_COUNT + 0;
+	int REGION2__PARENT_STATE = SCOPE_FEATURE_COUNT + 0;
 
-    /**
-	 * The number of structural features of the '<em>Concurrency</em>' class.
+				/**
+	 * The number of structural features of the '<em>Region2</em>' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int CONCURRENCY_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 1;
+	int REGION2_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 1;
 
-    /**
+				/**
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl <em>Controlflow Region</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getControlflowRegion()
+	 * @generated
+	 */
+	int CONTROLFLOW_REGION = 6;
+
+				/**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int REGION__ANNOTATIONS = CONCURRENCY__ANNOTATIONS;
+	int CONTROLFLOW_REGION__ANNOTATIONS = REGION2__ANNOTATIONS;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int REGION__ID = CONCURRENCY__ID;
+	int CONTROLFLOW_REGION__ID = REGION2__ID;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int REGION__LABEL = CONCURRENCY__LABEL;
+	int CONTROLFLOW_REGION__LABEL = REGION2__LABEL;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int REGION__LOCAL_ACTIONS = CONCURRENCY__LOCAL_ACTIONS;
+	int CONTROLFLOW_REGION__LOCAL_ACTIONS = REGION2__LOCAL_ACTIONS;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int REGION__REFERENCED_SCOPE = CONCURRENCY__REFERENCED_SCOPE;
+	int CONTROLFLOW_REGION__REFERENCED_SCOPE = REGION2__REFERENCED_SCOPE;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int REGION__BINDINGS = CONCURRENCY__BINDINGS;
+	int CONTROLFLOW_REGION__BINDINGS = REGION2__BINDINGS;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int REGION__DECLARATIONS = CONCURRENCY__DECLARATIONS;
+	int CONTROLFLOW_REGION__DECLARATIONS = REGION2__DECLARATIONS;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>For</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int REGION__FOR = CONCURRENCY__FOR;
+	int CONTROLFLOW_REGION__FOR = REGION2__FOR;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Parent State</b></em>' container reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int REGION__PARENT_STATE = CONCURRENCY__PARENT_STATE;
+	int CONTROLFLOW_REGION__PARENT_STATE = REGION2__PARENT_STATE;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>States</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int REGION__STATES = CONCURRENCY_FEATURE_COUNT + 0;
+	int CONTROLFLOW_REGION__STATES = REGION2_FEATURE_COUNT + 0;
 
-    /**
-	 * The number of structural features of the '<em>Region</em>' class.
+				/**
+	 * The number of structural features of the '<em>Controlflow Region</em>' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int REGION_FEATURE_COUNT = CONCURRENCY_FEATURE_COUNT + 1;
+	int CONTROLFLOW_REGION_FEATURE_COUNT = REGION2_FEATURE_COUNT + 1;
 
-    /**
+				/**
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl <em>Dataflow Region</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflowRegion()
+	 * @generated
+	 */
+	int DATAFLOW_REGION = 7;
+
+				/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION__ANNOTATIONS = REGION2__ANNOTATIONS;
+
+				/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION__ID = REGION2__ID;
+
+				/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION__LABEL = REGION2__LABEL;
+
+				/**
+	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION__LOCAL_ACTIONS = REGION2__LOCAL_ACTIONS;
+
+				/**
+	 * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION__REFERENCED_SCOPE = REGION2__REFERENCED_SCOPE;
+
+				/**
+	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION__BINDINGS = REGION2__BINDINGS;
+
+				/**
+	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION__DECLARATIONS = REGION2__DECLARATIONS;
+
+				/**
+	 * The feature id for the '<em><b>For</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION__FOR = REGION2__FOR;
+
+				/**
+	 * The feature id for the '<em><b>Parent State</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION__PARENT_STATE = REGION2__PARENT_STATE;
+
+				/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION__NODES = REGION2_FEATURE_COUNT + 0;
+
+				/**
+	 * The feature id for the '<em><b>Equations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION__EQUATIONS = REGION2_FEATURE_COUNT + 1;
+
+				/**
+	 * The number of structural features of the '<em>Dataflow Region</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION_FEATURE_COUNT = REGION2_FEATURE_COUNT + 2;
+
+				/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.NodeImpl <em>Node</em>}' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -756,124 +874,6 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 */
     int DEFINE_NODE = 11;
-
-    /**
-	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowImpl <em>Dataflow</em>}' class.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.sccharts.impl.DataflowImpl
-	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflow()
-	 * @generated
-	 */
-    int DATAFLOW = 7;
-
-    /**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int DATAFLOW__ANNOTATIONS = CONCURRENCY__ANNOTATIONS;
-
-    /**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int DATAFLOW__ID = CONCURRENCY__ID;
-
-    /**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int DATAFLOW__LABEL = CONCURRENCY__LABEL;
-
-    /**
-	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int DATAFLOW__LOCAL_ACTIONS = CONCURRENCY__LOCAL_ACTIONS;
-
-    /**
-	 * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int DATAFLOW__REFERENCED_SCOPE = CONCURRENCY__REFERENCED_SCOPE;
-
-    /**
-	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int DATAFLOW__BINDINGS = CONCURRENCY__BINDINGS;
-
-    /**
-	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int DATAFLOW__DECLARATIONS = CONCURRENCY__DECLARATIONS;
-
-    /**
-	 * The feature id for the '<em><b>For</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int DATAFLOW__FOR = CONCURRENCY__FOR;
-
-    /**
-	 * The feature id for the '<em><b>Parent State</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int DATAFLOW__PARENT_STATE = CONCURRENCY__PARENT_STATE;
-
-    /**
-	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int DATAFLOW__NODES = CONCURRENCY_FEATURE_COUNT + 0;
-
-    /**
-	 * The feature id for the '<em><b>Equations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int DATAFLOW__EQUATIONS = CONCURRENCY_FEATURE_COUNT + 1;
-
-    /**
-	 * The number of structural features of the '<em>Dataflow</em>' class.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int DATAFLOW_FEATURE_COUNT = CONCURRENCY_FEATURE_COUNT + 2;
 
     /**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -2068,27 +2068,6 @@ public interface SCChartsPackage extends EPackage {
     EReference getEmission_NewValue();
 
     /**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Region <em>Region</em>}'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Region</em>'.
-	 * @see de.cau.cs.kieler.sccharts.Region
-	 * @generated
-	 */
-    EClass getRegion();
-
-    /**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Region#getStates <em>States</em>}'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>States</em>'.
-	 * @see de.cau.cs.kieler.sccharts.Region#getStates()
-	 * @see #getRegion()
-	 * @generated
-	 */
-    EReference getRegion_States();
-
-    /**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Node <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2293,38 +2272,6 @@ public interface SCChartsPackage extends EPackage {
     EReference getEquation_ValuedObject();
 
     /**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Dataflow <em>Dataflow</em>}'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Dataflow</em>'.
-	 * @see de.cau.cs.kieler.sccharts.Dataflow
-	 * @generated
-	 */
-    EClass getDataflow();
-
-    /**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Dataflow#getNodes <em>Nodes</em>}'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Nodes</em>'.
-	 * @see de.cau.cs.kieler.sccharts.Dataflow#getNodes()
-	 * @see #getDataflow()
-	 * @generated
-	 */
-    EReference getDataflow_Nodes();
-
-    /**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Dataflow#getEquations <em>Equations</em>}'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Equations</em>'.
-	 * @see de.cau.cs.kieler.sccharts.Dataflow#getEquations()
-	 * @see #getDataflow()
-	 * @generated
-	 */
-    EReference getDataflow_Equations();
-
-    /**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2378,17 +2325,17 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getState_Type();
 
     /**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.State#getConcurrencies <em>Concurrencies</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.State#getRegions <em>Regions</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Concurrencies</em>'.
-	 * @see de.cau.cs.kieler.sccharts.State#getConcurrencies()
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Regions</em>'.
+	 * @see de.cau.cs.kieler.sccharts.State#getRegions()
 	 * @see #getState()
 	 * @generated
 	 */
-    EReference getState_Concurrencies();
+	EReference getState_Regions();
 
-    /**
+				/**
 	 * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.State#getParentRegion <em>Parent Region</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2444,27 +2391,80 @@ public interface SCChartsPackage extends EPackage {
     EReference getState_IncomingTransitions();
 
     /**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Concurrency <em>Concurrency</em>}'.
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Region2 <em>Region2</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Concurrency</em>'.
-	 * @see de.cau.cs.kieler.sccharts.Concurrency
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Region2</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Region2
 	 * @generated
 	 */
-    EClass getConcurrency();
+	EClass getRegion2();
 
-    /**
-	 * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Concurrency#getParentState <em>Parent State</em>}'.
+				/**
+	 * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Region2#getParentState <em>Parent State</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @return the meta object for the container reference '<em>Parent State</em>'.
-	 * @see de.cau.cs.kieler.sccharts.Concurrency#getParentState()
-	 * @see #getConcurrency()
+	 * @see de.cau.cs.kieler.sccharts.Region2#getParentState()
+	 * @see #getRegion2()
 	 * @generated
 	 */
-    EReference getConcurrency_ParentState();
+	EReference getRegion2_ParentState();
 
-    /**
+				/**
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ControlflowRegion <em>Controlflow Region</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Controlflow Region</em>'.
+	 * @see de.cau.cs.kieler.sccharts.ControlflowRegion
+	 * @generated
+	 */
+	EClass getControlflowRegion();
+
+				/**
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.ControlflowRegion#getStates <em>States</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>States</em>'.
+	 * @see de.cau.cs.kieler.sccharts.ControlflowRegion#getStates()
+	 * @see #getControlflowRegion()
+	 * @generated
+	 */
+	EReference getControlflowRegion_States();
+
+				/**
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DataflowRegion <em>Dataflow Region</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Dataflow Region</em>'.
+	 * @see de.cau.cs.kieler.sccharts.DataflowRegion
+	 * @generated
+	 */
+	EClass getDataflowRegion();
+
+				/**
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.DataflowRegion#getNodes <em>Nodes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Nodes</em>'.
+	 * @see de.cau.cs.kieler.sccharts.DataflowRegion#getNodes()
+	 * @see #getDataflowRegion()
+	 * @generated
+	 */
+	EReference getDataflowRegion_Nodes();
+
+				/**
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.DataflowRegion#getEquations <em>Equations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Equations</em>'.
+	 * @see de.cau.cs.kieler.sccharts.DataflowRegion#getEquations()
+	 * @see #getDataflowRegion()
+	 * @generated
+	 */
+	EReference getDataflowRegion_Equations();
+
+				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Transition <em>Transition</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2956,24 +2956,6 @@ public interface SCChartsPackage extends EPackage {
         EReference EMISSION__NEW_VALUE = eINSTANCE.getEmission_NewValue();
 
         /**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
-		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.sccharts.impl.RegionImpl
-		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion()
-		 * @generated
-		 */
-        EClass REGION = eINSTANCE.getRegion();
-
-        /**
-		 * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-		 * @generated
-		 */
-        EReference REGION__STATES = eINSTANCE.getRegion_States();
-
-        /**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.NodeImpl <em>Node</em>}' class.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3136,32 +3118,6 @@ public interface SCChartsPackage extends EPackage {
         EReference EQUATION__VALUED_OBJECT = eINSTANCE.getEquation_ValuedObject();
 
         /**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowImpl <em>Dataflow</em>}' class.
-		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.sccharts.impl.DataflowImpl
-		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflow()
-		 * @generated
-		 */
-        EClass DATAFLOW = eINSTANCE.getDataflow();
-
-        /**
-		 * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-		 * @generated
-		 */
-        EReference DATAFLOW__NODES = eINSTANCE.getDataflow_Nodes();
-
-        /**
-		 * The meta object literal for the '<em><b>Equations</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-		 * @generated
-		 */
-        EReference DATAFLOW__EQUATIONS = eINSTANCE.getDataflow_Equations();
-
-        /**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.BindingImpl <em>Binding</em>}' class.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3206,14 +3162,14 @@ public interface SCChartsPackage extends EPackage {
         EAttribute STATE__TYPE = eINSTANCE.getState_Type();
 
         /**
-		 * The meta object literal for the '<em><b>Concurrencies</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Regions</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference STATE__CONCURRENCIES = eINSTANCE.getState_Concurrencies();
+		EReference STATE__REGIONS = eINSTANCE.getState_Regions();
 
-        /**
+								/**
 		 * The meta object literal for the '<em><b>Parent Region</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3254,24 +3210,68 @@ public interface SCChartsPackage extends EPackage {
         EReference STATE__INCOMING_TRANSITIONS = eINSTANCE.getState_IncomingTransitions();
 
         /**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ConcurrencyImpl <em>Concurrency</em>}' class.
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.Region2Impl <em>Region2</em>}' class.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.sccharts.impl.ConcurrencyImpl
-		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getConcurrency()
+		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.sccharts.impl.Region2Impl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion2()
 		 * @generated
 		 */
-        EClass CONCURRENCY = eINSTANCE.getConcurrency();
+		EClass REGION2 = eINSTANCE.getRegion2();
 
-        /**
+								/**
 		 * The meta object literal for the '<em><b>Parent State</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference CONCURRENCY__PARENT_STATE = eINSTANCE.getConcurrency_ParentState();
+		EReference REGION2__PARENT_STATE = eINSTANCE.getRegion2_ParentState();
 
-        /**
+								/**
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl <em>Controlflow Region</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getControlflowRegion()
+		 * @generated
+		 */
+		EClass CONTROLFLOW_REGION = eINSTANCE.getControlflowRegion();
+
+								/**
+		 * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONTROLFLOW_REGION__STATES = eINSTANCE.getControlflowRegion_States();
+
+								/**
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl <em>Dataflow Region</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflowRegion()
+		 * @generated
+		 */
+		EClass DATAFLOW_REGION = eINSTANCE.getDataflowRegion();
+
+								/**
+		 * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATAFLOW_REGION__NODES = eINSTANCE.getDataflowRegion_Nodes();
+
+								/**
+		 * The meta object literal for the '<em><b>Equations</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DATAFLOW_REGION__EQUATIONS = eINSTANCE.getDataflowRegion_Equations();
+
+								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->

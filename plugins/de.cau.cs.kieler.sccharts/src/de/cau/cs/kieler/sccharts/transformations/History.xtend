@@ -21,7 +21,6 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.HistoryType
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
@@ -29,6 +28,7 @@ import java.util.ArrayList
 import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * SCCharts History Transformation.
@@ -101,10 +101,10 @@ class History extends AbstractExpansionTransformation implements Traceable {
             val List<ValuedObject> stateEnumsAll = new ArrayList
             val List<ValuedObject> stateEnumsDeep = new ArrayList
 
-            val regions = state.regions.immutableCopy
-            var regionsDeep = state.regions.immutableCopy as List<Region>
+            val regions = state.regions.filter(ControlflowRegion).toList
+            var regionsDeep = state.regions.filter(ControlflowRegion).toList as List<ControlflowRegion>
             if (!deepHistoryTransitions.nullOrEmpty) {
-                regionsDeep = state.allContainedRegions
+                regionsDeep = state.allContainedControlflowRegions
             }
 
             for (region : regionsDeep.toList) {

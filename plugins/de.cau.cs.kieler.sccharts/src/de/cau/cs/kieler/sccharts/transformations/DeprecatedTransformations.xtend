@@ -20,7 +20,6 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
@@ -28,6 +27,7 @@ import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -1905,9 +1905,9 @@ class ExposeLocalSignals {
     //-------------------------------------------------------------------------
     // -- OLD IMPLEMENTATION --
     // Traverse all states 
-    def void transformSCCAborts_OLD_IMPLEMENTATION_(State state, Region targetRootState) {
+    def void transformSCCAborts_OLD_IMPLEMENTATION_(State state, ControlflowRegion targetRootState) {
 
-        if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && state.outgoingTransitions.size() > 0) {
+        if ((state.hasInnerStatesOrControlflowRegions || state.hasInnerActions) && state.outgoingTransitions.size() > 0) {
 
             // Remember all outgoing transitions
             val originalOutgoingTransitions = ImmutableList::copyOf(state.outgoingTransitions);
@@ -1919,7 +1919,7 @@ class ExposeLocalSignals {
                 e|e.type == TransitionType::TERMINATION).size > 0;
 
             // Remember all regions
-            val originalRegions = ImmutableList::copyOf(state.regions);
+            val originalRegions = ImmutableList::copyOf(state.regions.filter(ControlflowRegion));
 
             // For a hierarchical state:
             // 1. for each existing region, create a new Aborted-auxiliary state
@@ -1936,7 +1936,7 @@ class ExposeLocalSignals {
             abortState.setId(state.id("Abort"));
             abortState.setLabel("Abort");
             abortState.setFinal(true);
-            val watcherRegion = SCChartsFactory::eINSTANCE.createRegion();
+            val watcherRegion = SCChartsFactory::eINSTANCE.createControlflowRegion();
             watcherRegion.setId(state.id("Ctrl"));
             watcherRegion.states.add(runState);
             watcherRegion.states.add(abortState);
@@ -2126,7 +2126,7 @@ class ExposeLocalSignals {
                 watcherTransition.setImmediate(true);
                 watcherTransition.setDelay(0);
 
-                val mainRegion = SCChartsFactory::eINSTANCE.createRegion();
+                val mainRegion = SCChartsFactory::eINSTANCE.createControlflowRegion();
                 mainRegion.setId(state.id("Body"));
                 val mainState = SCChartsFactory::eINSTANCE.createState();
                 mainState.setId(state.id("Main"));

@@ -25,7 +25,7 @@ import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.sccharts.Binding
 import de.cau.cs.kieler.sccharts.CallNode
-import de.cau.cs.kieler.sccharts.Dataflow
+import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Node
 import de.cau.cs.kieler.sccharts.ReferenceNode
 import de.cau.cs.kieler.sccharts.SCChartsFactory
@@ -39,7 +39,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * SCCharts Reference Transformation.
@@ -209,9 +209,9 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 
     
     def transformDataflows(State state) {
-    	val dataflows = <Dataflow> newHashSet
+    	val dataflows = <DataflowRegion> newHashSet
     	// traverse all dataflows
-    	state.getAllContainedStates.forEach[ dataflows += concurrencies.filter(typeof(Dataflow))]
+    	state.getAllContainedStates.forEach[ dataflows += regions.filter(typeof(DataflowRegion))]
     	val nodeMapping = <Node, State> newHashMap
     	for(dataflow : dataflows.immutableCopy) {
     		val parentState = dataflow.eContainer as State
@@ -523,7 +523,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                 }
             }
             // recursive call, to get all nested dataflows after reference
-            parentState.allContainedRegions.forEach[
+            parentState.regions.filter(ControlflowRegion).forEach[
                 states.forEach[
                     transform
                 ]
@@ -531,7 +531,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 			
             // remove (old) dataflow and empty regions
     		dataflow.remove
-    		for (r: parentState.regions.immutableCopy) {
+    		for (r: parentState.regions.filter(ControlflowRegion).toList) {
     		    if (r.states.size == 0) {
     		        r.remove
     		    }
@@ -539,7 +539,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
     	}
     	
     	// remove empty regions
-    	for(r : state.regions.immutableCopy) {
+    	for(r : state.regions.filter(ControlflowRegion).toList) {
     		if (r.states.size == 0) {
     		    r.remove
     		}

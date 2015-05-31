@@ -34,7 +34,6 @@ import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.FunctionCallEffect;
 import de.cau.cs.kieler.sccharts.LocalAction;
-import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
@@ -126,16 +125,16 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 				return createStateAdapter();
 			}
 			@Override
-			public Adapter caseConcurrency(Concurrency object) {
-				return createConcurrencyAdapter();
+			public Adapter caseRegion2(Region2 object) {
+				return createRegion2Adapter();
 			}
 			@Override
-			public Adapter caseRegion(Region object) {
-				return createRegionAdapter();
+			public Adapter caseControlflowRegion(ControlflowRegion object) {
+				return createControlflowRegionAdapter();
 			}
 			@Override
-			public Adapter caseDataflow(Dataflow object) {
-				return createDataflowAdapter();
+			public Adapter caseDataflowRegion(DataflowRegion object) {
+				return createDataflowRegionAdapter();
 			}
 			@Override
 			public Adapter caseNode(Node object) {
@@ -298,20 +297,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Region <em>Region</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.sccharts.Region
-	 * @generated
-	 */
-    public Adapter createRegionAdapter() {
-		return null;
-	}
-
-    /**
 	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Node <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -382,20 +367,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Dataflow <em>Dataflow</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.sccharts.Dataflow
-	 * @generated
-	 */
-    public Adapter createDataflowAdapter() {
-		return null;
-	}
-
-    /**
 	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
 	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -424,20 +395,48 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Concurrency <em>Concurrency</em>}'.
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Region2 <em>Region2</em>}'.
 	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.sccharts.Concurrency
+	 * @see de.cau.cs.kieler.sccharts.Region2
 	 * @generated
 	 */
-    public Adapter createConcurrencyAdapter() {
+	public Adapter createRegion2Adapter() {
 		return null;
 	}
 
-    /**
+				/**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.ControlflowRegion <em>Controlflow Region</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.sccharts.ControlflowRegion
+	 * @generated
+	 */
+	public Adapter createControlflowRegionAdapter() {
+		return null;
+	}
+
+				/**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.DataflowRegion <em>Dataflow Region</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.sccharts.DataflowRegion
+	 * @generated
+	 */
+	public Adapter createDataflowRegionAdapter() {
+		return null;
+	}
+
+				/**
 	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Transition <em>Transition</em>}'.
 	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;

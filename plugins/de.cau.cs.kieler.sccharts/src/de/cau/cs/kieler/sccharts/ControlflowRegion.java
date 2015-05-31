@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Region</b></em>'.
+ * A representation of the model object '<em><b>Controlflow Region</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -34,38 +34,38 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.Region#getStates <em>States</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.ControlflowRegion#getStates <em>States</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getControlflowRegion()
  * @model
  * @generated
  */
-public interface Region extends Concurrency {
-    /**
+public interface ControlflowRegion extends Region2 {
+	/**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+	String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
-    /**
+	/**
 	 * Returns the value of the '<em><b>States</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.sccharts.State}.
 	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getParentRegion <em>Parent Region</em>}'.
 	 * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>States</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>States</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>States</em>' containment reference list.
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion_States()
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getControlflowRegion_States()
 	 * @see de.cau.cs.kieler.sccharts.State#getParentRegion
 	 * @model opposite="parentRegion" containment="true"
 	 * @generated
 	 */
-    EList<State> getStates();
+	EList<State> getStates();
 
-} // Region
+} // ControlflowRegion

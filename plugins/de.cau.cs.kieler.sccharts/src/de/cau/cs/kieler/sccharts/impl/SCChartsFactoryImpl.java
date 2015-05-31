@@ -31,7 +31,6 @@ import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.FunctionCallEffect;
 import de.cau.cs.kieler.sccharts.HistoryType;
-import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
@@ -96,9 +95,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
 			case SCChartsPackage.ASSIGNMENT: return createAssignment();
 			case SCChartsPackage.EMISSION: return createEmission();
 			case SCChartsPackage.STATE: return createState();
-			case SCChartsPackage.CONCURRENCY: return createConcurrency();
-			case SCChartsPackage.REGION: return createRegion();
-			case SCChartsPackage.DATAFLOW: return createDataflow();
+			case SCChartsPackage.REGION2: return createRegion2();
+			case SCChartsPackage.CONTROLFLOW_REGION: return createControlflowRegion();
+			case SCChartsPackage.DATAFLOW_REGION: return createDataflowRegion();
 			case SCChartsPackage.NODE: return createNode();
 			case SCChartsPackage.REFERENCE_NODE: return createReferenceNode();
 			case SCChartsPackage.CALL_NODE: return createCallNode();
@@ -196,16 +195,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public Region createRegion() {
-		RegionImpl region = new RegionImpl();
-		return region;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
     public Node createNode() {
 		NodeImpl node = new NodeImpl();
 		return node;
@@ -256,16 +245,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public Dataflow createDataflow() {
-		DataflowImpl dataflow = new DataflowImpl();
-		return dataflow;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
     public Binding createBinding() {
 		BindingImpl binding = new BindingImpl();
 		return binding;
@@ -283,15 +262,35 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
 
     /**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public Concurrency createConcurrency() {
-		ConcurrencyImpl concurrency = new ConcurrencyImpl();
-		return concurrency;
+	public Region2 createRegion2() {
+		Region2Impl region2 = new Region2Impl();
+		return region2;
 	}
 
-    /**
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ControlflowRegion createControlflowRegion() {
+		ControlflowRegionImpl controlflowRegion = new ControlflowRegionImpl();
+		return controlflowRegion;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataflowRegion createDataflowRegion() {
+		DataflowRegionImpl dataflowRegion = new DataflowRegionImpl();
+		return dataflowRegion;
+	}
+
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated

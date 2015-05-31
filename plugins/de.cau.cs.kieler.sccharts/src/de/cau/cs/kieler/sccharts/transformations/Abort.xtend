@@ -28,6 +28,7 @@ import java.util.HashMap
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * SCCharts Abort Transformation.
@@ -110,20 +111,20 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
         //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
-        if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
+        if ((state.hasInnerStatesOrControlflowRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
             state.outgoingTransitions.setDefaultTrace;
             val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
 
             // Remember all outgoing transitions and regions (important: do not consider regions without inner states! => regions2)
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
-            val regions = state.regions2.immutableCopy
+            val regions = state.controlflowRegions2.immutableCopy
 
             // Only create a control region in the WTO case if there is at least one conditional termination
             // or a delayed termination
             val notCoreTerminations = outgoingTransitions.filter[e|
                 (e.typeTermination && (!(e.immediate2) || (e.trigger != null)))]
             val delayedWeekAborts = outgoingTransitions.filter[e|e.typeWeakAbort && !e.immediate2]
-            val finalStates = state.regions.filter[e|e.states.filter[ee|ee.final].size > 0].size > 0
+            val finalStates = state.regions.filter(ControlflowRegion).filter[e|e.states.filter[ee|ee.final].size > 0].size > 0
             val termination = outgoingTransitions.filter[e|e.typeTermination && e.trigger == null].size > 0
 
             val terminationHandlingNeeded = (notCoreTerminations.size > 0)
@@ -201,7 +202,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
-                                if (innerState.hasInnerStatesOrRegions || innerState.hasInnerActions) {
+                                if (innerState.hasInnerStatesOrControlflowRegions || innerState.hasInnerActions) {
                                     strongAbort.setTypeStrongAbort
                                 }
                                 strongAbort.setPriority(0)

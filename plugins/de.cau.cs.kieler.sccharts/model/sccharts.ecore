@@ -47,10 +47,10 @@
       <details key="documentation" value="A State is the main entity in a SyncChart. States are located in a {@link Region}.&#xA;A SyncChart itself is represented by a top-level root Region that contains&#xA;exactly one root State. Every State may contain multiple parallel Regions&#xA;whereas a Region contains multiple States. This allows nested State&#xA;machines with parallelism.&#xA;&lt;p>&#xA;A State may be initial or final or both. An initial State is the entry State of a Region.&#xA;sccharts may only have one initial State per Region. A final State indcates that&#xA;its parent Region has terminated and nothing needs to be done in that Region&#xA;and its parent State may be left via a normal termination transition.&#xA;&lt;p>&#xA;A State is also a Scope and hence may carry an interface declaration and is&#xA;identified by id and label.&#xA;&lt;p>&#xA;States have a type to indicate different properties of States. See {@link StateType}."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//StateType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="concurrencies" upperBound="-1"
-        eType="#//Concurrency" containment="true" eOpposite="#//Concurrency/parentState"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parentRegion" eType="#//Region"
-        eOpposite="#//Region/states"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
+        eType="#//Region2" containment="true" eOpposite="#//Region2/parentState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentRegion" eType="#//ControlflowRegion"
+        eOpposite="#//ControlflowRegion/states"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="initial" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="final" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions" upperBound="-1"
@@ -58,18 +58,18 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomingTransitions" upperBound="-1"
         eType="#//Transition" eOpposite="#//Transition/targetState"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Concurrency" eSuperTypes="#//Scope">
+  <eClassifiers xsi:type="ecore:EClass" name="Region2" eSuperTypes="#//Scope">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"
-        eOpposite="#//State/concurrencies"/>
+        eOpposite="#//State/regions"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//Concurrency">
+  <eClassifiers xsi:type="ecore:EClass" name="ControlflowRegion" eSuperTypes="#//Region2">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Regions represent a parallelism in sccharts. A {@link State} may contain&#xA;multiple Regions and each Region may contain multiple States. The Regions&#xA;are then logically executed in parallel. A SyncChart gets represented by one root Region &#xA;that contains exactly one root State.&#xA;&lt;p>&#xA;A Region is a {@link Scope} and therefore gets identified by label and id&#xA;and carries an interface declaration. Hence a Region may declare&#xA;local signals or variables."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
         eType="#//State" containment="true" eOpposite="#//State/parentRegion"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Dataflow" eSuperTypes="#//Concurrency">
+  <eClassifiers xsi:type="ecore:EClass" name="DataflowRegion" eSuperTypes="#//Region2">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Regions represent a parallelism in sccharts. A {@link State} may contain&#xA;multiple Regions and each Region may contain multiple States. The Regions&#xA;are then logically executed in parallel. A SyncChart gets represented by one root Region &#xA;that contains exactly one root State.&#xA;&lt;p>&#xA;A Region is a {@link Scope} and therefore gets identified by label and id&#xA;and carries an interface declaration. Hence a Region may declare&#xA;local signals or variables."/>
     </eAnnotations>

@@ -13,13 +13,11 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Dataflow</b></em>'.
+ * A representation of the model object '<em><b>Dataflow Region</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -36,53 +34,53 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.Dataflow#getNodes <em>Nodes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Dataflow#getEquations <em>Equations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.DataflowRegion#getNodes <em>Nodes</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.DataflowRegion#getEquations <em>Equations</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflow()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflowRegion()
  * @model
  * @generated
  */
-public interface Dataflow extends Concurrency {
-    /**
+public interface DataflowRegion extends Region2 {
+	/**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+	String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
-    /**
+	/**
 	 * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.sccharts.Node}.
 	 * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Nodes</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Nodes</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Nodes</em>' containment reference list.
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflow_Nodes()
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflowRegion_Nodes()
 	 * @model containment="true"
 	 * @generated
 	 */
-    EList<Node> getNodes();
+	EList<Node> getNodes();
 
-    /**
+	/**
 	 * Returns the value of the '<em><b>Equations</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.sccharts.Equation}.
 	 * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Equations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Equations</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Equations</em>' containment reference list.
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflow_Equations()
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflowRegion_Equations()
 	 * @model containment="true"
 	 * @generated
 	 */
-    EList<Equation> getEquations();
+	EList<Equation> getEquations();
 
-} // Dataflow
+} // DataflowRegion

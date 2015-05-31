@@ -123,12 +123,12 @@ class AbortWTODeep extends AbstractExpansionTransformation {
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
         //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
-        if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
+        if ((state.hasInnerStatesOrControlflowRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
             val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
 
             // Remember all outgoing transitions and regions (important: do not consider regions without inner states! => regions2)
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
-            val regions = state.regions2.toList.immutableCopy
+            val regions = state.controlflowRegions2.toList.immutableCopy
 
             // .. || stateHasUntransformedTransitions : for conditional terminations!
             if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
@@ -183,7 +183,7 @@ class AbortWTODeep extends AbstractExpansionTransformation {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
-                                if (innerState.hasInnerStatesOrRegions || innerState.hasInnerActions) {
+                                if (innerState.hasInnerStatesOrControlflowRegions || innerState.hasInnerActions) {
 
                                     // HERE DIFFERENCE TO ABORT1()
                                     // We dig deep in the hierarchy and connect all states with immediate transitions
@@ -191,7 +191,7 @@ class AbortWTODeep extends AbstractExpansionTransformation {
                                     // This leads to more transitions but avoids more variables.
                                     strongAbort.setTypeTermination
                                     val allInnerSimpleStates = innerState.allContainedStatesList.filter[
-                                        !(hasInnerStatesOrRegions || hasInnerActions)].filter[!final]
+                                        !(hasInnerStatesOrControlflowRegions || hasInnerActions)].filter[!final]
                                     for (innerSimpleState : allInnerSimpleStates) {
                                         val innerFinalStates = innerSimpleState.parentRegion.states.filter[final]
                                         var State innerAbortedState;

@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * SCCharts Exit Transformation.
@@ -92,7 +93,7 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void prepareExit(State state, State targetRootState) {
-        for (region : state.regions) {
+        for (region : state.regions.filter(ControlflowRegion)) {
             val finalStates = region.finalStates
             if (finalStates.size > 1) {
                 val firstFinalState = finalStates.get(0)
@@ -117,13 +118,13 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
             var State firstState
             var State lastState
 
-            if (!state.hasInnerStatesOrRegions) {
+            if (!state.hasInnerStatesOrControlflowRegions) {
                 state.regions.clear // FIX: need to erase dummy single region
                 val region = state.createRegion(GENERATED_PREFIX + "Exit")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")
-            } else if (state.regions.size == 1 && !state.regions.get(0).finalStates.nullOrEmpty) {
-                val region = state.regions.get(0)
+            } else if (state.regions.filter(ControlflowRegion).size == 1 && !state.regions.filter(ControlflowRegion).get(0).finalStates.nullOrEmpty) {
+                val region = state.regions.filter(ControlflowRegion).get(0)
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")
 
                 firstState = region.finalStates.get(0) //every region MUST have an initial state

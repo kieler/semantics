@@ -67,15 +67,6 @@ public interface SCChartsFactory extends EFactory {
     Emission createEmission();
 
     /**
-	 * Returns a new object of class '<em>Region</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Region</em>'.
-	 * @generated
-	 */
-    Region createRegion();
-
-    /**
 	 * Returns a new object of class '<em>Node</em>'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -121,15 +112,6 @@ public interface SCChartsFactory extends EFactory {
     Equation createEquation();
 
     /**
-	 * Returns a new object of class '<em>Dataflow</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Dataflow</em>'.
-	 * @generated
-	 */
-    Dataflow createDataflow();
-
-    /**
 	 * Returns a new object of class '<em>Binding</em>'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -148,15 +130,33 @@ public interface SCChartsFactory extends EFactory {
     State createState();
 
     /**
-	 * Returns a new object of class '<em>Concurrency</em>'.
+	 * Returns a new object of class '<em>Region2</em>'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Concurrency</em>'.
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Region2</em>'.
 	 * @generated
 	 */
-    Concurrency createConcurrency();
+	Region2 createRegion2();
 
-    /**
+				/**
+	 * Returns a new object of class '<em>Controlflow Region</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Controlflow Region</em>'.
+	 * @generated
+	 */
+	ControlflowRegion createControlflowRegion();
+
+				/**
+	 * Returns a new object of class '<em>Dataflow Region</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dataflow Region</em>'.
+	 * @generated
+	 */
+	DataflowRegion createDataflowRegion();
+
+				/**
 	 * Returns a new object of class '<em>Transition</em>'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
