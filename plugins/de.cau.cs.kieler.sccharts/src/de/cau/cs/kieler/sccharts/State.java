@@ -94,8 +94,8 @@ public interface State extends Scope {
 
     /**
 	 * Returns the value of the '<em><b>Regions</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.sccharts.Region2}.
-	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Region2#getParentState <em>Parent State</em>}'.
+	 * The list contents are of type {@link de.cau.cs.kieler.sccharts.Region}.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Region#getParentState <em>Parent State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Regions</em>' containment reference list isn't clear,
@@ -104,11 +104,11 @@ public interface State extends Scope {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Regions</em>' containment reference list.
 	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_Regions()
-	 * @see de.cau.cs.kieler.sccharts.Region2#getParentState
+	 * @see de.cau.cs.kieler.sccharts.Region#getParentState
 	 * @model opposite="parentState" containment="true"
 	 * @generated
 	 */
-	EList<Region2> getRegions();
+	EList<Region> getRegions();
 
 				/**
 	 * Returns the value of the '<em><b>Parent Region</b></em>' container reference.

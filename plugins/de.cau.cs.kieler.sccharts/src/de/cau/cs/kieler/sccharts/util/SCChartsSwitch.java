@@ -139,18 +139,18 @@ public class SCChartsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case SCChartsPackage.REGION2: {
-				Region2 region2 = (Region2)theEObject;
-				T result = caseRegion2(region2);
-				if (result == null) result = caseScope(region2);
-				if (result == null) result = caseAnnotatable(region2);
+			case SCChartsPackage.REGION: {
+				Region region = (Region)theEObject;
+				T result = caseRegion(region);
+				if (result == null) result = caseScope(region);
+				if (result == null) result = caseAnnotatable(region);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case SCChartsPackage.CONTROLFLOW_REGION: {
 				ControlflowRegion controlflowRegion = (ControlflowRegion)theEObject;
 				T result = caseControlflowRegion(controlflowRegion);
-				if (result == null) result = caseRegion2(controlflowRegion);
+				if (result == null) result = caseRegion(controlflowRegion);
 				if (result == null) result = caseScope(controlflowRegion);
 				if (result == null) result = caseAnnotatable(controlflowRegion);
 				if (result == null) result = defaultCase(theEObject);
@@ -159,7 +159,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
 			case SCChartsPackage.DATAFLOW_REGION: {
 				DataflowRegion dataflowRegion = (DataflowRegion)theEObject;
 				T result = caseDataflowRegion(dataflowRegion);
-				if (result == null) result = caseRegion2(dataflowRegion);
+				if (result == null) result = caseRegion(dataflowRegion);
 				if (result == null) result = caseScope(dataflowRegion);
 				if (result == null) result = caseAnnotatable(dataflowRegion);
 				if (result == null) result = defaultCase(theEObject);
@@ -471,17 +471,17 @@ public class SCChartsSwitch<T> extends Switch<T> {
 	}
 
     /**
-	 * Returns the result of interpreting the object as an instance of '<em>Region2</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Region</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Region2</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Region</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseRegion2(Region2 object) {
+	public T caseRegion(Region object) {
 		return null;
 	}
 

@@ -42,7 +42,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface ControlflowRegion extends Region2 {
+public interface ControlflowRegion extends Region {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

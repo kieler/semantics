@@ -125,8 +125,8 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 				return createStateAdapter();
 			}
 			@Override
-			public Adapter caseRegion2(Region2 object) {
-				return createRegion2Adapter();
+			public Adapter caseRegion(Region object) {
+				return createRegionAdapter();
 			}
 			@Override
 			public Adapter caseControlflowRegion(ControlflowRegion object) {
@@ -395,16 +395,16 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Region2 <em>Region2</em>}'.
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Region <em>Region</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.sccharts.Region2
+	 * @see de.cau.cs.kieler.sccharts.Region
 	 * @generated
 	 */
-	public Adapter createRegion2Adapter() {
+	public Adapter createRegionAdapter() {
 		return null;
 	}
 

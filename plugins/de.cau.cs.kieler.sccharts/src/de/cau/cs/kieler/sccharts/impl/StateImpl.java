@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
-import de.cau.cs.kieler.sccharts.Region2;
+import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.StateType;
@@ -92,7 +92,7 @@ public class StateImpl extends ScopeImpl implements State {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Region2> regions;
+	protected EList<Region> regions;
 
 	/**
 	 * The default value of the '{@link #isInitial() <em>Initial</em>}' attribute.
@@ -199,9 +199,9 @@ public class StateImpl extends ScopeImpl implements State {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Region2> getRegions() {
+	public EList<Region> getRegions() {
 		if (regions == null) {
-			regions = new EObjectContainmentWithInverseEList<Region2>(Region2.class, this, SCChartsPackage.STATE__REGIONS, SCChartsPackage.REGION2__PARENT_STATE);
+			regions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, SCChartsPackage.STATE__REGIONS, SCChartsPackage.REGION__PARENT_STATE);
 		}
 		return regions;
 	}
@@ -410,7 +410,7 @@ public class StateImpl extends ScopeImpl implements State {
 				return;
 			case SCChartsPackage.STATE__REGIONS:
 				getRegions().clear();
-				getRegions().addAll((Collection<? extends Region2>)newValue);
+				getRegions().addAll((Collection<? extends Region>)newValue);
 				return;
 			case SCChartsPackage.STATE__PARENT_REGION:
 				setParentRegion((ControlflowRegion)newValue);

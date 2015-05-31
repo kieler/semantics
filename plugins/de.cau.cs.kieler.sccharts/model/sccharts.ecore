@@ -48,7 +48,7 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//StateType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
-        eType="#//Region2" containment="true" eOpposite="#//Region2/parentState"/>
+        eType="#//Region" containment="true" eOpposite="#//Region/parentState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentRegion" eType="#//ControlflowRegion"
         eOpposite="#//ControlflowRegion/states"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="initial" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -58,18 +58,18 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomingTransitions" upperBound="-1"
         eType="#//Transition" eOpposite="#//Transition/targetState"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Region2" eSuperTypes="#//Scope">
+  <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//Scope">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"
         eOpposite="#//State/regions"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ControlflowRegion" eSuperTypes="#//Region2">
+  <eClassifiers xsi:type="ecore:EClass" name="ControlflowRegion" eSuperTypes="#//Region">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Regions represent a parallelism in sccharts. A {@link State} may contain&#xA;multiple Regions and each Region may contain multiple States. The Regions&#xA;are then logically executed in parallel. A SyncChart gets represented by one root Region &#xA;that contains exactly one root State.&#xA;&lt;p>&#xA;A Region is a {@link Scope} and therefore gets identified by label and id&#xA;and carries an interface declaration. Hence a Region may declare&#xA;local signals or variables."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
         eType="#//State" containment="true" eOpposite="#//State/parentRegion"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DataflowRegion" eSuperTypes="#//Region2">
+  <eClassifiers xsi:type="ecore:EClass" name="DataflowRegion" eSuperTypes="#//Region">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Regions represent a parallelism in sccharts. A {@link State} may contain&#xA;multiple Regions and each Region may contain multiple States. The Regions&#xA;are then logically executed in parallel. A SyncChart gets represented by one root Region &#xA;that contains exactly one root State.&#xA;&lt;p>&#xA;A Region is a {@link Scope} and therefore gets identified by label and id&#xA;and carries an interface declaration. Hence a Region may declare&#xA;local signals or variables."/>
     </eAnnotations>

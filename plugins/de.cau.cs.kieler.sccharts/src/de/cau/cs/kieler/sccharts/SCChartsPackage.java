@@ -509,14 +509,14 @@ public interface SCChartsPackage extends EPackage {
     int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 7;
 
     /**
-	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.Region2Impl <em>Region2</em>}' class.
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.sccharts.impl.Region2Impl
-	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion2()
+	 * @see de.cau.cs.kieler.sccharts.impl.RegionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion()
 	 * @generated
 	 */
-	int REGION2 = 5;
+	int REGION = 5;
 
 				/**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -525,7 +525,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REGION2__ANNOTATIONS = SCOPE__ANNOTATIONS;
+	int REGION__ANNOTATIONS = SCOPE__ANNOTATIONS;
 
 				/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -534,7 +534,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REGION2__ID = SCOPE__ID;
+	int REGION__ID = SCOPE__ID;
 
 				/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -543,7 +543,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REGION2__LABEL = SCOPE__LABEL;
+	int REGION__LABEL = SCOPE__LABEL;
 
 				/**
 	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
@@ -552,7 +552,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REGION2__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
+	int REGION__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
 
 				/**
 	 * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
@@ -561,7 +561,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REGION2__REFERENCED_SCOPE = SCOPE__REFERENCED_SCOPE;
+	int REGION__REFERENCED_SCOPE = SCOPE__REFERENCED_SCOPE;
 
 				/**
 	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
@@ -570,7 +570,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REGION2__BINDINGS = SCOPE__BINDINGS;
+	int REGION__BINDINGS = SCOPE__BINDINGS;
 
 				/**
 	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -579,7 +579,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REGION2__DECLARATIONS = SCOPE__DECLARATIONS;
+	int REGION__DECLARATIONS = SCOPE__DECLARATIONS;
 
 				/**
 	 * The feature id for the '<em><b>For</b></em>' containment reference.
@@ -588,7 +588,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REGION2__FOR = SCOPE__FOR;
+	int REGION__FOR = SCOPE__FOR;
 
 				/**
 	 * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -597,16 +597,16 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REGION2__PARENT_STATE = SCOPE_FEATURE_COUNT + 0;
+	int REGION__PARENT_STATE = SCOPE_FEATURE_COUNT + 0;
 
 				/**
-	 * The number of structural features of the '<em>Region2</em>' class.
+	 * The number of structural features of the '<em>Region</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REGION2_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 1;
+	int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 1;
 
 				/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl <em>Controlflow Region</em>}' class.
@@ -625,7 +625,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_REGION__ANNOTATIONS = REGION2__ANNOTATIONS;
+	int CONTROLFLOW_REGION__ANNOTATIONS = REGION__ANNOTATIONS;
 
 				/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -634,7 +634,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_REGION__ID = REGION2__ID;
+	int CONTROLFLOW_REGION__ID = REGION__ID;
 
 				/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -643,7 +643,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_REGION__LABEL = REGION2__LABEL;
+	int CONTROLFLOW_REGION__LABEL = REGION__LABEL;
 
 				/**
 	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
@@ -652,7 +652,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_REGION__LOCAL_ACTIONS = REGION2__LOCAL_ACTIONS;
+	int CONTROLFLOW_REGION__LOCAL_ACTIONS = REGION__LOCAL_ACTIONS;
 
 				/**
 	 * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
@@ -661,7 +661,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_REGION__REFERENCED_SCOPE = REGION2__REFERENCED_SCOPE;
+	int CONTROLFLOW_REGION__REFERENCED_SCOPE = REGION__REFERENCED_SCOPE;
 
 				/**
 	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
@@ -670,7 +670,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_REGION__BINDINGS = REGION2__BINDINGS;
+	int CONTROLFLOW_REGION__BINDINGS = REGION__BINDINGS;
 
 				/**
 	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -679,7 +679,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_REGION__DECLARATIONS = REGION2__DECLARATIONS;
+	int CONTROLFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
 
 				/**
 	 * The feature id for the '<em><b>For</b></em>' containment reference.
@@ -688,7 +688,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_REGION__FOR = REGION2__FOR;
+	int CONTROLFLOW_REGION__FOR = REGION__FOR;
 
 				/**
 	 * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -697,7 +697,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_REGION__PARENT_STATE = REGION2__PARENT_STATE;
+	int CONTROLFLOW_REGION__PARENT_STATE = REGION__PARENT_STATE;
 
 				/**
 	 * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -706,7 +706,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_REGION__STATES = REGION2_FEATURE_COUNT + 0;
+	int CONTROLFLOW_REGION__STATES = REGION_FEATURE_COUNT + 0;
 
 				/**
 	 * The number of structural features of the '<em>Controlflow Region</em>' class.
@@ -715,7 +715,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_REGION_FEATURE_COUNT = REGION2_FEATURE_COUNT + 1;
+	int CONTROLFLOW_REGION_FEATURE_COUNT = REGION_FEATURE_COUNT + 1;
 
 				/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl <em>Dataflow Region</em>}' class.
@@ -734,7 +734,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATAFLOW_REGION__ANNOTATIONS = REGION2__ANNOTATIONS;
+	int DATAFLOW_REGION__ANNOTATIONS = REGION__ANNOTATIONS;
 
 				/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -743,7 +743,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATAFLOW_REGION__ID = REGION2__ID;
+	int DATAFLOW_REGION__ID = REGION__ID;
 
 				/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -752,7 +752,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATAFLOW_REGION__LABEL = REGION2__LABEL;
+	int DATAFLOW_REGION__LABEL = REGION__LABEL;
 
 				/**
 	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
@@ -761,7 +761,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATAFLOW_REGION__LOCAL_ACTIONS = REGION2__LOCAL_ACTIONS;
+	int DATAFLOW_REGION__LOCAL_ACTIONS = REGION__LOCAL_ACTIONS;
 
 				/**
 	 * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
@@ -770,7 +770,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATAFLOW_REGION__REFERENCED_SCOPE = REGION2__REFERENCED_SCOPE;
+	int DATAFLOW_REGION__REFERENCED_SCOPE = REGION__REFERENCED_SCOPE;
 
 				/**
 	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
@@ -779,7 +779,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATAFLOW_REGION__BINDINGS = REGION2__BINDINGS;
+	int DATAFLOW_REGION__BINDINGS = REGION__BINDINGS;
 
 				/**
 	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -788,7 +788,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATAFLOW_REGION__DECLARATIONS = REGION2__DECLARATIONS;
+	int DATAFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
 
 				/**
 	 * The feature id for the '<em><b>For</b></em>' containment reference.
@@ -797,7 +797,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATAFLOW_REGION__FOR = REGION2__FOR;
+	int DATAFLOW_REGION__FOR = REGION__FOR;
 
 				/**
 	 * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -806,7 +806,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATAFLOW_REGION__PARENT_STATE = REGION2__PARENT_STATE;
+	int DATAFLOW_REGION__PARENT_STATE = REGION__PARENT_STATE;
 
 				/**
 	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
@@ -815,7 +815,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATAFLOW_REGION__NODES = REGION2_FEATURE_COUNT + 0;
+	int DATAFLOW_REGION__NODES = REGION_FEATURE_COUNT + 0;
 
 				/**
 	 * The feature id for the '<em><b>Equations</b></em>' containment reference list.
@@ -824,7 +824,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATAFLOW_REGION__EQUATIONS = REGION2_FEATURE_COUNT + 1;
+	int DATAFLOW_REGION__EQUATIONS = REGION_FEATURE_COUNT + 1;
 
 				/**
 	 * The number of structural features of the '<em>Dataflow Region</em>' class.
@@ -833,7 +833,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATAFLOW_REGION_FEATURE_COUNT = REGION2_FEATURE_COUNT + 2;
+	int DATAFLOW_REGION_FEATURE_COUNT = REGION_FEATURE_COUNT + 2;
 
 				/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.NodeImpl <em>Node</em>}' class.
@@ -2391,25 +2391,25 @@ public interface SCChartsPackage extends EPackage {
     EReference getState_IncomingTransitions();
 
     /**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Region2 <em>Region2</em>}'.
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Region <em>Region</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Region2</em>'.
-	 * @see de.cau.cs.kieler.sccharts.Region2
+	 * @return the meta object for class '<em>Region</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Region
 	 * @generated
 	 */
-	EClass getRegion2();
+	EClass getRegion();
 
 				/**
-	 * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Region2#getParentState <em>Parent State</em>}'.
+	 * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Region#getParentState <em>Parent State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the container reference '<em>Parent State</em>'.
-	 * @see de.cau.cs.kieler.sccharts.Region2#getParentState()
-	 * @see #getRegion2()
+	 * @see de.cau.cs.kieler.sccharts.Region#getParentState()
+	 * @see #getRegion()
 	 * @generated
 	 */
-	EReference getRegion2_ParentState();
+	EReference getRegion_ParentState();
 
 				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ControlflowRegion <em>Controlflow Region</em>}'.
@@ -3210,14 +3210,14 @@ public interface SCChartsPackage extends EPackage {
         EReference STATE__INCOMING_TRANSITIONS = eINSTANCE.getState_IncomingTransitions();
 
         /**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.Region2Impl <em>Region2</em>}' class.
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.sccharts.impl.Region2Impl
-		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion2()
+		 * @see de.cau.cs.kieler.sccharts.impl.RegionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion()
 		 * @generated
 		 */
-		EClass REGION2 = eINSTANCE.getRegion2();
+		EClass REGION = eINSTANCE.getRegion();
 
 								/**
 		 * The meta object literal for the '<em><b>Parent State</b></em>' container reference feature.
@@ -3225,7 +3225,7 @@ public interface SCChartsPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference REGION2__PARENT_STATE = eINSTANCE.getRegion2_ParentState();
+		EReference REGION__PARENT_STATE = eINSTANCE.getRegion_ParentState();
 
 								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl <em>Controlflow Region</em>}' class.

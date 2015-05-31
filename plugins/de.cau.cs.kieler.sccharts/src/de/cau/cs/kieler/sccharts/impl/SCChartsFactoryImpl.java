@@ -95,7 +95,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
 			case SCChartsPackage.ASSIGNMENT: return createAssignment();
 			case SCChartsPackage.EMISSION: return createEmission();
 			case SCChartsPackage.STATE: return createState();
-			case SCChartsPackage.REGION2: return createRegion2();
+			case SCChartsPackage.REGION: return createRegion();
 			case SCChartsPackage.CONTROLFLOW_REGION: return createControlflowRegion();
 			case SCChartsPackage.DATAFLOW_REGION: return createDataflowRegion();
 			case SCChartsPackage.NODE: return createNode();
@@ -265,9 +265,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Region2 createRegion2() {
-		Region2Impl region2 = new Region2Impl();
-		return region2;
+	public Region createRegion() {
+		RegionImpl region = new RegionImpl();
+		return region;
 	}
 
 				/**

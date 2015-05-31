@@ -14,9 +14,8 @@
 package de.cau.cs.kieler.sccharts.provider;
 
 
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
-
-import de.cau.cs.kieler.sccharts.ReferenceNode;
+import de.cau.cs.kieler.sccharts.DataflowRegion;
+import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import java.util.Collection;
@@ -27,17 +26,16 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.sccharts.ReferenceNode} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.sccharts.DataflowRegion} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ReferenceNodeItemProvider extends NodeItemProvider {
+public class DataflowRegionItemProvider extends RegionItemProvider {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -51,7 +49,7 @@ public class ReferenceNodeItemProvider extends NodeItemProvider {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ReferenceNodeItemProvider(AdapterFactory adapterFactory) {
+	public DataflowRegionItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -66,31 +64,8 @@ public class ReferenceNodeItemProvider extends NodeItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addReferencedScopePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Referenced Scope feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addReferencedScopePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ReferenceNode_referencedScope_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ReferenceNode_referencedScope_feature", "_UI_ReferenceNode_type"),
-				 SCChartsPackage.Literals.REFERENCE_NODE__REFERENCED_SCOPE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**
@@ -105,7 +80,8 @@ public class ReferenceNodeItemProvider extends NodeItemProvider {
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(SCChartsPackage.Literals.REFERENCE_NODE__PARAMETERS);
+			childrenFeatures.add(SCChartsPackage.Literals.DATAFLOW_REGION__NODES);
+			childrenFeatures.add(SCChartsPackage.Literals.DATAFLOW_REGION__EQUATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -124,14 +100,14 @@ public class ReferenceNodeItemProvider extends NodeItemProvider {
 	}
 
 	/**
-	 * This returns ReferenceNode.gif.
+	 * This returns DataflowRegion.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ReferenceNode"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DataflowRegion"));
 	}
 
 	/**
@@ -142,10 +118,10 @@ public class ReferenceNodeItemProvider extends NodeItemProvider {
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((ReferenceNode)object).getId();
+		String label = ((DataflowRegion)object).getId();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ReferenceNode_type") :
-			getString("_UI_ReferenceNode_type") + " " + label;
+			getString("_UI_DataflowRegion_type") :
+			getString("_UI_DataflowRegion_type") + " " + label;
 	}
 	
 
@@ -160,8 +136,9 @@ public class ReferenceNodeItemProvider extends NodeItemProvider {
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(ReferenceNode.class)) {
-			case SCChartsPackage.REFERENCE_NODE__PARAMETERS:
+		switch (notification.getFeatureID(DataflowRegion.class)) {
+			case SCChartsPackage.DATAFLOW_REGION__NODES:
+			case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -181,8 +158,28 @@ public class ReferenceNodeItemProvider extends NodeItemProvider {
 
 		newChildDescriptors.add
 			(createChildParameter
-				(SCChartsPackage.Literals.REFERENCE_NODE__PARAMETERS,
-				 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
+				(SCChartsPackage.Literals.DATAFLOW_REGION__NODES,
+				 SCChartsFactory.eINSTANCE.createNode()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.DATAFLOW_REGION__NODES,
+				 SCChartsFactory.eINSTANCE.createReferenceNode()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.DATAFLOW_REGION__NODES,
+				 SCChartsFactory.eINSTANCE.createCallNode()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.DATAFLOW_REGION__NODES,
+				 SCChartsFactory.eINSTANCE.createDefineNode()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.DATAFLOW_REGION__EQUATIONS,
+				 SCChartsFactory.eINSTANCE.createEquation()));
 	}
 
 }

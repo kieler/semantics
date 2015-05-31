@@ -130,13 +130,13 @@ public interface SCChartsFactory extends EFactory {
     State createState();
 
     /**
-	 * Returns a new object of class '<em>Region2</em>'.
+	 * Returns a new object of class '<em>Region</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Region2</em>'.
+	 * @return a new object of class '<em>Region</em>'.
 	 * @generated
 	 */
-	Region2 createRegion2();
+	Region createRegion();
 
 				/**
 	 * Returns a new object of class '<em>Controlflow Region</em>'.

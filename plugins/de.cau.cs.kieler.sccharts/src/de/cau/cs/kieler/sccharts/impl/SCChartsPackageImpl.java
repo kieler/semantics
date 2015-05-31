@@ -48,7 +48,7 @@ import de.cau.cs.kieler.sccharts.OutputNode;
 import de.cau.cs.kieler.sccharts.Receiver;
 import de.cau.cs.kieler.sccharts.ReferenceNode;
 import de.cau.cs.kieler.sccharts.ReferencedNode;
-import de.cau.cs.kieler.sccharts.Region2;
+import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
@@ -157,7 +157,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass region2EClass = null;
+	private EClass regionEClass = null;
 
 				/**
 	 * <!-- begin-user-doc -->
@@ -743,8 +743,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getRegion2() {
-		return region2EClass;
+	public EClass getRegion() {
+		return regionEClass;
 	}
 
 				/**
@@ -752,8 +752,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getRegion2_ParentState() {
-		return (EReference)region2EClass.getEStructuralFeatures().get(0);
+	public EReference getRegion_ParentState() {
+		return (EReference)regionEClass.getEStructuralFeatures().get(0);
 	}
 
 				/**
@@ -1153,8 +1153,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 		createEReference(stateEClass, STATE__OUTGOING_TRANSITIONS);
 		createEReference(stateEClass, STATE__INCOMING_TRANSITIONS);
 
-		region2EClass = createEClass(REGION2);
-		createEReference(region2EClass, REGION2__PARENT_STATE);
+		regionEClass = createEClass(REGION);
+		createEReference(regionEClass, REGION__PARENT_STATE);
 
 		controlflowRegionEClass = createEClass(CONTROLFLOW_REGION);
 		createEReference(controlflowRegionEClass, CONTROLFLOW_REGION__STATES);
@@ -1276,9 +1276,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 		assignmentEClass.getESuperTypes().add(this.getEffect());
 		emissionEClass.getESuperTypes().add(this.getEffect());
 		stateEClass.getESuperTypes().add(this.getScope());
-		region2EClass.getESuperTypes().add(this.getScope());
-		controlflowRegionEClass.getESuperTypes().add(this.getRegion2());
-		dataflowRegionEClass.getESuperTypes().add(this.getRegion2());
+		regionEClass.getESuperTypes().add(this.getScope());
+		controlflowRegionEClass.getESuperTypes().add(this.getRegion());
+		dataflowRegionEClass.getESuperTypes().add(this.getRegion());
 		nodeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
 		referenceNodeEClass.getESuperTypes().add(this.getNode());
 		callNodeEClass.getESuperTypes().add(this.getNode());
@@ -1318,15 +1318,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
 		initEClass(stateEClass, State.class, "State", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getState_Type(), this.getStateType(), "type", null, 1, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getState_Regions(), this.getRegion2(), this.getRegion2_ParentState(), "regions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getState_Regions(), this.getRegion(), this.getRegion_ParentState(), "regions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getState_ParentRegion(), this.getControlflowRegion(), this.getControlflowRegion_States(), "parentRegion", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getState_Initial(), ecorePackage.getEBoolean(), "initial", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getState_Final(), ecorePackage.getEBoolean(), "final", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getState_OutgoingTransitions(), this.getTransition(), this.getTransition_SourceState(), "outgoingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getState_IncomingTransitions(), this.getTransition(), this.getTransition_TargetState(), "incomingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(region2EClass, Region2.class, "Region2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRegion2_ParentState(), this.getState(), this.getState_Regions(), "parentState", null, 0, 1, Region2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(regionEClass, Region.class, "Region", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getRegion_ParentState(), this.getState(), this.getState_Regions(), "parentState", null, 0, 1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(controlflowRegionEClass, ControlflowRegion.class, "ControlflowRegion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getControlflowRegion_States(), this.getState(), this.getState_ParentRegion(), "states", null, 0, -1, ControlflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.AbstractTreeIterator;
 
 import com.google.common.base.Function;
 
+import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
@@ -31,27 +32,27 @@ import de.cau.cs.kieler.sccharts.State;
  * @kieler.design 2014-09-05 proposed 
  * @kieler.rating 2014-09-05 proposed yellow
  */
-public final class RegionIterator {
+public final class ControlflowRegionIterator {
 
-    public static Function<State, Iterator<Region>> GET_REGIONS =
-            new Function<State, Iterator<Region>>() {
+    public static Function<State, Iterator<ControlflowRegion>> GET_REGIONS =
+            new Function<State, Iterator<ControlflowRegion>>() {
         /**
          * {@inheritDoc}
          */
-        public Iterator<Region> apply(State s) {
+        public Iterator<ControlflowRegion> apply(State s) {
 //            return s.getConcurrencies().iterator();
             return null;
         }
     };
     
-    public static Iterator<Region> sccAllRegions(Region r) {
+    public static Iterator<Region> sccAllRegions(ControlflowRegion r) {
         return new AbstractTreeIterator<Region>((Region) r, true) {
 
             private static final long serialVersionUID = -4364507280963568556L;
 
             @Override
-            protected Iterator<? extends Region> getChildren(Object object) {
-                final Iterator<State> states = ((Region) object).getStates().iterator();
+            protected Iterator<? extends ControlflowRegion> getChildren(Object object) {
+                final Iterator<State> states = ((ControlflowRegion) object).getStates().iterator();
                 return concat(transform(states, GET_REGIONS));
             }
 
@@ -64,8 +65,8 @@ public final class RegionIterator {
             private static final long serialVersionUID = -4364507280963568556L;
 
             @Override
-            protected Iterator<? extends Region> getChildren(Object object) {
-                final Iterator<State> states = ((Region) object).getStates().iterator();
+            protected Iterator<? extends ControlflowRegion> getChildren(Object object) {
+                final Iterator<State> states = ((ControlflowRegion) object).getStates().iterator();
                 return concat(transform(states, GET_REGIONS));
             }
 

@@ -44,7 +44,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class DataflowRegionImpl extends Region2Impl implements DataflowRegion {
+public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

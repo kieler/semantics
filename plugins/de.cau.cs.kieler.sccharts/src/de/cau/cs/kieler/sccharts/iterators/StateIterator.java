@@ -24,7 +24,7 @@ import org.eclipse.emf.common.util.AbstractTreeIterator;
 
 import com.google.common.base.Function;
 
-import de.cau.cs.kieler.sccharts.Concurrency;
+import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
@@ -36,14 +36,14 @@ import de.cau.cs.kieler.sccharts.State;
  */
 public final class StateIterator {
 
-    public static Function<Concurrency, Iterator<State>> GET_STATES =
-            new Function<Concurrency, Iterator<State>>() {
+    public static Function<Region, Iterator<State>> GET_STATES =
+            new Function<Region, Iterator<State>>() {
         /**
          * {@inheritDoc}
          */
-        public Iterator<State> apply(Concurrency r) {
-            if (r instanceof Region) {
-                return ((Region)r).getStates().iterator();
+        public Iterator<State> apply(Region r) {
+            if (r instanceof ControlflowRegion) {
+                return ((ControlflowRegion)r).getStates().iterator();
             }
             List<State> empty = new ArrayList<State>();
             return empty.iterator();
@@ -57,7 +57,7 @@ public final class StateIterator {
 
             @Override
             protected Iterator<? extends State> getChildren(Object object) {
-                final Iterator<Concurrency> regions = ((State) object).getConcurrencies().iterator();
+                final Iterator<Region> regions = ((State) object).getRegions().iterator();
                 return concat(transform(regions, GET_STATES));
             }
 
@@ -71,14 +71,14 @@ public final class StateIterator {
 
             @Override
             protected Iterator<? extends State> getChildren(Object object) {
-                final Iterator<Concurrency> regions = ((State) object).getConcurrencies().iterator();
+                final Iterator<Region> regions = ((State) object).getRegions().iterator();
                 return concat(transform(regions, GET_STATES));
             }
 
         };
     };
     
-    public static Iterator<State> sccAllStates(Region r) {
+    public static Iterator<State> sccAllStates(ControlflowRegion r) {
         return concat(transform(r.getStates().iterator(),
                 new Function<State, Iterator<State>>() {
         /**
