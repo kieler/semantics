@@ -45,7 +45,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import org.eclipse.cdt.core.dom.ast.IASTExpression
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTExpressionStatement
-import de.cau.cs.kieler.sccharts.Dataflow
+import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import org.eclipse.cdt.core.model.CoreModel
@@ -59,6 +59,7 @@ import org.eclipse.cdt.internal.core.dom.parser.c.CASTUnaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * @author ssm
@@ -155,7 +156,7 @@ class CDTProcessor extends AbstractProductionTransformation {
             scc.createRegion => [
                 id = "_main"
                 label = id
-                root.concurrencies += it
+                root.regions += it
             ]
         ]
         
@@ -205,7 +206,7 @@ class CDTProcessor extends AbstractProductionTransformation {
                 s.id = "_S" + trC
                 s.label = s.id
             
-                parentState.concurrencies.filter(typeof(Region)).head.states += s
+                parentState.regions.filter(typeof(ControlflowRegion)).head.states += s
             ]
         } else {
             newState = state
@@ -221,10 +222,10 @@ class CDTProcessor extends AbstractProductionTransformation {
 //     org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer@60243ef3
 //      0        
         
-        stateF.concurrencies += scc.createRegion => [
+        stateF.regions += scc.createRegion => [
             id = "_r" + trC
         ]
-        stateF.concurrencies += scc.createDataflow => [
+        stateF.regions += scc.createDataflowRegion => [
             id = "_d" + trC
         ]
         
@@ -266,13 +267,12 @@ class CDTProcessor extends AbstractProductionTransformation {
             }
         }
         
-        stateF.concurrencies.immutableCopy.forEach [
-            if (it instanceof Region) {
-                if ((it as Region).states.empty) stateF.concurrencies.remove(it)
+        stateF.regions.immutableCopy.forEach [
+            if (it instanceof ControlflowRegion) {
+                if (it.states.empty) stateF.regions.remove(it)
             }
-            if (it instanceof Dataflow) {
-                val df = it as Dataflow 
-                if (df.nodes.empty && df.equations.empty) stateF.concurrencies.remove(it)
+            if (it instanceof DataflowRegion) {
+                if (it.nodes.empty && it.equations.empty) stateF.regions.remove(it)
             }
         ]
         
@@ -288,7 +288,7 @@ class CDTProcessor extends AbstractProductionTransformation {
                 s.id = state.id + trC + "T"
                 s.label = s.id
             
-                s.concurrencies += scc.createRegion => [
+                s.regions += scc.createRegion => [
                     id = s.id + "_r"
                     label = ""
                 ]
@@ -300,7 +300,7 @@ class CDTProcessor extends AbstractProductionTransformation {
                 s.id = state.id + trC + "F"
                 s.label = s.id
             
-                s.concurrencies += scc.createRegion => [
+                s.regions += scc.createRegion => [
                     id = s.id + "_r"
                     label = ""
                 ]
@@ -313,7 +313,7 @@ class CDTProcessor extends AbstractProductionTransformation {
                 s.label = s.id
                 s.setTypeConnector
             
-                s.concurrencies += scc.createRegion => [
+                s.regions += scc.createRegion => [
                     id = s.id + "_r"
                     label = ""
                 ]
@@ -443,7 +443,7 @@ class CDTProcessor extends AbstractProductionTransformation {
 //                    id = s.id + "_r"
 //                    label = ""
 //                ]            
-                s.concurrencies += scc.createDataflow => [
+                s.regions += scc.createDataflowRegion => [
                     id = s.id + "_d"
                     label = ""
                 ]            
@@ -458,7 +458,7 @@ class CDTProcessor extends AbstractProductionTransformation {
 //            expression = returnStatement.returnValue.createKExpression 
 //        ]
         
-        val df = returnState.dataflow
+        val df = returnState.dataflowRegion
         
         val eq = scc.createEquation
         eq.valuedObject = VOSet.filter[name.equals(RETURNVONAME)].head
@@ -492,7 +492,7 @@ class CDTProcessor extends AbstractProductionTransformation {
 //    org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@77cc47a
 //     n
 //    1
-        val df = state.dataflow
+        val df = state.dataflowRegion
         
         val eq = scc.createEquation
         eq.valuedObject = (exp.operand1 as CASTIdExpression).createVOReference.valuedObject
@@ -524,7 +524,7 @@ class CDTProcessor extends AbstractProductionTransformation {
             } else {
                 kExp = createIntValue(Integer.parseInt(value.toString))
             }
-            val df = state.dataflow
+            val df = state.dataflowRegion
         
             val eq = scc.createEquation
             eq.valuedObject = lVar
@@ -616,12 +616,12 @@ class CDTProcessor extends AbstractProductionTransformation {
         KExpressionsFactory::eINSTANCE
     }
     
-    private def Region getRegion(State state) {
-        state.concurrencies.filter(typeof(Region)).head
+    private def ControlflowRegion getControlflowRegion(State state) {
+        state.regions.filter(typeof(ControlflowRegion)).head
     }
 
-    private def Dataflow getDataflow(State state) {
-        state.concurrencies.filter(typeof(Dataflow)).head
+    private def DataflowRegion getDataflowRegion(State state) {
+        state.regions.filter(typeof(DataflowRegion)).head
     }
     
     private def State getParent(State state) {
