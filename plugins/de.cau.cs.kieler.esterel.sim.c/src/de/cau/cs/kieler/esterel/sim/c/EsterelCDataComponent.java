@@ -455,7 +455,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             highLevelContext.setCreateDummyResource(debug);
             
             highLevelContext.setInplace(false);
-            highLevelContext.setPrerequirements(true);
+// TODO: check
+//            highLevelContext.setPrerequirements(true);
             System.out.println("10");
             CompilationResult highLeveleCompilationResult =
                     KielerCompiler.compile(highLevelContext);
@@ -472,7 +473,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                     new KielerCompilerContext(lowLevelTransformations, esterelProgramOrSCLProgram);
             lowLevelContext.setCreateDummyResource(true);
             lowLevelContext.setInplace(false);
-            lowLevelContext.setPrerequirements(true);
+// TODO: check
+//            lowLevelContext.setPrerequirements(true);
             System.out.println("12");
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
             System.out.println("13");
