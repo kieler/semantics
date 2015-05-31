@@ -16,7 +16,7 @@ package de.cau.cs.kieler.sccharts.text.sct.scoping
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.Binding
 import de.cau.cs.kieler.sccharts.CallNode
-import de.cau.cs.kieler.sccharts.Dataflow
+import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.DefineNode
 import de.cau.cs.kieler.sccharts.Node
@@ -38,6 +38,7 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.SimpleScope
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * This class implements to scoping for referencedScope (used in KiCoUtil.parse()) and for binding (used in the sct Xtext editor).
@@ -157,7 +158,7 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     public def IScope scope_Equation_node(EObject context, EReference reference) {
         val s = context as State
         val nodeList = <Node>newArrayList
-        s.concurrencies.filter(typeof(Dataflow)).forEach[
+        s.regions.filter(typeof(DataflowRegion)).forEach[
             nodeList += it.nodes.filter(typeof(ReferenceNode))
         ]
         
@@ -223,11 +224,10 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     }
 
     public def IScope scope_Transition_targetState(Transition trans, EReference reference) {
-
         val l = <IEObjectDescription>newLinkedList
         val m = new HashSet<String>
         var String key = null
-        val region = (trans.eContainer().eContainer()) as Region
+        val region = (trans.eContainer().eContainer()) as ControlflowRegion
         for (State s : region.states) {
             key = s.getId();
             if (m.contains(key)) {

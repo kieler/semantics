@@ -103,17 +103,17 @@ ruleRoot returns [EObject current=null]
 
 
 
-// Entry rule entryRuleSingleRegion
-entryRuleSingleRegion returns [EObject current=null] 
+// Entry rule entryRuleSingleControlflowRegion
+entryRuleSingleControlflowRegion returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getSingleRegionRule()); }
-	 iv_ruleSingleRegion=ruleSingleRegion 
-	 { $current=$iv_ruleSingleRegion.current; } 
+	{ newCompositeNode(grammarAccess.getSingleControlflowRegionRule()); }
+	 iv_ruleSingleControlflowRegion=ruleSingleControlflowRegion 
+	 { $current=$iv_ruleSingleControlflowRegion.current; } 
 	 EOF 
 ;
 
-// Rule SingleRegion
-ruleSingleRegion returns [EObject current=null] 
+// Rule SingleControlflowRegion
+ruleSingleControlflowRegion returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -123,17 +123,17 @@ ruleSingleRegion returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getSingleRegionAccess().getRegionAction_0(),
+            grammarAccess.getSingleControlflowRegionAccess().getControlflowRegionAction_0(),
             $current);
     }
 )((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSingleRegionAccess().getAnnotationsAnnotationParserRuleCall_1_0_0()); 
+	        newCompositeNode(grammarAccess.getSingleControlflowRegionAccess().getAnnotationsAnnotationParserRuleCall_1_0_0()); 
 	    }
 		lv_annotations_1_0=ruleAnnotation		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getSingleRegionRule());
+	            $current = createModelElementForParent(grammarAccess.getSingleControlflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -146,17 +146,17 @@ ruleSingleRegion returns [EObject current=null]
 )
 )*	otherlv_2='region' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getSingleRegionAccess().getRegionKeyword_1_1());
+    	newLeafNode(otherlv_2, grammarAccess.getSingleControlflowRegionAccess().getRegionKeyword_1_1());
     }
 (
 (
 		lv_id_3_0=RULE_ID
 		{
-			newLeafNode(lv_id_3_0, grammarAccess.getSingleRegionAccess().getIdIDTerminalRuleCall_1_2_0()); 
+			newLeafNode(lv_id_3_0, grammarAccess.getSingleControlflowRegionAccess().getIdIDTerminalRuleCall_1_2_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSingleRegionRule());
+	            $current = createModelElement(grammarAccess.getSingleControlflowRegionRule());
 	        }
        		setWithLastConsumed(
        			$current, 
@@ -170,11 +170,11 @@ ruleSingleRegion returns [EObject current=null]
 (
 		lv_label_4_0=RULE_STRING
 		{
-			newLeafNode(lv_label_4_0, grammarAccess.getSingleRegionAccess().getLabelSTRINGTerminalRuleCall_1_3_0()); 
+			newLeafNode(lv_label_4_0, grammarAccess.getSingleControlflowRegionAccess().getLabelSTRINGTerminalRuleCall_1_3_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSingleRegionRule());
+	            $current = createModelElement(grammarAccess.getSingleControlflowRegionRule());
 	        }
        		setWithLastConsumed(
        			$current, 
@@ -186,16 +186,16 @@ ruleSingleRegion returns [EObject current=null]
 )
 )?(	otherlv_5='[' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getSingleRegionAccess().getLeftSquareBracketKeyword_1_4_0());
+    	newLeafNode(otherlv_5, grammarAccess.getSingleControlflowRegionAccess().getLeftSquareBracketKeyword_1_4_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSingleRegionAccess().getForForParserRuleCall_1_4_1_0()); 
+	        newCompositeNode(grammarAccess.getSingleControlflowRegionAccess().getForForParserRuleCall_1_4_1_0()); 
 	    }
 		lv_for_6_0=ruleFor		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getSingleRegionRule());
+	            $current = createModelElementForParent(grammarAccess.getSingleControlflowRegionRule());
 	        }
        		set(
        			$current, 
@@ -208,20 +208,20 @@ ruleSingleRegion returns [EObject current=null]
 )
 )	otherlv_7=']' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getSingleRegionAccess().getRightSquareBracketKeyword_1_4_2());
+    	newLeafNode(otherlv_7, grammarAccess.getSingleControlflowRegionAccess().getRightSquareBracketKeyword_1_4_2());
     }
 )?	otherlv_8=':' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getSingleRegionAccess().getColonKeyword_1_5());
+    	newLeafNode(otherlv_8, grammarAccess.getSingleControlflowRegionAccess().getColonKeyword_1_5());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSingleRegionAccess().getDeclarationsDeclarationParserRuleCall_1_6_0()); 
+	        newCompositeNode(grammarAccess.getSingleControlflowRegionAccess().getDeclarationsDeclarationParserRuleCall_1_6_0()); 
 	    }
 		lv_declarations_9_0=ruleDeclaration		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getSingleRegionRule());
+	            $current = createModelElementForParent(grammarAccess.getSingleControlflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -235,11 +235,11 @@ ruleSingleRegion returns [EObject current=null]
 )*)?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSingleRegionAccess().getStatesStateParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getSingleControlflowRegionAccess().getStatesStateParserRuleCall_2_0()); 
 	    }
 		lv_states_10_0=ruleState		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getSingleRegionRule());
+	            $current = createModelElementForParent(grammarAccess.getSingleControlflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -257,17 +257,17 @@ ruleSingleRegion returns [EObject current=null]
 
 
 
-// Entry rule entryRuleSingleDataflow
-entryRuleSingleDataflow returns [EObject current=null] 
+// Entry rule entryRuleSingleDataflowRegion
+entryRuleSingleDataflowRegion returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getSingleDataflowRule()); }
-	 iv_ruleSingleDataflow=ruleSingleDataflow 
-	 { $current=$iv_ruleSingleDataflow.current; } 
+	{ newCompositeNode(grammarAccess.getSingleDataflowRegionRule()); }
+	 iv_ruleSingleDataflowRegion=ruleSingleDataflowRegion 
+	 { $current=$iv_ruleSingleDataflowRegion.current; } 
 	 EOF 
 ;
 
-// Rule SingleDataflow
-ruleSingleDataflow returns [EObject current=null] 
+// Rule SingleDataflowRegion
+ruleSingleDataflowRegion returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -277,17 +277,17 @@ ruleSingleDataflow returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getSingleDataflowAccess().getDataflowAction_0(),
+            grammarAccess.getSingleDataflowRegionAccess().getDataflowRegionAction_0(),
             $current);
     }
 )((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getAnnotationsAnnotationParserRuleCall_1_0_0()); 
+	        newCompositeNode(grammarAccess.getSingleDataflowRegionAccess().getAnnotationsAnnotationParserRuleCall_1_0_0()); 
 	    }
 		lv_annotations_1_0=ruleAnnotation		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRule());
+	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -300,17 +300,17 @@ ruleSingleDataflow returns [EObject current=null]
 )
 )*	otherlv_2='dataflow' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getSingleDataflowAccess().getDataflowKeyword_1_1());
+    	newLeafNode(otherlv_2, grammarAccess.getSingleDataflowRegionAccess().getDataflowKeyword_1_1());
     }
 (
 (
 		lv_id_3_0=RULE_ID
 		{
-			newLeafNode(lv_id_3_0, grammarAccess.getSingleDataflowAccess().getIdIDTerminalRuleCall_1_2_0()); 
+			newLeafNode(lv_id_3_0, grammarAccess.getSingleDataflowRegionAccess().getIdIDTerminalRuleCall_1_2_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSingleDataflowRule());
+	            $current = createModelElement(grammarAccess.getSingleDataflowRegionRule());
 	        }
        		setWithLastConsumed(
        			$current, 
@@ -324,11 +324,11 @@ ruleSingleDataflow returns [EObject current=null]
 (
 		lv_label_4_0=RULE_STRING
 		{
-			newLeafNode(lv_label_4_0, grammarAccess.getSingleDataflowAccess().getLabelSTRINGTerminalRuleCall_1_3_0()); 
+			newLeafNode(lv_label_4_0, grammarAccess.getSingleDataflowRegionAccess().getLabelSTRINGTerminalRuleCall_1_3_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSingleDataflowRule());
+	            $current = createModelElement(grammarAccess.getSingleDataflowRegionRule());
 	        }
        		setWithLastConsumed(
        			$current, 
@@ -340,16 +340,16 @@ ruleSingleDataflow returns [EObject current=null]
 )
 )?(	otherlv_5='[' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getSingleDataflowAccess().getLeftSquareBracketKeyword_1_4_0());
+    	newLeafNode(otherlv_5, grammarAccess.getSingleDataflowRegionAccess().getLeftSquareBracketKeyword_1_4_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getForForParserRuleCall_1_4_1_0()); 
+	        newCompositeNode(grammarAccess.getSingleDataflowRegionAccess().getForForParserRuleCall_1_4_1_0()); 
 	    }
 		lv_for_6_0=ruleFor		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRule());
+	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRegionRule());
 	        }
        		set(
        			$current, 
@@ -362,20 +362,20 @@ ruleSingleDataflow returns [EObject current=null]
 )
 )	otherlv_7=']' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getSingleDataflowAccess().getRightSquareBracketKeyword_1_4_2());
+    	newLeafNode(otherlv_7, grammarAccess.getSingleDataflowRegionAccess().getRightSquareBracketKeyword_1_4_2());
     }
 )?	otherlv_8=':' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getSingleDataflowAccess().getColonKeyword_1_5());
+    	newLeafNode(otherlv_8, grammarAccess.getSingleDataflowRegionAccess().getColonKeyword_1_5());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getDeclarationsDeclarationParserRuleCall_1_6_0()); 
+	        newCompositeNode(grammarAccess.getSingleDataflowRegionAccess().getDeclarationsDeclarationParserRuleCall_1_6_0()); 
 	    }
 		lv_declarations_9_0=ruleDeclaration		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRule());
+	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -389,11 +389,11 @@ ruleSingleDataflow returns [EObject current=null]
 )*)?((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getEquationsEquationParserRuleCall_2_0_0()); 
+	        newCompositeNode(grammarAccess.getSingleDataflowRegionAccess().getEquationsEquationParserRuleCall_2_0_0()); 
 	    }
 		lv_equations_10_0=ruleEquation		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRule());
+	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -408,11 +408,11 @@ ruleSingleDataflow returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getNodesNodeParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getSingleDataflowRegionAccess().getNodesNodeParserRuleCall_2_1_0()); 
 	    }
 		lv_nodes_11_0=ruleNode		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRule());
+	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -522,17 +522,17 @@ ruleFor returns [EObject current=null]
 
 
 
-// Entry rule entryRuleRegion
-entryRuleRegion returns [EObject current=null] 
+// Entry rule entryRuleControlflowRegion
+entryRuleControlflowRegion returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getRegionRule()); }
-	 iv_ruleRegion=ruleRegion 
-	 { $current=$iv_ruleRegion.current; } 
+	{ newCompositeNode(grammarAccess.getControlflowRegionRule()); }
+	 iv_ruleControlflowRegion=ruleControlflowRegion 
+	 { $current=$iv_ruleControlflowRegion.current; } 
 	 EOF 
 ;
 
-// Rule Region
-ruleRegion returns [EObject current=null] 
+// Rule ControlflowRegion
+ruleControlflowRegion returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -542,17 +542,17 @@ ruleRegion returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getRegionAccess().getRegionAction_0(),
+            grammarAccess.getControlflowRegionAccess().getControlflowRegionAction_0(),
             $current);
     }
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRegionAccess().getAnnotationsAnnotationParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getControlflowRegionAccess().getAnnotationsAnnotationParserRuleCall_1_0()); 
 	    }
 		lv_annotations_1_0=ruleAnnotation		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getRegionRule());
+	            $current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -565,17 +565,17 @@ ruleRegion returns [EObject current=null]
 )
 )*	otherlv_2='region' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getRegionAccess().getRegionKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getControlflowRegionAccess().getRegionKeyword_2());
     }
 (
 (
 		lv_id_3_0=RULE_ID
 		{
-			newLeafNode(lv_id_3_0, grammarAccess.getRegionAccess().getIdIDTerminalRuleCall_3_0()); 
+			newLeafNode(lv_id_3_0, grammarAccess.getControlflowRegionAccess().getIdIDTerminalRuleCall_3_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getRegionRule());
+	            $current = createModelElement(grammarAccess.getControlflowRegionRule());
 	        }
        		setWithLastConsumed(
        			$current, 
@@ -589,11 +589,11 @@ ruleRegion returns [EObject current=null]
 (
 		lv_label_4_0=RULE_STRING
 		{
-			newLeafNode(lv_label_4_0, grammarAccess.getRegionAccess().getLabelSTRINGTerminalRuleCall_4_0()); 
+			newLeafNode(lv_label_4_0, grammarAccess.getControlflowRegionAccess().getLabelSTRINGTerminalRuleCall_4_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getRegionRule());
+	            $current = createModelElement(grammarAccess.getControlflowRegionRule());
 	        }
        		setWithLastConsumed(
        			$current, 
@@ -605,16 +605,16 @@ ruleRegion returns [EObject current=null]
 )
 )?(	otherlv_5='[' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getRegionAccess().getLeftSquareBracketKeyword_5_0());
+    	newLeafNode(otherlv_5, grammarAccess.getControlflowRegionAccess().getLeftSquareBracketKeyword_5_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRegionAccess().getForForParserRuleCall_5_1_0()); 
+	        newCompositeNode(grammarAccess.getControlflowRegionAccess().getForForParserRuleCall_5_1_0()); 
 	    }
 		lv_for_6_0=ruleFor		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getRegionRule());
+	            $current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
 	        }
        		set(
        			$current, 
@@ -627,20 +627,20 @@ ruleRegion returns [EObject current=null]
 )
 )	otherlv_7=']' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getRegionAccess().getRightSquareBracketKeyword_5_2());
+    	newLeafNode(otherlv_7, grammarAccess.getControlflowRegionAccess().getRightSquareBracketKeyword_5_2());
     }
 )?	otherlv_8=':' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getRegionAccess().getColonKeyword_6());
+    	newLeafNode(otherlv_8, grammarAccess.getControlflowRegionAccess().getColonKeyword_6());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRegionAccess().getDeclarationsDeclarationParserRuleCall_7_0()); 
+	        newCompositeNode(grammarAccess.getControlflowRegionAccess().getDeclarationsDeclarationParserRuleCall_7_0()); 
 	    }
 		lv_declarations_9_0=ruleDeclaration		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getRegionRule());
+	            $current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -654,11 +654,11 @@ ruleRegion returns [EObject current=null]
 )*(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getRegionAccess().getStatesStateParserRuleCall_8_0()); 
+	        newCompositeNode(grammarAccess.getControlflowRegionAccess().getStatesStateParserRuleCall_8_0()); 
 	    }
 		lv_states_10_0=ruleState		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getRegionRule());
+	            $current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -676,17 +676,17 @@ ruleRegion returns [EObject current=null]
 
 
 
-// Entry rule entryRuleDataflow
-entryRuleDataflow returns [EObject current=null] 
+// Entry rule entryRuleDataflowRegion
+entryRuleDataflowRegion returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getDataflowRule()); }
-	 iv_ruleDataflow=ruleDataflow 
-	 { $current=$iv_ruleDataflow.current; } 
+	{ newCompositeNode(grammarAccess.getDataflowRegionRule()); }
+	 iv_ruleDataflowRegion=ruleDataflowRegion 
+	 { $current=$iv_ruleDataflowRegion.current; } 
 	 EOF 
 ;
 
-// Rule Dataflow
-ruleDataflow returns [EObject current=null] 
+// Rule DataflowRegion
+ruleDataflowRegion returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -696,17 +696,17 @@ ruleDataflow returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getDataflowAccess().getDataflowAction_0(),
+            grammarAccess.getDataflowRegionAccess().getDataflowRegionAction_0(),
             $current);
     }
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowAccess().getAnnotationsAnnotationParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getAnnotationsAnnotationParserRuleCall_1_0()); 
 	    }
 		lv_annotations_1_0=ruleAnnotation		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getDataflowRule());
+	            $current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -719,17 +719,17 @@ ruleDataflow returns [EObject current=null]
 )
 )*	otherlv_2='dataflow' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getDataflowAccess().getDataflowKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getDataflowRegionAccess().getDataflowKeyword_2());
     }
 (
 (
 		lv_id_3_0=RULE_ID
 		{
-			newLeafNode(lv_id_3_0, grammarAccess.getDataflowAccess().getIdIDTerminalRuleCall_3_0()); 
+			newLeafNode(lv_id_3_0, grammarAccess.getDataflowRegionAccess().getIdIDTerminalRuleCall_3_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getDataflowRule());
+	            $current = createModelElement(grammarAccess.getDataflowRegionRule());
 	        }
        		setWithLastConsumed(
        			$current, 
@@ -743,11 +743,11 @@ ruleDataflow returns [EObject current=null]
 (
 		lv_label_4_0=RULE_STRING
 		{
-			newLeafNode(lv_label_4_0, grammarAccess.getDataflowAccess().getLabelSTRINGTerminalRuleCall_4_0()); 
+			newLeafNode(lv_label_4_0, grammarAccess.getDataflowRegionAccess().getLabelSTRINGTerminalRuleCall_4_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getDataflowRule());
+	            $current = createModelElement(grammarAccess.getDataflowRegionRule());
 	        }
        		setWithLastConsumed(
        			$current, 
@@ -759,16 +759,16 @@ ruleDataflow returns [EObject current=null]
 )
 )?(	otherlv_5='[' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getDataflowAccess().getLeftSquareBracketKeyword_5_0());
+    	newLeafNode(otherlv_5, grammarAccess.getDataflowRegionAccess().getLeftSquareBracketKeyword_5_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowAccess().getForForParserRuleCall_5_1_0()); 
+	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getForForParserRuleCall_5_1_0()); 
 	    }
 		lv_for_6_0=ruleFor		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getDataflowRule());
+	            $current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 	        }
        		set(
        			$current, 
@@ -781,20 +781,20 @@ ruleDataflow returns [EObject current=null]
 )
 )	otherlv_7=']' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getDataflowAccess().getRightSquareBracketKeyword_5_2());
+    	newLeafNode(otherlv_7, grammarAccess.getDataflowRegionAccess().getRightSquareBracketKeyword_5_2());
     }
 )?	otherlv_8=':' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getDataflowAccess().getColonKeyword_6());
+    	newLeafNode(otherlv_8, grammarAccess.getDataflowRegionAccess().getColonKeyword_6());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowAccess().getDeclarationsDeclarationParserRuleCall_7_0()); 
+	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getDeclarationsDeclarationParserRuleCall_7_0()); 
 	    }
 		lv_declarations_9_0=ruleDeclaration		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getDataflowRule());
+	            $current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -808,11 +808,11 @@ ruleDataflow returns [EObject current=null]
 )*((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowAccess().getEquationsEquationParserRuleCall_8_0_0()); 
+	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsEquationParserRuleCall_8_0_0()); 
 	    }
 		lv_equations_10_0=ruleEquation		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getDataflowRule());
+	            $current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -827,11 +827,11 @@ ruleDataflow returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowAccess().getNodesNodeParserRuleCall_8_1_0()); 
+	        newCompositeNode(grammarAccess.getDataflowRegionAccess().getNodesNodeParserRuleCall_8_1_0()); 
 	    }
 		lv_nodes_11_0=ruleNode		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getDataflowRule());
+	            $current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 	        }
        		add(
        			$current, 
@@ -1165,17 +1165,17 @@ ruleSCChart returns [EObject current=null]
 ))*(((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSCChartAccess().getConcurrenciesSingleRegionParserRuleCall_4_1_1_1_0_0_0()); 
+	        newCompositeNode(grammarAccess.getSCChartAccess().getRegionsSingleControlflowRegionParserRuleCall_4_1_1_1_0_0_0()); 
 	    }
-		lv_concurrencies_13_0=ruleSingleRegion		{
+		lv_regions_13_0=ruleSingleControlflowRegion		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSCChartRule());
 	        }
        		add(
        			$current, 
-       			"concurrencies",
-        		lv_concurrencies_13_0, 
-        		"SingleRegion");
+       			"regions",
+        		lv_regions_13_0, 
+        		"SingleControlflowRegion");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1184,17 +1184,17 @@ ruleSCChart returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSCChartAccess().getConcurrenciesSingleDataflowParserRuleCall_4_1_1_1_0_1_0()); 
+	        newCompositeNode(grammarAccess.getSCChartAccess().getRegionsSingleDataflowRegionParserRuleCall_4_1_1_1_0_1_0()); 
 	    }
-		lv_concurrencies_14_0=ruleSingleDataflow		{
+		lv_regions_14_0=ruleSingleDataflowRegion		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSCChartRule());
 	        }
        		add(
        			$current, 
-       			"concurrencies",
-        		lv_concurrencies_14_0, 
-        		"SingleDataflow");
+       			"regions",
+        		lv_regions_14_0, 
+        		"SingleDataflowRegion");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1202,17 +1202,17 @@ ruleSCChart returns [EObject current=null]
 ))(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSCChartAccess().getConcurrenciesConcurrencyParserRuleCall_4_1_1_1_1_0()); 
+	        newCompositeNode(grammarAccess.getSCChartAccess().getRegionsRegionParserRuleCall_4_1_1_1_1_0()); 
 	    }
-		lv_concurrencies_15_0=ruleConcurrency		{
+		lv_regions_15_0=ruleRegion		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSCChartRule());
 	        }
        		add(
        			$current, 
-       			"concurrencies",
-        		lv_concurrencies_15_0, 
-        		"Concurrency");
+       			"regions",
+        		lv_regions_15_0, 
+        		"Region");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1228,17 +1228,17 @@ ruleSCChart returns [EObject current=null]
 
 
 
-// Entry rule entryRuleConcurrency
-entryRuleConcurrency returns [EObject current=null] 
+// Entry rule entryRuleRegion
+entryRuleRegion returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getConcurrencyRule()); }
-	 iv_ruleConcurrency=ruleConcurrency 
-	 { $current=$iv_ruleConcurrency.current; } 
+	{ newCompositeNode(grammarAccess.getRegionRule()); }
+	 iv_ruleRegion=ruleRegion 
+	 { $current=$iv_ruleRegion.current; } 
 	 EOF 
 ;
 
-// Rule Concurrency
-ruleConcurrency returns [EObject current=null] 
+// Rule Region
+ruleRegion returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -1247,11 +1247,11 @@ ruleConcurrency returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getConcurrencyAccess().getRegionParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getRegionAccess().getControlflowRegionParserRuleCall_0()); 
     }
-    this_Region_0=ruleRegion
+    this_ControlflowRegion_0=ruleControlflowRegion
     { 
-        $current = $this_Region_0.current; 
+        $current = $this_ControlflowRegion_0.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -1260,11 +1260,11 @@ ruleConcurrency returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getConcurrencyAccess().getDataflowParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getRegionAccess().getDataflowRegionParserRuleCall_1()); 
     }
-    this_Dataflow_1=ruleDataflow
+    this_DataflowRegion_1=ruleDataflowRegion
     { 
-        $current = $this_Dataflow_1.current; 
+        $current = $this_DataflowRegion_1.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -1534,17 +1534,17 @@ ruleState returns [EObject current=null]
 ))*(((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getStateAccess().getConcurrenciesSingleRegionParserRuleCall_6_1_1_1_0_0_0()); 
+	        newCompositeNode(grammarAccess.getStateAccess().getRegionsSingleControlflowRegionParserRuleCall_6_1_1_1_0_0_0()); 
 	    }
-		lv_concurrencies_18_0=ruleSingleRegion		{
+		lv_regions_18_0=ruleSingleControlflowRegion		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getStateRule());
 	        }
        		add(
        			$current, 
-       			"concurrencies",
-        		lv_concurrencies_18_0, 
-        		"SingleRegion");
+       			"regions",
+        		lv_regions_18_0, 
+        		"SingleControlflowRegion");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1553,17 +1553,17 @@ ruleState returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getStateAccess().getConcurrenciesSingleDataflowParserRuleCall_6_1_1_1_0_1_0()); 
+	        newCompositeNode(grammarAccess.getStateAccess().getRegionsSingleDataflowRegionParserRuleCall_6_1_1_1_0_1_0()); 
 	    }
-		lv_concurrencies_19_0=ruleSingleDataflow		{
+		lv_regions_19_0=ruleSingleDataflowRegion		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getStateRule());
 	        }
        		add(
        			$current, 
-       			"concurrencies",
-        		lv_concurrencies_19_0, 
-        		"SingleDataflow");
+       			"regions",
+        		lv_regions_19_0, 
+        		"SingleDataflowRegion");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1571,17 +1571,17 @@ ruleState returns [EObject current=null]
 ))(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getStateAccess().getConcurrenciesConcurrencyParserRuleCall_6_1_1_1_1_0()); 
+	        newCompositeNode(grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_1_1_0()); 
 	    }
-		lv_concurrencies_20_0=ruleConcurrency		{
+		lv_regions_20_0=ruleRegion		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getStateRule());
 	        }
        		add(
        			$current, 
-       			"concurrencies",
-        		lv_concurrencies_20_0, 
-        		"Concurrency");
+       			"regions",
+        		lv_regions_20_0, 
+        		"Region");
 	        afterParserOrEnumRuleCall();
 	    }
 

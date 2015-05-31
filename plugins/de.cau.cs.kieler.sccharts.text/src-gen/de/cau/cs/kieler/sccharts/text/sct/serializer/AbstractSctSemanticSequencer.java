@@ -25,7 +25,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.sccharts.Assignment;
 import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.CallNode;
-import de.cau.cs.kieler.sccharts.Dataflow;
+import de.cau.cs.kieler.sccharts.ControlflowRegion;
+import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DefineNode;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.Emission;
@@ -36,7 +37,6 @@ import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.FunctionCallEffect;
 import de.cau.cs.kieler.sccharts.IterateAction;
 import de.cau.cs.kieler.sccharts.ReferenceNode;
-import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SuspendAction;
@@ -387,14 +387,25 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
-			case SCChartsPackage.DATAFLOW:
-				if(context == grammarAccess.getConcurrencyRule() ||
-				   context == grammarAccess.getDataflowRule()) {
-					sequence_Dataflow(context, (Dataflow) semanticObject); 
+			case SCChartsPackage.CONTROLFLOW_REGION:
+				if(context == grammarAccess.getControlflowRegionRule() ||
+				   context == grammarAccess.getRegionRule()) {
+					sequence_ControlflowRegion(context, (ControlflowRegion) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getSingleDataflowRule()) {
-					sequence_SingleDataflow(context, (Dataflow) semanticObject); 
+				else if(context == grammarAccess.getSingleControlflowRegionRule()) {
+					sequence_SingleControlflowRegion(context, (ControlflowRegion) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.DATAFLOW_REGION:
+				if(context == grammarAccess.getDataflowRegionRule() ||
+				   context == grammarAccess.getRegionRule()) {
+					sequence_DataflowRegion(context, (DataflowRegion) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getSingleDataflowRegionRule()) {
+					sequence_SingleDataflowRegion(context, (DataflowRegion) semanticObject); 
 					return; 
 				}
 				else break;
@@ -466,17 +477,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
-			case SCChartsPackage.REGION:
-				if(context == grammarAccess.getConcurrencyRule() ||
-				   context == grammarAccess.getRegionRule()) {
-					sequence_Region(context, (Region) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getSingleRegionRule()) {
-					sequence_SingleRegion(context, (Region) semanticObject); 
-					return; 
-				}
-				else break;
 			case SCChartsPackage.STATE:
 				if(context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSCChartRule()) {
@@ -538,10 +538,26 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         for=For? 
 	 *         declarations+=Declaration* 
+	 *         states+=State+
+	 *     )
+	 */
+	protected void sequence_ControlflowRegion(EObject context, ControlflowRegion semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         id=ID? 
+	 *         label=STRING? 
+	 *         for=For? 
+	 *         declarations+=Declaration* 
 	 *         (equations+=Equation | nodes+=Node)*
 	 *     )
 	 */
-	protected void sequence_Dataflow(EObject context, Dataflow semanticObject) {
+	protected void sequence_DataflowRegion(EObject context, DataflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -618,29 +634,13 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         id=ID? 
-	 *         label=STRING? 
-	 *         for=For? 
-	 *         declarations+=Declaration* 
-	 *         states+=State+
-	 *     )
-	 */
-	protected void sequence_Region(EObject context, Region semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
 	 *         id=ID 
 	 *         label=STRING? 
 	 *         (
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
 	 *             (
 	 *                 (declarations+=Declaration | localActions+=LocalAction)* 
-	 *                 ((concurrencies+=SingleRegion | concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?
+	 *                 ((regions+=SingleControlflowRegion | regions+=SingleDataflowRegion) regions+=Region*)?
 	 *             )
 	 *         )?
 	 *     )
@@ -652,18 +652,18 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((annotations+=Annotation* id=ID? label=STRING? for=For? declarations+=Declaration*)? (equations+=Equation | nodes+=Node)*)
+	 *     ((annotations+=Annotation* id=ID? label=STRING? for=For? declarations+=Declaration*)? states+=State*)
 	 */
-	protected void sequence_SingleDataflow(EObject context, Dataflow semanticObject) {
+	protected void sequence_SingleControlflowRegion(EObject context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     ((annotations+=Annotation* id=ID? label=STRING? for=For? declarations+=Declaration*)? states+=State*)
+	 *     ((annotations+=Annotation* id=ID? label=STRING? for=For? declarations+=Declaration*)? (equations+=Equation | nodes+=Node)*)
 	 */
-	protected void sequence_SingleRegion(EObject context, Region semanticObject) {
+	protected void sequence_SingleDataflowRegion(EObject context, DataflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -678,11 +678,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         (
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
-	 *             (
-	 *                 (declarations+=Declaration | localActions+=LocalAction)* 
-	 *                 (concurrencies+=SingleRegion | concurrencies+=SingleDataflow) 
-	 *                 concurrencies+=Concurrency*
-	 *             )
+	 *             ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion) regions+=Region*)
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
 	 *     )

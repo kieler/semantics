@@ -79,7 +79,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
         if (feature == SCChartsPackage.eINSTANCE.getState_ParentRegion()
 //                || feature == SCChartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
                 || feature == SCChartsPackage.eINSTANCE.getState_IncomingTransitions()
-                || feature == SCChartsPackage.eINSTANCE.getConcurrency_ParentState()
+                || feature == SCChartsPackage.eINSTANCE.getRegion_ParentState()
                 || feature == SCChartsPackage.eINSTANCE.getTransition_SourceState()
 //                || feature == SCChartsPackage.eINSTANCE.getSubstitution_ParentScope()) 
         ) {

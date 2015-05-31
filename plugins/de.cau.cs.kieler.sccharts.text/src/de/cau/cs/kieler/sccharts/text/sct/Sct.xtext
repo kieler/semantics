@@ -15,8 +15,8 @@ Root returns sccharts::State:
 
 // ---------------------------------------------------------------------------------------------------
 
-SingleRegion returns sccharts::Region:
-	{sccharts::Region}
+SingleControlflowRegion returns sccharts::ControlflowRegion:
+	{sccharts::ControlflowRegion}
     (
       (annotations += Annotation)*
       'region' (id=ID)? (label=STRING)? ('['for=For']')?  ':'
@@ -28,8 +28,8 @@ SingleRegion returns sccharts::Region:
 
 // ---------------------------------------------------------------------------------------------------
 
-SingleDataflow returns sccharts::Dataflow:
-    {sccharts::Dataflow}
+SingleDataflowRegion returns sccharts::DataflowRegion:
+    {sccharts::DataflowRegion}
     (
       (annotations += Annotation)*
       'dataflow' (id=ID)? (label=STRING)? ('['for=For']')?  ':'
@@ -51,8 +51,8 @@ For returns sccharts::For:
 
 // ---------------------------------------------------------------------------------------------------
 
-Region returns sccharts::Region:
-	{sccharts::Region}
+ControlflowRegion returns sccharts::ControlflowRegion:
+	{sccharts::ControlflowRegion}
     (annotations += Annotation)*
     'region' (id=ID)? (label=STRING)? ('['for=For']')? ':'
       (declarations+=Declaration)*
@@ -61,8 +61,8 @@ Region returns sccharts::Region:
 
 // ---------------------------------------------------------------------------------------------------
 
-Dataflow returns sccharts::Dataflow:
-    {sccharts::Dataflow}
+DataflowRegion returns sccharts::DataflowRegion:
+    {sccharts::DataflowRegion}
     (annotations += Annotation)*
     'dataflow' (id=ID)? (label=STRING)? ('['for=For']')? ':'
     (declarations+=Declaration)*
@@ -106,15 +106,15 @@ SCChart returns sccharts::State:
 //             	(concurrencies+=SingleDataflow)|
 //             	(concurrencies+=Concurrency)*
 //				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-				(concurrencies+=SingleRegion|concurrencies+=SingleDataflow)(concurrencies+=Concurrency)*
+				(regions+=SingleControlflowRegion|regions+=SingleDataflowRegion)(regions+=Region)*
              )?
             )
           '}') 
      )?
 ;
 
-Concurrency returns sccharts::Concurrency:
-	Region | Dataflow	
+Region returns sccharts::Region:
+	ControlflowRegion | DataflowRegion	
 ;
 
 //ImportDecl: 
@@ -154,7 +154,7 @@ State returns sccharts::State:
 //                (concurrencies+=SingleRegion)|
 //             	(concurrencies+=SingleDataflow)|
 //             	(concurrencies+=Concurrency)*
-				(concurrencies+=SingleRegion|concurrencies+=SingleDataflow)(concurrencies+=Concurrency)*
+				(regions+=SingleControlflowRegion|regions+=SingleDataflowRegion)(regions+=Region)*
              )
             )
           '}') 
