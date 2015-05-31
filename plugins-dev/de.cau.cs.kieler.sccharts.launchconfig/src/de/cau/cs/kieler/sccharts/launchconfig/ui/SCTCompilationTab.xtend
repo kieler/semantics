@@ -13,23 +13,17 @@
  */
 package de.cau.cs.kieler.sccharts.launchconfig.ui
 
-import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
 import de.cau.cs.kieler.sccharts.launchconfig.SCTCompilationData
-import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
 import java.util.List
-import java.util.Set
+import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
-import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.runtime.IPath
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
 import org.eclipse.jface.viewers.ArrayContentProvider
-import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.viewers.LabelProvider
@@ -37,18 +31,12 @@ import org.eclipse.jface.viewers.ListViewer
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.swt.SWT
-import org.eclipse.swt.events.ModifyEvent
-import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
-import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
-import org.eclipse.swt.widgets.FileDialog
-import org.eclipse.swt.widgets.Text
-import org.eclipse.ui.dialogs.ContainerSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 
 /**
@@ -57,24 +45,22 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
  */
 class SCTCompilationTab extends AbstractLaunchConfigurationTab {
 
+    /**
+     * The list control for the sct files.
+     * Takes an collection of SCTCompilationData as input.
+     */
     private var ListViewer list
-
-    private var ComboViewer targetLanguage
-    private var Text targetPath
-    private var Button browseTargetPath
-
-    private var Text targetTemplate
-    private var Button browseTargetTemplate
-
-    private var Text wrapperCodeTemplate
-    private var Button browseWrapperCodeTemplate
-    private var Text wrapperCodeTarget
-    private var Button browseWrapperCodeTarget
-    private var Text wrapperCodeSnippets
-    private var Button browseWrapperCodeSnippets
-
+    
+    /**
+     * The currently selected data of the list control.
+     */
     private var SCTCompilationData currentData
 
+    private var IProject project
+
+    /**
+     * {@inheritDoc}
+     */
     override createControl(Composite parent) {
         var Composite comp = new Composite(parent, SWT.NONE)
         setControl(comp)
@@ -83,14 +69,16 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         comp.setFont(parent.getFont())
 
         createSCTFilesComponent(comp)
-        createTargetComponent(comp)
-        createTargetTemplateComponent(comp)
-        createWrapperCodeComponent(comp)
-
-        // Disable controls
-        enableControls(false)
+        
+        updateEnabled()
     }
 
+    /**
+     * Creates a new group with a list control and add and remove buttons.
+     * The add button opens a resource selection dialog such that the user can add
+     * sct files to the list.
+     * The remove button removes the currently selected item from the list. 
+     */
     private def createSCTFilesComponent(Composite parent) {
         val group = SWTFactory.createGroup(parent, "SCT files", 1, 2, GridData.FILL_HORIZONTAL)
         val comp = SWTFactory.createComposite(group, parent.getFont(), 5, 3, GridData.FILL_HORIZONTAL, 0, 0)
@@ -114,11 +102,12 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         });
 
         // Selection event
+        // Updates the currentData reference.
         list.addSelectionChangedListener(new ISelectionChangedListener() {
             override void selectionChanged(SelectionChangedEvent event) {
                 val selection = event.selection as IStructuredSelection
                 currentData = selection.firstElement as SCTCompilationData
-                updateControls(currentData)
+                updateControls(currentData)                
             }
         });
 
@@ -130,11 +119,14 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         add.addSelectionListener(
             new SelectionAdapter() {
                 override void widgetSelected(SelectionEvent e) {
-                    val dialog = new ResourceSelectionDialog(shell, ResourcesPlugin.getWorkspace().getRoot(), "Select SCT files that should be compiled.")
+                    // Create dialog.
+                    val dialog = new ResourceSelectionDialog(shell, project, "Select SCT files that should be compiled.")
                     dialog.open()
 
+                    // Get results.
                     val results = dialog.result
                     if (results != null) {
+                        // Compute new input for gui list by constructing new input.
                         val List<SCTCompilationData> currentInput = list.input as List<SCTCompilationData>
                         val newInput = new ArrayList()
                         if (currentInput != null)
@@ -146,22 +138,24 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
                             val path = resource.location.toOSString
                             val name = resource.name
 
-                            // The ResourceSelectionDialog does not provide filter funcionality so we do this here manually
+                            // The ResourceSelectionDialog does not provide filter funcionality
+                            // so we do this here manually.
                             var isOK = resource.fileExtension.toLowerCase == "sct"
                             for (SCTCompilationData d : currentInput) {
                                 if (d.path == path)
                                     isOK = false
                             }
 
-                            // Add if not filtered
+                            // Add if the new element is ok.
                             if (isOK)
                                 newInput.add(new SCTCompilationData(path, name))
                             else
                                 println("Resource '" + resource.name + "' is no SCT file or already in list!")
                         }
                         list.input = newInput
-                    }
-
+   
+                        updateLaunchConfigurationDialog()
+                    }                    
                 }
             }
         )
@@ -170,6 +164,12 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         val remove = createPushButton(bcomp, "Remove", null)
         remove.addSelectionListener(new SelectionAdapter() {
             override void widgetSelected(SelectionEvent e) {
+                // The ListViewer does not provide an easy way to remove an element
+                // so we do it the hard way.
+                
+                // Remove the currently selected item from the list
+                // by computing the input as 
+                // 'everything in the list which is not the current selection'.
                 val currentInput = list.input as List<SCTCompilationData>
                 if (currentInput != null) {
                     val newInput = newArrayList()
@@ -179,261 +179,94 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
                     ]
                     list.input = newInput
                     list.selection = new StructuredSelection()
-
+                    
+                    updateLaunchConfigurationDialog()
                 }
             }
         })
     }
 
-    private def createTargetComponent(Composite parent) {
-        val group = SWTFactory.createGroup(parent, "Output file", 1, 2, GridData.FILL_HORIZONTAL)
-        val comp = SWTFactory.createComposite(group, parent.getFont(), 1, 3, GridData.FILL_BOTH, 0, 0)
-
-        // Target language
-        val languageComp = SWTFactory.createComposite(comp, parent.getFont(), 8, 3, GridData.HORIZONTAL_ALIGN_BEGINNING,
-            0, 0)
-        SWTFactory.createLabel(languageComp, "Language", 5)
-        
-        // Create ComboViewer
-        targetLanguage = new ComboViewer(comp, SWT.DEFAULT)
-        
-        // Fetch possible targets from KiCo
-        var Set<Transformation> transformations
-        val feature = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
-        println(feature)
-        if(feature != null){
-            transformations = feature.expandingTransformations
-        }
-        
-        // Fill combo
-        targetLanguage.contentProvider = ArrayContentProvider.instance
-        targetLanguage.input = transformations
-        if(transformations != null && transformations.size > 0){
-            targetLanguage.selection = new StructuredSelection(transformations.get(0))
-        }
-        
-        // Label provider
-        targetLanguage.labelProvider = new LabelProvider() {
-            override String getText(Object element) {
-                val data = (element as Transformation)
-                if (data != null)
-                    return data.name
-                else
-                    return ""
-            }
-        }
-        
-        // Selection listener
-        targetLanguage.addSelectionChangedListener(new ISelectionChangedListener{
-            
-            override selectionChanged(SelectionChangedEvent event) {
-                val selection = event.selection as IStructuredSelection
-                if (selection != null){
-                    val trans = selection.firstElement as Transformation
-                    if(trans != null){
-                        currentData.targetLanguage = trans.id
-                        updateLaunchConfigurationDialog();    
-                    }
-                }
-            }
-            
-        })
-
-        // Target path
-        val fileComp = SWTFactory.createComposite(comp, parent.getFont(), 5, 3, GridData.FILL_BOTH, 0, 0)
-        targetPath = SWTFactory.createSingleText(fileComp, 4)
-        targetPath.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                currentData.targetPath = targetPath.text
-                updateLaunchConfigurationDialog();
-            }
-        })
-
-        // Browse
-        browseTargetPath = createPushButton(fileComp, "Browse...", null)
-        browseTargetPath.addSelectionListener(
-            new SelectionAdapter() {
-                override void widgetSelected(SelectionEvent e) {
-                    val dialog = new FileDialog(parent.shell, SWT.SAVE)
-                    val result = dialog.open()
-                    if (result != null) {
-                        targetPath.setText(result);
-                    }
-                }
-
-            }
-        )
-    }
-
-    private def createTargetTemplateComponent(Composite parent) {
-        val group = SWTFactory.createGroup(parent, "Output file template", 1, 2, GridData.FILL_HORIZONTAL)
-        val comp = SWTFactory.createComposite(group, parent.getFont(), 5, 3, GridData.FILL_BOTH, 0, 0)
-
-        // Output file template
-        targetTemplate = SWTFactory.createSingleText(comp, 4)
-        targetTemplate.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                currentData.targetTemplate = targetTemplate.text
-                updateLaunchConfigurationDialog();
-            }
-        })
-
-        // Browse
-        browseTargetTemplate = createPushButton(comp, "Browse...", null)
-        browseTargetTemplate.addSelectionListener(
-            new SelectionAdapter() {
-                override void widgetSelected(SelectionEvent e) {
-                    val dialog = new FileDialog(parent.shell, SWT.SAVE)
-                    val result = dialog.open()
-                    if (result != null) {
-                        targetTemplate.setText(result);
-                    }
-                }
-
-            }
-        )
-    }
-
-    private def createWrapperCodeComponent(Composite parent) {
-        val group = SWTFactory.createGroup(parent, "Wrapper code generation", 1, 2, GridData.FILL_HORIZONTAL)
-        val comp = SWTFactory.createComposite(group, parent.getFont(), 8, 3, GridData.FILL_BOTH, 0, 0)
-
-        // Input file
-        SWTFactory.createLabel(comp, "Input file", 3)
-        wrapperCodeTemplate = SWTFactory.createSingleText(comp, 4)
-        wrapperCodeTemplate.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                currentData.wrapperCodeTemplate = wrapperCodeTemplate.text
-                updateLaunchConfigurationDialog();
-            }
-        })
-
-        browseWrapperCodeTemplate = createPushButton(comp, "Browse...", null)
-        browseWrapperCodeTemplate.addSelectionListener(
-            new SelectionAdapter() {
-                override void widgetSelected(SelectionEvent e) {
-                    val dialog = new FileDialog(parent.shell, SWT.SAVE)
-                    val result = dialog.open()
-                    if (result != null) {
-                        wrapperCodeTemplate.setText(result);
-                    }
-                }
-
-            }
-        )
-
-        // Output file
-        SWTFactory.createLabel(comp, "Output file", 3)
-        wrapperCodeTarget = SWTFactory.createSingleText(comp, 4)
-        wrapperCodeTarget.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                currentData.wrapperCodeTargetPath = wrapperCodeTarget.text
-                updateLaunchConfigurationDialog();
-            }
-        })
-
-        browseWrapperCodeTarget = createPushButton(comp, "Browse...", null)
-        browseWrapperCodeTarget.addSelectionListener(
-            new SelectionAdapter() {
-                override void widgetSelected(SelectionEvent e) {
-                    val dialog = new FileDialog(parent.shell, SWT.SAVE)
-                    val result = dialog.open()
-                    if (result != null) {
-                        wrapperCodeTarget.setText(result);
-                    }
-                }
-
-            }
-        )
-
-        // Directory with snippet definitions
-        SWTFactory.createLabel(comp, "Annotation snippets directory", 3)
-        wrapperCodeSnippets = SWTFactory.createSingleText(comp, 4)
-        wrapperCodeSnippets.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                currentData.wrapperCodeSnippetsDirectory = wrapperCodeSnippets.text
-                updateLaunchConfigurationDialog();
-            }
-        })
-
-        browseWrapperCodeSnippets = createPushButton(comp, "Browse...", null)
-        browseWrapperCodeSnippets.addSelectionListener(
-            new SelectionAdapter() {
-                override void widgetSelected(SelectionEvent e) {
-                    val dialog = new ContainerSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(),
-                        false, "");
-
-                    dialog.open();
-                    val results = dialog.getResult()
-                    if ((results != null) && (results.length > 0) && (results.get(0) instanceof IPath)) {
-                        val path = results.get(0) as IPath;
-                        val containerName = path.toOSString();
-                        wrapperCodeSnippets.setText(containerName);
-                    }
-                }
-
-            }
-        )
-
-    }
-
+    /**type filter text
+     * {@inheritDoc}
+     */
     override getName() {
         return "SCT Compilation"
     }
 
+    /**
+     * {@inheritDoc}
+     */
     override initializeFrom(ILaunchConfiguration configuration) {
         list.input = SCTCompilationData.loadAllFromConfiguration(configuration)
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override activated(ILaunchConfigurationWorkingCopy workingCopy) {
         super.activated(workingCopy)
         currentData= null
-        enableControls(false)
+        updateProjectReference(workingCopy)        
+        updateEnabled()
     }
 
+    private def updateProjectReference(ILaunchConfigurationWorkingCopy configuration){
+        val projectName = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
+        project= LaunchConfiguration.findProject(projectName)
+        
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     override performApply(ILaunchConfigurationWorkingCopy configuration) {
+        // Get the sct files in the list
         val datas = list.input as List<SCTCompilationData>
-        if (datas != null && !datas.isEmpty) {
+        if (datas != null) {
+            // Create a list with the paths of the selected SCT files.
             val List<String> sctFiles = newArrayList()
-                
             datas.forEach [
                 sctFiles += it.path
+                
+                // Save the attributes of this file with the path as identification
                 configuration.setAttribute(it.path, it.attributeMap)
             ]
             configuration.setAttribute(LaunchConfiguration.ATTR_SCT_FILES, sctFiles)
         }
+        
+        // Update project reference
+        updateProjectReference(configuration)
     }
 
+    /**
+     * {@inheritDoc}
+     */
     override setDefaults(ILaunchConfigurationWorkingCopy configuration) {
     }
 
+    /**
+     * Updates the values of all controls with the newly selected data.
+     */
     private def updateControls(SCTCompilationData data) {
-        enableControls(data != null)
+        updateEnabled()
+        
         if (data != null) {
-            // Target language
-            if(targetLanguage.input != null){
-                for(transformation : targetLanguage.input as Iterable<Transformation>){
-                    if(transformation.id == data.targetLanguage){
-                        targetLanguage.selection = new StructuredSelection(transformation)
-                    }
-                }
-            }
-
-            targetPath.text = data.targetPath
-            targetTemplate.text = data.targetTemplate
-
-            // Wrapper code
-            wrapperCodeTemplate.text = data.wrapperCodeTemplate
-            wrapperCodeTarget.text = data.wrapperCodeTargetPath
-            wrapperCodeSnippets.text = data.wrapperCodeSnippetsDirectory
+            // Set values of controls
         }
     }
 
-    private def enableControls(boolean enable) {
-        val List<Control> controls = #[targetLanguage.combo, targetPath, targetTemplate, wrapperCodeTemplate, wrapperCodeTarget,
-            wrapperCodeSnippets, browseTargetPath, browseTargetTemplate, browseWrapperCodeSnippets,
-            browseWrapperCodeTarget, browseWrapperCodeTemplate]
-        controls.forEach[it.enabled = enable]
+    /**
+     * Enable or disable all controls that work on the currently selected sct file data.
+     * Enable list control iff the project is set correct.
+     */
+    private def updateEnabled() {
+        // Enable controls that work on the currentData
+        var enabled = (currentData != null)        
+        val controls = #[]
+        SCChartsLaunchConfigurationTabGroup.enableControls(controls, enabled)
+        
+        // Enable list control iff project is specified
+        list.list.parent.children.forEach[ it.enabled = (project != null) ]
     }
 
 }

@@ -20,6 +20,9 @@ import java.util.Map
 import java.util.HashMap
 
 /** 
+ * Data container for sct files compilation.
+ * The objects are created in the launch configuration dialog of SCCharts applications.
+ * 
  * @author aas
  */
 class SCTCompilationData {
@@ -36,35 +39,40 @@ class SCTCompilationData {
     private var String path = ""
     @Accessors
     private var String name = ""
-    @Accessors
-    private var String targetLanguage = ""
-    @Accessors
-    private var String targetPath = ""
-    @Accessors
-    private var String targetTemplate = ""
-
-    // Wrapper code
-    @Accessors
-    private var String wrapperCodeTemplate = ""
-    @Accessors
-    private var String wrapperCodeTargetPath = ""
-    @Accessors
-    private var String wrapperCodeSnippetsDirectory = ""
     
+    /**
+     * Loads all SCTCompilationData objects from the launch configuration.
+     * 
+     * @return List of the loaded compilation data.
+     */
     static def List<SCTCompilationData> loadAllFromConfiguration(ILaunchConfiguration configuration){
+        // Load list with paths of sct files that should be compiled.
         val List<String> sctFiles = configuration.getAttribute(LaunchConfiguration.ATTR_SCT_FILES, #[])
+        
+        // Prepare the result list.
         val List<SCTCompilationData> datas = newArrayList()
+        
+        // Create an object for each path and load its data.
         sctFiles.forEach [
             val data = new SCTCompilationData()
             data.path = it
+            
+            // The data for the object is stored with its path as attribute identification. 
             data.loadAttributesFromMap(configuration.getAttribute(data.path, new HashMap()))
             
+            // Add this object to the result list
             datas += data
         ]
         
         return datas
     }
     
+    /**
+     * Try to loads the values of this objects fields by reading the map values.
+     * 
+     * @param map A map where the key is this object's field names
+     * and the value is the value this object's field should have.  
+     */
     def loadAttributesFromMap(Map<String, String> map) {
         val classObject = typeof(SCTCompilationData)
         for(f : classObject.declaredFields){
@@ -72,6 +80,10 @@ class SCTCompilationData {
         }
     }
     
+    /**
+     * Stores all fields of this class in a map
+     * where the key is a field's name and the value is the field's value.
+     */
     def Map<String, String> getAttributeMap(){
         val map = new HashMap<String, String>()
         val classObject = typeof(SCTCompilationData)

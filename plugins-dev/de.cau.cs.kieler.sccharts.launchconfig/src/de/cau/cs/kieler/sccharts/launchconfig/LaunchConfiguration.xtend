@@ -5,6 +5,7 @@ import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup
 import freemarker.template.Configuration
 import freemarker.template.Template
+import freemarker.template.TemplateExceptionHandler
 import freemarker.template.Version
 import java.io.File
 import java.io.FileReader
@@ -15,8 +16,11 @@ import java.util.ArrayList
 import java.util.List
 import java.util.concurrent.ExecutionException
 import java.util.regex.Pattern
+import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.Path
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunch
@@ -26,7 +30,6 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl
-import freemarker.template.TemplateExceptionHandler
 
 class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
@@ -35,6 +38,14 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val ATTR_RUN_COMMAND = "de.cau.cs.kieler.scchart.launchconfig.execute.command.run"
 
     public static val ATTR_SCT_FILES = "de.cau.cs.kieler.scchart.launchconfig.sct.files"
+
+    public static val ATTR_PROJECT = "de.cau.cs.kieler.scchart.launchconfig.main.project"
+    public static val ATTR_TARGET_LANGUAGE = "de.cau.cs.kieler.scchart.launchconfig.main.target.language"
+    public static val ATTR_TARGET_TEMPLATE = "de.cau.cs.kieler.scchart.launchconfig.main.target.template"
+    
+    public static val ATTR_WRAPPER_CODE_TEMPLATE = "de.cau.cs.kieler.scchart.launchconfig.main.wrapper.template"
+    public static val ATTR_WRAPPER_CODE_OUTPUT = "de.cau.cs.kieler.scchart.launchconfig.main.wrapper.output"
+    public static val ATTR_WRAPPER_CODE_SNIPPETS = "de.cau.cs.kieler.scchart.launchconfig.main.wrapper.snippets"
 
     var ILaunchConfiguration configuration
     var String mode
@@ -71,28 +82,33 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         }
 
         if (model != null) {
-            if (data.targetLanguage != null && data.targetLanguage != "") {
+            val targetLanguage = configuration.getAttribute(ATTR_TARGET_LANGUAGE, "")
+            val targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
+            val targetPath = data.path+".target"
+            
+            if (targetLanguage != null && targetLanguage != "") {
                 // Compile sct
-                val context = new KielerCompilerContext("T_"+data.targetLanguage, model)
+                val context = new KielerCompilerContext("T_"+targetLanguage, model)
                 val result = KielerCompiler.compile(context)
 
                 // Flush compilation result to target
                 if (result != null && result.string != null) {
                     try {
-                        if (data.targetTemplate != null && data.targetTemplate != "") {
+                        
+                        if (targetTemplate != null && targetTemplate != "") {
                             // Use template
-                            val reader = new FileReader(new File(data.targetTemplate))
+                            val reader = new FileReader(new File(targetTemplate))
                             val cfg = new Configuration(new Version(2, 3, 0))
                             cfg.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
                             
                             val template = new Template("tmp", reader, cfg)
-                            val writer = new FileWriter(new File(data.targetPath))
+                            val writer = new FileWriter(new File(targetPath))
                             template.process(#{"sct_code" -> result.string}, writer)
                             reader.close()
                             writer.close()
                         } else {
                             // Write directly to file
-                            val writer = new PrintWriter(data.targetPath, "UTF-8");
+                            val writer = new PrintWriter(targetPath, "UTF-8");
                             writer.print(result.string)
                             writer.close()
                         }
@@ -101,7 +117,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     }
                 }
             } else {
-                println("Can't find transformationID for SCT target language '" + data.targetLanguage + "'.")
+                println("Can't find transformationID for SCT target language '" + targetLanguage + "'.")
             }
         }
     }
@@ -169,6 +185,19 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 throw new ExecutionException("Could not load SCChart as an XMIResource.", e);
             }
         }
+    }
+    
+    /**
+     * Returns a proejct handle if the project name is a valid name for a project
+     * and the project exists in the current workspace.
+     */
+    static def IProject findProject(String name) {
+        if (name != null && name != "" && new Path(name).isValidPath(name)) {
+            val p = ResourcesPlugin.workspace.root.getProject(name)
+            if (p.location != null)
+                return p
+        }
+        return null
     }
 
 }
