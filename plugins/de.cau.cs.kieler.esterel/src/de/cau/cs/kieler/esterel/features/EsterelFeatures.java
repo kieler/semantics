@@ -23,7 +23,7 @@ package de.cau.cs.kieler.esterel.features;
  */
 public class EsterelFeatures {
 
-    public final static String BASIC_ID = "scl.basic";
-    public final static String BASIC_NAME = "SCL";
+    public final static String BASIC_ID = "esterel.basic";
+    public final static String BASIC_NAME = "Esterel";
     
 }
