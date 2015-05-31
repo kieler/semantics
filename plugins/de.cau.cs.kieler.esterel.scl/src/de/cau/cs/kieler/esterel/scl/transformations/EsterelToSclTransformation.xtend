@@ -173,7 +173,6 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         return SCLFeatures.BASIC_ID
     }
 
-
     /**
      * Generic transformation method for KiCo. Compile without optimized ouput variable resetting
      * if the program does not terminate.

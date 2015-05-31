@@ -51,6 +51,8 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.features.SCLFeatures
+import java.util.Set
+import com.google.common.collect.Sets
 
 /** 
  * SCL to SCG Transformation 
@@ -78,6 +80,16 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
     override getId() {
         return SCLTransformations::SCG_ID
     }
+    
+    
+        /**
+     * {@inheritDoc}
+     */
+    override Set<String> getRequiredFeatureIds() {
+        return Sets.newHashSet(SCLFeatures.BASIC_ID)
+    }
+    
+    
 
     // M2M Mapping
     //    private val nodeMapping = new HashMap<Node, Node>
