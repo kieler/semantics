@@ -140,7 +140,7 @@ class SimulationVisualization {
 
     // New visualization of active states with immediate during actions
     def void transformSimulationVisualizationState(State state, State targetRootState, String UID) {
-        if (!state.isRootState && !state.hasInnerStatesOrRegions) {
+        if (!state.isRootState && !state.hasInnerStatesOrControlflowRegions) {
             val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
             
             if (!state.final) {
