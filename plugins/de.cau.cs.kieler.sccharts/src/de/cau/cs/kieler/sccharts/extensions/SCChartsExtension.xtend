@@ -101,7 +101,7 @@ class SCChartsExtension {
 //        state.regions.filter(typeof(Dataflow)).toList
 //    }
     
-    def List<DataflowRegion> getDataflows(State state) {
+    def List<DataflowRegion> getDataflowRegions(State state) {
         state.regions.filter(typeof(DataflowRegion)).toList
     }
 

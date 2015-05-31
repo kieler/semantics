@@ -62,12 +62,9 @@ import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.CallNode
-import de.cau.cs.kieler.sccharts.Dataflow
+import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.DefineNode
-import de.cau.cs.kieler.sccharts.DuringAction
-import de.cau.cs.kieler.sccharts.EntryAction
-import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Node
 import de.cau.cs.kieler.sccharts.ReferenceNode
@@ -100,7 +97,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
-
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -282,8 +279,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 		}
 		
 		
-        if (model instanceof Region) {
-            val region = (model as Region).translate(false)
+        if (model instanceof ControlflowRegion) {
+            val region = model.translate(false)
             var time = (System.currentTimeMillis - timestamp) as float
             System.out.println("SCCharts synthesis (regions) finished (time elapsed: "+(time / 1000)+"s).")
             return region
@@ -316,7 +313,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     // -------------------------------------------------------------------------
     // Transform a region
-    public def KNode translate(Region r, boolean loadLazy) {
+    public def KNode translate(ControlflowRegion r, boolean loadLazy) {
     	regionCounter = regionCounter + 1
     	if (regionCounter % 100 == 0) System.out.print("r")
     	if (regionCounter % 2000 == 0) System.out.println("")
@@ -403,17 +400,18 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     // -------------------------------------------------------------------------
     // Helper functions
     // Returns true if the state has no regions that contain any further states.
-    def boolean hasNoRegionsWithStates(State state) {
-        return (state.regions == null || state.regions.size == 0 || !state.regionsNotEmpty)
+    def boolean hasNoControlflowRegionsWithStates(State state) {
+        return (state.controlflowRegions == null || state.controlflowRegions.size == 0 || !state.controlflowRegionsNotEmpty)
     }
     
-    def boolean hasNoDataflows(State state) {
-    	return (state.dataflows == null || state.dataflows.size == 0)
+    def boolean hasNoDataflowRegions(State state) {
+    	val df = state.dataflowRegions
+    	return (df == null || df.size == 0)
     }
 
     // Tells if the state needs a macro state rendering because of regions or declarations.
     def boolean hasRegionsOrDeclarations(State state, List<ValuedObject> valuedObjectCache) {
-        val returnValue = (!state.hasNoRegionsWithStates || !state.hasNoDataflows || 
+        val returnValue = (!state.hasNoControlflowRegionsWithStates || !state.hasNoDataflowRegions || 
             (!state.localActions.nullOrEmpty && SHOW_STATE_ACTIONS.booleanValue) ||
             (!valuedObjectCache.nullOrEmpty && SHOW_SIGNAL_DECLARATIONS.booleanValue))
         return returnValue
@@ -584,7 +582,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     if (!(PAPER_BW.booleanValue || globalBWOption)) {
                         it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                     } else {
-                        if (s.hasInnerStatesOrRegions) {
+                        if (s.hasInnerStatesOrControlflowRegions) {
                             it.setBackground(SCCHARTSGRAY.copy);
                         }
                     }
@@ -610,7 +608,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             dependencyNode.getPriority + ""
                         else
                             (dependencyNode.getOrder) + ""
-                        if (s.hasInnerStatesOrRegions || s.hasInnerActions) {
+                        if (s.hasInnerStatesOrControlflowRegions || s.hasInnerActions) {
                             if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).nullOrEmpty) {
                                 val dependencyNodeJoin = dependencyGraph.dependencyNodes.filter(
                                     e|e.getState == s && e.getIsJoin).get(0)
@@ -649,7 +647,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 val prioritySpace = if(priorityToShow.length > 0) "  " else " "
                 if (s.hasRegionsOrDeclarations(valuedObjectCache) || s.referencedState) {
                     
-                    if (s.hasNoRegionsWithStates) 
+                    if (s.hasNoControlflowRegionsWithStates) 
                         if (USE_ADAPTIVEZOOM.booleanValue) figure.lowerVisibilityScaleBound = 0.075f;
                     // Get a smaller window-title-bare if this a macro state 
                     if (!s.label.empty)
@@ -818,12 +816,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     ];
                 }
             ];
-            if (!s.hasNoRegionsWithStates) {
-                for (r : s.regions)
+            if (!s.hasNoControlflowRegionsWithStates) {
+                for (r : s.regions.filter(ControlflowRegion))
                     node.children += r.translate(false);
             }
-            if (!s.hasNoDataflows) {
-                for (d : s.dataflows)
+            if (!s.hasNoDataflowRegions) {
+                for (d : s.dataflowRegions)
                 	node.children += d.translate(false)
             }
             if (s.isReferencedState) {
@@ -834,7 +832,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
             } 
             if (s.referencedState && SHOW_REFERENCEEXPANSION.booleanValue) {
-                for (r : (s.referencedScope as State).regions) {
+                for (r : (s.referencedScope as State).regions.filter(ControlflowRegion)) {
                     val synthesis = delegate.get();
                     synthesis.use(usedContext)
                     node.children += synthesis.translate(r, true)
@@ -1011,7 +1009,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     // -------------------------------------------------------------------------
     // Transform a dataflow region
-    public def dispatch KNode translate(Dataflow d, boolean loadLazy) {
+    public def dispatch KNode translate(DataflowRegion d, boolean loadLazy) {
         val dNode = d.createNode().putToLookUpWith(d) => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
@@ -1096,7 +1094,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     // list of commutative operators to reduce port constraints (just fixed side, not fixed order)
     val commutativeOps = newArrayList("+", "*", "&", "|", "==", "<>")
     
-    private def dispatch KNode translate(Expression expr, int index, KNode parentNode, Dataflow d) {
+    private def dispatch KNode translate(Expression expr, int index, KNode parentNode, DataflowRegion d) {
         val nNode = expr.createNode(parentNode).putToLookUpWith(expr)
         // translate the expression according to it's type
         switch(expr) {
