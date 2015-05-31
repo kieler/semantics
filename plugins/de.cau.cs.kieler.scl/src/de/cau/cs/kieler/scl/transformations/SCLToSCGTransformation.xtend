@@ -76,7 +76,7 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
     }
     
     override getId() {
-        return SCLFeatures::BASIC_ID
+        return SCLTransformations::SCG_ID
     }
 
     // M2M Mapping
