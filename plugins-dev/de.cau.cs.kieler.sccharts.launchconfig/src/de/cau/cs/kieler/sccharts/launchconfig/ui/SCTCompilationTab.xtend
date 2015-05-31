@@ -38,6 +38,7 @@ import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
+import org.eclipse.swt.widgets.Button
 
 /**
  * @author aas
@@ -50,6 +51,18 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
      * Takes an collection of SCTCompilationData as input.
      */
     private var ListViewer list
+
+    /**
+     * The add button.
+     * Opens a Resource selection dialog and adds all selected SCT files to the list.
+     */
+    private var Button addButton
+    
+    /**
+     * The remove Button.
+     * Removes the current selection from the list.
+     */
+    private var Button removeButton
     
     /**
      * The currently selected data of the list control.
@@ -95,7 +108,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
             override String getText(Object element) {
                 val data = (element as SCTCompilationData)
                 if (data != null)
-                    return data.name
+                    return data.projectRelativePath
                 else
                     return ""
             }
@@ -115,8 +128,8 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         val bcomp = SWTFactory.createComposite(comp, comp.getFont(), 1, 3, GridData.HORIZONTAL_ALIGN_END, 0, 0)
 
         // Add Button
-        val add = createPushButton(bcomp, "Add...", null)
-        add.addSelectionListener(
+        addButton = createPushButton(bcomp, "Add...", null)
+        addButton.addSelectionListener(
             new SelectionAdapter() {
                 override void widgetSelected(SelectionEvent e) {
                     // Create dialog.
@@ -136,8 +149,9 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
                         for (var i = 0; i < results.length; i++) {
                             val resource = results.get(i) as IResource
                             val path = resource.location.toOSString
+                            val projectRelativePath = resource.projectRelativePath.toOSString
                             val name = resource.name
-
+ 
                             // The ResourceSelectionDialog does not provide filter funcionality
                             // so we do this here manually.
                             var isOK = resource.fileExtension.toLowerCase == "sct"
@@ -148,7 +162,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
 
                             // Add if the new element is ok.
                             if (isOK)
-                                newInput.add(new SCTCompilationData(path, name))
+                                newInput.add(new SCTCompilationData(path, projectRelativePath, name))
                             else
                                 println("Resource '" + resource.name + "' is no SCT file or already in list!")
                         }
@@ -161,8 +175,8 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         )
 
         // Remove Button
-        val remove = createPushButton(bcomp, "Remove", null)
-        remove.addSelectionListener(new SelectionAdapter() {
+        removeButton = createPushButton(bcomp, "Remove", null)
+        removeButton.addSelectionListener(new SelectionAdapter() {
             override void widgetSelected(SelectionEvent e) {
                 // The ListViewer does not provide an easy way to remove an element
                 // so we do it the hard way.
@@ -262,11 +276,13 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
     private def updateEnabled() {
         // Enable controls that work on the currentData
         var enabled = (currentData != null)        
-        val controls = #[]
+        var controls = #[]
         SCChartsLaunchConfigurationTabGroup.enableControls(controls, enabled)
         
         // Enable list control iff project is specified
-        list.list.parent.children.forEach[ it.enabled = (project != null) ]
+        controls = #[list.list, addButton, removeButton]
+        enabled = (project != null)
+        SCChartsLaunchConfigurationTabGroup.enableControls(controls, enabled)
     }
 
 }

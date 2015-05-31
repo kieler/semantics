@@ -30,13 +30,16 @@ class SCTCompilationData {
     new() {
     }
 
-    new(String filePath, String fileName) {
+    new(String filePath, String projectRelativePath, String fileName) {
         this.path = filePath
+        this.projectRelativePath = projectRelativePath
         this.name = fileName
     }
 
     @Accessors
     private var String path = ""
+    @Accessors
+    private var String projectRelativePath = ""
     @Accessors
     private var String name = ""
     
