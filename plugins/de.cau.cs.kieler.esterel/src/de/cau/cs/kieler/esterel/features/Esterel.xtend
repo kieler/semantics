@@ -40,7 +40,7 @@ class Esterel extends Feature {
     //-------------------------------------------------------------------------
 
     // This method checks, if this feature is contained in a model
-    def isContained(Program scl) {
+    def isContained(Program program) {
         return true
     }
 }
