@@ -20,7 +20,8 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.106.1",
  de.cau.cs.kieler.sccharts.text;bundle-version="0.1.1",
  de.cau.cs.kieler.freemarker;bundle-version="0.1.0",
  org.eclipse.ui.console;bundle-version="3.5.300",
- org.eclipse.core.variables;bundle-version="3.2.800"
+ org.eclipse.core.variables;bundle-version="3.2.800",
+ de.cau.cs.kieler.core.annotations.text;bundle-version="0.4.3"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPoliBundle-Vendor: Christian-Albrechts-Universität zu Kiel
 cy: lazy

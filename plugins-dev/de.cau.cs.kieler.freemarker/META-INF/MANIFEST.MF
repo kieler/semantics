@@ -4,11 +4,31 @@ Bundle-Name: KEIER Freemarker Wrapper
 Bundle-SymbolicName: de.cau.cs.kieler.freemarker;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.freemarker.FreeMarkerPlugin
-Require-Bundle: org.eclipse.core.runtime
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Bundle-ClassPath: .,
- lib/FreeMarker/freemarker.jar
+Bundle-ClassPath: .,lib/FreeMarker/freemarker.jar
 Export-Package: de.cau.cs.kieler.freemarker,
- freemarker.template
+ freemarker.cache,
+ freemarker.core,
+ freemarker.debug,
+ freemarker.debug.impl,
+ freemarker.ext.ant,
+ freemarker.ext.beans,
+ freemarker.ext.dom,
+ freemarker.ext.jdom,
+ freemarker.ext.jsp,
+ freemarker.ext.jython,
+ freemarker.ext.rhino,
+ freemarker.ext.servlet,
+ freemarker.ext.util,
+ freemarker.ext.xml,
+ freemarker.log,
+ freemarker.template,
+ freemarker.template.utility
+
