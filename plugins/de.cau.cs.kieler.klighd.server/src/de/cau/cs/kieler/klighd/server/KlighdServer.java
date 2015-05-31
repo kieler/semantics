@@ -33,8 +33,9 @@ import de.cau.cs.kieler.core.kgraph.KGraphData;
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.impl.KGraphDataImpl;
-import de.cau.cs.kieler.kico.KiCoUtil;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kiml.service.KimlServicePlugin;
 import de.cau.cs.kieler.kiml.util.KimlUtil;
 import de.cau.cs.kieler.klighd.IOffscreenRenderer;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
@@ -155,6 +156,7 @@ public class KlighdServer extends HttpServer {
                 // build up a corresponding view context
                 final ViewContext viewContext =
                         LightDiagramServices.translateModel2(mainModel, null);
+                //KimlServicePlugin.getDefault(); 
                 LightDiagramServices.layoutDiagram(viewContext);
                 ResourceSet rs = new ResourceSetImpl();
                 Resource r = rs.createResource(URI.createPlatformResourceURI("Dummy.kgx", true));
@@ -191,6 +193,13 @@ public class KlighdServer extends HttpServer {
                     e1.printStackTrace();
                 }
             } else {
+                // build up a corresponding view context
+                final ViewContext viewContext =
+                        LightDiagramServices.translateModel2(mainModel, null);
+                //KimlServicePlugin.getDefault(); 
+                //LightDiagramServices.layoutDiagram(viewContext);
+                
+                
                 final ByteArrayOutputStream outputStreamParam = outputStream;
                 // // Render model
                 // ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -205,6 +214,9 @@ public class KlighdServer extends HttpServer {
                                 .setProperty(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
                 Display.getDefault().syncExec(new Runnable() {
                     public void run() {
+                        
+                        KimlServicePlugin.getDefault();
+                        
                         renderingResult =
                                 LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
                                         outputStreamParam, properties);
@@ -215,6 +227,33 @@ public class KlighdServer extends HttpServer {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                
+                
+                
+//                final ByteArrayOutputStream outputStreamParam = outputStream;
+//                // // Render model
+//                // ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                // final ByteArrayOutputStream outputStreamParam = outputStream;
+//                final EObject mainModelParam = mainModel;
+//                final String renderParam = render;
+//                final KlighdSynthesisProperties properties =
+//                        KlighdSynthesisProperties
+//                                .create()
+//                                .setProperty(SVGOffscreenRenderer.GENERATOR,
+//                                        "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEPExtended")
+//                                .setProperty(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
+//                Display.getDefault().syncExec(new Runnable() {
+//                    public void run() {
+//                        renderingResult =
+//                                LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
+//                                        outputStreamParam, properties);
+//                    }
+//                });
+//                try {
+//                    outputStreamParam.flush();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             }
 
             debug("Model rendered");

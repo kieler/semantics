@@ -51,13 +51,4 @@
             name="C2SCT">
       </transformationMethod>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.kico.ui.transformation">
-      <editor
-            editor="org.eclipse.cdt.ui.editor.CEditor"
-            label="C"
-            priority="100"
-            transformations="C2SCT"></editor>
-   </extension>
-
 </plugin>

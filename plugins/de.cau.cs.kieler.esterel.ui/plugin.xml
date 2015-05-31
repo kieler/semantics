@@ -180,5 +180,15 @@
             class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
       </markerResolutionGenerator>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.ui.transformation">
+      <editor
+            editor="de.cau.cs.kieler.esterel.Esterel"
+            features="scl.basic, scg, scl.scg, codegeneration, s, s.target"
+            label="Esterel SCL Compilation"
+            preferred="s.c, scl.basic"
+            priority="100">
+      </editor>
+   </extension>
 
 </plugin>

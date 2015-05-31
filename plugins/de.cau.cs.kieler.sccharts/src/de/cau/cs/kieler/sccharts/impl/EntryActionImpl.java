@@ -13,10 +13,10 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import org.eclipse.emf.ecore.EClass;
+
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
-
-import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,29 +29,29 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class EntryActionImpl extends LocalActionImpl implements EntryAction {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected EntryActionImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return SCChartsPackage.Literals.ENTRY_ACTION;
-    }
+		return SCChartsPackage.Literals.ENTRY_ACTION;
+	}
 
 } //EntryActionImpl

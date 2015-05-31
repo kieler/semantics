@@ -47,7 +47,6 @@ import de.cau.cs.kieler.core.kexpressions.Declaration
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTExpressionStatement
 import de.cau.cs.kieler.sccharts.Dataflow
 import de.cau.cs.kieler.sccharts.TransitionType
-import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import org.eclipse.cdt.core.model.CoreModel
 import org.eclipse.core.resources.IResource
@@ -59,12 +58,13 @@ import de.cau.cs.kieler.sccharts.Assignment
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTUnaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 
 /**
  * @author ssm
  *
  */
-class CDTProcessor extends Transformation {
+class CDTProcessor extends AbstractProductionTransformation {
     
     @Inject
     extension KExpressionsExtension
@@ -82,6 +82,11 @@ class CDTProcessor extends Transformation {
     override String getId() {
         return "C2SCT";
     }
+    
+	override getProducedFeatureId() {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+    
     
     override transform(EObject eObject, KielerCompilerContext context) {
         eObject
@@ -627,8 +632,6 @@ class CDTProcessor extends Transformation {
         _trc = _trc + 1
         _trc
     }
-    
-
     
 //    private createExpression    
 }

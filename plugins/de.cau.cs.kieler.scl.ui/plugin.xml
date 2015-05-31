@@ -312,8 +312,18 @@
           point="de.cau.cs.kieler.kico.ui.transformation">
        <editor
              editor="de.cau.cs.kieler.scl.SCL"
-             transformations=" OPTIMIZE_ALL,REMOVE_UNREACHABLE_CODE_AND_LABELS,REMOVE_SUBSEQUENT_LABELS,REMOVE_DOUBLE_JUMPS, SCL_OPTIMIZATIONS,REMOVE_UNREACHABLE_CODE,OPTIMIZE_LABELS, REMOVE_SUPERFLUOUS_GOTOS_AND_LABELS,SCLSCGGROUP,SCLTOSCG, SCGDEP, SCGBBGROUP, SCGBB,SCGBBSCPLUS,SCGSCHEDULE, SCGSEQUENTIALIZE, SCGGC,CODEGENERATION, SCG2S,SCG2C,S2TARGET,S2C,S2JAVA,SCPDG">
+             features="scg, scl.scg, codegeneration, s, s.target"
+             label="Netlist Compilation (SCL)"
+             preferred="s.c, scl.basic"
+             priority="100">
        </editor>
     </extension>
+    <!--<extension
+          point="de.cau.cs.kieler.kico.ui.transformation">
+       <editor
+             editor="de.cau.cs.kieler.scl.SCL"
+             transformations=" OPTIMIZE_ALL,REMOVE_UNREACHABLE_CODE_AND_LABELS,REMOVE_SUBSEQUENT_LABELS,REMOVE_DOUBLE_JUMPS, SCL_OPTIMIZATIONS,REMOVE_UNREACHABLE_CODE,OPTIMIZE_LABELS, REMOVE_SUPERFLUOUS_GOTOS_AND_LABELS,SCLSCGGROUP,SCLTOSCG, SCGDEP, SCGBBGROUP, SCGBB,SCGBBSCPLUS,SCGSCHEDULE, SCGSEQUENTIALIZE, SCGGC,CODEGENERATION, SCG2S,SCG2C,S2TARGET,S2C,S2JAVA,SCPDG">
+       </editor>
+    </extension>-->
 
 </plugin>

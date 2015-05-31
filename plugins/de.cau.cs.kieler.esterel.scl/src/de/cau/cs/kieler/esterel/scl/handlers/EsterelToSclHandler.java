@@ -20,12 +20,16 @@ import org.eclipse.jface.viewers.ISelection;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
+import de.cau.cs.kieler.esterel.scl.transformations.EsterelTransformations;
 import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scl.SCLStandaloneSetup;
-import de.cau.cs.kieler.scl.scl.SCLProgram;
 
 /**
- * @author krat
+ * @author krat ssm
+ * @kieler.design 2015-05-25 proposed 
+ * @kieler.rating 2015-05-25 proposed yellow
  *
  */
 public class EsterelToSclHandler extends AbstractConvertModelHandler {
@@ -66,7 +70,9 @@ public class EsterelToSclHandler extends AbstractConvertModelHandler {
 
         transformed = model;
         if (commandString.equals(ESTEREL_TRANSFORMATION)) {
-            transformed = (SCLProgram) KielerCompiler.compile("ESTERELTOSCL", model, false, false).getEObject();
+//            transformed = (SCLProgram) KielerCompiler.compile("ESTERELTOSCL", model, false, false).getEObject();
+            KielerCompilerContext context = new KielerCompilerContext(EsterelTransformations.SCL_ID, model);
+            transformed = (SCGraph) KielerCompiler.compile(context).getEObject();
         } 
         return transformed;
     }

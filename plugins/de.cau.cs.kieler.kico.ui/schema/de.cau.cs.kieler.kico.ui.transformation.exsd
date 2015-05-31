@@ -51,7 +51,7 @@ This extension point allowes to define which KiCo transformations should be visi
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="editor" type="string">
+         <attribute name="editor" type="string" use="required">
             <annotation>
                <documentation>
                   The editor ID for which the defined transformation IDs should be visible within the KiCo.Ui (KIELER Compiler Selection) View. 
@@ -67,14 +67,21 @@ Leaving the editor ID empty means that the registered transformations will be vi
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="transformations" type="string">
+         <attribute name="features" type="string" use="required">
             <annotation>
                <documentation>
-                  A comma separated list of transformation IDs that should be visible within the KiCo.Ui (KIELER Compiler Selection) View when the defined editor is active. Enter &quot;ALL&quot; iff you whish to make all registered KiCo transformations visible.
+                  A comma separated list of feature IDs that should be visible within the KiCo.Ui (KIELER Compiler Selection) View when the defined editor is active. Enter &quot;ALL&quot; iff you whish to make all registered KiCo transformations visible.
                </documentation>
                <appinfo>
                   <meta.attribute translatable="true"/>
                </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="preferred" type="string">
+            <annotation>
+               <documentation>
+                  A comma separated list of transformation IDs of alternatives that should be preferred with priority when an alternative feature group is selected (e.g., a feature that is transformed by more than one transformation).
+               </documentation>
             </annotation>
          </attribute>
       </complexType>

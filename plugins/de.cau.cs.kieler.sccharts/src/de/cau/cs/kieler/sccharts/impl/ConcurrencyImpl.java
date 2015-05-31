@@ -42,172 +42,172 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class ConcurrencyImpl extends ScopeImpl implements Concurrency {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ConcurrencyImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return SCChartsPackage.Literals.CONCURRENCY;
-    }
+		return SCChartsPackage.Literals.CONCURRENCY;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public State getParentState() {
-        if (eContainerFeatureID() != SCChartsPackage.CONCURRENCY__PARENT_STATE) return null;
-        return (State)eInternalContainer();
-    }
+		if (eContainerFeatureID() != SCChartsPackage.CONCURRENCY__PARENT_STATE) return null;
+		return (State)eInternalContainer();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public NotificationChain basicSetParentState(State newParentState, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newParentState, SCChartsPackage.CONCURRENCY__PARENT_STATE, msgs);
-        return msgs;
-    }
+		msgs = eBasicSetContainer((InternalEObject)newParentState, SCChartsPackage.CONCURRENCY__PARENT_STATE, msgs);
+		return msgs;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setParentState(State newParentState) {
-        if (newParentState != eInternalContainer() || (eContainerFeatureID() != SCChartsPackage.CONCURRENCY__PARENT_STATE && newParentState != null)) {
-            if (EcoreUtil.isAncestor(this, newParentState))
-                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-            NotificationChain msgs = null;
-            if (eInternalContainer() != null)
-                msgs = eBasicRemoveFromContainer(msgs);
-            if (newParentState != null)
-                msgs = ((InternalEObject)newParentState).eInverseAdd(this, SCChartsPackage.STATE__CONCURRENCIES, State.class, msgs);
-            msgs = basicSetParentState(newParentState, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.CONCURRENCY__PARENT_STATE, newParentState, newParentState));
-    }
+		if (newParentState != eInternalContainer() || (eContainerFeatureID() != SCChartsPackage.CONCURRENCY__PARENT_STATE && newParentState != null)) {
+			if (EcoreUtil.isAncestor(this, newParentState))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newParentState != null)
+				msgs = ((InternalEObject)newParentState).eInverseAdd(this, SCChartsPackage.STATE__CONCURRENCIES, State.class, msgs);
+			msgs = basicSetParentState(newParentState, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.CONCURRENCY__PARENT_STATE, newParentState, newParentState));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SCChartsPackage.CONCURRENCY__PARENT_STATE:
-                if (eInternalContainer() != null)
-                    msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetParentState((State)otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SCChartsPackage.CONCURRENCY__PARENT_STATE:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetParentState((State)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SCChartsPackage.CONCURRENCY__PARENT_STATE:
-                return basicSetParentState(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SCChartsPackage.CONCURRENCY__PARENT_STATE:
+				return basicSetParentState(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-        switch (eContainerFeatureID()) {
-            case SCChartsPackage.CONCURRENCY__PARENT_STATE:
-                return eInternalContainer().eInverseRemove(this, SCChartsPackage.STATE__CONCURRENCIES, State.class, msgs);
-        }
-        return super.eBasicRemoveFromContainerFeature(msgs);
-    }
+		switch (eContainerFeatureID()) {
+			case SCChartsPackage.CONCURRENCY__PARENT_STATE:
+				return eInternalContainer().eInverseRemove(this, SCChartsPackage.STATE__CONCURRENCIES, State.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case SCChartsPackage.CONCURRENCY__PARENT_STATE:
-                return getParentState();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case SCChartsPackage.CONCURRENCY__PARENT_STATE:
+				return getParentState();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case SCChartsPackage.CONCURRENCY__PARENT_STATE:
-                setParentState((State)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case SCChartsPackage.CONCURRENCY__PARENT_STATE:
+				setParentState((State)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case SCChartsPackage.CONCURRENCY__PARENT_STATE:
-                setParentState((State)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case SCChartsPackage.CONCURRENCY__PARENT_STATE:
+				setParentState((State)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case SCChartsPackage.CONCURRENCY__PARENT_STATE:
-                return getParentState() != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case SCChartsPackage.CONCURRENCY__PARENT_STATE:
+				return getParentState() != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //ConcurrencyImpl

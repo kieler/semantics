@@ -43,6 +43,7 @@ Import-Package: com.google.common.base,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.scl,
  de.cau.cs.kieler.scl.extensions,
+ de.cau.cs.kieler.scl.features,
  de.cau.cs.kieler.scl.formatting,
  de.cau.cs.kieler.scl.handlers,
  de.cau.cs.kieler.scl.parser.antlr,

@@ -18,7 +18,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -32,6 +32,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
 import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.Goto
@@ -41,6 +42,7 @@ import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.StatementScope
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.LinkedList
@@ -48,8 +50,7 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.scl.StatementSequence
-import de.cau.cs.kieler.scl.scl.StatementScope
+import de.cau.cs.kieler.scl.features.SCLFeatures
 
 /** 
  * SCL to SCG Transformation 
@@ -59,7 +60,7 @@ import de.cau.cs.kieler.scl.scl.StatementScope
  * @kieler.rating 2014-01-27 proposed yellow
  */
 // This class contains all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
-class SCLToSCGTransformation extends AbstractModelTransformation {
+class SCLToSCGTransformation extends AbstractProductionTransformation {
 
     @Inject
     extension SCGControlFlowExtensions
@@ -69,6 +70,14 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     
     @Inject
     extension SCLExtensions
+
+    override getProducedFeatureId() {
+        return SCGFeatures::BASIC_ID
+    }
+    
+    override getId() {
+        return SCLFeatures::BASIC_ID
+    }
 
     // M2M Mapping
     //    private val nodeMapping = new HashMap<Node, Node>
@@ -344,6 +353,8 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     private def List<ControlFlow> toList(ControlFlow controlFlow) {
         <ControlFlow>newArrayList(controlFlow)
     }
+    
+
 
 // -------------------------------------------------------------------------   
 }

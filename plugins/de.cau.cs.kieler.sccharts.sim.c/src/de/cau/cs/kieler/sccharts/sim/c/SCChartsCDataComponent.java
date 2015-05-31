@@ -469,7 +469,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             highLevelContext.setCreateDummyResource(debug);
 
             highLevelContext.setInplace(false);
-            highLevelContext.setPrerequirements(true);
+            highLevelContext.setAdvancedSelect(true);
             System.out.println("10");
             CompilationResult highLeveleCompilationResult =
                     KielerCompiler.compile(highLevelContext);
@@ -486,7 +486,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                     new KielerCompilerContext(lowLevelTransformations, stateOrSCG);
             lowLevelContext.setCreateDummyResource(true);
             lowLevelContext.setInplace(false);
-            lowLevelContext.setPrerequirements(true);
+            lowLevelContext.setAdvancedSelect(true);
             System.out.println("12");
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
             System.out.println("13");

@@ -25,12 +25,14 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.sccharts.Binding
+import de.cau.cs.kieler.sccharts.Dataflow
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.Effect
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.IterateAction
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
@@ -47,15 +49,9 @@ import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.sccharts.Binding
-import de.cau.cs.kieler.sccharts.Dataflow
-import de.cau.cs.kieler.sccharts.Concurrency
-import de.cau.cs.kieler.sccharts.IterateAction
 
 /**
  * SCCharts Extensions.
@@ -88,7 +84,6 @@ class SCChartsExtension {
     def <E> ImmutableList<E> immutableCopy(List<E> list) {
          ImmutableList::copyOf(list) as ImmutableList<E>
     }
-    
 
 //    def Region getRegions(Concurrency concurrency) {
 //        concurrency as Region
@@ -216,6 +211,19 @@ class SCChartsExtension {
 // The top-most element is an SCChart which is a State.
 // If necessary, these function should be re-implemented.
 
+    // Checks if all regions have at least one final state. Note that the final
+    // state may not be reachable and this method conservatively still returns
+    // true. It only returns fals iff there is at least one region without
+    // a final state.
+    def boolean regionsMayTerminate(State state) {
+        for (region : state.regions) {
+            if (region.allFinalStates.nullOrEmpty) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 	def boolean isRootState(State state) {
 		state.parentRegion == null
 	}
@@ -238,7 +246,8 @@ class SCChartsExtension {
 
     
     def State createSCChart() {
-         SCChartsFactory::eINSTANCE.createState
+        val state = SCChartsFactory::eINSTANCE.createState();
+        return state;
     }
 
     // Gets the list of non-empty regions
@@ -445,15 +454,15 @@ class SCChartsExtension {
     def State createInitialState(String id) {
         createState(id).setInitial
     }
-
+    
     def State createFinalState(String id) {
         createState(id).setFinal
     }
-
+    
     def State createInitialState(Region region, String id) {
         region.createState(id).setInitial
     }
-
+    
     def State createFinalState(Region region, String id) {
         region.createState(id).setFinal
     }
@@ -585,11 +594,11 @@ class SCChartsExtension {
         val transition = SCChartsFactory::eINSTANCE.createTransition()
         transition.setPriority2(1)
     }
-
+    
     def Transition createImmediateTransition() {
         createTransition.setImmediate
     }
-
+    
     def Transition createTransitionTo(State sourceState, State targetState) {
         val transition = createTransition()
         transition.setTargetState(targetState)
@@ -600,14 +609,14 @@ class SCChartsExtension {
         //sourceState.outgoingTransitions.remove(dummyTransition)
         transition.trimPriorities
     }
-    
+   
     def Transition createTransitionTo(State sourceState, State targetState, int index) {
         val transition = createTransition()
         transition.setTargetState(targetState)
         sourceState.outgoingTransitions.add(index, transition)
 //        targetState.incomingTransitions.add(transition)
         transition.trimPriorities
-    }    
+    }   
 
     def Transition setTargetState2(Transition transition, State targetState) {
 //        transition.targetState.incomingTransitions.remove(transition)
@@ -678,6 +687,7 @@ class SCChartsExtension {
 
     def State fixAllTextualOrdersByPriorities(State state) {
         for (containedState : state.allContainedStatesList) {
+            //Old implementation unnecessarily touching every element every causing decresing tracing performance
             val transitions = containedState.outgoingTransitions.sortBy[priority].immutableCopy;
             for (transition : transitions) {
                 //System.out.println(transition.sourceState.id + "->" + transition.targetState.id + " : " + transition.priority)
@@ -685,6 +695,14 @@ class SCChartsExtension {
                 containedState.outgoingTransitions.add(transition) 
                 transition.setPriority(0)
             }
+            //als: New implementation avoids calls of remove and add
+            // This throws an exception because EList seems not sortable
+            //java.lang.IllegalArgumentException: The 'no duplicates' constraint is violated
+            //    at org.eclipse.emf.common.util.AbstractEList.set(AbstractEList.java:264)
+            //    at org.eclipse.emf.common.util.AbstractEList$EListIterator.doSet(AbstractEList.java:959)
+            //    at org.eclipse.emf.common.util.AbstractEList$EListIterator.set(AbstractEList.java:937)
+            //    at java.util.Collections.sort(Collections.java:221)
+            //containedState.outgoingTransitions.sort([first, second | first.priority - second.priority ]);
         }
         state
     }
@@ -837,12 +855,11 @@ class SCChartsExtension {
     }
 
     //========== ASSIGNMENTS ============
-   // Create a during action for a state.
+    //Create a during action for a state.
     def Emission createEmission() {
         val emission = SCChartsFactory::eINSTANCE.createEmission
         emission
-    }
-    
+    } 
     
     // Create an Assignment.
     def Assignment assign(ValuedObject valuedObject) {
@@ -1056,8 +1073,8 @@ class SCChartsExtension {
             val originalSource = terminationTransition.sourceState
             val originalTarget = terminationTransition.targetState
             val region = originalSource.parentRegion
-            val auxiliaryState = region.createState("_TE").uniqueName
-            val auxliiaryTransition = auxiliaryState.createImmediateTransitionTo(originalTarget)
+            val auxiliaryState = region.createState("_TE").uniqueName.trace(terminationTransition)
+            val auxliiaryTransition = auxiliaryState.createImmediateTransitionTo(originalTarget).trace(terminationTransition)
             for (effect : terminationTransition.effects.immutableCopy) {
                 auxliiaryTransition.addEffect(effect)
             }
@@ -1065,7 +1082,6 @@ class SCChartsExtension {
         }
         rootState
     }
-    
 
     //-------------------------------------------------------------------------
     //--                F I X   F O R   H A L T   S T A T E S                --
@@ -1075,16 +1091,15 @@ class SCChartsExtension {
         val haltStates = stateList.filter[!hasInnerStatesOrRegions && outgoingTransitions.nullOrEmpty && !final]
         
         for (haltState : haltStates) {
-            haltState.createTransitionTo(haltState)
+            haltState.createTransitionTo(haltState).trace(haltState)
         }
         rootState
     }
 
-
-
     //-------------------------------------------------------------------------
     //--                F I X   F O R   D E A D    C O D E                   --
     //-------------------------------------------------------------------------
+    
     // This fixes halt states and adds an explicit delayed self transition
     def State fixDeadCode(State rootState) {
         val nonReachabledStates = rootState.allContainedStates.filter[!isStateReachable].toList
@@ -1258,22 +1273,22 @@ class SCChartsExtension {
     			&& (obj as ValuedObjectReference).valuedObject == valuedObject
     		)  {
                 val valuedObjectReference = (obj as ValuedObjectReference)
-    		    val valuedObjectReferenceCopy = valuedObjectReference.copy;
+    		    val valuedObjectReferenceCopy = valuedObjectReference.nontracingCopy;
     		    val replacementValuedObjectReference = replacement.reference;
     			obj.replace(replacementValuedObjectReference)
       			replacementValuedObjectReference.indices.clear
       			for (index : valuedObjectReferenceCopy.indices) {
-                    replacementValuedObjectReference.indices.add(index.copy);
+                    replacementValuedObjectReference.indices.add(index.nontracingCopy);
       			}
     		}
 
     		else if (obj instanceof Assignment && (obj as Assignment).valuedObject == valuedObject)  {
     		    val assignment = (obj as Assignment)
-                val assignmentCopy = assignment.copy;
+                val assignmentCopy = assignment.nontracingCopy;
 				assignment.valuedObject = replacement;
                 assignment.indices.clear
                 for (index : assignmentCopy.indices) {
-                    assignment.indices.add(index.copy);
+                    assignment.indices.add(index.nontracingCopy);
                 }
     		}
 
@@ -1312,7 +1327,7 @@ class SCChartsExtension {
     
     
     def State copyState(State state) {
-        val newState = state.copy
+        val newState = state.nontracingCopy
     		
     		// Fix valued object references
     		state.valuedObjects.forEach[
@@ -1323,4 +1338,5 @@ class SCChartsExtension {
     		]
         newState
     }
+    
 }

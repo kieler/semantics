@@ -13,33 +13,38 @@
  */
 package de.cau.cs.kieler.scg.optimizations
 
-import de.cau.cs.kieler.kico.Transformation
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.core.kexpressions.Value
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.SCGraph
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kico.transformation.Processor
+import de.cau.cs.kieler.scg.processors.SCGProcessors
 
 /**
  * Replaces only initialized but never rewritten variables by constants
  * TODO replaces only variables in conditionals, could be exteded
  * TODO initial value null -> take as false
  * 
- * @author krat
+ * @author krat ssm 
+ * @kieler.design 2015-05-25 proposed 
+ * @kieler.rating 2015-05-25 proposed yellow
  *
  */
-class ReplaceUnusedVariables extends Transformation {
+class ReplaceUnusedVariables extends Processor implements Traceable {
 
-    override transform(EObject eObject, KielerCompilerContext context) {
+    override getId() {
+        return SCGProcessors::REPLACEUNUSEDVARIABLES_ID
+    }
+    
+    override process(EObject eObject) {
         System.out.println("ReplaceUnusedVariables")
         val scg = eObject as SCGraph
 
@@ -105,4 +110,6 @@ class ReplaceUnusedVariables extends Transformation {
 
         valObjRef
     }
+        
+    
 }
