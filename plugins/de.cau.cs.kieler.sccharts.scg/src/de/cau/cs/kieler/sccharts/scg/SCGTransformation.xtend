@@ -67,6 +67,7 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -376,7 +377,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     }
 
     def boolean isFork(State state) {
-        (!state.regions.nullOrEmpty && state.regionsNotEmpty)
+        (!state.regions.nullOrEmpty && state.controlflowRegionsNotEmpty)
     }
 
     def boolean isEntry(State state) {
@@ -515,7 +516,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // -------------------------------------------------------------------------   
     // --                 G E N E R A T E    N O D E S                        --
     // -------------------------------------------------------------------------   
-    def void transformSCGGenerateNodes(Region region, SCGraph sCGraph) {
+    def void transformSCGGenerateNodes(ControlflowRegion region, SCGraph sCGraph) {
         val entry = sCGraph.addEntry.trace(region, region.parentState)
         val exit = sCGraph.addExit.trace(region, region.parentState)
         region.map(entry)
@@ -590,7 +591,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             join.map(state)
 
             // Do recursion for all regions
-            for (region : state.regions) {
+            for (region : state.regions.filter(ControlflowRegion)) {
                 region.transformSCGGenerateNodes(sCGraph)
             }
         } else if (stateTypeCache.get(state).contains(PatternType::EXIT)) {
@@ -602,7 +603,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // -------------------------------------------------------------------------   
     // --                  C O N N E C T    N O D E S                         --
     // -------------------------------------------------------------------------   
-    def void transformSCGConnectNodes(Region region, SCGraph sCGraph) {
+    def void transformSCGConnectNodes(ControlflowRegion region, SCGraph sCGraph) {
         val entry = region.mappedEntry
 
         // Connect all entry nodes with the initial state's nodes.
@@ -685,7 +686,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             val join = fork.join
 
             // Do recursion for all regions
-            for (region : state.regions) {
+            for (region : state.regions.filter(ControlflowRegion)) {
                 val otherNodeEntry = region.mappedEntry
                 if (otherNodeEntry != null) {
                     val controlFlowEntry = otherNodeEntry.createControlFlow
