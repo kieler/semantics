@@ -374,7 +374,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // if a transformation is not already selected
                 Transformation transformation =
                         TransformationDummyGraph.getTransformationHandlingFeature(
-                                autoSelectedFeature.getId(), selection);
+                                autoSelectedFeature.getId(), selection, null);
                 if (transformation != null
                         && !selection.isTransformationSelected(transformation.getId())) {
                     TransformationFeature transformationFeature =
