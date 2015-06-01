@@ -106,23 +106,6 @@ public abstract class Feature implements IFeature {
     }
 
     // -------------------------------------------------------------------------
-    
-    /**
-     * Returns true if at least one transformation expanding this feature is an production
-     * transformation.
-     * 
-     * @return is feature is production feature
-     */
-    public boolean isProduction() {
-        for (Transformation transformation : getExpandingTransformations()) {
-            if (transformation.isProduction()) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    // -------------------------------------------------------------------------
 
     /**
      * Call the most specific isContained method suitable for the parameter. The default will just
