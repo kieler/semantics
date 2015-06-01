@@ -598,6 +598,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             val exit = sCGraph.addExit
             state.map(exit)
         }
+        clearDefaultTrace;
     }
 
     // -------------------------------------------------------------------------   
@@ -621,26 +622,17 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // -------------------------------------------------------------------------   
     // Traverse all states and transform possible local valuedObjects.
     def void transformSCGConnectNodes(State state, SCGraph sCGraph) {
-
-        //System.out.println("Connect Node for State " + state.id)
-        //KITT: All following SCG elements will be trace to state or transition by default
-        if (!state.outgoingTransitions.nullOrEmpty) {
-            state.outgoingTransitions.get(0).setDefaultTrace
-        } else {
-            state.setDefaultTrace
-        }
-
         if (stateTypeCache.get(state).contains(PatternType::PAUSE)) {
 
             // Connect the depth with the node that belongs to the target of
             // the single delayed transition outgoing from the current state
             val surface = state.mappedSurface
             val depth = surface.depth
-
-            val targetState = state.outgoingTransitions.get(0).targetState
+            val transition = state.outgoingTransitions.get(0)
+            val targetState = transition.targetState
             val otherNode = targetState.mappedNode
             if (otherNode != null) {
-                val controlFlow = otherNode.createControlFlow
+                val controlFlow = otherNode.createControlFlow.trace(transition)
                 depth.setNext(controlFlow)
             }
         } else if (stateTypeCache.get(state).contains(PatternType::ASSIGNMENT)) {
@@ -649,11 +641,11 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             // of the single immediate assignment transition outgoing  from
             // the current state
             val assignment = state.mappedAssignment
-
-            val targetState = state.outgoingTransitions.get(0).targetState
+            val transition = state.outgoingTransitions.get(0)
+            val targetState = transition.targetState
             val otherNode = targetState.mappedNode
             if (otherNode != null) {
-                val controlFlow = otherNode.createControlFlow
+                val controlFlow = otherNode.createControlFlow.trace(transition)
                 assignment.setNext(controlFlow)
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
@@ -689,12 +681,12 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             for (region : state.regions.filter(ControlflowRegion)) {
                 val otherNodeEntry = region.mappedEntry
                 if (otherNodeEntry != null) {
-                    val controlFlowEntry = otherNodeEntry.createControlFlow
+                    val controlFlowEntry = otherNodeEntry.createControlFlow.trace(state, region)
                     fork.next.add(controlFlowEntry)
                 }
                 val otherNodeExit = region.mappedEntry.exit
                 if (otherNodeExit != null) {
-                    val controlFlowFinal = join.createControlFlow
+                    val controlFlowFinal = join.createControlFlow.trace(state, region)
                     otherNodeExit.setNext(controlFlowFinal)
                 }
                 region.transformSCGConnectNodes(sCGraph)
@@ -705,7 +697,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                 val otherNodeTermination = terminationTargetState.mappedNode
                 if (otherNodeTermination != null) {
 
-                    val controlFlowTermination = otherNodeTermination.createControlFlow
+                    val controlFlowTermination = otherNodeTermination.createControlFlow.trace(termination)
 
                     // STEVEN'S HOTHOTFIX                	
                     //                	// Add another assignment if the termination has an effect.
@@ -729,10 +721,10 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                 // The root state does not have a normal termination.
                 // Use the corresponding exit node of the root region in this case. 
                 if (state.isRootState) {
-                    val controlFlow = rootStateEntry.exit.createControlFlow
+                    val controlFlow = rootStateEntry.exit.createControlFlow.trace(state)
                     join.setNext(controlFlow)
                 } else {
-                    val controlFlow = (state.eContainer as Region).getMappedEntry.exit.createControlFlow
+                    val controlFlow = (state.eContainer as Region).getMappedEntry.exit.createControlFlow.trace(state)
                     join.setNext(controlFlow)
                 }
             }
@@ -742,7 +734,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             // of the region.
             val nodeExit = state.mappedExit
             val regionExit = state.parentRegion.mappedEntry.exit
-            val controlFlowFinal = regionExit.createControlFlow
+            val controlFlowFinal = regionExit.createControlFlow.trace(state)
             nodeExit.setNext(controlFlowFinal)
         }
     }
