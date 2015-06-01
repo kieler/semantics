@@ -141,7 +141,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 var State doneState
                 var State runState
                 if (needCtrlRegion) {
-                    val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueNameCached(nameCache)
+                    val ctrlRegion = state.createControlflowRegion(GENERATED_PREFIX + "Ctrl").uniqueNameCached(nameCache)
                     runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueNameCached(nameCache)
                     doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueNameCached(nameCache)
                 }
@@ -178,7 +178,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 // also to the terminationTrigger
                 for (region : regions) {
                     if (terminationHandlingNeeded) {
-                        val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueNameCached(nameCache)
+                        val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueNameCached(nameCache)
                         val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").
                             uniqueNameCached(nameCache)
                         mainState.regions.add(region)

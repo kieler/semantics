@@ -145,7 +145,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
             }
 
             //Add Watcher Region
-            val watcherRegion = state.createRegion(GENERATED_PREFIX + "Watch").uniqueName
+            val watcherRegion = state.createControlflowRegion(GENERATED_PREFIX + "Watch").uniqueName
             val watcherTransition = watcherRegion.createInitialState(GENERATED_PREFIX + "Watch").
                 createImmediateTransitionTo(watcherRegion.createFinalState(GENERATED_PREFIX + "Aborted"))
             watcherTransition.addEffect(abortFlag.assign(TRUE))

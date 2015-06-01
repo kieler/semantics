@@ -112,7 +112,7 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                 uniqueNameCached(nameCache)
             newAux.applyAttributes(preValuedObject)
 
-            val preRegion = state.createRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
+            val preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
             val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache).setFinal
             val preWait = preRegion.createFinalState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
 

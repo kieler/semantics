@@ -132,7 +132,7 @@ class AbortWTODeep extends AbstractExpansionTransformation {
 
             // .. || stateHasUntransformedTransitions : for conditional terminations!
             if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
-                val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
+                val ctrlRegion = state.createControlflowRegion(GENERATED_PREFIX + "Ctrl").uniqueName
                 val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
                 val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
 
@@ -163,7 +163,7 @@ class AbortWTODeep extends AbstractExpansionTransformation {
                 // also to the terminationTrigger
                 for (region : regions) {
                     if (terminationHandlingNeeded) {
-                        val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueName
+                        val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
                         val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueName
                         mainState.regions.add(region)
                         val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueName
