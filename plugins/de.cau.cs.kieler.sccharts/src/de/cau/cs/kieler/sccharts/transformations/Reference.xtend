@@ -223,7 +223,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 			 * and bind all valued objects accordingly
 			 */
             for(refNode: dataflow.nodes.filter(typeof(ReferenceNode))) {
-                val rRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
+                val rRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
                 rRegion.label = dataflow.label + regionCounter
                 val newState = rRegion.createState("_" + refNode.id + idCounter)
                 newState.label = if (refNode.label != null) {refNode.label + idCounter} else {refNode.id + idCounter}
@@ -288,7 +288,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 			    if (defNode.states.nullOrEmpty) {
                     // case: dataflow is modelled inside define node
                     // create new region, initial and final state
-                    val newRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
+                    val newRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
                     newRegion.label = dataflow.label + regionCounter
                     
                     val newState = newRegion.createState("_" + dataflow.ID + idCounter)
@@ -374,7 +374,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 			    } else {
                     // second case: controlflow is modeled inside define node
                     // create new region and copy all content of the define node
-			        val newRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
+			        val newRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
                     newRegion.label = dataflow.label + regionCounter
                     
                     val transitionMapping = <Transition, Transition> newHashMap
@@ -499,7 +499,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
              */
             if (!assignmentList.empty) {
                 // => create new region with initial and final state for each expression
-                val rRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
+                val rRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
                 rRegion.label = dataflow.label + regionCounter
                     
                 val newState = rRegion.createState("_" + dataflow.ID + idCounter)

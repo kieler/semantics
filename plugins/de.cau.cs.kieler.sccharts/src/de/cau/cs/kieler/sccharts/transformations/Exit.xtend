@@ -120,7 +120,7 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
 
             if (!state.hasInnerStatesOrControlflowRegions) {
                 state.regions.clear // FIX: need to erase dummy single region
-                val region = state.createRegion(GENERATED_PREFIX + "Exit")
+                val region = state.createControlflowRegion(GENERATED_PREFIX + "Exit")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")
             } else if (state.regions.filter(ControlflowRegion).size == 1 && !state.regions.filter(ControlflowRegion).get(0).finalStates.nullOrEmpty) {
@@ -130,7 +130,7 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                 firstState = region.finalStates.get(0) //every region MUST have an initial state
                 firstState.setNotFinal
             } else { // state has several regions (or one region without any final state!)
-                val region = state.createRegion(GENERATED_PREFIX + "Entry").uniqueName
+                val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName
                 firstState = region.createInitialState(GENERATED_PREFIX + "Main")
                 for (mainRegion : state.regions.filter(e|e != region).toList.immutableCopy) {
                     firstState.regions.add(mainRegion)

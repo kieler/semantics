@@ -19,6 +19,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.collect.Sets;
+
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -124,7 +126,8 @@ public class TransformationDummyGraph {
                         for (Feature innerFeature : features) {
                             autoSelectedFeatures.add(innerFeature);
                             transformation =
-                                    getTransformationHandlingFeature(innerFeature.getId(), selection);
+                                    getTransformationHandlingFeature(innerFeature.getId(),
+                                            selection, null);
                             if (transformation != null) {
                                 addTransformationToGraph(transformation);
                             }
@@ -132,7 +135,8 @@ public class TransformationDummyGraph {
                             selectedFeatures.add(innerFeature);
                         }
                     } else {
-                        transformation = getTransformationHandlingFeature(selectedId, selection);
+                        transformation =
+                                getTransformationHandlingFeature(selectedId, selection, null);
                         Feature possiblyAlternativeFeature = KielerCompiler.getFeature(selectedId);
                         if (possiblyAlternativeFeature.isAlternative()) {
                             autoSelectedFeatures.add(possiblyAlternativeFeature);
@@ -168,12 +172,17 @@ public class TransformationDummyGraph {
                 }
             }
 
-            // Now add all transformations for these features
+            // Now add all transformations for these features.
+            // The specific transformations are filtered by their input types according to
+            // the output type of possibly previous transformations.
             for (Feature featureToAdd : featuresToAdd) {
                 // Add to autoselected feature set (also if this was initially selected by the
                 // user!)
                 autoSelectedFeatures.add(featureToAdd);
-                addFeatureToGraph(featureToAdd);
+                Set<Feature> modelFeaturesAndFeaturesToAdd = new HashSet<Feature>();
+                modelFeaturesAndFeaturesToAdd.addAll(modelFeatures);
+                modelFeaturesAndFeaturesToAdd.addAll(featuresToAdd);
+                addFeatureToGraph(featureToAdd, modelFeaturesAndFeaturesToAdd);
             }
         }
 
@@ -190,9 +199,10 @@ public class TransformationDummyGraph {
      * @param context
      *            the context
      */
-    private void addFeatureToGraph(Feature feature) {
+    private void addFeatureToGraph(Feature feature, Set<Feature> featuresToAdd) {
         Transformation transformation =
-                getTransformationHandlingFeature(feature.getId(), context.getSelection());
+                getTransformationHandlingFeature(feature.getId(), context.getSelection(),
+                        featuresToAdd);
         if (transformation != null) {
             addTransformationToGraph(transformation);
         }
@@ -209,10 +219,15 @@ public class TransformationDummyGraph {
      * 
      * @param featureId
      *            the feature id
+     * @param selection
+     *            the selection
+     * @param containedAndHandledFeatures
+     *            the contained and handled features of the model or null if called not for compile
+     *            chain
      * @return the transformation handling feature
      */
     public static Transformation getTransformationHandlingFeature(String featureId,
-            KielerCompilerSelection selection) {
+            KielerCompilerSelection selection, Set<Feature> containedAndHandledFeatures) {
         // A preferred, not disabled transformation handling a feature or a transformation
         Transformation transformation = null;
         // A non-preferred but not disabled transformation used if there is no preferred one
@@ -248,9 +263,14 @@ public class TransformationDummyGraph {
                     if (selection.isTransformationPreferred(handlingTransformationId)) {
                         // found a preferred transformation, that is not disabled
                         transformation = handlingTransformation;
+                    } else if (containedAndHandledFeatures == null
+                            || handlingTransformation.getNotHandlesFeatures(false).isEmpty()
+                            || !Sets.intersection(
+                                    handlingTransformation.getNotHandlesFeatures(false),
+                                    containedAndHandledFeatures).isEmpty()) {
+                        // Remember in case we do not find a preferred transformation
+                        backupTransformation = handlingTransformation;
                     }
-                    // Remember in case we do not find a preferred transformation
-                    backupTransformation = handlingTransformation;
                 } else {
                     // Remember if there will be no transformation AND no backup!
                     disabledFallbackTransformation = handlingTransformation;

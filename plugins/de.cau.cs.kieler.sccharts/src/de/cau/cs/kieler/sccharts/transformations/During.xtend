@@ -129,7 +129,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
         for (duringAction : state.duringActions.immutableCopy) {
             duringAction.setDefaultTrace;
             val immediateDuringAction = duringAction.isImmediate
-            val region = state.createRegion(GENERATED_PREFIX + "During").uniqueName
+            val region = state.createControlflowRegion (GENERATED_PREFIX + "During").uniqueName
             val initialState = region.createInitialState(GENERATED_PREFIX + "I")
             var Transition duringTransition = null
             if (immediateDuringAction) {
@@ -164,7 +164,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
         for (duringAction : state.duringActions.immutableCopy) {
             duringAction.setDefaultTrace;
             val immediateDuringAction = duringAction.isImmediate
-            val region = state.createRegion(GENERATED_PREFIX + "During").uniqueName
+            val region = state.createControlflowRegion(GENERATED_PREFIX + "During").uniqueName
             val initialState = region.createInitialState(GENERATED_PREFIX + "I")
             var Transition duringTransition = null
             if (immediateDuringAction) {
@@ -251,7 +251,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
             val term = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
             term.setInitialValue(FALSE)
 
-            val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueName
+            val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
             val mainState = mainRegion.createState(GENERATED_PREFIX + "Main").setInitial
             for (region : state.regions.filter(e|e != mainRegion).toList.immutableCopy) {
                 mainState.regions.add(region)
@@ -264,7 +264,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
             // For every during action: Create a region
             for (duringAction : state.duringActions.immutableCopy) {
                 val immediateDuringAction = duringAction.isImmediate
-                val region = state.createRegion(GENERATED_PREFIX + "During").uniqueName
+                val region = state.createControlflowRegion(GENERATED_PREFIX + "During").uniqueName
                 val initialState = region.createInitialState(GENERATED_PREFIX + "I")
                 val middleState = region.createState(GENERATED_PREFIX + "S")
                 if (!immediateDuringAction) {

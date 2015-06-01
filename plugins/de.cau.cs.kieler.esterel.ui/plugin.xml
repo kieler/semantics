@@ -184,7 +184,7 @@
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
             editor="de.cau.cs.kieler.esterel.Esterel"
-            features="scl.basic, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, codegeneration, s, s.target"
+            features="scl.scg, scl.basic, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, codegeneration, s, s.target"
             label="Esterel-SCL-Compilation"
             preferred="s.c, scl.basic"
             priority="100">

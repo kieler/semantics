@@ -36,6 +36,9 @@ public class KiCoSelectionDiagramModel {
     /** The visible features. */
     private Set<Feature> visibleFeatures = new HashSet<Feature>();
 
+    /** The visible transformations. */
+    private Set<Transformation> visibleTransformations = new HashSet<Transformation>();
+
     /** The compiler context including the selection and the graph. */
     private KielerCompilerContext context = null;
 
@@ -51,20 +54,26 @@ public class KiCoSelectionDiagramModel {
     // -------------------------------------------------------------------------
 
     /**
-     * Constructs a list of visible features by copying the features from the feature list that also
-     * appear in the visibleFeatureId list.
+     * Constructs a list of visible features or transformations by copying the
+     * features/transformations from the feature/transformation list that also appear in the
+     * visibleFeatureId list.
      * 
      * @param features
      *            the features
-     * @param visibleFeatureIds
+     * @param visibleFeatureOrTransformationIds
      *            the visible feature ids
      */
-    public void setVisibleFeatures(Set<Feature> features,
-            List<String> visibleFeatureIds) {
+    public void setVisibleFeatures(Set<Feature> features, Set<Transformation> transformations,
+            List<String> visibleFeatureOrTransformationIds) {
         visibleFeatures.clear();
         for (Feature feature : features) {
-            if (visibleFeatureIds.contains(feature.getId())) {
+            if (visibleFeatureOrTransformationIds.contains(feature.getId())) {
                 visibleFeatures.add(feature);
+            }
+        }
+        for (Transformation transformation : transformations) {
+            if (visibleFeatureOrTransformationIds.contains(transformation.getId())) {
+                visibleTransformations.add(transformation);
             }
         }
     }
@@ -78,6 +87,17 @@ public class KiCoSelectionDiagramModel {
      */
     public Set<Feature> getVisibleFeatures() {
         return visibleFeatures;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the visible transformations.
+     * 
+     * @return the visible transformations
+     */
+    public Set<Transformation> getVisibleTransformations() {
+        return visibleTransformations;
     }
 
     // -------------------------------------------------------------------------
