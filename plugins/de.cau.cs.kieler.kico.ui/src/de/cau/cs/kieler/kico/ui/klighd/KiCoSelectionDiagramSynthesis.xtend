@@ -47,8 +47,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2015-03-19 proposed cmot
  * @kieler.rating 2015-03-19 proposed yellow
  */
-class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
-    
+class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
+
     // -------------------------------------------------------------------------
     // We need some extensions 
     @Inject
@@ -85,7 +85,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
         if (source == null || dest == null) {
             return new Pair(-1, null)
         }
-        if (dest.container == source.container|| !source.container.isVisible) {
+        if (dest.container == source.container || !source.container.isVisible) {
 
             // if this is a group-internal transition
             return new Pair(cnt, source)
@@ -125,6 +125,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
             return new Pair(-1, null)
         }
         if (dest.container == source.container || !dest.container.isVisible) {
+
             // if this is a group-internal transition
             return new Pair(cnt, dest)
         } else {
@@ -205,8 +206,6 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
         return null;
     }
 
-
-
     // -------------------------------------------------------------------------
     //   The Main entry transform function   
     override transform(KiCoSelectionDiagramModel model) {
@@ -265,13 +264,16 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
             if (feature.alternative) {
 
                 for (transformation : feature.expandingTransformations) {
-                    val child = new TransformationFeature(transformation)
-                    transformationFeatureMap.put(transformation, child)
-                    visibleFeatures.add(child)
-                    val childKNode = child.translate;
-                    node.children += childKNode;
+                    if (transformation.isVisible) {
+                        val child = new TransformationFeature(transformation)
+                        transformationFeatureMap.put(transformation, child)
+                        visibleFeatures.add(child)
+                        val childKNode = child.translate;
+                        node.children += childKNode;
+                    }
                 }
             } else {
+
                 // Only proceed with features that should be visible!!!
                 if (feature.isVisible) {
                     visibleFeatures.add(feature)
@@ -445,6 +447,5 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
         return root
     }
 
-    // -------------------------------------------------------------------------
-
+// -------------------------------------------------------------------------
 }

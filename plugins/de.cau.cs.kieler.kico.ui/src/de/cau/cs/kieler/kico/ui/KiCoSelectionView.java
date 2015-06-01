@@ -703,7 +703,7 @@ public class KiCoSelectionView extends DiagramViewPart {
 
         // Update the visible view model
         KiCoSelectionDiagramModel selectionModel = getSelectionModel(activeEditorID);
-        selectionModel.setVisibleFeatures(KielerCompiler.getFeatures(), visibleFeatureIds);
+        selectionModel.setVisibleFeatures(KielerCompiler.getFeatures(), KielerCompiler.getTransformations(), visibleFeatureIds);
         // Update preferred transformations
         selectionModel.getContext().getSelection().getPreferredTransformationIds().clear();
         for (String elementId : preferrdTransformationIds) {

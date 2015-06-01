@@ -122,6 +122,15 @@ abstract class KiCoSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagr
         return false
     }
     
+    // True if this transformation is visible as declared by the kico.ui extension
+    // based on its id
+    def isVisible(Transformation transformation) {
+        if (currentModel.visibleTransformations.contains(transformation)) {
+            return true;
+        }
+        return false
+    }
+    
 
     // -------------------------------------------------------------------------
     // access methods to get auxiliary TransformationFeatures
