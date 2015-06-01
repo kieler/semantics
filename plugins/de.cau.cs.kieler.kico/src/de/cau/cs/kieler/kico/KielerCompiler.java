@@ -192,9 +192,11 @@ public class KielerCompiler {
         // as this is a compile run, the following MUST be set
         EObject transformationEObject = context.getTransformationObject();
         if (transformationEObject == null) {
+            String message = "No model was supplied for this compilation run! Aborting compilation.";
             KiCoPlugin.getInstance().showError(
-                    "No model was supplied for this compilation run! Aborting compilation.",
+                    message,
                     KiCoPlugin.PLUGIN_ID, null, true);
+            context.getCompilationResult().addPostponedError(new KielerCompilerException("", "", message));
             return context.getCompilationResult();
         }
 
@@ -366,11 +368,12 @@ public class KielerCompiler {
                         int additional = 100 - subMonitor.getPercentDone();
                         monitor.worked(additional);
                     } else {
-                        KiCoPlugin.getInstance().showError(
-                                "Broken compile chain. Transformation "
-                                        + compilationTransformationId
-                                        + " cannot handle input type "
-                                        + transformedObject.getClass().getName());
+                        String errorMessage =  "Broken compile chain. Transformation "
+                                + compilationTransformationId
+                                + " cannot handle input type "
+                                + transformedObject.getClass().getName();
+                        KiCoPlugin.getInstance().showError(errorMessage);
+                        context.getCompilationResult().addPostponedError(new KielerCompilerException(compilationTransformationId, compilationTransformationId, errorMessage));
                         // MUST flag this to be finished otherwise
                         context.getCompilationResult().setCurrentTransformationDone(true);
                     }
