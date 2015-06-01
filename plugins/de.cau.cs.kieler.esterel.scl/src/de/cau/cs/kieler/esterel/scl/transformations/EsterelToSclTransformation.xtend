@@ -90,6 +90,9 @@ import java.util.Stack
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
+import java.util.Set
+import java.util.HashSet
+import de.cau.cs.kieler.esterel.features.EsterelFeatures
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
@@ -171,6 +174,10 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
     
     override getProducedFeatureId() {
         return SCLFeatures.BASIC_ID
+    }
+    
+    override Set<String> getRequiredFeatureIds() {
+        return newHashSet(EsterelFeatures.BASIC_ID);
     }
 
     /**
