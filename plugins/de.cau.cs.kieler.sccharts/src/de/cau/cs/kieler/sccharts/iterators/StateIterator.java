@@ -89,13 +89,14 @@ public final class StateIterator {
         }
         }));
     };
+
     
     public static Iterator<State> sccAllStates(Scope s) {
         if (s instanceof State) {
            return sccAllStates((State) s);
 
-        } else if (s instanceof Region) {
-           return sccAllStates((Region) s);
+        } else if (s instanceof ControlflowRegion) {
+           return sccAllStates((ControlflowRegion) s);
         }
         else {
             throw new IllegalArgumentException("Scope type not supported.");

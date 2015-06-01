@@ -540,6 +540,18 @@ class SCChartsExtension {
         controlflow
     }
 
+//    def ControlflowRegion createControlflowRegion(State state, String id) {
+//        val region = createControlflowRegion(id)
+//        // ATTENTION: if this is the first region and there already is an IMPLICIT region,
+//        // e.g., because of inner actions, then return THIS region only!
+//        if (state.regions.size == 1 && state.regions.get(0).allContainedStates.size == 0 &&
+//            state.regions.get(0) instanceof ControlflowRegion) {
+//            return state.regions.get(0) as ControlflowRegion
+//        }
+//        state.regions += region
+//        region
+//    }
+
     def ControlflowRegion createControlflowRegion(State state, String id) {
         val region = createControlflowRegion(id)
         // ATTENTION: if this is the first region and there already is an IMPLICIT region,
