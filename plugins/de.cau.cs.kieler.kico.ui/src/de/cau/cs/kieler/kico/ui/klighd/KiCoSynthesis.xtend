@@ -202,7 +202,7 @@ abstract class KiCoSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagr
 
     // Display a feature as a group, if it has several handling transformations (alternative) or if it really is a feature group!
     def isGroupOrAlternative(Feature feature) {
-        (feature instanceof FeatureGroup || feature.isAlternative);
+        (feature instanceof FeatureGroup || feature.isAlternative(currentModel.visibleTransformations));
     }
 
     // -------------------------------------------------------------------------

@@ -361,8 +361,8 @@ public abstract class Feature implements IFeature {
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if is alternative feature meaning that there are more than one transformation
-     * tranforming this feature.
+     * Checks if is alternative feature meaning that there are more than one transformations
+     * transforming this feature.
      * 
      * @return true, if is alternative
      */
@@ -378,7 +378,40 @@ public abstract class Feature implements IFeature {
         // return false;
         return ((!(this instanceof FeatureGroup)) && (this.getExpandingTransformations().size() > 1));
     }
+    
+    // -------------------------------------------------------------------------
 
+    /**
+     * Checks if is alternative feature meaning that there are more than one visible transformations
+     * transforming this feature.
+     * 
+     * @return true, if is alternative
+     */
+    public boolean isAlternative(Set<Transformation> visibleTransformations) {
+        // boolean noFeatureGroup = !(this instanceof FeatureGroup);
+        // int handlingTransformations = 0;
+        // if (this.getHandlingTransformations() != null) {
+        // handlingTransformations = this.getHandlingTransformations().size();
+        // }
+        // if (noFeatureGroup && handlingTransformations > 1) {
+        // return true;
+        // }
+        // return false;
+        if (!isAlternative()) {
+            return false;
+        }
+        int i = 0;
+        for (Transformation transformation : this.getExpandingTransformations()) {
+            if (visibleTransformations.contains(transformation)) {
+                i++;
+                if (i > 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
