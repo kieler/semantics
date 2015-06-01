@@ -1,19 +1,23 @@
 package de.cau.cs.kieler.sccharts.launchconfig
 
+import com.google.common.io.Files
+import de.cau.cs.kieler.freemarker.FreeMarkerPlugin
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup
 import freemarker.template.Configuration
 import freemarker.template.Template
-import freemarker.template.TemplateException
 import freemarker.template.TemplateExceptionHandler
 import freemarker.template.Version
 import java.io.File
+import java.io.FileFilter
 import java.io.FileReader
 import java.io.FileWriter
-import java.io.IOException
 import java.io.PrintWriter
+import java.io.StringWriter
 import java.util.ArrayList
+import java.util.HashMap
 import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.core.resources.IProject
@@ -33,12 +37,9 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.freemarker.FreeMarkerPlugin
-import com.google.common.io.Files
-import java.io.FileFilter
-import java.io.StringWriter
-import java.util.HashMap
+
+import static de.cau.cs.kieler.freemarker.FreeMarkerPlugin.*
+import static de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration.*
 
 class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
@@ -72,12 +73,13 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     var String wrapperCodeTarget
     var String wrapperCodeSnippetDirectory
 
+    var String compileCommand
+    var String deployCommand
+    var String runCommand
+
     // Variables to check if the compilation and code generation ended successfully
-    var compilationHadError = false
-    var compilationCompletedSuccessful = false
-    
-    var wrapperCodeGenerationHadError = false
-    var wrapperCodeGenerationCompletedSuccessful = false
+    var boolean compilationCompletedSuccessful
+    var boolean wrapperCodeGenerationCompletedSuccessful
 
     /**
      * {@inheritDoc}
@@ -91,14 +93,14 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         // Get data from config
         loadSettingsFromConfiguration()
-        if (project == null) {
+        if (project != null) {
+            // Compile SCT files
+            val datas = SCTCompilationData.loadAllFromConfiguration(configuration)
+            compile(datas)
+            generateWrapperCode(datas)
+        } else {
             println("Project of SCT launch configuration '" + configuration.name + "' does not exist.")
         }
-
-        // Compile SCT files
-        val datas = SCTCompilationData.loadAllFromConfiguration(configuration)
-        compile(datas)
-        generateWrapperCode(datas)
     }
 
     /**
@@ -117,28 +119,37 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         wrapperCodeTarget = configuration.getAttribute(ATTR_WRAPPER_CODE_OUTPUT, "")
         wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
         wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
+
+        // Execution
+        compileCommand = configuration.getAttribute(ATTR_COMPILE_COMMAND, "")
+        deployCommand = configuration.getAttribute(ATTR_DEPLOY_COMMAND, "")
+        runCommand = configuration.getAttribute(ATTR_RUN_COMMAND, "")
     }
 
     /**
-     * Compiles a list of SCTCompildationData.
+     * Compiles a list of SCTCompildationData via KiCo.
      * The compilation is done in a new job.
      */
     private def void compile(List<SCTCompilationData> datas) {
+
+        compilationCompletedSuccessful = false
+
         val job = new Job("SCT Compilation") {
             override protected IStatus run(IProgressMonitor monitor) {
+
                 for (data : datas) {
                     compile(data)
 
                     if (monitor.isCanceled())
                         return Status.CANCEL_STATUS
                 }
-                
+
+                // If an exception occured while executing this job.
+                // We would not get to the following lines.
                 // Execute commands if both jobs completed successful
-                if(!compilationHadError){
-                    compilationCompletedSuccessful = true
-                    executeCommands()
-                }
-                
+                compilationCompletedSuccessful = true
+                executeCommands()
+
                 return Status.OK_STATUS
             }
         }
@@ -148,7 +159,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     /**
      * Compile an sct file via KiCo and save result.
      */
-    private def compile(SCTCompilationData data) throws IllegalArgumentException{
+    private def compile(SCTCompilationData data) {
         // Load model from file
         val EObject model = loadModelFromFile(data.path)
 
@@ -156,14 +167,16 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             // Compile sct
             val context = new KielerCompilerContext("T_" + targetLanguage, model)
             context.inplace = false
+            context.advancedSelect = true
             val result = KielerCompiler.compile(context)
 
             // Flush compilation result to target
-            if (result != null && result.string != null) {
+            if (result.string != null && result.string != "") {
                 saveCompilationResult(result.string, computeTargetPath(data.projectRelativePath))
             } else {
-                println("Compilation of SCT '" + data.name + "' failed:\n" + result.allErrors)
-                compilationHadError = true
+                var errorMessage = "Compilation of SCT '" + data.name + "' failed:\n\n" + result.allErrors
+
+                throw new Exception(errorMessage)
             }
         }
     }
@@ -181,7 +194,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         if (index > -1) {
             projectRelativePathWithoutExtension = projectRelativePath.substring(0, index)
         }
-        
+
         // Compute fully qualified target path
         return project.location + "/" + BUILD_DIRECTORY + "/" + projectRelativePathWithoutExtension +
             getTargetLanguageExtension()
@@ -206,39 +219,24 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     private def saveCompilationResult(String result, String targetPath) {
         // Create directory for the output if none yet.
         // If the directory can't be created we can't go on.
-        if (createDirectories(targetPath) == false)
-            return;
+        createDirectories(targetPath)
 
         if (targetTemplate != "") {
             // Use template
-            try {
-                val reader = new FileReader(new File(project.location + "/" + targetTemplate))
-                val cfg = new Configuration(new Version(2, 3, 0))
-                cfg.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
+            val reader = new FileReader(new File(project.location + "/" + targetTemplate))
+            val cfg = new Configuration(new Version(2, 3, 0))
+            cfg.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
 
-                val template = new Template("tmp", reader, cfg)
-                val writer = new FileWriter(new File(targetPath))
-                try {
-                    template.process(#{"sct_code" -> result}, writer)
-                } catch (TemplateException e) {
-                    e.printStackTrace()
-                }
-                writer.close()
-                reader.close()
-            } catch (Exception e) {
-                println("Error while saving compilation result with template.")
-                e.printStackTrace()
-            }
+            val template = new Template(targetTemplate, reader, cfg)
+            val writer = new FileWriter(new File(targetPath))
+            template.process(#{"sct_code" -> result}, writer)
+            writer.close()
+
+            reader.close()
         } else {
-            try {
-                // Write directly to file
-                val writer = new PrintWriter(targetPath, "UTF-8");
-                writer.print(result)
-                writer.close()
-            } catch (Exception e) {
-                println("Error while saving compilation.")
-                e.printStackTrace()
-            }
+            val writer = new PrintWriter(targetPath, "UTF-8");
+            writer.print(result)
+            writer.close()
         }
     }
 
@@ -247,15 +245,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @param path The path to a fully qualified file.
      * @return True if the folder structure for the file exists or could be created. False otherwise.
      */
-    private def boolean createDirectories(String path) {
-        try {
-            new File(path).parentFile.mkdirs()
-            return true
-        } catch (Exception e) {
-            println("Could not create directories for path '" + path + "'.")
-            e.printStackTrace()
-            return false
-        }
+    private def createDirectories(String path) {
+        new File(path).parentFile.mkdirs()
     }
 
     /**
@@ -263,31 +254,20 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @param fullPath The fully qualified path to the file.
      */
     private def EObject loadModelFromFile(String fullPath) {
-        try {
-            val input = URI.createFileURI(fullPath);
+        val input = URI.createFileURI(fullPath);
 
-            val rInjector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
-            if (rInjector != null) {
-                val resourceSet = rInjector.getInstance(typeof(ResourceSet));
-                val resourceLoad = resourceSet.getResource(input, true);
-                return resourceLoad.getContents().get(0);
-            } else {
-                // Try to load SCCharts model
-                val inputResource = new XMIResourceImpl(input);
-                // Load SCCharts model
-                try {
-                    inputResource.load(null);
-                    return inputResource.getContents().get(0);
-                } catch (IOException e) {
-                    println("Could not load SCChart as an XMIResource.")
-                    compilationHadError = true
-                    return null
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace()
-            compilationHadError = true
-            return null
+        val rInjector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
+        if (rInjector != null) {
+            val resourceSet = rInjector.getInstance(typeof(ResourceSet));
+            val resourceLoad = resourceSet.getResource(input, true);
+            return resourceLoad.getContents().get(0);
+        } else {
+            // Try to load SCCharts model
+            val inputResource = new XMIResourceImpl(input);
+
+            // Load SCCharts model
+            inputResource.load(null);
+            return inputResource.getContents().get(0);
         }
     }
 
@@ -295,81 +275,84 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * Generates the wrapper code for a list of SCTCompilationData and saves it. 
      */
     private def void generateWrapperCode(List<SCTCompilationData> datas) {
+        wrapperCodeGenerationCompletedSuccessful = false
+
         val job = new Job("SCT Wrapper code generation") {
             override protected IStatus run(IProgressMonitor monitor) {
-                
+
                 val targetLocation = new File(project.location + "/" + wrapperCodeTarget)
                 val templateLocation = new File(project.location + "/" + wrapperCodeTemplate)
                 val snippetDirectory = new File(project.location + "/" + wrapperCodeSnippetDirectory)
-                
+
                 // Check consistency of paths
-                if (wrapperCodeTarget != ""
-                    && wrapperCodeTemplate != "" && templateLocation.exists
-                    && wrapperCodeSnippetDirectory != "" && snippetDirectory.exists){
-                    
+                if (wrapperCodeTarget != "" && wrapperCodeTemplate != "" && templateLocation.exists &&
+                    wrapperCodeSnippetDirectory != "" && snippetDirectory.exists) {
+
                     val List<WrapperCodeAnnotationData> annotationDatas = newArrayList()
-                    
+
                     for (data : datas) {
                         getWrapperCodeAnnotationData(data, annotationDatas)
-                        
+
                         if (monitor.isCanceled())
                             return Status.CANCEL_STATUS
                     }
-                    
+
                     // Create template macro calls from annotations
                     val map = new HashMap<String, String>()
-                    var outputs =  ""
+                    var outputs = ""
                     var inputs = ""
-                    var inits = "" 
-                    for(data : annotationDatas){
-                        inits += getAssignments("light", "int");
-                        inits += getInitAnnotationMacro("LightSensor", "S3");
-                        
-                        outputs += getAssignments("light", "int");
-                        outputs += getInitAnnotationMacro("LightSensor", "S3");
-                        
-                        inputs += getAssignments("light", "int");
-                        inputs += getInitAnnotationMacro("LightSensor", "S3");
+                    var inits = ""
+                    for (data : annotationDatas) {
+                        inits += getAssignments(data.varName, data.varType);
+                        inits += getInitAnnotationMacro(data.name, data.arguments);
+
+                        outputs += getAssignments(data.varName, data.varType);
+                        outputs += getOutputAnnotationMacro(data.name, data.arguments);
+
+                        inputs += getAssignments(data.varName, data.varType);
+                        inputs += getInputAnnotationMacro(data.name, data.arguments);
                     }
                     map.put("init_macros", inits)
                     map.put("output_macros", outputs)
                     map.put("input_macros", inputs)
-                    
+
                     // Inject macro calls in input template
                     FreeMarkerPlugin.templateDirectory = project.location.toOSString()
                     val template = FreeMarkerPlugin.configuration.getTemplate(wrapperCodeTemplate)
-                    
+
                     val writer = new StringWriter();
                     template.process(map, writer)
-                    
+
                     // Let FreeMarker process the new input template
                     FreeMarkerPlugin.templateDirectory = snippetDirectory.absolutePath
-                    
+
                     // Add implicit include of assignment macros
-                    FreeMarkerPlugin.stringTemplateLoader.putTemplate("assignmentMacros", FreeMarkerPlugin.assignmentMacros)
+                    FreeMarkerPlugin.stringTemplateLoader.putTemplate("assignmentMacros",
+                        FreeMarkerPlugin.assignmentMacros)
                     FreeMarkerPlugin.configuration.addAutoInclude("assignmentMacros")
-        
+
                     // Implicitly add snippets to FreeMarker when processing the next template
                     val List<File> snippetFiles = newArrayList()
-                    getFilesRecursive(snippetDirectory, snippetFiles)
-                    snippetFiles.forEach[
+                    getFilesRecursive(snippetDirectory, snippetFiles)                    
+                    snippetFiles.forEach [
                         val relativePath = snippetDirectory.toURI().relativize(it.toURI()).getPath()
                         FreeMarkerPlugin.configuration.addAutoInclude(relativePath)
                     ]
-                
+
                     // Process template with macro calls and loaded snippets
                     FreeMarkerPlugin.stringTemplateLoader.putTemplate("tmp", writer.toString())
                     val newTemplate = FreeMarkerPlugin.configuration.getTemplate("tmp")
-                    
+
                     newTemplate.process(newHashMap(), new FileWriter(targetLocation))
+
                 }
-                
+
+                // If an exception occured while executing this job.
+                // We would not get to the following lines.
                 // Execute commands if both jobs completed successful
-                if(!wrapperCodeGenerationHadError){
-                    wrapperCodeGenerationCompletedSuccessful = true
-                    executeCommands()
-                }
-                    
+                wrapperCodeGenerationCompletedSuccessful = true
+                executeCommands()
+
                 return Status.OK_STATUS
             }
         }
@@ -377,10 +360,10 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     }
 
     private static def String getAssignments(String varname, String vartype) {
-        return "<#assign varname='" + varname + "' " + "vartype='" + vartype + "'"
-                + " init_snippet='' output_snippet = '' input_snippet = '' />\n";
+        return "<#assign varname='" + varname + "' " + "vartype='" + vartype + "'" +
+            " init_snippet='' output_snippet = '' input_snippet = '' />\n";
     }
-    
+
     private static def String getInitAnnotationMacro(String annotationName, String... args) {
         return getAnnotationMacro(annotationName, args) + "\n${init_snippet!}\n";
     }
@@ -401,14 +384,17 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         txt += "/>";
         return txt;
     }
-    
-    def getFilesRecursive(File folder, List<File> list) {
-        val ftlFilter = new FileFilter(){
-            
+
+    def void getFilesRecursive(File folder, List<File> list) {
+        // Filter that accepts directories and files with extension ftl
+        val ftlFilter = new FileFilter() {
             override accept(File file) {
-                return Files.getFileExtension(file.name).toLowerCase == "ftl"
-            }    
+                return file.isDirectory || Files.getFileExtension(file.name).toLowerCase == "ftl"
+            }
         }
+        
+        // Iterate over files in the folder recursively.
+        // Add every file that is not filtered to the list.
         for (fileEntry : folder.listFiles(ftlFilter)) {
             if (fileEntry.isDirectory()) {
                 getFilesRecursive(fileEntry, list);
@@ -424,21 +410,27 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      */
     private def getWrapperCodeAnnotationData(SCTCompilationData sctData, List annotationDatas) {
         val model = loadModelFromFile(sctData.path)
-        
-        if(model != null && model instanceof State){            
+
+        if (model != null && model instanceof State) {
             // Iterate over model to get all annotations
             val root = (model as State)
-            for(decl : root.declarations){
-                
+            for (decl : root.declarations) {
+
                 // Only consider annotations for inputs and outputs.
-                if (decl.input || decl.output){
-                    
-                    decl.annotations.forEach[
-                        val data = new WrapperCodeAnnotationData(decl.input, decl.output)
-                        data.name = it.name
-                        
+                if (decl.input || decl.output) {
+
+                    for (anno : decl.annotations) {
+                        val data = new WrapperCodeAnnotationData()
+                        // Data from annotation
+                        data.name = anno.name
+
+                        // Data from declaration
+                        data.input = decl.input
+                        data.output = decl.output
+
+                        // Add to list
                         annotationDatas += data
-                    ]
+                    }
                 }
             }
         }
@@ -450,41 +442,51 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * and wrapper code creation finished without errors.
      */
     private def executeCommands() {
-        // NOTE: As this method is called from two threads it is possible
+        // NOTE: As this method is called from two jobs it is possible
         // that the commands are executed twice.
         // The scheduler might make a context switch after the
         // ...CompletedSuccessful variables are set to true.
-                
-        // Compilation fails always...
-        //if(compilationCompletedSuccessful && wrapperCodeGenerationCompletedSuccessful){
-        if(wrapperCodeGenerationCompletedSuccessful){
-            execCommand(configuration.getAttribute(ATTR_COMPILE_COMMAND, ""), "Compile Command")
-            execCommand(configuration.getAttribute(ATTR_DEPLOY_COMMAND, ""), "Deploy Command")
-            execCommand(configuration.getAttribute(ATTR_RUN_COMMAND, ""), "Run Command")    
+        if (compilationCompletedSuccessful && wrapperCodeGenerationCompletedSuccessful) {
+            val job = new Job("SCT Execute Commands") {
+
+                override protected run(IProgressMonitor monitor) {
+                    if (!execCommand(compileCommand, "Compile Command"))
+                        return Status.OK_STATUS
+                    if (!execCommand(deployCommand, "Deploy Command"))
+                        return Status.OK_STATUS
+                    if (!execCommand(runCommand, "Run Command"))
+                        return Status.OK_STATUS
+
+                    return Status.OK_STATUS
+                }
+            }
+            job.schedule()
         }
     }
 
     /**
-     * Executes a command via OS.
+     * Executes a command via OS and waits for the process termination.
      * The command may contain arguments separated by spaces.
      * Double quotes (") can be use to handle a command or argument with spaces as one entity.
      * The created process gets a console in the Console View to fetch its output.
+     * 
+     * @return True iff the process terminated normally.
      */
-    private def execCommand(String cmdLine, String consoleLabel) {
+    private def boolean execCommand(String cmdLine, String consoleLabel) {
         if (cmdLine != null && cmdLine != "") {
-            try {
-                val man = VariablesPlugin.getDefault.stringVariableManager
-                val fullCommand = man.performStringSubstitution(cmdLine)
-                val commandWithParameters = splitStringOnWhitespace(fullCommand)
-                
-                // Run process
-                val p = new ProcessBuilder(commandWithParameters).start()
-                DebugPlugin.newProcess(launch, p, consoleLabel)
-            } catch (Exception e) {
-                println("Error running command '" + cmdLine + "'")
-                e.printStackTrace()
-            }
+            val man = VariablesPlugin.getDefault.stringVariableManager
+            val fullCommand = man.performStringSubstitution(cmdLine)
+            val commandWithParameters = splitStringOnWhitespace(fullCommand)
+
+            // Run process
+            val p = new ProcessBuilder(commandWithParameters).start()
+            DebugPlugin.newProcess(launch, p, consoleLabel)
+
+            // Wait until the process finished
+            val errorCode = p.waitFor()
+            return ( errorCode == 0)
         }
+        return true
     }
 
     /**

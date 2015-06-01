@@ -41,4 +41,10 @@ class WrapperCodeAnnotationData {
     
     @Accessors
     private List<String> arguments = newArrayList()
+    
+    @Accessors
+    private String varName
+    
+    @Accessors
+    private String varType
 }
