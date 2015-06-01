@@ -42,8 +42,10 @@ import de.cau.cs.kieler.esterel.esterel.Function;
 import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
 import de.cau.cs.kieler.esterel.esterel.FunctionExpression;
 import de.cau.cs.kieler.esterel.esterel.FunctionRenaming;
+import de.cau.cs.kieler.esterel.esterel.Goto;
 import de.cau.cs.kieler.esterel.esterel.Halt;
 import de.cau.cs.kieler.esterel.esterel.IfTest;
+import de.cau.cs.kieler.esterel.esterel.Label;
 import de.cau.cs.kieler.esterel.esterel.LocalSignal;
 import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl;
 import de.cau.cs.kieler.esterel.esterel.LocalSignalList;
@@ -108,6 +110,7 @@ import de.cau.cs.kieler.esterel.esterel.WeakAbortCase;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortEnd;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortEndAlt;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortInstance;
+import de.cau.cs.kieler.esterel.esterel.WeakSuspend;
 
 import de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage;
 
@@ -684,6 +687,13 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass weakSuspendEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass sustainEClass = null;
 
   /**
@@ -713,6 +723,20 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * @generated
    */
   private EClass localVariableEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass gotoEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass labelEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -2925,6 +2949,26 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getWeakSuspend()
+  {
+    return weakSuspendEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getWeakSuspend_Delay()
+  {
+    return (EReference)weakSuspendEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getSustain()
   {
     return sustainEClass;
@@ -3068,6 +3112,46 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EAttribute getLocalVariable_OptEnd()
   {
     return (EAttribute)localVariableEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getGoto()
+  {
+    return gotoEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getGoto_TargetLabel()
+  {
+    return (EAttribute)gotoEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLabel()
+  {
+    return labelEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getLabel_Label()
+  {
+    return (EAttribute)labelEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -3879,6 +3963,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     suspendEClass = createEClass(SUSPEND);
     createEReference(suspendEClass, SUSPEND__DELAY);
 
+    weakSuspendEClass = createEClass(WEAK_SUSPEND);
+    createEReference(weakSuspendEClass, WEAK_SUSPEND__DELAY);
+
     sustainEClass = createEClass(SUSTAIN);
     createEReference(sustainEClass, SUSTAIN__SIGNAL);
     createEAttribute(sustainEClass, SUSTAIN__TICK);
@@ -3898,6 +3985,12 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     localVariableEClass = createEClass(LOCAL_VARIABLE);
     createEReference(localVariableEClass, LOCAL_VARIABLE__VAR);
     createEAttribute(localVariableEClass, LOCAL_VARIABLE__OPT_END);
+
+    gotoEClass = createEClass(GOTO);
+    createEAttribute(gotoEClass, GOTO__TARGET_LABEL);
+
+    labelEClass = createEClass(LABEL);
+    createEAttribute(labelEClass, LABEL__LABEL);
 
     delayExprEClass = createEClass(DELAY_EXPR);
     createEReference(delayExprEClass, DELAY_EXPR__EXPR);
@@ -4049,6 +4142,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     runEClass.getESuperTypes().add(this.getStatement());
     suspendEClass.getESuperTypes().add(this.getStatementContainer());
     suspendEClass.getESuperTypes().add(this.getStatement());
+    weakSuspendEClass.getESuperTypes().add(this.getStatementContainer());
+    weakSuspendEClass.getESuperTypes().add(this.getStatement());
     sustainEClass.getESuperTypes().add(this.getStatement());
     trapEClass.getESuperTypes().add(this.getStatementContainer());
     trapEClass.getESuperTypes().add(this.getStatement());
@@ -4354,6 +4449,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEClass(suspendEClass, Suspend.class, "Suspend", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSuspend_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, Suspend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(weakSuspendEClass, WeakSuspend.class, "WeakSuspend", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getWeakSuspend_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, WeakSuspend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(sustainEClass, Sustain.class, "Sustain", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSustain_Signal(), theKExpressionsPackage.getISignal(), null, "signal", null, 0, 1, Sustain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSustain_Tick(), ecorePackage.getEString(), "tick", null, 0, 1, Sustain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4373,6 +4471,12 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEClass(localVariableEClass, LocalVariable.class, "LocalVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLocalVariable_Var(), theKExpressionsPackage.getInterfaceVariableDecl(), null, "var", null, 0, 1, LocalVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getLocalVariable_OptEnd(), ecorePackage.getEString(), "optEnd", null, 0, 1, LocalVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(gotoEClass, Goto.class, "Goto", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGoto_TargetLabel(), ecorePackage.getEString(), "targetLabel", null, 0, 1, Goto.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLabel_Label(), ecorePackage.getEString(), "label", null, 0, 1, Label.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(delayExprEClass, DelayExpr.class, "DelayExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getDelayExpr_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, DelayExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

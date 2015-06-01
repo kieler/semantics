@@ -174,5 +174,26 @@
             class="de.cau.cs.kieler.scl.scl.SclPackage"
             genModel="model/SCL.genmodel"/>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.extension">
+      <ExtensionInformation
+            className="SCLProgram"
+            editor_id="de.cau.cs.kieler.scl.SCL"
+            extensionName="scl"
+            isXMI="false">
+      </ExtensionInformation>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.feature">
+      <featureClass
+            class="de.cau.cs.kieler.scl.features.SCL">
+      </featureClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scl.transformations.SCLToSCGTransformation">
+      </productionTransformationClass>
+   </extension>
 
 </plugin>

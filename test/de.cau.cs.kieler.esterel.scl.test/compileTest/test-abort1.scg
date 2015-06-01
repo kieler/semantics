@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="ASCII"?>
+<scg:SCGraph xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:scg="http://kieler.cs.cau.de/scg/0.1.0">
+  <nodes xsi:type="scg:Entry" exit="//@nodes.68">
+    <next target="//@nodes.1"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.0/@next" valuedObject="//@declarations.13/@valuedObjects.0">
+    <next target="//@nodes.2"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="true"/>
+  </nodes>
+  <nodes xsi:type="scg:Fork" incoming="//@nodes.1/@next" join="//@nodes.3">
+    <next target="//@nodes.4"/>
+    <next target="//@nodes.17"/>
+  </nodes>
+  <nodes xsi:type="scg:Join" incoming="//@nodes.16/@next //@nodes.67/@next" fork="//@nodes.2">
+    <next target="//@nodes.68"/>
+  </nodes>
+  <nodes xsi:type="scg:Entry" incoming="//@nodes.2/@next.0" exit="//@nodes.16">
+    <next target="//@nodes.5"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.4/@next //@nodes.15/@next" valuedObject="//@declarations.0/@valuedObjects.0">
+    <next target="//@nodes.6"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.5/@next" valuedObject="//@declarations.1/@valuedObjects.0">
+    <next target="//@nodes.7"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.6/@next" valuedObject="//@declarations.2/@valuedObjects.0">
+    <next target="//@nodes.8"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.7/@next" valuedObject="//@declarations.4/@valuedObjects.0">
+    <next target="//@nodes.9"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.8/@next" valuedObject="//@declarations.5/@valuedObjects.0">
+    <next target="//@nodes.10"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.9/@next" valuedObject="//@declarations.7/@valuedObjects.0">
+    <next target="//@nodes.11"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.10/@next" valuedObject="//@declarations.8/@valuedObjects.0">
+    <next target="//@nodes.12"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.11/@next" valuedObject="//@declarations.10/@valuedObjects.0">
+    <next target="//@nodes.13"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.12/@next" valuedObject="//@declarations.11/@valuedObjects.0">
+    <next target="//@nodes.14"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Surface" incoming="//@nodes.13/@next" depth="//@nodes.15"/>
+  <nodes xsi:type="scg:Depth" surface="//@nodes.14">
+    <next target="//@nodes.5"/>
+  </nodes>
+  <nodes xsi:type="scg:Exit" entry="//@nodes.4">
+    <next target="//@nodes.3"/>
+  </nodes>
+  <nodes xsi:type="scg:Entry" incoming="//@nodes.2/@next.1" exit="//@nodes.67">
+    <next target="//@nodes.18"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.17/@next //@nodes.66/@next" valuedObject="//@declarations.14/@valuedObjects.0">
+    <next target="//@nodes.19"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.18/@next" valuedObject="//@declarations.15/@valuedObjects.0">
+    <next target="//@nodes.20"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Conditional" incoming="//@nodes.19/@next">
+    <then target="//@nodes.21"/>
+    <else target="//@nodes.22"/>
+    <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.3/@valuedObjects.0"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.20/@then" valuedObject="//@declarations.15/@valuedObjects.0">
+    <next target="//@nodes.50"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="true"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.20/@else" valuedObject="//@declarations.16/@valuedObjects.0">
+    <next target="//@nodes.23"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.22/@next" valuedObject="//@declarations.12/@valuedObjects.0">
+    <next target="//@nodes.24"/>
+    <assignment xsi:type="kexpressions:IntValue" value="0"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.23/@next" valuedObject="//@declarations.17/@valuedObjects.0">
+    <next target="//@nodes.25"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.24/@next" valuedObject="//@declarations.0/@valuedObjects.0">
+    <next target="//@nodes.26"/>
+    <assignment xsi:type="kexpressions:OperatorExpression" operator="|">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.0/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:BoolValue" value="true"/>
+    </assignment>
+  </nodes>
+  <nodes xsi:type="scg:Surface" incoming="//@nodes.25/@next" depth="//@nodes.27"/>
+  <nodes xsi:type="scg:Depth" surface="//@nodes.26">
+    <next target="//@nodes.28"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.27/@next" valuedObject="//@declarations.14/@valuedObjects.0">
+    <next target="//@nodes.29"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="true"/>
+  </nodes>
+  <nodes xsi:type="scg:Conditional" incoming="//@nodes.28/@next">
+    <then target="//@nodes.30"/>
+    <else target="//@nodes.31"/>
+    <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.3/@valuedObjects.0"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.29/@then" valuedObject="//@declarations.15/@valuedObjects.0">
+    <next target="//@nodes.50"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="true"/>
+  </nodes>
+  <nodes xsi:type="scg:Conditional" incoming="//@nodes.29/@else">
+    <then target="//@nodes.32"/>
+    <else target="//@nodes.33"/>
+    <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.6/@valuedObjects.0"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.31/@then" valuedObject="//@declarations.16/@valuedObjects.0">
+    <next target="//@nodes.50"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="true"/>
+  </nodes>
+  <nodes xsi:type="scg:Conditional" incoming="//@nodes.31/@else">
+    <then target="//@nodes.34"/>
+    <else target="//@nodes.35"/>
+    <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.9/@valuedObjects.0"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.33/@then" valuedObject="//@declarations.12/@valuedObjects.0">
+    <next target="//@nodes.35"/>
+    <assignment xsi:type="kexpressions:OperatorExpression" operator="+">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.12/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:IntValue" value="1"/>
+    </assignment>
+  </nodes>
+  <nodes xsi:type="scg:Conditional" incoming="//@nodes.34/@next //@nodes.33/@else">
+    <then target="//@nodes.36"/>
+    <else target="//@nodes.37"/>
+    <condition xsi:type="kexpressions:OperatorExpression" operator="&amp;">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.9/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:OperatorExpression" operator="&lt;=">
+        <subExpressions xsi:type="kexpressions:IntValue" value="5"/>
+        <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.12/@valuedObjects.0"/>
+      </subExpressions>
+    </condition>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.35/@then" valuedObject="//@declarations.17/@valuedObjects.0">
+    <next target="//@nodes.50"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="true"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.35/@else" valuedObject="//@declarations.1/@valuedObjects.0">
+    <next target="//@nodes.38"/>
+    <assignment xsi:type="kexpressions:OperatorExpression" operator="|">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.1/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:BoolValue" value="true"/>
+    </assignment>
+  </nodes>
+  <nodes xsi:type="scg:Surface" incoming="//@nodes.37/@next" depth="//@nodes.39"/>
+  <nodes xsi:type="scg:Depth" surface="//@nodes.38">
+    <next target="//@nodes.40"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.39/@next" valuedObject="//@declarations.14/@valuedObjects.0">
+    <next target="//@nodes.41"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="true"/>
+  </nodes>
+  <nodes xsi:type="scg:Conditional" incoming="//@nodes.40/@next">
+    <then target="//@nodes.42"/>
+    <else target="//@nodes.43"/>
+    <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.3/@valuedObjects.0"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.41/@then" valuedObject="//@declarations.15/@valuedObjects.0">
+    <next target="//@nodes.50"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="true"/>
+  </nodes>
+  <nodes xsi:type="scg:Conditional" incoming="//@nodes.41/@else">
+    <then target="//@nodes.44"/>
+    <else target="//@nodes.45"/>
+    <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.6/@valuedObjects.0"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.43/@then" valuedObject="//@declarations.16/@valuedObjects.0">
+    <next target="//@nodes.50"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="true"/>
+  </nodes>
+  <nodes xsi:type="scg:Conditional" incoming="//@nodes.43/@else">
+    <then target="//@nodes.46"/>
+    <else target="//@nodes.47"/>
+    <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.9/@valuedObjects.0"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.45/@then" valuedObject="//@declarations.12/@valuedObjects.0">
+    <next target="//@nodes.47"/>
+    <assignment xsi:type="kexpressions:OperatorExpression" operator="+">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.12/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:IntValue" value="1"/>
+    </assignment>
+  </nodes>
+  <nodes xsi:type="scg:Conditional" incoming="//@nodes.46/@next //@nodes.45/@else">
+    <then target="//@nodes.48"/>
+    <else target="//@nodes.49"/>
+    <condition xsi:type="kexpressions:OperatorExpression" operator="&amp;">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.9/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:OperatorExpression" operator="&lt;=">
+        <subExpressions xsi:type="kexpressions:IntValue" value="5"/>
+        <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.12/@valuedObjects.0"/>
+      </subExpressions>
+    </condition>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.47/@then" valuedObject="//@declarations.17/@valuedObjects.0">
+    <next target="//@nodes.50"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="true"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.47/@else" valuedObject="//@declarations.2/@valuedObjects.0">
+    <next target="//@nodes.50"/>
+    <assignment xsi:type="kexpressions:OperatorExpression" operator="|">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.2/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:BoolValue" value="true"/>
+    </assignment>
+  </nodes>
+  <nodes xsi:type="scg:Conditional" incoming="//@nodes.49/@next //@nodes.21/@next //@nodes.30/@next //@nodes.32/@next //@nodes.36/@next //@nodes.42/@next //@nodes.44/@next //@nodes.48/@next">
+    <then target="//@nodes.51"/>
+    <else target="//@nodes.55"/>
+    <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.3/@valuedObjects.0"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.50/@then" valuedObject="//@declarations.4/@valuedObjects.0">
+    <next target="//@nodes.52"/>
+    <assignment xsi:type="kexpressions:OperatorExpression" operator="|">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.4/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:BoolValue" value="true"/>
+    </assignment>
+  </nodes>
+  <nodes xsi:type="scg:Surface" incoming="//@nodes.51/@next" depth="//@nodes.53"/>
+  <nodes xsi:type="scg:Depth" surface="//@nodes.52">
+    <next target="//@nodes.54"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.53/@next" valuedObject="//@declarations.5/@valuedObjects.0">
+    <next target="//@nodes.65"/>
+    <assignment xsi:type="kexpressions:OperatorExpression" operator="|">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.5/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:BoolValue" value="true"/>
+    </assignment>
+  </nodes>
+  <nodes xsi:type="scg:Conditional" incoming="//@nodes.50/@else">
+    <then target="//@nodes.56"/>
+    <else target="//@nodes.60"/>
+    <condition xsi:type="kexpressions:OperatorExpression" operator="&amp;">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.6/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.14/@valuedObjects.0"/>
+    </condition>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.55/@then" valuedObject="//@declarations.7/@valuedObjects.0">
+    <next target="//@nodes.57"/>
+    <assignment xsi:type="kexpressions:OperatorExpression" operator="|">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.7/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:BoolValue" value="true"/>
+    </assignment>
+  </nodes>
+  <nodes xsi:type="scg:Surface" incoming="//@nodes.56/@next" depth="//@nodes.58"/>
+  <nodes xsi:type="scg:Depth" surface="//@nodes.57">
+    <next target="//@nodes.59"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.58/@next" valuedObject="//@declarations.8/@valuedObjects.0">
+    <next target="//@nodes.65"/>
+    <assignment xsi:type="kexpressions:OperatorExpression" operator="|">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.8/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:BoolValue" value="true"/>
+    </assignment>
+  </nodes>
+  <nodes xsi:type="scg:Conditional" incoming="//@nodes.55/@else">
+    <then target="//@nodes.61"/>
+    <else target="//@nodes.65"/>
+    <condition xsi:type="kexpressions:OperatorExpression" operator="&amp;">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.9/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:OperatorExpression" operator="&lt;=">
+        <subExpressions xsi:type="kexpressions:IntValue" value="5"/>
+        <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.12/@valuedObjects.0"/>
+      </subExpressions>
+    </condition>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.60/@then" valuedObject="//@declarations.10/@valuedObjects.0">
+    <next target="//@nodes.62"/>
+    <assignment xsi:type="kexpressions:OperatorExpression" operator="|">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.10/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:BoolValue" value="true"/>
+    </assignment>
+  </nodes>
+  <nodes xsi:type="scg:Surface" incoming="//@nodes.61/@next" depth="//@nodes.63"/>
+  <nodes xsi:type="scg:Depth" surface="//@nodes.62">
+    <next target="//@nodes.64"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.63/@next" valuedObject="//@declarations.11/@valuedObjects.0">
+    <next target="//@nodes.65"/>
+    <assignment xsi:type="kexpressions:OperatorExpression" operator="|">
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.11/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:BoolValue" value="true"/>
+    </assignment>
+  </nodes>
+  <nodes xsi:type="scg:Surface" incoming="//@nodes.60/@else //@nodes.54/@next //@nodes.59/@next //@nodes.64/@next" depth="//@nodes.66"/>
+  <nodes xsi:type="scg:Depth" surface="//@nodes.65">
+    <next target="//@nodes.18"/>
+  </nodes>
+  <nodes xsi:type="scg:Exit" entry="//@nodes.17">
+    <next target="//@nodes.3"/>
+  </nodes>
+  <nodes xsi:type="scg:Exit" incoming="//@nodes.3/@next" entry="//@nodes.0"/>
+  <declarations type="bool" output="true">
+    <valuedObjects name="A"/>
+  </declarations>
+  <declarations type="bool" output="true">
+    <valuedObjects name="B"/>
+  </declarations>
+  <declarations type="bool" output="true">
+    <valuedObjects name="C"/>
+  </declarations>
+  <declarations type="bool" input="true">
+    <valuedObjects name="D"/>
+  </declarations>
+  <declarations type="bool" output="true">
+    <valuedObjects name="E"/>
+  </declarations>
+  <declarations type="bool" output="true">
+    <valuedObjects name="F"/>
+  </declarations>
+  <declarations type="bool" input="true">
+    <valuedObjects name="G"/>
+  </declarations>
+  <declarations type="bool" output="true">
+    <valuedObjects name="H"/>
+  </declarations>
+  <declarations type="bool" output="true">
+    <valuedObjects name="I"/>
+  </declarations>
+  <declarations type="bool" input="true">
+    <valuedObjects name="J"/>
+  </declarations>
+  <declarations type="bool" output="true">
+    <valuedObjects name="K"/>
+  </declarations>
+  <declarations type="bool" output="true">
+    <valuedObjects name="L"/>
+  </declarations>
+  <declarations type="bool">
+    <valuedObjects name="i"/>
+  </declarations>
+  <declarations type="bool">
+    <valuedObjects name="synchronousTick"/>
+  </declarations>
+  <declarations type="bool">
+    <valuedObjects name="f_depth"/>
+  </declarations>
+  <declarations type="bool">
+    <valuedObjects name="f_a"/>
+  </declarations>
+  <declarations type="bool">
+    <valuedObjects name="f_a_"/>
+  </declarations>
+  <declarations type="bool">
+    <valuedObjects name="f_a__"/>
+  </declarations>
+</scg:SCGraph>

@@ -1,0 +1,14 @@
+module test_suspend6:
+input A;
+output B;
+output D;
+
+suspend 
+  loop 
+    emit B;
+    pause;
+    emit D
+  end loop
+when A
+
+end module

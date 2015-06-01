@@ -1,0 +1,21 @@
+module warehouse_pc:
+
+type MYSQL_RES_ptr;
+type MYSQL_ROW;
+
+function check_result(MYSQL_RES_ptr) : boolean;
+
+input orders_results : MYSQL_RES_ptr;
+output orders_query_out : string;  
+
+signal item_quantity : integer,
+       num_items_in_bin : integer,		 
+       move_and_drop_item,
+       robot_high_level_op_complete in
+  if (check_result(?orders_results)) then
+    emit num_items_in_bin(pre(?num_items_in_bin))
+%   emit num_items_in_bin(pre(?num_items_in_bin)+?item_quantity);
+  end if;
+end signal
+
+end module

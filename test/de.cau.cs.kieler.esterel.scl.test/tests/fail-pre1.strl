@@ -1,0 +1,11 @@
+module test_pre1:
+input A;
+output B;
+
+loop
+  present pre(A) then
+    emit B
+  end present
+end loop
+
+end module

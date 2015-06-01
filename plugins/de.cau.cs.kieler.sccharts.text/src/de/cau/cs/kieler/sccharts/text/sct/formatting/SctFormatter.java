@@ -45,17 +45,17 @@ public class SctFormatter extends ActionsFormatter {
          */
 
         // Suppress any space between 'region' and ':'
-        c.setLinewrap(2).before(f.getRegionAccess().getRegionKeyword_2());
+        c.setLinewrap(2).before(f.getControlflowRegionAccess().getRegionKeyword_2());
 //        c.setLinewrap(2).before(f.getTheRootRegionAccess().getRegionKeyword_4_1());
-        c.setLinewrap(2).before(f.getSingleRegionAccess().getRegionKeyword_1_1());
-        c.setNoSpace().before(f.getRegionAccess().getColonKeyword_6());
-        c.setLinewrap().after(f.getRegionAccess().getColonKeyword_6());
+        c.setLinewrap(2).before(f.getSingleControlflowRegionAccess().getRegionKeyword_1_1());
+        c.setNoSpace().before(f.getControlflowRegionAccess().getColonKeyword_6());
+        c.setLinewrap().after(f.getControlflowRegionAccess().getColonKeyword_6());
 //
 //        c.setNoSpace().before(f.getTheRootRegionAccess().getColonKeyword_4_4());
 //        c.setLinewrap().after(f.getTheRootRegionAccess().getColonKeyword_4_4());
 
-        c.setNoSpace().before(f.getSingleRegionAccess().getColonKeyword_1_5());
-        c.setLinewrap().after(f.getSingleRegionAccess().getColonKeyword_1_5());
+        c.setNoSpace().before(f.getSingleControlflowRegionAccess().getColonKeyword_1_5());
+        c.setLinewrap().after(f.getSingleControlflowRegionAccess().getColonKeyword_1_5());
         
 //        /*
 //         *  STATE

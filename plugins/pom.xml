@@ -52,6 +52,8 @@
     <module>de.cau.cs.kieler.klighd.server</module>
     <module>de.cau.cs.kieler.klighd.server.ui</module>
     <module>de.cau.cs.kieler.kex.ui</module>
+    <module>de.cau.cs.kieler.kitt</module>
+    <module>de.cau.cs.kieler.kitt.klighd</module>
     <module>de.cau.cs.kieler.s</module>
     <module>de.cau.cs.kieler.s.sc</module>
     <module>de.cau.cs.kieler.s.sj</module>
@@ -96,7 +98,6 @@
     <module>de.cau.cs.kieler.scg.editor</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
     <module>de.cau.cs.kieler.scg.s</module>
-    <module>de.cau.cs.kieler.scg.sim</module>
     <module>org.json</module>
   </modules>
 

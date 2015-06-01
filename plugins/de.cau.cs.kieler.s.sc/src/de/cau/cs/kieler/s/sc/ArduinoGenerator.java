@@ -34,8 +34,8 @@ import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.model.codegeneration.SimpleCBeautifier;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
-import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.xtend.S2Arduino;
 

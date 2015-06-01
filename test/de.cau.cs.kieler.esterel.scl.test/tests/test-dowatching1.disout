@@ -1,0 +1,26 @@
+module test_dowatching1:
+input A;
+input B;
+input C;
+output X;
+output Y;
+
+abort
+  
+when A;
+emit X;
+abort
+  abort
+    pause
+  when B do
+    abort
+      
+    when [A and B];
+    loop
+      pause
+    end loop
+  end abort
+when C;
+emit Y
+
+end module

@@ -27,24 +27,24 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class RelativeWrite_ReadImpl extends DependencyImpl implements RelativeWrite_Read {
+public class RelativeWrite_ReadImpl extends DataDependencyImpl implements RelativeWrite_Read {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected RelativeWrite_ReadImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return ScgPackage.Literals.RELATIVE_WRITE_READ;
-    }
+		return ScgPackage.Literals.RELATIVE_WRITE_READ;
+	}
 
 } //RelativeWrite_ReadImpl

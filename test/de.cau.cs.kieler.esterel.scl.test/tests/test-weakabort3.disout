@@ -1,0 +1,35 @@
+module test_weakabort3:
+output A;
+output B;
+output C;
+
+loop
+  [
+    trap weak_trap_1 in
+      trap weak_trap_0 in
+          pause;
+          pause;
+          emit A;
+          exit weak_trap_0
+        ||
+          abort
+            loop
+              pause
+            end loop
+          when B do
+            exit weak_trap_1
+          end abort
+      end trap
+    handle weak_trap_1 do
+      
+    end trap
+  ||
+    pause;
+    pause;
+    emit B
+  ];
+  emit C;
+  pause
+end loop
+
+end module

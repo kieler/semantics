@@ -1,0 +1,26 @@
+module Module3:
+type t1a;
+type t2a;
+type t3a;
+constant c1a : integer;
+constant c2a : boolean;
+constant c3a : integer;
+function f1a() : integer;
+function f2a(integer, boolean) : boolean;
+function f3a() : boolean;
+procedure p1a()();
+procedure p2a(integer, boolean)(integer);
+procedure p3a(integer)(boolean);
+task ta1a()();
+task ta2a(boolean, integer)(boolean);
+task ta3a()();
+input s1a;
+input s2a;
+output s3a;
+output s4a;
+inputoutput s5a;
+inputoutput s6a;
+
+nothing
+
+end module

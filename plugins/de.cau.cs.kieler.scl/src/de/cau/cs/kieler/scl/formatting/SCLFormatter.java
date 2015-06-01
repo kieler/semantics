@@ -30,13 +30,13 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
 		for(Keyword comma: f.findKeywords(",")) {
 			c.setNoLinewrap().before(comma);
 			c.setNoSpace().before(comma);
-			c.setLinewrap().after(comma);
+//			c.setLinewrap().after(comma);
 		}
 		c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
 		c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
 		c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
 
-		c.setLinewrap().before(f.getProgramAccess().getDeclarationsAssignment_3());
+//		c.setLinewrap().before(f.getSCLProgramAccess().getDeclarationsAssignment_3());
 		
 		for(Keyword semicolon: f.findKeywords(";")) {
 		    c.setNoSpace().before(semicolon);
@@ -56,6 +56,19 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
 	        c.setIndentation(f.getParallelAccess().getForkKeyword_0(), 
 	                         f.getParallelAccess().getParKeyword_1_1_0());
 	        c.setIndentation(f.getParallelAccess().getParKeyword_1_1_0(), 
-	                         f.getParallelAccess().getJoinKeyword_2());		
+	                         f.getParallelAccess().getJoinKeyword_2());
+	        
+	        // Indent then and else statements
+	        c.setLinewrap(1).after(f.getConditionalAccess().getThenKeyword_2());
+                c.setLinewrap(1).after(f.getConditionalAccess().getElseKeyword_5_0());
+                c.setLinewrap(1).after(f.getConditionalAccess().getEndKeyword_6());
+                c.setLinewrap(1).before(f.getConditionalAccess().getElseKeyword_5_0());
+                c.setLinewrap(1).before(f.getConditionalAccess().getEndKeyword_6());
+                c.setIndentation(f.getConditionalAccess().getThenKeyword_2(), 
+                                 f.getConditionalAccess().getElseKeyword_5_0());
+                c.setIndentation(f.getConditionalAccess().getElseKeyword_5_0(), 
+                                 f.getConditionalAccess().getEndKeyword_6());
+                
+//	        c.setNoSpace().before(f.getEmptyStatementAccess().getLabelAssignment_1_0());
         }
 }

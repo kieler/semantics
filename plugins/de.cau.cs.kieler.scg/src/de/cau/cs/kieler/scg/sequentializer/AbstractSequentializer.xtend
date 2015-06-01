@@ -17,10 +17,10 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.SCGraph
-import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import org.eclipse.emf.ecore.EObject
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -41,7 +41,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
  * @kieler.rating 2013-01-21 proposed yellow
  */
 
-abstract class AbstractSequentializer extends Transformation {
+abstract class AbstractSequentializer extends AbstractProductionTransformation {
     
     @Inject
     extension KExpressionsExtension
@@ -56,8 +56,6 @@ abstract class AbstractSequentializer extends Transformation {
     /** Name of the go signal. */
     protected static val String GOGUARDNAME = "_GO"
     
-    public static val String ANNOTATION_SEQUENTIALIZED = "sequentialized" 
-    
     public static val String ANNOTATION_CONDITIONALASSIGNMENT = "conditional"
     
     
@@ -65,8 +63,8 @@ abstract class AbstractSequentializer extends Transformation {
     // -- Sequentializer 
     // -------------------------------------------------------------------------            
 	
-    override transform(EObject eObject, KielerCompilerContext context) {
-        sequentialize(eObject as SCGraph, context)
+    public def transform(SCGraph scg, KielerCompilerContext context) {
+        sequentialize(scg, context)
     }
 	
 	abstract def SCGraph sequentialize(SCGraph scg, KielerCompilerContext context)

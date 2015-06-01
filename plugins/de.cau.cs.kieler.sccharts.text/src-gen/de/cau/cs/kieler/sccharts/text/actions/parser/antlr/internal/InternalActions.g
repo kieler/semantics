@@ -254,6 +254,8 @@ ruleTransition returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRuleEffect
 entryRuleEffect returns [EObject current=null] 
 	:
@@ -3466,6 +3468,8 @@ ruleLogicalAndOperator returns [Enumerator current=null]
         newLeafNode(enumLiteral_0, grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); 
     }
 );
+
+
 
 
 

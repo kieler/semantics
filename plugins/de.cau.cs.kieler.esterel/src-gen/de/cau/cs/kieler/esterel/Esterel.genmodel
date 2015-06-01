@@ -270,6 +270,9 @@
     <genClasses ecoreClass="Esterel.ecore#//Suspend">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Suspend/delay"/>
     </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//WeakSuspend">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//WeakSuspend/delay"/>
+    </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Sustain">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Sustain/signal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Sustain/tick"/>
@@ -289,6 +292,12 @@
     <genClasses ecoreClass="Esterel.ecore#//LocalVariable">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LocalVariable/var"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//LocalVariable/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Goto">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Goto/targetLabel"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Label">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Label/label"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//DelayExpr">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/expr"/>

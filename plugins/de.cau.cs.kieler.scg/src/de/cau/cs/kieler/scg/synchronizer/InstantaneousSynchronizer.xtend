@@ -15,7 +15,6 @@
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
@@ -27,6 +26,7 @@ import java.util.List
 import java.util.Map
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler

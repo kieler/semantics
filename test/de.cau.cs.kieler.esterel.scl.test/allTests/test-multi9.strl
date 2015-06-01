@@ -1,0 +1,43 @@
+module stest_repeat:
+input A;
+input B;
+input C;
+input D;
+output X;
+output Y;
+output Z;
+output W;
+output T;
+
+loop
+  suspend
+    trap TT in
+      repeat 4 times
+        emit X;
+        abort
+          repeat 5 times
+            [
+              emit Y;
+              pause;
+              present [B and C] then
+                exit TT
+              end present;
+              pause;
+              emit Y
+            ||
+              await B;
+              emit Z
+            ]
+          end repeat
+        when [C and D];
+        pause
+      end repeat;
+      emit T
+    end trap;
+    emit X;
+    pause
+  when A;
+  emit W
+end loop
+
+end module

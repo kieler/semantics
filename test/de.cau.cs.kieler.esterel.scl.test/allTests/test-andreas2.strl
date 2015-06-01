@@ -1,0 +1,62 @@
+module test_andreas2:
+procedure PrintFU()(string, integer);
+
+signal FUName1 := "Fu_1" : string,
+       Offset1 := 0 : integer,
+       FUName2 := "FU_2" : string,
+       Offset2 := 1 : integer,
+       A : string,
+       B : string,
+       C : integer, 
+       D : integer in
+    emit FUName1("FU_1");
+    emit Offset1(0);
+    emit FUName2("FU_2");
+    emit Offset2(1)
+  ||
+    run FU_SYSTEM [
+      signal FUName1 / FUName,
+             Offset1 / Offset,
+              A / N,
+              C / I ] 
+  ||
+    run FU_SYSTEM [
+       signal FUName2 / FUName,
+              Offset2 / Offset,
+              B / N,
+              D / I ] 
+  ||
+    loop
+      call PrintFU()(?A, ?C);
+      call PrintFU()(?B, ?D);
+      pause
+    end loop
+end signal
+
+end module
+
+module FU_SYSTEM:
+input FUName : string;
+input Offset : integer;
+output N : string;
+output I : integer;
+
+run FU
+
+end module
+
+module FU:
+input FUName : string;
+input Offset : integer;
+output N : string;
+output I : integer;
+
+await immediate FUName;
+await immediate Offset;
+loop
+  pause;
+  emit N(?FUName);
+  emit I(?Offset);
+end loop
+
+end module

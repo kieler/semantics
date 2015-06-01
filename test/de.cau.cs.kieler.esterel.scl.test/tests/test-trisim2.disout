@@ -1,0 +1,19 @@
+module test_trisim2:
+input A;
+input B;
+output C;
+
+loop
+  if (A) {
+    if (C) else {
+      emit C
+    }
+  } else {
+    if (B) {
+      emit C
+    }
+  };
+  pause
+end loop
+
+end module

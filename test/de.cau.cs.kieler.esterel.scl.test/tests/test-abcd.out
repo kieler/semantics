@@ -1,0 +1,111 @@
+module ONE_BUTTON:
+input BUTTON;
+input LOCK;
+input UNLOCK;
+output BUTTON_PRESELECTED_ON;
+output BUTTON_PRESELECTED_OFF;
+output BUTTON_LOCKED_ON;
+output BUTTON_LOCKED_OFF;
+inputoutput PRESELECTED;
+inputoutput LOCKED;
+inputoutput UNLOCKED;
+
+emit BUTTON_PRESELECTED_OFF;
+emit BUTTON_LOCKED_OFF;
+loop
+  trap BACK_TO_MAIN_LOOP in
+    trap PRESELECTED in
+      loop
+        do
+          await BUTTON do
+            exit PRESELECTED
+          end await
+        upto LOCKED;
+        await UNLOCKED
+      end loop
+    end trap;
+    loop
+      emit PRESELECTED;
+      emit BUTTON_PRESELECTED_ON;
+      do
+        await 
+          case BUTTON
+          case PRESELECTED
+        end await;
+        emit BUTTON_PRESELECTED_OFF;
+        exit BACK_TO_MAIN_LOOP
+      watching LOCK timeout
+        emit BUTTON_PRESELECTED_OFF;
+        emit LOCKED;
+        emit BUTTON_LOCKED_ON;
+        await UNLOCK do
+          emit BUTTON_LOCKED_OFF;
+          emit UNLOCKED
+        end await
+      end timeout
+    end loop
+  end trap
+end loop
+
+end module
+
+module abcd:
+input A;
+input B;
+input C;
+input D;
+input LOCK;
+output A_PRESELECTED_ON;
+output B_PRESELECTED_ON;
+output C_PRESELECTED_ON;
+output D_PRESELECTED_ON;
+output A_PRESELECTED_OFF;
+output B_PRESELECTED_OFF;
+output C_PRESELECTED_OFF;
+output D_PRESELECTED_OFF;
+output A_LOCKED_ON;
+output B_LOCKED_ON;
+output C_LOCKED_ON;
+output D_LOCKED_ON;
+output A_LOCKED_OFF;
+output B_LOCKED_OFF;
+output C_LOCKED_OFF;
+output D_LOCKED_OFF;
+
+signal LOCKED,
+       UNLOCKED,
+       PRESELECTED in
+    run ONE_BUTTON [
+      signal A / BUTTON,
+             A_PRESELECTED_ON / BUTTON_PRESELECTED_ON,
+             A_PRESELECTED_OFF / BUTTON_PRESELECTED_OFF,
+             A_LOCKED_ON / BUTTON_LOCKED_ON,
+             A_LOCKED_OFF / BUTTON_LOCKED_OFF,
+             LOCK / UNLOCK ]
+  ||
+    run ONE_BUTTON [
+      signal B / BUTTON,
+             B_PRESELECTED_ON / BUTTON_PRESELECTED_ON,
+             B_PRESELECTED_OFF / BUTTON_PRESELECTED_OFF,
+             B_LOCKED_ON / BUTTON_LOCKED_ON,
+             B_LOCKED_OFF / BUTTON_LOCKED_OFF,
+             LOCK / UNLOCK ]
+  ||
+    run ONE_BUTTON [
+      signal C / BUTTON,
+             C_PRESELECTED_ON / BUTTON_PRESELECTED_ON,
+             C_PRESELECTED_OFF / BUTTON_PRESELECTED_OFF,
+             C_LOCKED_ON / BUTTON_LOCKED_ON,
+             C_LOCKED_OFF / BUTTON_LOCKED_OFF,
+             LOCK / UNLOCK ]
+  ||
+    run ONE_BUTTON [
+      signal D / BUTTON,
+             D_PRESELECTED_ON / BUTTON_PRESELECTED_ON,
+             D_PRESELECTED_OFF / BUTTON_PRESELECTED_OFF,
+             D_LOCKED_ON / BUTTON_LOCKED_ON,
+             D_LOCKED_OFF / BUTTON_LOCKED_OFF,
+             LOCK / UNLOCK ]
+end signal
+
+end module

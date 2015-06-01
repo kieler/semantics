@@ -1,0 +1,15 @@
+module test:
+
+input a,b,r;
+output o;
+
+loop
+abort 
+[await a
+|| await b
+];
+emit o;
+halt;
+when r;
+end
+end module

@@ -14,7 +14,7 @@ import de.cau.cs.kieler.scl.scl.Instruction;
 import de.cau.cs.kieler.scl.scl.InstructionStatement;
 import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
-import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.SclFactory;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
@@ -41,7 +41,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass programEClass = null;
+  private EClass sclProgramEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -198,9 +198,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getProgram()
+  public EClass getSCLProgram()
   {
-    return programEClass;
+    return sclProgramEClass;
   }
 
   /**
@@ -208,9 +208,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProgram_Annotations()
+  public EReference getSCLProgram_Annotations()
   {
-    return (EReference)programEClass.getEStructuralFeatures().get(0);
+    return (EReference)sclProgramEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -218,9 +218,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getProgram_Name()
+  public EAttribute getSCLProgram_Name()
   {
-    return (EAttribute)programEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)sclProgramEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -228,9 +228,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProgram_Declarations()
+  public EReference getSCLProgram_Declarations()
   {
-    return (EReference)programEClass.getEStructuralFeatures().get(2);
+    return (EReference)sclProgramEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -503,10 +503,10 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     isCreated = true;
 
     // Create classes and their features
-    programEClass = createEClass(PROGRAM);
-    createEReference(programEClass, PROGRAM__ANNOTATIONS);
-    createEAttribute(programEClass, PROGRAM__NAME);
-    createEReference(programEClass, PROGRAM__DECLARATIONS);
+    sclProgramEClass = createEClass(SCL_PROGRAM);
+    createEReference(sclProgramEClass, SCL_PROGRAM__ANNOTATIONS);
+    createEAttribute(sclProgramEClass, SCL_PROGRAM__NAME);
+    createEReference(sclProgramEClass, SCL_PROGRAM__DECLARATIONS);
 
     statementEClass = createEClass(STATEMENT);
     createEReference(statementEClass, STATEMENT__ANNOTATIONS);
@@ -578,7 +578,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    programEClass.getESuperTypes().add(this.getStatementSequence());
+    sclProgramEClass.getESuperTypes().add(this.getStatementSequence());
     emptyStatementEClass.getESuperTypes().add(this.getStatement());
     instructionStatementEClass.getESuperTypes().add(this.getStatement());
     assignmentEClass.getESuperTypes().add(this.getInstruction());
@@ -592,10 +592,10 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     statementScopeEClass.getESuperTypes().add(this.getStatementSequence());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getProgram_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getProgram_Name(), ecorePackage.getEString(), "name", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProgram_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(sclProgramEClass, SCLProgram.class, "SCLProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSCLProgram_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, SCLProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSCLProgram_Name(), ecorePackage.getEString(), "name", null, 0, 1, SCLProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSCLProgram_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, SCLProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getStatement_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

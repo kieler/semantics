@@ -1,0 +1,1071 @@
+module atds:
+input modeT;
+input modeC;
+input modeE;
+input add_vme;
+input data_vme;
+input cmd_vme;
+input adem_vme;
+input dem_vme;
+input stop;
+input add_in;
+input dem_in;
+input data_in;
+input add_clk;
+input data_clk;
+input err;
+input egal;
+input sout;
+output raz_reg;
+output raz_bit;
+output raz_stop;
+output it_data_T;
+output it_data_C;
+output it_add;
+output it_err;
+output it_adem;
+output it_dem;
+output sin;
+output sclk;
+output ld1;
+output ld2;
+output mem_clk;
+output paren;
+output dem;
+output data_out;
+output data_clk_out;
+output add_out;
+output add_clk_out;
+output L1;
+output L2;
+relation modeT # modeC # modeE;
+relation cmd_vme # adem_vme # dem_vme # stop;
+relation add_in # data_in;
+relation add_clk # data_clk;
+relation add_in # data_clk;
+relation data_in # add_clk;
+relation add_vme # data_vme # adem_vme # dem_vme # cmd_vme # stop;
+
+loop
+  abort
+    loop
+      pause
+    end loop
+  when
+    case modeT do
+      trap MODE in
+        loop
+          abort
+            loop
+              pause
+            end loop
+          when
+            case immediate cmd_vme do
+              emit dem;
+              abort
+                loop
+                  pause
+                end loop
+              when tick;
+              emit raz_reg;
+              emit ld1;
+              abort
+                loop
+                  pause
+                end loop
+              when tick;
+              emit ld1;
+              emit sclk;
+              abort
+                loop
+                  pause
+                end loop
+              when data_clk;
+              if (sout) {
+                emit data_out;
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick
+              };
+              emit sclk;
+              abort
+                loop
+                  pause
+                end loop
+              when immediate [not data_clk];
+              abort
+                loop
+                  pause
+                end loop
+              when
+                case err do
+                  emit it_err
+                case cmd_vme
+                case adem_vme
+                case [not modeT]
+              end abort
+            case immediate adem_vme do
+              abort
+                loop
+                  pause
+                end loop
+              when immediate adem_vme do
+                [
+                  emit dem;
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when tick
+                ||
+                  emit data_out;
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when tick
+                ]
+              end abort;
+              trap ACQADD,
+                   DEM_VME in
+                [
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when immediate add_clk;
+                  exit ACQADD
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when immediate add_in;
+                  exit ACQADD
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when immediate dem_vme;
+                  exit DEM_VME
+                ]
+              handle ACQADD or DEM_VME do
+                [
+                  if (ACQADD) {
+                    trap EndAddress in
+                      [
+                        loop
+                          trap DATA in
+                            signal IS_DATA in
+                              [
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when immediate add_clk;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when tick;
+                                if (IS_DATA) {
+                                  emit sin;
+                                  abort
+                                    loop
+                                      pause
+                                    end loop
+                                  when tick;
+                                  emit sin
+                                };
+                                exit DATA
+                              ||
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when immediate add_in;
+                                loop
+                                  emit IS_DATA;
+                                  pause
+                                end loop
+                              ]
+                            end signal
+                          end trap;
+                          emit sclk;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when immediate [not add_clk]
+                        end loop
+                      ||
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when 7 sclk;
+                        exit EndAddress
+                      ]
+                    end trap;
+                    signal NULL in
+                      emit paren;
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when tick;
+                      emit paren;
+                      emit mem_clk;
+                      emit NULL
+                    end signal;
+                    emit it_add
+                  }
+                ]
+              end trap;
+              trap ACQDATA in
+                loop
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when
+                    case immediate dem_vme do
+                      emit dem;
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when tick;
+                      emit raz_bit;
+                      trap EndData in
+                        [
+                          loop
+                            trap DATA in
+                              signal IS_DATA in
+                                [
+                                  abort
+                                    loop
+                                      pause
+                                    end loop
+                                  when immediate data_clk;
+                                  abort
+                                    loop
+                                      pause
+                                    end loop
+                                  when tick;
+                                  if (IS_DATA) {
+                                    emit sin;
+                                    abort
+                                      loop
+                                        pause
+                                      end loop
+                                    when tick;
+                                    emit sin
+                                  };
+                                  exit DATA
+                                ||
+                                  abort
+                                    loop
+                                      pause
+                                    end loop
+                                  when immediate data_in;
+                                  loop
+                                    emit IS_DATA;
+                                    pause
+                                  end loop
+                                ]
+                              end signal
+                            end trap;
+                            emit sclk;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate [not data_clk]
+                          end loop
+                        ||
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when sclk;
+                          exit EndData
+                        ]
+                      end trap;
+                      signal NULL in
+                        emit paren;
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when tick;
+                        emit paren;
+                        emit mem_clk;
+                        emit NULL
+                      end signal;
+                      emit it_data_T;
+                      emit ld2;
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when tick;
+                      emit ld2;
+                      emit sclk;
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when data_clk;
+                      if (sout) {
+                        emit data_out;
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when tick
+                      };
+                      emit sclk;
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when immediate [not data_clk]
+                    case stop do
+                      emit raz_stop;
+                      exit ACQDATA
+                    case err do
+                      emit it_err;
+                      exit ACQDATA
+                    case cmd_vme do
+                      exit ACQDATA
+                    case [not modeT] do
+                      exit ACQDATA
+                  end abort
+                end loop
+              end trap
+            case immediate [not modeT] do
+              exit MODE
+          end abort
+        end loop
+      end trap
+    case modeC do
+      trap MODE in
+        loop
+          signal IS_DATA in
+            trap ADVDEM in
+                abort
+                  loop
+                    pause
+                  end loop
+                when
+                  case immediate data_in do
+                    loop
+                      emit IS_DATA;
+                      pause
+                    end loop
+                  case immediate [not modeC] do
+                    exit MODE
+                end abort
+              ||
+                abort
+                  loop
+                    pause
+                  end loop
+                when immediate dem_in;
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                if (IS_DATA) {
+                  emit it_adem;
+                  trap STOP in
+                    loop
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when
+                        case add_vme do
+                          emit raz_reg;
+                          trap ADRESSE in
+                            [
+                              emit ld1;
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when tick;
+                              emit ld1;
+                              emit sclk;
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when tick;
+                              loop
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when tick;
+                                if (sout) {
+                                  [
+                                    emit add_clk_out;
+                                    abort
+                                      loop
+                                        pause
+                                      end loop
+                                    when tick
+                                  ||
+                                    emit add_out;
+                                    abort
+                                      loop
+                                        pause
+                                      end loop
+                                    when tick
+                                  ]
+                                } else {
+                                  emit add_clk_out;
+                                  abort
+                                    loop
+                                      pause
+                                    end loop
+                                  when tick
+                                };
+                                emit sclk;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when 31 tick
+                              end loop
+                            ||
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when add_clk_out;
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when tick;
+                              exit ADRESSE
+                            ]
+                          end trap
+                        case dem_in do
+                          emit it_dem;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when data_vme;
+                          emit raz_reg;
+                          trap DONNEES in
+                            [
+                              emit ld1;
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when tick;
+                              emit ld1;
+                              emit sclk;
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when tick;
+                              loop
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when tick;
+                                if (sout) {
+                                  [
+                                    emit data_clk_out;
+                                    abort
+                                      loop
+                                        pause
+                                      end loop
+                                    when tick
+                                  ||
+                                    emit data_out;
+                                    abort
+                                      loop
+                                        pause
+                                      end loop
+                                    when tick
+                                  ]
+                                } else {
+                                  emit data_clk_out;
+                                  abort
+                                    loop
+                                      pause
+                                    end loop
+                                  when tick
+                                };
+                                emit sclk;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when 31 tick
+                              end loop
+                            ||
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when data_clk_out;
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when tick;
+                              exit DONNEES
+                            ]
+                          end trap;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when tick;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when tick;
+                          emit data_clk_out;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when tick;
+                          signal IS_DATA in
+                            trap DATA in
+                              [
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when immediate data_in do
+                                  loop
+                                    emit IS_DATA;
+                                    pause
+                                  end loop
+                                end abort
+                              ||
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when tick;
+                                if (IS_DATA) {
+                                  emit sin;
+                                  abort
+                                    loop
+                                      pause
+                                    end loop
+                                  when tick;
+                                  emit sin
+                                };
+                                exit DATA
+                              ]
+                            end trap
+                          end signal;
+                          emit sclk;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when tick;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when tick;
+                          emit paren;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when tick;
+                          emit paren;
+                          emit mem_clk;
+                          emit L2;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when tick;
+                          if (egal) else {
+                            emit data_out;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when tick;
+                            exit STOP
+                          }
+                        case stop do
+                          emit raz_stop;
+                          exit STOP
+                        case [not modeC] do
+                          exit STOP
+                      end abort
+                    end loop
+                  end trap
+                } else {
+                  trap RECDATA in
+                    signal fin_1,
+                           first in
+                      [
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when tick;
+                        emit data_clk_out;
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when tick;
+                        signal IS_DATA in
+                          trap DATA in
+                            [
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when immediate data_in do
+                                loop
+                                  emit IS_DATA;
+                                  pause
+                                end loop
+                              end abort
+                            ||
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when tick;
+                              if (IS_DATA) {
+                                emit sin;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when tick;
+                                emit sin
+                              };
+                              exit DATA
+                            ]
+                          end trap
+                        end signal;
+                        emit sclk;
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when tick;
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when tick;
+                        emit fin_1;
+                        if (first) {
+                          emit paren;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when tick;
+                          emit paren;
+                          emit mem_clk;
+                          emit L1;
+                          emit it_data_C;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when tick
+                        } else {
+                          emit paren;
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when tick;
+                          emit paren;
+                          emit mem_clk;
+                          emit L2;
+                          exit RECDATA
+                        }
+                      ||
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when fin_1 do
+                          emit first
+                        end abort
+                      ]
+                    end signal
+                  end trap;
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when tick;
+                  if (egal) else {
+                    emit data_out;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when tick
+                  }
+                };
+                exit ADVDEM
+            end trap
+          end signal
+        end loop
+      end trap
+    case modeE do
+      trap MODE in
+        loop
+          signal IS_DATA in
+            trap ADVDEM in
+                abort
+                  loop
+                    pause
+                  end loop
+                when
+                  case immediate data_in do
+                    loop
+                      emit IS_DATA;
+                      pause
+                    end loop
+                  case immediate [not modeE] do
+                    exit MODE
+                end abort
+              ||
+                abort
+                  loop
+                    pause
+                  end loop
+                when immediate dem_in;
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                if (IS_DATA) {
+                  emit it_adem;
+                  trap ACQADD,
+                       DEM_VME in
+                    [
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when immediate add_clk;
+                      exit ACQADD
+                    ||
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when immediate add_in;
+                      exit ACQADD
+                    ||
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when immediate dem_in;
+                      exit DEM_VME
+                    ]
+                  handle ACQADD or DEM_VME do
+                    [
+                      if (ACQADD or DEM_VME) {
+                          if (ACQADD) {
+                            trap EndAddress in
+                              [
+                                loop
+                                  trap DATA in
+                                    signal IS_DATA in
+                                      [
+                                        abort
+                                          loop
+                                            pause
+                                          end loop
+                                        when immediate add_clk;
+                                        abort
+                                          loop
+                                            pause
+                                          end loop
+                                        when tick;
+                                        if (IS_DATA) {
+                                          emit sin;
+                                          abort
+                                            loop
+                                              pause
+                                            end loop
+                                          when tick;
+                                          emit sin
+                                        };
+                                        exit DATA
+                                      ||
+                                        abort
+                                          loop
+                                            pause
+                                          end loop
+                                        when immediate add_in;
+                                        loop
+                                          emit IS_DATA;
+                                          pause
+                                        end loop
+                                      ]
+                                    end signal
+                                  end trap;
+                                  emit sclk;
+                                  abort
+                                    loop
+                                      pause
+                                    end loop
+                                  when immediate [not add_clk]
+                                end loop
+                              ||
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when 7 sclk;
+                                exit EndAddress
+                              ]
+                            end trap;
+                            signal NULL in
+                              emit paren;
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when tick;
+                              emit paren;
+                              emit mem_clk;
+                              emit NULL
+                            end signal;
+                            emit it_add
+                          }
+                      }
+                    ]
+                  end trap;
+                  trap ACQDATA in
+                    loop
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when
+                        case immediate dem_in do
+                          emit it_dem;
+                          trap EndData in
+                            [
+                              loop
+                                trap DATA in
+                                  signal IS_DATA in
+                                    [
+                                      abort
+                                        loop
+                                          pause
+                                        end loop
+                                      when immediate data_clk;
+                                      abort
+                                        loop
+                                          pause
+                                        end loop
+                                      when tick;
+                                      if (IS_DATA) {
+                                        emit sin;
+                                        abort
+                                          loop
+                                            pause
+                                          end loop
+                                        when tick;
+                                        emit sin
+                                      };
+                                      exit DATA
+                                    ||
+                                      abort
+                                        loop
+                                          pause
+                                        end loop
+                                      when immediate data_in;
+                                      loop
+                                        emit IS_DATA;
+                                        pause
+                                      end loop
+                                    ]
+                                  end signal
+                                end trap;
+                                emit sclk;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when immediate [not data_clk]
+                              end loop
+                            ||
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when sclk;
+                              exit EndData
+                            ]
+                          end trap;
+                          signal NULL in
+                            emit paren;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when tick;
+                            emit paren;
+                            emit mem_clk;
+                            emit NULL
+                          end signal;
+                          emit it_data_T
+                        case stop do
+                          emit raz_stop;
+                          exit ACQDATA
+                        case err do
+                          emit it_err;
+                          exit ACQDATA
+                      end abort
+                    end loop
+                  end trap
+                } else {
+                  trap ACQDATA in
+                    loop
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when
+                        case immediate dem_in do
+                          trap EndData in
+                            [
+                              loop
+                                trap DATA in
+                                  signal IS_DATA in
+                                    [
+                                      abort
+                                        loop
+                                          pause
+                                        end loop
+                                      when immediate data_clk;
+                                      abort
+                                        loop
+                                          pause
+                                        end loop
+                                      when tick;
+                                      if (IS_DATA) {
+                                        emit sin;
+                                        abort
+                                          loop
+                                            pause
+                                          end loop
+                                        when tick;
+                                        emit sin
+                                      };
+                                      exit DATA
+                                    ||
+                                      abort
+                                        loop
+                                          pause
+                                        end loop
+                                      when immediate data_in;
+                                      loop
+                                        emit IS_DATA;
+                                        pause
+                                      end loop
+                                    ]
+                                  end signal
+                                end trap;
+                                emit sclk;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when immediate [not data_clk]
+                              end loop
+                            ||
+                              abort
+                                loop
+                                  pause
+                                end loop
+                              when sclk;
+                              exit EndData
+                            ]
+                          end trap;
+                          signal NULL in
+                            emit paren;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when tick;
+                            emit paren;
+                            emit mem_clk;
+                            emit NULL
+                          end signal;
+                          emit it_data_T
+                        case stop do
+                          emit raz_stop;
+                          exit ACQDATA
+                        case err do
+                          emit it_err;
+                          exit ACQDATA
+                      end abort
+                    end loop
+                  end trap
+                }
+            end trap
+          end signal
+        end loop
+      end trap
+  end abort
+end loop
+
+end module

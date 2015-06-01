@@ -1,0 +1,9 @@
+module Test_Run12:
+
+trap T in
+  trap Q in
+    
+  end trap
+end trap
+
+end module

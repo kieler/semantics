@@ -30,7 +30,7 @@ import de.cau.cs.kieler.scl.scl.Goto;
 import de.cau.cs.kieler.scl.scl.InstructionStatement;
 import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
-import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.services.SCLGrammarAccess;
@@ -469,10 +469,10 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 					return; 
 				}
 				else break;
-			case SclPackage.PROGRAM:
-				if(context == grammarAccess.getProgramRule() ||
+			case SclPackage.SCL_PROGRAM:
+				if(context == grammarAccess.getSCLProgramRule() ||
 				   context == grammarAccess.getStatementSequenceRule()) {
-					sequence_Program(context, (Program) semanticObject); 
+					sequence_SCLProgram(context, (SCLProgram) semanticObject); 
 					return; 
 				}
 				else break;
@@ -624,7 +624,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	 *         (statements+=InstructionStatement statements+=EmptyStatement*)?
 	 *     )
 	 */
-	protected void sequence_Program(EObject context, Program semanticObject) {
+	protected void sequence_SCLProgram(EObject context, SCLProgram semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -653,7 +653,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* name=ID initialValue=Expression? combineOperator=CombineOperator?)
+	 *     (name=ID initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

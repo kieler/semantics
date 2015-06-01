@@ -1,0 +1,27 @@
+module example1:
+constant MOTOR_FWD : integer;
+constant MOTOR_REV : integer;
+constant TICKS_PER_SECOND = 1000 : integer;
+input TOUCH_1;
+output MOTOR_A_SPEED : integer;
+output MOTOR_C_SPEED : integer;
+output MOTOR_A_DIR : integer;
+output MOTOR_C_DIR : integer;
+output MOTOR_B_SPEED : integer;
+output MOTOR_B_DIR : integer;
+
+emit MOTOR_B_DIR(1);
+emit MOTOR_B_SPEED(80);
+loop
+  emit MOTOR_A_DIR(MOTOR_REV);
+  emit MOTOR_C_DIR(MOTOR_FWD);
+  emit MOTOR_A_SPEED(20);
+  emit MOTOR_C_SPEED(100);
+  await TOUCH_1;
+  emit MOTOR_A_DIR(MOTOR_FWD);
+  emit MOTOR_C_DIR(MOTOR_REV);
+  emit MOTOR_A_SPEED(100);
+  emit MOTOR_C_SPEED(20)
+end loop
+
+end module

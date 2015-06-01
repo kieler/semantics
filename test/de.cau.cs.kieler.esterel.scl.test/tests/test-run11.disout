@@ -1,0 +1,18 @@
+module Test_Run11:
+type t1;
+function f1(integer, integer) : integer;
+function f3(integer, integer, integer) : t1;
+function f4(integer) : t1;
+
+var a : integer in
+  a := f1(a, a);
+  var b : integer,
+      c : t1 in
+    b := f1(b, b);
+    b := f1(b, b);
+    c := f3(b, b, b);
+    c := f4(b)
+  end var
+end var
+
+end module

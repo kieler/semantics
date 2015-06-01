@@ -1,0 +1,19 @@
+module Test_Run14:
+
+run Foo
+
+end module
+
+module Foo:
+
+run Bar
+
+end module
+
+module Bar:
+
+nothing;
+pause;
+nothing
+
+end module

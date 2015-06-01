@@ -1,0 +1,9 @@
+module test_repeat3:
+input A;
+output B;
+
+repeat 5 times
+  pause
+end repeat
+
+end module

@@ -1,0 +1,14 @@
+module Test_Run9:
+
+var cc : integer in
+  run Bar
+end var
+
+end module
+
+module Bar:
+constant cc : integer;
+
+nothing
+
+end module

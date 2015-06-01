@@ -32,22 +32,7 @@
       </wizard>
    </extension>
 
-   <extension point="org.eclipse.ui.newWizards">
-      <!-- @generated sccharts -->
-      <category
-            id="org.eclipse.emf.ecore.Wizard.category.ID"
-            name="%_UI_Wizard_category"/>
-      <wizard
-            id="de.cau.cs.kieler.sccharts.presentation.SCChartsModelWizardID"
-            name="%_UI_SCChartsModelWizard_label"
-            class="de.cau.cs.kieler.sccharts.presentation.SCChartsModelWizard"
-            category="org.eclipse.emf.ecore.Wizard.category.ID"
-            icon="icons/full/obj16/SCChartsModelFile.gif">
-         <description>%_UI_SCChartsModelWizard_description</description>
-         <selection class="org.eclipse.core.resources.IResource"/>
-      </wizard>
-   </extension>
-
+null
    <extension point="org.eclipse.ui.editors">
       <editor
             id="de.cau.cs.kieler.sccharts.presentation.SCChartsEditorID"
@@ -62,7 +47,7 @@
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
             editor="de.cau.cs.kieler.sccharts.presentation.SCChartsEditorID"
-            transformations="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT,ABORTDEFAULT,ABORTALTERNATIVE,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, SCGRAPH, SCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGSCHEDSIMPLE, SCGSCHEDCLUSTER, SCGSCHEDHYBRID, SCGSEQ, SCGBBGROUP, SCGSCHEDGROUP, MAP, FOR, REFERENCE, CONST, EXPANSIONS,CODEGENERATION, SCG2C">
+            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT,ABORTDEFAULT,ABORTALTERNATIVE,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, SCGRAPH, SCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGSCHEDSIMPLE, SCGSCHEDCLUSTER, SCGSCHEDHYBRID, SCGSEQ, SCGBBGROUP, SCGSCHEDGROUP, MAP, FOR, REFERENCE, CONST, EXPANSIONS,CODEGENERATION, SCG2C">
       </editor>
    </extension>
 
