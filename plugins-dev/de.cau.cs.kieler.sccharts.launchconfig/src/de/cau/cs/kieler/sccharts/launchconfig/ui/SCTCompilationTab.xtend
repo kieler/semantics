@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.swt.widgets.Button
+import java.io.File
 
 /**
  * @author aas
@@ -250,8 +251,28 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         
         // Update project reference
         updateProjectReference(configuration)
+        
+        // Check the user input for consistency
+        checkConsistency()
     }
 
+    /**
+     * Checks if the current input makes sense and set an error message accordingly.
+     */
+    private def checkConsistency() {
+        errorMessage = null
+        
+        if (project != null) {
+            
+            // All SCT files exist in this project
+            for(data : list.input as List<SCTCompilationData>){
+                val file = new File(project.location + "/" + data.projectRelativePath)
+                if(!file.exists)
+                    errorMessage = "File '"+data.projectRelativePath+"' does not exist in the specified project"
+            }    
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -284,5 +305,5 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         enabled = (project != null)
         SCChartsLaunchConfigurationTabGroup.enableControls(controls, enabled)
     }
-
+    
 }
