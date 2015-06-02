@@ -5,6 +5,8 @@ import org.osgi.framework.BundleContext;
 
 public class LaunchConfigPlugin implements BundleActivator {
 
+        public static String ID = "de.cau.kieler.sccharts.launchconfig";
+    
 	private static BundleContext context;
 
 	static BundleContext getContext() {

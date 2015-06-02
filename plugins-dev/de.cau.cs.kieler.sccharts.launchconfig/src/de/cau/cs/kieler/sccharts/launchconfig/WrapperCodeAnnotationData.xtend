@@ -47,4 +47,16 @@ class WrapperCodeAnnotationData {
     
     @Accessors
     private String varType
+    
+    /**
+     * Two WrapperCodeAnnotationData are equal if the name is equal
+     * and their argument lists are equal.
+     */
+    override boolean equals(Object obj){
+        if(obj instanceof WrapperCodeAnnotationData){
+            val o = obj as WrapperCodeAnnotationData
+            return o.name == name && o.arguments.equals(arguments)
+        }
+        return false
+    }
 }

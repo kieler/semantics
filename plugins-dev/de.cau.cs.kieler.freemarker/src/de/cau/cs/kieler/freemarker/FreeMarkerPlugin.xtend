@@ -11,6 +11,7 @@ import java.util.Locale
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
+import javax.sound.midi.SysexMessage
 
 class FreeMarkerPlugin implements BundleActivator {
     static BundleContext context
@@ -52,6 +53,7 @@ class FreeMarkerPlugin implements BundleActivator {
         configuration.setLocale(Locale.US);
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         configuration.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
+        configuration.whitespaceStripping = true
         
         // We want to load templates from files in the directory
         // as well as from simple strings.
@@ -74,24 +76,21 @@ class FreeMarkerPlugin implements BundleActivator {
     // This should really be loaded from a resource of this plug-in.
     @Accessors
     public static val assignmentMacros = 
-"<#-- init -->\n"+
 "<#macro init>\n"+
 "   <#assign init_snippet>\n"+
 "       <#nested />\n"+
 "   </#assign>\n"+
-"</#macro>\n"+
+"</#macro>\n\n"+
 
-"<#-- input -->\n"+
 "<#macro input>\n"+
 "   <#assign input_snippet>\n"+
 "       <#nested />\n"+
 "   </#assign>\n"+
-"</#macro>\n"+
+"</#macro>\n\n"+
 
-"<#-- output -->\n"+
 "<#macro output>\n"+
 "   <#assign output_snippet>\n"+
 "       <#nested />\n"+
 "   </#assign>\n"+
-"</#macro>\n"
+"</#macro>"
 }
