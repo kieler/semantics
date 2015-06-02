@@ -181,19 +181,19 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
     }
 
     /**
-     * Generic transformation method for KiCo. Compile without optimized ouput variable resetting
+     * Generic transformation method for KiCo. Compile without optimized output variable resetting
      * if the program does not terminate.
      */
-    override transform(EObject eObject) {
+    def transformNoOpt(EObject eObject) {
         optimizeTransformation = false;
         return transformProgram(eObject as Program) as EObject
     }
     
     /**
-     * Generic transformation method for KiCo. Compile without optimized ouput variable resetting
+     * Generic transformation method for KiCo. Compile without optimized output variable resetting
      * if the program does not terminate.
      */
-    def transformOpt(EObject eObject) {
+    override transform(EObject eObject) {
         optimizeTransformation = true;
         return transformProgram(eObject as Program) as EObject
     }
