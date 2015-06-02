@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kitt.tracing;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -494,6 +495,13 @@ public class TransformationTracing {
      */
     public static <T extends EObject> void setDefaultTrace(final T... origins) {
         tracingDefaults.put(Thread.currentThread(), Lists.<EObject> newArrayList(origins));
+    }
+    
+    /**
+     * Clears the default trace.
+     */
+    public static void clearDefaultTrace() {
+        tracingDefaults.put(Thread.currentThread(), Collections.<EObject> emptyList());
     }
 
 }
