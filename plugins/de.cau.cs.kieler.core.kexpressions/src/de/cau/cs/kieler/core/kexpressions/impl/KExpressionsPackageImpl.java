@@ -44,669 +44,669 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  */
 public class KExpressionsPackageImpl extends EPackageImpl implements KExpressionsPackage {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass expressionEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass valuedObjectEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass valuedObjectReferenceEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass valueEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass intValueEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass floatValueEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass boolValueEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass operatorExpressionEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass textExpressionEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass declarationEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass functionCallEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass parameterEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EClass stringValueEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EEnum combineOperatorEEnum = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EEnum operatorTypeEEnum = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private EEnum valueTypeEEnum = null;
 
     /**
-	 * Creates an instance of the model <b>Package</b>, registered with
-	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
-	 * package URI value.
-	 * <p>Note: the correct way to create the package is via the static
-	 * factory method {@link #init init()}, which also performs
-	 * initialization of the package, or returns the registered package,
-	 * if one already exists.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the model <b>Package</b>, registered with
+     * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
+     * package URI value.
+     * <p>Note: the correct way to create the package is via the static
+     * factory method {@link #init init()}, which also performs
+     * initialization of the package, or returns the registered package,
+     * if one already exists.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#eNS_URI
-	 * @see #init()
-	 * @generated
-	 */
+     * @see org.eclipse.emf.ecore.EPackage.Registry
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#eNS_URI
+     * @see #init()
+     * @generated
+     */
     private KExpressionsPackageImpl() {
-		super(eNS_URI, KExpressionsFactory.eINSTANCE);
-	}
+        super(eNS_URI, KExpressionsFactory.eINSTANCE);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private static boolean isInited = false;
 
     /**
-	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
-	 * <p>This method is used to initialize {@link KExpressionsPackage#eINSTANCE} when that field is accessed.
-	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-	 * <!-- begin-user-doc -->
+     * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+     * 
+     * <p>This method is used to initialize {@link KExpressionsPackage#eINSTANCE} when that field is accessed.
+     * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #eNS_URI
-	 * @see #createPackageContents()
-	 * @see #initializePackageContents()
-	 * @generated
-	 */
+     * @see #eNS_URI
+     * @see #createPackageContents()
+     * @see #initializePackageContents()
+     * @generated
+     */
     public static KExpressionsPackage init() {
-		if (isInited) return (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
+        if (isInited) return (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
-		// Obtain or create and register package
-		KExpressionsPackageImpl theKExpressionsPackage = (KExpressionsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KExpressionsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KExpressionsPackageImpl());
+        // Obtain or create and register package
+        KExpressionsPackageImpl theKExpressionsPackage = (KExpressionsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KExpressionsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KExpressionsPackageImpl());
 
-		isInited = true;
+        isInited = true;
 
-		// Initialize simple dependencies
-		AnnotationsPackage.eINSTANCE.eClass();
+        // Initialize simple dependencies
+        AnnotationsPackage.eINSTANCE.eClass();
 
-		// Create package meta-data objects
-		theKExpressionsPackage.createPackageContents();
+        // Create package meta-data objects
+        theKExpressionsPackage.createPackageContents();
 
-		// Initialize created meta-data
-		theKExpressionsPackage.initializePackageContents();
+        // Initialize created meta-data
+        theKExpressionsPackage.initializePackageContents();
 
-		// Mark meta-data to indicate it can't be changed
-		theKExpressionsPackage.freeze();
+        // Mark meta-data to indicate it can't be changed
+        theKExpressionsPackage.freeze();
 
   
-		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(KExpressionsPackage.eNS_URI, theKExpressionsPackage);
-		return theKExpressionsPackage;
-	}
+        // Update the registry and return the package
+        EPackage.Registry.INSTANCE.put(KExpressionsPackage.eNS_URI, theKExpressionsPackage);
+        return theKExpressionsPackage;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getExpression() {
-		return expressionEClass;
-	}
+        return expressionEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getValuedObject() {
-		return valuedObjectEClass;
-	}
+        return valuedObjectEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getValuedObject_Name() {
-		return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(0);
-	}
+        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EReference getValuedObject_InitialValue() {
-		return (EReference)valuedObjectEClass.getEStructuralFeatures().get(2);
-	}
+        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(2);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EAttribute getValuedObject_Cardinalities() {
-		return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(3);
-	}
+        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(3);
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getValuedObject_CombineOperator() {
-		return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(1);
-	}
+        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(1);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getValuedObjectReference() {
-		return valuedObjectReferenceEClass;
-	}
+        return valuedObjectReferenceEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EReference getValuedObjectReference_ValuedObject() {
-		return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(0);
-	}
+        return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EReference getValuedObjectReference_Indices() {
-		return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(1);
-	}
+        return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(1);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getValue() {
-		return valueEClass;
-	}
+        return valueEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getIntValue() {
-		return intValueEClass;
-	}
+        return intValueEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getIntValue_Value() {
-		return (EAttribute)intValueEClass.getEStructuralFeatures().get(0);
-	}
+        return (EAttribute)intValueEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getFloatValue() {
-		return floatValueEClass;
-	}
+        return floatValueEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getFloatValue_Value() {
-		return (EAttribute)floatValueEClass.getEStructuralFeatures().get(0);
-	}
+        return (EAttribute)floatValueEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getBoolValue() {
-		return boolValueEClass;
-	}
+        return boolValueEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getBoolValue_Value() {
-		return (EAttribute)boolValueEClass.getEStructuralFeatures().get(0);
-	}
+        return (EAttribute)boolValueEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getOperatorExpression() {
-		return operatorExpressionEClass;
-	}
+        return operatorExpressionEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getOperatorExpression_Operator() {
-		return (EAttribute)operatorExpressionEClass.getEStructuralFeatures().get(0);
-	}
+        return (EAttribute)operatorExpressionEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EReference getOperatorExpression_SubExpressions() {
-		return (EReference)operatorExpressionEClass.getEStructuralFeatures().get(1);
-	}
+        return (EReference)operatorExpressionEClass.getEStructuralFeatures().get(1);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getTextExpression() {
-		return textExpressionEClass;
-	}
+        return textExpressionEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getTextExpression_Text() {
-		return (EAttribute)textExpressionEClass.getEStructuralFeatures().get(0);
-	}
+        return (EAttribute)textExpressionEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getDeclaration() {
-		return declarationEClass;
-	}
+        return declarationEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EReference getDeclaration_ValuedObjects() {
-		return (EReference)declarationEClass.getEStructuralFeatures().get(0);
-	}
+        return (EReference)declarationEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getDeclaration_Type() {
-		return (EAttribute)declarationEClass.getEStructuralFeatures().get(1);
-	}
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(1);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getDeclaration_Input() {
-		return (EAttribute)declarationEClass.getEStructuralFeatures().get(2);
-	}
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(2);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getDeclaration_Output() {
-		return (EAttribute)declarationEClass.getEStructuralFeatures().get(3);
-	}
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(3);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getDeclaration_Static() {
-		return (EAttribute)declarationEClass.getEStructuralFeatures().get(4);
-	}
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(4);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getDeclaration_Signal() {
-		return (EAttribute)declarationEClass.getEStructuralFeatures().get(5);
-	}
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(5);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getDeclaration_Const() {
-		return (EAttribute)declarationEClass.getEStructuralFeatures().get(6);
-	}
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(6);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getDeclaration_Extern() {
-		return (EAttribute)declarationEClass.getEStructuralFeatures().get(7);
-	}
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(7);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EAttribute getDeclaration_Volatile() {
-		return (EAttribute)declarationEClass.getEStructuralFeatures().get(8);
-	}
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(8);
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDeclaration_HostType() {
-		return (EAttribute)declarationEClass.getEStructuralFeatures().get(9);
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
+    public EAttribute getDeclaration_HostType() {
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(9);
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getFunctionCall() {
-		return functionCallEClass;
-	}
+        return functionCallEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getFunctionCall_FunctionName() {
-		return (EAttribute)functionCallEClass.getEStructuralFeatures().get(0);
-	}
+        return (EAttribute)functionCallEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EReference getFunctionCall_Parameters() {
-		return (EReference)functionCallEClass.getEStructuralFeatures().get(1);
-	}
+        return (EReference)functionCallEClass.getEStructuralFeatures().get(1);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getParameter() {
-		return parameterEClass;
-	}
+        return parameterEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getParameter_CallByReference() {
-		return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
-	}
+        return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EReference getParameter_Expression() {
-		return (EReference)parameterEClass.getEStructuralFeatures().get(1);
-	}
+        return (EReference)parameterEClass.getEStructuralFeatures().get(1);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EClass getStringValue() {
-		return stringValueEClass;
-	}
+        return stringValueEClass;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EAttribute getStringValue_Value() {
-		return (EAttribute)stringValueEClass.getEStructuralFeatures().get(0);
-	}
+        return (EAttribute)stringValueEClass.getEStructuralFeatures().get(0);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EEnum getCombineOperator() {
-		return combineOperatorEEnum;
-	}
+        return combineOperatorEEnum;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EEnum getOperatorType() {
-		return operatorTypeEEnum;
-	}
+        return operatorTypeEEnum;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EEnum getValueType() {
-		return valueTypeEEnum;
-	}
+        return valueTypeEEnum;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public KExpressionsFactory getKExpressionsFactory() {
-		return (KExpressionsFactory)getEFactoryInstance();
-	}
+        return (KExpressionsFactory)getEFactoryInstance();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private boolean isCreated = false;
 
     /**
-	 * Creates the meta-model objects for the package.  This method is
-	 * guarded to have no affect on any invocation but its first.
-	 * <!-- begin-user-doc -->
+     * Creates the meta-model objects for the package.  This method is
+     * guarded to have no affect on any invocation but its first.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void createPackageContents() {
-		if (isCreated) return;
-		isCreated = true;
+        if (isCreated) return;
+        isCreated = true;
 
-		// Create classes and their features
-		expressionEClass = createEClass(EXPRESSION);
+        // Create classes and their features
+        expressionEClass = createEClass(EXPRESSION);
 
-		valuedObjectEClass = createEClass(VALUED_OBJECT);
-		createEAttribute(valuedObjectEClass, VALUED_OBJECT__NAME);
-		createEAttribute(valuedObjectEClass, VALUED_OBJECT__COMBINE_OPERATOR);
-		createEReference(valuedObjectEClass, VALUED_OBJECT__INITIAL_VALUE);
-		createEAttribute(valuedObjectEClass, VALUED_OBJECT__CARDINALITIES);
+        valuedObjectEClass = createEClass(VALUED_OBJECT);
+        createEAttribute(valuedObjectEClass, VALUED_OBJECT__NAME);
+        createEAttribute(valuedObjectEClass, VALUED_OBJECT__COMBINE_OPERATOR);
+        createEReference(valuedObjectEClass, VALUED_OBJECT__INITIAL_VALUE);
+        createEAttribute(valuedObjectEClass, VALUED_OBJECT__CARDINALITIES);
 
-		valuedObjectReferenceEClass = createEClass(VALUED_OBJECT_REFERENCE);
-		createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__VALUED_OBJECT);
-		createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__INDICES);
+        valuedObjectReferenceEClass = createEClass(VALUED_OBJECT_REFERENCE);
+        createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__VALUED_OBJECT);
+        createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__INDICES);
 
-		valueEClass = createEClass(VALUE);
+        valueEClass = createEClass(VALUE);
 
-		intValueEClass = createEClass(INT_VALUE);
-		createEAttribute(intValueEClass, INT_VALUE__VALUE);
+        intValueEClass = createEClass(INT_VALUE);
+        createEAttribute(intValueEClass, INT_VALUE__VALUE);
 
-		floatValueEClass = createEClass(FLOAT_VALUE);
-		createEAttribute(floatValueEClass, FLOAT_VALUE__VALUE);
+        floatValueEClass = createEClass(FLOAT_VALUE);
+        createEAttribute(floatValueEClass, FLOAT_VALUE__VALUE);
 
-		boolValueEClass = createEClass(BOOL_VALUE);
-		createEAttribute(boolValueEClass, BOOL_VALUE__VALUE);
+        boolValueEClass = createEClass(BOOL_VALUE);
+        createEAttribute(boolValueEClass, BOOL_VALUE__VALUE);
 
-		operatorExpressionEClass = createEClass(OPERATOR_EXPRESSION);
-		createEAttribute(operatorExpressionEClass, OPERATOR_EXPRESSION__OPERATOR);
-		createEReference(operatorExpressionEClass, OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
+        operatorExpressionEClass = createEClass(OPERATOR_EXPRESSION);
+        createEAttribute(operatorExpressionEClass, OPERATOR_EXPRESSION__OPERATOR);
+        createEReference(operatorExpressionEClass, OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
 
-		textExpressionEClass = createEClass(TEXT_EXPRESSION);
-		createEAttribute(textExpressionEClass, TEXT_EXPRESSION__TEXT);
+        textExpressionEClass = createEClass(TEXT_EXPRESSION);
+        createEAttribute(textExpressionEClass, TEXT_EXPRESSION__TEXT);
 
-		declarationEClass = createEClass(DECLARATION);
-		createEReference(declarationEClass, DECLARATION__VALUED_OBJECTS);
-		createEAttribute(declarationEClass, DECLARATION__TYPE);
-		createEAttribute(declarationEClass, DECLARATION__INPUT);
-		createEAttribute(declarationEClass, DECLARATION__OUTPUT);
-		createEAttribute(declarationEClass, DECLARATION__STATIC);
-		createEAttribute(declarationEClass, DECLARATION__SIGNAL);
-		createEAttribute(declarationEClass, DECLARATION__CONST);
-		createEAttribute(declarationEClass, DECLARATION__EXTERN);
-		createEAttribute(declarationEClass, DECLARATION__VOLATILE);
-		createEAttribute(declarationEClass, DECLARATION__HOST_TYPE);
+        declarationEClass = createEClass(DECLARATION);
+        createEReference(declarationEClass, DECLARATION__VALUED_OBJECTS);
+        createEAttribute(declarationEClass, DECLARATION__TYPE);
+        createEAttribute(declarationEClass, DECLARATION__INPUT);
+        createEAttribute(declarationEClass, DECLARATION__OUTPUT);
+        createEAttribute(declarationEClass, DECLARATION__STATIC);
+        createEAttribute(declarationEClass, DECLARATION__SIGNAL);
+        createEAttribute(declarationEClass, DECLARATION__CONST);
+        createEAttribute(declarationEClass, DECLARATION__EXTERN);
+        createEAttribute(declarationEClass, DECLARATION__VOLATILE);
+        createEAttribute(declarationEClass, DECLARATION__HOST_TYPE);
 
-		functionCallEClass = createEClass(FUNCTION_CALL);
-		createEAttribute(functionCallEClass, FUNCTION_CALL__FUNCTION_NAME);
-		createEReference(functionCallEClass, FUNCTION_CALL__PARAMETERS);
+        functionCallEClass = createEClass(FUNCTION_CALL);
+        createEAttribute(functionCallEClass, FUNCTION_CALL__FUNCTION_NAME);
+        createEReference(functionCallEClass, FUNCTION_CALL__PARAMETERS);
 
-		parameterEClass = createEClass(PARAMETER);
-		createEAttribute(parameterEClass, PARAMETER__CALL_BY_REFERENCE);
-		createEReference(parameterEClass, PARAMETER__EXPRESSION);
+        parameterEClass = createEClass(PARAMETER);
+        createEAttribute(parameterEClass, PARAMETER__CALL_BY_REFERENCE);
+        createEReference(parameterEClass, PARAMETER__EXPRESSION);
 
-		stringValueEClass = createEClass(STRING_VALUE);
-		createEAttribute(stringValueEClass, STRING_VALUE__VALUE);
+        stringValueEClass = createEClass(STRING_VALUE);
+        createEAttribute(stringValueEClass, STRING_VALUE__VALUE);
 
-		// Create enums
-		combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
-		operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
-		valueTypeEEnum = createEEnum(VALUE_TYPE);
-	}
+        // Create enums
+        combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
+        operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
+        valueTypeEEnum = createEEnum(VALUE_TYPE);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private boolean isInitialized = false;
 
     /**
-	 * Complete the initialization of the package and its meta-model.  This
-	 * method is guarded to have no affect on any invocation but its first.
-	 * <!-- begin-user-doc -->
+     * Complete the initialization of the package and its meta-model.  This
+     * method is guarded to have no affect on any invocation but its first.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void initializePackageContents() {
         if (isInitialized) return;
         isInitialized = true;
@@ -777,6 +777,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getDeclaration_Const(), ecorePackage.getEBoolean(), "const", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDeclaration_Extern(), ecorePackage.getEBoolean(), "extern", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDeclaration_Volatile(), ecorePackage.getEBoolean(), "volatile", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDeclaration_HostType(), ecorePackage.getEString(), "hostType", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(functionCallEClass, FunctionCall.class, "FunctionCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getFunctionCall_FunctionName(), ecorePackage.getEString(), "functionName", null, 0, 1, FunctionCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

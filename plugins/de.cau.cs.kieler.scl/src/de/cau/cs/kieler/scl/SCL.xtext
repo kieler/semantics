@@ -31,16 +31,16 @@ Declaration returns kexpressions::Declaration:
     (static?='static')?
     (signal?='signal')?
     (
-//        type=HostType hostType=STRING valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';' |
+        type=HostType hostType=STRING valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';' |
         type=ValueType valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
     )
 ;
 
 // Override ValueType rule without host type
-//enum ValueType returns kexpressions::ValueType:
-//    PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | 
-//    INT="int" | FLOAT="float" |
-//    STRING="string";
+enum ValueType returns kexpressions::ValueType:
+    PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | 
+    INT="int" | FLOAT="float" |
+    STRING="string";
 
 ValuedObject returns kexpressions::ValuedObject:
 //    (annotations+=Annotation)* // Parser does not like this
