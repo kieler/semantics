@@ -70,6 +70,9 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
      */
     private var SCTCompilationData currentData
 
+    /**
+     * The project set in the main tab.
+     */
     private var IProject project
 
     /**
@@ -228,7 +231,6 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
     private def updateProjectReference(ILaunchConfigurationWorkingCopy configuration){
         val projectName = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
         project= LaunchConfiguration.findProject(projectName)
-        
     }
 
     /**

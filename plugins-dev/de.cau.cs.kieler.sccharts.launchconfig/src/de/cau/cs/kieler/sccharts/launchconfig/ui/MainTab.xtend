@@ -265,7 +265,17 @@ class MainTab extends AbstractLaunchConfigurationTab {
                     val results = dialog.result
                     if (results != null && results.size > 0) {
                         val result = results.get(0) as IResource
-                        wrapperCodeTemplate.setText(result.projectRelativePath.toOSString)
+                        val path = result.projectRelativePath.toOSString
+                        wrapperCodeTemplate.setText(path)
+                        
+                        // Automaticly set default value for output as the template path without extension.
+                        if(wrapperCodeTarget.text == null || wrapperCodeTarget.text == ""){
+                            val index = path.lastIndexOf('.')
+                            if(index > -1)
+                                wrapperCodeTarget.text = path.substring(0,index)
+                            else
+                                wrapperCodeTarget.text = path
+                        }
                     }
                 }
 

@@ -48,6 +48,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     public static val BUILD_DIRECTORY = "sct-gen"
 
+    public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
+    public static val LAUNCHED_PROJECT_PLACEHOLDER = "${"+LAUNCHED_PROJECT_VARIABLE+"}"
+
     // Objects from launch
     var ILaunchConfiguration configuration
     var String mode
@@ -231,15 +234,25 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * The file extension of the target path is the extension for the current target language.
      */
     private def String computeTargetPath(String projectRelativePath) {
+        // The src directory of a typical java project is not part of the relevant target path
+        var String projectRelativeRelevantPath;
+        if(projectRelativePath.startsWith("src/") || projectRelativePath.startsWith("src\\"))
+            projectRelativeRelevantPath = projectRelativePath.substring(4)
+        else
+            projectRelativeRelevantPath = projectRelativePath
+            
+        println(projectRelativePath)
+        println(projectRelativePath.startsWith("src/"))
+        println(projectRelativeRelevantPath)
+            
         // Remove extension from path 
-        var projectRelativePathWithoutExtension = projectRelativePath
-        val index = projectRelativePath.lastIndexOf(".")
+        val index = projectRelativeRelevantPath.lastIndexOf(".")
         if (index > -1) {
-            projectRelativePathWithoutExtension = projectRelativePath.substring(0, index)
+            projectRelativeRelevantPath = projectRelativeRelevantPath.substring(0, index)
         }
 
         // Compute fully qualified target path
-        return project.location + "/" + BUILD_DIRECTORY + "/" + projectRelativePathWithoutExtension +
+        return project.location + "/" + BUILD_DIRECTORY + "/" + projectRelativeRelevantPath +
             getTargetLanguageExtension()
     }
 
@@ -260,6 +273,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * Saves the result of an SCT compilation to the fully qualified target path.
      */
     private def saveCompilationResult(String result, String targetPath) {
+        println(targetPath)
         // Create directory for the output if none yet.
         createDirectories(targetPath)
 

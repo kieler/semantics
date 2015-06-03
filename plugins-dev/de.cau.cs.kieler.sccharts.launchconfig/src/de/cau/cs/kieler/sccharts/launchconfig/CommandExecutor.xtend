@@ -95,9 +95,9 @@ class CommandExecutor {
     private def setVariables() {
         val man = VariablesPlugin.getDefault.stringVariableManager
         var ValueVariable variable = null;
-        val variables = man.variables.filter[it.name == "launched_project_loc"]
+        val variables = man.variables.filter[it.name == LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE]
         if (variables.isEmpty) {
-            variable = new ValueVariable("launched_project_loc", "Fully qualified path to the launched SCT project",
+            variable = new ValueVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE, "Fully qualified path to the launched SCT project",
                 true, project.location.toOSString)
             man.addVariables(#[variable])
         } else {

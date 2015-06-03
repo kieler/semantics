@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.sccharts.launchconfig.ui
 
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
+import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IResource
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.debug.internal.ui.SWTFactory
@@ -28,6 +30,7 @@ import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Text
+import org.eclipse.ui.dialogs.ResourceSelectionDialog
 
 /** 
  * @author aas
@@ -48,6 +51,11 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
      * The input field for the run command.
      */
     Text runCommand    
+    
+    /**
+     * The project set in the main tab.
+     */
+    private var IProject project
     
     /** 
      * {@inheritDoc}
@@ -74,7 +82,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
      */
     private def Text createCommandComponent(Composite parent, String title) {
         val group = SWTFactory.createGroup(parent, title, 1, 2, GridData.FILL_HORIZONTAL)
-        val comp = SWTFactory.createComposite(group, parent.getFont(), 5, 3, GridData.FILL_BOTH, 0, 0)
+        val comp = SWTFactory.createComposite(group, parent.getFont(), 1, 3, GridData.FILL_BOTH, 0, 0)
 
         // Text
         val Text text = SWTFactory.createSingleText(comp, 4)
@@ -84,8 +92,33 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
             }
         })
         
-        // Button
-        val variables = createPushButton(comp, "Variables...", null);
+        // Buttons
+        val bcomp = SWTFactory.createComposite(comp, parent.getFont(), 2, 3, GridData.HORIZONTAL_ALIGN_END, 0, 0)
+        
+        // Browse
+        val browse = createPushButton(bcomp, "Browse Project...", null);
+        browse.addSelectionListener(new SelectionListener() {
+            
+            override void widgetSelected(SelectionEvent e) {
+                if(project != null){
+                    val dialog = new ResourceSelectionDialog(shell, project, "Select a file in the project.")
+                    dialog.open()
+
+                    // Get results.
+                    val results = dialog.result
+                    if (results != null && !results.isEmpty) {
+                        val resource = results.get(0) as IResource    
+                        text.insert('"'+LaunchConfiguration.LAUNCHED_PROJECT_PLACEHOLDER+"/"+resource.projectRelativePath.toOSString+'"')
+                    }    
+                }
+            }
+
+            override void widgetDefaultSelected(SelectionEvent e) {
+            }
+        });
+        
+        // Variables
+        val variables = createPushButton(bcomp, "Variables...", null);
         variables.addSelectionListener(new SelectionListener() {
             
             override void widgetSelected(SelectionEvent e) {
@@ -104,6 +137,19 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         return text
     }
 
+    private def updateProjectReference(ILaunchConfigurationWorkingCopy configuration){
+        val projectName = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
+        project= LaunchConfiguration.findProject(projectName)
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override activated(ILaunchConfigurationWorkingCopy workingCopy) {
+        super.activated(workingCopy)
+        updateProjectReference(workingCopy)        
+    }
+    
     /** 
      * {@inheritDoc}
      */
