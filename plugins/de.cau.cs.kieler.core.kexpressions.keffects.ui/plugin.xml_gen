@@ -9,7 +9,7 @@
             class="de.cau.cs.kieler.core.kexpressions.keffects.ui.KEffectsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
-            extensions="keffect"
+            extensions="keffects"
             id="de.cau.cs.kieler.core.kexpressions.keffects.KEffects"
             name="KEffects Editor">
         </editor>
@@ -213,13 +213,13 @@
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
 			class="de.cau.cs.kieler.core.kexpressions.keffects.ui.KEffectsExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-			type="keffect">
+			type="keffects">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
             class="de.cau.cs.kieler.core.kexpressions.keffects.ui.KEffectsExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
-            uriExtension="keffect">
+            uriExtension="keffects">
         </resourceServiceProvider>
     </extension>
 

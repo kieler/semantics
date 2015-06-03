@@ -6,6 +6,7 @@ import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
 import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 
+// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
 
 Effect returns keffects::Effect: 
 	Emission | Assignment | TextEffect | FunctionCallEffect;

@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.xtext.ui,
  de.cau.cs.kieler.core.kexpressions.keffects,
  de.cau.cs.kieler.core.annotations.text,
  de.cau.cs.kieler.core.kexpressions,
- de.cau.cs.kieler.core.kexpressions.ui
+ de.cau.cs.kieler.core.kexpressions.ui,
+ de.cau.cs.kieler.core.annotations.text.ui
 Export-Package: de.cau.cs.kieler.core.kexpressions.keffects.ui,
  de.cau.cs.kieler.core.kexpressions.keffects.ui.contentassist,
  de.cau.cs.kieler.core.kexpressions.keffects.ui.contentassist.antlr,

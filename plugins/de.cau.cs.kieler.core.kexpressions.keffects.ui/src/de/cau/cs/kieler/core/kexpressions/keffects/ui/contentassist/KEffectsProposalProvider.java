@@ -6,6 +6,6 @@ package de.cau.cs.kieler.core.kexpressions.keffects.ui.contentassist;
 /**
  * see http://www.eclipse.org/Xtext/documentation.html#contentAssist on how to customize content assistant
  */
-public class KEffectsProposalProvider extends de.cau.cs.kieler.core.kexpressions.keffects.ui.contentassist.AbstractKEffectsProposalProvider {
+public class KEffectsProposalProvider extends AbstractKEffectsProposalProvider {
 
 }

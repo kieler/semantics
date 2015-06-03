@@ -5,7 +5,7 @@ import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
 var grammarURI = "classpath:/de/cau/cs/kieler/core/kexpressions/keffects/KEffects.xtext"
-var file.extensions = "keffect"
+var file.extensions = "keffects"
 var projectName = "de.cau.cs.kieler.core.kexpressions.keffects"
 var runtimeProject = "../${projectName}"
 

@@ -27,6 +27,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTextEffectParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cFunctionCallEffectParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
+		//// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
 		//Effect returns keffects::Effect:
 		//	Emission | Assignment | TextEffect | FunctionCallEffect;
 		public ParserRule getRule() { return rule; }
@@ -315,6 +316,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
+	//// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
 	//Effect returns keffects::Effect:
 	//	Emission | Assignment | TextEffect | FunctionCallEffect;
 	public EffectElements getEffectAccess() {
@@ -840,6 +842,16 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getValueTypeRule() {
 		return getValueTypeAccess().getRule();
+	}
+
+	//enum HostType returns ValueType:
+	//	HOST="host";
+	public KExpressionsGrammarAccess.HostTypeElements getHostTypeAccess() {
+		return gaKExpressions.getHostTypeAccess();
+	}
+	
+	public EnumRule getHostTypeRule() {
+		return getHostTypeAccess().getRule();
 	}
 
 	//enum CombineOperator:
