@@ -78,7 +78,8 @@ class SCGDepExtension {
     val HashSet<Pair<EObject, EObject>> cache = newHashSet;
 
     def addSCGDependcyEdges(KNode rootNode, State scc, SourceModelTrackingAdapter tracking) {
-            val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID, scc);
+            //TODO This transformation selection should be sensetive to the user selection in KiCoSelectionView regarding its editor
+            val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID+",*T_ABORT,*T_scg.basicblock.sc", scc);
             context.setProperty(Tracing.ACTIVE_TRACING, true);
             context.advancedSelect = true;
             val result = KielerCompiler.compile(context);
