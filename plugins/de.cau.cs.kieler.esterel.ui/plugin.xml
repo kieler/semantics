@@ -186,7 +186,7 @@
             editor="de.cau.cs.kieler.esterel.Esterel"
             features="scl.scg, scl.basic, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, codegeneration, s, s.target"
             label="Esterel-SCL-Compilation"
-            preferred="s.c, scl.basic"
+            preferred="s.c, scl.scg"
             priority="100">
       </editor>
    </extension>
