@@ -312,9 +312,9 @@
           point="de.cau.cs.kieler.kico.ui.transformation">
        <editor
              editor="de.cau.cs.kieler.scl.SCL"
-             features="scg, scl.scg, codegeneration, s, s.target"
+             features="scg, codegeneration, s, s.target"
              label="Netlist Compilation (SCL)"
-             preferred="s.c, scl.basic"
+             preferred="s.c, scl.scg"
              priority="100">
        </editor>
     </extension>
