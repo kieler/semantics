@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.freemarker
+package org.freemarker
 
 import freemarker.cache.FileTemplateLoader
 import freemarker.cache.MultiTemplateLoader
