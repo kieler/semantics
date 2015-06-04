@@ -4,7 +4,8 @@ package de.cau.cs.kieler.core.kexpressions.text.kext.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 
-import de.cau.cs.kieler.core.kexpressions.text.kext.Assignment;
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 
@@ -30,7 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextImpl#getDeclarations <em>Declarations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextImpl#getAssignments <em>Assignments</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextImpl#getEffects <em>Effects</em>}</li>
  * </ul>
  * </p>
  *
@@ -49,14 +50,14 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
   protected EList<Declaration> declarations;
 
   /**
-   * The cached value of the '{@link #getAssignments() <em>Assignments</em>}' containment reference list.
+   * The cached value of the '{@link #getEffects() <em>Effects</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getAssignments()
+   * @see #getEffects()
    * @generated
    * @ordered
    */
-  protected EList<Assignment> assignments;
+  protected EList<Effect> effects;
 
   /**
    * <!-- begin-user-doc -->
@@ -98,13 +99,13 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Assignment> getAssignments()
+  public EList<Effect> getEffects()
   {
-    if (assignments == null)
+    if (effects == null)
     {
-      assignments = new EObjectContainmentEList<Assignment>(Assignment.class, this, KextPackage.KEXT__ASSIGNMENTS);
+      effects = new EObjectContainmentEList<Effect>(Effect.class, this, KextPackage.KEXT__EFFECTS);
     }
-    return assignments;
+    return effects;
   }
 
   /**
@@ -119,8 +120,8 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
     {
       case KextPackage.KEXT__DECLARATIONS:
         return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
-      case KextPackage.KEXT__ASSIGNMENTS:
-        return ((InternalEList<?>)getAssignments()).basicRemove(otherEnd, msgs);
+      case KextPackage.KEXT__EFFECTS:
+        return ((InternalEList<?>)getEffects()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -137,8 +138,8 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
     {
       case KextPackage.KEXT__DECLARATIONS:
         return getDeclarations();
-      case KextPackage.KEXT__ASSIGNMENTS:
-        return getAssignments();
+      case KextPackage.KEXT__EFFECTS:
+        return getEffects();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -158,9 +159,9 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
         getDeclarations().clear();
         getDeclarations().addAll((Collection<? extends Declaration>)newValue);
         return;
-      case KextPackage.KEXT__ASSIGNMENTS:
-        getAssignments().clear();
-        getAssignments().addAll((Collection<? extends Assignment>)newValue);
+      case KextPackage.KEXT__EFFECTS:
+        getEffects().clear();
+        getEffects().addAll((Collection<? extends Effect>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -179,8 +180,8 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
       case KextPackage.KEXT__DECLARATIONS:
         getDeclarations().clear();
         return;
-      case KextPackage.KEXT__ASSIGNMENTS:
-        getAssignments().clear();
+      case KextPackage.KEXT__EFFECTS:
+        getEffects().clear();
         return;
     }
     super.eUnset(featureID);
@@ -198,8 +199,8 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
     {
       case KextPackage.KEXT__DECLARATIONS:
         return declarations != null && !declarations.isEmpty();
-      case KextPackage.KEXT__ASSIGNMENTS:
-        return assignments != null && !assignments.isEmpty();
+      case KextPackage.KEXT__EFFECTS:
+        return effects != null && !effects.isEmpty();
     }
     return super.eIsSet(featureID);
   }

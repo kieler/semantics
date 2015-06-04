@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text.kext;
 
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -75,13 +77,13 @@ public interface KextPackage extends EPackage
   int KEXT__DECLARATIONS = 0;
 
   /**
-   * The feature id for the '<em><b>Assignments</b></em>' containment reference list.
+   * The feature id for the '<em><b>Effects</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int KEXT__ASSIGNMENTS = 1;
+  int KEXT__EFFECTS = 1;
 
   /**
    * The number of structural features of the '<em>Kext</em>' class.
@@ -93,41 +95,50 @@ public interface KextPackage extends EPackage
   int KEXT_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.AssignmentImpl <em>Assignment</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.StringAnnotationImpl <em>String Annotation</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.AssignmentImpl
-   * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getAssignment()
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.StringAnnotationImpl
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getStringAnnotation()
    * @generated
    */
-  int ASSIGNMENT = 1;
+  int STRING_ANNOTATION = 1;
 
   /**
-   * The feature id for the '<em><b>Valued Object</b></em>' reference.
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT__VALUED_OBJECT = 0;
+  int STRING_ANNOTATION__ANNOTATIONS = AnnotationsPackage.STRING_ANNOTATION__ANNOTATIONS;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT__EXPRESSION = 1;
+  int STRING_ANNOTATION__NAME = AnnotationsPackage.STRING_ANNOTATION__NAME;
 
   /**
-   * The number of structural features of the '<em>Assignment</em>' class.
+   * The feature id for the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT_FEATURE_COUNT = 2;
+  int STRING_ANNOTATION__VALUE = AnnotationsPackage.STRING_ANNOTATION__VALUE;
+
+  /**
+   * The number of structural features of the '<em>String Annotation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRING_ANNOTATION_FEATURE_COUNT = AnnotationsPackage.STRING_ANNOTATION_FEATURE_COUNT + 0;
 
 
   /**
@@ -152,47 +163,25 @@ public interface KextPackage extends EPackage
   EReference getKext_Declarations();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getAssignments <em>Assignments</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getEffects <em>Effects</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Assignments</em>'.
-   * @see de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getAssignments()
+   * @return the meta object for the containment reference list '<em>Effects</em>'.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getEffects()
    * @see #getKext()
    * @generated
    */
-  EReference getKext_Assignments();
+  EReference getKext_Effects();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Assignment <em>Assignment</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.StringAnnotation <em>String Annotation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Assignment</em>'.
-   * @see de.cau.cs.kieler.core.kexpressions.text.kext.Assignment
+   * @return the meta object for class '<em>String Annotation</em>'.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.StringAnnotation
    * @generated
    */
-  EClass getAssignment();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Assignment#getValuedObject <em>Valued Object</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Valued Object</em>'.
-   * @see de.cau.cs.kieler.core.kexpressions.text.kext.Assignment#getValuedObject()
-   * @see #getAssignment()
-   * @generated
-   */
-  EReference getAssignment_ValuedObject();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Assignment#getExpression <em>Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expression</em>'.
-   * @see de.cau.cs.kieler.core.kexpressions.text.kext.Assignment#getExpression()
-   * @see #getAssignment()
-   * @generated
-   */
-  EReference getAssignment_Expression();
+  EClass getStringAnnotation();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -236,38 +225,22 @@ public interface KextPackage extends EPackage
     EReference KEXT__DECLARATIONS = eINSTANCE.getKext_Declarations();
 
     /**
-     * The meta object literal for the '<em><b>Assignments</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Effects</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference KEXT__ASSIGNMENTS = eINSTANCE.getKext_Assignments();
+    EReference KEXT__EFFECTS = eINSTANCE.getKext_Effects();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.AssignmentImpl <em>Assignment</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.StringAnnotationImpl <em>String Annotation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.AssignmentImpl
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getAssignment()
+     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.StringAnnotationImpl
+     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getStringAnnotation()
      * @generated
      */
-    EClass ASSIGNMENT = eINSTANCE.getAssignment();
-
-    /**
-     * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ASSIGNMENT__VALUED_OBJECT = eINSTANCE.getAssignment_ValuedObject();
-
-    /**
-     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ASSIGNMENT__EXPRESSION = eINSTANCE.getAssignment_Expression();
+    EClass STRING_ANNOTATION = eINSTANCE.getStringAnnotation();
 
   }
 

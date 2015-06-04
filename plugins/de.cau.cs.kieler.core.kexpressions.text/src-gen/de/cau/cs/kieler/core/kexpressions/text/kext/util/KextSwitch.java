@@ -2,6 +2,10 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text.kext.util;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.core.annotations.NamedObject;
+
 import de.cau.cs.kieler.core.kexpressions.text.kext.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -79,10 +83,14 @@ public class KextSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case KextPackage.ASSIGNMENT:
+      case KextPackage.STRING_ANNOTATION:
       {
-        Assignment assignment = (Assignment)theEObject;
-        T result = caseAssignment(assignment);
+        StringAnnotation stringAnnotation = (StringAnnotation)theEObject;
+        T result = caseStringAnnotation(stringAnnotation);
+        if (result == null) result = caseAnnotations_StringAnnotation(stringAnnotation);
+        if (result == null) result = caseAnnotation(stringAnnotation);
+        if (result == null) result = caseNamedObject(stringAnnotation);
+        if (result == null) result = caseAnnotatable(stringAnnotation);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -107,17 +115,81 @@ public class KextSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>String Annotation</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
+   * @return the result of interpreting the object as an instance of '<em>String Annotation</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseAssignment(Assignment object)
+  public T caseStringAnnotation(StringAnnotation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Annotatable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAnnotatable(Annotatable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Named Object</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Named Object</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNamedObject(NamedObject object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Annotation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Annotation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAnnotation(Annotation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>String Annotation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>String Annotation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAnnotations_StringAnnotation(de.cau.cs.kieler.core.annotations.StringAnnotation object)
   {
     return null;
   }

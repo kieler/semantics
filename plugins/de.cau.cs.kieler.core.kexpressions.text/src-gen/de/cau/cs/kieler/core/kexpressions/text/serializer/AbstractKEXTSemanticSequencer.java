@@ -22,24 +22,25 @@ import de.cau.cs.kieler.core.kexpressions.StringValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.core.kexpressions.serializer.KExpressionsSemanticSequencer;
-import de.cau.cs.kieler.core.kexpressions.text.kext.Assignment;
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission;
+import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
+import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect;
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.core.kexpressions.keffects.serializer.KEffectsSemanticSequencer;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 import de.cau.cs.kieler.core.kexpressions.text.services.KEXTGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
 import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
 import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
-import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEObjectProvider;
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
-public abstract class AbstractKEXTSemanticSequencer extends KExpressionsSemanticSequencer {
+public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequencer {
 
 	@Inject
 	private KEXTGrammarAccess grammarAccess;
@@ -85,16 +86,9 @@ public abstract class AbstractKEXTSemanticSequencer extends KExpressionsSemantic
 				else break;
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getCommentAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
-					sequence_Annotation_CommentAnnotation_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getCommentAnnotationRule()) {
 					sequence_CommentAnnotation(context, (StringAnnotation) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getKeyStringValueAnnotationRule()) {
-					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else break;
@@ -103,6 +97,36 @@ public abstract class AbstractKEXTSemanticSequencer extends KExpressionsSemantic
 				   context == grammarAccess.getTypedKeyStringValueAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
+			}
+		else if(semanticObject.eClass().getEPackage() == KEffectsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case KEffectsPackage.ASSIGNMENT:
+				if(context == grammarAccess.getAssignmentRule() ||
+				   context == grammarAccess.getEffectRule()) {
+					sequence_Assignment(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else break;
+			case KEffectsPackage.EMISSION:
+				if(context == grammarAccess.getEffectRule() ||
+				   context == grammarAccess.getEmissionRule()) {
+					sequence_Emission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else break;
+			case KEffectsPackage.FUNCTION_CALL_EFFECT:
+				if(context == grammarAccess.getEffectRule() ||
+				   context == grammarAccess.getFunctionCallEffectRule()) {
+					sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
+					return; 
+				}
+				else break;
+			case KEffectsPackage.HOSTCODE_EFFECT:
+				if(context == grammarAccess.getEffectRule() ||
+				   context == grammarAccess.getTextEffectRule()) {
+					sequence_TextEffect(context, (HostcodeEffect) semanticObject); 
 					return; 
 				}
 				else break;
@@ -412,40 +436,23 @@ public abstract class AbstractKEXTSemanticSequencer extends KExpressionsSemantic
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == KextPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case KextPackage.ASSIGNMENT:
-				if(context == grammarAccess.getAssignmentRule()) {
-					sequence_Assignment(context, (Assignment) semanticObject); 
-					return; 
-				}
-				else break;
 			case KextPackage.KEXT:
 				if(context == grammarAccess.getKextRule()) {
 					sequence_Kext(context, (Kext) semanticObject); 
 					return; 
 				}
 				else break;
+			case KextPackage.STRING_ANNOTATION:
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getKeyStringValueAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
+					sequence_KeyStringValueAnnotation(context, (de.cau.cs.kieler.core.kexpressions.text.kext.StringAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
-	
-	/**
-	 * Constraint:
-	 *     (valuedObject=[ValuedObject|ID] expression=Expression)
-	 */
-	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, KextPackage.Literals.ASSIGNMENT__VALUED_OBJECT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KextPackage.Literals.ASSIGNMENT__VALUED_OBJECT));
-			if(transientValues.isValueTransient(semanticObject, KextPackage.Literals.ASSIGNMENT__EXPRESSION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KextPackage.Literals.ASSIGNMENT__EXPRESSION));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1(), semanticObject.getValuedObject());
-		feeder.accept(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_2_0(), semanticObject.getExpression());
-		feeder.finish();
-	}
-	
 	
 	/**
 	 * Constraint:
@@ -468,9 +475,18 @@ public abstract class AbstractKEXTSemanticSequencer extends KExpressionsSemantic
 	
 	/**
 	 * Constraint:
-	 *     (declarations+=Declaration* assignments+=Assignment*)
+	 *     (declarations+=Declaration* effects+=Effect*)
 	 */
 	protected void sequence_Kext(EObject context, Kext semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ExtendedID value=STRING annotations+=Annotation*)
+	 */
+	protected void sequence_KeyStringValueAnnotation(EObject context, de.cau.cs.kieler.core.kexpressions.text.kext.StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

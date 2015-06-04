@@ -2,12 +2,16 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text.kext.impl;
 
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
-import de.cau.cs.kieler.core.kexpressions.text.kext.Assignment;
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextFactory;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
+import de.cau.cs.kieler.core.kexpressions.text.kext.StringAnnotation;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -35,7 +39,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass assignmentEClass = null;
+  private EClass stringAnnotationEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -86,7 +90,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
     isInited = true;
 
     // Initialize simple dependencies
-    KExpressionsPackage.eINSTANCE.eClass();
+    KEffectsPackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theKextPackage.createPackageContents();
@@ -128,7 +132,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getKext_Assignments()
+  public EReference getKext_Effects()
   {
     return (EReference)kextEClass.getEStructuralFeatures().get(1);
   }
@@ -138,29 +142,9 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getAssignment()
+  public EClass getStringAnnotation()
   {
-    return assignmentEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAssignment_ValuedObject()
-  {
-    return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAssignment_Expression()
-  {
-    return (EReference)assignmentEClass.getEStructuralFeatures().get(1);
+    return stringAnnotationEClass;
   }
 
   /**
@@ -195,11 +179,9 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
     // Create classes and their features
     kextEClass = createEClass(KEXT);
     createEReference(kextEClass, KEXT__DECLARATIONS);
-    createEReference(kextEClass, KEXT__ASSIGNMENTS);
+    createEReference(kextEClass, KEXT__EFFECTS);
 
-    assignmentEClass = createEClass(ASSIGNMENT);
-    createEReference(assignmentEClass, ASSIGNMENT__VALUED_OBJECT);
-    createEReference(assignmentEClass, ASSIGNMENT__EXPRESSION);
+    stringAnnotationEClass = createEClass(STRING_ANNOTATION);
   }
 
   /**
@@ -228,21 +210,22 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
 
     // Obtain other dependent packages
     KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
+    KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
+    AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
 
     // Create type parameters
 
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    stringAnnotationEClass.getESuperTypes().add(theAnnotationsPackage.getStringAnnotation());
 
     // Initialize classes and features; add operations and parameters
     initEClass(kextEClass, Kext.class, "Kext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getKext_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getKext_Assignments(), this.getAssignment(), null, "assignments", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getKext_Effects(), theKEffectsPackage.getEffect(), null, "effects", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAssignment_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAssignment_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(stringAnnotationEClass, StringAnnotation.class, "StringAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);
