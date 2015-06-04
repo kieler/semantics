@@ -85,7 +85,6 @@ public class SCChartsFeature {
 
     public final static String SURFACEDEPTH_ID = "SURFACEDEPTH";
     public final static String SURFACEDEPTH_NAME = "Suface/Depth";
-    
 
     public final static String EXPOSELOCALVALUEDOBJECT_ID = "EXPOSELOCALVALUEDOBJECT";
     public final static String EXPOSELOCALVALUEDOBJECT_NAME = "Expore Local ValuedObject";
@@ -95,4 +94,7 @@ public class SCChartsFeature {
 
     public final static String TERMINATION_ID = "TERMINATION";
     public final static String TERMINATION_NAME = "Termination";
+    
+    public final static String SIMULATIONVISUALIZATION_ID = "SIMULATIONVISUALIZATION";
+    public final static String SIMULATIONVISUALIZATION_NAME = "Simulation Visualization";
 }
