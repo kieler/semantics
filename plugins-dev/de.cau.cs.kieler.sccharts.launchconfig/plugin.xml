@@ -25,5 +25,32 @@
          </launchMode>
       </launchConfigurationTabGroup>
    </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            class="de.cau.cs.kieler.sccharts.launchconfig.SCTLaunchShortcut"
+            id="de.cau.cs.kieler.sccharts.launchconfig.SCTLaunchShortcut"
+            label="SCT Application"
+            modes="run, debug">
+         <contextualLaunch>
+            <enablement>
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <test
+                              forcePluginActivation="true"
+                              property="org.eclipse.debug.ui.matchesPattern"
+                              value="*.sct"/>
+                     </or>
+                  </iterate>
+               </with>
+            </enablement>
+         </contextualLaunch>
+      </shortcut>
+   </extension>
 
 </plugin>

@@ -241,10 +241,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         else
             projectRelativeRelevantPath = projectRelativePath
             
-        println(projectRelativePath)
-        println(projectRelativePath.startsWith("src/"))
-        println(projectRelativeRelevantPath)
-            
         // Remove extension from path 
         val index = projectRelativeRelevantPath.lastIndexOf(".")
         if (index > -1) {
@@ -273,7 +269,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * Saves the result of an SCT compilation to the fully qualified target path.
      */
     private def saveCompilationResult(String result, String targetPath) {
-        println(targetPath)
         // Create directory for the output if none yet.
         createDirectories(targetPath)
 

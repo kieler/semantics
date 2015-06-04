@@ -108,7 +108,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                     val results = dialog.result
                     if (results != null && !results.isEmpty) {
                         val resource = results.get(0) as IResource    
-                        text.insert('"'+LaunchConfiguration.LAUNCHED_PROJECT_PLACEHOLDER+"/"+resource.projectRelativePath.toOSString+'"')
+                        text.insert('"'+resource.projectRelativePath.toOSString+'"') 
                     }    
                 }
             }

@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunch
+import java.io.File
 
 /**
  * @author aas
@@ -67,7 +68,9 @@ class CommandExecutor {
             val commandWithParameters = splitStringOnWhitespace(command.fullCommand)
 
             // Run process
-            val p = new ProcessBuilder(commandWithParameters).start()
+            val pBuilder = new ProcessBuilder(commandWithParameters)
+            pBuilder.directory(new File(project.location.toOSString))
+            val p = pBuilder.start()
             DebugPlugin.newProcess(launch, p, command.label)
 
             // Wait until the process finished
