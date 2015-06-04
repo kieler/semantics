@@ -83,12 +83,14 @@ class SuperfluousForkRemover extends AbstractOptimizer {
                 }
             }
 
-            //KITT redirect tracing relations
-            forkPreviousControlflows.trace(entry.next)
-            forkPreviousControlflows.trace(fork.next)
-            exitPreviousControlflows.trace(fork.join.next, entry.exit.next)
-            ancestorEntry.trace(entry, fork)
-            ancestorEntry.exit.trace(entry.exit, fork.join)
+            if(tracingActive) {
+                //KITT redirect tracing relations
+                forkPreviousControlflows.trace(entry.next)
+                forkPreviousControlflows.trace(fork.next)
+                exitPreviousControlflows.trace(fork.join.next, entry.exit.next)
+                ancestorEntry.trace(entry, fork)
+                ancestorEntry.exit.trace(entry.exit, fork.join)
+            }
 
             // Add superfluous control flows to the remove list.
             removeControlFlows += fork.join.next
