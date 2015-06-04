@@ -213,7 +213,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueSTRINGTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		private final RuleCall cValueEStringParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -226,10 +226,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		//// Overriding KeyStringValueAnnotation avoids the error message during grammar generation. 
 		//// e.g.: @layouter dot;   
 		//KeyStringValueAnnotation returns StringAnnotation:
-		//	"@" name=ExtendedID value=STRING ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID value=STRING ("(" annotations+=Annotation* ")")?
+		//"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -241,11 +241,11 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 
-		//value=STRING
+		//value=EString
 		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 
-		//STRING
-		public RuleCall getValueSTRINGTerminalRuleCall_2_0() { return cValueSTRINGTerminalRuleCall_2_0; }
+		//EString
+		public RuleCall getValueEStringParserRuleCall_2_0() { return cValueEStringParserRuleCall_2_0; }
 
 		//("(" annotations+=Annotation* ")")?
 		public Group getGroup_3() { return cGroup_3; }
@@ -262,12 +262,45 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
 	}
+
+	public class AnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Annotation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cTagAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cKeyStringValueAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cTypedKeyStringValueAnnotationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		////    | KeyBooleanValueAnnotation
+		////    | KeyIntValueAnnotation
+		////    | KeyFloatValueAnnotation
+		//Annotation returns annotations::Annotation: //    CommentAnnotation
+		////    | 
+		//	TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
+		public ParserRule getRule() { return rule; }
+
+		////    CommentAnnotation
+		////    | 
+		//TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		////    CommentAnnotation
+		////    | 
+		//TagAnnotation
+		public RuleCall getTagAnnotationParserRuleCall_0() { return cTagAnnotationParserRuleCall_0; }
+
+		//KeyStringValueAnnotation
+		public RuleCall getKeyStringValueAnnotationParserRuleCall_1() { return cKeyStringValueAnnotationParserRuleCall_1; }
+
+		//TypedKeyStringValueAnnotation
+		public RuleCall getTypedKeyStringValueAnnotationParserRuleCall_2() { return cTypedKeyStringValueAnnotationParserRuleCall_2; }
+	}
 	
 	
 	private final KextElements pKext;
 	private final DeclarationElements pDeclaration;
 	private final ValuedObjectElements pValuedObject;
 	private final KeyStringValueAnnotationElements pKeyStringValueAnnotation;
+	private final AnnotationElements pAnnotation;
 	
 	private final Grammar grammar;
 
@@ -282,6 +315,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		this.pDeclaration = new DeclarationElements();
 		this.pValuedObject = new ValuedObjectElements();
 		this.pKeyStringValueAnnotation = new KeyStringValueAnnotationElements();
+		this.pAnnotation = new AnnotationElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -348,13 +382,27 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	//// Overriding KeyStringValueAnnotation avoids the error message during grammar generation. 
 	//// e.g.: @layouter dot;   
 	//KeyStringValueAnnotation returns StringAnnotation:
-	//	"@" name=ExtendedID value=STRING ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
 	public KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return pKeyStringValueAnnotation;
 	}
 	
 	public ParserRule getKeyStringValueAnnotationRule() {
 		return getKeyStringValueAnnotationAccess().getRule();
+	}
+
+	////    | KeyBooleanValueAnnotation
+	////    | KeyIntValueAnnotation
+	////    | KeyFloatValueAnnotation
+	//Annotation returns annotations::Annotation: //    CommentAnnotation
+	////    | 
+	//	TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
+	public AnnotationElements getAnnotationAccess() {
+		return pAnnotation;
+	}
+	
+	public ParserRule getAnnotationRule() {
+		return getAnnotationAccess().getRule();
 	}
 
 	//// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
@@ -911,22 +959,6 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	public TerminalRule getHOSTCODERule() {
 		return gaKEffects.getHOSTCODERule();
 	} 
-
-	//// --------------------------
-	// //
-	// //   ANNOTATIONS
-	// //
-	// // --------------------------
-	// Annotation:
-	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
-	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
-		return gaKEffects.getAnnotationAccess();
-	}
-	
-	public ParserRule getAnnotationRule() {
-		return getAnnotationAccess().getRule();
-	}
 
 	//ValuedAnnotation returns Annotation:
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |

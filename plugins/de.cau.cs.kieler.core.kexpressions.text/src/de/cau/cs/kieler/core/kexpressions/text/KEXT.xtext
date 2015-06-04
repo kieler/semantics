@@ -16,7 +16,7 @@ Kext:
     (declarations += Declaration)*
     (effects += Effect)*
 ;
-
+    
 Declaration returns kexpressions::Declaration:
     (annotations+=Annotation)*
 	(const?='const')?
@@ -42,7 +42,20 @@ ValuedObject returns kexpressions::ValuedObject:
 
 // e.g.: @layouter dot;   
 KeyStringValueAnnotation returns StringAnnotation:
-    '@' name=ExtendedID value=STRING
+    '@' name=ExtendedID value=EString
     ('('
         (annotations+=Annotation)*
     ')')?;
+
+Annotation returns annotations::Annotation:
+//    CommentAnnotation
+//    | 
+    TagAnnotation
+    | KeyStringValueAnnotation
+    | TypedKeyStringValueAnnotation
+//    | KeyBooleanValueAnnotation
+//    | KeyIntValueAnnotation
+//    | KeyFloatValueAnnotation
+    ;
+    
+    

@@ -17,9 +17,9 @@ public class AbstractKEXTJavaValidator extends de.cau.cs.kieler.core.kexpression
 	    List<EPackage> result = new ArrayList<EPackage>();
 	    result.add(de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage.eINSTANCE);
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kexpressions/0.1.2"));
+	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/keffects/0.1.0"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/emf/2002/Ecore"));
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
 		return result;
 	}
 

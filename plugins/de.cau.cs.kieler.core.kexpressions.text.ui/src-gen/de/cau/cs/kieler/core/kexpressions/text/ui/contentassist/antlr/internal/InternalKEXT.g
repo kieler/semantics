@@ -169,6 +169,34 @@ finally {
 
 
 
+// Entry rule entryRuleAnnotation
+entryRuleAnnotation 
+:
+{ before(grammarAccess.getAnnotationRule()); }
+	 ruleAnnotation
+{ after(grammarAccess.getAnnotationRule()); } 
+	 EOF 
+;
+
+// Rule Annotation
+ruleAnnotation
+    @init {
+		int stackSize = keepStackSize();
+    }
+	:
+(
+{ before(grammarAccess.getAnnotationAccess().getAlternatives()); }
+(rule__Annotation__Alternatives)
+{ after(grammarAccess.getAnnotationAccess().getAlternatives()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
 // Entry rule entryRuleEffect
 entryRuleEffect 
 :
@@ -1069,34 +1097,6 @@ finally {
 
 
 
-// Entry rule entryRuleAnnotation
-entryRuleAnnotation 
-:
-{ before(grammarAccess.getAnnotationRule()); }
-	 ruleAnnotation
-{ after(grammarAccess.getAnnotationRule()); } 
-	 EOF 
-;
-
-// Rule Annotation
-ruleAnnotation
-    @init {
-		int stackSize = keepStackSize();
-    }
-	:
-(
-{ before(grammarAccess.getAnnotationAccess().getAlternatives()); }
-(rule__Annotation__Alternatives)
-{ after(grammarAccess.getAnnotationAccess().getAlternatives()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
 
 
 // Entry rule entryRuleCommentAnnotation
@@ -1681,6 +1681,34 @@ finally {
 
 
 
+rule__Annotation__Alternatives
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_0()); }
+	ruleTagAnnotation
+{ after(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_0()); }
+)
+
+    |(
+{ before(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1()); }
+	ruleKeyStringValueAnnotation
+{ after(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1()); }
+)
+
+    |(
+{ before(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2()); }
+	ruleTypedKeyStringValueAnnotation
+{ after(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__Effect__Alternatives
     @init {
 		int stackSize = keepStackSize();
@@ -1975,58 +2003,6 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-
-rule__Annotation__Alternatives
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0()); }
-	ruleCommentAnnotation
-{ after(grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0()); }
-)
-
-    |(
-{ before(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_1()); }
-	ruleTagAnnotation
-{ after(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_1()); }
-)
-
-    |(
-{ before(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2()); }
-	ruleKeyStringValueAnnotation
-{ after(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2()); }
-)
-
-    |(
-{ before(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); }
-	ruleTypedKeyStringValueAnnotation
-{ after(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); }
-)
-
-    |(
-{ before(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_4()); }
-	ruleKeyBooleanValueAnnotation
-{ after(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_4()); }
-)
-
-    |(
-{ before(grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_5()); }
-	ruleKeyIntValueAnnotation
-{ after(grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_5()); }
-)
-
-    |(
-{ before(grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_6()); }
-	ruleKeyFloatValueAnnotation
-{ after(grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_6()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
 
 
 rule__EString__Alternatives
@@ -8312,8 +8288,8 @@ rule__KeyStringValueAnnotation__ValueAssignment_2
     }
 :
 (
-{ before(grammarAccess.getKeyStringValueAnnotationAccess().getValueSTRINGTerminalRuleCall_2_0()); }
-	RULE_STRING{ after(grammarAccess.getKeyStringValueAnnotationAccess().getValueSTRINGTerminalRuleCall_2_0()); }
+{ before(grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()); }
+	ruleEString{ after(grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()); }
 )
 
 ;
