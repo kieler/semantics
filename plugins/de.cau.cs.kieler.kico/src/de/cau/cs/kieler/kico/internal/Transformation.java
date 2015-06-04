@@ -220,7 +220,7 @@ public class Transformation implements ITransformation {
                     if (feature.isGroup()) {
                         // add all features of this group!
                         for (Feature innerFeature : feature.asGroup().getResolvedFeatures()) {
-                            cachedNotHandlesFeatures.add(innerFeature);
+                            cachedProducesFeatures.add(innerFeature);
                         }
                     } else {
                         cachedProducesFeatures.add(feature);
