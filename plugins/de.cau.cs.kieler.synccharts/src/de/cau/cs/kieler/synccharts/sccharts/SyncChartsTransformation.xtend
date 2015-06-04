@@ -279,7 +279,7 @@ class SyncChartsTransformation {
     // Transforming regions
     def dispatch void transform(de.cau.cs.kieler.synccharts.Region syncRegion, de.cau.cs.kieler.sccharts.State state) {
         val parentState = syncRegion.parentState.state
-        val region = parentState.createRegion(syncRegion.id)
+        val region = parentState.createControlflowRegion(syncRegion.id)
         region.map(syncRegion)
         if (syncRegion.label != null) {
             region.setLabel(syncRegion.label)
