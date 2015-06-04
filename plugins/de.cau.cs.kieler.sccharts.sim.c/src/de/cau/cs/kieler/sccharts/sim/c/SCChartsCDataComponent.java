@@ -476,7 +476,14 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             // The following should be a state or an SCG
             EObject stateOrSCG = highLeveleCompilationResult.getEObject();
+            if (!((stateOrSCG instanceof State) || (stateOrSCG instanceof SCGraph))) {
+                // compilation failed
+                throw new KiemInitializationException(
+                        "Error compiling the SCChart (high-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view.",
+                        true, null);
+            }
 
+            
             // String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
             // writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
             // System.out.println(coreSSChartText);
@@ -495,7 +502,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             if (cSCChartCCode == null) {
                 // compilation failed
                 throw new KiemInitializationException(
-                        "Error compiling the SCChart. Try compiling it manually step-by-step using the KiCo compiler selection view.",
+                        "Error compiling the SCChart (low-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view.",
                         true, null);
             }
 
