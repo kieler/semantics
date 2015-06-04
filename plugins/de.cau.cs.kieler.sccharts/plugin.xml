@@ -92,6 +92,9 @@
               class="de.cau.cs.kieler.sccharts.transformations.SimulationVisualization">
         </expansionTransformationClass>
         <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.NoSimulationVisualization">
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Static">
         </expansionTransformationClass>
         <expansionTransformationClass
