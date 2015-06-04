@@ -389,9 +389,8 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             throws KiemInitializationException {
         doModel2ModelTransform(monitor, this.getModelRootElement(),
                 this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
-                        .getValueAsBoolean(),
-                        this.getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
-                                .getValueAsBoolean());
+                        .getValueAsBoolean(), this.getProperties()[KIEM_PROPERTY_BENCHMARK
+                        + KIEM_PROPERTY_DIFF].getValueAsBoolean());
     }
 
     // -------------------------------------------------------------------------
@@ -493,6 +492,12 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             String cSCChartCCode = lowLevelCompilationResult.getString();
             System.out.println("14 " + cSCChartCCode);
+            if (cSCChartCCode == null) {
+                // compilation failed
+                throw new KiemInitializationException(
+                        "Error compiling the SCChart. Try compiling it manually step-by-step using the KiCo compiler selection view.",
+                        true, null);
+            }
 
             // Generate Simulation wrapper C code
             String cSimulation = "";
