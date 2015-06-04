@@ -864,8 +864,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // check if source model is read correctly
             if (sourceModel == null) {
                 currentModel = null;
-                updateDiagram(new KiCoErrorModel("Cannot read model from active Editor!"), true,
-                        activeEditor);
+                updateDiagram(new KiCoMessageModel("No model in active editor!"), true,
+                        activeEditor);//new KiCoErrorModel("Cannot read model from active Editor!")
                 return;
             }
 

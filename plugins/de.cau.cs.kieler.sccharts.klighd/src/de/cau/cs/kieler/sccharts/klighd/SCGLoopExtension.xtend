@@ -42,7 +42,9 @@ class SCGLoopExtension {
     extension KRenderingExtensions
 
     def addSCGLoopHighlighting(KNode rootNode, State scc, SourceModelTrackingAdapter tracking) {
-        val context = new KielerCompilerContext(SCGFeatures.GUARD_ID, scc);
+
+        //TODO This transformation selection should be sensetive to the user selection in KiCoSelectionView regarding its editor
+        val context = new KielerCompilerContext(SCGFeatures.GUARD_ID + ",*T_ABORT,*T_scg.basicblock.sc", scc);
         context.setProperty(Tracing.ACTIVE_TRACING, true);
         context.advancedSelect = true;
         val result = KielerCompiler.compile(context);
@@ -66,8 +68,15 @@ class SCGLoopExtension {
         ];
         if (mapping != null) {
             for (PotentialInstantaneousLoopResult loop : loops) {
+                val criticalSCGEelements = <Object>newArrayList();
+                criticalSCGEelements.addAll(loop.criticalNodes)
                 for (Node node : loop.criticalNodes) {
-                    for (Object source : mapping.get(node)) {
+                    criticalSCGEelements.addAll(node.incoming.filter[
+                        loop.criticalNodes.contains(it.eContainer)
+                    ]);
+                }
+                for (Object crit : criticalSCGEelements) {
+                    for (Object source : mapping.get(crit)) {
                         val elements = newArrayList();
                         elements.addAll(tracking.getTargetElements(source))
                         elements.addAll(equivalenceClasses.getTargets(source).filter(EObject))
