@@ -952,6 +952,7 @@ public abstract class KiemAutomatedJUnitTest {
                 .getDataComponentWrapperList();
         for (DataComponentWrapper dataComponentWrapper : dataComponentWrapperList) {
             String dataComponentId = dataComponentWrapper.getDataComponent().getDataComponentId();
+            System.out.println("Foring " + dataComponentId);
             if (dataComponentId.startsWith(KartConstants.KART_REPLAY_DATACOMPONENT_ID_START)) {
                 return dataComponentWrapper;
             }

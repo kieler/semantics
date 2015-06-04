@@ -43,6 +43,9 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -105,7 +108,9 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     // -------------------------------------------------------------------------
     // -- Globals 
     // -------------------------------------------------------------------------
-        
+    
+    public static val ANNOTATION_DEPENDENCYTRANSFORMATION = "dependencies"
+    
     /** 
      * threadNodeCache caches the entry nodes a specific node belongs to w.r.t. hierarchy
      * The entry node list is mainly used to speed up the efficiency of concurrency tests.
@@ -322,7 +327,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         // Filter all other assignments.
         assignments.forEach[ node |
             if (node != assignment) {
-                var Dependency dependency = null
+                var DataDependency dependency = null
                 // If they write to the same variable...
                 if (node.isSameScalar(assignment)) {
                     // Check absolute / relative writes and add the corresponding dependency.
@@ -348,7 +353,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
                     if (assignment.areConfluent(node)) dependency.confluent = true
                     dependency.target = node;
                     dependency.trace(node);
-                    if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.dependencyExists(dependency)) {
+                    if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.filter(DataDependency).dataDependencyExists(dependency)) {
                         assignment.dependencies.add(dependency);
                         dependency.trace(assignment);
                         dependencyCounter = dependencyCounter + 1
@@ -364,7 +369,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         // Basically, do the same stuff with conditionals as target. 
         // Since conditionals will never write to a variable, it is sufficient to check the reader.
         conditionals.forEach[ node |
-            var Dependency dependency = null
+            var DataDependency dependency = null
             if (node.isReader(assignment)) {
                 if (iAmAbsoluteWriter) dependency = ScgFactory::eINSTANCE.createAbsoluteWrite_Read
                 else dependency = ScgFactory::eINSTANCE.createRelativeWrite_Read    
@@ -373,7 +378,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
                 if (assignment.areConcurrent(node)) dependency.concurrent = true
                 dependency.target = node;
                 dependency.trace(node);
-                if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.dependencyExists(dependency)) {
+                if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.filter(DataDependency).dataDependencyExists(dependency)) {
                     assignment.dependencies.add(dependency);
                     dependency.trace(assignment);
                     dependencyCounter = dependencyCounter + 1
@@ -388,7 +393,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         assignment
     }
     
-    private def boolean dependencyExists(List<Dependency> dependencies, Dependency dependency) {
+    private def boolean dataDependencyExists(Iterable<DataDependency> dependencies, DataDependency dependency) {
         for(d : dependencies) {
             if (
                 d.class == dependency.class &&

@@ -32,31 +32,31 @@ package de.cau.cs.kieler.scg;
  */
 public interface Surface extends Node {
     /**
-     * Returns the value of the '<em><b>Depth</b></em>' reference.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.scg.Depth#getSurface <em>Surface</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Depth</b></em>' reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.scg.Depth#getSurface <em>Surface</em>}'.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Depth</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Depth</em>' reference.
-     * @see #setDepth(Depth)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getSurface_Depth()
-     * @see de.cau.cs.kieler.scg.Depth#getSurface
-     * @model opposite="surface" required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Depth</em>' reference.
+	 * @see #setDepth(Depth)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getSurface_Depth()
+	 * @see de.cau.cs.kieler.scg.Depth#getSurface
+	 * @model opposite="surface" required="true"
+	 * @generated
+	 */
     Depth getDepth();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.Surface#getDepth <em>Depth</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Surface#getDepth <em>Depth</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Depth</em>' reference.
-     * @see #getDepth()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Depth</em>' reference.
+	 * @see #getDepth()
+	 * @generated
+	 */
     void setDepth(Depth value);
 
 } // Surface

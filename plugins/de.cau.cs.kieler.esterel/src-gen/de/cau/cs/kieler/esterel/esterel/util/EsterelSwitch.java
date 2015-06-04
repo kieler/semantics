@@ -681,6 +681,15 @@ public class EsterelSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case EsterelPackage.WEAK_SUSPEND:
+      {
+        WeakSuspend weakSuspend = (WeakSuspend)theEObject;
+        T result = caseWeakSuspend(weakSuspend);
+        if (result == null) result = caseStatementContainer(weakSuspend);
+        if (result == null) result = caseStatement(weakSuspend);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case EsterelPackage.SUSTAIN:
       {
         Sustain sustain = (Sustain)theEObject;
@@ -719,6 +728,20 @@ public class EsterelSwitch<T> extends Switch<T>
         T result = caseLocalVariable(localVariable);
         if (result == null) result = caseStatementContainer(localVariable);
         if (result == null) result = caseStatement(localVariable);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.GOTO:
+      {
+        Goto goto_ = (Goto)theEObject;
+        T result = caseGoto(goto_);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.LABEL:
+      {
+        Label label = (Label)theEObject;
+        T result = caseLabel(label);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -2163,6 +2186,22 @@ public class EsterelSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Weak Suspend</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Weak Suspend</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseWeakSuspend(WeakSuspend object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Sustain</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -2238,6 +2277,38 @@ public class EsterelSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLocalVariable(LocalVariable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Goto</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Goto</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGoto(Goto object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Label</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Label</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLabel(Label object)
   {
     return null;
   }

@@ -35,144 +35,143 @@ import de.cau.cs.kieler.sccharts.SuspendAction;
  */
 public class SuspendActionImpl extends LocalActionImpl implements SuspendAction {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * The default value of the '{@link #isWeak() <em>Weak</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #isWeak() <em>Weak</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isWeak()
-     * @generated
-     * @ordered
-     */
+	 * @see #isWeak()
+	 * @generated
+	 * @ordered
+	 */
     protected static final boolean WEAK_EDEFAULT = false;
-
     /**
-     * The cached value of the '{@link #isWeak() <em>Weak</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #isWeak() <em>Weak</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isWeak()
-     * @generated
-     * @ordered
-     */
+	 * @see #isWeak()
+	 * @generated
+	 * @ordered
+	 */
     protected boolean weak = WEAK_EDEFAULT;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected SuspendActionImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return SCChartsPackage.Literals.SUSPEND_ACTION;
-    }
+		return SCChartsPackage.Literals.SUSPEND_ACTION;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public boolean isWeak() {
-        return weak;
-    }
+		return weak;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setWeak(boolean newWeak) {
-        boolean oldWeak = weak;
-        weak = newWeak;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SUSPEND_ACTION__WEAK, oldWeak, weak));
-    }
+		boolean oldWeak = weak;
+		weak = newWeak;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SUSPEND_ACTION__WEAK, oldWeak, weak));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case SCChartsPackage.SUSPEND_ACTION__WEAK:
-                return isWeak();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case SCChartsPackage.SUSPEND_ACTION__WEAK:
+				return isWeak();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case SCChartsPackage.SUSPEND_ACTION__WEAK:
-                setWeak((Boolean)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case SCChartsPackage.SUSPEND_ACTION__WEAK:
+				setWeak((Boolean)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case SCChartsPackage.SUSPEND_ACTION__WEAK:
-                setWeak(WEAK_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case SCChartsPackage.SUSPEND_ACTION__WEAK:
+				setWeak(WEAK_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case SCChartsPackage.SUSPEND_ACTION__WEAK:
-                return weak != WEAK_EDEFAULT;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case SCChartsPackage.SUSPEND_ACTION__WEAK:
+				return weak != WEAK_EDEFAULT;
+		}
+		return super.eIsSet(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (weak: ");
-        result.append(weak);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (weak: ");
+		result.append(weak);
+		result.append(')');
+		return result.toString();
+	}
 
 } //SuspendActionImpl

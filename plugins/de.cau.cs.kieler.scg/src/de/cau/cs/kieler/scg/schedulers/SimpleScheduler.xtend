@@ -29,6 +29,7 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -109,7 +110,7 @@ abstract class SimpleScheduler extends AbstractScheduler implements Traceable {
                 
         // Basically, perform the same test for dependency. We cannot create a guard expression 
         // if any block containing a dependency is still in our list.
-        for(dependency : schedulingBlock.dependencies) {
+        for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
             if (dependency.concurrent && !dependency.confluent) {
 				val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
     	      	if (!placedBlocks.contains(sBlock)) { return false }
@@ -131,7 +132,7 @@ abstract class SimpleScheduler extends AbstractScheduler implements Traceable {
                    		 sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
                 }
             }
-            for(dependency : schedulingBlock.dependencies) {
+            for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
                 if (dependency.concurrent && !dependency.confluent) {
 					val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
 					if (!topologicalSortVisited.contains(sBlock)) {

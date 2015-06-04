@@ -26,6 +26,7 @@ import java.util.ArrayList
 import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * SCCharts ComplexFinalState Transformation.
@@ -122,7 +123,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
 
             var ArrayList<ValuedObject> termVariables = new ArrayList
 
-            for (region : state.regions) {
+            for (region : state.regions.filter(ControlflowRegion)) {
                 val termVariable = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
                 termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {
@@ -144,7 +145,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
             }
 
             //Add Watcher Region
-            val watcherRegion = state.createRegion(GENERATED_PREFIX + "Watch").uniqueName
+            val watcherRegion = state.createControlflowRegion(GENERATED_PREFIX + "Watch").uniqueName
             val watcherTransition = watcherRegion.createInitialState(GENERATED_PREFIX + "Watch").
                 createImmediateTransitionTo(watcherRegion.createFinalState(GENERATED_PREFIX + "Aborted"))
             watcherTransition.addEffect(abortFlag.assign(TRUE))

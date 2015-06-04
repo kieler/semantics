@@ -1,0 +1,26 @@
+module test_trap15:
+input A;
+input B;
+output C;
+output D;
+
+loop
+  trap T1 in
+    trap T2 in
+      [
+        await A;
+        exit T1
+      ||
+        await B;
+        exit T2
+      ]
+    handle T2 do
+      emit C
+    end trap
+  handle T1 do
+    emit D
+  end trap;
+  pause
+end loop
+
+end module

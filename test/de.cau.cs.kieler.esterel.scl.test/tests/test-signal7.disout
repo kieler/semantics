@@ -1,0 +1,26 @@
+module test_signal7:
+output B : integer;
+output C : integer;
+
+signal A : integer in
+    loop
+      emit C(?A);
+      pause
+    end loop
+  ||
+    var a : integer in
+      a := 0;
+      loop
+        emit A(a);
+        a := a + 1;
+        pause
+      end loop
+    end var
+  ||
+    loop
+      emit B(?A);
+      pause
+    end loop
+end signal
+
+end module

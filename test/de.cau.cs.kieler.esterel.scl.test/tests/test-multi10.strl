@@ -1,0 +1,62 @@
+module stest:
+input A;
+input B;
+input C;
+input D;
+input E;
+input F;
+output X;
+output Y;
+output Z;
+output W;
+output X1;
+output X2;
+output X3;
+output X4;
+output X5;
+output X6;
+output X7;
+output WW;
+
+loop
+  [
+    emit Y;
+    await A;
+    pause;
+    pause;
+    emit X1
+  ||
+    await B;
+    pause;
+    pause;
+    emit X2
+  ||
+    await C;
+    pause;
+    pause;
+    emit X3
+  ||
+    emit Z;
+    pause;
+    [
+      await D;
+      pause;
+      pause;
+      emit X4
+    ||
+      await E;
+      pause;
+      pause;
+      emit X5
+    ||
+      await F;
+      pause;
+      pause;
+      emit X7
+    ];
+    emit X6
+  ];
+  emit X
+end loop
+
+end module

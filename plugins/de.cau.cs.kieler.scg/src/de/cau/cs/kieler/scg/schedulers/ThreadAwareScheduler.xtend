@@ -28,6 +28,7 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.ArrayList
 import java.util.List
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -93,7 +94,7 @@ class ThreadAwareScheduler extends SimpleScheduler {
 		for (sBlock : cluster) {
 			for (nodes : sBlock.nodes) {
 				dependencies = dependencies + 
-					nodes.incoming.filter(typeof(Dependency)).filter[ concurrent == true ].size
+					nodes.incoming.filter(typeof(DataDependency)).filter[ concurrent == true ].size
 			}
 		}
 		
@@ -153,7 +154,7 @@ class ThreadAwareScheduler extends SimpleScheduler {
                     }
                 }
             }
-            for(dependency : schedulingBlock.dependencies) {
+            for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
                 if (dependency.concurrent && !dependency.confluent) {
                     if (schedulingBlocks.contains((dependency.eContainer as Node).schedulingBlock)) { 
                         (dependency.eContainer as Node).schedulingBlock.topologicalClusterPlacement(

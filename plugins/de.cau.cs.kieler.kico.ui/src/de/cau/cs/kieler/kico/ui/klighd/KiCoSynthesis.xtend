@@ -122,6 +122,15 @@ abstract class KiCoSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagr
         return false
     }
     
+    // True if this transformation is visible as declared by the kico.ui extension
+    // based on its id
+    def isVisible(Transformation transformation) {
+        if (currentModel.visibleTransformations.contains(transformation)) {
+            return true;
+        }
+        return false
+    }
+    
 
     // -------------------------------------------------------------------------
     // access methods to get auxiliary TransformationFeatures
@@ -193,7 +202,7 @@ abstract class KiCoSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagr
 
     // Display a feature as a group, if it has several handling transformations (alternative) or if it really is a feature group!
     def isGroupOrAlternative(Feature feature) {
-        (feature instanceof FeatureGroup || feature.isAlternative);
+        (feature instanceof FeatureGroup || feature.isAlternative(currentModel.visibleTransformations));
     }
 
     // -------------------------------------------------------------------------

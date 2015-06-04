@@ -27,24 +27,24 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class Write_WriteImpl extends DependencyImpl implements Write_Write {
+public class Write_WriteImpl extends DataDependencyImpl implements Write_Write {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected Write_WriteImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return ScgPackage.Literals.WRITE_WRITE;
-    }
+		return ScgPackage.Literals.WRITE_WRITE;
+	}
 
 } //Write_WriteImpl

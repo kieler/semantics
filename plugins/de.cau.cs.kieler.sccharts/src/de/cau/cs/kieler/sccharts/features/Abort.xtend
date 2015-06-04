@@ -51,7 +51,7 @@ class Abort extends Feature {
 
             //val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
             //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
-            if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) {
+            if ((state.hasInnerStatesOrControlflowRegions || state.hasInnerActions) && stateHasUntransformedTransitions) {
                 return true
             }
         }

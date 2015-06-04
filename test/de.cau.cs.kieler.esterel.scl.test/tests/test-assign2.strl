@@ -1,0 +1,19 @@
+module test_assign2:
+output A : boolean;
+output B : boolean;
+
+  pause;
+  pause;
+  emit A(false);
+  pause;
+  emit A(true)
+||
+  var value := true : boolean in
+    loop
+      await A;
+      value := ?A;
+      emit B(value);
+    end loop
+  end var
+
+end module

@@ -207,7 +207,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     @Override
     public boolean checkModelValidation(final EObject rootEObject)
             throws KiemInitializationException {
-        if (!(rootEObject instanceof State)) {
+        if (!(rootEObject instanceof State) && !(rootEObject instanceof SCGraph)) {
             throw new KiemInitializationException(
                     "SCCharts Simulator can only be used with a SCCharts editor.\n\n", true, null);
         }

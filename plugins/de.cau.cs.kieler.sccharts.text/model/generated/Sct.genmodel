@@ -1,3 +1,30 @@
+<<<<<<< HEAD
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.sccharts.text/src-gen" editDirectory="/de.cau.cs.kieler.sccharts.text.edit/src"
+    editorDirectory="/de.cau.cs.kieler.sccharts.text.editor/src" modelPluginID="de.cau.cs.kieler.sccharts.text"
+    forceOverwrite="true" modelName="Sct" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.sccharts.text.edit"
+    editorPluginID="de.cau.cs.kieler.sccharts.text.editor" runtimeVersion="2.9" usedGenPackages="../../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../../de.cau.cs.kieler.sccharts/model/sccharts.genmodel#//sccharts ../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
+  <genPackages prefix="Sct" basePackage="de.cau.cs.kieler.sccharts.text.sct" disposableProviderFactory="true"
+      ecorePackage="Sct.ecore#/">
+    <genClasses ecoreClass="Sct.ecore#//ImportDecl">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sct.ecore#//ImportDecl/importedType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sct.ecore#//ImportDecl/importedNamespace"/>
+    </genClasses>
+    <genClasses ecoreClass="Sct.ecore#//SCChart">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sct.ecore#//SCChart/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sct.ecore#//SCChart/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sct.ecore#//SCChart/declaration"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sct.ecore#//SCChart/package"/>
+    </genClasses>
+    <genClasses ecoreClass="Sct.ecore#//TheRootRegion">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sct.ecore#//TheRootRegion/package"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sct.ecore#//TheRootRegion/imports"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
+=======
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.sccharts.text/src-gen" editDirectory="/de.cau.cs.kieler.sccharts.text.edit/src"
@@ -23,3 +50,4 @@
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
+>>>>>>> master

@@ -479,6 +479,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createSuspendAdapter();
       }
       @Override
+      public Adapter caseWeakSuspend(WeakSuspend object)
+      {
+        return createWeakSuspendAdapter();
+      }
+      @Override
       public Adapter caseSustain(Sustain object)
       {
         return createSustainAdapter();
@@ -502,6 +507,16 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
       public Adapter caseLocalVariable(LocalVariable object)
       {
         return createLocalVariableAdapter();
+      }
+      @Override
+      public Adapter caseGoto(Goto object)
+      {
+        return createGotoAdapter();
+      }
+      @Override
+      public Adapter caseLabel(Label object)
+      {
+        return createLabelAdapter();
       }
       @Override
       public Adapter caseDelayExpr(DelayExpr object)
@@ -1856,6 +1871,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakSuspend <em>Weak Suspend</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.WeakSuspend
+   * @generated
+   */
+  public Adapter createWeakSuspendAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Sustain <em>Sustain</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1926,6 +1956,36 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createLocalVariableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Goto <em>Goto</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.Goto
+   * @generated
+   */
+  public Adapter createGotoAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Label <em>Label</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.Label
+   * @generated
+   */
+  public Adapter createLabelAdapter()
   {
     return null;
   }

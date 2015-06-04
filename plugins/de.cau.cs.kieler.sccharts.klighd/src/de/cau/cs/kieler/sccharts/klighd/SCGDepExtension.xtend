@@ -53,6 +53,7 @@ import java.util.HashSet
 import org.eclipse.emf.ecore.EObject
 
 import static extension com.google.common.base.Predicates.*
+import de.cau.cs.kieler.scg.DataDependency
 
 /**
  * @author als
@@ -113,7 +114,7 @@ class SCGDepExtension {
                                     toList);
                             list;
                         ];
-                        for (Dependency dep : asng.dependencies) {
+                        for (dep : asng.dependencies.filter(DataDependency)) {
                             if (!dep.confluent && dep.concurrent) {
                                 val targets = mapping.get(dep.target).filter(filterModelPredicate).fold(newHashSet()) [ list, item |
                                     list.addAll(tracking.getTargetElements(item).filter(filterDiagramPredicate));

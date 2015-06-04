@@ -93,6 +93,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleEffect
 entryRuleEffect 
 :
@@ -1476,6 +1478,8 @@ finally {
 
 
 
+
+
 rule__Effect__Alternatives
     @init {
 		int stackSize = keepStackSize();
@@ -2421,6 +2425,9 @@ rule__Transition__Group_7_2__1__Impl
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+
 
 
 
@@ -7039,6 +7046,10 @@ rule__Transition__EffectsAssignment_7_2_1
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+
+
 
 
 

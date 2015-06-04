@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg.transformations
 
-import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.features.SCGFeatures
 
@@ -64,7 +64,7 @@ class BasicBlockTransformationSCplus extends BasicBlockTransformation {
     
     override boolean schedulingBlockSplitter(Node node, Node lastNode) {
         super.schedulingBlockSplitter(node, lastNode) ||
-        node.eContents.filter(typeof(Dependency)).filter[ concurrent && !confluent ].empty
+        node.eContents.filter(typeof(DataDependency)).filter[ concurrent && !confluent ].empty
     } 
     
   

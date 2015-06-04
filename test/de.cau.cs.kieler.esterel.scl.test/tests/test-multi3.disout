@@ -1,0 +1,115 @@
+module stest:
+input A;
+input B;
+input C;
+output D;
+output X;
+output Y;
+output Z;
+output W;
+output T;
+output E;
+
+loop
+    abort
+      [
+        loop
+          trap TT in
+            abort
+              pause;
+              trap T in
+                [
+                  abort
+                    [
+                      loop
+                        emit B;
+                        pause;
+                        emit B;
+                        if (W) {
+                          exit T
+                        }
+                      end loop
+                    ||
+                      loop
+                          if (X and Y) {
+                            exit T
+                          };
+                          pause;
+                          emit A
+                        ||
+                          loop
+                            if (X and Z) {
+                              exit TT
+                            };
+                            pause
+                          end loop
+                      end loop
+                    ]
+                  when [Z and Y];
+                  emit B
+                ||
+                  loop
+                    if (T) {
+                      pause;
+                      exit TT
+                    };
+                    pause;
+                    if (X and B) {
+                      emit A
+                    } else {
+                      pause;
+                      pause
+                    }
+                  end loop
+                ]
+              end trap
+            when 3 Y;
+            emit C
+          end trap;
+          emit A
+        end loop
+      ||
+        loop
+          abort
+            loop
+              pause
+            end loop
+          when 5 tick;
+          emit X
+        end loop
+      ||
+        loop
+          abort
+            loop
+              pause
+            end loop
+          when 11 tick;
+          emit Y
+        end loop
+      ||
+        loop
+          abort
+            loop
+              pause
+            end loop
+          when 17 tick;
+          emit W
+        end loop
+      ]
+    when 100 T;
+    pause;
+    emit E
+  ||
+    abort
+      loop
+        abort
+          loop
+            pause
+          end loop
+        when 100 tick;
+        emit T
+      end loop
+    when E
+end loop
+
+end module

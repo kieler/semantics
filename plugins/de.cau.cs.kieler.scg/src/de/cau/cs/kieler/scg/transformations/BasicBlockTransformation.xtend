@@ -23,6 +23,7 @@ import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
@@ -500,7 +501,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
     }
     
     protected def boolean schedulingBlockSplitter(Node node, Node lastNode) {
-        (!node.incoming.filter(typeof(Dependency)).filter[ concurrent && !confluent].empty) ||
+        (!node.incoming.filter(typeof(DataDependency)).filter[ concurrent && !confluent].empty) ||
         (SPLITSCHEDULINGBLOCKSATENTRY && (lastNode instanceof Entry))
     } 
     

@@ -1,0 +1,22 @@
+module test_weakabort3:
+output A;
+output B;
+output C;
+
+loop
+  [
+    weak abort
+      pause;
+      pause;
+      emit A
+    when B
+  ||
+    pause;
+    pause;
+    emit B
+  ];
+  emit C;
+  pause
+end loop
+
+end module

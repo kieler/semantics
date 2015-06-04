@@ -101,7 +101,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
             }
 
             weakSuspends.setDefaultTrace
-            for (region : state.allContainedRegions.immutableCopy) {
+            for (region : state.allContainedControlflowRegions.immutableCopy) {
                 val subStates = region.states.immutableCopy
                 val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
                 val stateEnum = state.createVariable(GENERATED_PREFIX + "stateEnum").setTypeInt.uniqueName

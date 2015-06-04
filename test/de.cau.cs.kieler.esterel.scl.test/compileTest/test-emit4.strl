@@ -1,0 +1,15 @@
+module test_emit4:
+output A;
+output B;
+output C;
+output D;
+
+emit A;
+pause;
+emit B;
+pause;
+emit C ;
+pause;
+emit D
+
+end module

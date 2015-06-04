@@ -1,0 +1,48 @@
+module test_present7:
+input A;
+input B;
+input C;
+output W;
+output X;
+output Y;
+output Z;
+
+loop
+  if (A) {
+    pause
+  };
+  if (B) else {
+    emit W
+  };
+  if (A) {
+    pause;
+    emit X
+  } else {
+    if (B) else {
+      if (C) {
+        emit Y
+      }
+    }
+  };
+  if (A) {
+    if (B) {
+      pause
+    } else {
+      emit Z
+    };
+    if (C) else {
+      pause
+    }
+  } else {
+    if (A) else {
+      if (B) {
+        emit X
+      } else {
+        if (C)
+      }
+    }
+  };
+  pause
+end loop
+
+end module

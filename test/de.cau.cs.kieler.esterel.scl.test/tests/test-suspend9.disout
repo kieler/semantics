@@ -1,0 +1,16 @@
+module test_suspend9:
+input A;
+output B;
+
+  suspend
+    loop
+      emit B;
+      pause
+    end loop
+  when immediate [not A]
+||
+  loop
+    pause
+  end loop
+
+end module

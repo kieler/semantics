@@ -81,6 +81,9 @@
       <featureGroupClass
             class="de.cau.cs.kieler.scg.features.SCGraphGroup">
       </featureGroupClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.features.SCPDG">
+      </featureClass>
    </extension>
 
 

@@ -41,6 +41,7 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
 import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
@@ -308,7 +309,8 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
         if (part instanceof XtextEditor || part instanceof IEditingDomainProvider) {
             return true;
         }
-        return false;
+        return true;
+//        return false;
     }
 
     /**
@@ -364,6 +366,10 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
             if (!resources.isEmpty() && !resources.get(0).getContents().isEmpty()) {
                 model = EcoreUtil.getRootContainer(resources.get(0).getContents().get(0));
             }
+// TODO: What to do with non ecore models?
+//        } else {
+//            CDTProcessor CDTProcessor = Guice.createInjector().getInstance(CDTProcessor.class);
+//            model = CDTProcessor.createFromEditor(editor);
         }
         return model;
     }
@@ -380,7 +386,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
      */
     public List<KiCoModelView> getModelViews(final IEditorPart editor) {
         if (editor != null) {
-            return Lists.newArrayList(Iterables.filter(modelViews, new Predicate<KiCoModelView>(){
+            return Lists.newArrayList(Iterables.filter(modelViews, new Predicate<KiCoModelView>() {
                 public boolean apply(KiCoModelView view) {
                     IEditorPart activeEditor = view.getActiveEditor();
                     return activeEditor != null && activeEditor.equals(editor);

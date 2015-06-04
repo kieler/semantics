@@ -1,0 +1,361 @@
+module STATION:
+constant POSITIVE : integer;
+constant NEGATIVE : integer;
+constant NB_TRAMES_STATION : integer;
+constant ADRESSES : integer;
+constant LONG_MIN : integer;
+constant DD : integer;
+constant DF : integer;
+constant IDLE : integer;
+constant RIEN : integer;
+constant ERR : integer;
+constant DIFFUSION : integer;
+constant LONG_MAX : integer;
+constant T1 : integer;
+constant T2 : integer;
+function QUELLE_TRAME(integer, integer, integer) : integer;
+function LONG_TRAME(integer) : integer;
+function DONNEE_TRAME(integer, integer) : integer;
+sensor ID : integer;
+input EE : integer;
+input ER : integer;
+output DEMANDE_EMISSION : integer;
+output CONFIRMATION_pos;
+output CONFIRMATION_neg;
+output INDICATION_RECEPTION;
+output SYNCHRONISATION;
+output SE : integer;
+output SR : integer;
+
+signal MAC_PRET : integer,
+       DEBUT_CYCLE,
+       STOPPE_RECEPTION,
+       TOP,
+       DD,
+       DF,
+       ERR,
+       ADRESSE,
+       CRC_OK,
+       PERTE_DF,
+       ARME_TEMPORISATION,
+       DESARME_TEMPORISATION,
+       TIMEOUT in
+    var X : integer,
+        CONFIRMATION : integer in
+      X := (?ID - 1) * NB_TRAMES_STATION + 1;
+      CONFIRMATION := POSITIVE;
+      loop
+        await TOP do
+          X := QUELLE_TRAME(?ID, X, CONFIRMATION);
+          emit DEMANDE_EMISSION(X)
+        end await;
+        await 
+          case CONFIRMATION_pos do
+            CONFIRMATION := POSITIVE
+          case CONFIRMATION_neg do
+            CONFIRMATION := NEGATIVE
+        end await;
+        await SYNCHRONISATION
+      end loop
+    end var
+  ||
+    signal AD_SOURCE,
+           AD_DEST,
+           ATTEND_DF,
+           DF_VALIDE,
+           ERR_RECEPTION in
+      loop
+        await DEMANDE_EMISSION do
+          emit MAC_PRET(?DEMANDE_EMISSION)
+        end await;
+        await DEBUT_CYCLE;
+        trap CYCLE in
+          present DD else
+            pause;
+            emit ARME_TEMPORISATION;
+            do
+              await DD do
+                emit DESARME_TEMPORISATION
+              end await
+            watching TIMEOUT timeout
+              pause;
+              emit CONFIRMATION_neg;
+              do
+                await DF do
+                  emit DESARME_TEMPORISATION
+                end await
+              watching TIMEOUT;
+              exit CYCLE
+            end timeout
+          end present;
+          [
+            weak abort
+              await ADRESSES TOP do
+                emit AD_SOURCE
+              end await;
+              await TOP do
+                emit AD_DEST
+              end await;
+              await LONG_MIN - ADRESSES - 1 TOP do
+                emit ATTEND_DF
+              end await
+            when ERR_RECEPTION
+          ||
+            weak abort
+              await AD_SOURCE do
+                present ADRESSE then
+                  emit CONFIRMATION_pos
+                else
+                  pause;
+                  emit CONFIRMATION_neg
+                end present
+              end await
+            when ERR_RECEPTION do
+              pause;
+              emit CONFIRMATION_neg
+            end weak abort
+          ||
+            weak abort
+              await AD_DEST do
+                present ADRESSE then
+                  await DF do
+                    present CRC_OK then
+                      emit INDICATION_RECEPTION
+                    end present
+                  end await
+                end present
+              end await
+            when ERR_RECEPTION;
+            emit STOPPE_RECEPTION
+          ||
+            await 
+              case ATTEND_DF
+              case ERR_RECEPTION
+            end await;
+            do
+              await DF
+            watching PERTE_DF timeout
+              emit ERR_RECEPTION
+            end timeout;
+            exit CYCLE
+          ||
+            trap DETEC_ERR in
+                await ERR do
+                  emit ERR_RECEPTION
+                end await
+              ||
+                await DD do
+                  emit ERR_RECEPTION
+                end await
+              ||
+                await 
+                  case DF do
+                    emit ERR_RECEPTION
+                  case ATTEND_DF
+                end await
+              ||
+                await ERR_RECEPTION do
+                  exit DETEC_ERR
+                end await
+            end trap
+          ]
+        end trap;
+        pause;
+        emit SYNCHRONISATION
+      end loop
+    end signal
+  ||
+    var ID_TRAME : integer,
+        LONG : integer,
+        PRIORITE_H : integer,
+        PRIORITE_L : integer,
+        DONNEE : integer,
+        CRC : integer,
+        INDEX : integer in
+      signal ST,
+             EM_ACTIF,
+             EM_INACTIF in
+          loop
+            await MAC_PRET do
+              emit EM_ACTIF;
+              ID_TRAME := ?MAC_PRET;
+              INDEX := 0;
+              LONG := LONG_TRAME(ID_TRAME);
+              PRIORITE_H := DONNEE_TRAME(ID_TRAME, 0);
+              PRIORITE_L := DONNEE_TRAME(ID_TRAME, 1);
+              CRC := 0
+            end await;
+            trap ATT_DD in
+              every EE do
+                if ?EE = DD then
+                  exit ATT_DD
+                else
+                  if ?EE = RIEN then
+                    emit ST;
+                    exit ATT_DD
+                  else
+                    emit SE(?EE)
+                  end if
+                end if
+              end every
+            end trap;
+            emit SE(DD);
+            emit DEBUT_CYCLE;
+            trap EMISSION in
+              [
+                present ST else
+                  await EE do
+                    if ?EE > PRIORITE_H then
+                      emit SE(?EE);
+                      exit EMISSION
+                    else
+                      emit SE(PRIORITE_H);
+                      CRC := CRC + PRIORITE_H;
+                      INDEX := INDEX + 1;
+                      LONG := LONG - 1;
+                      if ?EE = PRIORITE_H then
+                        await EE do
+                          if ?EE >= PRIORITE_L then
+                            emit SE(?EE);
+                            exit EMISSION
+                          else
+                            emit SE(PRIORITE_L);
+                            CRC := CRC + PRIORITE_L;
+                            INDEX := INDEX + 1;
+                            LONG := LONG - 1
+                          end if
+                        end await
+                      end if
+                    end if
+                  end await
+                end present;
+                repeat LONG times
+                  DONNEE := DONNEE_TRAME(ID_TRAME, INDEX);
+                  await EE do
+                    emit SE(DONNEE);
+                    INDEX := INDEX + 1;
+                    CRC := CRC + DONNEE
+                  end await
+                end repeat;
+                repeat 2 times
+                  await EE do
+                    emit SE(CRC)
+                  end await
+                end repeat;
+                await EE do
+                  emit SE(DF)
+                end await;
+                exit EMISSION
+              ||
+                await CONFIRMATION_neg do
+                  pause;
+                  exit EMISSION
+                end await
+              ||
+                await SYNCHRONISATION do
+                  exit EMISSION
+                end await
+              ]
+            end trap;
+            emit EM_INACTIF
+          end loop
+        ||
+          loop
+            trap INACTIVITE in
+                await EM_ACTIF do
+                  exit INACTIVITE
+                end await
+              ||
+                every EE do
+                  if ?EE = RIEN then
+                    emit SE(IDLE)
+                  else
+                    emit SE(?EE)
+                  end if
+                end every
+            end trap
+          each EM_INACTIF
+      end signal
+    end var
+  ||
+    var CRC : integer,
+        DERNIER : integer in
+        every ER do
+          emit TOP;
+          if ?ER = RIEN then
+            emit SR(?SE)
+          else
+            emit SR(?ER)
+          end if;
+          if ?SR = DF then
+            emit DF
+          else
+            if ?SR = DD then
+              emit DD
+            else
+              if ?SR = ERR then
+                emit ERR
+              else
+                if ?SR = ?ID or ?SR = DIFFUSION then
+                  emit ADRESSE
+                end if
+              end if
+            end if
+          end if
+        end every
+      ||
+        loop
+          await DEBUT_CYCLE;
+          trap CYCLE in
+            [
+              await immediate DD;
+              [
+                trap REC_TRAME in
+                    CRC := 0;
+                    DERNIER := 1;
+                    every TOP do
+                      if CRC = 3 * DERNIER then
+                        emit CRC_OK
+                      end if;
+                      CRC := CRC + ?SR;
+                      DERNIER := ?SR
+                    end every
+                  ||
+                    await STOPPE_RECEPTION do
+                      exit REC_TRAME
+                    end await
+                end trap
+              ||
+                await LONG_MAX + 2 TOP do
+                  emit PERTE_DF
+                end await
+              ]
+            ||
+              await SYNCHRONISATION do
+                exit CYCLE
+              end await
+            ]
+          end trap
+        end loop
+    end var
+  ||
+    every ARME_TEMPORISATION do
+      trap ATTENTE in
+          await DESARME_TEMPORISATION do
+            exit ATTENTE
+          end await
+        ||
+          await T1 TOP do
+            pause;
+            emit TIMEOUT
+          end await;
+          await T2 TOP do
+            pause;
+            emit TIMEOUT
+          end await;
+          exit ATTENTE
+      end trap
+    end every
+end signal
+
+end module

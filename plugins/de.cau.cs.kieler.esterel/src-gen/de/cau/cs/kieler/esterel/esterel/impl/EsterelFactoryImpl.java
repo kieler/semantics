@@ -143,11 +143,14 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.TASK_RENAMING: return createTaskRenaming();
       case EsterelPackage.SIGNAL_RENAMING: return createSignalRenaming();
       case EsterelPackage.SUSPEND: return createSuspend();
+      case EsterelPackage.WEAK_SUSPEND: return createWeakSuspend();
       case EsterelPackage.SUSTAIN: return createSustain();
       case EsterelPackage.TRAP: return createTrap();
       case EsterelPackage.TRAP_DECL_LIST: return createTrapDeclList();
       case EsterelPackage.TRAP_HANDLER: return createTrapHandler();
       case EsterelPackage.LOCAL_VARIABLE: return createLocalVariable();
+      case EsterelPackage.GOTO: return createGoto();
+      case EsterelPackage.LABEL: return createLabel();
       case EsterelPackage.DELAY_EXPR: return createDelayExpr();
       case EsterelPackage.DELAY_EVENT: return createDelayEvent();
       case EsterelPackage.EXEC: return createExec();
@@ -1047,6 +1050,17 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public WeakSuspend createWeakSuspend()
+  {
+    WeakSuspendImpl weakSuspend = new WeakSuspendImpl();
+    return weakSuspend;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Sustain createSustain()
   {
     SustainImpl sustain = new SustainImpl();
@@ -1095,6 +1109,28 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     LocalVariableImpl localVariable = new LocalVariableImpl();
     return localVariable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Goto createGoto()
+  {
+    GotoImpl goto_ = new GotoImpl();
+    return goto_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Label createLabel()
+  {
+    LabelImpl label = new LabelImpl();
+    return label;
   }
 
   /**

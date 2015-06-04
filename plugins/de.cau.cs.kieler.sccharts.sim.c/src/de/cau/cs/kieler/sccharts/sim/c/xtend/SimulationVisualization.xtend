@@ -17,8 +17,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.sim.c.SCChartsSimCPlugin
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 /**
  * This class handles the<BR>
@@ -140,7 +140,7 @@ class SimulationVisualization {
 
     // New visualization of active states with immediate during actions
     def void transformSimulationVisualizationState(State state, State targetRootState, String UID) {
-        if (!state.isRootState && !state.hasInnerStatesOrRegions) {
+        if (!state.isRootState && !state.hasInnerStatesOrControlflowRegions) {
             val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
             
             if (!state.final) {

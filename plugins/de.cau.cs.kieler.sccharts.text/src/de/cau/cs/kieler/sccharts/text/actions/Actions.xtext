@@ -40,7 +40,10 @@ ExitAction returns sccharts::ExitAction:
 SuspendAction returns sccharts::SuspendAction:
     {sccharts::SuspendAction}
 //    (annotations += Annotation)*
-   (immediate?='immediate')? (weak?='weak')? 'suspend'  (trigger=BoolExpression)? ';'?;      
+   (immediate?='immediate')? (weak?='weak')? 'suspend'  (trigger=BoolExpression)? ';'?;   
+IterateAction returns sccharts::IterateAction:
+    {sccharts::IterateAction}
+    (immediate?='immediate')? 'iterate' (trigger=BoolExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)? ';'?;
 
 Effect returns sccharts::Effect: 
 	Emission | Assignment | TextEffect | FunctionCallEffect;

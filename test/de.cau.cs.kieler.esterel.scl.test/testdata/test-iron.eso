@@ -1,0 +1,100 @@
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+SWITCH_ON 
+% Output: HEAT_ON(1) 
+;
+
+% Output: HEAT_ON(1) 
+;
+
+% Output: HEAT_ON(1) 
+;
+
+% Output: HEAT_ON(1) 
+;
+
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SWITCH_OFF SECOND 
+% Output: 
+;
+SECOND 
+% Output: 
+;
+SECOND 
+% Output: 
+;
+SWITCH_ON SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_OFF(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;
+SECOND 
+% Output: HEAT_ON(1) 
+;

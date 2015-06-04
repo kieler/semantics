@@ -1,0 +1,17 @@
+module test_run20:
+type T1;
+constant c1 = 3 : integer;
+function f1(integer) : integer;
+procedure p1()();
+
+  var v1 : integer in
+    v1 := f1(c1);
+    call p1()()
+  end var
+||
+  var v1 : integer in
+    v1 := f1(c1);
+    call p1()()
+  end var
+
+end module

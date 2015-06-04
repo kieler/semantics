@@ -1,0 +1,35 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Esterel to SCL ransformation
+Bundle-SymbolicName: de.cau.cs.kieler.esterel.scl;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.esterel.scl.EsterelToSclPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources;bundle-version="3.8.101",
+ org.eclipse.emf;bundle-version="2.6.0",
+ org.eclipse.emf.codegen.ecore,
+ com.google.inject;bundle-version="3.0.0",
+ org.eclipse.xtend.lib,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.json;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.kexpressions,
+ de.cau.cs.kieler.esterel.kexpressions,
+ de.cau.cs.kieler.kico.ui,
+ de.cau.cs.kieler.core.annotations,
+ de.cau.cs.kieler.scg,
+ de.cau.cs.kieler.scg.klighd,
+ de.cau.cs.kieler.kico,
+ de.cau.cs.kieler.esterel,
+ de.cau.cs.kieler.scl,
+ de.cau.cs.kieler.kitt
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Import-Package: de.cau.cs.kieler.core.model.handlers,
+ de.cau.cs.kieler.core.model.util,
+ de.cau.cs.kieler.sim.kiem,
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Export-Package: de.cau.cs.kieler.esterel.scl.transformations
+

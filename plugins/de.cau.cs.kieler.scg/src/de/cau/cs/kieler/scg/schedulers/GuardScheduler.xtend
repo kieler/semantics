@@ -39,6 +39,7 @@ import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
 import java.util.List
 import java.util.Set
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -181,7 +182,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
             }
 
             if (schedulingBlock != null) {
-                val dependencies = schedulingBlock.getAllDependencies(scg)
+                val dependencies = schedulingBlock.getAllDataDependencies(scg)
                 if (!dependencies.empty) {
                     debug(indent + "Scheduling block" + schedulingBlock.label + " has dependencies: ", false)
                     for (dependency : dependencies) {
@@ -398,8 +399,8 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
         scg
     }
 
-    private def Set<Dependency> getAllDependencies(SchedulingBlock schedulingBlock, SCGraph scg) {
-        val returnSet = <Dependency>newHashSet;
+    private def Set<DataDependency> getAllDataDependencies(SchedulingBlock schedulingBlock, SCGraph scg) {
+        val returnSet = <DataDependency>newHashSet;
 
         //    	val guard = schedulingBlock.guard
         //    	for (sb : scg.allSchedulingBlocks) {
@@ -408,7 +409,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
         //    		}
         //    	} 
         //(schedulingBlock.eContainer as BasicBlock).schedulingBlocks.forEach[ returnSet += it.dependencies ]
-        returnSet += schedulingBlock.dependencies
+        returnSet += schedulingBlock.dependencies.filter(typeof(DataDependency))
 
         returnSet
     }

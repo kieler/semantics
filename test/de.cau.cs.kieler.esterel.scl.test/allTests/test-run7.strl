@@ -1,0 +1,20 @@
+module Test_Run7:
+type t1;
+type t2;
+
+run Foo [
+  type t2 / t3 ]
+
+end module
+
+module Foo:
+type t1;
+type t2;
+type t3;
+type t4;
+
+var c : t3 in
+  nothing
+end var
+
+end module

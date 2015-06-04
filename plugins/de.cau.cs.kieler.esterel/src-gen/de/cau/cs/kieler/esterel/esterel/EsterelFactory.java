@@ -734,6 +734,15 @@ public interface EsterelFactory extends EFactory
   Suspend createSuspend();
 
   /**
+   * Returns a new object of class '<em>Weak Suspend</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Weak Suspend</em>'.
+   * @generated
+   */
+  WeakSuspend createWeakSuspend();
+
+  /**
    * Returns a new object of class '<em>Sustain</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -777,6 +786,24 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   LocalVariable createLocalVariable();
+
+  /**
+   * Returns a new object of class '<em>Goto</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Goto</em>'.
+   * @generated
+   */
+  Goto createGoto();
+
+  /**
+   * Returns a new object of class '<em>Label</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Label</em>'.
+   * @generated
+   */
+  Label createLabel();
 
   /**
    * Returns a new object of class '<em>Delay Expr</em>'.
