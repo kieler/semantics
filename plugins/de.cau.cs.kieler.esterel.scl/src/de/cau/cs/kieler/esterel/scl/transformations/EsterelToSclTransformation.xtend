@@ -94,6 +94,7 @@ import java.util.Set
 import java.util.HashSet
 import de.cau.cs.kieler.esterel.features.EsterelFeatures
 import de.cau.cs.kieler.esterel.esterel.UnEmit
+import de.cau.cs.kieler.esterel.esterel.Reset
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
@@ -382,7 +383,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
     def dispatch StatementSequence transformStatement(Emit emit, StatementSequence targetStatementSequence) {
 
         // Get the LAST defined valued object (with respect to local signals) as this is the one on the
-        // closest surrounding Scope. Signals with the same name defined in higher hierachical levels
+        // closest surrounding Scope. Signals with the same name defined in higher hierarchical levels
         // (and appear closer to the begin of the signal map) may be shadowed out.
         val emitVariable = signalToVariableMap.findLast[ it.key == emit.signal.name ].value
 
@@ -459,16 +460,52 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
     def dispatch StatementSequence transformStatement(UnEmit unemit, StatementSequence targetStatementSequence) {
 
         // Get the LAST defined valued object (with respect to local signals) as this is the one on the
-        // closest surrounding Scope. Signals with the same name defined in higher hierachical levels
+        // closest surrounding Scope. Signals with the same name defined in higher hierarchical levels
         // (and appear closer to the begin of the signal map) may be shadowed out.
         val unEmitVariable = signalToVariableMap.findLast[ it.key == unemit.signal.name ].value
 
         // "unemits" the signal by setting it to false by an absolute write
-        val emitSignal =  createStatement(createAssignment(unEmitVariable,  createBoolValue(false)))
+        val emitSignal = createStatement(createAssignment(unEmitVariable,  createBoolValue(false)))
 
         targetStatementSequence.add(emitSignal)
        return targetStatementSequence
      }
+
+
+    /**
+     * reset s(t)
+     * -> s_val = t
+     * Reset is transformed to setting the corresponding s_val to the according value. The variable
+     * carrying the present status is left untouched.
+     * 
+     * @param reset The Reset-statement
+     * @param targetStatementSequence The StatementSequence which should contain the transformed statements
+     * @return The transformed statement
+     */
+    def dispatch StatementSequence transformStatement(Reset reset, StatementSequence targetStatementSequence) {
+
+        // Get the LAST defined valued object (with respect to local signals) as this is the one on the
+        // closest surrounding Scope. Signals with the same name defined in higher hierarchical levels
+        // (and appear closer to the begin of the signal map) may be shadowed out.
+        val resetVariable = signalToVariableMap.findLast[ it.key == reset.signal.name ].value
+
+        // Reset of a pure signal does nothing
+        if (reset.expr == null) {
+            return targetStatementSequence
+        }
+
+        // Reset of a valued signal makes sense
+        else {
+            // Get the corresponding valued variable
+            val resetValueVariable = signalToValueMap.get(resetVariable)
+            val sclEmittedExpression = reset.expr.transformExp(resetValueVariable.type.toString)
+
+            // Valued reset without combine function
+            targetStatementSequence.add(createAssignment(resetValueVariable, sclEmittedExpression))
+        }
+
+        targetStatementSequence
+    }
 
 
     /**

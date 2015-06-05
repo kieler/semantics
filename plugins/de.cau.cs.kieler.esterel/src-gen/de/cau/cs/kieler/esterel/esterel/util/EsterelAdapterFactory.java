@@ -324,6 +324,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createUnEmitAdapter();
       }
       @Override
+      public Adapter caseReset(Reset object)
+      {
+        return createResetAdapter();
+      }
+      @Override
       public Adapter caseEveryDo(EveryDo object)
       {
         return createEveryDoAdapter();
@@ -1406,6 +1411,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createUnEmitAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Reset <em>Reset</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.Reset
+   * @generated
+   */
+  public Adapter createResetAdapter()
   {
     return null;
   }

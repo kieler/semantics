@@ -1719,33 +1719,34 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDoParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cEmitParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cUnEmitParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
-		private final RuleCall cEveryDoParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
-		private final RuleCall cExitParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
-		private final RuleCall cExecParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
-		private final RuleCall cHaltParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
-		private final RuleCall cIfTestParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
-		private final RuleCall cLocalSignalDeclParserRuleCall_13 = (RuleCall)cAlternatives.eContents().get(13);
-		private final RuleCall cLoopParserRuleCall_14 = (RuleCall)cAlternatives.eContents().get(14);
-		private final RuleCall cNothingParserRuleCall_15 = (RuleCall)cAlternatives.eContents().get(15);
-		private final RuleCall cPauseParserRuleCall_16 = (RuleCall)cAlternatives.eContents().get(16);
-		private final RuleCall cPresentParserRuleCall_17 = (RuleCall)cAlternatives.eContents().get(17);
-		private final RuleCall cRepeatParserRuleCall_18 = (RuleCall)cAlternatives.eContents().get(18);
-		private final RuleCall cRunParserRuleCall_19 = (RuleCall)cAlternatives.eContents().get(19);
-		private final RuleCall cSuspendParserRuleCall_20 = (RuleCall)cAlternatives.eContents().get(20);
-		private final RuleCall cWeakSuspendParserRuleCall_21 = (RuleCall)cAlternatives.eContents().get(21);
-		private final RuleCall cSustainParserRuleCall_22 = (RuleCall)cAlternatives.eContents().get(22);
-		private final RuleCall cTrapParserRuleCall_23 = (RuleCall)cAlternatives.eContents().get(23);
-		private final RuleCall cLocalVariableParserRuleCall_24 = (RuleCall)cAlternatives.eContents().get(24);
-		private final RuleCall cWeakAbortParserRuleCall_25 = (RuleCall)cAlternatives.eContents().get(25);
+		private final RuleCall cResetParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cEveryDoParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cExitParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final RuleCall cExecParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
+		private final RuleCall cHaltParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
+		private final RuleCall cIfTestParserRuleCall_13 = (RuleCall)cAlternatives.eContents().get(13);
+		private final RuleCall cLocalSignalDeclParserRuleCall_14 = (RuleCall)cAlternatives.eContents().get(14);
+		private final RuleCall cLoopParserRuleCall_15 = (RuleCall)cAlternatives.eContents().get(15);
+		private final RuleCall cNothingParserRuleCall_16 = (RuleCall)cAlternatives.eContents().get(16);
+		private final RuleCall cPauseParserRuleCall_17 = (RuleCall)cAlternatives.eContents().get(17);
+		private final RuleCall cPresentParserRuleCall_18 = (RuleCall)cAlternatives.eContents().get(18);
+		private final RuleCall cRepeatParserRuleCall_19 = (RuleCall)cAlternatives.eContents().get(19);
+		private final RuleCall cRunParserRuleCall_20 = (RuleCall)cAlternatives.eContents().get(20);
+		private final RuleCall cSuspendParserRuleCall_21 = (RuleCall)cAlternatives.eContents().get(21);
+		private final RuleCall cWeakSuspendParserRuleCall_22 = (RuleCall)cAlternatives.eContents().get(22);
+		private final RuleCall cSustainParserRuleCall_23 = (RuleCall)cAlternatives.eContents().get(23);
+		private final RuleCall cTrapParserRuleCall_24 = (RuleCall)cAlternatives.eContents().get(24);
+		private final RuleCall cLocalVariableParserRuleCall_25 = (RuleCall)cAlternatives.eContents().get(25);
+		private final RuleCall cWeakAbortParserRuleCall_26 = (RuleCall)cAlternatives.eContents().get(26);
 		
 		//// -!
 		//AtomicStatement returns Statement:
-		//	Abort | Assignment | Await | Block | ProcCall | Do | Emit | UnEmit | EveryDo | Exit | Exec | Halt | IfTest |
+		//	Abort | Assignment | Await | Block | ProcCall | Do | Emit | UnEmit | Reset | EveryDo | Exit | Exec | Halt | IfTest |
 		//	LocalSignalDecl | Loop | Nothing | Pause | Present | Repeat | Run | Suspend | WeakSuspend | Sustain | Trap |
 		//	LocalVariable | WeakAbort;
 		public ParserRule getRule() { return rule; }
 
-		//Abort | Assignment | Await | Block | ProcCall | Do | Emit | UnEmit | EveryDo | Exit | Exec | Halt | IfTest |
+		//Abort | Assignment | Await | Block | ProcCall | Do | Emit | UnEmit | Reset | EveryDo | Exit | Exec | Halt | IfTest |
 		//LocalSignalDecl | Loop | Nothing | Pause | Present | Repeat | Run | Suspend | WeakSuspend | Sustain | Trap |
 		//LocalVariable | WeakAbort
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -1774,59 +1775,62 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//UnEmit
 		public RuleCall getUnEmitParserRuleCall_7() { return cUnEmitParserRuleCall_7; }
 
+		//Reset
+		public RuleCall getResetParserRuleCall_8() { return cResetParserRuleCall_8; }
+
 		//EveryDo
-		public RuleCall getEveryDoParserRuleCall_8() { return cEveryDoParserRuleCall_8; }
+		public RuleCall getEveryDoParserRuleCall_9() { return cEveryDoParserRuleCall_9; }
 
 		//Exit
-		public RuleCall getExitParserRuleCall_9() { return cExitParserRuleCall_9; }
+		public RuleCall getExitParserRuleCall_10() { return cExitParserRuleCall_10; }
 
 		//Exec
-		public RuleCall getExecParserRuleCall_10() { return cExecParserRuleCall_10; }
+		public RuleCall getExecParserRuleCall_11() { return cExecParserRuleCall_11; }
 
 		//Halt
-		public RuleCall getHaltParserRuleCall_11() { return cHaltParserRuleCall_11; }
+		public RuleCall getHaltParserRuleCall_12() { return cHaltParserRuleCall_12; }
 
 		//IfTest
-		public RuleCall getIfTestParserRuleCall_12() { return cIfTestParserRuleCall_12; }
+		public RuleCall getIfTestParserRuleCall_13() { return cIfTestParserRuleCall_13; }
 
 		//LocalSignalDecl
-		public RuleCall getLocalSignalDeclParserRuleCall_13() { return cLocalSignalDeclParserRuleCall_13; }
+		public RuleCall getLocalSignalDeclParserRuleCall_14() { return cLocalSignalDeclParserRuleCall_14; }
 
 		//Loop
-		public RuleCall getLoopParserRuleCall_14() { return cLoopParserRuleCall_14; }
+		public RuleCall getLoopParserRuleCall_15() { return cLoopParserRuleCall_15; }
 
 		//Nothing
-		public RuleCall getNothingParserRuleCall_15() { return cNothingParserRuleCall_15; }
+		public RuleCall getNothingParserRuleCall_16() { return cNothingParserRuleCall_16; }
 
 		//Pause
-		public RuleCall getPauseParserRuleCall_16() { return cPauseParserRuleCall_16; }
+		public RuleCall getPauseParserRuleCall_17() { return cPauseParserRuleCall_17; }
 
 		//Present
-		public RuleCall getPresentParserRuleCall_17() { return cPresentParserRuleCall_17; }
+		public RuleCall getPresentParserRuleCall_18() { return cPresentParserRuleCall_18; }
 
 		//Repeat
-		public RuleCall getRepeatParserRuleCall_18() { return cRepeatParserRuleCall_18; }
+		public RuleCall getRepeatParserRuleCall_19() { return cRepeatParserRuleCall_19; }
 
 		//Run
-		public RuleCall getRunParserRuleCall_19() { return cRunParserRuleCall_19; }
+		public RuleCall getRunParserRuleCall_20() { return cRunParserRuleCall_20; }
 
 		//Suspend
-		public RuleCall getSuspendParserRuleCall_20() { return cSuspendParserRuleCall_20; }
+		public RuleCall getSuspendParserRuleCall_21() { return cSuspendParserRuleCall_21; }
 
 		//WeakSuspend
-		public RuleCall getWeakSuspendParserRuleCall_21() { return cWeakSuspendParserRuleCall_21; }
+		public RuleCall getWeakSuspendParserRuleCall_22() { return cWeakSuspendParserRuleCall_22; }
 
 		//Sustain
-		public RuleCall getSustainParserRuleCall_22() { return cSustainParserRuleCall_22; }
+		public RuleCall getSustainParserRuleCall_23() { return cSustainParserRuleCall_23; }
 
 		//Trap
-		public RuleCall getTrapParserRuleCall_23() { return cTrapParserRuleCall_23; }
+		public RuleCall getTrapParserRuleCall_24() { return cTrapParserRuleCall_24; }
 
 		//LocalVariable
-		public RuleCall getLocalVariableParserRuleCall_24() { return cLocalVariableParserRuleCall_24; }
+		public RuleCall getLocalVariableParserRuleCall_25() { return cLocalVariableParserRuleCall_25; }
 
 		//WeakAbort
-		public RuleCall getWeakAbortParserRuleCall_25() { return cWeakAbortParserRuleCall_25; }
+		public RuleCall getWeakAbortParserRuleCall_26() { return cWeakAbortParserRuleCall_26; }
 	}
 
 	public class SequenceElements extends AbstractParserRuleElementFinder {
@@ -2844,6 +2848,69 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Tick
 		public RuleCall getTickTickParserRuleCall_1_1_0() { return cTickTickParserRuleCall_1_1_0; }
+	}
+
+	public class ResetElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Reset");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cResetKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Assignment cSignalAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
+		private final CrossReference cSignalISignalCrossReference_1_0_0 = (CrossReference)cSignalAssignment_1_0.eContents().get(0);
+		private final RuleCall cSignalISignalIDTerminalRuleCall_1_0_0_1 = (RuleCall)cSignalISignalCrossReference_1_0_0.eContents().get(1);
+		private final Assignment cTickAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
+		private final RuleCall cTickTickParserRuleCall_1_1_0 = (RuleCall)cTickAssignment_1_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cExprAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cExprExpressionParserRuleCall_2_1_0 = (RuleCall)cExprAssignment_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		
+		//// -!
+		//// --> SCEst only! reset: Signal value reset (absolute write) <--
+		//// !-(emit)2 -------------------------------------
+		//Reset:
+		//	"reset" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")");
+		public ParserRule getRule() { return rule; }
+
+		//"reset" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")")
+		public Group getGroup() { return cGroup; }
+
+		//"reset"
+		public Keyword getResetKeyword_0() { return cResetKeyword_0; }
+
+		//signal=[kexpressions::ISignal] | tick=Tick
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//signal=[kexpressions::ISignal]
+		public Assignment getSignalAssignment_1_0() { return cSignalAssignment_1_0; }
+
+		//[kexpressions::ISignal]
+		public CrossReference getSignalISignalCrossReference_1_0_0() { return cSignalISignalCrossReference_1_0_0; }
+
+		//ID
+		public RuleCall getSignalISignalIDTerminalRuleCall_1_0_0_1() { return cSignalISignalIDTerminalRuleCall_1_0_0_1; }
+
+		//tick=Tick
+		public Assignment getTickAssignment_1_1() { return cTickAssignment_1_1; }
+
+		//Tick
+		public RuleCall getTickTickParserRuleCall_1_1_0() { return cTickTickParserRuleCall_1_1_0; }
+
+		//"(" expr=Expression ")"
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+
+		//expr=Expression
+		public Assignment getExprAssignment_2_1() { return cExprAssignment_2_1; }
+
+		//Expression
+		public RuleCall getExprExpressionParserRuleCall_2_1_0() { return cExprExpressionParserRuleCall_2_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 	}
 
 	public class EveryDoElements extends AbstractParserRuleElementFinder {
@@ -5661,6 +5728,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	private final DoWatchingEndElements pDoWatchingEnd;
 	private final EmitElements pEmit;
 	private final UnEmitElements pUnEmit;
+	private final ResetElements pReset;
 	private final EveryDoElements pEveryDo;
 	private final ExitElements pExit;
 	private final HaltElements pHalt;
@@ -5795,6 +5863,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		this.pDoWatchingEnd = new DoWatchingEndElements();
 		this.pEmit = new EmitElements();
 		this.pUnEmit = new UnEmitElements();
+		this.pReset = new ResetElements();
 		this.pEveryDo = new EveryDoElements();
 		this.pExit = new ExitElements();
 		this.pHalt = new HaltElements();
@@ -6267,7 +6336,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// -!
 	//AtomicStatement returns Statement:
-	//	Abort | Assignment | Await | Block | ProcCall | Do | Emit | UnEmit | EveryDo | Exit | Exec | Halt | IfTest |
+	//	Abort | Assignment | Await | Block | ProcCall | Do | Emit | UnEmit | Reset | EveryDo | Exit | Exec | Halt | IfTest |
 	//	LocalSignalDecl | Loop | Nothing | Pause | Present | Repeat | Run | Suspend | WeakSuspend | Sustain | Trap |
 	//	LocalVariable | WeakAbort;
 	public AtomicStatementElements getAtomicStatementAccess() {
@@ -6562,6 +6631,19 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getUnEmitRule() {
 		return getUnEmitAccess().getRule();
+	}
+
+	//// -!
+	//// --> SCEst only! reset: Signal value reset (absolute write) <--
+	//// !-(emit)2 -------------------------------------
+	//Reset:
+	//	"reset" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")");
+	public ResetElements getResetAccess() {
+		return pReset;
+	}
+	
+	public ParserRule getResetRule() {
+		return getResetAccess().getRule();
 	}
 
 	//// -!

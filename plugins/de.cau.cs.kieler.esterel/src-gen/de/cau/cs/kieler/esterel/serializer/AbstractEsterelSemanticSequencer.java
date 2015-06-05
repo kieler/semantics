@@ -81,6 +81,7 @@ import de.cau.cs.kieler.esterel.esterel.RelationIncompatibility;
 import de.cau.cs.kieler.esterel.esterel.Renaming;
 import de.cau.cs.kieler.esterel.esterel.RenamingList;
 import de.cau.cs.kieler.esterel.esterel.Repeat;
+import de.cau.cs.kieler.esterel.esterel.Reset;
 import de.cau.cs.kieler.esterel.esterel.Run;
 import de.cau.cs.kieler.esterel.esterel.SensorDecl;
 import de.cau.cs.kieler.esterel.esterel.SensorWithType;
@@ -795,6 +796,17 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 				   context == grammarAccess.getStatementContainerInterfaceRule() ||
 				   context == grammarAccess.getStatementAccess().getParallelListAction_1_0()) {
 					sequence_Repeat(context, (Repeat) semanticObject); 
+					return; 
+				}
+				else break;
+			case EsterelPackage.RESET:
+				if(context == grammarAccess.getAtomicStatementRule() ||
+				   context == grammarAccess.getResetRule() ||
+				   context == grammarAccess.getSequenceRule() ||
+				   context == grammarAccess.getSequenceAccess().getSequenceListAction_1_0() ||
+				   context == grammarAccess.getStatementRule() ||
+				   context == grammarAccess.getStatementAccess().getParallelListAction_1_0()) {
+					sequence_Reset(context, (Reset) semanticObject); 
 					return; 
 				}
 				else break;
@@ -2061,6 +2073,15 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	 *     (positive?='positive'? expression=Expression statement=Statement optEnd='repeat'?)
 	 */
 	protected void sequence_Repeat(EObject context, Repeat semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     ((signal=[ISignal|ID] | tick=Tick) expr=Expression)
+	 */
+	protected void sequence_Reset(EObject context, Reset semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

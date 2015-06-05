@@ -161,7 +161,7 @@ Statement:
 
 	// -!
 AtomicStatement returns Statement:
-	Abort | Assignment | Await | Block | ProcCall | Do | Emit | UnEmit | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
+	Abort | Assignment | Await | Block | ProcCall | Do | Emit | UnEmit | Reset | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
 	Loop | Nothing | Pause | Present | Repeat | Run | Suspend | WeakSuspend | Sustain | Trap | LocalVariable | WeakAbort;
 
 	// --> B.4.1 Control Flow Operators <--	
@@ -268,6 +268,12 @@ Emit:
 // !-(unemit)2 -------------------------------------
 UnEmit:
     "unemit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick);
+    // -!
+
+// --> SCEst only! reset: Signal value reset (absolute write) <--
+// !-(emit)2 -------------------------------------
+Reset:
+    "reset" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("("expr=Expression")");
     // -!
 
 

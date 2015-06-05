@@ -57,6 +57,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDoAccess().getAlternatives_2(), "rule__Do__Alternatives_2");
 					put(grammarAccess.getEmitAccess().getAlternatives_1(), "rule__Emit__Alternatives_1");
 					put(grammarAccess.getUnEmitAccess().getAlternatives_1(), "rule__UnEmit__Alternatives_1");
+					put(grammarAccess.getResetAccess().getAlternatives_1(), "rule__Reset__Alternatives_1");
 					put(grammarAccess.getLoopAccess().getAlternatives_2(), "rule__Loop__Alternatives_2");
 					put(grammarAccess.getPresentBodyAccess().getAlternatives(), "rule__PresentBody__Alternatives");
 					put(grammarAccess.getPresentEventAccess().getAlternatives(), "rule__PresentEvent__Alternatives");
@@ -180,6 +181,8 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEmitAccess().getGroup(), "rule__Emit__Group__0");
 					put(grammarAccess.getEmitAccess().getGroup_2(), "rule__Emit__Group_2__0");
 					put(grammarAccess.getUnEmitAccess().getGroup(), "rule__UnEmit__Group__0");
+					put(grammarAccess.getResetAccess().getGroup(), "rule__Reset__Group__0");
+					put(grammarAccess.getResetAccess().getGroup_2(), "rule__Reset__Group_2__0");
 					put(grammarAccess.getEveryDoAccess().getGroup(), "rule__EveryDo__Group__0");
 					put(grammarAccess.getExitAccess().getGroup(), "rule__Exit__Group__0");
 					put(grammarAccess.getExitAccess().getGroup_2(), "rule__Exit__Group_2__0");
@@ -452,6 +455,9 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEmitAccess().getExprAssignment_2_1(), "rule__Emit__ExprAssignment_2_1");
 					put(grammarAccess.getUnEmitAccess().getSignalAssignment_1_0(), "rule__UnEmit__SignalAssignment_1_0");
 					put(grammarAccess.getUnEmitAccess().getTickAssignment_1_1(), "rule__UnEmit__TickAssignment_1_1");
+					put(grammarAccess.getResetAccess().getSignalAssignment_1_0(), "rule__Reset__SignalAssignment_1_0");
+					put(grammarAccess.getResetAccess().getTickAssignment_1_1(), "rule__Reset__TickAssignment_1_1");
+					put(grammarAccess.getResetAccess().getExprAssignment_2_1(), "rule__Reset__ExprAssignment_2_1");
 					put(grammarAccess.getEveryDoAccess().getDelayAssignment_1(), "rule__EveryDo__DelayAssignment_1");
 					put(grammarAccess.getEveryDoAccess().getStatementAssignment_3(), "rule__EveryDo__StatementAssignment_3");
 					put(grammarAccess.getEveryDoAccess().getOptEndAssignment_5(), "rule__EveryDo__OptEndAssignment_5");
