@@ -93,6 +93,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import java.util.Set
 import java.util.HashSet
 import de.cau.cs.kieler.esterel.features.EsterelFeatures
+import de.cau.cs.kieler.esterel.esterel.UnEmit
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
@@ -443,6 +444,32 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
 
         targetStatementSequence
     }
+
+
+    /**
+     * unemit s
+     * -> s = false
+     * UnEmit is only available in SCEst not in pure Esterel. UnEmit is transformed to setting the 
+     * corresponding variable to false by an absolute write. The value is not affected.
+     * 
+     * @param unemit The UnEmit-statement
+     * @param targetStatementSequence The StatementSequence which should contain the transformed statements
+     * @return The transformed statement
+     */
+    def dispatch StatementSequence transformStatement(UnEmit unemit, StatementSequence targetStatementSequence) {
+
+        // Get the LAST defined valued object (with respect to local signals) as this is the one on the
+        // closest surrounding Scope. Signals with the same name defined in higher hierachical levels
+        // (and appear closer to the begin of the signal map) may be shadowed out.
+        val unEmitVariable = signalToVariableMap.findLast[ it.key == unemit.signal.name ].value
+
+        // "unemits" the signal by setting it to false by an absolute write
+        val emitSignal =  createStatement(createAssignment(unEmitVariable,  createBoolValue(false)))
+
+        targetStatementSequence.add(emitSignal)
+       return targetStatementSequence
+     }
+
 
     /**
      * sustain s
