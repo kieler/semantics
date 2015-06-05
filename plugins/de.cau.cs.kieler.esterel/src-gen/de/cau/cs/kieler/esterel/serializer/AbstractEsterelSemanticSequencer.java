@@ -2382,7 +2382,7 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     ((signal=[ISignal|ID] | tick=Tick) expr=Expression?)
+	 *     (signal=[ISignal|ID] | tick=Tick)
 	 */
 	protected void sequence_UnEmit(EObject context, UnEmit semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

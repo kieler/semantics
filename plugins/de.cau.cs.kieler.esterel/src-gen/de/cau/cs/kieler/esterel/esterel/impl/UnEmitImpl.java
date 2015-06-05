@@ -5,11 +5,9 @@ package de.cau.cs.kieler.esterel.esterel.impl;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.UnEmit;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
 import de.cau.cs.kieler.esterel.kexpressions.ISignal;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -25,7 +23,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.UnEmitImpl#getSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.UnEmitImpl#getTick <em>Tick</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.UnEmitImpl#getExpr <em>Expr</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,16 +59,6 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
    * @ordered
    */
   protected String tick = TICK_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExpr()
-   * @generated
-   * @ordered
-   */
-  protected Expression expr;
 
   /**
    * <!-- begin-user-doc -->
@@ -165,70 +152,6 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getExpr()
-  {
-    return expr;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
-  {
-    Expression oldExpr = expr;
-    expr = newExpr;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.UN_EMIT__EXPR, oldExpr, newExpr);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setExpr(Expression newExpr)
-  {
-    if (newExpr != expr)
-    {
-      NotificationChain msgs = null;
-      if (expr != null)
-        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.UN_EMIT__EXPR, null, msgs);
-      if (newExpr != null)
-        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.UN_EMIT__EXPR, null, msgs);
-      msgs = basicSetExpr(newExpr, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.UN_EMIT__EXPR, newExpr, newExpr));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case EsterelPackage.UN_EMIT__EXPR:
-        return basicSetExpr(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -239,8 +162,6 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
         return basicGetSignal();
       case EsterelPackage.UN_EMIT__TICK:
         return getTick();
-      case EsterelPackage.UN_EMIT__EXPR:
-        return getExpr();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -260,9 +181,6 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
         return;
       case EsterelPackage.UN_EMIT__TICK:
         setTick((String)newValue);
-        return;
-      case EsterelPackage.UN_EMIT__EXPR:
-        setExpr((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -284,9 +202,6 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
       case EsterelPackage.UN_EMIT__TICK:
         setTick(TICK_EDEFAULT);
         return;
-      case EsterelPackage.UN_EMIT__EXPR:
-        setExpr((Expression)null);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -305,8 +220,6 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
         return signal != null;
       case EsterelPackage.UN_EMIT__TICK:
         return TICK_EDEFAULT == null ? tick != null : !TICK_EDEFAULT.equals(tick);
-      case EsterelPackage.UN_EMIT__EXPR:
-        return expr != null;
     }
     return super.eIsSet(featureID);
   }

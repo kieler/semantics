@@ -1754,22 +1754,13 @@ public interface EsterelPackage extends EPackage
   int UN_EMIT__TICK = STATEMENT_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int UN_EMIT__EXPR = STATEMENT_FEATURE_COUNT + 2;
-
-  /**
    * The number of structural features of the '<em>Un Emit</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int UN_EMIT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 3;
+  int UN_EMIT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.EveryDoImpl <em>Every Do</em>}' class.
@@ -5416,17 +5407,6 @@ public interface EsterelPackage extends EPackage
   EAttribute getUnEmit_Tick();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.UnEmit#getExpr <em>Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.UnEmit#getExpr()
-   * @see #getUnEmit()
-   * @generated
-   */
-  EReference getUnEmit_Expr();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.EveryDo <em>Every Do</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -8141,14 +8121,6 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EAttribute UN_EMIT__TICK = eINSTANCE.getUnEmit_Tick();
-
-    /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference UN_EMIT__EXPR = eINSTANCE.getUnEmit_Expr();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.EveryDoImpl <em>Every Do</em>}' class.

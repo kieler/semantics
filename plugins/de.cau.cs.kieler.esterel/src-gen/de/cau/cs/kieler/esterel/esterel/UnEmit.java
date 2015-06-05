@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression;
 import de.cau.cs.kieler.esterel.kexpressions.ISignal;
 
 /**
@@ -15,7 +14,6 @@ import de.cau.cs.kieler.esterel.kexpressions.ISignal;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.UnEmit#getSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.UnEmit#getTick <em>Tick</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.UnEmit#getExpr <em>Expr</em>}</li>
  * </ul>
  * </p>
  *
@@ -76,31 +74,5 @@ public interface UnEmit extends Statement
    * @generated
    */
   void setTick(String value);
-
-  /**
-   * Returns the value of the '<em><b>Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Expr</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Expr</em>' containment reference.
-   * @see #setExpr(Expression)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getUnEmit_Expr()
-   * @model containment="true"
-   * @generated
-   */
-  Expression getExpr();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.UnEmit#getExpr <em>Expr</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expr</em>' containment reference.
-   * @see #getExpr()
-   * @generated
-   */
-  void setExpr(Expression value);
 
 } // UnEmit

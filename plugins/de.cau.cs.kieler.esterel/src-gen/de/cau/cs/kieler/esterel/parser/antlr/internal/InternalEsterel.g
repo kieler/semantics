@@ -4702,33 +4702,7 @@ ruleUnEmit returns [EObject current=null]
 	    }
 
 )
-))(	otherlv_3='(' 
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getUnEmitAccess().getLeftParenthesisKeyword_2_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getUnEmitAccess().getExprExpressionParserRuleCall_2_1_0()); 
-	    }
-		lv_expr_4_0=ruleExpression		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getUnEmitRule());
-	        }
-       		set(
-       			$current, 
-       			"expr",
-        		lv_expr_4_0, 
-        		"Expression");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)	otherlv_5=')' 
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getUnEmitAccess().getRightParenthesisKeyword_2_2());
-    }
-)?)
+)))
 ;
 
 

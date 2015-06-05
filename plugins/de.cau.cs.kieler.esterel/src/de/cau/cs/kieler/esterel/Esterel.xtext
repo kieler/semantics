@@ -267,7 +267,7 @@ Emit:
 // --> SCEst only! unemit: Signal UnEmission <--
 // !-(unemit)2 -------------------------------------
 UnEmit:
-    "unemit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("("expr=Expression")")?;
+    "unemit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick);
     // -!
 
 

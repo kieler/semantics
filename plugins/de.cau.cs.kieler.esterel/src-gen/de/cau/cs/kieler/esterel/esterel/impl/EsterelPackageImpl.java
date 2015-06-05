@@ -2147,16 +2147,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getUnEmit_Expr()
-  {
-    return (EReference)unEmitEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getEveryDo()
   {
     return everyDoEClass;
@@ -3898,7 +3888,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     unEmitEClass = createEClass(UN_EMIT);
     createEReference(unEmitEClass, UN_EMIT__SIGNAL);
     createEAttribute(unEmitEClass, UN_EMIT__TICK);
-    createEReference(unEmitEClass, UN_EMIT__EXPR);
 
     everyDoEClass = createEClass(EVERY_DO);
     createEReference(everyDoEClass, EVERY_DO__DELAY);
@@ -4390,7 +4379,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEClass(unEmitEClass, UnEmit.class, "UnEmit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getUnEmit_Signal(), theKExpressionsPackage.getISignal(), null, "signal", null, 0, 1, UnEmit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getUnEmit_Tick(), ecorePackage.getEString(), "tick", null, 0, 1, UnEmit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getUnEmit_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, UnEmit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(everyDoEClass, EveryDo.class, "EveryDo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEveryDo_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, EveryDo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -165,7 +165,6 @@
     <genClasses ecoreClass="Esterel.ecore#//UnEmit">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//UnEmit/signal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//UnEmit/tick"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//UnEmit/expr"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//EveryDo">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//EveryDo/delay"/>
