@@ -319,6 +319,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createEmitAdapter();
       }
       @Override
+      public Adapter caseUnEmit(UnEmit object)
+      {
+        return createUnEmitAdapter();
+      }
+      @Override
       public Adapter caseEveryDo(EveryDo object)
       {
         return createEveryDoAdapter();
@@ -1386,6 +1391,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEmitAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.UnEmit <em>Un Emit</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.UnEmit
+   * @generated
+   */
+  public Adapter createUnEmitAdapter()
   {
     return null;
   }

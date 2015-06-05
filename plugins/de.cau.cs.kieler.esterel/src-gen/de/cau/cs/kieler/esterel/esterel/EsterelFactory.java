@@ -446,6 +446,15 @@ public interface EsterelFactory extends EFactory
   Emit createEmit();
 
   /**
+   * Returns a new object of class '<em>Un Emit</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Un Emit</em>'.
+   * @generated
+   */
+  UnEmit createUnEmit();
+
+  /**
    * Returns a new object of class '<em>Every Do</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

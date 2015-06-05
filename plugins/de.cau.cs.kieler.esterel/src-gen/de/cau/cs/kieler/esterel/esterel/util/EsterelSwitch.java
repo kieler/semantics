@@ -436,6 +436,14 @@ public class EsterelSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case EsterelPackage.UN_EMIT:
+      {
+        UnEmit unEmit = (UnEmit)theEObject;
+        T result = caseUnEmit(unEmit);
+        if (result == null) result = caseStatement(unEmit);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case EsterelPackage.EVERY_DO:
       {
         EveryDo everyDo = (EveryDo)theEObject;
@@ -1669,6 +1677,22 @@ public class EsterelSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseEmit(Emit object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Un Emit</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Un Emit</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUnEmit(UnEmit object)
   {
     return null;
   }

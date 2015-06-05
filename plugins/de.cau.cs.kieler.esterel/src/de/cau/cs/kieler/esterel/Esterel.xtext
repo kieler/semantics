@@ -161,7 +161,7 @@ Statement:
 
 	// -!
 AtomicStatement returns Statement:
-	Abort | Assignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
+	Abort | Assignment | Await | Block | ProcCall | Do | Emit | UnEmit | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
 	Loop | Nothing | Pause | Present | Repeat | Run | Suspend | WeakSuspend | Sustain | Trap | LocalVariable | WeakAbort;
 
 	// --> B.4.1 Control Flow Operators <--	
@@ -263,6 +263,14 @@ DoWatchingEnd:
 Emit:
 	"emit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("("expr=Expression")")?;
 	// -!
+
+// --> SCEst only! unemit: Signal UnEmission <--
+// !-(unemit)2 -------------------------------------
+UnEmit:
+    "unemit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("("expr=Expression")")?;
+    // -!
+
+
 // --> B.4.8 every-do: Conditional Iteration
 // !-(every)-------------------------------------
 EveryDo:

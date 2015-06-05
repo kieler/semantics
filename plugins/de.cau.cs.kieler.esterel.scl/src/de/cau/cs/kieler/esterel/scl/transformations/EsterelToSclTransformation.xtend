@@ -186,7 +186,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
      */
     def transformNoOpt(EObject eObject) {
         optimizeTransformation = false;
-        return transformProgram(eObject as Program) as EObject
+        return transformProgram(eObject as Program) 
     }
     
     /**
@@ -195,7 +195,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
      */
     override transform(EObject eObject) {
         optimizeTransformation = true;
-        return transformProgram(eObject as Program) as EObject
+        return (transformProgram(eObject as Program).optimizeAll) 
     }
 
     /**

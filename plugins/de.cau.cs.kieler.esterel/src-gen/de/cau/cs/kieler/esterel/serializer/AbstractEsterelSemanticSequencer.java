@@ -103,6 +103,7 @@ import de.cau.cs.kieler.esterel.esterel.Type;
 import de.cau.cs.kieler.esterel.esterel.TypeDecl;
 import de.cau.cs.kieler.esterel.esterel.TypeIdentifier;
 import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
+import de.cau.cs.kieler.esterel.esterel.UnEmit;
 import de.cau.cs.kieler.esterel.esterel.WeakAbort;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortCase;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortEnd;
@@ -984,6 +985,17 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 			case EsterelPackage.TYPE_RENAMING:
 				if(context == grammarAccess.getTypeRenamingRule()) {
 					sequence_TypeRenaming(context, (TypeRenaming) semanticObject); 
+					return; 
+				}
+				else break;
+			case EsterelPackage.UN_EMIT:
+				if(context == grammarAccess.getAtomicStatementRule() ||
+				   context == grammarAccess.getSequenceRule() ||
+				   context == grammarAccess.getSequenceAccess().getSequenceListAction_1_0() ||
+				   context == grammarAccess.getStatementRule() ||
+				   context == grammarAccess.getStatementAccess().getParallelListAction_1_0() ||
+				   context == grammarAccess.getUnEmitRule()) {
+					sequence_UnEmit(context, (UnEmit) semanticObject); 
 					return; 
 				}
 				else break;
@@ -2365,6 +2377,15 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getTypeAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     ((signal=[ISignal|ID] | tick=Tick) expr=Expression?)
+	 */
+	protected void sequence_UnEmit(EObject context, UnEmit semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
