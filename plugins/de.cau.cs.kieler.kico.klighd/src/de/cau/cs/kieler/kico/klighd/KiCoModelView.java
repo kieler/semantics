@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.WeakHashMap;
@@ -52,11 +51,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
@@ -66,6 +63,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.util.StringInputStream;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
@@ -73,17 +71,24 @@ import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
-import de.cau.cs.kieler.kico.KiCoUtil;
+import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KielerCompilerException;
-import de.cau.cs.kieler.kico.ResourceExtension;
+import de.cau.cs.kieler.kico.KielerCompilerSelection;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
+import de.cau.cs.kieler.kico.internal.ResourceExtension;
 import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
-import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
-import de.cau.cs.kieler.kico.ui.KiCoSelection;
+import de.cau.cs.kieler.kiml.config.CompoundLayoutConfig;
+import de.cau.cs.kieler.kiml.config.ILayoutConfig;
+import de.cau.cs.kieler.kiml.config.LayoutContext;
+import de.cau.cs.kieler.kiml.config.VolatileLayoutConfig;
+import de.cau.cs.kieler.kiml.options.Direction;
+import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.klighd.IViewer;
+import de.cau.cs.kieler.klighd.KlighdConstants;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
 import de.cau.cs.kieler.klighd.KlighdPlugin;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
@@ -92,11 +97,11 @@ import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.internal.ISynthesis;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
-import de.cau.cs.kieler.klighd.util.KlighdProperties;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination;
 import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination;
+
 
 /**
  * Singleton instance of DiagramViewPart to display any model
@@ -106,6 +111,7 @@ import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination;
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
+@SuppressWarnings("restriction")
 public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
     /**
@@ -115,7 +121,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * 
      */
     public enum ChangeEvent {
-        SAVED, DISPLAY_MODE, TRANSFORMATIONS, ACTIVE_EDITOR, COMPILE, COMPILATION_FINISHED
+        SAVED, DISPLAY_MODE, SELECTION, ACTIVE_EDITOR, COMPILE, COMPILATION_FINISHED
     }
 
     /** Viewer ID **/
@@ -148,10 +154,13 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     private static final ImageDescriptor ICON_SIDE_BY_SIDE = AbstractUIPlugin
             .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd",
                     "icons/KiCoModelViewIconSideBySide.png");
+    /** The icon for toggling chain display mode button. */
+    private static final ImageDescriptor ICON_CHAIN = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconChain.png");
     /** The icon for pin selection button. */
     private static final ImageDescriptor ICON_PIN = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconPin.png");
-    
+
     /** The icon for closing windows. */
     private static final ImageDescriptor ICON_CLOSE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "org.eclipse.ui", "icons/full/elcl16/remove.gif");
@@ -173,10 +182,10 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     /** The action for toggling compile. */
     private Action actionPinToggle;
     /** String currently saved transformations. */
-    private KiCoSelection transformations = KiCoSelection.EMPTY_SELECTION;
+    private Pair<KielerCompilerSelection, Boolean> selection = null;
     /** Map with pinned transformations */
-    private WeakHashMap<IEditorPart, KiCoSelection> pinnedTransformations =
-            new WeakHashMap<IEditorPart, KiCoSelection>();
+    private WeakHashMap<IEditorPart, Pair<KielerCompilerSelection, Boolean>> pinnedTransformations =
+            new WeakHashMap<IEditorPart, Pair<KielerCompilerSelection, Boolean>>();
 
     /** The action for forking view. */
     private Action actionFork;
@@ -186,10 +195,20 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     /** Flag if this view is paused and does not update its model due to external changes. */
     private boolean pauseSynchronization = false;
 
-    /** The action for toggling pausing of synchronization. */
+    /** The action for toggling diagram placeholders. */
     private Action actionNoDiagramToggle;
-    /** Flag if this view is paused and does not update its model due to external changes. */
+    /** Flag if model placeholders will be displayed. */
     private boolean noDiagram = false;
+
+    /** The action for toggling tracing. */
+    private Action actionTracingToggle;
+    /** Flag if tracing is activated. */
+    private boolean doTracing = false;
+
+    /** The action for toggling chain display mode. */
+    private Action actionTracingChainToggle;
+    /** Flag if chain display mode is active. */
+    private boolean displayTracingChain = false;
 
     // Models
 
@@ -203,13 +222,14 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     private KiCoAsynchronousCompilation currentCompilation = null;
 
     /**
-     * current compilation result assocuiiated with current model or null if current model is not
+     * current compilation result associated with current model or null if current model is not
      * compiled
      */
     private CompilationResult currentCompilationResult = null;
-    
-    /** Stores saved selection of synthesis options according to their model type */ 
-    private HashMap<ISynthesis, HashMap<SynthesisOption,Object>> recentSynthesisOptions = Maps.newHashMap();
+
+    /** Stores saved selection of synthesis options according to their model type */
+    private HashMap<ISynthesis, HashMap<SynthesisOption, Object>> recentSynthesisOptions = Maps
+            .newHashMap();
 
     // Editor
 
@@ -217,13 +237,12 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     private IEditorPart activeEditor;
 
     // Error handling
-    
+
     private Exception lastException = null;
-    
+
     // Visual
-    
+
     private Composite warningMessageContainer = null;
-    
 
     // -- Constructor and Initialization
     // -------------------------------------------------------------------------
@@ -259,26 +278,22 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         }
     }
 
+    // -- Getter
+    // -------------------------------------------------------------------------
+
     /**
-     * @return if this view is primary
+     * @return true if this view is primary
      */
     public boolean isPrimaryView() {
         return secondaryID == null;
     }
 
-    // -- LISTENER
-    // -------------------------------------------------------------------------
-
-    /** PropertyListener to check if a editor was saved. */
-    final IPropertyListener dirtyPropertyListener = new IPropertyListener() {
-
-        public void propertyChanged(Object source, int propId) {
-            if (propId == IWorkbenchPartConstants.PROP_DIRTY && !((IEditorPart) source).isDirty()) {
-                // dirty flag changed and editor is not dirty -> saved
-                updateModel(ChangeEvent.SAVED);
-            }
-        }
-    };
+    /**
+     * @return the sourceModel
+     */
+    public EObject getSourceModel() {
+        return sourceModel;
+    }
 
     // -- Setup Toolbar
     // -------------------------------------------------------------------------
@@ -299,6 +314,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
         IMenuManager menu = bars.getMenuManager();
         menu.add(new Separator());
+        menu.add(getActionTracing());
+        menu.add(getActionTracingChain());
         menu.add(getActionPauseSync());
         menu.add(getActionNoDiagram());
 
@@ -362,28 +379,14 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     void setActiveEditor(IEditorPart editor) {
         if (editor != null) {
             if (activeEditor != editor) {
-                // unregister save listener if necessary
-                if (activeEditor != null) {
-                    activeEditor.removePropertyListener(dirtyPropertyListener);
-                }
-                // register save listener
-                editor.addPropertyListener(dirtyPropertyListener);
-
                 // set as active editor
                 activeEditor = editor;
-
                 updateViewTitle();
-
                 updateModel(ChangeEvent.ACTIVE_EDITOR);
             }
         } else {
-            if (activeEditor != null) {
-                activeEditor.removePropertyListener(dirtyPropertyListener);
-            }
             activeEditor = null;
-            
             updateViewTitle();
-
             updateModel(ChangeEvent.ACTIVE_EDITOR);
         }
     }
@@ -393,17 +396,6 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      */
     public IEditorPart getActiveEditor() {
         return activeEditor;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void dispose() {
-        // unregister save listener if necessary
-        if (activeEditor != null) {
-            activeEditor.removePropertyListener(dirtyPropertyListener);
-        }
-        super.dispose();
     }
 
     // -- ACTIONS
@@ -445,11 +437,11 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             public void run() {
                 if (activeEditor != null) {
                     if (isChecked()) {
-                        pinnedTransformations.put(activeEditor, transformations);
+                        pinnedTransformations.put(activeEditor, selection);
                     } else {
                         pinnedTransformations.remove(activeEditor);
                         // update model due to possible changed of transformation configuration
-                        updateModel(ChangeEvent.TRANSFORMATIONS);
+                        updateModel(ChangeEvent.SELECTION);
                     }
                 }
             }
@@ -462,7 +454,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     }
 
     /**
-     * Gets the action to toggle side-by-side display mode.
+     * Gets the action to toggle side-by-side display mode and chain display mode accordingly.
      * 
      * @return the action
      */
@@ -530,30 +522,23 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * @return the action
      */
     private Action getActionPauseSync() {
-        final String pauseText = "Decouple from editors";
-        final String continueText = "Couple to editors";
-
         if (actionPauseSyncToggle != null) {
             return actionPauseSyncToggle;
         }
-        actionPauseSyncToggle = new Action("", IAction.AS_PUSH_BUTTON) {
+        actionPauseSyncToggle = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
-
-                if (pauseSynchronization) {
-                    pauseSynchronization = false;
-                    setText(pauseText);
+                pauseSynchronization = !isChecked();
+                if (!pauseSynchronization) {
                     // force view to update model
                     updateModel(ChangeEvent.ACTIVE_EDITOR);
-                } else {
-                    pauseSynchronization = true;
-                    setText(continueText);
                 }
                 updateViewTitle();
             }
         };
-        actionPauseSyncToggle.setText(pauseText);
+        actionPauseSyncToggle.setChecked(!pauseSynchronization);
+        actionPauseSyncToggle.setText("Synchronize with editor");
         actionPauseSyncToggle
-                .setToolTipText("If paused, this view will no longer update its status.");
+                .setToolTipText("If Synchronize is disabled, this view will no longer update its status when editor changes.");
         return actionPauseSyncToggle;
     }
 
@@ -563,31 +548,67 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * @return the action
      */
     private Action getActionNoDiagram() {
-        final String pauseText = "Deactivate model visualization";
-        final String continueText = "Activate model visualization";
-
         if (actionNoDiagramToggle != null) {
             return actionNoDiagramToggle;
         }
-        actionNoDiagramToggle = new Action("", IAction.AS_PUSH_BUTTON) {
+        actionNoDiagramToggle = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
-                if (noDiagram) {
-                    this.setText(pauseText);
-                    noDiagram = false;
-                    // force synthesis of diagram
-                    if (currentModel != null) {
-                        updateDiagram(currentModel, true, activeEditor);
-                    }
-                } else {
-                    this.setText(continueText);
-                    noDiagram = true;
-                }
+                noDiagram = !isChecked();
+                // force new synthesis of diagram
+                updateModel(ChangeEvent.DISPLAY_MODE);
             }
         };
-        actionNoDiagramToggle.setText(pauseText);
+        actionNoDiagramToggle.setChecked(!noDiagram);
+        actionNoDiagramToggle.setText("Model visualization");
         actionNoDiagramToggle
                 .setToolTipText("If visualization is deactiveted, all diagrams will be replaced by a placeholder diagram.");
         return actionNoDiagramToggle;
+    }
+
+    /**
+     * Gets the action to switch of activation of tracing.
+     * 
+     * @return the action
+     */
+    private Action getActionTracing() {
+        if (actionTracingToggle != null) {
+            return actionTracingToggle;
+        }
+        actionTracingToggle = new Action("", IAction.AS_CHECK_BOX) {
+            public void run() {
+                doTracing = isChecked();
+                updateModel(ChangeEvent.COMPILE);
+            }
+        };
+        actionTracingToggle.setChecked(doTracing);
+        actionTracingToggle.setText("Tracing");
+        actionTracingToggle
+                .setToolTipText("Performes tracing during transformations if activated.");
+        return actionTracingToggle;
+    }
+
+    /**
+     * Gets the action to toggle chain display mode instead of side-by-side display mode when
+     * tracing is active.
+     * 
+     * @return the action
+     */
+    private Action getActionTracingChain() {
+        if (actionTracingChainToggle != null) {
+            return actionTracingChainToggle;
+        }
+        actionTracingChainToggle = new Action("", IAction.AS_CHECK_BOX) {
+            public void run() {
+                displayTracingChain = isChecked();
+                updateModel(ChangeEvent.DISPLAY_MODE);
+            }
+        };
+        actionTracingChainToggle.setText("Display Transformation Chain");
+        actionTracingChainToggle
+                .setToolTipText("Enable tranformation chain view in displaySideBySide display mode");
+        // actionTracingChainToggle.setImageDescriptor(ICON_CHAIN);
+        actionTracingChainToggle.setChecked(displayTracingChain);
+        return actionTracingChainToggle;
     }
 
     // -- Save model
@@ -613,16 +634,16 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             try {
                 String lastDirString = KiCoKLighDPlugin.getLastDir();
                 lastDir = new Path(lastDirString);
-            } catch(Exception e){
+            } catch (Exception e) {
                 lastDir = null;
             }
             if (lastDir != null) {
                 IPath path = lastDir;
                 // add new filename
                 path = path.append(filename);
-                try{
+                try {
                     saveAsDialog.setOriginalFile(root.getFile(path));
-                } catch(Exception e) {
+                } catch (Exception e) {
                     // In case of any path error
                     saveAsDialog.setOriginalName(filename);
                 }
@@ -704,7 +725,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         }
         return "";
     }
-    
+
     // -- Fork
     // -------------------------------------------------------------------------
 
@@ -732,9 +753,12 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 child.actionSideBySideToggle.setChecked(displaySideBySide);
                 // adopt transformation settings
                 child.pinnedTransformations =
-                        new WeakHashMap<IEditorPart, KiCoSelection>(pinnedTransformations);
+                        new WeakHashMap<IEditorPart, Pair<KielerCompilerSelection, Boolean>>(pinnedTransformations);
                 // synchronization settings cannot be adopted
 
+                // tracing
+                child.doTracing = doTracing;
+                child.displayTracingChain = displayTracingChain;
                 // TODO update when implemented new toggle buttons
 
                 // update model of forked view
@@ -797,7 +821,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * transformation
      */
     private void updatePinToggleButton() {
-        actionPinToggle.setEnabled(!transformations.isEmpty());
+        actionPinToggle.setEnabled(selection != null);
         actionPinToggle.setChecked(pinnedTransformations.containsKey(activeEditor));
     }
 
@@ -820,7 +844,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // change event flags
             boolean is_active_editor_update = change == ChangeEvent.ACTIVE_EDITOR;
             boolean is_save_update = change == ChangeEvent.SAVED;
-            boolean is_transformation_update = change == ChangeEvent.TRANSFORMATIONS;
+            boolean is_selection_update = change == ChangeEvent.SELECTION;
             boolean is_display_mode_update = change == ChangeEvent.DISPLAY_MODE;
             boolean is_compile_update =
                     change == ChangeEvent.COMPILE || change == ChangeEvent.COMPILATION_FINISHED;
@@ -840,49 +864,42 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // check if source model is read correctly
             if (sourceModel == null) {
                 currentModel = null;
-                updateDiagram(new KiCoErrorModel("Cannot read model from active Editor!"), true,
-                        activeEditor);
+                updateDiagram(new KiCoMessageModel("No model in active editor!"), true,
+                        activeEditor);//new KiCoErrorModel("Cannot read model from active Editor!")
                 return;
             }
 
             // Evaluate if current transformation configuration should be asked
-            boolean do_get_transformations = false;
-            do_get_transformations |= is_transformation_update;
-            do_get_transformations |= is_active_editor_update;
-            do_get_transformations |= is_compile_update && compileModel;
+            boolean do_get_selection = false;
+            do_get_selection |= is_selection_update;
+            do_get_selection |= is_active_editor_update;
+            do_get_selection |= is_compile_update && compileModel;
 
             // Indicates of the current transformation configuration differs from previous
             // configuration
-            boolean transformations_changed = false;
+            boolean selection_changed = false;
 
             // get new transformations if necessary
-            if (do_get_transformations) {
+            if (do_get_selection) {
                 KiCoModelViewManager mvm = KiCoModelViewManager.getInstance();
                 if (mvm != null) {
                     // if there is a pinned transformation for active editor take pinned one else
                     // take selected ones
-                    KiCoSelection newTransformations = null;
+                    Pair<KielerCompilerSelection, Boolean> newSelection = null;
                     if (pinnedTransformations.containsKey(activeEditor)) {
-                        newTransformations = pinnedTransformations.get(activeEditor);
-                        // null pointer is indicator for no selection
-                        if (newTransformations.isEmpty()) {
-                            newTransformations = KiCoSelection.EMPTY_SELECTION;
-                        }
+                        newSelection = pinnedTransformations.get(activeEditor);
                     } else {
-                        newTransformations = mvm.getSelection(activeEditor);
+                        newSelection = mvm.getSelection(activeEditor);
                     }
                     // check if selection changed
-                    if (newTransformations == null) {
-                        if (transformations != KiCoSelection.EMPTY_SELECTION) {
-                            transformations_changed |= true;
-                            transformations = KiCoSelection.EMPTY_SELECTION;
-                            ;
+                    if (newSelection != null) {
+                        if (!newSelection.equals(selection)) {
+                            selection_changed |= true;
+                            selection = newSelection;
                         }
-                    } else {
-                        if (!newTransformations.equals(transformations)) {
-                            transformations_changed |= true;
-                            transformations = newTransformations;
-                        }
+                    } else if (newSelection != selection) {
+                        selection_changed |= true;
+                        selection = newSelection;
                     }
                 }
             }
@@ -893,13 +910,13 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // Evaluate if compilation is needed
             boolean do_compile = false;
             // -- compile only if something changed
-            do_compile |= transformations_changed;
+            do_compile |= selection_changed;
             do_compile |= is_active_editor_update;
             do_compile |= is_save_update;
             do_compile |= is_compile_update;
             do_compile |= is_display_mode_update;
             // -- But only if:
-            do_compile &= !transformations.isEmpty();
+            do_compile &= selection != null;
             do_compile &= compileModel;
 
             Object previousCurrentModel = currentModel;
@@ -913,11 +930,12 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     if (currentCompilation != null) {
                         currentCompilation.cancel();
                     }
+
                     // create compilation job
                     currentCompilation =
                             new KiCoAsynchronousCompilation(this, (EObject) sourceModel,
-                                    activeEditor.getTitle(), transformations);
-                    currentCompilationResult = null;                    
+                                    activeEditor.getTitle(), selection, doTracing);
+                    currentCompilationResult = null;
                     currentModel = currentCompilation.getModel();
                     // start
                     currentCompilation.schedule();
@@ -959,7 +977,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 } else {// This is not the most recent compilation
                     return;
                 }
-            } else if (!is_transformation_update || transformations_changed) {
+            } else if (!is_selection_update || selection_changed) {
                 currentModel = sourceModel;
                 currentCompilationResult = null;
                 // drop any existing compilation
@@ -971,10 +989,13 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
             // composite model in given display mode
             if (!noDiagram && displaySideBySide) {
-                KiCoModelChain chain = new KiCoModelChain();
-                chain.getModels().add(new KiCoModelWrapper(sourceModel));
-                chain.getModels().add(new KiCoModelWrapper(currentModel));
-                currentModel = chain;
+                if (displayTracingChain && currentCompilationResult != null) {
+                    currentModel =
+                            new KiCoModelChain(sourceModel, currentCompilationResult,
+                                    activeEditor.getTitle(), selection.getFirst());
+                } else {
+                    currentModel = new KiCoModelChain(sourceModel, currentModel);
+                }
             }
 
             // Indicates if type of model changed and thus the model view has to reinitialize
@@ -990,21 +1011,20 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             do_update_diagram |= do_compile;
             do_update_diagram |= is_display_mode_update;
             // should compile but no transformations are selected
-            do_update_diagram |= is_compile_update && !transformations.isEmpty();
+            do_update_diagram |= is_compile_update && selection != null;
             // compile and transformations changed to null
             do_update_diagram |=
-                    compileModel && transformations.isEmpty() && transformations_changed;
+                    compileModel && selection == null && selection_changed;
 
             boolean is_buisness_model = true;
             is_buisness_model &= !(currentModel instanceof KiCoErrorModel);
             is_buisness_model &= !(currentModel instanceof KiCoMessageModel);
-            is_buisness_model &= !(currentModel instanceof KiCoCodePlaceHolder);
-            
+
             if (do_update_diagram) {
                 if (noDiagram && is_buisness_model) {
-                    updateDiagram(new KiCoMessageModel(
-                            "Model Placeholder: " + getCurrentResourceName(),
-                            "Model visualization is deactivated"), true, activeEditor);
+                    updateDiagram(new KiCoMessageModel("Model Placeholder: "
+                            + getCurrentResourceName(), "Model visualization is deactivated"),
+                            true, activeEditor);
                 } else {
                     updateDiagram(currentModel, model_type_changed, activeEditor);
                 }
@@ -1020,7 +1040,23 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             updateDiagram(currentModel, true, null);
         }
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ILayoutConfig getLayoutConfig() {
+        ViewContext viewContext = this.getViewContext();
+        if (viewContext.getInputModel() instanceof KiCoModelChain) {
+            return new CompoundLayoutConfig(Lists.newArrayList(super.getLayoutConfig(),
+                    new VolatileLayoutConfig(KlighdConstants.SIDE_BAR_LAYOUT_CONFIG_PRIORITY + 1)
+                            .setValue(LayoutOptions.DIRECTION, viewContext.getViewModel(),
+                                    LayoutContext.DIAGRAM_PART, Direction.RIGHT)));
+        } else {
+            return super.getLayoutConfig();
+        }
+    }
+
     /**
      * Updates displayed diagram in this view in a dedicated job.
      */
@@ -1033,18 +1069,21 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
             @Override
             public IStatus runInUIThread(IProgressMonitor monitor) {
-                updateDiagram(model, modelTypeChanged, editorContext, compilationResult, compilation, false);
+                updateDiagram(model, modelTypeChanged, editorContext, compilationResult,
+                        compilation, false);
                 return Status.OK_STATUS;
             }
         }.schedule();
     }
 
     /**
-     * DO NOT CALL THIS METHOD!<p>
-     * This method should only be invoked by {@link #updateDiagram(Object, boolean, IEditorPart)}<p>
+     * DO NOT CALL THIS METHOD!
+     * <p>
+     * This method should only be invoked by {@link #updateDiagram(Object, boolean, IEditorPart)}
+     * <p>
      * Updates displayed diagram in this view. Initializes this view if necessary.
      */
-    private void updateDiagram(final Object model, boolean modelTypeChanged,
+    private void updateDiagram(Object model, boolean modelTypeChanged,
             final IEditorPart editorContext, final CompilationResult compilationResult,
             final KiCoAsynchronousCompilation compilation, boolean isErrorModel) {
         try {
@@ -1052,36 +1091,47 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
                 // if viewer or context does not exist always init view
                 modelTypeChanged = true;
-            }else{
+            } else {
                 vc = this.getViewer().getViewContext();
             }
 
             // listen for internal klighd errors
             lastException = null;
-            Platform.addLogListener(this);
-            
+//            Platform.addLogListener(this);
+
+            // get available synthesis
+            ISynthesis synthesis =
+                    Iterables
+                            .getFirst(
+                                    KlighdDataManager.getInstance().getAvailableSyntheses(
+                                            model.getClass()), null);
+            if (synthesis == null) {
+                model = new KiCoModelChain(model);
+            }
+
             boolean success = false;
-            
+
             // Update diagram
             if (modelTypeChanged) {
-                //save previous synthesis options to restore later
                 KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
-                properties.setProperty(KlighdProperties.EDGES_FIRST, true);
+                properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY,
+                        "de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationUpdateStrategy");
 
+                // save previous synthesis options to restore later
                 if (vc != null) {
-                    ISynthesis synthesis = vc.getDiagramSynthesis();
-                    if (synthesis != null) {
+                    ISynthesis usedSynthesis = vc.getDiagramSynthesis();
+                    if (usedSynthesis != null) {
                         List<SynthesisOption> options = vc.getDisplayedSynthesisOptions();
                         if (!options.isEmpty()) {
                             HashMap<SynthesisOption, Object> optionsMap;
-                            if (recentSynthesisOptions.containsKey(synthesis)) {
-                                optionsMap = recentSynthesisOptions.get(synthesis);
+                            if (recentSynthesisOptions.containsKey(usedSynthesis)) {
+                                optionsMap = recentSynthesisOptions.get(usedSynthesis);
                             } else {
                                 optionsMap = Maps.newHashMap();
-                                recentSynthesisOptions.put(synthesis, optionsMap);
+                                recentSynthesisOptions.put(usedSynthesis, optionsMap);
                             }
                             for (SynthesisOption option : options) {
-                                if(synthesis.getDisplayedSynthesisOptions().contains(option)){
+                                if (usedSynthesis.getDisplayedSynthesisOptions().contains(option)) {
                                     optionsMap.put(option, vc.getOptionValue(option));
                                 }
                             }
@@ -1090,32 +1140,32 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 }
 
                 // get save options to restore
-                ISynthesis synthesis = Iterables.getFirst(KlighdDataManager.getInstance().getAvailableSyntheses(model.getClass()), null);
                 if (synthesis != null && recentSynthesisOptions.containsKey(synthesis)) {
-                    properties.configureSynthesisOptionValues(recentSynthesisOptions.get(synthesis));
+                    properties
+                            .configureSynthesisOptionValues(recentSynthesisOptions.get(synthesis));
                 }
 
                 // Give model synthesis access to the compilation result
-                properties.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
+                properties.setProperty(KiCoProperties.COMPILATION_RESULT, compilationResult);
                 publishCurrentModelInformation(model, compilationResult);
 
                 // the (re)initialization case
                 initialize(model, null, properties);
                 success = true;
                 // reset layout to resolve KISEMA-905
-                resetLayoutConfig();
+                resetLayoutConfig(false);
 
             } else {
                 // Give model synthesis access to the compilation result
-                vc.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
+                vc.setProperty(KiCoProperties.COMPILATION_RESULT, compilationResult);
                 publishCurrentModelInformation(model, compilationResult);
                 // update case (keeps options and sidebar)
-                success = DiagramViewManager.updateView(this.getViewer().getViewContext(), model) != null;
+                success = LightDiagramServices.updateDiagram(this.getViewer().getViewContext(), model);
             }
 
             // stop listening
-            Platform.removeLogListener(this);  
-            
+            Platform.removeLogListener(this);
+
             // check is update was successful
             if (lastException != null) {
                 throw lastException;
@@ -1125,17 +1175,24 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     if (model instanceof EObject && !(model instanceof KiCoCodePlaceHolder)) {
                         String editorID = null;
                         // Adding file extension
-                        ResourceExtension resourceExtension = KiCoPlugin.getInstance().getResourceExtension(currentModel);
+                        ResourceExtension resourceExtension =
+                                KiCoPlugin.getInstance().getResourceExtension(currentModel);
                         String resourceExtensionString = "txt";
                         if (resourceExtension != null) {
                             resourceExtensionString = resourceExtension.getExtension();
                         }
-                        //TODO Cannot open xtext editor because it fails to create a resource for the special StringEditorInput because it has no path
-                      ResourceExtension ext = KiCoPlugin.getInstance().getResourceExtension(currentModel);
-                      if (ext != null) {
-                          editorID = ext.getEditorID();
-                      }
-                        updateDiagram(new KiCoCodePlaceHolder(getCurrentResourceName(), KiCoUtil.serialize((EObject)model, null, false), editorID, resourceExtensionString), true, editorContext, null, null, false);
+                        // TODO Cannot open xtext editor because it fails to create a resource for
+                        // the special StringEditorInput because it has no path
+                        ResourceExtension ext =
+                                KiCoPlugin.getInstance().getResourceExtension(currentModel);
+                        if (ext != null) {
+                            editorID = ext.getEditorID();
+                        }
+                        updateDiagram(
+                                new KiCoCodePlaceHolder(getCurrentResourceName(),
+                                        KiCoUtil.serialize((EObject) model, null, false), editorID,
+                                        resourceExtensionString), true, editorContext, null, null,
+                                false);
                     } else {
                         throw new NullPointerException(
                                 "Diagram is null or empty. Inernal KLighD error.");
@@ -1148,14 +1205,14 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 this.getViewer().getViewContext().setSourceWorkbenchPart(editorContext);
             }
 
-            //dispose warning message composite if necessary
+            // dispose warning message composite if necessary
             if (warningMessageContainer != null) {
                 if (!warningMessageContainer.isDisposed()) {
                     warningMessageContainer.dispose();
                 }
                 warningMessageContainer = null;
             }
-            //show warnings
+            // show warnings
             if (compilationResult != null && !compilationResult.getPostponedWarnings().isEmpty()) {
                 StringBuilder warnings = new StringBuilder();
                 for (KielerCompilerException warning : compilationResult.getPostponedWarnings()) {
@@ -1167,7 +1224,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
         } catch (Exception e) {
             if (!isErrorModel) {
-                updateDiagram(new KiCoErrorModel("Displaying diagram failed!", e), true, editorContext, null, null, true);
+                updateDiagram(new KiCoErrorModel("Displaying diagram failed!", e), true,
+                        editorContext, null, null, true);
             }
         } finally {
             Platform.removeLogListener(this);
@@ -1179,7 +1237,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * 
      * @param model
      */
-    private void publishCurrentModelInformation(final Object model, final CompilationResult compilationResult) {
+    private void publishCurrentModelInformation(final Object model,
+            final CompilationResult compilationResult) {
         if (isPrimaryView()) {
             boolean is_placeholder =
                     model instanceof KiCoErrorModel || model instanceof KiCoMessageModel
@@ -1196,7 +1255,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     KiemPlugin.setCurrentModelFile(modelViewPath);
                     KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
                 }
-            } else { //this case when model is not compiled
+            } else { // this case when model is not compiled
                 KIEMModelSelectionCombination.refreshKIEMActiveAndOpenedModels(activeEditor);
                 KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
             }
@@ -1217,9 +1276,10 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             }
         }
     }
-    
+
     /**
      * Shows warning text in klighd canvas
+     * 
      * @param viewer
      * @param allWarnings
      */
@@ -1234,9 +1294,9 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         final Image closeImage = ICON_CLOSE.createImage();
         close.setBackground(orange);
         close.setImage(closeImage);
-        //close.setBackground(orange);
+        // close.setBackground(orange);
         close.setToolTipText("Close warnings");
-        //close action
+        // close action
         close.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseUp(final MouseEvent event) {
@@ -1250,12 +1310,12 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
         warningMessageContainer.setLocation(0, 0);
         warningMessageContainer.setLayout(new RowLayout());
-        
-        //update composite
+
+        // update composite
         warningMessageContainer.pack();
         canvas.layout(true, true);
 
-        //cleanup on dispose
+        // cleanup on dispose
         warningMessageContainer.addDisposeListener(new DisposeListener() {
 
             public void widgetDisposed(DisposeEvent e) {

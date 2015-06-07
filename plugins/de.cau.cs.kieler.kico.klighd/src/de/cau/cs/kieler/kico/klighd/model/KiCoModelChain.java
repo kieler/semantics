@@ -13,8 +13,13 @@
  */
 package de.cau.cs.kieler.kico.klighd.model;
 
+import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.ListIterator;
+
+import de.cau.cs.kieler.kico.CompilationResult;
+import de.cau.cs.kieler.kico.IntermediateResult;
+import de.cau.cs.kieler.kico.KielerCompilerSelection;
 
 /**
  * This is a Wrapper for a list of KiCoModelWrapper because KLighD does not support diagram
@@ -27,29 +32,114 @@ import java.util.List;
  */
 public class KiCoModelChain {
 
-    private final List<KiCoModelWrapper> models = new LinkedList<KiCoModelWrapper>();    
+    private final LinkedList<Object> models = new LinkedList<Object>();
+    private final LinkedList<String> tranformations = new LinkedList<String>();
+    private final HashMap<Object, Boolean> collapse = new HashMap<Object, Boolean>();
+    private boolean blankMode = true;
 
     /**
-     * Standard Constructor
+     * Creates a one element model chain from given model. This is used to have a fall-back
+     * synthesis for models without a own synthesis.
+     * 
+     * @param firstModel
+     *            first model
+     * @param secondModel
+     *            second model
      */
-    public KiCoModelChain() {
-        super();
-        // TODO Auto-generated constructor stub
+    public KiCoModelChain(final Object model) {
+        if (model == null) {
+            models.add(new KiCoMessageModel("Missing Model"));
+        } else {
+            models.add(model);
+        }
     }
-    
+
     /**
-     * @return list of models in chain
+     * Creates a two element model chain from given models representing a side-by-side model.
+     * 
+     * @param firstModel
+     *            first model
+     * @param secondModel
+     *            second model
      */
-    public List<KiCoModelWrapper> getModels() {
+    public KiCoModelChain(final Object firstModel, final Object secondModel) {
+        if (firstModel == null) {
+            models.add(new KiCoMessageModel("Missing Model"));
+        } else {
+            models.add(firstModel);
+        }
+        if (secondModel == null) {
+            models.add(new KiCoMessageModel("Missing Model"));
+        } else {
+            models.add(secondModel);
+        }
+    }
+
+    /**
+     * Creates a model chain from the given compilation result containing all intermediate models.
+     * 
+     * @param compilationResult
+     *            the compilation result
+     * @param modelName
+     *            the name of the source model
+     * @param transformations
+     *            the selected transformations
+     */
+    public KiCoModelChain(Object sourceModel, final CompilationResult compilationResult, final String modelName,
+            KielerCompilerSelection selection) {
+        models.add(sourceModel);
+        collapse.put(sourceModel, false);
+        for (IntermediateResult ir : compilationResult.getTransformationIntermediateResults()) {
+            Object model = ir.getResult();
+            if (model instanceof String) {
+                model = new KiCoCodePlaceHolder(modelName, (String) model);
+            } else if(model == null) {
+                model = new KiCoMessageModel("Missing Model");
+            }
+            if(!models.contains(model)) {
+                tranformations.add(ir.getId());
+                models.add(model);
+                collapse.put(model, false);//true
+            }
+        }
+        collapse.put(models.getLast(), false);
+        blankMode = false;
+    }
+
+    /**
+     * Returns the selected model in this chain
+     * 
+     * @return selected model
+     */
+    public Object getSelectedModel() {
+        return models.getLast();
+    }
+
+    /**
+     * @return the models
+     */
+    public LinkedList<Object> getModels() {
         return models;
     }
 
     /**
-     * @return selected model
+     * @return the blankMode
      */
-    public Object getSelectedModel() {
-        //TODO implement selection detection
-        return models.get(models.size() - 1).getModel();
+    public boolean isBlankMode() {
+        return blankMode;
     }
 
+    /**
+     * @return the tranformations
+     */
+    public LinkedList<String> getTranformations() {
+        return tranformations;
+    }
+
+    /**
+     * @return the collapse
+     */
+    public HashMap<Object, Boolean> getCollapse() {
+        return collapse;
+    }
 }

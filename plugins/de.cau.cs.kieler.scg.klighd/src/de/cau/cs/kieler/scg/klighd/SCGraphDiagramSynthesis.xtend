@@ -84,7 +84,7 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.kico.klighd.KiCoKLighDProperties
+import de.cau.cs.kieler.kico.KiCoProperties
 import java.util.Set
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
@@ -95,6 +95,8 @@ import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.klay.layered.properties.InternalProperties
 import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
+import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.ControlDependency
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -343,6 +345,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 0; it.green = 0; it.blue = 255;]
     private static val KColor DEPENDENCY_ABSWRITEABSWRITE = RENDERING_FACTORY.createKColor() =>
         [it.red = 255; it.green = 0; it.blue = 0;]
+    private static val KColor DEPENDENCY_CONTROL = RENDERING_FACTORY.createKColor() =>
+        [it.red = 0; it.green = 192; it.blue = 192;]
     private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor() =>
         [it.red = 255; it.green = 0; it.blue = 0;]
     private static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor() =>
@@ -373,7 +377,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val String ANNOTATION_BRANCH = "branch"
     private static val String ANNOTATION_REGIONNAME = "regionName"
     private static val String ANNOTATION_SEQUENTIALIZED = "sequentialized" 
-    private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"    
+    private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"   
+    private static val String ANNOTATION_SCPDGTRANSFORMATION = "scpdg" 
 
     /** 
 	 * Constants for hierarchical node groups
@@ -412,6 +417,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private int sequentializedSCGCounter = 0
     
     private SCGraph SCGraph;
+    protected boolean isSCPDG;
 
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
@@ -428,9 +434,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // Connect the model to the scope provider for the serialization.
         scopeProvider.parent = model;
 
-        compilationResult = this.usedContext.getProperty(KiCoKLighDProperties.COMPILATION_RESULT)
+        compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
         if (compilationResult != null) {
-            val PILR = compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head
+            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
             if (PILR != null) PIL_Nodes += PILR.criticalNodes
         }
 
@@ -459,6 +465,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return scg.createNode().putToLookUpWith(scg) => [ node |
             // Set root node and layout options.
             rootNode = node
+            isSCPDG = scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)
             if(ORIENTATION.objectValue == "Left-Right") orientation = ORIENTATION_LANDSCAPE else orientation = ORIENTATION_PORTRAIT
             if (topdown)
                 node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
@@ -526,10 +533,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 
                 // If the dependency edges shall be layouted as well, they must be drawn before any 
                 // hierarchy management. The hierarchy methods break edges in half and connect them via a port.
-                if (scg instanceof SCGraph && SHOW_DEPENDENCIES.booleanValue && LAYOUT_DEPENDENCIES.booleanValue) {
-                    if (it instanceof Assignment) {
-                        (it as Assignment).dependencies.forEach[ (it as Dependency).synthesizeDependency ]
-                    }
+                if (scg instanceof SCGraph && SHOW_DEPENDENCIES.booleanValue && 
+                	(LAYOUT_DEPENDENCIES.booleanValue || isSCPDG)
+                ) {
+//                    if (it instanceof Assignment) {
+//                        (it as Assignment).
+                        it.dependencies.forEach[ (it as Dependency).synthesizeDependency ]
+//                    }
                 }
             ]
             
@@ -587,7 +597,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (scg.basicBlocks.size>0) scg.synthesizeBasicBlocks
             
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
-            if (SHOW_DEPENDENCIES.booleanValue && !LAYOUT_DEPENDENCIES.booleanValue) {
+            if (SHOW_DEPENDENCIES.booleanValue && !(LAYOUT_DEPENDENCIES.booleanValue || isSCPDG)) {
                 scg.nodes.filter(Assignment).forEach[
                     it.dependencies.forEach[ (it as Dependency).synthesizeDependency ]
                 ]
@@ -1147,8 +1157,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private def Dependency synthesizeDependency(Dependency dependency) {
 
         // If non concurrent dependency are hidden and the given dependency is not concurrent, exit at once.
-        if(!SHOW_NONCONCURRENT.booleanValue && !dependency.isConcurrent) return dependency;
-        if(!SHOW_CONFLUENT.booleanValue && dependency.confluent) return dependency;
+        if(dependency instanceof DataDependency) {
+            val dataDependency = dependency as DataDependency
+            if((!isSCPDG) && ((!SHOW_NONCONCURRENT.booleanValue && !dataDependency.isConcurrent))) return dependency;
+            if(!SHOW_CONFLUENT.booleanValue && dataDependency.confluent) return dependency;    
+        }
 
         if(!SHOW_DEPENDENCY_WRITE_WRITE.booleanValue && dependency instanceof Write_Write) return dependency;
         if(!SHOW_DEPENDENCY_ABSWRITE_RELWRITE.booleanValue && dependency instanceof AbsoluteWrite_RelativeWrite) return dependency;
@@ -1164,17 +1177,27 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.40);
             edge.source = sourceNode
             edge.target = targetNode
-            edge.addRoundedBendsPolyline(8, 2) => [
-                // ... and use the predefined color for the different dependency types.    
-                if(dependency instanceof AbsoluteWrite_Read) it.foreground = DEPENDENCY_ABSWRITEREAD.copy
-                if(dependency instanceof RelativeWrite_Read) it.foreground = DEPENDENCY_RELWRITEREAD.copy
-                if(dependency instanceof AbsoluteWrite_RelativeWrite) it.foreground = DEPENDENCY_ABSWRITERELWRITE.copy
-                if(dependency instanceof Write_Write) it.foreground = DEPENDENCY_ABSWRITEABSWRITE.copy
-                it.lineStyle = LineStyle::DASH
-                it.addArrowDecorator
-            ]
+            if (dependency instanceof DataDependency) {
+	            edge.addRoundedBendsPolyline(8, 2) => [
+    	            // ... and use the predefined color for the different dependency types.    
+        	        if(dependency instanceof AbsoluteWrite_Read) it.foreground = DEPENDENCY_ABSWRITEREAD.copy
+            	    if(dependency instanceof RelativeWrite_Read) it.foreground = DEPENDENCY_RELWRITEREAD.copy
+                	if(dependency instanceof AbsoluteWrite_RelativeWrite) it.foreground = DEPENDENCY_ABSWRITERELWRITE.copy
+                	if(dependency instanceof Write_Write) it.foreground = DEPENDENCY_ABSWRITEABSWRITE.copy
+                	it.lineStyle = LineStyle::DASH
+                	it.addArrowDecorator
+            	]
+            }
+            else if (dependency instanceof ControlDependency) {
+	            edge.addRoundedBendsPolyline(8, 2) => [
+    	            // ... and use the predefined color for the different dependency types.    
+        	        it.foreground = DEPENDENCY_CONTROL.copy
+                	it.lineStyle = LineStyle::DOT
+                	it.addArrowDecorator
+            	]
+            }
             // If dependency edges are layouted, use the dependency ports to attach the edges.
-            if (LAYOUT_DEPENDENCIES.booleanValue) {
+            if ((LAYOUT_DEPENDENCIES.booleanValue) || (isSCPDG)) {
                 edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
                 edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)
             } else {
@@ -1329,7 +1352,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (SHOW_BASICBLOCKS.booleanValue) {
                 val bbNodes = <Node>newLinkedList
                 basicBlock.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
-                val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK, basicBlock)
+                val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK, basicBlock).associateWith(basicBlock)
                 bbContainerList.put(basicBlock, bbContainer)
 //                val bbName = serializer.serialize(bb.guards.head.reference)
                 var bbName = basicBlock.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
@@ -1344,7 +1367,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
                 for (schedulingBlock : basicBlock.schedulingBlocks) {
-                    val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK, schedulingBlock)
+                    val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK, schedulingBlock).associateWith(schedulingBlock)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
 //                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
                      var sbName = "<null>"
@@ -1366,7 +1389,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 						sbName = sbName + "\n" + expText       
 					}
             	    
-                	sbName.createLabel(sbContainer).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
+                	sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
                 	
                     if (basicBlock.deadBlock) {
                         sbContainer.getData(typeof(KRoundedRectangle)) => [

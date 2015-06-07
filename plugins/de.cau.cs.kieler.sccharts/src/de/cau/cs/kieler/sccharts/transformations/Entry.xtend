@@ -13,11 +13,17 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * SCCharts Entry Transformation.
@@ -26,8 +32,32 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Entry {
+class Entry extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::ENTRY_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::ENTRY_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::ENTRY_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::ABORT_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
 
@@ -58,7 +88,9 @@ class Entry {
 
             var State firstState
             var State lastState
-
+            
+            state.setDefaultTrace //All following states etc. will be traced to state
+            
             if (state.final) {
                 val connector = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
                 for (transition : state.incomingTransitions.immutableCopy) {
@@ -66,9 +98,9 @@ class Entry {
                 }
                 firstState = connector
                 lastState = state
-            } else if (!state.hasInnerStatesOrRegions) {
+            } else if (!state.hasInnerStatesOrControlflowRegions) {
                 state.regions.clear // FIX: need to erase dummy single region
-                val region = state.createRegion(GENERATED_PREFIX + "Entry")
+                val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")
                 val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName
@@ -76,13 +108,13 @@ class Entry {
                     exitState.outgoingTransitions.add(transition)
                 }
                 state.createTransitionTo(exitState).setTypeTermination
-            } else if (state.regions.size == 1) {
-                val region = state.regions.get(0)
+            } else if (state.regions.filter(ControlflowRegion).size == 1) {
+                val region = state.regions.filter(ControlflowRegion).get(0)
                 lastState = region.states.filter[initial].get(0) //every region MUST have an initial state
                 lastState.setNotInitial
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName
             } else { // state has several regions
-                val region = state.createRegion(GENERATED_PREFIX + "Entry").uniqueName
+                val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName
                 lastState = region.createState(GENERATED_PREFIX + "Main")
                 for (mainRegion : state.regions.filter(e|e != region).toList.immutableCopy) {
                     lastState.regions.add(mainRegion)
@@ -95,6 +127,8 @@ class Entry {
             val entryRegion = firstState.parentRegion
             val lastEntryAction = state.entryActions.last
             for (entryAction : state.entryActions.immutableCopy) {
+                entryAction.setDefaultTrace //All following states etc. will be traced to their entryAction
+                
                 var connector = lastState
                 if (entryAction != lastEntryAction) {
                     connector = entryRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector

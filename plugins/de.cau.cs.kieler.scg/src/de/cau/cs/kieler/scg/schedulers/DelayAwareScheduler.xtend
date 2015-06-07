@@ -14,28 +14,23 @@
  package de.cau.cs.kieler.scg.schedulers
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Predecessor
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScheduledBlock
 import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerSelector
 import java.util.List
 import java.util.Set
-import java.util.ArrayList
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
-import com.google.inject.Guice
-import de.cau.cs.kieler.kico.KielerCompilerException
-import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
-import de.cau.cs.kieler.scg.ScheduledBlock
-import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -55,6 +50,28 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
  * @kieler.rating 2013-11-27 proposed yellow
  */
 class DelayAwareScheduler extends SimpleScheduler {
+    
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    
+    override getId() {
+        //TODO: Create unique transformation ID and register this class as transformation
+        return null //SCGTransformations::SCHEDULING_ID
+    }
+
+    override getName() {
+        //TODO: see above
+        return null //SCGTransformations::SCHEDULING_NAME
+    }
+
+    override getProducedFeatureId() {
+        return SCGFeatures::SCHEDULING_ID
+    }
+
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::GUARD_ID)
+    }
     
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -135,7 +152,7 @@ class DelayAwareScheduler extends SimpleScheduler {
                 
         // Basically, perform the same test for dependency. We cannot create a guard expression 
         // if any block containing a dependency is still in our list.
-        for(dependency : schedulingBlock.dependencies) {
+        for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
             if (dependency.concurrent && !dependency.confluent) {
                 val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
                     if (
@@ -213,7 +230,7 @@ class DelayAwareScheduler extends SimpleScheduler {
 //	            	}
 //            	}
 //           	}
-            for(dependency : schedulingBlock.dependencies) {
+            for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
                 if (dependency.concurrent && !dependency.confluent) {
                     val sb = schedulingBlockCache.get(dependency.eContainer as Node)
                     preceedingSchizo.put(sb, true)

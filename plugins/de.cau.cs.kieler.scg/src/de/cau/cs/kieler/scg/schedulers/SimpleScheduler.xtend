@@ -16,20 +16,20 @@
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.ScheduledBlock
 import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
-import com.google.inject.Guice
-import de.cau.cs.kieler.scg.ScheduledBlock
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -48,8 +48,8 @@ import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-class SimpleScheduler extends AbstractScheduler {
-    
+abstract class SimpleScheduler extends AbstractScheduler implements Traceable {
+        
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
@@ -110,7 +110,7 @@ class SimpleScheduler extends AbstractScheduler {
                 
         // Basically, perform the same test for dependency. We cannot create a guard expression 
         // if any block containing a dependency is still in our list.
-        for(dependency : schedulingBlock.dependencies) {
+        for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
             if (dependency.concurrent && !dependency.confluent) {
 				val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
     	      	if (!placedBlocks.contains(sBlock)) { return false }
@@ -132,7 +132,7 @@ class SimpleScheduler extends AbstractScheduler {
                    		 sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
                 }
             }
-            for(dependency : schedulingBlock.dependencies) {
+            for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
                 if (dependency.concurrent && !dependency.confluent) {
 					val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
 					if (!topologicalSortVisited.contains(sBlock)) {
@@ -193,7 +193,7 @@ class SimpleScheduler extends AbstractScheduler {
 //        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
 //            Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
 //        context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
-        val pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
+        val pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.criticalNodes.toSet
         
 
         // Create and fill a list for all scheduling blocks.
@@ -209,7 +209,7 @@ class SimpleScheduler extends AbstractScheduler {
         // and add the scheduling information to the graph.
         if (!schedulable) {
             if (context != null) {
-                context.getCompilationResult().addPostponedWarning(new KielerCompilerException(getId(), "The SCG is NOT ASC-schedulable!"));
+                context.getCompilationResult().addPostponedWarning(new KielerCompilerException(getId(), getId(), "The SCG is NOT ASC-schedulable!"));
             }
             System::out.println("The SCG is NOT ASC-schedulable!")
             scg.schedules.add(schedule)

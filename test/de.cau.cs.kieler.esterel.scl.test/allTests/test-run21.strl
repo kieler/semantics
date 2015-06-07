@@ -1,0 +1,20 @@
+module test_run21:
+output A : integer;
+
+run foo
+
+end module
+
+module foo:
+output A : integer;
+
+run bar
+
+end module
+
+module bar:
+output A : integer;
+
+emit A(10)
+
+end module

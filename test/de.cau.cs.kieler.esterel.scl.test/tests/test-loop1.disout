@@ -1,0 +1,12 @@
+module test_loop1:
+
+loop
+  ;
+  ;
+  loop
+    ;
+    pause
+  end loop
+end loop
+
+end module

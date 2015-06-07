@@ -14,15 +14,21 @@
 package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.ArrayList
 import java.util.List
-import de.cau.cs.kieler.sccharts.Region
+
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * SCCharts History Transformation.
@@ -31,8 +37,32 @@ import de.cau.cs.kieler.sccharts.Region
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class History {
+class History extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::HISTORY_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::HISTORY_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::HISTORY_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::STATIC_ID, SCChartsFeature::INITIALIZATION_ID, SCChartsFeature::ENTRY_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -52,7 +82,7 @@ class History {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach [ targetState  |
+        targetRootState.getAllStates.forEach [ targetState |
             targetState.transformHistory(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
@@ -64,20 +94,22 @@ class History {
         val historyTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[isHistory])
         val deepHistoryTransitions = historyTransitions.filter[!isDeepHistory]
         val nonHistoryTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[!isHistory])
+        historyTransitions.setDefaultTrace
 
         if (historyTransitions != null && historyTransitions.size > 0 && state.regions != null && state.regions.size > 0) {
             var int initialValue
             val List<ValuedObject> stateEnumsAll = new ArrayList
             val List<ValuedObject> stateEnumsDeep = new ArrayList
 
-            val regions = state.regions.immutableCopy
-            var regionsDeep = state.regions.immutableCopy as List<Region>
+            val regions = state.regions.filter(ControlflowRegion).toList
+            var regionsDeep = state.regions.filter(ControlflowRegion).toList as List<ControlflowRegion>
             if (!deepHistoryTransitions.nullOrEmpty) {
-                regionsDeep = state.allContainedRegions
+                regionsDeep = state.allContainedControlflowRegions
             }
 
-            for ( region : regionsDeep.toList) {
+            for (region : regionsDeep.toList) {
                 var counter = 0
+
                 // FIXME: stateEnum should be static
                 val stateEnum = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + state.id).setTypeInt.
                     uniqueName
@@ -107,7 +139,7 @@ class History {
 
                     // Reset deepStateEnums
                     for (stateEnum : stateEnumsDeep) {
-                        transition.addEffect(stateEnum.assign(initialValue.createIntValue))
+                        transition.addEffect(stateEnum.assign(initialValue.createIntValue)).trace(transition)
                     }
                 }
                 transition.setHistory(HistoryType::RESET)

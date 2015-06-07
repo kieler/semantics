@@ -1,0 +1,16 @@
+module test_abort2:
+output A;
+output B;
+output C;
+
+  abort
+    pause;
+    pause;
+    emit B
+  when A;
+  emit C
+||
+  pause;
+  emit A
+
+end module

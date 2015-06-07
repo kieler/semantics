@@ -1,0 +1,40 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Esterel to Scl Test
+Bundle-SymbolicName: de.cau.cs.kieler.esterel.scl.test;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.sim.kiem.test,
+ org.eclipse.core.resources;bundle-version="3.7.101",
+ de.cau.cs.kieler.s.sim.sc,
+ de.cau.cs.kieler.s.sc,
+ de.cau.cs.kieler.sim.eso,
+ de.cau.cs.kieler.sim.kart,
+ de.cau.cs.kieler.sim.syncsignalreset,
+ de.cau.cs.kieler.sccharts.sim.c,
+ de.cau.cs.kieler.sccharts,
+ de.cau.cs.kieler.sccharts.s,
+ de.cau.cs.kieler.sccharts.text,
+ de.cau.cs.kieler.sccharts.text.ui,
+ de.cau.cs.kieler.sccharts.scg,
+ de.cau.cs.kieler.scg,
+ de.cau.cs.kieler.scg.s,
+ de.cau.cs.kieler.s,
+ de.cau.cs.kieler.esterel;bundle-version="0.3.3",
+ de.cau.cs.kieler.scl,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ de.cau.cs.kieler.esterel.cec;bundle-version="0.1.4"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Import-Package: com.google.inject;version="1.3.0",
+ de.cau.cs.kieler.esterel.scl.transformations,
+ de.cau.cs.kieler.kico,
+ org.eclipse.emf.ecore.xmi.impl,
+ org.eclipse.xtext.junit4.util,
+ org.eclipse.xtext.resource
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+

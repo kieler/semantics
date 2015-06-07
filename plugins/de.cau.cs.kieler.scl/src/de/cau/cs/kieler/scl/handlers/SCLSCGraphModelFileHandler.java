@@ -21,9 +21,12 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
+import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scl.SCLStandaloneSetup;
-import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.transformations.SCLToSCGTransformation;
+import de.cau.cs.kieler.scl.transformations.SCLTransformations;
 
 /**
  * @author ssm
@@ -72,7 +75,9 @@ public class SCLSCGraphModelFileHandler extends AbstractConvertModelHandler {
         // refactored model).
         transformed = model;
         if (commandString.equals(SCL_TRANSFORMATION)) {
-            transformed = transformation.transformSCLToSCG((Program) model);
+//            transformed = transformation.transformSCLToSCG((Program) model);
+            KielerCompilerContext context = new KielerCompilerContext(SCLTransformations.SCG_ID, model);
+            transformed = (SCGraph) KielerCompiler.compile(context).getEObject();
         } 
         return transformed;
     }

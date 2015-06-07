@@ -1,0 +1,6 @@
+module test_run21:
+output A : integer;
+
+emit A(10)
+
+end module

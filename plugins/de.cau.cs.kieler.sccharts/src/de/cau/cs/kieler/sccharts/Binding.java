@@ -16,8 +16,6 @@ package de.cau.cs.kieler.sccharts;
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Binding</b></em>'.
@@ -37,62 +35,62 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Binding extends Annotatable {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * Returns the value of the '<em><b>Formal</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Formal</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Formal</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Formal</em>' reference.
-     * @see #setFormal(ValuedObject)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getBinding_Formal()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Formal</em>' reference.
+	 * @see #setFormal(ValuedObject)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getBinding_Formal()
+	 * @model
+	 * @generated
+	 */
     ValuedObject getFormal();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Binding#getFormal <em>Formal</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Binding#getFormal <em>Formal</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Formal</em>' reference.
-     * @see #getFormal()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Formal</em>' reference.
+	 * @see #getFormal()
+	 * @generated
+	 */
     void setFormal(ValuedObject value);
 
     /**
-     * Returns the value of the '<em><b>Actual</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Actual</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Actual</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Actual</em>' reference.
-     * @see #setActual(ValuedObject)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getBinding_Actual()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Actual</em>' reference.
+	 * @see #setActual(ValuedObject)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getBinding_Actual()
+	 * @model
+	 * @generated
+	 */
     ValuedObject getActual();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Binding#getActual <em>Actual</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Binding#getActual <em>Actual</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Actual</em>' reference.
-     * @see #getActual()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Actual</em>' reference.
+	 * @see #getActual()
+	 * @generated
+	 */
     void setActual(ValuedObject value);
 
 } // Binding

@@ -13,15 +13,9 @@
  */
 package de.cau.cs.kieler.scg.transformations
 
-import de.cau.cs.kieler.scg.BasicBlock
-import de.cau.cs.kieler.scg.Dependency
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.SchedulingBlock
-import java.util.List
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.features.SCGFeatures
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -44,13 +38,33 @@ import de.cau.cs.kieler.scg.Node
 
 class BasicBlockTransformationSCplus extends BasicBlockTransformation {
     
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    
+    override getId() {
+        return SCGTransformations::BASICBLOCK_SCPLUS_ID
+    }
+
+    override getName() {
+        return SCGTransformations::BASICBLOCK_SCPLUS_NAME
+    }
+
+    override getProducedFeatureId() {
+        return SCGFeatures::BASICBLOCK_ID
+    }
+
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::DEPENDENCY_ID)
+    }
+    
     // -------------------------------------------------------------------------
     // -- Transformation methods
     // -------------------------------------------------------------------------
     
     override boolean schedulingBlockSplitter(Node node, Node lastNode) {
         super.schedulingBlockSplitter(node, lastNode) ||
-        node.eContents.filter(typeof(Dependency)).filter[ concurrent && !confluent ].empty
+        node.eContents.filter(typeof(DataDependency)).filter[ concurrent && !confluent ].empty
     } 
     
   

@@ -14,20 +14,21 @@
 package de.cau.cs.kieler.scg.schedulers
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScheduledBlock
 import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.ArrayList
 import java.util.List
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.scg.ScheduledBlock
-import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -47,6 +48,28 @@ import de.cau.cs.kieler.scg.ScgFactory
  * @kieler.rating 2014-01-18 proposed yellow
  */
 class ThreadAwareScheduler extends SimpleScheduler {
+
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    
+    override getId() {
+        //TODO: Create unique transformation ID and register this class as transformation
+        return null //SCGTransformations::SCHEDULING_ID
+    }
+
+    override getName() {
+        //TODO: see above
+        return null //SCGTransformations::SCHEDULING_NAME
+    }
+
+    override getProducedFeatureId() {
+        return SCGFeatures::SCHEDULING_ID
+    }
+
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::GUARD_ID)
+    }
 
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -71,7 +94,7 @@ class ThreadAwareScheduler extends SimpleScheduler {
 		for (sBlock : cluster) {
 			for (nodes : sBlock.nodes) {
 				dependencies = dependencies + 
-					nodes.incoming.filter(typeof(Dependency)).filter[ concurrent == true ].size
+					nodes.incoming.filter(typeof(DataDependency)).filter[ concurrent == true ].size
 			}
 		}
 		
@@ -131,7 +154,7 @@ class ThreadAwareScheduler extends SimpleScheduler {
                     }
                 }
             }
-            for(dependency : schedulingBlock.dependencies) {
+            for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
                 if (dependency.concurrent && !dependency.confluent) {
                     if (schedulingBlocks.contains((dependency.eContainer as Node).schedulingBlock)) { 
                         (dependency.eContainer as Node).schedulingBlock.topologicalClusterPlacement(

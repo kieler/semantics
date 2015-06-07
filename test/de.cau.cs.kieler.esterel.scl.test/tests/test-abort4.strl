@@ -1,0 +1,32 @@
+module test_abort4:
+input A;
+input B;
+output C;
+output D;
+output E;
+
+loop
+  abort
+    pause;
+    emit C;
+    pause;
+    pause;
+    emit D
+  when
+    case 3 B do
+      emit E;
+      pause;
+      pause;
+      emit C;
+      emit E
+    case 2 A do
+      emit D;
+      pause;
+      pause;
+      emit D;
+      emit E
+  end abort;
+  pause
+end loop
+
+end module

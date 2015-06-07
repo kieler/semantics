@@ -83,32 +83,33 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      *
      * @param region the region
      */
-    @Check
-    public void checkInitialState(final de.cau.cs.kieler.sccharts.Region region) {
-        // Do not consider the root region == SCChart
-        if (region.getParentState() != null) {
-            // check if parent state has declared any REAL region not only a
-            // dummy region for entry/during/exit actions or suspends
-            de.cau.cs.kieler.sccharts.State parentState = region.getParentState();
-            int foundInitial = 0;
-            if ((parentState.getLocalActions().size() > 0) && (parentState.getRegions().size() == 1)
-                    && parentState.getRegions().get(0).getStates().size() == 0
-                    && (parentState.getRegions().get(0).getId() == null
-                        || parentState.getRegions().get(0).getId().equals(""))) {
-                foundInitial = 1;
-            }
-            for (de.cau.cs.kieler.sccharts.State state : region.getStates()) {
-                if (state.isInitial()) {
-                    foundInitial++;
-                }
-            }
-            if (foundInitial == 0) {
-                error(REGION_NO_INITIAL_STATE, region, null, -1);
-            } else if (foundInitial > 1) {
-                error(REGION_TWO_MANY_INITIAL_STATES, region, null, -1);
-            }
-        }
-    }
+// FIXME: dataflow
+//    @Check
+//    public void checkInitialState(final de.cau.cs.kieler.sccharts.Region region) {
+//        // Do not consider the root region == SCChart
+//        if (region.getParentState() != null) {
+//            // check if parent state has declared any REAL region not only a
+//            // dummy region for entry/during/exit actions or suspends
+//            de.cau.cs.kieler.sccharts.State parentState = region.getParentState();
+//            int foundInitial = 0;
+//            if ((parentState.getLocalActions().size() > 0) && (parentState.getRegions().size() == 1)
+//                    && parentState.getRegions().get(0).getStates().size() == 0
+//                    && (parentState.getRegions().get(0).getId() == null
+//                        || parentState.getRegions().get(0).getId().equals(""))) {
+//                foundInitial = 1;
+//            }
+//            for (de.cau.cs.kieler.sccharts.State state : region.getStates()) {
+//                if (state.isInitial()) {
+//                    foundInitial++;
+//                }
+//            }
+//            if (foundInitial == 0) {
+//                error(REGION_NO_INITIAL_STATE, region, null, -1);
+//            } else if (foundInitial > 1) {
+//                error(REGION_TWO_MANY_INITIAL_STATES, region, null, -1);
+//            }
+//        }
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -118,34 +119,35 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      *
      * @param state the state
      */
-    @Check
-    public void checkFinalStates(final de.cau.cs.kieler.sccharts.State state) {
-        // Only consider macro states
-        if (state.getRegions().size() > 0) {
-            boolean foundTermination = false;
-            for (Transition transition : state.getOutgoingTransitions()) {
-                if (transition.getType() == TransitionType.TERMINATION) {
-                    foundTermination = true;
-                    break;
-                }
-            }
-            if (foundTermination) {
-                // Now test for every region
-                for (Region region : state.getRegions()) {
-                    boolean foundFinal = false;
-                    for (de.cau.cs.kieler.sccharts.State innerState : region.getStates()) {
-                        if (innerState.isFinal()) {
-                            foundFinal = true;
-                            break;
-                        }
-                    }
-                    if (!foundFinal) {
-                        warning(REGION_NO_FINAL_STATE, region, null, -1);
-                    }
-                }
-            }
-        }
-    }
+ // FIXME: dataflow
+//    @Check
+//    public void checkFinalStates(final de.cau.cs.kieler.sccharts.State state) {
+//        // Only consider macro states
+//        if (state.getRegions().size() > 0) {
+//            boolean foundTermination = false;
+//            for (Transition transition : state.getOutgoingTransitions()) {
+//                if (transition.getType() == TransitionType.TERMINATION) {
+//                    foundTermination = true;
+//                    break;
+//                }
+//            }
+//            if (foundTermination) {
+//                // Now test for every region
+//                for (Region region : state.getRegions()) {
+//                    boolean foundFinal = false;
+//                    for (de.cau.cs.kieler.sccharts.State innerState : region.getStates()) {
+//                        if (innerState.isFinal()) {
+//                            foundFinal = true;
+//                            break;
+//                        }
+//                    }
+//                    if (!foundFinal) {
+//                        warning(REGION_NO_FINAL_STATE, region, null, -1);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     // -------------------------------------------------------------------------
 

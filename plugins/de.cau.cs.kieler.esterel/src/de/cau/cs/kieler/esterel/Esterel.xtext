@@ -146,8 +146,9 @@ StatementContainer:
 ;
 
 StatementContainerInterface returns StatementContainer:
-	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance | Do | DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | Trap | TrapHandler | LocalVariable | Exec | ExecCase
+	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance | Do | DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | WeakSuspend | Trap | TrapHandler | LocalVariable | Exec | ExecCase
 ;
+
 
 // ==============================================
 // ===            B.4 Statements              ===
@@ -155,12 +156,13 @@ StatementContainerInterface returns StatementContainer:
 // !-(parallel)
 Statement:
 	//was Sequence ({Parallel.list+=current} "||" list+=Sequence)*; (uru)
-	Sequence ({Parallel.list+=current} ("||" list+=Sequence)+)?;
+	Sequence ({Parallel.list+=current} ("||" list+=Sequence)+)?
+	;
 
 	// -!
 AtomicStatement returns Statement:
-	Abort | Assignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
-	Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | WeakAbort;
+	Abort | Assignment | Await | Block | ProcCall | Do | Emit | UnEmit | Reset | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
+	Loop | Nothing | Pause | Present | Repeat | Run | Suspend | WeakSuspend | Sustain | Trap | LocalVariable | WeakAbort;
 
 	// --> B.4.1 Control Flow Operators <--	
 // !-(sequence)
@@ -259,8 +261,22 @@ DoWatchingEnd:
 // --> B.4.7 emit: Signal Emission <--
 // !-(emit)2 -------------------------------------
 Emit:
-	"emit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("(" expr=Expression ")")?;
+	"emit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("("expr=Expression")")?;
 	// -!
+
+// --> SCEst only! unemit: Signal UnEmission <--
+// !-(unemit)2 -------------------------------------
+UnEmit:
+    "unemit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick);
+    // -!
+
+// --> SCEst only! reset: Signal value reset (absolute write) <--
+// !-(emit)2 -------------------------------------
+Reset:
+    "reset" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("("expr=Expression")");
+    // -!
+
+
 // --> B.4.8 every-do: Conditional Iteration
 // !-(every)-------------------------------------
 EveryDo:
@@ -394,6 +410,11 @@ BuildInFunction:
 // !-(suspend)-------------------------------------
 Suspend:
 	"suspend" statement=Statement "when" delay=DelayExpr;
+	
+// !-(weak suspend)-------------------------------------
+WeakSuspend:
+    "weak" "suspend" statement=Statement "when" delay=DelayExpr;
+    
 	// -!
 // --> B.4.22 sustain: Emit a Signal Indefinitely
 // !-(sustain) -------------------------------------
@@ -420,6 +441,21 @@ TrapHandler:
 LocalVariable:
 	var=InterfaceVariableDecl "in" statement=Statement "end" (optEnd="var")?;
 	// -!
+	
+	
+// ==============================================
+// ===            B.2.5 SCL             ===
+// ==============================================
+
+// goto -------------------------------------
+Goto:
+    "goto" targetLabel=ID ";";
+    
+Label:
+    label=ID':';
+
+    
+    
 // ==============================================
 // ===            B.3 Expressions             ===
 // ==============================================

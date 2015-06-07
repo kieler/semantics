@@ -4,7 +4,7 @@
     editorDirectory="/de.cau.cs.kieler.esterel.editor/src" modelPluginID="de.cau.cs.kieler.esterel"
     forceOverwrite="true" modelName="Esterel" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.esterel.edit"
-    editorPluginID="de.cau.cs.kieler.esterel.editor" runtimeVersion="2.9" usedGenPackages="../../../../../../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../../../../../../de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    editorPluginID="de.cau.cs.kieler.esterel.editor" runtimeVersion="2.10" usedGenPackages="platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <genPackages prefix="Esterel" basePackage="de.cau.cs.kieler.esterel" disposableProviderFactory="true"
       ecorePackage="Esterel.ecore#/">
     <genClasses ecoreClass="Esterel.ecore#//Program">
@@ -162,6 +162,15 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Emit/tick"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Emit/expr"/>
     </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//UnEmit">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//UnEmit/signal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//UnEmit/tick"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Reset">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Reset/signal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Reset/tick"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Reset/expr"/>
+    </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//EveryDo">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//EveryDo/delay"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//EveryDo/optEnd"/>
@@ -270,6 +279,9 @@
     <genClasses ecoreClass="Esterel.ecore#//Suspend">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Suspend/delay"/>
     </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//WeakSuspend">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//WeakSuspend/delay"/>
+    </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Sustain">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Sustain/signal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Sustain/tick"/>
@@ -289,6 +301,12 @@
     <genClasses ecoreClass="Esterel.ecore#//LocalVariable">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LocalVariable/var"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//LocalVariable/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Goto">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Goto/targetLabel"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Label">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Label/label"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//DelayExpr">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/expr"/>

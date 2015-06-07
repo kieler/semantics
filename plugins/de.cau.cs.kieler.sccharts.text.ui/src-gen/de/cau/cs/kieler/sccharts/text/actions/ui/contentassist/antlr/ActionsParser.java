@@ -73,6 +73,9 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExitActionAccess().getGroup_3(), "rule__ExitAction__Group_3__0");
 					put(grammarAccess.getExitActionAccess().getGroup_3_2(), "rule__ExitAction__Group_3_2__0");
 					put(grammarAccess.getSuspendActionAccess().getGroup(), "rule__SuspendAction__Group__0");
+					put(grammarAccess.getIterateActionAccess().getGroup(), "rule__IterateAction__Group__0");
+					put(grammarAccess.getIterateActionAccess().getGroup_4(), "rule__IterateAction__Group_4__0");
+					put(grammarAccess.getIterateActionAccess().getGroup_4_2(), "rule__IterateAction__Group_4_2__0");
 					put(grammarAccess.getEmissionAccess().getGroup(), "rule__Emission__Group__0");
 					put(grammarAccess.getEmissionAccess().getGroup_1(), "rule__Emission__Group_1__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
@@ -142,6 +145,10 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSuspendActionAccess().getImmediateAssignment_1(), "rule__SuspendAction__ImmediateAssignment_1");
 					put(grammarAccess.getSuspendActionAccess().getWeakAssignment_2(), "rule__SuspendAction__WeakAssignment_2");
 					put(grammarAccess.getSuspendActionAccess().getTriggerAssignment_4(), "rule__SuspendAction__TriggerAssignment_4");
+					put(grammarAccess.getIterateActionAccess().getImmediateAssignment_1(), "rule__IterateAction__ImmediateAssignment_1");
+					put(grammarAccess.getIterateActionAccess().getTriggerAssignment_3(), "rule__IterateAction__TriggerAssignment_3");
+					put(grammarAccess.getIterateActionAccess().getEffectsAssignment_4_1(), "rule__IterateAction__EffectsAssignment_4_1");
+					put(grammarAccess.getIterateActionAccess().getEffectsAssignment_4_2_1(), "rule__IterateAction__EffectsAssignment_4_2_1");
 					put(grammarAccess.getEmissionAccess().getValuedObjectAssignment_0(), "rule__Emission__ValuedObjectAssignment_0");
 					put(grammarAccess.getEmissionAccess().getNewValueAssignment_1_1(), "rule__Emission__NewValueAssignment_1_1");
 					put(grammarAccess.getAssignmentAccess().getValuedObjectAssignment_0(), "rule__Assignment__ValuedObjectAssignment_0");
