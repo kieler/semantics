@@ -9,14 +9,19 @@ import org.eclipse.swt.widgets.Shell;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+//import de.cau.cs.kieler.core.kexpressions.Declaration;
+//import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
-import de.cau.cs.kieler.esterel.text.EsterelStandaloneSetup;
+import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
+import de.cau.cs.kieler.esterel.esterel.Module;
+import de.cau.cs.kieler.esterel.esterel.Program;
+import de.cau.cs.kieler.esterel.kexpressions.Input;
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
+import de.cau.cs.kieler.esterel.kexpressions.Signal;
 
 /**
  * The abstract handler for Esterel file formats strl.
- *
+ * 
  * @author cmot
  * @kieler.design 2015-06-15 proposed cmot
  * @kieler.rating 2015-06-15 proposed yellow
@@ -74,7 +79,11 @@ public class EsterelModelFileHandler extends AbstractConvertModelHandler {
             // fallback are ticks=0, traces=1
         }
 
-        State state = (State) model;
+        Program program = (Program) model;
+        if (program.getModules().size() == 0) {
+            return "ERROR: No module in Esterel program.";
+        }
+        Module module = program.getModules().get(0);
 
         StringBuilder builder = new StringBuilder();
 
@@ -82,42 +91,37 @@ public class EsterelModelFileHandler extends AbstractConvertModelHandler {
             builder.append("! reset;\n");
             for (int tick = 0; tick < ticks; tick++) {
 
-                for (Declaration declaration : state.getDeclarations()) {
-                    if (declaration.isInput()) {
-                        String type = declaration.getType().getLiteral();
+                for (InterfaceSignalDecl declaration : module.getInterface().getIntSignalDecls()) {
+                    for (Signal signal : declaration.getSignals()) {
+                        if (declaration instanceof Input) {
+                            String type = signal.getType().getLiteral();
 
-                        String value = null;
-                        // get random value
-                        if (type.equals("int")) {
-                            value = ((int)(1000 - (Math.random() * 2000))) + "";
-                        } else if (type.equals("bool")) {
-                            if (Math.random()*2 > 1) {
-                                value =  "true";
-                            } else {
-                                value =  "false";
-                            }
-                        } else if (type.equals("pure")) {
-                            if (Math.random()*2 > 1) {
-                                value =  "PRESENT";
-                            }
-                        } else if (type.equals("double")) {
-                            value = (1000 - (Math.random() * 2000)) + "";
-                        }
-
-                        for (ValuedObject valuedObject : declaration.getValuedObjects()) {
-                            String name = valuedObject.getName();
-
-                            if (!declaration.isSignal() || (!type.equals("pure"))) {
-                                // variables
-                                builder.append(name + "(" + value + ") ");
-                            } else {
-                                // signals
-                                if (value != null) {
-                                    builder.append(name + " ");
+                            String value = null;
+                            // get random value
+                            if (type.equals("int")) {
+                                value = ((int) (1000 - (Math.random() * 2000))) + "";
+                            } else if (type.equals("bool")) {
+                                if (Math.random() * 2 > 1) {
+                                    value = "true";
+                                } else {
+                                    value = "false";
                                 }
+                            } else if (type.equals("pure")) {
+                                if (Math.random() * 2 > 1) {
+                                    value = "PRESENT";
+                                }
+                            } else if (type.equals("double")) {
+                                value = (1000 - (Math.random() * 2000)) + "";
                             }
-                        }
-                    }// input
+
+                            String name = signal.getName();
+
+                            // signals
+                            if (value != null) {
+                                builder.append(name + " ");
+                            }
+                        }// input
+                    }
                 }// declaration
                 builder.append("\n% Output: \n;\n");
 
@@ -173,14 +177,14 @@ public class EsterelModelFileHandler extends AbstractConvertModelHandler {
 
     /**
      * Show an input dialog with the message, a default value and a specific title.
-     *
+     * 
      * @param title
      *            the title of the dialog
      * @param message
      *            the message to present
      * @param defaultValue
      *            the default value
-     *
+     * 
      * @return the string value entered or null if aborted
      */
     String inputDialogReturnValue = null;

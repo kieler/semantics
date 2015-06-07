@@ -41,7 +41,7 @@ public class EsterelEsoPlugin extends AbstractUIPlugin {
     /**
      * The constructor.
      */
-    public SCChartsEsoPlugin() {
+    public EsterelEsoPlugin() {
     }
 
     // ---------------------------------------------------------------------
