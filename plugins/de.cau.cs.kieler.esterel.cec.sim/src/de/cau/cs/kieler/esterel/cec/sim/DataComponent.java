@@ -229,7 +229,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     private static final boolean KIEM_PROPERTY_DEFAULT_BENCHMARK = false;
 
     /** The Constant SIMULATION_SUBPATH. */
-    static final String SIMULATION_SUBPATH = "simulation";
+    static final String SIMULATION_SUBPATH = "include";
 
     /** The Constant SIMULATION_PREFIX. */
     static final String SIMULATION_PREFIX = "simu";
@@ -239,6 +239,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
     /** The Constant SIMULATION_JSONBIB. */
     static final String SIMULATION_JSONBIB = "cJSON.c";
+
+    /** The Constant SIMULATION_USERTIMEBIB. */
+    static final String SIMULATION_USERTIMEBIB = "usertime.h";
 
     /** The Constant SIMULATION_COMPILER_OPTIONS. */
     static final String SIMULATION_COMPILER_OPTIONS = "-lm -o";
@@ -840,15 +843,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             // Compile Esterel to C
             URL output =
                     this.compileEsterelToC(esterelOutput, CEC.getDefaultOutFile(),
-                            esterelSimulationProgressMonitor).toURL();
+                            esterelSimulationProgressMonitor).toURL(); 
             System.out.println("M2M 9");
-
+            
             // Possibly add #include for a header file
             if (myModel.getModules() != null && myModel.getModules().size() > 0) {
                 String mainModuleName = myModel.getModules().get(0).getName();
                 output = copyPossibleHeaderFile(mainModuleName, input, output);
             }
             System.out.println("M2M 10");
+
 
             // Cannot be done before because otherwise the new model cannot be serialized
             // Do this on a copy to not destroy original program;
@@ -860,7 +864,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             System.out.println("M2M 11");
 
             // Generate data.c
-            URL data = generateCSimulationInterface(fixedTransformedProgram, esterelOutput);
+            URL data = generateCSimulationInterface(fixedTransformedProgram, esterelOutput, benchmark);
             System.out.println("M2M 12");
 
             // Compile C code
@@ -869,7 +873,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
             URL fileUrl = FileLocator.find(bundle, new Path(SIMULATION_SUBPATH), null);
             URL bundleLocation = FileLocator.toFileURL(fileUrl);
+            
             System.out.println("M2M 14");
+
+            System.out.println("M2M 15");
 
             String compiler =
                     (getProperties()[KIEM_PROPERTY_CCOMPILER
@@ -1020,7 +1027,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      *             the kiem initialization exception
      */
     private URL generateCSimulationInterface(final Program esterelProgram,
-            final URI esterelProgramURI) throws KiemInitializationException {
+            final URI esterelProgramURI, final boolean benchmark) throws KiemInitializationException {
         File data;
         try {
             data = File.createTempFile("data", ".c");
@@ -1040,6 +1047,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             String ccode =
                     transform.createCSimulationInterface(esterelProgram.getModules().get(0))
                             .toString();
+            
+
+            if (benchmark) {
+                ccode = Benchmark.addTimingCode(ccode);
+            }
 
             // Write out c program
             URI output = URI.createURI(esterelProgramURI.toString());
