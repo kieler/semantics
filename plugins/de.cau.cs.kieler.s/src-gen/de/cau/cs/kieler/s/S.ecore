@@ -27,9 +27,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hostCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Instruction"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Instruction platform:/resource/de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Assignment">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Instruction platform:/resource/de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Assignment"/>
   <eClassifiers xsi:type="ecore:EClass" name="Prio" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="continuation" eType="#//State"/>

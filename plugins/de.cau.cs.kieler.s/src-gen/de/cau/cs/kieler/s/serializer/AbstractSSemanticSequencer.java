@@ -621,7 +621,7 @@ public abstract class AbstractSSemanticSequencer extends KEXTSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (variable=[ValuedObject|ID] indices+=Expression* expression=Expression)
+	 *     (valuedObject=[ValuedObject|ID] indices+=Expression* expression=Expression)
 	 */
 	protected void sequence_Assignment(EObject context, de.cau.cs.kieler.s.s.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

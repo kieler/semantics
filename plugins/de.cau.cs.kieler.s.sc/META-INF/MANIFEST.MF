@@ -22,7 +22,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext.generator;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  de.cau.cs.kieler.core.model,
- de.cau.cs.kieler.kico
+ de.cau.cs.kieler.kico,
+ de.cau.cs.kieler.core.kexpressions.keffects
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.s.sc,

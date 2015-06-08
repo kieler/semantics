@@ -36,7 +36,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getVariable <em>Variable</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,16 +72,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * @ordered
    */
   protected EList<Expression> indices;
-
-  /**
-   * The cached value of the '{@link #getVariable() <em>Variable</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getVariable()
-   * @generated
-   * @ordered
-   */
-  protected ValuedObject variable;
 
   /**
    * <!-- begin-user-doc -->
@@ -215,49 +204,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValuedObject getVariable()
-  {
-    if (variable != null && variable.eIsProxy())
-    {
-      InternalEObject oldVariable = (InternalEObject)variable;
-      variable = (ValuedObject)eResolveProxy(oldVariable);
-      if (variable != oldVariable)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
-      }
-    }
-    return variable;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ValuedObject basicGetVariable()
-  {
-    return variable;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setVariable(ValuedObject newVariable)
-  {
-    ValuedObject oldVariable = variable;
-    variable = newVariable;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -288,9 +234,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         return getExpression();
       case SPackage.ASSIGNMENT__INDICES:
         return getIndices();
-      case SPackage.ASSIGNMENT__VARIABLE:
-        if (resolve) return getVariable();
-        return basicGetVariable();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -316,9 +259,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         getIndices().clear();
         getIndices().addAll((Collection<? extends Expression>)newValue);
         return;
-      case SPackage.ASSIGNMENT__VARIABLE:
-        setVariable((ValuedObject)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -342,9 +282,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
       case SPackage.ASSIGNMENT__INDICES:
         getIndices().clear();
         return;
-      case SPackage.ASSIGNMENT__VARIABLE:
-        setVariable((ValuedObject)null);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -365,8 +302,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         return expression != null;
       case SPackage.ASSIGNMENT__INDICES:
         return indices != null && !indices.isEmpty();
-      case SPackage.ASSIGNMENT__VARIABLE:
-        return variable != null;
     }
     return super.eIsSet(featureID);
   }

@@ -271,22 +271,13 @@ public interface SPackage extends EPackage
   int ASSIGNMENT__INDICES = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Variable</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ASSIGNMENT__VARIABLE = INSTRUCTION_FEATURE_COUNT + 3;
-
-  /**
    * The number of structural features of the '<em>Assignment</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 4;
+  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PrioImpl <em>Prio</em>}' class.
@@ -849,17 +840,6 @@ public interface SPackage extends EPackage
   EClass getAssignment();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Assignment#getVariable <em>Variable</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Variable</em>'.
-   * @see de.cau.cs.kieler.s.s.Assignment#getVariable()
-   * @see #getAssignment()
-   * @generated
-   */
-  EReference getAssignment_Variable();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Prio <em>Prio</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1340,14 +1320,6 @@ public interface SPackage extends EPackage
      * @generated
      */
     EClass ASSIGNMENT = eINSTANCE.getAssignment();
-
-    /**
-     * The meta object literal for the '<em><b>Variable</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ASSIGNMENT__VARIABLE = eINSTANCE.getAssignment_Variable();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.PrioImpl <em>Prio</em>}' class.

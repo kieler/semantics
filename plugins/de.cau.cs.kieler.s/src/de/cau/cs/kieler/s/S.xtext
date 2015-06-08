@@ -90,8 +90,9 @@ Instruction:
 ;
 
 Assignment:
-   variable = [kexpressions::ValuedObject]('[' indices+=Expression ']')* '=' expression=Expression
-;
+    valuedObject=[kexpressions::ValuedObject]
+    ('[' indices+=Expression ']')*
+     "=" expression = Expression ;
 
 // Change priority
 Prio:

@@ -597,7 +597,7 @@ ruleAssignment returns [EObject current=null]
         }
 	otherlv_0=RULE_ID
 	{
-		newLeafNode(otherlv_0, grammarAccess.getAssignmentAccess().getVariableValuedObjectCrossReference_0_0()); 
+		newLeafNode(otherlv_0, grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
 	}
 
 )

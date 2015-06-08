@@ -29,14 +29,15 @@ Require-Bundle: org.eclipse.xtend.lib,
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.s,
- de.cau.cs.kieler.s.services,
+ de.cau.cs.kieler.s.extensions,
+ de.cau.cs.kieler.s.formatting,
+ de.cau.cs.kieler.s.parser.antlr,
+ de.cau.cs.kieler.s.parser.antlr.internal,
  de.cau.cs.kieler.s.s,
  de.cau.cs.kieler.s.s.impl,
  de.cau.cs.kieler.s.s.util,
- de.cau.cs.kieler.s.serializer,
- de.cau.cs.kieler.s.parser.antlr,
- de.cau.cs.kieler.s.parser.antlr.internal,
- de.cau.cs.kieler.s.validation,
  de.cau.cs.kieler.s.scoping,
- de.cau.cs.kieler.s.formatting
+ de.cau.cs.kieler.s.serializer,
+ de.cau.cs.kieler.s.services,
+ de.cau.cs.kieler.s.validation
 Bundle-ClassPath: .

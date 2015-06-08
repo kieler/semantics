@@ -165,7 +165,7 @@ class SExtension {
     def Assignment createAssignment(ValuedObject valuedObject, Expression expression) {
         val assignmentInstruction = SFactory::eINSTANCE.createAssignment
         assignmentInstruction.expression = expression;
-        assignmentInstruction.variable = valuedObject;
+        assignmentInstruction.valuedObject = valuedObject;
         assignmentInstruction
     }
     

@@ -319,9 +319,9 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	public class AssignmentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Assignment");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cVariableAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cVariableValuedObjectCrossReference_0_0 = (CrossReference)cVariableAssignment_0.eContents().get(0);
-		private final RuleCall cVariableValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cVariableValuedObjectCrossReference_0_0.eContents().get(1);
+		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cIndicesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
@@ -332,20 +332,20 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExpressionExpressionParserRuleCall_3_0 = (RuleCall)cExpressionAssignment_3.eContents().get(0);
 		
 		//Assignment:
-		//	variable=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
+		//	valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
 		public ParserRule getRule() { return rule; }
 
-		//variable=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression
+		//valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression
 		public Group getGroup() { return cGroup; }
 
-		//variable=[kexpressions::ValuedObject]
-		public Assignment getVariableAssignment_0() { return cVariableAssignment_0; }
+		//valuedObject=[kexpressions::ValuedObject]
+		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
 
 		//[kexpressions::ValuedObject]
-		public CrossReference getVariableValuedObjectCrossReference_0_0() { return cVariableValuedObjectCrossReference_0_0; }
+		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
 
 		//ID
-		public RuleCall getVariableValuedObjectIDTerminalRuleCall_0_0_1() { return cVariableValuedObjectIDTerminalRuleCall_0_0_1; }
+		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
 
 		//("[" indices+=Expression "]")*
 		public Group getGroup_1() { return cGroup_1; }
@@ -1168,7 +1168,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Assignment:
-	//	variable=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
+	//	valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
 	public AssignmentElements getAssignmentAccess() {
 		return pAssignment;
 	}

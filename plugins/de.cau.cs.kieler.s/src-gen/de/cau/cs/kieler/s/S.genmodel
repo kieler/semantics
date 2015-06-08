@@ -24,9 +24,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//HostCodeInstruction/hostCode"/>
     </genClasses>
     <genClasses ecoreClass="S.ecore#//Instruction"/>
-    <genClasses ecoreClass="S.ecore#//Assignment">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Assignment/variable"/>
-    </genClasses>
+    <genClasses ecoreClass="S.ecore#//Assignment"/>
     <genClasses ecoreClass="S.ecore#//Prio">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Prio/priority"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Prio/continuation"/>
