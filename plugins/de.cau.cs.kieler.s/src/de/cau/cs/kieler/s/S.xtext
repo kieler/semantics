@@ -1,7 +1,7 @@
 //grammar de.cau.cs.kieler.s.S with org.eclipse.xtext.common.Terminals
 //		 de.cau.cs.kieler.core.expressions.Expressions, 
 //		 de.cau.cs.kieler.core.annotations.Annotations
-grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.core.kexpressions.KExpressions
+grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.core.kexpressions.text.KEXT
 //grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.synccharts.text.actions.Actions
 //grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.synccharts.text.interfaces.Interfaces
 
@@ -11,7 +11,8 @@ grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.core.kexpressions.KExpression
 import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
-//import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore" as annotations
+import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
+import "http://kieler.cs.cau.de/kext/kext" as kext
 
 generate s "http://www.cau.de/cs/kieler/s"
 
@@ -53,41 +54,7 @@ State:
 
 // TODO: ensure signal AND variable declaration in top level....
 
-Declaration returns kexpressions::Declaration:
-    (annotations+=Annotation)*
-    (
-        ((extern?='extern')?
-        (static?='static')?
-        (const?='const')?
-        (input?='input')?
-        (output?='output')?
-        (
-            ((signal?='signal')? type = ValueType)
-            |
-            (signal?='signal')
-        ))
-        |
-        ((extern?='extern')
-        (static?='static')?
-        (const?='const')?
-        (input?='input')?
-        (output?='output')?        
-        (signal?='signal')? 
-        (type = ValueType)?)
-    )
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-;
 
-
-
-ValuedObject returns kexpressions::ValuedObject:
-    (annotations+=Annotation)*
-    name=ID
-    ('[' cardinalities+=INT ']')* 
-    ('=' initialValue=Expression)?
-    ( 'combine'
-      (combineOperator = CombineOperator)
-    )?;
 
 //
 // OLD S DECLARATION

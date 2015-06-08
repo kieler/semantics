@@ -5,6 +5,9 @@ package de.cau.cs.kieler.s.s.impl;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+
 import de.cau.cs.kieler.s.s.Assignment;
 import de.cau.cs.kieler.s.s.SPackage;
 
@@ -30,9 +33,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getVariable <em>Variable</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getVariable <em>Variable</em>}</li>
  * </ul>
  * </p>
  *
@@ -41,14 +45,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class AssignmentImpl extends InstructionImpl implements Assignment
 {
   /**
-   * The cached value of the '{@link #getVariable() <em>Variable</em>}' reference.
+   * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVariable()
+   * @see #getValuedObject()
    * @generated
    * @ordered
    */
-  protected ValuedObject variable;
+  protected ValuedObject valuedObject;
+
+  /**
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExpression()
+   * @generated
+   * @ordered
+   */
+  protected Expression expression;
 
   /**
    * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
@@ -61,14 +75,14 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   protected EList<Expression> indices;
 
   /**
-   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+   * The cached value of the '{@link #getVariable() <em>Variable</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpression()
+   * @see #getVariable()
    * @generated
    * @ordered
    */
-  protected Expression expression;
+  protected ValuedObject variable;
 
   /**
    * <!-- begin-user-doc -->
@@ -96,19 +110,19 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValuedObject getVariable()
+  public ValuedObject getValuedObject()
   {
-    if (variable != null && variable.eIsProxy())
+    if (valuedObject != null && valuedObject.eIsProxy())
     {
-      InternalEObject oldVariable = (InternalEObject)variable;
-      variable = (ValuedObject)eResolveProxy(oldVariable);
-      if (variable != oldVariable)
+      InternalEObject oldValuedObject = (InternalEObject)valuedObject;
+      valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
+      if (valuedObject != oldValuedObject)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
       }
     }
-    return variable;
+    return valuedObject;
   }
 
   /**
@@ -116,9 +130,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public ValuedObject basicGetVariable()
+  public ValuedObject basicGetValuedObject()
   {
-    return variable;
+    return valuedObject;
   }
 
   /**
@@ -126,26 +140,12 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setVariable(ValuedObject newVariable)
+  public void setValuedObject(ValuedObject newValuedObject)
   {
-    ValuedObject oldVariable = variable;
-    variable = newVariable;
+    ValuedObject oldValuedObject = valuedObject;
+    valuedObject = newValuedObject;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Expression> getIndices()
-  {
-    if (indices == null)
-    {
-      indices = new EObjectContainmentEList<Expression>(Expression.class, this, SPackage.ASSIGNMENT__INDICES);
-    }
-    return indices;
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
   }
 
   /**
@@ -201,15 +201,72 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Expression> getIndices()
+  {
+    if (indices == null)
+    {
+      indices = new EObjectContainmentEList<Expression>(Expression.class, this, SPackage.ASSIGNMENT__INDICES);
+    }
+    return indices;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ValuedObject getVariable()
+  {
+    if (variable != null && variable.eIsProxy())
+    {
+      InternalEObject oldVariable = (InternalEObject)variable;
+      variable = (ValuedObject)eResolveProxy(oldVariable);
+      if (variable != oldVariable)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
+      }
+    }
+    return variable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ValuedObject basicGetVariable()
+  {
+    return variable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setVariable(ValuedObject newVariable)
+  {
+    ValuedObject oldVariable = variable;
+    variable = newVariable;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case SPackage.ASSIGNMENT__INDICES:
-        return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
       case SPackage.ASSIGNMENT__EXPRESSION:
         return basicSetExpression(null, msgs);
+      case SPackage.ASSIGNMENT__INDICES:
+        return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -224,13 +281,16 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
+      case SPackage.ASSIGNMENT__VALUED_OBJECT:
+        if (resolve) return getValuedObject();
+        return basicGetValuedObject();
+      case SPackage.ASSIGNMENT__EXPRESSION:
+        return getExpression();
+      case SPackage.ASSIGNMENT__INDICES:
+        return getIndices();
       case SPackage.ASSIGNMENT__VARIABLE:
         if (resolve) return getVariable();
         return basicGetVariable();
-      case SPackage.ASSIGNMENT__INDICES:
-        return getIndices();
-      case SPackage.ASSIGNMENT__EXPRESSION:
-        return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -246,15 +306,18 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SPackage.ASSIGNMENT__VARIABLE:
-        setVariable((ValuedObject)newValue);
+      case SPackage.ASSIGNMENT__VALUED_OBJECT:
+        setValuedObject((ValuedObject)newValue);
+        return;
+      case SPackage.ASSIGNMENT__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
       case SPackage.ASSIGNMENT__INDICES:
         getIndices().clear();
         getIndices().addAll((Collection<? extends Expression>)newValue);
         return;
-      case SPackage.ASSIGNMENT__EXPRESSION:
-        setExpression((Expression)newValue);
+      case SPackage.ASSIGNMENT__VARIABLE:
+        setVariable((ValuedObject)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -270,14 +333,17 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SPackage.ASSIGNMENT__VARIABLE:
-        setVariable((ValuedObject)null);
+      case SPackage.ASSIGNMENT__VALUED_OBJECT:
+        setValuedObject((ValuedObject)null);
+        return;
+      case SPackage.ASSIGNMENT__EXPRESSION:
+        setExpression((Expression)null);
         return;
       case SPackage.ASSIGNMENT__INDICES:
         getIndices().clear();
         return;
-      case SPackage.ASSIGNMENT__EXPRESSION:
-        setExpression((Expression)null);
+      case SPackage.ASSIGNMENT__VARIABLE:
+        setVariable((ValuedObject)null);
         return;
     }
     super.eUnset(featureID);
@@ -293,14 +359,72 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SPackage.ASSIGNMENT__VARIABLE:
-        return variable != null;
-      case SPackage.ASSIGNMENT__INDICES:
-        return indices != null && !indices.isEmpty();
+      case SPackage.ASSIGNMENT__VALUED_OBJECT:
+        return valuedObject != null;
       case SPackage.ASSIGNMENT__EXPRESSION:
         return expression != null;
+      case SPackage.ASSIGNMENT__INDICES:
+        return indices != null && !indices.isEmpty();
+      case SPackage.ASSIGNMENT__VARIABLE:
+        return variable != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Effect.class)
+    {
+      switch (derivedFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    if (baseClass == de.cau.cs.kieler.core.kexpressions.keffects.Assignment.class)
+    {
+      switch (derivedFeatureID)
+      {
+        case SPackage.ASSIGNMENT__VALUED_OBJECT: return KEffectsPackage.ASSIGNMENT__VALUED_OBJECT;
+        case SPackage.ASSIGNMENT__EXPRESSION: return KEffectsPackage.ASSIGNMENT__EXPRESSION;
+        case SPackage.ASSIGNMENT__INDICES: return KEffectsPackage.ASSIGNMENT__INDICES;
+        default: return -1;
+      }
+    }
+    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Effect.class)
+    {
+      switch (baseFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    if (baseClass == de.cau.cs.kieler.core.kexpressions.keffects.Assignment.class)
+    {
+      switch (baseFeatureID)
+      {
+        case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT: return SPackage.ASSIGNMENT__VALUED_OBJECT;
+        case KEffectsPackage.ASSIGNMENT__EXPRESSION: return SPackage.ASSIGNMENT__EXPRESSION;
+        case KEffectsPackage.ASSIGNMENT__INDICES: return SPackage.ASSIGNMENT__INDICES;
+        default: return -1;
+      }
+    }
+    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
 } //AssignmentImpl
