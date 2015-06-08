@@ -191,11 +191,6 @@ public class AnnotatableItemProvider
             (createChildParameter
                 (AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
                  AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createParameterAnnotation()));
     }
 
     /**

@@ -46,22 +46,20 @@ ValuedAnnotation returns Annotation:
 
 // e.g.: /** semantic comment */
 CommentAnnotation returns StringAnnotation:
-    value=COMMENT_ANNOTATION;
-
+    values += COMMENT_ANNOTATION;
 
 // e.g.: @HVlayout
 TagAnnotation returns Annotation:
     '@' name=ExtendedID;
 
-
 // e.g.: @layouter dot;   
 KeyStringValueAnnotation returns StringAnnotation:
-    '@' name=ExtendedID value=EString;
+    '@' name=ExtendedID (values += EString)+;
 
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-    '@' name=ExtendedID '[' type=ExtendedID ']' value=EString;
-
+    '@' name=ExtendedID '[' type=ExtendedID ']' (values += EString)+;
+    
 // e.g.: @visible true;
 KeyBooleanValueAnnotation returns BooleanAnnotation:
     '@' name=ExtendedID value=BOOLEAN;

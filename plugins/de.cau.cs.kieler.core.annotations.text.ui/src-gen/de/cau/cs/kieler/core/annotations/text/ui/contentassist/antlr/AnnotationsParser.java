@@ -51,13 +51,13 @@ public class AnnotationsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExtendedIDAccess().getGroup_1(), "rule__ExtendedID__Group_1__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
-					put(grammarAccess.getCommentAnnotationAccess().getValueAssignment(), "rule__CommentAnnotation__ValueAssignment");
+					put(grammarAccess.getCommentAnnotationAccess().getValuesAssignment(), "rule__CommentAnnotation__ValuesAssignment");
 					put(grammarAccess.getTagAnnotationAccess().getNameAssignment_1(), "rule__TagAnnotation__NameAssignment_1");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getNameAssignment_1(), "rule__KeyStringValueAnnotation__NameAssignment_1");
-					put(grammarAccess.getKeyStringValueAnnotationAccess().getValueAssignment_2(), "rule__KeyStringValueAnnotation__ValueAssignment_2");
+					put(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_2(), "rule__KeyStringValueAnnotation__ValuesAssignment_2");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameAssignment_1(), "rule__TypedKeyStringValueAnnotation__NameAssignment_1");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_3(), "rule__TypedKeyStringValueAnnotation__TypeAssignment_3");
-					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueAssignment_5(), "rule__TypedKeyStringValueAnnotation__ValueAssignment_5");
+					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_5(), "rule__TypedKeyStringValueAnnotation__ValuesAssignment_5");
 					put(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameAssignment_1(), "rule__KeyBooleanValueAnnotation__NameAssignment_1");
 					put(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueAssignment_2(), "rule__KeyBooleanValueAnnotation__ValueAssignment_2");
 					put(grammarAccess.getKeyIntValueAnnotationAccess().getNameAssignment_1(), "rule__KeyIntValueAnnotation__NameAssignment_1");

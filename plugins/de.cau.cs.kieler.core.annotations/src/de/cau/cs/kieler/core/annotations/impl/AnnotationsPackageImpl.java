@@ -123,13 +123,6 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
     private EClass typedStringAnnotationEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass parameterAnnotationEClass = null;
-
-    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -249,7 +242,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStringAnnotation_Value() {
+    public EAttribute getStringAnnotation_Values() {
         return (EAttribute)stringAnnotationEClass.getEStructuralFeatures().get(0);
     }
 
@@ -384,24 +377,6 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getParameterAnnotation() {
-        return parameterAnnotationEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getParameterAnnotation_Values() {
-        return (EAttribute)parameterAnnotationEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public AnnotationsFactory getAnnotationsFactory() {
         return (AnnotationsFactory)getEFactoryInstance();
     }
@@ -434,7 +409,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         annotationEClass = createEClass(ANNOTATION);
 
         stringAnnotationEClass = createEClass(STRING_ANNOTATION);
-        createEAttribute(stringAnnotationEClass, STRING_ANNOTATION__VALUE);
+        createEAttribute(stringAnnotationEClass, STRING_ANNOTATION__VALUES);
 
         referenceAnnotationEClass = createEClass(REFERENCE_ANNOTATION);
         createEReference(referenceAnnotationEClass, REFERENCE_ANNOTATION__OBJECT);
@@ -456,9 +431,6 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 
         typedStringAnnotationEClass = createEClass(TYPED_STRING_ANNOTATION);
         createEAttribute(typedStringAnnotationEClass, TYPED_STRING_ANNOTATION__TYPE);
-
-        parameterAnnotationEClass = createEClass(PARAMETER_ANNOTATION);
-        createEAttribute(parameterAnnotationEClass, PARAMETER_ANNOTATION__VALUES);
     }
 
     /**
@@ -499,7 +471,6 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         containmentAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         importAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         typedStringAnnotationEClass.getESuperTypes().add(this.getStringAnnotation());
-        parameterAnnotationEClass.getESuperTypes().add(this.getAnnotation());
 
         // Initialize classes and features; add operations and parameters
         initEClass(namedObjectEClass, NamedObject.class, "NamedObject", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -524,7 +495,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(stringAnnotationEClass, StringAnnotation.class, "StringAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getStringAnnotation_Value(), ecorePackage.getEString(), "value", null, 0, 1, StringAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getStringAnnotation_Values(), ecorePackage.getEString(), "values", null, 0, -1, StringAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(referenceAnnotationEClass, ReferenceAnnotation.class, "ReferenceAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getReferenceAnnotation_Object(), ecorePackage.getEObject(), null, "object", null, 1, 1, ReferenceAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -546,9 +517,6 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 
         initEClass(typedStringAnnotationEClass, TypedStringAnnotation.class, "TypedStringAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTypedStringAnnotation_Type(), ecorePackage.getEString(), "type", null, 0, 1, TypedStringAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(parameterAnnotationEClass, ParameterAnnotation.class, "ParameterAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getParameterAnnotation_Values(), ecorePackage.getEString(), "values", null, 0, -1, ParameterAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

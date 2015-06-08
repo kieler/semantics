@@ -198,11 +198,6 @@ public class ContainmentAnnotationItemProvider
             (createChildParameter
                 (AnnotationsPackage.Literals.CONTAINMENT_ANNOTATION__OBJECT,
                  AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (AnnotationsPackage.Literals.CONTAINMENT_ANNOTATION__OBJECT,
-                 AnnotationsFactory.eINSTANCE.createParameterAnnotation()));
     }
 
 				/**

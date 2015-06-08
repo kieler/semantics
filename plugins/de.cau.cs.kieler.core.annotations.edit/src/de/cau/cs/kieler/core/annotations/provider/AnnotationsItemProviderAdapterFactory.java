@@ -290,29 +290,6 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.ParameterAnnotation} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected ParameterAnnotationItemProvider parameterAnnotationItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.ParameterAnnotation}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createParameterAnnotationAdapter() {
-        if (parameterAnnotationItemProvider == null) {
-            parameterAnnotationItemProvider = new ParameterAnnotationItemProvider(this);
-        }
-
-        return parameterAnnotationItemProvider;
-    }
-
-    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -420,7 +397,6 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
         if (containmentAnnotationItemProvider != null) containmentAnnotationItemProvider.dispose();
         if (importAnnotationItemProvider != null) importAnnotationItemProvider.dispose();
         if (typedStringAnnotationItemProvider != null) typedStringAnnotationItemProvider.dispose();
-        if (parameterAnnotationItemProvider != null) parameterAnnotationItemProvider.dispose();
     }
 
 }

@@ -123,7 +123,7 @@ public class AnnotationsEditingSupport extends EditingSupport {
         switch (AnnotationType.of((Annotation) element)) {
         case STRING:
         case TYPED_STRING:
-            return ((StringAnnotation) element).getValue();
+            return ((StringAnnotation) element).getValues().get(0);
         case INT:
             return Integer.toString(((IntAnnotation) element).getValue());
         case FLOAT:

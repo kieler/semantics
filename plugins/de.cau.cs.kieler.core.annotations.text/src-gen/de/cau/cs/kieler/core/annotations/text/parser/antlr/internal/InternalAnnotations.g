@@ -171,18 +171,18 @@ ruleCommentAnnotation returns [EObject current=null]
     @after { leaveRule(); }:
 (
 (
-		lv_value_0_0=RULE_COMMENT_ANNOTATION
+		lv_values_0_0=RULE_COMMENT_ANNOTATION
 		{
-			newLeafNode(lv_value_0_0, grammarAccess.getCommentAnnotationAccess().getValueCOMMENT_ANNOTATIONTerminalRuleCall_0()); 
+			newLeafNode(lv_values_0_0, grammarAccess.getCommentAnnotationAccess().getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0()); 
 		}
 		{
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getCommentAnnotationRule());
 	        }
-       		setWithLastConsumed(
+       		addWithLastConsumed(
        			$current, 
-       			"value",
-        		lv_value_0_0, 
+       			"values",
+        		lv_values_0_0, 
         		"COMMENT_ANNOTATION");
 	    }
 
@@ -276,22 +276,22 @@ ruleKeyStringValueAnnotation returns [EObject current=null]
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_2_0()); 
 	    }
-		lv_value_2_0=ruleEString		{
+		lv_values_2_0=ruleEString		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getKeyStringValueAnnotationRule());
 	        }
-       		set(
+       		add(
        			$current, 
-       			"value",
-        		lv_value_2_0, 
+       			"values",
+        		lv_values_2_0, 
         		"EString");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))
+)+)
 ;
 
 
@@ -363,22 +363,22 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_5_0()); 
+	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_5_0()); 
 	    }
-		lv_value_5_0=ruleEString		{
+		lv_values_5_0=ruleEString		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
 	        }
-       		set(
+       		add(
        			$current, 
-       			"value",
-        		lv_value_5_0, 
+       			"values",
+        		lv_values_5_0, 
         		"EString");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))
+)+)
 ;
 
 

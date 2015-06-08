@@ -102,9 +102,9 @@ ruleCommentAnnotation
     }
 	:
 (
-{ before(grammarAccess.getCommentAnnotationAccess().getValueAssignment()); }
-(rule__CommentAnnotation__ValueAssignment)
-{ after(grammarAccess.getCommentAnnotationAccess().getValueAssignment()); }
+{ before(grammarAccess.getCommentAnnotationAccess().getValuesAssignment()); }
+(rule__CommentAnnotation__ValuesAssignment)
+{ after(grammarAccess.getCommentAnnotationAccess().getValuesAssignment()); }
 )
 
 ;
@@ -614,9 +614,16 @@ rule__KeyStringValueAnnotation__Group__2__Impl
     }
 :
 (
-{ before(grammarAccess.getKeyStringValueAnnotationAccess().getValueAssignment_2()); }
-(rule__KeyStringValueAnnotation__ValueAssignment_2)
-{ after(grammarAccess.getKeyStringValueAnnotationAccess().getValueAssignment_2()); }
+(
+{ before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_2()); }
+(rule__KeyStringValueAnnotation__ValuesAssignment_2)
+{ after(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_2()); }
+)
+(
+{ before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_2()); }
+(rule__KeyStringValueAnnotation__ValuesAssignment_2)*
+{ after(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_2()); }
+)
 )
 
 ;
@@ -799,9 +806,16 @@ rule__TypedKeyStringValueAnnotation__Group__5__Impl
     }
 :
 (
-{ before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueAssignment_5()); }
-(rule__TypedKeyStringValueAnnotation__ValueAssignment_5)
-{ after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueAssignment_5()); }
+(
+{ before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); }
+(rule__TypedKeyStringValueAnnotation__ValuesAssignment_5)
+{ after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); }
+)
+(
+{ before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); }
+(rule__TypedKeyStringValueAnnotation__ValuesAssignment_5)*
+{ after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); }
+)
 )
 
 ;
@@ -1356,14 +1370,14 @@ finally {
 
 
 
-rule__CommentAnnotation__ValueAssignment
+rule__CommentAnnotation__ValuesAssignment
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getCommentAnnotationAccess().getValueCOMMENT_ANNOTATIONTerminalRuleCall_0()); }
-	RULE_COMMENT_ANNOTATION{ after(grammarAccess.getCommentAnnotationAccess().getValueCOMMENT_ANNOTATIONTerminalRuleCall_0()); }
+{ before(grammarAccess.getCommentAnnotationAccess().getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0()); }
+	RULE_COMMENT_ANNOTATION{ after(grammarAccess.getCommentAnnotationAccess().getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0()); }
 )
 
 ;
@@ -1401,14 +1415,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__KeyStringValueAnnotation__ValueAssignment_2
+rule__KeyStringValueAnnotation__ValuesAssignment_2
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()); }
-	ruleEString{ after(grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()); }
+{ before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_2_0()); }
+	ruleEString{ after(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_2_0()); }
 )
 
 ;
@@ -1446,14 +1460,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TypedKeyStringValueAnnotation__ValueAssignment_5
+rule__TypedKeyStringValueAnnotation__ValuesAssignment_5
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_5_0()); }
-	ruleEString{ after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_5_0()); }
+{ before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_5_0()); }
+	ruleEString{ after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_5_0()); }
 )
 
 ;

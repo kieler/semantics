@@ -105,19 +105,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class CommentAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CommentAnnotation");
-		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueCOMMENT_ANNOTATIONTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		private final Assignment cValuesAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValuesCOMMENT_ANNOTATIONTerminalRuleCall_0 = (RuleCall)cValuesAssignment.eContents().get(0);
 		
 		//// e.g.: / ** semantic comment * /
 		// CommentAnnotation returns StringAnnotation:
-		//	value=COMMENT_ANNOTATION;
+		//	values+=COMMENT_ANNOTATION;
 		public ParserRule getRule() { return rule; }
 
-		//value=COMMENT_ANNOTATION
-		public Assignment getValueAssignment() { return cValueAssignment; }
+		//values+=COMMENT_ANNOTATION
+		public Assignment getValuesAssignment() { return cValuesAssignment; }
 
 		//COMMENT_ANNOTATION
-		public RuleCall getValueCOMMENT_ANNOTATIONTerminalRuleCall_0() { return cValueCOMMENT_ANNOTATIONTerminalRuleCall_0; }
+		public RuleCall getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0() { return cValuesCOMMENT_ANNOTATIONTerminalRuleCall_0; }
 	}
 
 	public class TagAnnotationElements extends AbstractParserRuleElementFinder {
@@ -151,15 +151,15 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueEStringParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		private final Assignment cValuesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValuesEStringParserRuleCall_2_0 = (RuleCall)cValuesAssignment_2.eContents().get(0);
 		
 		//// e.g.: @layouter dot;   
 		// KeyStringValueAnnotation returns StringAnnotation:
-		//	"@" name=ExtendedID value=EString;
+		//	"@" name=ExtendedID values+=EString+;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID value=EString
+		//"@" name=ExtendedID values+=EString+
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -171,11 +171,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 
-		//value=EString
-		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+		//values+=EString+
+		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
 
 		//EString
-		public RuleCall getValueEStringParserRuleCall_2_0() { return cValueEStringParserRuleCall_2_0; }
+		public RuleCall getValuesEStringParserRuleCall_2_0() { return cValuesEStringParserRuleCall_2_0; }
 	}
 
 	public class TypedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -188,16 +188,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cTypeExtendedIDParserRuleCall_3_0 = (RuleCall)cTypeAssignment_3.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cValueAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cValueEStringParserRuleCall_5_0 = (RuleCall)cValueAssignment_5.eContents().get(0);
+		private final Assignment cValuesAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cValuesEStringParserRuleCall_5_0 = (RuleCall)cValuesAssignment_5.eContents().get(0);
 		
 		//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 		// TypedKeyStringValueAnnotation returns
 		//TypedStringAnnotation:
-		//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString;
+		//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString+;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID "[" type=ExtendedID "]" value=EString
+		//"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString+
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -221,11 +221,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 
-		//value=EString
-		public Assignment getValueAssignment_5() { return cValueAssignment_5; }
+		//values+=EString+
+		public Assignment getValuesAssignment_5() { return cValuesAssignment_5; }
 
 		//EString
-		public RuleCall getValueEStringParserRuleCall_5_0() { return cValueEStringParserRuleCall_5_0; }
+		public RuleCall getValuesEStringParserRuleCall_5_0() { return cValuesEStringParserRuleCall_5_0; }
 	}
 
 	public class KeyBooleanValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -552,7 +552,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: / ** semantic comment * /
 	// CommentAnnotation returns StringAnnotation:
-	//	value=COMMENT_ANNOTATION;
+	//	values+=COMMENT_ANNOTATION;
 	public CommentAnnotationElements getCommentAnnotationAccess() {
 		return pCommentAnnotation;
 	}
@@ -574,7 +574,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @layouter dot;   
 	// KeyStringValueAnnotation returns StringAnnotation:
-	//	"@" name=ExtendedID value=EString;
+	//	"@" name=ExtendedID values+=EString+;
 	public KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return pKeyStringValueAnnotation;
 	}
@@ -586,7 +586,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	// TypedKeyStringValueAnnotation returns
 	//TypedStringAnnotation:
-	//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString;
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString+;
 	public TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return pTypedKeyStringValueAnnotation;
 	}

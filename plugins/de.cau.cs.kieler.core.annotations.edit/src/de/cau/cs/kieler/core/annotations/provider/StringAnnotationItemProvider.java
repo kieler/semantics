@@ -62,25 +62,25 @@ public class StringAnnotationItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addValuePropertyDescriptor(object);
+            addValuesPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Value feature.
+     * This adds a property descriptor for the Values feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addValuePropertyDescriptor(Object object) {
+    protected void addValuesPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_StringAnnotation_value_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_StringAnnotation_value_feature", "_UI_StringAnnotation_type"),
-                 AnnotationsPackage.Literals.STRING_ANNOTATION__VALUE,
+                 getString("_UI_StringAnnotation_values_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_StringAnnotation_values_feature", "_UI_StringAnnotation_type"),
+                 AnnotationsPackage.Literals.STRING_ANNOTATION__VALUES,
                  true,
                  false,
                  false,
@@ -126,7 +126,7 @@ public class StringAnnotationItemProvider
         updateChildren(notification);
 
         switch (notification.getFeatureID(StringAnnotation.class)) {
-            case AnnotationsPackage.STRING_ANNOTATION__VALUE:
+            case AnnotationsPackage.STRING_ANNOTATION__VALUES:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }
