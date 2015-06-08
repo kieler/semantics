@@ -22,7 +22,7 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
@@ -133,7 +133,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
     extension SynchronizerSelector
 
     @Inject
-    extension KExpressionsSerializeExtension
+    extension KEffectsSerializeExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals

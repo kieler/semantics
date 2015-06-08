@@ -174,9 +174,9 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
         scg.setDefaultTrace
         newSCG.trace(scg)
         
-        val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
+        val hostcodeAnnotations = scg.getAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
-            newSCG.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+            newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
         schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
         
@@ -336,7 +336,7 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
                     nodeCache.add(conditionalAssignment)
     				nextControlFlow = ScgFactory::eINSTANCE.createControlFlow.trace(assignment)
     				conditionalAssignment.next = nextControlFlow
-    				conditionalAssignment.addAnnotation(ANNOTATION_CONDITIONALASSIGNMENT, sBlock.guard.valuedObject.name)
+    				conditionalAssignment.createStringAnnotation(ANNOTATION_CONDITIONALASSIGNMENT, sBlock.guard.valuedObject.name)
     			}
     			nextControlFlows.add(nextControlFlow)
     			

@@ -45,7 +45,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.Guard
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 
 /** 
@@ -118,7 +118,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
     extension AnnotationsExtensions
     
     @Inject
-    extension KExpressionsSerializeExtension    
+    extension KEffectsSerializeExtensions   
     
     public var Declaration schizophrenicDeclaration = null
    

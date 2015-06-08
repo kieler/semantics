@@ -758,7 +758,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             var switchBranch = false
             val branchAnnotation = conditional.getAnnotation(ANNOTATION_BRANCH)
             if (branchAnnotation instanceof StringAnnotation) {
-                val annotationValue = (branchAnnotation as StringAnnotation).getValue
+                val annotationValue = (branchAnnotation as StringAnnotation).getValues.head
                 if (annotationValue == "switch") {
                     switchBranch = true
                 }

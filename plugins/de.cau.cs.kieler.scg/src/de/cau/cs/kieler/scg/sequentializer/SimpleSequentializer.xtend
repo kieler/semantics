@@ -168,9 +168,9 @@ class SimpleSequentializer extends AbstractSequentializer {
         	annotations += createStringAnnotation(ANNOTATION_SEQUENTIALIZED, "")
         	label = scg.label
         ]
-        val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
+        val hostcodeAnnotations = scg.getAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
-            newSCG.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+            newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]        
         schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
 		val predecessorList = <Predecessor> newArrayList
