@@ -2121,7 +2121,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: / ** semantic comment * /
 	// CommentAnnotation returns StringAnnotation:
-	//	value=COMMENT_ANNOTATION;
+	//	values+=COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
 		return gaAnnotations.getCommentAnnotationAccess();
 	}
@@ -2132,7 +2132,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @HVlayout
 	// TagAnnotation returns Annotation:
-	//	"@" name=ExtendedID ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaAnnotations.getTagAnnotationAccess();
 	}
@@ -2143,7 +2143,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @layouter dot;   
 	// KeyStringValueAnnotation returns StringAnnotation:
-	//	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID values+=EString+;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getKeyStringValueAnnotationAccess();
 	}
@@ -2155,7 +2155,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	// TypedKeyStringValueAnnotation returns
 	//TypedStringAnnotation:
-	//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString+;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getTypedKeyStringValueAnnotationAccess();
 	}
@@ -2166,7 +2166,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @visible true;
 	// KeyBooleanValueAnnotation returns BooleanAnnotation:
-	//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=BOOLEAN;
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return gaAnnotations.getKeyBooleanValueAnnotationAccess();
 	}
@@ -2177,7 +2177,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10;    
 	// KeyIntValueAnnotation returns IntAnnotation:
-	//	"@" name=ExtendedID value=Integer ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=Integer;
 	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
 		return gaAnnotations.getKeyIntValueAnnotationAccess();
 	}
@@ -2188,7 +2188,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10.0;    
 	// KeyFloatValueAnnotation returns FloatAnnotation:
-	//	"@" name=ExtendedID value=Floateger ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=Floateger;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return gaAnnotations.getKeyFloatValueAnnotationAccess();
 	}

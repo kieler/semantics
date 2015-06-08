@@ -13,6 +13,7 @@ import de.cau.cs.kieler.core.kexpressions.text.kext.KextFactory;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 import de.cau.cs.kieler.core.kexpressions.text.kext.StringAnnotation;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -152,6 +153,16 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getStringAnnotation_Value()
+  {
+    return (EAttribute)stringAnnotationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public KextFactory getKextFactory()
   {
     return (KextFactory)getEFactoryInstance();
@@ -182,6 +193,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
     createEReference(kextEClass, KEXT__EFFECTS);
 
     stringAnnotationEClass = createEClass(STRING_ANNOTATION);
+    createEAttribute(stringAnnotationEClass, STRING_ANNOTATION__VALUE);
   }
 
   /**
@@ -226,6 +238,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
     initEReference(getKext_Effects(), theKEffectsPackage.getEffect(), null, "effects", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(stringAnnotationEClass, StringAnnotation.class, "StringAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getStringAnnotation_Value(), ecorePackage.getEString(), "value", null, 0, 1, StringAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);
