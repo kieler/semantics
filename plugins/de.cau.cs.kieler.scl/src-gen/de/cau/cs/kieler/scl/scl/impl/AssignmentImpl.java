@@ -5,16 +5,26 @@ package de.cau.cs.kieler.scl.scl.impl;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,6 +35,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
  * </ul>
  * </p>
  *
@@ -51,6 +62,16 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * @ordered
    */
   protected Expression expression;
+
+  /**
+   * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getIndices()
+   * @generated
+   * @ordered
+   */
+  protected EList<Expression> indices;
 
   /**
    * <!-- begin-user-doc -->
@@ -169,6 +190,20 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Expression> getIndices()
+  {
+    if (indices == null)
+    {
+      indices = new EObjectContainmentEList<Expression>(Expression.class, this, SclPackage.ASSIGNMENT__INDICES);
+    }
+    return indices;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -176,6 +211,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case SclPackage.ASSIGNMENT__EXPRESSION:
         return basicSetExpression(null, msgs);
+      case SclPackage.ASSIGNMENT__INDICES:
+        return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -195,6 +232,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         return basicGetValuedObject();
       case SclPackage.ASSIGNMENT__EXPRESSION:
         return getExpression();
+      case SclPackage.ASSIGNMENT__INDICES:
+        return getIndices();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -204,6 +243,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -214,6 +254,10 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         return;
       case SclPackage.ASSIGNMENT__EXPRESSION:
         setExpression((Expression)newValue);
+        return;
+      case SclPackage.ASSIGNMENT__INDICES:
+        getIndices().clear();
+        getIndices().addAll((Collection<? extends Expression>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -235,6 +279,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
       case SclPackage.ASSIGNMENT__EXPRESSION:
         setExpression((Expression)null);
         return;
+      case SclPackage.ASSIGNMENT__INDICES:
+        getIndices().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -253,8 +300,66 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         return valuedObject != null;
       case SclPackage.ASSIGNMENT__EXPRESSION:
         return expression != null;
+      case SclPackage.ASSIGNMENT__INDICES:
+        return indices != null && !indices.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Effect.class)
+    {
+      switch (derivedFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    if (baseClass == de.cau.cs.kieler.core.kexpressions.keffects.Assignment.class)
+    {
+      switch (derivedFeatureID)
+      {
+        case SclPackage.ASSIGNMENT__VALUED_OBJECT: return KEffectsPackage.ASSIGNMENT__VALUED_OBJECT;
+        case SclPackage.ASSIGNMENT__EXPRESSION: return KEffectsPackage.ASSIGNMENT__EXPRESSION;
+        case SclPackage.ASSIGNMENT__INDICES: return KEffectsPackage.ASSIGNMENT__INDICES;
+        default: return -1;
+      }
+    }
+    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Effect.class)
+    {
+      switch (baseFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    if (baseClass == de.cau.cs.kieler.core.kexpressions.keffects.Assignment.class)
+    {
+      switch (baseFeatureID)
+      {
+        case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT: return SclPackage.ASSIGNMENT__VALUED_OBJECT;
+        case KEffectsPackage.ASSIGNMENT__EXPRESSION: return SclPackage.ASSIGNMENT__EXPRESSION;
+        case KEffectsPackage.ASSIGNMENT__INDICES: return SclPackage.ASSIGNMENT__INDICES;
+        default: return -1;
+      }
+    }
+    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
 } //AssignmentImpl

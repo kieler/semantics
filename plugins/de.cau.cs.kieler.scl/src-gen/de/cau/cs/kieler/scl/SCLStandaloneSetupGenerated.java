@@ -17,7 +17,7 @@ import com.google.inject.Injector;
 public class SCLStandaloneSetupGenerated implements ISetup {
 
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup.doSetup();
+		de.cau.cs.kieler.core.kexpressions.text.KEXTStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

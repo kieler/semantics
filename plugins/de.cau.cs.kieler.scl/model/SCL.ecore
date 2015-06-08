@@ -23,11 +23,7 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Instruction"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Instruction">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Instruction platform:/resource/de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Assignment"/>
   <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Instruction #//StatementSequence">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>

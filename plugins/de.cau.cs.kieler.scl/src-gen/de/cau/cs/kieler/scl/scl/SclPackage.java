@@ -289,13 +289,22 @@ public interface SclPackage extends EPackage
   int ASSIGNMENT__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__INDICES = INSTRUCTION_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Assignment</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
+  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -620,28 +629,6 @@ public interface SclPackage extends EPackage
   EClass getAssignment();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.scl.scl.Assignment#getValuedObject <em>Valued Object</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Valued Object</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Assignment#getValuedObject()
-   * @see #getAssignment()
-   * @generated
-   */
-  EReference getAssignment_ValuedObject();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scl.scl.Assignment#getExpression <em>Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expression</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Assignment#getExpression()
-   * @see #getAssignment()
-   * @generated
-   */
-  EReference getAssignment_Expression();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Conditional <em>Conditional</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -918,22 +905,6 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EClass ASSIGNMENT = eINSTANCE.getAssignment();
-
-    /**
-     * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ASSIGNMENT__VALUED_OBJECT = eINSTANCE.getAssignment_ValuedObject();
-
-    /**
-     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ASSIGNMENT__EXPRESSION = eINSTANCE.getAssignment_Expression();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl <em>Conditional</em>}' class.

@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.scl.scl.util;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -150,6 +152,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
       public Adapter caseStatementScope(StatementScope object)
       {
         return createStatementScopeAdapter();
+      }
+      @Override
+      public Adapter caseEffect(Effect object)
+      {
+        return createEffectAdapter();
+      }
+      @Override
+      public Adapter caseKEffects_Assignment(de.cau.cs.kieler.core.kexpressions.keffects.Assignment object)
+      {
+        return createKEffects_AssignmentAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -364,6 +376,36 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createStatementScopeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.keffects.Effect <em>Effect</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.core.kexpressions.keffects.Effect
+   * @generated
+   */
+  public Adapter createEffectAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.keffects.Assignment <em>Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+   * @generated
+   */
+  public Adapter createKEffects_AssignmentAdapter()
   {
     return null;
   }
