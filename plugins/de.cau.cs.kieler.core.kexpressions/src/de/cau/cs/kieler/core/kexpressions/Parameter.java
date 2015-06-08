@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Parameter#isCallByReference <em>Call By Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.Parameter#isPureOutput <em>Pure Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Parameter#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
@@ -47,6 +48,32 @@ public interface Parameter extends EObject {
      * @generated
      */
     void setCallByReference(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Pure Output</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Pure Output</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Pure Output</em>' attribute.
+     * @see #setPureOutput(boolean)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getParameter_PureOutput()
+     * @model
+     * @generated
+     */
+    boolean isPureOutput();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.Parameter#isPureOutput <em>Pure Output</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Pure Output</em>' attribute.
+     * @see #isPureOutput()
+     * @generated
+     */
+    void setPureOutput(boolean value);
 
     /**
      * Returns the value of the '<em><b>Expression</b></em>' containment reference.

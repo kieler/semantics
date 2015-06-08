@@ -1667,11 +1667,11 @@ ruleParameter returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((
+(((
 (
 		lv_callByReference_0_0=	'&' 
     {
-        newLeafNode(lv_callByReference_0_0, grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0());
+        newLeafNode(lv_callByReference_0_0, grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0_0());
     }
  
 	    {
@@ -1682,19 +1682,34 @@ ruleParameter returns [EObject current=null]
 	    }
 
 )
-)?(
+)(
+(
+		lv_pureOutput_1_0=	'&' 
+    {
+        newLeafNode(lv_pureOutput_1_0, grammarAccess.getParameterAccess().getPureOutputAmpersandKeyword_0_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getParameterRule());
+	        }
+       		setWithLastConsumed($current, "pureOutput", true, "&");
+	    }
+
+)
+)?)?(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getParameterAccess().getExpressionExpressionParserRuleCall_1_0()); 
 	    }
-		lv_expression_1_0=ruleExpression		{
+		lv_expression_2_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getParameterRule());
 	        }
        		set(
        			$current, 
        			"expression",
-        		lv_expression_1_0, 
+        		lv_expression_2_0, 
         		"Expression");
 	        afterParserOrEnumRuleCall();
 	    }

@@ -67,6 +67,7 @@ public class DeclarationItemProvider
             addConstPropertyDescriptor(object);
             addExternPropertyDescriptor(object);
             addVolatilePropertyDescriptor(object);
+            addHostTypePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -248,6 +249,28 @@ public class DeclarationItemProvider
     }
 
 				/**
+     * This adds a property descriptor for the Host Type feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addHostTypePropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Declaration_hostType_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Declaration_hostType_feature", "_UI_Declaration_type"),
+                 KExpressionsPackage.Literals.DECLARATION__HOST_TYPE,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+                /**
      * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
      * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -323,6 +346,7 @@ public class DeclarationItemProvider
             case KExpressionsPackage.DECLARATION__CONST:
             case KExpressionsPackage.DECLARATION__EXTERN:
             case KExpressionsPackage.DECLARATION__VOLATILE:
+            case KExpressionsPackage.DECLARATION__HOST_TYPE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:

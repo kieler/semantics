@@ -150,7 +150,7 @@ FunctionCall returns FunctionCall:
 ;
 
 Parameter returns Parameter:
-    (callByReference ?= '&')?
+    (callByReference ?= '&' (pureOutput ?= '&')?)?
     expression = Expression
 ;
 
