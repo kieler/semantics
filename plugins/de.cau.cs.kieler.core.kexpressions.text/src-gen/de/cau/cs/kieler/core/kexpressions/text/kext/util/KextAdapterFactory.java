@@ -2,10 +2,6 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text.kext.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.annotations.Annotation;
-import de.cau.cs.kieler.core.annotations.NamedObject;
-
 import de.cau.cs.kieler.core.kexpressions.text.kext.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -84,31 +80,6 @@ public class KextAdapterFactory extends AdapterFactoryImpl
         return createKextAdapter();
       }
       @Override
-      public Adapter caseStringAnnotation(StringAnnotation object)
-      {
-        return createStringAnnotationAdapter();
-      }
-      @Override
-      public Adapter caseAnnotatable(Annotatable object)
-      {
-        return createAnnotatableAdapter();
-      }
-      @Override
-      public Adapter caseNamedObject(NamedObject object)
-      {
-        return createNamedObjectAdapter();
-      }
-      @Override
-      public Adapter caseAnnotation(Annotation object)
-      {
-        return createAnnotationAdapter();
-      }
-      @Override
-      public Adapter caseAnnotations_StringAnnotation(de.cau.cs.kieler.core.annotations.StringAnnotation object)
-      {
-        return createAnnotations_StringAnnotationAdapter();
-      }
-      @Override
       public Adapter defaultCase(EObject object)
       {
         return createEObjectAdapter();
@@ -141,81 +112,6 @@ public class KextAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createKextAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.StringAnnotation <em>String Annotation</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.core.kexpressions.text.kext.StringAnnotation
-   * @generated
-   */
-  public Adapter createStringAnnotationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.core.annotations.Annotatable
-   * @generated
-   */
-  public Adapter createAnnotatableAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.NamedObject <em>Named Object</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.core.annotations.NamedObject
-   * @generated
-   */
-  public Adapter createNamedObjectAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotation <em>Annotation</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.core.annotations.Annotation
-   * @generated
-   */
-  public Adapter createAnnotationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.StringAnnotation <em>String Annotation</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.core.annotations.StringAnnotation
-   * @generated
-   */
-  public Adapter createAnnotations_StringAnnotationAdapter()
   {
     return null;
   }

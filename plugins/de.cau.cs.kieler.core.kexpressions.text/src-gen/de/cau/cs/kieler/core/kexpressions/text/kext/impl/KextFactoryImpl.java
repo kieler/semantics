@@ -65,7 +65,6 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory
     switch (eClass.getClassifierID())
     {
       case KextPackage.KEXT: return createKext();
-      case KextPackage.STRING_ANNOTATION: return createStringAnnotation();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -80,17 +79,6 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory
   {
     KextImpl kext = new KextImpl();
     return kext;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public StringAnnotation createStringAnnotation()
-  {
-    StringAnnotationImpl stringAnnotation = new StringAnnotationImpl();
-    return stringAnnotation;
   }
 
   /**

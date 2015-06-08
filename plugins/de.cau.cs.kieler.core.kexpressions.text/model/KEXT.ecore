@@ -9,7 +9,4 @@
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Effect"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StringAnnotation" eSuperTypes="platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore#//StringAnnotation">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
 </ecore:EPackage>

@@ -37,19 +37,22 @@ public class KEXTParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
 					put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
+					put(grammarAccess.getUnaryOperationAccess().getAlternatives(), "rule__UnaryOperation__Alternatives");
 					put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_2(), "rule__FunctionCallEffect__Alternatives_2");
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
 					put(grammarAccess.getNegExpressionAccess().getAlternatives(), "rule__NegExpression__Alternatives");
+					put(grammarAccess.getPostfixAddExpressionAccess().getAlternatives(), "rule__PostfixAddExpression__Alternatives");
+					put(grammarAccess.getPostfixSubExpressionAccess().getAlternatives(), "rule__PostfixSubExpression__Alternatives");
 					put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 					put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0(), "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0");
 					put(grammarAccess.getFunctionCallAccess().getAlternatives_2(), "rule__FunctionCall__Alternatives_2");
 					put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
+					put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
 					put(grammarAccess.getValuedAnnotationAccess().getAlternatives(), "rule__ValuedAnnotation__Alternatives");
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
@@ -61,8 +64,6 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectAccess().getGroup(), "rule__ValuedObject__Group__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup_2(), "rule__ValuedObject__Group_2__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup_3(), "rule__ValuedObject__Group_3__0");
-					put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup(), "rule__KeyStringValueAnnotation__Group__0");
-					put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup_3(), "rule__KeyStringValueAnnotation__Group_3__0");
 					put(grammarAccess.getEmissionAccess().getGroup(), "rule__Emission__Group__0");
 					put(grammarAccess.getEmissionAccess().getGroup_1(), "rule__Emission__Group_1__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
@@ -70,7 +71,6 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup(), "rule__FunctionCallEffect__Group__0");
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup_2_0(), "rule__FunctionCallEffect__Group_2_0__0");
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup_2_0_2(), "rule__FunctionCallEffect__Group_2_0_2__0");
-					put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup(), "rule__LogicalOrExpression__Group__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1(), "rule__LogicalOrExpression__Group_1__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1_1(), "rule__LogicalOrExpression__Group_1_1__0");
@@ -97,6 +97,8 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModExpressionAccess().getGroup(), "rule__ModExpression__Group__0");
 					put(grammarAccess.getModExpressionAccess().getGroup_1(), "rule__ModExpression__Group_1__0");
 					put(grammarAccess.getNegExpressionAccess().getGroup_0(), "rule__NegExpression__Group_0__0");
+					put(grammarAccess.getPostfixAddExpressionAccess().getGroup_0(), "rule__PostfixAddExpression__Group_0__0");
+					put(grammarAccess.getPostfixSubExpressionAccess().getGroup_0(), "rule__PostfixSubExpression__Group_0__0");
 					put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
 					put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_3(), "rule__AtomicValuedExpression__Group_3__0");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
@@ -105,7 +107,10 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallAccess().getGroup(), "rule__FunctionCall__Group__0");
 					put(grammarAccess.getFunctionCallAccess().getGroup_2_0(), "rule__FunctionCall__Group_2_0__0");
 					put(grammarAccess.getFunctionCallAccess().getGroup_2_0_2(), "rule__FunctionCall__Group_2_0_2__0");
+					put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
+					put(grammarAccess.getParameterAccess().getGroup_0(), "rule__Parameter__Group_0__0");
 					put(grammarAccess.getTagAnnotationAccess().getGroup(), "rule__TagAnnotation__Group__0");
+					put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup(), "rule__KeyStringValueAnnotation__Group__0");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup(), "rule__TypedKeyStringValueAnnotation__Group__0");
 					put(grammarAccess.getKeyBooleanValueAnnotationAccess().getGroup(), "rule__KeyBooleanValueAnnotation__Group__0");
 					put(grammarAccess.getKeyIntValueAnnotationAccess().getGroup(), "rule__KeyIntValueAnnotation__Group__0");
@@ -130,20 +135,17 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectAccess().getNameAssignment_1(), "rule__ValuedObject__NameAssignment_1");
 					put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_2_1(), "rule__ValuedObject__InitialValueAssignment_2_1");
 					put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_3_1(), "rule__ValuedObject__CombineOperatorAssignment_3_1");
-					put(grammarAccess.getKeyStringValueAnnotationAccess().getNameAssignment_1(), "rule__KeyStringValueAnnotation__NameAssignment_1");
-					put(grammarAccess.getKeyStringValueAnnotationAccess().getValueAssignment_2(), "rule__KeyStringValueAnnotation__ValueAssignment_2");
-					put(grammarAccess.getKeyStringValueAnnotationAccess().getAnnotationsAssignment_3_1(), "rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1");
 					put(grammarAccess.getEmissionAccess().getValuedObjectAssignment_0(), "rule__Emission__ValuedObjectAssignment_0");
 					put(grammarAccess.getEmissionAccess().getNewValueAssignment_1_1(), "rule__Emission__NewValueAssignment_1_1");
 					put(grammarAccess.getAssignmentAccess().getValuedObjectAssignment_0(), "rule__Assignment__ValuedObjectAssignment_0");
 					put(grammarAccess.getAssignmentAccess().getIndicesAssignment_1_1(), "rule__Assignment__IndicesAssignment_1_1");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_3(), "rule__Assignment__ExpressionAssignment_3");
+					put(grammarAccess.getUnaryOperationAccess().getExpressionAssignment_0(), "rule__UnaryOperation__ExpressionAssignment_0");
+					put(grammarAccess.getUnaryOperationAccess().getExpressionAssignment_1(), "rule__UnaryOperation__ExpressionAssignment_1");
 					put(grammarAccess.getTextEffectAccess().getTextAssignment(), "rule__TextEffect__TextAssignment");
 					put(grammarAccess.getFunctionCallEffectAccess().getFunctionNameAssignment_1(), "rule__FunctionCallEffect__FunctionNameAssignment_1");
 					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_2_0_1(), "rule__FunctionCallEffect__ParametersAssignment_2_0_1");
 					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_2_0_2_1(), "rule__FunctionCallEffect__ParametersAssignment_2_0_2_1");
-					put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0(), "rule__Parameter__CallByReferenceAssignment_0");
-					put(grammarAccess.getParameterAccess().getExpressionAssignment_1(), "rule__Parameter__ExpressionAssignment_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalOrExpression__OperatorAssignment_1_1_0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1");
 					put(grammarAccess.getLogicalAndExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalAndExpression__OperatorAssignment_1_1_0");
@@ -168,6 +170,10 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModExpressionAccess().getSubExpressionsAssignment_1_2(), "rule__ModExpression__SubExpressionsAssignment_1_2");
 					put(grammarAccess.getNegExpressionAccess().getOperatorAssignment_0_1(), "rule__NegExpression__OperatorAssignment_0_1");
 					put(grammarAccess.getNegExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__NegExpression__SubExpressionsAssignment_0_2");
+					put(grammarAccess.getPostfixAddExpressionAccess().getOperatorAssignment_0_1(), "rule__PostfixAddExpression__OperatorAssignment_0_1");
+					put(grammarAccess.getPostfixAddExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__PostfixAddExpression__SubExpressionsAssignment_0_2");
+					put(grammarAccess.getPostfixSubExpressionAccess().getOperatorAssignment_0_1(), "rule__PostfixSubExpression__OperatorAssignment_0_1");
+					put(grammarAccess.getPostfixSubExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__PostfixSubExpression__SubExpressionsAssignment_0_2");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 					put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");
@@ -175,6 +181,9 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_1(), "rule__FunctionCall__FunctionNameAssignment_1");
 					put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_1(), "rule__FunctionCall__ParametersAssignment_2_0_1");
 					put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_2_1(), "rule__FunctionCall__ParametersAssignment_2_0_2_1");
+					put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0_0(), "rule__Parameter__CallByReferenceAssignment_0_0");
+					put(grammarAccess.getParameterAccess().getPureOutputAssignment_0_1(), "rule__Parameter__PureOutputAssignment_0_1");
+					put(grammarAccess.getParameterAccess().getExpressionAssignment_1(), "rule__Parameter__ExpressionAssignment_1");
 					put(grammarAccess.getTextExpressionAccess().getTextAssignment(), "rule__TextExpression__TextAssignment");
 					put(grammarAccess.getIntValueAccess().getValueAssignment(), "rule__IntValue__ValueAssignment");
 					put(grammarAccess.getFloatValueAccess().getValueAssignment(), "rule__FloatValue__ValueAssignment");
@@ -182,6 +191,8 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStringValueAccess().getValueAssignment(), "rule__StringValue__ValueAssignment");
 					put(grammarAccess.getCommentAnnotationAccess().getValuesAssignment(), "rule__CommentAnnotation__ValuesAssignment");
 					put(grammarAccess.getTagAnnotationAccess().getNameAssignment_1(), "rule__TagAnnotation__NameAssignment_1");
+					put(grammarAccess.getKeyStringValueAnnotationAccess().getNameAssignment_1(), "rule__KeyStringValueAnnotation__NameAssignment_1");
+					put(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_2(), "rule__KeyStringValueAnnotation__ValuesAssignment_2");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameAssignment_1(), "rule__TypedKeyStringValueAnnotation__NameAssignment_1");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_3(), "rule__TypedKeyStringValueAnnotation__TypeAssignment_3");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_5(), "rule__TypedKeyStringValueAnnotation__ValuesAssignment_5");

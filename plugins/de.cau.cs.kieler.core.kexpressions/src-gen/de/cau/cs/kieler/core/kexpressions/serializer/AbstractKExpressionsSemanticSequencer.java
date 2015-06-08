@@ -130,6 +130,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getPostfixAddExpressionRule() ||
+				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -165,6 +167,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getPostfixAddExpressionRule() ||
+				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -200,6 +204,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getPostfixAddExpressionRule() ||
+				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -235,6 +241,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getPostfixAddExpressionRule() ||
+				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -269,11 +277,13 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getPostfixAddExpressionRule() ||
+				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_NotOrValuedExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_NotOrValuedExpression_PostfixAddExpression_PostfixSubExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -313,6 +323,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getPostfixAddExpressionRule() ||
+				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getStringValueRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
@@ -348,6 +360,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getPostfixAddExpressionRule() ||
+				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -383,6 +397,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getPostfixAddExpressionRule() ||
+				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -401,6 +417,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Constraint:
 	 *     (
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (operator=PostfixAdd subExpressions+=PostfixAddExpression) | 
+	 *         (operator=PostfixSub subExpressions+=PostfixSubExpression) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression) | 
 	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=ModOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=DivOperator subExpressions+=ModExpression) | 
@@ -415,7 +433,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (subExpressions+=LogicalOrExpression_OperatorExpression_1_0 (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+)
 	 *     )
 	 */
-	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_NotOrValuedExpression_SubExpression_ValuedObjectTestExpression(EObject context, OperatorExpression semanticObject) {
+	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_NotOrValuedExpression_PostfixAddExpression_PostfixSubExpression_SubExpression_ValuedObjectTestExpression(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

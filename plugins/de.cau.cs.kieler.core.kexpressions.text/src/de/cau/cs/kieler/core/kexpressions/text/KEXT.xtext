@@ -16,6 +16,7 @@ Kext:
     (declarations += Declaration)*
     (effects += Effect)*
 ;
+
     
 Declaration returns kexpressions::Declaration:
     (annotations+=Annotation)*
@@ -27,35 +28,12 @@ Declaration returns kexpressions::Declaration:
     type = ValueType valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 ;
 
+
 ValuedObject returns kexpressions::ValuedObject:
     (annotations+=Annotation)*
     name=ID ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )? ','
-;
-
-// ssm: KExt overrides the KeyStringValueAnnotation because allowing EString as value would introduce an ambiguity.
-// With EString antlr cannot decide between "ExtendedID ID" (KeyStringValueAnnotation with EStrings) and the ID of the ValuedObject.
-// Thus, this path can never be chosen because the ID is mandatory in ValuedObject. 
-// Overriding KeyStringValueAnnotation avoids the error message during grammar generation. 
-
-// e.g.: @layouter dot;   
-KeyStringValueAnnotation returns StringAnnotation:
-    '@' name=ExtendedID value=STRING
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
-
-Annotation returns annotations::Annotation:
-    CommentAnnotation
-    | 
-    TagAnnotation
-    | KeyStringValueAnnotation
-    | TypedKeyStringValueAnnotation
-    | KeyBooleanValueAnnotation
-    | KeyIntValueAnnotation
-    | KeyFloatValueAnnotation
-    ;
+    )? ',';
     
     

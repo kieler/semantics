@@ -203,7 +203,23 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    BITWISE_AND(16, "BITWISE_AND", "BITWISE_AND");
+    BITWISE_AND(16, "BITWISE_AND", "BITWISE_AND"), /**
+     * The '<em><b>POSTFIX ADD</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #POSTFIX_ADD_VALUE
+     * @generated
+     * @ordered
+     */
+    POSTFIX_ADD(18, "POSTFIX_ADD", "POSTFIX_ADD"), /**
+     * The '<em><b>POSTFIX SUB</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #POSTFIX_SUB_VALUE
+     * @generated
+     * @ordered
+     */
+    POSTFIX_SUB(19, "POSTFIX_SUB", "POSTFIX_SUB");
     /**
      * The '<em><b>EQ</b></em>' literal value.
      * <!-- begin-user-doc -->
@@ -461,6 +477,36 @@ public enum OperatorType implements Enumerator {
     public static final int BITWISE_AND_VALUE = 16;
 
     /**
+     * The '<em><b>POSTFIX ADD</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>POSTFIX ADD</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #POSTFIX_ADD
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int POSTFIX_ADD_VALUE = 18;
+
+    /**
+     * The '<em><b>POSTFIX SUB</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>POSTFIX SUB</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #POSTFIX_SUB
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int POSTFIX_SUB_VALUE = 19;
+
+    /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -486,6 +532,8 @@ public enum OperatorType implements Enumerator {
             MOD,
             BITWISE_OR,
             BITWISE_AND,
+            POSTFIX_ADD,
+            POSTFIX_SUB,
         };
 
     /**
@@ -554,6 +602,8 @@ public enum OperatorType implements Enumerator {
             case MOD_VALUE: return MOD;
             case BITWISE_OR_VALUE: return BITWISE_OR;
             case BITWISE_AND_VALUE: return BITWISE_AND;
+            case POSTFIX_ADD_VALUE: return POSTFIX_ADD;
+            case POSTFIX_SUB_VALUE: return POSTFIX_SUB;
         }
         return null;
     }

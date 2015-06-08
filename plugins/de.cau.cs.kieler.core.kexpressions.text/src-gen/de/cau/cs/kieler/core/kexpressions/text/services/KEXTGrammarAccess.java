@@ -209,112 +209,11 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		//","
 		public Keyword getCommaKeyword_4() { return cCommaKeyword_4; }
 	}
-
-	public class KeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "KeyStringValueAnnotation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueSTRINGTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cAnnotationsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_3_1_0 = (RuleCall)cAnnotationsAssignment_3_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
-		
-		//// ssm: KExt overrides the KeyStringValueAnnotation because allowing EString as value would introduce an ambiguity.
-		//// With EString antlr cannot decide between "ExtendedID ID" (KeyStringValueAnnotation with EStrings) and the ID of the ValuedObject.
-		//// Thus, this path can never be chosen because the ID is mandatory in ValuedObject. 
-		//// Overriding KeyStringValueAnnotation avoids the error message during grammar generation. 
-		//// e.g.: @layouter dot;   
-		//KeyStringValueAnnotation returns StringAnnotation:
-		//	"@" name=ExtendedID value=STRING ("(" annotations+=Annotation* ")")?;
-		public ParserRule getRule() { return rule; }
-
-		//"@" name=ExtendedID value=STRING ("(" annotations+=Annotation* ")")?
-		public Group getGroup() { return cGroup; }
-
-		//"@"
-		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
-
-		//name=ExtendedID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
-		//ExtendedID
-		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
-
-		//value=STRING
-		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
-
-		//STRING
-		public RuleCall getValueSTRINGTerminalRuleCall_2_0() { return cValueSTRINGTerminalRuleCall_2_0; }
-
-		//("(" annotations+=Annotation* ")")?
-		public Group getGroup_3() { return cGroup_3; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
-
-		//annotations+=Annotation*
-		public Assignment getAnnotationsAssignment_3_1() { return cAnnotationsAssignment_3_1; }
-
-		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_3_1_0() { return cAnnotationsAnnotationParserRuleCall_3_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
-	}
-
-	public class AnnotationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Annotation");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cCommentAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cTagAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cKeyStringValueAnnotationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cTypedKeyStringValueAnnotationParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cKeyBooleanValueAnnotationParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cKeyIntValueAnnotationParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final RuleCall cKeyFloatValueAnnotationParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
-		
-		//Annotation returns annotations::Annotation:
-		//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-		//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
-		public ParserRule getRule() { return rule; }
-
-		//CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
-		//| KeyIntValueAnnotation | KeyFloatValueAnnotation
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//CommentAnnotation
-		public RuleCall getCommentAnnotationParserRuleCall_0() { return cCommentAnnotationParserRuleCall_0; }
-
-		//TagAnnotation
-		public RuleCall getTagAnnotationParserRuleCall_1() { return cTagAnnotationParserRuleCall_1; }
-
-		//KeyStringValueAnnotation
-		public RuleCall getKeyStringValueAnnotationParserRuleCall_2() { return cKeyStringValueAnnotationParserRuleCall_2; }
-
-		//TypedKeyStringValueAnnotation
-		public RuleCall getTypedKeyStringValueAnnotationParserRuleCall_3() { return cTypedKeyStringValueAnnotationParserRuleCall_3; }
-
-		//KeyBooleanValueAnnotation
-		public RuleCall getKeyBooleanValueAnnotationParserRuleCall_4() { return cKeyBooleanValueAnnotationParserRuleCall_4; }
-
-		//KeyIntValueAnnotation
-		public RuleCall getKeyIntValueAnnotationParserRuleCall_5() { return cKeyIntValueAnnotationParserRuleCall_5; }
-
-		//KeyFloatValueAnnotation
-		public RuleCall getKeyFloatValueAnnotationParserRuleCall_6() { return cKeyFloatValueAnnotationParserRuleCall_6; }
-	}
 	
 	
 	private final KextElements pKext;
 	private final DeclarationElements pDeclaration;
 	private final ValuedObjectElements pValuedObject;
-	private final KeyStringValueAnnotationElements pKeyStringValueAnnotation;
-	private final AnnotationElements pAnnotation;
 	
 	private final Grammar grammar;
 
@@ -328,8 +227,6 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		this.pKext = new KextElements();
 		this.pDeclaration = new DeclarationElements();
 		this.pValuedObject = new ValuedObjectElements();
-		this.pKeyStringValueAnnotation = new KeyStringValueAnnotationElements();
-		this.pAnnotation = new AnnotationElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -390,35 +287,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectAccess().getRule();
 	}
 
-	//// ssm: KExt overrides the KeyStringValueAnnotation because allowing EString as value would introduce an ambiguity.
-	//// With EString antlr cannot decide between "ExtendedID ID" (KeyStringValueAnnotation with EStrings) and the ID of the ValuedObject.
-	//// Thus, this path can never be chosen because the ID is mandatory in ValuedObject. 
-	//// Overriding KeyStringValueAnnotation avoids the error message during grammar generation. 
-	//// e.g.: @layouter dot;   
-	//KeyStringValueAnnotation returns StringAnnotation:
-	//	"@" name=ExtendedID value=STRING ("(" annotations+=Annotation* ")")?;
-	public KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
-		return pKeyStringValueAnnotation;
-	}
-	
-	public ParserRule getKeyStringValueAnnotationRule() {
-		return getKeyStringValueAnnotationAccess().getRule();
-	}
-
-	//Annotation returns annotations::Annotation:
-	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
-	public AnnotationElements getAnnotationAccess() {
-		return pAnnotation;
-	}
-	
-	public ParserRule getAnnotationRule() {
-		return getAnnotationAccess().getRule();
-	}
-
 	//// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
 	//Effect returns keffects::Effect:
-	//	Emission | Assignment | TextEffect | FunctionCallEffect;
+	//	Emission | Assignment | UnaryOperation | TextEffect | FunctionCallEffect;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
@@ -447,6 +318,16 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getAssignmentAccess().getRule();
 	}
 
+	//UnaryOperation returns keffects::Assignment:
+	//	expression=PostfixAddExpression | expression=PostfixSubExpression;
+	public KEffectsGrammarAccess.UnaryOperationElements getUnaryOperationAccess() {
+		return gaKEffects.getUnaryOperationAccess();
+	}
+	
+	public ParserRule getUnaryOperationRule() {
+		return getUnaryOperationAccess().getRule();
+	}
+
 	//TextEffect returns keffects::HostcodeEffect:
 	//	text=HOSTCODE;
 	public KEffectsGrammarAccess.TextEffectElements getTextEffectAccess() {
@@ -465,16 +346,6 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallEffectRule() {
 		return getFunctionCallEffectAccess().getRule();
-	}
-
-	//Parameter returns kexpressions::Parameter:
-	//	callByReference?="&"? expression=Expression;
-	public KEffectsGrammarAccess.ParameterElements getParameterAccess() {
-		return gaKEffects.getParameterAccess();
-	}
-	
-	public ParserRule getParameterRule() {
-		return getParameterAccess().getRule();
 	}
 
 	//Root returns ecore::EObject:
@@ -673,14 +544,35 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: -?A, -(?A + ?B)
 	//// at the latter we need the parents to indicate the right binding
+	////    | AtomicValuedExpression
 	//NegExpression returns Expression:
-	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression;
+	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | PostfixAddExpression;
 	public KExpressionsGrammarAccess.NegExpressionElements getNegExpressionAccess() {
 		return gaKEffects.getNegExpressionAccess();
 	}
 	
 	public ParserRule getNegExpressionRule() {
 		return getNegExpressionAccess().getRule();
+	}
+
+	//PostfixAddExpression returns Expression:
+	//	{OperatorExpression} operator=PostfixAdd subExpressions+=PostfixAddExpression | PostfixSubExpression;
+	public KExpressionsGrammarAccess.PostfixAddExpressionElements getPostfixAddExpressionAccess() {
+		return gaKEffects.getPostfixAddExpressionAccess();
+	}
+	
+	public ParserRule getPostfixAddExpressionRule() {
+		return getPostfixAddExpressionAccess().getRule();
+	}
+
+	//PostfixSubExpression returns Expression:
+	//	{OperatorExpression} operator=PostfixSub subExpressions+=PostfixSubExpression | AtomicValuedExpression;
+	public KExpressionsGrammarAccess.PostfixSubExpressionElements getPostfixSubExpressionAccess() {
+		return gaKEffects.getPostfixSubExpressionAccess();
+	}
+	
+	public ParserRule getPostfixSubExpressionRule() {
+		return getPostfixSubExpressionAccess().getRule();
 	}
 
 	//AtomicExpression returns Expression:
@@ -734,6 +626,16 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
+	}
+
+	//Parameter:
+	//	(callByReference?="&" pureOutput?="&"?)? expression=Expression;
+	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
+		return gaKEffects.getParameterAccess();
+	}
+	
+	public ParserRule getParameterRule() {
+		return getParameterAccess().getRule();
 	}
 
 	//// Example: 'printf(...)'
@@ -803,7 +705,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum CompareOperator returns OperatorType:
-	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 	public KExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
 		return gaKEffects.getCompareOperatorAccess();
 	}
@@ -932,6 +834,26 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalAndOperatorAccess().getRule();
 	}
 
+	//enum PostfixAdd returns OperatorType:
+	//	POSTFIX_ADD="++";
+	public KExpressionsGrammarAccess.PostfixAddElements getPostfixAddAccess() {
+		return gaKEffects.getPostfixAddAccess();
+	}
+	
+	public EnumRule getPostfixAddRule() {
+		return getPostfixAddAccess().getRule();
+	}
+
+	//enum PostfixSub returns OperatorType:
+	//	POSTFIX_SUB="--";
+	public KExpressionsGrammarAccess.PostfixSubElements getPostfixSubAccess() {
+		return gaKEffects.getPostfixSubAccess();
+	}
+	
+	public EnumRule getPostfixSubRule() {
+		return getPostfixSubAccess().getRule();
+	}
+
 	/// *
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 	// * / enum ValueType:
@@ -971,6 +893,22 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return gaKEffects.getHOSTCODERule();
 	} 
 
+	//// --------------------------
+	// //
+	// //   ANNOTATIONS
+	// //
+	// // --------------------------
+	// Annotation:
+	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
+	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
+	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
+		return gaKEffects.getAnnotationAccess();
+	}
+	
+	public ParserRule getAnnotationRule() {
+		return getAnnotationAccess().getRule();
+	}
+
 	//ValuedAnnotation returns Annotation:
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
 	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
@@ -1002,6 +940,17 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTagAnnotationRule() {
 		return getTagAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @layouter dot;   
+	// KeyStringValueAnnotation returns StringAnnotation:
+	//	"@" name=ExtendedID values+=EString+;
+	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
+		return gaKEffects.getKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getKeyStringValueAnnotationRule() {
+		return getKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"

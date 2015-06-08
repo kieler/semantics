@@ -11,6 +11,7 @@ import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 Effect returns keffects::Effect: 
 	Emission |
 	Assignment | 
+	UnaryOperation | 
 	TextEffect | 
 	FunctionCallEffect;
 
@@ -23,19 +24,21 @@ Assignment returns keffects::Assignment:
 	valuedObject=[kexpressions::ValuedObject]
 	('[' indices+=Expression ']')*
 	 "=" expression = Expression ;
+	 
+	 
+UnaryOperation returns keffects::Assignment:
+    expression = PostfixAddExpression | expression = PostfixSubExpression;
 
 
 TextEffect returns keffects::HostcodeEffect:
  	text=HOSTCODE;
  	
+ 	
 FunctionCallEffect returns keffects::FunctionCallEffect:
-    '<' functionName=ExtendedID (('(' parameters += Parameter (',' parameters += Parameter)* ')')|'()')? '>'
-;
+    '<' functionName=ExtendedID (('(' parameters += Parameter (',' parameters += Parameter)* ')')|'()')? '>';
 
-Parameter returns kexpressions::Parameter:
-    (callByReference ?= '&')?
-    expression = Expression
-;
+
+
 
 
     

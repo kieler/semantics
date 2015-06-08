@@ -113,6 +113,17 @@ ModExpression returns Expression:
 // at the latter we need the parents to indicate the right binding
 NegExpression returns Expression:
 	{OperatorExpression} operator=SubOperator subExpressions+=(NegExpression)
+	| PostfixAddExpression
+//    | AtomicValuedExpression
+;
+
+PostfixAddExpression returns Expression:
+    {OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
+    | PostfixSubExpression
+;
+
+PostfixSubExpression returns Expression:
+    {OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
     | AtomicValuedExpression
 ;
   
@@ -183,7 +194,7 @@ AnyType returns ecore::EString:
 
 
 enum CompareOperator returns OperatorType:
-	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 
 enum PreOperator returns OperatorType:
     PRE="pre";
@@ -220,6 +231,12 @@ enum LogicalOrOperator returns OperatorType:
 
 enum LogicalAndOperator returns OperatorType:
 	AND="&&";
+	
+enum PostfixAdd returns OperatorType:
+    POSTFIX_ADD="++";
+
+enum PostfixSub returns OperatorType:
+    POSTFIX_SUB="--";
 
 /*
    the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 

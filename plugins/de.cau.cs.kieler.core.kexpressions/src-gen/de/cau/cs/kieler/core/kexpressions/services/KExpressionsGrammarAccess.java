@@ -599,15 +599,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorSubOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
 		private final RuleCall cSubExpressionsNegExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
-		private final RuleCall cAtomicValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cPostfixAddExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// Example: -?A, -(?A + ?B)
 		//// at the latter we need the parents to indicate the right binding
+		////    | AtomicValuedExpression
 		//NegExpression returns Expression:
-		//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression;
+		//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | PostfixAddExpression;
 		public ParserRule getRule() { return rule; }
 
-		//{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression
+		//{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | PostfixAddExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//{OperatorExpression} operator=SubOperator subExpressions+=NegExpression
@@ -627,6 +628,86 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//NegExpression
 		public RuleCall getSubExpressionsNegExpressionParserRuleCall_0_2_0() { return cSubExpressionsNegExpressionParserRuleCall_0_2_0; }
+
+		//PostfixAddExpression
+		public RuleCall getPostfixAddExpressionParserRuleCall_1() { return cPostfixAddExpressionParserRuleCall_1; }
+	}
+
+	public class PostfixAddExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PostfixAddExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cOperatorPostfixAddEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cSubExpressionsPostfixAddExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
+		private final RuleCall cPostfixSubExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//PostfixAddExpression returns Expression:
+		//	{OperatorExpression} operator=PostfixAdd subExpressions+=PostfixAddExpression | PostfixSubExpression;
+		public ParserRule getRule() { return rule; }
+
+		//{OperatorExpression} operator=PostfixAdd subExpressions+=PostfixAddExpression | PostfixSubExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//{OperatorExpression} operator=PostfixAdd subExpressions+=PostfixAddExpression
+		public Group getGroup_0() { return cGroup_0; }
+
+		//{OperatorExpression}
+		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
+
+		//operator=PostfixAdd
+		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
+
+		//PostfixAdd
+		public RuleCall getOperatorPostfixAddEnumRuleCall_0_1_0() { return cOperatorPostfixAddEnumRuleCall_0_1_0; }
+
+		//subExpressions+=PostfixAddExpression
+		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
+
+		//PostfixAddExpression
+		public RuleCall getSubExpressionsPostfixAddExpressionParserRuleCall_0_2_0() { return cSubExpressionsPostfixAddExpressionParserRuleCall_0_2_0; }
+
+		//PostfixSubExpression
+		public RuleCall getPostfixSubExpressionParserRuleCall_1() { return cPostfixSubExpressionParserRuleCall_1; }
+	}
+
+	public class PostfixSubExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PostfixSubExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cOperatorPostfixSubEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cSubExpressionsPostfixSubExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
+		private final RuleCall cAtomicValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//PostfixSubExpression returns Expression:
+		//	{OperatorExpression} operator=PostfixSub subExpressions+=PostfixSubExpression | AtomicValuedExpression;
+		public ParserRule getRule() { return rule; }
+
+		//{OperatorExpression} operator=PostfixSub subExpressions+=PostfixSubExpression | AtomicValuedExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//{OperatorExpression} operator=PostfixSub subExpressions+=PostfixSubExpression
+		public Group getGroup_0() { return cGroup_0; }
+
+		//{OperatorExpression}
+		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
+
+		//operator=PostfixSub
+		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
+
+		//PostfixSub
+		public RuleCall getOperatorPostfixSubEnumRuleCall_0_1_0() { return cOperatorPostfixSubEnumRuleCall_0_1_0; }
+
+		//subExpressions+=PostfixSubExpression
+		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
+
+		//PostfixSubExpression
+		public RuleCall getSubExpressionsPostfixSubExpressionParserRuleCall_0_2_0() { return cSubExpressionsPostfixSubExpressionParserRuleCall_0_2_0; }
 
 		//AtomicValuedExpression
 		public RuleCall getAtomicValuedExpressionParserRuleCall_1() { return cAtomicValuedExpressionParserRuleCall_1; }
@@ -1069,13 +1150,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cGEQEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
 		private final Keyword cGEQGreaterThanSignEqualsSignKeyword_4_0 = (Keyword)cGEQEnumLiteralDeclaration_4.eContents().get(0);
 		private final EnumLiteralDeclaration cNEEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
-		private final Keyword cNELessThanSignGreaterThanSignKeyword_5_0 = (Keyword)cNEEnumLiteralDeclaration_5.eContents().get(0);
+		private final Keyword cNEExclamationMarkEqualsSignKeyword_5_0 = (Keyword)cNEEnumLiteralDeclaration_5.eContents().get(0);
 		
 		//enum CompareOperator returns OperatorType:
-		//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+		//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 		public EnumRule getRule() { return rule; }
 
-		//EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>"
+		//EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!="
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//EQ="=="
@@ -1108,11 +1189,11 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//">="
 		public Keyword getGEQGreaterThanSignEqualsSignKeyword_4_0() { return cGEQGreaterThanSignEqualsSignKeyword_4_0; }
 
-		//NE="<>"
+		//NE="!="
 		public EnumLiteralDeclaration getNEEnumLiteralDeclaration_5() { return cNEEnumLiteralDeclaration_5; }
 
-		//"<>"
-		public Keyword getNELessThanSignGreaterThanSignKeyword_5_0() { return cNELessThanSignGreaterThanSignKeyword_5_0; }
+		//"!="
+		public Keyword getNEExclamationMarkEqualsSignKeyword_5_0() { return cNEExclamationMarkEqualsSignKeyword_5_0; }
 	}
 
 	public class PreOperatorElements extends AbstractEnumRuleElementFinder {
@@ -1307,6 +1388,38 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getANDAmpersandAmpersandKeyword_0() { return cANDAmpersandAmpersandKeyword_0; }
 	}
 
+	public class PostfixAddElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "PostfixAdd");
+		private final EnumLiteralDeclaration cPOSTFIX_ADDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cPOSTFIX_ADDPlusSignPlusSignKeyword_0 = (Keyword)cPOSTFIX_ADDEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum PostfixAdd returns OperatorType:
+		//	POSTFIX_ADD="++";
+		public EnumRule getRule() { return rule; }
+
+		//POSTFIX_ADD="++"
+		public EnumLiteralDeclaration getPOSTFIX_ADDEnumLiteralDeclaration() { return cPOSTFIX_ADDEnumLiteralDeclaration; }
+
+		//"++"
+		public Keyword getPOSTFIX_ADDPlusSignPlusSignKeyword_0() { return cPOSTFIX_ADDPlusSignPlusSignKeyword_0; }
+	}
+
+	public class PostfixSubElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "PostfixSub");
+		private final EnumLiteralDeclaration cPOSTFIX_SUBEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cPOSTFIX_SUBHyphenMinusHyphenMinusKeyword_0 = (Keyword)cPOSTFIX_SUBEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum PostfixSub returns OperatorType:
+		//	POSTFIX_SUB="--";
+		public EnumRule getRule() { return rule; }
+
+		//POSTFIX_SUB="--"
+		public EnumLiteralDeclaration getPOSTFIX_SUBEnumLiteralDeclaration() { return cPOSTFIX_SUBEnumLiteralDeclaration; }
+
+		//"--"
+		public Keyword getPOSTFIX_SUBHyphenMinusHyphenMinusKeyword_0() { return cPOSTFIX_SUBHyphenMinusHyphenMinusKeyword_0; }
+	}
+
 	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "ValueType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1486,6 +1599,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final DivExpressionElements pDivExpression;
 	private final ModExpressionElements pModExpression;
 	private final NegExpressionElements pNegExpression;
+	private final PostfixAddExpressionElements pPostfixAddExpression;
+	private final PostfixSubExpressionElements pPostfixSubExpression;
 	private final AtomicExpressionElements pAtomicExpression;
 	private final AtomicValuedExpressionElements pAtomicValuedExpression;
 	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
@@ -1511,6 +1626,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ValOperatorElements unknownRuleValOperator;
 	private final LogicalOrOperatorElements unknownRuleLogicalOrOperator;
 	private final LogicalAndOperatorElements unknownRuleLogicalAndOperator;
+	private final PostfixAddElements unknownRulePostfixAdd;
+	private final PostfixSubElements unknownRulePostfixSub;
 	private final ValueTypeElements unknownRuleValueType;
 	private final HostTypeElements unknownRuleHostType;
 	private final CombineOperatorElements unknownRuleCombineOperator;
@@ -1542,6 +1659,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pDivExpression = new DivExpressionElements();
 		this.pModExpression = new ModExpressionElements();
 		this.pNegExpression = new NegExpressionElements();
+		this.pPostfixAddExpression = new PostfixAddExpressionElements();
+		this.pPostfixSubExpression = new PostfixSubExpressionElements();
 		this.pAtomicExpression = new AtomicExpressionElements();
 		this.pAtomicValuedExpression = new AtomicValuedExpressionElements();
 		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
@@ -1567,6 +1686,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.unknownRuleValOperator = new ValOperatorElements();
 		this.unknownRuleLogicalOrOperator = new LogicalOrOperatorElements();
 		this.unknownRuleLogicalAndOperator = new LogicalAndOperatorElements();
+		this.unknownRulePostfixAdd = new PostfixAddElements();
+		this.unknownRulePostfixSub = new PostfixSubElements();
 		this.unknownRuleValueType = new ValueTypeElements();
 		this.unknownRuleHostType = new HostTypeElements();
 		this.unknownRuleCombineOperator = new CombineOperatorElements();
@@ -1796,14 +1917,35 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: -?A, -(?A + ?B)
 	//// at the latter we need the parents to indicate the right binding
+	////    | AtomicValuedExpression
 	//NegExpression returns Expression:
-	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression;
+	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | PostfixAddExpression;
 	public NegExpressionElements getNegExpressionAccess() {
 		return pNegExpression;
 	}
 	
 	public ParserRule getNegExpressionRule() {
 		return getNegExpressionAccess().getRule();
+	}
+
+	//PostfixAddExpression returns Expression:
+	//	{OperatorExpression} operator=PostfixAdd subExpressions+=PostfixAddExpression | PostfixSubExpression;
+	public PostfixAddExpressionElements getPostfixAddExpressionAccess() {
+		return pPostfixAddExpression;
+	}
+	
+	public ParserRule getPostfixAddExpressionRule() {
+		return getPostfixAddExpressionAccess().getRule();
+	}
+
+	//PostfixSubExpression returns Expression:
+	//	{OperatorExpression} operator=PostfixSub subExpressions+=PostfixSubExpression | AtomicValuedExpression;
+	public PostfixSubExpressionElements getPostfixSubExpressionAccess() {
+		return pPostfixSubExpression;
+	}
+	
+	public ParserRule getPostfixSubExpressionRule() {
+		return getPostfixSubExpressionAccess().getRule();
 	}
 
 	//AtomicExpression returns Expression:
@@ -1936,7 +2078,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum CompareOperator returns OperatorType:
-	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 	public CompareOperatorElements getCompareOperatorAccess() {
 		return unknownRuleCompareOperator;
 	}
@@ -2063,6 +2205,26 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getLogicalAndOperatorRule() {
 		return getLogicalAndOperatorAccess().getRule();
+	}
+
+	//enum PostfixAdd returns OperatorType:
+	//	POSTFIX_ADD="++";
+	public PostfixAddElements getPostfixAddAccess() {
+		return unknownRulePostfixAdd;
+	}
+	
+	public EnumRule getPostfixAddRule() {
+		return getPostfixAddAccess().getRule();
+	}
+
+	//enum PostfixSub returns OperatorType:
+	//	POSTFIX_SUB="--";
+	public PostfixSubElements getPostfixSubAccess() {
+		return unknownRulePostfixSub;
+	}
+	
+	public EnumRule getPostfixSubRule() {
+		return getPostfixSubAccess().getRule();
 	}
 
 	/// *

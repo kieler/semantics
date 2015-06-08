@@ -41,6 +41,8 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
 					put(grammarAccess.getNegExpressionAccess().getAlternatives(), "rule__NegExpression__Alternatives");
+					put(grammarAccess.getPostfixAddExpressionAccess().getAlternatives(), "rule__PostfixAddExpression__Alternatives");
+					put(grammarAccess.getPostfixSubExpressionAccess().getAlternatives(), "rule__PostfixSubExpression__Alternatives");
 					put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 					put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
@@ -79,6 +81,8 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModExpressionAccess().getGroup(), "rule__ModExpression__Group__0");
 					put(grammarAccess.getModExpressionAccess().getGroup_1(), "rule__ModExpression__Group_1__0");
 					put(grammarAccess.getNegExpressionAccess().getGroup_0(), "rule__NegExpression__Group_0__0");
+					put(grammarAccess.getPostfixAddExpressionAccess().getGroup_0(), "rule__PostfixAddExpression__Group_0__0");
+					put(grammarAccess.getPostfixSubExpressionAccess().getGroup_0(), "rule__PostfixSubExpression__Group_0__0");
 					put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
 					put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_3(), "rule__AtomicValuedExpression__Group_3__0");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
@@ -124,6 +128,10 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModExpressionAccess().getSubExpressionsAssignment_1_2(), "rule__ModExpression__SubExpressionsAssignment_1_2");
 					put(grammarAccess.getNegExpressionAccess().getOperatorAssignment_0_1(), "rule__NegExpression__OperatorAssignment_0_1");
 					put(grammarAccess.getNegExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__NegExpression__SubExpressionsAssignment_0_2");
+					put(grammarAccess.getPostfixAddExpressionAccess().getOperatorAssignment_0_1(), "rule__PostfixAddExpression__OperatorAssignment_0_1");
+					put(grammarAccess.getPostfixAddExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__PostfixAddExpression__SubExpressionsAssignment_0_2");
+					put(grammarAccess.getPostfixSubExpressionAccess().getOperatorAssignment_0_1(), "rule__PostfixSubExpression__OperatorAssignment_0_1");
+					put(grammarAccess.getPostfixSubExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__PostfixSubExpression__SubExpressionsAssignment_0_2");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 					put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");
