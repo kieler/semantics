@@ -24,16 +24,17 @@ Declaration returns kexpressions::Declaration:
     (input?='input')? 
     (output?='output')?
     (static?='static')?
-    (((signal?='signal')? type = ValueType) | ((signal?='signal'))) 
+    (((signal?='signal')? type = ValueType) | (signal?='signal')) 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 ;
 
 
 ValuedObject returns kexpressions::ValuedObject:
-    (annotations+=Annotation)*
+//    (annotations+=Annotation)*
     name=ID ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )? ',';
+    )?
+;
     
     

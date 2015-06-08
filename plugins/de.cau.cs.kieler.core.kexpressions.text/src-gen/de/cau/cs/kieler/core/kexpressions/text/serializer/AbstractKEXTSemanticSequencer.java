@@ -505,7 +505,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* name=ID initialValue=Expression? combineOperator=CombineOperator?)
+	 *     (name=ID initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

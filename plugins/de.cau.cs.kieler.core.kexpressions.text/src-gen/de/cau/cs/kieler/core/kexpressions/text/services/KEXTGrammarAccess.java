@@ -165,65 +165,55 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	public class ValuedObjectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedObject");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cInitialValueAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cInitialValueExpressionParserRuleCall_1_1_0 = (RuleCall)cInitialValueAssignment_1_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cEqualsSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cInitialValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cInitialValueExpressionParserRuleCall_2_1_0 = (RuleCall)cInitialValueAssignment_2_1.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cCombineKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cCombineOperatorAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_3_1_0 = (RuleCall)cCombineOperatorAssignment_3_1.eContents().get(0);
-		private final Keyword cCommaKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Keyword cCombineKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cCombineOperatorAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_2_1_0 = (RuleCall)cCombineOperatorAssignment_2_1.eContents().get(0);
 		
-		//ValuedObject returns kexpressions::ValuedObject:
-		//	annotations+=Annotation* name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ",";
+		//ValuedObject returns kexpressions::ValuedObject: //    (annotations+=Annotation)*
+		//	name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ","
+		////    (annotations+=Annotation)*
+		//name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?
 		public Group getGroup() { return cGroup; }
 
-		//annotations+=Annotation*
-		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
-
-		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
-
+		////    (annotations+=Annotation)*
 		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 
 		//("=" initialValue=Expression)?
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_1() { return cGroup_1; }
 
 		//"="
-		public Keyword getEqualsSignKeyword_2_0() { return cEqualsSignKeyword_2_0; }
+		public Keyword getEqualsSignKeyword_1_0() { return cEqualsSignKeyword_1_0; }
 
 		//initialValue=Expression
-		public Assignment getInitialValueAssignment_2_1() { return cInitialValueAssignment_2_1; }
+		public Assignment getInitialValueAssignment_1_1() { return cInitialValueAssignment_1_1; }
 
 		//Expression
-		public RuleCall getInitialValueExpressionParserRuleCall_2_1_0() { return cInitialValueExpressionParserRuleCall_2_1_0; }
+		public RuleCall getInitialValueExpressionParserRuleCall_1_1_0() { return cInitialValueExpressionParserRuleCall_1_1_0; }
 
 		//("combine" combineOperator=CombineOperator)?
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_2() { return cGroup_2; }
 
 		//"combine"
-		public Keyword getCombineKeyword_3_0() { return cCombineKeyword_3_0; }
+		public Keyword getCombineKeyword_2_0() { return cCombineKeyword_2_0; }
 
 		//combineOperator=CombineOperator
-		public Assignment getCombineOperatorAssignment_3_1() { return cCombineOperatorAssignment_3_1; }
+		public Assignment getCombineOperatorAssignment_2_1() { return cCombineOperatorAssignment_2_1; }
 
 		//CombineOperator
-		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_3_1_0() { return cCombineOperatorCombineOperatorEnumRuleCall_3_1_0; }
-
-		//","
-		public Keyword getCommaKeyword_4() { return cCommaKeyword_4; }
+		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_2_1_0() { return cCombineOperatorCombineOperatorEnumRuleCall_2_1_0; }
 	}
 	
 	
@@ -293,8 +283,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getDeclarationAccess().getRule();
 	}
 
-	//ValuedObject returns kexpressions::ValuedObject:
-	//	annotations+=Annotation* name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ",";
+	//ValuedObject returns kexpressions::ValuedObject: //    (annotations+=Annotation)*
+	//	name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
 	public ValuedObjectElements getValuedObjectAccess() {
 		return pValuedObject;
 	}

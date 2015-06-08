@@ -138,8 +138,8 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDeclarationAccess().getGroup_5_0(), "rule__Declaration__Group_5_0__0");
 					put(grammarAccess.getDeclarationAccess().getGroup_7(), "rule__Declaration__Group_7__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup(), "rule__ValuedObject__Group__0");
+					put(grammarAccess.getValuedObjectAccess().getGroup_1(), "rule__ValuedObject__Group_1__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup_2(), "rule__ValuedObject__Group_2__0");
-					put(grammarAccess.getValuedObjectAccess().getGroup_3(), "rule__ValuedObject__Group_3__0");
 					put(grammarAccess.getEmissionAccess().getGroup(), "rule__Emission__Group__0");
 					put(grammarAccess.getEmissionAccess().getGroup_1(), "rule__Emission__Group_1__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
@@ -310,10 +310,9 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDeclarationAccess().getSignalAssignment_5_1(), "rule__Declaration__SignalAssignment_5_1");
 					put(grammarAccess.getDeclarationAccess().getValuedObjectsAssignment_6(), "rule__Declaration__ValuedObjectsAssignment_6");
 					put(grammarAccess.getDeclarationAccess().getValuedObjectsAssignment_7_1(), "rule__Declaration__ValuedObjectsAssignment_7_1");
-					put(grammarAccess.getValuedObjectAccess().getAnnotationsAssignment_0(), "rule__ValuedObject__AnnotationsAssignment_0");
-					put(grammarAccess.getValuedObjectAccess().getNameAssignment_1(), "rule__ValuedObject__NameAssignment_1");
-					put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_2_1(), "rule__ValuedObject__InitialValueAssignment_2_1");
-					put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_3_1(), "rule__ValuedObject__CombineOperatorAssignment_3_1");
+					put(grammarAccess.getValuedObjectAccess().getNameAssignment_0(), "rule__ValuedObject__NameAssignment_0");
+					put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_1_1(), "rule__ValuedObject__InitialValueAssignment_1_1");
+					put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_2_1(), "rule__ValuedObject__CombineOperatorAssignment_2_1");
 					put(grammarAccess.getEmissionAccess().getValuedObjectAssignment_0(), "rule__Emission__ValuedObjectAssignment_0");
 					put(grammarAccess.getEmissionAccess().getNewValueAssignment_1_1(), "rule__Emission__NewValueAssignment_1_1");
 					put(grammarAccess.getAssignmentAccess().getValuedObjectAssignment_0(), "rule__Assignment__ValuedObjectAssignment_0");

@@ -2148,8 +2148,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getDeclarationAccess().getRule();
 	}
 
-	//ValuedObject returns kexpressions::ValuedObject:
-	//	annotations+=Annotation* name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ",";
+	//ValuedObject returns kexpressions::ValuedObject: //    (annotations+=Annotation)*
+	//	name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
 	public KEXTGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaActions.getValuedObjectAccess();
 	}

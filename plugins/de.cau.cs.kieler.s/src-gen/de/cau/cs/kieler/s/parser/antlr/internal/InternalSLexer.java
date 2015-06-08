@@ -1365,11 +1365,11 @@ public class InternalSLexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5111:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5111:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5089:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5089:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
             match('\''); 
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5111:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5089:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop1:
             do {
                 int alt1=3;
@@ -1385,7 +1385,7 @@ public class InternalSLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5111:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5089:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1401,7 +1401,7 @@ public class InternalSLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5111:64: ~ ( ( '\\\\' | '\\'' ) )
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5089:64: ~ ( ( '\\\\' | '\\'' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1438,12 +1438,12 @@ public class InternalSLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5113:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5113:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5091:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5091:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5113:33: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5091:33: ( options {greedy=false; } : . )*
             loop2:
             do {
                 int alt2=2;
@@ -1468,7 +1468,7 @@ public class InternalSLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5113:61: .
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5091:61: .
             	    {
             	    matchAny(); 
 
@@ -1498,8 +1498,8 @@ public class InternalSLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5115:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5115:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5093:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5093:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -1512,7 +1512,7 @@ public class InternalSLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5115:31: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5093:31: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -1537,7 +1537,7 @@ public class InternalSLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5115:59: .
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5093:59: .
             	    {
             	    matchAny(); 
 
@@ -1565,8 +1565,8 @@ public class InternalSLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5117:22: ( '0' .. '9' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5117:24: '0' .. '9'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5095:22: ( '0' .. '9' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5095:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -1583,10 +1583,10 @@ public class InternalSLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5119:10: ( ( RULE_NUMBER )+ )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5119:12: ( RULE_NUMBER )+
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5097:10: ( ( RULE_NUMBER )+ )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5097:12: ( RULE_NUMBER )+
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5119:12: ( RULE_NUMBER )+
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5097:12: ( RULE_NUMBER )+
             int cnt4=0;
             loop4:
             do {
@@ -1600,7 +1600,7 @@ public class InternalSLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5119:12: RULE_NUMBER
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5097:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -1632,17 +1632,17 @@ public class InternalSLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             int alt12=2;
             alt12 = dfa12.predict(input);
             switch (alt12) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:15: ( RULE_NUMBER )+
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:15: ( RULE_NUMBER )+
                     int cnt5=0;
                     loop5:
                     do {
@@ -1656,7 +1656,7 @@ public class InternalSLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:15: RULE_NUMBER
+                    	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1673,7 +1673,7 @@ public class InternalSLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:32: ( RULE_NUMBER )*
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:32: ( RULE_NUMBER )*
                     loop6:
                     do {
                         int alt6=2;
@@ -1686,7 +1686,7 @@ public class InternalSLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:32: RULE_NUMBER
+                    	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1698,7 +1698,7 @@ public class InternalSLexer extends Lexer {
                         }
                     } while (true);
 
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -1707,7 +1707,7 @@ public class InternalSLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -1718,7 +1718,7 @@ public class InternalSLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:56: ( '+' | '-' )?
+                            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:56: ( '+' | '-' )?
                             int alt7=2;
                             int LA7_0 = input.LA(1);
 
@@ -1744,7 +1744,7 @@ public class InternalSLexer extends Lexer {
 
                             }
 
-                            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:67: ( RULE_NUMBER )+
+                            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:67: ( RULE_NUMBER )+
                             int cnt8=0;
                             loop8:
                             do {
@@ -1758,7 +1758,7 @@ public class InternalSLexer extends Lexer {
 
                                 switch (alt8) {
                             	case 1 :
-                            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:67: RULE_NUMBER
+                            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -1780,7 +1780,7 @@ public class InternalSLexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:82: ( 'f' )?
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:82: ( 'f' )?
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
@@ -1789,7 +1789,7 @@ public class InternalSLexer extends Lexer {
                     }
                     switch (alt10) {
                         case 1 :
-                            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:82: 'f'
+                            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:82: 'f'
                             {
                             match('f'); 
 
@@ -1802,9 +1802,9 @@ public class InternalSLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:87: ( RULE_NUMBER )+ 'f'
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:87: ( RULE_NUMBER )+
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:87: ( RULE_NUMBER )+
                     int cnt11=0;
                     loop11:
                     do {
@@ -1818,7 +1818,7 @@ public class InternalSLexer extends Lexer {
 
                         switch (alt11) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5121:87: RULE_NUMBER
+                    	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5099:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1857,10 +1857,10 @@ public class InternalSLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5123:14: ( ( 'true' | 'false' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5123:16: ( 'true' | 'false' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5101:14: ( ( 'true' | 'false' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5101:16: ( 'true' | 'false' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5123:16: ( 'true' | 'false' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5101:16: ( 'true' | 'false' )
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -1878,7 +1878,7 @@ public class InternalSLexer extends Lexer {
             }
             switch (alt13) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5123:17: 'true'
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5101:17: 'true'
                     {
                     match("true"); 
 
@@ -1886,7 +1886,7 @@ public class InternalSLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5123:24: 'false'
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5101:24: 'false'
                     {
                     match("false"); 
 
@@ -1912,11 +1912,11 @@ public class InternalSLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5125:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5125:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5103:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5103:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5125:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5103:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
             loop14:
             do {
                 int alt14=3;
@@ -1932,7 +1932,7 @@ public class InternalSLexer extends Lexer {
 
                 switch (alt14) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5125:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5103:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1948,7 +1948,7 @@ public class InternalSLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5125:61: ~ ( ( '\\\\' | '\"' ) )
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5103:61: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1985,10 +1985,10 @@ public class InternalSLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5127:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5127:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5105:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5105:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5127:11: ( '^' )?
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5105:11: ( '^' )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -1997,7 +1997,7 @@ public class InternalSLexer extends Lexer {
             }
             switch (alt15) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5127:11: '^'
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5105:11: '^'
                     {
                     match('^'); 
 
@@ -2015,7 +2015,7 @@ public class InternalSLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5127:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5105:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop16:
             do {
                 int alt16=2;
@@ -2064,12 +2064,12 @@ public class InternalSLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5129:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5129:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5107:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5107:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5129:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5107:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop17:
             do {
                 int alt17=2;
@@ -2082,7 +2082,7 @@ public class InternalSLexer extends Lexer {
 
                 switch (alt17) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5129:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5107:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2102,7 +2102,7 @@ public class InternalSLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5129:40: ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5107:40: ( ( '\\r' )? '\\n' )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -2111,9 +2111,9 @@ public class InternalSLexer extends Lexer {
             }
             switch (alt19) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5129:41: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5107:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5129:41: ( '\\r' )?
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5107:41: ( '\\r' )?
                     int alt18=2;
                     int LA18_0 = input.LA(1);
 
@@ -2122,7 +2122,7 @@ public class InternalSLexer extends Lexer {
                     }
                     switch (alt18) {
                         case 1 :
-                            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5129:41: '\\r'
+                            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5107:41: '\\r'
                             {
                             match('\r'); 
 
@@ -2154,10 +2154,10 @@ public class InternalSLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5131:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5131:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5109:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5109:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5131:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5109:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt20=0;
             loop20:
             do {
@@ -2211,8 +2211,8 @@ public class InternalSLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5133:16: ( . )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5133:18: .
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5111:16: ( . )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:5111:18: .
             {
             matchAny(); 
 
@@ -2792,7 +2792,7 @@ public class InternalSLexer extends Lexer {
             this.transition = DFA12_transition;
         }
         public String getDescription() {
-            return "5121:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
+            return "5099:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
         }
     }
     static final String DFA21_eotS =
