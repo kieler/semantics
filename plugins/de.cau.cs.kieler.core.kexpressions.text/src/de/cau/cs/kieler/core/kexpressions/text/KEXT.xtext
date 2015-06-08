@@ -32,7 +32,7 @@ ValuedObject returns kexpressions::ValuedObject:
     name=ID ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )?
+    )? ','
 ;
 
 // ssm: KExt overrides the KeyStringValueAnnotation because allowing EString as value would introduce an ambiguity.
@@ -42,20 +42,20 @@ ValuedObject returns kexpressions::ValuedObject:
 
 // e.g.: @layouter dot;   
 KeyStringValueAnnotation returns StringAnnotation:
-    '@' name=ExtendedID value=EString
+    '@' name=ExtendedID value=STRING
     ('('
         (annotations+=Annotation)*
     ')')?;
 
 Annotation returns annotations::Annotation:
-//    CommentAnnotation
-//    | 
+    CommentAnnotation
+    | 
     TagAnnotation
     | KeyStringValueAnnotation
     | TypedKeyStringValueAnnotation
-//    | KeyBooleanValueAnnotation
-//    | KeyIntValueAnnotation
-//    | KeyFloatValueAnnotation
+    | KeyBooleanValueAnnotation
+    | KeyIntValueAnnotation
+    | KeyFloatValueAnnotation
     ;
     
     

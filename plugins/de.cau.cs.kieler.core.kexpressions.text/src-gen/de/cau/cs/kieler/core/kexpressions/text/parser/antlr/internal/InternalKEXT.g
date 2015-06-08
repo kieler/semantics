@@ -398,7 +398,11 @@ ruleValuedObject returns [EObject current=null]
 	    }
 
 )
-))?)
+))?	otherlv_6=',' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getValuedObjectAccess().getCommaKeyword_4());
+    }
+)
 ;
 
 
@@ -443,19 +447,19 @@ ruleKeyStringValueAnnotation returns [EObject current=null]
 )
 )(
 (
-		{ 
-	        newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()); 
-	    }
-		lv_value_2_0=ruleEString		{
+		lv_value_2_0=RULE_STRING
+		{
+			newLeafNode(lv_value_2_0, grammarAccess.getKeyStringValueAnnotationAccess().getValueSTRINGTerminalRuleCall_2_0()); 
+		}
+		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getKeyStringValueAnnotationRule());
+	            $current = createModelElement(grammarAccess.getKeyStringValueAnnotationRule());
 	        }
-       		set(
+       		setWithLastConsumed(
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"EString");
-	        afterParserOrEnumRuleCall();
+        		"STRING");
 	    }
 
 )
@@ -511,11 +515,11 @@ ruleAnnotation returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0()); 
     }
-    this_TagAnnotation_0=ruleTagAnnotation
+    this_CommentAnnotation_0=ruleCommentAnnotation
     { 
-        $current = $this_TagAnnotation_0.current; 
+        $current = $this_CommentAnnotation_0.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -524,11 +528,11 @@ ruleAnnotation returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_1()); 
     }
-    this_KeyStringValueAnnotation_1=ruleKeyStringValueAnnotation
+    this_TagAnnotation_1=ruleTagAnnotation
     { 
-        $current = $this_KeyStringValueAnnotation_1.current; 
+        $current = $this_TagAnnotation_1.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -537,11 +541,63 @@ ruleAnnotation returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2()); 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2()); 
     }
-    this_TypedKeyStringValueAnnotation_2=ruleTypedKeyStringValueAnnotation
+    this_KeyStringValueAnnotation_2=ruleKeyStringValueAnnotation
     { 
-        $current = $this_TypedKeyStringValueAnnotation_2.current; 
+        $current = $this_KeyStringValueAnnotation_2.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); 
+    }
+    this_TypedKeyStringValueAnnotation_3=ruleTypedKeyStringValueAnnotation
+    { 
+        $current = $this_TypedKeyStringValueAnnotation_3.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_4()); 
+    }
+    this_KeyBooleanValueAnnotation_4=ruleKeyBooleanValueAnnotation
+    { 
+        $current = $this_KeyBooleanValueAnnotation_4.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_5()); 
+    }
+    this_KeyIntValueAnnotation_5=ruleKeyIntValueAnnotation
+    { 
+        $current = $this_KeyIntValueAnnotation_5.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_6()); 
+    }
+    this_KeyFloatValueAnnotation_6=ruleKeyFloatValueAnnotation
+    { 
+        $current = $this_KeyFloatValueAnnotation_6.current; 
         afterParserOrEnumRuleCall();
     }
 )

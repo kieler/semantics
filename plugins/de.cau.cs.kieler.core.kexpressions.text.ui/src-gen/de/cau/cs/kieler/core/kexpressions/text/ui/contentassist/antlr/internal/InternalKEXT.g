@@ -6,6 +6,7 @@ grammar InternalKEXT;
 options {
 	superClass=AbstractInternalContentAssistParser;
 	backtrack=true;
+	 memoize=true;
 	
 }
 
@@ -1687,21 +1688,45 @@ rule__Annotation__Alternatives
     }
 :
 (
-{ before(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_0()); }
+{ before(grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0()); }
+	ruleCommentAnnotation
+{ after(grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0()); }
+)
+
+    |(
+{ before(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_1()); }
 	ruleTagAnnotation
-{ after(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_0()); }
+{ after(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_1()); }
 )
 
     |(
-{ before(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1()); }
+{ before(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2()); }
 	ruleKeyStringValueAnnotation
-{ after(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1()); }
+{ after(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2()); }
 )
 
     |(
-{ before(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2()); }
+{ before(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); }
 	ruleTypedKeyStringValueAnnotation
-{ after(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2()); }
+{ after(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); }
+)
+
+    |(
+{ before(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_4()); }
+	ruleKeyBooleanValueAnnotation
+{ after(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_4()); }
+)
+
+    |(
+{ before(grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_5()); }
+	ruleKeyIntValueAnnotation
+{ after(grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_5()); }
+)
+
+    |(
+{ before(grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_6()); }
+	ruleKeyFloatValueAnnotation
+{ after(grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_6()); }
 )
 
 ;
@@ -2734,6 +2759,7 @@ rule__ValuedObject__Group__3
     }
 :
 	rule__ValuedObject__Group__3__Impl
+	rule__ValuedObject__Group__4
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -2754,6 +2780,38 @@ rule__ValuedObject__Group__3__Impl
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+rule__ValuedObject__Group__4
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__ValuedObject__Group__4__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ValuedObject__Group__4__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getValuedObjectAccess().getCommaKeyword_4()); }
+
+	',' 
+
+{ after(grammarAccess.getValuedObjectAccess().getCommaKeyword_4()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
 
 
 
@@ -8288,8 +8346,8 @@ rule__KeyStringValueAnnotation__ValueAssignment_2
     }
 :
 (
-{ before(grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()); }
-	ruleEString{ after(grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()); }
+{ before(grammarAccess.getKeyStringValueAnnotationAccess().getValueSTRINGTerminalRuleCall_2_0()); }
+	RULE_STRING{ after(grammarAccess.getKeyStringValueAnnotationAccess().getValueSTRINGTerminalRuleCall_2_0()); }
 )
 
 ;

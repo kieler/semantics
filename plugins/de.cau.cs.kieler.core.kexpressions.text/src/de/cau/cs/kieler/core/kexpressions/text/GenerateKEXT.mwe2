@@ -106,8 +106,9 @@ Workflow {
 			// antlr parser generator tailored for content assist 
 			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment { 
 				options = {
-					classSplitting = true
+//					classSplitting = true
 					backtrack = true
+                    memoize = true
 				}
 			}
 

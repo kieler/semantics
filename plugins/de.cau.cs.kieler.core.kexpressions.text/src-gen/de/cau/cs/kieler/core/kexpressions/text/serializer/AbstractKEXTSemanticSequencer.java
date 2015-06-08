@@ -55,14 +55,16 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 				}
 				else break;
 			case AnnotationsPackage.BOOLEAN_ANNOTATION:
-				if(context == grammarAccess.getKeyBooleanValueAnnotationRule() ||
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getKeyBooleanValueAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyBooleanValueAnnotation(context, (BooleanAnnotation) semanticObject); 
 					return; 
 				}
 				else break;
 			case AnnotationsPackage.FLOAT_ANNOTATION:
-				if(context == grammarAccess.getKeyFloatValueAnnotationRule() ||
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getKeyFloatValueAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyFloatValueAnnotation(context, (FloatAnnotation) semanticObject); 
 					return; 
@@ -75,14 +77,16 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 				}
 				else break;
 			case AnnotationsPackage.INT_ANNOTATION:
-				if(context == grammarAccess.getKeyIntValueAnnotationRule() ||
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getKeyIntValueAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
 					return; 
 				}
 				else break;
 			case AnnotationsPackage.STRING_ANNOTATION:
-				if(context == grammarAccess.getCommentAnnotationRule() ||
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getCommentAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_CommentAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
@@ -480,7 +484,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (name=ExtendedID value=EString annotations+=Annotation*)
+	 *     (name=ExtendedID value=STRING annotations+=Annotation*)
 	 */
 	protected void sequence_KeyStringValueAnnotation(EObject context, de.cau.cs.kieler.core.kexpressions.text.kext.StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
