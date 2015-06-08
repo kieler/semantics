@@ -126,18 +126,13 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cAnnotationsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_2_1_0 = (RuleCall)cAnnotationsAssignment_2_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//// e.g.: @HVlayout
 		// TagAnnotation returns Annotation:
-		//	"@" name=ExtendedID ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ExtendedID;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID ("(" annotations+=Annotation* ")")?
+		//"@" name=ExtendedID
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -148,21 +143,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
-
-		//("(" annotations+=Annotation* ")")?
-		public Group getGroup_2() { return cGroup_2; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
-
-		//annotations+=Annotation*
-		public Assignment getAnnotationsAssignment_2_1() { return cAnnotationsAssignment_2_1; }
-
-		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_2_1_0() { return cAnnotationsAnnotationParserRuleCall_2_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 	}
 
 	public class KeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -173,18 +153,13 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cValueEStringParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cAnnotationsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_3_1_0 = (RuleCall)cAnnotationsAssignment_3_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
 		//// e.g.: @layouter dot;   
 		// KeyStringValueAnnotation returns StringAnnotation:
-		//	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ExtendedID value=EString;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?
+		//"@" name=ExtendedID value=EString
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -201,21 +176,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//EString
 		public RuleCall getValueEStringParserRuleCall_2_0() { return cValueEStringParserRuleCall_2_0; }
-
-		//("(" annotations+=Annotation* ")")?
-		public Group getGroup_3() { return cGroup_3; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
-
-		//annotations+=Annotation*
-		public Assignment getAnnotationsAssignment_3_1() { return cAnnotationsAssignment_3_1; }
-
-		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_3_1_0() { return cAnnotationsAnnotationParserRuleCall_3_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
 	}
 
 	public class TypedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -230,19 +190,14 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Assignment cValueAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cValueEStringParserRuleCall_5_0 = (RuleCall)cValueAssignment_5.eContents().get(0);
-		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cLeftParenthesisKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cAnnotationsAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_6_1_0 = (RuleCall)cAnnotationsAssignment_6_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
 		
 		//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 		// TypedKeyStringValueAnnotation returns
 		//TypedStringAnnotation:
-		//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?
+		//"@" name=ExtendedID "[" type=ExtendedID "]" value=EString
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -271,21 +226,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//EString
 		public RuleCall getValueEStringParserRuleCall_5_0() { return cValueEStringParserRuleCall_5_0; }
-
-		//("(" annotations+=Annotation* ")")?
-		public Group getGroup_6() { return cGroup_6; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_6_0() { return cLeftParenthesisKeyword_6_0; }
-
-		//annotations+=Annotation*
-		public Assignment getAnnotationsAssignment_6_1() { return cAnnotationsAssignment_6_1; }
-
-		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_6_1_0() { return cAnnotationsAnnotationParserRuleCall_6_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_6_2() { return cRightParenthesisKeyword_6_2; }
 	}
 
 	public class KeyBooleanValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -296,18 +236,13 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cValueBOOLEANTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cAnnotationsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_3_1_0 = (RuleCall)cAnnotationsAssignment_3_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
 		//// e.g.: @visible true;
 		// KeyBooleanValueAnnotation returns BooleanAnnotation:
-		//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ExtendedID value=BOOLEAN;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?
+		//"@" name=ExtendedID value=BOOLEAN
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -324,21 +259,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//BOOLEAN
 		public RuleCall getValueBOOLEANTerminalRuleCall_2_0() { return cValueBOOLEANTerminalRuleCall_2_0; }
-
-		//("(" annotations+=Annotation* ")")?
-		public Group getGroup_3() { return cGroup_3; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
-
-		//annotations+=Annotation*
-		public Assignment getAnnotationsAssignment_3_1() { return cAnnotationsAssignment_3_1; }
-
-		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_3_1_0() { return cAnnotationsAnnotationParserRuleCall_3_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
 	}
 
 	public class KeyIntValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -349,18 +269,13 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cValueIntegerParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cAnnotationsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_3_1_0 = (RuleCall)cAnnotationsAssignment_3_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
 		//// e.g.: @minSpace 10;    
 		// KeyIntValueAnnotation returns IntAnnotation:
-		//	"@" name=ExtendedID value=Integer ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ExtendedID value=Integer;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID value=Integer ("(" annotations+=Annotation* ")")?
+		//"@" name=ExtendedID value=Integer
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -377,21 +292,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Integer
 		public RuleCall getValueIntegerParserRuleCall_2_0() { return cValueIntegerParserRuleCall_2_0; }
-
-		//("(" annotations+=Annotation* ")")?
-		public Group getGroup_3() { return cGroup_3; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
-
-		//annotations+=Annotation*
-		public Assignment getAnnotationsAssignment_3_1() { return cAnnotationsAssignment_3_1; }
-
-		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_3_1_0() { return cAnnotationsAnnotationParserRuleCall_3_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
 	}
 
 	public class KeyFloatValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -402,18 +302,13 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cValueFloategerParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cAnnotationsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_3_1_0 = (RuleCall)cAnnotationsAssignment_3_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
 		//// e.g.: @minSpace 10.0;    
 		// KeyFloatValueAnnotation returns FloatAnnotation:
-		//	"@" name=ExtendedID value=Floateger ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ExtendedID value=Floateger;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID value=Floateger ("(" annotations+=Annotation* ")")?
+		//"@" name=ExtendedID value=Floateger
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -430,21 +325,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Floateger
 		public RuleCall getValueFloategerParserRuleCall_2_0() { return cValueFloategerParserRuleCall_2_0; }
-
-		//("(" annotations+=Annotation* ")")?
-		public Group getGroup_3() { return cGroup_3; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
-
-		//annotations+=Annotation*
-		public Assignment getAnnotationsAssignment_3_1() { return cAnnotationsAssignment_3_1; }
-
-		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_3_1_0() { return cAnnotationsAnnotationParserRuleCall_3_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
 	}
 
 	public class ImportAnnotationElements extends AbstractParserRuleElementFinder {
@@ -683,7 +563,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @HVlayout
 	// TagAnnotation returns Annotation:
-	//	"@" name=ExtendedID ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID;
 	public TagAnnotationElements getTagAnnotationAccess() {
 		return pTagAnnotation;
 	}
@@ -694,7 +574,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @layouter dot;   
 	// KeyStringValueAnnotation returns StringAnnotation:
-	//	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=EString;
 	public KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return pKeyStringValueAnnotation;
 	}
@@ -706,7 +586,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	// TypedKeyStringValueAnnotation returns
 	//TypedStringAnnotation:
-	//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString;
 	public TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return pTypedKeyStringValueAnnotation;
 	}
@@ -717,7 +597,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @visible true;
 	// KeyBooleanValueAnnotation returns BooleanAnnotation:
-	//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=BOOLEAN;
 	public KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return pKeyBooleanValueAnnotation;
 	}
@@ -728,7 +608,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10;    
 	// KeyIntValueAnnotation returns IntAnnotation:
-	//	"@" name=ExtendedID value=Integer ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=Integer;
 	public KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
 		return pKeyIntValueAnnotation;
 	}
@@ -739,7 +619,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10.0;    
 	// KeyFloatValueAnnotation returns FloatAnnotation:
-	//	"@" name=ExtendedID value=Floateger ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=Floateger;
 	public KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return pKeyFloatValueAnnotation;
 	}

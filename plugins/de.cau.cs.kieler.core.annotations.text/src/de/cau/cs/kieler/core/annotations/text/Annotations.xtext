@@ -51,73 +51,45 @@ CommentAnnotation returns StringAnnotation:
 
 // e.g.: @HVlayout
 TagAnnotation returns Annotation:
-    '@' name=ExtendedID
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
+    '@' name=ExtendedID;
 
 
 // e.g.: @layouter dot;   
 KeyStringValueAnnotation returns StringAnnotation:
-    '@' name=ExtendedID value=EString
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
-
+    '@' name=ExtendedID value=EString;
 
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-    '@' name=ExtendedID '[' type=ExtendedID ']' value=EString
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
-
+    '@' name=ExtendedID '[' type=ExtendedID ']' value=EString;
 
 // e.g.: @visible true;
 KeyBooleanValueAnnotation returns BooleanAnnotation:
-    '@' name=ExtendedID value=BOOLEAN
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
-
+    '@' name=ExtendedID value=BOOLEAN;
 
 // e.g.: @minSpace 10;    
 KeyIntValueAnnotation returns IntAnnotation:
-    '@' name=ExtendedID value=Integer
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
-
+    '@' name=ExtendedID value=Integer;
 
 // e.g.: @minSpace 10.0;    
 KeyFloatValueAnnotation returns FloatAnnotation:
-    '@' name=ExtendedID value=Floateger
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
-
+    '@' name=ExtendedID value=Floateger;
 
 // needed for importing other resources
 ImportAnnotation returns ImportAnnotation:
     'import' importURI=STRING;
 
-
 // allow strings without quotes as they don'c contain spaces
 EString returns ecore::EString:
     STRING | ID;
 
-
 ExtendedID returns ecore::EString:
   ID ("."ID)*;
   
-
 Integer returns ecore::EInt:
-    '-'? INT
-;
+    '-'? INT;
 
 Floateger returns ecore::EFloat:
-    '-'? FLOAT
-;
+    '-'? FLOAT;
 
 // --------------------------
 //
@@ -132,15 +104,12 @@ Floateger returns ecore::EFloat:
 terminal COMMENT_ANNOTATION returns ecore::EString: 
     '/**' -> '*/';
 
-
 // modified version of Terminals.ML_COMMENT as
 // COMMENT_ANNOTATION is not recognized correctly with original one 
 terminal ML_COMMENT returns ecore::EString:
     '/*'!'*' -> '*/';
 
-
 // generic terminals
-
 terminal fragment NUMBER :
     '0'..'9';
    
