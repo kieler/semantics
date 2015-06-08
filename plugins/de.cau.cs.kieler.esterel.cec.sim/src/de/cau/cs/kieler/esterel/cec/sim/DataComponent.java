@@ -67,6 +67,7 @@ import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2Simulation;
 import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.esterel.Program;
 import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
+import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
@@ -218,6 +219,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     /** The KiemProperty Constant for the full debug mode. */
     static final int KIEM_PROPERTY_FULLDEBUGMODE = 2;
 
+    /** The KiemProperty Constant for the full debug mode. */
+    static final int KIEM_PROPERTY_BENCHMARK = 3;
+
+    /** The Constant KIEM_PROPERTY_NAME_BENCHMARK. */
+    private static final String KIEM_PROPERTY_NAME_BENCHMARK = "Benchmark Mode";
+
+    /** The Constant KIEM_PROPERTY_DEFAULT_BENCHMARK. */
+    private static final boolean KIEM_PROPERTY_DEFAULT_BENCHMARK = false;
+
     /** The Constant SIMULATION_SUBPATH. */
     static final String SIMULATION_SUBPATH = "simulation";
 
@@ -232,6 +242,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
     /** The Constant SIMULATION_COMPILER_OPTIONS. */
     static final String SIMULATION_COMPILER_OPTIONS = "-lm -o";
+
+    /** The benchmark flag for generating cycle and file size signals. */
+    private boolean benchmark = false;
+
+    /** The source file size. */
+    private long sourceFileSize = 0;
+
+    /** The executabe file size. */
+    private long executabeFileSize = 0;
 
     /** The Esterel program is the concerned model. */
     private Program myModel = null;
@@ -262,6 +281,17 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      * error (if there was one).
      */
     private boolean errorReadingDone = false;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getDataComponentId() {
+        // This method should be removed for release because it disables the compability check of
+        // KIEM.
+        return "ESTERELDATACOMPONENTID";
+    }
 
     // -------------------------------------------------------------------------
 
@@ -363,9 +393,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                         if (esterelOutputName
                                 .startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
                             try {
-                                String statementWithoutAuxiliaryVariableTag = esterelOutputName
-                                        .substring(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG
-                                                .length());
+                                String statementWithoutAuxiliaryVariableTag =
+                                        esterelOutputName
+                                                .substring(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG
+                                                        .length());
 
                                 // Insert a "," if not the first statement
                                 if (activeStatements.length() != 0) {
@@ -382,6 +413,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                         }
 
                     }
+                }
+
+                // Add benchmark information
+                if (this.benchmark) {
+                    if (esterelOutput.has(Benchmark.BENCHMARK_SIGNAL_TIME)) {
+                        Object bench = esterelOutput.get(Benchmark.BENCHMARK_SIGNAL_TIME);
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
+                    }
+                    returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE, sourceFileSize);
+                    returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE, executabeFileSize);
                 }
 
                 // Then add normal output signals
@@ -414,8 +455,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
             // Finally accumulate all active Statements (activeStatements)
             // under the statementName
-            String statementName = this.getProperties()[KIEM_PROPERTY_STATEMENTNAME
-                    + JSONObjectSimulationDataComponent.KIEM_PROPERTY_DIFF].getValue();
+            String statementName =
+                    this.getProperties()[KIEM_PROPERTY_STATEMENTNAME
+                            + JSONObjectSimulationDataComponent.KIEM_PROPERTY_DIFF].getValue();
             returnObj.accumulate(statementName, activeStatements);
 
         } catch (IOException e) {
@@ -458,13 +500,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        final int nProperties = 3;
+        final int nProperties = 4;
         KiemProperty[] properties = new KiemProperty[nProperties];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
         properties[KIEM_PROPERTY_STATEMENTNAME] = new KiemProperty("Statement Name", "statement");
 
         properties[KIEM_PROPERTY_CCOMPILER] = new KiemProperty("C-Compiler", compilerFile, "gcc");
         properties[KIEM_PROPERTY_FULLDEBUGMODE] = new KiemProperty("Full Debug Mode", true);
+        properties[KIEM_PROPERTY_BENCHMARK] =
+                new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK, KIEM_PROPERTY_DEFAULT_BENCHMARK);
 
         return properties;
     }
@@ -612,6 +656,14 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         monitor.subTask("Generating C code");
         java.net.URI uri = CEC.runCODEGEN(scfgc, outFile);
         System.out.println("Compile 11" + uri);
+
+        if (benchmark) {
+            File currentFile = new File(uri.getPath());
+            if (currentFile.exists()) {
+                sourceFileSize = currentFile.length();
+            }
+        }
+
         monitor.worked(1);
         strl.close();
         return uri;
@@ -649,20 +701,20 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         URI cProgramFile = URI.createURI(cProgram.toString());
         URI cProgramModifiedFile = URI.createURI(cProgram.toString());
         cProgramModifiedFile = cProgramModifiedFile.trimFragment();
-        cProgramModifiedFile = cProgramModifiedFile.trimFileExtension().appendFileExtension(
-                "modified.c");
+        cProgramModifiedFile =
+                cProgramModifiedFile.trimFileExtension().appendFileExtension("modified.c");
         IPath cProgramFilePath = new Path(cProgramFile.toFileString());
         IPath cProgramModifiedFilePath = new Path(cProgramModifiedFile.toFileString());
 
         try {
             InputStream cProgramFileInputStream = new FileInputStream(cProgramFilePath.toString());
-            OutputStream cProgramModifiedFileOutputStream = new FileOutputStream(
-                    cProgramModifiedFilePath.toString());
+            OutputStream cProgramModifiedFileOutputStream =
+                    new FileOutputStream(cProgramModifiedFilePath.toString());
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
-                    cProgramFileInputStream));
-            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(
-                    cProgramModifiedFileOutputStream));
+            BufferedReader bufferedReader =
+                    new BufferedReader(new InputStreamReader(cProgramFileInputStream));
+            BufferedWriter bufferedWriter =
+                    new BufferedWriter(new OutputStreamWriter(cProgramModifiedFileOutputStream));
             String line = null;
 
             while ((line = bufferedReader.readLine()) != null) {
@@ -702,12 +754,28 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor)
             throws KiemInitializationException {
+        // get active editor
+        doModel2ModelTransform(monitor, (Program) this.getModelRootElement(),
+                this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
+                        .getValueAsBoolean(), this.getProperties()[KIEM_PROPERTY_BENCHMARK
+                        + KIEM_PROPERTY_DIFF].getValueAsBoolean());
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final Program model,
+            final boolean debug, final boolean benchmarkParam) throws KiemInitializationException {
         System.out.println("M2M 1");
         monitor.begin("Esterel Simulation", EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
 
-        EsterelSimulationProgressMonitor esterelSimulationProgressMonitor = 
-                new EsterelSimulationProgressMonitor(
-                monitor, EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
+        EsterelSimulationProgressMonitor esterelSimulationProgressMonitor =
+                new EsterelSimulationProgressMonitor(monitor,
+                        EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
+
+        benchmark = benchmarkParam;
 
         File executable = null;
         String compile = "";
@@ -715,7 +783,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
         try {
             myModel = (Program) this.getModelRootElement();
-            
+
             // Enforce the complete model to be loaded. Otherwise references to objects (signals)
             // might not be resolvable resulting in nasty error messages.
             EcoreUtil.resolveAll(myModel);
@@ -735,12 +803,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             // also states visualized.
             // Hence some pre-processing is needed and done by the
             // Esterl2Simulation Xtend2 model transformation
-            if (this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE
-                    + JSONObjectSimulationDataComponent.KIEM_PROPERTY_DIFF].getValueAsBoolean()) {
+            if (debug) {
                 // Try to load SyncCharts model
                 // 'Full Debug Mode' is turned ON
-                Esterel2Simulation transform = Guice.createInjector().getInstance(
-                        Esterel2Simulation.class);
+                Esterel2Simulation transform =
+                        Guice.createInjector().getInstance(Esterel2Simulation.class);
                 transformedProgram = transform.transform2Simulation(myModel);
             }
             System.out.println("M2M 5");
@@ -751,8 +818,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
             esterelOutput = URI.createURI(input.toString());
             esterelOutput = esterelOutput.trimFragment();
-            esterelOutput = esterelOutput.trimFileExtension()
-                    .appendFileExtension("simulation.strl");
+            esterelOutput =
+                    esterelOutput.trimFileExtension().appendFileExtension("simulation.strl");
             System.out.println("M2M 7" + esterelOutput.toString());
 
             try {
@@ -771,8 +838,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             System.out.println("M2M 8");
 
             // Compile Esterel to C
-            URL output = this.compileEsterelToC(esterelOutput, CEC.getDefaultOutFile(),
-                    esterelSimulationProgressMonitor).toURL();
+            URL output =
+                    this.compileEsterelToC(esterelOutput, CEC.getDefaultOutFile(),
+                            esterelSimulationProgressMonitor).toURL();
             System.out.println("M2M 9");
 
             // Possibly add #include for a header file
@@ -785,8 +853,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             // Cannot be done before because otherwise the new model cannot be serialized
             // Do this on a copy to not destroy original program;
             // Make Esterel Interface declaration consistent
-            InterfaceDeclarationFix interfaceDeclarationFix = Guice.createInjector().getInstance(
-                    InterfaceDeclarationFix.class);
+            InterfaceDeclarationFix interfaceDeclarationFix =
+                    Guice.createInjector().getInstance(InterfaceDeclarationFix.class);
             Program fixedTransformedProgram = (Program) EcoreUtil.copy(transformedProgram);
             interfaceDeclarationFix.fix(fixedTransformedProgram);
             System.out.println("M2M 11");
@@ -803,23 +871,27 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             URL bundleLocation = FileLocator.toFileURL(fileUrl);
             System.out.println("M2M 14");
 
-            String compiler = (getProperties()[KIEM_PROPERTY_CCOMPILER
-                    + JSONObjectSimulationDataComponent.KIEM_PROPERTY_DIFF]).getValue();
+            String compiler =
+                    (getProperties()[KIEM_PROPERTY_CCOMPILER
+                            + JSONObjectSimulationDataComponent.KIEM_PROPERTY_DIFF]).getValue();
 
             if (!isWindows()) {
                 // Non-Windows
                 executable = File.createTempFile(SIMULATION_PREFIX, "");
-                compile = compiler + " " + output.getPath() + " " + data.getPath() + " "
-                        + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
-                        + bundleLocation.getPath() + " " + SIMULATION_COMPILER_OPTIONS + " "
-                        + executable;
+                compile =
+                        compiler + " " + output.getPath() + " " + data.getPath() + " "
+                                + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
+                                + bundleLocation.getPath() + " " + SIMULATION_COMPILER_OPTIONS
+                                + " " + executable;
             } else {
                 // Windows
                 executable = File.createTempFile(SIMULATION_PREFIX, SIMULATION_SUFFIX);
-                compile = compiler + " " + output.getPath().substring(1) + " "
-                        + data.getPath().substring(1) + " " + bundleLocation.getPath().substring(1)
-                        + SIMULATION_JSONBIB + " " + "-I " + bundleLocation.getPath().substring(1)
-                        + " " + SIMULATION_COMPILER_OPTIONS + " " + executable;
+                compile =
+                        compiler + " " + output.getPath().substring(1) + " "
+                                + data.getPath().substring(1) + " "
+                                + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
+                                + "-I " + bundleLocation.getPath().substring(1) + " "
+                                + SIMULATION_COMPILER_OPTIONS + " " + executable;
             }
 
             System.out.println("M2M 15" + compile);
@@ -842,6 +914,14 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             if (exitValue != 0) {
                 throw new KiemInitializationException("Could not compile: " + errorString, true,
                         new Exception(errorString.toString()));
+            } else {
+                if (benchmark) {
+                    File currentFile = new File(simFile.getPath());
+                    if (currentFile.exists()) {
+                        executabeFileSize = currentFile.length();
+                    } 
+                }
+
             }
 
         } catch (Exception e) {
@@ -948,8 +1028,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             // Apply transformation
             // Because for @Inject tags we cannot use the standard JAVA 'new'
             // keyword
-            Esterel2CSimulationInterface transform = Guice.createInjector().getInstance(
-                    Esterel2CSimulationInterface.class);
+            Esterel2CSimulationInterface transform =
+                    Guice.createInjector().getInstance(Esterel2CSimulationInterface.class);
 
             if (esterelProgram.getModules() == null || esterelProgram.getModules().size() < 1) {
                 throw new KiemInitializationException(
@@ -957,8 +1037,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                                 + "(no Esterel modules found)", true, null);
             }
 
-            String ccode = transform.createCSimulationInterface(esterelProgram.getModules().get(0))
-                    .toString();
+            String ccode =
+                    transform.createCSimulationInterface(esterelProgram.getModules().get(0))
+                            .toString();
 
             // Write out c program
             URI output = URI.createURI(esterelProgramURI.toString());
