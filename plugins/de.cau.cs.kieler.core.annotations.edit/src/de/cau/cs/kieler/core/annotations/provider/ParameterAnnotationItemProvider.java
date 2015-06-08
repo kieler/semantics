@@ -15,7 +15,7 @@ package de.cau.cs.kieler.core.annotations.provider;
 
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.annotations.ReferenceAnnotation;
+import de.cau.cs.kieler.core.annotations.ParameterAnnotation;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,28 +24,24 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.annotations.ReferenceAnnotation} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.core.annotations.ParameterAnnotation} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ReferenceAnnotationItemProvider
-    extends AnnotationItemProvider {
+public class ParameterAnnotationItemProvider extends AnnotationItemProvider {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public ReferenceAnnotationItemProvider(AdapterFactory adapterFactory) {
+    public ParameterAnnotationItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -60,42 +56,42 @@ public class ReferenceAnnotationItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addObjectPropertyDescriptor(object);
+            addValuesPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Object feature.
+     * This adds a property descriptor for the Values feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addObjectPropertyDescriptor(Object object) {
+    protected void addValuesPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_ReferenceAnnotation_object_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ReferenceAnnotation_object_feature", "_UI_ReferenceAnnotation_type"),
-                 AnnotationsPackage.Literals.REFERENCE_ANNOTATION__OBJECT,
+                 getString("_UI_ParameterAnnotation_values_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ParameterAnnotation_values_feature", "_UI_ParameterAnnotation_type"),
+                 AnnotationsPackage.Literals.PARAMETER_ANNOTATION__VALUES,
                  true,
                  false,
-                 true,
-                 null,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
     }
 
     /**
-     * This returns ReferenceAnnotation.gif.
+     * This returns ParameterAnnotation.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ReferenceAnnotation"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ParameterAnnotation"));
     }
 
     /**
@@ -106,11 +102,12 @@ public class ReferenceAnnotationItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = ((ReferenceAnnotation)object).getName();
+        String label = ((ParameterAnnotation)object).getName();
         return label == null || label.length() == 0 ?
-            getString("_UI_ReferenceAnnotation_type") :
-            getString("_UI_ReferenceAnnotation_type") + " " + label;
+            getString("_UI_ParameterAnnotation_type") :
+            getString("_UI_ParameterAnnotation_type") + " " + label;
     }
+    
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
@@ -122,6 +119,12 @@ public class ReferenceAnnotationItemProvider
     @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
+
+        switch (notification.getFeatureID(ParameterAnnotation.class)) {
+            case AnnotationsPackage.PARAMETER_ANNOTATION__VALUES:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+        }
         super.notifyChanged(notification);
     }
 

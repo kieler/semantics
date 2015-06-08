@@ -550,6 +550,53 @@ public interface AnnotationsPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.annotations.impl.ParameterAnnotationImpl <em>Parameter Annotation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.annotations.impl.ParameterAnnotationImpl
+     * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getParameterAnnotation()
+     * @generated
+     */
+    int PARAMETER_ANNOTATION = 11;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER_ANNOTATION__ANNOTATIONS = ANNOTATION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER_ANNOTATION__NAME = ANNOTATION__NAME;
+
+    /**
+     * The feature id for the '<em><b>Values</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER_ANNOTATION__VALUES = ANNOTATION_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Parameter Annotation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER_ANNOTATION_FEATURE_COUNT = ANNOTATION_FEATURE_COUNT + 1;
+
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.annotations.NamedObject <em>Named Object</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -770,6 +817,27 @@ public interface AnnotationsPackage extends EPackage {
     EAttribute getTypedStringAnnotation_Type();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.annotations.ParameterAnnotation <em>Parameter Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Parameter Annotation</em>'.
+     * @see de.cau.cs.kieler.core.annotations.ParameterAnnotation
+     * @generated
+     */
+    EClass getParameterAnnotation();
+
+    /**
+     * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.core.annotations.ParameterAnnotation#getValues <em>Values</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Values</em>'.
+     * @see de.cau.cs.kieler.core.annotations.ParameterAnnotation#getValues()
+     * @see #getParameterAnnotation()
+     * @generated
+     */
+    EAttribute getParameterAnnotation_Values();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -980,6 +1048,24 @@ public interface AnnotationsPackage extends EPackage {
          * @generated
          */
         EAttribute TYPED_STRING_ANNOTATION__TYPE = eINSTANCE.getTypedStringAnnotation_Type();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.annotations.impl.ParameterAnnotationImpl <em>Parameter Annotation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.annotations.impl.ParameterAnnotationImpl
+         * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getParameterAnnotation()
+         * @generated
+         */
+        EClass PARAMETER_ANNOTATION = eINSTANCE.getParameterAnnotation();
+
+        /**
+         * The meta object literal for the '<em><b>Values</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PARAMETER_ANNOTATION__VALUES = eINSTANCE.getParameterAnnotation_Values();
 
     }
 
