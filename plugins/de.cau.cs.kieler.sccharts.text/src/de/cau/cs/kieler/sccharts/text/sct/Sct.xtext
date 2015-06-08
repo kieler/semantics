@@ -211,59 +211,12 @@ Transition returns sccharts::Transition:
 
 // ---------------------------------------------------------------------------------------------------
 
-Declaration returns kexpressions::Declaration:
-    (annotations+=Annotation)*
-    (
-        ((extern?='extern')?
-        (static?='static')?
-	    (const?='const')?
-        (input?='input')?
-        (output?='output')?
-        (
-            ((signal?='signal')? type = ValueType)
-            |
-            (signal?='signal')
-        ))
-        |
-        ((extern?='extern')
-        (static?='static')?
-        (const?='const')?
-        (input?='input')?
-        (output?='output')?        
-        (signal?='signal')? 
-        (type = ValueType)?)
-    )
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'?
-;
-
-// ---------------------------------------------------------------------------------------------------
-
-ValuedObject returns kexpressions::ValuedObject:
-    name=ID
-    ('[' cardinalities+=INT ']')* 
-    ('=' initialValue=Expression)?
-    ( 'combine'
-      (combineOperator = CombineOperator)
-    )?
-;
-
-// ---------------------------------------------------------------------------------------------------
-
-TextualCode returns kexpressions::TextExpression:
-    text = HOSTCODE ';';
-
-// ---------------------------------------------------------------------------------------------------
-
 Binding returns sccharts::Binding:
     (annotations+=Annotation)*
 	formal = [kexpressions::ValuedObject|ID] 
 	'to' 
 	actual = [kexpressions::ValuedObject|ID]
 ;
-
-
-// ---------------------------------------------------------------------------------------------------
-
 
 // ---------------------------------------------------------------------------------------------------
 

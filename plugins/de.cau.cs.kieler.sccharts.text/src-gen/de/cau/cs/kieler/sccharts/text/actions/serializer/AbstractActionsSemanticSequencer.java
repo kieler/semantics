@@ -11,6 +11,7 @@ import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
@@ -19,13 +20,16 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.Parameter;
 import de.cau.cs.kieler.core.kexpressions.StringValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
-import de.cau.cs.kieler.core.kexpressions.keffects.serializer.KEffectsSemanticSequencer;
+import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
+import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
+import de.cau.cs.kieler.core.kexpressions.text.serializer.KEXTSemanticSequencer;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
@@ -43,7 +47,7 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
 
 @SuppressWarnings("all")
-public abstract class AbstractActionsSemanticSequencer extends KEffectsSemanticSequencer {
+public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSequencer {
 
 	@Inject
 	private ActionsGrammarAccess grammarAccess;
@@ -183,6 +187,12 @@ public abstract class AbstractActionsSemanticSequencer extends KEffectsSemanticS
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
 					sequence_BoolValue(context, (BoolValue) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.DECLARATION:
+				if(context == grammarAccess.getDeclarationRule()) {
+					sequence_Declaration(context, (Declaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -417,6 +427,12 @@ public abstract class AbstractActionsSemanticSequencer extends KEffectsSemanticS
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.VALUED_OBJECT:
+				if(context == grammarAccess.getValuedObjectRule()) {
+					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -452,6 +468,14 @@ public abstract class AbstractActionsSemanticSequencer extends KEffectsSemanticS
 				   context == grammarAccess.getValuedObjectReferenceRule() ||
 				   context == grammarAccess.getValuedObjectTestExpressionRule()) {
 					sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else break;
+			}
+		else if(semanticObject.eClass().getEPackage() == KextPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case KextPackage.KEXT:
+				if(context == grammarAccess.getKextRule()) {
+					sequence_Kext(context, (Kext) semanticObject); 
 					return; 
 				}
 				else break;

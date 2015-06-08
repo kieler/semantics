@@ -12,6 +12,7 @@ import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
 
+import de.cau.cs.kieler.core.kexpressions.text.services.KEXTGrammarAccess;
 import de.cau.cs.kieler.core.kexpressions.keffects.services.KEffectsGrammarAccess;
 import de.cau.cs.kieler.core.kexpressions.services.KExpressionsGrammarAccess;
 import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
@@ -537,13 +538,13 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private final Grammar grammar;
 
-	private final KEffectsGrammarAccess gaKEffects;
+	private final KEXTGrammarAccess gaKEXT;
 
 	@Inject
 	public ActionsGrammarAccess(GrammarProvider grammarProvider,
-		KEffectsGrammarAccess gaKEffects) {
+		KEXTGrammarAccess gaKEXT) {
 		this.grammar = internalFindGrammar(grammarProvider);
-		this.gaKEffects = gaKEffects;
+		this.gaKEXT = gaKEXT;
 		this.pTransition = new TransitionElements();
 		this.pEntryAction = new EntryActionElements();
 		this.pDuringAction = new DuringActionElements();
@@ -576,8 +577,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 
-	public KEffectsGrammarAccess getKEffectsGrammarAccess() {
-		return gaKEffects;
+	public KEXTGrammarAccess getKEXTGrammarAccess() {
+		return gaKEXT;
 	}
 
 	
@@ -686,11 +687,42 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getHistoryTypeAccess().getRule();
 	}
 
+	//Kext:
+	//	declarations+=Declaration* effects+=Effect*;
+	public KEXTGrammarAccess.KextElements getKextAccess() {
+		return gaKEXT.getKextAccess();
+	}
+	
+	public ParserRule getKextRule() {
+		return getKextAccess().getRule();
+	}
+
+	//Declaration returns kexpressions::Declaration:
+	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
+	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
+	public KEXTGrammarAccess.DeclarationElements getDeclarationAccess() {
+		return gaKEXT.getDeclarationAccess();
+	}
+	
+	public ParserRule getDeclarationRule() {
+		return getDeclarationAccess().getRule();
+	}
+
+	//ValuedObject returns kexpressions::ValuedObject:
+	//	annotations+=Annotation* name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ",";
+	public KEXTGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
+		return gaKEXT.getValuedObjectAccess();
+	}
+	
+	public ParserRule getValuedObjectRule() {
+		return getValuedObjectAccess().getRule();
+	}
+
 	//// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
 	//Effect returns keffects::Effect:
 	//	Emission | Assignment | UnaryOperation | TextEffect | FunctionCallEffect;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
-		return gaKEffects.getEffectAccess();
+		return gaKEXT.getEffectAccess();
 	}
 	
 	public ParserRule getEffectRule() {
@@ -700,7 +732,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Emission returns keffects::Emission:
 	//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
 	public KEffectsGrammarAccess.EmissionElements getEmissionAccess() {
-		return gaKEffects.getEmissionAccess();
+		return gaKEXT.getEmissionAccess();
 	}
 	
 	public ParserRule getEmissionRule() {
@@ -710,7 +742,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Assignment returns keffects::Assignment:
 	//	valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
 	public KEffectsGrammarAccess.AssignmentElements getAssignmentAccess() {
-		return gaKEffects.getAssignmentAccess();
+		return gaKEXT.getAssignmentAccess();
 	}
 	
 	public ParserRule getAssignmentRule() {
@@ -720,7 +752,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//UnaryOperation returns keffects::Assignment:
 	//	expression=PostfixAddExpression | expression=PostfixSubExpression;
 	public KEffectsGrammarAccess.UnaryOperationElements getUnaryOperationAccess() {
-		return gaKEffects.getUnaryOperationAccess();
+		return gaKEXT.getUnaryOperationAccess();
 	}
 	
 	public ParserRule getUnaryOperationRule() {
@@ -730,7 +762,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//TextEffect returns keffects::HostcodeEffect:
 	//	text=HOSTCODE;
 	public KEffectsGrammarAccess.TextEffectElements getTextEffectAccess() {
-		return gaKEffects.getTextEffectAccess();
+		return gaKEXT.getTextEffectAccess();
 	}
 	
 	public ParserRule getTextEffectRule() {
@@ -740,7 +772,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//FunctionCallEffect returns keffects::FunctionCallEffect:
 	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
-		return gaKEffects.getFunctionCallEffectAccess();
+		return gaKEXT.getFunctionCallEffectAccess();
 	}
 	
 	public ParserRule getFunctionCallEffectRule() {
@@ -750,7 +782,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Root returns ecore::EObject:
 	//	Expression;
 	public KExpressionsGrammarAccess.RootElements getRootAccess() {
-		return gaKEffects.getRootAccess();
+		return gaKEXT.getRootAccess();
 	}
 	
 	public ParserRule getRootRule() {
@@ -760,7 +792,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Expression:
 	//	BoolExpression | ValuedExpression;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
-		return gaKEffects.getExpressionAccess();
+		return gaKEXT.getExpressionAccess();
 	}
 	
 	public ParserRule getExpressionRule() {
@@ -770,7 +802,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//BoolExpression returns Expression:
 	//	LogicalOrExpression;
 	public KExpressionsGrammarAccess.BoolExpressionElements getBoolExpressionAccess() {
-		return gaKEffects.getBoolExpressionAccess();
+		return gaKEXT.getBoolExpressionAccess();
 	}
 	
 	public ParserRule getBoolExpressionRule() {
@@ -794,7 +826,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
 	//	subExpressions+=LogicalAndExpression)+)?;
 	public KExpressionsGrammarAccess.LogicalOrExpressionElements getLogicalOrExpressionAccess() {
-		return gaKEffects.getLogicalOrExpressionAccess();
+		return gaKEXT.getLogicalOrExpressionAccess();
 	}
 	
 	public ParserRule getLogicalOrExpressionRule() {
@@ -805,7 +837,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
 	//	subExpressions+=BitwiseOrExpression)+)?;
 	public KExpressionsGrammarAccess.LogicalAndExpressionElements getLogicalAndExpressionAccess() {
-		return gaKEffects.getLogicalAndExpressionAccess();
+		return gaKEXT.getLogicalAndExpressionAccess();
 	}
 	
 	public ParserRule getLogicalAndExpressionRule() {
@@ -816,7 +848,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
 	//	subExpressions+=BitwiseAndExpression)+)?;
 	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
-		return gaKEffects.getBitwiseOrExpressionAccess();
+		return gaKEXT.getBitwiseOrExpressionAccess();
 	}
 	
 	public ParserRule getBitwiseOrExpressionRule() {
@@ -827,7 +859,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
 	//	subExpressions+=CompareOperation)+)?;
 	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
-		return gaKEffects.getBitwiseAndExpressionAccess();
+		return gaKEXT.getBitwiseAndExpressionAccess();
 	}
 	
 	public ParserRule getBitwiseAndExpressionRule() {
@@ -840,7 +872,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
 	//	subExpressions+=NotOrValuedExpression)?;
 	public KExpressionsGrammarAccess.CompareOperationElements getCompareOperationAccess() {
-		return gaKEffects.getCompareOperationAccess();
+		return gaKEXT.getCompareOperationAccess();
 	}
 	
 	public ParserRule getCompareOperationRule() {
@@ -851,7 +883,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//NotOrValuedExpression returns Expression:
 	//	ValuedExpression | NotExpression;
 	public KExpressionsGrammarAccess.NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
-		return gaKEffects.getNotOrValuedExpressionAccess();
+		return gaKEXT.getNotOrValuedExpressionAccess();
 	}
 	
 	public ParserRule getNotOrValuedExpressionRule() {
@@ -863,7 +895,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//NotExpression returns Expression:
 	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
 	public KExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
-		return gaKEffects.getNotExpressionAccess();
+		return gaKEXT.getNotExpressionAccess();
 	}
 	
 	public ParserRule getNotExpressionRule() {
@@ -874,7 +906,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedExpression returns Expression:
 	//	AddExpression;
 	public KExpressionsGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
-		return gaKEffects.getValuedExpressionAccess();
+		return gaKEXT.getValuedExpressionAccess();
 	}
 	
 	public ParserRule getValuedExpressionRule() {
@@ -885,7 +917,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//AddExpression returns Expression:
 	//	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
 	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
-		return gaKEffects.getAddExpressionAccess();
+		return gaKEXT.getAddExpressionAccess();
 	}
 	
 	public ParserRule getAddExpressionRule() {
@@ -896,7 +928,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//SubExpression returns Expression:
 	//	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
 	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
-		return gaKEffects.getSubExpressionAccess();
+		return gaKEXT.getSubExpressionAccess();
 	}
 	
 	public ParserRule getSubExpressionRule() {
@@ -910,7 +942,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//MultExpression returns Expression:
 	//	DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
-		return gaKEffects.getMultExpressionAccess();
+		return gaKEXT.getMultExpressionAccess();
 	}
 	
 	public ParserRule getMultExpressionRule() {
@@ -922,7 +954,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//DivExpression returns Expression:
 	//	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
-		return gaKEffects.getDivExpressionAccess();
+		return gaKEXT.getDivExpressionAccess();
 	}
 	
 	public ParserRule getDivExpressionRule() {
@@ -934,7 +966,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
 	//	subExpressions+=AtomicValuedExpression)?;
 	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
-		return gaKEffects.getModExpressionAccess();
+		return gaKEXT.getModExpressionAccess();
 	}
 	
 	public ParserRule getModExpressionRule() {
@@ -947,7 +979,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//NegExpression returns Expression:
 	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | PostfixAddExpression;
 	public KExpressionsGrammarAccess.NegExpressionElements getNegExpressionAccess() {
-		return gaKEffects.getNegExpressionAccess();
+		return gaKEXT.getNegExpressionAccess();
 	}
 	
 	public ParserRule getNegExpressionRule() {
@@ -957,7 +989,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//PostfixAddExpression returns Expression:
 	//	{OperatorExpression} operator=PostfixAdd subExpressions+=PostfixAddExpression | PostfixSubExpression;
 	public KExpressionsGrammarAccess.PostfixAddExpressionElements getPostfixAddExpressionAccess() {
-		return gaKEffects.getPostfixAddExpressionAccess();
+		return gaKEXT.getPostfixAddExpressionAccess();
 	}
 	
 	public ParserRule getPostfixAddExpressionRule() {
@@ -967,7 +999,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//PostfixSubExpression returns Expression:
 	//	{OperatorExpression} operator=PostfixSub subExpressions+=PostfixSubExpression | AtomicValuedExpression;
 	public KExpressionsGrammarAccess.PostfixSubExpressionElements getPostfixSubExpressionAccess() {
-		return gaKEffects.getPostfixSubExpressionAccess();
+		return gaKEXT.getPostfixSubExpressionAccess();
 	}
 	
 	public ParserRule getPostfixSubExpressionRule() {
@@ -977,7 +1009,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//AtomicExpression returns Expression:
 	//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | FunctionCall | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
-		return gaKEffects.getAtomicExpressionAccess();
+		return gaKEXT.getAtomicExpressionAccess();
 	}
 	
 	public ParserRule getAtomicExpressionRule() {
@@ -987,7 +1019,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//AtomicValuedExpression returns Expression:
 	//	IntValue | FloatValue | StringValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
-		return gaKEffects.getAtomicValuedExpressionAccess();
+		return gaKEXT.getAtomicValuedExpressionAccess();
 	}
 	
 	public ParserRule getAtomicValuedExpressionRule() {
@@ -999,7 +1031,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	{OperatorExpression} operator=(PreOperator | ValOperator) "(" subExpressions+=ValuedObjectTestExpression ")" |
 	//	ValuedObjectReference;
 	public KExpressionsGrammarAccess.ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
-		return gaKEffects.getValuedObjectTestExpressionAccess();
+		return gaKEXT.getValuedObjectTestExpressionAccess();
 	}
 	
 	public ParserRule getValuedObjectTestExpressionRule() {
@@ -1010,7 +1042,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedObjectReference:
 	//	valuedObject=[ValuedObject] ("[" indices+=Expression "]")*;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
-		return gaKEffects.getValuedObjectReferenceAccess();
+		return gaKEXT.getValuedObjectReferenceAccess();
 	}
 	
 	public ParserRule getValuedObjectReferenceRule() {
@@ -1020,7 +1052,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//FunctionCall:
 	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
-		return gaKEffects.getFunctionCallAccess();
+		return gaKEXT.getFunctionCallAccess();
 	}
 	
 	public ParserRule getFunctionCallRule() {
@@ -1030,7 +1062,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Parameter:
 	//	(callByReference?="&" pureOutput?="&"?)? expression=Expression;
 	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
-		return gaKEffects.getParameterAccess();
+		return gaKEXT.getParameterAccess();
 	}
 	
 	public ParserRule getParameterRule() {
@@ -1041,7 +1073,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//TextExpression:
 	//	text=HOSTCODE;
 	public KExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
-		return gaKEffects.getTextExpressionAccess();
+		return gaKEXT.getTextExpressionAccess();
 	}
 	
 	public ParserRule getTextExpressionRule() {
@@ -1051,7 +1083,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//IntValue:
 	//	value=INT;
 	public KExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
-		return gaKEffects.getIntValueAccess();
+		return gaKEXT.getIntValueAccess();
 	}
 	
 	public ParserRule getIntValueRule() {
@@ -1061,7 +1093,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//FloatValue:
 	//	value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
-		return gaKEffects.getFloatValueAccess();
+		return gaKEXT.getFloatValueAccess();
 	}
 	
 	public ParserRule getFloatValueRule() {
@@ -1071,7 +1103,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//BoolValue:
 	//	value=BOOLEAN;
 	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
-		return gaKEffects.getBoolValueAccess();
+		return gaKEXT.getBoolValueAccess();
 	}
 	
 	public ParserRule getBoolValueRule() {
@@ -1081,7 +1113,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//StringValue:
 	//	value=STRING;
 	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
-		return gaKEffects.getStringValueAccess();
+		return gaKEXT.getStringValueAccess();
 	}
 	
 	public ParserRule getStringValueRule() {
@@ -1096,7 +1128,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//AnyType returns ecore::EString:
 	//	BOOLEAN | INT | FLOAT | ID | STRING;
 	public KExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
-		return gaKEffects.getAnyTypeAccess();
+		return gaKEXT.getAnyTypeAccess();
 	}
 	
 	public ParserRule getAnyTypeRule() {
@@ -1106,7 +1138,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum CompareOperator returns OperatorType:
 	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 	public KExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
-		return gaKEffects.getCompareOperatorAccess();
+		return gaKEXT.getCompareOperatorAccess();
 	}
 	
 	public EnumRule getCompareOperatorRule() {
@@ -1116,7 +1148,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum PreOperator returns OperatorType:
 	//	PRE="pre";
 	public KExpressionsGrammarAccess.PreOperatorElements getPreOperatorAccess() {
-		return gaKEffects.getPreOperatorAccess();
+		return gaKEXT.getPreOperatorAccess();
 	}
 	
 	public EnumRule getPreOperatorRule() {
@@ -1126,7 +1158,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum BitwiseOrOperator returns OperatorType:
 	//	BITWISE_OR="|";
 	public KExpressionsGrammarAccess.BitwiseOrOperatorElements getBitwiseOrOperatorAccess() {
-		return gaKEffects.getBitwiseOrOperatorAccess();
+		return gaKEXT.getBitwiseOrOperatorAccess();
 	}
 	
 	public EnumRule getBitwiseOrOperatorRule() {
@@ -1136,7 +1168,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum BitwiseAndOperator returns OperatorType:
 	//	BITWISE_AND="&";
 	public KExpressionsGrammarAccess.BitwiseAndOperatorElements getBitwiseAndOperatorAccess() {
-		return gaKEffects.getBitwiseAndOperatorAccess();
+		return gaKEXT.getBitwiseAndOperatorAccess();
 	}
 	
 	public EnumRule getBitwiseAndOperatorRule() {
@@ -1146,7 +1178,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum NotOperator returns OperatorType:
 	//	NOT="!";
 	public KExpressionsGrammarAccess.NotOperatorElements getNotOperatorAccess() {
-		return gaKEffects.getNotOperatorAccess();
+		return gaKEXT.getNotOperatorAccess();
 	}
 	
 	public EnumRule getNotOperatorRule() {
@@ -1156,7 +1188,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum AddOperator returns OperatorType:
 	//	ADD="+";
 	public KExpressionsGrammarAccess.AddOperatorElements getAddOperatorAccess() {
-		return gaKEffects.getAddOperatorAccess();
+		return gaKEXT.getAddOperatorAccess();
 	}
 	
 	public EnumRule getAddOperatorRule() {
@@ -1166,7 +1198,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum SubOperator returns OperatorType:
 	//	SUB="-";
 	public KExpressionsGrammarAccess.SubOperatorElements getSubOperatorAccess() {
-		return gaKEffects.getSubOperatorAccess();
+		return gaKEXT.getSubOperatorAccess();
 	}
 	
 	public EnumRule getSubOperatorRule() {
@@ -1176,7 +1208,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum MultOperator returns OperatorType:
 	//	MULT="*";
 	public KExpressionsGrammarAccess.MultOperatorElements getMultOperatorAccess() {
-		return gaKEffects.getMultOperatorAccess();
+		return gaKEXT.getMultOperatorAccess();
 	}
 	
 	public EnumRule getMultOperatorRule() {
@@ -1186,7 +1218,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum ModOperator returns OperatorType:
 	//	MOD="%";
 	public KExpressionsGrammarAccess.ModOperatorElements getModOperatorAccess() {
-		return gaKEffects.getModOperatorAccess();
+		return gaKEXT.getModOperatorAccess();
 	}
 	
 	public EnumRule getModOperatorRule() {
@@ -1196,7 +1228,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum ValOperator returns OperatorType:
 	//	VAL="val";
 	public KExpressionsGrammarAccess.ValOperatorElements getValOperatorAccess() {
-		return gaKEffects.getValOperatorAccess();
+		return gaKEXT.getValOperatorAccess();
 	}
 	
 	public EnumRule getValOperatorRule() {
@@ -1206,7 +1238,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum LogicalOrOperator returns OperatorType:
 	//	OR="||";
 	public KExpressionsGrammarAccess.LogicalOrOperatorElements getLogicalOrOperatorAccess() {
-		return gaKEffects.getLogicalOrOperatorAccess();
+		return gaKEXT.getLogicalOrOperatorAccess();
 	}
 	
 	public EnumRule getLogicalOrOperatorRule() {
@@ -1216,7 +1248,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum LogicalAndOperator returns OperatorType:
 	//	AND="&&";
 	public KExpressionsGrammarAccess.LogicalAndOperatorElements getLogicalAndOperatorAccess() {
-		return gaKEffects.getLogicalAndOperatorAccess();
+		return gaKEXT.getLogicalAndOperatorAccess();
 	}
 	
 	public EnumRule getLogicalAndOperatorRule() {
@@ -1226,7 +1258,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum PostfixAdd returns OperatorType:
 	//	POSTFIX_ADD="++";
 	public KExpressionsGrammarAccess.PostfixAddElements getPostfixAddAccess() {
-		return gaKEffects.getPostfixAddAccess();
+		return gaKEXT.getPostfixAddAccess();
 	}
 	
 	public EnumRule getPostfixAddRule() {
@@ -1236,7 +1268,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum PostfixSub returns OperatorType:
 	//	POSTFIX_SUB="--";
 	public KExpressionsGrammarAccess.PostfixSubElements getPostfixSubAccess() {
-		return gaKEffects.getPostfixSubAccess();
+		return gaKEXT.getPostfixSubAccess();
 	}
 	
 	public EnumRule getPostfixSubRule() {
@@ -1248,7 +1280,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// * / enum ValueType:
 	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string" | HOST="host";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
-		return gaKEffects.getValueTypeAccess();
+		return gaKEXT.getValueTypeAccess();
 	}
 	
 	public EnumRule getValueTypeRule() {
@@ -1258,7 +1290,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum HostType returns ValueType:
 	//	HOST="host";
 	public KExpressionsGrammarAccess.HostTypeElements getHostTypeAccess() {
-		return gaKEffects.getHostTypeAccess();
+		return gaKEXT.getHostTypeAccess();
 	}
 	
 	public EnumRule getHostTypeRule() {
@@ -1268,7 +1300,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum CombineOperator:
 	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="|" | AND="&" | HOST="host";
 	public KExpressionsGrammarAccess.CombineOperatorElements getCombineOperatorAccess() {
-		return gaKEffects.getCombineOperatorAccess();
+		return gaKEXT.getCombineOperatorAccess();
 	}
 	
 	public EnumRule getCombineOperatorRule() {
@@ -1279,7 +1311,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//terminal HOSTCODE:
 	//	"\'" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getHOSTCODERule() {
-		return gaKEffects.getHOSTCODERule();
+		return gaKEXT.getHOSTCODERule();
 	} 
 
 	//// --------------------------
@@ -1291,7 +1323,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
 	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
-		return gaKEffects.getAnnotationAccess();
+		return gaKEXT.getAnnotationAccess();
 	}
 	
 	public ParserRule getAnnotationRule() {
@@ -1302,7 +1334,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
 	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
-		return gaKEffects.getValuedAnnotationAccess();
+		return gaKEXT.getValuedAnnotationAccess();
 	}
 	
 	public ParserRule getValuedAnnotationRule() {
@@ -1313,7 +1345,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// CommentAnnotation returns StringAnnotation:
 	//	values+=COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
-		return gaKEffects.getCommentAnnotationAccess();
+		return gaKEXT.getCommentAnnotationAccess();
 	}
 	
 	public ParserRule getCommentAnnotationRule() {
@@ -1324,7 +1356,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// TagAnnotation returns Annotation:
 	//	"@" name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
-		return gaKEffects.getTagAnnotationAccess();
+		return gaKEXT.getTagAnnotationAccess();
 	}
 	
 	public ParserRule getTagAnnotationRule() {
@@ -1335,7 +1367,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// KeyStringValueAnnotation returns StringAnnotation:
 	//	"@" name=ExtendedID values+=EString+;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
-		return gaKEffects.getKeyStringValueAnnotationAccess();
+		return gaKEXT.getKeyStringValueAnnotationAccess();
 	}
 	
 	public ParserRule getKeyStringValueAnnotationRule() {
@@ -1347,7 +1379,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//TypedStringAnnotation:
 	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString+;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
-		return gaKEffects.getTypedKeyStringValueAnnotationAccess();
+		return gaKEXT.getTypedKeyStringValueAnnotationAccess();
 	}
 	
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
@@ -1358,7 +1390,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// KeyBooleanValueAnnotation returns BooleanAnnotation:
 	//	"@" name=ExtendedID value=BOOLEAN;
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
-		return gaKEffects.getKeyBooleanValueAnnotationAccess();
+		return gaKEXT.getKeyBooleanValueAnnotationAccess();
 	}
 	
 	public ParserRule getKeyBooleanValueAnnotationRule() {
@@ -1369,7 +1401,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// KeyIntValueAnnotation returns IntAnnotation:
 	//	"@" name=ExtendedID value=Integer;
 	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
-		return gaKEffects.getKeyIntValueAnnotationAccess();
+		return gaKEXT.getKeyIntValueAnnotationAccess();
 	}
 	
 	public ParserRule getKeyIntValueAnnotationRule() {
@@ -1380,7 +1412,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// KeyFloatValueAnnotation returns FloatAnnotation:
 	//	"@" name=ExtendedID value=Floateger;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
-		return gaKEffects.getKeyFloatValueAnnotationAccess();
+		return gaKEXT.getKeyFloatValueAnnotationAccess();
 	}
 	
 	public ParserRule getKeyFloatValueAnnotationRule() {
@@ -1391,7 +1423,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// ImportAnnotation:
 	//	"import" importURI=STRING;
 	public AnnotationsGrammarAccess.ImportAnnotationElements getImportAnnotationAccess() {
-		return gaKEffects.getImportAnnotationAccess();
+		return gaKEXT.getImportAnnotationAccess();
 	}
 	
 	public ParserRule getImportAnnotationRule() {
@@ -1402,7 +1434,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// EString returns ecore::EString:
 	//	STRING | ID;
 	public AnnotationsGrammarAccess.EStringElements getEStringAccess() {
-		return gaKEffects.getEStringAccess();
+		return gaKEXT.getEStringAccess();
 	}
 	
 	public ParserRule getEStringRule() {
@@ -1412,7 +1444,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//ExtendedID returns ecore::EString:
 	//	ID ("." ID)*;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
-		return gaKEffects.getExtendedIDAccess();
+		return gaKEXT.getExtendedIDAccess();
 	}
 	
 	public ParserRule getExtendedIDRule() {
@@ -1422,7 +1454,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Integer returns ecore::EInt:
 	//	"-"? INT;
 	public AnnotationsGrammarAccess.IntegerElements getIntegerAccess() {
-		return gaKEffects.getIntegerAccess();
+		return gaKEXT.getIntegerAccess();
 	}
 	
 	public ParserRule getIntegerRule() {
@@ -1432,7 +1464,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Floateger returns ecore::EFloat:
 	//	"-"? FLOAT;
 	public AnnotationsGrammarAccess.FloategerElements getFloategerAccess() {
-		return gaKEffects.getFloategerAccess();
+		return gaKEXT.getFloategerAccess();
 	}
 	
 	public ParserRule getFloategerRule() {
@@ -1450,7 +1482,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// terminal COMMENT_ANNOTATION:
 	//	"/ **"->"* /";
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
-		return gaKEffects.getCOMMENT_ANNOTATIONRule();
+		return gaKEXT.getCOMMENT_ANNOTATIONRule();
 	} 
 
 	//// modified version of Terminals.ML_COMMENT as
@@ -1459,28 +1491,28 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//terminal ML_COMMENT:
 	//	"/ *" !"*"->"* /";
 	public TerminalRule getML_COMMENTRule() {
-		return gaKEffects.getML_COMMENTRule();
+		return gaKEXT.getML_COMMENTRule();
 	} 
 
 	//// generic terminals
 	// terminal fragment NUMBER:
 	//	"0".."9";
 	public TerminalRule getNUMBERRule() {
-		return gaKEffects.getNUMBERRule();
+		return gaKEXT.getNUMBERRule();
 	} 
 
 	//// redefine INT terminal to allow negative numbers
 	// terminal INT returns ecore::EInt:
 	//	NUMBER+;
 	public TerminalRule getINTRule() {
-		return gaKEffects.getINTRule();
+		return gaKEXT.getINTRule();
 	} 
 
 	//// make sure the Float rule does not shadow the INT rule
 	// terminal FLOAT returns ecore::EFloatObject:
 	//	NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | NUMBER+ "f";
 	public TerminalRule getFLOATRule() {
-		return gaKEffects.getFLOATRule();
+		return gaKEXT.getFLOATRule();
 	} 
 
 	//// redefine INT terminal to allow negative numbers
@@ -1496,37 +1528,37 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// terminal BOOLEAN returns ecore::EBooleanObject:
 	//	"true" | "false";
 	public TerminalRule getBOOLEANRule() {
-		return gaKEffects.getBOOLEANRule();
+		return gaKEXT.getBOOLEANRule();
 	} 
 
 	//// custom terminal rule for strings
 	// terminal STRING:
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
 	public TerminalRule getSTRINGRule() {
-		return gaKEffects.getSTRINGRule();
+		return gaKEXT.getSTRINGRule();
 	} 
 
 	//terminal ID:
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
-		return gaKEffects.getIDRule();
+		return gaKEXT.getIDRule();
 	} 
 
 	//terminal SL_COMMENT:
 	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
 	public TerminalRule getSL_COMMENTRule() {
-		return gaKEffects.getSL_COMMENTRule();
+		return gaKEXT.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:
 	//	(" " | "\t" | "\r" | "\n")+;
 	public TerminalRule getWSRule() {
-		return gaKEffects.getWSRule();
+		return gaKEXT.getWSRule();
 	} 
 
 	//terminal ANY_OTHER:
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
-		return gaKEffects.getANY_OTHERRule();
+		return gaKEXT.getANY_OTHERRule();
 	} 
 }

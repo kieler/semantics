@@ -27,6 +27,8 @@ import de.cau.cs.kieler.core.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
+import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.CallNode;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
@@ -46,14 +48,11 @@ import de.cau.cs.kieler.sccharts.text.actions.serializer.ActionsSemanticSequence
 import de.cau.cs.kieler.sccharts.text.sct.services.SctGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
 import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
 import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
-import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEObjectProvider;
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequencer {
@@ -428,10 +427,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					sequence_TextExpression(context, (TextExpression) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getTextualCodeRule()) {
-					sequence_TextualCode(context, (TextExpression) semanticObject); 
-					return; 
-				}
 				else break;
 			case KExpressionsPackage.VALUED_OBJECT:
 				if(context == grammarAccess.getValuedObjectRule()) {
@@ -473,6 +468,14 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getValuedObjectReferenceRule() ||
 				   context == grammarAccess.getValuedObjectTestExpressionRule()) {
 					sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else break;
+			}
+		else if(semanticObject.eClass().getEPackage() == KextPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case KextPackage.KEXT:
+				if(context == grammarAccess.getKextRule()) {
+					sequence_Kext(context, (Kext) semanticObject); 
 					return; 
 				}
 				else break;
@@ -627,38 +630,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         (
-	 *             (
-	 *                 extern?='extern'? 
-	 *                 static?='static'? 
-	 *                 const?='const'? 
-	 *                 input?='input'? 
-	 *                 output?='output'? 
-	 *                 ((signal?='signal'? type=ValueType) | signal?='signal')
-	 *             ) | 
-	 *             (
-	 *                 extern?='extern' 
-	 *                 static?='static'? 
-	 *                 const?='const'? 
-	 *                 input?='input'? 
-	 *                 output?='output'? 
-	 *                 signal?='signal'? 
-	 *                 type=ValueType?
-	 *             )
-	 *         ) 
-	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject*
-	 *     )
-	 */
-	protected void sequence_Declaration(EObject context, Declaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
 	 *     (id=ID inputs+=Declaration* outputs+=Declaration* ((valuedObjects+=[ValuedObject|ID] expressions+=Expression)* | states+=State*))
 	 */
 	protected void sequence_DefineNode(EObject context, DefineNode semanticObject) {
@@ -744,22 +715,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     text=HOSTCODE
-	 */
-	protected void sequence_TextualCode(EObject context, TextExpression semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.TEXT_EXPRESSION__TEXT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.TEXT_EXPRESSION__TEXT));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getTextualCodeAccess().getTextHOSTCODETerminalRuleCall_0_0(), semanticObject.getText());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         (type=TransitionTypeLegacy | type=TransitionType) 
@@ -773,15 +728,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *     )
 	 */
 	protected void sequence_Transition(EObject context, Transition semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
-	 */
-	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }

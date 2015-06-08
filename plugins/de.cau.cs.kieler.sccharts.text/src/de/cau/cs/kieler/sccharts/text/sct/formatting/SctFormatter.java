@@ -89,19 +89,10 @@ public class SctFormatter extends ActionsFormatter {
         c.setLinewrap().after(f.getDeclarationRule());
 
         /*
-         * TEXTUAL CODE
-         */
-
-        c.setLinewrap().after(f.getTextualCodeRule());
-        //c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_8());
-        c.setNoSpace().before(f.getTextualCodeAccess().getSemicolonKeyword_1());
-
-        
-        /*
          * DECLARATIONS
          */
 //        c.setNoSpace().before(f.getValuedObjectAccess().getSemicolonKeyword_9());
-        c.setNoSpace().before(f.getDeclarationAccess().getSemicolonKeyword_4());
+        c.setNoSpace().before(f.getDeclarationAccess().getSemicolonKeyword_8());
         
 
         

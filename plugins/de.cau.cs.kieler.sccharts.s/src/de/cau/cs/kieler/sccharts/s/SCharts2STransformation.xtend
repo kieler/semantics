@@ -26,11 +26,8 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.SFactory
-import de.cau.cs.kieler.sccharts.Assignment
-import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
@@ -42,6 +39,8 @@ import de.cau.cs.kieler.s.s.Fork
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.s.s.Prio
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 
 /**
  * Converts a SyncChart into an S program.

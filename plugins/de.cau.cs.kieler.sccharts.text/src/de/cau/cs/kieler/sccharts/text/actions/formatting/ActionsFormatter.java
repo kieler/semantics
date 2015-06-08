@@ -10,7 +10,7 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.util.Pair;
 
 import de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsFormatter;
-import de.cau.cs.kieler.core.kexpressions.keffects.formatting.KEffectsFormatter;
+import de.cau.cs.kieler.core.kexpressions.text.formatting.KEXTFormatter;
 import de.cau.cs.kieler.sccharts.text.actions.services.ActionsGrammarAccess;
 
 /**
@@ -21,7 +21,7 @@ import de.cau.cs.kieler.sccharts.text.actions.services.ActionsGrammarAccess;
  *
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  */
-public class ActionsFormatter extends KEffectsFormatter {
+public class ActionsFormatter extends KEXTFormatter {
 
     @Override
     protected void configureFormatting(FormattingConfig c) {
@@ -39,7 +39,7 @@ public class ActionsFormatter extends KEffectsFormatter {
      *            GrammarAccess provided by caller
      */
     protected void customConfigureFormatting(FormattingConfig c, ActionsGrammarAccess f) {
-        super.customConfigureFormatting(c, f.getKEffectsGrammarAccess());
+        super.customConfigureFormatting(c, f.getKEXTGrammarAccess());
 
         // avoid space in valued Emission like 'X (5 + 7)' -> 'X(5 + 7)'
         c.setNoSpace().before(f.getEmissionAccess().getLeftParenthesisKeyword_1_0());

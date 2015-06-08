@@ -24,8 +24,8 @@ Declaration returns kexpressions::Declaration:
     (input?='input')? 
     (output?='output')?
     (static?='static')?
-    (signal?='signal')?
-    type = ValueType valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+    (((signal?='signal')? type = ValueType) | ((signal?='signal'))) 
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 ;
 
 

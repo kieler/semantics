@@ -1,4 +1,4 @@
-module de.menges.logic.LogicAndIE
+module de.cau.cs.kieler.sccharts.text.sct.Sct
 
 
 Workflow {
@@ -8,6 +8,8 @@ Workflow {
 	component =  @de.cau.cs.kieler.core.kexpressions.KExpressions auto-inject {}
 	
 	component =  @de.cau.cs.kieler.core.kexpressions.keffects.KEffects auto-inject {}
+	
+	component =  @de.cau.cs.kieler.core.kexpressions.text auto-inject {}
 
 	component =  @de.cau.cs.kieler.sccharts.text.actions.Actions auto-inject {}
 

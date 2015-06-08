@@ -484,8 +484,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
-	 *         signal?='signal'? 
-	 *         type=ValueType 
+	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject*
 	 *     )

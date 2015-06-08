@@ -3,10 +3,12 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text.formatting;
 
-import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
-import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.util.Pair;
+
+import de.cau.cs.kieler.core.kexpressions.keffects.formatting.KEffectsFormatter;
+import de.cau.cs.kieler.core.kexpressions.text.services.KEXTGrammarAccess;
 
 /**
  * This class contains custom formatting description.
@@ -16,8 +18,12 @@ import org.eclipse.xtext.util.Pair;
  * 
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  */
-public class KEXTFormatter extends AbstractDeclarativeFormatter {
+public class KEXTFormatter extends KEffectsFormatter {
 	
+    protected void customConfigureFormatting(FormattingConfig c, KEXTGrammarAccess f) {
+        super.customConfigureFormatting(c, f.getKEffectsGrammarAccess());
+    }    
+    
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
 		de.cau.cs.kieler.core.kexpressions.text.services.KEXTGrammarAccess f = (de.cau.cs.kieler.core.kexpressions.text.services.KEXTGrammarAccess) getGrammarAccess();

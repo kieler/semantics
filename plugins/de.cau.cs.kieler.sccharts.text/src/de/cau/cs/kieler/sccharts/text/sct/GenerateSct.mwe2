@@ -15,10 +15,12 @@ Workflow {
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage"		
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.KExpressionsPackage"		
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage"
+		registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage"
 		registerGeneratedEPackage = "de.cau.cs.kieler.sccharts.SCChartsPackage"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.genmodel"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.sccharts/model/sccharts.genmodel"
 	}
 	
