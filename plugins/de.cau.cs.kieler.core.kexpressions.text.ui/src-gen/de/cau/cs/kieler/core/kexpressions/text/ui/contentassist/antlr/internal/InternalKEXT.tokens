@@ -1,5 +1,6 @@
 '!'=19
 '!='=36
+'#'=57
 '%'=23
 '&&'=27
 '&'=18
@@ -26,19 +27,19 @@
 ']'=54
 'bool'=38
 'combine'=50
-'const'=57
+'const'=58
 'float'=41
 'host'=43
-'input'=58
+'input'=59
 'int'=40
 'max'=45
 'min'=46
 'none'=44
-'output'=59
+'output'=60
 'pre'=16
 'pure'=37
-'signal'=61
-'static'=60
+'signal'=62
+'static'=61
 'string'=42
 'unsigned'=39
 'val'=25
@@ -102,3 +103,4 @@ T__58=58
 T__59=59
 T__60=60
 T__61=61
+T__62=62

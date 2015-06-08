@@ -1718,7 +1718,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// allow strings without quotes as they don'c contain spaces
 	// EString returns ecore::EString:
-	//	STRING | ID;
+	//	STRING | ExtendedID;
 	public AnnotationsGrammarAccess.EStringElements getEStringAccess() {
 		return gaKEXT.getEStringAccess();
 	}
@@ -1728,7 +1728,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ExtendedID returns ecore::EString:
-	//	ID ("." ID)*;
+	//	ID ("." ID)* ("#" INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaKEXT.getExtendedIDAccess();
 	}

@@ -1,5 +1,6 @@
 '!'=19
 '!='=36
+'#'=70
 '%'=23
 '&&'=27
 '&'=18
@@ -27,7 +28,7 @@
 ']'=54
 'bool'=38
 'combine'=65
-'const'=70
+'const'=71
 'else'=58
 'end'=57
 'float'=41
@@ -35,20 +36,20 @@
 'goto'=59
 'host'=43
 'if'=55
-'input'=71
+'input'=72
 'int'=40
 'join'=61
 'max'=45
 'min'=46
 'module'=47
 'none'=44
-'output'=72
+'output'=73
 'par'=62
 'pause'=63
 'pre'=16
 'pure'=37
-'signal'=74
-'static'=73
+'signal'=75
+'static'=74
 'string'=42
 'then'=56
 'unsigned'=39
@@ -128,3 +129,4 @@ T__71=71
 T__72=72
 T__73=73
 T__74=74
+T__75=75

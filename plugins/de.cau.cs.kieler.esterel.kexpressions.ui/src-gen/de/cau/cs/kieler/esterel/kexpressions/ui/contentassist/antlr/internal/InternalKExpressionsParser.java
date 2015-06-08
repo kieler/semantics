@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalKExpressionsParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'or'", "'and'", "'not'", "'+'", "'-'", "'*'", "'mod'", "'/'", "'?'", "'='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pure'", "'boolean'", "'unsigned'", "'integer'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'", "'('", "')'", "'input'", "';'", "','", "'output'", "'inputoutput'", "'return'", "':'", "':='", "'var'", "'combine'", "'with'", "'@'", "'['", "']'", "'.'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'or'", "'and'", "'not'", "'+'", "'-'", "'*'", "'mod'", "'/'", "'?'", "'='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pure'", "'boolean'", "'unsigned'", "'integer'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'", "'('", "')'", "'input'", "';'", "','", "'output'", "'inputoutput'", "'return'", "':'", "':='", "'var'", "'combine'", "'with'", "'@'", "'['", "']'", "'.'", "'#'"
     };
     public static final int RULE_BOOLEAN=9;
     public static final int RULE_ID=5;
@@ -38,6 +38,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     public static final int RULE_ANY_OTHER=15;
     public static final int T__21=21;
     public static final int T__20=20;
+    public static final int T__60=60;
     public static final int EOF=-1;
     public static final int T__55=55;
     public static final int T__56=56;
@@ -5875,13 +5876,13 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__EString__Alternatives"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:1867:1: rule__EString__Alternatives : ( ( RULE_STRING ) | ( RULE_ID ) );
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:1867:1: rule__EString__Alternatives : ( ( RULE_STRING ) | ( ruleExtendedID ) );
     public final void rule__EString__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:1871:1: ( ( RULE_STRING ) | ( RULE_ID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:1871:1: ( ( RULE_STRING ) | ( ruleExtendedID ) )
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -5919,17 +5920,21 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:1878:6: ( RULE_ID )
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:1878:6: ( ruleExtendedID )
                     {
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:1878:6: ( RULE_ID )
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:1879:1: RULE_ID
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:1878:6: ( ruleExtendedID )
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:1879:1: ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getEStringAccess().getIDTerminalRuleCall_1()); 
+                       before(grammarAccess.getEStringAccess().getExtendedIDParserRuleCall_1()); 
                     }
-                    match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__EString__Alternatives3982); if (state.failed) return ;
+                    pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__EString__Alternatives3982);
+                    ruleExtendedID();
+
+                    state._fsp--;
+                    if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getEStringAccess().getIDTerminalRuleCall_1()); 
+                       after(grammarAccess.getEStringAccess().getExtendedIDParserRuleCall_1()); 
                     }
 
                     }
@@ -19023,17 +19028,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group__1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6615:1: rule__ExtendedID__Group__1 : rule__ExtendedID__Group__1__Impl ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6615:1: rule__ExtendedID__Group__1 : rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 ;
     public final void rule__ExtendedID__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6619:1: ( rule__ExtendedID__Group__1__Impl )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6620:2: rule__ExtendedID__Group__1__Impl
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6619:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6620:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group__1__Impl_in_rule__ExtendedID__Group__113438);
             rule__ExtendedID__Group__1__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group__2_in_rule__ExtendedID__Group__113441);
+            rule__ExtendedID__Group__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -19056,22 +19066,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group__1__Impl"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6626:1: rule__ExtendedID__Group__1__Impl : ( ( rule__ExtendedID__Group_1__0 )* ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6627:1: rule__ExtendedID__Group__1__Impl : ( ( rule__ExtendedID__Group_1__0 )* ) ;
     public final void rule__ExtendedID__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6630:1: ( ( ( rule__ExtendedID__Group_1__0 )* ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6631:1: ( ( rule__ExtendedID__Group_1__0 )* )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6631:1: ( ( ( rule__ExtendedID__Group_1__0 )* ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6632:1: ( ( rule__ExtendedID__Group_1__0 )* )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6631:1: ( ( rule__ExtendedID__Group_1__0 )* )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6632:1: ( rule__ExtendedID__Group_1__0 )*
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6632:1: ( ( rule__ExtendedID__Group_1__0 )* )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6633:1: ( rule__ExtendedID__Group_1__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getGroup_1()); 
             }
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6633:1: ( rule__ExtendedID__Group_1__0 )*
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6634:1: ( rule__ExtendedID__Group_1__0 )*
             loop37:
             do {
                 int alt37=2;
@@ -19084,9 +19094,9 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
                 switch (alt37) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6633:2: rule__ExtendedID__Group_1__0
+            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6634:2: rule__ExtendedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl13465);
+            	    pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl13468);
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -19124,22 +19134,117 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     // $ANTLR end "rule__ExtendedID__Group__1__Impl"
 
 
+    // $ANTLR start "rule__ExtendedID__Group__2"
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6644:1: rule__ExtendedID__Group__2 : rule__ExtendedID__Group__2__Impl ;
+    public final void rule__ExtendedID__Group__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6648:1: ( rule__ExtendedID__Group__2__Impl )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6649:2: rule__ExtendedID__Group__2__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group__2__Impl_in_rule__ExtendedID__Group__213499);
+            rule__ExtendedID__Group__2__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExtendedID__Group__2"
+
+
+    // $ANTLR start "rule__ExtendedID__Group__2__Impl"
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6655:1: rule__ExtendedID__Group__2__Impl : ( ( rule__ExtendedID__Group_2__0 )? ) ;
+    public final void rule__ExtendedID__Group__2__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6659:1: ( ( ( rule__ExtendedID__Group_2__0 )? ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6660:1: ( ( rule__ExtendedID__Group_2__0 )? )
+            {
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6660:1: ( ( rule__ExtendedID__Group_2__0 )? )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6661:1: ( rule__ExtendedID__Group_2__0 )?
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getExtendedIDAccess().getGroup_2()); 
+            }
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6662:1: ( rule__ExtendedID__Group_2__0 )?
+            int alt38=2;
+            int LA38_0 = input.LA(1);
+
+            if ( (LA38_0==60) ) {
+                alt38=1;
+            }
+            switch (alt38) {
+                case 1 :
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6662:2: rule__ExtendedID__Group_2__0
+                    {
+                    pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_2__0_in_rule__ExtendedID__Group__2__Impl13526);
+                    rule__ExtendedID__Group_2__0();
+
+                    state._fsp--;
+                    if (state.failed) return ;
+
+                    }
+                    break;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getExtendedIDAccess().getGroup_2()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExtendedID__Group__2__Impl"
+
+
     // $ANTLR start "rule__ExtendedID__Group_1__0"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6647:1: rule__ExtendedID__Group_1__0 : rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6678:1: rule__ExtendedID__Group_1__0 : rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 ;
     public final void rule__ExtendedID__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6651:1: ( rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6652:2: rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6682:1: ( rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6683:2: rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__013500);
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__013563);
             rule__ExtendedID__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__013503);
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__013566);
             rule__ExtendedID__Group_1__1();
 
             state._fsp--;
@@ -19163,22 +19268,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__0__Impl"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6659:1: rule__ExtendedID__Group_1__0__Impl : ( '.' ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6690:1: rule__ExtendedID__Group_1__0__Impl : ( '.' ) ;
     public final void rule__ExtendedID__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6663:1: ( ( '.' ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6664:1: ( '.' )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6694:1: ( ( '.' ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6695:1: ( '.' )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6664:1: ( '.' )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6665:1: '.'
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6695:1: ( '.' )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6696:1: '.'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
             }
-            match(input,59,FollowSets000.FOLLOW_59_in_rule__ExtendedID__Group_1__0__Impl13531); if (state.failed) return ;
+            match(input,59,FollowSets000.FOLLOW_59_in_rule__ExtendedID__Group_1__0__Impl13594); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
             }
@@ -19204,16 +19309,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6678:1: rule__ExtendedID__Group_1__1 : rule__ExtendedID__Group_1__1__Impl ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6709:1: rule__ExtendedID__Group_1__1 : rule__ExtendedID__Group_1__1__Impl ;
     public final void rule__ExtendedID__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6682:1: ( rule__ExtendedID__Group_1__1__Impl )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6683:2: rule__ExtendedID__Group_1__1__Impl
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6713:1: ( rule__ExtendedID__Group_1__1__Impl )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6714:2: rule__ExtendedID__Group_1__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__113562);
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__113625);
             rule__ExtendedID__Group_1__1__Impl();
 
             state._fsp--;
@@ -19237,22 +19342,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__1__Impl"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6689:1: rule__ExtendedID__Group_1__1__Impl : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6720:1: rule__ExtendedID__Group_1__1__Impl : ( RULE_ID ) ;
     public final void rule__ExtendedID__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6693:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6694:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6724:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6725:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6694:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6695:1: RULE_ID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6725:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6726:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl13589); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl13652); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
             }
@@ -19277,22 +19382,175 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     // $ANTLR end "rule__ExtendedID__Group_1__1__Impl"
 
 
+    // $ANTLR start "rule__ExtendedID__Group_2__0"
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6741:1: rule__ExtendedID__Group_2__0 : rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 ;
+    public final void rule__ExtendedID__Group_2__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6745:1: ( rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6746:2: rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_2__0__Impl_in_rule__ExtendedID__Group_2__013685);
+            rule__ExtendedID__Group_2__0__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_2__1_in_rule__ExtendedID__Group_2__013688);
+            rule__ExtendedID__Group_2__1();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExtendedID__Group_2__0"
+
+
+    // $ANTLR start "rule__ExtendedID__Group_2__0__Impl"
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6753:1: rule__ExtendedID__Group_2__0__Impl : ( '#' ) ;
+    public final void rule__ExtendedID__Group_2__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6757:1: ( ( '#' ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6758:1: ( '#' )
+            {
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6758:1: ( '#' )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6759:1: '#'
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0()); 
+            }
+            match(input,60,FollowSets000.FOLLOW_60_in_rule__ExtendedID__Group_2__0__Impl13716); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExtendedID__Group_2__0__Impl"
+
+
+    // $ANTLR start "rule__ExtendedID__Group_2__1"
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6772:1: rule__ExtendedID__Group_2__1 : rule__ExtendedID__Group_2__1__Impl ;
+    public final void rule__ExtendedID__Group_2__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6776:1: ( rule__ExtendedID__Group_2__1__Impl )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6777:2: rule__ExtendedID__Group_2__1__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_2__1__Impl_in_rule__ExtendedID__Group_2__113747);
+            rule__ExtendedID__Group_2__1__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExtendedID__Group_2__1"
+
+
+    // $ANTLR start "rule__ExtendedID__Group_2__1__Impl"
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6783:1: rule__ExtendedID__Group_2__1__Impl : ( RULE_INT ) ;
+    public final void rule__ExtendedID__Group_2__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6787:1: ( ( RULE_INT ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6788:1: ( RULE_INT )
+            {
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6788:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6789:1: RULE_INT
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getExtendedIDAccess().getINTTerminalRuleCall_2_1()); 
+            }
+            match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_rule__ExtendedID__Group_2__1__Impl13774); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getExtendedIDAccess().getINTTerminalRuleCall_2_1()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ExtendedID__Group_2__1__Impl"
+
+
     // $ANTLR start "rule__Integer__Group__0"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6710:1: rule__Integer__Group__0 : rule__Integer__Group__0__Impl rule__Integer__Group__1 ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6804:1: rule__Integer__Group__0 : rule__Integer__Group__0__Impl rule__Integer__Group__1 ;
     public final void rule__Integer__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6714:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6715:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6808:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6809:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Integer__Group__0__Impl_in_rule__Integer__Group__013622);
+            pushFollow(FollowSets000.FOLLOW_rule__Integer__Group__0__Impl_in_rule__Integer__Group__013807);
             rule__Integer__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Integer__Group__1_in_rule__Integer__Group__013625);
+            pushFollow(FollowSets000.FOLLOW_rule__Integer__Group__1_in_rule__Integer__Group__013810);
             rule__Integer__Group__1();
 
             state._fsp--;
@@ -19316,33 +19574,33 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Integer__Group__0__Impl"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6722:1: rule__Integer__Group__0__Impl : ( ( '-' )? ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6816:1: rule__Integer__Group__0__Impl : ( ( '-' )? ) ;
     public final void rule__Integer__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6726:1: ( ( ( '-' )? ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6727:1: ( ( '-' )? )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6820:1: ( ( ( '-' )? ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6821:1: ( ( '-' )? )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6727:1: ( ( '-' )? )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6728:1: ( '-' )?
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6821:1: ( ( '-' )? )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6822:1: ( '-' )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntegerAccess().getHyphenMinusKeyword_0()); 
             }
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6729:1: ( '-' )?
-            int alt38=2;
-            int LA38_0 = input.LA(1);
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6823:1: ( '-' )?
+            int alt39=2;
+            int LA39_0 = input.LA(1);
 
-            if ( (LA38_0==21) ) {
-                alt38=1;
+            if ( (LA39_0==21) ) {
+                alt39=1;
             }
-            switch (alt38) {
+            switch (alt39) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6730:2: '-'
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6824:2: '-'
                     {
-                    match(input,21,FollowSets000.FOLLOW_21_in_rule__Integer__Group__0__Impl13654); if (state.failed) return ;
+                    match(input,21,FollowSets000.FOLLOW_21_in_rule__Integer__Group__0__Impl13839); if (state.failed) return ;
 
                     }
                     break;
@@ -19374,16 +19632,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Integer__Group__1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6741:1: rule__Integer__Group__1 : rule__Integer__Group__1__Impl ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6835:1: rule__Integer__Group__1 : rule__Integer__Group__1__Impl ;
     public final void rule__Integer__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6745:1: ( rule__Integer__Group__1__Impl )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6746:2: rule__Integer__Group__1__Impl
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6839:1: ( rule__Integer__Group__1__Impl )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6840:2: rule__Integer__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Integer__Group__1__Impl_in_rule__Integer__Group__113687);
+            pushFollow(FollowSets000.FOLLOW_rule__Integer__Group__1__Impl_in_rule__Integer__Group__113872);
             rule__Integer__Group__1__Impl();
 
             state._fsp--;
@@ -19407,22 +19665,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Integer__Group__1__Impl"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6752:1: rule__Integer__Group__1__Impl : ( RULE_INT ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6846:1: rule__Integer__Group__1__Impl : ( RULE_INT ) ;
     public final void rule__Integer__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6756:1: ( ( RULE_INT ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6757:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6850:1: ( ( RULE_INT ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6851:1: ( RULE_INT )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6757:1: ( RULE_INT )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6758:1: RULE_INT
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6851:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6852:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntegerAccess().getINTTerminalRuleCall_1()); 
             }
-            match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_rule__Integer__Group__1__Impl13714); if (state.failed) return ;
+            match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_rule__Integer__Group__1__Impl13899); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIntegerAccess().getINTTerminalRuleCall_1()); 
             }
@@ -19448,21 +19706,21 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Floateger__Group__0"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6773:1: rule__Floateger__Group__0 : rule__Floateger__Group__0__Impl rule__Floateger__Group__1 ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6867:1: rule__Floateger__Group__0 : rule__Floateger__Group__0__Impl rule__Floateger__Group__1 ;
     public final void rule__Floateger__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6777:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6778:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6871:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6872:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Floateger__Group__0__Impl_in_rule__Floateger__Group__013747);
+            pushFollow(FollowSets000.FOLLOW_rule__Floateger__Group__0__Impl_in_rule__Floateger__Group__013932);
             rule__Floateger__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Floateger__Group__1_in_rule__Floateger__Group__013750);
+            pushFollow(FollowSets000.FOLLOW_rule__Floateger__Group__1_in_rule__Floateger__Group__013935);
             rule__Floateger__Group__1();
 
             state._fsp--;
@@ -19486,33 +19744,33 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Floateger__Group__0__Impl"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6785:1: rule__Floateger__Group__0__Impl : ( ( '-' )? ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6879:1: rule__Floateger__Group__0__Impl : ( ( '-' )? ) ;
     public final void rule__Floateger__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6789:1: ( ( ( '-' )? ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6790:1: ( ( '-' )? )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6883:1: ( ( ( '-' )? ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6884:1: ( ( '-' )? )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6790:1: ( ( '-' )? )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6791:1: ( '-' )?
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6884:1: ( ( '-' )? )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6885:1: ( '-' )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloategerAccess().getHyphenMinusKeyword_0()); 
             }
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6792:1: ( '-' )?
-            int alt39=2;
-            int LA39_0 = input.LA(1);
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6886:1: ( '-' )?
+            int alt40=2;
+            int LA40_0 = input.LA(1);
 
-            if ( (LA39_0==21) ) {
-                alt39=1;
+            if ( (LA40_0==21) ) {
+                alt40=1;
             }
-            switch (alt39) {
+            switch (alt40) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6793:2: '-'
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6887:2: '-'
                     {
-                    match(input,21,FollowSets000.FOLLOW_21_in_rule__Floateger__Group__0__Impl13779); if (state.failed) return ;
+                    match(input,21,FollowSets000.FOLLOW_21_in_rule__Floateger__Group__0__Impl13964); if (state.failed) return ;
 
                     }
                     break;
@@ -19544,16 +19802,16 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Floateger__Group__1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6804:1: rule__Floateger__Group__1 : rule__Floateger__Group__1__Impl ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6898:1: rule__Floateger__Group__1 : rule__Floateger__Group__1__Impl ;
     public final void rule__Floateger__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6808:1: ( rule__Floateger__Group__1__Impl )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6809:2: rule__Floateger__Group__1__Impl
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6902:1: ( rule__Floateger__Group__1__Impl )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6903:2: rule__Floateger__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Floateger__Group__1__Impl_in_rule__Floateger__Group__113812);
+            pushFollow(FollowSets000.FOLLOW_rule__Floateger__Group__1__Impl_in_rule__Floateger__Group__113997);
             rule__Floateger__Group__1__Impl();
 
             state._fsp--;
@@ -19577,22 +19835,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__Floateger__Group__1__Impl"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6815:1: rule__Floateger__Group__1__Impl : ( RULE_FLOAT ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6909:1: rule__Floateger__Group__1__Impl : ( RULE_FLOAT ) ;
     public final void rule__Floateger__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6819:1: ( ( RULE_FLOAT ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6820:1: ( RULE_FLOAT )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6913:1: ( ( RULE_FLOAT ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6914:1: ( RULE_FLOAT )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6820:1: ( RULE_FLOAT )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6821:1: RULE_FLOAT
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6914:1: ( RULE_FLOAT )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6915:1: RULE_FLOAT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloategerAccess().getFLOATTerminalRuleCall_1()); 
             }
-            match(input,RULE_FLOAT,FollowSets000.FOLLOW_RULE_FLOAT_in_rule__Floateger__Group__1__Impl13839); if (state.failed) return ;
+            match(input,RULE_FLOAT,FollowSets000.FOLLOW_RULE_FLOAT_in_rule__Floateger__Group__1__Impl14024); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getFloategerAccess().getFLOATTerminalRuleCall_1()); 
             }
@@ -19618,22 +19876,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__OrExpression__OperatorAssignment_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6837:1: rule__OrExpression__OperatorAssignment_1_1 : ( ruleOrOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6931:1: rule__OrExpression__OperatorAssignment_1_1 : ( ruleOrOperator ) ;
     public final void rule__OrExpression__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6841:1: ( ( ruleOrOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6842:1: ( ruleOrOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6935:1: ( ( ruleOrOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6936:1: ( ruleOrOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6842:1: ( ruleOrOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6843:1: ruleOrOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6936:1: ( ruleOrOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6937:1: ruleOrOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getOrExpressionAccess().getOperatorOrOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleOrOperator_in_rule__OrExpression__OperatorAssignment_1_113877);
+            pushFollow(FollowSets000.FOLLOW_ruleOrOperator_in_rule__OrExpression__OperatorAssignment_1_114062);
             ruleOrOperator();
 
             state._fsp--;
@@ -19663,22 +19921,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__OrExpression__SubExpressionsAssignment_1_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6852:1: rule__OrExpression__SubExpressionsAssignment_1_2 : ( ruleAndExpression ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6946:1: rule__OrExpression__SubExpressionsAssignment_1_2 : ( ruleAndExpression ) ;
     public final void rule__OrExpression__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6856:1: ( ( ruleAndExpression ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6857:1: ( ruleAndExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6950:1: ( ( ruleAndExpression ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6951:1: ( ruleAndExpression )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6857:1: ( ruleAndExpression )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6858:1: ruleAndExpression
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6951:1: ( ruleAndExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6952:1: ruleAndExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getOrExpressionAccess().getSubExpressionsAndExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleAndExpression_in_rule__OrExpression__SubExpressionsAssignment_1_213908);
+            pushFollow(FollowSets000.FOLLOW_ruleAndExpression_in_rule__OrExpression__SubExpressionsAssignment_1_214093);
             ruleAndExpression();
 
             state._fsp--;
@@ -19708,22 +19966,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AndExpression__OperatorAssignment_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6867:1: rule__AndExpression__OperatorAssignment_1_1 : ( ruleAndOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6961:1: rule__AndExpression__OperatorAssignment_1_1 : ( ruleAndOperator ) ;
     public final void rule__AndExpression__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6871:1: ( ( ruleAndOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6872:1: ( ruleAndOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6965:1: ( ( ruleAndOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6966:1: ( ruleAndOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6872:1: ( ruleAndOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6873:1: ruleAndOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6966:1: ( ruleAndOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6967:1: ruleAndOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAndExpressionAccess().getOperatorAndOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleAndOperator_in_rule__AndExpression__OperatorAssignment_1_113939);
+            pushFollow(FollowSets000.FOLLOW_ruleAndOperator_in_rule__AndExpression__OperatorAssignment_1_114124);
             ruleAndOperator();
 
             state._fsp--;
@@ -19753,22 +20011,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AndExpression__SubExpressionsAssignment_1_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6882:1: rule__AndExpression__SubExpressionsAssignment_1_2 : ( ruleCompareOperation ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6976:1: rule__AndExpression__SubExpressionsAssignment_1_2 : ( ruleCompareOperation ) ;
     public final void rule__AndExpression__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6886:1: ( ( ruleCompareOperation ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6887:1: ( ruleCompareOperation )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6980:1: ( ( ruleCompareOperation ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6981:1: ( ruleCompareOperation )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6887:1: ( ruleCompareOperation )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6888:1: ruleCompareOperation
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6981:1: ( ruleCompareOperation )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6982:1: ruleCompareOperation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleCompareOperation_in_rule__AndExpression__SubExpressionsAssignment_1_213970);
+            pushFollow(FollowSets000.FOLLOW_ruleCompareOperation_in_rule__AndExpression__SubExpressionsAssignment_1_214155);
             ruleCompareOperation();
 
             state._fsp--;
@@ -19798,22 +20056,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__OperatorAssignment_0_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6897:1: rule__CompareOperation__OperatorAssignment_0_1_1 : ( ruleCompareOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6991:1: rule__CompareOperation__OperatorAssignment_0_1_1 : ( ruleCompareOperator ) ;
     public final void rule__CompareOperation__OperatorAssignment_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6901:1: ( ( ruleCompareOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6902:1: ( ruleCompareOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6995:1: ( ( ruleCompareOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6996:1: ( ruleCompareOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6902:1: ( ruleCompareOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6903:1: ruleCompareOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6996:1: ( ruleCompareOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6997:1: ruleCompareOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getOperatorCompareOperatorEnumRuleCall_0_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_0_1_114001);
+            pushFollow(FollowSets000.FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_0_1_114186);
             ruleCompareOperator();
 
             state._fsp--;
@@ -19843,22 +20101,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CompareOperation__SubExpressionsAssignment_0_1_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6912:1: rule__CompareOperation__SubExpressionsAssignment_0_1_2 : ( ruleNotOrValuedExpression ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7006:1: rule__CompareOperation__SubExpressionsAssignment_0_1_2 : ( ruleNotOrValuedExpression ) ;
     public final void rule__CompareOperation__SubExpressionsAssignment_0_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6916:1: ( ( ruleNotOrValuedExpression ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6917:1: ( ruleNotOrValuedExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7010:1: ( ( ruleNotOrValuedExpression ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7011:1: ( ruleNotOrValuedExpression )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6917:1: ( ruleNotOrValuedExpression )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6918:1: ruleNotOrValuedExpression
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7011:1: ( ruleNotOrValuedExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7012:1: ruleNotOrValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getSubExpressionsNotOrValuedExpressionParserRuleCall_0_1_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__SubExpressionsAssignment_0_1_214032);
+            pushFollow(FollowSets000.FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__SubExpressionsAssignment_0_1_214217);
             ruleNotOrValuedExpression();
 
             state._fsp--;
@@ -19888,22 +20146,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NotExpression__OperatorAssignment_0_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6927:1: rule__NotExpression__OperatorAssignment_0_1 : ( ruleNotOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7021:1: rule__NotExpression__OperatorAssignment_0_1 : ( ruleNotOperator ) ;
     public final void rule__NotExpression__OperatorAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6931:1: ( ( ruleNotOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6932:1: ( ruleNotOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7025:1: ( ( ruleNotOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7026:1: ( ruleNotOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6932:1: ( ruleNotOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6933:1: ruleNotOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7026:1: ( ruleNotOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7027:1: ruleNotOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleNotOperator_in_rule__NotExpression__OperatorAssignment_0_114063);
+            pushFollow(FollowSets000.FOLLOW_ruleNotOperator_in_rule__NotExpression__OperatorAssignment_0_114248);
             ruleNotOperator();
 
             state._fsp--;
@@ -19933,22 +20191,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NotExpression__SubExpressionsAssignment_0_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6942:1: rule__NotExpression__SubExpressionsAssignment_0_2 : ( ruleNotExpression ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7036:1: rule__NotExpression__SubExpressionsAssignment_0_2 : ( ruleNotExpression ) ;
     public final void rule__NotExpression__SubExpressionsAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6946:1: ( ( ruleNotExpression ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6947:1: ( ruleNotExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7040:1: ( ( ruleNotExpression ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7041:1: ( ruleNotExpression )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6947:1: ( ruleNotExpression )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6948:1: ruleNotExpression
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7041:1: ( ruleNotExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7042:1: ruleNotExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getSubExpressionsNotExpressionParserRuleCall_0_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleNotExpression_in_rule__NotExpression__SubExpressionsAssignment_0_214094);
+            pushFollow(FollowSets000.FOLLOW_ruleNotExpression_in_rule__NotExpression__SubExpressionsAssignment_0_214279);
             ruleNotExpression();
 
             state._fsp--;
@@ -19978,22 +20236,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__OperatorAssignment_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6957:1: rule__AddExpression__OperatorAssignment_1_1 : ( ruleAddOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7051:1: rule__AddExpression__OperatorAssignment_1_1 : ( ruleAddOperator ) ;
     public final void rule__AddExpression__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6961:1: ( ( ruleAddOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6962:1: ( ruleAddOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7055:1: ( ( ruleAddOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7056:1: ( ruleAddOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6962:1: ( ruleAddOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6963:1: ruleAddOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7056:1: ( ruleAddOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7057:1: ruleAddOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getOperatorAddOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleAddOperator_in_rule__AddExpression__OperatorAssignment_1_114125);
+            pushFollow(FollowSets000.FOLLOW_ruleAddOperator_in_rule__AddExpression__OperatorAssignment_1_114310);
             ruleAddOperator();
 
             state._fsp--;
@@ -20023,22 +20281,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__AddExpression__SubExpressionsAssignment_1_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6972:1: rule__AddExpression__SubExpressionsAssignment_1_2 : ( ruleSubExpression ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7066:1: rule__AddExpression__SubExpressionsAssignment_1_2 : ( ruleSubExpression ) ;
     public final void rule__AddExpression__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6976:1: ( ( ruleSubExpression ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6977:1: ( ruleSubExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7070:1: ( ( ruleSubExpression ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7071:1: ( ruleSubExpression )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6977:1: ( ruleSubExpression )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6978:1: ruleSubExpression
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7071:1: ( ruleSubExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7072:1: ruleSubExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getSubExpressionsSubExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleSubExpression_in_rule__AddExpression__SubExpressionsAssignment_1_214156);
+            pushFollow(FollowSets000.FOLLOW_ruleSubExpression_in_rule__AddExpression__SubExpressionsAssignment_1_214341);
             ruleSubExpression();
 
             state._fsp--;
@@ -20068,22 +20326,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__OperatorAssignment_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6987:1: rule__SubExpression__OperatorAssignment_1_1 : ( ruleSubOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7081:1: rule__SubExpression__OperatorAssignment_1_1 : ( ruleSubOperator ) ;
     public final void rule__SubExpression__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6991:1: ( ( ruleSubOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6992:1: ( ruleSubOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7085:1: ( ( ruleSubOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7086:1: ( ruleSubOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6992:1: ( ruleSubOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:6993:1: ruleSubOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7086:1: ( ruleSubOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7087:1: ruleSubOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getOperatorSubOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleSubOperator_in_rule__SubExpression__OperatorAssignment_1_114187);
+            pushFollow(FollowSets000.FOLLOW_ruleSubOperator_in_rule__SubExpression__OperatorAssignment_1_114372);
             ruleSubOperator();
 
             state._fsp--;
@@ -20113,22 +20371,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__SubExpression__SubExpressionsAssignment_1_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7002:1: rule__SubExpression__SubExpressionsAssignment_1_2 : ( ruleMultExpression ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7096:1: rule__SubExpression__SubExpressionsAssignment_1_2 : ( ruleMultExpression ) ;
     public final void rule__SubExpression__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7006:1: ( ( ruleMultExpression ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7007:1: ( ruleMultExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7100:1: ( ( ruleMultExpression ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7101:1: ( ruleMultExpression )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7007:1: ( ruleMultExpression )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7008:1: ruleMultExpression
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7101:1: ( ruleMultExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7102:1: ruleMultExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getSubExpressionsMultExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleMultExpression_in_rule__SubExpression__SubExpressionsAssignment_1_214218);
+            pushFollow(FollowSets000.FOLLOW_ruleMultExpression_in_rule__SubExpression__SubExpressionsAssignment_1_214403);
             ruleMultExpression();
 
             state._fsp--;
@@ -20158,22 +20416,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__OperatorAssignment_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7017:1: rule__MultExpression__OperatorAssignment_1_1 : ( ruleMultOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7111:1: rule__MultExpression__OperatorAssignment_1_1 : ( ruleMultOperator ) ;
     public final void rule__MultExpression__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7021:1: ( ( ruleMultOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7022:1: ( ruleMultOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7115:1: ( ( ruleMultOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7116:1: ( ruleMultOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7022:1: ( ruleMultOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7023:1: ruleMultOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7116:1: ( ruleMultOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7117:1: ruleMultOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getOperatorMultOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleMultOperator_in_rule__MultExpression__OperatorAssignment_1_114249);
+            pushFollow(FollowSets000.FOLLOW_ruleMultOperator_in_rule__MultExpression__OperatorAssignment_1_114434);
             ruleMultOperator();
 
             state._fsp--;
@@ -20203,22 +20461,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__MultExpression__SubExpressionsAssignment_1_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7032:1: rule__MultExpression__SubExpressionsAssignment_1_2 : ( ruleDivExpression ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7126:1: rule__MultExpression__SubExpressionsAssignment_1_2 : ( ruleDivExpression ) ;
     public final void rule__MultExpression__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7036:1: ( ( ruleDivExpression ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7037:1: ( ruleDivExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7130:1: ( ( ruleDivExpression ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7131:1: ( ruleDivExpression )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7037:1: ( ruleDivExpression )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7038:1: ruleDivExpression
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7131:1: ( ruleDivExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7132:1: ruleDivExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getSubExpressionsDivExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleDivExpression_in_rule__MultExpression__SubExpressionsAssignment_1_214280);
+            pushFollow(FollowSets000.FOLLOW_ruleDivExpression_in_rule__MultExpression__SubExpressionsAssignment_1_214465);
             ruleDivExpression();
 
             state._fsp--;
@@ -20248,22 +20506,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__OperatorAssignment_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7047:1: rule__DivExpression__OperatorAssignment_1_1 : ( ruleDivOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7141:1: rule__DivExpression__OperatorAssignment_1_1 : ( ruleDivOperator ) ;
     public final void rule__DivExpression__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7051:1: ( ( ruleDivOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7052:1: ( ruleDivOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7145:1: ( ( ruleDivOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7146:1: ( ruleDivOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7052:1: ( ruleDivOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7053:1: ruleDivOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7146:1: ( ruleDivOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7147:1: ruleDivOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getOperatorDivOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleDivOperator_in_rule__DivExpression__OperatorAssignment_1_114311);
+            pushFollow(FollowSets000.FOLLOW_ruleDivOperator_in_rule__DivExpression__OperatorAssignment_1_114496);
             ruleDivOperator();
 
             state._fsp--;
@@ -20293,22 +20551,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__DivExpression__SubExpressionsAssignment_1_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7062:1: rule__DivExpression__SubExpressionsAssignment_1_2 : ( ruleModExpression ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7156:1: rule__DivExpression__SubExpressionsAssignment_1_2 : ( ruleModExpression ) ;
     public final void rule__DivExpression__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7066:1: ( ( ruleModExpression ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7067:1: ( ruleModExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7160:1: ( ( ruleModExpression ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7161:1: ( ruleModExpression )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7067:1: ( ruleModExpression )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7068:1: ruleModExpression
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7161:1: ( ruleModExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7162:1: ruleModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getSubExpressionsModExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleModExpression_in_rule__DivExpression__SubExpressionsAssignment_1_214342);
+            pushFollow(FollowSets000.FOLLOW_ruleModExpression_in_rule__DivExpression__SubExpressionsAssignment_1_214527);
             ruleModExpression();
 
             state._fsp--;
@@ -20338,22 +20596,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__OperatorAssignment_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7077:1: rule__ModExpression__OperatorAssignment_1_1 : ( ruleModOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7171:1: rule__ModExpression__OperatorAssignment_1_1 : ( ruleModOperator ) ;
     public final void rule__ModExpression__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7081:1: ( ( ruleModOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7082:1: ( ruleModOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7175:1: ( ( ruleModOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7176:1: ( ruleModOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7082:1: ( ruleModOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7083:1: ruleModOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7176:1: ( ruleModOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7177:1: ruleModOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getOperatorModOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleModOperator_in_rule__ModExpression__OperatorAssignment_1_114373);
+            pushFollow(FollowSets000.FOLLOW_ruleModOperator_in_rule__ModExpression__OperatorAssignment_1_114558);
             ruleModOperator();
 
             state._fsp--;
@@ -20383,22 +20641,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ModExpression__SubExpressionsAssignment_1_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7092:1: rule__ModExpression__SubExpressionsAssignment_1_2 : ( ruleAtomicValuedExpression ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7186:1: rule__ModExpression__SubExpressionsAssignment_1_2 : ( ruleAtomicValuedExpression ) ;
     public final void rule__ModExpression__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7096:1: ( ( ruleAtomicValuedExpression ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7097:1: ( ruleAtomicValuedExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7190:1: ( ( ruleAtomicValuedExpression ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7191:1: ( ruleAtomicValuedExpression )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7097:1: ( ruleAtomicValuedExpression )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7098:1: ruleAtomicValuedExpression
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7191:1: ( ruleAtomicValuedExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7192:1: ruleAtomicValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleAtomicValuedExpression_in_rule__ModExpression__SubExpressionsAssignment_1_214404);
+            pushFollow(FollowSets000.FOLLOW_ruleAtomicValuedExpression_in_rule__ModExpression__SubExpressionsAssignment_1_214589);
             ruleAtomicValuedExpression();
 
             state._fsp--;
@@ -20428,22 +20686,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NegExpression__OperatorAssignment_0_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7107:1: rule__NegExpression__OperatorAssignment_0_1 : ( ruleSubOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7201:1: rule__NegExpression__OperatorAssignment_0_1 : ( ruleSubOperator ) ;
     public final void rule__NegExpression__OperatorAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7111:1: ( ( ruleSubOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7112:1: ( ruleSubOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7205:1: ( ( ruleSubOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7206:1: ( ruleSubOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7112:1: ( ruleSubOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7113:1: ruleSubOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7206:1: ( ruleSubOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7207:1: ruleSubOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getOperatorSubOperatorEnumRuleCall_0_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleSubOperator_in_rule__NegExpression__OperatorAssignment_0_114435);
+            pushFollow(FollowSets000.FOLLOW_ruleSubOperator_in_rule__NegExpression__OperatorAssignment_0_114620);
             ruleSubOperator();
 
             state._fsp--;
@@ -20473,22 +20731,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__NegExpression__SubExpressionsAssignment_0_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7122:1: rule__NegExpression__SubExpressionsAssignment_0_2 : ( ruleNegExpression ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7216:1: rule__NegExpression__SubExpressionsAssignment_0_2 : ( ruleNegExpression ) ;
     public final void rule__NegExpression__SubExpressionsAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7126:1: ( ( ruleNegExpression ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7127:1: ( ruleNegExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7220:1: ( ( ruleNegExpression ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7221:1: ( ruleNegExpression )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7127:1: ( ruleNegExpression )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7128:1: ruleNegExpression
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7221:1: ( ruleNegExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7222:1: ruleNegExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getSubExpressionsNegExpressionParserRuleCall_0_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleNegExpression_in_rule__NegExpression__SubExpressionsAssignment_0_214466);
+            pushFollow(FollowSets000.FOLLOW_ruleNegExpression_in_rule__NegExpression__SubExpressionsAssignment_0_214651);
             ruleNegExpression();
 
             state._fsp--;
@@ -20518,22 +20776,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__OperatorAssignment_0_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7137:1: rule__ValuedObjectTestExpression__OperatorAssignment_0_1 : ( rulePreOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7231:1: rule__ValuedObjectTestExpression__OperatorAssignment_0_1 : ( rulePreOperator ) ;
     public final void rule__ValuedObjectTestExpression__OperatorAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7141:1: ( ( rulePreOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7142:1: ( rulePreOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7235:1: ( ( rulePreOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7236:1: ( rulePreOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7142:1: ( rulePreOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7143:1: rulePreOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7236:1: ( rulePreOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7237:1: rulePreOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorPreOperatorEnumRuleCall_0_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_rulePreOperator_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_114497);
+            pushFollow(FollowSets000.FOLLOW_rulePreOperator_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_114682);
             rulePreOperator();
 
             state._fsp--;
@@ -20563,22 +20821,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7152:1: rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 : ( ruleValuedObjectTestExpression ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7246:1: rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 : ( ruleValuedObjectTestExpression ) ;
     public final void rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7156:1: ( ( ruleValuedObjectTestExpression ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7157:1: ( ruleValuedObjectTestExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7250:1: ( ( ruleValuedObjectTestExpression ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7251:1: ( ruleValuedObjectTestExpression )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7157:1: ( ruleValuedObjectTestExpression )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7158:1: ruleValuedObjectTestExpression
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7251:1: ( ruleValuedObjectTestExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7252:1: ruleValuedObjectTestExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_314528);
+            pushFollow(FollowSets000.FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_314713);
             ruleValuedObjectTestExpression();
 
             state._fsp--;
@@ -20608,22 +20866,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__OperatorAssignment_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7167:1: rule__ValuedObjectTestExpression__OperatorAssignment_1_1 : ( ruleValueTestOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7261:1: rule__ValuedObjectTestExpression__OperatorAssignment_1_1 : ( ruleValueTestOperator ) ;
     public final void rule__ValuedObjectTestExpression__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7171:1: ( ( ruleValueTestOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7172:1: ( ruleValueTestOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7265:1: ( ( ruleValueTestOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7266:1: ( ruleValueTestOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7172:1: ( ruleValueTestOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7173:1: ruleValueTestOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7266:1: ( ruleValueTestOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7267:1: ruleValueTestOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorValueTestOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleValueTestOperator_in_rule__ValuedObjectTestExpression__OperatorAssignment_1_114559);
+            pushFollow(FollowSets000.FOLLOW_ruleValueTestOperator_in_rule__ValuedObjectTestExpression__OperatorAssignment_1_114744);
             ruleValueTestOperator();
 
             state._fsp--;
@@ -20653,22 +20911,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__SubExpressionsAssignment_1_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7182:1: rule__ValuedObjectTestExpression__SubExpressionsAssignment_1_2 : ( ruleValuedObjectReference ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7276:1: rule__ValuedObjectTestExpression__SubExpressionsAssignment_1_2 : ( ruleValuedObjectReference ) ;
     public final void rule__ValuedObjectTestExpression__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7186:1: ( ( ruleValuedObjectReference ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7187:1: ( ruleValuedObjectReference )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7280:1: ( ( ruleValuedObjectReference ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7281:1: ( ruleValuedObjectReference )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7187:1: ( ruleValuedObjectReference )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7188:1: ruleValuedObjectReference
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7281:1: ( ruleValuedObjectReference )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7282:1: ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsValuedObjectReferenceParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleValuedObjectReference_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_1_214590);
+            pushFollow(FollowSets000.FOLLOW_ruleValuedObjectReference_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_1_214775);
             ruleValuedObjectReference();
 
             state._fsp--;
@@ -20698,28 +20956,28 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__ValuedObjectAssignment"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7197:1: rule__ValuedObjectReference__ValuedObjectAssignment : ( ( RULE_ID ) ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7291:1: rule__ValuedObjectReference__ValuedObjectAssignment : ( ( RULE_ID ) ) ;
     public final void rule__ValuedObjectReference__ValuedObjectAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7201:1: ( ( ( RULE_ID ) ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7202:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7295:1: ( ( ( RULE_ID ) ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7296:1: ( ( RULE_ID ) )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7202:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7203:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7296:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7297:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0()); 
             }
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7204:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7205:1: RULE_ID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7298:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7299:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_1()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment14625); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment14810); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_1()); 
             }
@@ -20751,22 +21009,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TextExpression__CodeAssignment_0"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7216:1: rule__TextExpression__CodeAssignment_0 : ( RULE_HOSTCODE ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7310:1: rule__TextExpression__CodeAssignment_0 : ( RULE_HOSTCODE ) ;
     public final void rule__TextExpression__CodeAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7220:1: ( ( RULE_HOSTCODE ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7221:1: ( RULE_HOSTCODE )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7314:1: ( ( RULE_HOSTCODE ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7315:1: ( RULE_HOSTCODE )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7221:1: ( RULE_HOSTCODE )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7222:1: RULE_HOSTCODE
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7315:1: ( RULE_HOSTCODE )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7316:1: RULE_HOSTCODE
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0()); 
             }
-            match(input,RULE_HOSTCODE,FollowSets000.FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__CodeAssignment_014660); if (state.failed) return ;
+            match(input,RULE_HOSTCODE,FollowSets000.FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__CodeAssignment_014845); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0()); 
             }
@@ -20792,22 +21050,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TextExpression__TypeAssignment_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7231:1: rule__TextExpression__TypeAssignment_1_1 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7325:1: rule__TextExpression__TypeAssignment_1_1 : ( RULE_ID ) ;
     public final void rule__TextExpression__TypeAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7235:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7236:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7329:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7330:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7236:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7237:1: RULE_ID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7330:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7331:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTextExpressionAccess().getTypeIDTerminalRuleCall_1_1_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__TextExpression__TypeAssignment_1_114691); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__TextExpression__TypeAssignment_1_114876); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTextExpressionAccess().getTypeIDTerminalRuleCall_1_1_0()); 
             }
@@ -20833,22 +21091,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__IntValue__ValueAssignment"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7246:1: rule__IntValue__ValueAssignment : ( RULE_INT ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7340:1: rule__IntValue__ValueAssignment : ( RULE_INT ) ;
     public final void rule__IntValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7250:1: ( ( RULE_INT ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7251:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7344:1: ( ( RULE_INT ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7345:1: ( RULE_INT )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7251:1: ( RULE_INT )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7252:1: RULE_INT
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7345:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7346:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntValueAccess().getValueINTTerminalRuleCall_0()); 
             }
-            match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment14722); if (state.failed) return ;
+            match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment14907); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIntValueAccess().getValueINTTerminalRuleCall_0()); 
             }
@@ -20874,22 +21132,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__FloatValue__ValueAssignment"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7261:1: rule__FloatValue__ValueAssignment : ( RULE_FLOAT ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7355:1: rule__FloatValue__ValueAssignment : ( RULE_FLOAT ) ;
     public final void rule__FloatValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7265:1: ( ( RULE_FLOAT ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7266:1: ( RULE_FLOAT )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7359:1: ( ( RULE_FLOAT ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7360:1: ( RULE_FLOAT )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7266:1: ( RULE_FLOAT )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7267:1: RULE_FLOAT
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7360:1: ( RULE_FLOAT )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7361:1: RULE_FLOAT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
             }
-            match(input,RULE_FLOAT,FollowSets000.FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment14753); if (state.failed) return ;
+            match(input,RULE_FLOAT,FollowSets000.FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment14938); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
             }
@@ -20915,22 +21173,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__BooleanValue__ValueAssignment"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7276:1: rule__BooleanValue__ValueAssignment : ( RULE_BOOLEAN ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7370:1: rule__BooleanValue__ValueAssignment : ( RULE_BOOLEAN ) ;
     public final void rule__BooleanValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7280:1: ( ( RULE_BOOLEAN ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7281:1: ( RULE_BOOLEAN )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7374:1: ( ( RULE_BOOLEAN ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7375:1: ( RULE_BOOLEAN )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7281:1: ( RULE_BOOLEAN )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7282:1: RULE_BOOLEAN
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7375:1: ( RULE_BOOLEAN )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7376:1: RULE_BOOLEAN
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
             }
-            match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_RULE_BOOLEAN_in_rule__BooleanValue__ValueAssignment14784); if (state.failed) return ;
+            match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_RULE_BOOLEAN_in_rule__BooleanValue__ValueAssignment14969); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
             }
@@ -20956,22 +21214,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ISignal__NameAssignment_0"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7291:1: rule__ISignal__NameAssignment_0 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7385:1: rule__ISignal__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__ISignal__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7295:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7296:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7389:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7390:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7296:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7297:1: RULE_ID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7390:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7391:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getISignalAccess().getNameIDTerminalRuleCall_0_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__ISignal__NameAssignment_014815); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__ISignal__NameAssignment_015000); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getISignalAccess().getNameIDTerminalRuleCall_0_0()); 
             }
@@ -20997,22 +21255,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ISignal__ChannelDescrAssignment_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7306:1: rule__ISignal__ChannelDescrAssignment_1 : ( ruleChannelDescription ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7400:1: rule__ISignal__ChannelDescrAssignment_1 : ( ruleChannelDescription ) ;
     public final void rule__ISignal__ChannelDescrAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7310:1: ( ( ruleChannelDescription ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7311:1: ( ruleChannelDescription )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7404:1: ( ( ruleChannelDescription ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7405:1: ( ruleChannelDescription )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7311:1: ( ruleChannelDescription )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7312:1: ruleChannelDescription
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7405:1: ( ruleChannelDescription )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7406:1: ruleChannelDescription
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getISignalAccess().getChannelDescrChannelDescriptionParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleChannelDescription_in_rule__ISignal__ChannelDescrAssignment_114846);
+            pushFollow(FollowSets000.FOLLOW_ruleChannelDescription_in_rule__ISignal__ChannelDescrAssignment_115031);
             ruleChannelDescription();
 
             state._fsp--;
@@ -21042,22 +21300,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__InterfaceSignalDecl__SignalsAssignment_0_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7321:1: rule__InterfaceSignalDecl__SignalsAssignment_0_2 : ( ruleISignal ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7415:1: rule__InterfaceSignalDecl__SignalsAssignment_0_2 : ( ruleISignal ) ;
     public final void rule__InterfaceSignalDecl__SignalsAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7325:1: ( ( ruleISignal ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7326:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7419:1: ( ( ruleISignal ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7420:1: ( ruleISignal )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7326:1: ( ruleISignal )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7327:1: ruleISignal
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7420:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7421:1: ruleISignal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInterfaceSignalDeclAccess().getSignalsISignalParserRuleCall_0_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_0_214877);
+            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_0_215062);
             ruleISignal();
 
             state._fsp--;
@@ -21087,22 +21345,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__InterfaceSignalDecl__SignalsAssignment_0_3_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7336:1: rule__InterfaceSignalDecl__SignalsAssignment_0_3_1 : ( ruleISignal ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7430:1: rule__InterfaceSignalDecl__SignalsAssignment_0_3_1 : ( ruleISignal ) ;
     public final void rule__InterfaceSignalDecl__SignalsAssignment_0_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7340:1: ( ( ruleISignal ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7341:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7434:1: ( ( ruleISignal ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7435:1: ( ruleISignal )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7341:1: ( ruleISignal )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7342:1: ruleISignal
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7435:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7436:1: ruleISignal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInterfaceSignalDeclAccess().getSignalsISignalParserRuleCall_0_3_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_0_3_114908);
+            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_0_3_115093);
             ruleISignal();
 
             state._fsp--;
@@ -21132,22 +21390,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__InterfaceSignalDecl__SignalsAssignment_1_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7351:1: rule__InterfaceSignalDecl__SignalsAssignment_1_2 : ( ruleISignal ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7445:1: rule__InterfaceSignalDecl__SignalsAssignment_1_2 : ( ruleISignal ) ;
     public final void rule__InterfaceSignalDecl__SignalsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7355:1: ( ( ruleISignal ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7356:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7449:1: ( ( ruleISignal ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7450:1: ( ruleISignal )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7356:1: ( ruleISignal )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7357:1: ruleISignal
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7450:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7451:1: ruleISignal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInterfaceSignalDeclAccess().getSignalsISignalParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_1_214939);
+            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_1_215124);
             ruleISignal();
 
             state._fsp--;
@@ -21177,22 +21435,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__InterfaceSignalDecl__SignalsAssignment_1_3_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7366:1: rule__InterfaceSignalDecl__SignalsAssignment_1_3_1 : ( ruleISignal ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7460:1: rule__InterfaceSignalDecl__SignalsAssignment_1_3_1 : ( ruleISignal ) ;
     public final void rule__InterfaceSignalDecl__SignalsAssignment_1_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7370:1: ( ( ruleISignal ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7371:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7464:1: ( ( ruleISignal ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7465:1: ( ruleISignal )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7371:1: ( ruleISignal )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7372:1: ruleISignal
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7465:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7466:1: ruleISignal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInterfaceSignalDeclAccess().getSignalsISignalParserRuleCall_1_3_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_1_3_114970);
+            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_1_3_115155);
             ruleISignal();
 
             state._fsp--;
@@ -21222,22 +21480,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__InterfaceSignalDecl__SignalsAssignment_2_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7381:1: rule__InterfaceSignalDecl__SignalsAssignment_2_2 : ( ruleISignal ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7475:1: rule__InterfaceSignalDecl__SignalsAssignment_2_2 : ( ruleISignal ) ;
     public final void rule__InterfaceSignalDecl__SignalsAssignment_2_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7385:1: ( ( ruleISignal ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7386:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7479:1: ( ( ruleISignal ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7480:1: ( ruleISignal )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7386:1: ( ruleISignal )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7387:1: ruleISignal
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7480:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7481:1: ruleISignal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInterfaceSignalDeclAccess().getSignalsISignalParserRuleCall_2_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_2_215001);
+            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_2_215186);
             ruleISignal();
 
             state._fsp--;
@@ -21267,22 +21525,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__InterfaceSignalDecl__SignalsAssignment_2_3_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7396:1: rule__InterfaceSignalDecl__SignalsAssignment_2_3_1 : ( ruleISignal ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7490:1: rule__InterfaceSignalDecl__SignalsAssignment_2_3_1 : ( ruleISignal ) ;
     public final void rule__InterfaceSignalDecl__SignalsAssignment_2_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7400:1: ( ( ruleISignal ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7401:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7494:1: ( ( ruleISignal ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7495:1: ( ruleISignal )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7401:1: ( ruleISignal )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7402:1: ruleISignal
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7495:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7496:1: ruleISignal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInterfaceSignalDeclAccess().getSignalsISignalParserRuleCall_2_3_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_2_3_115032);
+            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_2_3_115217);
             ruleISignal();
 
             state._fsp--;
@@ -21312,22 +21570,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__InterfaceSignalDecl__SignalsAssignment_3_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7411:1: rule__InterfaceSignalDecl__SignalsAssignment_3_2 : ( ruleISignal ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7505:1: rule__InterfaceSignalDecl__SignalsAssignment_3_2 : ( ruleISignal ) ;
     public final void rule__InterfaceSignalDecl__SignalsAssignment_3_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7415:1: ( ( ruleISignal ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7416:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7509:1: ( ( ruleISignal ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7510:1: ( ruleISignal )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7416:1: ( ruleISignal )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7417:1: ruleISignal
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7510:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7511:1: ruleISignal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInterfaceSignalDeclAccess().getSignalsISignalParserRuleCall_3_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_3_215063);
+            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_3_215248);
             ruleISignal();
 
             state._fsp--;
@@ -21357,22 +21615,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__InterfaceSignalDecl__SignalsAssignment_3_3_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7426:1: rule__InterfaceSignalDecl__SignalsAssignment_3_3_1 : ( ruleISignal ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7520:1: rule__InterfaceSignalDecl__SignalsAssignment_3_3_1 : ( ruleISignal ) ;
     public final void rule__InterfaceSignalDecl__SignalsAssignment_3_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7430:1: ( ( ruleISignal ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7431:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7524:1: ( ( ruleISignal ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7525:1: ( ruleISignal )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7431:1: ( ruleISignal )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7432:1: ruleISignal
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7525:1: ( ruleISignal )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7526:1: ruleISignal
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInterfaceSignalDeclAccess().getSignalsISignalParserRuleCall_3_3_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_3_3_115094);
+            pushFollow(FollowSets000.FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_3_3_115279);
             ruleISignal();
 
             state._fsp--;
@@ -21402,22 +21660,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ChannelDescription__TypeAssignment_0_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7441:1: rule__ChannelDescription__TypeAssignment_0_1 : ( ruleTypeIdentifier ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7535:1: rule__ChannelDescription__TypeAssignment_0_1 : ( ruleTypeIdentifier ) ;
     public final void rule__ChannelDescription__TypeAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7445:1: ( ( ruleTypeIdentifier ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7446:1: ( ruleTypeIdentifier )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7539:1: ( ( ruleTypeIdentifier ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7540:1: ( ruleTypeIdentifier )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7446:1: ( ruleTypeIdentifier )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7447:1: ruleTypeIdentifier
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7540:1: ( ruleTypeIdentifier )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7541:1: ruleTypeIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getChannelDescriptionAccess().getTypeTypeIdentifierParserRuleCall_0_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleTypeIdentifier_in_rule__ChannelDescription__TypeAssignment_0_115125);
+            pushFollow(FollowSets000.FOLLOW_ruleTypeIdentifier_in_rule__ChannelDescription__TypeAssignment_0_115310);
             ruleTypeIdentifier();
 
             state._fsp--;
@@ -21447,22 +21705,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ChannelDescription__TypeAssignment_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7456:1: rule__ChannelDescription__TypeAssignment_1_1 : ( ruleTypeIdentifier ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7550:1: rule__ChannelDescription__TypeAssignment_1_1 : ( ruleTypeIdentifier ) ;
     public final void rule__ChannelDescription__TypeAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7460:1: ( ( ruleTypeIdentifier ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7461:1: ( ruleTypeIdentifier )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7554:1: ( ( ruleTypeIdentifier ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7555:1: ( ruleTypeIdentifier )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7461:1: ( ruleTypeIdentifier )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7462:1: ruleTypeIdentifier
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7555:1: ( ruleTypeIdentifier )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7556:1: ruleTypeIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getChannelDescriptionAccess().getTypeTypeIdentifierParserRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleTypeIdentifier_in_rule__ChannelDescription__TypeAssignment_1_115156);
+            pushFollow(FollowSets000.FOLLOW_ruleTypeIdentifier_in_rule__ChannelDescription__TypeAssignment_1_115341);
             ruleTypeIdentifier();
 
             state._fsp--;
@@ -21492,22 +21750,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ChannelDescription__ExpressionAssignment_2_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7471:1: rule__ChannelDescription__ExpressionAssignment_2_1 : ( ruleExpression ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7565:1: rule__ChannelDescription__ExpressionAssignment_2_1 : ( ruleExpression ) ;
     public final void rule__ChannelDescription__ExpressionAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7475:1: ( ( ruleExpression ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7476:1: ( ruleExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7569:1: ( ( ruleExpression ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7570:1: ( ruleExpression )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7476:1: ( ruleExpression )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7477:1: ruleExpression
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7570:1: ( ruleExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7571:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getChannelDescriptionAccess().getExpressionExpressionParserRuleCall_2_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleExpression_in_rule__ChannelDescription__ExpressionAssignment_2_115187);
+            pushFollow(FollowSets000.FOLLOW_ruleExpression_in_rule__ChannelDescription__ExpressionAssignment_2_115372);
             ruleExpression();
 
             state._fsp--;
@@ -21537,22 +21795,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ChannelDescription__TypeAssignment_2_3"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7486:1: rule__ChannelDescription__TypeAssignment_2_3 : ( ruleTypeIdentifier ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7580:1: rule__ChannelDescription__TypeAssignment_2_3 : ( ruleTypeIdentifier ) ;
     public final void rule__ChannelDescription__TypeAssignment_2_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7490:1: ( ( ruleTypeIdentifier ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7491:1: ( ruleTypeIdentifier )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7584:1: ( ( ruleTypeIdentifier ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7585:1: ( ruleTypeIdentifier )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7491:1: ( ruleTypeIdentifier )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7492:1: ruleTypeIdentifier
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7585:1: ( ruleTypeIdentifier )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7586:1: ruleTypeIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getChannelDescriptionAccess().getTypeTypeIdentifierParserRuleCall_2_3_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleTypeIdentifier_in_rule__ChannelDescription__TypeAssignment_2_315218);
+            pushFollow(FollowSets000.FOLLOW_ruleTypeIdentifier_in_rule__ChannelDescription__TypeAssignment_2_315403);
             ruleTypeIdentifier();
 
             state._fsp--;
@@ -21582,22 +21840,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__InterfaceVariableDecl__VarDeclsAssignment_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7501:1: rule__InterfaceVariableDecl__VarDeclsAssignment_1 : ( ruleVariableDecl ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7595:1: rule__InterfaceVariableDecl__VarDeclsAssignment_1 : ( ruleVariableDecl ) ;
     public final void rule__InterfaceVariableDecl__VarDeclsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7505:1: ( ( ruleVariableDecl ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7506:1: ( ruleVariableDecl )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7599:1: ( ( ruleVariableDecl ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7600:1: ( ruleVariableDecl )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7506:1: ( ruleVariableDecl )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7507:1: ruleVariableDecl
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7600:1: ( ruleVariableDecl )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7601:1: ruleVariableDecl
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInterfaceVariableDeclAccess().getVarDeclsVariableDeclParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleVariableDecl_in_rule__InterfaceVariableDecl__VarDeclsAssignment_115249);
+            pushFollow(FollowSets000.FOLLOW_ruleVariableDecl_in_rule__InterfaceVariableDecl__VarDeclsAssignment_115434);
             ruleVariableDecl();
 
             state._fsp--;
@@ -21627,22 +21885,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__InterfaceVariableDecl__VarDeclsAssignment_2_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7516:1: rule__InterfaceVariableDecl__VarDeclsAssignment_2_1 : ( ruleVariableDecl ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7610:1: rule__InterfaceVariableDecl__VarDeclsAssignment_2_1 : ( ruleVariableDecl ) ;
     public final void rule__InterfaceVariableDecl__VarDeclsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7520:1: ( ( ruleVariableDecl ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7521:1: ( ruleVariableDecl )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7614:1: ( ( ruleVariableDecl ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7615:1: ( ruleVariableDecl )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7521:1: ( ruleVariableDecl )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7522:1: ruleVariableDecl
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7615:1: ( ruleVariableDecl )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7616:1: ruleVariableDecl
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getInterfaceVariableDeclAccess().getVarDeclsVariableDeclParserRuleCall_2_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleVariableDecl_in_rule__InterfaceVariableDecl__VarDeclsAssignment_2_115280);
+            pushFollow(FollowSets000.FOLLOW_ruleVariableDecl_in_rule__InterfaceVariableDecl__VarDeclsAssignment_2_115465);
             ruleVariableDecl();
 
             state._fsp--;
@@ -21672,22 +21930,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VariableDecl__VariablesAssignment_0"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7531:1: rule__VariableDecl__VariablesAssignment_0 : ( ruleIVariable ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7625:1: rule__VariableDecl__VariablesAssignment_0 : ( ruleIVariable ) ;
     public final void rule__VariableDecl__VariablesAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7535:1: ( ( ruleIVariable ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7536:1: ( ruleIVariable )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7629:1: ( ( ruleIVariable ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7630:1: ( ruleIVariable )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7536:1: ( ruleIVariable )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7537:1: ruleIVariable
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7630:1: ( ruleIVariable )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7631:1: ruleIVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclAccess().getVariablesIVariableParserRuleCall_0_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleIVariable_in_rule__VariableDecl__VariablesAssignment_015311);
+            pushFollow(FollowSets000.FOLLOW_ruleIVariable_in_rule__VariableDecl__VariablesAssignment_015496);
             ruleIVariable();
 
             state._fsp--;
@@ -21717,22 +21975,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VariableDecl__VariablesAssignment_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7546:1: rule__VariableDecl__VariablesAssignment_1_1 : ( ruleIVariable ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7640:1: rule__VariableDecl__VariablesAssignment_1_1 : ( ruleIVariable ) ;
     public final void rule__VariableDecl__VariablesAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7550:1: ( ( ruleIVariable ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7551:1: ( ruleIVariable )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7644:1: ( ( ruleIVariable ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7645:1: ( ruleIVariable )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7551:1: ( ruleIVariable )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7552:1: ruleIVariable
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7645:1: ( ruleIVariable )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7646:1: ruleIVariable
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclAccess().getVariablesIVariableParserRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleIVariable_in_rule__VariableDecl__VariablesAssignment_1_115342);
+            pushFollow(FollowSets000.FOLLOW_ruleIVariable_in_rule__VariableDecl__VariablesAssignment_1_115527);
             ruleIVariable();
 
             state._fsp--;
@@ -21762,22 +22020,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__VariableDecl__TypeAssignment_3"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7561:1: rule__VariableDecl__TypeAssignment_3 : ( ruleTypeIdentifier ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7655:1: rule__VariableDecl__TypeAssignment_3 : ( ruleTypeIdentifier ) ;
     public final void rule__VariableDecl__TypeAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7565:1: ( ( ruleTypeIdentifier ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7566:1: ( ruleTypeIdentifier )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7659:1: ( ( ruleTypeIdentifier ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7660:1: ( ruleTypeIdentifier )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7566:1: ( ruleTypeIdentifier )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7567:1: ruleTypeIdentifier
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7660:1: ( ruleTypeIdentifier )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7661:1: ruleTypeIdentifier
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclAccess().getTypeTypeIdentifierParserRuleCall_3_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleTypeIdentifier_in_rule__VariableDecl__TypeAssignment_315373);
+            pushFollow(FollowSets000.FOLLOW_ruleTypeIdentifier_in_rule__VariableDecl__TypeAssignment_315558);
             ruleTypeIdentifier();
 
             state._fsp--;
@@ -21807,22 +22065,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__IVariable__NameAssignment_0"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7576:1: rule__IVariable__NameAssignment_0 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7670:1: rule__IVariable__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__IVariable__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7580:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7581:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7674:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7675:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7581:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7582:1: RULE_ID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7675:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7676:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIVariableAccess().getNameIDTerminalRuleCall_0_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__IVariable__NameAssignment_015404); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__IVariable__NameAssignment_015589); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIVariableAccess().getNameIDTerminalRuleCall_0_0()); 
             }
@@ -21848,22 +22106,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__IVariable__ExpressionAssignment_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7591:1: rule__IVariable__ExpressionAssignment_1_1 : ( ruleExpression ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7685:1: rule__IVariable__ExpressionAssignment_1_1 : ( ruleExpression ) ;
     public final void rule__IVariable__ExpressionAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7595:1: ( ( ruleExpression ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7596:1: ( ruleExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7689:1: ( ( ruleExpression ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7690:1: ( ruleExpression )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7596:1: ( ruleExpression )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7597:1: ruleExpression
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7690:1: ( ruleExpression )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7691:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIVariableAccess().getExpressionExpressionParserRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleExpression_in_rule__IVariable__ExpressionAssignment_1_115435);
+            pushFollow(FollowSets000.FOLLOW_ruleExpression_in_rule__IVariable__ExpressionAssignment_1_115620);
             ruleExpression();
 
             state._fsp--;
@@ -21893,22 +22151,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypeIdentifier__TypeAssignment_0"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7606:1: rule__TypeIdentifier__TypeAssignment_0 : ( ruleValueType ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7700:1: rule__TypeIdentifier__TypeAssignment_0 : ( ruleValueType ) ;
     public final void rule__TypeIdentifier__TypeAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7610:1: ( ( ruleValueType ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7611:1: ( ruleValueType )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7704:1: ( ( ruleValueType ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7705:1: ( ruleValueType )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7611:1: ( ruleValueType )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7612:1: ruleValueType
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7705:1: ( ruleValueType )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7706:1: ruleValueType
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeIdentifierAccess().getTypeValueTypeEnumRuleCall_0_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleValueType_in_rule__TypeIdentifier__TypeAssignment_015466);
+            pushFollow(FollowSets000.FOLLOW_ruleValueType_in_rule__TypeIdentifier__TypeAssignment_015651);
             ruleValueType();
 
             state._fsp--;
@@ -21938,22 +22196,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypeIdentifier__TypeIDAssignment_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7621:1: rule__TypeIdentifier__TypeIDAssignment_1 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7715:1: rule__TypeIdentifier__TypeIDAssignment_1 : ( RULE_ID ) ;
     public final void rule__TypeIdentifier__TypeIDAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7625:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7626:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7719:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7720:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7626:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7627:1: RULE_ID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7720:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7721:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeIdentifierAccess().getTypeIDIDTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__TypeIdentifier__TypeIDAssignment_115497); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__TypeIdentifier__TypeIDAssignment_115682); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeIdentifierAccess().getTypeIDIDTerminalRuleCall_1_0()); 
             }
@@ -21979,22 +22237,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypeIdentifier__TypeAssignment_2_1_0"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7636:1: rule__TypeIdentifier__TypeAssignment_2_1_0 : ( ruleValueType ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7730:1: rule__TypeIdentifier__TypeAssignment_2_1_0 : ( ruleValueType ) ;
     public final void rule__TypeIdentifier__TypeAssignment_2_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7640:1: ( ( ruleValueType ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7641:1: ( ruleValueType )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7734:1: ( ( ruleValueType ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7735:1: ( ruleValueType )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7641:1: ( ruleValueType )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7642:1: ruleValueType
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7735:1: ( ruleValueType )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7736:1: ruleValueType
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeIdentifierAccess().getTypeValueTypeEnumRuleCall_2_1_0_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleValueType_in_rule__TypeIdentifier__TypeAssignment_2_1_015528);
+            pushFollow(FollowSets000.FOLLOW_ruleValueType_in_rule__TypeIdentifier__TypeAssignment_2_1_015713);
             ruleValueType();
 
             state._fsp--;
@@ -22024,22 +22282,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypeIdentifier__TypeIDAssignment_2_1_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7651:1: rule__TypeIdentifier__TypeIDAssignment_2_1_1 : ( RULE_ID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7745:1: rule__TypeIdentifier__TypeIDAssignment_2_1_1 : ( RULE_ID ) ;
     public final void rule__TypeIdentifier__TypeIDAssignment_2_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7655:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7656:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7749:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7750:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7656:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7657:1: RULE_ID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7750:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7751:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeIdentifierAccess().getTypeIDIDTerminalRuleCall_2_1_1_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__TypeIdentifier__TypeIDAssignment_2_1_115559); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__TypeIdentifier__TypeIDAssignment_2_1_115744); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeIdentifierAccess().getTypeIDIDTerminalRuleCall_2_1_1_0()); 
             }
@@ -22065,22 +22323,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypeIdentifier__OperatorAssignment_2_3"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7666:1: rule__TypeIdentifier__OperatorAssignment_2_3 : ( ruleCombineOperator ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7760:1: rule__TypeIdentifier__OperatorAssignment_2_3 : ( ruleCombineOperator ) ;
     public final void rule__TypeIdentifier__OperatorAssignment_2_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7670:1: ( ( ruleCombineOperator ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7671:1: ( ruleCombineOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7764:1: ( ( ruleCombineOperator ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7765:1: ( ruleCombineOperator )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7671:1: ( ruleCombineOperator )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7672:1: ruleCombineOperator
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7765:1: ( ruleCombineOperator )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7766:1: ruleCombineOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeIdentifierAccess().getOperatorCombineOperatorEnumRuleCall_2_3_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleCombineOperator_in_rule__TypeIdentifier__OperatorAssignment_2_315590);
+            pushFollow(FollowSets000.FOLLOW_ruleCombineOperator_in_rule__TypeIdentifier__OperatorAssignment_2_315775);
             ruleCombineOperator();
 
             state._fsp--;
@@ -22110,22 +22368,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__CommentAnnotation__ValuesAssignment"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7681:1: rule__CommentAnnotation__ValuesAssignment : ( RULE_COMMENT_ANNOTATION ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7775:1: rule__CommentAnnotation__ValuesAssignment : ( RULE_COMMENT_ANNOTATION ) ;
     public final void rule__CommentAnnotation__ValuesAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7685:1: ( ( RULE_COMMENT_ANNOTATION ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7686:1: ( RULE_COMMENT_ANNOTATION )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7779:1: ( ( RULE_COMMENT_ANNOTATION ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7780:1: ( RULE_COMMENT_ANNOTATION )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7686:1: ( RULE_COMMENT_ANNOTATION )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7687:1: RULE_COMMENT_ANNOTATION
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7780:1: ( RULE_COMMENT_ANNOTATION )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7781:1: RULE_COMMENT_ANNOTATION
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCommentAnnotationAccess().getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0()); 
             }
-            match(input,RULE_COMMENT_ANNOTATION,FollowSets000.FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValuesAssignment15621); if (state.failed) return ;
+            match(input,RULE_COMMENT_ANNOTATION,FollowSets000.FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValuesAssignment15806); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getCommentAnnotationAccess().getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0()); 
             }
@@ -22151,22 +22409,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TagAnnotation__NameAssignment_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7696:1: rule__TagAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7790:1: rule__TagAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__TagAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7700:1: ( ( ruleExtendedID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7701:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7794:1: ( ( ruleExtendedID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7795:1: ( ruleExtendedID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7701:1: ( ruleExtendedID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7702:1: ruleExtendedID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7795:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7796:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__TagAnnotation__NameAssignment_115652);
+            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__TagAnnotation__NameAssignment_115837);
             ruleExtendedID();
 
             state._fsp--;
@@ -22196,22 +22454,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__NameAssignment_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7711:1: rule__KeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7805:1: rule__KeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__KeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7715:1: ( ( ruleExtendedID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7716:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7809:1: ( ( ruleExtendedID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7810:1: ( ruleExtendedID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7716:1: ( ruleExtendedID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7717:1: ruleExtendedID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7810:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7811:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__KeyStringValueAnnotation__NameAssignment_115683);
+            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__KeyStringValueAnnotation__NameAssignment_115868);
             ruleExtendedID();
 
             state._fsp--;
@@ -22241,22 +22499,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__ValuesAssignment_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7726:1: rule__KeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEString ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7820:1: rule__KeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEString ) ;
     public final void rule__KeyStringValueAnnotation__ValuesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7730:1: ( ( ruleEString ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7731:1: ( ruleEString )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7824:1: ( ( ruleEString ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7825:1: ( ruleEString )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7731:1: ( ruleEString )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7732:1: ruleEString
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7825:1: ( ruleEString )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7826:1: ruleEString
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValuesAssignment_215714);
+            pushFollow(FollowSets000.FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValuesAssignment_215899);
             ruleEString();
 
             state._fsp--;
@@ -22286,22 +22544,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__NameAssignment_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7741:1: rule__TypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7835:1: rule__TypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__TypedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7745:1: ( ( ruleExtendedID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7746:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7839:1: ( ( ruleExtendedID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7840:1: ( ruleExtendedID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7746:1: ( ruleExtendedID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7747:1: ruleExtendedID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7840:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7841:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_115745);
+            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_115930);
             ruleExtendedID();
 
             state._fsp--;
@@ -22331,22 +22589,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__TypeAssignment_3"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7756:1: rule__TypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7850:1: rule__TypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
     public final void rule__TypedKeyStringValueAnnotation__TypeAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7760:1: ( ( ruleExtendedID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7761:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7854:1: ( ( ruleExtendedID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7855:1: ( ruleExtendedID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7761:1: ( ruleExtendedID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7762:1: ruleExtendedID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7855:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7856:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_315776);
+            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_315961);
             ruleExtendedID();
 
             state._fsp--;
@@ -22376,22 +22634,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__ValuesAssignment_5"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7771:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEString ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7865:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEString ) ;
     public final void rule__TypedKeyStringValueAnnotation__ValuesAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7775:1: ( ( ruleEString ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7776:1: ( ruleEString )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7869:1: ( ( ruleEString ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7870:1: ( ruleEString )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7776:1: ( ruleEString )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7777:1: ruleEString
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7870:1: ( ruleEString )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7871:1: ruleEString
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_5_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValuesAssignment_515807);
+            pushFollow(FollowSets000.FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValuesAssignment_515992);
             ruleEString();
 
             state._fsp--;
@@ -22421,22 +22679,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyBooleanValueAnnotation__NameAssignment_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7786:1: rule__KeyBooleanValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7880:1: rule__KeyBooleanValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__KeyBooleanValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7790:1: ( ( ruleExtendedID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7791:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7884:1: ( ( ruleExtendedID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7885:1: ( ruleExtendedID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7791:1: ( ruleExtendedID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7792:1: ruleExtendedID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7885:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7886:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__KeyBooleanValueAnnotation__NameAssignment_115838);
+            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__KeyBooleanValueAnnotation__NameAssignment_116023);
             ruleExtendedID();
 
             state._fsp--;
@@ -22466,22 +22724,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyBooleanValueAnnotation__ValueAssignment_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7801:1: rule__KeyBooleanValueAnnotation__ValueAssignment_2 : ( RULE_BOOLEAN ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7895:1: rule__KeyBooleanValueAnnotation__ValueAssignment_2 : ( RULE_BOOLEAN ) ;
     public final void rule__KeyBooleanValueAnnotation__ValueAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7805:1: ( ( RULE_BOOLEAN ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7806:1: ( RULE_BOOLEAN )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7899:1: ( ( RULE_BOOLEAN ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7900:1: ( RULE_BOOLEAN )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7806:1: ( RULE_BOOLEAN )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7807:1: RULE_BOOLEAN
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7900:1: ( RULE_BOOLEAN )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7901:1: RULE_BOOLEAN
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_215869); if (state.failed) return ;
+            match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_216054); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
             }
@@ -22507,22 +22765,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyIntValueAnnotation__NameAssignment_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7816:1: rule__KeyIntValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7910:1: rule__KeyIntValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__KeyIntValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7820:1: ( ( ruleExtendedID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7821:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7914:1: ( ( ruleExtendedID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7915:1: ( ruleExtendedID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7821:1: ( ruleExtendedID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7822:1: ruleExtendedID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7915:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7916:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__KeyIntValueAnnotation__NameAssignment_115900);
+            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__KeyIntValueAnnotation__NameAssignment_116085);
             ruleExtendedID();
 
             state._fsp--;
@@ -22552,22 +22810,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyIntValueAnnotation__ValueAssignment_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7831:1: rule__KeyIntValueAnnotation__ValueAssignment_2 : ( ruleInteger ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7925:1: rule__KeyIntValueAnnotation__ValueAssignment_2 : ( ruleInteger ) ;
     public final void rule__KeyIntValueAnnotation__ValueAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7835:1: ( ( ruleInteger ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7836:1: ( ruleInteger )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7929:1: ( ( ruleInteger ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7930:1: ( ruleInteger )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7836:1: ( ruleInteger )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7837:1: ruleInteger
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7930:1: ( ruleInteger )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7931:1: ruleInteger
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getValueIntegerParserRuleCall_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleInteger_in_rule__KeyIntValueAnnotation__ValueAssignment_215931);
+            pushFollow(FollowSets000.FOLLOW_ruleInteger_in_rule__KeyIntValueAnnotation__ValueAssignment_216116);
             ruleInteger();
 
             state._fsp--;
@@ -22597,22 +22855,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyFloatValueAnnotation__NameAssignment_1"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7846:1: rule__KeyFloatValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7940:1: rule__KeyFloatValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__KeyFloatValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7850:1: ( ( ruleExtendedID ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7851:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7944:1: ( ( ruleExtendedID ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7945:1: ( ruleExtendedID )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7851:1: ( ruleExtendedID )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7852:1: ruleExtendedID
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7945:1: ( ruleExtendedID )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7946:1: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_115962);
+            pushFollow(FollowSets000.FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_116147);
             ruleExtendedID();
 
             state._fsp--;
@@ -22642,22 +22900,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__KeyFloatValueAnnotation__ValueAssignment_2"
-    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7861:1: rule__KeyFloatValueAnnotation__ValueAssignment_2 : ( ruleFloateger ) ;
+    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7955:1: rule__KeyFloatValueAnnotation__ValueAssignment_2 : ( ruleFloateger ) ;
     public final void rule__KeyFloatValueAnnotation__ValueAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7865:1: ( ( ruleFloateger ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7866:1: ( ruleFloateger )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7959:1: ( ( ruleFloateger ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7960:1: ( ruleFloateger )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7866:1: ( ruleFloateger )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7867:1: ruleFloateger
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7960:1: ( ruleFloateger )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7961:1: ruleFloateger
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloategerParserRuleCall_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleFloateger_in_rule__KeyFloatValueAnnotation__ValueAssignment_215993);
+            pushFollow(FollowSets000.FOLLOW_ruleFloateger_in_rule__KeyFloatValueAnnotation__ValueAssignment_216178);
             ruleFloateger();
 
             state._fsp--;
@@ -23679,7 +23937,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         public static final BitSet FOLLOW_rule__TypeIdentifier__TypeAssignment_2_1_0_in_rule__TypeIdentifier__Alternatives_2_13912 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TypeIdentifier__TypeIDAssignment_2_1_1_in_rule__TypeIdentifier__Alternatives_2_13930 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_STRING_in_rule__EString__Alternatives3965 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__EString__Alternatives3982 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__EString__Alternatives3982 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_26_in_rule__CompareOperator__Alternatives4015 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_27_in_rule__CompareOperator__Alternatives4036 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_28_in_rule__CompareOperator__Alternatives4057 = new BitSet(new long[]{0x0000000000000002L});
@@ -24068,95 +24326,103 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__NameAssignment_1_in_rule__KeyFloatValueAnnotation__Group__1__Impl13285 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__2__Impl_in_rule__KeyFloatValueAnnotation__Group__213315 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__ValueAssignment_2_in_rule__KeyFloatValueAnnotation__Group__2__Impl13342 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group__0__Impl_in_rule__ExtendedID__Group__013379 = new BitSet(new long[]{0x0800000000000000L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group__0__Impl_in_rule__ExtendedID__Group__013379 = new BitSet(new long[]{0x1800000000000000L});
         public static final BitSet FOLLOW_rule__ExtendedID__Group__1_in_rule__ExtendedID__Group__013382 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group__0__Impl13409 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group__1__Impl_in_rule__ExtendedID__Group__113438 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl13465 = new BitSet(new long[]{0x0800000000000002L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__013500 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__013503 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_59_in_rule__ExtendedID__Group_1__0__Impl13531 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__113562 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl13589 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Integer__Group__0__Impl_in_rule__Integer__Group__013622 = new BitSet(new long[]{0x0000000000200040L});
-        public static final BitSet FOLLOW_rule__Integer__Group__1_in_rule__Integer__Group__013625 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_21_in_rule__Integer__Group__0__Impl13654 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Integer__Group__1__Impl_in_rule__Integer__Group__113687 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_INT_in_rule__Integer__Group__1__Impl13714 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Floateger__Group__0__Impl_in_rule__Floateger__Group__013747 = new BitSet(new long[]{0x0000000000200080L});
-        public static final BitSet FOLLOW_rule__Floateger__Group__1_in_rule__Floateger__Group__013750 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_21_in_rule__Floateger__Group__0__Impl13779 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Floateger__Group__1__Impl_in_rule__Floateger__Group__113812 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_FLOAT_in_rule__Floateger__Group__1__Impl13839 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleOrOperator_in_rule__OrExpression__OperatorAssignment_1_113877 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAndExpression_in_rule__OrExpression__SubExpressionsAssignment_1_213908 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAndOperator_in_rule__AndExpression__OperatorAssignment_1_113939 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleCompareOperation_in_rule__AndExpression__SubExpressionsAssignment_1_213970 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_0_1_114001 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__SubExpressionsAssignment_0_1_214032 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNotOperator_in_rule__NotExpression__OperatorAssignment_0_114063 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNotExpression_in_rule__NotExpression__SubExpressionsAssignment_0_214094 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAddOperator_in_rule__AddExpression__OperatorAssignment_1_114125 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSubExpression_in_rule__AddExpression__SubExpressionsAssignment_1_214156 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSubOperator_in_rule__SubExpression__OperatorAssignment_1_114187 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleMultExpression_in_rule__SubExpression__SubExpressionsAssignment_1_214218 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleMultOperator_in_rule__MultExpression__OperatorAssignment_1_114249 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleDivExpression_in_rule__MultExpression__SubExpressionsAssignment_1_214280 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleDivOperator_in_rule__DivExpression__OperatorAssignment_1_114311 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleModExpression_in_rule__DivExpression__SubExpressionsAssignment_1_214342 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleModOperator_in_rule__ModExpression__OperatorAssignment_1_114373 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAtomicValuedExpression_in_rule__ModExpression__SubExpressionsAssignment_1_214404 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSubOperator_in_rule__NegExpression__OperatorAssignment_0_114435 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNegExpression_in_rule__NegExpression__SubExpressionsAssignment_0_214466 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rulePreOperator_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_114497 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_314528 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValueTestOperator_in_rule__ValuedObjectTestExpression__OperatorAssignment_1_114559 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedObjectReference_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_1_214590 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment14625 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__CodeAssignment_014660 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__TextExpression__TypeAssignment_1_114691 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment14722 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment14753 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__BooleanValue__ValueAssignment14784 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__ISignal__NameAssignment_014815 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleChannelDescription_in_rule__ISignal__ChannelDescrAssignment_114846 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_0_214877 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_0_3_114908 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_1_214939 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_1_3_114970 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_2_215001 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_2_3_115032 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_3_215063 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_3_3_115094 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypeIdentifier_in_rule__ChannelDescription__TypeAssignment_0_115125 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypeIdentifier_in_rule__ChannelDescription__TypeAssignment_1_115156 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExpression_in_rule__ChannelDescription__ExpressionAssignment_2_115187 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypeIdentifier_in_rule__ChannelDescription__TypeAssignment_2_315218 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleVariableDecl_in_rule__InterfaceVariableDecl__VarDeclsAssignment_115249 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleVariableDecl_in_rule__InterfaceVariableDecl__VarDeclsAssignment_2_115280 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleIVariable_in_rule__VariableDecl__VariablesAssignment_015311 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleIVariable_in_rule__VariableDecl__VariablesAssignment_1_115342 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypeIdentifier_in_rule__VariableDecl__TypeAssignment_315373 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__IVariable__NameAssignment_015404 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExpression_in_rule__IVariable__ExpressionAssignment_1_115435 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValueType_in_rule__TypeIdentifier__TypeAssignment_015466 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__TypeIdentifier__TypeIDAssignment_115497 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValueType_in_rule__TypeIdentifier__TypeAssignment_2_1_015528 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__TypeIdentifier__TypeIDAssignment_2_1_115559 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleCombineOperator_in_rule__TypeIdentifier__OperatorAssignment_2_315590 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValuesAssignment15621 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__TagAnnotation__NameAssignment_115652 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyStringValueAnnotation__NameAssignment_115683 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValuesAssignment_215714 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_115745 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_315776 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValuesAssignment_515807 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyBooleanValueAnnotation__NameAssignment_115838 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_215869 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyIntValueAnnotation__NameAssignment_115900 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleInteger_in_rule__KeyIntValueAnnotation__ValueAssignment_215931 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_115962 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleFloateger_in_rule__KeyFloatValueAnnotation__ValueAssignment_215993 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group__1__Impl_in_rule__ExtendedID__Group__113438 = new BitSet(new long[]{0x1800000000000000L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group__2_in_rule__ExtendedID__Group__113441 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl13468 = new BitSet(new long[]{0x0800000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group__2__Impl_in_rule__ExtendedID__Group__213499 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_2__0_in_rule__ExtendedID__Group__2__Impl13526 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__013563 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__013566 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_59_in_rule__ExtendedID__Group_1__0__Impl13594 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__113625 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl13652 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_2__0__Impl_in_rule__ExtendedID__Group_2__013685 = new BitSet(new long[]{0x0000000000000040L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_2__1_in_rule__ExtendedID__Group_2__013688 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_60_in_rule__ExtendedID__Group_2__0__Impl13716 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_2__1__Impl_in_rule__ExtendedID__Group_2__113747 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_INT_in_rule__ExtendedID__Group_2__1__Impl13774 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Integer__Group__0__Impl_in_rule__Integer__Group__013807 = new BitSet(new long[]{0x0000000000200040L});
+        public static final BitSet FOLLOW_rule__Integer__Group__1_in_rule__Integer__Group__013810 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_21_in_rule__Integer__Group__0__Impl13839 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Integer__Group__1__Impl_in_rule__Integer__Group__113872 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_INT_in_rule__Integer__Group__1__Impl13899 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Floateger__Group__0__Impl_in_rule__Floateger__Group__013932 = new BitSet(new long[]{0x0000000000200080L});
+        public static final BitSet FOLLOW_rule__Floateger__Group__1_in_rule__Floateger__Group__013935 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_21_in_rule__Floateger__Group__0__Impl13964 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Floateger__Group__1__Impl_in_rule__Floateger__Group__113997 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_FLOAT_in_rule__Floateger__Group__1__Impl14024 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleOrOperator_in_rule__OrExpression__OperatorAssignment_1_114062 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAndExpression_in_rule__OrExpression__SubExpressionsAssignment_1_214093 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAndOperator_in_rule__AndExpression__OperatorAssignment_1_114124 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleCompareOperation_in_rule__AndExpression__SubExpressionsAssignment_1_214155 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_0_1_114186 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__SubExpressionsAssignment_0_1_214217 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleNotOperator_in_rule__NotExpression__OperatorAssignment_0_114248 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleNotExpression_in_rule__NotExpression__SubExpressionsAssignment_0_214279 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAddOperator_in_rule__AddExpression__OperatorAssignment_1_114310 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSubExpression_in_rule__AddExpression__SubExpressionsAssignment_1_214341 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSubOperator_in_rule__SubExpression__OperatorAssignment_1_114372 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleMultExpression_in_rule__SubExpression__SubExpressionsAssignment_1_214403 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleMultOperator_in_rule__MultExpression__OperatorAssignment_1_114434 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleDivExpression_in_rule__MultExpression__SubExpressionsAssignment_1_214465 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleDivOperator_in_rule__DivExpression__OperatorAssignment_1_114496 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleModExpression_in_rule__DivExpression__SubExpressionsAssignment_1_214527 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleModOperator_in_rule__ModExpression__OperatorAssignment_1_114558 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAtomicValuedExpression_in_rule__ModExpression__SubExpressionsAssignment_1_214589 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSubOperator_in_rule__NegExpression__OperatorAssignment_0_114620 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleNegExpression_in_rule__NegExpression__SubExpressionsAssignment_0_214651 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rulePreOperator_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_114682 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_314713 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValueTestOperator_in_rule__ValuedObjectTestExpression__OperatorAssignment_1_114744 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObjectReference_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_1_214775 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment14810 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__CodeAssignment_014845 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__TextExpression__TypeAssignment_1_114876 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment14907 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment14938 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__BooleanValue__ValueAssignment14969 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__ISignal__NameAssignment_015000 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleChannelDescription_in_rule__ISignal__ChannelDescrAssignment_115031 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_0_215062 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_0_3_115093 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_1_215124 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_1_3_115155 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_2_215186 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_2_3_115217 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_3_215248 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleISignal_in_rule__InterfaceSignalDecl__SignalsAssignment_3_3_115279 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTypeIdentifier_in_rule__ChannelDescription__TypeAssignment_0_115310 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTypeIdentifier_in_rule__ChannelDescription__TypeAssignment_1_115341 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExpression_in_rule__ChannelDescription__ExpressionAssignment_2_115372 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTypeIdentifier_in_rule__ChannelDescription__TypeAssignment_2_315403 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleVariableDecl_in_rule__InterfaceVariableDecl__VarDeclsAssignment_115434 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleVariableDecl_in_rule__InterfaceVariableDecl__VarDeclsAssignment_2_115465 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleIVariable_in_rule__VariableDecl__VariablesAssignment_015496 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleIVariable_in_rule__VariableDecl__VariablesAssignment_1_115527 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTypeIdentifier_in_rule__VariableDecl__TypeAssignment_315558 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__IVariable__NameAssignment_015589 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExpression_in_rule__IVariable__ExpressionAssignment_1_115620 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValueType_in_rule__TypeIdentifier__TypeAssignment_015651 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__TypeIdentifier__TypeIDAssignment_115682 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValueType_in_rule__TypeIdentifier__TypeAssignment_2_1_015713 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__TypeIdentifier__TypeIDAssignment_2_1_115744 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleCombineOperator_in_rule__TypeIdentifier__OperatorAssignment_2_315775 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValuesAssignment15806 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__TagAnnotation__NameAssignment_115837 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyStringValueAnnotation__NameAssignment_115868 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValuesAssignment_215899 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_115930 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_315961 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValuesAssignment_515992 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyBooleanValueAnnotation__NameAssignment_116023 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_216054 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyIntValueAnnotation__NameAssignment_116085 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleInteger_in_rule__KeyIntValueAnnotation__ValueAssignment_216116 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_116147 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleFloateger_in_rule__KeyFloatValueAnnotation__ValueAssignment_216178 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleBooleanExpression_in_synpred2_InternalKExpressions3150 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0_in_synpred3_InternalKExpressions3200 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValuedExpression_in_synpred4_InternalKExpressions3251 = new BitSet(new long[]{0x0000000000000002L});
