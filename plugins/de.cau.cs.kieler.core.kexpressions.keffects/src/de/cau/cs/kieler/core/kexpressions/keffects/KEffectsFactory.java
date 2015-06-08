@@ -13,66 +13,66 @@ import org.eclipse.emf.ecore.EFactory;
  * @generated
  */
 public interface KEffectsFactory extends EFactory {
-	/**
-	 * The singleton instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	KEffectsFactory eINSTANCE = de.cau.cs.kieler.core.kexpressions.keffects.impl.KEffectsFactoryImpl.init();
+    /**
+     * The singleton instance of the factory.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    KEffectsFactory eINSTANCE = de.cau.cs.kieler.core.kexpressions.keffects.impl.KEffectsFactoryImpl.init();
 
-	/**
-	 * Returns a new object of class '<em>Effect</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Effect</em>'.
-	 * @generated
-	 */
-	Effect createEffect();
+    /**
+     * Returns a new object of class '<em>Effect</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Effect</em>'.
+     * @generated
+     */
+    Effect createEffect();
 
-	/**
-	 * Returns a new object of class '<em>Assignment</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Assignment</em>'.
-	 * @generated
-	 */
-	Assignment createAssignment();
+    /**
+     * Returns a new object of class '<em>Assignment</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Assignment</em>'.
+     * @generated
+     */
+    Assignment createAssignment();
 
-	/**
-	 * Returns a new object of class '<em>Emission</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Emission</em>'.
-	 * @generated
-	 */
-	Emission createEmission();
+    /**
+     * Returns a new object of class '<em>Emission</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Emission</em>'.
+     * @generated
+     */
+    Emission createEmission();
 
-	/**
-	 * Returns a new object of class '<em>Hostcode Effect</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Hostcode Effect</em>'.
-	 * @generated
-	 */
-	HostcodeEffect createHostcodeEffect();
+    /**
+     * Returns a new object of class '<em>Hostcode Effect</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Hostcode Effect</em>'.
+     * @generated
+     */
+    HostcodeEffect createHostcodeEffect();
 
-	/**
-	 * Returns a new object of class '<em>Function Call Effect</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Function Call Effect</em>'.
-	 * @generated
-	 */
-	FunctionCallEffect createFunctionCallEffect();
+    /**
+     * Returns a new object of class '<em>Function Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Function Call Effect</em>'.
+     * @generated
+     */
+    FunctionCallEffect createFunctionCallEffect();
 
-	/**
-	 * Returns the package supported by this factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the package supported by this factory.
-	 * @generated
-	 */
-	KEffectsPackage getKEffectsPackage();
+    /**
+     * Returns the package supported by this factory.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the package supported by this factory.
+     * @generated
+     */
+    KEffectsPackage getKEffectsPackage();
 
 } //KEffectsFactory

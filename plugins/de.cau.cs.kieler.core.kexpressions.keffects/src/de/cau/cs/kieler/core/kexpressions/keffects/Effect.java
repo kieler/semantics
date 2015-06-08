@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.core.kexpressions.keffects;
 
-import org.eclipse.emf.ecore.EObject;
+import de.cau.cs.kieler.core.annotations.Annotatable;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,5 +14,5 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Effect extends EObject {
+public interface Effect extends Annotatable {
 } // Effect

@@ -4,7 +4,7 @@
     modelPluginID="de.cau.cs.kieler.core.kexpressions.keffects" modelName="KEffects"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="7.0" copyrightFields="false" usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions"
-    operationReflection="true" importOrganizing="true">
+    importOrganizing="true">
   <foreignModel>keffects.ecore</foreignModel>
   <genPackages prefix="KEffects" basePackage="de.cau.cs.kieler.core.kexpressions"
       disposableProviderFactory="true" ecorePackage="keffects.ecore#/">

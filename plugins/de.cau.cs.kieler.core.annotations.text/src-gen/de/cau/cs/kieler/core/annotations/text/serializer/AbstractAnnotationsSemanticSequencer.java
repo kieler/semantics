@@ -94,7 +94,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (values+=COMMENT_ANNOTATION | (name=ExtendedID values+=EString+))
+	 *     (values+=COMMENT_ANNOTATION | (name=ExtendedID values+=EString values+=EString*))
 	 */
 	protected void sequence_Annotation_CommentAnnotation_KeyStringValueAnnotation(EObject context, StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -148,7 +148,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (name=ExtendedID values+=EString+)
+	 *     (name=ExtendedID values+=EString values+=EString*)
 	 */
 	protected void sequence_KeyStringValueAnnotation(EObject context, StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -166,7 +166,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (name=ExtendedID type=ExtendedID values+=EString+)
+	 *     (name=ExtendedID type=ExtendedID values+=EString values+=EString*)
 	 */
 	protected void sequence_TypedKeyStringValueAnnotation(EObject context, TypedStringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

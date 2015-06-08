@@ -599,16 +599,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorSubOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
 		private final RuleCall cSubExpressionsNegExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
-		private final RuleCall cPostfixAddExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cAtomicValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// Example: -?A, -(?A + ?B)
 		//// at the latter we need the parents to indicate the right binding
-		////    | AtomicValuedExpression
 		//NegExpression returns Expression:
-		//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | PostfixAddExpression;
+		//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression //	| PostfixAddExpression
+		//	| AtomicValuedExpression;
 		public ParserRule getRule() { return rule; }
 
-		//{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | PostfixAddExpression
+		//{OperatorExpression} operator=SubOperator subExpressions+=NegExpression //	| PostfixAddExpression
+		//| AtomicValuedExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//{OperatorExpression} operator=SubOperator subExpressions+=NegExpression
@@ -629,86 +630,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//NegExpression
 		public RuleCall getSubExpressionsNegExpressionParserRuleCall_0_2_0() { return cSubExpressionsNegExpressionParserRuleCall_0_2_0; }
 
-		//PostfixAddExpression
-		public RuleCall getPostfixAddExpressionParserRuleCall_1() { return cPostfixAddExpressionParserRuleCall_1; }
-	}
-
-	public class PostfixAddExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PostfixAddExpression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
-		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cOperatorPostfixAddEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cSubExpressionsPostfixAddExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
-		private final RuleCall cPostfixSubExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//PostfixAddExpression returns Expression:
-		//	{OperatorExpression} operator=PostfixAdd subExpressions+=PostfixAddExpression | PostfixSubExpression;
-		public ParserRule getRule() { return rule; }
-
-		//{OperatorExpression} operator=PostfixAdd subExpressions+=PostfixAddExpression | PostfixSubExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//{OperatorExpression} operator=PostfixAdd subExpressions+=PostfixAddExpression
-		public Group getGroup_0() { return cGroup_0; }
-
-		//{OperatorExpression}
-		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
-
-		//operator=PostfixAdd
-		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
-
-		//PostfixAdd
-		public RuleCall getOperatorPostfixAddEnumRuleCall_0_1_0() { return cOperatorPostfixAddEnumRuleCall_0_1_0; }
-
-		//subExpressions+=PostfixAddExpression
-		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
-
-		//PostfixAddExpression
-		public RuleCall getSubExpressionsPostfixAddExpressionParserRuleCall_0_2_0() { return cSubExpressionsPostfixAddExpressionParserRuleCall_0_2_0; }
-
-		//PostfixSubExpression
-		public RuleCall getPostfixSubExpressionParserRuleCall_1() { return cPostfixSubExpressionParserRuleCall_1; }
-	}
-
-	public class PostfixSubExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PostfixSubExpression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
-		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cOperatorPostfixSubEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cSubExpressionsPostfixSubExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
-		private final RuleCall cAtomicValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//PostfixSubExpression returns Expression:
-		//	{OperatorExpression} operator=PostfixSub subExpressions+=PostfixSubExpression | AtomicValuedExpression;
-		public ParserRule getRule() { return rule; }
-
-		//{OperatorExpression} operator=PostfixSub subExpressions+=PostfixSubExpression | AtomicValuedExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//{OperatorExpression} operator=PostfixSub subExpressions+=PostfixSubExpression
-		public Group getGroup_0() { return cGroup_0; }
-
-		//{OperatorExpression}
-		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
-
-		//operator=PostfixSub
-		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
-
-		//PostfixSub
-		public RuleCall getOperatorPostfixSubEnumRuleCall_0_1_0() { return cOperatorPostfixSubEnumRuleCall_0_1_0; }
-
-		//subExpressions+=PostfixSubExpression
-		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
-
-		//PostfixSubExpression
-		public RuleCall getSubExpressionsPostfixSubExpressionParserRuleCall_0_2_0() { return cSubExpressionsPostfixSubExpressionParserRuleCall_0_2_0; }
-
 		//AtomicValuedExpression
 		public RuleCall getAtomicValuedExpressionParserRuleCall_1() { return cAtomicValuedExpressionParserRuleCall_1; }
 	}
@@ -725,6 +646,15 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFunctionCallParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cTextExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
+		////PostfixAddExpression returns Expression:
+		////    {OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
+		////    | PostfixSubExpression
+		////;
+		////
+		////PostfixSubExpression returns Expression:
+		////    {OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
+		////    | AtomicValuedExpression
+		////;
 		//AtomicExpression returns Expression:
 		//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | FunctionCall | TextExpression;
 		public ParserRule getRule() { return rule; }
@@ -1599,8 +1529,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final DivExpressionElements pDivExpression;
 	private final ModExpressionElements pModExpression;
 	private final NegExpressionElements pNegExpression;
-	private final PostfixAddExpressionElements pPostfixAddExpression;
-	private final PostfixSubExpressionElements pPostfixSubExpression;
 	private final AtomicExpressionElements pAtomicExpression;
 	private final AtomicValuedExpressionElements pAtomicValuedExpression;
 	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
@@ -1659,8 +1587,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pDivExpression = new DivExpressionElements();
 		this.pModExpression = new ModExpressionElements();
 		this.pNegExpression = new NegExpressionElements();
-		this.pPostfixAddExpression = new PostfixAddExpressionElements();
-		this.pPostfixSubExpression = new PostfixSubExpressionElements();
 		this.pAtomicExpression = new AtomicExpressionElements();
 		this.pAtomicValuedExpression = new AtomicValuedExpressionElements();
 		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
@@ -1917,9 +1843,9 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: -?A, -(?A + ?B)
 	//// at the latter we need the parents to indicate the right binding
-	////    | AtomicValuedExpression
 	//NegExpression returns Expression:
-	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | PostfixAddExpression;
+	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression //	| PostfixAddExpression
+	//	| AtomicValuedExpression;
 	public NegExpressionElements getNegExpressionAccess() {
 		return pNegExpression;
 	}
@@ -1928,26 +1854,15 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getNegExpressionAccess().getRule();
 	}
 
-	//PostfixAddExpression returns Expression:
-	//	{OperatorExpression} operator=PostfixAdd subExpressions+=PostfixAddExpression | PostfixSubExpression;
-	public PostfixAddExpressionElements getPostfixAddExpressionAccess() {
-		return pPostfixAddExpression;
-	}
-	
-	public ParserRule getPostfixAddExpressionRule() {
-		return getPostfixAddExpressionAccess().getRule();
-	}
-
-	//PostfixSubExpression returns Expression:
-	//	{OperatorExpression} operator=PostfixSub subExpressions+=PostfixSubExpression | AtomicValuedExpression;
-	public PostfixSubExpressionElements getPostfixSubExpressionAccess() {
-		return pPostfixSubExpression;
-	}
-	
-	public ParserRule getPostfixSubExpressionRule() {
-		return getPostfixSubExpressionAccess().getRule();
-	}
-
+	////PostfixAddExpression returns Expression:
+	////    {OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
+	////    | PostfixSubExpression
+	////;
+	////
+	////PostfixSubExpression returns Expression:
+	////    {OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
+	////    | AtomicValuedExpression
+	////;
 	//AtomicExpression returns Expression:
 	//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | FunctionCall | TextExpression;
 	public AtomicExpressionElements getAtomicExpressionAccess() {
@@ -2272,8 +2187,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	// //
 	// // --------------------------
 	// Annotation:
-	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+	//	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaAnnotations.getAnnotationAccess();
 	}
@@ -2317,7 +2232,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @layouter dot;   
 	// KeyStringValueAnnotation returns StringAnnotation:
-	//	"@" name=ExtendedID values+=EString+;
+	//	"@" name=ExtendedID values+=EString ("," values+=EString)*;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getKeyStringValueAnnotationAccess();
 	}
@@ -2329,7 +2244,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	// TypedKeyStringValueAnnotation returns
 	//TypedStringAnnotation:
-	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString+;
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString ("," values+=EString)*;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaAnnotations.getTypedKeyStringValueAnnotationAccess();
 	}

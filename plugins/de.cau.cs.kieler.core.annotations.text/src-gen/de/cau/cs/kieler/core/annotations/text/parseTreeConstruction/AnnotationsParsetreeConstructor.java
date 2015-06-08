@@ -54,13 +54,13 @@ protected class ThisRootNode extends RootToken {
  *  //
  *  // --------------------------
  *  Annotation:
- * 	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
- * 	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
+ * 	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+ * 	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
  *
  **/
 
-// CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
-// | KeyIntValueAnnotation | KeyFloatValueAnnotation
+// CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+// KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation
 protected class Annotation_Alternatives extends AlternativesToken {
 
 	public Annotation_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -76,12 +76,12 @@ protected class Annotation_Alternatives extends AlternativesToken {
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
 			case 0: return new Annotation_CommentAnnotationParserRuleCall_0(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new Annotation_TagAnnotationParserRuleCall_1(lastRuleCallOrigin, this, 1, inst);
-			case 2: return new Annotation_KeyStringValueAnnotationParserRuleCall_2(lastRuleCallOrigin, this, 2, inst);
-			case 3: return new Annotation_TypedKeyStringValueAnnotationParserRuleCall_3(lastRuleCallOrigin, this, 3, inst);
-			case 4: return new Annotation_KeyBooleanValueAnnotationParserRuleCall_4(lastRuleCallOrigin, this, 4, inst);
-			case 5: return new Annotation_KeyIntValueAnnotationParserRuleCall_5(lastRuleCallOrigin, this, 5, inst);
-			case 6: return new Annotation_KeyFloatValueAnnotationParserRuleCall_6(lastRuleCallOrigin, this, 6, inst);
+			case 1: return new Annotation_KeyStringValueAnnotationParserRuleCall_1(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new Annotation_TypedKeyStringValueAnnotationParserRuleCall_2(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new Annotation_KeyBooleanValueAnnotationParserRuleCall_3(lastRuleCallOrigin, this, 3, inst);
+			case 4: return new Annotation_KeyIntValueAnnotationParserRuleCall_4(lastRuleCallOrigin, this, 4, inst);
+			case 5: return new Annotation_KeyFloatValueAnnotationParserRuleCall_5(lastRuleCallOrigin, this, 5, inst);
+			case 6: return new Annotation_TagAnnotationParserRuleCall_6(lastRuleCallOrigin, this, 6, inst);
 			default: return null;
 		}	
 	}
@@ -136,52 +136,16 @@ protected class Annotation_CommentAnnotationParserRuleCall_0 extends RuleCallTok
 	}	
 }
 
-// TagAnnotation
-protected class Annotation_TagAnnotationParserRuleCall_1 extends RuleCallToken {
-	
-	public Annotation_TagAnnotationParserRuleCall_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public RuleCall getGrammarElement() {
-		return grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new TagAnnotation_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-    @Override
-	public IEObjectConsumer tryConsume() {
-		if(getEObject().eClass() != grammarAccess.getTagAnnotationRule().getType().getClassifier())
-			return null;
-		if(checkForRecursion(TagAnnotation_Group.class, eObjectConsumer)) return null;
-		return eObjectConsumer;
-	}
-	
-    @Override
-	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
-		switch(index) {
-			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
-		}	
-	}	
-}
-
 // KeyStringValueAnnotation
-protected class Annotation_KeyStringValueAnnotationParserRuleCall_2 extends RuleCallToken {
+protected class Annotation_KeyStringValueAnnotationParserRuleCall_1 extends RuleCallToken {
 	
-	public Annotation_KeyStringValueAnnotationParserRuleCall_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Annotation_KeyStringValueAnnotationParserRuleCall_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2();
+		return grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1();
 	}
 
     @Override
@@ -209,15 +173,15 @@ protected class Annotation_KeyStringValueAnnotationParserRuleCall_2 extends Rule
 }
 
 // TypedKeyStringValueAnnotation
-protected class Annotation_TypedKeyStringValueAnnotationParserRuleCall_3 extends RuleCallToken {
+protected class Annotation_TypedKeyStringValueAnnotationParserRuleCall_2 extends RuleCallToken {
 	
-	public Annotation_TypedKeyStringValueAnnotationParserRuleCall_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Annotation_TypedKeyStringValueAnnotationParserRuleCall_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3();
+		return grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2();
 	}
 
     @Override
@@ -245,15 +209,15 @@ protected class Annotation_TypedKeyStringValueAnnotationParserRuleCall_3 extends
 }
 
 // KeyBooleanValueAnnotation
-protected class Annotation_KeyBooleanValueAnnotationParserRuleCall_4 extends RuleCallToken {
+protected class Annotation_KeyBooleanValueAnnotationParserRuleCall_3 extends RuleCallToken {
 	
-	public Annotation_KeyBooleanValueAnnotationParserRuleCall_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Annotation_KeyBooleanValueAnnotationParserRuleCall_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_4();
+		return grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_3();
 	}
 
     @Override
@@ -281,15 +245,15 @@ protected class Annotation_KeyBooleanValueAnnotationParserRuleCall_4 extends Rul
 }
 
 // KeyIntValueAnnotation
-protected class Annotation_KeyIntValueAnnotationParserRuleCall_5 extends RuleCallToken {
+protected class Annotation_KeyIntValueAnnotationParserRuleCall_4 extends RuleCallToken {
 	
-	public Annotation_KeyIntValueAnnotationParserRuleCall_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Annotation_KeyIntValueAnnotationParserRuleCall_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_5();
+		return grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_4();
 	}
 
     @Override
@@ -317,15 +281,15 @@ protected class Annotation_KeyIntValueAnnotationParserRuleCall_5 extends RuleCal
 }
 
 // KeyFloatValueAnnotation
-protected class Annotation_KeyFloatValueAnnotationParserRuleCall_6 extends RuleCallToken {
+protected class Annotation_KeyFloatValueAnnotationParserRuleCall_5 extends RuleCallToken {
 	
-	public Annotation_KeyFloatValueAnnotationParserRuleCall_6(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Annotation_KeyFloatValueAnnotationParserRuleCall_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_6();
+		return grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_5();
 	}
 
     @Override
@@ -341,6 +305,42 @@ protected class Annotation_KeyFloatValueAnnotationParserRuleCall_6 extends RuleC
 		if(getEObject().eClass() != grammarAccess.getKeyFloatValueAnnotationRule().getType().getClassifier())
 			return null;
 		if(checkForRecursion(KeyFloatValueAnnotation_Group.class, eObjectConsumer)) return null;
+		return eObjectConsumer;
+	}
+	
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+// TagAnnotation
+protected class Annotation_TagAnnotationParserRuleCall_6 extends RuleCallToken {
+	
+	public Annotation_TagAnnotationParserRuleCall_6(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_6();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TagAnnotation_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getTagAnnotationRule().getType().getClassifier())
+			return null;
+		if(checkForRecursion(TagAnnotation_Group.class, eObjectConsumer)) return null;
 		return eObjectConsumer;
 	}
 	
@@ -769,11 +769,11 @@ protected class TagAnnotation_NameAssignment_1 extends AssignmentToken  {
  *
  * // e.g.: @layouter dot;   
  *  KeyStringValueAnnotation returns StringAnnotation:
- * 	"@" name=ExtendedID values+=EString+;
+ * 	"@" name=ExtendedID values+=EString ("," values+=EString)*;
  *
  **/
 
-// "@" name=ExtendedID values+=EString+
+// "@" name=ExtendedID values+=EString ("," values+=EString)*
 protected class KeyStringValueAnnotation_Group extends GroupToken {
 	
 	public KeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -788,7 +788,8 @@ protected class KeyStringValueAnnotation_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new KeyStringValueAnnotation_ValuesAssignment_2(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new KeyStringValueAnnotation_Group_3(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new KeyStringValueAnnotation_ValuesAssignment_2(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
 	}
@@ -857,7 +858,7 @@ protected class KeyStringValueAnnotation_NameAssignment_1 extends AssignmentToke
 
 }
 
-// values+=EString+
+// values+=EString
 protected class KeyStringValueAnnotation_ValuesAssignment_2 extends AssignmentToken  {
 	
 	public KeyStringValueAnnotation_ValuesAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -872,8 +873,7 @@ protected class KeyStringValueAnnotation_ValuesAssignment_2 extends AssignmentTo
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new KeyStringValueAnnotation_ValuesAssignment_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new KeyStringValueAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 1, inst);
+			case 0: return new KeyStringValueAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -892,6 +892,86 @@ protected class KeyStringValueAnnotation_ValuesAssignment_2 extends AssignmentTo
 
 }
 
+// ("," values+=EString)*
+protected class KeyStringValueAnnotation_Group_3 extends GroupToken {
+	
+	public KeyStringValueAnnotation_Group_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getKeyStringValueAnnotationAccess().getGroup_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyStringValueAnnotation_ValuesAssignment_3_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// ","
+protected class KeyStringValueAnnotation_CommaKeyword_3_0 extends KeywordToken  {
+	
+	public KeyStringValueAnnotation_CommaKeyword_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyStringValueAnnotation_Group_3(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new KeyStringValueAnnotation_ValuesAssignment_2(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// values+=EString
+protected class KeyStringValueAnnotation_ValuesAssignment_3_1 extends AssignmentToken  {
+	
+	public KeyStringValueAnnotation_ValuesAssignment_3_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_3_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyStringValueAnnotation_CommaKeyword_3_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("values",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("values");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_3_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_3_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
 
 /************ end Rule KeyStringValueAnnotation ****************/
 
@@ -901,11 +981,11 @@ protected class KeyStringValueAnnotation_ValuesAssignment_2 extends AssignmentTo
  * // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
  *  TypedKeyStringValueAnnotation returns
  * TypedStringAnnotation:
- * 	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString+;
+ * 	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString ("," values+=EString)*;
  *
  **/
 
-// "@" name=ExtendedID "[" type=ExtendedID "]" values+=EString+
+// "@" name=ExtendedID "[" type=ExtendedID "]" values+=EString ("," values+=EString)*
 protected class TypedKeyStringValueAnnotation_Group extends GroupToken {
 	
 	public TypedKeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -920,7 +1000,8 @@ protected class TypedKeyStringValueAnnotation_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new TypedKeyStringValueAnnotation_ValuesAssignment_5(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new TypedKeyStringValueAnnotation_Group_6(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new TypedKeyStringValueAnnotation_ValuesAssignment_5(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
 	}
@@ -1067,7 +1148,7 @@ protected class TypedKeyStringValueAnnotation_RightSquareBracketKeyword_4 extend
 
 }
 
-// values+=EString+
+// values+=EString
 protected class TypedKeyStringValueAnnotation_ValuesAssignment_5 extends AssignmentToken  {
 	
 	public TypedKeyStringValueAnnotation_ValuesAssignment_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1082,8 +1163,7 @@ protected class TypedKeyStringValueAnnotation_ValuesAssignment_5 extends Assignm
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new TypedKeyStringValueAnnotation_ValuesAssignment_5(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new TypedKeyStringValueAnnotation_RightSquareBracketKeyword_4(lastRuleCallOrigin, this, 1, inst);
+			case 0: return new TypedKeyStringValueAnnotation_RightSquareBracketKeyword_4(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -1101,6 +1181,86 @@ protected class TypedKeyStringValueAnnotation_ValuesAssignment_5 extends Assignm
 	}
 
 }
+
+// ("," values+=EString)*
+protected class TypedKeyStringValueAnnotation_Group_6 extends GroupToken {
+	
+	public TypedKeyStringValueAnnotation_Group_6(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_6();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TypedKeyStringValueAnnotation_ValuesAssignment_6_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// ","
+protected class TypedKeyStringValueAnnotation_CommaKeyword_6_0 extends KeywordToken  {
+	
+	public TypedKeyStringValueAnnotation_CommaKeyword_6_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TypedKeyStringValueAnnotation_Group_6(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new TypedKeyStringValueAnnotation_ValuesAssignment_5(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// values+=EString
+protected class TypedKeyStringValueAnnotation_ValuesAssignment_6_1 extends AssignmentToken  {
+	
+	public TypedKeyStringValueAnnotation_ValuesAssignment_6_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new TypedKeyStringValueAnnotation_CommaKeyword_6_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("values",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("values");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_6_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_6_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
 
 
 /************ end Rule TypedKeyStringValueAnnotation ****************/

@@ -9,32 +9,45 @@ import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 // generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
 
 Effect returns keffects::Effect: 
+    Assignment | 
 	Emission |
-	Assignment | 
-	UnaryOperation | 
+//	UnaryOperation | 
 	TextEffect | 
 	FunctionCallEffect;
 
 		
 Emission returns keffects::Emission:
+//    (annotations+=Annotation)*    
 	valuedObject=[kexpressions::ValuedObject] ( "(" newValue = Expression ")" )?;
 
     
 Assignment returns keffects::Assignment:
+    (annotations+=Annotation)*    
 	valuedObject=[kexpressions::ValuedObject]
 	('[' indices+=Expression ']')*
-	 "=" expression = Expression ;
+	 "=" expression = Expression;
 	 
-	 
-UnaryOperation returns keffects::Assignment:
-    expression = PostfixAddExpression | expression = PostfixSubExpression;
+
+//PostfixAddEffect returns kexpressions::Expression:
+//    {kexpressions::OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
+//;
+//
+//PostfixSubEffect returns kexpressions::Expression:
+//    {kexpressions::OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
+//;
+//	 
+//UnaryOperation returns keffects::Assignment:
+//    (annotations+=Annotation)*    
+//    expression = PostfixAddEffect | expression = PostfixSubEffect;
 
 
 TextEffect returns keffects::HostcodeEffect:
+    (annotations+=Annotation)*    
  	text=HOSTCODE;
  	
  	
 FunctionCallEffect returns keffects::FunctionCallEffect:
+    (annotations+=Annotation)*    
     '<' functionName=ExtendedID (('(' parameters += Parameter (',' parameters += Parameter)* ')')|'()')? '>';
 
 

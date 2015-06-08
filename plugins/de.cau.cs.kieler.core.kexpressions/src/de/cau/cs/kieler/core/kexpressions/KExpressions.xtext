@@ -113,19 +113,19 @@ ModExpression returns Expression:
 // at the latter we need the parents to indicate the right binding
 NegExpression returns Expression:
 	{OperatorExpression} operator=SubOperator subExpressions+=(NegExpression)
-	| PostfixAddExpression
-//    | AtomicValuedExpression
-;
-
-PostfixAddExpression returns Expression:
-    {OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
-    | PostfixSubExpression
-;
-
-PostfixSubExpression returns Expression:
-    {OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
+//	| PostfixAddExpression
     | AtomicValuedExpression
 ;
+
+//PostfixAddExpression returns Expression:
+//    {OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
+//    | PostfixSubExpression
+//;
+//
+//PostfixSubExpression returns Expression:
+//    {OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
+//    | AtomicValuedExpression
+//;
   
     
 AtomicExpression returns Expression:
