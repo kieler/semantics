@@ -44,140 +44,140 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegion {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
 	/**
-	 * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getStates()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getStates()
+     * @generated
+     * @ordered
+     */
 	protected EList<State> states;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected ControlflowRegionImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return SCChartsPackage.Literals.CONTROLFLOW_REGION;
-	}
+        return SCChartsPackage.Literals.CONTROLFLOW_REGION;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EList<State> getStates() {
-		if (states == null) {
-			states = new EObjectContainmentWithInverseEList<State>(State.class, this, SCChartsPackage.CONTROLFLOW_REGION__STATES, SCChartsPackage.STATE__PARENT_REGION);
-		}
-		return states;
-	}
+        if (states == null) {
+            states = new EObjectContainmentWithInverseEList<State>(State.class, this, SCChartsPackage.CONTROLFLOW_REGION__STATES, SCChartsPackage.STATE__PARENT_REGION);
+        }
+        return states;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SCChartsPackage.CONTROLFLOW_REGION__STATES:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getStates()).basicAdd(otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case SCChartsPackage.CONTROLFLOW_REGION__STATES:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getStates()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SCChartsPackage.CONTROLFLOW_REGION__STATES:
-				return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case SCChartsPackage.CONTROLFLOW_REGION__STATES:
+                return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SCChartsPackage.CONTROLFLOW_REGION__STATES:
-				return getStates();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SCChartsPackage.CONTROLFLOW_REGION__STATES:
+                return getStates();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SCChartsPackage.CONTROLFLOW_REGION__STATES:
-				getStates().clear();
-				getStates().addAll((Collection<? extends State>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SCChartsPackage.CONTROLFLOW_REGION__STATES:
+                getStates().clear();
+                getStates().addAll((Collection<? extends State>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case SCChartsPackage.CONTROLFLOW_REGION__STATES:
-				getStates().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SCChartsPackage.CONTROLFLOW_REGION__STATES:
+                getStates().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SCChartsPackage.CONTROLFLOW_REGION__STATES:
-				return states != null && !states.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SCChartsPackage.CONTROLFLOW_REGION__STATES:
+                return states != null && !states.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //ControlflowRegionImpl

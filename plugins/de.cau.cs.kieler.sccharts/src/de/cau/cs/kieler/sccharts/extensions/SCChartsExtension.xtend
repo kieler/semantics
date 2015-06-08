@@ -23,11 +23,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.sccharts.Binding
 import de.cau.cs.kieler.sccharts.DuringAction
-import de.cau.cs.kieler.sccharts.Effect
-import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.HistoryType
@@ -38,7 +35,6 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.SuspendAction
-import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import java.util.ArrayList
@@ -52,6 +48,11 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
 
 /**
  * SCCharts Extensions.
@@ -870,13 +871,13 @@ class SCChartsExtension {
     //========== ASSIGNMENTS ============
     //Create a during action for a state.
     def Emission createEmission() {
-        val emission = SCChartsFactory::eINSTANCE.createEmission
+        val emission = KEffectsFactory::eINSTANCE.createEmission
         emission
     }
 
     // Create an Assignment.
     def Assignment assign(ValuedObject valuedObject) {
-        val assignment = SCChartsFactory::eINSTANCE.createAssignment()
+        val assignment = KEffectsFactory::eINSTANCE.createAssignment()
         assignment.setValuedObject(valuedObject)
         assignment
     }
@@ -918,15 +919,15 @@ class SCChartsExtension {
 
     //=========== EMISSIONS =============
     // Create a TextEffect.
-    def TextEffect createTextEffect(String text) {
-        val extEffect = SCChartsFactory::eINSTANCE.createTextEffect
+    def HostcodeEffect createHostcodeEffect(String text) {
+        val extEffect = KEffectsFactory::eINSTANCE.createHostcodeEffect
         extEffect.setText(text)
         extEffect
     }
 
     // Create an Emission.
     def Emission emit(ValuedObject valuedObject) {
-        val emission = SCChartsFactory::eINSTANCE.createEmission()
+        val emission = KEffectsFactory::eINSTANCE.createEmission()
         emission.setValuedObject(valuedObject)
         emission
     }

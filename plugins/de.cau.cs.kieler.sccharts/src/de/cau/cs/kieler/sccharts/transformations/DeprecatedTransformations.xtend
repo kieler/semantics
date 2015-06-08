@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -2003,7 +2004,7 @@ class ExposeLocalSignals {
                     watcherTransition.setDelay(transition.delay);
 
                     // Watcher transition emits the auxiliary valuedObject
-                    val transitionValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
+                    val transitionValuedObjectEmission = KEffectsFactory::eINSTANCE.createEmission();
                     transitionValuedObjectEmission.setValuedObject(transitionValuedObject);
                     watcherTransition.addEmission(transitionValuedObjectEmission);
 
@@ -2155,7 +2156,7 @@ class ExposeLocalSignals {
                 transition.setPriority(1);
                 transition.setType(TransitionType::TERMINATION);
                 mainState.outgoingTransitions.add(transition);
-                val exitValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
+                val exitValuedObjectEmission = KEffectsFactory::eINSTANCE.createEmission();
                 exitValuedObjectEmission.setValuedObject(exitValuedObject);
                 transition.addEmission(exitValuedObjectEmission);
 
