@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.featuregroups
 
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.kico.features.FeatureGroup
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 /**
  * SCCharts Feature Group.
@@ -38,7 +39,7 @@ class SCCharts extends FeatureGroup {
 
     override getFeatureIds() {
         Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID, SCChartsFeatureGroup::EXTENDED_ID,
-            SCChartsFeatureGroup::CORE_ID)
+            SCChartsFeatureGroup::CORE_ID, SCChartsFeature::SIMULATIONVISUALIZATION_ID)
     }
 
 //-------------------------------------------------------------------------

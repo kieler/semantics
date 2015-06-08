@@ -389,9 +389,8 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             throws KiemInitializationException {
         doModel2ModelTransform(monitor, this.getModelRootElement(),
                 this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
-                        .getValueAsBoolean(),
-                        this.getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
-                                .getValueAsBoolean());
+                        .getValueAsBoolean(), this.getProperties()[KIEM_PROPERTY_BENCHMARK
+                        + KIEM_PROPERTY_DIFF].getValueAsBoolean());
     }
 
     // -------------------------------------------------------------------------
@@ -477,7 +476,14 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             // The following should be a state or an SCG
             EObject stateOrSCG = highLeveleCompilationResult.getEObject();
+            if (!((stateOrSCG instanceof State) || (stateOrSCG instanceof SCGraph))) {
+                // compilation failed
+                throw new KiemInitializationException(
+                        "Error compiling the SCChart (high-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view.",
+                        true, null);
+            }
 
+            
             // String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
             // writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
             // System.out.println(coreSSChartText);
@@ -493,6 +499,12 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             String cSCChartCCode = lowLevelCompilationResult.getString();
             System.out.println("14 " + cSCChartCCode);
+            if (cSCChartCCode == null) {
+                // compilation failed
+                throw new KiemInitializationException(
+                        "Error compiling the SCChart (low-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view.",
+                        true, null);
+            }
 
             // Generate Simulation wrapper C code
             String cSimulation = "";

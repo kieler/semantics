@@ -162,6 +162,15 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Emit/tick"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Emit/expr"/>
     </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//UnEmit">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//UnEmit/signal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//UnEmit/tick"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Reset">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Reset/signal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Reset/tick"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Reset/expr"/>
+    </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//EveryDo">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//EveryDo/delay"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//EveryDo/optEnd"/>

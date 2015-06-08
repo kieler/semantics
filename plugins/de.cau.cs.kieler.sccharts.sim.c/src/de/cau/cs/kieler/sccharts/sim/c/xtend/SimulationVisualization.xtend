@@ -19,6 +19,11 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.sim.c.SCChartsSimCPlugin
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.sccharts.transformations.SCChartsTransformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import com.google.common.collect.Sets
 
 /**
  * This class handles the<BR>
@@ -29,7 +34,32 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
  * @kieler.design 2014-07-23 proposed cmot
  * @kieler.rating 2014-07-23 proposed yellow
  */
-class SimulationVisualization {
+class SimulationVisualization extends AbstractExpansionTransformation {
+    
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::SIMULATIONVISUALIZATION_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::SIMULATIONVISUALIZATION_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::SIMULATIONVISUALIZATION_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet()
+    }
+    
+    //-------------------------------------------------------------------------
 
     @Inject
     extension KExpressionsExtension
@@ -78,13 +108,7 @@ class SimulationVisualization {
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
     
-    def State transformNoVisualization(State rootState) {
-        // The default does nothing
-        rootState
-    }
-
-
-    def State transformVisualization(State rootState) {
+    def State transform(State rootState) {
         val res = rootState.eResource
         
         var targetRootState = rootState.fixAllPriorities
