@@ -101,9 +101,9 @@ class SCG2S extends AbstractProductionTransformation {
         sProgram.priority = 1
         sProgram.name = if (!scg.label.nullOrEmpty) scg.label else "S"
         
-        val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
+        val hostcodeAnnotations = scg.getAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
-            sProgram.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+            sProgram.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
         
         // KITT mapping for not inplace transformations
@@ -178,7 +178,7 @@ class SCG2S extends AbstractProductionTransformation {
 
         if (assignment.valuedObject != null && assignment.assignment != null) {
             val sAssignment = SFactory::eINSTANCE.createAssignment.trace(assignment)
-            sAssignment.variable = valuedObjectMapping.get(assignment.valuedObject)
+            sAssignment.valuedObject = valuedObjectMapping.get(assignment.valuedObject)
             val expression = assignment.assignment.copyExpression.fix.fixHostCode
             sAssignment.expression = expression
             for (index : assignment.indices) {
