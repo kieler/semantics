@@ -48,14 +48,14 @@ public class SctFormatter extends ActionsFormatter {
         c.setLinewrap(2).before(f.getControlflowRegionAccess().getRegionKeyword_2());
 //        c.setLinewrap(2).before(f.getTheRootRegionAccess().getRegionKeyword_4_1());
         c.setLinewrap(2).before(f.getSingleControlflowRegionAccess().getRegionKeyword_1_1());
-        c.setNoSpace().before(f.getControlflowRegionAccess().getColonKeyword_6());
-        c.setLinewrap().after(f.getControlflowRegionAccess().getColonKeyword_6());
+        c.setNoSpace().before(f.getControlflowRegionAccess().getColonKeyword_5());
+        c.setLinewrap().after(f.getControlflowRegionAccess().getColonKeyword_5());
 //
 //        c.setNoSpace().before(f.getTheRootRegionAccess().getColonKeyword_4_4());
 //        c.setLinewrap().after(f.getTheRootRegionAccess().getColonKeyword_4_4());
 
-        c.setNoSpace().before(f.getSingleControlflowRegionAccess().getColonKeyword_1_5());
-        c.setLinewrap().after(f.getSingleControlflowRegionAccess().getColonKeyword_1_5());
+        c.setNoSpace().before(f.getSingleControlflowRegionAccess().getColonKeyword_1_4());
+        c.setLinewrap().after(f.getSingleControlflowRegionAccess().getColonKeyword_1_4());
         
 //        /*
 //         *  STATE

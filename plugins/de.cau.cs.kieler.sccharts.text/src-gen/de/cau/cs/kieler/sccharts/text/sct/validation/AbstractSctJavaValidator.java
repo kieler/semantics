@@ -17,6 +17,7 @@ public class AbstractSctJavaValidator extends de.cau.cs.kieler.sccharts.text.act
 	    List<EPackage> result = new ArrayList<EPackage>();
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/sccharts/0.1.0"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kexpressions/0.1.2"));
+	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/keffects/0.1.0"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
 		return result;
 	}

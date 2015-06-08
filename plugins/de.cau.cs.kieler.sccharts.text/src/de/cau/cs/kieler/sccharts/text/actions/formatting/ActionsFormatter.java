@@ -10,7 +10,7 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.util.Pair;
 
 import de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsFormatter;
-import de.cau.cs.kieler.core.kexpressions.formatting.KExpressionsFormatter;
+import de.cau.cs.kieler.core.kexpressions.keffects.formatting.KEffectsFormatter;
 import de.cau.cs.kieler.sccharts.text.actions.services.ActionsGrammarAccess;
 
 /**
@@ -21,7 +21,7 @@ import de.cau.cs.kieler.sccharts.text.actions.services.ActionsGrammarAccess;
  *
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  */
-public class ActionsFormatter extends KExpressionsFormatter {
+public class ActionsFormatter extends KEffectsFormatter {
 
     @Override
     protected void configureFormatting(FormattingConfig c) {
@@ -39,7 +39,7 @@ public class ActionsFormatter extends KExpressionsFormatter {
      *            GrammarAccess provided by caller
      */
     protected void customConfigureFormatting(FormattingConfig c, ActionsGrammarAccess f) {
-        super.customConfigureFormatting(c, f.getKExpressionsGrammarAccess());
+        super.customConfigureFormatting(c, f.getKEffectsGrammarAccess());
 
         // avoid space in valued Emission like 'X (5 + 7)' -> 'X(5 + 7)'
         c.setNoSpace().before(f.getEmissionAccess().getLeftParenthesisKeyword_1_0());
@@ -77,7 +77,7 @@ public class ActionsFormatter extends KExpressionsFormatter {
        c.setNoSpace().after(f.getFunctionCallEffectAccess().getLessThanSignKeyword_0());
        c.setNoSpace().before(f.getFunctionCallEffectAccess().getGreaterThanSignKeyword_3());
        c.setNoSpace().before(f.getFunctionCallEffectAccess().getLeftParenthesisKeyword_2_0_0());
-       c.setNoSpace().after(f.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0());
+       c.setNoSpace().after(f.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0_0());
        
        for (Keyword comma : f.findKeywords(",")) {
            c.setNoLinewrap().before(comma);

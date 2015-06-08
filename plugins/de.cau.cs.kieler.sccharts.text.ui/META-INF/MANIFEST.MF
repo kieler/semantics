@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.1.0",
  de.cau.cs.kieler.core.kexpressions.ui,
  de.cau.cs.kieler.sccharts.text,
  de.cau.cs.kieler.core.annotations.text.ui,
- de.cau.cs.kieler.kico.ui;bundle-version="0.1.0"
+ de.cau.cs.kieler.kico.ui,
+ de.cau.cs.kieler.core.kexpressions.keffects.ui
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.sccharts.text.actions.ui.contentassist.antlr,

@@ -157,7 +157,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      * @param state the state
      */
     @Check
-    public void checkNoBooleanEmissions(final de.cau.cs.kieler.sccharts.Emission emission) {
+    public void checkNoBooleanEmissions(final de.cau.cs.kieler.core.kexpressions.keffects.Emission emission) {
         if (emission.getValuedObject() != null && emission.getValuedObject().eContainer() != null && emission.getValuedObject().eContainer() instanceof Declaration) {
             Declaration declaration = (Declaration) emission.getValuedObject().eContainer();
             if (!declaration.isSignal()) {
@@ -174,7 +174,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      * @param state the state
      */
     @Check
-    public void checkNoBooleanEmissions(final de.cau.cs.kieler.sccharts.Assignment assignment) {
+    public void checkNoBooleanEmissions(final de.cau.cs.kieler.core.kexpressions.keffects.Assignment assignment) {
         if (assignment.getValuedObject() != null && assignment.getValuedObject().eContainer() != null && assignment.getValuedObject().eContainer() instanceof Declaration) {
             Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();
             if (declaration.isSignal()) {
@@ -309,7 +309,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      * @param state the state
      */
     @Check
-    public void checkAssignmentToConst(final de.cau.cs.kieler.sccharts.Assignment assignment) {
+    public void checkAssignmentToConst(final de.cau.cs.kieler.core.kexpressions.keffects.Assignment assignment) {
     	if (assignment.getValuedObject() != null) {
     		Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();	
     		if (declaration.isConst()) {
