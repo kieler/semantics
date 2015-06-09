@@ -43,6 +43,16 @@ ValuedAnnotation returns Annotation:
     KeyFloatValueAnnotation
 ;
 
+RestrictedAnnotation returns Annotation:
+    CommentAnnotation |
+    QuotedKeyStringValueAnnotation |
+    QuotedTypedKeyStringValueAnnotation |
+    KeyBooleanValueAnnotation |
+    KeyIntValueAnnotation |
+    KeyFloatValueAnnotation |
+    TagAnnotation
+;
+
 
 // e.g.: /** semantic comment */
 CommentAnnotation returns StringAnnotation:
@@ -62,6 +72,15 @@ KeyStringValueAnnotation returns StringAnnotation:
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 TypedKeyStringValueAnnotation returns TypedStringAnnotation:
     '@' name=ExtendedID '[' type=ExtendedID ']' values += EString (',' values += EString)*;
+
+
+QuotedKeyStringValueAnnotation returns StringAnnotation:
+    '@' name=ExtendedID values += STRING (',' values += STRING)*;
+
+
+// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
+QuotedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+    '@' name=ExtendedID '[' type=ExtendedID ']' values += STRING (',' values += STRING)*;
 
     
 // e.g.: @visible true;

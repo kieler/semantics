@@ -3,6 +3,8 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text.scoping;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.scoping.KEffectsScopeProvider;
+
 /**
  * This class contains custom scoping description.
  * 
@@ -10,6 +12,6 @@ package de.cau.cs.kieler.core.kexpressions.text.scoping;
  * on how and when to use it 
  *
  */
-public class KEXTScopeProvider extends de.cau.cs.kieler.core.kexpressions.scoping.KExpressionsScopeProvider {
+public class KEXTScopeProvider extends KEffectsScopeProvider {
 
 }

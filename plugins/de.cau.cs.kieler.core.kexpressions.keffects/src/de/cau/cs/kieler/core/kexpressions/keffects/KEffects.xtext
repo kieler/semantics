@@ -17,7 +17,7 @@ Effect returns keffects::Effect:
 
 		
 Emission returns keffects::Emission:
-//    (annotations+=Annotation)*    
+    (annotations+=RestrictedAnnotation)*    
 	valuedObject=[kexpressions::ValuedObject] ( "(" newValue = Expression ")" )?;
 
     

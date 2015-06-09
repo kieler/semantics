@@ -54,47 +54,53 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	public class EmissionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Emission");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cNewValueAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cNewValueExpressionParserRuleCall_1_1_0 = (RuleCall)cNewValueAssignment_1_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsRestrictedAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cNewValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cNewValueExpressionParserRuleCall_2_1_0 = (RuleCall)cNewValueAssignment_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
-		//Emission returns keffects::Emission: //    (annotations+=Annotation)*    
-		//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
+		//Emission returns keffects::Emission:
+		//	annotations+=RestrictedAnnotation* valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
 		public ParserRule getRule() { return rule; }
 
-		////    (annotations+=Annotation)*    
-		//valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?
+		//annotations+=RestrictedAnnotation* valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?
 		public Group getGroup() { return cGroup; }
 
-		////    (annotations+=Annotation)*    
+		//annotations+=RestrictedAnnotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//RestrictedAnnotation
+		public RuleCall getAnnotationsRestrictedAnnotationParserRuleCall_0_0() { return cAnnotationsRestrictedAnnotationParserRuleCall_0_0; }
+
 		//valuedObject=[kexpressions::ValuedObject]
-		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
+		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
 
 		//[kexpressions::ValuedObject]
-		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
+		public CrossReference getValuedObjectValuedObjectCrossReference_1_0() { return cValuedObjectValuedObjectCrossReference_1_0; }
 
 		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
+		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1; }
 
 		//("(" newValue=Expression ")")?
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_2() { return cGroup_2; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 
 		//newValue=Expression
-		public Assignment getNewValueAssignment_1_1() { return cNewValueAssignment_1_1; }
+		public Assignment getNewValueAssignment_2_1() { return cNewValueAssignment_2_1; }
 
 		//Expression
-		public RuleCall getNewValueExpressionParserRuleCall_1_1_0() { return cNewValueExpressionParserRuleCall_1_1_0; }
+		public RuleCall getNewValueExpressionParserRuleCall_2_1_0() { return cNewValueExpressionParserRuleCall_2_1_0; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
+		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 	}
 
 	public class AssignmentElements extends AbstractParserRuleElementFinder {
@@ -346,8 +352,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getEffectAccess().getRule();
 	}
 
-	//Emission returns keffects::Emission: //    (annotations+=Annotation)*    
-	//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
+	//Emission returns keffects::Emission:
+	//	annotations+=RestrictedAnnotation* valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
 	public EmissionElements getEmissionAccess() {
 		return pEmission;
 	}
@@ -960,6 +966,17 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedAnnotationAccess().getRule();
 	}
 
+	//RestrictedAnnotation returns Annotation:
+	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
+	//	| KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
+	public AnnotationsGrammarAccess.RestrictedAnnotationElements getRestrictedAnnotationAccess() {
+		return gaKExpressions.getRestrictedAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedAnnotationRule() {
+		return getRestrictedAnnotationAccess().getRule();
+	}
+
 	//// e.g.: / ** semantic comment * /
 	// CommentAnnotation returns StringAnnotation:
 	//	values+=COMMENT_ANNOTATION;
@@ -1003,6 +1020,28 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//QuotedKeyStringValueAnnotation returns StringAnnotation:
+	//	"@" name=ExtendedID values+=STRING ("," values+=STRING)*;
+	public AnnotationsGrammarAccess.QuotedKeyStringValueAnnotationElements getQuotedKeyStringValueAnnotationAccess() {
+		return gaKExpressions.getQuotedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getQuotedKeyStringValueAnnotationRule() {
+		return getQuotedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
+	// QuotedTypedKeyStringValueAnnotation returns
+	//TypedStringAnnotation:
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*;
+	public AnnotationsGrammarAccess.QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
+		return gaKExpressions.getQuotedTypedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getQuotedTypedKeyStringValueAnnotationRule() {
+		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// e.g.: @visible true;

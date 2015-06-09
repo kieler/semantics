@@ -42,7 +42,7 @@ public interface NamedObject extends Annotatable {
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
      * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getNamedObject_Name()
-     * @model
+     * @model unique="false"
      * @generated
      */
     String getName();
