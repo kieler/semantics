@@ -27,7 +27,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p;
 	protected AbstractElementAlias match_Conditional_ElseKeyword_5_0_q;
-	protected AbstractElementAlias match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_2_1_q;
+	protected AbstractElementAlias match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q;
 	protected AbstractElementAlias match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
 	
 	@Inject
@@ -41,7 +41,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
 		match_Conditional_ElseKeyword_5_0_q = new TokenAlias(false, true, grammarAccess.getConditionalAccess().getElseKeyword_5_0());
-		match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallEffectAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
+		match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallEffectAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
 		match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
 	}
 	
@@ -73,8 +73,8 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_Conditional_ElseKeyword_5_0_q.equals(syntax))
 				emit_Conditional_ElseKeyword_5_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
-				emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q.equals(syntax))
+				emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
 				emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
@@ -149,7 +149,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	 * Syntax:
 	 *     '()'?
 	 */
-	protected void emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

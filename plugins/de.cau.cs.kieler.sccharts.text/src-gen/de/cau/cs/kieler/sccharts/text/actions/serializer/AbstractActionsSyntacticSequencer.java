@@ -29,7 +29,7 @@ public abstract class AbstractActionsSyntacticSequencer extends AbstractSyntacti
 	protected AbstractElementAlias match_DuringAction_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_EntryAction_SemicolonKeyword_4_q;
 	protected AbstractElementAlias match_ExitAction_SemicolonKeyword_4_q;
-	protected AbstractElementAlias match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_2_1_q;
+	protected AbstractElementAlias match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q;
 	protected AbstractElementAlias match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
 	protected AbstractElementAlias match_IterateAction_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_SuspendAction_SemicolonKeyword_5_q;
@@ -47,7 +47,7 @@ public abstract class AbstractActionsSyntacticSequencer extends AbstractSyntacti
 		match_DuringAction_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getDuringActionAccess().getSemicolonKeyword_5());
 		match_EntryAction_SemicolonKeyword_4_q = new TokenAlias(false, true, grammarAccess.getEntryActionAccess().getSemicolonKeyword_4());
 		match_ExitAction_SemicolonKeyword_4_q = new TokenAlias(false, true, grammarAccess.getExitActionAccess().getSemicolonKeyword_4());
-		match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallEffectAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
+		match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallEffectAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
 		match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
 		match_IterateAction_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getIterateActionAccess().getSemicolonKeyword_5());
 		match_SuspendAction_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getSuspendActionAccess().getSemicolonKeyword_5());
@@ -85,8 +85,8 @@ public abstract class AbstractActionsSyntacticSequencer extends AbstractSyntacti
 				emit_EntryAction_SemicolonKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_ExitAction_SemicolonKeyword_4_q.equals(syntax))
 				emit_ExitAction_SemicolonKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
-				emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q.equals(syntax))
+				emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
 				emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_IterateAction_SemicolonKeyword_5_q.equals(syntax))
@@ -181,7 +181,7 @@ public abstract class AbstractActionsSyntacticSequencer extends AbstractSyntacti
 	 * Syntax:
 	 *     '()'?
 	 */
-	protected void emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

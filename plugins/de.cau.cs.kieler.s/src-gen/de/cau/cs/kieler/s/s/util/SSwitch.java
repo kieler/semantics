@@ -113,6 +113,7 @@ public class SSwitch<T> extends Switch<T>
         if (result == null) result = caseInstruction(assignment);
         if (result == null) result = caseKEffects_Assignment(assignment);
         if (result == null) result = caseEffect(assignment);
+        if (result == null) result = caseAnnotatable(assignment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }

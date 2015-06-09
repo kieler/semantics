@@ -1,4 +1,4 @@
-module de.cau.cs.kieler.sccharts.text.sct.Sct
+module de.cau.cs.kieler.sccharts.text.sct.Sct.related
 
 
 Workflow {

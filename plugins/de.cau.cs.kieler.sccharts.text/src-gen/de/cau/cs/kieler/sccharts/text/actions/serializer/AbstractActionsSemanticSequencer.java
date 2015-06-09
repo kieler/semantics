@@ -56,6 +56,7 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 		if(semanticObject.eClass().getEPackage() == AnnotationsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case AnnotationsPackage.ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getRestrictedAnnotationRule() ||
 				   context == grammarAccess.getTagAnnotationRule()) {
 					sequence_TagAnnotation(context, (Annotation) semanticObject); 
 					return; 
@@ -64,6 +65,7 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 			case AnnotationsPackage.BOOLEAN_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
 				   context == grammarAccess.getKeyBooleanValueAnnotationRule() ||
+				   context == grammarAccess.getRestrictedAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyBooleanValueAnnotation(context, (BooleanAnnotation) semanticObject); 
 					return; 
@@ -72,6 +74,7 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 			case AnnotationsPackage.FLOAT_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
 				   context == grammarAccess.getKeyFloatValueAnnotationRule() ||
+				   context == grammarAccess.getRestrictedAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyFloatValueAnnotation(context, (FloatAnnotation) semanticObject); 
 					return; 
@@ -86,6 +89,7 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 			case AnnotationsPackage.INT_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
 				   context == grammarAccess.getKeyIntValueAnnotationRule() ||
+				   context == grammarAccess.getRestrictedAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
 					return; 
@@ -97,6 +101,10 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 					sequence_Annotation_CommentAnnotation_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
+				else if(context == grammarAccess.getRestrictedAnnotationRule()) {
+					sequence_CommentAnnotation_QuotedKeyStringValueAnnotation_RestrictedAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
 				else if(context == grammarAccess.getCommentAnnotationRule()) {
 					sequence_CommentAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
@@ -105,9 +113,18 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
+				else if(context == grammarAccess.getQuotedKeyStringValueAnnotationRule()) {
+					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
 				else break;
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
-				if(context == grammarAccess.getAnnotationRule() ||
+				if(context == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule() ||
+				   context == grammarAccess.getRestrictedAnnotationRule()) {
+					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getAnnotationRule() ||
 				   context == grammarAccess.getTypedKeyStringValueAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
@@ -122,11 +139,11 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 					return; 
 				}
 				else if(context == grammarAccess.getEffectRule()) {
-					sequence_Assignment_Effect_UnaryOperation(context, (Assignment) semanticObject); 
+					sequence_Assignment_Effect_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getUnaryOperationRule()) {
-					sequence_UnaryOperation(context, (Assignment) semanticObject); 
+				else if(context == grammarAccess.getPostfixEffectRule()) {
+					sequence_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else break;
@@ -180,8 +197,6 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getPostfixAddExpressionRule() ||
-				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -223,8 +238,6 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getPostfixAddExpressionRule() ||
-				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -260,8 +273,6 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getPostfixAddExpressionRule() ||
-				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -297,8 +308,6 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getPostfixAddExpressionRule() ||
-				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -333,13 +342,11 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getPostfixAddExpressionRule() ||
-				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_NotOrValuedExpression_PostfixAddExpression_PostfixSubExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_NotOrValuedExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -379,8 +386,6 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getPostfixAddExpressionRule() ||
-				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getStringValueRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
@@ -416,8 +421,6 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getPostfixAddExpressionRule() ||
-				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -459,8 +462,6 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getPostfixAddExpressionRule() ||
-				   context == grammarAccess.getPostfixSubExpressionRule() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||

@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.scl.scl.util;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
+
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 
 import de.cau.cs.kieler.scl.scl.Assignment;
@@ -152,6 +154,11 @@ public class SclAdapterFactory extends AdapterFactoryImpl
       public Adapter caseStatementScope(StatementScope object)
       {
         return createStatementScopeAdapter();
+      }
+      @Override
+      public Adapter caseAnnotatable(Annotatable object)
+      {
+        return createAnnotatableAdapter();
       }
       @Override
       public Adapter caseEffect(Effect object)
@@ -376,6 +383,21 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createStatementScopeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.core.annotations.Annotatable
+   * @generated
+   */
+  public Adapter createAnnotatableAdapter()
   {
     return null;
   }

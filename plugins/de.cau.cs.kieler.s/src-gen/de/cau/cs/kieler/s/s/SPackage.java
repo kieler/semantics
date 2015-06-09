@@ -244,13 +244,22 @@ public interface SPackage extends EPackage
   int ASSIGNMENT = 4;
 
   /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__ANNOTATIONS = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
    * The feature id for the '<em><b>Valued Object</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT__VALUED_OBJECT = INSTRUCTION_FEATURE_COUNT + 0;
+  int ASSIGNMENT__VALUED_OBJECT = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -259,7 +268,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASSIGNMENT__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 1;
+  int ASSIGNMENT__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Indices</b></em>' containment reference list.
@@ -268,7 +277,16 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASSIGNMENT__INDICES = INSTRUCTION_FEATURE_COUNT + 2;
+  int ASSIGNMENT__INDICES = INSTRUCTION_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__OPERATOR = INSTRUCTION_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Assignment</em>' class.
@@ -277,7 +295,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 3;
+  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PrioImpl <em>Prio</em>}' class.

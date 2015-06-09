@@ -720,7 +720,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
 	//Effect returns keffects::Effect:
-	//	Emission | Assignment | UnaryOperation | TextEffect | FunctionCallEffect;
+	//	Assignment | PostfixEffect | Emission | TextEffect | FunctionCallEffect;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEXT.getEffectAccess();
 	}
@@ -730,7 +730,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Emission returns keffects::Emission:
-	//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
+	//	annotations+=RestrictedAnnotation* valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
 	public KEffectsGrammarAccess.EmissionElements getEmissionAccess() {
 		return gaKEXT.getEmissionAccess();
 	}
@@ -740,7 +740,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Assignment returns keffects::Assignment:
-	//	valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
+	//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
+	//	operator=AssignOperator expression=Expression;
 	public KEffectsGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaKEXT.getAssignmentAccess();
 	}
@@ -749,18 +750,19 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAssignmentAccess().getRule();
 	}
 
-	//UnaryOperation returns keffects::Assignment:
-	//	expression=PostfixAddExpression | expression=PostfixSubExpression;
-	public KEffectsGrammarAccess.UnaryOperationElements getUnaryOperationAccess() {
-		return gaKEXT.getUnaryOperationAccess();
+	//PostfixEffect returns keffects::Assignment:
+	//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
+	//	operator=PostfixOperator;
+	public KEffectsGrammarAccess.PostfixEffectElements getPostfixEffectAccess() {
+		return gaKEXT.getPostfixEffectAccess();
 	}
 	
-	public ParserRule getUnaryOperationRule() {
-		return getUnaryOperationAccess().getRule();
+	public ParserRule getPostfixEffectRule() {
+		return getPostfixEffectAccess().getRule();
 	}
 
 	//TextEffect returns keffects::HostcodeEffect:
-	//	text=HOSTCODE;
+	//	annotations+=Annotation* text=HOSTCODE;
 	public KEffectsGrammarAccess.TextEffectElements getTextEffectAccess() {
 		return gaKEXT.getTextEffectAccess();
 	}
@@ -770,13 +772,34 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FunctionCallEffect returns keffects::FunctionCallEffect:
-	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
+	//	annotations+=Annotation* "<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" |
+	//	"()")? ">";
 	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return gaKEXT.getFunctionCallEffectAccess();
 	}
 	
 	public ParserRule getFunctionCallEffectRule() {
 		return getFunctionCallEffectAccess().getRule();
+	}
+
+	//enum AssignOperator returns keffects::AssignOperator:
+	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+	public KEffectsGrammarAccess.AssignOperatorElements getAssignOperatorAccess() {
+		return gaKEXT.getAssignOperatorAccess();
+	}
+	
+	public EnumRule getAssignOperatorRule() {
+		return getAssignOperatorAccess().getRule();
+	}
+
+	//enum PostfixOperator returns keffects::AssignOperator:
+	//	POSTFIXADD="++" | POSTFIXSUB="--";
+	public KEffectsGrammarAccess.PostfixOperatorElements getPostfixOperatorAccess() {
+		return gaKEXT.getPostfixOperatorAccess();
+	}
+	
+	public EnumRule getPostfixOperatorRule() {
+		return getPostfixOperatorAccess().getRule();
 	}
 
 	//Root returns ecore::EObject:
@@ -975,9 +998,9 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: -?A, -(?A + ?B)
 	//// at the latter we need the parents to indicate the right binding
-	////    | AtomicValuedExpression
 	//NegExpression returns Expression:
-	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | PostfixAddExpression;
+	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression //	| PostfixAddExpression
+	//	| AtomicValuedExpression;
 	public KExpressionsGrammarAccess.NegExpressionElements getNegExpressionAccess() {
 		return gaKEXT.getNegExpressionAccess();
 	}
@@ -986,26 +1009,15 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getNegExpressionAccess().getRule();
 	}
 
-	//PostfixAddExpression returns Expression:
-	//	{OperatorExpression} operator=PostfixAdd subExpressions+=PostfixAddExpression | PostfixSubExpression;
-	public KExpressionsGrammarAccess.PostfixAddExpressionElements getPostfixAddExpressionAccess() {
-		return gaKEXT.getPostfixAddExpressionAccess();
-	}
-	
-	public ParserRule getPostfixAddExpressionRule() {
-		return getPostfixAddExpressionAccess().getRule();
-	}
-
-	//PostfixSubExpression returns Expression:
-	//	{OperatorExpression} operator=PostfixSub subExpressions+=PostfixSubExpression | AtomicValuedExpression;
-	public KExpressionsGrammarAccess.PostfixSubExpressionElements getPostfixSubExpressionAccess() {
-		return gaKEXT.getPostfixSubExpressionAccess();
-	}
-	
-	public ParserRule getPostfixSubExpressionRule() {
-		return getPostfixSubExpressionAccess().getRule();
-	}
-
+	////PostfixAddExpression returns Expression:
+	////    {OperatorExpression} subExpressions+=(PostfixAddExpression) operator=PostfixAdd
+	////    | PostfixSubExpression
+	////;
+	////
+	////PostfixSubExpression returns Expression:
+	////    {OperatorExpression} subExpressions+=(PostfixSubExpression) operator=PostfixSub
+	////    | AtomicValuedExpression
+	////;
 	//AtomicExpression returns Expression:
 	//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | FunctionCall | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
@@ -1320,8 +1332,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// //
 	// // --------------------------
 	// Annotation:
-	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+	//	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaKEXT.getAnnotationAccess();
 	}
@@ -1339,6 +1351,17 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getValuedAnnotationRule() {
 		return getValuedAnnotationAccess().getRule();
+	}
+
+	//RestrictedAnnotation returns Annotation:
+	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
+	//	| KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
+	public AnnotationsGrammarAccess.RestrictedAnnotationElements getRestrictedAnnotationAccess() {
+		return gaKEXT.getRestrictedAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedAnnotationRule() {
+		return getRestrictedAnnotationAccess().getRule();
 	}
 
 	//// e.g.: / ** semantic comment * /
@@ -1365,7 +1388,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @layouter dot;   
 	// KeyStringValueAnnotation returns StringAnnotation:
-	//	"@" name=ExtendedID values+=EString+;
+	//	"@" name=ExtendedID values+=EString ("," values+=EString)*;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaKEXT.getKeyStringValueAnnotationAccess();
 	}
@@ -1377,13 +1400,35 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	// TypedKeyStringValueAnnotation returns
 	//TypedStringAnnotation:
-	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString+;
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString ("," values+=EString)*;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaKEXT.getTypedKeyStringValueAnnotationAccess();
 	}
 	
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//QuotedKeyStringValueAnnotation returns StringAnnotation:
+	//	"@" name=ExtendedID values+=STRING ("," values+=STRING)*;
+	public AnnotationsGrammarAccess.QuotedKeyStringValueAnnotationElements getQuotedKeyStringValueAnnotationAccess() {
+		return gaKEXT.getQuotedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getQuotedKeyStringValueAnnotationRule() {
+		return getQuotedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
+	// QuotedTypedKeyStringValueAnnotation returns
+	//TypedStringAnnotation:
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*;
+	public AnnotationsGrammarAccess.QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
+		return gaKEXT.getQuotedTypedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getQuotedTypedKeyStringValueAnnotationRule() {
+		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// e.g.: @visible true;

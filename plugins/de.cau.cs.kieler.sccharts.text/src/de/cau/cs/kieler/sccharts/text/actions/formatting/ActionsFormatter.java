@@ -42,7 +42,7 @@ public class ActionsFormatter extends KEXTFormatter {
         super.customConfigureFormatting(c, f.getKEXTGrammarAccess());
 
         // avoid space in valued Emission like 'X (5 + 7)' -> 'X(5 + 7)'
-        c.setNoSpace().before(f.getEmissionAccess().getLeftParenthesisKeyword_1_0());
+        c.setNoSpace().before(f.getEmissionAccess().getLeftParenthesisKeyword_2_0());
 
         // There is no type any more
         // avoid space in textual effect like '/ "foo" (java)' -> '/ "foo"(java)'
@@ -66,17 +66,17 @@ public class ActionsFormatter extends KEXTFormatter {
        c.setNoSpace().before(f.getExitActionAccess().getSemicolonKeyword_3_2_0());
        
        // Emission ( value ) -> (value)
-       c.setNoSpace().after(f.getEmissionAccess().getLeftParenthesisKeyword_1_0());
-       c.setNoSpace().before(f.getEmissionAccess().getRightParenthesisKeyword_1_2());
+       c.setNoSpace().after(f.getEmissionAccess().getLeftParenthesisKeyword_2_0());
+       c.setNoSpace().before(f.getEmissionAccess().getRightParenthesisKeyword_2_2());
        
-       c.setNoSpace().before(f.getAssignmentAccess().getLeftSquareBracketKeyword_1_0());
-       c.setNoSpace().after(f.getAssignmentAccess().getLeftSquareBracketKeyword_1_0());
-       c.setNoSpace().before(f.getAssignmentAccess().getRightSquareBracketKeyword_1_2());
+       c.setNoSpace().before(f.getAssignmentAccess().getLeftSquareBracketKeyword_2_0());
+       c.setNoSpace().after(f.getAssignmentAccess().getLeftSquareBracketKeyword_2_0());
+       c.setNoSpace().before(f.getAssignmentAccess().getRightSquareBracketKeyword_2_2());
 
        
-       c.setNoSpace().after(f.getFunctionCallEffectAccess().getLessThanSignKeyword_0());
-       c.setNoSpace().before(f.getFunctionCallEffectAccess().getGreaterThanSignKeyword_3());
-       c.setNoSpace().before(f.getFunctionCallEffectAccess().getLeftParenthesisKeyword_2_0_0());
+       c.setNoSpace().after(f.getFunctionCallEffectAccess().getLessThanSignKeyword_1());
+       c.setNoSpace().before(f.getFunctionCallEffectAccess().getGreaterThanSignKeyword_4());
+       c.setNoSpace().before(f.getFunctionCallEffectAccess().getLeftParenthesisKeyword_3_0_0());
        c.setNoSpace().after(f.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0_0());
        
        for (Keyword comma : f.findKeywords(",")) {

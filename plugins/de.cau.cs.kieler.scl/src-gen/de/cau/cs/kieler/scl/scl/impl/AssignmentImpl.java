@@ -2,9 +2,14 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 
@@ -33,9 +38,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getOperator <em>Operator</em>}</li>
  * </ul>
  * </p>
  *
@@ -43,6 +50,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class AssignmentImpl extends InstructionImpl implements Assignment
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
    * <!-- begin-user-doc -->
@@ -74,6 +91,26 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   protected EList<Expression> indices;
 
   /**
+   * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOperator()
+   * @generated
+   * @ordered
+   */
+  protected static final AssignOperator OPERATOR_EDEFAULT = AssignOperator.ASSIGN;
+
+  /**
+   * The cached value of the '{@link #getOperator() <em>Operator</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOperator()
+   * @generated
+   * @ordered
+   */
+  protected AssignOperator operator = OPERATOR_EDEFAULT;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -92,6 +129,20 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   protected EClass eStaticClass()
   {
     return SclPackage.Literals.ASSIGNMENT;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SclPackage.ASSIGNMENT__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -204,11 +255,72 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
+  public AssignOperator getOperator()
+  {
+    return operator;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setOperator(AssignOperator newOperator)
+  {
+    AssignOperator oldOperator = operator;
+    operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__OPERATOR, oldOperator, operator));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Annotation getAnnotation(String name)
+  {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAllAnnotations(String name)
+  {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void removeAllAnnotations(String name)
+  {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
+      case SclPackage.ASSIGNMENT__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case SclPackage.ASSIGNMENT__EXPRESSION:
         return basicSetExpression(null, msgs);
       case SclPackage.ASSIGNMENT__INDICES:
@@ -227,6 +339,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
+      case SclPackage.ASSIGNMENT__ANNOTATIONS:
+        return getAnnotations();
       case SclPackage.ASSIGNMENT__VALUED_OBJECT:
         if (resolve) return getValuedObject();
         return basicGetValuedObject();
@@ -234,6 +348,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         return getExpression();
       case SclPackage.ASSIGNMENT__INDICES:
         return getIndices();
+      case SclPackage.ASSIGNMENT__OPERATOR:
+        return getOperator();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -249,6 +365,10 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
+      case SclPackage.ASSIGNMENT__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case SclPackage.ASSIGNMENT__VALUED_OBJECT:
         setValuedObject((ValuedObject)newValue);
         return;
@@ -258,6 +378,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
       case SclPackage.ASSIGNMENT__INDICES:
         getIndices().clear();
         getIndices().addAll((Collection<? extends Expression>)newValue);
+        return;
+      case SclPackage.ASSIGNMENT__OPERATOR:
+        setOperator((AssignOperator)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -273,6 +396,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
+      case SclPackage.ASSIGNMENT__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case SclPackage.ASSIGNMENT__VALUED_OBJECT:
         setValuedObject((ValuedObject)null);
         return;
@@ -281,6 +407,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         return;
       case SclPackage.ASSIGNMENT__INDICES:
         getIndices().clear();
+        return;
+      case SclPackage.ASSIGNMENT__OPERATOR:
+        setOperator(OPERATOR_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -296,12 +425,16 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
+      case SclPackage.ASSIGNMENT__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case SclPackage.ASSIGNMENT__VALUED_OBJECT:
         return valuedObject != null;
       case SclPackage.ASSIGNMENT__EXPRESSION:
         return expression != null;
       case SclPackage.ASSIGNMENT__INDICES:
         return indices != null && !indices.isEmpty();
+      case SclPackage.ASSIGNMENT__OPERATOR:
+        return operator != OPERATOR_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -314,6 +447,14 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   @Override
   public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
   {
+    if (baseClass == Annotatable.class)
+    {
+      switch (derivedFeatureID)
+      {
+        case SclPackage.ASSIGNMENT__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+        default: return -1;
+      }
+    }
     if (baseClass == Effect.class)
     {
       switch (derivedFeatureID)
@@ -328,6 +469,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         case SclPackage.ASSIGNMENT__VALUED_OBJECT: return KEffectsPackage.ASSIGNMENT__VALUED_OBJECT;
         case SclPackage.ASSIGNMENT__EXPRESSION: return KEffectsPackage.ASSIGNMENT__EXPRESSION;
         case SclPackage.ASSIGNMENT__INDICES: return KEffectsPackage.ASSIGNMENT__INDICES;
+        case SclPackage.ASSIGNMENT__OPERATOR: return KEffectsPackage.ASSIGNMENT__OPERATOR;
         default: return -1;
       }
     }
@@ -342,6 +484,14 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   @Override
   public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
   {
+    if (baseClass == Annotatable.class)
+    {
+      switch (baseFeatureID)
+      {
+        case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return SclPackage.ASSIGNMENT__ANNOTATIONS;
+        default: return -1;
+      }
+    }
     if (baseClass == Effect.class)
     {
       switch (baseFeatureID)
@@ -356,10 +506,28 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT: return SclPackage.ASSIGNMENT__VALUED_OBJECT;
         case KEffectsPackage.ASSIGNMENT__EXPRESSION: return SclPackage.ASSIGNMENT__EXPRESSION;
         case KEffectsPackage.ASSIGNMENT__INDICES: return SclPackage.ASSIGNMENT__INDICES;
+        case KEffectsPackage.ASSIGNMENT__OPERATOR: return SclPackage.ASSIGNMENT__OPERATOR;
         default: return -1;
       }
     }
     return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (operator: ");
+    result.append(operator);
+    result.append(')');
+    return result.toString();
   }
 
 } //AssignmentImpl
