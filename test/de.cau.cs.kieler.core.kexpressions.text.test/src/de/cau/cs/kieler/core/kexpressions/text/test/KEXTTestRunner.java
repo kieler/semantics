@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text.test;
 
+import de.cau.cs.kieler.core.annotations.StringAnnotation;
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
 
 /**
@@ -22,6 +25,8 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
  */
 public class KEXTTestRunner extends ModelCollectionTestRunner {
 
+    public static String KEXT_CHECK_ANNOTATION = "check";
+    
     /**
      * @param clazz
      * @throws Throwable
@@ -30,6 +35,21 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
         super(clazz);
     }
 
-
+    protected void runTestRunnerForModel(Object object, String modelName) throws Throwable {
+        if (!(object instanceof Kext)) {
+            throw new IllegalArgumentException("The KEXT test runner expects a KEXT object as input.");
+        }
+        for(Effect effect : ((Kext)object).getEffects()) {
+            StringAnnotation checkAnnotation = (StringAnnotation) effect.getAnnotation(KEXT_CHECK_ANNOTATION);
+            if (checkAnnotation != null && checkAnnotation.getValues().size() > 0) {
+                runTestRunnerForObject(effect, checkAnnotation.getValues().get(0), object);
+            }
+        }
+    }
+    
+    protected void runTestRunnerForObject(Object object, String objectName, Object rootObject) throws Throwable {
+        this.getChildren().add(
+                new SingleModelTestRunner(getTestClass().getJavaClass(), object, objectName));
+    }
 
 }
