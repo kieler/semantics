@@ -8,4 +8,8 @@ package de.cau.cs.kieler.core.kexpressions.text;
  */
 public class KEXTRuntimeModule extends de.cau.cs.kieler.core.kexpressions.text.AbstractKEXTRuntimeModule {
 
+    public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
+        return de.cau.cs.kieler.core.kexpressions.text.formatting.KEXTValueConverter.class;
+    }
+    
 }

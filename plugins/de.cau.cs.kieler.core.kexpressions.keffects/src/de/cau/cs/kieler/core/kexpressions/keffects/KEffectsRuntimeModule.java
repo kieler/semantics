@@ -8,4 +8,8 @@ package de.cau.cs.kieler.core.kexpressions.keffects;
  */
 public class KEffectsRuntimeModule extends de.cau.cs.kieler.core.kexpressions.keffects.AbstractKEffectsRuntimeModule {
 
+    public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
+        return de.cau.cs.kieler.core.kexpressions.keffects.formatting.KEffectsValueConverter.class;
+    }    
+    
 }
