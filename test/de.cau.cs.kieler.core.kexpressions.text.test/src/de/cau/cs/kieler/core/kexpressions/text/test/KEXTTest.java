@@ -21,8 +21,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+import com.google.inject.Guice;
+
 import de.cau.cs.kieler.core.kexpressions.text.KEXTStandaloneSetup;
+import de.cau.cs.kieler.core.kexpressions.text.extensions.KEXTSerializeExtensions;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter;
@@ -33,6 +35,9 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
  * JUnit Test Case for the KEXT
  * 
  * @author ssm
+ * @kieler.design 2015-06-09 proposed 
+ * @kieler.rating 2015-06-09 yellow proposed
+ * 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(KEXTTestRunner.class)
@@ -41,10 +46,6 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
 @ModelFilter("*.kext")
 public class KEXTTest {
 
-    // -------------------------------------------------------------------------
-    // -- Injector & Setup
-    // -------------------------------------------------------------------------
-	
     /**
      * Provides a {@link ResourceSet} in order to load the models properly.
      * 
@@ -58,7 +59,9 @@ public class KEXTTest {
     
     @Test
     public void serialize(final EObject effect) {
-       System.out.println("Test");
+        KEXTSerializeExtensions SE = Guice.createInjector().getInstance(KEXTSerializeExtensions.class);
+        
+        System.out.println("Test: " + SE.serialize(effect));
     }
     
 

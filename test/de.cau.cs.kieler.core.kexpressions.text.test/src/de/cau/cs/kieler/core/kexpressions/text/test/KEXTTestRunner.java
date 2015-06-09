@@ -21,6 +21,7 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
 /**
  * @author ssm
  * @kieler.design 2015-06-09 proposed 
+ * @kieler.rating 2015-06-09 yellow proposed
  * 
  */
 public class KEXTTestRunner extends ModelCollectionTestRunner {
@@ -39,6 +40,7 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
         if (!(object instanceof Kext)) {
             throw new IllegalArgumentException("The KEXT test runner expects a KEXT object as input.");
         }
+        
         for(Effect effect : ((Kext)object).getEffects()) {
             StringAnnotation checkAnnotation = (StringAnnotation) effect.getAnnotation(KEXT_CHECK_ANNOTATION);
             if (checkAnnotation != null && checkAnnotation.getValues().size() > 0) {
