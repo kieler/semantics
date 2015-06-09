@@ -53,6 +53,8 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedAnnotationAccess().getAlternatives(), "rule__ValuedAnnotation__Alternatives");
 					put(grammarAccess.getRestrictedAnnotationAccess().getAlternatives(), "rule__RestrictedAnnotation__Alternatives");
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
+					put(grammarAccess.getAssignOperatorAccess().getAlternatives(), "rule__AssignOperator__Alternatives");
+					put(grammarAccess.getPostfixOperatorAccess().getAlternatives(), "rule__PostfixOperator__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
@@ -60,6 +62,8 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEmissionAccess().getGroup_2(), "rule__Emission__Group_2__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
 					put(grammarAccess.getAssignmentAccess().getGroup_2(), "rule__Assignment__Group_2__0");
+					put(grammarAccess.getPostfixEffectAccess().getGroup(), "rule__PostfixEffect__Group__0");
+					put(grammarAccess.getPostfixEffectAccess().getGroup_2(), "rule__PostfixEffect__Group_2__0");
 					put(grammarAccess.getTextEffectAccess().getGroup(), "rule__TextEffect__Group__0");
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup(), "rule__FunctionCallEffect__Group__0");
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup_3_0(), "rule__FunctionCallEffect__Group_3_0__0");
@@ -124,7 +128,12 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getAnnotationsAssignment_0(), "rule__Assignment__AnnotationsAssignment_0");
 					put(grammarAccess.getAssignmentAccess().getValuedObjectAssignment_1(), "rule__Assignment__ValuedObjectAssignment_1");
 					put(grammarAccess.getAssignmentAccess().getIndicesAssignment_2_1(), "rule__Assignment__IndicesAssignment_2_1");
+					put(grammarAccess.getAssignmentAccess().getOperatorAssignment_3(), "rule__Assignment__OperatorAssignment_3");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_4(), "rule__Assignment__ExpressionAssignment_4");
+					put(grammarAccess.getPostfixEffectAccess().getAnnotationsAssignment_0(), "rule__PostfixEffect__AnnotationsAssignment_0");
+					put(grammarAccess.getPostfixEffectAccess().getValuedObjectAssignment_1(), "rule__PostfixEffect__ValuedObjectAssignment_1");
+					put(grammarAccess.getPostfixEffectAccess().getIndicesAssignment_2_1(), "rule__PostfixEffect__IndicesAssignment_2_1");
+					put(grammarAccess.getPostfixEffectAccess().getOperatorAssignment_3(), "rule__PostfixEffect__OperatorAssignment_3");
 					put(grammarAccess.getTextEffectAccess().getAnnotationsAssignment_0(), "rule__TextEffect__AnnotationsAssignment_0");
 					put(grammarAccess.getTextEffectAccess().getTextAssignment_1(), "rule__TextEffect__TextAssignment_1");
 					put(grammarAccess.getFunctionCallEffectAccess().getAnnotationsAssignment_0(), "rule__FunctionCallEffect__AnnotationsAssignment_0");

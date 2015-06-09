@@ -23,32 +23,33 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Effect");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cAssignmentParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cEmissionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cTextEffectParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cFunctionCallEffectParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cPostfixEffectParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cEmissionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cTextEffectParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cFunctionCallEffectParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
 		//Effect returns keffects::Effect:
-		//	Assignment | Emission | //	UnaryOperation | 
-		//	TextEffect | FunctionCallEffect;
+		//	Assignment | PostfixEffect | Emission | TextEffect | FunctionCallEffect;
 		public ParserRule getRule() { return rule; }
 
-		//Assignment | Emission | //	UnaryOperation | 
-		//TextEffect | FunctionCallEffect
+		//Assignment | PostfixEffect | Emission | TextEffect | FunctionCallEffect
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Assignment
 		public RuleCall getAssignmentParserRuleCall_0() { return cAssignmentParserRuleCall_0; }
 
-		//Emission
-		public RuleCall getEmissionParserRuleCall_1() { return cEmissionParserRuleCall_1; }
+		//PostfixEffect
+		public RuleCall getPostfixEffectParserRuleCall_1() { return cPostfixEffectParserRuleCall_1; }
 
-		////	UnaryOperation | 
+		//Emission
+		public RuleCall getEmissionParserRuleCall_2() { return cEmissionParserRuleCall_2; }
+
 		//TextEffect
-		public RuleCall getTextEffectParserRuleCall_2() { return cTextEffectParserRuleCall_2; }
+		public RuleCall getTextEffectParserRuleCall_3() { return cTextEffectParserRuleCall_3; }
 
 		//FunctionCallEffect
-		public RuleCall getFunctionCallEffectParserRuleCall_3() { return cFunctionCallEffectParserRuleCall_3; }
+		public RuleCall getFunctionCallEffectParserRuleCall_4() { return cFunctionCallEffectParserRuleCall_4; }
 	}
 
 	public class EmissionElements extends AbstractParserRuleElementFinder {
@@ -116,17 +117,18 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cIndicesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cIndicesExpressionParserRuleCall_2_1_0 = (RuleCall)cIndicesAssignment_2_1.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
-		private final Keyword cEqualsSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cOperatorAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cOperatorAssignOperatorEnumRuleCall_3_0 = (RuleCall)cOperatorAssignment_3.eContents().get(0);
 		private final Assignment cExpressionAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cExpressionExpressionParserRuleCall_4_0 = (RuleCall)cExpressionAssignment_4.eContents().get(0);
 		
 		//Assignment returns keffects::Assignment:
-		//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "="
-		//	expression=Expression;
+		//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
+		//	operator=AssignOperator expression=Expression;
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "="
-		//expression=Expression
+		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
+		//operator=AssignOperator expression=Expression
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -159,14 +161,79 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
 
-		//"="
-		public Keyword getEqualsSignKeyword_3() { return cEqualsSignKeyword_3; }
+		//operator=AssignOperator
+		public Assignment getOperatorAssignment_3() { return cOperatorAssignment_3; }
+
+		//AssignOperator
+		public RuleCall getOperatorAssignOperatorEnumRuleCall_3_0() { return cOperatorAssignOperatorEnumRuleCall_3_0; }
 
 		//expression=Expression
 		public Assignment getExpressionAssignment_4() { return cExpressionAssignment_4; }
 
 		//Expression
 		public RuleCall getExpressionExpressionParserRuleCall_4_0() { return cExpressionExpressionParserRuleCall_4_0; }
+	}
+
+	public class PostfixEffectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PostfixEffect");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cIndicesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cIndicesExpressionParserRuleCall_2_1_0 = (RuleCall)cIndicesAssignment_2_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Assignment cOperatorAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cOperatorPostfixOperatorEnumRuleCall_3_0 = (RuleCall)cOperatorAssignment_3.eContents().get(0);
+		
+		//PostfixEffect returns keffects::Assignment:
+		//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
+		//	operator=PostfixOperator;
+		public ParserRule getRule() { return rule; }
+
+		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
+		//operator=PostfixOperator
+		public Group getGroup() { return cGroup; }
+
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+
+		//valuedObject=[kexpressions::ValuedObject]
+		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
+
+		//[kexpressions::ValuedObject]
+		public CrossReference getValuedObjectValuedObjectCrossReference_1_0() { return cValuedObjectValuedObjectCrossReference_1_0; }
+
+		//ID
+		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1; }
+
+		//("[" indices+=Expression "]")*
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
+
+		//indices+=Expression
+		public Assignment getIndicesAssignment_2_1() { return cIndicesAssignment_2_1; }
+
+		//Expression
+		public RuleCall getIndicesExpressionParserRuleCall_2_1_0() { return cIndicesExpressionParserRuleCall_2_1_0; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
+
+		//operator=PostfixOperator
+		public Assignment getOperatorAssignment_3() { return cOperatorAssignment_3; }
+
+		//PostfixOperator
+		public RuleCall getOperatorPostfixOperatorEnumRuleCall_3_0() { return cOperatorPostfixOperatorEnumRuleCall_3_0; }
 	}
 
 	public class TextEffectElements extends AbstractParserRuleElementFinder {
@@ -177,17 +244,6 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTextAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cTextHOSTCODETerminalRuleCall_1_0 = (RuleCall)cTextAssignment_1.eContents().get(0);
 		
-		////PostfixAddEffect returns kexpressions::Expression:
-		////    {kexpressions::OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
-		////;
-		////
-		////PostfixSubEffect returns kexpressions::Expression:
-		////    {kexpressions::OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
-		////;
-		////	 
-		////UnaryOperation returns keffects::Assignment:
-		////    (annotations+=Annotation)*    
-		////    expression = PostfixAddEffect | expression = PostfixSubEffect;
 		//TextEffect returns keffects::HostcodeEffect:
 		//	annotations+=Annotation* text=HOSTCODE;
 		public ParserRule getRule() { return rule; }
@@ -291,11 +347,94 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
+	public class AssignOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "AssignOperator");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cASSIGNEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cASSIGNEqualsSignKeyword_0_0 = (Keyword)cASSIGNEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNADDEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cASSIGNADDPlusSignEqualsSignKeyword_1_0 = (Keyword)cASSIGNADDEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNSUBEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cASSIGNSUBHyphenMinusEqualsSignKeyword_2_0 = (Keyword)cASSIGNSUBEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNMULEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cASSIGNMULAsteriskEqualsSignKeyword_3_0 = (Keyword)cASSIGNMULEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNDIVEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cASSIGNDIVSolidusEqualsSignKeyword_4_0 = (Keyword)cASSIGNDIVEnumLiteralDeclaration_4.eContents().get(0);
+		
+		//enum AssignOperator returns keffects::AssignOperator:
+		//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+		public EnumRule getRule() { return rule; }
+
+		//ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/="
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//ASSIGN="="
+		public EnumLiteralDeclaration getASSIGNEnumLiteralDeclaration_0() { return cASSIGNEnumLiteralDeclaration_0; }
+
+		//"="
+		public Keyword getASSIGNEqualsSignKeyword_0_0() { return cASSIGNEqualsSignKeyword_0_0; }
+
+		//ASSIGNADD="+="
+		public EnumLiteralDeclaration getASSIGNADDEnumLiteralDeclaration_1() { return cASSIGNADDEnumLiteralDeclaration_1; }
+
+		//"+="
+		public Keyword getASSIGNADDPlusSignEqualsSignKeyword_1_0() { return cASSIGNADDPlusSignEqualsSignKeyword_1_0; }
+
+		//ASSIGNSUB="-="
+		public EnumLiteralDeclaration getASSIGNSUBEnumLiteralDeclaration_2() { return cASSIGNSUBEnumLiteralDeclaration_2; }
+
+		//"-="
+		public Keyword getASSIGNSUBHyphenMinusEqualsSignKeyword_2_0() { return cASSIGNSUBHyphenMinusEqualsSignKeyword_2_0; }
+
+		//ASSIGNMUL="*="
+		public EnumLiteralDeclaration getASSIGNMULEnumLiteralDeclaration_3() { return cASSIGNMULEnumLiteralDeclaration_3; }
+
+		//"*="
+		public Keyword getASSIGNMULAsteriskEqualsSignKeyword_3_0() { return cASSIGNMULAsteriskEqualsSignKeyword_3_0; }
+
+		//ASSIGNDIV="/="
+		public EnumLiteralDeclaration getASSIGNDIVEnumLiteralDeclaration_4() { return cASSIGNDIVEnumLiteralDeclaration_4; }
+
+		//"/="
+		public Keyword getASSIGNDIVSolidusEqualsSignKeyword_4_0() { return cASSIGNDIVSolidusEqualsSignKeyword_4_0; }
+	}
+
+	public class PostfixOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "PostfixOperator");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cPOSTFIXADDEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cPOSTFIXADDPlusSignPlusSignKeyword_0_0 = (Keyword)cPOSTFIXADDEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cPOSTFIXSUBEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cPOSTFIXSUBHyphenMinusHyphenMinusKeyword_1_0 = (Keyword)cPOSTFIXSUBEnumLiteralDeclaration_1.eContents().get(0);
+		
+		//enum PostfixOperator returns keffects::AssignOperator:
+		//	POSTFIXADD="++" | POSTFIXSUB="--";
+		public EnumRule getRule() { return rule; }
+
+		//POSTFIXADD="++" | POSTFIXSUB="--"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//POSTFIXADD="++"
+		public EnumLiteralDeclaration getPOSTFIXADDEnumLiteralDeclaration_0() { return cPOSTFIXADDEnumLiteralDeclaration_0; }
+
+		//"++"
+		public Keyword getPOSTFIXADDPlusSignPlusSignKeyword_0_0() { return cPOSTFIXADDPlusSignPlusSignKeyword_0_0; }
+
+		//POSTFIXSUB="--"
+		public EnumLiteralDeclaration getPOSTFIXSUBEnumLiteralDeclaration_1() { return cPOSTFIXSUBEnumLiteralDeclaration_1; }
+
+		//"--"
+		public Keyword getPOSTFIXSUBHyphenMinusHyphenMinusKeyword_1_0() { return cPOSTFIXSUBHyphenMinusHyphenMinusKeyword_1_0; }
+	}
+	
 	private final EffectElements pEffect;
 	private final EmissionElements pEmission;
 	private final AssignmentElements pAssignment;
+	private final PostfixEffectElements pPostfixEffect;
 	private final TextEffectElements pTextEffect;
 	private final FunctionCallEffectElements pFunctionCallEffect;
+	private final AssignOperatorElements unknownRuleAssignOperator;
+	private final PostfixOperatorElements unknownRulePostfixOperator;
 	
 	private final Grammar grammar;
 
@@ -309,8 +448,11 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pEffect = new EffectElements();
 		this.pEmission = new EmissionElements();
 		this.pAssignment = new AssignmentElements();
+		this.pPostfixEffect = new PostfixEffectElements();
 		this.pTextEffect = new TextEffectElements();
 		this.pFunctionCallEffect = new FunctionCallEffectElements();
+		this.unknownRuleAssignOperator = new AssignOperatorElements();
+		this.unknownRulePostfixOperator = new PostfixOperatorElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -342,8 +484,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
 	//Effect returns keffects::Effect:
-	//	Assignment | Emission | //	UnaryOperation | 
-	//	TextEffect | FunctionCallEffect;
+	//	Assignment | PostfixEffect | Emission | TextEffect | FunctionCallEffect;
 	public EffectElements getEffectAccess() {
 		return pEffect;
 	}
@@ -363,8 +504,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Assignment returns keffects::Assignment:
-	//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "="
-	//	expression=Expression;
+	//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
+	//	operator=AssignOperator expression=Expression;
 	public AssignmentElements getAssignmentAccess() {
 		return pAssignment;
 	}
@@ -373,17 +514,17 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAssignmentAccess().getRule();
 	}
 
-	////PostfixAddEffect returns kexpressions::Expression:
-	////    {kexpressions::OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
-	////;
-	////
-	////PostfixSubEffect returns kexpressions::Expression:
-	////    {kexpressions::OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
-	////;
-	////	 
-	////UnaryOperation returns keffects::Assignment:
-	////    (annotations+=Annotation)*    
-	////    expression = PostfixAddEffect | expression = PostfixSubEffect;
+	//PostfixEffect returns keffects::Assignment:
+	//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
+	//	operator=PostfixOperator;
+	public PostfixEffectElements getPostfixEffectAccess() {
+		return pPostfixEffect;
+	}
+	
+	public ParserRule getPostfixEffectRule() {
+		return getPostfixEffectAccess().getRule();
+	}
+
 	//TextEffect returns keffects::HostcodeEffect:
 	//	annotations+=Annotation* text=HOSTCODE;
 	public TextEffectElements getTextEffectAccess() {
@@ -403,6 +544,26 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallEffectRule() {
 		return getFunctionCallEffectAccess().getRule();
+	}
+
+	//enum AssignOperator returns keffects::AssignOperator:
+	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+	public AssignOperatorElements getAssignOperatorAccess() {
+		return unknownRuleAssignOperator;
+	}
+	
+	public EnumRule getAssignOperatorRule() {
+		return getAssignOperatorAccess().getRule();
+	}
+
+	//enum PostfixOperator returns keffects::AssignOperator:
+	//	POSTFIXADD="++" | POSTFIXSUB="--";
+	public PostfixOperatorElements getPostfixOperatorAccess() {
+		return unknownRulePostfixOperator;
+	}
+	
+	public EnumRule getPostfixOperatorRule() {
+		return getPostfixOperatorAccess().getRule();
 	}
 
 	//Root returns ecore::EObject:
@@ -613,12 +774,12 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////PostfixAddExpression returns Expression:
-	////    {OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
+	////    {OperatorExpression} subExpressions+=(PostfixAddExpression) operator=PostfixAdd
 	////    | PostfixSubExpression
 	////;
 	////
 	////PostfixSubExpression returns Expression:
-	////    {OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
+	////    {OperatorExpression} subExpressions+=(PostfixSubExpression) operator=PostfixSub
 	////    | AtomicValuedExpression
 	////;
 	//AtomicExpression returns Expression:

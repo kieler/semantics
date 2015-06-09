@@ -647,12 +647,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTextExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		////PostfixAddExpression returns Expression:
-		////    {OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
+		////    {OperatorExpression} subExpressions+=(PostfixAddExpression) operator=PostfixAdd
 		////    | PostfixSubExpression
 		////;
 		////
 		////PostfixSubExpression returns Expression:
-		////    {OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
+		////    {OperatorExpression} subExpressions+=(PostfixSubExpression) operator=PostfixSub
 		////    | AtomicValuedExpression
 		////;
 		//AtomicExpression returns Expression:
@@ -1855,12 +1855,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////PostfixAddExpression returns Expression:
-	////    {OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
+	////    {OperatorExpression} subExpressions+=(PostfixAddExpression) operator=PostfixAdd
 	////    | PostfixSubExpression
 	////;
 	////
 	////PostfixSubExpression returns Expression:
-	////    {OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
+	////    {OperatorExpression} subExpressions+=(PostfixSubExpression) operator=PostfixSub
 	////    | AtomicValuedExpression
 	////;
 	//AtomicExpression returns Expression:

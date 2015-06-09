@@ -5,6 +5,7 @@ package de.cau.cs.kieler.core.kexpressions.keffects.impl;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission;
@@ -13,7 +14,9 @@ import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -62,6 +65,13 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 	private EClass functionCallEffectEClass = null;
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum assignOperatorEEnum = null;
+
+    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -172,6 +182,15 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getAssignment_Operator() {
+        return (EAttribute)assignmentEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -217,6 +236,15 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EEnum getAssignOperator() {
+        return assignOperatorEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -249,6 +277,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         createEReference(assignmentEClass, ASSIGNMENT__VALUED_OBJECT);
         createEReference(assignmentEClass, ASSIGNMENT__EXPRESSION);
         createEReference(assignmentEClass, ASSIGNMENT__INDICES);
+        createEAttribute(assignmentEClass, ASSIGNMENT__OPERATOR);
 
         emissionEClass = createEClass(EMISSION);
         createEReference(emissionEClass, EMISSION__VALUED_OBJECT);
@@ -257,6 +286,9 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         hostcodeEffectEClass = createEClass(HOSTCODE_EFFECT);
 
         functionCallEffectEClass = createEClass(FUNCTION_CALL_EFFECT);
+
+        // Create enums
+        assignOperatorEEnum = createEEnum(ASSIGN_OPERATOR);
     }
 
 	/**
@@ -304,8 +336,9 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
         initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getAssignment_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getAssignment_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 1, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAssignment_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getAssignment_Indices(), theKExpressionsPackage.getExpression(), null, "indices", null, 0, -1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getAssignment_Operator(), this.getAssignOperator(), "operator", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(emissionEClass, Emission.class, "Emission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getEmission_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Emission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -314,6 +347,16 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         initEClass(hostcodeEffectEClass, HostcodeEffect.class, "HostcodeEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(functionCallEffectEClass, FunctionCallEffect.class, "FunctionCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        // Initialize enums and add enum literals
+        initEEnum(assignOperatorEEnum, AssignOperator.class, "AssignOperator");
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGN);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNADD);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNSUB);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNMUL);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNDIV);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.POSTFIXADD);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.POSTFIXSUB);
 
         // Create resource
         createResource(eNS_URI);

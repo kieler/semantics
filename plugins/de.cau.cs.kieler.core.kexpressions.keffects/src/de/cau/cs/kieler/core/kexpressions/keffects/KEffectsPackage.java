@@ -4,7 +4,9 @@ package de.cau.cs.kieler.core.kexpressions.keffects;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -132,13 +134,22 @@ public interface KEffectsPackage extends EPackage {
     int ASSIGNMENT__INDICES = EFFECT_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Operator</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__OPERATOR = EFFECT_FEATURE_COUNT + 3;
+
+    /**
      * The number of structural features of the '<em>Assignment</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 3;
+    int ASSIGNMENT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.EmissionImpl <em>Emission</em>}' class.
@@ -270,6 +281,16 @@ public interface KEffectsPackage extends EPackage {
     int FUNCTION_CALL_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 2;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.impl.KEffectsPackageImpl#getAssignOperator()
+     * @generated
+     */
+    int ASSIGN_OPERATOR = 5;
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.keffects.Effect <em>Effect</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -323,6 +344,17 @@ public interface KEffectsPackage extends EPackage {
     EReference getAssignment_Indices();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.keffects.Assignment#getOperator <em>Operator</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Operator</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.Assignment#getOperator()
+     * @see #getAssignment()
+     * @generated
+     */
+    EAttribute getAssignment_Operator();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.keffects.Emission <em>Emission</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -373,6 +405,16 @@ public interface KEffectsPackage extends EPackage {
      * @generated
      */
     EClass getFunctionCallEffect();
+
+    /**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Assign Operator</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+     * @generated
+     */
+    EEnum getAssignOperator();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -442,6 +484,14 @@ public interface KEffectsPackage extends EPackage {
         EReference ASSIGNMENT__INDICES = eINSTANCE.getAssignment_Indices();
 
         /**
+         * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ASSIGNMENT__OPERATOR = eINSTANCE.getAssignment_Operator();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.EmissionImpl <em>Emission</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -486,6 +536,16 @@ public interface KEffectsPackage extends EPackage {
          * @generated
          */
         EClass FUNCTION_CALL_EFFECT = eINSTANCE.getFunctionCallEffect();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+         * @see de.cau.cs.kieler.core.kexpressions.keffects.impl.KEffectsPackageImpl#getAssignOperator()
+         * @generated
+         */
+        EEnum ASSIGN_OPERATOR = eINSTANCE.getAssignOperator();
 
     }
 

@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.keffects.Assignment#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.keffects.Assignment#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.keffects.Assignment#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.keffects.Assignment#getOperator <em>Operator</em>}</li>
  * </ul>
  * </p>
  *
@@ -63,7 +64,7 @@ public interface Assignment extends Effect {
      * @return the value of the '<em>Expression</em>' containment reference.
      * @see #setExpression(Expression)
      * @see de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage#getAssignment_Expression()
-     * @model containment="true" required="true"
+     * @model containment="true"
      * @generated
      */
 	Expression getExpression();
@@ -93,5 +94,34 @@ public interface Assignment extends Effect {
      * @generated
      */
 	EList<Expression> getIndices();
+
+    /**
+     * Returns the value of the '<em><b>Operator</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Operator</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Operator</em>' attribute.
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+     * @see #setOperator(AssignOperator)
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage#getAssignment_Operator()
+     * @model
+     * @generated
+     */
+    AssignOperator getOperator();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.keffects.Assignment#getOperator <em>Operator</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Operator</em>' attribute.
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+     * @see #getOperator()
+     * @generated
+     */
+    void setOperator(AssignOperator value);
 
 } // Assignment

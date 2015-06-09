@@ -5,6 +5,7 @@ package de.cau.cs.kieler.core.kexpressions.keffects.impl;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.AssignmentImpl#getOperator <em>Operator</em>}</li>
  * </ul>
  * </p>
  *
@@ -70,6 +72,26 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
 	protected EList<Expression> indices;
 
 	/**
+     * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOperator()
+     * @generated
+     * @ordered
+     */
+    protected static final AssignOperator OPERATOR_EDEFAULT = AssignOperator.ASSIGN;
+
+    /**
+     * The cached value of the '{@link #getOperator() <em>Operator</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOperator()
+     * @generated
+     * @ordered
+     */
+    protected AssignOperator operator = OPERATOR_EDEFAULT;
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -183,6 +205,27 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public AssignOperator getOperator() {
+        return operator;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setOperator(AssignOperator newOperator) {
+        AssignOperator oldOperator = operator;
+        operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.ASSIGNMENT__OPERATOR, oldOperator, operator));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -212,6 +255,8 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
                 return getExpression();
             case KEffectsPackage.ASSIGNMENT__INDICES:
                 return getIndices();
+            case KEffectsPackage.ASSIGNMENT__OPERATOR:
+                return getOperator();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -235,6 +280,9 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
                 getIndices().clear();
                 getIndices().addAll((Collection<? extends Expression>)newValue);
                 return;
+            case KEffectsPackage.ASSIGNMENT__OPERATOR:
+                setOperator((AssignOperator)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -256,6 +304,9 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
             case KEffectsPackage.ASSIGNMENT__INDICES:
                 getIndices().clear();
                 return;
+            case KEffectsPackage.ASSIGNMENT__OPERATOR:
+                setOperator(OPERATOR_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -274,8 +325,26 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
                 return expression != null;
             case KEffectsPackage.ASSIGNMENT__INDICES:
                 return indices != null && !indices.isEmpty();
+            case KEffectsPackage.ASSIGNMENT__OPERATOR:
+                return operator != OPERATOR_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (operator: ");
+        result.append(operator);
+        result.append(')');
+        return result.toString();
     }
 
 } //AssignmentImpl

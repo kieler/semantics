@@ -118,12 +118,12 @@ NegExpression returns Expression:
 ;
 
 //PostfixAddExpression returns Expression:
-//    {OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
+//    {OperatorExpression} subExpressions+=(PostfixAddExpression) operator=PostfixAdd
 //    | PostfixSubExpression
 //;
 //
 //PostfixSubExpression returns Expression:
-//    {OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
+//    {OperatorExpression} subExpressions+=(PostfixSubExpression) operator=PostfixSub
 //    | AtomicValuedExpression
 //;
   

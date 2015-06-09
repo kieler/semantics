@@ -5,6 +5,7 @@ package de.cau.cs.kieler.core.kexpressions.keffects.provider;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
@@ -19,6 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -50,6 +52,7 @@ public class AssignmentItemProvider extends EffectItemProvider {
             super.getPropertyDescriptors(object);
 
             addValuedObjectPropertyDescriptor(object);
+            addOperatorPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -72,6 +75,28 @@ public class AssignmentItemProvider extends EffectItemProvider {
                  false,
                  true,
                  null,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Operator feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addOperatorPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Assignment_operator_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Assignment_operator_feature", "_UI_Assignment_type"),
+                 KEffectsPackage.Literals.ASSIGNMENT__OPERATOR,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
     }
@@ -126,7 +151,11 @@ public class AssignmentItemProvider extends EffectItemProvider {
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_Assignment_type");
+        AssignOperator labelValue = ((Assignment)object).getOperator();
+        String label = labelValue == null ? null : labelValue.toString();
+        return label == null || label.length() == 0 ?
+            getString("_UI_Assignment_type") :
+            getString("_UI_Assignment_type") + " " + label;
     }
     
 
@@ -142,6 +171,9 @@ public class AssignmentItemProvider extends EffectItemProvider {
         updateChildren(notification);
 
         switch (notification.getFeatureID(Assignment.class)) {
+            case KEffectsPackage.ASSIGNMENT__OPERATOR:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
             case KEffectsPackage.ASSIGNMENT__INDICES:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));

@@ -5,12 +5,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Effect">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="indices" upperBound="-1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//AssignOperator"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Emission" eSuperTypes="#//Effect">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
@@ -20,4 +20,13 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HostcodeEffect" eSuperTypes="#//Effect ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TextExpression"/>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionCallEffect" eSuperTypes="#//Effect ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//FunctionCall"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="AssignOperator">
+    <eLiterals name="ASSIGN"/>
+    <eLiterals name="ASSIGNADD" value="1"/>
+    <eLiterals name="ASSIGNSUB" value="2"/>
+    <eLiterals name="ASSIGNMUL" value="3"/>
+    <eLiterals name="ASSIGNDIV" value="4"/>
+    <eLiterals name="POSTFIXADD" value="5"/>
+    <eLiterals name="POSTFIXSUB" value="6"/>
+  </eClassifiers>
 </ecore:EPackage>

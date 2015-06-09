@@ -10,8 +10,8 @@ import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 
 Effect returns keffects::Effect: 
     Assignment | 
+	PostfixEffect | 
 	Emission |
-//	UnaryOperation | 
 	TextEffect | 
 	FunctionCallEffect;
 
@@ -25,22 +25,16 @@ Assignment returns keffects::Assignment:
     (annotations+=Annotation)*    
 	valuedObject=[kexpressions::ValuedObject]
 	('[' indices+=Expression ']')*
-	 "=" expression = Expression;
+	 operator=AssignOperator expression = Expression;
 	 
 
-//PostfixAddEffect returns kexpressions::Expression:
-//    {kexpressions::OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
-//;
-//
-//PostfixSubEffect returns kexpressions::Expression:
-//    {kexpressions::OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
-//;
-//	 
-//UnaryOperation returns keffects::Assignment:
-//    (annotations+=Annotation)*    
-//    expression = PostfixAddEffect | expression = PostfixSubEffect;
+PostfixEffect returns keffects::Assignment:
+    (annotations+=Annotation)*    
+    valuedObject=[kexpressions::ValuedObject]
+    ('[' indices+=Expression ']')*
+     operator=PostfixOperator;
 
-
+	 
 TextEffect returns keffects::HostcodeEffect:
     (annotations+=Annotation)*    
  	text=HOSTCODE;
@@ -51,7 +45,11 @@ FunctionCallEffect returns keffects::FunctionCallEffect:
     '<' functionName=ExtendedID (('(' parameters += Parameter (',' parameters += Parameter)* ')')|'()')? '>';
 
 
-
+enum AssignOperator returns keffects::AssignOperator:
+    ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+    
+enum PostfixOperator returns keffects::AssignOperator:
+    POSTFIXADD="++" | POSTFIXSUB="--"; 
 
 
     

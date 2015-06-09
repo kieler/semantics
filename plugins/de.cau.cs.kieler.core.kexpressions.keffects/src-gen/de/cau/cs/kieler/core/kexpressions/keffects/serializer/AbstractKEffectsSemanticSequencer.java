@@ -123,9 +123,16 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 			}
 		else if(semanticObject.eClass().getEPackage() == KEffectsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case KEffectsPackage.ASSIGNMENT:
-				if(context == grammarAccess.getAssignmentRule() ||
-				   context == grammarAccess.getEffectRule()) {
+				if(context == grammarAccess.getAssignmentRule()) {
 					sequence_Assignment(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getEffectRule()) {
+					sequence_Assignment_Effect_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getPostfixEffectRule()) {
+					sequence_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else break;
@@ -448,9 +455,21 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* expression=Expression)
+	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=AssignOperator expression=Expression)
 	 */
 	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=AssignOperator expression=Expression) | 
+	 *         (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=PostfixOperator)
+	 *     )
+	 */
+	protected void sequence_Assignment_Effect_PostfixEffect(EObject context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -469,6 +488,15 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     (annotations+=Annotation* functionName=ExtendedID (parameters+=Parameter parameters+=Parameter*)?)
 	 */
 	protected void sequence_FunctionCallEffect(EObject context, FunctionCallEffect semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=PostfixOperator)
+	 */
+	protected void sequence_PostfixEffect(EObject context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

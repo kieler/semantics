@@ -127,9 +127,16 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 			}
 		else if(semanticObject.eClass().getEPackage() == KEffectsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case KEffectsPackage.ASSIGNMENT:
-				if(context == grammarAccess.getAssignmentRule() ||
-				   context == grammarAccess.getEffectRule()) {
+				if(context == grammarAccess.getAssignmentRule()) {
 					sequence_Assignment(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getEffectRule()) {
+					sequence_Assignment_Effect_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getPostfixEffectRule()) {
+					sequence_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else break;

@@ -295,8 +295,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
 	//Effect returns keffects::Effect:
-	//	Assignment | Emission | //	UnaryOperation | 
-	//	TextEffect | FunctionCallEffect;
+	//	Assignment | PostfixEffect | Emission | TextEffect | FunctionCallEffect;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
@@ -316,8 +315,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Assignment returns keffects::Assignment:
-	//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "="
-	//	expression=Expression;
+	//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
+	//	operator=AssignOperator expression=Expression;
 	public KEffectsGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaKEffects.getAssignmentAccess();
 	}
@@ -326,17 +325,17 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getAssignmentAccess().getRule();
 	}
 
-	////PostfixAddEffect returns kexpressions::Expression:
-	////    {kexpressions::OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
-	////;
-	////
-	////PostfixSubEffect returns kexpressions::Expression:
-	////    {kexpressions::OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
-	////;
-	////	 
-	////UnaryOperation returns keffects::Assignment:
-	////    (annotations+=Annotation)*    
-	////    expression = PostfixAddEffect | expression = PostfixSubEffect;
+	//PostfixEffect returns keffects::Assignment:
+	//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
+	//	operator=PostfixOperator;
+	public KEffectsGrammarAccess.PostfixEffectElements getPostfixEffectAccess() {
+		return gaKEffects.getPostfixEffectAccess();
+	}
+	
+	public ParserRule getPostfixEffectRule() {
+		return getPostfixEffectAccess().getRule();
+	}
+
 	//TextEffect returns keffects::HostcodeEffect:
 	//	annotations+=Annotation* text=HOSTCODE;
 	public KEffectsGrammarAccess.TextEffectElements getTextEffectAccess() {
@@ -356,6 +355,26 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallEffectRule() {
 		return getFunctionCallEffectAccess().getRule();
+	}
+
+	//enum AssignOperator returns keffects::AssignOperator:
+	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+	public KEffectsGrammarAccess.AssignOperatorElements getAssignOperatorAccess() {
+		return gaKEffects.getAssignOperatorAccess();
+	}
+	
+	public EnumRule getAssignOperatorRule() {
+		return getAssignOperatorAccess().getRule();
+	}
+
+	//enum PostfixOperator returns keffects::AssignOperator:
+	//	POSTFIXADD="++" | POSTFIXSUB="--";
+	public KEffectsGrammarAccess.PostfixOperatorElements getPostfixOperatorAccess() {
+		return gaKEffects.getPostfixOperatorAccess();
+	}
+	
+	public EnumRule getPostfixOperatorRule() {
+		return getPostfixOperatorAccess().getRule();
 	}
 
 	//Root returns ecore::EObject:
@@ -566,12 +585,12 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////PostfixAddExpression returns Expression:
-	////    {OperatorExpression} operator=PostfixAdd subExpressions+=(PostfixAddExpression)
+	////    {OperatorExpression} subExpressions+=(PostfixAddExpression) operator=PostfixAdd
 	////    | PostfixSubExpression
 	////;
 	////
 	////PostfixSubExpression returns Expression:
-	////    {OperatorExpression} operator=PostfixSub subExpressions+=(PostfixSubExpression)
+	////    {OperatorExpression} subExpressions+=(PostfixSubExpression) operator=PostfixSub
 	////    | AtomicValuedExpression
 	////;
 	//AtomicExpression returns Expression:
