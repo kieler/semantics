@@ -182,7 +182,7 @@ import com.google.common.collect.Lists;
  * }
  * </pre>
  * 
- * @author chsch
+ * @author chsch ssm
  * @kieler.design proposed by chsch
  * @kieler.rating proposed yellow by chsch
  * 
@@ -312,8 +312,13 @@ public class ModelCollectionTestRunner extends Suite {
                     + "provided paths are correct and contain model files.");
         }
 
-        // for each of the revealed model objects determine a name (the fragmentURI in case of
-        //  EObjects) and create a related child test runner
+        runTestRunnerForModelCollection(models);
+    }
+    
+    protected void runTestRunnerForModelCollection(final List<?> models) throws InitializationError {
+
+        // For each of the revealed model objects determine a name (the fragmentURI in case of
+        // EObjects) and create a related child test runner
         
         for (Object o : models) {
             String modelName = o.toString();
@@ -321,9 +326,14 @@ public class ModelCollectionTestRunner extends Suite {
                 URI uri = EcoreUtil.getURI((EObject) o);
                 modelName = uri.path() + uri.fragment();
             }
-            this.getChildren().add(
-                    new SingleModelTestRunner(getTestClass().getJavaClass(), o, modelName));
+            runTestRunnerForModel(o, modelName);
         }
+    }
+    
+    protected void runTestRunnerForModel(Object object, String modelName) throws InitializationError {
+        this.getChildren().add(
+                new SingleModelTestRunner(getTestClass().getJavaClass(), object, modelName));
+        
     }
 
     // --------------------------------------------------------------------
