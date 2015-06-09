@@ -315,7 +315,7 @@ public class ModelCollectionTestRunner extends Suite {
         runTestRunnerForModelCollection(models);
     }
     
-    protected void runTestRunnerForModelCollection(final List<?> models) throws InitializationError {
+    protected void runTestRunnerForModelCollection(final List<?> models) throws Throwable {
 
         // For each of the revealed model objects determine a name (the fragmentURI in case of
         // EObjects) and create a related child test runner
@@ -330,7 +330,7 @@ public class ModelCollectionTestRunner extends Suite {
         }
     }
     
-    protected void runTestRunnerForModel(Object object, String modelName) throws InitializationError {
+    protected void runTestRunnerForModel(Object object, String modelName) throws Throwable {
         this.getChildren().add(
                 new SingleModelTestRunner(getTestClass().getJavaClass(), object, modelName));
         
