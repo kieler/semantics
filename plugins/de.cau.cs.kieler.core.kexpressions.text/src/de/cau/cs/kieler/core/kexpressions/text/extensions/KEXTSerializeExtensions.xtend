@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.core.kexpressions.text.extensions
 
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity
 
 /**
  * @author ssm
@@ -23,5 +24,12 @@ import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeE
  */
 class KEXTSerializeExtensions extends KEffectsSerializeExtensions {
     
+    def dispatch CharSequence serialize(TestEntity entity) {
+        if (entity.effect != null) {
+        	return entity.effect.serialize
+        } else {
+        	return entity.expression.serialize
+        }
+    }
 
 }

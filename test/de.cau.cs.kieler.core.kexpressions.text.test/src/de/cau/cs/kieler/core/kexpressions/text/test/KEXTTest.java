@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.core.kexpressions.text.KEXTStandaloneSetup;
 import de.cau.cs.kieler.core.kexpressions.text.extensions.KEXTSerializeExtensions;
+import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter;
@@ -61,22 +62,31 @@ public class KEXTTest {
     }
     
     @Test
-    public void serialize(final EObject effect, String expected) {
+    public void serialize(final EObject eObject, String expected) {
         KEXTSerializeExtensions SE = Guice.createInjector().getInstance(KEXTSerializeExtensions.class);
+        TestEntity entity = (TestEntity) eObject;
         
-        String serialized = SE.serialize(effect).toString();
+        String serialized = SE.serialize(entity).toString();
+        
         if (!serialized.equals(expected)) {
-            
-            StringAnnotation checkAnnotation =
-                     (StringAnnotation) ((Effect) effect).getAnnotation(KEXTTestRunner.KEXT_CHECK_ANNOTATION);
-            
-            Assert.fail("Serialization of " + checkAnnotation.getValues().get(0) + 
+        	StringAnnotation checkAnnotation = getCheckAnnotation(entity);
+        	String assertMessage = "Serialization of " + checkAnnotation.getValues().get(0) + 
                     " was \"" + serialized + 
                     "\" but does not match expected output \"" + 
                     expected + 
-                    "\"!");
+                    "\"!";
+        	System.out.println(assertMessage);
+            Assert.fail(assertMessage);
         }
     }
     
+    
+    private StringAnnotation getCheckAnnotation(TestEntity entity) {
+    	if (entity.getEffect() != null) {
+    		return (StringAnnotation) entity.getEffect().getAnnotation(KEXTTestRunner.KEXT_CHECK_ANNOTATION);
+    	} else {
+    		return (StringAnnotation) entity.getExpression().getAnnotation(KEXTTestRunner.KEXT_CHECK_ANNOTATION);
+    	}
+    }
 
 }
