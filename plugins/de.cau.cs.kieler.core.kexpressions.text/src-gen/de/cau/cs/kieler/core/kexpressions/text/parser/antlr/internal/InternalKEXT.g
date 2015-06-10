@@ -103,20 +103,59 @@ ruleKext returns [EObject current=null]
 	    }
 
 )
-)*((
+)*(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getKextAccess().getExpressionsAnnotatedExpressionParserRuleCall_1_0_0()); 
+	        newCompositeNode(grammarAccess.getKextAccess().getEntitiesTestEntityParserRuleCall_1_0()); 
 	    }
-		lv_expressions_1_0=ruleAnnotatedExpression		{
+		lv_entities_1_0=ruleTestEntity		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getKextRule());
 	        }
        		add(
        			$current, 
-       			"expressions",
-        		lv_expressions_1_0, 
-        		"AnnotatedExpression");
+       			"entities",
+        		lv_entities_1_0, 
+        		"TestEntity");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)*)
+;
+
+
+
+
+
+// Entry rule entryRuleTestEntity
+entryRuleTestEntity returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTestEntityRule()); }
+	 iv_ruleTestEntity=ruleTestEntity 
+	 { $current=$iv_ruleTestEntity.current; } 
+	 EOF 
+;
+
+// Rule TestEntity
+ruleTestEntity returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTestEntityAccess().getEffectEffectParserRuleCall_0_0()); 
+	    }
+		lv_effect_0_0=ruleEffect		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTestEntityRule());
+	        }
+       		set(
+       			$current, 
+       			"effect",
+        		lv_effect_0_0, 
+        		"Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -125,22 +164,22 @@ ruleKext returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getKextAccess().getEffectsEffectParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getTestEntityAccess().getExpressionAnnotatedExpressionParserRuleCall_1_0()); 
 	    }
-		lv_effects_2_0=ruleEffect		{
+		lv_expression_1_0=ruleAnnotatedExpression		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getKextRule());
+	            $current = createModelElementForParent(grammarAccess.getTestEntityRule());
 	        }
-       		add(
+       		set(
        			$current, 
-       			"effects",
-        		lv_effects_2_0, 
-        		"Effect");
+       			"expression",
+        		lv_expression_1_0, 
+        		"AnnotatedExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))*)
+))
 ;
 
 

@@ -31,6 +31,7 @@ import de.cau.cs.kieler.core.kexpressions.keffects.serializer.KEffectsSemanticSe
 import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
+import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 import de.cau.cs.kieler.core.kexpressions.text.services.KEXTGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -480,6 +481,12 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 					return; 
 				}
 				else break;
+			case KextPackage.TEST_ENTITY:
+				if(context == grammarAccess.getTestEntityRule()) {
+					sequence_TestEntity(context, (TestEntity) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
@@ -513,9 +520,18 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (declarations+=Declaration* (expressions+=AnnotatedExpression | effects+=Effect)*)
+	 *     (declarations+=Declaration* entities+=TestEntity*)
 	 */
 	protected void sequence_Kext(EObject context, Kext semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (effect=Effect | expression=AnnotatedExpression)
+	 */
+	protected void sequence_TestEntity(EObject context, TestEntity semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
