@@ -529,7 +529,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (effect=Effect | expression=AnnotatedExpression)
+	 *     (expression=AnnotatedExpression | effect=Effect)
 	 */
 	protected void sequence_TestEntity(EObject context, TestEntity semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

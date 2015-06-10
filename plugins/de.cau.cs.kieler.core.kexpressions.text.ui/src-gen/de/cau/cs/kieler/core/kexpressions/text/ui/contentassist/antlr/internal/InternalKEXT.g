@@ -86,6 +86,34 @@ finally {
 
 
 
+// Entry rule entryRuleTestEntity
+entryRuleTestEntity 
+:
+{ before(grammarAccess.getTestEntityRule()); }
+	 ruleTestEntity
+{ after(grammarAccess.getTestEntityRule()); } 
+	 EOF 
+;
+
+// Rule TestEntity
+ruleTestEntity
+    @init {
+		int stackSize = keepStackSize();
+    }
+	:
+(
+{ before(grammarAccess.getTestEntityAccess().getAlternatives()); }
+(rule__TestEntity__Alternatives)
+{ after(grammarAccess.getTestEntityAccess().getAlternatives()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
 // Entry rule entryRuleAnnotatedExpression
 entryRuleAnnotatedExpression 
 :
@@ -1864,21 +1892,21 @@ finally {
 
 
 
-rule__Kext__Alternatives_1
+rule__TestEntity__Alternatives
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getKextAccess().getExpressionsAssignment_1_0()); }
-(rule__Kext__ExpressionsAssignment_1_0)
-{ after(grammarAccess.getKextAccess().getExpressionsAssignment_1_0()); }
+{ before(grammarAccess.getTestEntityAccess().getExpressionAssignment_0()); }
+(rule__TestEntity__ExpressionAssignment_0)
+{ after(grammarAccess.getTestEntityAccess().getExpressionAssignment_0()); }
 )
 
     |(
-{ before(grammarAccess.getKextAccess().getEffectsAssignment_1_1()); }
-(rule__Kext__EffectsAssignment_1_1)
-{ after(grammarAccess.getKextAccess().getEffectsAssignment_1_1()); }
+{ before(grammarAccess.getTestEntityAccess().getEffectAssignment_1()); }
+(rule__TestEntity__EffectAssignment_1)
+{ after(grammarAccess.getTestEntityAccess().getEffectAssignment_1()); }
 )
 
 ;
@@ -2630,9 +2658,9 @@ rule__Kext__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getKextAccess().getAlternatives_1()); }
-(rule__Kext__Alternatives_1)*
-{ after(grammarAccess.getKextAccess().getAlternatives_1()); }
+{ before(grammarAccess.getKextAccess().getEntitiesAssignment_1()); }
+(rule__Kext__EntitiesAssignment_1)*
+{ after(grammarAccess.getKextAccess().getEntitiesAssignment_1()); }
 )
 
 ;
@@ -9040,14 +9068,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Kext__ExpressionsAssignment_1_0
+rule__Kext__EntitiesAssignment_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getKextAccess().getExpressionsAnnotatedExpressionParserRuleCall_1_0_0()); }
-	ruleAnnotatedExpression{ after(grammarAccess.getKextAccess().getExpressionsAnnotatedExpressionParserRuleCall_1_0_0()); }
+{ before(grammarAccess.getKextAccess().getEntitiesTestEntityParserRuleCall_1_0()); }
+	ruleTestEntity{ after(grammarAccess.getKextAccess().getEntitiesTestEntityParserRuleCall_1_0()); }
 )
 
 ;
@@ -9055,14 +9083,29 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Kext__EffectsAssignment_1_1
+rule__TestEntity__ExpressionAssignment_0
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getKextAccess().getEffectsEffectParserRuleCall_1_1_0()); }
-	ruleEffect{ after(grammarAccess.getKextAccess().getEffectsEffectParserRuleCall_1_1_0()); }
+{ before(grammarAccess.getTestEntityAccess().getExpressionAnnotatedExpressionParserRuleCall_0_0()); }
+	ruleAnnotatedExpression{ after(grammarAccess.getTestEntityAccess().getExpressionAnnotatedExpressionParserRuleCall_0_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__TestEntity__EffectAssignment_1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getTestEntityAccess().getEffectEffectParserRuleCall_1_0()); }
+	ruleEffect{ after(grammarAccess.getTestEntityAccess().getEffectEffectParserRuleCall_1_0()); }
 )
 
 ;

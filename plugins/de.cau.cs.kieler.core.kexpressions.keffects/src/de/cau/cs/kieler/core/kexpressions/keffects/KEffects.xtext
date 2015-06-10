@@ -44,7 +44,7 @@ FunctionCallEffect returns keffects::FunctionCallEffect:
     (annotations+=Annotation)*    
     '<' functionName=ExtendedID (('(' parameters += Parameter (',' parameters += Parameter)* ')')|'()')? '>';
 
-
+    
 enum AssignOperator returns keffects::AssignOperator:
     ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
     

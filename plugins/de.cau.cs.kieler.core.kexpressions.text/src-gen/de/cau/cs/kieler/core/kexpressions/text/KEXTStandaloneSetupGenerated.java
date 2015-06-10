@@ -29,9 +29,6 @@ public class KEXTStandaloneSetupGenerated implements ISetup {
 	}
 	
 	public void register(Injector injector) {
-	if (!EPackage.Registry.INSTANCE.containsKey("http://kieler.cs.cau.de/kext/kext")) {
-		EPackage.Registry.INSTANCE.put("http://kieler.cs.cau.de/kext/kext", de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage.eINSTANCE);
-	}
 
 		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
 		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);

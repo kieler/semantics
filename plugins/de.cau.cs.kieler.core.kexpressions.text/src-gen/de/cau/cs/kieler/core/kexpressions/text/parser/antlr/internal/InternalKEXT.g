@@ -145,17 +145,17 @@ ruleTestEntity returns [EObject current=null]
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTestEntityAccess().getEffectEffectParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getTestEntityAccess().getExpressionAnnotatedExpressionParserRuleCall_0_0()); 
 	    }
-		lv_effect_0_0=ruleEffect		{
+		lv_expression_0_0=ruleAnnotatedExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTestEntityRule());
 	        }
        		set(
        			$current, 
-       			"effect",
-        		lv_effect_0_0, 
-        		"Effect");
+       			"expression",
+        		lv_expression_0_0, 
+        		"AnnotatedExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -164,17 +164,17 @@ ruleTestEntity returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTestEntityAccess().getExpressionAnnotatedExpressionParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getTestEntityAccess().getEffectEffectParserRuleCall_1_0()); 
 	    }
-		lv_expression_1_0=ruleAnnotatedExpression		{
+		lv_effect_1_0=ruleEffect		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTestEntityRule());
 	        }
        		set(
        			$current, 
-       			"expression",
-        		lv_expression_1_0, 
-        		"AnnotatedExpression");
+       			"effect",
+        		lv_effect_1_0, 
+        		"Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 

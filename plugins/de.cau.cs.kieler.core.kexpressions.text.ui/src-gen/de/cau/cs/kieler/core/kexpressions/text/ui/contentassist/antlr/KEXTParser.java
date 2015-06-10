@@ -37,7 +37,7 @@ public class KEXTParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getKextAccess().getAlternatives_1(), "rule__Kext__Alternatives_1");
+					put(grammarAccess.getTestEntityAccess().getAlternatives(), "rule__TestEntity__Alternatives");
 					put(grammarAccess.getDeclarationAccess().getAlternatives_5(), "rule__Declaration__Alternatives_5");
 					put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
 					put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_3(), "rule__FunctionCallEffect__Alternatives_3");
@@ -134,8 +134,9 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
 					put(grammarAccess.getKextAccess().getDeclarationsAssignment_0(), "rule__Kext__DeclarationsAssignment_0");
-					put(grammarAccess.getKextAccess().getExpressionsAssignment_1_0(), "rule__Kext__ExpressionsAssignment_1_0");
-					put(grammarAccess.getKextAccess().getEffectsAssignment_1_1(), "rule__Kext__EffectsAssignment_1_1");
+					put(grammarAccess.getKextAccess().getEntitiesAssignment_1(), "rule__Kext__EntitiesAssignment_1");
+					put(grammarAccess.getTestEntityAccess().getExpressionAssignment_0(), "rule__TestEntity__ExpressionAssignment_0");
+					put(grammarAccess.getTestEntityAccess().getEffectAssignment_1(), "rule__TestEntity__EffectAssignment_1");
 					put(grammarAccess.getAnnotatedExpressionAccess().getAnnotationsAssignment_0(), "rule__AnnotatedExpression__AnnotationsAssignment_0");
 					put(grammarAccess.getAnnotatedExpressionAccess().getExpressionAssignment_2(), "rule__AnnotatedExpression__ExpressionAssignment_2");
 					put(grammarAccess.getDeclarationAccess().getAnnotationsAssignment_0(), "rule__Declaration__AnnotationsAssignment_0");
