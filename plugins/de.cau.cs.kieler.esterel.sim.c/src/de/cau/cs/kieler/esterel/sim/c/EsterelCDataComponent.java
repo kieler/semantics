@@ -101,8 +101,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     /** The Constant KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS = "Debug Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONSS. */
-    private static final String KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS =
-            "";
+    private static final String KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS = "";
 
     /** The Constant KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS. */
     private static final int KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS = 4;
@@ -118,7 +117,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     private static final String KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS =
             "Low Level Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
-    private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS = "scl.basic, scg, codegeneration";
+    private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS =
+            "scl.basic, scg, codegeneration";
 
     /** The KiemProperty Constant for the full debug mode. */
     static final int KIEM_PROPERTY_BENCHMARK = 6;
@@ -485,6 +485,12 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
             // The following should be a state or an SCG
             EObject esterelProgramOrSCLProgram = highLeveleCompilationResult.getEObject();
+            if (!((esterelProgramOrSCLProgram instanceof Program) || (esterelProgramOrSCLProgram instanceof SCLProgram))) {
+                // compilation failed
+                throw new KiemInitializationException(
+                        "Error compiling the Esterel/SCEst (high-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view.",
+                        true, null);
+            }
 
             // String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
             // writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
@@ -495,12 +501,19 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             lowLevelContext.setCreateDummyResource(true);
             lowLevelContext.setInplace(false);
             // TODO: check
-            // lowLevelContext.setPrerequirements(true);
+            lowLevelContext.setAdvancedSelect(true);
             System.out.println("12");
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
             System.out.println("13");
 
             String cModelCCode = lowLevelCompilationResult.getString();
+            if (cModelCCode == null) {
+                // compilation failed
+                throw new KiemInitializationException(
+                        "Error compiling the Esterel/SCEst (low-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view.",
+                        true, null);
+            }
+
             System.out.println("14 " + cModelCCode);
 
             // Generate Simulation wrapper C code
