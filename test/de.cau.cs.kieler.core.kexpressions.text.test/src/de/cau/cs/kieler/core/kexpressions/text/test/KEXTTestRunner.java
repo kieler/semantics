@@ -45,6 +45,8 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
 public class KEXTTestRunner extends ModelCollectionTestRunner {
 
     public static String KEXT_CHECK_ANNOTATION = "check";
+    
+    public static String KEXT_EXPECT_ANNOTATION = "expect";
 
     /**
      * @param clazz
@@ -100,6 +102,20 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
     }
     
     private String getExpectedOutput(Object object, String objectName, List<String> textFile) {
+    	
+    	if (object instanceof TestEntity) {
+    		TestEntity entity = (TestEntity) object;
+    		StringAnnotation expectAnnotation;
+        	if (entity.getEffect() != null) {
+        		expectAnnotation = (StringAnnotation) entity.getEffect().getAnnotation(KEXTTestRunner.KEXT_EXPECT_ANNOTATION);
+        	} else {
+        		expectAnnotation = (StringAnnotation) entity.getExpression().getAnnotation(KEXTTestRunner.KEXT_EXPECT_ANNOTATION);
+        	}
+        	if (expectAnnotation != null) {
+        		return expectAnnotation.getValues().get(0);
+        	}
+    	}
+    	
         int lineCount = 0;
         while(lineCount < textFile.size()) {
             String line = textFile.get(lineCount);
