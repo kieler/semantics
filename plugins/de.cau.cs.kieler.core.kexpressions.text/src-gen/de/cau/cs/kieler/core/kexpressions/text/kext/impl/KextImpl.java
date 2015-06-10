@@ -3,10 +3,10 @@
 package de.cau.cs.kieler.core.kexpressions.text.kext.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 
+import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 
@@ -69,7 +69,7 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
    * @generated
    * @ordered
    */
-  protected EList<Expression> expressions;
+  protected EList<AnnotatedExpression> expressions;
 
   /**
    * <!-- begin-user-doc -->
@@ -125,11 +125,11 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Expression> getExpressions()
+  public EList<AnnotatedExpression> getExpressions()
   {
     if (expressions == null)
     {
-      expressions = new EObjectContainmentEList<Expression>(Expression.class, this, KextPackage.KEXT__EXPRESSIONS);
+      expressions = new EObjectContainmentEList<AnnotatedExpression>(AnnotatedExpression.class, this, KextPackage.KEXT__EXPRESSIONS);
     }
     return expressions;
   }
@@ -195,7 +195,7 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
         return;
       case KextPackage.KEXT__EXPRESSIONS:
         getExpressions().clear();
-        getExpressions().addAll((Collection<? extends Expression>)newValue);
+        getExpressions().addAll((Collection<? extends AnnotatedExpression>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

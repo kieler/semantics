@@ -161,7 +161,7 @@ FunctionCall returns FunctionCall:
 ;
 
 Parameter returns Parameter:
-    (callByReference ?= '&' (pureOutput ?= '&')?)?
+    ((pureOutput ?= '!')? callByReference ?= '&')?
     expression = Expression
 ;
 

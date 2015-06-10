@@ -3,7 +3,6 @@
 package de.cau.cs.kieler.core.kexpressions.text.kext;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 
@@ -65,7 +64,7 @@ public interface Kext extends EObject
 
   /**
    * Returns the value of the '<em><b>Expressions</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Expressions</em>' containment reference list isn't clear,
@@ -77,6 +76,6 @@ public interface Kext extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<Expression> getExpressions();
+  EList<AnnotatedExpression> getExpressions();
 
 } // Kext

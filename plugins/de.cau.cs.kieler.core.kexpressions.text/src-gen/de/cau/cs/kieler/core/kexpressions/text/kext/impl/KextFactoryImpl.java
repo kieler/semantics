@@ -65,6 +65,7 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory
     switch (eClass.getClassifierID())
     {
       case KextPackage.KEXT: return createKext();
+      case KextPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -79,6 +80,17 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory
   {
     KextImpl kext = new KextImpl();
     return kext;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AnnotatedExpression createAnnotatedExpression()
+  {
+    AnnotatedExpressionImpl annotatedExpression = new AnnotatedExpressionImpl();
+    return annotatedExpression;
   }
 
   /**

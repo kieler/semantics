@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_STRING", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'('", "')'", "'['", "']'", "'<'", "','", "'()'", "'>'", "'&'", "'@'", "'.'", "'#'", "'-'", "'=='", "'<='", "'>='", "'!='", "'pre'", "'|'", "'!'", "'+'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_STRING", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'('", "')'", "'['", "']'", "'<'", "','", "'()'", "'>'", "'!'", "'&'", "'@'", "'.'", "'#'", "'-'", "'=='", "'<='", "'>='", "'!='", "'pre'", "'|'", "'+'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'"
     };
     public static final int T__42=42;
     public static final int RULE_BOOLEAN=8;
@@ -997,7 +997,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             int alt7=2;
             int LA7_0 = input.LA(1);
 
-            if ( (LA7_0==34) ) {
+            if ( (LA7_0==35) ) {
                 alt7=1;
             }
             switch (alt7) {
@@ -1029,7 +1029,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         int alt6=2;
                         int LA6_0 = input.LA(1);
 
-                        if ( (LA6_0==34) ) {
+                        if ( (LA6_0==35) ) {
                             alt6=1;
                         }
 
@@ -1236,7 +1236,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             int alt9=2;
             int LA9_0 = input.LA(1);
 
-            if ( (LA9_0==24) ) {
+            if ( (LA9_0==25) ) {
                 alt9=1;
             }
             switch (alt9) {
@@ -1268,7 +1268,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         int alt8=2;
                         int LA8_0 = input.LA(1);
 
-                        if ( (LA8_0==24) ) {
+                        if ( (LA8_0==25) ) {
                             alt8=1;
                         }
 
@@ -1475,7 +1475,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             int alt10=2;
             int LA10_0 = input.LA(1);
 
-            if ( (LA10_0==20||LA10_0==23||(LA10_0>=29 && LA10_0<=32)) ) {
+            if ( (LA10_0==20||LA10_0==23||(LA10_0>=30 && LA10_0<=33)) ) {
                 alt10=1;
             }
             switch (alt10) {
@@ -1796,10 +1796,10 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             int alt12=2;
             int LA12_0 = input.LA(1);
 
-            if ( (LA12_0==35) ) {
+            if ( (LA12_0==24) ) {
                 alt12=1;
             }
-            else if ( ((LA12_0>=RULE_ID && LA12_0<=RULE_HOSTCODE)||LA12_0==RULE_BOOLEAN||LA12_0==16||LA12_0==20||LA12_0==33||LA12_0==40) ) {
+            else if ( ((LA12_0>=RULE_ID && LA12_0<=RULE_HOSTCODE)||LA12_0==RULE_BOOLEAN||LA12_0==16||LA12_0==20||LA12_0==34||LA12_0==40) ) {
                 alt12=2;
             }
             else {
@@ -2357,7 +2357,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                 int alt14=2;
                 int LA14_0 = input.LA(1);
 
-                if ( (LA14_0==28) ) {
+                if ( (LA14_0==29) ) {
                     alt14=1;
                 }
 
@@ -3181,10 +3181,10 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             int alt18=2;
             int LA18_0 = input.LA(1);
 
-            if ( (LA18_0==28) ) {
+            if ( (LA18_0==29) ) {
                 alt18=1;
             }
-            else if ( ((LA18_0>=RULE_ID && LA18_0<=RULE_STRING)||LA18_0==16||LA18_0==20||LA18_0==33||LA18_0==40) ) {
+            else if ( ((LA18_0>=RULE_ID && LA18_0<=RULE_STRING)||LA18_0==16||LA18_0==20||LA18_0==34||LA18_0==40) ) {
                 alt18=2;
             }
             else {
@@ -3417,7 +3417,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                 }
                 break;
             case RULE_ID:
-            case 33:
+            case 34:
             case 40:
                 {
                 alt19=2;
@@ -3931,7 +3931,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             int alt22=2;
             int LA22_0 = input.LA(1);
 
-            if ( (LA22_0==33||LA22_0==40) ) {
+            if ( (LA22_0==34||LA22_0==40) ) {
                 alt22=1;
             }
             else if ( (LA22_0==RULE_ID) ) {
@@ -3979,7 +3979,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     int alt21=2;
                     int LA21_0 = input.LA(1);
 
-                    if ( (LA21_0==33) ) {
+                    if ( (LA21_0==34) ) {
                         alt21=1;
                     }
                     else if ( (LA21_0==40) ) {
@@ -4672,45 +4672,89 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParameter"
-    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1666:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_callByReference_0_0= '&' ) ) ( (lv_pureOutput_1_0= '&' ) )? )? ( (lv_expression_2_0= ruleExpression ) ) ) ;
+    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1666:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) ;
     public final EObject ruleParameter() throws RecognitionException {
         EObject current = null;
 
-        Token lv_callByReference_0_0=null;
-        Token lv_pureOutput_1_0=null;
+        Token lv_pureOutput_0_0=null;
+        Token lv_callByReference_1_0=null;
         EObject lv_expression_2_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1669:28: ( ( ( ( (lv_callByReference_0_0= '&' ) ) ( (lv_pureOutput_1_0= '&' ) )? )? ( (lv_expression_2_0= ruleExpression ) ) ) )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1670:1: ( ( ( (lv_callByReference_0_0= '&' ) ) ( (lv_pureOutput_1_0= '&' ) )? )? ( (lv_expression_2_0= ruleExpression ) ) )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1669:28: ( ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1670:1: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
             {
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1670:1: ( ( ( (lv_callByReference_0_0= '&' ) ) ( (lv_pureOutput_1_0= '&' ) )? )? ( (lv_expression_2_0= ruleExpression ) ) )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1670:2: ( ( (lv_callByReference_0_0= '&' ) ) ( (lv_pureOutput_1_0= '&' ) )? )? ( (lv_expression_2_0= ruleExpression ) )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1670:1: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1670:2: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) )
             {
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1670:2: ( ( (lv_callByReference_0_0= '&' ) ) ( (lv_pureOutput_1_0= '&' ) )? )?
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1670:2: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )?
             int alt27=2;
             int LA27_0 = input.LA(1);
 
             if ( (LA27_0==24) ) {
+                int LA27_1 = input.LA(2);
+
+                if ( (LA27_1==25) ) {
+                    alt27=1;
+                }
+            }
+            else if ( (LA27_0==25) ) {
                 alt27=1;
             }
             switch (alt27) {
                 case 1 :
-                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1670:3: ( (lv_callByReference_0_0= '&' ) ) ( (lv_pureOutput_1_0= '&' ) )?
+                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1670:3: ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) )
                     {
-                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1670:3: ( (lv_callByReference_0_0= '&' ) )
-                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1671:1: (lv_callByReference_0_0= '&' )
+                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1670:3: ( (lv_pureOutput_0_0= '!' ) )?
+                    int alt26=2;
+                    int LA26_0 = input.LA(1);
+
+                    if ( (LA26_0==24) ) {
+                        alt26=1;
+                    }
+                    switch (alt26) {
+                        case 1 :
+                            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1671:1: (lv_pureOutput_0_0= '!' )
+                            {
+                            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1671:1: (lv_pureOutput_0_0= '!' )
+                            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1672:3: lv_pureOutput_0_0= '!'
+                            {
+                            lv_pureOutput_0_0=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleParameter3560); if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
+
+                                      newLeafNode(lv_pureOutput_0_0, grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0());
+                                  
+                            }
+                            if ( state.backtracking==0 ) {
+
+                              	        if (current==null) {
+                              	            current = createModelElement(grammarAccess.getParameterRule());
+                              	        }
+                                     		setWithLastConsumed(current, "pureOutput", true, "!");
+                              	    
+                            }
+
+                            }
+
+
+                            }
+                            break;
+
+                    }
+
+                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1685:3: ( (lv_callByReference_1_0= '&' ) )
+                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1686:1: (lv_callByReference_1_0= '&' )
                     {
-                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1671:1: (lv_callByReference_0_0= '&' )
-                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1672:3: lv_callByReference_0_0= '&'
+                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1686:1: (lv_callByReference_1_0= '&' )
+                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1687:3: lv_callByReference_1_0= '&'
                     {
-                    lv_callByReference_0_0=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleParameter3560); if (state.failed) return current;
+                    lv_callByReference_1_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleParameter3592); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_callByReference_0_0, grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0_0());
+                              newLeafNode(lv_callByReference_1_0, grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_1_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -4727,50 +4771,13 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1685:2: ( (lv_pureOutput_1_0= '&' ) )?
-                    int alt26=2;
-                    int LA26_0 = input.LA(1);
-
-                    if ( (LA26_0==24) ) {
-                        alt26=1;
-                    }
-                    switch (alt26) {
-                        case 1 :
-                            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1686:1: (lv_pureOutput_1_0= '&' )
-                            {
-                            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1686:1: (lv_pureOutput_1_0= '&' )
-                            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1687:3: lv_pureOutput_1_0= '&'
-                            {
-                            lv_pureOutput_1_0=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleParameter3591); if (state.failed) return current;
-                            if ( state.backtracking==0 ) {
-
-                                      newLeafNode(lv_pureOutput_1_0, grammarAccess.getParameterAccess().getPureOutputAmpersandKeyword_0_1_0());
-                                  
-                            }
-                            if ( state.backtracking==0 ) {
-
-                              	        if (current==null) {
-                              	            current = createModelElement(grammarAccess.getParameterRule());
-                              	        }
-                                     		setWithLastConsumed(current, "pureOutput", true, "&");
-                              	    
-                            }
-
-                            }
-
-
-                            }
-                            break;
-
-                    }
-
 
                     }
                     break;
 
             }
 
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1700:5: ( (lv_expression_2_0= ruleExpression ) )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1700:4: ( (lv_expression_2_0= ruleExpression ) )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1701:1: (lv_expression_2_0= ruleExpression )
             {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1701:1: (lv_expression_2_0= ruleExpression )
@@ -5497,7 +5504,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1981:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:1981:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) )
             {
-            otherlv_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleTagAnnotation4265); if (state.failed) return current;
+            otherlv_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleTagAnnotation4265); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0());
@@ -5623,7 +5630,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2024:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEString ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )* )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2024:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEString ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEString ) ) )*
             {
-            otherlv_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleKeyStringValueAnnotation4369); if (state.failed) return current;
+            otherlv_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleKeyStringValueAnnotation4369); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -5853,7 +5860,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2107:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEString ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEString ) ) )* )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2107:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEString ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEString ) ) )*
             {
-            otherlv_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleTypedKeyStringValueAnnotation4530); if (state.failed) return current;
+            otherlv_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleTypedKeyStringValueAnnotation4530); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -6124,7 +6131,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2216:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2216:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
             {
-            otherlv_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleQuotedKeyStringValueAnnotation4736); if (state.failed) return current;
+            otherlv_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleQuotedKeyStringValueAnnotation4736); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -6342,7 +6349,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2299:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2299:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
             {
-            otherlv_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleQuotedTypedKeyStringValueAnnotation4899); if (state.failed) return current;
+            otherlv_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleQuotedTypedKeyStringValueAnnotation4899); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -6601,7 +6608,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2408:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2408:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) )
             {
-            otherlv_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleKeyBooleanValueAnnotation5107); if (state.failed) return current;
+            otherlv_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleKeyBooleanValueAnnotation5107); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -6754,7 +6761,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2469:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleInteger ) ) )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2469:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleInteger ) )
             {
-            otherlv_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleKeyIntValueAnnotation5233); if (state.failed) return current;
+            otherlv_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleKeyIntValueAnnotation5233); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -6912,7 +6919,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2530:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleFloateger ) ) )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2530:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleFloateger ) )
             {
-            otherlv_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleKeyFloatValueAnnotation5358); if (state.failed) return current;
+            otherlv_0=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleKeyFloatValueAnnotation5358); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0());
@@ -7224,7 +7231,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                 int alt33=2;
                 int LA33_0 = input.LA(1);
 
-                if ( (LA33_0==26) ) {
+                if ( (LA33_0==27) ) {
                     alt33=1;
                 }
 
@@ -7233,7 +7240,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2641:2: kw= '.' this_ID_2= RULE_ID
             	    {
-            	    kw=(Token)match(input,26,FollowSets000.FOLLOW_26_in_ruleExtendedID5639); if (state.failed) return current;
+            	    kw=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleExtendedID5639); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	              current.merge(kw);
@@ -7264,14 +7271,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             int alt34=2;
             int LA34_0 = input.LA(1);
 
-            if ( (LA34_0==27) ) {
+            if ( (LA34_0==28) ) {
                 alt34=1;
             }
             switch (alt34) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2654:2: kw= '#' this_INT_4= RULE_INT
                     {
-                    kw=(Token)match(input,27,FollowSets000.FOLLOW_27_in_ruleExtendedID5675); if (state.failed) return current;
+                    kw=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleExtendedID5675); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -7378,14 +7385,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             int alt35=2;
             int LA35_0 = input.LA(1);
 
-            if ( (LA35_0==28) ) {
+            if ( (LA35_0==29) ) {
                 alt35=1;
             }
             switch (alt35) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2688:2: kw= '-'
                     {
-                    kw=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleInteger5788); if (state.failed) return current;
+                    kw=(Token)match(input,29,FollowSets000.FOLLOW_29_in_ruleInteger5788); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -7492,14 +7499,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             int alt36=2;
             int LA36_0 = input.LA(1);
 
-            if ( (LA36_0==28) ) {
+            if ( (LA36_0==29) ) {
                 alt36=1;
             }
             switch (alt36) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2722:2: kw= '-'
                     {
-                    kw=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleFloateger5901); if (state.failed) return current;
+                    kw=(Token)match(input,29,FollowSets000.FOLLOW_29_in_ruleFloateger5901); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -7565,7 +7572,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2745:1: ( (enumLiteral_0= '==' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '!=' ) )
             int alt37=6;
             switch ( input.LA(1) ) {
-            case 29:
+            case 30:
                 {
                 alt37=1;
                 }
@@ -7575,7 +7582,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                 alt37=2;
                 }
                 break;
-            case 30:
+            case 31:
                 {
                 alt37=3;
                 }
@@ -7585,12 +7592,12 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                 alt37=4;
                 }
                 break;
-            case 31:
+            case 32:
                 {
                 alt37=5;
                 }
                 break;
-            case 32:
+            case 33:
                 {
                 alt37=6;
                 }
@@ -7610,7 +7617,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2745:2: (enumLiteral_0= '==' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2745:4: enumLiteral_0= '=='
                     {
-                    enumLiteral_0=(Token)match(input,29,FollowSets000.FOLLOW_29_in_ruleCompareOperator5977); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,30,FollowSets000.FOLLOW_30_in_ruleCompareOperator5977); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -7648,7 +7655,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2757:6: (enumLiteral_2= '<=' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2757:8: enumLiteral_2= '<='
                     {
-                    enumLiteral_2=(Token)match(input,30,FollowSets000.FOLLOW_30_in_ruleCompareOperator6011); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,31,FollowSets000.FOLLOW_31_in_ruleCompareOperator6011); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getLEQEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -7686,7 +7693,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2769:6: (enumLiteral_4= '>=' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2769:8: enumLiteral_4= '>='
                     {
-                    enumLiteral_4=(Token)match(input,31,FollowSets000.FOLLOW_31_in_ruleCompareOperator6045); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,32,FollowSets000.FOLLOW_32_in_ruleCompareOperator6045); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getGEQEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -7705,7 +7712,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2775:6: (enumLiteral_5= '!=' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2775:8: enumLiteral_5= '!='
                     {
-                    enumLiteral_5=(Token)match(input,32,FollowSets000.FOLLOW_32_in_ruleCompareOperator6062); if (state.failed) return current;
+                    enumLiteral_5=(Token)match(input,33,FollowSets000.FOLLOW_33_in_ruleCompareOperator6062); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getNEEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -7755,7 +7762,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2788:1: (enumLiteral_0= 'pre' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2788:3: enumLiteral_0= 'pre'
             {
-            enumLiteral_0=(Token)match(input,33,FollowSets000.FOLLOW_33_in_rulePreOperator6106); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,34,FollowSets000.FOLLOW_34_in_rulePreOperator6106); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getPreOperatorAccess().getPREEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -7799,7 +7806,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2801:1: (enumLiteral_0= '|' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2801:3: enumLiteral_0= '|'
             {
-            enumLiteral_0=(Token)match(input,34,FollowSets000.FOLLOW_34_in_ruleBitwiseOrOperator6149); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,35,FollowSets000.FOLLOW_35_in_ruleBitwiseOrOperator6149); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getBitwiseOrOperatorAccess().getBITWISE_OREnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -7843,7 +7850,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2814:1: (enumLiteral_0= '&' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2814:3: enumLiteral_0= '&'
             {
-            enumLiteral_0=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleBitwiseAndOperator6192); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleBitwiseAndOperator6192); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getBitwiseAndOperatorAccess().getBITWISE_ANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -7887,7 +7894,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2827:1: (enumLiteral_0= '!' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2827:3: enumLiteral_0= '!'
             {
-            enumLiteral_0=(Token)match(input,35,FollowSets000.FOLLOW_35_in_ruleNotOperator6235); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleNotOperator6235); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -7975,7 +7982,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2853:1: (enumLiteral_0= '-' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2853:3: enumLiteral_0= '-'
             {
-            enumLiteral_0=(Token)match(input,28,FollowSets000.FOLLOW_28_in_ruleSubOperator6321); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,29,FollowSets000.FOLLOW_29_in_ruleSubOperator6321); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current = grammarAccess.getSubOperatorAccess().getSUBEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -8403,8 +8410,8 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
     static final String DFA1_specialS =
         "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\2\uffff}>";
     static final String[] DFA1_transitionS = {
-            "\1\11\1\13\1\2\1\3\1\6\1\4\6\uffff\1\5\3\uffff\1\12\7\uffff"+
-            "\1\1\4\uffff\1\7\1\uffff\1\14\4\uffff\1\10",
+            "\1\11\1\13\1\2\1\3\1\6\1\4\6\uffff\1\5\3\uffff\1\12\3\uffff"+
+            "\1\14\4\uffff\1\1\4\uffff\1\7\5\uffff\1\10",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -8642,8 +8649,8 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
     static final String DFA11_specialS =
         "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\uffff}>";
     static final String[] DFA11_transitionS = {
-            "\1\11\1\13\2\1\1\6\1\1\6\uffff\1\5\3\uffff\1\12\7\uffff\1\1"+
-            "\4\uffff\1\7\1\uffff\1\14\4\uffff\1\10",
+            "\1\11\1\13\2\1\1\6\1\1\6\uffff\1\5\3\uffff\1\12\3\uffff\1\14"+
+            "\4\uffff\1\1\4\uffff\1\7\5\uffff\1\10",
             "",
             "",
             "",
@@ -8820,7 +8827,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
     static final String DFA20_specialS =
         "\4\uffff\1\0\7\uffff}>";
     static final String[] DFA20_transitionS = {
-            "\2\5\1\1\1\2\1\5\1\3\6\uffff\1\4\3\uffff\1\5\14\uffff\1\5\6"+
+            "\2\5\1\1\1\2\1\5\1\3\6\uffff\1\4\3\uffff\1\5\15\uffff\1\5\5"+
             "\uffff\1\5",
             "",
             "",
@@ -8911,27 +8918,27 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleLogicalOrExpression_in_entryRuleLogicalOrExpression392 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleLogicalOrExpression402 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression452 = new BitSet(new long[]{0x0000020000000002L});
-        public static final BitSet FOLLOW_ruleLogicalOrOperator_in_ruleLogicalOrExpression486 = new BitSet(new long[]{0x0000010A101103F0L});
+        public static final BitSet FOLLOW_ruleLogicalOrOperator_in_ruleLogicalOrExpression486 = new BitSet(new long[]{0x00000104211103F0L});
         public static final BitSet FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression507 = new BitSet(new long[]{0x0000020000000002L});
         public static final BitSet FOLLOW_ruleLogicalAndExpression_in_entryRuleLogicalAndExpression547 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleLogicalAndExpression557 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleBitwiseOrExpression_in_ruleLogicalAndExpression607 = new BitSet(new long[]{0x0000040000000002L});
-        public static final BitSet FOLLOW_ruleLogicalAndOperator_in_ruleLogicalAndExpression641 = new BitSet(new long[]{0x0000010A101103F0L});
+        public static final BitSet FOLLOW_ruleLogicalAndOperator_in_ruleLogicalAndExpression641 = new BitSet(new long[]{0x00000104211103F0L});
         public static final BitSet FOLLOW_ruleBitwiseOrExpression_in_ruleLogicalAndExpression662 = new BitSet(new long[]{0x0000040000000002L});
         public static final BitSet FOLLOW_ruleBitwiseOrExpression_in_entryRuleBitwiseOrExpression702 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleBitwiseOrExpression712 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression762 = new BitSet(new long[]{0x0000000400000002L});
-        public static final BitSet FOLLOW_ruleBitwiseOrOperator_in_ruleBitwiseOrExpression796 = new BitSet(new long[]{0x0000010A101103F0L});
-        public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression817 = new BitSet(new long[]{0x0000000400000002L});
+        public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression762 = new BitSet(new long[]{0x0000000800000002L});
+        public static final BitSet FOLLOW_ruleBitwiseOrOperator_in_ruleBitwiseOrExpression796 = new BitSet(new long[]{0x00000104211103F0L});
+        public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression817 = new BitSet(new long[]{0x0000000800000002L});
         public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_entryRuleBitwiseAndExpression857 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleBitwiseAndExpression867 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleCompareOperation_in_ruleBitwiseAndExpression917 = new BitSet(new long[]{0x0000000001000002L});
-        public static final BitSet FOLLOW_ruleBitwiseAndOperator_in_ruleBitwiseAndExpression951 = new BitSet(new long[]{0x0000010A101103F0L});
-        public static final BitSet FOLLOW_ruleCompareOperation_in_ruleBitwiseAndExpression972 = new BitSet(new long[]{0x0000000001000002L});
+        public static final BitSet FOLLOW_ruleCompareOperation_in_ruleBitwiseAndExpression917 = new BitSet(new long[]{0x0000000002000002L});
+        public static final BitSet FOLLOW_ruleBitwiseAndOperator_in_ruleBitwiseAndExpression951 = new BitSet(new long[]{0x00000104211103F0L});
+        public static final BitSet FOLLOW_ruleCompareOperation_in_ruleBitwiseAndExpression972 = new BitSet(new long[]{0x0000000002000002L});
         public static final BitSet FOLLOW_ruleCompareOperation_in_entryRuleCompareOperation1012 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleCompareOperation1022 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_ruleCompareOperation1072 = new BitSet(new long[]{0x00000001E0900002L});
-        public static final BitSet FOLLOW_ruleCompareOperator_in_ruleCompareOperation1105 = new BitSet(new long[]{0x0000010A101103F0L});
+        public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_ruleCompareOperation1072 = new BitSet(new long[]{0x00000003C0900002L});
+        public static final BitSet FOLLOW_ruleCompareOperator_in_ruleCompareOperation1105 = new BitSet(new long[]{0x00000104211103F0L});
         public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_ruleCompareOperation1126 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_entryRuleNotOrValuedExpression1164 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleNotOrValuedExpression1174 = new BitSet(new long[]{0x0000000000000002L});
@@ -8939,7 +8946,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleNotExpression_in_ruleNotOrValuedExpression1254 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleNotExpression_in_entryRuleNotExpression1289 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleNotExpression1299 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNotOperator_in_ruleNotExpression1358 = new BitSet(new long[]{0x0000010A101103F0L});
+        public static final BitSet FOLLOW_ruleNotOperator_in_ruleNotExpression1358 = new BitSet(new long[]{0x00000104211103F0L});
         public static final BitSet FOLLOW_ruleNotExpression_in_ruleNotExpression1379 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAtomicExpression_in_ruleNotExpression1411 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValuedExpression_in_entryRuleValuedExpression1446 = new BitSet(new long[]{0x0000000000000000L});
@@ -8948,38 +8955,38 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleAddExpression_in_entryRuleAddExpression1539 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleAddExpression1549 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleSubExpression_in_ruleAddExpression1599 = new BitSet(new long[]{0x0000001000000002L});
-        public static final BitSet FOLLOW_ruleAddOperator_in_ruleAddExpression1632 = new BitSet(new long[]{0x00000102101103F0L});
+        public static final BitSet FOLLOW_ruleAddOperator_in_ruleAddExpression1632 = new BitSet(new long[]{0x00000104201103F0L});
         public static final BitSet FOLLOW_ruleSubExpression_in_ruleAddExpression1653 = new BitSet(new long[]{0x0000001000000002L});
         public static final BitSet FOLLOW_ruleSubExpression_in_entryRuleSubExpression1691 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleSubExpression1701 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleMultExpression_in_ruleSubExpression1751 = new BitSet(new long[]{0x0000000010000002L});
-        public static final BitSet FOLLOW_ruleSubOperator_in_ruleSubExpression1784 = new BitSet(new long[]{0x00000102101103F0L});
-        public static final BitSet FOLLOW_ruleMultExpression_in_ruleSubExpression1805 = new BitSet(new long[]{0x0000000010000002L});
+        public static final BitSet FOLLOW_ruleMultExpression_in_ruleSubExpression1751 = new BitSet(new long[]{0x0000000020000002L});
+        public static final BitSet FOLLOW_ruleSubOperator_in_ruleSubExpression1784 = new BitSet(new long[]{0x00000104201103F0L});
+        public static final BitSet FOLLOW_ruleMultExpression_in_ruleSubExpression1805 = new BitSet(new long[]{0x0000000020000002L});
         public static final BitSet FOLLOW_ruleMultExpression_in_entryRuleMultExpression1843 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleMultExpression1853 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleDivExpression_in_ruleMultExpression1903 = new BitSet(new long[]{0x0000002000000002L});
-        public static final BitSet FOLLOW_ruleMultOperator_in_ruleMultExpression1936 = new BitSet(new long[]{0x00000102101103F0L});
+        public static final BitSet FOLLOW_ruleMultOperator_in_ruleMultExpression1936 = new BitSet(new long[]{0x00000104201103F0L});
         public static final BitSet FOLLOW_ruleDivExpression_in_ruleMultExpression1957 = new BitSet(new long[]{0x0000002000000002L});
         public static final BitSet FOLLOW_ruleDivExpression_in_entryRuleDivExpression1995 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleDivExpression2005 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleModExpression_in_ruleDivExpression2055 = new BitSet(new long[]{0x0000008000000002L});
-        public static final BitSet FOLLOW_ruleDivOperator_in_ruleDivExpression2088 = new BitSet(new long[]{0x00000102101103F0L});
+        public static final BitSet FOLLOW_ruleDivOperator_in_ruleDivExpression2088 = new BitSet(new long[]{0x00000104201103F0L});
         public static final BitSet FOLLOW_ruleModExpression_in_ruleDivExpression2109 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleModExpression_in_entryRuleModExpression2147 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleModExpression2157 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleNegExpression_in_ruleModExpression2207 = new BitSet(new long[]{0x0000004000000002L});
-        public static final BitSet FOLLOW_ruleModOperator_in_ruleModExpression2240 = new BitSet(new long[]{0x00000102101103F0L});
+        public static final BitSet FOLLOW_ruleModOperator_in_ruleModExpression2240 = new BitSet(new long[]{0x00000104201103F0L});
         public static final BitSet FOLLOW_ruleAtomicValuedExpression_in_ruleModExpression2261 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleNegExpression_in_entryRuleNegExpression2299 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleNegExpression2309 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSubOperator_in_ruleNegExpression2368 = new BitSet(new long[]{0x00000102101103F0L});
+        public static final BitSet FOLLOW_ruleSubOperator_in_ruleNegExpression2368 = new BitSet(new long[]{0x00000104201103F0L});
         public static final BitSet FOLLOW_ruleNegExpression_in_ruleNegExpression2389 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAtomicValuedExpression_in_ruleNegExpression2421 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAtomicExpression_in_entryRuleAtomicExpression2456 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleAtomicExpression2466 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleBoolValue_in_ruleAtomicExpression2516 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValuedObjectTestExpression_in_ruleAtomicExpression2546 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_ruleAtomicExpression2564 = new BitSet(new long[]{0x0000010A101103F0L});
+        public static final BitSet FOLLOW_16_in_ruleAtomicExpression2564 = new BitSet(new long[]{0x00000104211103F0L});
         public static final BitSet FOLLOW_ruleBoolExpression_in_ruleAtomicExpression2589 = new BitSet(new long[]{0x0000000000020000L});
         public static final BitSet FOLLOW_17_in_ruleAtomicExpression2600 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleFunctionCall_in_ruleAtomicExpression2632 = new BitSet(new long[]{0x0000000000000002L});
@@ -8989,7 +8996,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleIntValue_in_ruleAtomicValuedExpression2757 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleFloatValue_in_ruleAtomicValuedExpression2787 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleStringValue_in_ruleAtomicValuedExpression2817 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_ruleAtomicValuedExpression2835 = new BitSet(new long[]{0x00000102101103F0L});
+        public static final BitSet FOLLOW_16_in_ruleAtomicValuedExpression2835 = new BitSet(new long[]{0x00000104201103F0L});
         public static final BitSet FOLLOW_ruleValuedExpression_in_ruleAtomicValuedExpression2860 = new BitSet(new long[]{0x0000000000020000L});
         public static final BitSet FOLLOW_17_in_ruleAtomicValuedExpression2871 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAtomicExpression_in_ruleAtomicValuedExpression2903 = new BitSet(new long[]{0x0000000000000002L});
@@ -8997,31 +9004,31 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_EOF_in_entryRuleValuedObjectTestExpression2948 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rulePreOperator_in_ruleValuedObjectTestExpression3009 = new BitSet(new long[]{0x0000000000010000L});
         public static final BitSet FOLLOW_ruleValOperator_in_ruleValuedObjectTestExpression3028 = new BitSet(new long[]{0x0000000000010000L});
-        public static final BitSet FOLLOW_16_in_ruleValuedObjectTestExpression3043 = new BitSet(new long[]{0x0000010200000010L});
+        public static final BitSet FOLLOW_16_in_ruleValuedObjectTestExpression3043 = new BitSet(new long[]{0x0000010400000010L});
         public static final BitSet FOLLOW_ruleValuedObjectTestExpression_in_ruleValuedObjectTestExpression3064 = new BitSet(new long[]{0x0000000000020000L});
         public static final BitSet FOLLOW_17_in_ruleValuedObjectTestExpression3076 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValuedObjectReference_in_ruleValuedObjectTestExpression3108 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValuedObjectReference_in_entryRuleValuedObjectReference3143 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleValuedObjectReference3153 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_ruleValuedObjectReference3202 = new BitSet(new long[]{0x0000000000040002L});
-        public static final BitSet FOLLOW_18_in_ruleValuedObjectReference3215 = new BitSet(new long[]{0x0000010A101103F0L});
+        public static final BitSet FOLLOW_18_in_ruleValuedObjectReference3215 = new BitSet(new long[]{0x00000104211103F0L});
         public static final BitSet FOLLOW_ruleExpression_in_ruleValuedObjectReference3236 = new BitSet(new long[]{0x0000000000080000L});
         public static final BitSet FOLLOW_19_in_ruleValuedObjectReference3248 = new BitSet(new long[]{0x0000000000040002L});
         public static final BitSet FOLLOW_ruleFunctionCall_in_entryRuleFunctionCall3286 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleFunctionCall3296 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_20_in_ruleFunctionCall3333 = new BitSet(new long[]{0x0000000000000010L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleFunctionCall3354 = new BitSet(new long[]{0x0000000000C10000L});
-        public static final BitSet FOLLOW_16_in_ruleFunctionCall3368 = new BitSet(new long[]{0x0000010A111103F0L});
+        public static final BitSet FOLLOW_16_in_ruleFunctionCall3368 = new BitSet(new long[]{0x00000104231103F0L});
         public static final BitSet FOLLOW_ruleParameter_in_ruleFunctionCall3389 = new BitSet(new long[]{0x0000000000220000L});
-        public static final BitSet FOLLOW_21_in_ruleFunctionCall3402 = new BitSet(new long[]{0x0000010A111103F0L});
+        public static final BitSet FOLLOW_21_in_ruleFunctionCall3402 = new BitSet(new long[]{0x00000104231103F0L});
         public static final BitSet FOLLOW_ruleParameter_in_ruleFunctionCall3423 = new BitSet(new long[]{0x0000000000220000L});
         public static final BitSet FOLLOW_17_in_ruleFunctionCall3437 = new BitSet(new long[]{0x0000000000800000L});
         public static final BitSet FOLLOW_22_in_ruleFunctionCall3456 = new BitSet(new long[]{0x0000000000800000L});
         public static final BitSet FOLLOW_23_in_ruleFunctionCall3470 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleParameter_in_entryRuleParameter3506 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleParameter3516 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_24_in_ruleParameter3560 = new BitSet(new long[]{0x0000010A111103F0L});
-        public static final BitSet FOLLOW_24_in_ruleParameter3591 = new BitSet(new long[]{0x0000010A101103F0L});
+        public static final BitSet FOLLOW_24_in_ruleParameter3560 = new BitSet(new long[]{0x0000000002000000L});
+        public static final BitSet FOLLOW_25_in_ruleParameter3592 = new BitSet(new long[]{0x00000104211103F0L});
         public static final BitSet FOLLOW_ruleExpression_in_ruleParameter3628 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleTextExpression_in_entryRuleTextExpression3664 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleTextExpression3674 = new BitSet(new long[]{0x0000000000000002L});
@@ -9043,18 +9050,18 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_RULE_COMMENT_ANNOTATION_in_ruleCommentAnnotation4178 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleTagAnnotation_in_entryRuleTagAnnotation4218 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleTagAnnotation4228 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_25_in_ruleTagAnnotation4265 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_26_in_ruleTagAnnotation4265 = new BitSet(new long[]{0x0000000000000010L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleTagAnnotation4286 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyStringValueAnnotation_in_entryRuleKeyStringValueAnnotation4322 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyStringValueAnnotation4332 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_25_in_ruleKeyStringValueAnnotation4369 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_26_in_ruleKeyStringValueAnnotation4369 = new BitSet(new long[]{0x0000000000000010L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleKeyStringValueAnnotation4390 = new BitSet(new long[]{0x0000000000000210L});
         public static final BitSet FOLLOW_ruleEString_in_ruleKeyStringValueAnnotation4411 = new BitSet(new long[]{0x0000000000200002L});
         public static final BitSet FOLLOW_21_in_ruleKeyStringValueAnnotation4424 = new BitSet(new long[]{0x0000000000000210L});
         public static final BitSet FOLLOW_ruleEString_in_ruleKeyStringValueAnnotation4445 = new BitSet(new long[]{0x0000000000200002L});
         public static final BitSet FOLLOW_ruleTypedKeyStringValueAnnotation_in_entryRuleTypedKeyStringValueAnnotation4483 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleTypedKeyStringValueAnnotation4493 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_25_in_ruleTypedKeyStringValueAnnotation4530 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_26_in_ruleTypedKeyStringValueAnnotation4530 = new BitSet(new long[]{0x0000000000000010L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleTypedKeyStringValueAnnotation4551 = new BitSet(new long[]{0x0000000000040000L});
         public static final BitSet FOLLOW_18_in_ruleTypedKeyStringValueAnnotation4563 = new BitSet(new long[]{0x0000000000000010L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleTypedKeyStringValueAnnotation4584 = new BitSet(new long[]{0x0000000000080000L});
@@ -9064,14 +9071,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleEString_in_ruleTypedKeyStringValueAnnotation4651 = new BitSet(new long[]{0x0000000000200002L});
         public static final BitSet FOLLOW_ruleQuotedKeyStringValueAnnotation_in_entryRuleQuotedKeyStringValueAnnotation4689 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleQuotedKeyStringValueAnnotation4699 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_25_in_ruleQuotedKeyStringValueAnnotation4736 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_26_in_ruleQuotedKeyStringValueAnnotation4736 = new BitSet(new long[]{0x0000000000000010L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleQuotedKeyStringValueAnnotation4757 = new BitSet(new long[]{0x0000000000000200L});
         public static final BitSet FOLLOW_RULE_STRING_in_ruleQuotedKeyStringValueAnnotation4774 = new BitSet(new long[]{0x0000000000200002L});
         public static final BitSet FOLLOW_21_in_ruleQuotedKeyStringValueAnnotation4792 = new BitSet(new long[]{0x0000000000000200L});
         public static final BitSet FOLLOW_RULE_STRING_in_ruleQuotedKeyStringValueAnnotation4809 = new BitSet(new long[]{0x0000000000200002L});
         public static final BitSet FOLLOW_ruleQuotedTypedKeyStringValueAnnotation_in_entryRuleQuotedTypedKeyStringValueAnnotation4852 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleQuotedTypedKeyStringValueAnnotation4862 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_25_in_ruleQuotedTypedKeyStringValueAnnotation4899 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_26_in_ruleQuotedTypedKeyStringValueAnnotation4899 = new BitSet(new long[]{0x0000000000000010L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleQuotedTypedKeyStringValueAnnotation4920 = new BitSet(new long[]{0x0000000000040000L});
         public static final BitSet FOLLOW_18_in_ruleQuotedTypedKeyStringValueAnnotation4932 = new BitSet(new long[]{0x0000000000000010L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleQuotedTypedKeyStringValueAnnotation4953 = new BitSet(new long[]{0x0000000000080000L});
@@ -9081,18 +9088,18 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_RULE_STRING_in_ruleQuotedTypedKeyStringValueAnnotation5017 = new BitSet(new long[]{0x0000000000200002L});
         public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation5060 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation5070 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_25_in_ruleKeyBooleanValueAnnotation5107 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_26_in_ruleKeyBooleanValueAnnotation5107 = new BitSet(new long[]{0x0000000000000010L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleKeyBooleanValueAnnotation5128 = new BitSet(new long[]{0x0000000000000100L});
         public static final BitSet FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation5145 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyIntValueAnnotation_in_entryRuleKeyIntValueAnnotation5186 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyIntValueAnnotation5196 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_25_in_ruleKeyIntValueAnnotation5233 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_ruleKeyIntValueAnnotation5254 = new BitSet(new long[]{0x0000000010000040L});
+        public static final BitSet FOLLOW_26_in_ruleKeyIntValueAnnotation5233 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_ruleKeyIntValueAnnotation5254 = new BitSet(new long[]{0x0000000020000040L});
         public static final BitSet FOLLOW_ruleInteger_in_ruleKeyIntValueAnnotation5275 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyFloatValueAnnotation_in_entryRuleKeyFloatValueAnnotation5311 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyFloatValueAnnotation5321 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_25_in_ruleKeyFloatValueAnnotation5358 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_ruleKeyFloatValueAnnotation5379 = new BitSet(new long[]{0x0000000010000080L});
+        public static final BitSet FOLLOW_26_in_ruleKeyFloatValueAnnotation5358 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_ruleKeyFloatValueAnnotation5379 = new BitSet(new long[]{0x0000000020000080L});
         public static final BitSet FOLLOW_ruleFloateger_in_ruleKeyFloatValueAnnotation5400 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleEString_in_entryRuleEString5439 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleEString5450 = new BitSet(new long[]{0x0000000000000002L});
@@ -9100,31 +9107,31 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleEString5523 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleExtendedID_in_entryRuleExtendedID5569 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleExtendedID5580 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleExtendedID5620 = new BitSet(new long[]{0x000000000C000002L});
-        public static final BitSet FOLLOW_26_in_ruleExtendedID5639 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleExtendedID5654 = new BitSet(new long[]{0x000000000C000002L});
-        public static final BitSet FOLLOW_27_in_ruleExtendedID5675 = new BitSet(new long[]{0x0000000000000040L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleExtendedID5620 = new BitSet(new long[]{0x0000000018000002L});
+        public static final BitSet FOLLOW_27_in_ruleExtendedID5639 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleExtendedID5654 = new BitSet(new long[]{0x0000000018000002L});
+        public static final BitSet FOLLOW_28_in_ruleExtendedID5675 = new BitSet(new long[]{0x0000000000000040L});
         public static final BitSet FOLLOW_RULE_INT_in_ruleExtendedID5690 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleInteger_in_entryRuleInteger5738 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleInteger5749 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_28_in_ruleInteger5788 = new BitSet(new long[]{0x0000000000000040L});
+        public static final BitSet FOLLOW_29_in_ruleInteger5788 = new BitSet(new long[]{0x0000000000000040L});
         public static final BitSet FOLLOW_RULE_INT_in_ruleInteger5805 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleFloateger_in_entryRuleFloateger5851 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleFloateger5862 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_28_in_ruleFloateger5901 = new BitSet(new long[]{0x0000000000000080L});
+        public static final BitSet FOLLOW_29_in_ruleFloateger5901 = new BitSet(new long[]{0x0000000000000080L});
         public static final BitSet FOLLOW_RULE_FLOAT_in_ruleFloateger5918 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_29_in_ruleCompareOperator5977 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_30_in_ruleCompareOperator5977 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_20_in_ruleCompareOperator5994 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_30_in_ruleCompareOperator6011 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_31_in_ruleCompareOperator6011 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_23_in_ruleCompareOperator6028 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_31_in_ruleCompareOperator6045 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_32_in_ruleCompareOperator6062 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_33_in_rulePreOperator6106 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_34_in_ruleBitwiseOrOperator6149 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_24_in_ruleBitwiseAndOperator6192 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_35_in_ruleNotOperator6235 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_32_in_ruleCompareOperator6045 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_33_in_ruleCompareOperator6062 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_34_in_rulePreOperator6106 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_35_in_ruleBitwiseOrOperator6149 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_25_in_ruleBitwiseAndOperator6192 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_24_in_ruleNotOperator6235 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_36_in_ruleAddOperator6278 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_28_in_ruleSubOperator6321 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_29_in_ruleSubOperator6321 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_37_in_ruleMultOperator6364 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_38_in_ruleModOperator6407 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_39_in_ruleDivOperator6450 = new BitSet(new long[]{0x0000000000000002L});
@@ -9133,7 +9140,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_42_in_ruleLogicalAndOperator6579 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleBoolExpression_in_synpred1_InternalKExpressions234 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValuedExpression_in_synpred11_InternalKExpressions1224 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_synpred26_InternalKExpressions2835 = new BitSet(new long[]{0x00000102101103F0L});
+        public static final BitSet FOLLOW_16_in_synpred26_InternalKExpressions2835 = new BitSet(new long[]{0x00000104201103F0L});
         public static final BitSet FOLLOW_ruleValuedExpression_in_synpred26_InternalKExpressions2860 = new BitSet(new long[]{0x0000000000020000L});
         public static final BitSet FOLLOW_17_in_synpred26_InternalKExpressions2871 = new BitSet(new long[]{0x0000000000000002L});
     }

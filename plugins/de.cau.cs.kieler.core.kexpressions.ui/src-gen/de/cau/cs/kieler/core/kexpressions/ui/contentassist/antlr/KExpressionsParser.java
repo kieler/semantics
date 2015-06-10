@@ -139,8 +139,8 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_1(), "rule__FunctionCall__FunctionNameAssignment_1");
 					put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_1(), "rule__FunctionCall__ParametersAssignment_2_0_1");
 					put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_2_1(), "rule__FunctionCall__ParametersAssignment_2_0_2_1");
-					put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0_0(), "rule__Parameter__CallByReferenceAssignment_0_0");
-					put(grammarAccess.getParameterAccess().getPureOutputAssignment_0_1(), "rule__Parameter__PureOutputAssignment_0_1");
+					put(grammarAccess.getParameterAccess().getPureOutputAssignment_0_0(), "rule__Parameter__PureOutputAssignment_0_0");
+					put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0_1(), "rule__Parameter__CallByReferenceAssignment_0_1");
 					put(grammarAccess.getParameterAccess().getExpressionAssignment_1(), "rule__Parameter__ExpressionAssignment_1");
 					put(grammarAccess.getTextExpressionAccess().getTextAssignment(), "rule__TextExpression__TextAssignment");
 					put(grammarAccess.getIntValueAccess().getValueAssignment(), "rule__IntValue__ValueAssignment");

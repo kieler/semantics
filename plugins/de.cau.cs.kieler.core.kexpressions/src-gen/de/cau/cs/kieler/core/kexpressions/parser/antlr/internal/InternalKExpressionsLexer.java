@@ -232,10 +232,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:19:7: ( '&' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:19:9: '&'
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:19:7: ( '!' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:19:9: '!'
             {
-            match('&'); 
+            match('!'); 
 
             }
 
@@ -252,10 +252,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:20:7: ( '@' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:20:9: '@'
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:20:7: ( '&' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:20:9: '&'
             {
-            match('@'); 
+            match('&'); 
 
             }
 
@@ -272,10 +272,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:21:7: ( '.' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:21:9: '.'
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:21:7: ( '@' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:21:9: '@'
             {
-            match('.'); 
+            match('@'); 
 
             }
 
@@ -292,10 +292,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:22:7: ( '#' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:22:9: '#'
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:22:7: ( '.' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:22:9: '.'
             {
-            match('#'); 
+            match('.'); 
 
             }
 
@@ -312,10 +312,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:23:7: ( '-' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:23:9: '-'
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:23:7: ( '#' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:23:9: '#'
             {
-            match('-'); 
+            match('#'); 
 
             }
 
@@ -332,11 +332,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:24:7: ( '==' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:24:9: '=='
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:24:7: ( '-' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:24:9: '-'
             {
-            match("=="); 
-
+            match('-'); 
 
             }
 
@@ -353,10 +352,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:25:7: ( '<=' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:25:9: '<='
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:25:7: ( '==' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:25:9: '=='
             {
-            match("<="); 
+            match("=="); 
 
 
             }
@@ -374,10 +373,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:26:7: ( '>=' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:26:9: '>='
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:26:7: ( '<=' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:26:9: '<='
             {
-            match(">="); 
+            match("<="); 
 
 
             }
@@ -395,10 +394,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:27:7: ( '!=' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:27:9: '!='
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:27:7: ( '>=' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:27:9: '>='
             {
-            match("!="); 
+            match(">="); 
 
 
             }
@@ -416,10 +415,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__33;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:28:7: ( 'pre' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:28:9: 'pre'
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:28:7: ( '!=' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:28:9: '!='
             {
-            match("pre"); 
+            match("!="); 
 
 
             }
@@ -437,10 +436,11 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:29:7: ( '|' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:29:9: '|'
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:29:7: ( 'pre' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:29:9: 'pre'
             {
-            match('|'); 
+            match("pre"); 
+
 
             }
 
@@ -457,10 +457,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:30:7: ( '!' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:30:9: '!'
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:30:7: ( '|' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:30:9: '|'
             {
-            match('!'); 
+            match('|'); 
 
             }
 
@@ -1813,36 +1813,36 @@ public class InternalKExpressionsLexer extends Lexer {
         }
     }
     static final String DFA21_eotS =
-        "\1\uffff\1\40\3\uffff\1\45\1\uffff\1\50\1\52\4\uffff\1\36\1\61"+
+        "\1\uffff\1\40\3\uffff\1\45\1\uffff\1\50\1\52\1\54\4\uffff\1\36"+
         "\1\63\1\65\3\uffff\1\73\1\63\1\36\1\76\2\63\2\36\26\uffff\1\63\11"+
         "\uffff\1\63\2\uffff\1\76\1\uffff\2\63\2\uffff\1\113\2\uffff\1\114"+
         "\2\63\2\uffff\1\117\1\63\1\uffff\1\117";
     static final String DFA21_eofS =
         "\121\uffff";
     static final String DFA21_minS =
-        "\1\0\1\51\3\uffff\1\75\1\uffff\1\75\1\46\4\uffff\2\75\1\162\1\174"+
+        "\1\0\1\51\3\uffff\1\75\1\uffff\2\75\1\46\4\uffff\1\75\1\162\1\174"+
         "\3\uffff\1\52\1\141\1\0\1\56\1\162\1\141\1\0\1\101\26\uffff\1\145"+
         "\6\uffff\1\0\2\uffff\1\154\2\uffff\1\56\1\uffff\1\165\1\154\2\uffff"+
         "\1\60\2\uffff\1\60\1\145\1\163\2\uffff\1\60\1\145\1\uffff\1\60";
     static final String DFA21_maxS =
-        "\1\uffff\1\51\3\uffff\1\75\1\uffff\1\75\1\46\4\uffff\2\75\1\162"+
+        "\1\uffff\1\51\3\uffff\1\75\1\uffff\2\75\1\46\4\uffff\1\75\1\162"+
         "\1\174\3\uffff\1\57\1\141\1\uffff\1\146\1\162\1\141\1\uffff\1\172"+
         "\26\uffff\1\145\6\uffff\1\uffff\2\uffff\1\154\2\uffff\1\146\1\uffff"+
         "\1\165\1\154\2\uffff\1\172\2\uffff\1\172\1\145\1\163\2\uffff\1\172"+
         "\1\145\1\uffff\1\172";
     static final String DFA21_acceptS =
-        "\2\uffff\1\2\1\3\1\4\1\uffff\1\6\2\uffff\1\12\1\13\1\14\1\15\4"+
+        "\2\uffff\1\2\1\3\1\4\1\uffff\1\6\3\uffff\1\13\1\14\1\15\1\16\3"+
         "\uffff\1\25\1\26\1\27\10\uffff\1\43\1\45\1\46\1\7\1\1\1\2\1\3\1"+
-        "\4\1\17\1\5\1\6\1\20\1\10\1\33\1\11\1\12\1\13\1\14\1\15\1\16\1\21"+
-        "\1\24\1\uffff\1\43\1\32\1\23\1\25\1\26\1\27\1\uffff\1\44\1\30\1"+
+        "\4\1\20\1\5\1\6\1\21\1\10\1\22\1\11\1\33\1\12\1\13\1\14\1\15\1\16"+
+        "\1\17\1\uffff\1\43\1\32\1\24\1\25\1\26\1\27\1\uffff\1\44\1\30\1"+
         "\uffff\1\34\1\37\1\uffff\1\40\2\uffff\1\42\1\45\1\uffff\1\35\1\36"+
-        "\3\uffff\1\22\1\31\2\uffff\1\41\1\uffff";
+        "\3\uffff\1\23\1\31\2\uffff\1\41\1\uffff";
     static final String DFA21_specialS =
         "\1\3\25\uffff\1\2\3\uffff\1\0\36\uffff\1\1\27\uffff}>";
     static final String[] DFA21_transitionS = {
-            "\11\36\2\35\2\36\1\35\22\36\1\35\1\16\1\32\1\13\1\36\1\23\1"+
-            "\10\1\26\1\1\1\2\1\22\1\21\1\6\1\14\1\12\1\24\12\27\2\36\1\5"+
-            "\1\15\1\7\1\36\1\11\32\34\1\3\1\36\1\4\1\33\1\34\1\36\5\34\1"+
+            "\11\36\2\35\2\36\1\35\22\36\1\35\1\10\1\32\1\14\1\36\1\23\1"+
+            "\11\1\26\1\1\1\2\1\22\1\21\1\6\1\15\1\13\1\24\12\27\2\36\1\5"+
+            "\1\16\1\7\1\36\1\12\32\34\1\3\1\36\1\4\1\33\1\34\1\36\5\34\1"+
             "\31\11\34\1\17\3\34\1\30\1\34\1\25\4\34\1\36\1\20\uff83\36",
             "\1\37",
             "",
@@ -1852,12 +1852,12 @@ public class InternalKExpressionsLexer extends Lexer {
             "",
             "\1\47",
             "\1\51",
+            "\1\53",
             "",
             "",
             "",
             "",
-            "\1\57",
-            "\1\60",
+            "\1\61",
             "\1\62",
             "\1\64",
             "",
@@ -2010,19 +2010,19 @@ public class InternalKExpressionsLexer extends Lexer {
 
                         else if ( (LA21_0=='>') ) {s = 7;}
 
-                        else if ( (LA21_0=='&') ) {s = 8;}
+                        else if ( (LA21_0=='!') ) {s = 8;}
 
-                        else if ( (LA21_0=='@') ) {s = 9;}
+                        else if ( (LA21_0=='&') ) {s = 9;}
 
-                        else if ( (LA21_0=='.') ) {s = 10;}
+                        else if ( (LA21_0=='@') ) {s = 10;}
 
-                        else if ( (LA21_0=='#') ) {s = 11;}
+                        else if ( (LA21_0=='.') ) {s = 11;}
 
-                        else if ( (LA21_0=='-') ) {s = 12;}
+                        else if ( (LA21_0=='#') ) {s = 12;}
 
-                        else if ( (LA21_0=='=') ) {s = 13;}
+                        else if ( (LA21_0=='-') ) {s = 13;}
 
-                        else if ( (LA21_0=='!') ) {s = 14;}
+                        else if ( (LA21_0=='=') ) {s = 14;}
 
                         else if ( (LA21_0=='p') ) {s = 15;}
 

@@ -128,11 +128,11 @@ ruleEffect returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getEffectAccess().getTextEffectParserRuleCall_3()); 
+        newCompositeNode(grammarAccess.getEffectAccess().getHostcodeEffectParserRuleCall_3()); 
     }
-    this_TextEffect_3=ruleTextEffect
+    this_HostcodeEffect_3=ruleHostcodeEffect
     { 
-        $current = $this_TextEffect_3.current; 
+        $current = $this_HostcodeEffect_3.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -452,28 +452,28 @@ rulePostfixEffect returns [EObject current=null]
 
 
 
-// Entry rule entryRuleTextEffect
-entryRuleTextEffect returns [EObject current=null] 
+// Entry rule entryRuleHostcodeEffect
+entryRuleHostcodeEffect returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getTextEffectRule()); }
-	 iv_ruleTextEffect=ruleTextEffect 
-	 { $current=$iv_ruleTextEffect.current; } 
+	{ newCompositeNode(grammarAccess.getHostcodeEffectRule()); }
+	 iv_ruleHostcodeEffect=ruleHostcodeEffect 
+	 { $current=$iv_ruleHostcodeEffect.current; } 
 	 EOF 
 ;
 
-// Rule TextEffect
-ruleTextEffect returns [EObject current=null] 
+// Rule HostcodeEffect
+ruleHostcodeEffect returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTextEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getHostcodeEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
 	    }
 		lv_annotations_0_0=ruleAnnotation		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTextEffectRule());
+	            $current = createModelElementForParent(grammarAccess.getHostcodeEffectRule());
 	        }
        		add(
        			$current, 
@@ -488,11 +488,11 @@ ruleTextEffect returns [EObject current=null]
 (
 		lv_text_1_0=RULE_HOSTCODE
 		{
-			newLeafNode(lv_text_1_0, grammarAccess.getTextEffectAccess().getTextHOSTCODETerminalRuleCall_1_0()); 
+			newLeafNode(lv_text_1_0, grammarAccess.getHostcodeEffectAccess().getTextHOSTCODETerminalRuleCall_1_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTextEffectRule());
+	            $current = createModelElement(grammarAccess.getHostcodeEffectRule());
 	        }
        		setWithLastConsumed(
        			$current, 
@@ -2195,9 +2195,24 @@ ruleParameter returns [EObject current=null]
     @after { leaveRule(); }:
 (((
 (
-		lv_callByReference_0_0=	'&' 
+		lv_pureOutput_0_0=	'!' 
     {
-        newLeafNode(lv_callByReference_0_0, grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0_0());
+        newLeafNode(lv_pureOutput_0_0, grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getParameterRule());
+	        }
+       		setWithLastConsumed($current, "pureOutput", true, "!");
+	    }
+
+)
+)?(
+(
+		lv_callByReference_1_0=	'&' 
+    {
+        newLeafNode(lv_callByReference_1_0, grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_1_0());
     }
  
 	    {
@@ -2208,22 +2223,7 @@ ruleParameter returns [EObject current=null]
 	    }
 
 )
-)(
-(
-		lv_pureOutput_1_0=	'&' 
-    {
-        newLeafNode(lv_pureOutput_1_0, grammarAccess.getParameterAccess().getPureOutputAmpersandKeyword_0_1_0());
-    }
- 
-	    {
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getParameterRule());
-	        }
-       		setWithLastConsumed($current, "pureOutput", true, "&");
-	    }
-
-)
-)?)?(
+))?(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getParameterAccess().getExpressionExpressionParserRuleCall_1_0()); 

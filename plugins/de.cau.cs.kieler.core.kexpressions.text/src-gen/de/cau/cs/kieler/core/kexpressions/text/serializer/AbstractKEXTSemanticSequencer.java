@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.core.kexpressions.keffects.serializer.KEffectsSemanticSequencer;
+import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 import de.cau.cs.kieler.core.kexpressions.text.services.KEXTGrammarAccess;
@@ -156,8 +157,8 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 				else break;
 			case KEffectsPackage.HOSTCODE_EFFECT:
 				if(context == grammarAccess.getEffectRule() ||
-				   context == grammarAccess.getTextEffectRule()) {
-					sequence_TextEffect(context, (HostcodeEffect) semanticObject); 
+				   context == grammarAccess.getHostcodeEffectRule()) {
+					sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
 					return; 
 				}
 				else break;
@@ -467,6 +468,12 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == KextPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case KextPackage.ANNOTATED_EXPRESSION:
+				if(context == grammarAccess.getAnnotatedExpressionRule()) {
+					sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
+					return; 
+				}
+				else break;
 			case KextPackage.KEXT:
 				if(context == grammarAccess.getKextRule()) {
 					sequence_Kext(context, (Kext) semanticObject); 
@@ -476,6 +483,15 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 			}
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Constraint:
+	 *     (annotations+=Annotation* expression=Expression)
+	 */
+	protected void sequence_AnnotatedExpression(EObject context, AnnotatedExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
 	
 	/**
 	 * Constraint:
@@ -497,7 +513,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (declarations+=Declaration* (effects+=Effect | expressions+=Expression)*)
+	 *     (declarations+=Declaration* (effects+=Effect | expressions+=AnnotatedExpression)*)
 	 */
 	protected void sequence_Kext(EObject context, Kext semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

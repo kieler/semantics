@@ -101,6 +101,43 @@ public interface KextPackage extends EPackage
    */
   int KEXT_FEATURE_COUNT = 3;
 
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.AnnotatedExpressionImpl <em>Annotated Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.AnnotatedExpressionImpl
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getAnnotatedExpression()
+   * @generated
+   */
+  int ANNOTATED_EXPRESSION = 1;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATED_EXPRESSION__ANNOTATIONS = 0;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATED_EXPRESSION__EXPRESSION = 1;
+
+  /**
+   * The number of structural features of the '<em>Annotated Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATED_EXPRESSION_FEATURE_COUNT = 2;
+
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext <em>Kext</em>}'.
@@ -144,6 +181,38 @@ public interface KextPackage extends EPackage
    * @generated
    */
   EReference getKext_Expressions();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression <em>Annotated Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Annotated Expression</em>'.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression
+   * @generated
+   */
+  EClass getAnnotatedExpression();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression#getAnnotations <em>Annotations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Annotations</em>'.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression#getAnnotations()
+   * @see #getAnnotatedExpression()
+   * @generated
+   */
+  EReference getAnnotatedExpression_Annotations();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression#getExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression#getExpression()
+   * @see #getAnnotatedExpression()
+   * @generated
+   */
+  EReference getAnnotatedExpression_Expression();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -201,6 +270,32 @@ public interface KextPackage extends EPackage
      * @generated
      */
     EReference KEXT__EXPRESSIONS = eINSTANCE.getKext_Expressions();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.AnnotatedExpressionImpl <em>Annotated Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.AnnotatedExpressionImpl
+     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getAnnotatedExpression()
+     * @generated
+     */
+    EClass ANNOTATED_EXPRESSION = eINSTANCE.getAnnotatedExpression();
+
+    /**
+     * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ANNOTATED_EXPRESSION__ANNOTATIONS = eINSTANCE.getAnnotatedExpression_Annotations();
+
+    /**
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ANNOTATED_EXPRESSION__EXPRESSION = eINSTANCE.getAnnotatedExpression_Expression();
 
   }
 

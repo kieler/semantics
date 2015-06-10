@@ -32,6 +32,15 @@ public interface KextFactory extends EFactory
   Kext createKext();
 
   /**
+   * Returns a new object of class '<em>Annotated Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Annotated Expression</em>'.
+   * @generated
+   */
+  AnnotatedExpression createAnnotatedExpression();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

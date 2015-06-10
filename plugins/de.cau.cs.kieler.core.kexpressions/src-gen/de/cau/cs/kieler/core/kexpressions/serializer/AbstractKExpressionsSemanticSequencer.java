@@ -496,7 +496,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	/**
 	 * Constraint:
-	 *     ((callByReference?='&' pureOutput?='&'?)? expression=Expression)
+	 *     ((pureOutput?='!'? callByReference?='&')? expression=Expression)
 	 */
 	protected void sequence_Parameter(EObject context, Parameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

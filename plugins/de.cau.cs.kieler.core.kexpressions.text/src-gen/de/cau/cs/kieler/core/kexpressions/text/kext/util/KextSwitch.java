@@ -79,6 +79,13 @@ public class KextSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case KextPackage.ANNOTATED_EXPRESSION:
+      {
+        AnnotatedExpression annotatedExpression = (AnnotatedExpression)theEObject;
+        T result = caseAnnotatedExpression(annotatedExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default: return defaultCase(theEObject);
     }
   }
@@ -95,6 +102,22 @@ public class KextSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseKext(Kext object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Annotated Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Annotated Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAnnotatedExpression(AnnotatedExpression object)
   {
     return null;
   }

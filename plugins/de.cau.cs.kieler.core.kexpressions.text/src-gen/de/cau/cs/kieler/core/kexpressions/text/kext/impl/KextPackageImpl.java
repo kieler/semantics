@@ -2,10 +2,13 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text.kext.impl;
 
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 
+import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextFactory;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
@@ -30,6 +33,13 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
    * @generated
    */
   private EClass kextEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass annotatedExpressionEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -142,6 +152,36 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getAnnotatedExpression()
+  {
+    return annotatedExpressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAnnotatedExpression_Annotations()
+  {
+    return (EReference)annotatedExpressionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAnnotatedExpression_Expression()
+  {
+    return (EReference)annotatedExpressionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public KextFactory getKextFactory()
   {
     return (KextFactory)getEFactoryInstance();
@@ -171,6 +211,10 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
     createEReference(kextEClass, KEXT__DECLARATIONS);
     createEReference(kextEClass, KEXT__EFFECTS);
     createEReference(kextEClass, KEXT__EXPRESSIONS);
+
+    annotatedExpressionEClass = createEClass(ANNOTATED_EXPRESSION);
+    createEReference(annotatedExpressionEClass, ANNOTATED_EXPRESSION__ANNOTATIONS);
+    createEReference(annotatedExpressionEClass, ANNOTATED_EXPRESSION__EXPRESSION);
   }
 
   /**
@@ -200,6 +244,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
     // Obtain other dependent packages
     KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
     KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
+    AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
 
     // Create type parameters
 
@@ -211,7 +256,11 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
     initEClass(kextEClass, Kext.class, "Kext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getKext_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getKext_Effects(), theKEffectsPackage.getEffect(), null, "effects", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getKext_Expressions(), theKExpressionsPackage.getExpression(), null, "expressions", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getKext_Expressions(), this.getAnnotatedExpression(), null, "expressions", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(annotatedExpressionEClass, AnnotatedExpression.class, "AnnotatedExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAnnotatedExpression_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, AnnotatedExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAnnotatedExpression_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, AnnotatedExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

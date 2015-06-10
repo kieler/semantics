@@ -152,8 +152,8 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				else break;
 			case KEffectsPackage.HOSTCODE_EFFECT:
 				if(context == grammarAccess.getEffectRule() ||
-				   context == grammarAccess.getTextEffectRule()) {
-					sequence_TextEffect(context, (HostcodeEffect) semanticObject); 
+				   context == grammarAccess.getHostcodeEffectRule()) {
+					sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
 					return; 
 				}
 				else break;
@@ -494,18 +494,18 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=PostfixOperator)
+	 *     (annotations+=Annotation* text=HOSTCODE)
 	 */
-	protected void sequence_PostfixEffect(EObject context, Assignment semanticObject) {
+	protected void sequence_HostcodeEffect(EObject context, HostcodeEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* text=HOSTCODE)
+	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=PostfixOperator)
 	 */
-	protected void sequence_TextEffect(EObject context, HostcodeEffect semanticObject) {
+	protected void sequence_PostfixEffect(EObject context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }

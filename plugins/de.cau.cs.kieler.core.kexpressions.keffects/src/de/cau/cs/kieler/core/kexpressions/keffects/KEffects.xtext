@@ -12,7 +12,7 @@ Effect returns keffects::Effect:
     Assignment | 
 	PostfixEffect | 
 	Emission |
-	TextEffect | 
+	HostcodeEffect | 
 	FunctionCallEffect;
 
 		
@@ -35,7 +35,7 @@ PostfixEffect returns keffects::Assignment:
      operator=PostfixOperator;
 
 	 
-TextEffect returns keffects::HostcodeEffect:
+HostcodeEffect returns keffects::HostcodeEffect:
     (annotations+=Annotation)*    
  	text=HOSTCODE;
  	

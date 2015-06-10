@@ -1669,9 +1669,24 @@ ruleParameter returns [EObject current=null]
     @after { leaveRule(); }:
 (((
 (
-		lv_callByReference_0_0=	'&' 
+		lv_pureOutput_0_0=	'!' 
     {
-        newLeafNode(lv_callByReference_0_0, grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0_0());
+        newLeafNode(lv_pureOutput_0_0, grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getParameterRule());
+	        }
+       		setWithLastConsumed($current, "pureOutput", true, "!");
+	    }
+
+)
+)?(
+(
+		lv_callByReference_1_0=	'&' 
+    {
+        newLeafNode(lv_callByReference_1_0, grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_1_0());
     }
  
 	    {
@@ -1682,22 +1697,7 @@ ruleParameter returns [EObject current=null]
 	    }
 
 )
-)(
-(
-		lv_pureOutput_1_0=	'&' 
-    {
-        newLeafNode(lv_pureOutput_1_0, grammarAccess.getParameterAccess().getPureOutputAmpersandKeyword_0_1_0());
-    }
- 
-	    {
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getParameterRule());
-	        }
-       		setWithLastConsumed($current, "pureOutput", true, "&");
-	    }
-
-)
-)?)?(
+))?(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getParameterAccess().getExpressionExpressionParserRuleCall_1_0()); 

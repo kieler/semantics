@@ -6,13 +6,17 @@
     modelName="KEXT" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.core.kexpressions.text.edit"
     editorPluginID="de.cau.cs.kieler.core.kexpressions.text.editor" runtimeVersion="2.10"
-    usedGenPackages="platform:/resource/de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.genmodel#//keffects platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    usedGenPackages="platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.genmodel#//keffects platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <genPackages prefix="Kext" basePackage="de.cau.cs.kieler.core.kexpressions.text"
       disposableProviderFactory="true" ecorePackage="platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#/">
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//Kext">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//Kext/declarations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//Kext/effects"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//Kext/expressions"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//AnnotatedExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//AnnotatedExpression/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//AnnotatedExpression/expression"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

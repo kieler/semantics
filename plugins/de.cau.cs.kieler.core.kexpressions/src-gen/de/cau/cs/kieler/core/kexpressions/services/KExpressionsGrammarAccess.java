@@ -911,34 +911,34 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Parameter");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
-		private final Assignment cCallByReferenceAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
-		private final Keyword cCallByReferenceAmpersandKeyword_0_0_0 = (Keyword)cCallByReferenceAssignment_0_0.eContents().get(0);
-		private final Assignment cPureOutputAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final Keyword cPureOutputAmpersandKeyword_0_1_0 = (Keyword)cPureOutputAssignment_0_1.eContents().get(0);
+		private final Assignment cPureOutputAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
+		private final Keyword cPureOutputExclamationMarkKeyword_0_0_0 = (Keyword)cPureOutputAssignment_0_0.eContents().get(0);
+		private final Assignment cCallByReferenceAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final Keyword cCallByReferenceAmpersandKeyword_0_1_0 = (Keyword)cCallByReferenceAssignment_0_1.eContents().get(0);
 		private final Assignment cExpressionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cExpressionExpressionParserRuleCall_1_0 = (RuleCall)cExpressionAssignment_1.eContents().get(0);
 		
 		//Parameter:
-		//	(callByReference?="&" pureOutput?="&"?)? expression=Expression;
+		//	(pureOutput?="!"? callByReference?="&")? expression=Expression;
 		public ParserRule getRule() { return rule; }
 
-		//(callByReference?="&" pureOutput?="&"?)? expression=Expression
+		//(pureOutput?="!"? callByReference?="&")? expression=Expression
 		public Group getGroup() { return cGroup; }
 
-		//(callByReference?="&" pureOutput?="&"?)?
+		//(pureOutput?="!"? callByReference?="&")?
 		public Group getGroup_0() { return cGroup_0; }
 
+		//pureOutput?="!"?
+		public Assignment getPureOutputAssignment_0_0() { return cPureOutputAssignment_0_0; }
+
+		//"!"
+		public Keyword getPureOutputExclamationMarkKeyword_0_0_0() { return cPureOutputExclamationMarkKeyword_0_0_0; }
+
 		//callByReference?="&"
-		public Assignment getCallByReferenceAssignment_0_0() { return cCallByReferenceAssignment_0_0; }
+		public Assignment getCallByReferenceAssignment_0_1() { return cCallByReferenceAssignment_0_1; }
 
 		//"&"
-		public Keyword getCallByReferenceAmpersandKeyword_0_0_0() { return cCallByReferenceAmpersandKeyword_0_0_0; }
-
-		//pureOutput?="&"?
-		public Assignment getPureOutputAssignment_0_1() { return cPureOutputAssignment_0_1; }
-
-		//"&"
-		public Keyword getPureOutputAmpersandKeyword_0_1_0() { return cPureOutputAmpersandKeyword_0_1_0; }
+		public Keyword getCallByReferenceAmpersandKeyword_0_1_0() { return cCallByReferenceAmpersandKeyword_0_1_0; }
 
 		//expression=Expression
 		public Assignment getExpressionAssignment_1() { return cExpressionAssignment_1; }
@@ -1917,7 +1917,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Parameter:
-	//	(callByReference?="&" pureOutput?="&"?)? expression=Expression;
+	//	(pureOutput?="!"? callByReference?="&")? expression=Expression;
 	public ParameterElements getParameterAccess() {
 		return pParameter;
 	}

@@ -15,10 +15,15 @@ generate kext "http://kieler.cs.cau.de/kext/kext"
 Kext:
     (declarations += Declaration)*
     ((effects += Effect) |
-        ('expression' expressions += Expression)
+     (expressions += AnnotatedExpression)
     )*
 ;
 
+AnnotatedExpression:
+    (annotations+=Annotation)*
+    'expression'
+    (expression = Expression)
+;
     
 Declaration returns kexpressions::Declaration:
     (annotations+=Annotation)*

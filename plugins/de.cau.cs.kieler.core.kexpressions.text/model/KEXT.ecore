@@ -9,7 +9,13 @@
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Effect"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        eType="#//AnnotatedExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AnnotatedExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotation"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

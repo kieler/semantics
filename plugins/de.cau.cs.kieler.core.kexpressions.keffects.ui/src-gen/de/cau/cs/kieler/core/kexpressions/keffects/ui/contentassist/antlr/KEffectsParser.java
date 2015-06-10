@@ -64,7 +64,7 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getGroup_2(), "rule__Assignment__Group_2__0");
 					put(grammarAccess.getPostfixEffectAccess().getGroup(), "rule__PostfixEffect__Group__0");
 					put(grammarAccess.getPostfixEffectAccess().getGroup_2(), "rule__PostfixEffect__Group_2__0");
-					put(grammarAccess.getTextEffectAccess().getGroup(), "rule__TextEffect__Group__0");
+					put(grammarAccess.getHostcodeEffectAccess().getGroup(), "rule__HostcodeEffect__Group__0");
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup(), "rule__FunctionCallEffect__Group__0");
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup_3_0(), "rule__FunctionCallEffect__Group_3_0__0");
 					put(grammarAccess.getFunctionCallEffectAccess().getGroup_3_0_2(), "rule__FunctionCallEffect__Group_3_0_2__0");
@@ -134,8 +134,8 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPostfixEffectAccess().getValuedObjectAssignment_1(), "rule__PostfixEffect__ValuedObjectAssignment_1");
 					put(grammarAccess.getPostfixEffectAccess().getIndicesAssignment_2_1(), "rule__PostfixEffect__IndicesAssignment_2_1");
 					put(grammarAccess.getPostfixEffectAccess().getOperatorAssignment_3(), "rule__PostfixEffect__OperatorAssignment_3");
-					put(grammarAccess.getTextEffectAccess().getAnnotationsAssignment_0(), "rule__TextEffect__AnnotationsAssignment_0");
-					put(grammarAccess.getTextEffectAccess().getTextAssignment_1(), "rule__TextEffect__TextAssignment_1");
+					put(grammarAccess.getHostcodeEffectAccess().getAnnotationsAssignment_0(), "rule__HostcodeEffect__AnnotationsAssignment_0");
+					put(grammarAccess.getHostcodeEffectAccess().getTextAssignment_1(), "rule__HostcodeEffect__TextAssignment_1");
 					put(grammarAccess.getFunctionCallEffectAccess().getAnnotationsAssignment_0(), "rule__FunctionCallEffect__AnnotationsAssignment_0");
 					put(grammarAccess.getFunctionCallEffectAccess().getFunctionNameAssignment_2(), "rule__FunctionCallEffect__FunctionNameAssignment_2");
 					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_3_0_1(), "rule__FunctionCallEffect__ParametersAssignment_3_0_1");
@@ -171,8 +171,8 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_1(), "rule__FunctionCall__FunctionNameAssignment_1");
 					put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_1(), "rule__FunctionCall__ParametersAssignment_2_0_1");
 					put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_2_1(), "rule__FunctionCall__ParametersAssignment_2_0_2_1");
-					put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0_0(), "rule__Parameter__CallByReferenceAssignment_0_0");
-					put(grammarAccess.getParameterAccess().getPureOutputAssignment_0_1(), "rule__Parameter__PureOutputAssignment_0_1");
+					put(grammarAccess.getParameterAccess().getPureOutputAssignment_0_0(), "rule__Parameter__PureOutputAssignment_0_0");
+					put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0_1(), "rule__Parameter__CallByReferenceAssignment_0_1");
 					put(grammarAccess.getParameterAccess().getExpressionAssignment_1(), "rule__Parameter__ExpressionAssignment_1");
 					put(grammarAccess.getTextExpressionAccess().getTextAssignment(), "rule__TextExpression__TextAssignment");
 					put(grammarAccess.getIntValueAccess().getValueAssignment(), "rule__IntValue__ValueAssignment");
