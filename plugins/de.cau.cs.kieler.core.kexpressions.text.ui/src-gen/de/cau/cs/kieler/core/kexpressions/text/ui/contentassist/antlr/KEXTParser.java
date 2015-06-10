@@ -134,8 +134,8 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
 					put(grammarAccess.getKextAccess().getDeclarationsAssignment_0(), "rule__Kext__DeclarationsAssignment_0");
-					put(grammarAccess.getKextAccess().getEffectsAssignment_1_0(), "rule__Kext__EffectsAssignment_1_0");
-					put(grammarAccess.getKextAccess().getExpressionsAssignment_1_1(), "rule__Kext__ExpressionsAssignment_1_1");
+					put(grammarAccess.getKextAccess().getExpressionsAssignment_1_0(), "rule__Kext__ExpressionsAssignment_1_0");
+					put(grammarAccess.getKextAccess().getEffectsAssignment_1_1(), "rule__Kext__EffectsAssignment_1_1");
 					put(grammarAccess.getAnnotatedExpressionAccess().getAnnotationsAssignment_0(), "rule__AnnotatedExpression__AnnotationsAssignment_0");
 					put(grammarAccess.getAnnotatedExpressionAccess().getExpressionAssignment_2(), "rule__AnnotatedExpression__ExpressionAssignment_2");
 					put(grammarAccess.getDeclarationAccess().getAnnotationsAssignment_0(), "rule__Declaration__AnnotationsAssignment_0");

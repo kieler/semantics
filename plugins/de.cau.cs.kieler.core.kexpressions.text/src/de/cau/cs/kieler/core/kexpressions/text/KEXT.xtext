@@ -14,8 +14,8 @@ generate kext "http://kieler.cs.cau.de/kext/kext"
 
 Kext:
     (declarations += Declaration)*
-    ((effects += Effect) |
-     (expressions += AnnotatedExpression)
+    ((expressions += AnnotatedExpression) |
+        (effects += Effect)
     )*
 ;
 

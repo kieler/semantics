@@ -106,17 +106,17 @@ ruleKext returns [EObject current=null]
 )*((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getKextAccess().getEffectsEffectParserRuleCall_1_0_0()); 
+	        newCompositeNode(grammarAccess.getKextAccess().getExpressionsAnnotatedExpressionParserRuleCall_1_0_0()); 
 	    }
-		lv_effects_1_0=ruleEffect		{
+		lv_expressions_1_0=ruleAnnotatedExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getKextRule());
 	        }
        		add(
        			$current, 
-       			"effects",
-        		lv_effects_1_0, 
-        		"Effect");
+       			"expressions",
+        		lv_expressions_1_0, 
+        		"AnnotatedExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -125,17 +125,17 @@ ruleKext returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getKextAccess().getExpressionsAnnotatedExpressionParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getKextAccess().getEffectsEffectParserRuleCall_1_1_0()); 
 	    }
-		lv_expressions_2_0=ruleAnnotatedExpression		{
+		lv_effects_2_0=ruleEffect		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getKextRule());
 	        }
        		add(
        			$current, 
-       			"expressions",
-        		lv_expressions_2_0, 
-        		"AnnotatedExpression");
+       			"effects",
+        		lv_effects_2_0, 
+        		"Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 

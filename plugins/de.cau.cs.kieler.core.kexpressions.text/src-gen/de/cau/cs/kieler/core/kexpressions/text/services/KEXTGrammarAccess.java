@@ -26,16 +26,16 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cDeclarationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cDeclarationsDeclarationParserRuleCall_0_0 = (RuleCall)cDeclarationsAssignment_0.eContents().get(0);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Assignment cEffectsAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
-		private final RuleCall cEffectsEffectParserRuleCall_1_0_0 = (RuleCall)cEffectsAssignment_1_0.eContents().get(0);
-		private final Assignment cExpressionsAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
-		private final RuleCall cExpressionsAnnotatedExpressionParserRuleCall_1_1_0 = (RuleCall)cExpressionsAssignment_1_1.eContents().get(0);
+		private final Assignment cExpressionsAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
+		private final RuleCall cExpressionsAnnotatedExpressionParserRuleCall_1_0_0 = (RuleCall)cExpressionsAssignment_1_0.eContents().get(0);
+		private final Assignment cEffectsAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_1_1_0 = (RuleCall)cEffectsAssignment_1_1.eContents().get(0);
 		
 		//Kext:
-		//	declarations+=Declaration* (effects+=Effect | expressions+=AnnotatedExpression)*;
+		//	declarations+=Declaration* (expressions+=AnnotatedExpression | effects+=Effect)*;
 		public ParserRule getRule() { return rule; }
 
-		//declarations+=Declaration* (effects+=Effect | expressions+=AnnotatedExpression)*
+		//declarations+=Declaration* (expressions+=AnnotatedExpression | effects+=Effect)*
 		public Group getGroup() { return cGroup; }
 
 		//declarations+=Declaration*
@@ -44,20 +44,20 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		//Declaration
 		public RuleCall getDeclarationsDeclarationParserRuleCall_0_0() { return cDeclarationsDeclarationParserRuleCall_0_0; }
 
-		//(effects+=Effect | expressions+=AnnotatedExpression)*
+		//(expressions+=AnnotatedExpression | effects+=Effect)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//effects+=Effect
-		public Assignment getEffectsAssignment_1_0() { return cEffectsAssignment_1_0; }
-
-		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_1_0_0() { return cEffectsEffectParserRuleCall_1_0_0; }
-
 		//expressions+=AnnotatedExpression
-		public Assignment getExpressionsAssignment_1_1() { return cExpressionsAssignment_1_1; }
+		public Assignment getExpressionsAssignment_1_0() { return cExpressionsAssignment_1_0; }
 
 		//AnnotatedExpression
-		public RuleCall getExpressionsAnnotatedExpressionParserRuleCall_1_1_0() { return cExpressionsAnnotatedExpressionParserRuleCall_1_1_0; }
+		public RuleCall getExpressionsAnnotatedExpressionParserRuleCall_1_0_0() { return cExpressionsAnnotatedExpressionParserRuleCall_1_0_0; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_1_1() { return cEffectsAssignment_1_1; }
+
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_1_1_0() { return cEffectsEffectParserRuleCall_1_1_0; }
 	}
 
 	public class AnnotatedExpressionElements extends AbstractParserRuleElementFinder {
@@ -329,7 +329,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Kext:
-	//	declarations+=Declaration* (effects+=Effect | expressions+=AnnotatedExpression)*;
+	//	declarations+=Declaration* (expressions+=AnnotatedExpression | effects+=Effect)*;
 	public KextElements getKextAccess() {
 		return pKext;
 	}

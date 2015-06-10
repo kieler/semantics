@@ -5721,7 +5721,7 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kext__Alternatives_1"
-    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1867:1: rule__Kext__Alternatives_1 : ( ( ( rule__Kext__EffectsAssignment_1_0 ) ) | ( ( rule__Kext__ExpressionsAssignment_1_1 ) ) );
+    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1867:1: rule__Kext__Alternatives_1 : ( ( ( rule__Kext__ExpressionsAssignment_1_0 ) ) | ( ( rule__Kext__EffectsAssignment_1_1 ) ) );
     public final void rule__Kext__Alternatives_1() throws RecognitionException {
         int rule__Kext__Alternatives_1_StartIndex = input.index();
 
@@ -5729,24 +5729,24 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 122) ) { return ; }
-            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1871:1: ( ( ( rule__Kext__EffectsAssignment_1_0 ) ) | ( ( rule__Kext__ExpressionsAssignment_1_1 ) ) )
+            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1871:1: ( ( ( rule__Kext__ExpressionsAssignment_1_0 ) ) | ( ( rule__Kext__EffectsAssignment_1_1 ) ) )
             int alt1=2;
             alt1 = dfa1.predict(input);
             switch (alt1) {
                 case 1 :
-                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1872:1: ( ( rule__Kext__EffectsAssignment_1_0 ) )
+                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1872:1: ( ( rule__Kext__ExpressionsAssignment_1_0 ) )
                     {
-                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1872:1: ( ( rule__Kext__EffectsAssignment_1_0 ) )
-                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1873:1: ( rule__Kext__EffectsAssignment_1_0 )
+                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1872:1: ( ( rule__Kext__ExpressionsAssignment_1_0 ) )
+                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1873:1: ( rule__Kext__ExpressionsAssignment_1_0 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getKextAccess().getEffectsAssignment_1_0()); 
+                       before(grammarAccess.getKextAccess().getExpressionsAssignment_1_0()); 
                     }
-                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1874:1: ( rule__Kext__EffectsAssignment_1_0 )
-                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1874:2: rule__Kext__EffectsAssignment_1_0
+                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1874:1: ( rule__Kext__ExpressionsAssignment_1_0 )
+                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1874:2: rule__Kext__ExpressionsAssignment_1_0
                     {
-                    pushFollow(FOLLOW_rule__Kext__EffectsAssignment_1_0_in_rule__Kext__Alternatives_13863);
-                    rule__Kext__EffectsAssignment_1_0();
+                    pushFollow(FOLLOW_rule__Kext__ExpressionsAssignment_1_0_in_rule__Kext__Alternatives_13863);
+                    rule__Kext__ExpressionsAssignment_1_0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -5754,7 +5754,7 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getKextAccess().getEffectsAssignment_1_0()); 
+                       after(grammarAccess.getKextAccess().getExpressionsAssignment_1_0()); 
                     }
 
                     }
@@ -5763,19 +5763,19 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1878:6: ( ( rule__Kext__ExpressionsAssignment_1_1 ) )
+                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1878:6: ( ( rule__Kext__EffectsAssignment_1_1 ) )
                     {
-                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1878:6: ( ( rule__Kext__ExpressionsAssignment_1_1 ) )
-                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1879:1: ( rule__Kext__ExpressionsAssignment_1_1 )
+                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1878:6: ( ( rule__Kext__EffectsAssignment_1_1 ) )
+                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1879:1: ( rule__Kext__EffectsAssignment_1_1 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getKextAccess().getExpressionsAssignment_1_1()); 
+                       before(grammarAccess.getKextAccess().getEffectsAssignment_1_1()); 
                     }
-                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1880:1: ( rule__Kext__ExpressionsAssignment_1_1 )
-                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1880:2: rule__Kext__ExpressionsAssignment_1_1
+                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1880:1: ( rule__Kext__EffectsAssignment_1_1 )
+                    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1880:2: rule__Kext__EffectsAssignment_1_1
                     {
-                    pushFollow(FOLLOW_rule__Kext__ExpressionsAssignment_1_1_in_rule__Kext__Alternatives_13881);
-                    rule__Kext__ExpressionsAssignment_1_1();
+                    pushFollow(FOLLOW_rule__Kext__EffectsAssignment_1_1_in_rule__Kext__Alternatives_13881);
+                    rule__Kext__EffectsAssignment_1_1();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -5783,7 +5783,7 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getKextAccess().getExpressionsAssignment_1_1()); 
+                       after(grammarAccess.getKextAccess().getEffectsAssignment_1_1()); 
                     }
 
                     }
@@ -28021,79 +28021,31 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Kext__DeclarationsAssignment_0"
 
 
-    // $ANTLR start "rule__Kext__EffectsAssignment_1_0"
-    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9043:1: rule__Kext__EffectsAssignment_1_0 : ( ruleEffect ) ;
-    public final void rule__Kext__EffectsAssignment_1_0() throws RecognitionException {
-        int rule__Kext__EffectsAssignment_1_0_StartIndex = input.index();
+    // $ANTLR start "rule__Kext__ExpressionsAssignment_1_0"
+    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9043:1: rule__Kext__ExpressionsAssignment_1_0 : ( ruleAnnotatedExpression ) ;
+    public final void rule__Kext__ExpressionsAssignment_1_0() throws RecognitionException {
+        int rule__Kext__ExpressionsAssignment_1_0_StartIndex = input.index();
 
         		int stackSize = keepStackSize();
             
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 554) ) { return ; }
-            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9047:1: ( ( ruleEffect ) )
-            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9048:1: ( ruleEffect )
+            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9047:1: ( ( ruleAnnotatedExpression ) )
+            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9048:1: ( ruleAnnotatedExpression )
             {
-            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9048:1: ( ruleEffect )
-            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9049:1: ruleEffect
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getKextAccess().getEffectsEffectParserRuleCall_1_0_0()); 
-            }
-            pushFollow(FOLLOW_ruleEffect_in_rule__Kext__EffectsAssignment_1_018397);
-            ruleEffect();
-
-            state._fsp--;
-            if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getKextAccess().getEffectsEffectParserRuleCall_1_0_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-            if ( state.backtracking>0 ) { memoize(input, 554, rule__Kext__EffectsAssignment_1_0_StartIndex); }
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Kext__EffectsAssignment_1_0"
-
-
-    // $ANTLR start "rule__Kext__ExpressionsAssignment_1_1"
-    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9058:1: rule__Kext__ExpressionsAssignment_1_1 : ( ruleAnnotatedExpression ) ;
-    public final void rule__Kext__ExpressionsAssignment_1_1() throws RecognitionException {
-        int rule__Kext__ExpressionsAssignment_1_1_StartIndex = input.index();
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            if ( state.backtracking>0 && alreadyParsedRule(input, 555) ) { return ; }
-            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9062:1: ( ( ruleAnnotatedExpression ) )
-            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9063:1: ( ruleAnnotatedExpression )
-            {
-            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9063:1: ( ruleAnnotatedExpression )
-            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9064:1: ruleAnnotatedExpression
+            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9048:1: ( ruleAnnotatedExpression )
+            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9049:1: ruleAnnotatedExpression
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getKextAccess().getExpressionsAnnotatedExpressionParserRuleCall_1_1_0()); 
+               before(grammarAccess.getKextAccess().getExpressionsAnnotatedExpressionParserRuleCall_1_0_0()); 
             }
-            pushFollow(FOLLOW_ruleAnnotatedExpression_in_rule__Kext__ExpressionsAssignment_1_118428);
+            pushFollow(FOLLOW_ruleAnnotatedExpression_in_rule__Kext__ExpressionsAssignment_1_018397);
             ruleAnnotatedExpression();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getKextAccess().getExpressionsAnnotatedExpressionParserRuleCall_1_1_0()); 
+               after(grammarAccess.getKextAccess().getExpressionsAnnotatedExpressionParserRuleCall_1_0_0()); 
             }
 
             }
@@ -28107,14 +28059,62 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
             recover(input,re);
         }
         finally {
-            if ( state.backtracking>0 ) { memoize(input, 555, rule__Kext__ExpressionsAssignment_1_1_StartIndex); }
+            if ( state.backtracking>0 ) { memoize(input, 554, rule__Kext__ExpressionsAssignment_1_0_StartIndex); }
 
             	restoreStackSize(stackSize);
 
         }
         return ;
     }
-    // $ANTLR end "rule__Kext__ExpressionsAssignment_1_1"
+    // $ANTLR end "rule__Kext__ExpressionsAssignment_1_0"
+
+
+    // $ANTLR start "rule__Kext__EffectsAssignment_1_1"
+    // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9058:1: rule__Kext__EffectsAssignment_1_1 : ( ruleEffect ) ;
+    public final void rule__Kext__EffectsAssignment_1_1() throws RecognitionException {
+        int rule__Kext__EffectsAssignment_1_1_StartIndex = input.index();
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            if ( state.backtracking>0 && alreadyParsedRule(input, 555) ) { return ; }
+            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9062:1: ( ( ruleEffect ) )
+            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9063:1: ( ruleEffect )
+            {
+            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9063:1: ( ruleEffect )
+            // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:9064:1: ruleEffect
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getKextAccess().getEffectsEffectParserRuleCall_1_1_0()); 
+            }
+            pushFollow(FOLLOW_ruleEffect_in_rule__Kext__EffectsAssignment_1_118428);
+            ruleEffect();
+
+            state._fsp--;
+            if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getKextAccess().getEffectsEffectParserRuleCall_1_1_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+            if ( state.backtracking>0 ) { memoize(input, 555, rule__Kext__EffectsAssignment_1_1_StartIndex); }
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Kext__EffectsAssignment_1_1"
 
 
     // $ANTLR start "rule__AnnotatedExpression__AnnotationsAssignment_0"
@@ -32724,20 +32724,20 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
 
     // $ANTLR start synpred1_InternalKEXT
     public final void synpred1_InternalKEXT_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1872:1: ( ( ( rule__Kext__EffectsAssignment_1_0 ) ) )
-        // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1872:1: ( ( rule__Kext__EffectsAssignment_1_0 ) )
+        // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1872:1: ( ( ( rule__Kext__ExpressionsAssignment_1_0 ) ) )
+        // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1872:1: ( ( rule__Kext__ExpressionsAssignment_1_0 ) )
         {
-        // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1872:1: ( ( rule__Kext__EffectsAssignment_1_0 ) )
-        // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1873:1: ( rule__Kext__EffectsAssignment_1_0 )
+        // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1872:1: ( ( rule__Kext__ExpressionsAssignment_1_0 ) )
+        // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1873:1: ( rule__Kext__ExpressionsAssignment_1_0 )
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getKextAccess().getEffectsAssignment_1_0()); 
+           before(grammarAccess.getKextAccess().getExpressionsAssignment_1_0()); 
         }
-        // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1874:1: ( rule__Kext__EffectsAssignment_1_0 )
-        // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1874:2: rule__Kext__EffectsAssignment_1_0
+        // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1874:1: ( rule__Kext__ExpressionsAssignment_1_0 )
+        // ../de.cau.cs.kieler.core.kexpressions.text.ui/src-gen/de/cau/cs/kieler/core/kexpressions/text/ui/contentassist/antlr/internal/InternalKEXT.g:1874:2: rule__Kext__ExpressionsAssignment_1_0
         {
-        pushFollow(FOLLOW_rule__Kext__EffectsAssignment_1_0_in_synpred1_InternalKEXT3863);
-        rule__Kext__EffectsAssignment_1_0();
+        pushFollow(FOLLOW_rule__Kext__ExpressionsAssignment_1_0_in_synpred1_InternalKEXT3863);
+        rule__Kext__ExpressionsAssignment_1_0();
 
         state._fsp--;
         if (state.failed) return ;
@@ -33054,64 +33054,64 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
     static final String DFA1_eofS =
         "\110\uffff";
     static final String DFA1_minS =
-        "\3\5\2\uffff\1\4\1\5\1\6\1\5\1\6\4\5\1\0\2\4\1\70\1\4\1\5\1\6\1"+
-        "\4\2\5\2\70\3\5\1\6\2\5\2\4\1\5\1\6\1\4\2\5\1\4\7\5\1\6\1\5\1\6"+
-        "\6\5\1\6\2\4\1\70\1\5\1\6\3\5\1\6\1\4\2\5\2\70\1\5";
+        "\3\5\2\uffff\1\4\1\5\1\6\1\5\1\6\2\5\1\0\2\5\2\4\1\70\1\4\1\5\1"+
+        "\6\1\4\2\5\2\70\3\5\1\6\2\5\2\4\1\5\1\6\1\4\2\5\1\4\7\5\1\6\1\5"+
+        "\1\6\6\5\1\6\2\4\1\70\1\5\1\6\3\5\1\6\1\4\2\5\2\70\1\5";
     static final String DFA1_maxS =
-        "\2\74\1\5\2\uffff\1\76\1\5\1\6\1\5\1\7\4\74\1\0\1\76\1\74\1\76"+
-        "\2\5\1\6\1\5\1\74\2\76\1\70\1\74\1\76\1\5\1\6\1\74\4\5\1\6\1\5\1"+
-        "\76\1\74\1\76\2\74\2\76\2\74\1\5\1\6\1\5\1\7\4\74\1\76\1\5\1\6\1"+
-        "\76\1\74\1\76\1\5\1\6\1\76\1\74\1\5\1\6\1\5\1\76\1\74\1\76\1\70"+
-        "\1\74";
+        "\2\74\1\5\2\uffff\1\76\1\5\1\6\1\5\1\7\2\74\1\0\2\74\1\76\1\74"+
+        "\1\76\2\5\1\6\1\5\1\74\2\76\1\70\1\74\1\76\1\5\1\6\1\74\4\5\1\6"+
+        "\1\5\1\76\1\74\1\76\2\74\2\76\2\74\1\5\1\6\1\5\1\7\2\74\1\76\2\74"+
+        "\1\5\1\6\1\76\1\74\1\76\1\5\1\6\1\76\1\74\1\5\1\6\1\5\1\76\1\74"+
+        "\1\76\1\70\1\74";
     static final String DFA1_acceptS =
         "\3\uffff\1\1\1\2\103\uffff";
     static final String DFA1_specialS =
-        "\16\uffff\1\0\71\uffff}>";
+        "\14\uffff\1\0\73\uffff}>";
     static final String[] DFA1_transitionS = {
-            "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\16\uffff\1\4\7\uffff"+
+            "\1\4\2\uffff\1\4\1\uffff\1\1\32\uffff\1\4\16\uffff\1\3\7\uffff"+
             "\1\2",
-            "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\16\uffff\1\4\7\uffff"+
+            "\1\4\2\uffff\1\4\1\uffff\1\1\32\uffff\1\4\16\uffff\1\3\7\uffff"+
             "\1\2",
             "\1\5",
             "",
             "",
-            "\1\15\1\16\1\14\1\12\1\3\1\13\1\1\12\uffff\1\11\17\uffff\1"+
-            "\3\16\uffff\1\4\2\uffff\1\10\4\uffff\1\2\1\6\1\7",
+            "\1\13\1\14\1\16\1\12\1\4\1\15\1\1\12\uffff\1\11\17\uffff\1"+
+            "\4\16\uffff\1\3\2\uffff\1\10\4\uffff\1\2\1\6\1\7",
             "\1\17",
             "\1\20",
             "\1\21",
-            "\1\14\1\12",
-            "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\16\uffff\1\4\7\uffff"+
+            "\1\16\1\12",
+            "\1\4\2\uffff\1\4\1\uffff\1\1\32\uffff\1\4\16\uffff\1\3\7\uffff"+
             "\1\2",
-            "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\16\uffff\1\4\7\uffff"+
-            "\1\2",
-            "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\16\uffff\1\4\7\uffff"+
-            "\1\2",
-            "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\16\uffff\1\4\1\uffff"+
+            "\1\4\2\uffff\1\4\1\uffff\1\1\32\uffff\1\4\16\uffff\1\3\1\uffff"+
             "\1\22\5\uffff\1\2",
             "\1\uffff",
-            "\1\15\1\16\1\14\1\12\1\3\1\13\1\1\12\uffff\1\11\17\uffff\1"+
-            "\3\16\uffff\1\4\2\uffff\1\10\4\uffff\1\2\1\6\1\7",
-            "\1\15\1\16\1\14\1\12\1\3\1\13\1\1\12\uffff\1\11\17\uffff\1"+
-            "\3\16\uffff\1\4\2\uffff\1\10\4\uffff\1\2",
+            "\1\4\2\uffff\1\4\1\uffff\1\1\32\uffff\1\4\16\uffff\1\3\7\uffff"+
+            "\1\2",
+            "\1\4\2\uffff\1\4\1\uffff\1\1\32\uffff\1\4\16\uffff\1\3\7\uffff"+
+            "\1\2",
+            "\1\13\1\14\1\16\1\12\1\4\1\15\1\1\12\uffff\1\11\17\uffff\1"+
+            "\4\16\uffff\1\3\2\uffff\1\10\4\uffff\1\2\1\6\1\7",
+            "\1\13\1\14\1\16\1\12\1\4\1\15\1\1\12\uffff\1\11\17\uffff\1"+
+            "\4\16\uffff\1\3\2\uffff\1\10\4\uffff\1\2",
             "\1\25\4\uffff\1\23\1\24",
             "\1\26\1\27",
             "\1\30",
             "\1\31",
             "\1\32\1\33",
-            "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\16\uffff\1\4\1\uffff"+
+            "\1\4\2\uffff\1\4\1\uffff\1\1\32\uffff\1\4\16\uffff\1\3\1\uffff"+
             "\1\22\5\uffff\1\2",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\40\5\uffff\1\37\1\34\1\35",
             "\1\25\4\uffff\1\23\1\24",
             "\1\25",
-            "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\16\uffff\1\4\1\uffff"+
+            "\1\4\2\uffff\1\4\1\uffff\1\1\32\uffff\1\4\16\uffff\1\3\1\uffff"+
             "\1\41\5\uffff\1\2",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\44\5\uffff\1\37\1\42\1\43",
             "\1\45",
             "\1\46",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\7"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\7"+
             "\uffff\1\37",
             "\1\47",
             "\1\50\1\27",
@@ -33119,61 +33119,61 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
             "\1\53",
             "\1\54",
             "\1\55\1\52",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\40\5\uffff\1\37\1\34\1\35",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\40\5\uffff\1\37",
-            "\1\65\1\66\1\64\1\62\1\3\1\63\1\36\12\uffff\1\61\17\uffff"+
-            "\1\3\16\uffff\1\4\2\uffff\1\60\4\uffff\1\37\1\56\1\57",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\63\1\64\1\66\1\62\1\4\1\65\1\36\12\uffff\1\61\17\uffff"+
+            "\1\4\16\uffff\1\3\2\uffff\1\60\4\uffff\1\37\1\56\1\57",
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\40\5\uffff\1\37",
-            "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\16\uffff\1\4\1\uffff"+
+            "\1\4\2\uffff\1\4\1\uffff\1\1\32\uffff\1\4\16\uffff\1\3\1\uffff"+
             "\1\41\5\uffff\1\2",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\44\5\uffff\1\37\1\67\1\70",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\44\5\uffff\1\37\1\42\1\43",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\44\5\uffff\1\37",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\44\5\uffff\1\37",
             "\1\71",
             "\1\72",
             "\1\73",
-            "\1\64\1\62",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\7"+
+            "\1\66\1\62",
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\7"+
             "\uffff\1\37",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\7"+
-            "\uffff\1\37",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\7"+
-            "\uffff\1\37",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\40\5\uffff\1\37",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\22\uffff\7\3\1\uffff\1\3\16"+
-            "\uffff\1\4\1\uffff\1\40\1\3\4\uffff\1\37\1\74\1\75",
+            "\1\4\2\uffff\1\4\1\uffff\1\36\22\uffff\7\4\1\uffff\1\4\16"+
+            "\uffff\1\3\1\uffff\1\40\1\4\4\uffff\1\37\1\74\1\75",
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\7"+
+            "\uffff\1\37",
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\7"+
+            "\uffff\1\37",
             "\1\76",
             "\1\77",
-            "\1\65\1\66\1\64\1\62\1\3\1\63\1\36\12\uffff\1\61\17\uffff"+
-            "\1\3\16\uffff\1\4\2\uffff\1\60\4\uffff\1\37\1\56\1\57",
-            "\1\65\1\66\1\64\1\62\1\3\1\63\1\36\12\uffff\1\61\17\uffff"+
-            "\1\3\16\uffff\1\4\2\uffff\1\60\4\uffff\1\37",
+            "\1\63\1\64\1\66\1\62\1\4\1\65\1\36\12\uffff\1\61\17\uffff"+
+            "\1\4\16\uffff\1\3\2\uffff\1\60\4\uffff\1\37\1\56\1\57",
+            "\1\63\1\64\1\66\1\62\1\4\1\65\1\36\12\uffff\1\61\17\uffff"+
+            "\1\4\16\uffff\1\3\2\uffff\1\60\4\uffff\1\37",
             "\1\102\4\uffff\1\100\1\101",
             "\1\103",
             "\1\104",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\44\5\uffff\1\37\1\67\1\70",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\44\5\uffff\1\37",
             "\1\105",
             "\1\106",
             "\1\107\1\33",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\40\5\uffff\1\37\1\74\1\75",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\40\5\uffff\1\37",
             "\1\102\4\uffff\1\100\1\101",
             "\1\102",
-            "\1\3\2\uffff\1\3\1\uffff\1\36\32\uffff\1\3\16\uffff\1\4\1"+
+            "\1\4\2\uffff\1\4\1\uffff\1\36\32\uffff\1\4\16\uffff\1\3\1"+
             "\uffff\1\44\5\uffff\1\37"
     };
 
@@ -33207,17 +33207,17 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
             this.transition = DFA1_transition;
         }
         public String getDescription() {
-            return "1867:1: rule__Kext__Alternatives_1 : ( ( ( rule__Kext__EffectsAssignment_1_0 ) ) | ( ( rule__Kext__ExpressionsAssignment_1_1 ) ) );";
+            return "1867:1: rule__Kext__Alternatives_1 : ( ( ( rule__Kext__ExpressionsAssignment_1_0 ) ) | ( ( rule__Kext__EffectsAssignment_1_1 ) ) );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA1_14 = input.LA(1);
+                        int LA1_12 = input.LA(1);
 
                          
-                        int index1_14 = input.index();
+                        int index1_12 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred1_InternalKEXT()) ) {s = 3;}
@@ -33225,7 +33225,7 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 4;}
 
                          
-                        input.seek(index1_14);
+                        input.seek(index1_12);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -33888,7 +33888,7 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
     static final String DFA22_maxS =
         "\2\103\1\5\2\uffff\1\103\1\5\1\6\1\7\5\103\1\5\2\103\2\5\1\6\1"+
         "\5\1\76\5\103\1\5\1\6\2\5\1\6\1\103\1\5\1\76\1\70\5\103\2\5\1\6"+
-        "\2\5\1\6\1\7\4\103\1\5\10\103\1\76\1\5\1\6\1\5\1\6\1\5\2\103\1\76"+
+        "\2\5\1\6\1\7\5\103\1\5\7\103\1\76\1\5\1\6\1\5\1\6\1\5\2\103\1\76"+
         "\1\70\1\103";
     static final String DFA22_acceptS =
         "\3\uffff\1\2\1\1\103\uffff";
@@ -33902,12 +33902,12 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
             "\1\5",
             "",
             "",
-            "\1\13\1\14\1\11\1\15\1\3\1\12\1\1\12\uffff\1\10\17\uffff\1"+
+            "\1\13\1\14\1\11\1\12\1\3\1\15\1\1\12\uffff\1\10\17\uffff\1"+
             "\3\4\uffff\7\4\3\uffff\1\3\2\uffff\1\16\4\uffff\1\2\1\6\1\7"+
             "\5\4",
             "\1\17",
             "\1\20",
-            "\1\11\1\15",
+            "\1\11\1\12",
             "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\4\uffff\7\4\3\uffff"+
             "\1\3\7\uffff\1\2\2\uffff\5\4",
             "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\4\uffff\7\4\3\uffff"+
@@ -33920,10 +33920,10 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
             "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\4\uffff\7\4\3\uffff"+
             "\1\3\7\uffff\1\2\2\uffff\5\4",
             "\1\25",
-            "\1\13\1\14\1\11\1\15\1\3\1\12\1\1\12\uffff\1\10\17\uffff\1"+
+            "\1\13\1\14\1\11\1\12\1\3\1\15\1\1\12\uffff\1\10\17\uffff\1"+
             "\3\4\uffff\7\4\3\uffff\1\3\2\uffff\1\16\4\uffff\1\2\1\6\1\7"+
             "\5\4",
-            "\1\13\1\14\1\11\1\15\1\3\1\12\1\1\12\uffff\1\10\17\uffff\1"+
+            "\1\13\1\14\1\11\1\12\1\3\1\15\1\1\12\uffff\1\10\17\uffff\1"+
             "\3\4\uffff\7\4\3\uffff\1\3\2\uffff\1\16\4\uffff\1\2\2\uffff"+
             "\5\4",
             "\1\26\1\27",
@@ -33959,8 +33959,8 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
             "\1\3\1\uffff\1\24\5\uffff\1\41\1\36\1\37\5\4",
             "\1\3\2\uffff\1\3\1\uffff\1\40\32\uffff\1\3\4\uffff\7\4\3\uffff"+
             "\1\3\1\uffff\1\24\5\uffff\1\41\2\uffff\5\4",
-            "\1\62\1\63\1\60\1\65\1\3\1\61\1\40\12\uffff\1\57\17\uffff"+
-            "\1\3\4\uffff\7\4\3\uffff\1\3\2\uffff\1\64\4\uffff\1\41\1\55"+
+            "\1\62\1\63\1\60\1\61\1\3\1\64\1\40\12\uffff\1\57\17\uffff"+
+            "\1\3\4\uffff\7\4\3\uffff\1\3\2\uffff\1\65\4\uffff\1\41\1\55"+
             "\1\56\5\4",
             "\1\66\1\67",
             "\1\70",
@@ -33968,7 +33968,7 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
             "\1\72\1\67",
             "\1\73",
             "\1\74",
-            "\1\60\1\65",
+            "\1\60\1\61",
             "\1\3\2\uffff\1\3\1\uffff\1\40\32\uffff\1\3\4\uffff\7\4\3\uffff"+
             "\1\3\7\uffff\1\41\2\uffff\5\4",
             "\1\3\2\uffff\1\3\1\uffff\1\40\32\uffff\1\3\4\uffff\7\4\3\uffff"+
@@ -33977,9 +33977,9 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
             "\1\3\1\uffff\1\24\5\uffff\1\41\2\uffff\5\4",
             "\1\3\2\uffff\1\3\1\uffff\1\40\22\uffff\7\3\1\uffff\1\3\4\uffff"+
             "\7\4\3\uffff\1\3\1\uffff\1\24\1\3\4\uffff\1\41\1\22\1\23\5\4",
-            "\1\75",
             "\1\3\2\uffff\1\3\1\uffff\1\40\32\uffff\1\3\4\uffff\7\4\3\uffff"+
             "\1\3\7\uffff\1\41\2\uffff\5\4",
+            "\1\75",
             "\1\3\2\uffff\1\3\1\uffff\1\1\32\uffff\1\3\4\uffff\7\4\3\uffff"+
             "\1\3\1\uffff\1\51\5\uffff\1\2\2\uffff\5\4",
             "\1\3\2\uffff\1\3\1\uffff\1\40\32\uffff\1\3\4\uffff\7\4\3\uffff"+
@@ -33990,11 +33990,11 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
             "\1\3\1\uffff\1\54\5\uffff\1\41\2\uffff\5\4",
             "\1\3\2\uffff\1\3\1\uffff\1\40\32\uffff\1\3\4\uffff\7\4\3\uffff"+
             "\1\3\1\uffff\1\54\5\uffff\1\41\2\uffff\5\4",
-            "\1\62\1\63\1\60\1\65\1\3\1\61\1\40\12\uffff\1\57\17\uffff"+
-            "\1\3\4\uffff\7\4\3\uffff\1\3\2\uffff\1\64\4\uffff\1\41\1\55"+
+            "\1\62\1\63\1\60\1\61\1\3\1\64\1\40\12\uffff\1\57\17\uffff"+
+            "\1\3\4\uffff\7\4\3\uffff\1\3\2\uffff\1\65\4\uffff\1\41\1\55"+
             "\1\56\5\4",
-            "\1\62\1\63\1\60\1\65\1\3\1\61\1\40\12\uffff\1\57\17\uffff"+
-            "\1\3\4\uffff\7\4\3\uffff\1\3\2\uffff\1\64\4\uffff\1\41\2\uffff"+
+            "\1\62\1\63\1\60\1\61\1\3\1\64\1\40\12\uffff\1\57\17\uffff"+
+            "\1\3\4\uffff\7\4\3\uffff\1\3\2\uffff\1\65\4\uffff\1\41\2\uffff"+
             "\5\4",
             "\1\102\4\uffff\1\100\1\101",
             "\1\103",
@@ -34220,8 +34220,8 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_27_in_ruleLogicalAndOperator3748 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__ValueType__Alternatives_in_ruleValueType3790 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__CombineOperator__Alternatives_in_ruleCombineOperator3828 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kext__EffectsAssignment_1_0_in_rule__Kext__Alternatives_13863 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kext__ExpressionsAssignment_1_1_in_rule__Kext__Alternatives_13881 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kext__ExpressionsAssignment_1_0_in_rule__Kext__Alternatives_13863 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kext__EffectsAssignment_1_1_in_rule__Kext__Alternatives_13881 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Declaration__Group_5_0__0_in_rule__Declaration__Alternatives_53914 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Declaration__SignalAssignment_5_1_in_rule__Declaration__Alternatives_53932 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAssignment_in_rule__Effect__Alternatives3965 = new BitSet(new long[]{0x0000000000000002L});
@@ -34304,7 +34304,7 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__Kext__DeclarationsAssignment_0_in_rule__Kext__Group__0__Impl5680 = new BitSet(new long[]{0x9001FC0000000402L,0x000000000000000FL});
     public static final BitSet FOLLOW_rule__Kext__Group__1__Impl_in_rule__Kext__Group__15711 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Kext__Alternatives_1_in_rule__Kext__Group__1__Impl5738 = new BitSet(new long[]{0x1010002000000522L});
-    public static final BitSet FOLLOW_rule__AnnotatedExpression__Group__0__Impl_in_rule__AnnotatedExpression__Group__05773 = new BitSet(new long[]{0x1010002000000520L});
+    public static final BitSet FOLLOW_rule__AnnotatedExpression__Group__0__Impl_in_rule__AnnotatedExpression__Group__05773 = new BitSet(new long[]{0x1010000000000400L});
     public static final BitSet FOLLOW_rule__AnnotatedExpression__Group__1_in_rule__AnnotatedExpression__Group__05776 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__AnnotatedExpression__AnnotationsAssignment_0_in_rule__AnnotatedExpression__Group__0__Impl5803 = new BitSet(new long[]{0x1000000000000402L});
     public static final BitSet FOLLOW_rule__AnnotatedExpression__Group__1__Impl_in_rule__AnnotatedExpression__Group__15834 = new BitSet(new long[]{0x04000020022903F0L});
@@ -34439,7 +34439,7 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__HostcodeEffect__AnnotationsAssignment_0_in_rule__HostcodeEffect__Group__0__Impl8780 = new BitSet(new long[]{0x1000000000000402L});
     public static final BitSet FOLLOW_rule__HostcodeEffect__Group__1__Impl_in_rule__HostcodeEffect__Group__18811 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__HostcodeEffect__TextAssignment_1_in_rule__HostcodeEffect__Group__1__Impl8838 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__FunctionCallEffect__Group__0__Impl_in_rule__FunctionCallEffect__Group__08872 = new BitSet(new long[]{0x1000002000000520L});
+    public static final BitSet FOLLOW_rule__FunctionCallEffect__Group__0__Impl_in_rule__FunctionCallEffect__Group__08872 = new BitSet(new long[]{0x1010002000000520L});
     public static final BitSet FOLLOW_rule__FunctionCallEffect__Group__1_in_rule__FunctionCallEffect__Group__08875 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__FunctionCallEffect__AnnotationsAssignment_0_in_rule__FunctionCallEffect__Group__0__Impl8902 = new BitSet(new long[]{0x1000000000000402L});
     public static final BitSet FOLLOW_rule__FunctionCallEffect__Group__1__Impl_in_rule__FunctionCallEffect__Group__18933 = new BitSet(new long[]{0x0000000000000020L});
@@ -34834,8 +34834,8 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__Floateger__Group__1__Impl_in_rule__Floateger__Group__118301 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_FLOAT_in_rule__Floateger__Group__1__Impl18328 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDeclaration_in_rule__Kext__DeclarationsAssignment_018366 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEffect_in_rule__Kext__EffectsAssignment_1_018397 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotatedExpression_in_rule__Kext__ExpressionsAssignment_1_118428 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotatedExpression_in_rule__Kext__ExpressionsAssignment_1_018397 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEffect_in_rule__Kext__EffectsAssignment_1_118428 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAnnotation_in_rule__AnnotatedExpression__AnnotationsAssignment_018459 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__AnnotatedExpression__ExpressionAssignment_218490 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAnnotation_in_rule__Declaration__AnnotationsAssignment_018521 = new BitSet(new long[]{0x0000000000000002L});
@@ -34931,7 +34931,7 @@ public class InternalKEXTParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_ruleInteger_in_rule__KeyIntValueAnnotation__ValueAssignment_221449 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_121480 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleFloateger_in_rule__KeyFloatValueAnnotation__ValueAssignment_221511 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kext__EffectsAssignment_1_0_in_synpred1_InternalKEXT3863 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kext__ExpressionsAssignment_1_0_in_synpred1_InternalKEXT3863 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAssignment_in_synpred3_InternalKEXT3965 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePostfixEffect_in_synpred4_InternalKEXT3982 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEmission_in_synpred5_InternalKEXT3999 = new BitSet(new long[]{0x0000000000000002L});
