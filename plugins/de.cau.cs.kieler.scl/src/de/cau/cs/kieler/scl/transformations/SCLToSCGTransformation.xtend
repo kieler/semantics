@@ -57,7 +57,7 @@ import com.google.common.collect.Sets
 /** 
  * SCL to SCG Transformation 
  * 
- * @author ssm
+ * @author ssm, cmot
  * @kieler.design 2014-01-27 proposed 
  * @kieler.rating 2014-01-27 proposed yellow
  */
@@ -158,8 +158,26 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
         scl.transform(scg, null)
         scl.eAllContents.filter(Goto).forEach[transform(scg, gotoFlows.get(it))]
 
+        scg.removeSuperflousConditionals
+
         scg
     }
+    
+    
+    // Removes conditional nodes that have the same target for the then and the else branch.
+    private def removeSuperflousConditionals(SCGraph scg) {
+        val toDelete = <Conditional>newLinkedList
+        for (conditional : scg.eAllContents.filter(typeof(Conditional)).toList) {
+            if (conditional.^else.target == conditional.then.target) {
+                toDelete += conditional
+                for (previous : conditional.incoming.immutableCopy) {
+                    previous.target = conditional.^else.target
+                }
+            }
+        }
+        toDelete.forEach[it.remove]
+    }
+    
 
     private dispatch def SCLContinuation transform(SCLProgram program, SCGraph scg, List<ControlFlow> incoming) {
         val entry = ScgFactory::eINSTANCE.createEntry.createNodeList(program) as Entry => [
