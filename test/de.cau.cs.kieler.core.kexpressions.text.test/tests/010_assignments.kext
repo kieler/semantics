@@ -1,0 +1,29 @@
+/* KEXT Test File for assignments
+ * 
+ * @author ssm
+ * @date 2015-06-10
+ */
+bool A;
+int I;
+int I1[5];
+
+@check assignment.valuedObject
+A = A
+
+@check assignment.array
+I1[0] = 0
+
+@check assignment.literal
+A = true
+
+@check assignment.assign.add
+I += 1
+
+@check assignment.assign.sub
+I -= 1
+
+@check assignment.assign.mul
+I *= 2
+
+@check assignment.assign.div
+I /= 2

@@ -33,6 +33,7 @@ import com.google.common.collect.Lists;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
+import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
 
 /**
@@ -76,11 +77,15 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
             textFile.add(line);
         }
 
-        for (Effect effect : ((Kext) object).getEffects()) {
-            StringAnnotation checkAnnotation =
-                    (StringAnnotation) effect.getAnnotation(KEXT_CHECK_ANNOTATION);
+        for (TestEntity entity : ((Kext) object).getEntities()) {
+            StringAnnotation checkAnnotation;
+            if (entity.getEffect() != null) {
+                checkAnnotation = (StringAnnotation) entity.getEffect().getAnnotation(KEXT_CHECK_ANNOTATION);
+            } else {
+                checkAnnotation = (StringAnnotation) entity.getExpression().getAnnotation(KEXT_CHECK_ANNOTATION);
+            }
             if (checkAnnotation != null && checkAnnotation.getValues().size() > 0) {
-                runTestRunnerForObject(effect, checkAnnotation.getValues().get(0), (EObject) object, textFile);
+                runTestRunnerForObject(entity, checkAnnotation.getValues().get(0), (EObject) object, textFile);
             }
         }
     }
