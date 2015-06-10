@@ -14,38 +14,26 @@
 package de.cau.cs.kieler.core.kexpressions.text.test;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.junit.runners.model.FrameworkMethod;
+import org.junit.runners.model.InitializationError;
+import org.junit.runners.model.Statement;
 import org.osgi.framework.Bundle;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
+import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ResourceSet;
 
 /**
  * @author ssm
@@ -56,7 +44,7 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
 public class KEXTTestRunner extends ModelCollectionTestRunner {
 
     public static String KEXT_CHECK_ANNOTATION = "check";
-    
+
     /**
      * @param clazz
      * @throws Throwable
@@ -65,89 +53,128 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
         super(clazz);
     }
 
-	protected void runTestRunnerForModel(Object object, String modelName)
-			throws Throwable {
-		
-		System.out.println(modelName);
-		
-		if (!(object instanceof Kext)) {
-			throw new IllegalArgumentException(
-					"The KEXT test runner expects a KEXT object as input.");
-		}
-		
-		FrameworkMethod resourceSetMethod = getAnnotatedMethod(getTestClass(), ResourceSet.class);
-		URI uri = EcoreUtil.getURI((EObject) object);
-		final Resource r =  ((org.eclipse.emf.ecore.resource.ResourceSet) resourceSetMethod.invokeExplosively(null)).getResource(uri, true);
-		String bundleId = "de.cau.cs.kieler.core.kexpressions.text.test"; 
-//				(String) getAnnotatedMethod(getTestClass(), BundleId.class).invokeExplosively(null);
-		Bundle bundle = Platform.getBundle(bundleId);
-		IPath path = new Path(modelName.substring(0, modelName.length()-1));
-		InputStream is = FileLocator.openStream(bundle, path, true);
-//		List<String> lines = Files.readLines(new File(fileString), Charsets.UTF_8);
-//		((org.eclipse.emf.ecore.resource.ResourceSet) resourceSetMethod.invokeExplosively(null)).get
-		
-//		IResource platformResource = getPlatformResource((EObject) object);
-//		System.out.println(platformResource.toString());
-//		
-//		ClassLoader classLoader = getClass().getClassLoader();
-//		InputStream is = classLoader.getResourceAsStream(uri.toString());
-		BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		String s;
-		while((s = br.readLine()) != null) {
-			System.out.println(s);
-		}
-//		
-//		System.out.println(s2);
-		loadTextFile(uri);
-		
-		
-		for (Effect effect : ((Kext) object).getEffects()) {
-			StringAnnotation checkAnnotation = (StringAnnotation) effect
-					.getAnnotation(KEXT_CHECK_ANNOTATION);
-			if (checkAnnotation != null
-					&& checkAnnotation.getValues().size() > 0) {
-				runTestRunnerForObject(effect,
-						checkAnnotation.getValues().get(0), object);
-			}
-		}
-	}
-	
-	IResource getPlatformResource(EObject eObject) {
-		Resource eResource = eObject.eResource();
-		URI eUri = eResource.getURI();
-		if (eUri.isPlatformResource()) {
-			String platformString = eUri.toPlatformString(true);
-			return ResourcesPlugin.getWorkspace().getRoot().findMember(platformString);
-		}	
-		return null;
-	}
-	
-	protected void loadTextFile(URI uri) {
-		BufferedReader reader;
-		String line;
-		
-		try {
-			reader = new BufferedReader(new FileReader(uri.toString()));
-			line = reader.readLine();
-			while(line != null) {
-				System.out.println(line);
-				line = reader.readLine();
-			}
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    protected void runTestRunnerForModel(Object object, String modelName) throws Throwable {
 
-	protected void runTestRunnerForObject(Object object, String objectName,
-			Object rootObject) throws Throwable {
-		this.getChildren().add(
-				new SingleModelTestRunner(getTestClass().getJavaClass(),
-						object, objectName));
-	}
+        String line;
+
+        System.out.println(modelName);
+
+        if (!(object instanceof Kext)) {
+            throw new IllegalArgumentException(
+                    "The KEXT test runner expects a KEXT object as input.");
+        }
+
+        FrameworkMethod resourceSetMethod = getAnnotatedMethod(getTestClass(), ResourceSet.class);
+        String bundleId = getClassAnnotation(BundleId.class).value();
+        Bundle bundle = Platform.getBundle(bundleId);
+        InputStream is =
+                FileLocator.openStream(bundle,
+                        new Path(modelName.substring(0, modelName.length() - 1)), true);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        List<String> textFile = Lists.newArrayList();
+        while ((line = br.readLine()) != null) {
+            textFile.add(line);
+        }
+
+        for (Effect effect : ((Kext) object).getEffects()) {
+            StringAnnotation checkAnnotation =
+                    (StringAnnotation) effect.getAnnotation(KEXT_CHECK_ANNOTATION);
+            if (checkAnnotation != null && checkAnnotation.getValues().size() > 0) {
+                runTestRunnerForObject(effect, checkAnnotation.getValues().get(0), (EObject) object, textFile);
+            }
+        }
+    }
+	
+    protected void runTestRunnerForObject(Object object, String objectName, EObject rootObject,
+            Object data) throws Throwable {
+        @SuppressWarnings("unchecked")
+        String expectedLine = getExpectedOutput(object, objectName, (ArrayList<String>) data);
+
+        this.getChildren().add(
+                new KEXTModelTestRunner(getTestClass().getJavaClass(), object, objectName, rootObject, expectedLine));
+    }
+    
+    private String getExpectedOutput(Object object, String objectName, List<String> textFile) {
+        int lineCount = 0;
+        while(lineCount < textFile.size()) {
+            String line = textFile.get(lineCount);
+            if (line.startsWith("@" + KEXT_CHECK_ANNOTATION)) {
+                if (line.contains(objectName)) {
+                    lineCount++;
+                    while(lineCount < textFile.size()) {
+                        if (!(textFile.get(lineCount).startsWith("@"))) {
+                            return textFile.get(lineCount);
+                        }
+                    }
+                    return null;
+                }
+            }
+            lineCount++;
+        }
+        
+        return null;
+    }
+    
+    protected class KEXTModelTestRunner extends SingleModelTestRunner {
+        
+        protected EObject rootModel;
+        protected Object data;
+        
+        public <T,R extends Object> KEXTModelTestRunner(final Class<?> clazz,
+                final T theModel, final String theModelName, final EObject rootModel, final R data) throws InitializationError {
+            super(clazz, theModel, theModelName);
+            this.rootModel = rootModel;
+            this.data = data;
+        }
+        
+        protected Statement methodInvoker(final FrameworkMethod method,
+                final Object testClassInstance) {
+            return new KEXTInvokeMethodOnModel(method, testClassInstance, this.model, this.data);
+        }        
+    }
+    
+    protected static class KEXTInvokeMethodOnModel extends Statement {
+
+        private FrameworkMethod method = null;
+        private Object testClassInstance = null;
+        private Object model = null;
+        private Object data = null;
+        
+        public KEXTInvokeMethodOnModel(final FrameworkMethod theMethod, final Object theTestClassInstance,
+                final Object theModel, final Object theData) {
+            this.method = theMethod;
+            this.testClassInstance = theTestClassInstance;
+            
+            final Class<?>[] methodParams = theMethod.getMethod().getParameterTypes();
+            
+            if (methodParams.length > 0
+                    && (methodParams[0].equals(Object.class) || (methodParams[0]
+                            .isAssignableFrom(theModel.getClass())))) {
+                this.model = theModel;
+                if (methodParams.length > 1
+                        && (methodParams[1].isAssignableFrom(theData.getClass()))) {
+                    this.data = theData;
+                } else {
+                    this.data = null;
+                }
+            } else {
+                this.model = null;
+            }
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void evaluate() throws Throwable {
+            if (model == null) {
+                method.invokeExplosively(testClassInstance);
+            } else if (data == null) {
+                method.invokeExplosively(testClassInstance, this.model);
+            } else {
+                method.invokeExplosively(testClassInstance, this.model, this.data);
+            }
+        }
+    }    
 
 }

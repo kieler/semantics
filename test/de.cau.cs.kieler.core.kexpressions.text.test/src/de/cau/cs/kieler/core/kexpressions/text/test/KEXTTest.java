@@ -16,6 +16,7 @@ package de.cau.cs.kieler.core.kexpressions.text.test;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.XtextResourceSet;
+import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +24,8 @@ import org.junit.runners.MethodSorters;
 
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.core.annotations.StringAnnotation;
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.core.kexpressions.text.KEXTStandaloneSetup;
 import de.cau.cs.kieler.core.kexpressions.text.extensions.KEXTSerializeExtensions;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
@@ -58,10 +61,21 @@ public class KEXTTest {
     }
     
     @Test
-    public void serialize(final EObject effect) {
+    public void serialize(final EObject effect, String expected) {
         KEXTSerializeExtensions SE = Guice.createInjector().getInstance(KEXTSerializeExtensions.class);
         
-        System.out.println("Test: " + SE.serialize(effect));
+        String serialized = SE.serialize(effect).toString();
+        if (!serialized.equals(expected)) {
+            
+            StringAnnotation checkAnnotation =
+                     (StringAnnotation) ((Effect) effect).getAnnotation(KEXTTestRunner.KEXT_CHECK_ANNOTATION);
+            
+            Assert.fail("Serialization of " + checkAnnotation.getValues().get(0) + 
+                    " was \"" + serialized + 
+                    "\" but does not match expected output \"" + 
+                    expected + 
+                    "\"!");
+        }
     }
     
 

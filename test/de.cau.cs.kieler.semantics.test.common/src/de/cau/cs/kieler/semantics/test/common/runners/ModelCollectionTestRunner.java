@@ -591,8 +591,8 @@ public class ModelCollectionTestRunner extends Suite {
      */
     protected class SingleModelTestRunner extends BlockJUnit4ClassRunner {
 
-        private Object model = null;
-        private String modelName = null;
+        protected Object model = null;
+        protected String modelName = null;
 
         /**
          * Constructor.
@@ -797,7 +797,7 @@ public class ModelCollectionTestRunner extends Suite {
      * 
      * @author chsch
      */
-    private static class InvokeMethodOnModel extends Statement {
+    protected static class InvokeMethodOnModel extends Statement {
 
         private FrameworkMethod method = null;
         private Object testClassInstance = null;
