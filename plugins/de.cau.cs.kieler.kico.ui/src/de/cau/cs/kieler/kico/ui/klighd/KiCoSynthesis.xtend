@@ -194,6 +194,19 @@ abstract class KiCoSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagr
         "T_" + s.name
     }
     
+        // -------------------------------------------------------------------------
+    // Get the display id name for the transformation
+    def String getIdLabel(Transformation s) {
+        "T_" + s.id
+    }
+    
+    
+    // -------------------------------------------------------------------------
+    // Get the display id name for the feature
+    def String getIdLabel(Feature s) {
+        s.id
+    }
+        
     // -------------------------------------------------------------------------
     // Get the display name for the feature
     def String getLabel(Feature s) {
