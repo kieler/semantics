@@ -359,10 +359,9 @@ public class KiCoUtil {
      * @return the model hash
      */
     public static int getModelHash(EObject eObject) {
+        System.out.println(eObject.getClass().getName() + " " + eObject);
         int hashValue = 0;
-        TreeIterator<?> treeIterator = eObject.eAllContents();
-        while (treeIterator.hasNext()) {
-            Object obj = treeIterator.next();
+        for (Object obj : eObject.eContents()) {
             if (obj instanceof EObject) {
                 EObject innerEObject = (EObject) obj;
                 hashValue += getModelHash(innerEObject);
