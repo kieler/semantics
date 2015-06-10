@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.core.kexpressions.text.kext;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 
@@ -20,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getEffects <em>Effects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getExpressions <em>Expressions</em>}</li>
  * </ul>
  * </p>
  *
@@ -60,5 +62,21 @@ public interface Kext extends EObject
    * @generated
    */
   EList<Effect> getEffects();
+
+  /**
+   * Returns the value of the '<em><b>Expressions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Expressions</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Expressions</em>' containment reference list.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKext_Expressions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Expression> getExpressions();
 
 } // Kext

@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.core.kexpressions.text.kext.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextImpl#getEffects <em>Effects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextImpl#getExpressions <em>Expressions</em>}</li>
  * </ul>
  * </p>
  *
@@ -58,6 +60,16 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
    * @ordered
    */
   protected EList<Effect> effects;
+
+  /**
+   * The cached value of the '{@link #getExpressions() <em>Expressions</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExpressions()
+   * @generated
+   * @ordered
+   */
+  protected EList<Expression> expressions;
 
   /**
    * <!-- begin-user-doc -->
@@ -113,6 +125,20 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Expression> getExpressions()
+  {
+    if (expressions == null)
+    {
+      expressions = new EObjectContainmentEList<Expression>(Expression.class, this, KextPackage.KEXT__EXPRESSIONS);
+    }
+    return expressions;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -122,6 +148,8 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
         return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
       case KextPackage.KEXT__EFFECTS:
         return ((InternalEList<?>)getEffects()).basicRemove(otherEnd, msgs);
+      case KextPackage.KEXT__EXPRESSIONS:
+        return ((InternalEList<?>)getExpressions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -140,6 +168,8 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
         return getDeclarations();
       case KextPackage.KEXT__EFFECTS:
         return getEffects();
+      case KextPackage.KEXT__EXPRESSIONS:
+        return getExpressions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -163,6 +193,10 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
         getEffects().clear();
         getEffects().addAll((Collection<? extends Effect>)newValue);
         return;
+      case KextPackage.KEXT__EXPRESSIONS:
+        getExpressions().clear();
+        getExpressions().addAll((Collection<? extends Expression>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -183,6 +217,9 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
       case KextPackage.KEXT__EFFECTS:
         getEffects().clear();
         return;
+      case KextPackage.KEXT__EXPRESSIONS:
+        getExpressions().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -201,6 +238,8 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext
         return declarations != null && !declarations.isEmpty();
       case KextPackage.KEXT__EFFECTS:
         return effects != null && !effects.isEmpty();
+      case KextPackage.KEXT__EXPRESSIONS:
+        return expressions != null && !expressions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

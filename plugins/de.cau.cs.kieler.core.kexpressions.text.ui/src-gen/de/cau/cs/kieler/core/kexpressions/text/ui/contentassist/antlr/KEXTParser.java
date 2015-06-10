@@ -37,6 +37,7 @@ public class KEXTParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
+					put(grammarAccess.getKextAccess().getAlternatives_1(), "rule__Kext__Alternatives_1");
 					put(grammarAccess.getDeclarationAccess().getAlternatives_5(), "rule__Declaration__Alternatives_5");
 					put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
 					put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_3(), "rule__FunctionCallEffect__Alternatives_3");
@@ -60,12 +61,14 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getKextAccess().getGroup(), "rule__Kext__Group__0");
+					put(grammarAccess.getKextAccess().getGroup_1_1(), "rule__Kext__Group_1_1__0");
 					put(grammarAccess.getDeclarationAccess().getGroup(), "rule__Declaration__Group__0");
 					put(grammarAccess.getDeclarationAccess().getGroup_5_0(), "rule__Declaration__Group_5_0__0");
 					put(grammarAccess.getDeclarationAccess().getGroup_7(), "rule__Declaration__Group_7__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup(), "rule__ValuedObject__Group__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup_1(), "rule__ValuedObject__Group_1__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup_2(), "rule__ValuedObject__Group_2__0");
+					put(grammarAccess.getValuedObjectAccess().getGroup_3(), "rule__ValuedObject__Group_3__0");
 					put(grammarAccess.getEmissionAccess().getGroup(), "rule__Emission__Group__0");
 					put(grammarAccess.getEmissionAccess().getGroup_2(), "rule__Emission__Group_2__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
@@ -131,7 +134,8 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
 					put(grammarAccess.getKextAccess().getDeclarationsAssignment_0(), "rule__Kext__DeclarationsAssignment_0");
-					put(grammarAccess.getKextAccess().getEffectsAssignment_1(), "rule__Kext__EffectsAssignment_1");
+					put(grammarAccess.getKextAccess().getEffectsAssignment_1_0(), "rule__Kext__EffectsAssignment_1_0");
+					put(grammarAccess.getKextAccess().getExpressionsAssignment_1_1_1(), "rule__Kext__ExpressionsAssignment_1_1_1");
 					put(grammarAccess.getDeclarationAccess().getAnnotationsAssignment_0(), "rule__Declaration__AnnotationsAssignment_0");
 					put(grammarAccess.getDeclarationAccess().getConstAssignment_1(), "rule__Declaration__ConstAssignment_1");
 					put(grammarAccess.getDeclarationAccess().getInputAssignment_2(), "rule__Declaration__InputAssignment_2");
@@ -143,8 +147,9 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDeclarationAccess().getValuedObjectsAssignment_6(), "rule__Declaration__ValuedObjectsAssignment_6");
 					put(grammarAccess.getDeclarationAccess().getValuedObjectsAssignment_7_1(), "rule__Declaration__ValuedObjectsAssignment_7_1");
 					put(grammarAccess.getValuedObjectAccess().getNameAssignment_0(), "rule__ValuedObject__NameAssignment_0");
-					put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_1_1(), "rule__ValuedObject__InitialValueAssignment_1_1");
-					put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_2_1(), "rule__ValuedObject__CombineOperatorAssignment_2_1");
+					put(grammarAccess.getValuedObjectAccess().getCardinalitiesAssignment_1_1(), "rule__ValuedObject__CardinalitiesAssignment_1_1");
+					put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_2_1(), "rule__ValuedObject__InitialValueAssignment_2_1");
+					put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_3_1(), "rule__ValuedObject__CombineOperatorAssignment_3_1");
 					put(grammarAccess.getEmissionAccess().getAnnotationsAssignment_0(), "rule__Emission__AnnotationsAssignment_0");
 					put(grammarAccess.getEmissionAccess().getValuedObjectAssignment_1(), "rule__Emission__ValuedObjectAssignment_1");
 					put(grammarAccess.getEmissionAccess().getNewValueAssignment_2_1(), "rule__Emission__NewValueAssignment_2_1");

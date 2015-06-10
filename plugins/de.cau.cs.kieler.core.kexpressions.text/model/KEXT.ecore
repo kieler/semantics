@@ -8,5 +8,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="effects" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Effect"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

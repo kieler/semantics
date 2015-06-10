@@ -14,7 +14,9 @@ generate kext "http://kieler.cs.cau.de/kext/kext"
 
 Kext:
     (declarations += Declaration)*
-    (effects += Effect)*
+    ((effects += Effect) |
+        ('expression' expressions += Expression)
+    )*
 ;
 
     
@@ -31,7 +33,9 @@ Declaration returns kexpressions::Declaration:
 
 ValuedObject returns kexpressions::ValuedObject:
 //    (annotations+=Annotation)*
-    name=ID ('=' initialValue=Expression)?
+    name=ID
+    ('[' cardinalities+=INT ']')* 
+    ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
     )?

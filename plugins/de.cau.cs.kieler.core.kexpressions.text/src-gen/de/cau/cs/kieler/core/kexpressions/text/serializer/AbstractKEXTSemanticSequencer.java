@@ -497,7 +497,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (declarations+=Declaration* effects+=Effect*)
+	 *     (declarations+=Declaration* (effects+=Effect | expressions+=Expression)*)
 	 */
 	protected void sequence_Kext(EObject context, Kext semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -506,7 +506,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (name=ID initialValue=Expression? combineOperator=CombineOperator?)
+	 *     (name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

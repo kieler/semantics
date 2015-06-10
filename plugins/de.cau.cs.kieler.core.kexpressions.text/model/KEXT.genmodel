@@ -12,6 +12,7 @@
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//Kext">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//Kext/declarations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//Kext/effects"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//Kext/expressions"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

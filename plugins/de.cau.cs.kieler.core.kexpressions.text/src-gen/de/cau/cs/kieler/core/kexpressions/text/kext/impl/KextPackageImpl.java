@@ -132,6 +132,16 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getKext_Expressions()
+  {
+    return (EReference)kextEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public KextFactory getKextFactory()
   {
     return (KextFactory)getEFactoryInstance();
@@ -160,6 +170,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
     kextEClass = createEClass(KEXT);
     createEReference(kextEClass, KEXT__DECLARATIONS);
     createEReference(kextEClass, KEXT__EFFECTS);
+    createEReference(kextEClass, KEXT__EXPRESSIONS);
   }
 
   /**
@@ -200,6 +211,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
     initEClass(kextEClass, Kext.class, "Kext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getKext_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getKext_Effects(), theKEffectsPackage.getEffect(), null, "effects", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getKext_Expressions(), theKExpressionsPackage.getExpression(), null, "expressions", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

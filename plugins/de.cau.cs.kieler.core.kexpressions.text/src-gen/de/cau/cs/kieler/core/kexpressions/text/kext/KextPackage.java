@@ -84,13 +84,22 @@ public interface KextPackage extends EPackage
   int KEXT__EFFECTS = 1;
 
   /**
+   * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEXT__EXPRESSIONS = 2;
+
+  /**
    * The number of structural features of the '<em>Kext</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int KEXT_FEATURE_COUNT = 2;
+  int KEXT_FEATURE_COUNT = 3;
 
 
   /**
@@ -124,6 +133,17 @@ public interface KextPackage extends EPackage
    * @generated
    */
   EReference getKext_Effects();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getExpressions <em>Expressions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Expressions</em>'.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getExpressions()
+   * @see #getKext()
+   * @generated
+   */
+  EReference getKext_Expressions();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -173,6 +193,14 @@ public interface KextPackage extends EPackage
      * @generated
      */
     EReference KEXT__EFFECTS = eINSTANCE.getKext_Effects();
+
+    /**
+     * The meta object literal for the '<em><b>Expressions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference KEXT__EXPRESSIONS = eINSTANCE.getKext_Expressions();
 
   }
 
