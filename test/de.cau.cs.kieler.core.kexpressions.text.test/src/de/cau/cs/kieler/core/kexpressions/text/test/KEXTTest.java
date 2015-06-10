@@ -65,6 +65,9 @@ public class KEXTTest {
     public void serialize(final EObject eObject, String expected) {
         KEXTSerializeExtensions SE = Guice.createInjector().getInstance(KEXTSerializeExtensions.class);
         TestEntity entity = (TestEntity) eObject;
+        if (entity.getExpression() != null) {
+        	expected = expected.substring(11); 
+        }
         
         String serialized = SE.serialize(entity).toString();
         
