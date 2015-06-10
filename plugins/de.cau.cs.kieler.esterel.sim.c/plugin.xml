@@ -6,7 +6,7 @@
       <content
             class="de.cau.cs.kieler.esterel.sim.c.EsterelCDataComponent"
             id="de.cau.cs.kieler.esterel.sim.c"
-            name="Esterel Simulator (SCG)">
+            name="Esterel Simulator (SCEst)">
       </content>
    </extension>
    <extension

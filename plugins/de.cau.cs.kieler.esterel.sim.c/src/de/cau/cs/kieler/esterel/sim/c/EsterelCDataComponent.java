@@ -76,7 +76,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
     private int dirtyIndicator = 0;
 
-    private static final int KIEM_PROPERTY_MAX = 6;
+    private static final int KIEM_PROPERTY_MAX = 7;
 
     private static final int KIEM_PROPERTY_STATEMENTNAME = 0;
     private static final String KIEM_PROPERTY_NAME_STATEMENTNAME = "Statement Name";
@@ -101,7 +101,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     /** The Constant KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS = "Debug Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONSS. */
-    private static final String KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS = "SCCHARTS_SIMULATION_VISUALIZATION";
+    private static final String KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS =
+            "";
 
     /** The Constant KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS. */
     private static final int KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS = 4;
@@ -109,15 +110,24 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     private static final String KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS =
             "High Level Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
-    private static final String KIEM_PROPERTY_DEFAULT_HIGHLEVELTRANSFORMATIONS = "CORE";
+    private static final String KIEM_PROPERTY_DEFAULT_HIGHLEVELTRANSFORMATIONS = "";
 
     /** The Constant KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS. */
     private static final int KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS = 5;
     /** The Constant KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS. */
-    private static final String KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS = 
+    private static final String KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS =
             "Low Level Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
-    private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS = "CODEGENERATION";
+    private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS = "scl.basic, scg, codegeneration";
+
+    /** The KiemProperty Constant for the full debug mode. */
+    static final int KIEM_PROPERTY_BENCHMARK = 6;
+
+    /** The Constant KIEM_PROPERTY_NAME_BENCHMARK. */
+    private static final String KIEM_PROPERTY_NAME_BENCHMARK = "Benchmark Mode";
+
+    /** The Constant KIEM_PROPERTY_DEFAULT_BENCHMARK. */
+    private static final boolean KIEM_PROPERTY_DEFAULT_BENCHMARK = false;
 
     /** The C execution object for concurrent execution. */
     private CExecution cExecution = null;
@@ -173,6 +183,9 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
         properties[KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS] =
                 new KiemProperty(KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS,
                         KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS);
+        properties[KIEM_PROPERTY_BENCHMARK] =
+                new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK, KIEM_PROPERTY_DEFAULT_BENCHMARK);
+
         // properties[KIEM_PROPERTY_BENCHMARK] = new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK,
         // false);
         // properties[KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE] = new KiemProperty(
@@ -196,7 +209,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             throws KiemInitializationException {
         if (!(rootEObject instanceof Program) && !(rootEObject instanceof SCLProgram)) {
             throw new KiemInitializationException(
-                    "Esterel (SCG) Simulator can only be used with an Esterel or SCL editor.\n\n", true, null);
+                    "Esterel (SCG) Simulator can only be used with an Esterel or SCL editor.\n\n",
+                    true, null);
         }
 
         return true;
@@ -204,8 +218,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
     // -------------------------------------------------------------------------
 
-    /**SCG
-     * {@inheritDoc}
+    /**
+     * SCG {@inheritDoc}
      */
     public boolean isDirty() {
         // Calculate a dirty indicator from ALL model elements and their textual representation's
@@ -231,7 +245,12 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
     // -------------------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     public String getDataComponentId() {
+        // This method should be removed for release because it disables the compability check of
+        // KIEM.
         return "de.cau.cs.kieler.esterel.sim.c";
     }
 
@@ -317,13 +336,14 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                         "Esterel program could not be started sucessfully.\n\n", true, e);
             }
         } else {
-            throw new KiemInitializationException("Esterel program was not compiled sucessfully.\n\n",
-                    true, null);
+            throw new KiemInitializationException(
+                    "Esterel program was not compiled sucessfully.\n\n", true, null);
         }
 
         if (!cExecution.isStarted()) {
             throw new KiemInitializationException(
-                    "Error running Esterel program. Compiled simulation does not exist.\n", true, null);
+                    "Error running Esterel program. Compiled simulation does not exist.\n", true,
+                    null);
         }
 
         // Build the list of interface output signals
@@ -369,7 +389,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    
+
     /**
      * {@inheritDoc}
      */
@@ -387,7 +407,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final EObject model,
             final boolean debug) throws KiemInitializationException {
-        
+
         System.out.println("1");
         this.myModel = model;
         monitor.begin("Esterel (SCG) Simulation", 1);
@@ -399,15 +419,16 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             System.out.println("3");
             if (this.myModel == null) {
                 throw new KiemInitializationException(
-                        "Cannot simulate active editor using the Esterel (SCG) Simulator", true, null);
+                        "Cannot simulate active editor using the Esterel (SCG) Simulator", true,
+                        null);
             }
             System.out.println("4");
 
-//            if (this.getModelRootElement().eResource() == null) {
-//                throw new KiemInitializationException(
-//                        "The active editor has must be saved in order to simulate the SCChart."
-//                                + " Volatile resources cannot be simulated.", true, null);
-//            }
+            // if (this.getModelRootElement().eResource() == null) {
+            // throw new KiemInitializationException(
+            // "The active editor has must be saved in order to simulate the SCChart."
+            // + " Volatile resources cannot be simulated.", true, null);
+            // }
             System.out.println("5");
 
             // Make a copy of the S program in case it was from
@@ -450,13 +471,13 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
             KielerCompilerContext highLevelContext =
                     new KielerCompilerContext(highLevelTransformations, extendedSCChart);
-            
+
             // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
             highLevelContext.setCreateDummyResource(debug);
-            
+
             highLevelContext.setInplace(false);
-// TODO: check
-//            highLevelContext.setPrerequirements(true);
+            // TODO: check
+            // highLevelContext.setPrerequirements(true);
             System.out.println("10");
             CompilationResult highLeveleCompilationResult =
                     KielerCompiler.compile(highLevelContext);
@@ -465,16 +486,16 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             // The following should be a state or an SCG
             EObject esterelProgramOrSCLProgram = highLeveleCompilationResult.getEObject();
 
-            //String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
-            //writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
+            // String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
+            // writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
             // System.out.println(coreSSChartText);
 
             KielerCompilerContext lowLevelContext =
                     new KielerCompilerContext(lowLevelTransformations, esterelProgramOrSCLProgram);
             lowLevelContext.setCreateDummyResource(true);
             lowLevelContext.setInplace(false);
-// TODO: check
-//            lowLevelContext.setPrerequirements(true);
+            // TODO: check
+            // lowLevelContext.setPrerequirements(true);
             System.out.println("12");
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
             System.out.println("13");
@@ -486,16 +507,19 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             String cSimulation = "";
             if (esterelProgramOrSCLProgram instanceof Program) {
                 System.out.println("15");
-                CSimulationEsterel cSimulationSCChart = Guice.createInjector().getInstance(CSimulationEsterel.class);
+                CSimulationEsterel cSimulationSCChart =
+                        Guice.createInjector().getInstance(CSimulationEsterel.class);
                 System.out.println("16");
-                Program program = (Program)esterelProgramOrSCLProgram;
+                Program program = (Program) esterelProgramOrSCLProgram;
                 cSimulation = cSimulationSCChart.transform(program, "10000").toString();
-            }
-            else if (esterelProgramOrSCLProgram instanceof SCLProgram) {
+            } else if (esterelProgramOrSCLProgram instanceof SCLProgram) {
                 System.out.println("15");
-                CSimulationSCL cSimulationSCG = Guice.createInjector().getInstance(CSimulationSCL.class);
+                CSimulationSCL cSimulationSCG =
+                        Guice.createInjector().getInstance(CSimulationSCL.class);
                 System.out.println("16");
-                cSimulation = cSimulationSCG.transform((SCLProgram)esterelProgramOrSCLProgram, "10000").toString();
+                cSimulation =
+                        cSimulationSCG.transform((SCLProgram) esterelProgramOrSCLProgram, "10000")
+                                .toString();
             }
             System.out.println("17 " + cSimulation);
 
@@ -526,8 +550,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             String modelName = "SCG";
             if (myModel instanceof Program) {
                 modelName = ((Program) myModel).getModules().get(0).getName();
-            }
-            else if (myModel instanceof SCLProgram) {
+            } else if (myModel instanceof SCLProgram) {
                 modelName = ((SCLProgram) myModel).getName();
             }
             cExecution.compile(generatedSCFiles, modelName);
@@ -576,9 +599,9 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
         boolean debugConsole = false;
 
         // Collect active statements
-         StringBuffer activeStatementsBuf = new StringBuffer();
-         StringBuffer activeTransitionsBuf = new StringBuffer();
-         //List<DebugData> activeStatesList = new LinkedList<DebugData>();
+        StringBuffer activeStatementsBuf = new StringBuffer();
+        StringBuffer activeTransitionsBuf = new StringBuffer();
+        // List<DebugData> activeStatesList = new LinkedList<DebugData>();
 
         if (cExecution == null || !cExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
@@ -627,16 +650,19 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                                 present = ((Integer) value) != 0;
                             }
 
-                            if (outputName.startsWith(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG)) {
+                            if (outputName
+                                    .startsWith(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG)) {
                                 if (present) {
                                     if (activeStatementsBuf.length() > 0) {
                                         activeStatementsBuf.append(",");
                                     }
-                                    String activeStatementName = outputName.substring(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG.length());
+                                    String activeStatementName =
+                                            outputName
+                                                    .substring(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG
+                                                            .length());
                                     activeStatementsBuf.append(activeStatementName);
                                 }
-                            }
-                            else {
+                            } else {
                                 returnObj.accumulate(outputName,
                                         JSONSignalValues.newValue(value, present));
                             }
@@ -652,9 +678,9 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             activeStatements = activeStatementsBuf.toString();
 
             String activeStatementsName =
-             this.getProperties()[KIEM_PROPERTY_STATEMENTNAME + KIEM_PROPERTY_DIFF]
-             .getValue();
-             returnObj.accumulate(activeStatementsName, activeStatements);
+                    this.getProperties()[KIEM_PROPERTY_STATEMENTNAME + KIEM_PROPERTY_DIFF]
+                            .getValue();
+            returnObj.accumulate(activeStatementsName, activeStatements);
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
