@@ -29,22 +29,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class ControlDependencyImpl extends DependencyImpl implements ControlDependency {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ControlDependencyImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return ScgPackage.Literals.CONTROL_DEPENDENCY;
-	}
+        return ScgPackage.Literals.CONTROL_DEPENDENCY;
+    }
 
 } //ControlDependencyImpl

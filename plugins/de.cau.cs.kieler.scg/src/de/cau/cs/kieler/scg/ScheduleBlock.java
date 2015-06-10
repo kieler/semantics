@@ -36,45 +36,45 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ScheduleBlock extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Scheduling Block</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Scheduling Block</b></em>' reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Scheduling Block</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Scheduling Block</em>' reference.
-	 * @see #setSchedulingBlock(SchedulingBlock)
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getScheduleBlock_SchedulingBlock()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Scheduling Block</em>' reference.
+     * @see #setSchedulingBlock(SchedulingBlock)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getScheduleBlock_SchedulingBlock()
+     * @model
+     * @generated
+     */
 	SchedulingBlock getSchedulingBlock();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scg.ScheduleBlock#getSchedulingBlock <em>Scheduling Block</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.ScheduleBlock#getSchedulingBlock <em>Scheduling Block</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Scheduling Block</em>' reference.
-	 * @see #getSchedulingBlock()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Scheduling Block</em>' reference.
+     * @see #getSchedulingBlock()
+     * @generated
+     */
 	void setSchedulingBlock(SchedulingBlock value);
 
 	/**
-	 * Returns the value of the '<em><b>Additional Guards</b></em>' reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.scg.Guard}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Additional Guards</b></em>' reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scg.Guard}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Additional Guards</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Additional Guards</em>' reference list.
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getScheduleBlock_AdditionalGuards()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Additional Guards</em>' reference list.
+     * @see de.cau.cs.kieler.scg.ScgPackage#getScheduleBlock_AdditionalGuards()
+     * @model
+     * @generated
+     */
 	EList<Guard> getAdditionalGuards();
 
 } // ScheduleBlock

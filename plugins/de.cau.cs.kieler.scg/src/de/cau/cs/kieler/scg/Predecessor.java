@@ -35,84 +35,84 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Predecessor extends EObject {
     /**
-	 * Returns the value of the '<em><b>Basic Block</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Basic Block</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Basic Block</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Basic Block</em>' reference.
-	 * @see #setBasicBlock(BasicBlock)
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getPredecessor_BasicBlock()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Basic Block</em>' reference.
+     * @see #setBasicBlock(BasicBlock)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getPredecessor_BasicBlock()
+     * @model required="true"
+     * @generated
+     */
     BasicBlock getBasicBlock();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Predecessor#getBasicBlock <em>Basic Block</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Predecessor#getBasicBlock <em>Basic Block</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Basic Block</em>' reference.
-	 * @see #getBasicBlock()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Basic Block</em>' reference.
+     * @see #getBasicBlock()
+     * @generated
+     */
     void setBasicBlock(BasicBlock value);
 
     /**
-	 * Returns the value of the '<em><b>Conditional</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Conditional</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Conditional</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Conditional</em>' reference.
-	 * @see #setConditional(Conditional)
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getPredecessor_Conditional()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Conditional</em>' reference.
+     * @see #setConditional(Conditional)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getPredecessor_Conditional()
+     * @model
+     * @generated
+     */
     Conditional getConditional();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Predecessor#getConditional <em>Conditional</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Predecessor#getConditional <em>Conditional</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Conditional</em>' reference.
-	 * @see #getConditional()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Conditional</em>' reference.
+     * @see #getConditional()
+     * @generated
+     */
     void setConditional(Conditional value);
 
 				/**
-	 * Returns the value of the '<em><b>Branch Type</b></em>' attribute.
-	 * The literals are from the enumeration {@link de.cau.cs.kieler.scg.BranchType}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Branch Type</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.scg.BranchType}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Branch Type</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Branch Type</em>' attribute.
-	 * @see de.cau.cs.kieler.scg.BranchType
-	 * @see #setBranchType(BranchType)
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getPredecessor_BranchType()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Branch Type</em>' attribute.
+     * @see de.cau.cs.kieler.scg.BranchType
+     * @see #setBranchType(BranchType)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getPredecessor_BranchType()
+     * @model
+     * @generated
+     */
 	BranchType getBranchType();
 
 				/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Predecessor#getBranchType <em>Branch Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Predecessor#getBranchType <em>Branch Type</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Branch Type</em>' attribute.
-	 * @see de.cau.cs.kieler.scg.BranchType
-	 * @see #getBranchType()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Branch Type</em>' attribute.
+     * @see de.cau.cs.kieler.scg.BranchType
+     * @see #getBranchType()
+     * @generated
+     */
 	void setBranchType(BranchType value);
 
 } // Predecessor
