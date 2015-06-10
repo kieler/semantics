@@ -52,6 +52,7 @@ import de.cau.cs.kieler.esterel.kexpressions.Output;
 import de.cau.cs.kieler.esterel.kexpressions.Signal;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
+import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -150,6 +151,15 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     /** The single s / kexpression extension. */
     private static SExtension sExtension = new SExtension();
     private static KExpressionsExtension kExpressionExtension = new KExpressionsExtension();
+
+    /** The benchmark flag for generating cycle and file size signals. */
+    private boolean benchmark = false;
+
+    /** The source file size. */
+    private long sourceFileSize = 0;
+
+    /** The executabe file size. */
+    private long executabeFileSize = 0;
 
     // -------------------------------------------------------------------------
 
@@ -397,7 +407,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             throws KiemInitializationException {
         doModel2ModelTransform(monitor, this.getModelRootElement(),
                 this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
-                        .getValueAsBoolean());
+                        .getValueAsBoolean(), this.getProperties()[KIEM_PROPERTY_BENCHMARK
+                        + KIEM_PROPERTY_DIFF].getValueAsBoolean());
     }
 
     // -------------------------------------------------------------------------
@@ -406,7 +417,9 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
      * {@inheritDoc}
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final EObject model,
-            final boolean debug) throws KiemInitializationException {
+            final boolean debug, final boolean benchmarkParam) throws KiemInitializationException {
+
+        benchmark = benchmarkParam;
 
         System.out.println("1");
         this.myModel = model;
@@ -534,6 +547,11 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                         cSimulationSCG.transform((SCLProgram) esterelProgramOrSCLProgram, "10000")
                                 .toString();
             }
+
+            if (benchmark) {
+                cSimulation = Benchmark.addTimingCode(cSimulation);
+            }
+
             System.out.println("17 " + cSimulation);
 
             // Set a random output folder for the compiled files
@@ -567,6 +585,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                 modelName = ((SCLProgram) myModel).getName();
             }
             cExecution.compile(generatedSCFiles, modelName);
+
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
@@ -618,6 +637,11 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
         if (cExecution == null || !cExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
+        }
+
+        if (benchmark) {
+            sourceFileSize = cExecution.getSourceFileSize();
+            executabeFileSize = cExecution.getExecutableFileSize();
         }
 
         try {
@@ -683,6 +707,19 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
                     }
                 }
+                // Add benchmark information
+                if (this.benchmark) {
+                    if (output.has(Benchmark.BENCHMARK_SIGNAL_TIME)) {
+                        Object bench = output.get(Benchmark.BENCHMARK_SIGNAL_TIME);
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
+                    }
+                }
+            }
+
+            // Add benchmark information
+            if (this.benchmark) {
+                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE, sourceFileSize);
+                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE, executabeFileSize);
             }
 
             // Finally accumulate all active Statements (activeStatements)
