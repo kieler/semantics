@@ -15,6 +15,7 @@ package de.cau.cs.kieler.core.kexpressions.text.extensions
 
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity
+import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression
 
 /**
  * @author ssm
@@ -30,6 +31,10 @@ class KEXTSerializeExtensions extends KEffectsSerializeExtensions {
         } else {
         	return entity.expression.serialize
         }
+    }
+    
+    def dispatch CharSequence serialize(AnnotatedExpression annotatedExpression) {
+    	annotatedExpression.expression.serialize
     }
 
 }
