@@ -13,8 +13,11 @@ A = A
 @check assignment.array
 I1[0] = 0
 
-@check assignment.literal
+@check "assignment.literal.true"
 A = true
+
+@check "assignment.literal.false"
+A = false
 
 @check assignment.assign.add
 I += 1
