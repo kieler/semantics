@@ -596,7 +596,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         }
         System.out.println("Compile 5");
         monitor.subTask("Expanding Esterel file");
-        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml);
+//        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
+        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
         monitor.worked(1);
         if (monitor.isCanceled()) {
             strl.close();
@@ -888,7 +889,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                 compile =
                         compiler + " " + output.getPath() + " " + data.getPath() + " "
                                 + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
-                                + bundleLocation.getPath() + " " + SIMULATION_COMPILER_OPTIONS
+                                + bundleLocation.getPath() + " -D_NO_FUNCTION_DEFINITIONS " + SIMULATION_COMPILER_OPTIONS
                                 + " " + executable;
             } else {
                 // Windows
@@ -897,7 +898,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                         compiler + " " + output.getPath().substring(1) + " "
                                 + data.getPath().substring(1) + " "
                                 + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
-                                + "-I " + bundleLocation.getPath().substring(1) + " "
+                                + "-I " + bundleLocation.getPath().substring(1) + " -D_NO_FUNCTION_DEFINITIONS "
                                 + SIMULATION_COMPILER_OPTIONS + " " + executable;
             }
 
