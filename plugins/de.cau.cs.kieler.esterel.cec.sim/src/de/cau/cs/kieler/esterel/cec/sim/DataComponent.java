@@ -66,6 +66,7 @@ import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2CSimulationInterface;
 import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2Simulation;
 import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.esterel.Program;
+import de.cau.cs.kieler.esterel.esterelv5_100.Esterelv5_100;
 import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -577,89 +578,179 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         monitor.subTask("Reading Esterel file");
         System.out.println("Compile 1" + strlFile.toString() + " , " + outFile.toString());
         java.net.URI inputURI = convertEMFtoJavaURI(strlFile);
+               
+        
+      
+      //ESTERELv5-Section
+      //*******************************************************************************************
+      System.out.println("STRL: " + inputURI.toString());
+      InputStream strl = Esterelv5_100.runSTRL(inputURI);
+      monitor.worked(1);
+      if (monitor.isCanceled()) {
+          strl.close();
+          return null;
+      }
+      
+      System.out.println("STRLIC");
+      monitor.subTask("Parsing Esterel file");
+      InputStream ic = Esterelv5_100.runSTRLIC(strl);
+      monitor.worked(1);
+      if (monitor.isCanceled()) {
+          strl.close();
+          return null;
+      }
+      
+      System.out.println("ICLC");
+      monitor.subTask("Parsing Esterel file");
+      InputStream lc = Esterelv5_100.runICLC(ic);
+      monitor.worked(1);
+      if (monitor.isCanceled()) {
+          strl.close();
+          return null;
+      }
+      
+      System.out.println("LCSC");
+      monitor.subTask("Parsing Esterel file");
+      InputStream sc = Esterelv5_100.runLCSC(lc);
+      monitor.worked(1);
+      if (monitor.isCanceled()) {
+          strl.close();
+          return null;
+      }
+      
+      System.out.println("SCSSC");
+      monitor.subTask("Parsing Esterel file");
+      InputStream ssc = Esterelv5_100.runSCSSC(sc);
+      monitor.worked(1);
+      if (monitor.isCanceled()) {
+          strl.close();
+          return null;
+      }
+      
+//      System.out.println("SCOC");
+//      monitor.subTask("Parsing Esterel file");
+//      InputStream oc = Esterelv5_100.runSTRLIC(ssc);
+//      monitor.worked(1);
+//      if (monitor.isCanceled()) {
+//          strl.close();
+//          return null;
+//      }
+      
+//      System.out.println("SCC");
+//      monitor.subTask("Parsing Esterel file");
+//      InputStream c = Esterelv5_100.runSCC(ssc);
+//      monitor.worked(1);
+//      if (monitor.isCanceled()) {
+//          strl.close();
+//          return null;
+//      }
+      
+      System.out.println("SSCC");
+      monitor.subTask("Parsing Esterel file");
+      InputStream c = Esterelv5_100.runSSCC(ssc);
+      monitor.worked(1);
+      if (monitor.isCanceled()) {
+          strl.close();
+          return null;
+      }
+      
+//      System.out.println("OCC");
+//      monitor.subTask("Parsing Esterel file");
+//      InputStream c = Esterelv5_100.runOCC(oc);
+//      monitor.worked(1);
+//      if (monitor.isCanceled()) {
+//          strl.close();
+//          return null;
+//      }
+      
+      System.out.println("CODEGEN");
+      monitor.subTask("Generating C code");
+      java.net.URI uri = Esterelv5_100.runCODEGEN(c, outFile);
+      //*******************************************************************************************
+      
+        
 
-        System.out.println("Compile 2" + inputURI.toString());
-        InputStream strl = CEC.runSTRL(inputURI);
-        System.out.println("Compile 3");
-        monitor.worked(1);
-        if (monitor.isCanceled()) {
-            strl.close();
-            return null;
-        }
-        System.out.println("Compile 4");
-        monitor.subTask("Parsing Esterel file");
-        InputStream strlxml = CEC.runSTRLXML(strl);
-        monitor.worked(1);
-        if (monitor.isCanceled()) {
-            strl.close();
-            return null;
-        }
-        System.out.println("Compile 5");
-        monitor.subTask("Expanding Esterel file");
+//        System.out.println("Compile 2" + inputURI.toString());
+//        InputStream strl = CEC.runSTRL(inputURI);
+//        System.out.println("Compile 3");
+//        monitor.worked(1);
+//        if (monitor.isCanceled()) {
+//            strl.close();
+//            return null;
+//        }
+//        System.out.println("Compile 4");
+//        monitor.subTask("Parsing Esterel file");
+//        InputStream strlxml = CEC.runSTRLXML(strl);
+//        monitor.worked(1);
+//        if (monitor.isCanceled()) {
+//            strl.close();
+//            return null;
+//        }
+//        System.out.println("Compile 5");
+//        monitor.subTask("Expanding Esterel file");
 //        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
-        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
-        monitor.worked(1);
-        if (monitor.isCanceled()) {
-            strl.close();
-            return null;
-        }
-        System.out.println("Compile 6");
-        monitor.subTask("Dismantle Esterel file");
-        InputStream dismantle = CEC.runDISMANTLE(expandmodule);
-        monitor.worked(1);
-        if (monitor.isCanceled()) {
-            strl.close();
-            return null;
-        }
-        System.out.println("Compile 7");
-        monitor.subTask("ASTGRC");
-        InputStream astgrc = CEC.runASTGRC(dismantle);
-        monitor.worked(1);
-        if (monitor.isCanceled()) {
-            strl.close();
-            return null;
-        }
-        System.out.println("Compile 8");
-        monitor.subTask("GRCOPT");
-        InputStream grcopt = CEC.runGRCOPT(astgrc);
-        monitor.worked(1);
-        if (monitor.isCanceled()) {
-            strl.close();
-            return null;
-        }
-        monitor.subTask("GRCPDG");
-        InputStream grcpdg = CEC.runGRCPDG(grcopt);
-        monitor.worked(1);
-        if (monitor.isCanceled()) {
-            strl.close();
-            return null;
-        }
-        monitor.subTask("PDGCCFG");
-        InputStream pdgccfg = CEC.runPDGCCFG(grcpdg);
-        monitor.worked(1);
-        if (monitor.isCanceled()) {
-            strl.close();
-            return null;
-        }
-        System.out.println("Compile 9");
-        monitor.subTask("EEC");
-        InputStream eec = CEC.runEEC(pdgccfg);
-        monitor.worked(1);
-        if (monitor.isCanceled()) {
-            strl.close();
-            return null;
-        }
-        monitor.subTask("SCFGC");
-        InputStream scfgc = CEC.runSCFGC(eec);
-        monitor.worked(1);
-        if (monitor.isCanceled()) {
-            strl.close();
-            return null;
-        }
-        System.out.println("Compile 10");
-        monitor.subTask("Generating C code");
-        java.net.URI uri = CEC.runCODEGEN(scfgc, outFile);
-        System.out.println("Compile 11" + uri);
+//        monitor.worked(1);
+//        if (monitor.isCanceled()) {
+//            strl.close();
+//            return null;
+//        }
+//        System.out.println("Compile 6");
+//        monitor.subTask("Dismantle Esterel file");
+//        InputStream dismantle = CEC.runDISMANTLE(expandmodule);
+//        monitor.worked(1);
+//        if (monitor.isCanceled()) {
+//            strl.close();
+//            return null;
+//        }
+//        System.out.println("Compile 7");
+//        monitor.subTask("ASTGRC");
+//        InputStream astgrc = CEC.runASTGRC(dismantle);
+//        monitor.worked(1);
+//        if (monitor.isCanceled()) {
+//            strl.close();
+//            return null;
+//        }
+//        System.out.println("Compile 8");
+//        monitor.subTask("GRCOPT");
+//        InputStream grcopt = CEC.runGRCOPT(astgrc);
+//        monitor.worked(1);
+//        if (monitor.isCanceled()) {
+//            strl.close();
+//            return null;
+//        }
+//        monitor.subTask("GRCPDG");
+//        InputStream grcpdg = CEC.runGRCPDG(grcopt);
+//        monitor.worked(1);
+//        if (monitor.isCanceled()) {
+//            strl.close();
+//            return null;
+//        }
+//        monitor.subTask("PDGCCFG");
+//        InputStream pdgccfg = CEC.runPDGCCFG(grcpdg);
+//        monitor.worked(1);
+//        if (monitor.isCanceled()) {
+//            strl.close();
+//            return null;
+//        }
+//        System.out.println("Compile 9");
+//        monitor.subTask("EEC");
+//        InputStream eec = CEC.runEEC(pdgccfg);
+//        monitor.worked(1);
+//        if (monitor.isCanceled()) {
+//            strl.close();
+//            return null;
+//        }
+//        monitor.subTask("SCFGC");
+//        InputStream scfgc = CEC.runSCFGC(eec);
+//        monitor.worked(1);
+//        if (monitor.isCanceled()) {
+//            strl.close();
+//            return null;
+//        }
+//        System.out.println("Compile 10");
+//        monitor.subTask("Generating C code");
+//        java.net.URI uri = CEC.runCODEGEN(scfgc, outFile);
+//        System.out.println("Compile 11" + uri);
 
         if (benchmark) {
             File currentFile = new File(uri.getPath());

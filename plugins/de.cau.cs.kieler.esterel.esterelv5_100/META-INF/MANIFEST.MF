@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Esterelv5_100
+Bundle-SymbolicName: de.cau.cs.kieler.esterel.esterelv5_100
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.esterel.esterelv5_100.Esterelv5_100Plugin
+Require-Bundle: org.eclipse.core.runtime,
+ de.cau.cs.kieler.core;bundle-version="0.14.0",
+ de.cau.cs.kieler.sim.kiem;bundle-version="0.6.3"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.esterel.esterelv5_100
