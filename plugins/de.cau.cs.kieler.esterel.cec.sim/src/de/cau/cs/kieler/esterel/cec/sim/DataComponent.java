@@ -889,7 +889,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                 compile =
                         compiler + " " + output.getPath() + " " + data.getPath() + " "
                                 + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
-                                + bundleLocation.getPath() + " -D_NO_FUNCTION_DEFINITIONS " + SIMULATION_COMPILER_OPTIONS
+                                + bundleLocation.getPath() + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS " + SIMULATION_COMPILER_OPTIONS
                                 + " " + executable;
             } else {
                 // Windows
@@ -898,9 +898,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                         compiler + " " + output.getPath().substring(1) + " "
                                 + data.getPath().substring(1) + " "
                                 + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
-                                + "-I " + bundleLocation.getPath().substring(1) + " -D_NO_FUNCTION_DEFINITIONS "
+                                + "-I " + bundleLocation.getPath().substring(1) + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
                                 + SIMULATION_COMPILER_OPTIONS + " " + executable;
             }
+            
+            // D_NO_EXTERN_DEFINITIONS
+            // D_NO_FUNCTION_DEFINITIONS
 
             System.out.println("M2M 15" + compile);
             simFile = executable;
