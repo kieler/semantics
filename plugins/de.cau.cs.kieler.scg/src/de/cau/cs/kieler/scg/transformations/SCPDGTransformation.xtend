@@ -35,6 +35,7 @@ import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import java.util.Set
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scg.ConditionalDependency
 
 /** 
  * 
@@ -151,6 +152,8 @@ class SCPDGTransformation extends Transformation {
     }
 
     private def Set<Node> nextNode(Node node) {
+//        if(node == null)
+//            return newHashSet()
         if (node instanceof Entry) {
             return newHashSet((node as Entry).next.target)
         }
@@ -175,8 +178,10 @@ class SCPDGTransformation extends Transformation {
         }
         if (node instanceof Conditional){
             val ret = newHashSet;
-            ret += node.^else.target
-            ret += node.then.target
+            if (node.^else != null)
+                ret += node.^else.target
+            if (node.then != null)
+                ret += node.then.target
             return ret
         }
         return null
@@ -208,10 +213,10 @@ class SCPDGTransformation extends Transformation {
                 ]
             }
 
-            node.removeNext
+            //node.removeNext
 
         }
-        entry.next = null
+        //entry.next = null
     }
 
     private def removeNext(Node node) {
@@ -230,8 +235,11 @@ class SCPDGTransformation extends Transformation {
         }
         if (node instanceof Join) {
             (node as Join).next = null
+        } if (node instanceof Conditional){
+            (node as Conditional).then = null
+            (node as Conditional).^else = null
+            }
         }
-    }
 
     private def dispatch transformSCPDG(Surface surface, Set<ControlFlow> controlFlows, SCGraph scg,
         KielerCompilerContext context) {
@@ -269,10 +277,10 @@ class SCPDGTransformation extends Transformation {
                 ]
             }
 
-            node.removeNext
+            //node.removeNext
 
         }
-        depth.removeNext
+        //depth.removeNext
     }
 
     private def dispatch Node transformSCPDG(Exit exit, Set<ControlFlow> controlFlows, SCGraph scg,
@@ -289,12 +297,34 @@ class SCPDGTransformation extends Transformation {
         KielerCompilerContext context) {
             controlFlows += cond.allNext
             
-            cond.^else.target.allNext.forEach[cf|
-                //TODO create else Dependencies
-            ]            
-            cond
-            
-        }
+//            ScgFactory::eINSTANCE.createElseDependency => [
+//            target = cond.^else.target
+//            cond.dependencies += it
+//        ]
+//
+//        ScgFactory::eINSTANCE.createThenDependency => [
+//            target = cond.then.target
+//            cond.dependencies += it
+//        ]
+//
+//        cond.^else.target.allNext.forEach [ cf |
+//            ScgFactory::eINSTANCE.createElseDependency => [
+//                target = cf.target
+//                cond.dependencies += it
+//            ]
+//        ]
+//
+//        cond.then.target.allNext.forEach [ cf |
+//            ScgFactory::eINSTANCE.createThenDependency => [
+//                target = cf.target
+//                cond.dependencies += it
+//            ]
+//        ]
+        
+        //cond.removeNext
+        cond
+
+    }
 
     private def dispatch Node transformSCPDG(Assignment assignment, Set<ControlFlow> controlFlows, SCGraph scg,
         KielerCompilerContext context) {
