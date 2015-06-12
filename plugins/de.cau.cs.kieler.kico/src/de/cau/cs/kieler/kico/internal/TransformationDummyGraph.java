@@ -171,7 +171,9 @@ public class TransformationDummyGraph {
                     featuresToAdd.addAll(moreFeaturesToAdd);
                 }
             }
-
+            Set<Feature> modelFeaturesAndFeaturesToAdd = new HashSet<Feature>();
+            modelFeaturesAndFeaturesToAdd.addAll(modelFeatures);
+            modelFeaturesAndFeaturesToAdd.addAll(featuresToAdd);
             // Now add all transformations for these features.
             // The specific transformations are filtered by their input types according to
             // the output type of possibly previous transformations.
@@ -179,9 +181,6 @@ public class TransformationDummyGraph {
                 // Add to autoselected feature set (also if this was initially selected by the
                 // user!)
                 autoSelectedFeatures.add(featureToAdd);
-                Set<Feature> modelFeaturesAndFeaturesToAdd = new HashSet<Feature>();
-                modelFeaturesAndFeaturesToAdd.addAll(modelFeatures);
-                modelFeaturesAndFeaturesToAdd.addAll(featuresToAdd);
                 addFeatureToGraph(featureToAdd, modelFeaturesAndFeaturesToAdd);
             }
         }
