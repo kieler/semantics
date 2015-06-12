@@ -583,6 +583,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
       
       //ESTERELv5-Section
       //*******************************************************************************************
+      //*******************************************************************************************
       System.out.println("STRL: " + inputURI.toString());
       InputStream strl = Esterelv5_100.runSTRL(inputURI);
       monitor.worked(1);
@@ -592,7 +593,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
       }
       
       System.out.println("STRLIC");
-      monitor.subTask("Parsing Esterel file");
+      monitor.subTask("STRLIC Processor");
       InputStream ic = Esterelv5_100.runSTRLIC(strl);
       monitor.worked(1);
       if (monitor.isCanceled()) {
@@ -601,7 +602,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
       }
       
       System.out.println("ICLC");
-      monitor.subTask("Parsing Esterel file");
+      monitor.subTask("ICLC Processor");
       InputStream lc = Esterelv5_100.runICLC(ic);
       monitor.worked(1);
       if (monitor.isCanceled()) {
@@ -610,7 +611,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
       }
       
       System.out.println("LCSC");
-      monitor.subTask("Parsing Esterel file");
+      monitor.subTask("LCSC Processor");
       InputStream sc = Esterelv5_100.runLCSC(lc);
       monitor.worked(1);
       if (monitor.isCanceled()) {
@@ -619,7 +620,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
       }
       
       System.out.println("SCSSC");
-      monitor.subTask("Parsing Esterel file");
+      monitor.subTask("SCSSC Processor");
       InputStream ssc = Esterelv5_100.runSCSSC(sc);
       monitor.worked(1);
       if (monitor.isCanceled()) {
@@ -646,8 +647,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 //      }
       
       System.out.println("SSCC");
-      monitor.subTask("Parsing Esterel file");
+      monitor.subTask("SSCC Processor");
       InputStream c = Esterelv5_100.runSSCC(ssc);
+      System.out.println(c.toString());
       monitor.worked(1);
       if (monitor.isCanceled()) {
           strl.close();
@@ -666,10 +668,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
       System.out.println("CODEGEN");
       monitor.subTask("Generating C code");
       java.net.URI uri = Esterelv5_100.runCODEGEN(c, outFile);
+      System.out.println(uri.toString());
+      //*******************************************************************************************
       //*******************************************************************************************
       
         
 
+      //CEC-Section
+      //*******************************************************************************************
+      //*******************************************************************************************
+      
 //        System.out.println("Compile 2" + inputURI.toString());
 //        InputStream strl = CEC.runSTRL(inputURI);
 //        System.out.println("Compile 3");
@@ -751,6 +759,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 //        monitor.subTask("Generating C code");
 //        java.net.URI uri = CEC.runCODEGEN(scfgc, outFile);
 //        System.out.println("Compile 11" + uri);
+      
+      	//*******************************************************************************************
+      	//*******************************************************************************************
 
         if (benchmark) {
             File currentFile = new File(uri.getPath());
@@ -934,8 +945,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
             // Compile Esterel to C
             URL output =
-                    this.compileEsterelToC(esterelOutput, CEC.getDefaultOutFile(),
+                    this.compileEsterelToC(esterelOutput, Esterelv5_100.getDefaultOutFile(),
                             esterelSimulationProgressMonitor).toURL(); 
+            output = new URL("file:sscc_out.c");
+            System.out.println(output.toString());
             System.out.println("M2M 9");
             
             // Possibly add #include for a header file

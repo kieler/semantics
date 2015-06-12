@@ -133,48 +133,39 @@ public class Esterelv5_100 {
 
 	public static InputStream runSTRL(final URI strlFile)
 			throws FileNotFoundException {
-		System.out.println("STRL at work");
 		return new FileInputStream(strlFile.getPath());
 	}
 
 	public static InputStream runSTRLIC(final InputStream strl)
 			throws IOException {
-		System.out.println("STRLIC at work");
 		return exec(MODULE.STRLIC, strl);
 	}
 
 	public static InputStream runICLC(final InputStream ic) throws IOException {
-		System.out.println("ICLC at work");
 		return exec(MODULE.ICLC, ic);
 	}
 
 	public static InputStream runLCSC(final InputStream lc) throws IOException {
-		System.out.println("LCSC at work");
 		return exec(MODULE.LCSC, lc);
 	}
 
 	public static InputStream runSCOC(final InputStream sc) throws IOException {
-		System.out.println("SCOC at work");
 		return exec(MODULE.SCOC, sc);
 	}
 
 	public static InputStream runSCC(final InputStream sc) throws IOException {
-		System.out.println("SCC at work");
 		return exec(MODULE.SCC, sc);
 	}
 
 	public static InputStream runOCC(final InputStream oc) throws IOException {
-		System.out.println("OCC at work");
 		return exec(MODULE.OCC, oc);
 	}
 
 	public static InputStream runSCSSC(final InputStream sc) throws IOException {
-		System.out.println("SCSSC at work");
 		return exec(MODULE.SCSSC, sc);
 	}
 
 	public static InputStream runSSCC(final InputStream ssc) throws IOException {
-		System.out.println("SSCC at work");
 		return exec(MODULE.SSCC, ssc);
 	}
 
@@ -207,6 +198,7 @@ public class Esterelv5_100 {
 
 	public static File getDefaultOutFile() throws IOException {
 		File outFile = File.createTempFile("strl", ".c");
+		System.out.println(outFile.getPath().toString());
 		return outFile;
 	}
 

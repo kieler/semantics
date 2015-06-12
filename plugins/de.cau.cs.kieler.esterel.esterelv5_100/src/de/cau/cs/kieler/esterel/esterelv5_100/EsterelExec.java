@@ -33,16 +33,16 @@ private EsterelExec(){
         stdin.close();
         // wait for initial output
         long time = System.currentTimeMillis();
-        while (stdout.available() == 0 && stderr.available() == 0) {
-            if (System.currentTimeMillis() - time > inittime) {
-                throw new IOException("Timeout executing " + cmd);
-            }
-            try {
-                Thread.sleep(steptime);
-            } catch (InterruptedException e) {
-                // silently ignore
-            }
-        }
+//        while (stdout.available() == 0 && stderr.available() == 0) {
+//            if (System.currentTimeMillis() - time > inittime) {
+//                throw new IOException("Timeout executing " + cmd);
+//            }
+//            try {
+//                Thread.sleep(steptime);
+//            } catch (InterruptedException e) {
+//                // silently ignore
+//            }
+//        }
      // get output
         time = System.currentTimeMillis();
         while (System.currentTimeMillis() - time < timeout) {
