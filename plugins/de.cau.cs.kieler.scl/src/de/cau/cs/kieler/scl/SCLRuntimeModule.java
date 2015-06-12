@@ -3,9 +3,37 @@
  */
 package de.cau.cs.kieler.scl;
 
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.linking.ILinker;
+import org.eclipse.xtext.linking.impl.Linker;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class SCLRuntimeModule extends de.cau.cs.kieler.scl.AbstractSCLRuntimeModule {
 
+    /**
+     * Method registers the non-lazy linking Linker since the default
+     * {@link org.eclipse.xtext.linking.lazy.LazyLinker} doesn't work properly with EOpposite
+     * references. (Produces error markers in editor.)
+     * 
+     * @return the {@link Linker} class
+     */
+    @Override
+    public Class<? extends ILinker> bindILinker() {
+        return SclLinker.class;
+    }
+
+    /**
+     * FIXME Xtext EOpposite Problem. Temporary fix for an issue where Transition#targetState is set
+     * to null again _after_ it was successfully linked. Xtext EOpposite.
+     */
+    private static class SclLinker extends Linker {
+
+        protected boolean isClearAllReferencesRequired(Resource resource) {
+            return false;
+        }
+
+    }
+    
 }

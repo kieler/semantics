@@ -37,7 +37,7 @@ public class TracingEcoreUtil extends EcoreUtil {
     }
     
     /**
-     * @see copy
+     * Performs a standard copy without tracing
      */
     public static <T extends EObject> T nontracingCopy(T eObject) {
         return EcoreUtil.copy(eObject);

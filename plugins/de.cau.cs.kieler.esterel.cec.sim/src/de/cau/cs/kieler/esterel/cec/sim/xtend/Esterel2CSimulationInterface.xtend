@@ -98,16 +98,21 @@ void setInputs(){
    }'''
 }
    
-   // -------------------------------------------------------------------------   
+   // -------------------------------------------------------------------------
+      
    
    // Generate the generic C main function
    def mainFunction(Module it) {
    	'''
+int tick() {
+    «name»();
+}   
+   	
 int main(){«name»_reset();
   output = cJSON_CreateObject();
   while(1){
     setInputs();
-	«name»();
+	tick();
 	char* outString = cJSON_Print(output);
 	strip_white_spaces(outString);
 	printf("%s\n", outString);

@@ -1,0 +1,37 @@
+module test_present1:
+input A;
+input B;
+input C;
+
+present A then
+  pause
+end present;
+present B else
+  nothing
+end present;
+present
+  case A do
+     pause
+  case B
+  case C do
+     nothing
+end present;
+present A then
+  present B then
+     pause
+  else
+     nothing
+  end present;
+  present C else
+    halt 
+  end present
+else
+  present
+    case A
+    case B do
+       nothing
+    case C
+  end present
+end present
+
+end module

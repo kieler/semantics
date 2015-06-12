@@ -13,12 +13,18 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -27,8 +33,33 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class WeakSuspend {
+class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::WEAKSUSPEND_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::WEAKSUSPEND_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::WEAKSUSPEND_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::DEFERRED_ID, SCChartsFeature::STATIC_ID, SCChartsFeature::DURING_ID,
+            SCChartsFeature::COMPLEXFINALSTATE_ID, SCChartsFeature::INITIALIZATION_ID, SCChartsFeature::ENTRY_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -55,12 +86,14 @@ class WeakSuspend {
     def void transformWeakSuspend(State state, State targetRootState) {
 
         val weakSuspends = state.suspendActions.filter[weak].toList
-
+        weakSuspends.setDefaultTrace
+        
         if (!weakSuspends.nullOrEmpty) {
             val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "weakSuspend").setTypeBool.uniqueName
             weakSuspendFlag.setInitialValue(FALSE)
 
             for (weakSuspend : weakSuspends.immutableCopy) {
+                weakSuspend.setDefaultTrace
                 val duringAction = state.createDuringAction
                 duringAction.setImmediate(weakSuspend.immediate)
                 duringAction.setTrigger(weakSuspend.trigger.copy)
@@ -68,7 +101,8 @@ class WeakSuspend {
                 state.localActions.remove(weakSuspend)
             }
 
-            for (region : state.allContainedRegions.immutableCopy) {
+            weakSuspends.setDefaultTrace
+            for (region : state.allContainedControlflowRegions.immutableCopy) {
                 val subStates = region.states.immutableCopy
                 val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
                 val stateEnum = state.createVariable(GENERATED_PREFIX + "stateEnum").setTypeInt.uniqueName

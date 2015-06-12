@@ -19,7 +19,7 @@ import java.util.ListIterator;
 
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.IntermediateResult;
-import de.cau.cs.kieler.kico.ui.KiCoSelection;
+import de.cau.cs.kieler.kico.KielerCompilerSelection;
 
 /**
  * This is a Wrapper for a list of KiCoModelWrapper because KLighD does not support diagram
@@ -86,10 +86,10 @@ public class KiCoModelChain {
      *            the selected transformations
      */
     public KiCoModelChain(Object sourceModel, final CompilationResult compilationResult, final String modelName,
-            KiCoSelection selection) {
+            KielerCompilerSelection selection) {
         models.add(sourceModel);
         collapse.put(sourceModel, false);
-        for (IntermediateResult ir : compilationResult.getIntermediateResults()) {
+        for (IntermediateResult ir : compilationResult.getTransformationIntermediateResults()) {
             Object model = ir.getResult();
             if (model instanceof String) {
                 model = new KiCoCodePlaceHolder(modelName, (String) model);
@@ -97,7 +97,7 @@ public class KiCoModelChain {
                 model = new KiCoMessageModel("Missing Model");
             }
             if(!models.contains(model)) {
-                tranformations.add(ir.getTransformationID());
+                tranformations.add(ir.getId());
                 models.add(model);
                 collapse.put(model, false);//true
             }

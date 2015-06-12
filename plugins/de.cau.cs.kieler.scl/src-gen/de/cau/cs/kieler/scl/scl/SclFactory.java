@@ -23,13 +23,13 @@ public interface SclFactory extends EFactory
   SclFactory eINSTANCE = de.cau.cs.kieler.scl.scl.impl.SclFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Program</em>'.
+   * Returns a new object of class '<em>SCL Program</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Program</em>'.
+   * @return a new object of class '<em>SCL Program</em>'.
    * @generated
    */
-  Program createProgram();
+  SCLProgram createSCLProgram();
 
   /**
    * Returns a new object of class '<em>Statement</em>'.

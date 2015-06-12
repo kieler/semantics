@@ -34,514 +34,550 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class ScgAdapterFactory extends AdapterFactoryImpl {
     /**
-     * The cached model package.
-     * <!-- begin-user-doc -->
+	 * The cached model package.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected static ScgPackage modelPackage;
 
     /**
-     * Creates an instance of the adapter factory.
-     * <!-- begin-user-doc -->
+	 * Creates an instance of the adapter factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ScgAdapterFactory() {
-        if (modelPackage == null) {
-            modelPackage = ScgPackage.eINSTANCE;
-        }
-    }
+		if (modelPackage == null) {
+			modelPackage = ScgPackage.eINSTANCE;
+		}
+	}
 
     /**
-     * Returns whether this factory is applicable for the type of the object.
-     * <!-- begin-user-doc -->
+	 * Returns whether this factory is applicable for the type of the object.
+	 * <!-- begin-user-doc -->
      * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
      * <!-- end-user-doc -->
-     * @return whether this factory is applicable for the type of the object.
-     * @generated
-     */
+	 * @return whether this factory is applicable for the type of the object.
+	 * @generated
+	 */
     @Override
     public boolean isFactoryForType(Object object) {
-        if (object == modelPackage) {
-            return true;
-        }
-        if (object instanceof EObject) {
-            return ((EObject)object).eClass().getEPackage() == modelPackage;
-        }
-        return false;
-    }
+		if (object == modelPackage) {
+			return true;
+		}
+		if (object instanceof EObject) {
+			return ((EObject)object).eClass().getEPackage() == modelPackage;
+		}
+		return false;
+	}
 
     /**
-     * The switch that delegates to the <code>createXXX</code> methods.
-     * <!-- begin-user-doc -->
+	 * The switch that delegates to the <code>createXXX</code> methods.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ScgSwitch<Adapter> modelSwitch =
         new ScgSwitch<Adapter>() {
-            @Override
-            public Adapter caseSCGraph(SCGraph object) {
-                return createSCGraphAdapter();
-            }
-            @Override
-            public Adapter caseNode(Node object) {
-                return createNodeAdapter();
-            }
-            @Override
-            public Adapter caseConditional(Conditional object) {
-                return createConditionalAdapter();
-            }
-            @Override
-            public Adapter caseSurface(Surface object) {
-                return createSurfaceAdapter();
-            }
-            @Override
-            public Adapter caseDepth(Depth object) {
-                return createDepthAdapter();
-            }
-            @Override
-            public Adapter caseAssignment(Assignment object) {
-                return createAssignmentAdapter();
-            }
-            @Override
-            public Adapter caseFork(Fork object) {
-                return createForkAdapter();
-            }
-            @Override
-            public Adapter caseJoin(Join object) {
-                return createJoinAdapter();
-            }
-            @Override
-            public Adapter caseLink(Link object) {
-                return createLinkAdapter();
-            }
-            @Override
-            public Adapter caseEntry(Entry object) {
-                return createEntryAdapter();
-            }
-            @Override
-            public Adapter caseExit(Exit object) {
-                return createExitAdapter();
-            }
-            @Override
-            public Adapter caseControlFlow(ControlFlow object) {
-                return createControlFlowAdapter();
-            }
-            @Override
-            public Adapter caseDependency(Dependency object) {
-                return createDependencyAdapter();
-            }
-            @Override
-            public Adapter caseAbsoluteWrite_Read(AbsoluteWrite_Read object) {
-                return createAbsoluteWrite_ReadAdapter();
-            }
-            @Override
-            public Adapter caseRelativeWrite_Read(RelativeWrite_Read object) {
-                return createRelativeWrite_ReadAdapter();
-            }
-            @Override
-            public Adapter caseAbsoluteWrite_RelativeWrite(AbsoluteWrite_RelativeWrite object) {
-                return createAbsoluteWrite_RelativeWriteAdapter();
-            }
-            @Override
-            public Adapter caseWrite_Write(Write_Write object) {
-                return createWrite_WriteAdapter();
-            }
-            @Override
-            public Adapter caseBasicBlock(BasicBlock object) {
-                return createBasicBlockAdapter();
-            }
-            @Override
-            public Adapter caseSchedulingBlock(SchedulingBlock object) {
-                return createSchedulingBlockAdapter();
-            }
-            @Override
-            public Adapter casePredecessor(Predecessor object) {
-                return createPredecessorAdapter();
-            }
-            @Override
-            public Adapter caseScheduleBlock(ScheduleBlock object) {
-                return createScheduleBlockAdapter();
-            }
-            @Override
-            public Adapter caseSchedule(Schedule object) {
-                return createScheduleAdapter();
-            }
-            @Override
-            public Adapter caseGuard(Guard object) {
-                return createGuardAdapter();
-            }
-            @Override
-            public Adapter caseAnnotatable(Annotatable object) {
-                return createAnnotatableAdapter();
-            }
-            @Override
-            public Adapter defaultCase(EObject object) {
-                return createEObjectAdapter();
-            }
-        };
+			@Override
+			public Adapter caseSCGraph(SCGraph object) {
+				return createSCGraphAdapter();
+			}
+			@Override
+			public Adapter caseNode(Node object) {
+				return createNodeAdapter();
+			}
+			@Override
+			public Adapter caseConditional(Conditional object) {
+				return createConditionalAdapter();
+			}
+			@Override
+			public Adapter caseSurface(Surface object) {
+				return createSurfaceAdapter();
+			}
+			@Override
+			public Adapter caseDepth(Depth object) {
+				return createDepthAdapter();
+			}
+			@Override
+			public Adapter caseAssignment(Assignment object) {
+				return createAssignmentAdapter();
+			}
+			@Override
+			public Adapter caseFork(Fork object) {
+				return createForkAdapter();
+			}
+			@Override
+			public Adapter caseJoin(Join object) {
+				return createJoinAdapter();
+			}
+			@Override
+			public Adapter caseLink(Link object) {
+				return createLinkAdapter();
+			}
+			@Override
+			public Adapter caseEntry(Entry object) {
+				return createEntryAdapter();
+			}
+			@Override
+			public Adapter caseExit(Exit object) {
+				return createExitAdapter();
+			}
+			@Override
+			public Adapter caseControlFlow(ControlFlow object) {
+				return createControlFlowAdapter();
+			}
+			@Override
+			public Adapter caseDependency(Dependency object) {
+				return createDependencyAdapter();
+			}
+			@Override
+			public Adapter caseDataDependency(DataDependency object) {
+				return createDataDependencyAdapter();
+			}
+			@Override
+			public Adapter caseControlDependency(ControlDependency object) {
+				return createControlDependencyAdapter();
+			}
+			@Override
+			public Adapter caseAbsoluteWrite_Read(AbsoluteWrite_Read object) {
+				return createAbsoluteWrite_ReadAdapter();
+			}
+			@Override
+			public Adapter caseRelativeWrite_Read(RelativeWrite_Read object) {
+				return createRelativeWrite_ReadAdapter();
+			}
+			@Override
+			public Adapter caseAbsoluteWrite_RelativeWrite(AbsoluteWrite_RelativeWrite object) {
+				return createAbsoluteWrite_RelativeWriteAdapter();
+			}
+			@Override
+			public Adapter caseWrite_Write(Write_Write object) {
+				return createWrite_WriteAdapter();
+			}
+			@Override
+			public Adapter caseBasicBlock(BasicBlock object) {
+				return createBasicBlockAdapter();
+			}
+			@Override
+			public Adapter caseSchedulingBlock(SchedulingBlock object) {
+				return createSchedulingBlockAdapter();
+			}
+			@Override
+			public Adapter casePredecessor(Predecessor object) {
+				return createPredecessorAdapter();
+			}
+			@Override
+			public Adapter caseScheduleBlock(ScheduleBlock object) {
+				return createScheduleBlockAdapter();
+			}
+			@Override
+			public Adapter caseSchedule(Schedule object) {
+				return createScheduleAdapter();
+			}
+			@Override
+			public Adapter caseGuard(Guard object) {
+				return createGuardAdapter();
+			}
+			@Override
+			public Adapter caseAnnotatable(Annotatable object) {
+				return createAnnotatableAdapter();
+			}
+			@Override
+			public Adapter defaultCase(EObject object) {
+				return createEObjectAdapter();
+			}
+		};
 
     /**
-     * Creates an adapter for the <code>target</code>.
-     * <!-- begin-user-doc -->
+	 * Creates an adapter for the <code>target</code>.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param target the object to adapt.
-     * @return the adapter for the <code>target</code>.
-     * @generated
-     */
+	 * @param target the object to adapt.
+	 * @return the adapter for the <code>target</code>.
+	 * @generated
+	 */
     @Override
     public Adapter createAdapter(Notifier target) {
-        return modelSwitch.doSwitch((EObject)target);
-    }
+		return modelSwitch.doSwitch((EObject)target);
+	}
 
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Node <em>Node</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Node <em>Node</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Node
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Node
+	 * @generated
+	 */
     public Adapter createNodeAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Conditional <em>Conditional</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Conditional <em>Conditional</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Conditional
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Conditional
+	 * @generated
+	 */
     public Adapter createConditionalAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Surface <em>Surface</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Surface <em>Surface</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Surface
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Surface
+	 * @generated
+	 */
     public Adapter createSurfaceAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Depth <em>Depth</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Depth <em>Depth</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Depth
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Depth
+	 * @generated
+	 */
     public Adapter createDepthAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Assignment <em>Assignment</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Assignment <em>Assignment</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Assignment
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Assignment
+	 * @generated
+	 */
     public Adapter createAssignmentAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Fork <em>Fork</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Fork <em>Fork</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Fork
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Fork
+	 * @generated
+	 */
     public Adapter createForkAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Join <em>Join</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Join <em>Join</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Join
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Join
+	 * @generated
+	 */
     public Adapter createJoinAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Link <em>Link</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Link <em>Link</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Link
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Link
+	 * @generated
+	 */
     public Adapter createLinkAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.SCGraph <em>SC Graph</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.SCGraph <em>SC Graph</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.SCGraph
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.SCGraph
+	 * @generated
+	 */
     public Adapter createSCGraphAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Entry <em>Entry</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Entry <em>Entry</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Entry
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Entry
+	 * @generated
+	 */
     public Adapter createEntryAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Exit <em>Exit</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Exit <em>Exit</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Exit
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Exit
+	 * @generated
+	 */
     public Adapter createExitAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ControlFlow <em>Control Flow</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ControlFlow <em>Control Flow</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.ControlFlow
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.ControlFlow
+	 * @generated
+	 */
     public Adapter createControlFlowAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Dependency <em>Dependency</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Dependency <em>Dependency</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Dependency
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Dependency
+	 * @generated
+	 */
     public Adapter createDependencyAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_Read <em>Absolute Write Read</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.DataDependency <em>Data Dependency</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.AbsoluteWrite_Read
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.DataDependency
+	 * @generated
+	 */
+    public Adapter createDataDependencyAdapter() {
+		return null;
+	}
+
+    /**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ControlDependency <em>Control Dependency</em>}'.
+	 * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.ControlDependency
+	 * @generated
+	 */
+    public Adapter createControlDependencyAdapter() {
+		return null;
+	}
+
+    /**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_Read <em>Absolute Write Read</em>}'.
+	 * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.AbsoluteWrite_Read
+	 * @generated
+	 */
     public Adapter createAbsoluteWrite_ReadAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.RelativeWrite_Read <em>Relative Write Read</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.RelativeWrite_Read <em>Relative Write Read</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.RelativeWrite_Read
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.RelativeWrite_Read
+	 * @generated
+	 */
     public Adapter createRelativeWrite_ReadAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite <em>Absolute Write Relative Write</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite <em>Absolute Write Relative Write</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
+	 * @generated
+	 */
     public Adapter createAbsoluteWrite_RelativeWriteAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Write_Write <em>Write Write</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Write_Write <em>Write Write</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Write_Write
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Write_Write
+	 * @generated
+	 */
     public Adapter createWrite_WriteAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.BasicBlock <em>Basic Block</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.BasicBlock <em>Basic Block</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.BasicBlock
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.BasicBlock
+	 * @generated
+	 */
     public Adapter createBasicBlockAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.SchedulingBlock <em>Scheduling Block</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.SchedulingBlock <em>Scheduling Block</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.SchedulingBlock
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.SchedulingBlock
+	 * @generated
+	 */
     public Adapter createSchedulingBlockAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Predecessor <em>Predecessor</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Predecessor <em>Predecessor</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Predecessor
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Predecessor
+	 * @generated
+	 */
     public Adapter createPredecessorAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ScheduleBlock <em>Schedule Block</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ScheduleBlock <em>Schedule Block</em>}'.
+	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.ScheduleBlock
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.ScheduleBlock
+	 * @generated
+	 */
 	public Adapter createScheduleBlockAdapter() {
-        return null;
-    }
+		return null;
+	}
 
 				/**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Schedule <em>Schedule</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Schedule <em>Schedule</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Schedule
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Schedule
+	 * @generated
+	 */
     public Adapter createScheduleAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Guard <em>Guard</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Guard <em>Guard</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Guard
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.Guard
+	 * @generated
+	 */
     public Adapter createGuardAdapter() {
-        return null;
-    }
+		return null;
+	}
 
                 /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.annotations.Annotatable
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.core.annotations.Annotatable
+	 * @generated
+	 */
     public Adapter createAnnotatableAdapter() {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Creates a new adapter for the default case.
-     * <!-- begin-user-doc -->
+	 * Creates a new adapter for the default case.
+	 * <!-- begin-user-doc -->
      * This default implementation returns null.
      * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @generated
-     */
+	 * @return the new adapter.
+	 * @generated
+	 */
     public Adapter createEObjectAdapter() {
-        return null;
-    }
+		return null;
+	}
 
 } //ScgAdapterFactory

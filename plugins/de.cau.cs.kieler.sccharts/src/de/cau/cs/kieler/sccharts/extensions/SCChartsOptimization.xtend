@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
@@ -45,7 +44,7 @@ class SCChartsOptimization {
     }
 
     def void optimizeSuperflousImmediateTransitions(State state, State targetRootState) {
-        if (state.outgoingTransitions.size == 1 && !state.hasInnerStatesOrRegions) {
+        if (state.outgoingTransitions.size == 1 && !state.hasInnerStatesOrControlflowRegions) {
             val transition = state.outgoingTransitions.get(0)
             val targetState = transition.targetState
             if (transition.immediate2) {
@@ -81,7 +80,7 @@ class SCChartsOptimization {
     }
 
     def void optimizeSuperflousConditionalStates(State state, State targetRootState) {
-        if (state.outgoingTransitions.size == 2 && !state.hasInnerStatesOrRegions) {
+        if (state.outgoingTransitions.size == 2 && !state.hasInnerStatesOrControlflowRegions) {
             val transition1 = state.outgoingTransitions.get(0)
             val transition2 = state.outgoingTransitions.get(1)
             val targetState2 = transition1.targetState

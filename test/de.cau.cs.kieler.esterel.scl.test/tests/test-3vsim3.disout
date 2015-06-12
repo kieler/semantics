@@ -1,0 +1,30 @@
+module test_3vsim3:
+input A;
+input B;
+input C;
+input D;
+output E;
+output F;
+output G;
+
+trap T in
+  if (A) {
+      if (B) else {
+        emit E
+      }
+    ||
+      if (C) else {
+        if (D) else {
+          exit T
+        };
+        emit G
+      };
+      emit E
+    ||
+      if (E) else {
+        emit F
+      }
+  }
+end trap
+
+end module

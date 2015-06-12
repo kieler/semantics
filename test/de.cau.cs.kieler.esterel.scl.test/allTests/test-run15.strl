@@ -1,0 +1,163 @@
+module Runnable:
+type t1;
+type t2;
+type t3;
+type t4;
+type t5;
+type t6;
+type t7;
+type t8;
+constant c1 : integer;
+constant c2 : boolean;
+constant c3 : double;
+function f1() : integer;
+function f2(integer, boolean) : boolean;
+function f3() : boolean;
+function pfadd(integer, integer) : integer;
+function pfand(boolean, boolean) : boolean;
+function pfdiv(integer, integer) : integer;
+function pfeq(integer, integer) : boolean;
+function pfge(integer, integer) : boolean;
+function pfgt(integer, integer) : boolean;
+function pfle(integer, integer) : boolean;
+function pflt(integer, integer) : boolean;
+function pfmod(integer, integer) : integer;
+function pfmult(integer, integer) : integer;
+function pfne(integer, integer) : boolean;
+function pfnot(boolean) : boolean;
+function pfor(boolean, boolean) : boolean;
+function pfsub(integer, integer) : integer;
+procedure p1()();
+procedure p2(integer, boolean)(integer);
+procedure p3(integer)(boolean);
+task ta1()();
+task ta2(boolean, integer)(boolean);
+task ta3()();
+input s1;
+input s2;
+output s3;
+output s4;
+inputoutput s5;
+inputoutput s6;
+return s10;
+return s11;
+
+var v1 : t1,
+    v2 : t2,
+    v3 : t3,
+    v4 : t4,
+    v5 : t5,
+    v6 : t6,
+    v7 : t7,
+    v8 : t8,
+    v9 := c1 : integer,
+    v10 := c2 : boolean,
+    v11 := c3 : double in
+  v9 := f1();
+  v10 := f2(v9, v10);
+  v10 := f3();
+  v10 := pfand(v10, v10);
+  v10 := pfor(v10, v10);
+  v10 := pfnot(v10);
+  v9 := pfadd(v9, v9);
+  v9 := pfsub(v9, v9);
+  v9 := pfmult(v9, v9);
+  v9 := pfdiv(v9, v9 + 1);
+  v10 := pflt(v9, v9);
+  v10 := pfgt(v9, v9);
+  v10 := pfle(v9, v9);
+  v10 := pfge(v9, v9);
+  v10 := pfne(v9, v9);
+  v10 := pfeq(v9, v9);
+  call p1()();
+  call p2(v9, v10)(v9);
+  call p3(v9)(v10);
+  exec
+    case ta1()() return s10
+  end exec;
+  exec
+    case ta2(v10, v9)(v10) return s11
+  end exec;
+  present s1 then
+    emit s3
+  end present;
+  present s2 then
+    emit s4
+  end present;
+  present s5 then
+    emit s6
+  end present  
+end var
+
+end module
+
+module test_run15:
+type t1a;
+type t2a;
+type t3a;
+constant c1a = 8 : integer;
+constant c2a : boolean;
+constant c3a : integer;
+function f1a() : integer;
+function f2a(integer, boolean) : boolean;
+function f3a() : boolean;
+procedure p1a()();
+procedure p2a(integer, boolean)(integer);
+procedure p3a(integer)(boolean);
+task ta1a()();
+task ta2a(boolean, integer)(boolean);
+task ta3a()();
+input s1a;
+input s2a;
+output s3a;
+output s4a;
+inputoutput s5a;
+inputoutput s6a;
+return s10a;
+return s11a;
+
+run Runme / Runnable [
+  type t1a / t1,
+       t2a / t2,
+       t3a / t3,
+       string / t4,
+       integer / t5,
+       boolean / t6,
+       float / t7,
+       double / t8;
+  constant c1a / c1,
+           true / c2,
+           3.14159 / c3;
+  function f1a / f1,
+           f2a / f2,
+           f3a / f3,
+           and / pfand,
+           or / pfor,
+           not / pfnot,
+           + / pfadd,
+           - / pfsub,
+           * / pfmult,
+           / / pfdiv,
+           mod / pfmod,
+           < / pflt,
+           > / pfgt,
+           <= / pfle,
+           >= / pfge,
+           <> / pfne,
+           = / pfeq;
+  procedure p1a / p1,
+            p2a / p2,
+            p3a / p3;
+  task ta1a / ta1,
+       ta2a / ta2,
+       ta3a / ta3;
+  signal s1a / s1,
+         s2a / s2,
+         s3a / s3,
+         s4a / s4,
+         s5a / s5,
+         s6a / s6,
+         s10a / s10,
+         s11a / s11 ]
+
+end module

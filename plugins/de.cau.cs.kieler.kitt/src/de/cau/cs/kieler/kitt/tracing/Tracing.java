@@ -23,6 +23,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Multimap;
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.core.properties.IProperty;
+import de.cau.cs.kieler.core.properties.Property;
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData;
 import de.cau.cs.kieler.kitt.tracing.internal.TracingChain;
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper;
@@ -36,7 +39,13 @@ import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper;
  * @kieler.rating 2015-02-25 proposed yellow
  * 
  */
-public class Tracing {
+public class Tracing extends AbstractKielerCompilerAuxiliaryData {
+    
+    /**
+     * Activates tracing if set to true in the compiler context.
+     */
+    public static final IProperty<Boolean> ACTIVE_TRACING = new Property<Boolean>(
+            "de.cau.cs.kieler.kitt.tracing", false);
 
     private static TracingTreeExtensions treeExtension = Guice.createInjector().getInstance(
             TracingTreeExtensions.class);

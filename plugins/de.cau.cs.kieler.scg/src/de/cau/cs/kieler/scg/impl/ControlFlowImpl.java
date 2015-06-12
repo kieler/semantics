@@ -18,28 +18,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class ControlFlowImpl extends LinkImpl implements ControlFlow {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-
-
-
 	 * @generated
 	 */
-    
     protected ControlFlowImpl() {
 		super();
 	}
 
-
-
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return ScgPackage.Literals.CONTROL_FLOW;
-    }
+		return ScgPackage.Literals.CONTROL_FLOW;
+	}
 
 } //ControlFlowImpl

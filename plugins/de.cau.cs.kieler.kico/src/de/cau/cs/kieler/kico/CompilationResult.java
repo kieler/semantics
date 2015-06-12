@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -14,11 +14,15 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.kitt.tracing.Tracing;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Collections2;
 
 /**
  * This class is the extended version of the transformation result including intermediate results
@@ -26,14 +30,14 @@ import de.cau.cs.kieler.kitt.tracing.Tracing;
  * be the source model.
  * 
  * @author cmot ssm
- * @kieler.design 2014-05-21 proposed
- * @kieler.rating 2014-05-21 proposed yellow
+ * @kieler.design 2015-03-11 proposed
+ * @kieler.rating 2015-03-11 proposed yellow
  * 
  */
 public class CompilationResult {
 
     /** The intermediate results. */
-    private List<IntermediateResult> intermediateResults = new ArrayList<IntermediateResult>();
+    private List<TransformationIntermediateResult> intermediateResults = new ArrayList<TransformationIntermediateResult>();
 
     /** The postponed error list transformation id. */
     private List<KielerCompilerException> postponedErrors =
@@ -49,17 +53,15 @@ public class CompilationResult {
     /** All last/occurred warnings processed for this compilation. */
     private String allWarnings = null;
     
-    /** Ancillary data. */
-    private List<AbstractKielerCompilerAncillaryData> ancillaryData = 
-            new ArrayList<AbstractKielerCompilerAncillaryData>();
+    /** Auxiliary data. */
+    private Set<AbstractKielerCompilerAuxiliaryData> auxiliaryData = 
+            new HashSet<AbstractKielerCompilerAuxiliaryData>();
 
     /**
      * Indicates that the compilation is done and no further compilation steps are needed or
      * possible.
      */
-    private boolean currentTransformationdone = false;
-    
-    public Tracing tracing;//TODO delete when kico is redesigned
+    private boolean currentTransformationDone = false;
 
     // -------------------------------------------------------------------------
 
@@ -96,31 +98,34 @@ public class CompilationResult {
      */
     public void clear(EObject sourceModel) {
         intermediateResults.clear();
-        intermediateResults.add(new IntermediateResult("", sourceModel, 0));
+        TransformationIntermediateResult intermediateResult = new TransformationIntermediateResult();
+        intermediateResult.setId("");
+        intermediateResult.setResult(sourceModel);
+        intermediateResults.add(intermediateResult);
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Access all intermediate results.
+     * Access all transformation intermediate results.
      * 
      * @return the intermediate results
      */
-    public List<IntermediateResult> getIntermediateResults() {
+    public List<TransformationIntermediateResult> getTransformationIntermediateResults() {
         return intermediateResults;
     }
 
     // -------------------------------------------------------------------------
     
     /**
-     * Adds a new intermediate result for a given transformationID.
+     * Adds a new transformation intermediate result for a given transformation ID.
      *
      * @param transformationID the transformation id
      * @return the intermediate result
      */
-    public IntermediateResult addIntermediateResult(String transformationID) {
-        IntermediateResult intermediateResult = new IntermediateResult();
-        intermediateResult.setTransformationId(transformationID);
+    public TransformationIntermediateResult addTransformationIntermediateResult(String transformationID) {
+        TransformationIntermediateResult intermediateResult = new TransformationIntermediateResult();
+        intermediateResult.setId(transformationID);
         intermediateResults.add(intermediateResult);
         return intermediateResult;
     }
@@ -128,14 +133,14 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
     
     /**
-     * Gets the last intermediate transformation result. Returns null if there is no transformation
+     * Gets the last transformation intermediate transformation result. Returns null if there is no transformation
      * result at all.
      * 
      * @return the e object
      */
-    public IntermediateResult getLastIntermediateResult() {
+    public TransformationIntermediateResult getLastIntermediateResult() {
         if (intermediateResults.size() > 0) {
-            IntermediateResult lastResult = intermediateResults.get(intermediateResults.size() - 1);
+            TransformationIntermediateResult lastResult = intermediateResults.get(intermediateResults.size() - 1);
             return lastResult;
         }
         return null;
@@ -144,14 +149,14 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
     
     /**
-     * Gets the first intermediate transformation result. Returns null if there is no transformation
+     * Gets the first transformation intermediate transformation result. Returns null if there is no transformation
      * result at all.
      * 
      * @return the e object
      */
-    public IntermediateResult getFirstIntermediateResult() {
+    public TransformationIntermediateResult getFirstIntermediateResult() {
         if (intermediateResults.size() > 0) {
-            IntermediateResult lastResult = intermediateResults.get(0);
+            TransformationIntermediateResult lastResult = intermediateResults.get(0);
             return lastResult;
         }
         return null;
@@ -184,7 +189,7 @@ public class CompilationResult {
      * @return the e object
      */
     public Object getTransformationObject() {
-        IntermediateResult intermediateResult = getFirstIntermediateResult();
+        TransformationIntermediateResult intermediateResult = getFirstIntermediateResult();
         if (intermediateResult != null) {
             return intermediateResult.getResult();
         }
@@ -273,7 +278,7 @@ public class CompilationResult {
      */
     public void processPostponedWarnings() {
         for (KielerCompilerException exception : postponedWarnings) {
-            String transformationID = exception.getTransformationID();
+            String transformationID = exception.getTransformationId();
 
             if (allWarnings != null) {
                 allWarnings += ", ";
@@ -297,7 +302,7 @@ public class CompilationResult {
      */
     public void processPostponedErrors() {
         for (KielerCompilerException exception : postponedErrors) {
-            String transformationID = exception.getTransformationID();
+            String transformationID = exception.getTransformationId();
 
             if (allErrors != null) {
                 allErrors += ", ";
@@ -364,7 +369,7 @@ public class CompilationResult {
      * @return the done
      */
     public boolean isCurrentTransformationDone() {
-        return currentTransformationdone;
+        return currentTransformationDone;
     }
 
     // -------------------------------------------------------------------------
@@ -376,25 +381,42 @@ public class CompilationResult {
      *            the done to set
      */
     public void setCurrentTransformationDone(boolean done) {
-        this.currentTransformationdone = done;
+        this.currentTransformationDone = done;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * @return the ancillaryData
+     * Gets the auxiliary data by its type.
+     * 
+     * @param type
+     * @return collection of auxiliary data with matching type
      */
-    public List<AbstractKielerCompilerAncillaryData> getAncillaryData() {
-        return ancillaryData;
+    @SuppressWarnings("unchecked")
+    public <T extends AbstractKielerCompilerAuxiliaryData> List<T> getAuxiliaryData(Class<T> type) {
+        return new ArrayList<T>((Collection<T>) Collections2.filter(auxiliaryData, Predicates.instanceOf(type)));
     }
 
     /**
-     * @param ancillaryData the ancillaryData to set
+     * Adds given auxiliary data.
+     *
+     * @param data
+     *            new data to add to set
+     * @return true if the data set did not already contain the data
      */
-    public void setAncillaryData(List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-        this.ancillaryData = ancillaryData;
+    public boolean addAuxiliaryData(AbstractKielerCompilerAuxiliaryData data) {
+        return auxiliaryData.add(data);
     }
 
-    // -------------------------------------------------------------------------
-    
+    /**
+     * Removed given auxiliary data if existing
+     *
+     * @param data
+     *            to remove from set
+     * @return true if this set contained the specified element
+     */
+    public boolean removeAuxiliaryData(AbstractKielerCompilerAuxiliaryData data) {
+        return auxiliaryData.remove(data);
+    }
+
 }

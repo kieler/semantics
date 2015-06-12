@@ -1,0 +1,13 @@
+module test_multi4b:
+input A;
+
+loop
+  suspend
+    pause
+  when immediate A;
+  pause
+  ||
+  emit A
+end loop
+
+end module

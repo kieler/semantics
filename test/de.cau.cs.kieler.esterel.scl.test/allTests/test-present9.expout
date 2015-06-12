@@ -1,0 +1,22 @@
+module test_present9:
+input A;
+input B;
+input C;
+output X;
+output Y;
+output Z;
+
+loop
+  present A then
+    emit X
+  end present;
+  present [A and B] then
+    emit Y
+  end present;
+  present [not A and B or not C] then
+    emit Z
+  end present;
+  pause
+end loop
+
+end module

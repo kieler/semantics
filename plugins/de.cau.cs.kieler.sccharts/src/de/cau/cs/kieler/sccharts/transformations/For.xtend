@@ -13,11 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 
 /**
  * SCCharts For Transformation.
@@ -26,8 +28,32 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class For {
+class For extends AbstractExpansionTransformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::FOR_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::FOR_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::FOR_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet()
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::REFERENCE_ID, SCChartsFeature::MAP_ID) //TODO check MAP dependency
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
 

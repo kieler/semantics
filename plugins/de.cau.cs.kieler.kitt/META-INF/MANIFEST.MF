@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.compare,
  org.eclipse.emf.compare.rcp,
  com.google.inject,
- de.cau.cs.kieler.core
+ de.cau.cs.kieler.core,
+ de.cau.cs.kieler.kico
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.kitt.tracing,
  de.cau.cs.kieler.kitt.tracing.internal;x-friends:="de.cau.cs.kieler.kitt.klighd",

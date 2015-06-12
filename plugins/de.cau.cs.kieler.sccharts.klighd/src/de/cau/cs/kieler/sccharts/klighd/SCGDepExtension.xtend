@@ -26,17 +26,20 @@ import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kico.KielerCompilerSelection
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingEdgeNode
+import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
-import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.scg.AbsoluteWrite_Read
 import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
 import de.cau.cs.kieler.scg.Assignment
@@ -44,10 +47,13 @@ import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.RelativeWrite_Read
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Write_Write
+import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
+import java.util.HashSet
 import org.eclipse.emf.ecore.EObject
 
 import static extension com.google.common.base.Predicates.*
+import de.cau.cs.kieler.scg.DataDependency
 
 /**
  * @author als
@@ -69,20 +75,13 @@ class SCGDepExtension {
     @Inject
     extension KContainerRenderingExtensions
 
-    val HashMap<KNode, SourceModelTrackingAdapter> adapters = newHashMap;
+    val HashSet<Pair<EObject, EObject>> cache = newHashSet;
 
-    def prepareSCGDependcyEdges(KNode rootNode) {
-        val adapter = new SourceModelTrackingAdapter();
-        rootNode.eAdapters.add(adapter);
-        adapters.put(rootNode, adapter)
-    }
-
-    def addSCGDependcyEdges(KNode rootNode, State scc) {
-        val tracking = adapters.get(rootNode);
-        if (tracking != null) {
-            val context = new KielerCompilerContext("SCGDEP", scc);
-            context.prerequirements = true;
-            context.tracing = true;
+    def addSCGDependcyEdges(KNode rootNode, State scc, SourceModelTrackingAdapter tracking) {
+            //TODO This transformation selection should be sensetive to the user selection in KiCoSelectionView regarding its editor
+            val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID+",*T_ABORT,*T_scg.basicblock.sc", scc);
+            context.setProperty(Tracing.ACTIVE_TRACING, true);
+            context.advancedSelect = true;
             val result = KielerCompiler.compile(context);
             val compiledModel = result.object;
             val attachNode = rootNode.children.head;
@@ -104,21 +103,25 @@ class SCGDepExtension {
             if (compiledModel instanceof SCGraph && attachNode != null) {
                 val scg = compiledModel as SCGraph;
 
-                val mapping = result.tracing.getMapping(scg, scc);
+                val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
                 if (mapping != null) {
                     val filterDiagramPredicate = KLabel.instanceOf.or(KRectangle.instanceOf);
                     val filterModelPredicate = Action.instanceOf.or(ValuedObject.instanceOf);
                     for (Assignment asng : scg.nodes.filter(Assignment)) {
                         val sources = mapping.get(asng).filter(filterModelPredicate).fold(newHashSet()) [ list, item |
                             list.addAll(tracking.getTargetElements(item).filter(filterDiagramPredicate));
-                            list.addAll(equivalenceClasses.getTargets(item).filter(EObject).filter(filterDiagramPredicate).toList);
+                            list.addAll(
+                                equivalenceClasses.getTargets(item).filter(EObject).filter(filterDiagramPredicate).
+                                    toList);
                             list;
                         ];
-                        for (Dependency dep : asng.dependencies) {
+                        for (dep : asng.dependencies.filter(DataDependency)) {
                             if (!dep.confluent && dep.concurrent) {
                                 val targets = mapping.get(dep.target).filter(filterModelPredicate).fold(newHashSet()) [ list, item |
                                     list.addAll(tracking.getTargetElements(item).filter(filterDiagramPredicate));
-                                    list.addAll(equivalenceClasses.getTargets(item).filter(EObject).filter(filterDiagramPredicate));
+                                    list.addAll(
+                                        equivalenceClasses.getTargets(item).filter(EObject).filter(
+                                            filterDiagramPredicate));
                                     list;
                                 ];
                                 for (EObject source : sources) {
@@ -132,8 +135,6 @@ class SCGDepExtension {
                     }
                 }
             }
-            rootNode.eAdapters.remove(tracking)
-        }
         return rootNode
     }
 
@@ -147,7 +148,13 @@ class SCGDepExtension {
                 if(dependency instanceof AbsoluteWrite_Read) it.foreground = Colors.GREEN
                 if(dependency instanceof RelativeWrite_Read) it.foreground = Colors.GREEN
                 if(dependency instanceof AbsoluteWrite_RelativeWrite) it.foreground = Colors.GREEN
-                if(dependency instanceof Write_Write) it.foreground = Colors.RED
+                if (cache.contains(new Pair(target, source))) {
+                    it.invisible = true;
+                }
+                if (dependency instanceof Write_Write) {
+                    it.foreground = Colors.RED;
+                    cache.add(new Pair(source, target))
+                }
                 it.lineWidth = 2
                 it.lineStyle = LineStyle::DASH
                 it.addArrowDecorator

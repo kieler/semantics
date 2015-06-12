@@ -28,8 +28,6 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.kitt.klighd.actions.MemorizedCollapseExpandAction
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.LightDiagramServices
@@ -43,6 +41,7 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 
 /**
  * Diagram synthesis of a KiCoModelChain.
@@ -79,8 +78,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
     extension KColorExtensions
 
     // -------------------------------------------------------------------------
-    private static val KColor BG_COLOR_1 = RENDERING_FACTORY.createKColor() => [it.color = Colors.CHOCOLATE_1];
-    private static val KColor BG_COLOR_2 = RENDERING_FACTORY.createKColor() => [it.color = Colors.CHOCOLATE_3];
+    private static val KColor BG_COLOR = RENDERING_FACTORY.createKColor() => [red = 255; green = 202; blue = 119];
     private static val KColor SHADOW_COLOR = RENDERING_FACTORY.createKColor() => [it.color = Colors.BLACK];
 
     override public getDisplayedSynthesisOptions() {
@@ -140,8 +138,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         //if label is not null a parent node is created and model diagram is added in collapsed child area
         if (!chain.blankMode) {
 
-            node.setLayoutOption(KlighdProperties::EXPAND,
-                MemorizedCollapseExpandAction.isExpanded(model, !chain.collapse.get(model)));
+            node.setLayoutOption(KlighdProperties::EXPAND, !chain.collapse.get(model));
 
             //Expanded Rectangle
             node.createFigure() => [
@@ -152,8 +149,8 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                     it.fontSize = 9
                     //center
                     it.setSurroundingSpaceGrid(5, 0);
-                    it.addSingleClickAction(MemorizedCollapseExpandAction.ID);
-                    it.addDoubleClickAction(MemorizedCollapseExpandAction.ID);
+                    it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
                 it.addRectangle => [
                     it.setGridPlacementData.from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
@@ -170,8 +167,8 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                 it.addText("[Show Model]") => [
                     it.foreground = "blue".color
                     it.fontSize = 9
-                    it.addSingleClickAction(MemorizedCollapseExpandAction.ID);
-                    it.addDoubleClickAction(MemorizedCollapseExpandAction.ID);
+                    it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                     it.setSurroundingSpace(5, 0);
                 ];
             ];
@@ -188,27 +185,37 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         } catch (Exception e) {
             //fallthrou
         }
-        if (subDiagramNode == null && model instanceof EObject) { //component synthesis
+        if ((subDiagramNode == null || subDiagramNode.children.isEmpty) && model instanceof EObject) { //component synthesis
             subDiagramNode = createNode();
             val modelObject = model as EObject;
+            subDiagramNode.children += modelObject.translateEObject
             subDiagramNode.children += modelObject.eAllContents.map [
-                it.translateEObject;
+                val child = it.translateEObject;
+                val container = it.eContainer;
+                if (container != null) {
+                    createEdge => [
+                        it.source = container.translateEObject;
+                        it.target = child;
+                        it.addPolyline.addArrowDecorator;
+                    ]
+                }
+                return child;
             ].toIterable;
         }
-        if (subDiagramNode != null) {
+        if (subDiagramNode != null && !subDiagramNode.children.isEmpty) {
 
             // prevent adding of rectangle by adding an invisible own one.
             subDiagramNode.addRectangle.invisible = true;
 
             //Add subdiagram to collapseable child area
             node.children += subDiagramNode;
-            node.setLayoutOption(TracingProperties.TRACED_MODEL_ROOT_NODE, true);
+            node.setLayoutOption(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE, true);
         }
         return node;
     }
 
-    private def KNode translateEObject(EObject object) {
-        val node = object.createNode.associateWith(object);
+    private def create node : object.createNode translateEObject(EObject object) {
+        node.associateWith(object);
 
         //create and add colored rectangle for this node
         val figure = node.createFigure;
@@ -234,8 +241,6 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                 it.suppressSelectability;
             ];
         ]
-
-        return node;
     }
 
     /**
@@ -245,7 +250,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         val figure = node.addRoundedRectangle(8, 8, 1);
         figure.lineWidth = 1;
         figure.foreground = Colors.GRAY;
-        figure.setBackgroundGradient(BG_COLOR_1.copy, BG_COLOR_2.copy, 90);
+        figure.background = BG_COLOR;
 
         //add shadow
         figure.shadow = SHADOW_COLOR.copy;

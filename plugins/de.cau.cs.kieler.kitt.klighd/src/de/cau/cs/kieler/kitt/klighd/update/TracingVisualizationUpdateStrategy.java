@@ -16,29 +16,40 @@ package de.cau.cs.kieler.kitt.klighd.update;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.ui.progress.UIJob;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.inject.Binder;
 import com.google.inject.Guice;
 import com.google.inject.Module;
 import com.google.inject.Scopes;
 
+import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KLabel;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTracingProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingVisualizer;
 import de.cau.cs.kieler.klighd.IKlighdSelection;
 import de.cau.cs.kieler.klighd.IUpdateStrategy;
+import de.cau.cs.kieler.klighd.IViewChangeListener;
 import de.cau.cs.kieler.klighd.SynthesisOption;
+import de.cau.cs.kieler.klighd.ViewChangeType;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy;
 import de.cau.cs.kieler.klighd.viewers.ContextViewer;
@@ -89,6 +100,36 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
         }
     };
 
+    /**
+     * Global listener on collapse expand actions which invokes tracing visualization for
+     * intermediate model tracing
+     */
+    private static IViewChangeListener collapseExpandListener = new IViewChangeListener() {
+
+        public void viewChanged(ViewChange change) {
+            KGraphElement affectedElement = change.getAffectedElement();
+            if (affectedElement instanceof KNode
+                    && affectedElement.getData(KLayoutData.class).getProperty(
+                            TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)) {
+                ViewContext viewContext = change.getViewContext();
+                Set<Object> tracedModels =
+                        viewContext.getProperty(InternalTracingProperties.VISIBLE_TRACED_MODELS);
+                if (tracedModels != null) {
+                    Set<Object> currentModels =
+                            tracingVisualizer.getTracedModelMap(viewContext.getViewModel(),
+                                    viewContext).keySet();
+                    if (!Sets.symmetricDifference(tracedModels, currentModels).isEmpty()) {
+                        // force recalculation of tracing edges because displayed models have
+                        // changed
+                        visualizeTracing(
+                                enabledContextViewer.get(change.getViewer().getContextViewer()),
+                                viewContext.getViewModel(), viewContext, new ArrayList(0), true);
+                    }
+                }
+            }
+        }
+    };
+
     /** Delegate update strategy to perform normal behavior */
     private SimpleUpdateStrategy simpleDelegate = new SimpleUpdateStrategy();
 
@@ -130,20 +171,24 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
             simpleDelegate.update(baseModel, newModel, viewContext);
         }
 
-        SynthesisOption option = TracingSynthesisOption.getSynthesisOption();
-        // Assumption: DisplayedSynthesisOptions are already loaded into ViewContext on configuring
-        if (viewContext.getDisplayedSynthesisOptions().contains(option)) {
-            // Assumption: SynthesisOptions are preset earlier and there is at most one option
-            // Activate tracing in currrent mode
-            TracingMode mode = TracingMode.getTracingMode(viewContext.getOptionValue(option));
-            enableVisualization(mode, baseModel, viewContext);
-            viewContext.setProperty(InternalTracingProperties.VISUALIZATION_MODE, mode);
-        } else {
-            // disable tracing when a diagram without tracing options is present
-            viewContext.setProperty(InternalTracingProperties.VISUALIZATION_MODE,
-                    TracingMode.NO_TRACING);
-            viewContext.setProperty(InternalTracingProperties.MAPPING, null);
-            viewContext.setProperty(InternalTracingProperties.DIAGRAM_EQUIVALENCE_CLASSES, null);
+        if (baseModel != null && !baseModel.getChildren().isEmpty()) {
+            SynthesisOption option = TracingSynthesisOption.getSynthesisOption();
+            // Assumption: DisplayedSynthesisOptions are already loaded into ViewContext on
+            // configuring
+            if (viewContext.getDisplayedSynthesisOptions().contains(option)) {
+                // Assumption: SynthesisOptions are preset earlier and there is at most one option
+                // Activate tracing in currrent mode
+                TracingMode mode = TracingMode.getTracingMode(viewContext.getOptionValue(option));
+                enableVisualization(mode, baseModel, viewContext);
+                viewContext.setProperty(InternalTracingProperties.VISUALIZATION_MODE, mode);
+            } else {
+                // disable tracing when a diagram without tracing options is present
+                viewContext.setProperty(InternalTracingProperties.VISUALIZATION_MODE,
+                        TracingMode.NO_TRACING);
+                viewContext.setProperty(InternalTracingProperties.MAPPING, null);
+                viewContext
+                        .setProperty(InternalTracingProperties.DIAGRAM_EQUIVALENCE_CLASSES, null);
+            }
         }
     }
 
@@ -171,9 +216,12 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
             } else {
                 contextViewer.removeSelectionChangedListener(selectionListener);
             }
+            viewContext.getViewer().addViewChangedListener(collapseExpandListener,
+                    ViewChangeType.COLLAPSE, ViewChangeType.EXPAND);
         } else {
             // disable visualization
             contextViewer.removeSelectionChangedListener(selectionListener);
+            viewContext.getViewer().removeViewChangedEventListener(collapseExpandListener);
             enabledContextViewer.put(contextViewer, TracingMode.NO_TRACING);
             visualizeTracing(TracingMode.NO_TRACING, viewModel, viewContext, null, false);
         }
@@ -195,18 +243,18 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
      * @param force
      *            flag to indicate force reevaluation of tracing data
      */
-    public static void visualizeTracing(TracingMode mode, final KNode viewModel,
-            final ViewContext viewContext, List<EObject> selection, boolean force) {
+    public static void visualizeTracing(final TracingMode mode, final KNode viewModel,
+            final ViewContext viewContext, final List<EObject> selection, final boolean force) {
         if (viewModel != null) {
             switch (mode) {
             case NO_TRACING:
-                tracingVisualizer.clearTracing(viewModel, viewContext.getViewer());
+                tracingVisualizer.hideTracing(viewModel, viewContext.getViewer());
                 break;
             case MODEL_TRACING:
-                tracingVisualizer.traceAll(viewModel, viewContext, force);
+                tracingVisualizer.showTracing(viewModel, viewContext, force);
                 break;
             case ELEMENT_TRACING:
-                tracingVisualizer.traceElements(viewModel, viewContext, selection, force);
+                tracingVisualizer.showSelectiveTracing(viewModel, viewContext, selection, force);
                 break;
             default:
                 throw new IllegalArgumentException("Illegal tracing mode: " + mode);

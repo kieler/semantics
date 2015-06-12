@@ -1,0 +1,22 @@
+module test_date2004:
+input R;
+output A;
+output B;
+output C;
+output D;
+
+every R do
+    loop
+      emit A;
+      pause;
+      emit B;
+      pause
+    end loop
+  ||
+    emit C;
+    pause;
+    pause;
+    emit D
+end every
+
+end module

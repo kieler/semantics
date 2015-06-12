@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kitt.klighd.tracing.internal;
 
+import java.awt.Dimension;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
@@ -36,7 +37,6 @@ import de.cau.cs.kieler.klighd.internal.macrolayout.AnchorUtil;
 import de.cau.cs.kieler.klighd.piccolo.internal.controller.AbstractKGERenderingController;
 import de.cau.cs.kieler.klighd.piccolo.internal.controller.PNodeController;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.IInternalKGraphElementNode;
-import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KChildAreaNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KCustomConnectionFigureNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KEdgeNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KlighdPath;
@@ -214,34 +214,65 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
                     return;
                 }
 
-                // Add offset to collide edge towards center OR point to middle of an egde
-                KVector sourceVector = new KVector(thePoints[0].getX(), thePoints[0].getY());
-                KVector targetVector = new KVector(thePoints[1].getX(), thePoints[1].getY());
-                Dimension2D sourceDimension = sourceNode.getFullBoundsReference().getSize();
-                Dimension2D targetDimension = targetNode.getFullBoundsReference().getSize();
-                // target -> source
+                // If target or source is an edge calculate before colliding towards center
+                // point edge to middle of an egde
                 if (sourceIsEdge) {
                     addToPoint(thePoints[0], getAppropiateBendPoint((KEdgeNode) sourceNode));
+                }
+                if (targetIsEdge) {
+                    addToPoint(thePoints[1], getAppropiateBendPoint((KEdgeNode) targetNode));
+                }
+                // Calculate vector and dimension of source and target to invoke collide edge
+                // towards center. This is done after calculation positions of source or targets
+                // pointing on edges to have correct values now
+                KVector sourceVector = new KVector(thePoints[0].getX(), thePoints[0].getY());
+                Dimension2D sourceDimension = null;
+                KRendering sourceRendering = null;
+                if (sourceIsEdge) {
+                    sourceDimension = new Dimension(0, 0);
                 } else {
+                    sourceDimension = sourceNode.getFullBoundsReference().getSize();
+                    if (source instanceof KRendering) {
+                        sourceRendering = (KRendering) source;
+                    } else if (source instanceof KNode) {
+                        sourceRendering = ((KNode) source).getData(KRendering.class);
+                    }
+                }
+                KVector targetVector = new KVector(thePoints[1].getX(), thePoints[1].getY());
+                Dimension2D targetDimension = null;
+                KRendering targetRendering = null;
+                if (targetIsEdge) {
+                    targetDimension = new Dimension(0, 0);
+                } else {
+                    targetDimension = targetNode.getFullBoundsReference().getSize();
+                    if (target instanceof KRendering) {
+                        targetRendering = (KRendering) target;
+                    } else if (target instanceof KNode) {
+                        targetRendering = ((KNode) target).getData(KRendering.class);
+                    }
+                }
+                // Add offset to collide edge towards center if target or source is not an edge
+                // target -> source
+                if (!sourceIsEdge) {
                     addToPoint(thePoints[0], AnchorUtil.collideTowardsCenter(
                             targetVector
                                     .clone()
                                     .sub(sourceVector)
                                     .add(targetDimension.getWidth() / 2,
                                             targetDimension.getHeight() / 2),
-                            sourceDimension.getWidth(), sourceDimension.getHeight(), null));
+                            sourceDimension.getWidth(), sourceDimension.getHeight(),
+                            sourceRendering));
                 }
                 // source -> target
-                if (targetIsEdge) {
-                    addToPoint(thePoints[1], getAppropiateBendPoint((KEdgeNode) targetNode));
-                } else {
+                if (!targetIsEdge) {
                     addToPoint(thePoints[1], AnchorUtil.collideTowardsCenter(
                             sourceVector
                                     .clone()
                                     .sub(targetVector)
                                     .add(sourceDimension.getWidth() / 2,
                                             sourceDimension.getHeight() / 2),
-                            targetDimension.getWidth(), targetDimension.getHeight(), null));
+                            targetDimension.getWidth(), targetDimension.getHeight(),
+                            targetRendering));
                 }
 
                 // Apply points
@@ -311,9 +342,12 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     private Point2D getAppropiateBendPoint(KEdgeNode node) {
         Point2D[] bendPoints = node.getBendPoints();
         if (bendPoints.length % 2 == 0) {
-            return bendPoints[bendPoints.length / 2];
+            Point2D pointA = bendPoints[(bendPoints.length - 1) / 2];
+            Point2D pointB = bendPoints[bendPoints.length / 2];
+            return new Point2D.Double((pointA.getX() + pointB.getX()) / 2,
+                    (pointA.getY() + pointB.getY()) / 2);
         } else {
-            return bendPoints[bendPoints.length / 2 + 1];
+            return bendPoints[(bendPoints.length - 1) / 2];
         }
     }
 

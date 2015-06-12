@@ -1,0 +1,25 @@
+module test_iwls3:
+input A;
+output B;
+output C;
+output D;
+
+loop
+  if (A) {
+    emit B
+  } else {
+    emit C
+  };
+  if (C) {
+    if (B) else {
+      emit D
+    }
+  } else {
+    if (B) {
+      emit D
+    }
+  };
+  pause
+end loop
+
+end module

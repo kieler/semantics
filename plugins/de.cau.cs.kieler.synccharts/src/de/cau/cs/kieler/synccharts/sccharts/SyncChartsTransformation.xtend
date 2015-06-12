@@ -39,6 +39,7 @@ import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
 import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import de.cau.cs.kieler.synccharts.State
 import de.cau.cs.kieler.synccharts.TransitionType
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /** 
  * Transforming SyncCharts into SCCharts.
@@ -78,14 +79,14 @@ class SyncChartsTransformation {
     
     
     // Regions mapping    
-    BiMap<Region, de.cau.cs.kieler.synccharts.Region> regions = HashBiMap.create();
-    def Region getRegion(de.cau.cs.kieler.synccharts.Region syncRegion) {
+    BiMap<ControlflowRegion, de.cau.cs.kieler.synccharts.Region> regions = HashBiMap.create();
+    def ControlflowRegion getRegion(de.cau.cs.kieler.synccharts.Region syncRegion) {
         return regions.inverse().get(syncRegion)
     }
     def de.cau.cs.kieler.synccharts.Region getSyncRegion(Region syncRegion) {
         return regions.get(syncRegion)
     }
-    def void map(Region region, de.cau.cs.kieler.synccharts.Region syncRegion) {
+    def void map(ControlflowRegion region, de.cau.cs.kieler.synccharts.Region syncRegion) {
         regions.put(region, syncRegion)
     }
 
@@ -278,7 +279,7 @@ class SyncChartsTransformation {
     // Transforming regions
     def dispatch void transform(de.cau.cs.kieler.synccharts.Region syncRegion, de.cau.cs.kieler.sccharts.State state) {
         val parentState = syncRegion.parentState.state
-        val region = parentState.createRegion(syncRegion.id)
+        val region = parentState.createControlflowRegion(syncRegion.id)
         region.map(syncRegion)
         if (syncRegion.label != null) {
             region.setLabel(syncRegion.label)

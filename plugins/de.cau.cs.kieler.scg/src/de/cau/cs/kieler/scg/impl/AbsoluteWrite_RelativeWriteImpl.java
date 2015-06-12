@@ -27,24 +27,24 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class AbsoluteWrite_RelativeWriteImpl extends DependencyImpl implements AbsoluteWrite_RelativeWrite {
+public class AbsoluteWrite_RelativeWriteImpl extends DataDependencyImpl implements AbsoluteWrite_RelativeWrite {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected AbsoluteWrite_RelativeWriteImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return ScgPackage.Literals.ABSOLUTE_WRITE_RELATIVE_WRITE;
-    }
+		return ScgPackage.Literals.ABSOLUTE_WRITE_RELATIVE_WRITE;
+	}
 
 } //AbsoluteWrite_RelativeWriteImpl

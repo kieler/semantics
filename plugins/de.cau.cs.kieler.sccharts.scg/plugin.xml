@@ -71,19 +71,9 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
-      <transformationMethod
-            class="de.cau.cs.kieler.sccharts.scg.SCGTransformation"
-            producesDependencies="SCGDEP"
-            id="SCG"
-            method="transformSCG"
-            name="SCG">
-      </transformationMethod>
-      <transformationGroup
-            id="SCGRAPH"
-            isCategory="true"
-            name="SCGraph"
-            transformations="SCG, SCGDEP, SCGBBGROUP, SCGSCHEDULE, SCGSEQUENTIALIZE, SCGGC">
-      </transformationGroup>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.sccharts.scg.SCGTransformation">
+      </productionTransformationClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.extension">

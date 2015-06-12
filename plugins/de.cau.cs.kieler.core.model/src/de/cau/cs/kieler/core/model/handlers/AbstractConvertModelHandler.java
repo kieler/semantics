@@ -309,7 +309,7 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
      * 
      * @param modelObject model
      */
-    private void openEditorSync(final Object modelObject) {
+    protected void openEditorSync(final Object modelObject) {
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 openEditor(modelObject);
@@ -322,7 +322,7 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
      * 
      * @param modelObject model
      */
-    private void openEditor(final Object modelObject) {
+    protected void openEditor(final Object modelObject) {
         EObject transformedModel = (EObject) modelObject;
 
         URI uri = EcoreUtil.getURI(transformedModel);

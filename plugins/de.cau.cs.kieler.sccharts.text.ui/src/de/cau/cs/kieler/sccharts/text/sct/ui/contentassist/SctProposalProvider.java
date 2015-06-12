@@ -30,7 +30,6 @@ public class SctProposalProvider extends AbstractSctProposalProvider {
     @Override
     public void completeState_ReferencedScope(EObject model, Assignment assignment,
             ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        // TODO Auto-generated method stub
         lookupCrossReference(((CrossReference)assignment.getTerminal()), context, acceptor, new Predicate<IEObjectDescription>() {
             
             public boolean apply(IEObjectDescription arg0) {
@@ -41,4 +40,47 @@ public class SctProposalProvider extends AbstractSctProposalProvider {
         });
         
     }
+    
+    @Override
+    public void completeReferenceNode_ReferencedScope(EObject model, Assignment assignment,
+            ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        lookupCrossReference(((CrossReference)assignment.getTerminal()), context, acceptor, new Predicate<IEObjectDescription>() {
+            
+            public boolean apply(IEObjectDescription arg0) {
+                return 
+                        arg0.getEObjectOrProxy().eIsProxy();
+//                        && arg0.getEObjectOrProxy().eContainer() == null;
+            }
+        });
+        
+    }
+    
+    @Override
+    public void completeEquation_Node(EObject model, Assignment assignment,
+            ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        lookupCrossReference(((CrossReference)assignment.getTerminal()), context, acceptor, new Predicate<IEObjectDescription>() {
+            
+            public boolean apply(IEObjectDescription arg0) {
+                return 
+                        arg0.getEObjectOrProxy().eIsProxy();
+//                        && arg0.getEObjectOrProxy().eContainer() == null;
+            }
+        });
+        
+    }
+    
+    @Override
+    public void completeCallNode_CallReference(EObject model, Assignment assignment,
+            ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        lookupCrossReference(((CrossReference)assignment.getTerminal()), context, acceptor, new Predicate<IEObjectDescription>() {
+            
+            public boolean apply(IEObjectDescription arg0) {
+                return 
+                        arg0.getEObjectOrProxy().eIsProxy();
+//                        && arg0.getEObjectOrProxy().eContainer() == null;
+            }
+        });
+        
+    }
+
 }

@@ -4,4 +4,8 @@
    <extension-point id="de.cau.cs.kieler.kico.transformation" name="KIELER Compiler Transformation" schema="schema/de.cau.cs.kieler.kico.transformation.exsd"/>
    <extension-point id="de.cau.cs.kieler.kico.extension" name="KIELER Compiler Resource Extension Information" schema="schema/de.cau.cs.kieler.kico.extension.exsd"/>
 
+   <extension-point id="de.cau.cs.kieler.kico.feature" name="KIELER Compiler Feature" schema="schema/de.cau.cs.kieler.kico.feature.exsd"/>
+   <extension-point id="de.cau.cs.kieler.kico.processor" name="KIELER Compiler Processor" schema="schema/de.cau.cs.kieler.kico.processor.exsd"/>
+   <extension-point id="de.cau.cs.kieler.kico.hook" name="KIELER Compiler Hook" schema="schema/de.cau.cs.kieler.kico.hook.exsd"/>
+
 </plugin>

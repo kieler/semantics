@@ -14,20 +14,22 @@
 package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import java.util.List
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.util.Iterator
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Pre Transformation.
@@ -36,18 +38,45 @@ import java.util.Iterator
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Pre {
+class Pre extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::PRE_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::PRE_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::PRE_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::INITIALIZATION_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
     @Inject
     extension SCChartsExtension
 
+    @Inject
+    extension de.cau.cs.kieler.sccharts.features.Pre
+
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
-    
-    private val nameCache = <String> newArrayList
+
+    private val nameCache = <String>newArrayList
 
     //-------------------------------------------------------------------------
     //--                        P R E -  O P E R A T O R                     --
@@ -57,38 +86,10 @@ class Pre {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach[ targetState |
+        targetRootState.getAllStates.forEach [ targetState |
             targetState.transformPre(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
-    }
-
-    // Return a list of Pre Expressions for an action that references the valuedObject
-    def Iterator<OperatorExpression> getPreExpression(Action action, ValuedObject valuedObject) {
-        val List<OperatorExpression> returnPreExpressions = <OperatorExpression>newLinkedList;
-        val preExpressions = action.eAllContents.filter(typeof(OperatorExpression)).filter(
-            e|
-                (e.operator == OperatorType::PRE) && (e.subExpressions.size() == 1) &&
-                    (e.subExpressions.get(0) instanceof ValuedObjectReference) &&
-                    ((e.subExpressions.get(0) as ValuedObjectReference).valuedObject == valuedObject)
-        );
-        preExpressions
-    }
-
-    // Return a list of Pre Expressions for an action that references the value of a valuedObject
-    def Iterator<OperatorExpression> getPreValExpression(Action action, ValuedObject valuedObject) {
-        val List<OperatorExpression> returnPreValExpressions = <OperatorExpression>newLinkedList;
-        val preValExpressions = action.eAllContents.filter(typeof(OperatorExpression)).filter(
-            e|
-                (e.operator == OperatorType::PRE) && (e.subExpressions.size() == 1) &&
-                    (e.subExpressions.get(0) instanceof OperatorExpression) &&
-                    ((e.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) &&
-                    ((e.subExpressions.get(0) as OperatorExpression).subExpressions.size() == 1) &&
-                    ((e.subExpressions.get(0) as OperatorExpression).subExpressions.get(0) instanceof ValuedObjectReference) && (((e.
-                        subExpressions.get(0) as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).
-                        valuedObject == valuedObject)
-        );
-        preValExpressions
     }
 
     // Traverse all states that might declare a valuedObject that is used with the PRE operator
@@ -104,7 +105,7 @@ class Pre {
                             action.getPreValExpression(valuedObject).hasNext).hasNext);
 
         for (preValuedObject : ImmutableList::copyOf(allPreValuedObjects)) {
-
+            preValuedObject.setDefaultTrace
             val newPre = state.createValuedObject(GENERATED_PREFIX + "pre" + GENERATED_PREFIX + preValuedObject.name).
                 uniqueNameCached(nameCache)
             newPre.applyAttributes(preValuedObject)
@@ -112,7 +113,7 @@ class Pre {
                 uniqueNameCached(nameCache)
             newAux.applyAttributes(preValuedObject)
 
-            val preRegion = state.createRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
+            val preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
             val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache).setFinal
             val preWait = preRegion.createFinalState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
 

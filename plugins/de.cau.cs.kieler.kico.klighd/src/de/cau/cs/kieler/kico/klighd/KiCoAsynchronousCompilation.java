@@ -21,14 +21,16 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.progress.UIJob;
 
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
 import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
-import de.cau.cs.kieler.kico.ui.KiCoSelection;
+import de.cau.cs.kieler.kitt.tracing.Tracing;
 import de.cau.cs.kieler.klighd.IViewer;
 
 /**
@@ -50,7 +52,7 @@ public class KiCoAsynchronousCompilation extends Job {
     /** Name of the source file without extension */
     private final String sourceFileName;
     /** Compiler selection */
-    private final KiCoSelection transformations;
+    private final Pair<KielerCompilerSelection, Boolean> selection;
     /** Flag if additional progress information should be displayed */
     private final boolean tracing;
     private boolean showsProgress = false;
@@ -72,7 +74,7 @@ public class KiCoAsynchronousCompilation extends Job {
      * @param transformations
      */
     public KiCoAsynchronousCompilation(KiCoModelView modelView, EObject sourceModel,
-            String sourceFile, KiCoSelection transformations, boolean tracing) {
+            String sourceFile, Pair<KielerCompilerSelection, Boolean> selection, boolean tracing) {
         super("Compiling: " + sourceFile);
 
         this.modelView = modelView;
@@ -85,7 +87,7 @@ public class KiCoAsynchronousCompilation extends Job {
         }
 
         this.sourceModel = sourceModel;
-        this.transformations = transformations;
+        this.selection = selection;
         this.tracing = tracing;
 
         // compilation placeholder
@@ -99,13 +101,15 @@ public class KiCoAsynchronousCompilation extends Job {
         try {
             // compile with progress monitor
             KielerCompilerContext context =
-                    new KielerCompilerContext(transformations.getSelectionString(), (EObject) sourceModel);
-            context.setPrerequirements(transformations.isAdvanced());
+                    new KielerCompilerContext(selection.getFirst(), (EObject) sourceModel);
+            context.setAdvancedSelect(selection.getSecond());
             context.setInplace(false);
             context.setProgressMonitor(monitor);
-            context.tracing = tracing;
+            if (tracing) {
+                context.setProperty(Tracing.ACTIVE_TRACING, true);
+            }
             // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo selection view
-            context.setCreateDummyResource(true);
+            context.setCreateDummyResource(false);
             result = KielerCompiler.compile(context);
 
             if (monitor.isCanceled()) {

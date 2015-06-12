@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.esterel.sim.c.EsterelCDataComponent"
+            id="de.cau.cs.kieler.esterel.sim.c"
+            name="Esterel Simulator (SCEst)">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/esterel_c.execution">
+         <editor
+               id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+               name="SCG (Tree) Editor"
+               priority="99">
+         </editor>
+         <editor
+               id=" de.cau.cs.kieler.scl.SCL"
+               name="SCL (Textual) Editor"
+               priority="99">
+         </editor>
+         <editor
+               id="de.cau.cs.kieler.esterel.Esterel"
+               name="KIELER Esterel Editor"
+               priority="5">
+         </editor>
+      </executionFile>
+      <executionFile
+            file="execution/esterel_c_no_visualization.execution">
+         <editor
+               id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+               name="SCG (Tree) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id=" de.cau.cs.kieler.scl.SCL"
+               name="SCL (Textual) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id="de.cau.cs.kieler.esterel.Esterel"
+               name="KIELER Esterel Editor"
+               priority="6">
+         </editor>
+      </executionFile>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformationMethod
+            class="de.cau.cs.kieler.esterel.sim.c.xtend.SimulationVisualization"
+            id="ESTEREL_SIMULATION_VISUALIZATION"
+            method="transformVisualization"
+            name="Visualization">
+      </transformationMethod>
+      <transformationGroup
+            alternatives="true"
+            id="ESTEREL_SIMULATION"
+            isCategory="false"
+            isFeatureGroup="false"
+            name="Esterel Simulation"
+            transformations="ESTEREL_SIMULATION_NO_VISUALIZATION, ESTEREL_SIMULATION_VISUALIZATION">
+      </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.esterel.sim.c.xtend.SimulationVisualization"
+            id="ESTEREL_SIMULATION_NO_VISUALIZATION"
+            method="transformNoVisualization"
+            name="No Visualization">
+      </transformationMethod>
+   </extension>
+
+</plugin>

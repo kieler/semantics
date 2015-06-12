@@ -29,7 +29,6 @@ import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
 import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.kitt.tracing.TracingTreeExtensions
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
@@ -45,9 +44,9 @@ import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
 
-import static extension de.cau.cs.kieler.kitt.klighd.actions.AbstractTracingSelectionAction.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 
 /**
  * Adds tracing edges from mappings to a diagram.
@@ -84,24 +83,25 @@ class TracingVisualizer {
         } else {
 
             //If model is a wrapper around a traced model marked as TRACED_MODEL_ROOT_NODE
-            return diagram.eAllContentsOfType2(typeof(KNode)).filter [
-                (it as KNode).getData(KLayoutData)?.getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)
-            ].findFirst[viewContext.tracing != null || model instanceof ModelWrapper] != null;
+            return diagram.KNodeIterator.
+                filter [
+                    it.getData(KLayoutData)?.getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)
+                ].exists[viewContext.tracing != null || model instanceof ModelWrapper];
         }
     }
 
+    /** Returns the tracing stored in the compilation result of the ViewContext */
     private def Tracing tracing(ViewContext viewContext) {
-        return viewContext.getProperty(KiCoProperties.COMPILATION_RESULT)?.tracing;
+        return (viewContext.getProperty(KiCoProperties.COMPILATION_RESULT)?.getAuxiliaryData(Tracing)?:emptyList).head;
     }
 
-    /** Removed all tracing edges from the diagram  */
-    def clearTracing(KNode diagram, IViewer view) {
-        diagram.hideTracingSelection;
+    /** Removed all tracing edges from the diagram */
+    def hideTracing(KNode diagram, IViewer view) {
 
         //Hide all edges marked as TRACING_EDGE
-        diagram.eAllContentsOfType2(typeof(KNode)).forEach [
-            (it as KNode).outgoingEdges.filter [
-                it.tracingEdge;
+        diagram.KNodeIterator.forEach [
+            it.outgoingEdges.filter [
+                it.isTracingEdge;
             ].toList.forEach [
                 view.hide(it);
             ]
@@ -109,15 +109,15 @@ class TracingVisualizer {
     }
 
     /** Shows all tracing edges in the given diagram  */
-    def traceAll(KNode diagram, ViewContext viewContext, boolean forceReTrace) {
-        diagram.showTracingSelection;
+    def showTracing(KNode diagram, ViewContext viewContext, boolean forceReTrace) {
 
         //check for existing tracing edge
-        val hasTracingEdges = diagram.eAllContentsOfType2(typeof(KNode)).findFirst [
-            (it as KNode).outgoingEdges.findFirst [
-                it.tracingEdge;
-            ] != null;
-        ] != null;
+        val hasTracingEdges = diagram.KNodeIterator.
+            exists [
+                it.outgoingEdges.exists [
+                    it.isTracingEdge;
+                ];
+            ];
 
         //add tracing edges if necessary
         if (!hasTracingEdges || forceReTrace) {
@@ -126,9 +126,9 @@ class TracingVisualizer {
 
         //Show all edges marked as TRACING_EDGE
         val view = viewContext.viewer;
-        diagram.eAllContentsOfType2(typeof(KNode)).forEach [
-            (it as KNode).outgoingEdges.filter [
-                it.tracingEdge;
+        diagram.KNodeIterator.forEach [
+            it.outgoingEdges.filter [
+                it.isTracingEdge;
             ].toList.forEach [
                 view.show(it);
             ]
@@ -136,15 +136,14 @@ class TracingVisualizer {
     }
 
     /** Shows tracing edges in the given diagram for the given selection */
-    def traceElements(KNode diagram, ViewContext viewContext, List<EObject> selection, boolean forceReTrace) {
-        diagram.showTracingSelection;
+    def showSelectiveTracing(KNode diagram, ViewContext viewContext, List<EObject> selection, boolean forceReTrace) {
 
         //check for existing tracing edge
-        val hasTracingEdges = diagram.eAllContentsOfType2(typeof(KNode)).findFirst [
-            (it as KNode).outgoingEdges.findFirst [
-                it.tracingEdge;
-            ] != null;
-        ] != null;
+        val hasTracingEdges = diagram.KNodeIterator.exists [
+            it.outgoingEdges.exists [
+                it.isTracingEdge;
+            ];
+        ];
 
         //add tracing edges if necessary
         if (!hasTracingEdges || forceReTrace) {
@@ -168,7 +167,6 @@ class TracingVisualizer {
                     selectedSourceElements.addAll(boo);
                 }
             }
-
             if (viewContext.inputModel instanceof ModelWrapper) { //In case of displaying a TracingTree
                 selectedSourceElements.forEach [
                     if (it instanceof EObjectWrapper) {
@@ -227,14 +225,15 @@ class TracingVisualizer {
                         ];
                     } while (!parents.empty && visibleEdgesModelOrigin.addAll(parents)); //continue if derived elements exist and are new (changing the set)
                 }
+
             }
         }
 
         //iterate over all tracing edges and show all edges originated from selected model elements, all others invisible
         val view = viewContext.viewer;
-        diagram.eAllContentsOfType2(typeof(KNode)).forEach [
-            (it as KNode).outgoingEdges.filter [
-                it.tracingEdge;
+        diagram.KNodeIterator.forEach [
+            it.outgoingEdges.filter [
+                it.isTracingEdge;
             ].toList.forEach [
                 if (visibleEdgesModelOrigin.empty) {
                     view.hide(it);
@@ -251,13 +250,33 @@ class TracingVisualizer {
         ];
     }
 
+    /** Returns a map with all visible traced model in the diagram and their representing knodes */
+    def getTracedModelMap(KNode diagram, ViewContext viewContext) {
+        val tracing = viewContext.tracing
+        if (tracing != null) {
+            return diagram.KNodeIterator.filter [
+                val node = it as KNode;
+                node.getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE) &&
+                    viewContext.viewer.isExpanded(node);
+            ].map[it as KNode].fold(newHashMap()) [ map, node |
+                val model = viewContext.getSourceElement(node);
+                if (model != null && tracing.tracingChain.models.contains(model)) {
+                    map.put(model, node);
+                }
+                return map;
+            ];
+        } else {
+            return emptyMap;
+        }
+    }
+
     /** Adds all tracing edges to the diagram */
     private def addAllTracingEdges(KNode diagram, ViewContext viewContext) {
 
         //Remove all edges marked as TRACING_EDGE
-        diagram.eAllContentsOfType2(typeof(KNode)).forEach [
-            (it as KNode).outgoingEdges.filter [
-                it.tracingEdge;
+        diagram.KNodeIterator.forEach [
+            it.outgoingEdges.filter [
+                it.isTracingEdge;
             ].toList.forEach [
                 it.source = null;
                 it.target = null;
@@ -270,40 +289,20 @@ class TracingVisualizer {
         //Add tracing edges
         if (viewContext.inputModel instanceof ModelWrapper) { //Tracing Tree
             val tree = viewContext.inputModel as ModelWrapper;
-            val selection = diagram.getTracingSelection(viewContext);
-            if (selection != null) { //resolve mapping if source target are selected
-                addTracingTreeEdges(selection.first as ModelWrapper, selection.second as ModelWrapper, viewContext);
-            } else { //dont resolve -> show all
-                tree.succeedingTransformations.forEach [
-                    addTracingTreeEdges(it.source, it.target, viewContext);
-                ];
-            }
+            tree.succeedingTransformations.forEach [
+                addTracingTreeEdges(it.source, it.target, viewContext);
+            ];
         } else { //Other models
-            val tracing = viewContext.tracing;
 
             //get all traced models contained in this model
-            val tracedModelMap = diagram.eAllContentsOfType2(typeof(KNode)).filter [
-                (it as KNode).getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE);
-            ].map[it as KNode].fold(newHashMap()) [ map, node |
-                val model = viewContext.getSourceElement(node);
-                if (model != null && tracing.tracingChain.models.contains(model)) {
-                    map.put(model, node);
-                }
-                return map;
-            ];
-
-            if (!tracedModelMap.empty) {
-                val traceMap = new TracingMapping(null);
-                val equivalenceClasses = new TracingMapping(null);
-                val selection = diagram.getTracingSelection(viewContext);
-                if (selection != null) { //resolve mapping if source target are selected
-                    val mapping = tracing.getMapping(selection.first, selection.second);
-                    mapping.entries.iterator.addTracingEdges(viewContext, tracedModelMap.get(selection.first),
-                        equivalenceClasses);
-                    traceMap.putAll(mapping);
-                } else { //dont resolve -> show all
+            val tracing = viewContext.tracing;
+            if (tracing != null) {
+                val tracedModelMap = getTracedModelMap(diagram, viewContext);
+                if (!tracedModelMap.empty) {
+                    val traceMap = new TracingMapping(null);
+                    val equivalenceClasses = new TracingMapping(null);
                     val chain = tracing.tracingChain;
-                    if (!chain.models.empty) {
+                    if (chain != null && !chain.models.empty) {
 
                         //Iterate over all step in the chain apply mappings
                         val chainIter = chain.models.listIterator;
@@ -339,9 +338,10 @@ class TracingVisualizer {
                             item = next;
                         }
                     }
+                    viewContext.setProperty(InternalTracingProperties.MAPPING, traceMap);
+                    viewContext.setProperty(InternalTracingProperties.DIAGRAM_EQUIVALENCE_CLASSES, equivalenceClasses);
+                    viewContext.setProperty(InternalTracingProperties.VISIBLE_TRACED_MODELS, tracedModelMap.keySet);
                 }
-                viewContext.setProperty(InternalTracingProperties.MAPPING, traceMap);
-                viewContext.setProperty(InternalTracingProperties.DIAGRAM_EQUIVALENCE_CLASSES, equivalenceClasses);
             }
         }
     }
@@ -362,10 +362,10 @@ class TracingVisualizer {
             var Map<EObjectWrapper, EObject> _targetInstanceMap = null;
             val sourceModelRootNode = viewContext.getTargetElements(source).findFirst[
                 it instanceof KNode &&
-                    (it as KNode).getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
+                    (it as KNode).getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
             val targetModelRootNode = viewContext.getTargetElements(target).findFirst[
                 it instanceof KNode &&
-                    (it as KNode).getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
+                    (it as KNode).getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
             if (!source.transient && sourceModelRootNode != null && source.rootObject.EObject != null) {
                 _sourceInstanceMap = source.modelInstanceMapping(source.rootObject.EObject);
             }
@@ -396,12 +396,12 @@ class TracingVisualizer {
     private def createTracingEdges(Object source, Object target, KNode attachNode, ViewContext viewContext,
         TracingMapping equivalenceClasses) {
         val origin = new Pair(source, target);
-        val predicate = Predicates.or(viewContext.getProperty(TracingProperties.VISUALIZATION_PREDICATE),
+        val predicate = Predicates.or(viewContext.getProperty(TracingVisualizationProperties.VISUALIZATION_PREDICATE),
             [
                 if (it instanceof KGraphElement) {
-                    return (it as KGraphElement).getData(KLayoutData).getProperty(TracingProperties.TRACING_NODE);
+                    return (it as KGraphElement).getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACING_NODE);
                 } else if (it instanceof KRendering) {
-                    return (it as KRendering).getProperty(TracingProperties.TRACING_NODE);
+                    return (it as KRendering).getProperty(TracingVisualizationProperties.TRACING_NODE);
                 } else {
                     return false;
                 }
@@ -420,7 +420,7 @@ class TracingVisualizer {
 
         //If no diagram element is associated with the given model element its container is used to find an appropriate representation
         if (elements.empty && modelElement instanceof EObject) {
-            val maxDepth = viewContext.getProperty(TracingProperties.VISUALIZATION_EQUIVALENCE_CLASS_DEPTH);
+            val maxDepth = viewContext.getProperty(TracingVisualizationProperties.VISUALIZATION_EQUIVALENCE_CLASS_DEPTH);
             var depth = 0;
             var next = (modelElement as EObject)
             while (elements.empty && next != null && depth < maxDepth) {
@@ -451,6 +451,16 @@ class TracingVisualizer {
             edge.target = attachNode;
         }
 
+    }
+
+    private def KNodeIterator(KNode root) {
+        return new FunctionalTreeIterator(
+            root,
+            true,
+            [
+                (it as KNode).children.iterator
+            ]
+        ) as Iterator<KNode>
     }
 
     /** Checks if given edge is a tracing edge */
