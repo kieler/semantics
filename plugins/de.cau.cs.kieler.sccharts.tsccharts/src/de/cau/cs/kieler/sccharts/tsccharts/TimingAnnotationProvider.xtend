@@ -22,6 +22,7 @@ import java.io.FileReader
 import java.io.IOException
 import java.util.LinkedList
 import java.util.List
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * This class provides an SCChart with WCRT information by annotating all regions with two values: The
@@ -41,7 +42,7 @@ class TimingAnnotationProvider {
         val regionListIterator = regionList.iterator;
         while (regionListIterator.hasNext()) {
             val region = regionListIterator.next();
-            val children = region.states;
+            val children = (region as ControlflowRegion).states;
             val childrenIterator = children.iterator;
             while (childrenIterator.hasNext()) {
                 val child = childrenIterator.next();

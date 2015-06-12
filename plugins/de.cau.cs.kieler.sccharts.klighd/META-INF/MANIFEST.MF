@@ -23,3 +23,4 @@ Require-Bundle: de.cau.cs.kieler.core.krendering.extensions,
  de.cau.cs.kieler.klighd.piccolo,
  de.cau.cs.kieler.sccharts.tsccharts
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+

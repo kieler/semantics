@@ -56,6 +56,7 @@ import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerException;
+import de.cau.cs.kieler.kitt.tracing.Tracing;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.util.ModelingUtil;
 import de.cau.cs.kieler.sccharts.Region;
@@ -74,6 +75,9 @@ import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgFactory;
+import de.cau.cs.kieler.scg.features.SCGFeatures;
+import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures;
+import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
 
 /**
  * @author als, ima
@@ -169,9 +173,9 @@ public class TimingAnalysis extends Job {
             return Status.CANCEL_STATUS;
         }
 
-        KielerCompilerContext context = new KielerCompilerContext("SCGSEQUENTIALIZE", scchart);
-        context.setPrerequirements(true);
-        context.tracing = true;
+        KielerCompilerContext context = new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID+",*T_ABORT,*T_scg.basicblock.sc", scchart);
+        context.setProperty(Tracing.ACTIVE_TRACING, true);
+        context.setAdvancedSelect(true);
         CompilationResult compilationResult = KielerCompiler.compile(context);
 
         if (!(compilationResult.getEObject() instanceof SCGraph)
@@ -191,8 +195,10 @@ public class TimingAnalysis extends Job {
         }
 
         SCGraph scg = (SCGraph) compilationResult.getEObject();
+        List<Tracing> tracings = compilationResult.getAuxiliaryData(Tracing.class);
+        Tracing tracing = tracings.isEmpty() ? null : tracings.get(0);
 
-        if (compilationResult.tracing == null) {
+        if (tracing == null) {
             return new Status(IStatus.ERROR, pluginId,
                     "The tracing is not activated for the given model.");
         }
@@ -204,13 +210,13 @@ public class TimingAnalysis extends Job {
             return Status.CANCEL_STATUS;
         }
 
-        Multimap<Object, Object> tracing = compilationResult.tracing.getMapping(scg, scchart);
+        Multimap<Object, Object> mapping = tracing.getMapping(scg, scchart);
         HashMap<Node, Region> nodeRegionMapping =
-                new HashMap<Node, Region>(tracing.keySet().size());
+                new HashMap<Node, Region>(mapping.keySet().size());
         HashMap<Region, Integer> regionDepth = TimingUtil.createRegionDepthMap(scchart);
-        for (Object oringinElement : tracing.keySet()) {
+        for (Object oringinElement : mapping.keySet()) {
             if (oringinElement instanceof Node) {
-                Collection<Object> targetElements = tracing.get(oringinElement);
+                Collection<Object> targetElements = mapping.get(oringinElement);
                 Region region = null;
                 int depth = -1;
                 for (Object targetObj : targetElements) {
@@ -222,7 +228,7 @@ public class TimingAnalysis extends Job {
                      * element.
                      */
                     if (!(targetElement instanceof State && (scchartsExtension
-                            .hasInnerStatesOrRegions((State) targetElement)))
+                            .hasInnerStatesOrControlflowRegions((State) targetElement)))
                             || targetElements.size() == 1) {
                         while (targetElement != null) {
                             if (targetElement instanceof Region) {
@@ -275,8 +281,9 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-
-        compilationResult = KielerCompiler.compile("SCG2S,S2C", scg, false, false);
+        
+        context = new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID+","+CodeGenerationFeatures.TARGET_ID+",T_"+CodeGenerationTransformations.S2C_ID, scg);
+        compilationResult = KielerCompiler.compile(context);
 
         if (compilationResult.getString() == null
                 || compilationResult.getPostponedErrors().size() > 0) {

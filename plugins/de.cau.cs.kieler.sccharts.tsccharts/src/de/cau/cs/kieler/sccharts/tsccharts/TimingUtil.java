@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.tsccharts;
 
 import java.util.HashMap;
 
+import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
 
@@ -49,10 +50,12 @@ public class TimingUtil {
      */
     private static void recursiveRegionDepthMap(HashMap<Region, Integer> map, int depth,
             Region region) {
-        map.put(region, depth);
-        for (State s : region.getStates()) {
-            for (Region r : s.getRegions()) {
-                recursiveRegionDepthMap(map, depth + 1, r);
+        if (region instanceof ControlflowRegion) {
+            map.put(region, depth);
+            for (State s : ((ControlflowRegion)region).getStates()) {
+                for (Region r : s.getRegions()) {
+                    recursiveRegionDepthMap(map, depth + 1, r);
+                }
             }
         }
     }
