@@ -264,6 +264,7 @@ public class TransformationDummyGraph {
                         transformation = handlingTransformation;
                     } else if (containedAndHandledFeatures == null
                             || handlingTransformation.getNotHandlesFeatures(false).isEmpty()
+                            || handlingTransformations.size() == 1
                             || !Sets.intersection(
                                     handlingTransformation.getNotHandlesFeatures(false),
                                     containedAndHandledFeatures).isEmpty()) {
