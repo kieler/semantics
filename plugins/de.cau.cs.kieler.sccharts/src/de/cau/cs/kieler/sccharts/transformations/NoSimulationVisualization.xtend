@@ -44,11 +44,11 @@ class NoSimulationVisualization extends AbstractExpansionTransformation {
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID)
+        return Sets.newHashSet()
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet()
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
     }
     
     //-------------------------------------------------------------------------

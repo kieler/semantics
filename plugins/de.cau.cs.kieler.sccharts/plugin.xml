@@ -68,6 +68,9 @@
               class="de.cau.cs.kieler.sccharts.transformations.Exit">
         </expansionTransformationClass>
         <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Map">
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.For">
         </expansionTransformationClass>
         <expansionTransformationClass
@@ -141,6 +144,9 @@
         </featureClass>
         <featureClass
               class="de.cau.cs.kieler.sccharts.features.For">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Map">
         </featureClass>
         <featureClass
               class="de.cau.cs.kieler.sccharts.features.History">
