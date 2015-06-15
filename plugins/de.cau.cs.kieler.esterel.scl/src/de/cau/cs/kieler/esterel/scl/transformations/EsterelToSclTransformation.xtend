@@ -1199,8 +1199,10 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         } else {
             handleStrongAbort(abort, sScope, abortEndLabel, counter, countExp)
         }
-        pauseTransformation.pop
-        joinTransformation.pop
+        
+        // FIXME: apply closures
+        pauseTransformation.pop.apply(sScope)
+        joinTransformation.pop.apply(sScope)
 
         // If body was left without being preempted, doNothing
         val l_doNothing = createNewUniqueLabel
@@ -1615,8 +1617,9 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         if (trap.statement != null)
             trap.statement.transformStatement(statementScope)
 
-        pauseTransformation.pop
-        joinTransformation.pop
+        // FIX: apply closures
+        pauseTransformation.pop.apply(statementScope)
+        joinTransformation.pop.apply(statementScope)
         statementScope.addLabel(trapEndLabel)
         statementScope.statements.removeInstantaneousGotos(trapEndLabel, exitVariables)
 
