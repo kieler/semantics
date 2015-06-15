@@ -59,7 +59,7 @@ class Const extends AbstractExpansionTransformation implements Traceable {
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet()
+        return Sets.newHashSet(SCChartsFeature::REFERENCE_ID)
     }
 
     //-------------------------------------------------------------------------
@@ -80,7 +80,7 @@ class Const extends AbstractExpansionTransformation implements Traceable {
     //-------------------------------------------------------------------------
     //--                           C O N S T                                 --
     //-------------------------------------------------------------------------
-    // ...
+
     def State transform(State rootState) {
         var targetRootState = rootState.fixAllPriorities;
 

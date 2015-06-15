@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 
 /**
  * SCCharts For Transformation.
@@ -45,15 +46,11 @@ class For extends AbstractExpansionTransformation {
     }
 
     override getProducesFeatureIds() {
-
-        // TODO: Check
         return Sets.newHashSet()
     }
 
     override getNotHandlesFeatureIds() {
-
-        // TODO: Check
-        return Sets.newHashSet()
+        return Sets.newHashSet(SCChartsFeature::REFERENCE_ID, SCChartsFeature::MAP_ID) //TODO check MAP dependency
     }
 
     //-------------------------------------------------------------------------

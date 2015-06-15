@@ -18,14 +18,15 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * SCCharts Termination Transformation.
@@ -60,7 +61,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
     override getNotHandlesFeatureIds() {
 
         // TODO: Check
-        return Sets.newHashSet()
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
     }
 
     //-------------------------------------------------------------------------
