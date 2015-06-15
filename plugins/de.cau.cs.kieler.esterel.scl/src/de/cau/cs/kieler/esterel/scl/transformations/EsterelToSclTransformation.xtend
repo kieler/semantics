@@ -1622,7 +1622,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             trap.statement.transformStatement(statementScope)
 
         // FIX: apply closures
-        pauseTransformation.pop.apply(statementScope)
+        pauseTransformation.pop //.apply(statementScope)
         joinTransformation.pop.apply(statementScope)
         statementScope.addLabel(trapEndLabel)
         statementScope.statements.removeInstantaneousGotos(trapEndLabel, exitVariables)
