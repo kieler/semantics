@@ -65,7 +65,7 @@ import com.google.common.collect.Sets
 class SCLToSCGTransformation extends AbstractProductionTransformation {
 
     @Inject
-    extension SCGControlFlowExtensions
+    extension SCGControlFlowExtensions 
 
     @Inject
     extension KExpressionsExtension
