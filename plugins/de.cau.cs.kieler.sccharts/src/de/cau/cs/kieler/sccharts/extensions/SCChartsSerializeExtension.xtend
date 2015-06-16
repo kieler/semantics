@@ -13,19 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
-import de.cau.cs.kieler.sccharts.Assignment
-import de.cau.cs.kieler.sccharts.Effect
-import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.ExitAction
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.sccharts.IterateAction
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 
 /**
  * @author ssm
@@ -33,37 +27,9 @@ import de.cau.cs.kieler.sccharts.IterateAction
  * @kieler.design 2014-09-04 proposed ssm
  * @kieler.rating 2014-09-04 proposed yellow
  */
-class SCChartsSerializeExtension extends KExpressionsSerializeExtension {
+class SCChartsSerializeExtension extends KEffectsSerializeExtensions {
     
-    def dispatch CharSequence serialize(Assignment assignment) {
-        assignment.valuedObject.name + " = " + assignment.expression.serialize
-    }
-    
-    def dispatch CharSequence serialize(Emission emission) {
-        val objectContainer = emission.valuedObject.eContainer
-        if (objectContainer instanceof Declaration) {
-            if ((objectContainer as Declaration).type != ValueType::PURE) {
-                return (emission.valuedObject.name + "(" + emission.newValue.serialize + ")")             
-            } else {
-                return emission.valuedObject.name
-            }
-        } else {
-            return emission.valuedObject.name
-        }
-    }
    
-    def dispatch CharSequence serialize(EList<Effect> effects) {
-        if (!effects.empty) {
-            var String label = "" 
-            for(effect : effects) {
-                label = label + effect.serialize as String + "; "
-            }
-            label = label.substring(0, label.length - 2)
-            return label
-        }
-        return ""
-    }
-    
     def dispatch CharSequence serialize(Transition transition) {
         var label = ""
         if (transition.trigger != null) { 

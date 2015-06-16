@@ -311,7 +311,7 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> implemen
 
    // Expand a ASSIGNMENT instruction.
    def dispatch CharSequence expand(Assignment assignment) {
-       '''«assignment.variable.expand » = «assignment.expression.expand»;'''
+       '''«assignment.valuedObject.expand » = «assignment.expression.expand»;'''
    }   
 
       

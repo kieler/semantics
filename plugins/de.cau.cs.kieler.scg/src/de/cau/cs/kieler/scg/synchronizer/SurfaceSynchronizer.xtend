@@ -39,7 +39,7 @@ import java.util.Set
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 
@@ -110,7 +110,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     extension AnnotationsExtensions
     
     @Inject
-    extension KExpressionsSerializeExtension
+    extension KEffectsSerializeExtensions
    
     protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
     protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8

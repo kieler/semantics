@@ -64,6 +64,7 @@ public class ParameterItemProvider
             super.getPropertyDescriptors(object);
 
             addCallByReferencePropertyDescriptor(object);
+            addPureOutputPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -82,6 +83,28 @@ public class ParameterItemProvider
                  getString("_UI_Parameter_callByReference_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_Parameter_callByReference_feature", "_UI_Parameter_type"),
                  KExpressionsPackage.Literals.PARAMETER__CALL_BY_REFERENCE,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Pure Output feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addPureOutputPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Parameter_pureOutput_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Parameter_pureOutput_feature", "_UI_Parameter_type"),
+                 KExpressionsPackage.Literals.PARAMETER__PURE_OUTPUT,
                  true,
                  false,
                  false,
@@ -156,6 +179,7 @@ public class ParameterItemProvider
 
         switch (notification.getFeatureID(Parameter.class)) {
             case KExpressionsPackage.PARAMETER__CALL_BY_REFERENCE:
+            case KExpressionsPackage.PARAMETER__PURE_OUTPUT:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case KExpressionsPackage.PARAMETER__EXPRESSION:

@@ -31,6 +31,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
@@ -62,8 +63,8 @@ public class SctLinker extends AbstractCleaningLinker {
             /* restrict to elements with cross references */
             if (SCChartsPackage.eINSTANCE.getScope().isInstance(obj)
                     || SCChartsPackage.eINSTANCE.getTransition().isInstance(obj)
-                    || SCChartsPackage.eINSTANCE.getEmission().isInstance(obj)
-                    || SCChartsPackage.eINSTANCE.getAssignment().isInstance(obj)
+                    || KEffectsPackage.eINSTANCE.getEmission().isInstance(obj)
+                    || KEffectsPackage.eINSTANCE.getAssignment().isInstance(obj)
                     || KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(obj)) {
 
                 /* reveal the dedicated parse tree element */

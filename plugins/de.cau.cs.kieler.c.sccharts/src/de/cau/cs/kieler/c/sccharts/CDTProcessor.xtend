@@ -54,12 +54,13 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.cdt.internal.ui.editor.CEditor
 import org.eclipse.ui.IEditorPart
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTForStatement
-import de.cau.cs.kieler.sccharts.Assignment
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTUnaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
 
 /**
  * @author ssm
@@ -569,7 +570,7 @@ class CDTProcessor extends AbstractProductionTransformation {
     }
     
     def Assignment createAssignment(CASTUnaryExpression unary) {
-    	val assignment = scc.createAssignment
+    	val assignment = kef.createAssignment
     	
     	val VOR = (unary.operand as CASTIdExpression).createVOReference
     	assignment.valuedObject = VOR.valuedObject
@@ -614,6 +615,10 @@ class CDTProcessor extends AbstractProductionTransformation {
     
     private def kex() {
         KExpressionsFactory::eINSTANCE
+    }
+    
+    private def kef() {
+    	KEffectsFactory::eINSTANCE
     }
     
     private def ControlflowRegion getControlflowRegion(State state) {

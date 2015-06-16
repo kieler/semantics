@@ -15,6 +15,8 @@ package de.cau.cs.kieler.sccharts.provider;
 
 import de.cau.cs.kieler.core.annotations.provider.AnnotationsEditPlugin;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.provider.KEffectsEditPlugin;
+
 import de.cau.cs.kieler.core.kexpressions.provider.KExpressionsEditPlugin;
 
 import org.eclipse.emf.common.EMFPlugin;
@@ -29,85 +31,86 @@ import org.eclipse.emf.common.util.ResourceLocator;
  */
 public final class SCChartsEditPlugin extends EMFPlugin {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-	 * Keep track of the singleton.
-	 * <!-- begin-user-doc -->
+     * Keep track of the singleton.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final SCChartsEditPlugin INSTANCE = new SCChartsEditPlugin();
 
     /**
-	 * Keep track of the singleton.
-	 * <!-- begin-user-doc -->
+     * Keep track of the singleton.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private static Implementation plugin;
 
     /**
-	 * Create the instance.
-	 * <!-- begin-user-doc -->
+     * Create the instance.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SCChartsEditPlugin() {
-		super
-		  (new ResourceLocator [] {
-		     AnnotationsEditPlugin.INSTANCE,
-		     KExpressionsEditPlugin.INSTANCE,
-		   });
-	}
+        super
+          (new ResourceLocator [] {
+             AnnotationsEditPlugin.INSTANCE,
+             KEffectsEditPlugin.INSTANCE,
+             KExpressionsEditPlugin.INSTANCE,
+           });
+    }
 
     /**
-	 * Returns the singleton instance of the Eclipse plugin.
-	 * <!-- begin-user-doc -->
+     * Returns the singleton instance of the Eclipse plugin.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return the singleton instance.
-	 * @generated
-	 */
+     * @return the singleton instance.
+     * @generated
+     */
     @Override
     public ResourceLocator getPluginResourceLocator() {
-		return plugin;
-	}
+        return plugin;
+    }
 
     /**
-	 * Returns the singleton instance of the Eclipse plugin.
-	 * <!-- begin-user-doc -->
+     * Returns the singleton instance of the Eclipse plugin.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return the singleton instance.
-	 * @generated
-	 */
+     * @return the singleton instance.
+     * @generated
+     */
     public static Implementation getPlugin() {
-		return plugin;
-	}
+        return plugin;
+    }
 
     /**
-	 * The actual implementation of the Eclipse <b>Plugin</b>.
-	 * <!-- begin-user-doc -->
+     * The actual implementation of the Eclipse <b>Plugin</b>.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static class Implementation extends EclipsePlugin {
         /**
-		 * Creates an instance.
-		 * <!-- begin-user-doc -->
+         * Creates an instance.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-		 * @generated
-		 */
+         * @generated
+         */
         public Implementation() {
-			super();
+            super();
 
-			// Remember the static instance.
-			//
-			plugin = this;
-		}
+            // Remember the static instance.
+            //
+            plugin = this;
+        }
     }
 
 }

@@ -22,7 +22,6 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.sccharts.Binding
 import de.cau.cs.kieler.sccharts.CallNode
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -41,6 +40,8 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
 
 /**
  * SCCharts Reference Transformation.
@@ -545,7 +546,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
    	
    	// helper methods
    	private def Assignment createNewAssignment(ValuedObject vo, Expression expression) {
-   	    val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
+   	    val newAssignment = KEffectsFactory.eINSTANCE.createAssignment
    	    newAssignment.valuedObject = vo
    	    newAssignment.expression = expression
    	    return newAssignment

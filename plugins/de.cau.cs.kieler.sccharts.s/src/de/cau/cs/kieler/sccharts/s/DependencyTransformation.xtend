@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sccharts.s
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -24,8 +23,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
-import de.cau.cs.kieler.sccharts.impl.AssignmentImpl
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 
 /** 
  * SCCharts DependencyTransformation Extension builds up a sorted list of dependencies between states
@@ -130,7 +130,7 @@ class DependencyTransformation {
                 for (action : allActions) {
                     for (effect : action.effects) {
                         if ((effect instanceof Emission && ((effect as Emission).valuedObject == valuedObject))
-                         || effect instanceof AssignmentImpl && ((effect as AssignmentImpl).valuedObject == valuedObject)) {
+                         || effect instanceof Assignment && ((effect as Assignment).valuedObject == valuedObject)) {
 
                             // We consider only SCG normalized SCCharts, hence only transitions
                             if (action instanceof Transition) {

@@ -395,7 +395,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
             scg.schedules.add(schedule)
         }
         
-        scg.addAnnotation(SCGFeatures.SCHEDULING_ID, SCGFeatures.SCHEDULING_NAME);
+        scg.createStringAnnotation(SCGFeatures.SCHEDULING_ID, SCGFeatures.SCHEDULING_NAME);
         scg
     }
 

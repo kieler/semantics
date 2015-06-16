@@ -1,0 +1,128 @@
+/* KEXT Test File for boolean operations
+ * Logical specific operations
+ * 
+ * @author ssm
+ * @date 2015-06-10
+ */
+
+bool A, B, C, D;
+
+@check boolean.logical.and
+A = B && C
+
+@check boolean.logical.and.parenthesis
+A = (B && C)
+
+@check boolean.logical.and.and
+A = B && C && D
+
+@check boolean.logical.and.and.parenthesis#001
+A = (B && C && D)
+
+@check boolean.logical.and.and.parenthesis#002
+A = B && (C && D)
+
+@check boolean.logical.and.and.parenthesis#003
+A = (B && C) && D
+
+
+@check boolean.logical.or
+A = B || C
+
+@check boolean.logical.or.parenthesis
+A = (B || C)
+
+@check boolean.logical.or.or
+A = B || C || D
+
+@check boolean.logical.or.or.parenthesis#001
+A = (B || C || D)
+
+@check boolean.logical.or.or.parenthesis#002
+A = B || (C || D)
+
+@check boolean.logical.or.or.parenthesis#003
+A = (B || C) || D
+
+
+@check boolean.logical.and.or
+A = B && C || D
+
+@check boolean.logical.and.or.parenthesis#001
+A = B && (C || D)
+
+@check boolean.logical.and.or.parenthesis#002
+A = (B && C) || D
+
+
+@check boolean.logical.or.and
+A = B || C && D
+
+@check boolean.logical.or.and.parenthesis#001
+A = B || (C && D)
+
+@check boolean.logical.or.and.parenthesis#002
+A = (B || C) && D
+
+
+@check boolean.logical.not.and#001
+A = !(B && C)
+
+@check boolean.logical.not.and#002
+A = !B && C
+
+@check boolean.logical.not.and#003
+A = (!B && C)
+
+@check boolean.logical.not.and#004
+A = !B && !C
+
+@check boolean.logical.not.and#005
+A = (!B && !C)
+
+@check boolean.logical.not.and#006
+A = !(!B && !C)
+
+
+@check boolean.logical.not.or#001
+A = !(B || C)
+
+@check boolean.logical.not.or#002
+A = !B || C
+
+@check boolean.logical.not.or#003
+A = (!B || C)
+
+@check boolean.logical.not.or#004
+A = !B || !C
+
+@check boolean.logical.not.or#005
+A = (!B || !C)
+
+@check boolean.logical.not.or#006
+A = !(!B || !C)
+
+
+@check boolean.logical.mixed#001
+A = (B || C) && (B || C) && (B || C)
+
+@check boolean.logical.mixed#002
+A = (B || C) && ((B || C) && (B || C))
+
+@check boolean.logical.mixed#003
+A = D || (B && (B || (C && (C || D))))
+
+@check boolean.logical.mixed#004
+A = (D || (B && (B || (C && (C || D)))))
+
+@check boolean.logical.mixed#005
+A = !A || !(A && B)
+
+@check boolean.logical.mixed#006
+A = (!A || !(A && B))
+
+@check boolean.logical.mixed#007
+A = !(!A || !(A && B))
+
+@check boolean.logical.mixed#008
+A = (!(!A || !(A && B)))

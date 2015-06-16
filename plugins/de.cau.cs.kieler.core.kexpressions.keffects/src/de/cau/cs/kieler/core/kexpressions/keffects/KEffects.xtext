@@ -1,0 +1,57 @@
+grammar de.cau.cs.kieler.core.kexpressions.keffects.KEffects with de.cau.cs.kieler.core.kexpressions.KExpressions
+ 
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/annotations" as annotations
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
+import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
+
+// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
+
+Effect returns keffects::Effect: 
+    Assignment | 
+	PostfixEffect | 
+	Emission |
+	HostcodeEffect | 
+	FunctionCallEffect;
+
+		
+Emission returns keffects::Emission:
+    (annotations+=RestrictedAnnotation)*    
+	valuedObject=[kexpressions::ValuedObject] ( "(" newValue = Expression ")" )?;
+
+    
+Assignment returns keffects::Assignment:
+    (annotations+=Annotation)*    
+	valuedObject=[kexpressions::ValuedObject]
+	('[' indices+=Expression ']')*
+	 operator=AssignOperator expression = Expression;
+	 
+
+PostfixEffect returns keffects::Assignment:
+    (annotations+=Annotation)*    
+    valuedObject=[kexpressions::ValuedObject]
+    ('[' indices+=Expression ']')*
+     operator=PostfixOperator;
+
+	 
+HostcodeEffect returns keffects::HostcodeEffect:
+    (annotations+=Annotation)*    
+ 	text=HOSTCODE;
+ 	
+ 	
+FunctionCallEffect returns keffects::FunctionCallEffect:
+    (annotations+=Annotation)*    
+    '<' functionName=ExtendedID (('(' parameters += Parameter (',' parameters += Parameter)* ')')|'()')? '>';
+
+    
+enum AssignOperator returns keffects::AssignOperator:
+    ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+    
+enum PostfixOperator returns keffects::AssignOperator:
+    POSTFIXADD="++" | POSTFIXSUB="--"; 
+
+
+    
+	
+	

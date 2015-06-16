@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.SCChartsPlugin
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -118,7 +119,7 @@ class SCChartsSimulation {
      def void transformTransition(Transition transition, State targetRootState, String UID) {
           // auxiliary valuedObject
           val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-          val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
+          val auxiliaryEmission = KEffectsFactory::eINSTANCE.createEmission();
           
           // Setup the auxiliaryValuedObject as an OUTPUT to the module
           auxiliaryValuedObject.setName(UID);
@@ -162,7 +163,7 @@ class SCChartsSimulation {
                // Add emission of auxiliary ValuedObject as an immediate during action for this state
                val immediateDuringAction = SCChartsFactory::eINSTANCE.createDuringAction();
                immediateDuringAction.setImmediate(true);
-               val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
+               val auxiliaryEmission = KEffectsFactory::eINSTANCE.createEmission();
                    auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
                immediateDuringAction.effects.add(auxiliaryEmission);
                

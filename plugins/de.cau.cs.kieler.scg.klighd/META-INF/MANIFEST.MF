@@ -17,6 +17,7 @@ Require-Bundle: de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.klay.layered,
  de.cau.cs.kieler.kico,
- de.cau.cs.kieler.kico.klighd
+ de.cau.cs.kieler.kico.klighd,
+ de.cau.cs.kieler.core.annotations.text
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.scg.klighd

@@ -293,7 +293,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
       	 }
       	 System.out.println("o")
 
-        scg.addAnnotation(SCGFeatures.DEPENDENCY_ID, SCGFeatures.DEPENDENCY_NAME)   
+        scg.createStringAnnotation(SCGFeatures.DEPENDENCY_ID, SCGFeatures.DEPENDENCY_NAME)   
 
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Dependency analysis finished (overall time elapsed: "+(time / 1000)+"s).")  

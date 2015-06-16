@@ -56,7 +56,7 @@ class AnnotationsExtensions {
                     case annotationsPackage.floatAnnotation:
                      (it as FloatAnnotation).value
                     case annotationsPackage.stringAnnotation:
-                     data.parseValue((it as StringAnnotation).value)
+                     data.parseValue((it as StringAnnotation).values.head)
                     default:
                      null
                 });

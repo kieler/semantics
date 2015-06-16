@@ -29,17 +29,17 @@ import de.cau.cs.kieler.esterel.kexpressions.TextExpression
 import de.cau.cs.kieler.esterel.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.Effect
-import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
 import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import de.cau.cs.kieler.synccharts.State
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
+import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect
 
 /** 
  * Transforming SyncCharts into SCCharts.
@@ -304,9 +304,9 @@ class SyncChartsTransformation {
       }
    }           
 
-   def dispatch TextEffect transformEffect(de.cau.cs.kieler.synccharts.TextEffect textEffect) {
+   def dispatch HostcodeEffect transformEffect(de.cau.cs.kieler.synccharts.TextEffect textEffect) {
       val text = textEffect.code
-      text.createTextEffect
+      text.createHostcodeEffect
    }
 
    def dispatch Effect transformEffect(de.cau.cs.kieler.synccharts.Effect effect) {

@@ -24,8 +24,6 @@
             genModel="model/sccharts.genmodel"/>
    </extension>
 
-
-   
      <extension
            point="de.cau.cs.kieler.kico.extension">
         <ExtensionInformation

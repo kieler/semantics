@@ -35,6 +35,10 @@ public class KExpressionsFormatter extends AnnotationsFormatter {
      */
     @Override
     protected void configureFormatting(FormattingConfig c) {
+        int a, b;
+        
+        a = 1 & 2 | 3;
+        
         customConfigureFormatting(c, (KExpressionsGrammarAccess) getGrammarAccess());
     }
 
@@ -80,7 +84,7 @@ public class KExpressionsFormatter extends AnnotationsFormatter {
         c.setNoSpace().after(f.getFunctionCallAccess().getLessThanSignKeyword_0());
         c.setNoSpace().before(f.getFunctionCallAccess().getGreaterThanSignKeyword_3());
         c.setNoSpace().before(f.getFunctionCallAccess().getLeftParenthesisKeyword_2_0_0());
-        c.setNoSpace().after(f.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0());
+        c.setNoSpace().after(f.getParameterAccess().getCallByReferenceAmpersandKeyword_0_1_0());
     }
 
 }

@@ -2,19 +2,34 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+
+import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator;
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,8 +38,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getOperator <em>Operator</em>}</li>
  * </ul>
  * </p>
  *
@@ -32,6 +50,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class AssignmentImpl extends InstructionImpl implements Assignment
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
    * <!-- begin-user-doc -->
@@ -53,6 +81,36 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   protected Expression expression;
 
   /**
+   * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getIndices()
+   * @generated
+   * @ordered
+   */
+  protected EList<Expression> indices;
+
+  /**
+   * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOperator()
+   * @generated
+   * @ordered
+   */
+  protected static final AssignOperator OPERATOR_EDEFAULT = AssignOperator.ASSIGN;
+
+  /**
+   * The cached value of the '{@link #getOperator() <em>Operator</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOperator()
+   * @generated
+   * @ordered
+   */
+  protected AssignOperator operator = OPERATOR_EDEFAULT;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -71,6 +129,20 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   protected EClass eStaticClass()
   {
     return SclPackage.Literals.ASSIGNMENT;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SclPackage.ASSIGNMENT__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -169,13 +241,90 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Expression> getIndices()
+  {
+    if (indices == null)
+    {
+      indices = new EObjectContainmentEList<Expression>(Expression.class, this, SclPackage.ASSIGNMENT__INDICES);
+    }
+    return indices;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AssignOperator getOperator()
+  {
+    return operator;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setOperator(AssignOperator newOperator)
+  {
+    AssignOperator oldOperator = operator;
+    operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__OPERATOR, oldOperator, operator));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Annotation getAnnotation(String name)
+  {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAllAnnotations(String name)
+  {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void removeAllAnnotations(String name)
+  {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
+      case SclPackage.ASSIGNMENT__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case SclPackage.ASSIGNMENT__EXPRESSION:
         return basicSetExpression(null, msgs);
+      case SclPackage.ASSIGNMENT__INDICES:
+        return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -190,11 +339,17 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
+      case SclPackage.ASSIGNMENT__ANNOTATIONS:
+        return getAnnotations();
       case SclPackage.ASSIGNMENT__VALUED_OBJECT:
         if (resolve) return getValuedObject();
         return basicGetValuedObject();
       case SclPackage.ASSIGNMENT__EXPRESSION:
         return getExpression();
+      case SclPackage.ASSIGNMENT__INDICES:
+        return getIndices();
+      case SclPackage.ASSIGNMENT__OPERATOR:
+        return getOperator();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -204,16 +359,28 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
+      case SclPackage.ASSIGNMENT__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case SclPackage.ASSIGNMENT__VALUED_OBJECT:
         setValuedObject((ValuedObject)newValue);
         return;
       case SclPackage.ASSIGNMENT__EXPRESSION:
         setExpression((Expression)newValue);
+        return;
+      case SclPackage.ASSIGNMENT__INDICES:
+        getIndices().clear();
+        getIndices().addAll((Collection<? extends Expression>)newValue);
+        return;
+      case SclPackage.ASSIGNMENT__OPERATOR:
+        setOperator((AssignOperator)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -229,11 +396,20 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
+      case SclPackage.ASSIGNMENT__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case SclPackage.ASSIGNMENT__VALUED_OBJECT:
         setValuedObject((ValuedObject)null);
         return;
       case SclPackage.ASSIGNMENT__EXPRESSION:
         setExpression((Expression)null);
+        return;
+      case SclPackage.ASSIGNMENT__INDICES:
+        getIndices().clear();
+        return;
+      case SclPackage.ASSIGNMENT__OPERATOR:
+        setOperator(OPERATOR_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -249,12 +425,109 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
+      case SclPackage.ASSIGNMENT__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case SclPackage.ASSIGNMENT__VALUED_OBJECT:
         return valuedObject != null;
       case SclPackage.ASSIGNMENT__EXPRESSION:
         return expression != null;
+      case SclPackage.ASSIGNMENT__INDICES:
+        return indices != null && !indices.isEmpty();
+      case SclPackage.ASSIGNMENT__OPERATOR:
+        return operator != OPERATOR_EDEFAULT;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Annotatable.class)
+    {
+      switch (derivedFeatureID)
+      {
+        case SclPackage.ASSIGNMENT__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+        default: return -1;
+      }
+    }
+    if (baseClass == Effect.class)
+    {
+      switch (derivedFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    if (baseClass == de.cau.cs.kieler.core.kexpressions.keffects.Assignment.class)
+    {
+      switch (derivedFeatureID)
+      {
+        case SclPackage.ASSIGNMENT__VALUED_OBJECT: return KEffectsPackage.ASSIGNMENT__VALUED_OBJECT;
+        case SclPackage.ASSIGNMENT__EXPRESSION: return KEffectsPackage.ASSIGNMENT__EXPRESSION;
+        case SclPackage.ASSIGNMENT__INDICES: return KEffectsPackage.ASSIGNMENT__INDICES;
+        case SclPackage.ASSIGNMENT__OPERATOR: return KEffectsPackage.ASSIGNMENT__OPERATOR;
+        default: return -1;
+      }
+    }
+    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Annotatable.class)
+    {
+      switch (baseFeatureID)
+      {
+        case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return SclPackage.ASSIGNMENT__ANNOTATIONS;
+        default: return -1;
+      }
+    }
+    if (baseClass == Effect.class)
+    {
+      switch (baseFeatureID)
+      {
+        default: return -1;
+      }
+    }
+    if (baseClass == de.cau.cs.kieler.core.kexpressions.keffects.Assignment.class)
+    {
+      switch (baseFeatureID)
+      {
+        case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT: return SclPackage.ASSIGNMENT__VALUED_OBJECT;
+        case KEffectsPackage.ASSIGNMENT__EXPRESSION: return SclPackage.ASSIGNMENT__EXPRESSION;
+        case KEffectsPackage.ASSIGNMENT__INDICES: return SclPackage.ASSIGNMENT__INDICES;
+        case KEffectsPackage.ASSIGNMENT__OPERATOR: return SclPackage.ASSIGNMENT__OPERATOR;
+        default: return -1;
+      }
+    }
+    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (operator: ");
+    result.append(operator);
+    result.append(')');
+    return result.toString();
   }
 
 } //AssignmentImpl

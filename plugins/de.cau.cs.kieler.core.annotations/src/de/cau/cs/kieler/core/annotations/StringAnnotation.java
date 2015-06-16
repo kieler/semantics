@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.core.annotations;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +28,7 @@ package de.cau.cs.kieler.core.annotations;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.annotations.StringAnnotation#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.annotations.StringAnnotation#getValues <em>Values</em>}</li>
  * </ul>
  * </p>
  *
@@ -36,29 +38,19 @@ package de.cau.cs.kieler.core.annotations;
  */
 public interface StringAnnotation extends Annotation {
     /**
-     * Returns the value of the '<em><b>Value</b></em>' attribute.
+     * Returns the value of the '<em><b>Values</b></em>' attribute list.
+     * The list contents are of type {@link java.lang.String}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Value</em>' attribute isn't clear,
+     * If the meaning of the '<em>Values</em>' attribute list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Value</em>' attribute.
-     * @see #setValue(String)
-     * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getStringAnnotation_Value()
+     * @return the value of the '<em>Values</em>' attribute list.
+     * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getStringAnnotation_Values()
      * @model
      * @generated
      */
-    String getValue();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.annotations.StringAnnotation#getValue <em>Value</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Value</em>' attribute.
-     * @see #getValue()
-     * @generated
-     */
-    void setValue(String value);
+    EList<String> getValues();
 
 } // StringAnnotation

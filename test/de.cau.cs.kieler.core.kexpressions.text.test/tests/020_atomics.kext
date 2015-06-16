@@ -1,0 +1,41 @@
+/* KEXT Test File for atomic operations
+ * 
+ * @author ssm
+ * @date 2015-06-09
+ */
+bool A;
+signal int SI;
+int I;
+
+@check valuedObject.value
+I = val(SI)
+
+@check valuedObject.value.value
+I = val(val(SI))
+
+@check valuedObject.value.value.value
+I = val(val(val(SI)))
+
+@check "valuedObject.pre"
+A = pre(A)
+
+@check "valuedObject.pre.pre"
+A = pre(pre(A))
+
+@check "valuedObject.pre"
+A = pre(pre(pre(A)))
+
+@check valuedObject.not
+A = !A
+
+@check valuedObject.not.not
+A = !!A
+
+@check valuedObject.not.not.not
+A = !!!A
+
+@check "valuedObject.not.pre"
+A = !pre(A)
+
+@check "valuedObject.not.not.pre"
+A = !!pre(A)

@@ -10,7 +10,7 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.util.Pair;
 
 import de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsFormatter;
-import de.cau.cs.kieler.core.kexpressions.formatting.KExpressionsFormatter;
+import de.cau.cs.kieler.core.kexpressions.text.formatting.KEXTFormatter;
 import de.cau.cs.kieler.sccharts.text.actions.services.ActionsGrammarAccess;
 
 /**
@@ -21,7 +21,7 @@ import de.cau.cs.kieler.sccharts.text.actions.services.ActionsGrammarAccess;
  *
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  */
-public class ActionsFormatter extends KExpressionsFormatter {
+public class ActionsFormatter extends KEXTFormatter {
 
     @Override
     protected void configureFormatting(FormattingConfig c) {
@@ -39,10 +39,10 @@ public class ActionsFormatter extends KExpressionsFormatter {
      *            GrammarAccess provided by caller
      */
     protected void customConfigureFormatting(FormattingConfig c, ActionsGrammarAccess f) {
-        super.customConfigureFormatting(c, f.getKExpressionsGrammarAccess());
+        super.customConfigureFormatting(c, f.getKEXTGrammarAccess());
 
         // avoid space in valued Emission like 'X (5 + 7)' -> 'X(5 + 7)'
-        c.setNoSpace().before(f.getEmissionAccess().getLeftParenthesisKeyword_1_0());
+        c.setNoSpace().before(f.getEmissionAccess().getLeftParenthesisKeyword_2_0());
 
         // There is no type any more
         // avoid space in textual effect like '/ "foo" (java)' -> '/ "foo"(java)'
@@ -66,18 +66,18 @@ public class ActionsFormatter extends KExpressionsFormatter {
        c.setNoSpace().before(f.getExitActionAccess().getSemicolonKeyword_3_2_0());
        
        // Emission ( value ) -> (value)
-       c.setNoSpace().after(f.getEmissionAccess().getLeftParenthesisKeyword_1_0());
-       c.setNoSpace().before(f.getEmissionAccess().getRightParenthesisKeyword_1_2());
+       c.setNoSpace().after(f.getEmissionAccess().getLeftParenthesisKeyword_2_0());
+       c.setNoSpace().before(f.getEmissionAccess().getRightParenthesisKeyword_2_2());
        
-       c.setNoSpace().before(f.getAssignmentAccess().getLeftSquareBracketKeyword_1_0());
-       c.setNoSpace().after(f.getAssignmentAccess().getLeftSquareBracketKeyword_1_0());
-       c.setNoSpace().before(f.getAssignmentAccess().getRightSquareBracketKeyword_1_2());
+       c.setNoSpace().before(f.getAssignmentAccess().getLeftSquareBracketKeyword_2_0());
+       c.setNoSpace().after(f.getAssignmentAccess().getLeftSquareBracketKeyword_2_0());
+       c.setNoSpace().before(f.getAssignmentAccess().getRightSquareBracketKeyword_2_2());
 
        
-       c.setNoSpace().after(f.getFunctionCallEffectAccess().getLessThanSignKeyword_0());
-       c.setNoSpace().before(f.getFunctionCallEffectAccess().getGreaterThanSignKeyword_3());
-       c.setNoSpace().before(f.getFunctionCallEffectAccess().getLeftParenthesisKeyword_2_0_0());
-       c.setNoSpace().after(f.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0());
+       c.setNoSpace().after(f.getFunctionCallEffectAccess().getLessThanSignKeyword_1());
+       c.setNoSpace().before(f.getFunctionCallEffectAccess().getGreaterThanSignKeyword_4());
+       c.setNoSpace().before(f.getFunctionCallEffectAccess().getLeftParenthesisKeyword_3_0_0());
+       c.setNoSpace().after(f.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0_0());
        
        for (Keyword comma : f.findKeywords(",")) {
            c.setNoLinewrap().before(comma);

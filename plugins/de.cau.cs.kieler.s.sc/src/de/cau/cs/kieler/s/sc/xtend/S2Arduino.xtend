@@ -406,20 +406,20 @@ class S2Arduino {
    def dispatch CharSequence expand(Assignment assignment) {
        if (assignment.expression instanceof FunctionCall) {
            var returnValue = '''«assignment.expression.expand»;'''
-            if (assignment.variable != null) {
-                returnValue = '''«assignment.variable.expand» = ''' + returnValue
+            if (assignment.valuedObject != null) {
+                returnValue = '''«assignment.valuedObject.expand» = ''' + returnValue
             }            
            return returnValue 
        }
        else if (!assignment.indices.nullOrEmpty) {
-          var returnValue = '''«assignment.variable.expand »'''
+          var returnValue = '''«assignment.valuedObject.expand »'''
           for (index : assignment.indices) {
               returnValue = returnValue + '''[«index.expand»]'''
           }
           returnValue = returnValue + ''' = «assignment.expression.expand»;'''
           return returnValue
        } else {
-          return '''«assignment.variable.expand » = «assignment.expression.expand»;'''
+          return '''«assignment.valuedObject.expand » = «assignment.expression.expand»;'''
        }
    }   
       

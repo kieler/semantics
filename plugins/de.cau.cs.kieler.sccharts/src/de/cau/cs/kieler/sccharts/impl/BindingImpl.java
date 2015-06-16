@@ -39,195 +39,195 @@ import de.cau.cs.kieler.sccharts.SCChartsPackage;
  */
 public class BindingImpl extends AnnotatableImpl implements Binding {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-	 * The cached value of the '{@link #getFormal() <em>Formal</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getFormal() <em>Formal</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getFormal()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getFormal()
+     * @generated
+     * @ordered
+     */
     protected ValuedObject formal;
 
     /**
-	 * The cached value of the '{@link #getActual() <em>Actual</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getActual() <em>Actual</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getActual()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getActual()
+     * @generated
+     * @ordered
+     */
     protected ValuedObject actual;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected BindingImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return SCChartsPackage.Literals.BINDING;
-	}
+        return SCChartsPackage.Literals.BINDING;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ValuedObject getFormal() {
-		if (formal != null && formal.eIsProxy()) {
-			InternalEObject oldFormal = (InternalEObject)formal;
-			formal = (ValuedObject)eResolveProxy(oldFormal);
-			if (formal != oldFormal) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.BINDING__FORMAL, oldFormal, formal));
-			}
-		}
-		return formal;
-	}
+        if (formal != null && formal.eIsProxy()) {
+            InternalEObject oldFormal = (InternalEObject)formal;
+            formal = (ValuedObject)eResolveProxy(oldFormal);
+            if (formal != oldFormal) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.BINDING__FORMAL, oldFormal, formal));
+            }
+        }
+        return formal;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ValuedObject basicGetFormal() {
-		return formal;
-	}
+        return formal;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setFormal(ValuedObject newFormal) {
-		ValuedObject oldFormal = formal;
-		formal = newFormal;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.BINDING__FORMAL, oldFormal, formal));
-	}
+        ValuedObject oldFormal = formal;
+        formal = newFormal;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.BINDING__FORMAL, oldFormal, formal));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ValuedObject getActual() {
-		if (actual != null && actual.eIsProxy()) {
-			InternalEObject oldActual = (InternalEObject)actual;
-			actual = (ValuedObject)eResolveProxy(oldActual);
-			if (actual != oldActual) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.BINDING__ACTUAL, oldActual, actual));
-			}
-		}
-		return actual;
-	}
+        if (actual != null && actual.eIsProxy()) {
+            InternalEObject oldActual = (InternalEObject)actual;
+            actual = (ValuedObject)eResolveProxy(oldActual);
+            if (actual != oldActual) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.BINDING__ACTUAL, oldActual, actual));
+            }
+        }
+        return actual;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ValuedObject basicGetActual() {
-		return actual;
-	}
+        return actual;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setActual(ValuedObject newActual) {
-		ValuedObject oldActual = actual;
-		actual = newActual;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.BINDING__ACTUAL, oldActual, actual));
-	}
+        ValuedObject oldActual = actual;
+        actual = newActual;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.BINDING__ACTUAL, oldActual, actual));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SCChartsPackage.BINDING__FORMAL:
-				if (resolve) return getFormal();
-				return basicGetFormal();
-			case SCChartsPackage.BINDING__ACTUAL:
-				if (resolve) return getActual();
-				return basicGetActual();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SCChartsPackage.BINDING__FORMAL:
+                if (resolve) return getFormal();
+                return basicGetFormal();
+            case SCChartsPackage.BINDING__ACTUAL:
+                if (resolve) return getActual();
+                return basicGetActual();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SCChartsPackage.BINDING__FORMAL:
-				setFormal((ValuedObject)newValue);
-				return;
-			case SCChartsPackage.BINDING__ACTUAL:
-				setActual((ValuedObject)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SCChartsPackage.BINDING__FORMAL:
+                setFormal((ValuedObject)newValue);
+                return;
+            case SCChartsPackage.BINDING__ACTUAL:
+                setActual((ValuedObject)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case SCChartsPackage.BINDING__FORMAL:
-				setFormal((ValuedObject)null);
-				return;
-			case SCChartsPackage.BINDING__ACTUAL:
-				setActual((ValuedObject)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SCChartsPackage.BINDING__FORMAL:
+                setFormal((ValuedObject)null);
+                return;
+            case SCChartsPackage.BINDING__ACTUAL:
+                setActual((ValuedObject)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SCChartsPackage.BINDING__FORMAL:
-				return formal != null;
-			case SCChartsPackage.BINDING__ACTUAL:
-				return actual != null;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SCChartsPackage.BINDING__FORMAL:
+                return formal != null;
+            case SCChartsPackage.BINDING__ACTUAL:
+                return actual != null;
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //BindingImpl

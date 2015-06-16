@@ -6,6 +6,8 @@ import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -176,7 +178,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     isInited = true;
 
     // Initialize simple dependencies
-    KExpressionsPackage.eINSTANCE.eClass();
+    KEffectsPackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theSclPackage.createPackageContents();
@@ -311,26 +313,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
   public EClass getAssignment()
   {
     return assignmentEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAssignment_ValuedObject()
-  {
-    return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAssignment_Expression()
-  {
-    return (EReference)assignmentEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -520,8 +502,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     instructionEClass = createEClass(INSTRUCTION);
 
     assignmentEClass = createEClass(ASSIGNMENT);
-    createEReference(assignmentEClass, ASSIGNMENT__VALUED_OBJECT);
-    createEReference(assignmentEClass, ASSIGNMENT__EXPRESSION);
 
     conditionalEClass = createEClass(CONDITIONAL);
     createEReference(conditionalEClass, CONDITIONAL__EXPRESSION);
@@ -572,6 +552,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     // Obtain other dependent packages
     AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
     KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
+    KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
 
     // Create type parameters
 
@@ -582,6 +563,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     emptyStatementEClass.getESuperTypes().add(this.getStatement());
     instructionStatementEClass.getESuperTypes().add(this.getStatement());
     assignmentEClass.getESuperTypes().add(this.getInstruction());
+    assignmentEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
     conditionalEClass.getESuperTypes().add(this.getInstruction());
     conditionalEClass.getESuperTypes().add(this.getStatementSequence());
     gotoEClass.getESuperTypes().add(this.getInstruction());
@@ -609,8 +591,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAssignment_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAssignment_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getConditional_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

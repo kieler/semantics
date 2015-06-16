@@ -1,0 +1,24 @@
+/* KEXT Test File for function call effects
+ * 
+ * @author ssm
+ * @date 2015-06-10
+ */
+ 
+string S = "Hallo Welt!";
+bool B;
+int I;
+
+@check functionCall.basic
+expression <printf("Hallo Welt!")>
+
+@check functionCall.basic.parameter
+expression <printf("%s", S)>
+
+@check functionCall.returnValue
+B = <scanf("")>
+
+@check functionCall.returnValue.parameter.byReference
+B = <scanf("%d", &I)>
+
+@check functionCall.returnValue.parameter.byPureOutput
+B = <scanf("%d", !&I)> 

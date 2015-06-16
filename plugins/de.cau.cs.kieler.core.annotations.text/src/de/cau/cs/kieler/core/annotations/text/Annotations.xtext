@@ -25,76 +25,77 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 
 Annotation returns Annotation:
-    CommentAnnotation
-    | TagAnnotation
-    | KeyStringValueAnnotation
-    | TypedKeyStringValueAnnotation
-    | KeyBooleanValueAnnotation
-    | KeyIntValueAnnotation
-    | KeyFloatValueAnnotation
-    ;
+    CommentAnnotation | 
+    KeyStringValueAnnotation |
+    TypedKeyStringValueAnnotation |
+    KeyBooleanValueAnnotation |
+    KeyIntValueAnnotation |
+    KeyFloatValueAnnotation |
+    TagAnnotation 
+;
 
 ValuedAnnotation returns Annotation:
-    CommentAnnotation
-    | KeyStringValueAnnotation
-    | TypedKeyStringValueAnnotation
-    | KeyBooleanValueAnnotation
-    | KeyIntValueAnnotation
-    | KeyFloatValueAnnotation
-    ;
+    CommentAnnotation |
+    KeyStringValueAnnotation |
+    TypedKeyStringValueAnnotation |
+    KeyBooleanValueAnnotation |
+    KeyIntValueAnnotation |
+    KeyFloatValueAnnotation
+;
+
+RestrictedAnnotation returns Annotation:
+    CommentAnnotation |
+    QuotedKeyStringValueAnnotation |
+    QuotedTypedKeyStringValueAnnotation |
+    KeyBooleanValueAnnotation |
+    KeyIntValueAnnotation |
+    KeyFloatValueAnnotation |
+    TagAnnotation
+;
 
 
 // e.g.: /** semantic comment */
 CommentAnnotation returns StringAnnotation:
-    value=COMMENT_ANNOTATION;
+    values += COMMENT_ANNOTATION;
 
 
 // e.g.: @HVlayout
 TagAnnotation returns Annotation:
-    '@' name=ExtendedID
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
+    '@' name=ExtendedID;
 
 
 // e.g.: @layouter dot;   
 KeyStringValueAnnotation returns StringAnnotation:
-    '@' name=ExtendedID value=EString
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
+    '@' name=ExtendedID values += EString (',' values += EString)*;
 
 
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-    '@' name=ExtendedID '[' type=ExtendedID ']' value=EString
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
+    '@' name=ExtendedID '[' type=ExtendedID ']' values += EString (',' values += EString)*;
 
 
+QuotedKeyStringValueAnnotation returns StringAnnotation:
+    '@' name=ExtendedID values += STRING (',' values += STRING)*;
+
+
+// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
+QuotedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+    '@' name=ExtendedID '[' type=ExtendedID ']' values += STRING (',' values += STRING)*;
+
+    
 // e.g.: @visible true;
 KeyBooleanValueAnnotation returns BooleanAnnotation:
-    '@' name=ExtendedID value=BOOLEAN
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
+    '@' name=ExtendedID value=BOOLEAN;
 
 
 // e.g.: @minSpace 10;    
 KeyIntValueAnnotation returns IntAnnotation:
-    '@' name=ExtendedID value=INT
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
+    '@' name=ExtendedID value=Integer;
 
 
 // e.g.: @minSpace 10.0;    
 KeyFloatValueAnnotation returns FloatAnnotation:
-    '@' name=ExtendedID value=FLOAT
-    ('('
-        (annotations+=Annotation)*
-    ')')?;
+    '@' name=ExtendedID value=Floateger;
 
 
 // needed for importing other resources
@@ -104,13 +105,21 @@ ImportAnnotation returns ImportAnnotation:
 
 // allow strings without quotes as they don'c contain spaces
 EString returns ecore::EString:
-    STRING | ID;
+    STRING | ExtendedID;
 
 
 ExtendedID returns ecore::EString:
-  ID ("."ID)*;
+  ID ("."ID)* ("#"INT)?;
+
   
-  
+Integer returns ecore::EInt:
+    '-'? INT;
+
+
+Floateger returns ecore::EFloat:
+    '-'? FLOAT;
+
+
 // --------------------------
 //
 //  Terminals...
@@ -132,23 +141,36 @@ terminal ML_COMMENT returns ecore::EString:
 
 
 // generic terminals
-
 terminal fragment NUMBER :
     '0'..'9';
+
    
 // redefine INT terminal to allow negative numbers
 terminal INT returns ecore::EInt:
-    '-'? NUMBER+;
+    NUMBER+;
 
+    
 // make sure the Float rule does not shadow the INT rule
 terminal FLOAT returns ecore::EFloatObject :
-    '-'? NUMBER+ ('.' NUMBER*) (("e"|"E") ("+"|"-")? NUMBER+)? 'f'? |
-    '-'? NUMBER+ 'f';
+    NUMBER+ ('.' NUMBER*) (("e"|"E") ("+"|"-")? NUMBER+)? 'f'? |
+    NUMBER+ 'f';
+
+    
+// redefine INT terminal to allow negative numbers
+//terminal NEGINT returns ecore::EInt:
+//    '-' INT;
+//    
+//// make sure the Float rule does not shadow the INT rule
+//terminal NEGFLOAT returns ecore::EFloatObject :
+//    '-' FLOAT;
     
 // introduce boolean values
 terminal BOOLEAN returns ecore::EBooleanObject :
     'true' | 'false';
 
+
 // custom terminal rule for strings
 terminal STRING returns ecore::EString:
     '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';
+
+    

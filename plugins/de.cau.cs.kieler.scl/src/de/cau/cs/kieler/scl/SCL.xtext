@@ -1,4 +1,4 @@
-grammar de.cau.cs.kieler.scl.SCL with de.cau.cs.kieler.core.kexpressions.KExpressions
+grammar de.cau.cs.kieler.scl.SCL with de.cau.cs.kieler.core.kexpressions.text.KEXT
  
 //// we do not need to generate the transitionlabel ecore model, because we
 //// only reuse classes of the official sccharts metamodel
@@ -23,33 +23,6 @@ SCLProgram:
     '}' 
 ;
 
-Declaration returns kexpressions::Declaration:
-    (annotations+=Annotation)*
-	(const?='const')?
-    (input?='input')?
-    (output?='output')?
-    (static?='static')?
-    (signal?='signal')?
-    (
-        type = HostType hostType = STRING valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';' |
-        type = ValueType valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-    )
-;
-
-// Override ValueType rule without host type
-enum ValueType returns kexpressions::ValueType:
-    PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | 
-    INT="int" | FLOAT="float" |
-    STRING="string";
-
-ValuedObject returns kexpressions::ValuedObject:
-//    (annotations+=Annotation)* // Parser does not like this
-    name=ID ('=' initialValue=Expression)?
-    ( 'combine'
-      (combineOperator = CombineOperator)
-    )?
-;
-
 Statement:
     EmptyStatement | InstructionStatement
 ;
@@ -71,11 +44,9 @@ Instruction:
 ;
 
 Assignment:
-//    assignment = kexpressions::Expression
-    valuedObject = [kexpressions::ValuedObject] 
-    '=' 
-    expression = Expression
-;
+    valuedObject=[kexpressions::ValuedObject]
+    ('[' indices+=Expression ']')*
+     "=" expression = Expression ;
 
 Conditional:
     'if' expression = Expression 'then'
