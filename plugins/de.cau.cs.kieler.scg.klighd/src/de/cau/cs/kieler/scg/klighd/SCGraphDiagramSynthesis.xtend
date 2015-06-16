@@ -1480,12 +1480,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
         for (n : PIL_Nodes) {
             val nextFlows = n.allNext
+            var hasFlows = false
             for (flow : nextFlows) {
                 if (PIL_Nodes.contains(flow.target)) {
                     flow.colorControlFlow(PROBLEM_COLOR.copy)
                     flow.thickenControlFlow(PROBLEM_WIDTH)
+                    hasFlows = true
                 } 
             }
+            
+            if (!hasFlows) {
+                val nextDeps = n.eContents.filter(DataDependency).filter[ concurrent == true && confluent == false].toList
+                for (flow : nextDeps) {
+                    if (PIL_Nodes.contains(flow.target)) {
+                        flow.colorDependency(PROBLEM_COLOR.copy)
+                        flow.thickenDependency(PROBLEM_WIDTH)
+                    } 
+                }
+            }            
         }
     }
 
