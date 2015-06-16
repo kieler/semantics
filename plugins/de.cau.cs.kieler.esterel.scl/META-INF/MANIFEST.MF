@@ -6,7 +6,7 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.scl.EsterelToSclPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.core.resources;bundle-version="3.8.101",
+ org.eclipse.core.resources,
  org.eclipse.emf;bundle-version="2.6.0",
  org.eclipse.emf.codegen.ecore,
  com.google.inject;bundle-version="3.0.0",
