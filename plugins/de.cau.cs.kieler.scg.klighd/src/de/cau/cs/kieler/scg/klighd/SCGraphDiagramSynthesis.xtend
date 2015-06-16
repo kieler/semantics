@@ -97,6 +97,9 @@ import de.cau.cs.kieler.klay.layered.properties.InternalProperties
 import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.ControlDependency
+import de.cau.cs.kieler.scg.ConditionalDependency
+import de.cau.cs.kieler.scg.ThenDependency
+import de.cau.cs.kieler.scg.ElseDependency
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -347,6 +350,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 255; it.green = 0; it.blue = 0;]
     private static val KColor DEPENDENCY_CONTROL = RENDERING_FACTORY.createKColor() =>
         [it.red = 0; it.green = 192; it.blue = 192;]
+    private static val KColor DEPENDENCY_THEN = RENDERING_FACTORY.createKColor() =>
+        [it.red = 255; it.green = 192; it.blue = 192]
+    private static val KColor DEPENDENCY_ELSE = RENDERING_FACTORY.createKColor() =>
+        [it.red = 150; it.green = 192; it.blue = 192]
     private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor() =>
         [it.red = 255; it.green = 0; it.blue = 0;]
     private static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor() =>
@@ -381,10 +388,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val String ANNOTATION_SCPDGTRANSFORMATION = "scpdg" 
 
     /** 
-	 * Constants for hierarchical node groups
-	 * Since hierarchy, basic blocks and scheduling blocks use the same mechanism to group nodes and draw hierarchical edges, 
-	 * use this constants to define the desired kind of group. 
-	 */
+     * Constants for hierarchical node groups
+     * Since hierarchy, basic blocks and scheduling blocks use the same mechanism to group nodes and draw hierarchical edges, 
+     * use this constants to define the desired kind of group. 
+     */
     private static val int NODEGROUPING_HIERARCHY = 0
     private static val int NODEGROUPING_BASICBLOCK = 1
     private static val int NODEGROUPING_SCHEDULINGBLOCK = 2
@@ -423,12 +430,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -- Main Entry Point 
     // -------------------------------------------------------------------------
     /**
-	 * This method is called by KlighD. Trigger your visualization here.
-	 * 
-	 * @param model
-	 * 			the model in question
-	 * @return Returns the root KNode.
-	 */
+     * This method is called by KlighD. Trigger your visualization here.
+     * 
+     * @param model
+     *          the model in question
+     * @return Returns the root KNode.
+     */
     override transform(SCGraph model) {
 
         // Connect the model to the scope provider for the serialization.
@@ -458,7 +465,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      * Is triggered when a SCGrpah must be synthesized.
      * 
      * @param scg
-     * 			the SCG in question
+     *          the SCG in question
      * @return Returns the top level KNode.
      */
     private def dispatch KNode synthesize(SCGraph scg) {
@@ -506,10 +513,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     if (n.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
                         threadTypes.put((n as Entry), n.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2)
                     }
-                	node.children += n.synthesize
+                    node.children += n.synthesize
                 }
                 if (n instanceof Exit) { 
-                	node.children += n.synthesize
+                    node.children += n.synthesize
                 }
                 if (n instanceof Join) { node.children += n.synthesize }
                 if (n instanceof Depth) { node.children += n.synthesize }
@@ -534,7 +541,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 // If the dependency edges shall be layouted as well, they must be drawn before any 
                 // hierarchy management. The hierarchy methods break edges in half and connect them via a port.
                 if (scg instanceof SCGraph && SHOW_DEPENDENCIES.booleanValue && 
-                	(LAYOUT_DEPENDENCIES.booleanValue || isSCPDG)
+                    (LAYOUT_DEPENDENCIES.booleanValue || isSCPDG)
                 ) {
 //                    if (it instanceof Assignment) {
 //                        (it as Assignment).
@@ -544,27 +551,27 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
-            	sequentializedSCGCounter = 0
-            	val controlFlows = <ControlFlow> newArrayList => [ it += (scg.nodes.head as Entry).next ]
-            	while(!controlFlows.empty) {
-            		val nextNode = controlFlows.head.target
-            		controlFlows.remove(0)
-            		
-            		if (nextNode instanceof Assignment) {
-		            	sequentializedSCGCounter = sequentializedSCGCounter + 1
-        		    	if (sequentializedSCGCounter > 10) {
-            				sequentializedSCGCounter = 0
-//            				nextNode.getNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
-            			}
-            			controlFlows += (nextNode as Assignment).next
-            		}
-             		else if (nextNode instanceof Conditional) {
-             			controlFlows += (nextNode as Conditional).^else
-             		}
-             		else if (nextNode instanceof Exit) {
-             			controlFlows.clear;
-             		}
-            	}
+                sequentializedSCGCounter = 0
+                val controlFlows = <ControlFlow> newArrayList => [ it += (scg.nodes.head as Entry).next ]
+                while(!controlFlows.empty) {
+                    val nextNode = controlFlows.head.target
+                    controlFlows.remove(0)
+                    
+                    if (nextNode instanceof Assignment) {
+                        sequentializedSCGCounter = sequentializedSCGCounter + 1
+                        if (sequentializedSCGCounter > 10) {
+                            sequentializedSCGCounter = 0
+//                          nextNode.getNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+                        }
+                        controlFlows += (nextNode as Assignment).next
+                    }
+                    else if (nextNode instanceof Conditional) {
+                        controlFlows += (nextNode as Conditional).^else
+                    }
+                    else if (nextNode instanceof Exit) {
+                        controlFlows.clear;
+                    }
+                }
             }
             
             // Apply any hierarchy if the corresponding option is set. Since layout of edges between nodes
@@ -576,7 +583,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         if (entry != null) {
                             val regionLabel = entry.getStringAnnotationValue(ANNOTATION_REGIONNAME)
                             entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY, null) => [
-                            	var text = ""
+                                var text = ""
                                 val threadPathType = threadTypes.get(entry)
                                 if (threadPathType != null) {
                                     if (!regionLabel.nullOrEmpty) text = regionLabel + " - "
@@ -619,12 +626,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * This dispatch method is triggered when an assignment must be synthesized.
-	 * 
-	 * @param assignment
-	 * 			the assignment in question.
-	 * @return Returns the top level KNode. 
-	 */
+     * This dispatch method is triggered when an assignment must be synthesized.
+     * 
+     * @param assignment
+     *          the assignment in question.
+     * @return Returns the top level KNode. 
+     */
     private def dispatch KNode synthesize(Assignment assignment) {
         return assignment.createNode().putToLookUpWith(assignment) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
@@ -730,12 +737,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }    
 
     /**
-	 * This dispatch method is triggered when a conditional must be synthesized.
-	 * 
-	 * @param conditional
-	 * 			the conditional in question.
-	 * @return Returns the top level KNode. 
-	 */
+     * This dispatch method is triggered when a conditional must be synthesized.
+     * 
+     * @param conditional
+     *          the conditional in question.
+     * @return Returns the top level KNode. 
+     */
     private def dispatch KNode synthesize(Conditional conditional) {
         return conditional.createNode().putToLookUpWith(conditional) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
@@ -790,12 +797,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * This dispatch method is triggered when a surface must be synthesized.
-	 * 
-	 * @param surface
-	 * 			the surface in question.
-	 * @return Returns the top level KNode. 
-	 */
+     * This dispatch method is triggered when a surface must be synthesized.
+     * 
+     * @param surface
+     *          the surface in question.
+     * @return Returns the top level KNode. 
+     */
     private def dispatch KNode synthesize(Surface surface) {
         return surface.createNode().putToLookUpWith(surface) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
@@ -836,12 +843,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * This dispatch method is triggered when a depth must be synthesized.
-	 * 
-	 * @param depth
-	 * 			the depth in question.
-	 * @return Returns the top level KNode. 
-	 */
+     * This dispatch method is triggered when a depth must be synthesized.
+     * 
+     * @param depth
+     *          the depth in question.
+     * @return Returns the top level KNode. 
+     */
     private def dispatch KNode synthesize(Depth depth) {
         return depth.createNode().putToLookUpWith(depth) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
@@ -885,12 +892,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * This dispatch method is triggered when an entry must be synthesized.
-	 * 
-	 * @param entry
-	 * 			the entry node in question.
-	 * @return Returns the top level KNode. 
-	 */
+     * This dispatch method is triggered when an entry must be synthesized.
+     * 
+     * @param entry
+     *          the entry node in question.
+     * @return Returns the top level KNode. 
+     */
     private def dispatch KNode synthesize(Entry entry) {
         return entry.createNode().putToLookUpWith(entry) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
@@ -921,12 +928,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * This dispatch method is triggered when an exit must be synthesized.
-	 * 
-	 * @param exit
-	 * 			the exit node in question.
-	 * @return Returns the top level KNode. 
-	 */
+     * This dispatch method is triggered when an exit must be synthesized.
+     * 
+     * @param exit
+     *          the exit node in question.
+     * @return Returns the top level KNode. 
+     */
     private def dispatch KNode synthesize(Exit exit) {
         return exit.createNode().putToLookUpWith(exit) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
@@ -957,12 +964,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * This dispatch method is triggered when a fork must be synthesized.
-	 * 
-	 * @param fork
-	 * 			the fork node in question.
-	 * @return Returns the top level KNode. 
-	 */
+     * This dispatch method is triggered when a fork must be synthesized.
+     * 
+     * @param fork
+     *          the fork node in question.
+     * @return Returns the top level KNode. 
+     */
     private def dispatch KNode synthesize(Fork fork) {
         return fork.createNode().putToLookUpWith(fork) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
@@ -1005,12 +1012,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * This dispatch method is triggered when a join must be synthesized.
-	 * 
-	 * @param join
-	 * 			the join node in question.
-	 * @return Returns the top level KNode. 
-	 */
+     * This dispatch method is triggered when a join must be synthesized.
+     * 
+     * @param join
+     *          the join node in question.
+     * @return Returns the top level KNode. 
+     */
     private def dispatch KNode synthesize(Join join) {
         return join.createNode().putToLookUpWith(join) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
@@ -1055,12 +1062,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * Draw a dotted line from the corresponding surface node to the given depth node.
-	 * 
-	 * @param depth
-	 * 			the depth (target= node of the tick edge
-	 * @return Returns the KEdge.
-	 */
+     * Draw a dotted line from the corresponding surface node to the given depth node.
+     * 
+     * @param depth
+     *          the depth (target= node of the tick edge
+     * @return Returns the KEdge.
+     */
     private def KEdge synthesizeTickEdge(Depth depth) {
         return depth.createNewEdge().putToLookUpWith(depth) => [ edge |
             edge.source = depth.surface?.node;
@@ -1076,15 +1083,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * Draw a control flow edge from one node to another.
-	 * Use the outgoing port description as port identifier.
-	 * 
-	 * @param controlFlow
-	 * 			the control flow in question
-	 * @param outgoingPortId
-	 * 			the identifier for the outgoing port
-	 * @return Returns the KEdge. 
-	 */
+     * Draw a control flow edge from one node to another.
+     * Use the outgoing port description as port identifier.
+     * 
+     * @param controlFlow
+     *          the control flow in question
+     * @param outgoingPortId
+     *          the identifier for the outgoing port
+     * @return Returns the KEdge. 
+     */
     private def KEdge synthesizeControlFlow(ControlFlow controlFlow, String outgoingPortId) {
         if(controlFlow.target == null || controlFlow.eContainer == null) return null;
 
@@ -1148,12 +1155,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * Synthesize a (single) dependency.
-	 * 
-	 * @param dependency
-	 * 			the dependency in question
-	 * @return Returns the dependency. 
-	 */
+     * Synthesize a (single) dependency.
+     * 
+     * @param dependency
+     *          the dependency in question
+     * @return Returns the dependency. 
+     */
     private def Dependency synthesizeDependency(Dependency dependency) {
 
         // If non concurrent dependency are hidden and the given dependency is not concurrent, exit at once.
@@ -1178,23 +1185,32 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.source = sourceNode
             edge.target = targetNode
             if (dependency instanceof DataDependency) {
-	            edge.addRoundedBendsPolyline(8, 2) => [
-    	            // ... and use the predefined color for the different dependency types.    
-        	        if(dependency instanceof AbsoluteWrite_Read) it.foreground = DEPENDENCY_ABSWRITEREAD.copy
-            	    if(dependency instanceof RelativeWrite_Read) it.foreground = DEPENDENCY_RELWRITEREAD.copy
-                	if(dependency instanceof AbsoluteWrite_RelativeWrite) it.foreground = DEPENDENCY_ABSWRITERELWRITE.copy
-                	if(dependency instanceof Write_Write) it.foreground = DEPENDENCY_ABSWRITEABSWRITE.copy
-                	it.lineStyle = LineStyle::DASH
-                	it.addArrowDecorator
-            	]
+                edge.addRoundedBendsPolyline(8, 2) => [
+                    // ... and use the predefined color for the different dependency types.    
+                    if(dependency instanceof AbsoluteWrite_Read) it.foreground = DEPENDENCY_ABSWRITEREAD.copy
+                    if(dependency instanceof RelativeWrite_Read) it.foreground = DEPENDENCY_RELWRITEREAD.copy
+                    if(dependency instanceof AbsoluteWrite_RelativeWrite) it.foreground = DEPENDENCY_ABSWRITERELWRITE.copy
+                    if(dependency instanceof Write_Write) it.foreground = DEPENDENCY_ABSWRITEABSWRITE.copy
+                    it.lineStyle = LineStyle::DASH
+                    it.addArrowDecorator
+                ]
             }
             else if (dependency instanceof ControlDependency) {
-	            edge.addRoundedBendsPolyline(8, 2) => [
-    	            // ... and use the predefined color for the different dependency types.    
-        	        it.foreground = DEPENDENCY_CONTROL.copy
-                	it.lineStyle = LineStyle::DOT
-                	it.addArrowDecorator
-            	]
+                edge.addRoundedBendsPolyline(8, 2) => [
+                    // ... and use the predefined color for the different dependency types.    
+                    it.foreground = DEPENDENCY_CONTROL.copy
+                    it.lineStyle = LineStyle::DOT
+                    it.addArrowDecorator
+                ]
+            }
+            else if (dependency instanceof ConditionalDependency) {
+                edge.addRoundedBendsPolyline(8, 2) => [
+                    // ... and use the predefined color for the different dependency types.    
+                    if(dependency instanceof ThenDependency) it.foreground = DEPENDENCY_THEN.copy
+                    if(dependency instanceof ElseDependency) it.foreground = DEPENDENCY_ELSE.copy
+                    it.lineStyle = LineStyle::DOT
+                    it.addArrowDecorator
+                ]
             }
             // If dependency edges are layouted, use the dependency ports to attach the edges.
             if ((LAYOUT_DEPENDENCIES.booleanValue) || (isSCPDG)) {
@@ -1219,9 +1235,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      * change when basic blocks are re-introduced.
      * 
      * @param nodes
-     * 			the list of nodes that should be includes in the hierarchy
+     *          the list of nodes that should be includes in the hierarchy
      * @param
-     * 			the kindof grouping that should be applied.
+     *          the kindof grouping that should be applied.
      * @return Returns the container KNode.
      */
     private def KNode createHierarchy(List<Node> nodes, int nodeGrouping, EObject contextObject) {
@@ -1340,7 +1356,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      * Synthesizes the basic blocks.
      * 
      * @param scg
-     * 			the SCG containing the basic block information
+     *          the SCG containing the basic block information
      * @return Returns nothing.
      */
     private def void synthesizeBasicBlocks(SCGraph scg) {
@@ -1358,9 +1374,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 var bbName = basicBlock.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
                 
                 if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-                	val expText = serializer.serialize(basicBlock.schedulingBlocks.head.guard.expression.copy.fix)	
-//                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
-					bbName = bbName + "\n" + expText                	
+                    val expText = serializer.serialize(basicBlock.schedulingBlocks.head.guard.expression.copy.fix)  
+//                  expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
+                    bbName = bbName + "\n" + expText                    
                 }
                 
                 bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER.copy
@@ -1380,17 +1396,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                          }
                      }
 
-	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-	                    var expText = "<null>"
-	                    if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
-        	            	expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)
-    	            	}	
-//        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
-						sbName = sbName + "\n" + expText       
-					}
-            	    
-                	sbName.createLabel(sbContainer).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
-                	
+                    if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
+                        var expText = "<null>"
+                        if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
+                            expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)
+                        }   
+//                      expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                 
+                        sbName = sbName + "\n" + expText       
+                    }
+                    
+                    sbName.createLabel(sbContainer).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
+                    
                     if (basicBlock.deadBlock) {
                         sbContainer.getData(typeof(KRoundedRectangle)) => [
                             it.lineStyle = LineStyle::SOLID
@@ -1467,7 +1483,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      * Each additional analysis stored by the scheduler can hook they visualization in the visualization class.
      * 
      * @param scg
-     * 			the scg containing additional visualization data
+     *          the scg containing additional visualization data
      * @return Returns nothing.
      */
     private def void synthesizeAnalyses(SCGraph scg) {
@@ -1493,14 +1509,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -- Helper: Edges 
     // -------------------------------------------------------------------------
     /**
-	 * Re-color an existing control flow. All edges, even split up ones, are colored.
-	 * 
-	 * @param controlFlow
-	 * 			the control flow in question
-	 * @param color
-	 * 			the desired color
-	 * @return Returns the control flow 
-	 */
+     * Re-color an existing control flow. All edges, even split up ones, are colored.
+     * 
+     * @param controlFlow
+     *          the control flow in question
+     * @param color
+     *          the desired color
+     * @return Returns the control flow 
+     */
     def ControlFlow colorControlFlow(ControlFlow controlFlow, KColor color) {
         controlFlow => [
             allEdges.forEach [
@@ -1510,14 +1526,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * Re-alpha an existing control flow. All alpha values, even on split up edges, are changed.
-	 * 
-	 * @param controlFlow
-	 * 			the control flow in question
-	 * @param alpha 
-	 * 			the desired alpha value
-	 * @return Returns the control flow 
-	 */
+     * Re-alpha an existing control flow. All alpha values, even on split up edges, are changed.
+     * 
+     * @param controlFlow
+     *          the control flow in question
+     * @param alpha 
+     *          the desired alpha value
+     * @return Returns the control flow 
+     */
     def ControlFlow controlFlowAlpha(ControlFlow controlFlow, int alpha) {
         controlFlow => [
             allEdges.forEach [
@@ -1527,14 +1543,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * Re-thicken an existing control flow. All edges, even split up ones, are thicken.
-	 * 
-	 * @param controlFlow
-	 * 			the control flow in question
-	 * @param width
-	 * 			the desired edge width
-	 * @return Returns the control flow 
-	 */
+     * Re-thicken an existing control flow. All edges, even split up ones, are thicken.
+     * 
+     * @param controlFlow
+     *          the control flow in question
+     * @param width
+     *          the desired edge width
+     * @return Returns the control flow 
+     */
     def ControlFlow thickenControlFlow(ControlFlow controlFlow, int width) {
         controlFlow => [
             allEdges.forEach [
@@ -1544,14 +1560,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * Re-color an existing tick edge.
-	 * 
-	 * @param depth
-	 * 			the depth (target) node of the tick edge in question
-	 * @param color
-	 * 			the desired color
-	 * @return Returns the depth. 
-	 */
+     * Re-color an existing tick edge.
+     * 
+     * @param depth
+     *          the depth (target) node of the tick edge in question
+     * @param color
+     *          the desired color
+     * @return Returns the depth. 
+     */
     def Depth colorTickEdge(Depth depth, KColor color) {
         depth => [
             allEdges.forEach [
@@ -1561,14 +1577,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * Re-thicken an existing tick edge.
-	 * 
-	 * @param depth
-	 * 			the depth (target) node of the tick edge in question
-	 * @param width
-	 * 			the desired edge width
-	 * @return Returns the depth. 
-	 */
+     * Re-thicken an existing tick edge.
+     * 
+     * @param depth
+     *          the depth (target) node of the tick edge in question
+     * @param width
+     *          the desired edge width
+     * @return Returns the depth. 
+     */
     def Depth thickenTickEdge(Depth depth, int width) {
         depth => [
             allEdges.forEach [
@@ -1578,14 +1594,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * Re-color an existing dependency. All edges, even split up ones, are colored.
-	 * 
-	 * @param dependency
-	 * 			the dependency in question
-	 * @param color
-	 * 			the desired color
-	 * @return Returns the dependency 
-	 */
+     * Re-color an existing dependency. All edges, even split up ones, are colored.
+     * 
+     * @param dependency
+     *          the dependency in question
+     * @param color
+     *          the desired color
+     * @return Returns the dependency 
+     */
     def Dependency colorDependency(Dependency dependency, KColor color) {
         dependency => [
             allEdges.forEach [
@@ -1595,14 +1611,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     /**
-	 * Re-thicken an existing dependency. 
-	 * 
-	 * @param dependency
-	 * 			the dependency in question
-	 * @param width
-	 * 			the desired edge width
-	 * @return Returns the dependency 
-	 */
+     * Re-thicken an existing dependency. 
+     * 
+     * @param dependency
+     *          the dependency in question
+     * @param width
+     *          the desired edge width
+     * @return Returns the dependency 
+     */
     def Dependency thickenDependency(Dependency dependency, int width) {
         dependency => [
             allEdges.forEach [

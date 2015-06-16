@@ -92,7 +92,7 @@ class SCPDGTransformation extends Transformation {
         ]
         
         scg.nodes.forEach [ node |
-            //node.removeNext
+            node.removeNext
         ]
 
         //        programEntry.transformSCPDG(cfs, scg, context)
@@ -249,7 +249,7 @@ class SCPDGTransformation extends Transformation {
 
     private def boolean isControlNode(Node node) {
         return ((node instanceof Conditional) || (node instanceof Depth) || (node instanceof Surface) ||
-            (node instanceof Fork) || (node instanceof Join) || (node instanceof Exit) || (node instanceof Exit))
+            (node instanceof Fork) || (node instanceof Join) || (node instanceof Entry) || (node instanceof Exit))
     }
 
     private def removeNext(Node node) {
@@ -268,6 +268,9 @@ class SCPDGTransformation extends Transformation {
         }
         if (node instanceof Join) {
             (node as Join).next = null
+        }
+        if(node instanceof Fork){
+            (node as Fork).next.clear
         }
         if (node instanceof Conditional) {
             (node as Conditional).then = null
