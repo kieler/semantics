@@ -77,7 +77,7 @@ public class ActionsFormatter extends KEXTFormatter {
        c.setNoSpace().after(f.getFunctionCallEffectAccess().getLessThanSignKeyword_1());
        c.setNoSpace().before(f.getFunctionCallEffectAccess().getGreaterThanSignKeyword_4());
        c.setNoSpace().before(f.getFunctionCallEffectAccess().getLeftParenthesisKeyword_3_0_0());
-       c.setNoSpace().after(f.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0_0());
+       c.setNoSpace().after(f.getParameterAccess().getCallByReferenceAmpersandKeyword_0_1_0());
        
        for (Keyword comma : f.findKeywords(",")) {
            c.setNoLinewrap().before(comma);

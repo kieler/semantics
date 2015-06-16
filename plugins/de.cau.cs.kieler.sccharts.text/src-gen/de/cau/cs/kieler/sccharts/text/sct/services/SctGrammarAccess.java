@@ -2127,14 +2127,35 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getHistoryTypeAccess().getRule();
 	}
 
-	//Kext:
-	//	declarations+=Declaration* effects+=Effect*;
+	////generate kext "http://kieler.cs.cau.de/kext/kext"
+	//Kext returns kext::Kext:
+	//	declarations+=Declaration* entities+=TestEntity*;
 	public KEXTGrammarAccess.KextElements getKextAccess() {
 		return gaActions.getKextAccess();
 	}
 	
 	public ParserRule getKextRule() {
 		return getKextAccess().getRule();
+	}
+
+	//TestEntity returns kext::TestEntity:
+	//	expression=AnnotatedExpression | effect=Effect;
+	public KEXTGrammarAccess.TestEntityElements getTestEntityAccess() {
+		return gaActions.getTestEntityAccess();
+	}
+	
+	public ParserRule getTestEntityRule() {
+		return getTestEntityAccess().getRule();
+	}
+
+	//AnnotatedExpression returns kext::AnnotatedExpression:
+	//	annotations+=Annotation* "expression" expression=Expression;
+	public KEXTGrammarAccess.AnnotatedExpressionElements getAnnotatedExpressionAccess() {
+		return gaActions.getAnnotatedExpressionAccess();
+	}
+	
+	public ParserRule getAnnotatedExpressionRule() {
+		return getAnnotatedExpressionAccess().getRule();
 	}
 
 	//Declaration returns kexpressions::Declaration:
@@ -2149,7 +2170,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ValuedObject returns kexpressions::ValuedObject: //    (annotations+=Annotation)*
-	//	name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
+	//	name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
 	public KEXTGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaActions.getValuedObjectAccess();
 	}
@@ -2160,7 +2181,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
 	//Effect returns keffects::Effect:
-	//	Assignment | PostfixEffect | Emission | TextEffect | FunctionCallEffect;
+	//	Assignment | PostfixEffect | Emission | HostcodeEffect | FunctionCallEffect;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaActions.getEffectAccess();
 	}
@@ -2201,14 +2222,14 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getPostfixEffectAccess().getRule();
 	}
 
-	//TextEffect returns keffects::HostcodeEffect:
+	//HostcodeEffect returns keffects::HostcodeEffect:
 	//	annotations+=Annotation* text=HOSTCODE;
-	public KEffectsGrammarAccess.TextEffectElements getTextEffectAccess() {
-		return gaActions.getTextEffectAccess();
+	public KEffectsGrammarAccess.HostcodeEffectElements getHostcodeEffectAccess() {
+		return gaActions.getHostcodeEffectAccess();
 	}
 	
-	public ParserRule getTextEffectRule() {
-		return getTextEffectAccess().getRule();
+	public ParserRule getHostcodeEffectRule() {
+		return getHostcodeEffectAccess().getRule();
 	}
 
 	//FunctionCallEffect returns keffects::FunctionCallEffect:
@@ -2502,7 +2523,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Parameter:
-	//	(callByReference?="&" pureOutput?="&"?)? expression=Expression;
+	//	(pureOutput?="!"? callByReference?="&")? expression=Expression;
 	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
 		return gaActions.getParameterAccess();
 	}

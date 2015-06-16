@@ -169,7 +169,7 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
         
         val hostcodeAnnotations = scl.annotations.filter(typeof(StringAnnotation)).filter[ name == ANNOTATION_HOSTCODE ] 
         hostcodeAnnotations.forEach [
-            scg.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+            scg.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]        
 
         scg

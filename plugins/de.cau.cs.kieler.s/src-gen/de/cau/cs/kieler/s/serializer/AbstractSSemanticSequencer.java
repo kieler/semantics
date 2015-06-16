@@ -27,8 +27,10 @@ import de.cau.cs.kieler.core.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
+import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 import de.cau.cs.kieler.core.kexpressions.text.serializer.KEXTSemanticSequencer;
 import de.cau.cs.kieler.s.s.Abort;
 import de.cau.cs.kieler.s.s.Await;
@@ -168,8 +170,8 @@ public abstract class AbstractSSemanticSequencer extends KEXTSemanticSequencer {
 				else break;
 			case KEffectsPackage.HOSTCODE_EFFECT:
 				if(context == grammarAccess.getEffectRule() ||
-				   context == grammarAccess.getTextEffectRule()) {
-					sequence_TextEffect(context, (HostcodeEffect) semanticObject); 
+				   context == grammarAccess.getHostcodeEffectRule()) {
+					sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
 					return; 
 				}
 				else break;
@@ -487,9 +489,21 @@ public abstract class AbstractSSemanticSequencer extends KEXTSemanticSequencer {
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == KextPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case KextPackage.ANNOTATED_EXPRESSION:
+				if(context == grammarAccess.getAnnotatedExpressionRule()) {
+					sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
+					return; 
+				}
+				else break;
 			case KextPackage.KEXT:
 				if(context == grammarAccess.getKextRule()) {
 					sequence_Kext(context, (Kext) semanticObject); 
+					return; 
+				}
+				else break;
+			case KextPackage.TEST_ENTITY:
+				if(context == grammarAccess.getTestEntityRule()) {
+					sequence_TestEntity(context, (TestEntity) semanticObject); 
 					return; 
 				}
 				else break;
