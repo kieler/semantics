@@ -290,6 +290,29 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.CommentAnnotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected CommentAnnotationItemProvider commentAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.CommentAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createCommentAnnotationAdapter() {
+        if (commentAnnotationItemProvider == null) {
+            commentAnnotationItemProvider = new CommentAnnotationItemProvider(this);
+        }
+
+        return commentAnnotationItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -397,6 +420,7 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
         if (containmentAnnotationItemProvider != null) containmentAnnotationItemProvider.dispose();
         if (importAnnotationItemProvider != null) importAnnotationItemProvider.dispose();
         if (typedStringAnnotationItemProvider != null) typedStringAnnotationItemProvider.dispose();
+        if (commentAnnotationItemProvider != null) commentAnnotationItemProvider.dispose();
     }
 
 }

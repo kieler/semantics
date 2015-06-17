@@ -93,6 +93,7 @@ protected class Annotation_Alternatives extends AlternativesToken {
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getTagAnnotationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getKeyBooleanValueAnnotationRule().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getCommentAnnotationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getKeyFloatValueAnnotationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getKeyIntValueAnnotationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getKeyStringValueAnnotationRule().getType().getClassifier() && 
@@ -396,6 +397,7 @@ protected class ValuedAnnotation_Alternatives extends AlternativesToken {
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getKeyBooleanValueAnnotationRule().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getCommentAnnotationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getKeyFloatValueAnnotationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getKeyIntValueAnnotationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getKeyStringValueAnnotationRule().getType().getClassifier() && 
@@ -665,6 +667,7 @@ protected class RestrictedAnnotation_Alternatives extends AlternativesToken {
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getTagAnnotationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getKeyBooleanValueAnnotationRule().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getCommentAnnotationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getKeyFloatValueAnnotationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getKeyIntValueAnnotationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getQuotedKeyStringValueAnnotationRule().getType().getClassifier() && 
@@ -934,7 +937,7 @@ protected class RestrictedAnnotation_TagAnnotationParserRuleCall_6 extends RuleC
 /************ begin Rule CommentAnnotation ****************
  *
  * // e.g.: / ** semantic comment * /
- *  CommentAnnotation returns StringAnnotation:
+ *  CommentAnnotation:
  * 	values+=COMMENT_ANNOTATION;
  *
  **/

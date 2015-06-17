@@ -114,6 +114,15 @@ public interface AnnotationsFactory extends EFactory {
     TypedStringAnnotation createTypedStringAnnotation();
 
     /**
+     * Returns a new object of class '<em>Comment Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Comment Annotation</em>'.
+     * @generated
+     */
+    CommentAnnotation createCommentAnnotation();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

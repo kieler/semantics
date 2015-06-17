@@ -55,7 +55,7 @@ RestrictedAnnotation returns Annotation:
 
 
 // e.g.: /** semantic comment */
-CommentAnnotation returns StringAnnotation:
+CommentAnnotation returns CommentAnnotation:
     values += COMMENT_ANNOTATION;
 
 

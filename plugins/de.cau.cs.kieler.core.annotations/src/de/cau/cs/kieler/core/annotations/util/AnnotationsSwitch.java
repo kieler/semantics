@@ -173,6 +173,16 @@ public class AnnotationsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case AnnotationsPackage.COMMENT_ANNOTATION: {
+                CommentAnnotation commentAnnotation = (CommentAnnotation)theEObject;
+                T result = caseCommentAnnotation(commentAnnotation);
+                if (result == null) result = caseStringAnnotation(commentAnnotation);
+                if (result == null) result = caseAnnotation(commentAnnotation);
+                if (result == null) result = caseNamedObject(commentAnnotation);
+                if (result == null) result = caseAnnotatable(commentAnnotation);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -339,6 +349,21 @@ public class AnnotationsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseTypedStringAnnotation(TypedStringAnnotation object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Comment Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Comment Annotation</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseCommentAnnotation(CommentAnnotation object) {
         return null;
     }
 

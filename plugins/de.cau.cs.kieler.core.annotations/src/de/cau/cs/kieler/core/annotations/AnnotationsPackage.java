@@ -550,6 +550,53 @@ public interface AnnotationsPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.annotations.impl.CommentAnnotationImpl <em>Comment Annotation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.annotations.impl.CommentAnnotationImpl
+     * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getCommentAnnotation()
+     * @generated
+     */
+    int COMMENT_ANNOTATION = 11;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMMENT_ANNOTATION__ANNOTATIONS = STRING_ANNOTATION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMMENT_ANNOTATION__NAME = STRING_ANNOTATION__NAME;
+
+    /**
+     * The feature id for the '<em><b>Values</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMMENT_ANNOTATION__VALUES = STRING_ANNOTATION__VALUES;
+
+    /**
+     * The number of structural features of the '<em>Comment Annotation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int COMMENT_ANNOTATION_FEATURE_COUNT = STRING_ANNOTATION_FEATURE_COUNT + 0;
+
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.annotations.NamedObject <em>Named Object</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -770,6 +817,16 @@ public interface AnnotationsPackage extends EPackage {
     EAttribute getTypedStringAnnotation_Type();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.annotations.CommentAnnotation <em>Comment Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Comment Annotation</em>'.
+     * @see de.cau.cs.kieler.core.annotations.CommentAnnotation
+     * @generated
+     */
+    EClass getCommentAnnotation();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -980,6 +1037,16 @@ public interface AnnotationsPackage extends EPackage {
          * @generated
          */
         EAttribute TYPED_STRING_ANNOTATION__TYPE = eINSTANCE.getTypedStringAnnotation_Type();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.annotations.impl.CommentAnnotationImpl <em>Comment Annotation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.annotations.impl.CommentAnnotationImpl
+         * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getCommentAnnotation()
+         * @generated
+         */
+        EClass COMMENT_ANNOTATION = eINSTANCE.getCommentAnnotation();
 
     }
 

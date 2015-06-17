@@ -151,7 +151,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuesCOMMENT_ANNOTATIONTerminalRuleCall_0 = (RuleCall)cValuesAssignment.eContents().get(0);
 		
 		//// e.g.: / ** semantic comment * /
-		// CommentAnnotation returns StringAnnotation:
+		// CommentAnnotation:
 		//	values+=COMMENT_ANNOTATION;
 		public ParserRule getRule() { return rule; }
 
@@ -768,7 +768,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: / ** semantic comment * /
-	// CommentAnnotation returns StringAnnotation:
+	// CommentAnnotation:
 	//	values+=COMMENT_ANNOTATION;
 	public CommentAnnotationElements getCommentAnnotationAccess() {
 		return pCommentAnnotation;
