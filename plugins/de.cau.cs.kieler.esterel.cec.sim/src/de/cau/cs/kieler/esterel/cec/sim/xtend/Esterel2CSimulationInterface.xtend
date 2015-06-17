@@ -66,7 +66,7 @@ class Esterel2CSimulationInterface {
 #define DEFAULT_BUFFER_SIZE 2048
 
 cJSON* output = 0;
-cJSON* value = 0;
+cJSON* jsonvalue = 0;
 	''' 
    }
    
@@ -89,7 +89,7 @@ void setInputs(){
 	cJSON* object = 0;
 	cJSON* child = 0;
 	cJSON* present = 0;
-	cJSON* value = 0;
+	cJSON* jsonvalue = 0;
 
 	object = cJSON_Parse(buffer);
 	
@@ -136,20 +136,20 @@ int main(){«name»_reset();
    	  		gen = gen + "int i";
    	  	}
    	  	gen = gen + '''){  	
-   	  		value = cJSON_CreateObject();
-			cJSON_AddTrueToObject(value, "present");'''.toString();
+   	  		jsonvalue = cJSON_CreateObject();
+			cJSON_AddTrueToObject(jsonvalue, "present");'''.toString();
    	  	if (signal.type.literal == "int") {
-   	  		gen = gen + ''' cJSON_AddNumberToObject(value, "value", i);'''.toString();
+   	  		gen = gen + ''' cJSON_AddNumberToObject(jsonvalue, "value", i);'''.toString();
    	  	} 
    	  	else if (signal.type.literal == "bool") {
 			gen = gen + ''' if (i == 0) {
-				cJSON_AddFalseToObject(value, "value"); }
+				cJSON_AddFalseToObject(jsonvalue, "value"); }
 				else {
-					cJSON_AddTrueToObject(value, "value");
+					cJSON_AddTrueToObject(jsonvalue, "value");
 				} 
 			'''.toString();
    	  	}
-   	  	gen = gen + '''cJSON_AddItemToObject(output, "«signal.name»", value);}'''.toString();
+   	  	gen = gen + '''cJSON_AddItemToObject(output, "«signal.name»", jsonvalue);}'''.toString();
    	  } // next signal
    	  gen;
    }
@@ -170,20 +170,24 @@ int main(){«name»_reset();
    	child = cJSON_GetObjectItem(object, "«signal.name»");
    	if (child != NULL){
    	present = cJSON_GetObjectItem(child, "present");
-   	value = cJSON_GetObjectItem(child, "value");
+   	jsonvalue = cJSON_GetObjectItem(child, "value");
    	if (present != NULL && present->type==cJSON_True) {
    	    «IF signal.type == ValueType::PURE»
 			«moduleName»_I_«signal.name»();
 		«ENDIF»
         «IF signal.type == ValueType::INT»
-            «moduleName»_I_«signal.name»(value->valueint);
+            if (jsonvalue != NULL) {
+                 «moduleName»_I_«signal.name»(jsonvalue->valueint);               
+            }
         «ENDIF»
         «IF signal.type == ValueType::BOOL»
-            if (value->valueint) {
-                «moduleName»_I_«signal.name»(_true);
-            }
-            else {
-                «moduleName»_I_«signal.name»(_false);
+             if (jsonvalue != NULL) {
+                if (jsonvalue->valueint) {
+                    «moduleName»_I_«signal.name»(_true);
+                }
+                else {
+                    «moduleName»_I_«signal.name»(_false);
+                }
             }
         «ENDIF»
    	}
