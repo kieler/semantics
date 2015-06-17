@@ -98,6 +98,7 @@ import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.core.annotations.CommentAnnotation
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -156,6 +157,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     
     @Inject
     extension SCChartsSerializeExtension
+    
+    @Inject
+    extension de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
     
     @Inject 
     extension SCGDepExtension
@@ -328,6 +332,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 for (s : r.states) {
                     node.children += s.translate;
                 }
+                
+                // semantic comments
+                if (r.hasCommentAnnotation) {
+                    for(commentAnnotation : r.getCommentAnnotations) {
+                        val commentNode = createCommentNode(commentAnnotation)
+                        node.children += commentNode
+                    }
+                }
             }
             var regionLabelVar = r.label
             val regionLabel = regionLabelVar
@@ -388,6 +400,32 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         
         return regionNode
     }
+    
+    
+    public def KNode createCommentNode(CommentAnnotation commentAnnotation) {
+        val node = commentAnnotation.createNode()
+//        node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot")
+        node.setLayoutOption(LayoutOptions::SPACING, 1f);
+        val commentText = commentAnnotation.values.head
+        node.addRectangle() => [
+            it.associateWith(commentAnnotation)
+//            it.setSurroundingSpace(2, 2);
+            it.invisible = false;
+            it.foreground = "DarkGoldenrod".color
+            it.background = "LemonChiffon".color
+            it.lineWidth = 0.5f;
+            it.addText(commentText).associateWith(commentAnnotation) => [
+                if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
+                it.foreground = "DarkGoldenrod".color
+                it.invisible = false;
+                it.fontSize = 10
+                it.setPointPlacementData(createKPosition(LEFT, 4, 0, TOP, 4, 0), H_LEFT, V_TOP, 4, 4, 0, 0);
+                it.suppressSelectability
+            ];
+        ];
+        node    
+    }
+            
 
     // -------------------------------------------------------------------------
     // Helper functions
