@@ -108,6 +108,7 @@ void readInputs() {
     if (child != NULL) {
             present = cJSON_GetObjectItem(child, "present");
             value = cJSON_GetObjectItem(child, "value");
+            «IF signal.type == ValueType::PURE»
             if (present != NULL && present->type) {
                 «signal.name» = 1;
             }
@@ -117,6 +118,18 @@ void readInputs() {
             else {
                 «signal.name» = 0;
             }
+            «ENDIF»
+            «IF signal.type != ValueType::PURE»
+            if (present != NULL && present->type) {
+                «signal.name» = 1;
+                if (value != NULL && value->type) {
+                    «signal.name»_val = value->valueint;
+                }
+            }
+            else {
+                «signal.name» = 0;
+            }
+            «ENDIF»
     }   
             «ENDFOR»
         «ENDIF»
