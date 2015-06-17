@@ -17,6 +17,7 @@ import de.cau.cs.kieler.esterel.kexpressions.Input
 import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
 import de.cau.cs.kieler.esterel.kexpressions.Output
 import de.cau.cs.kieler.esterel.esterel.Module
+import de.cau.cs.kieler.esterel.kexpressions.ValueType
 
 /**
  * Transformation of Esterel code into a c simulation interface wrapper
@@ -104,7 +105,7 @@ void setInputs(){
    // Generate the generic C main function
    def mainFunction(Module it) {
    	'''
-int tick() {
+int doTick() {
     «name»();
 }   
    	
@@ -112,7 +113,7 @@ int main(){«name»_reset();
   output = cJSON_CreateObject();
   while(1){
     setInputs();
-	tick();
+	doTick();
 	char* outString = cJSON_Print(output);
 	strip_white_spaces(outString);
 	printf("%s\n", outString);
@@ -171,7 +172,20 @@ int main(){«name»_reset();
    	present = cJSON_GetObjectItem(child, "present");
    	value = cJSON_GetObjectItem(child, "value");
    	if (present != NULL && present->type==cJSON_True) {
+   	    «IF signal.type == ValueType::PURE»
 			«moduleName»_I_«signal.name»();
+		«ENDIF»
+        «IF signal.type == ValueType::INT»
+            «moduleName»_I_«signal.name»(value->valueint);
+        «ENDIF»
+        «IF signal.type == ValueType::BOOL»
+            if (value->valueint) {
+                «moduleName»_I_«signal.name»(_true);
+            }
+            else {
+                «moduleName»_I_«signal.name»(_false);
+            }
+        «ENDIF»
    	}
    	}'''.toString();
    	} // next signal

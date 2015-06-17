@@ -53,7 +53,7 @@ public class Benchmark {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public static String addTimingCode(final String cCodeString) throws IOException {
+    public static String addTimingCode(final String cCodeString, final String tickFunctionName) throws IOException {
         StringBuilder returnCCodeString = new  StringBuilder();
         
         String[] lines = cCodeString.split("\n");
@@ -78,9 +78,9 @@ public class Benchmark {
             // cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));
             // cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
             // cJSON_AddItemToObject(output, "cycles", value);
-            if (lineIn.contains("tick();")) {
+            if (lineIn.contains(tickFunctionName + "();")) {
                 returnCCodeString.append("resetusertime();");
-                returnCCodeString.append("tick();");
+                returnCCodeString.append(tickFunctionName + "();");
                 returnCCodeString.append("t =  getusertime();");
                 // fileContent.add("value = cJSON_CreateObject();");
                 // fileContent.add("cJSON_AddItemToObject(value, \"value\", "
@@ -107,7 +107,7 @@ public class Benchmark {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public static String addTimingCodeFile(final String filePath) throws IOException {
+    public static String addTimingCodeFile(final String filePath, final String tickFunctionName) throws IOException {
 
         String newFilePath = filePath.replace(".c", ".timing.c");
 
@@ -125,7 +125,7 @@ public class Benchmark {
         br.close();
         fis.close();
         
-        String fileOutContent = addTimingCode(fileContent);
+        String fileOutContent = addTimingCode(fileContent, tickFunctionName);
         
         // Write out SC modified file
         PrintWriter out = new PrintWriter(newFilePath);

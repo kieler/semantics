@@ -580,7 +580,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             }
 
             if (benchmark) {
-                cSimulation = Benchmark.addTimingCode(cSimulation);
+                cSimulation = Benchmark.addTimingCode(cSimulation, "tick");
             }
 
             // Possibly add #include for a header file

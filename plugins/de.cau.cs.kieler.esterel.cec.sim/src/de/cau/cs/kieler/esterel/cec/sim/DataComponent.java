@@ -864,8 +864,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             interfaceDeclarationFix.fix(fixedTransformedProgram);
             System.out.println("M2M 11");
 
+            String esterelCCodeFile = output.getPath();
+            int i = esterelCCodeFile.lastIndexOf("strl");
+            String esterelCCodeFileName = esterelCCodeFile;
+            if (i >= 0) {
+                esterelCCodeFileName = esterelCCodeFile.substring(i);
+            }
+            
             // Generate data.c
-            URL data = generateCSimulationInterface(fixedTransformedProgram, esterelOutput, benchmark);
+            URL data = generateCSimulationInterface(fixedTransformedProgram, esterelOutput, benchmark, esterelCCodeFileName);
             System.out.println("M2M 12");
 
             // Compile C code
@@ -886,20 +893,31 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             if (!isWindows()) {
                 // Non-Windows
                 executable = File.createTempFile(SIMULATION_PREFIX, "");
-                compile =
-                        compiler + " " + output.getPath() + " " + data.getPath() + " "
-                                + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
-                                + bundleLocation.getPath() + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS " + SIMULATION_COMPILER_OPTIONS
-                                + " " + executable;
+              compile =
+              compiler + " " + output.getPath() + " " + data.getPath() + " "
+                      + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
+                      + bundleLocation.getPath() + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS " + SIMULATION_COMPILER_OPTIONS
+                      + " " + executable;
+//                compile =
+//                        compiler + " " + output.getPath() + " " + data.getPath() + " "
+//                                + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
+//                                + bundleLocation.getPath() + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS " + SIMULATION_COMPILER_OPTIONS
+//                                + " " + executable;
             } else {
                 // Windows
                 executable = File.createTempFile(SIMULATION_PREFIX, SIMULATION_SUFFIX);
                 compile =
-                        compiler + " " + output.getPath().substring(1) + " "
+                        compiler + " " 
                                 + data.getPath().substring(1) + " "
                                 + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
                                 + "-I " + bundleLocation.getPath().substring(1) + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
                                 + SIMULATION_COMPILER_OPTIONS + " " + executable;
+//                compile =
+//                        compiler + " " + output.getPath().substring(1) + " "
+//                                + data.getPath().substring(1) + " "
+//                                + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
+//                                + "-I " + bundleLocation.getPath().substring(1) + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+//                                + SIMULATION_COMPILER_OPTIONS + " " + executable;
             }
             
             // D_NO_EXTERN_DEFINITIONS
@@ -1031,7 +1049,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      *             the kiem initialization exception
      */
     private URL generateCSimulationInterface(final Program esterelProgram,
-            final URI esterelProgramURI, final boolean benchmark) throws KiemInitializationException {
+            final URI esterelProgramURI, final boolean benchmark, final String strlProgramFileName) throws KiemInitializationException {
         File data;
         try {
             data = File.createTempFile("data", ".c");
@@ -1052,9 +1070,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                     transform.createCSimulationInterface(esterelProgram.getModules().get(0))
                             .toString();
             
+            ccode = "#include \""+ strlProgramFileName + "\"\n\r" + ccode; 
+            
 
             if (benchmark) {
-                ccode = Benchmark.addTimingCode(ccode);
+                ccode = Benchmark.addTimingCode(ccode, "doTick");
             }
 
             // Write out c program
