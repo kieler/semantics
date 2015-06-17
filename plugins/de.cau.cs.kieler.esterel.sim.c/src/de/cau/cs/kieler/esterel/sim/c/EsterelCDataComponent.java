@@ -38,6 +38,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +51,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationEsterel;
 import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationSCL;
+import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -492,6 +494,13 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
             // Compile the SCChart to C code
             EObject extendedSCChart = this.myModel;
+
+            System.out.println("8b");
+            
+            // Enforce the complete model to be loaded. Otherwise references to objects (signals)
+            // might not be resolvable resulting in nasty error messages.
+            EcoreUtil.resolveAll(myModel);
+            
             System.out.println("9");
 
             KielerCompilerContext highLevelContext =
@@ -549,7 +558,17 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                         Guice.createInjector().getInstance(CSimulationEsterel.class);
                 System.out.println("16");
                 Program program = (Program) esterelProgramOrSCLProgram;
-                cSimulation = cSimulationSCChart.transform(program, "10000").toString();
+
+                // Cannot be done before because otherwise the new model cannot be serialized
+                // Do this on a copy to not destroy original program;
+                // Make Esterel Interface declaration consistent
+                InterfaceDeclarationFix interfaceDeclarationFix =
+                        Guice.createInjector().getInstance(InterfaceDeclarationFix.class);
+                Program fixedTransformedProgram = (Program) EcoreUtil.copy(program);
+                interfaceDeclarationFix.fix(fixedTransformedProgram);
+
+                
+                cSimulation = cSimulationSCChart.transform(fixedTransformedProgram, "10000").toString();
             } else if (esterelProgramOrSCLProgram instanceof SCLProgram) {
                 System.out.println("15");
                 CSimulationSCL cSimulationSCG =
@@ -695,12 +714,25 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
                             JSONObject valuedObject = output.getJSONObject(outputName);
                             Object value = ((JSONObject) valuedObject).get("value");
-
+                            
                             boolean present = false;
-                            if (value instanceof Boolean) {
-                                present = (Boolean) value;
-                            } else if (value instanceof Integer) {
-                                present = ((Integer) value) != 0;
+                            boolean isSignal = false;
+                            if (valuedObject.has("present")) {
+                                isSignal = true;
+                                Object isPresentValue = valuedObject.get("present");
+                                if (value instanceof Boolean) {
+                                    present = (Boolean) isPresentValue;
+                                } else if (value instanceof Integer) {
+                                    present = ((Integer) isPresentValue) != 0;
+                                }
+                            }
+                            
+                            if (!isSignal) {
+                                if (value instanceof Boolean) {
+                                    present = (Boolean) value;
+                                } else if (value instanceof Integer) {
+                                    present = ((Integer) value) != 0;
+                                }
                             }
 
                             if (outputName

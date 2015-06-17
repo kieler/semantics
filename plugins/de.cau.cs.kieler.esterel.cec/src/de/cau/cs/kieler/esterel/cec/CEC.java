@@ -150,7 +150,7 @@ public final class CEC {
     private static final int INIT_TIME = 10000;
 
     /** The Constant TIMEOUT. */
-    private static final int TIMEOUT = 200;
+    private static final int TIMEOUT = 500;
 
     /** The Constant STEP_TIME. */
     private static final int STEP_TIME = 50;
