@@ -1,0 +1,65 @@
+/* KEXT Test File for comparisons
+ * Val + Pre expressions
+ * 
+ * @author ssm
+ * @date 2015-06-12
+ */
+bool A, B;
+int I, J;
+signal int S;
+
+@check "comparison.mixed.val.equals"
+expression val(S) == 5
+
+@check "comparison.mixed.val.notEquals"
+expression val(S) != 5
+
+@check "comparison.mixed.val.greater"
+expression val(S) > 5
+
+@check "comparison.mixed.val.less"
+expression val(S) < 5
+
+@check "comparison.mixed.val.greaterEquals"
+expression val(S) >= 5
+
+@check "comparison.mixed.val.lessEquals"
+expression val(S) <= 5
+
+
+@check "comparison.mixed.pre.equals"
+expression pre(I) == 5
+
+@check "comparison.mixed.pre.notEquals"
+expression pre(I) != 5
+
+@check "comparison.mixed.pre.greater"
+expression pre(I) > 5
+
+@check "comparison.mixed.pre.less"
+expression pre(I) < 5
+
+@check "comparison.mixed.pre.greaterEquals"
+expression pre(I) >= 5
+
+@check "comparison.mixed.pre.lessEquals"
+expression pre(I) <= 5
+
+
+@check "comparison.mixed.val.pre.equals"
+expression val(pre(S)) == 5
+
+@check "comparison.mixed.val.pre.notEquals"
+expression val(pre(S)) != 5
+
+@check "comparison.mixed.val.pre.greater"
+expression val(pre(S)) > 5
+
+@check "comparison.mixed.val.pre.less"
+expression val(pre(S)) < 5
+
+@check "comparison.mixed.val.pre.greaterEquals"
+expression val(pre(S)) >= 5
+
+@check "comparison.mixed.val.pre.lessEquals"
+expression val(pre(S)) <= 5

@@ -1,0 +1,24 @@
+/* KEXT Test File for comparisons
+ * Mixed expressions
+ * 
+ * @author ssm
+ * @date 2015-06-12
+ */
+bool A, B;
+int I, J;
+signal int S;
+
+@check "comparison.mixed.sum.less.or.boolean"
+expression 5 + 5 < 7 || A
+
+@check "comparison.mixed.sum.greaterEquals.and.boolean"
+expression 5 + 5 >= 7 & B
+
+@check "comparison.mixed.sum.equals.and.VOs"
+expression 5 + 5 == (I & J)
+
+@check "comparison.mixed.VO.notEquals.VO.sum"
+expression J != I + 5
+
+
+
