@@ -2,11 +2,13 @@ package de.cau.cs.kieler.esterel.eso;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 //import de.cau.cs.kieler.core.kexpressions.Declaration;
@@ -18,6 +20,7 @@ import de.cau.cs.kieler.esterel.esterel.Program;
 import de.cau.cs.kieler.esterel.kexpressions.Input;
 import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
 import de.cau.cs.kieler.esterel.kexpressions.Signal;
+import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 
 /**
  * The abstract handler for Esterel file formats strl.
@@ -83,7 +86,16 @@ public class EsterelModelFileHandler extends AbstractConvertModelHandler {
         if (program.getModules().size() == 0) {
             return "ERROR: No module in Esterel program.";
         }
-        Module module = program.getModules().get(0);
+
+        // Cannot be done before because otherwise the new model cannot be serialized
+        // Do this on a copy to not destroy original program;
+        // Make Esterel Interface declaration consistent
+        InterfaceDeclarationFix interfaceDeclarationFix =
+                Guice.createInjector().getInstance(InterfaceDeclarationFix.class);
+        Program fixedTransformedProgram = (Program) EcoreUtil.copy(program);
+        interfaceDeclarationFix.fix(fixedTransformedProgram);
+
+        Module module = fixedTransformedProgram.getModules().get(0);
 
         StringBuilder builder = new StringBuilder();
 
@@ -95,6 +107,8 @@ public class EsterelModelFileHandler extends AbstractConvertModelHandler {
                     for (Signal signal : declaration.getSignals()) {
                         if (declaration instanceof Input) {
                             String type = signal.getType().getLiteral();
+                            
+                            boolean present = (Math.random() * 2 > 1);
 
                             String value = null;
                             // get random value
@@ -117,8 +131,12 @@ public class EsterelModelFileHandler extends AbstractConvertModelHandler {
                             String name = signal.getName();
 
                             // signals
-                            if (value != null) {
-                                builder.append(name + " ");
+                            if (value != null && present) {
+                                if (type.equals("pure")) {
+                                    builder.append(name + " ");
+                                } else {
+                                    builder.append(name + "(" + value + ") ");
+                                }
                             }
                         }// input
                     }
