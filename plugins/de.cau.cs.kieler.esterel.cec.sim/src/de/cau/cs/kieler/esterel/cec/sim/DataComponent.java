@@ -800,7 +800,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
             URI esterelOutput = URI.createURI("");
             // By default there is no additional transformation necessary
-            Program transformedProgram = myModel;
+            Program transformedProgram = EcoreUtil.copy(myModel);
             System.out.println("M2M 4");
 
             // If 'Full Debug Mode' is turned on then the user wants to have
