@@ -33,6 +33,9 @@ import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import java.util.Set
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.scg.ThenDependency
+import de.cau.cs.kieler.scg.ElseDependency
 
 /** 
  * 
@@ -60,6 +63,10 @@ class SCPDGTransformation extends Transformation {
     // -- Globals 
     // -------------------------------------------------------------------------
     public static val ANNOTATION_SCPDGTRANSFORMATION = "scpdg"
+    public var boolean one = false
+    public var boolean two = false
+    public var boolean three = false
+    private var Entry programEntry;
 
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -74,7 +81,6 @@ class SCPDGTransformation extends Transformation {
     override transform(EObject eObject, KielerCompilerContext context) {
         val SCGraph scg = transformSCGToSCPDG(eObject as SCGraph, context)
 
-        //scg.removeUnnecessaryDependencies
         return scg
     }
 
@@ -85,15 +91,26 @@ class SCPDGTransformation extends Transformation {
             return scg
         }
 
-   
+        programEntry = (scg.nodes.head as Entry)
 
         scg.nodes.forEach [ node |
             node.createDependencies(scg, context)
         ]
         
-        scg.nodes.forEach [ node |
-            node.removeNext
-        ]
+        
+        if (one)
+            scg.removeUselessNodes
+
+        if (two)
+            scg.removeUnnecessaryDependencies
+
+        if (three) {
+            scg.nodes.forEach [ node |
+                node.removeNext
+            ]
+
+        }
+        
 
         //        programEntry.transformSCPDG(cfs, scg, context)
         //        
@@ -121,11 +138,105 @@ class SCPDGTransformation extends Transformation {
 
         scg
     }
+    
+    private def SCGraph removeDeadCode(SCGraph scg){
+        val deadNodes = newHashSet()
+        scg.nodes.forEach[node|
+            if(node.incoming.empty){
+                deadNodes += node
+            }
+        ]
+        
+        if(!deadNodes.empty){
+            deadNodes.forEach[deadNode|
+                scg.nodes.remove(deadNode)
+            ]
+            scg.removeDeadCode
+        }
+        
+        scg
+    }
+    
+    private def SCGraph removeUselessNodes(SCGraph scg){
+        val allNodes = newHashSet()
+        allNodes.addAll(scg.nodes)
+        val removedNodes = newHashSet()
+        
+        while (!allNodes.empty) {
+            val node = allNodes.head
+            allNodes.remove(node)
+            if (node.isUseless) {
+                removedNodes.add(node)
+                node.incoming.forEach [ link |
+                        System.out.println("link found")
+                    if (link instanceof Dependency)
+                        link.newTargets((link.eContainer as Node), link.target.allUntilNextControlNode)
+                    else
+                        System.out.println("Nein")
+                ]
+
+            }
+        }
+        
+//        uselessDependencies.forEach[dependency|
+//            if(dependency.eContainer instanceof Node){
+//                dependency.newTargets((dependency.eContainer as Node), dependency.target.allUntilNextControlNode)
+//                
+//                } else {
+//                    System.out.println("neiin!")
+//                }
+//                
+//        ]
+        
+        removedNodes.forEach[node|
+            
+            scg.nodes.remove(node)
+        ]
+        
+        scg
+    }
+    
+    private def dispatch newTargets(ThenDependency dependency, Node rootNode, Set<Node> targets){
+        targets.forEach[targetNode|
+            ScgFactory::eINSTANCE.createThenDependency => [
+                target = targetNode
+                targetNode.incoming += it
+                rootNode.dependencies += it
+            ]
+        ]
+    }
+    private def dispatch newTargets(ElseDependency dependency, Node rootNode, Set<Node> targets){
+        targets.forEach[targetNode|
+            ScgFactory::eINSTANCE.createElseDependency => [
+                target = targetNode
+                targetNode.incoming += it
+                rootNode.dependencies += it
+            ]
+        ]
+    }
+    private def dispatch newTargets(ControlDependency dependency, Node rootNode, Set<Node> targets){
+        targets.forEach[targetNode|
+            ScgFactory::eINSTANCE.createControlDependency => [
+                target = targetNode
+                targetNode.incoming += it
+                rootNode.dependencies += it
+            ]
+        ]
+    }
+    
+    private def boolean isUseless(Node node){
+        if(node instanceof Fork)
+            return true
+        if (node instanceof Entry)
+            return (node != programEntry)
+        return false
+    }
 
     private def dispatch createDependencies(Entry entry, SCGraph scg, KielerCompilerContext context) {
         entry.allUntilNextControlNode.forEach[next|
             ScgFactory::eINSTANCE.createControlDependency => [
                 target = next
+                next.incoming += it
                 entry.dependencies += it
             ]
         ]
@@ -135,6 +246,7 @@ class SCPDGTransformation extends Transformation {
         assignment.allUntilNextControlNode.forEach[next|
             ScgFactory::eINSTANCE.createControlDependency => [
                 target = next
+                next.incoming += it
                 assignment.dependencies += it
             ]
         ]
@@ -157,6 +269,7 @@ class SCPDGTransformation extends Transformation {
         thenNodes.forEach[node|
             ScgFactory::eINSTANCE.createThenDependency => [
                 target = node
+                node.incoming += it
                 cond.dependencies += it
             ]
         ]
@@ -164,6 +277,7 @@ class SCPDGTransformation extends Transformation {
         elseNodes.forEach[node|
             ScgFactory::eINSTANCE.createElseDependency => [
                 target = node
+                node.incoming += it
                 cond.dependencies += it
             ]
         ]
@@ -173,6 +287,7 @@ class SCPDGTransformation extends Transformation {
         fork.allUntilNextControlNode.forEach[next|
             ScgFactory::eINSTANCE.createControlDependency => [
                 target = next
+                next.incoming += it
                 fork.dependencies += it
             ]
         ]
@@ -182,6 +297,7 @@ class SCPDGTransformation extends Transformation {
         join.allUntilNextControlNode.forEach[next|
             ScgFactory::eINSTANCE.createControlDependency => [
                 target = next
+                next.incoming += it
                 join.dependencies += it
             ]
         ]
@@ -191,6 +307,7 @@ class SCPDGTransformation extends Transformation {
         exit.allUntilNextControlNode.forEach[next|
             ScgFactory::eINSTANCE.createControlDependency => [
                 target = next
+                next.incoming += it
                 exit.dependencies += it
             ]
         ]
@@ -200,6 +317,7 @@ class SCPDGTransformation extends Transformation {
         surface.allUntilNextControlNode.forEach[next|
             ScgFactory::eINSTANCE.createControlDependency => [
                 target = next
+                next.incoming += it
                 surface.dependencies += it
             ]
         ]
@@ -209,6 +327,7 @@ class SCPDGTransformation extends Transformation {
         depth.allUntilNextControlNode.forEach[next|
             ScgFactory::eINSTANCE.createControlDependency => [
                 target = next
+                next.incoming += it
                 depth.dependencies += it
             ]
         ]
@@ -245,6 +364,12 @@ class SCPDGTransformation extends Transformation {
             }
         ]
         ret
+    }
+    
+    private def Set<Node> allUntilNextBreak(Node node){
+        val ret = newHashSet()
+        
+        return ret
     }
 
     private def boolean isControlNode(Node node) {
@@ -352,7 +477,7 @@ class SCPDGTransformation extends Transformation {
         node.dependencies.forEach [ dependcy |
             if (dependcy instanceof ControlDependency) {
                 if (!node.dependencies.forall [ depend |
-                    if (depend != dependcy && depend.target == dependcy.target) {
+                    if (depend != dependcy && depend.target == dependcy.target && (depend instanceof ControlDependency)) {
 
                         return false
 
