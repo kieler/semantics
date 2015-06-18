@@ -142,10 +142,10 @@ public class SCExecution extends AbstractExecution {
 
         compile += compileBuf.toString();
 
-        // If Cycle counting activated include the header
-        if (this.isBenchmark()) {
-            compile += " " + bundleLocation + "cycle.h ";
-        }
+//        // If Cycle counting activated include the header
+//        if (this.isBenchmark()) {
+//            compile += " " + bundleLocation + "cycle.h ";
+//        }
 
         compile += " "
                 // + outPath

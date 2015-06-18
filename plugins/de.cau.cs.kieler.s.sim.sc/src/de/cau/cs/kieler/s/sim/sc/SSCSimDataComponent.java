@@ -572,7 +572,7 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
             generatedSCFiles.add(scOutputString);
             scExecution.setDebug(debugConsole);
             scExecution.setScl(scl);
-            scExecution.compile(generatedSCFiles, modelName);
+            scExecution.compile(generatedSCFiles, modelName, scOutputString);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);

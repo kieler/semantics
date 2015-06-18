@@ -596,7 +596,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         }
         System.out.println("Compile 5");
         monitor.subTask("Expanding Esterel file");
-//        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
+        // InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
         InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
         monitor.worked(1);
         if (monitor.isCanceled()) {
@@ -675,13 +675,90 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
     // -------------------------------------------------------------------------
 
+    // /**
+    // * If there is a header file available, add include directive to generated C program and
+    // return
+    // * the path to the modified C program. Otherwise return the original path.
+    // *
+    // * @throws KiemInitializationException
+    // */
+    // private URL copyPossibleHeaderFile(final String mainModuleName, final URI inputModel,
+    // final URL cProgram) throws KiemInitializationException {
+    // // Build header file name
+    // String headerFileString;
+    // try {
+    // java.net.URI inputURI = convertEMFtoJavaURI(inputModel);
+    // headerFileString = inputURI.toString();
+    // headerFileString = headerFileString.replaceFirst(".strl", ".h");
+    // } catch (URISyntaxException e) {
+    // return cProgram;
+    // }
+    // IPath headerFilePath = new Path(headerFileString);
+    //
+    // // Test if header file exists
+    // File headerFile = new File(headerFileString);
+    // if (!headerFile.exists()) {
+    // // header file was not found, return the original cProgram path
+    // return cProgram;
+    // }
+    //
+    // // append include directive to cProgram
+    // URI cProgramFile = URI.createURI(cProgram.toString());
+    // URI cProgramModifiedFile = URI.createURI(cProgram.toString());
+    // cProgramModifiedFile = cProgramModifiedFile.trimFragment();
+    // cProgramModifiedFile =
+    // cProgramModifiedFile.trimFileExtension().appendFileExtension("modified.c");
+    // IPath cProgramFilePath = new Path(cProgramFile.toFileString());
+    // IPath cProgramModifiedFilePath = new Path(cProgramModifiedFile.toFileString());
+    //
+    // try {
+    // InputStream cProgramFileInputStream = new FileInputStream(cProgramFilePath.toString());
+    // OutputStream cProgramModifiedFileOutputStream =
+    // new FileOutputStream(cProgramModifiedFilePath.toString());
+    //
+    // BufferedReader bufferedReader =
+    // new BufferedReader(new InputStreamReader(cProgramFileInputStream));
+    // BufferedWriter bufferedWriter =
+    // new BufferedWriter(new OutputStreamWriter(cProgramModifiedFileOutputStream));
+    // String line = null;
+    //
+    // while ((line = bufferedReader.readLine()) != null) {
+    // // Search for "#include mainmodule.h" line and replace it with
+    // // the more concrete header file.
+    // if (line.startsWith("#include")) {
+    // if (line.contains(mainModuleName + ".h")) {
+    // // replace this line
+    // line = "#include \"" + headerFilePath + "\"\n";
+    // }
+    // }
+    //
+    // bufferedWriter.append(line + "\n");
+    // }
+    // bufferedWriter.close();
+    // bufferedReader.close();
+    //
+    // // return the modified file instead
+    // URL cProgramModified = new URL(cProgramModifiedFile.toString());
+    //
+    // return cProgramModified;
+    // } catch (FileNotFoundException e) {
+    // throw new KiemInitializationException(
+    // "Cannot read from generated C file in order to append header file inclusion.",
+    // true, e);
+    // } catch (IOException e) {
+    // throw new KiemInitializationException(
+    // "Cannot read from generated C file in order to append header file inclusion.",
+    // true, e);
+    // }
+    // }
+
     /**
-     * If there is a header file available, add include directive to generated C program and return
-     * the path to the modified C program. Otherwise return the original path.
+     * If there is a header file available, return the path to the header file in order to be able
+     * to include it in the wrapper code.
      * 
      * @throws KiemInitializationException
      */
-    private URL copyPossibleHeaderFile(final String mainModuleName, final URI inputModel,
+    private String getPossibleHeaderFile(final String mainModuleName, final URI inputModel,
             final URL cProgram) throws KiemInitializationException {
         // Build header file name
         String headerFileString;
@@ -690,7 +767,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             headerFileString = inputURI.toString();
             headerFileString = headerFileString.replaceFirst(".strl", ".h");
         } catch (URISyntaxException e) {
-            return cProgram;
+            return "";
         }
         IPath headerFilePath = new Path(headerFileString);
 
@@ -698,57 +775,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         File headerFile = new File(headerFileString);
         if (!headerFile.exists()) {
             // header file was not found, return the original cProgram path
-            return cProgram;
+            return "";
         }
 
-        // append include directive to cProgram
-        URI cProgramFile = URI.createURI(cProgram.toString());
-        URI cProgramModifiedFile = URI.createURI(cProgram.toString());
-        cProgramModifiedFile = cProgramModifiedFile.trimFragment();
-        cProgramModifiedFile =
-                cProgramModifiedFile.trimFileExtension().appendFileExtension("modified.c");
-        IPath cProgramFilePath = new Path(cProgramFile.toFileString());
-        IPath cProgramModifiedFilePath = new Path(cProgramModifiedFile.toFileString());
-
-        try {
-            InputStream cProgramFileInputStream = new FileInputStream(cProgramFilePath.toString());
-            OutputStream cProgramModifiedFileOutputStream =
-                    new FileOutputStream(cProgramModifiedFilePath.toString());
-
-            BufferedReader bufferedReader =
-                    new BufferedReader(new InputStreamReader(cProgramFileInputStream));
-            BufferedWriter bufferedWriter =
-                    new BufferedWriter(new OutputStreamWriter(cProgramModifiedFileOutputStream));
-            String line = null;
-
-            while ((line = bufferedReader.readLine()) != null) {
-                // Search for "#include mainmodule.h" line and replace it with
-                // the more concrete header file.
-                if (line.startsWith("#include")) {
-                    if (line.contains(mainModuleName + ".h")) {
-                        // replace this line
-                        line = "#include \"" + headerFilePath + "\"\n";
-                    }
-                }
-
-                bufferedWriter.append(line + "\n");
-            }
-            bufferedWriter.close();
-            bufferedReader.close();
-
-            // return the modified file instead
-            URL cProgramModified = new URL(cProgramModifiedFile.toString());
-
-            return cProgramModified;
-        } catch (FileNotFoundException e) {
-            throw new KiemInitializationException(
-                    "Cannot read from generated C file in order to append header file inclusion.",
-                    true, e);
-        } catch (IOException e) {
-            throw new KiemInitializationException(
-                    "Cannot read from generated C file in order to append header file inclusion.",
-                    true, e);
-        }
+        return headerFilePath.toString();
     }
 
     // -------------------------------------------------------------------------
@@ -844,16 +874,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             // Compile Esterel to C
             URL output =
                     this.compileEsterelToC(esterelOutput, CEC.getDefaultOutFile(),
-                            esterelSimulationProgressMonitor).toURL(); 
+                            esterelSimulationProgressMonitor).toURL();
             System.out.println("M2M 9");
-            
+
             // Possibly add #include for a header file
+            String possibleHeader = "";
             if (myModel.getModules() != null && myModel.getModules().size() > 0) {
                 String mainModuleName = myModel.getModules().get(0).getName();
-                output = copyPossibleHeaderFile(mainModuleName, input, output);
+                possibleHeader = getPossibleHeaderFile(mainModuleName, input, output);
             }
             System.out.println("M2M 10");
-
 
             // Cannot be done before because otherwise the new model cannot be serialized
             // Do this on a copy to not destroy original program;
@@ -870,9 +900,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             if (i >= 0) {
                 esterelCCodeFileName = esterelCCodeFile.substring(i);
             }
-            
+
             // Generate data.c
-            URL data = generateCSimulationInterface(fixedTransformedProgram, esterelOutput, benchmark, esterelCCodeFileName);
+            URL data =
+                    generateCSimulationInterface(fixedTransformedProgram, esterelOutput, benchmark,
+                            esterelCCodeFileName, possibleHeader);
             System.out.println("M2M 12");
 
             // Compile C code
@@ -881,7 +913,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
             URL fileUrl = FileLocator.find(bundle, new Path(SIMULATION_SUBPATH), null);
             URL bundleLocation = FileLocator.toFileURL(fileUrl);
-            
+
             System.out.println("M2M 14");
 
             System.out.println("M2M 15");
@@ -893,33 +925,38 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             if (!isWindows()) {
                 // Non-Windows
                 executable = File.createTempFile(SIMULATION_PREFIX, "");
-              compile =
-              compiler + " " + output.getPath() + " " + data.getPath() + " "
-                      + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
-                      + bundleLocation.getPath() + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS " + SIMULATION_COMPILER_OPTIONS
-                      + " " + executable;
-//                compile =
-//                        compiler + " " + output.getPath() + " " + data.getPath() + " "
-//                                + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
-//                                + bundleLocation.getPath() + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS " + SIMULATION_COMPILER_OPTIONS
-//                                + " " + executable;
+                compile =
+                        compiler + " " + output.getPath() + " " + data.getPath() + " "
+                                + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
+                                + bundleLocation.getPath()
+                                + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+                                + SIMULATION_COMPILER_OPTIONS + " " + executable;
+
+                // compile =
+                // compiler + " " + output.getPath() + " " + data.getPath() + " "
+                // + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
+                // + bundleLocation.getPath() +
+                // " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS " +
+                // SIMULATION_COMPILER_OPTIONS
+                // + " " + executable;
             } else {
                 // Windows
                 executable = File.createTempFile(SIMULATION_PREFIX, SIMULATION_SUFFIX);
                 compile =
-                        compiler + " " 
-                                + data.getPath().substring(1) + " "
+                        compiler + " " + data.getPath().substring(1) + " "
                                 + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
-                                + "-I " + bundleLocation.getPath().substring(1) + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+                                + "-I " + bundleLocation.getPath().substring(1)
+                                + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
                                 + SIMULATION_COMPILER_OPTIONS + " " + executable;
-//                compile =
-//                        compiler + " " + output.getPath().substring(1) + " "
-//                                + data.getPath().substring(1) + " "
-//                                + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
-//                                + "-I " + bundleLocation.getPath().substring(1) + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
-//                                + SIMULATION_COMPILER_OPTIONS + " " + executable;
+                // compile =
+                // compiler + " " + output.getPath().substring(1) + " "
+                // + data.getPath().substring(1) + " "
+                // + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
+                // + "-I " + bundleLocation.getPath().substring(1) +
+                // " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+                // + SIMULATION_COMPILER_OPTIONS + " " + executable;
             }
-            
+
             // D_NO_EXTERN_DEFINITIONS
             // D_NO_FUNCTION_DEFINITIONS
 
@@ -945,10 +982,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                         new Exception(errorString.toString()));
             } else {
                 if (benchmark) {
-                    File currentFile = new File(simFile.getPath());
-                    if (currentFile.exists()) {
-                        executabeFileSize = currentFile.length();
-                    } 
+                    String benchmalCompiler =
+                            (getProperties()[KIEM_PROPERTY_CCOMPILER
+                                    + JSONObjectSimulationDataComponent.KIEM_PROPERTY_DIFF]).getValue();
+                    
+                    executabeFileSize = Benchmark.benchmarkExecutable(output, benchmalCompiler, isWindows());
+                    // File currentFile = new File(simFile.getPath());
+                    // if (currentFile.exists()) {
+                    // executabeFileSize = currentFile.length();
+                    // }
                 }
 
             }
@@ -1026,18 +1068,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     // -------------------------------------------------------------------------
 
     /**
-     * Checks whether the system is based on windows.
-     * 
-     * @return true, if is windows
-     */
-    public static boolean isWindows() {
-        String os = System.getProperty("os.name").toLowerCase();
-        return (os.indexOf("win") >= 0);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Generate the CSimulationInterface.
      * 
      * @param esterelProgram
@@ -1049,7 +1079,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      *             the kiem initialization exception
      */
     private URL generateCSimulationInterface(final Program esterelProgram,
-            final URI esterelProgramURI, final boolean benchmark, final String strlProgramFileName) throws KiemInitializationException {
+            final URI esterelProgramURI, final boolean benchmark, final String strlProgramFileName,
+            final String possibleHeader) throws KiemInitializationException {
         File data;
         try {
             data = File.createTempFile("data", ".c");
@@ -1069,9 +1100,13 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             String ccode =
                     transform.createCSimulationInterface(esterelProgram.getModules().get(0))
                             .toString();
-            
-            ccode = "#include \""+ strlProgramFileName + "\"\n\r" + ccode; 
-            
+
+            String additionalHeader = "";
+            if (possibleHeader != null && possibleHeader.length() > 0) {
+                additionalHeader = "#include \"" + possibleHeader + "\"\n\r";
+            }
+
+            ccode = additionalHeader + "#include \"" + strlProgramFileName + "\"\n\r" + ccode;
 
             if (benchmark) {
                 ccode = Benchmark.addTimingCode(ccode, "doTick");
