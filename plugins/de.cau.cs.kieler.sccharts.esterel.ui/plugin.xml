@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="de.cau.cs.kieler.sccharts.esterel.ui.SCChartsToEsterelTransformationHandler"
+            id="de.cau.cs.kieler.sccharts.esterel"
+            name="Transform SCChart to Esterel">
+      </command>
+   </extension>
+   <extension
+         id="de.cau.cs.kieler.sccharts.esterel.ui.menu"
+         name="SCChartsToEsterelMenu"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.esterel"
+               label="Transform SCChart to Esterel"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate>
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           property="org.eclipse.core.resources.extension"
+                           value="sct">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>
