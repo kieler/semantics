@@ -233,9 +233,9 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
         // Return the SCG.
         if (schizoDeclaration.valuedObjects.size > 0) newSCG.declarations += schizoDeclaration
 
-        val CopyPropagation copyPropagation = 
-            Guice.createInjector().getInstance(typeof(CopyPropagation))        
-        copyPropagation.optimize(newSCG)        
+//        val CopyPropagation copyPropagation = 
+//            Guice.createInjector().getInstance(typeof(CopyPropagation))        
+//        copyPropagation.optimize(newSCG)        
         
         newSCG     	
     }
