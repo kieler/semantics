@@ -94,9 +94,10 @@ class SCGLoopExtension {
         return rootNode
     }
 
-    private def highlight(KRendering rendering) {
+    private def void highlight(KRendering rendering) {
         rendering.foreground = Colors.RED
         if (rendering instanceof KPolyline) {
+            rendering.foreground.propagateToChildren = true;
         }
     }
 }
