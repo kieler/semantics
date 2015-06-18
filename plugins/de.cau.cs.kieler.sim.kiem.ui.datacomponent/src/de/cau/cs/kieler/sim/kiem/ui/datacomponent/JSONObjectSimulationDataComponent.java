@@ -856,4 +856,14 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     }
     // -------------------------------------------------------------------------
 
+
+    /**
+     * Checks whether the system is based on windows.
+     * 
+     * @return true, if is windows
+     */
+    public static boolean isWindows() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return (os.indexOf("win") >= 0);
+    }    
 }

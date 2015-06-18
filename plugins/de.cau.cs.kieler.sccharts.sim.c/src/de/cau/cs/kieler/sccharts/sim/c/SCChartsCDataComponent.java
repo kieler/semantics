@@ -550,7 +550,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             if (myModel instanceof State) {
                 modelName = ((State) myModel).getId();
             }
-            cExecution.compile(generatedSCFiles, modelName);
+            cExecution.compile(generatedSCFiles, modelName, outputFileSCChart);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);

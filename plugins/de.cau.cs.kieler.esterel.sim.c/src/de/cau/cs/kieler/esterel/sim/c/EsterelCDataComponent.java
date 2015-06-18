@@ -608,7 +608,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             System.out.println("21 " + includePath);
             System.out.println(includePath);
             // Compile
-            cExecution = new CExecution(outputFolder, false);
+            cExecution = new CExecution(outputFolder, benchmark);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
             generatedSCFiles.add(outputFileSimulation);
             // generatedSCFiles.add(outputFileSCChart);
@@ -619,7 +619,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             } else if (myModel instanceof SCLProgram) {
                 modelName = ((SCLProgram) myModel).getName();
             }
-            cExecution.compile(generatedSCFiles, modelName);
+            cExecution.compile(generatedSCFiles, modelName, outputFileSCChart);
 
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "

@@ -14,11 +14,17 @@
 package de.cau.cs.kieler.sim.benchmark;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.LinkedList;
+
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 /**
  * This Benchmark class is supposed to contain basic benchmark constants and code.
@@ -41,6 +47,13 @@ public class Benchmark {
 
     /** A Constant used for more acurate normed benchmark results. */
     public static final int BENCHMARK_NORMED_RUNS = 100000;
+
+    /** The Constant BENCHMARK_COMPILER_OPTIONS. */
+    static final String BENCHMARK_COMPILER_OPTIONS = "-c -o";
+
+    /** The Constant BENCHMARK_PREFIX. */
+    static final String BENCHMARK_PREFIX = "bench";
+
 
     //--------------------------------------------------------------------------
 
@@ -138,4 +151,83 @@ public class Benchmark {
         return newFilePath;
     }
     
+    
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Benchmark the file size of the executable object file including the tick function only.
+     * @throws KiemInitializationException 
+     */
+    public static long benchmarkExecutable(URL tickMethodFile, String compiler, boolean isWindows) throws KiemInitializationException {
+        File executable = null; // this contains only the object file
+        String compile = "";
+
+        try {
+            if (!isWindows) {
+                // Non-Windows
+                executable = File.createTempFile(BENCHMARK_PREFIX, ".o");
+                compile =
+                        compiler + " " + tickMethodFile.getPath()  + " "
+                              //  + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+                                + BENCHMARK_COMPILER_OPTIONS + " " + executable;
+            } else {
+                // Windows
+                executable = File.createTempFile(BENCHMARK_PREFIX, ".o");
+                compile =
+                        compiler + " " + tickMethodFile.getPath().substring(1) + " "
+                               // + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+                                + BENCHMARK_COMPILER_OPTIONS + " " + executable;
+            }
+            
+            
+            System.out.println("M2M 17 benchmak: " + compile);
+
+            // Compile the code with the settings from above
+            Process process = Runtime.getRuntime().exec(compile);
+            InputStream stderr = process.getErrorStream();
+            InputStreamReader isr = new InputStreamReader(stderr);
+            BufferedReader br = new BufferedReader(isr);
+            String line = null;
+            StringBuilder errorString = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                errorString.append("\n" + line);
+            }
+            System.out.println("M2M 18");
+
+            int exitValue = process.waitFor();
+
+            if (exitValue != 0) {
+                throw new KiemInitializationException("Could not compile benchmark object file: " + errorString, true,
+                        new Exception(errorString.toString()));
+            } else {
+                    File currentFile = new File(executable.getPath());
+                    if (currentFile.exists()) {
+                        return currentFile.length();
+                    }
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks whether the system is based on windows.
+     * 
+     * @return true, if is windows
+     */
+    public static boolean isWindows() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return (os.indexOf("win") >= 0);
+    }
+
+    // -------------------------------------------------------------------------
+
 }
