@@ -215,7 +215,7 @@ public class SCExecution extends AbstractExecution {
     public String filesPreProcessing(final String filePath) {
         try {
             //return addCycleCounterCode(filePath);
-            return Benchmark.addTimingCodeFile(filePath);
+            return Benchmark.addTimingCodeFile(filePath, "tick");
         } catch (IOException e) {
             e.printStackTrace();
         }
