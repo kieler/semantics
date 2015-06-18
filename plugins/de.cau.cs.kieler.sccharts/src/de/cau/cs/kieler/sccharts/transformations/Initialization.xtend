@@ -89,7 +89,7 @@ class Initialization extends AbstractExpansionTransformation implements Traceabl
 
         if (!valuedObjects.nullOrEmpty) {
             for (valuedObject : valuedObjects) {
-                valuedObject.setDefaultTrace
+                setDefaultTrace(valuedObject, valuedObject.declaration)
                 val entryAction = state.createEntryAction
                 entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
                 valuedObject.setInitialValue(null)
