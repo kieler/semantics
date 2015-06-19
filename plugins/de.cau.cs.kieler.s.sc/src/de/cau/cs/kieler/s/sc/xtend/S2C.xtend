@@ -185,7 +185,7 @@ class S2C {
             unsigned int «vo.name» : 1;
             
             «IF program.usesPre(vo)»
-                unsigned int PRE_«vo.name» «IF vo.initialValue != null» = «vo.initialValue.expand» «ENDIF»;
+                unsigned int PRE_«vo.name» : 1;
             «ENDIF»
                         
             «ENDFOR»
