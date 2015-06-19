@@ -219,7 +219,7 @@ class S2C {
  		ENDIF»«ENDFOR»«ENDFOR»'''
    }
    
-   
+    
 
 
    def dispatch expand(ValueType valueType) {

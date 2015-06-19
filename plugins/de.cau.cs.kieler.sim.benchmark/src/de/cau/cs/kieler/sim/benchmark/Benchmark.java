@@ -49,7 +49,7 @@ public class Benchmark {
     public static final int BENCHMARK_NORMED_RUNS = 100000;
 
     /** The Constant BENCHMARK_COMPILER_OPTIONS. */
-    static final String BENCHMARK_COMPILER_OPTIONS = "-c -o";
+    static final String BENCHMARK_COMPILER_OPTIONS = "-O0 -c -o";
 
     /** The Constant BENCHMARK_PREFIX. */
     static final String BENCHMARK_PREFIX = "bench";

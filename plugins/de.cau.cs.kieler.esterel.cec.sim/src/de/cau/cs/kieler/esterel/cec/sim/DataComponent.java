@@ -244,7 +244,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     static final String SIMULATION_USERTIMEBIB = "usertime.h";
 
     /** The Constant SIMULATION_COMPILER_OPTIONS. */
-    static final String SIMULATION_COMPILER_OPTIONS = "-lm -o";
+    static final String SIMULATION_COMPILER_OPTIONS = "-O2 -lm -o";
 
     /** The benchmark flag for generating cycle and file size signals. */
     private boolean benchmark = false;
@@ -675,90 +675,13 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
     // -------------------------------------------------------------------------
 
-    // /**
-    // * If there is a header file available, add include directive to generated C program and
-    // return
-    // * the path to the modified C program. Otherwise return the original path.
-    // *
-    // * @throws KiemInitializationException
-    // */
-    // private URL copyPossibleHeaderFile(final String mainModuleName, final URI inputModel,
-    // final URL cProgram) throws KiemInitializationException {
-    // // Build header file name
-    // String headerFileString;
-    // try {
-    // java.net.URI inputURI = convertEMFtoJavaURI(inputModel);
-    // headerFileString = inputURI.toString();
-    // headerFileString = headerFileString.replaceFirst(".strl", ".h");
-    // } catch (URISyntaxException e) {
-    // return cProgram;
-    // }
-    // IPath headerFilePath = new Path(headerFileString);
-    //
-    // // Test if header file exists
-    // File headerFile = new File(headerFileString);
-    // if (!headerFile.exists()) {
-    // // header file was not found, return the original cProgram path
-    // return cProgram;
-    // }
-    //
-    // // append include directive to cProgram
-    // URI cProgramFile = URI.createURI(cProgram.toString());
-    // URI cProgramModifiedFile = URI.createURI(cProgram.toString());
-    // cProgramModifiedFile = cProgramModifiedFile.trimFragment();
-    // cProgramModifiedFile =
-    // cProgramModifiedFile.trimFileExtension().appendFileExtension("modified.c");
-    // IPath cProgramFilePath = new Path(cProgramFile.toFileString());
-    // IPath cProgramModifiedFilePath = new Path(cProgramModifiedFile.toFileString());
-    //
-    // try {
-    // InputStream cProgramFileInputStream = new FileInputStream(cProgramFilePath.toString());
-    // OutputStream cProgramModifiedFileOutputStream =
-    // new FileOutputStream(cProgramModifiedFilePath.toString());
-    //
-    // BufferedReader bufferedReader =
-    // new BufferedReader(new InputStreamReader(cProgramFileInputStream));
-    // BufferedWriter bufferedWriter =
-    // new BufferedWriter(new OutputStreamWriter(cProgramModifiedFileOutputStream));
-    // String line = null;
-    //
-    // while ((line = bufferedReader.readLine()) != null) {
-    // // Search for "#include mainmodule.h" line and replace it with
-    // // the more concrete header file.
-    // if (line.startsWith("#include")) {
-    // if (line.contains(mainModuleName + ".h")) {
-    // // replace this line
-    // line = "#include \"" + headerFilePath + "\"\n";
-    // }
-    // }
-    //
-    // bufferedWriter.append(line + "\n");
-    // }
-    // bufferedWriter.close();
-    // bufferedReader.close();
-    //
-    // // return the modified file instead
-    // URL cProgramModified = new URL(cProgramModifiedFile.toString());
-    //
-    // return cProgramModified;
-    // } catch (FileNotFoundException e) {
-    // throw new KiemInitializationException(
-    // "Cannot read from generated C file in order to append header file inclusion.",
-    // true, e);
-    // } catch (IOException e) {
-    // throw new KiemInitializationException(
-    // "Cannot read from generated C file in order to append header file inclusion.",
-    // true, e);
-    // }
-    // }
-
     /**
-     * If there is a header file available, return the path to the header file in order to be able
-     * to include it in the wrapper code.
+     * If there is a header file available, add include directive to generated C program and return
+     * the path to the modified C program. Otherwise return the original path.
      * 
      * @throws KiemInitializationException
      */
-    private String getPossibleHeaderFile(final String mainModuleName, final URI inputModel,
+    private URL copyPossibleHeaderFile(final String mainModuleName, final URI inputModel,
             final URL cProgram) throws KiemInitializationException {
         // Build header file name
         String headerFileString;
@@ -767,7 +690,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             headerFileString = inputURI.toString();
             headerFileString = headerFileString.replaceFirst(".strl", ".h");
         } catch (URISyntaxException e) {
-            return "";
+            return cProgram;
         }
         IPath headerFilePath = new Path(headerFileString);
 
@@ -775,11 +698,87 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         File headerFile = new File(headerFileString);
         if (!headerFile.exists()) {
             // header file was not found, return the original cProgram path
-            return "";
+            return cProgram;
         }
 
-        return headerFilePath.toString();
+        // append include directive to cProgram
+        URI cProgramFile = URI.createURI(cProgram.toString());
+        URI cProgramModifiedFile = URI.createURI(cProgram.toString());
+        cProgramModifiedFile = cProgramModifiedFile.trimFragment();
+        cProgramModifiedFile =
+                cProgramModifiedFile.trimFileExtension().appendFileExtension("modified.c");
+        IPath cProgramFilePath = new Path(cProgramFile.toFileString());
+        IPath cProgramModifiedFilePath = new Path(cProgramModifiedFile.toFileString());
+
+        try {
+            InputStream cProgramFileInputStream = new FileInputStream(cProgramFilePath.toString());
+            OutputStream cProgramModifiedFileOutputStream =
+                    new FileOutputStream(cProgramModifiedFilePath.toString());
+
+            BufferedReader bufferedReader =
+                    new BufferedReader(new InputStreamReader(cProgramFileInputStream));
+            BufferedWriter bufferedWriter =
+                    new BufferedWriter(new OutputStreamWriter(cProgramModifiedFileOutputStream));
+            String line = null;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                // Search for "#include mainmodule.h" line and replace it with
+                // the more concrete header file.
+                if (line.startsWith("#include")) {
+                    if (line.contains(mainModuleName + ".h")) {
+                        // replace this line
+                        line = "#include \"" + headerFilePath + "\"\n";
+                    }
+                }
+
+                bufferedWriter.append(line + "\n");
+            }
+            bufferedWriter.close();
+            bufferedReader.close();
+
+            // return the modified file instead
+            URL cProgramModified = new URL(cProgramModifiedFile.toString());
+
+            return cProgramModified;
+        } catch (FileNotFoundException e) {
+            throw new KiemInitializationException(
+                    "Cannot read from generated C file in order to append header file inclusion.",
+                    true, e);
+        } catch (IOException e) {
+            throw new KiemInitializationException(
+                    "Cannot read from generated C file in order to append header file inclusion.",
+                    true, e);
+        }
     }
+
+//    /**
+//     * If there is a header file available, return the path to the header file in order to be able
+//     * to include it in the wrapper code.
+//     * 
+//     * @throws KiemInitializationException
+//     */
+//    private String getPossibleHeaderFile(final String mainModuleName, final URI inputModel,
+//            final URL cProgram) throws KiemInitializationException {
+//        // Build header file name
+//        String headerFileString;
+//        try {
+//            java.net.URI inputURI = convertEMFtoJavaURI(inputModel);
+//            headerFileString = inputURI.toString();
+//            headerFileString = headerFileString.replaceFirst(".strl", ".h");
+//        } catch (URISyntaxException e) {
+//            return "";
+//        }
+//        IPath headerFilePath = new Path(headerFileString);
+//
+//        // Test if header file exists
+//        File headerFile = new File(headerFileString);
+//        if (!headerFile.exists()) {
+//            // header file was not found, return the original cProgram path
+//            return "";
+//        }
+//
+//        return headerFilePath.toString();
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -881,7 +880,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             String possibleHeader = "";
             if (myModel.getModules() != null && myModel.getModules().size() > 0) {
                 String mainModuleName = myModel.getModules().get(0).getName();
-                possibleHeader = getPossibleHeaderFile(mainModuleName, input, output);
+//                possibleHeader = getPossibleHeaderFile(mainModuleName, input, output);
+                  output = copyPossibleHeaderFile(mainModuleName, input, output);
             }
             System.out.println("M2M 10");
 

@@ -71,6 +71,8 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
     /** The current tick. */
     private int tick = 0;
 
+    private boolean okToWrite = false;
+    
     /** The num of executions still to run. */
     private int numToRun = 0;
 
@@ -107,7 +109,8 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
                 kiemPlugin.requestReRun();
             }
         }
-
+        
+        okToWrite = true;
     }
 
     // -------------------------------------------------------------------------
@@ -119,6 +122,7 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
         IPath modelFilePath = this.getModelFilePath();
         IPath benchmarkFilePath = modelFilePath.removeFileExtension().addFileExtension(
                 BENCHMARK_FILE_ENDING);
+        System.out.println("+++ wrapup start ");
 
         try {
             if (benchmarkData.size() > 0) {
@@ -131,6 +135,7 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
         } catch (CoreException e) {
             throw new KiemInitializationException("Could not write Benchmark data.", false, e, true);
         }
+        System.out.println("+++ wrapup done ");
     }
 
     // -------------------------------------------------------------------------
@@ -157,9 +162,12 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
      * {@inheritDoc}
      */
     public JSONObject doStep(JSONObject jSONObject) throws KiemExecutionException {
+        if (!okToWrite) {
+            return null;
+        }
+        
         // In the step method open a benchmark file "model.ben" and
         // write the comma separated values into it if these values exist
-
         String markers = this.getProperties()[KIEM_PROPERTY_MARKER + KIEM_PROPERTY_DIFF].getValue();
         String markerArray[] = markers.split(",");
 
@@ -194,6 +202,7 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
             }
         }
 
+        System.out.println("+++ STEP ADD: " + benchmarkDataEntry);
         this.benchmarkData.add(benchmarkDataEntry);
 
         return null;
@@ -203,6 +212,9 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
 
     public void writeTextFile(final IPath path, final List<String> stringList, final boolean append)
             throws IOException, CoreException, KiemInitializationException {
+        
+        System.out.println("+++ WRITE TEXT FILE ");
+        
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IWorkspaceRoot root = workspace.getRoot();
         IFile file = root.getFile(path);
@@ -226,6 +238,10 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
             }
             br.close();
             fis.close();
+            
+            if (oldFileContent.size() == 0) {
+                newFile = true;
+            }
         }
 
         PrintWriter out = new PrintWriter(stringPath);
@@ -259,40 +275,60 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
                     String newTick = newLineSplit[1];
                     
                     if (newTick.equals(oldTick)) {
-                        // Now combine all other split values (the size should match)
-                        if (newLineSplit.length != oldLineSplit.length) {
-                            out.close();
-                            throw new KiemInitializationException("Cannot consolidate a different number of values.", false, null);
-                        }
+//                        // Now combine all other split values (the size should match)
+//                        if (newLineSplit.length != oldLineSplit.length) {
+//                            out.close();
+//                            throw new KiemInitializationException("Cannot consolidate a different number of values.", false, null);
+//                        }
                         
                         for (int ii = 2; ii < oldLineSplit.length; ii++) {
                             String oldValue = oldLineSplit[ii];
                             String newValue = newLineSplit[ii];
                             try {
-                                int oldValueInt = Integer.parseInt(oldValue);
-                                int newValueInt = Integer.parseInt(newValue);
+                                int oldValueInt = 0;
+                                int newValueInt = 0;
+                                double oldValueDouble = 0.0;
+                                double newValueDouble = 0.0;
+                                boolean isDouble = false;
+                                try {
+                                    oldValueInt = Integer.parseInt(oldValue);
+                                    newValueInt = Integer.parseInt(newValue);
+                                } catch(Exception e) {
+                                    isDouble = true;
+                                    oldValueDouble = Double.parseDouble(oldValue);
+                                    newValueDouble = Double.parseDouble(newValue);
+                                }
                                 
                                 // Consolidate new value into new 
                                 if (consolidation.equals(CONSOLIDATE_MIN)) {
-                                    if (newValueInt < oldValueInt) {
-                                        oldLineSplit[ii] = newValueInt + "";
+                                    if (newValueInt < oldValueInt || newValueDouble < oldValueDouble) {
+                                        oldLineSplit[ii] = newValue + "";
                                         oldLineSplit[0] = "-1";
                                     }
                                 } else if (consolidation.equals(CONSOLIDATE_MAX)) {
-                                    if (newValueInt > oldValueInt) {
-                                        oldLineSplit[ii] = newValueInt + "";
+                                    if (newValueInt > oldValueInt || newValueDouble > oldValueDouble) {
+                                        oldLineSplit[ii] = newValue + "";
                                         oldLineSplit[0] = "-1";
                                     }
                                 } else if (consolidation.equals(CONSOLIDATE_ADD)) {
-                                    oldLineSplit[ii] = oldValueInt + newValueInt + "";
+                                    if (!isDouble) {
+                                        oldLineSplit[ii] = oldValueInt + newValueInt + "";
+                                    } else {
+                                        oldLineSplit[ii] = oldValueDouble + newValueDouble + "";
+                                    }
                                     oldLineSplit[0] = "-1";
                                 }
                             } catch (Exception e) {
                                 // If not combinable, then keep the old value, e.g.,
                                 // the values might not be integers (e.g., strings).
+                                e.printStackTrace();
                             }
+                            System.out.println("+++ WRITE TEXT FILE: U ");
+                            
                         }
-                        
+
+                        System.out.println("+++ WRITE TEXT FILE: X ");
+
                         // Construct updated old line
                         String updatedOldLine = "";
                         for (String element : oldLineSplit) {
@@ -305,19 +341,24 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
                         oldFileContent.remove(i);
                         oldFileContent.add(i, updatedOldLine);
                         
+                        System.out.println("+++ WRITE TEXT FILE: Z ");
                         // We found the tick to consolidate
                         break;
                     }
                 }
             }
         }
-        
+
+        System.out.println("+++ WRITE TEXT FILE: 1 ");
+
         if (!newFile) {
             for (String line : oldFileContent) {
                // Write out old or consolidated contents
                out.println(line);
             }
         }
+
+        System.out.println("+++ WRITE TEXT FILE: 2 ");
 
         if (newFile || consolidation.equals(CONSOLIDATE_NONE)) {
             // Append new contents (if not already consolidated)
@@ -326,6 +367,7 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
             }
         }
 
+        System.out.println("+++ WRITE TEXT FILE: CLOSE ");
         out.close();
     }
 

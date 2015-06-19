@@ -463,8 +463,9 @@ public final class CEC {
         InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, expandedOutputStream);
         InputStream dismantle = CEC.runDISMANTLE(expandmodule);
         InputStream astgrc = CEC.runASTGRC(dismantle);
-        InputStream grcopt = CEC.runGRCOPT(astgrc);
-        InputStream grcpdg = CEC.runGRCPDG(grcopt);
+        //InputStream grcopt = CEC.runGRCOPT(astgrc);
+        //InputStream grcpdg = CEC.runGRCPDG(grcopt);
+        InputStream grcpdg = CEC.runGRCPDG(astgrc);
         InputStream pdgccfg = CEC.runPDGCCFG(grcpdg);
         InputStream eec = CEC.runEEC(pdgccfg);
         InputStream scfgc = CEC.runSCFGC(eec);
