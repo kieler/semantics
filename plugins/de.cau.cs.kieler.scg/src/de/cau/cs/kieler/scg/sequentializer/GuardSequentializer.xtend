@@ -185,7 +185,8 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
         
         scg.copyDeclarations(newSCG)
        	val guardDeclaration = createDeclaration => [ setType(ValueType::BOOL); it.volatile = true; newSCG.declarations += it ]
-        scg.guards.forEach[ g |
+       	System.out.println("dead guards: "+scg.guards.filter[dead].size)
+        scg.guards.filter[!dead].forEach[ g |
             val vo = createValuedObject(g.valuedObject.name) => [ guardDeclaration.valuedObjects += it ]
             g.valuedObject.addToValuedObjectMapping(vo)
             
@@ -193,15 +194,15 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
             schedulingBlockGuardCache.put(g, newHashSet)
         ]
 
-        val schedulingBlocks = <SchedulingBlock> newArrayList
-        scg.basicBlocks.forEach[
-        	it.schedulingBlocks.forEach[
-        		schedulingBlocks += it
-//        		guardBlockCache.put(it.guard.valuedObject, it)
-        		val sbSet = schedulingBlockGuardCache.get(it.guard)
-        		sbSet += it
-        	]
-        ]
+//        val schedulingBlocks = <SchedulingBlock> newArrayList
+//        scg.basicBlocks.forEach[
+//        	it.schedulingBlocks.forEach[
+//        		schedulingBlocks += it
+////        		guardBlockCache.put(it.guard.valuedObject, it)
+//        		val sbSet = schedulingBlockGuardCache.get(it.guard)
+//        		sbSet += it
+//        	]
+//        ]
         
 		placedGuards.clear
         
