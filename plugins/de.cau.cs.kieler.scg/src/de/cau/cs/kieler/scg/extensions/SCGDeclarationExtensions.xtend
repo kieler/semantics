@@ -23,7 +23,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import java.util.HashMap
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-
+import de.cau.cs.kieler.scg.SchedulingBlock
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -50,7 +50,10 @@ class SCGDeclarationExtensions {
     
     @Inject
     extension KExpressionsExtension
-    
+
+    @Inject
+    extension SCGCoreExtensions
+
     /** Valued object mapping */
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>    
 
@@ -105,6 +108,15 @@ class SCGDeclarationExtensions {
    		return null
     }
     
+    def SchedulingBlock findSchedulingBlockByVO(SCGraph scg, ValuedObject valuedObject) {
+        for(bb : scg.basicBlocks) {
+            for(sb : bb.schedulingBlocks) {
+                if (sb.guard.valuedObject == valuedObject) return sb
+            }
+        }
+        return null
+    }    
+    
     public def void copyDeclarations(SCGraph source, SCGraph target) {
     	for (declaration : source.declarations) {
     		val newDeclaration = createDeclaration(declaration).trace(declaration)
@@ -112,6 +124,19 @@ class SCGDeclarationExtensions {
     		target.declarations += newDeclaration
     	}
 	}     
+    
+    public def void copyDeclarationsWODead(SCGraph source, SCGraph target) {
+        for (declaration : source.declarations) {
+            val newDeclaration = createDeclaration(declaration).trace(declaration)
+            for(vo : declaration.valuedObjects) {
+                val sb = source.findSchedulingBlockByVO(vo)
+                if (sb == null || !sb.basicBlock.deadBlock) { 
+                    vo.copyValuedObject(newDeclaration) 
+                }
+            }
+            target.declarations += newDeclaration
+        }
+    }       
     
     public def void copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
         val newValuedObject = sourceObject.copy
