@@ -1358,7 +1358,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 var bbName = basicBlock.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
                 
                 if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-                	val expText = serializer.serialize(basicBlock.schedulingBlocks.head.guard.expression.copy.fix)	
+                    val guard = basicBlock.schedulingBlocks.head.guard
+                    var String expText
+                    if (guard.dead) {
+                        expText = "<dead>"
+                    } else {
+                        val exp = guard.expression.copy.fix
+                    	expText = serializer.serialize(exp)	
+                    }
 //                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
 					bbName = bbName + "\n" + expText                	
                 }
