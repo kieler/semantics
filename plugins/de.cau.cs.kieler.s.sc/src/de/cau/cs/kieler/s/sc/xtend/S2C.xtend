@@ -224,7 +224,7 @@ class S2C {
 
    def dispatch expand(ValueType valueType) {
        if (valueType == ValueType::BOOL) {
-           return '''int'''
+           return '''char'''
        }
        else if (valueType != ValueType::HOST) {
            return '''«valueType»'''
