@@ -69,9 +69,12 @@ class S2C {
     
     val preCache = <ValuedObject> newArrayList     
     
+    val structCache = <ValuedObject> newHashSet
+    
     // General method to create the c simulation interface.
     def transform (Program program) {
         val timestamp = System.currentTimeMillis
+        structCache.clear
        	program.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].forEach[
        		it.eAllContents.filter(typeof(ValuedObjectReference)).forEach[ preCache += it.valuedObject ]	
        	]    
@@ -150,10 +153,17 @@ class S2C {
    def boolean usesPre(Program program, ValuedObject valuedObject) {
 		preCache.contains(valuedObject)
    }
+   
+   def void addToStruct(ValuedObject vo) {
+       structCache += vo
+   }
 
    // Generate variables.
    def sVariables(Program program) {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       «IF (declaration.type == ValueType::BOOL && !declaration.input && !declaration.output)»
+«FOR vo : declaration.valuedObjects»«vo.addToStruct»«ENDFOR»
+       «ELSE»
           «FOR signal : declaration.valuedObjects»
             «signal.type.expand»«signal.declaration.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
@@ -162,14 +172,26 @@ class S2C {
                 «FOR card : signal.cardinalities»}}«ENDFOR»
                 «ELSE»
                   = «signal.initialValue.expand» 
-                «ENDIF»«ENDIF»;
-            
+             «ENDIF»«ENDIF»;
             «IF program.usesPre(signal)»
                 «signal.type.expand»«signal.declaration.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
             «ENDIF»
+          «ENDFOR»
+        «ENDIF»
         «ENDFOR»
-        «ENDFOR»
-        '''
+        «IF !structCache.empty»
+    static struct {
+            «FOR vo : structCache»
+            unsigned int «vo.name» : 1;
+            
+            «IF program.usesPre(vo)»
+                unsigned int PRE_«vo.name» «IF vo.initialValue != null» = «vo.initialValue.expand» «ENDIF»;
+            «ENDIF»
+                        
+            «ENDFOR»
+        «ENDIF»
+        } _s;
+    '''
    }
 
    // Generate PRE variables setter.
@@ -177,7 +199,7 @@ class S2C {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
        «IF program.usesPre(signal) 
- 			» PRE_«signal.name» = «signal.name»;«
+ 			» _s.PRE_«signal.name» =_s.«signal.name»;«
  		ENDIF»«ENDFOR»«ENDFOR»'''
    }
 
@@ -193,7 +215,7 @@ class S2C {
         «ENDIF»
        
        «IF program.usesPre(signal) 
- 			» PRE_«signal.name» = 0;« // FIXME: Must be the INITIAL value of the valued object
+ 			» _s.PRE_«signal.name» = 0;« // FIXME: Must be the INITIAL value of the valued object
  		ENDIF»«ENDFOR»«ENDFOR»'''
    }
    
@@ -224,7 +246,7 @@ class S2C {
    // Generate the  reset function.
    def sResetFunction(Program program) {
        '''    void reset(){
-       _GO = 1;
+       _s._GO = 1;
        «program.resetVariables»
        return;
     }
@@ -240,7 +262,7 @@ class S2C {
        «state.expand»
        «ENDFOR»
        «program.setPreVariables»
-       _GO = 0;
+       _s._GO = 0;
        return;
     }
     '''
@@ -312,7 +334,12 @@ class S2C {
           returnValue = returnValue + ''' = «assignment.expression.expand»;'''
           return returnValue
        } else {
-          return '''«assignment.variable.expand » = «assignment.expression.expand»;'''
+//           var ret = '''''';
+//           if (structCache.contains(assignment.variable)) {
+//               ret = ret + '''_s.''' 
+//           }
+//           ret = ret + '''«assignment.variable.expand » = «assignment.expression.expand»;''' 
+          return '''«assignment.variable.expand » = «assignment.expression.expand»;''' 
        }
    }   
       
@@ -491,7 +518,7 @@ class S2C {
         VAL_SCC(«expression.subExpressions.toList.head.expand_val»)
     «ENDIF»
     «IF expression.operator  == OperatorType::PRE»
-    (PRE_«expression.subExpressions.toList.head.expand_val»)
+    (_s.PRE_«expression.subExpressions.head.expand_realName»)
     «ENDIF»
     «IF expression.operator  == OperatorType::NE»
         («FOR subexpression : expression.subExpressions SEPARATOR " != "»
@@ -544,16 +571,40 @@ class S2C {
             return  '''PRESENT_SCC(«signal.name»)'''
        } else {
             // variable case
+            if (structCache.contains(signal)) {
+                return  '''_s.«signal.name»'''
+            }
             return  '''«signal.name»'''
        }
    }
    // Expand a signal within a value reference
    def dispatch CharSequence expand_val(ValuedObject signal) {
        //if (signal.isSignal) {
+            if (structCache.contains(signal)) {
+                return  '''_s.«signal.name»'''
+            }
             return  '''«signal.name»'''
        //}
        //return ''''''
    }
+   
+   def dispatch CharSequence expand_realName(ValuedObject signal) {
+            return  '''«signal.name»'''
+   }   
+   
+   def dispatch CharSequence expand_realName(Expression other) {
+        other.expand;
+   }  
+   
+   def dispatch CharSequence expand_realName(ValuedObjectReference valuedObjectReference) {
+//       if (!valuedObjectReference.indices.nullOrEmpty) {
+//        '''«valuedObjectReference.valuedObject.expand_val_array(valuedObjectReference.indices)»'''
+//       } else {
+        '''«valuedObjectReference.valuedObject.expand_realName»'''
+//       }
+   }   
+    
+   
    // Expand a signal within a value reference for arrays
    def CharSequence expand_val_array(ValuedObject signal, List<Expression> indices) {
        var returnValue = '''«signal.name»'''
@@ -562,6 +613,7 @@ class S2C {
        }
        return returnValue
    }
+   
    def dispatch CharSequence expand_val(ValuedObjectReference valuedObjectReference) {
        if (!valuedObjectReference.indices.nullOrEmpty) {
         '''«valuedObjectReference.valuedObject.expand_val_array(valuedObjectReference.indices)»'''
@@ -569,6 +621,7 @@ class S2C {
         '''«valuedObjectReference.valuedObject.expand_val»'''
        }
    }   
+   
    def dispatch CharSequence expand_val(Expression other) {
         other.expand;
    }
