@@ -46,9 +46,6 @@
             class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformation">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformationSCplus">
-      </productionTransformationClass>
-      <productionTransformationClass
             class="de.cau.cs.kieler.scg.guardCreation.GuardCreator">
       </productionTransformationClass>
       <productionTransformationClass
