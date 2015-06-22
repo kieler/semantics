@@ -15,14 +15,18 @@ package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
+
+import de.cau.cs.kieler.kico.internal.Timing;
 
 /**
  * This class is the extended version of the transformation result including intermediate results
@@ -56,6 +60,10 @@ public class CompilationResult {
     /** Auxiliary data. */
     private Set<AbstractKielerCompilerAuxiliaryData> auxiliaryData = 
             new HashSet<AbstractKielerCompilerAuxiliaryData>();
+    
+    /** Compilation duration data */
+    private Map<String, Timing> compilationDurationData =
+    		new HashMap<String, Timing>();
 
     /**
      * Indicates that the compilation is done and no further compilation steps are needed or
@@ -419,4 +427,26 @@ public class CompilationResult {
         return auxiliaryData.remove(data);
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Creates a new timing instance.
+     * 
+     * @param timingId
+     * @return New timing instance
+     */
+    public Timing createTiming(String timingId) {
+    	compilationDurationData.put(timingId, new Timing());
+    	return getTiming(timingId);
+    }
+    
+    /**
+     * Returns a timing instance.
+     * 
+     * @param timingId
+     * @return The timing instance
+     */
+    public Timing getTiming(String timingId) {
+    	return compilationDurationData.get(timingId);
+    }
 }
