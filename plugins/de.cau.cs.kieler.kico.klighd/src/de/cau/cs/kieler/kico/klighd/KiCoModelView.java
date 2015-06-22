@@ -914,7 +914,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             do_compile |= is_active_editor_update;
             do_compile |= is_save_update;
             do_compile |= is_compile_update;
-            do_compile |= is_display_mode_update;
+            do_compile |= is_display_mode_update && !noDiagram;
             // -- But only if:
             do_compile &= selection != null;
             do_compile &= compileModel;

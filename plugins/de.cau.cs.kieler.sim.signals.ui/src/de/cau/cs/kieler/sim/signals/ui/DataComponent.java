@@ -244,7 +244,9 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                             isSignal = true;
                             signalValue = JSONSignalValues.getSignalValue((JSONObject) obj);
                             obj = signalValue;
-                            
+                        }
+                        
+                        if (!isSignal) {
                             if (obj instanceof Double) {
                                 isPresent = (Double)obj != 0;
                             } else if (obj instanceof Integer) {

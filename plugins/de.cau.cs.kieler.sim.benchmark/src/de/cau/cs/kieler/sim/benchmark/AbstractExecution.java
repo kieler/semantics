@@ -20,9 +20,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
@@ -195,24 +197,38 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
 
     /**
      * Compile the filePaths files and does the surrounding measurement of file sizes.
-     * Implementations implement doCompile only.
-     * 
-     * @param filePaths
-     *            the file paths
-     * @param modelName
-     *            the model name
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     * @throws InterruptedException
-     *             the interrupted exception
+     * Implementations implement doCompile only. The tickMethodFile is for bechmarking only.
+     *
+     * @param filePaths the file paths
+     * @param modelName the model name
+     * @param tickMethodFile the tick method file
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws InterruptedException the interrupted exception
      */
-    final public void compile(final List<String> filePaths, final String modelName)
+    final public void compile(final List<String> filePaths, final String modelName, final String tickMethodFile)
             throws IOException, InterruptedException {
+        // Possible benchmarking
+        sourceFileSize = 0;
+        executableFileSize = 0;
+        if (isBenchmark()) {
+            try {
+                String benchmalCompiler =  this.getCompiler();
+                this.executableFileSize = Benchmark.benchmarkExecutable(new URL("file:/" + tickMethodFile), benchmalCompiler, Benchmark.isWindows());
+                File tickMethodFileFile = new File(tickMethodFile);
+                sourceFileSize = tickMethodFileFile.length();
+            } catch (KiemInitializationException e) {
+                e.printStackTrace();
+            }
+        }
+        
 
         // Possible pre processing
         List<String> usedfilePaths = new LinkedList<String>();
         for (String filePath : filePaths) {
-            usedfilePaths.add(filesPreProcessing(filePath));
+            File tmp = new File(filePath);
+            if (tmp.exists()) {
+                usedfilePaths.add(filesPreProcessing(filePath));
+            }
         }
 
         // Reset successful compiled flag
@@ -221,18 +237,16 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
         // Choose a random name for the compiled executable
         setExecutableName(generateExecutableName(filePaths, modelName));
 
-        // Measure source file size
-        sourceFileSize = 0;
-        executableFileSize = 0;
-        for (String filePath : usedfilePaths) {
-            File currentFile = new File(filePath);
-            sourceFileSize += currentFile.length();
-        }
+//        // Measure source file size
+//        for (String filePath : usedfilePaths) {
+//            File currentFile = new File(filePath);
+//            sourceFileSize += currentFile.length();
+//        }
 
         // Decide based on benchmark which files to use
-        if (!benchmark) {
+//        if (!benchmark) {
             usedfilePaths = filePaths;
-        }
+//        }
         
         // Test if compiled file exists
         compiledFiles = doCompile(usedfilePaths, modelName);
@@ -287,18 +301,18 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
         }
 
         // Compute file sizes
-        executableFileSize = 0;
-        for (File file : compiledFiles) {
-            if (file.exists()) {
-                executableFileSize += file.length();
-            } else {
-                // The Windows case
-                file = new File(this.getOutputPath() + getExecutableName() + ".exe");
-                if (file.exists()) {
-                    executableFileSize += file.length();
-                }
-            }
-        }
+//        executableFileSize = 0;
+//        for (File file : compiledFiles) {
+//            if (file.exists()) {
+//                executableFileSize += file.length();
+//            } else {
+//                // The Windows case
+//                file = new File(this.getOutputPath() + getExecutableName() + ".exe");
+//                if (file.exists()) {
+//                    executableFileSize += file.length();
+//                }
+//            }
+//        }
 
         // Execution specific code goes here
         doStartExecution();
