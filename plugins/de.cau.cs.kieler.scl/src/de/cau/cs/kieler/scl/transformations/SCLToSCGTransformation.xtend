@@ -53,6 +53,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.features.SCLFeatures
 import java.util.Set
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /** 
  * SCL to SCG Transformation 
@@ -64,11 +66,16 @@ import com.google.common.collect.Sets
 // This class contains all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
 class SCLToSCGTransformation extends AbstractProductionTransformation {
 
+    private static val String ANNOTATION_HOSTCODE = "hostcode"
+
     @Inject
-    extension SCGControlFlowExtensions
+    extension SCGControlFlowExtensions 
 
     @Inject
     extension KExpressionsExtension
+
+    @Inject
+    extension AnnotationsExtensions
     
     @Inject
     extension SCLExtensions
@@ -159,6 +166,11 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
         scl.eAllContents.filter(Goto).forEach[transform(scg, gotoFlows.get(it))]
 
         scg.removeSuperflousConditionals
+        
+        val hostcodeAnnotations = scl.annotations.filter(typeof(StringAnnotation)).filter[ name == ANNOTATION_HOSTCODE ] 
+        hostcodeAnnotations.forEach [
+            scg.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+        ]        
 
         scg
     }

@@ -97,6 +97,7 @@ import de.cau.cs.kieler.klay.layered.properties.InternalProperties
 import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.ControlDependency
+import de.cau.cs.kieler.scg.features.SCGFeatures
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -483,7 +484,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             
             //Suasage folding on/off
-            if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
+            if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
                 node.addLayoutParam(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH);
                 node.addLayoutParam(Properties::SAUSAGE_FOLDING, true);
             }
@@ -1358,7 +1359,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 var bbName = basicBlock.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
                 
                 if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-                	val expText = serializer.serialize(basicBlock.schedulingBlocks.head.guard.expression.copy.fix)	
+                    val guard = basicBlock.schedulingBlocks.head.guard
+                    var String expText
+                    if (guard.dead) {
+                        expText = "<dead>"
+                    } else {
+                        val exp = guard.expression.copy.fix
+                    	expText = serializer.serialize(exp)	
+                    }
 //                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
 					bbName = bbName + "\n" + expText                	
                 }
@@ -1480,12 +1488,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
         for (n : PIL_Nodes) {
             val nextFlows = n.allNext
+            var hasFlows = false
             for (flow : nextFlows) {
                 if (PIL_Nodes.contains(flow.target)) {
                     flow.colorControlFlow(PROBLEM_COLOR.copy)
                     flow.thickenControlFlow(PROBLEM_WIDTH)
+                    hasFlows = true
                 } 
             }
+            
+            if (!hasFlows) {
+                val nextDeps = n.eContents.filter(DataDependency).filter[ concurrent == true && confluent == false].toList
+                for (flow : nextDeps) {
+                    if (PIL_Nodes.contains(flow.target)) {
+                        flow.colorDependency(PROBLEM_COLOR.copy)
+                        flow.thickenDependency(PROBLEM_WIDTH)
+                    } 
+                }
+            }            
         }
     }
 

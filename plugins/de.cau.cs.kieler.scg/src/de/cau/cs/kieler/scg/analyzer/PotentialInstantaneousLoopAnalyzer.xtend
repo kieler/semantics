@@ -20,6 +20,8 @@ import java.util.Set
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. In particular analyzers are called by the scheduler
@@ -73,6 +75,9 @@ class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
 	private def boolean checkInstantaneousLoop(Node node, Set<Node> uncriticalPath, Set<Node> uncertainPath) {
 	    val previousNodes = node.allPrevious.map[ eContainer ].toList
         val nextNodes = node.allNext.map[ target ].toList
+        
+        previousNodes += node.incoming.filter(typeof(DataDependency)).filter[concurrent == true && confluent == false].map[ target ].toList
+        nextNodes += node.eContents.filter(typeof(DataDependency)).filter[concurrent == true && confluent == false].map[ target ].toList
 	    
 	    var uncritical = true
 	    for(pn : nextNodes) {

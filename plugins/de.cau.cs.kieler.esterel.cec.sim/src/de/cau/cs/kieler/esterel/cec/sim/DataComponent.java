@@ -244,7 +244,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     static final String SIMULATION_USERTIMEBIB = "usertime.h";
 
     /** The Constant SIMULATION_COMPILER_OPTIONS. */
-    static final String SIMULATION_COMPILER_OPTIONS = "-lm -o";
+    static final String SIMULATION_COMPILER_OPTIONS = "-O2 -lm -o";
 
     /** The benchmark flag for generating cycle and file size signals. */
     private boolean benchmark = false;
@@ -596,7 +596,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         }
         System.out.println("Compile 5");
         monitor.subTask("Expanding Esterel file");
-//        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
+        // InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
         InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
         monitor.worked(1);
         if (monitor.isCanceled()) {
@@ -751,6 +751,35 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         }
     }
 
+//    /**
+//     * If there is a header file available, return the path to the header file in order to be able
+//     * to include it in the wrapper code.
+//     * 
+//     * @throws KiemInitializationException
+//     */
+//    private String getPossibleHeaderFile(final String mainModuleName, final URI inputModel,
+//            final URL cProgram) throws KiemInitializationException {
+//        // Build header file name
+//        String headerFileString;
+//        try {
+//            java.net.URI inputURI = convertEMFtoJavaURI(inputModel);
+//            headerFileString = inputURI.toString();
+//            headerFileString = headerFileString.replaceFirst(".strl", ".h");
+//        } catch (URISyntaxException e) {
+//            return "";
+//        }
+//        IPath headerFilePath = new Path(headerFileString);
+//
+//        // Test if header file exists
+//        File headerFile = new File(headerFileString);
+//        if (!headerFile.exists()) {
+//            // header file was not found, return the original cProgram path
+//            return "";
+//        }
+//
+//        return headerFilePath.toString();
+//    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -800,7 +829,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
             URI esterelOutput = URI.createURI("");
             // By default there is no additional transformation necessary
-            Program transformedProgram = myModel;
+            Program transformedProgram = EcoreUtil.copy(myModel);
             System.out.println("M2M 4");
 
             // If 'Full Debug Mode' is turned on then the user wants to have
@@ -844,16 +873,17 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             // Compile Esterel to C
             URL output =
                     this.compileEsterelToC(esterelOutput, CEC.getDefaultOutFile(),
-                            esterelSimulationProgressMonitor).toURL(); 
+                            esterelSimulationProgressMonitor).toURL();
             System.out.println("M2M 9");
-            
+
             // Possibly add #include for a header file
+            String possibleHeader = "";
             if (myModel.getModules() != null && myModel.getModules().size() > 0) {
                 String mainModuleName = myModel.getModules().get(0).getName();
-                output = copyPossibleHeaderFile(mainModuleName, input, output);
+//                possibleHeader = getPossibleHeaderFile(mainModuleName, input, output);
+                  output = copyPossibleHeaderFile(mainModuleName, input, output);
             }
             System.out.println("M2M 10");
-
 
             // Cannot be done before because otherwise the new model cannot be serialized
             // Do this on a copy to not destroy original program;
@@ -864,8 +894,17 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             interfaceDeclarationFix.fix(fixedTransformedProgram);
             System.out.println("M2M 11");
 
+            String esterelCCodeFile = output.getPath();
+            int i = esterelCCodeFile.lastIndexOf("strl");
+            String esterelCCodeFileName = esterelCCodeFile;
+            if (i >= 0) {
+                esterelCCodeFileName = esterelCCodeFile.substring(i);
+            }
+
             // Generate data.c
-            URL data = generateCSimulationInterface(fixedTransformedProgram, esterelOutput, benchmark);
+            URL data =
+                    generateCSimulationInterface(fixedTransformedProgram, esterelOutput, benchmark,
+                            esterelCCodeFileName, possibleHeader);
             System.out.println("M2M 12");
 
             // Compile C code
@@ -874,7 +913,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
             URL fileUrl = FileLocator.find(bundle, new Path(SIMULATION_SUBPATH), null);
             URL bundleLocation = FileLocator.toFileURL(fileUrl);
-            
+
             System.out.println("M2M 14");
 
             System.out.println("M2M 15");
@@ -889,19 +928,35 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                 compile =
                         compiler + " " + output.getPath() + " " + data.getPath() + " "
                                 + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
-                                + bundleLocation.getPath() + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS " + SIMULATION_COMPILER_OPTIONS
-                                + " " + executable;
+                                + bundleLocation.getPath()
+                                + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+                                + SIMULATION_COMPILER_OPTIONS + " " + executable;
+
+                // compile =
+                // compiler + " " + output.getPath() + " " + data.getPath() + " "
+                // + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
+                // + bundleLocation.getPath() +
+                // " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS " +
+                // SIMULATION_COMPILER_OPTIONS
+                // + " " + executable;
             } else {
                 // Windows
                 executable = File.createTempFile(SIMULATION_PREFIX, SIMULATION_SUFFIX);
                 compile =
-                        compiler + " " + output.getPath().substring(1) + " "
-                                + data.getPath().substring(1) + " "
+                        compiler + " " + data.getPath().substring(1) + " "
                                 + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
-                                + "-I " + bundleLocation.getPath().substring(1) + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+                                + "-I " + bundleLocation.getPath().substring(1)
+                                + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
                                 + SIMULATION_COMPILER_OPTIONS + " " + executable;
+                // compile =
+                // compiler + " " + output.getPath().substring(1) + " "
+                // + data.getPath().substring(1) + " "
+                // + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
+                // + "-I " + bundleLocation.getPath().substring(1) +
+                // " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+                // + SIMULATION_COMPILER_OPTIONS + " " + executable;
             }
-            
+
             // D_NO_EXTERN_DEFINITIONS
             // D_NO_FUNCTION_DEFINITIONS
 
@@ -927,10 +982,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                         new Exception(errorString.toString()));
             } else {
                 if (benchmark) {
-                    File currentFile = new File(simFile.getPath());
-                    if (currentFile.exists()) {
-                        executabeFileSize = currentFile.length();
-                    } 
+                    String benchmalCompiler =
+                            (getProperties()[KIEM_PROPERTY_CCOMPILER
+                                    + JSONObjectSimulationDataComponent.KIEM_PROPERTY_DIFF]).getValue();
+                    
+                    executabeFileSize = Benchmark.benchmarkExecutable(output, benchmalCompiler, isWindows());
+                    // File currentFile = new File(simFile.getPath());
+                    // if (currentFile.exists()) {
+                    // executabeFileSize = currentFile.length();
+                    // }
                 }
 
             }
@@ -1008,18 +1068,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     // -------------------------------------------------------------------------
 
     /**
-     * Checks whether the system is based on windows.
-     * 
-     * @return true, if is windows
-     */
-    public static boolean isWindows() {
-        String os = System.getProperty("os.name").toLowerCase();
-        return (os.indexOf("win") >= 0);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Generate the CSimulationInterface.
      * 
      * @param esterelProgram
@@ -1031,7 +1079,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      *             the kiem initialization exception
      */
     private URL generateCSimulationInterface(final Program esterelProgram,
-            final URI esterelProgramURI, final boolean benchmark) throws KiemInitializationException {
+            final URI esterelProgramURI, final boolean benchmark, final String strlProgramFileName,
+            final String possibleHeader) throws KiemInitializationException {
         File data;
         try {
             data = File.createTempFile("data", ".c");
@@ -1051,10 +1100,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             String ccode =
                     transform.createCSimulationInterface(esterelProgram.getModules().get(0))
                             .toString();
-            
+
+            String additionalHeader = "";
+            if (possibleHeader != null && possibleHeader.length() > 0) {
+                additionalHeader = "#include \"" + possibleHeader + "\"\n\r";
+            }
+
+            ccode = additionalHeader + "#include \"" + strlProgramFileName + "\"\n\r" + ccode;
 
             if (benchmark) {
-                ccode = Benchmark.addTimingCode(ccode);
+                ccode = Benchmark.addTimingCode(ccode, "doTick");
             }
 
             // Write out c program

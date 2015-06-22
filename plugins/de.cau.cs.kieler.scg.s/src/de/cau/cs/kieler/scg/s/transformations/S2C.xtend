@@ -61,7 +61,7 @@ class S2C extends AbstractProductionTransformation {
         var String cProgram = transform2.transform(program as Program).toString();
 
         cProgram = SimpleCBeautifier.beautify(cProgram, "   ");
-
+        
         return cProgram
     }
 
