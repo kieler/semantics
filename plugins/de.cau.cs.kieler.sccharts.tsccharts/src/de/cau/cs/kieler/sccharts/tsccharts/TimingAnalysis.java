@@ -439,6 +439,10 @@ public class TimingAnalysis extends Job {
             HashMultimap<Region, WeakReference<KText>> timingLabelList,
             HashMap<Region, String> regionLabelStringMap, HashMap<Integer, Region> tppRegionMap,
             State rootState) {
+        // retrieve WCET path
+        LinkedList<String> wcp = resultList.getLast().getResult();
+        // set up list of Regions that are on the WCET path
+        ArrayList<Region> wcpRegions = new ArrayList<Region>();
         // Integer because there will be calculations with those values
         HashMap<Region, Integer> deepValues = new HashMap<Region, Integer>();
         HashMap<Region, Integer> flatValues = new HashMap<Region, Integer>();
