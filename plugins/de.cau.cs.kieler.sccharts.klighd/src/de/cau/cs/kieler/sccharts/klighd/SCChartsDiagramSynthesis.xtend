@@ -99,6 +99,8 @@ import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.core.annotations.CommentAnnotation
+import de.cau.cs.kieler.kiml.graphviz.dot.transform.Attributes
+import de.cau.cs.kieler.kiml.graphviz.dot.transform.Rank
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -335,9 +337,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 
                 // semantic comments
                 if (r.hasCommentAnnotation) {
+                    val initialStateNode = r.states.filter[ isInitial ].head.node
                     for(commentAnnotation : r.getCommentAnnotations) {
                         val commentNode = createCommentNode(commentAnnotation)
                         node.children += commentNode
+                        createEdge => [ edge |
+                            edge.target = initialStateNode
+                            edge.source = commentNode
+                            edge.KRendering => [ invisible = true ]
+                        ]                        
                     }
                 }
             }
@@ -406,6 +414,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         val node = commentAnnotation.createNode()
 //        node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot")
         node.setLayoutOption(LayoutOptions::SPACING, 1f);
+//        node.setLayoutOption(Attributes::RANK, Rank::MIN)
         val commentText = commentAnnotation.values.head
         node.addRectangle() => [
             it.associateWith(commentAnnotation)
