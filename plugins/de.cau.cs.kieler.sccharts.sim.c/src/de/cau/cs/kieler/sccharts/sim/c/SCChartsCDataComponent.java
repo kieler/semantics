@@ -46,6 +46,7 @@ import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCChart;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCG;
 import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -128,6 +129,13 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     /** The benchmark flag for generating cycle and file size signals. */
     private boolean benchmark = false;
 
+    /** The source file size. */
+    private long sourceFileSize = 0;
+
+    /** The executabe file size. */
+    private long executabeFileSize = 0;
+
+    
     /** The C execution object for concurrent execution. */
     private CExecution cExecution = null;
 
@@ -399,7 +407,9 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
      * {@inheritDoc}
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final EObject model,
-            final boolean debug, final boolean benchmark) throws KiemInitializationException {
+            final boolean debug, final boolean benchmarkParam) throws KiemInitializationException {
+
+        benchmark = benchmarkParam;
 
         System.out.println("1");
         this.myModel = model;
@@ -522,6 +532,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                 cSimulation = cSimulationSCG.transform((SCGraph) stateOrSCG, "10000").toString();
             }
             System.out.println("17 " + cSimulation);
+            
+            if (benchmark) {
+                cSimulation = Benchmark.addTimingCode(cSimulation, "tick");
+            }
 
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
@@ -603,6 +617,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         if (cExecution == null || !cExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
+        
+        if (benchmark) {
+            sourceFileSize = cExecution.getSourceFileSize();
+            executabeFileSize = cExecution.getExecutableFileSize();
+        }
 
         try {
             String out = jSONObject.toString();
@@ -675,12 +694,29 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                                 returnObj.accumulate(outputName,
                                         JSONSignalValues.newValue(value, present));
                             }
+                            
+
+                            
                         }
 
                     }
+                    
+                    // Add benchmark information
+                    if (this.benchmark) {
+                        if (output.has(Benchmark.BENCHMARK_SIGNAL_TIME)) {
+                            Object bench = output.get(Benchmark.BENCHMARK_SIGNAL_TIME);
+                            returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
+                        }
+                    }                    
                 }
             }
 
+            // Add benchmark information
+            if (this.benchmark) {
+                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE, sourceFileSize);
+                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE, executabeFileSize);
+            }
+            
             // Finally accumulate all active Statements (activeStatements)
             // under the statementName
             String activeStates = "";
