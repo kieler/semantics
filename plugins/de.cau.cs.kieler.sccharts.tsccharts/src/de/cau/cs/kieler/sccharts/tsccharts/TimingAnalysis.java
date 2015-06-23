@@ -264,7 +264,7 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-        HashMap<Integer, Region> tppRegionMap = new HashMap<Integer, Region>();
+        HashMap<String, Region> tppRegionMap = new HashMap<String, Region>();
 
         // It is normal that some nodes of the SCG will be mapped to null, because they belong to
         // the SCChart itself not to a Region of the SCChart (they cannot be attributed to the outermost
@@ -443,7 +443,7 @@ public class TimingAnalysis extends Job {
     private void extractTimingLabels(RequestType requestType,
             LinkedList<TimingRequestResult> resultList,
             HashMultimap<Region, WeakReference<KText>> timingLabelList,
-            HashMap<Region, String> regionLabelStringMap, HashMap<Integer, Region> tppRegionMap,
+            HashMap<Region, String> regionLabelStringMap, HashMap<String, Region> tppRegionMap,
             State rootState) {
         // retrieve WCET path
         LinkedList<String> wcp = resultList.getLast().getResult();
@@ -466,7 +466,7 @@ public class TimingAnalysis extends Job {
                     Region resultRegion;
                     if (!(currentResult.getStartPoint().equals("entry"))) {
                         resultRegion =
-                                tppRegionMap.get(Integer.parseInt(currentResult.getStartPoint()));
+                                tppRegionMap.get(currentResult.getStartPoint());
                     } else {
                         resultRegion = tppRegionMap.get(0);
                     }
@@ -493,7 +493,8 @@ public class TimingAnalysis extends Job {
                     Integer WCRT = 0;
                     Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();
                     while (outerRegionsIterator.hasNext()) {
-                        Integer currentValue = deepValues.get(outerRegionsIterator.next());
+                        Region nextRegion = outerRegionsIterator.next();
+                        Integer currentValue = deepValues.get(nextRegion);
                         WCRT = WCRT + currentValue;
                     }
                     regionLabelStringMap.put(currentRegion, WCRT.toString());
@@ -576,14 +577,14 @@ public class TimingAnalysis extends Job {
      *         number
      */
     private int insertTPP(SCGraph scg, HashMap<Node, Region> nodeRegionMapping,
-            HashMap<Integer, Region> tppRegionMap, Region scchartDummyRegion) {
+            HashMap<String, Region> tppRegionMap, Region scchartDummyRegion) {
         // Get all edges of the sequential scg
         // get the SCG nodes in fixed traversing order (top to bottom, then branch first)
         LinkedList<ControlFlow> edgeList = getEdgesInFixedTraversingOrder(scg);
         Iterator<ControlFlow> edgeListIterator = edgeList.iterator();
         ArrayList<Link> redirectedEdges = new ArrayList<Link>();
         // insertion starts with TPP(1);
-        int tppCounter = 1;
+        Integer tppCounter = 1;
         while (edgeListIterator.hasNext()) {
             if (tppCounter == 13) {
                 // avoid a TPP with the number 13, as this one has a special meaning for the timing
@@ -630,7 +631,7 @@ public class TimingAnalysis extends Job {
                         Assignment tpp =
                                 insertSingleTPP(scg, currentEdge, tppCounter, redirectedEdges);
                         // Save which Region starts at this TPP value
-                        tppRegionMap.put(tppCounter, targetRegion);
+                        tppRegionMap.put((tppCounter).toString(), targetRegion);
                         tppCounter = tppCounter + 1;
                         // make sure that all edges that also point to the same target node as the
                         // current edge did before redirection are redirected to the TPP as well
@@ -653,7 +654,7 @@ public class TimingAnalysis extends Job {
                 System.out.println("A mapping for at least one node of an edge cannot be found.");
             }
         }
-        return tppCounter - 1;
+        return tppCounter -1;
     }
 
     /**
