@@ -173,7 +173,9 @@ public class TimingAnalysis extends Job {
             return Status.CANCEL_STATUS;
         }
 
-        KielerCompilerContext context = new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID+",*T_ABORT,*T_scg.basicblock.sc", scchart);
+        KielerCompilerContext context =
+                new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID
+                        + ",*T_ABORT,*T_scg.basicblock.sc", scchart);
         context.setProperty(Tracing.ACTIVE_TRACING, true);
         context.setAdvancedSelect(true);
         CompilationResult compilationResult = KielerCompiler.compile(context);
@@ -264,10 +266,11 @@ public class TimingAnalysis extends Job {
         }
         HashMap<Integer, Region> tppRegionMap = new HashMap<Integer, Region>();
 
-        // It is normal that some nodes of the SCG will be mapped to null, because they belong to the
-        // SCChart itself not to a Region of the SCChart (they cannot be attributed to the outermost
-        // Region in the root state, because there may be several of those). So create a dummy region
-        // to represent the SCChart in Timing Analysis. Will be mapped to TPP "entry", represented by 0
+        // It is normal that some nodes of the SCG will be mapped to null, because they belong to
+        // the SCChart itself not to a Region of the SCChart (they cannot be attributed to the outermost
+        // Region in the root state, because there may be several of those). So create a dummy
+        // region to represent the SCChart in Timing Analysis. Will be mapped to TPP "entry", 
+        // represented by 0
         Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
         scchartDummyRegion.setId("SCChartDummyRegion");
 
@@ -281,8 +284,11 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-        
-        context = new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID+","+CodeGenerationFeatures.TARGET_ID+",T_"+CodeGenerationTransformations.S2C_ID, scg);
+
+        context =
+                new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID + ","
+                        + CodeGenerationFeatures.TARGET_ID + ",T_"
+                        + CodeGenerationTransformations.S2C_ID, scg);
         compilationResult = KielerCompiler.compile(context);
 
         if (compilationResult.getString() == null
@@ -334,7 +340,7 @@ public class TimingAnalysis extends Job {
                         stringBuilder);
         // just debug, may be removed
         System.out.println(stringBuilder.toString());
-        
+
         // .ta file string complete, write it to file
         String requestFile = uri.replace(".sct", ".ta");
         String requestFilePath = requestFile.replace("file:", "");
@@ -441,51 +447,57 @@ public class TimingAnalysis extends Job {
             State rootState) {
         // retrieve WCET path
         LinkedList<String> wcp = resultList.getLast().getResult();
-        // set up list of Regions that are on the WCET path
+        // set up list for Regions that are on the WCET path
         ArrayList<Region> wcpRegions = new ArrayList<Region>();
-        // Integer because there will be calculations with those values
-        HashMap<Region, Integer> deepValues = new HashMap<Region, Integer>();
-        HashMap<Region, Integer> flatValues = new HashMap<Region, Integer>();
-        Iterator<TimingRequestResult> resultListIterator = resultList.iterator();
-        // fill the map for flat values
-        while (resultListIterator.hasNext()) {
-            TimingRequestResult currentResult = resultListIterator.next();
-            if (currentResult.getRequestType() == requestType) {
-                Region resultRegion;
-                if (!(currentResult.getStartPoint().equals("entry"))){
-                resultRegion =
-                        tppRegionMap.get(Integer.parseInt(currentResult.getStartPoint()));
-                } else {
-                resultRegion =
-                        tppRegionMap.get(0);
-                }
-                if (flatValues.get(resultRegion) == null) {
-                    flatValues
-                            .put(resultRegion, Integer.parseInt(currentResult.getResult().get(0)));
-                } else {
-                    // there may be more than one timing result for a region, sum the values up
-                    flatValues.put(
-                            resultRegion,
-                            flatValues.get(resultRegion)
-                                    + Integer.parseInt(currentResult.getResult().get(0)));
+        // get the associated Region for every step of the path result
+        // (which f.e. looks like: entry, 1, 4, 7, exit)
+        Iterator<String> pathIterator = wcp.iterator();
+        while (pathIterator.hasNext()) {
+            String step = pathIterator.next();
+            if (!((step.equals("entry")) || (step.equals("exit")))) {
+            }
+            HashMap<Region, Integer> deepValues = new HashMap<Region, Integer>();
+            HashMap<Region, Integer> flatValues = new HashMap<Region, Integer>();
+            Iterator<TimingRequestResult> resultListIterator = resultList.iterator();
+            // fill the map for flat values
+            while (resultListIterator.hasNext()) {
+                TimingRequestResult currentResult = resultListIterator.next();
+                if (currentResult.getRequestType() == requestType) {
+                    Region resultRegion;
+                    if (!(currentResult.getStartPoint().equals("entry"))) {
+                        resultRegion =
+                                tppRegionMap.get(Integer.parseInt(currentResult.getStartPoint()));
+                    } else {
+                        resultRegion = tppRegionMap.get(0);
+                    }
+                    if (flatValues.get(resultRegion) == null) {
+                        flatValues.put(resultRegion,
+                                Integer.parseInt(currentResult.getResult().get(0)));
+                    } else {
+                        // there may be more than one timing result for a region, sum the values up
+                        flatValues.put(
+                                resultRegion,
+                                flatValues.get(resultRegion)
+                                        + Integer.parseInt(currentResult.getResult().get(0)));
+                    }
                 }
             }
-        }
-        calculateDeepTimingValues(rootState, flatValues, deepValues);
-        Iterator<Region> regionIterator = timingLabelList.keySet().iterator();
-        while (regionIterator.hasNext()) {
-            Region currentRegion = regionIterator.next();
-            if (!(currentRegion == null)) {
-                regionLabelStringMap.put(currentRegion, deepValues.get(currentRegion) + " / "
-                        + flatValues.get(currentRegion));
-            } else {
-                Integer WCRT = 0;
-                Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();
-                while (outerRegionsIterator.hasNext()) {
-                    Integer currentValue = deepValues.get(outerRegionsIterator.next());
-                    WCRT = WCRT + currentValue;
+            calculateDeepTimingValues(rootState, flatValues, deepValues);
+            Iterator<Region> regionIterator = timingLabelList.keySet().iterator();
+            while (regionIterator.hasNext()) {
+                Region currentRegion = regionIterator.next();
+                if (!(currentRegion == null)) {
+                    regionLabelStringMap.put(currentRegion, deepValues.get(currentRegion) + " / "
+                            + flatValues.get(currentRegion));
+                } else {
+                    Integer WCRT = 0;
+                    Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();
+                    while (outerRegionsIterator.hasNext()) {
+                        Integer currentValue = deepValues.get(outerRegionsIterator.next());
+                        WCRT = WCRT + currentValue;
+                    }
+                    regionLabelStringMap.put(currentRegion, WCRT.toString());
                 }
-                regionLabelStringMap.put(currentRegion, WCRT.toString());
             }
         }
     }
@@ -698,9 +710,10 @@ public class TimingAnalysis extends Job {
                     traverseSequentialGraphEdges(thenEdge.getTarget(), edgeList);
                 } else {
                     if (currentNode instanceof Assignment) {
-                        ControlFlow outgoingEdge = ((Assignment)currentNode).getNext();
+                        ControlFlow outgoingEdge = ((Assignment) currentNode).getNext();
                         edgeList.add(outgoingEdge);
-                        // check whether this node ends a then branch, if so, add the else edge to the 
+                        // check whether this node ends a then branch, if so, add the else edge to
+                        // the
                         // list also
                         EList<Link> targetIncomingList = outgoingEdge.getTarget().getIncoming();
                         if (targetIncomingList.size() > 1) {
@@ -708,11 +721,11 @@ public class TimingAnalysis extends Job {
                             while (incomingEdgeIterator.hasNext()) {
                                 Link currentLink = incomingEdgeIterator.next();
                                 if (!(currentLink == outgoingEdge)) {
-                                    edgeList.add((ControlFlow)currentLink);
+                                    edgeList.add((ControlFlow) currentLink);
                                 }
                             }
                         }
-                            traverseSequentialGraphEdges(outgoingEdge.getTarget(), edgeList);
+                        traverseSequentialGraphEdges(outgoingEdge.getTarget(), edgeList);
                     }
                 }
             }
