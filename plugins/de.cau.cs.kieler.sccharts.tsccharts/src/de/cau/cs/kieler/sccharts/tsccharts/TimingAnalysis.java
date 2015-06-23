@@ -424,7 +424,7 @@ public class TimingAnalysis extends Job {
      * Method extracts timing labels with format <deep timing value> / <flat timing value> for the
      * regions in the resultList.
      * 
-     * @param lwcet
+     * @param requestType
      *            : The requestType for which the timing labels are to be extracted. The method
      *            expects either RequestType.LWCET, RequestType.LBCET, RequestType.FWCET or
      *            RequestType.FBCET
@@ -454,51 +454,46 @@ public class TimingAnalysis extends Job {
         Iterator<String> pathIterator = wcp.iterator();
         while (pathIterator.hasNext()) {
             String step = pathIterator.next();
-            if (!((step.equals("entry")) || (step.equals("exit")))) {
-            }
-            HashMap<Region, Integer> deepValues = new HashMap<Region, Integer>();
-            HashMap<Region, Integer> flatValues = new HashMap<Region, Integer>();
-            Iterator<TimingRequestResult> resultListIterator = resultList.iterator();
-            // fill the map for flat values
-            while (resultListIterator.hasNext()) {
-                TimingRequestResult currentResult = resultListIterator.next();
-                if (currentResult.getRequestType() == requestType) {
-                    Region resultRegion;
-                    if (!(currentResult.getStartPoint().equals("entry"))) {
-                        resultRegion =
-                                tppRegionMap.get(currentResult.getStartPoint());
-                    } else {
-                        resultRegion = tppRegionMap.get(0);
-                    }
-                    if (flatValues.get(resultRegion) == null) {
-                        flatValues.put(resultRegion,
-                                Integer.parseInt(currentResult.getResult().get(0)));
-                    } else {
-                        // there may be more than one timing result for a region, sum the values up
-                        flatValues.put(
-                                resultRegion,
-                                flatValues.get(resultRegion)
-                                        + Integer.parseInt(currentResult.getResult().get(0)));
-                    }
-                }
-            }
-            calculateDeepTimingValues(rootState, flatValues, deepValues);
-            Iterator<Region> regionIterator = timingLabelList.keySet().iterator();
-            while (regionIterator.hasNext()) {
-                Region currentRegion = regionIterator.next();
-                if (!(currentRegion == null)) {
-                    regionLabelStringMap.put(currentRegion, deepValues.get(currentRegion) + " / "
-                            + flatValues.get(currentRegion));
+            // TODO: Implement the retrieving of path regions (then use to mark WCET path)
+        }
+        HashMap<Region, Integer> deepValues = new HashMap<Region, Integer>();
+        HashMap<Region, Integer> flatValues = new HashMap<Region, Integer>();
+        Iterator<TimingRequestResult> resultListIterator = resultList.iterator();
+        // fill the map for flat values
+        while (resultListIterator.hasNext()) {
+            TimingRequestResult currentResult = resultListIterator.next();
+            if (currentResult.getRequestType() == requestType) {
+                Region resultRegion;
+                String startPoint = currentResult.getStartPoint();
+                resultRegion = tppRegionMap.get(startPoint);
+                if (flatValues.get(resultRegion) == null) {
+                    flatValues
+                            .put(resultRegion, Integer.parseInt(currentResult.getResult().get(0)));
                 } else {
-                    Integer WCRT = 0;
-                    Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();
-                    while (outerRegionsIterator.hasNext()) {
-                        Region nextRegion = outerRegionsIterator.next();
-                        Integer currentValue = deepValues.get(nextRegion);
-                        WCRT = WCRT + currentValue;
-                    }
-                    regionLabelStringMap.put(currentRegion, WCRT.toString());
+                    // there may be more than one timing result for a region, sum the values up
+                    flatValues.put(
+                            resultRegion,
+                            flatValues.get(resultRegion)
+                                    + Integer.parseInt(currentResult.getResult().get(0)));
                 }
+            }
+        }
+        calculateDeepTimingValues(rootState, flatValues, deepValues);
+        Iterator<Region> regionIterator = timingLabelList.keySet().iterator();
+        while (regionIterator.hasNext()) {
+            Region currentRegion = regionIterator.next();
+            if (!(currentRegion == null)) {
+                regionLabelStringMap.put(currentRegion, deepValues.get(currentRegion) + " / "
+                        + flatValues.get(currentRegion));
+            } else {
+                Integer WCRT = 0;
+                Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();
+                while (outerRegionsIterator.hasNext()) {
+                    Region nextRegion = outerRegionsIterator.next();
+                    Integer currentValue = deepValues.get(nextRegion);
+                    WCRT = WCRT + currentValue;
+                }
+                regionLabelStringMap.put(currentRegion, WCRT.toString());
             }
         }
     }
@@ -585,6 +580,10 @@ public class TimingAnalysis extends Job {
         ArrayList<Link> redirectedEdges = new ArrayList<Link>();
         // insertion starts with TPP(1);
         Integer tppCounter = 1;
+        // Preprocessing step: Assign the first Region to the entry TPP
+        ControlFlow firstEdge = edgeList.getFirst();
+        Region firstSourceRegion = getSourceRegion(firstEdge, nodeRegionMapping, scchartDummyRegion);
+        tppRegionMap.put("entry", firstSourceRegion);
         while (edgeListIterator.hasNext()) {
             if (tppCounter == 13) {
                 // avoid a TPP with the number 13, as this one has a special meaning for the timing
@@ -604,20 +603,21 @@ public class TimingAnalysis extends Job {
                 // parts
                 targetRegion = scchartDummyRegion;
             }
-            // get the region the source node of the edge stems from
-            EObject edgeEContainer = currentEdge.eContainer();
-            Node sourceNode = null;
-            if (edgeEContainer instanceof Node) {
-                sourceNode = (Node) edgeEContainer;
-            } else {
-                // source node of edge could not be determined
-                return -1;
-            }
-            Region sourceRegion = nodeRegionMapping.get(sourceNode);
-            if (sourceRegion == null) {
-                // Nodes that do not belong to a region are attributed to the scchart dummy region
-                sourceRegion = scchartDummyRegion;
-            }
+            Region sourceRegion = getSourceRegion(currentEdge, nodeRegionMapping, scchartDummyRegion);
+//            // get the region the source node of the edge stems from
+//            EObject edgeEContainer = currentEdge.eContainer();
+//            Node sourceNode = null;
+//            if (edgeEContainer instanceof Node) {
+//                sourceNode = (Node) edgeEContainer;
+//            } else {
+//                // source node of edge could not be determined
+//                return -1;
+//            }
+//            Region sourceRegion = nodeRegionMapping.get(sourceNode);
+//            if (sourceRegion == null) {
+//                // Nodes that do not belong to a region are attributed to the scchart dummy region
+//                sourceRegion = scchartDummyRegion;
+//            }
             // check if the mapping has yielded a complete answer
             if ((targetRegion != null) && (sourceRegion != null)) {
                 // check for a context switch, in any other case nothing will be done
@@ -655,6 +655,40 @@ public class TimingAnalysis extends Job {
             }
         }
         return tppCounter -1;
+    }
+
+    /**
+     * This method retrieves the region the source node of the controlFlow edge given as a parameter is 
+     * attributed to.
+     * 
+     * @param nodeRegionMapping
+     *        The given mapping of nodes to regions
+     * @param scchartDummyRegion
+     *        The dummy region representing the SCChart itself (for not all elements can attributed to 
+     *        regions of the SCChart and are then attributed to the SCChart, resp. its dummy region)
+     * @param controlFlow
+     *        The edge for which the start node region ist to be determined
+     * @return 
+     *     Returns the Region the source node of the controlFlow edge belongs to. Returns null, if the
+     *     edge container is no Node.
+     */
+    private Region getSourceRegion(ControlFlow controlFlow,
+            HashMap<Node, Region> nodeRegionMapping, Region scchartDummyRegion) {
+        // get the region the source node of the edge stems from
+        EObject edgeEContainer = controlFlow.eContainer();
+        Node sourceNode = null;
+        if (edgeEContainer instanceof Node) {
+            sourceNode = (Node) edgeEContainer;
+        } else {
+            // source node of edge could not be determined
+            return null;
+        }
+        Region sourceRegion = nodeRegionMapping.get(sourceNode);
+        if (sourceRegion == null) {
+            // Nodes that do not belong to a region are attributed to the scchart dummy region
+            sourceRegion = scchartDummyRegion;
+        }
+        return null;
     }
 
     /**
