@@ -26,7 +26,7 @@ public class EsterelFeature {
     public final static String BASIC_ID = "esterel.basic";
     public final static String BASIC_NAME = "Esterel";
 
-    public final static String SIMULATIONVISUALIZATION_ID = "SIMULATIONVISUALIZATION";
+    public final static String SIMULATIONVISUALIZATION_ID = "ESTERELSIMULATIONVISUALIZATION";
     public final static String SIMULATIONVISUALIZATION_NAME = "Simulation Visualization";
 
 }

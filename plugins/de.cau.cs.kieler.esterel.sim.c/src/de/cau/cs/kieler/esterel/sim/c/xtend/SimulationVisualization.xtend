@@ -101,12 +101,8 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
     
-    def Program transformNoVisualization(Program model) {
-        // The default does nothing
-        model
-    }
 
-    def Program transformVisualization(Program program) {
+    def Program transform(Program program) {
         // The default does nothing
         
         // TODO: enable visualization

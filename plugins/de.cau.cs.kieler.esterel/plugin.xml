@@ -24,6 +24,9 @@
      <featureClass
            class="de.cau.cs.kieler.esterel.features.Esterel">
      </featureClass>
+     <featureClass
+           class="de.cau.cs.kieler.esterel.features.SimulationVisualization">
+     </featureClass>
   </extension>
   <!--extension
         point="org.eclipse.ui.menus">
