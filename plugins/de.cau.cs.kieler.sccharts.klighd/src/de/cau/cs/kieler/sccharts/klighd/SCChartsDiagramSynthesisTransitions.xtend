@@ -1,7 +1,7 @@
 package de.cau.cs.kieler.sccharts.klighd
 
 class SCChartsDiagramSynthesisTransitions {
-    def KEdge translateTransition(Transition t) {
+/*     def KEdge translateTransition(Transition t) {
         return t.createEdge().putToLookUpWith(t) => [ edge |
             edge.source = t.sourceState.node;
             edge.target = t.targetState.node;
@@ -156,5 +156,5 @@ class SCChartsDiagramSynthesisTransitions {
             ]
         ];
     }
-	
+*/	
 }

@@ -1,7 +1,7 @@
 package de.cau.cs.kieler.sccharts.klighd
 
 class SCChartsDiagramSynthesisDataflowRegions {
-	    public def dispatch KNode translate(DataflowRegion d, boolean loadLazy) {
+/* 	    public def dispatch KNode translate(DataflowRegion d, boolean loadLazy) {
         val dNode = d.createNode().putToLookUpWith(d) => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
@@ -380,7 +380,7 @@ class SCChartsDiagramSynthesisDataflowRegions {
                 /*  add ports to dummy node (nNode) to create an edge from input to output
                  * inside(!) the call node
                  * (klighd would draw the edge around the call node, if the dummy node is not used)
-                 */
+                 *
                 nNode.addPort(vo, PortSide::EAST, 1)
                 nNode.addPort(voRef, PortSide::WEST, 1)
                 // first part of the edge
@@ -578,7 +578,7 @@ class SCChartsDiagramSynthesisDataflowRegions {
                     /* add child nodes and edges if not already craeted
                      * only if the index of the parameter 
                      * is less then the number of inputs of the define node 
-                     */
+                     *
                     if (p instanceof ValuedObjectReference) {
                         val param = (p as ValuedObjectReference).valuedObject 
                         dNode.children += param.createNode(dNode) => [ inNode|
@@ -691,7 +691,7 @@ class SCChartsDiagramSynthesisDataflowRegions {
 	}
 	/*
 	 * some helper methods for node shapes and layout
-	 */
+	 *
 	private def KNode createDefaultNodeShape(KNode n) {
         n.addRoundedRectangle(3, 3) => [
             it.setBackgroundGradient("#ff8".color, "#ff8".color, 90)
@@ -786,5 +786,5 @@ class SCChartsDiagramSynthesisDataflowRegions {
         ]
         return edge
     }
-	
+*/	
 }

@@ -214,7 +214,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         
         // ATTENTION: DO NOT use graphiz on outermost root node, this will result in suspicious layout bugs!!!
         rootNode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
-        rootNode.children += rootState
+        rootNode.children += this.translate(rootState)
         
 		val elapsedTime = timing.elapsed
         System.out.println("SCCharts synthesis finished (time elapsed: "+(elapsedTime / 1000)+"s).")

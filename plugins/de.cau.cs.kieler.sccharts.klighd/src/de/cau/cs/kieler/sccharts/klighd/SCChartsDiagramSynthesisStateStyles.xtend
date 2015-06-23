@@ -4,7 +4,7 @@ import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 
 class SCChartsDiagramSynthesisStateStyles {
-	protected static final KRenderingFactory RENDERING_FACTORY = KRenderingFactory.eINSTANCE;
+	private static final KRenderingFactory RENDERING_FACTORY = KRenderingFactory.eINSTANCE;
 	
 	protected static val KColor KEYWORD = RENDERING_FACTORY.createKColor() => [it.red = 115; it.green = 0; it.blue = 65];
 	
@@ -18,5 +18,7 @@ class SCChartsDiagramSynthesisStateStyles {
     protected static val KColor STATE_STARTGRADIENTCOLOR = RENDERING_FACTORY.createKColor() =>
         [it.red = 248; it.green = 249; it.blue = 253];
     protected static val KColor STATE_ENDGRADIENTCOLOR = RENDERING_FACTORY.createKColor() =>
-        [it.red = 205; it.green = 220; it.blue = 243];	
+        [it.red = 205; it.green = 220; it.blue = 243];
+    protected static val KColor STATE_SUPERSTATEBACKGROUND = RENDERING_FACTORY.createKColor() =>
+        [it.red = 240; it.green = 240; it.blue = 240];
 }
