@@ -21,12 +21,19 @@ package de.cau.cs.kieler.esterel.scl.transformations;
  * @kieler.rating 2015-05-25 proposed yellow
  * 
  */
-public class EsterelTransformations {
+public class EsterelTransformation {
   
     public final static String SCL_ID = "esterel.scl";
     public final static String SCL_NAME = "SCL";
     
     public final static String SCLTOESTEREL_ID = "scl.esterel";
     public final static String SCLTOESTEREL_NAME = "Esterel";
+    
+    public final static String SIMULATIONVISUALIZATION_ID = "ESTERELSIMULATIONVISUALIZATION";
+    public final static String SIMULATIONVISUALIZATION_NAME = "Simulation Visualization";
+
+    public final static String NOSIMULATIONVISUALIZATION_ID = "ESTERELNOSIMULATIONVISUALIZATION";
+    public final static String NOSIMULATIONVISUALIZATION_NAME = "No Simulation Visualization";
+    
             
 }

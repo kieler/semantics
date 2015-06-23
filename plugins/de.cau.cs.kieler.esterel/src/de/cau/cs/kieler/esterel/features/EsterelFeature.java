@@ -21,9 +21,12 @@ package de.cau.cs.kieler.esterel.features;
  * @kieler.rating 2015-05-30 proposed yellow
  * 
  */
-public class EsterelFeatures {
+public class EsterelFeature {
 
     public final static String BASIC_ID = "esterel.basic";
     public final static String BASIC_NAME = "Esterel";
-    
+
+    public final static String SIMULATIONVISUALIZATION_ID = "SIMULATIONVISUALIZATION";
+    public final static String SIMULATIONVISUALIZATION_NAME = "Simulation Visualization";
+
 }

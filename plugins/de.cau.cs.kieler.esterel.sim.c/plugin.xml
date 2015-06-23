@@ -71,5 +71,11 @@
             name="No Visualization">
       </transformationMethod>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <expansionTransformationClass
+            class="de.cau.cs.kieler.esterel.sim.c.xtend.SimulationVisualization">
+      </expansionTransformationClass>
+   </extension>
 
 </plugin>

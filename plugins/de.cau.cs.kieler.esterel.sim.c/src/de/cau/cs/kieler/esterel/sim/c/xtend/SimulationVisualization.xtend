@@ -46,6 +46,10 @@ import de.cau.cs.kieler.esterel.esterel.Sequence
 import de.cau.cs.kieler.esterel.esterel.StatementContainer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.esterel.scl.transformations.EsterelTransformation
+import de.cau.cs.kieler.esterel.features.EsterelFeature
+import com.google.common.collect.Sets
 
 /**
  * This class handles the<BR>
@@ -55,8 +59,33 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2014-11-26 proposed cmot
  * @kieler.rating 2014-11-26 proposed yellow
  */
-class SimulationVisualization {
+class SimulationVisualization extends AbstractExpansionTransformation {
+    
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return EsterelTransformation::SIMULATIONVISUALIZATION_ID
+    }
 
+    override getName() {
+        return EsterelTransformation::SIMULATIONVISUALIZATION_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return EsterelFeature::SIMULATIONVISUALIZATION_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(EsterelFeature::BASIC_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet()
+    }
+    
+    //-------------------------------------------------------------------------
+    
     @Inject
     extension KExpressionsExtension
 
