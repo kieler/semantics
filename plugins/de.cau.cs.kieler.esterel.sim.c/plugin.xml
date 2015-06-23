@@ -76,6 +76,9 @@
       <expansionTransformationClass
             class="de.cau.cs.kieler.esterel.sim.c.xtend.SimulationVisualization">
       </expansionTransformationClass>
+      <expansionTransformationClass
+            class="de.cau.cs.kieler.esterel.sim.c.xtend.NoSimulationVisualization">
+      </expansionTransformationClass>
    </extension>
 
 </plugin>

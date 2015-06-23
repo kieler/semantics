@@ -47,9 +47,9 @@ import de.cau.cs.kieler.esterel.esterel.StatementContainer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.esterel.scl.transformations.EsterelTransformation
 import de.cau.cs.kieler.esterel.features.EsterelFeature
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
 
 /**
  * This class handles the<BR>

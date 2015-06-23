@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.scl.transformations;
+package de.cau.cs.kieler.esterel.transformations;
 
 /**
  * This class lists the esterel to scl transformations.
@@ -22,6 +22,9 @@ package de.cau.cs.kieler.esterel.scl.transformations;
  * 
  */
 public class EsterelTransformation {
+    
+    public final static String ESTERELDUMMY_ID = "ESTERELDUMMY";
+    public final static String ESTERELDUMMY_NAME = "Esterel Dummy";
   
     public final static String SCL_ID = "esterel.scl";
     public final static String SCL_NAME = "SCL";

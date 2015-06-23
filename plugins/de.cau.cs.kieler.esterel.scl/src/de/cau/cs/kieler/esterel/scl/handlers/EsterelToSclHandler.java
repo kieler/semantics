@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.ISelection;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
-import de.cau.cs.kieler.esterel.scl.transformations.EsterelTransformation;
+import de.cau.cs.kieler.esterel.transformations.EsterelTransformation;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.scg.SCGraph;

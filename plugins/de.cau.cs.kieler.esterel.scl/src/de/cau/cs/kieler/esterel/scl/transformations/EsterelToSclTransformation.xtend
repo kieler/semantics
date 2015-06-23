@@ -95,6 +95,7 @@ import java.util.HashSet
 import de.cau.cs.kieler.esterel.esterel.UnEmit
 import de.cau.cs.kieler.esterel.esterel.Reset
 import de.cau.cs.kieler.esterel.features.EsterelFeature
+import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
