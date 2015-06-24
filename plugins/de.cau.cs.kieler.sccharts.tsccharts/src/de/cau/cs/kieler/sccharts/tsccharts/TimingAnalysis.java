@@ -509,7 +509,7 @@ public class TimingAnalysis extends Job {
                 String wcpMarker = "";
                 if (wcpRegions.contains(currentRegion)){
                     wcpMarker = "W ";
-                }
+                } 
                 regionLabelStringMap.put(currentRegion, wcpMarker + flatValues.get(currentRegion) + " / "
                         + deepValues.get(currentRegion));
             } else {
