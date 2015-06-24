@@ -83,7 +83,7 @@ class SCChartsDiagramSynthesisControlflowRegions {
         val regionRectangle =  regionNode.addRectangle
         synthesis.associateWith(regionRectangle, region)
         regionRectangle.setAsExpandedView;
-        regionRectangle.setBackgroundGradient("white".color, SCChartsDiagramSynthesisTransitionStyles::REGION_BACKGROUNDGRADIENTEND.copy, 90);
+        regionRectangle.setBackgroundGradient("white".color, SCChartsDiagramSynthesisControlflowRegionStyles::REGION_BACKGROUNDGRADIENTEND.copy, 90);
         regionRectangle.setSurroundingSpace(2, 0);
         regionRectangle.invisible = false;
         regionRectangle.foreground = "gray".color
@@ -105,7 +105,7 @@ class SCChartsDiagramSynthesisControlflowRegions {
         val collapsedRectangle = regionNode.addRectangle()
         synthesis.associateWith(collapsedRectangle, region)
         collapsedRectangle.setAsCollapsedView;
-        collapsedRectangle.setBackgroundGradient("white".color, SCChartsDiagramSynthesisTransitionStyles::REGION_BACKGROUNDGRADIENTEND.copy, 90);
+        collapsedRectangle.setBackgroundGradient("white".color, SCChartsDiagramSynthesisControlflowRegionStyles::REGION_BACKGROUNDGRADIENTEND.copy, 90);
         collapsedRectangle.setSurroundingSpace(4, 0);
         collapsedRectangle.invisible = false;
         collapsedRectangle.foreground = "gray".color
