@@ -83,9 +83,8 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      *
      * @param region the region
      */
-// FIXME: dataflow
 //    @Check
-//    public void checkInitialState(final de.cau.cs.kieler.sccharts.Region region) {
+//    public void checkInitialState(final de.cau.cs.kieler.sccharts.ControlflowRegion region) {
 //        // Do not consider the root region == SCChart
 //        if (region.getParentState() != null) {
 //            // check if parent state has declared any REAL region not only a
