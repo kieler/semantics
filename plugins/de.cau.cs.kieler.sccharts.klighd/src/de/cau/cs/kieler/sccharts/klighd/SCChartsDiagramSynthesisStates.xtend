@@ -424,7 +424,7 @@ class SCChartsDiagramSynthesisStates {
             }
             
             for (transition : state.outgoingTransitions) {
-//                synthesis.translate(transition)
+                synthesis.translate(transition)
             }
         
         return stateNode
