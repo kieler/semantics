@@ -99,11 +99,19 @@ public class TimingAnalysis extends Job {
             SCChartsExtension.class);
 
     public static void startAnalysis(State rootState, KNode rootNode) {
+        // It is normal that some nodes of the SCG will be mapped to null, because they belong to
+        // the SCChart itself not to a Region of the SCChart (they cannot be attributed to the outermost
+        // Region in the root state, because there may be several of those). So we use a dummy
+        // region to represent the SCChart in Timing Analysis. 
+        Region scchartDummyRegion= SCChartsFactory.eINSTANCE.createRegion();
+        scchartDummyRegion.setId("SCChartDummyRegion");
+        
         // Step 0: (Preprocessing)
         // Add timing labels (while still in synthesis run)
-
+      
         // Hashmap contains weak references, thus the KGraph can be deleted completely while
         // timing analysis is running
+        
         HashMultimap<Region, WeakReference<KText>> timingLabels = HashMultimap.create();
         Iterator<EObject> graphIter =
                 ModelingUtil.eAllContentsOfType2(rootNode, KNode.class, KContainerRendering.class,
@@ -139,23 +147,26 @@ public class TimingAnalysis extends Job {
         rectangle.getChildren().add(text);
         timingLabels.put(null, new WeakReference<KText>(text));
         // start analysis job
-        new TimingAnalysis(rootState, timingLabels).schedule();
+        new TimingAnalysis(rootState, timingLabels, scchartDummyRegion).schedule();
     }
 
     private State scchart;
     private HashMultimap<Region, WeakReference<KText>> timingLabels;
     private HashMap<Region, String> timingResults;
+    private Region scchartDummyRegion;
 
     /**
      * @param name
      * @param rootState
+     * @param scchartDummyRegion 
      * @param rootNode
      */
-    public TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels) {
+    public TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels, Region scchartDummyRegion) {
         super("Timing Analysis");
         this.scchart = rootState;
         this.timingLabels = regionLabels;
         this.timingResults = new HashMap<Region, String>();
+        this.scchartDummyRegion = scchartDummyRegion;
     }
 
     /**
@@ -183,7 +194,7 @@ public class TimingAnalysis extends Job {
         if (!(compilationResult.getEObject() instanceof SCGraph)
                 || compilationResult.getPostponedErrors().size() > 0) {
             if (!(compilationResult.getEObject() instanceof SCGraph)) {
-                System.out.println("The scg sequentialization did not return a scg.");
+                System.out.println("The scg sequentialization did not return an scg.");
             } else {
                 System.out.println("The sequentialization yielded postponed Errors:\n");
                 Iterator<KielerCompilerException> errorIterator =
@@ -216,9 +227,9 @@ public class TimingAnalysis extends Job {
         HashMap<Node, Region> nodeRegionMapping =
                 new HashMap<Node, Region>(mapping.keySet().size());
         HashMap<Region, Integer> regionDepth = TimingUtil.createRegionDepthMap(scchart);
-        for (Object oringinElement : mapping.keySet()) {
-            if (oringinElement instanceof Node) {
-                Collection<Object> targetElements = mapping.get(oringinElement);
+        for (Object originElement : mapping.keySet()) {
+            if (originElement instanceof Node) {
+                Collection<Object> targetElements = mapping.get(originElement);
                 Region region = null;
                 int depth = -1;
                 for (Object targetObj : targetElements) {
@@ -254,7 +265,7 @@ public class TimingAnalysis extends Job {
                         }
                     }
                 }
-                nodeRegionMapping.put((Node) oringinElement, region);
+                nodeRegionMapping.put((Node) originElement, region);
             }
         }
 
@@ -266,14 +277,7 @@ public class TimingAnalysis extends Job {
         }
         HashMap<String, Region> tppRegionMap = new HashMap<String, Region>();
 
-        // It is normal that some nodes of the SCG will be mapped to null, because they belong to
-        // the SCChart itself not to a Region of the SCChart (they cannot be attributed to the outermost
-        // Region in the root state, because there may be several of those). So create a dummy
-        // region to represent the SCChart in Timing Analysis. Will be mapped to TPP "entry", 
-        // represented by 0
-        Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
-        scchartDummyRegion.setId("SCChartDummyRegion");
-
+        
         // insert timing program points
         int highestInsertedTPPNumber =
                 insertTPP(scg, nodeRegionMapping, tppRegionMap, scchartDummyRegion);
@@ -405,7 +409,19 @@ public class TimingAnalysis extends Job {
                     for (WeakReference<KText> labelRef : labels) {
                         KText label = labelRef.get();
                         if (label != null) {
-                            label.setText(timingResults.get(region));
+                            String timingResult = timingResults.get(region);
+                            // Special case: Timing for the whole SCChart
+                            if (region == null) {
+                                // get the timing for elements not attributed to a concrete region
+                                String scchartTiming = timingResults.get(scchartDummyRegion);
+                                // add it to the timing for child regions
+                                if (scchartTiming != null) {
+                                Integer timingResultSum = 
+                                        Integer.parseInt(timingResult) + Integer.parseInt(scchartTiming);
+                                timingResult = timingResultSum.toString();
+                                }
+                            }
+                            label.setText(timingResult);
                         }
                     }
                 }
@@ -492,6 +508,11 @@ public class TimingAnalysis extends Job {
                     Region nextRegion = outerRegionsIterator.next();
                     Integer currentValue = deepValues.get(nextRegion);
                     WCRT = WCRT + currentValue;
+                }
+                //get the timing for the parts of the scchart that are not attributed to a region
+                Integer dummyTiming = flatValues.get(scchartDummyRegion);
+                if (dummyTiming != null) {
+                WCRT = WCRT + dummyTiming;
                 }
                 regionLabelStringMap.put(currentRegion, WCRT.toString());
             }
@@ -688,7 +709,7 @@ public class TimingAnalysis extends Job {
             // Nodes that do not belong to a region are attributed to the scchart dummy region
             sourceRegion = scchartDummyRegion;
         }
-        return null;
+        return sourceRegion;
     }
 
     /**
