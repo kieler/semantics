@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import com.google.inject.Provider
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import java.util.List
+import de.cau.cs.kieler.core.krendering.KContainerRendering
 
 class SCChartsDiagramSynthesisStates {
 	
@@ -62,10 +63,11 @@ class SCChartsDiagramSynthesisStates {
     extension SCChartsDiagramSynthesisHelper
     
 	protected DependencyGraph dependencyGraph = null
+	protected var List<ValuedObject> valuedObjectCache 
 	
     public def KNode translate(AbstractDiagramSynthesis<Scope> synthesis, State state) {
 
-        val valuedObjectCache = state.getAllValuedObjects
+        valuedObjectCache = state.getAllValuedObjects
         
         val stateNode = state.createNode
         synthesis.associateWith(stateNode, state);
@@ -79,108 +81,9 @@ class SCChartsDiagramSynthesisStates {
             stateNode.setParent(stateNode.parent)
         }
         
-        val connector = state.type == StateType::CONNECTOR;
+        val stateFigure = stateNode.createStateFigure(state, synthesis)
         
-        var cornerRadius = 8;
-        var lineWidth = 1
-        
-        if (connector) {
-        	cornerRadius = 7;
-      	} else {
-        	if (!synthesis.regionsOrDeclarationsVisible(state, valuedObjectCache) && !state.referencedState) {
-        		cornerRadius = 17;
-        	}
-        }
-        
-        if (state.isInitial) {
-        	lineWidth = 3
-        }
-        
-        if (synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::PAPER_BW)) {
-            lineWidth = lineWidth + 1;
-        }
-        
-        
-        val stateFigure = stateNode.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)
-        stateFigure.background = "white".color
-        stateFigure.lineWidth = lineWidth;
-        
-        if (state.isInitial || state.isFinal || synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::PAPER_BW)) {
-        	stateFigure.foreground = "black".color
-        } else {
-        	stateFigure.foreground = "gray".color
-        }
-        
-        if (!synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::PAPER_BW) && 
-            synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::SHOW_SHADOW) && 
-            !connector
-        ) {
-            stateFigure.shadow = "black".color;
-            stateFigure.shadow.XOffset = 4;
-            stateFigure.shadow.YOffset = 4;
-        }
-
-        if (connector) {
-        	stateFigure.background = "black".color
-        	stateFigure.lineWidth = 3
-        	stateFigure.foreground = "white".color
-			stateNode.setNodeSize(7, 7);
-        }
-        
-        if (state.isFinal) {
-			val stateRectangle = stateFigure.addRoundedRectangle(cornerRadius, cornerRadius)        	
-			if (synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::USE_ADAPTIVEZOOM)) {
-				stateFigure.lowerVisibilityScaleBound = 0.30f;
-			}
-				
-			var offset = stateFigure.lineWidthValue + 2
-			if (state.isInitial) {
-				offset = offset - 1
-	            stateFigure.lineWidth = 3
-			} else {
-	            stateFigure.lineWidth = 1
-			}
-            stateFigure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
-            stateRectangle.styleRef = stateFigure // WHY?
-            
-            if (state.referencedState) {
-            	stateFigure.background.alpha = 0
-            } else {
-            	if (!synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::PAPER_BW)) {
-            		stateFigure.setBackgroundGradient(SCChartsDiagramSynthesisStateStyles::STATE_STARTGRADIENTCOLOR.copy, 
-            			SCChartsDiagramSynthesisStateStyles::STATE_ENDGRADIENTCOLOR.copy, 90
-            		);
-            	}
-            }
-            
-            stateFigure.shadow = null as KColor
-            stateFigure.lineWidth = 1;
-            stateFigure.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
-        
-        
-        } else {
-	        // State is not final.
-        	
-        	if (synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::PAPER_BW)) {
-                stateFigure.setBackgroundGradient(SCChartsDiagramSynthesisStateStyles::STATE_STARTGRADIENTCOLOR.copy, 
-                    SCChartsDiagramSynthesisStateStyles::STATE_ENDGRADIENTCOLOR.copy, 90);
-        	} else {
-        	    if (state.hasInnerStatesOrControlflowRegions) {
-        	        stateFigure.setBackground(SCChartsDiagramSynthesisStateStyles::STATE_SUPERSTATEBACKGROUND.copy)
-        	    }
-        	}
-        	
-        	stateNode.setMinimalNodeSize(2 * stateFigure.cornerWidth, 2 * stateFigure.cornerHeight);
-        	stateFigure.invisible = false
-        	
-        	if (connector) {
-        	    return stateNode
-        	}
-        	
-            if (synthesis.regionsOrDeclarationsVisible(state, valuedObjectCache) || state.isReferencedState) {
-                stateFigure.setGridPlacement(1);
-            }
-            
+    
             
             var priority = ""
             if (synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::SHOW_ORDER) || 
@@ -296,7 +199,7 @@ class SCChartsDiagramSynthesisStates {
                     stateText.lowerVisibilityScaleBound = 0.40f
                 }
             } // simple states
-        }
+//        }
         
         if (synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::SHOW_SIGNAL_DECLARATIONS)) {
             for (declaration : state.declarations) {
@@ -432,6 +335,107 @@ class SCChartsDiagramSynthesisStates {
     
     @Inject
     Provider<DelegateSCChartsDiagramSynthesis> delegate;    
+    
+    
+    def KContainerRendering createStateFigure(KNode stateNode, State state, AbstractDiagramSynthesis<Scope> synthesis) {
+        
+        val stateFigure = stateNode.addRoundedRectangle(SCChartsDiagramSynthesisStateStyles::DEFAULT_CORNER_RADIUS,
+            SCChartsDiagramSynthesisStateStyles::DEFAULT_CORNER_RADIUS, SCChartsDiagramSynthesisStateStyles::DEFAULT_LINE_WIDTH)
+        stateFigure.background = "white".color
+        stateFigure.foreground = "gray".color
+        
+        if (state.type == StateType::CONNECTOR) {
+            stateFigure.cornerHeight = 7
+            stateFigure.cornerWidth = 7
+            
+            stateFigure.background = "black".color
+            stateFigure.lineWidth = 3
+            stateFigure.foreground = "white".color
+            stateNode.setNodeSize(7, 7);            
+        }
+        
+        if (!synthesis.regionsOrDeclarationsVisible(state, valuedObjectCache) && !state.referencedState) {
+            stateFigure.cornerHeight = 17
+            stateFigure.cornerWidth = 17
+        }
+        
+        if (state.isInitial) {
+            stateFigure.lineWidth = 3
+            stateFigure.foreground = "black".color
+        }
+
+        if (state.isFinal) {
+            stateFigure.foreground = "black".color
+        }
+        
+        if (synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::PAPER_BW)) {
+            stateFigure.lineWidth = stateFigure.lineWidth.getLineWidth + 1
+            stateFigure.foreground = "black".color
+        }
+        
+        if (!synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::PAPER_BW) && 
+            synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::SHOW_SHADOW) && 
+            state.type != StateType::CONNECTOR
+        ) {
+            stateFigure.shadow = "black".color;
+            stateFigure.shadow.XOffset = 4;
+            stateFigure.shadow.YOffset = 4;
+        }
+        
+        
+        
+
+        if (state.isFinal) {
+            val finalFigure = stateFigure.addRoundedRectangle(SCChartsDiagramSynthesisStateStyles::DEFAULT_CORNER_RADIUS, 
+                SCChartsDiagramSynthesisStateStyles::DEFAULT_CORNER_RADIUS)            
+                
+            var offset = stateFigure.lineWidthValue + 3
+            if (state.isInitial) {
+                offset = offset - 1
+            } 
+            finalFigure.setCornerSize(offset + SCChartsDiagramSynthesisStateStyles::DEFAULT_CORNER_RADIUS, 
+                offset + SCChartsDiagramSynthesisStateStyles::DEFAULT_CORNER_RADIUS
+            )
+//            finalFigure.styleRef = stateFigure // WHY?
+            
+            if (state.referencedState) {
+                stateFigure.background.alpha = 0
+            } else {
+                if (!synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::PAPER_BW)) {
+                    stateFigure.setBackgroundGradient(SCChartsDiagramSynthesisStateStyles::STATE_STARTGRADIENTCOLOR.copy, 
+                        SCChartsDiagramSynthesisStateStyles::STATE_ENDGRADIENTCOLOR.copy, 90
+                    );
+                }
+            }
+            
+            finalFigure.shadow = null as KColor
+            finalFigure.lineWidth = 1;
+            finalFigure.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
+        
+        
+        } else {
+            // State is not final.
+            
+            if (!synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::PAPER_BW)) {
+                stateFigure.setBackgroundGradient(SCChartsDiagramSynthesisStateStyles::STATE_STARTGRADIENTCOLOR.copy, 
+                    SCChartsDiagramSynthesisStateStyles::STATE_ENDGRADIENTCOLOR.copy, 90);
+            } else {
+                if (state.hasInnerStatesOrControlflowRegions) {
+                    stateFigure.setBackground(SCChartsDiagramSynthesisStateStyles::STATE_SUPERSTATEBACKGROUND.copy)
+                }
+            }
+            
+            stateNode.setMinimalNodeSize(2 * stateFigure.cornerWidth, 2 * stateFigure.cornerHeight);
+            stateFigure.invisible = false
+            
+            
+            if (synthesis.regionsOrDeclarationsVisible(state, valuedObjectCache) || state.isReferencedState) {
+                stateFigure.setGridPlacement(1);
+            }
+       }  
+       
+       return stateFigure        
+    }
     
     
     

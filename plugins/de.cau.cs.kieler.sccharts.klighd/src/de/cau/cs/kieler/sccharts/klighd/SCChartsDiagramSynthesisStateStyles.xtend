@@ -21,4 +21,7 @@ class SCChartsDiagramSynthesisStateStyles {
         [it.red = 205; it.green = 220; it.blue = 243];
     protected static val KColor STATE_SUPERSTATEBACKGROUND = RENDERING_FACTORY.createKColor() =>
         [it.red = 240; it.green = 240; it.blue = 240];
+        
+    protected static val int DEFAULT_CORNER_RADIUS = 8
+    protected static val int DEFAULT_LINE_WIDTH = 1
 }
