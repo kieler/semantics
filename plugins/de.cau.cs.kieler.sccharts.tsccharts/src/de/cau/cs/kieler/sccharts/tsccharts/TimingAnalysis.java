@@ -124,7 +124,7 @@ public class TimingAnalysis extends Job {
                 if (sourceElem instanceof Region) {
                     KText text = KRenderingFactory.eINSTANCE.createKText();
                     text.setText("???/???");
-                    renderingExtensions.setFontSize(text, 18);
+                    renderingExtensions.setFontSize(text, 14);
                     renderingExtensions.setForegroundColor(text, 255, 0, 0);
                     renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5,
                             0, renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT,
@@ -139,7 +139,7 @@ public class TimingAnalysis extends Job {
                         .getChildren().get(0);
         KText text = KRenderingFactory.eINSTANCE.createKText();
         text.setText("???");
-        renderingExtensions.setFontSize(text, 22);
+        renderingExtensions.setFontSize(text, 20);
         renderingExtensions.setForegroundColor(text, 255, 0, 0);
         renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5, 0,
                 renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT, VerticalAlignment.TOP, 5,
@@ -470,7 +470,13 @@ public class TimingAnalysis extends Job {
         Iterator<String> pathIterator = wcp.iterator();
         while (pathIterator.hasNext()) {
             String step = pathIterator.next();
-            // TODO: Implement the retrieving of path regions (then use to mark WCET path)
+            // exit is not attributed to a region, it can be no start TPP
+            if (step != "exit") {
+            Region currentRegion = tppRegionMap.get(step);
+            if(currentRegion != null) {
+            wcpRegions.add(currentRegion);
+            }
+            }
         }
         HashMap<Region, Integer> deepValues = new HashMap<Region, Integer>();
         HashMap<Region, Integer> flatValues = new HashMap<Region, Integer>();
@@ -499,8 +505,13 @@ public class TimingAnalysis extends Job {
         while (regionIterator.hasNext()) {
             Region currentRegion = regionIterator.next();
             if (!(currentRegion == null)) {
-                regionLabelStringMap.put(currentRegion, deepValues.get(currentRegion) + " / "
-                        + flatValues.get(currentRegion));
+                // Possibly we have to mark this region as part of the WCET path (WCP)
+                String wcpMarker = "";
+                if (wcpRegions.contains(currentRegion)){
+                    wcpMarker = "W ";
+                }
+                regionLabelStringMap.put(currentRegion, wcpMarker + flatValues.get(currentRegion) + " / "
+                        + deepValues.get(currentRegion));
             } else {
                 Integer WCRT = 0;
                 Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();
