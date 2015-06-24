@@ -489,7 +489,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             if (!((stateOrSCG instanceof State) || (stateOrSCG instanceof SCGraph))) {
                 // compilation failed
                 throw new KiemInitializationException(
-                        "Error compiling the SCChart (high-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view.",
+                        "Error compiling the SCChart (high-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view:" + highLeveleCompilationResult.getAllErrors(),
                         true, null);
             }
 
@@ -512,7 +512,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             if (cSCChartCCode == null) {
                 // compilation failed
                 throw new KiemInitializationException(
-                        "Error compiling the SCChart (low-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view.",
+                        "Error compiling the SCChart (low-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view:" + lowLevelCompilationResult.getAllErrors(),
                         true, null);
             }
 

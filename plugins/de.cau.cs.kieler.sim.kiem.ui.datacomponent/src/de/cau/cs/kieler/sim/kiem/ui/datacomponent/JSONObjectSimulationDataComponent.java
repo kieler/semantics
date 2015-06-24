@@ -571,7 +571,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             e.printStackTrace();
             throw new KiemInitializationException("Model could not be generated\n\n"
                     + "Please ensure that all simulation warnings in the "
-                    + "respective Eclipse Problems View have been cleared.\n\n", true, e);
+                    + "respective Eclipse Problems View have been cleared.\n\n" + KiemUtil.getStackTraceString(e), true, e);
         }
     }
 

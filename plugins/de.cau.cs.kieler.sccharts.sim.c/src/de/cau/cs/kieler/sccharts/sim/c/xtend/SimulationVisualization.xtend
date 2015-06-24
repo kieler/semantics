@@ -114,19 +114,17 @@ class SimulationVisualization extends AbstractExpansionTransformation {
         var targetRootState = rootState.fixAllPriorities
 
 
-// FIXME: DISABLED DUE TO NPEs! Blocks testing... (ssm)
-
         // Traverse all transitions
-//        var i = 0;
-//        val originalTransitionsList = targetRootState.eAllContents().toIterable().filter(typeof(Transition)).toList
-//        for (targetTransition : originalTransitionsList.immutableCopy) {
-//            val originalTransition = originalTransitionsList.get(i);
-//            i = i + 1;
-//            val originalTransitionURIFragment = res.getURIFragment(originalTransition);
-//            val transitionUID = AUXILIARY_VARIABLE_TAG_TRANSITION +
-//                originalTransitionURIFragment.hashCode.toString().replace("-", "M");
-//            targetTransition.transformSimulationVisualizationTransition(targetRootState, transitionUID);
-//        }
+        var i = 0;
+        val originalTransitionsList = targetRootState.eAllContents().toIterable().filter(typeof(Transition)).toList
+        for (targetTransition : originalTransitionsList.immutableCopy) {
+            val originalTransition = originalTransitionsList.get(i);
+            i = i + 1;
+            val originalTransitionURIFragment = res.getURIFragment(originalTransition);
+            val transitionUID = AUXILIARY_VARIABLE_TAG_TRANSITION +
+                originalTransitionURIFragment.hashCode.toString().replace("-", "M");
+            targetTransition.transformSimulationVisualizationTransition(targetRootState, transitionUID);
+        }
 
 // TEMPORARY DISABLED //
 
