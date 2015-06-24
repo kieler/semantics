@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.ThenDependency
 import de.cau.cs.kieler.scg.ElseDependency
+import de.cau.cs.kieler.scg.ConditionalDependency
 
 /** 
  * 
@@ -63,9 +64,9 @@ class SCPDGTransformation extends Transformation {
     // -- Globals 
     // -------------------------------------------------------------------------
     public static val ANNOTATION_SCPDGTRANSFORMATION = "scpdg"
-    public var boolean one = false
+    public var boolean one = true
     public var boolean two = false
-    public var boolean three = false
+    public var boolean three = true
     private var Entry programEntry;
 
     // -------------------------------------------------------------------------
@@ -102,7 +103,7 @@ class SCPDGTransformation extends Transformation {
             scg.removeUselessNodes
 
         if (two)
-            scg.removeUnnecessaryDependencies
+            scg.minimizeControlDependencies
 
         if (three) {
             scg.nodes.forEach [ node |
@@ -332,26 +333,6 @@ class SCPDGTransformation extends Transformation {
             ]
         ]
     }
-
-//    private def Set<Node> getNextControlFlowNode(Node node) {
-//        val Set<Node> ret = newHashSet()
-//        val next = node.nextNode
-//        if (next == null) {
-//            return ret
-//        }
-//        next.forEach [ nextNode |
-//            if (nextNode instanceof Surface) {
-//                ret += nextNode
-//            } else if (nextNode instanceof Depth) {
-//                ret += nextNode
-//            } else if (nextNode instanceof Join) {
-//                ret += nextNode
-//            } else {
-//                ret.addAll(nextNode.nextControlFlowNode)
-//            }
-//        ]
-//        return ret
-//    }
     
     private def Set<Node> allUntilNextControlNode(Node node){
         val ret = newHashSet()
@@ -444,60 +425,108 @@ class SCPDGTransformation extends Transformation {
         return newHashSet()
     }
 
-    def private boolean existsNonTrivialDependency(Node root, Node target) {
-        val dependend = new BasicEList
-        root.dependencies.forEach [ depend |
-            if (target != depend.target)
-                dependend.add(depend.target)
-        ]
+//    def private boolean existsNonTrivialDependency(Node root, Node target) {
+//        val dependend = new BasicEList
+//        root.dependencies.forEach [ depend |
+//            if (target != depend.target)
+//                dependend.add(depend.target)
+//        ]
+//
+//        while (!dependend.empty) {
+//            val node = dependend.head
+//            if (!node.dependencies.forall [ dependency |
+//                dependend.add(dependency.target)
+//                dependency.target != target
+//            ]) {
+//                return true
+//            }
+//            dependend.remove(node)
+//        }
+//        false
+//    }
 
-        while (!dependend.empty) {
-            val node = dependend.head
-            if (!node.dependencies.forall [ dependency |
-                dependend.add(dependency.target)
-                dependency.target != target
-            ]) {
-                return true
-            }
-            dependend.remove(node)
-        }
-        false
-    }
-
-    def private SCGraph removeUnnecessaryDependencies(SCGraph scg) {
-        scg.nodes.forEach [ node |
-            node.removeUnnecessaryDependencies
-        ]
-
+//    def private SCGraph removeUnnecessaryDependencies(SCGraph scg) {
+//        scg.nodes.forEach [ node |
+//            node.removeUnnecessaryDependencies
+//        ]
+//
+//        return scg
+//    }
+//
+//    def private removeUnnecessaryDependencies(Node node) {
+//        val unnecessaryDependencies = new BasicEList
+//        node.dependencies.forEach [ dependcy |
+//            if (dependcy instanceof ControlDependency) {
+//                if (!node.dependencies.forall [ depend |
+//                    if (depend != dependcy && depend.target == dependcy.target && (depend instanceof ControlDependency)) {
+//
+//                        return false
+//
+//                    }
+//                    true
+//                ]) {
+//
+//                    unnecessaryDependencies.add(dependcy)
+//                }
+//
+//                if (existsNonTrivialDependency(node, dependcy.target)) {
+//
+//                    unnecessaryDependencies.add(dependcy)
+//                }
+//            }
+//        ]
+//
+//        unnecessaryDependencies.forEach [ dependency |
+//            node.dependencies.remove(dependency)
+//        ]
+//    }
+    
+    def private SCGraph minimizeControlDependencies(SCGraph scg){
+        scg.removeUnnecessaryControlDependencies
+        scg.removeUselessConditionalDependencies
+        
         return scg
     }
-
-    def private removeUnnecessaryDependencies(Node node) {
-        val unnecessaryDependencies = new BasicEList
-        node.dependencies.forEach [ dependcy |
-            if (dependcy instanceof ControlDependency) {
-                if (!node.dependencies.forall [ depend |
-                    if (depend != dependcy && depend.target == dependcy.target && (depend instanceof ControlDependency)) {
-
-                        return false
-
+    
+    def private removeUnnecessaryControlDependencies(SCGraph scg){
+        scg.nodes.forEach[node|
+            node.dependencies.forEach[]
+        ]
+    }
+    
+    def private removeUselessConditionalDependencies(SCGraph scg) {
+        scg.nodes.forEach [ node |
+            if (node instanceof Conditional) {
+                val Set<ConditionalDependency> uselessDependencies = newHashSet()
+                val Set<Node> independendNodes = newHashSet()
+                node.dependencies.forEach [ thenDependency |
+                    if (thenDependency instanceof ThenDependency) {
+                        node.dependencies.forEach [ elseDependency |
+                            if (elseDependency instanceof ElseDependency) {
+                                if (elseDependency.target == thenDependency.target) {
+                                    uselessDependencies += thenDependency
+                                    uselessDependencies += elseDependency
+                                    independendNodes += elseDependency.target
+                                }
+                            }
+                        ]
                     }
-                    true
-                ]) {
-
-                    unnecessaryDependencies.add(dependcy)
-                }
-
-                if (existsNonTrivialDependency(node, dependcy.target)) {
-
-                    unnecessaryDependencies.add(dependcy)
-                }
+                ]
+                
+                node.newDependencies(independendNodes)
+                node.dependencies.removeAll(uselessDependencies)    
             }
         ]
-
-        unnecessaryDependencies.forEach [ dependency |
-            node.dependencies.remove(dependency)
+    }
+    
+    def private newDependencies(Node node, Set<Node> targetNodes){
+        
+        node.incoming.forEach[dependency|
+            if(dependency instanceof ControlDependency || dependency instanceof ConditionalDependency){
+                (dependency as Dependency).newTargets((dependency.eContainer as Node), targetNodes)
+                }
         ]
+        
     }
 
 //     private def dispatch transformSCPDG(Entry entry, Set<ControlFlow> controlFlows, SCGraph scg,
