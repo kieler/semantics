@@ -4,14 +4,13 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text.ui;
 
-import org.eclipse.xtext.ui.DefaultUiModule;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Manual modifications go to {de.cau.cs.kieler.core.kexpressions.text.ui.KEXTUiModule}
  */
 @SuppressWarnings("all")
-public abstract class AbstractKEXTUiModule extends DefaultUiModule {
+public abstract class AbstractKEXTUiModule extends org.eclipse.xtext.ui.DefaultUiModule {
 	
 	public AbstractKEXTUiModule(AbstractUIPlugin plugin) {
 		super(plugin);

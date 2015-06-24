@@ -6,7 +6,6 @@ package de.cau.cs.kieler.core.kexpressions.keffects;
 import java.util.Properties;
 
 import org.eclipse.xtext.Constants;
-import org.eclipse.xtext.service.DefaultRuntimeModule;
 
 import com.google.inject.Binder;
 import com.google.inject.name.Names;
@@ -14,8 +13,8 @@ import com.google.inject.name.Names;
 /**
  * Manual modifications go to {de.cau.cs.kieler.core.kexpressions.keffects.KEffectsRuntimeModule}
  */
- @SuppressWarnings("all")
-public abstract class AbstractKEffectsRuntimeModule extends DefaultRuntimeModule {
+@SuppressWarnings("all")
+public abstract class AbstractKEffectsRuntimeModule extends org.eclipse.xtext.service.DefaultRuntimeModule {
 
 	protected Properties properties = null;
 

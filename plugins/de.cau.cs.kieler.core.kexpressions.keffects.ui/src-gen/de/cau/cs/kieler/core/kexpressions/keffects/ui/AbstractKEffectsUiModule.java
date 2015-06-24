@@ -4,14 +4,13 @@
  */
 package de.cau.cs.kieler.core.kexpressions.keffects.ui;
 
-import org.eclipse.xtext.ui.DefaultUiModule;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Manual modifications go to {de.cau.cs.kieler.core.kexpressions.keffects.ui.KEffectsUiModule}
  */
 @SuppressWarnings("all")
-public abstract class AbstractKEffectsUiModule extends DefaultUiModule {
+public abstract class AbstractKEffectsUiModule extends org.eclipse.xtext.ui.DefaultUiModule {
 	
 	public AbstractKEffectsUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
