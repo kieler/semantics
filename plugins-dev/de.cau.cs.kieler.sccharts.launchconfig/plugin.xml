@@ -52,5 +52,35 @@
          </contextualLaunch>
       </shortcut>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="de.cau.cs.kieler.sccharts.wizard.category"
+            name="SCCharts">
+      </category>
+      <wizard
+            category="de.cau.cs.kieler.sccharts.wizard.category"
+            class="de.cau.cs.kieler.sccharts.projectwizard.SCChartsProjectWizard"
+            hasPages="true"
+            id="de.cau.cs.kieler.sccharts.wizards.project"
+            name="SCT Project"
+            project="true">
+         <description>
+            Create a new SCCharts project.
+         </description>
+      </wizard>
+      <wizard
+            canFinishEarly="false"
+            category="de.cau.cs.kieler.sccharts.wizard.category"
+            class="de.cau.cs.kieler.sccharts.filewizard.SCChartsFileWizard"
+            hasPages="true"
+            id="de.cau.cs.kieler.sccharts.wizards.file"
+            name="SCT File"
+            project="false">
+         <description>
+            Create a new SCT model file.
+         </description>
+      </wizard>
+   </extension>
 
 </plugin>
