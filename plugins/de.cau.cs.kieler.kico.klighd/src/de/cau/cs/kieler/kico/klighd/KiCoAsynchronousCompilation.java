@@ -60,6 +60,8 @@ public class KiCoAsynchronousCompilation extends Job {
     private boolean updateModelView = false;
     /** Model to display in ModeView depending on current compilation state */
     private Object model;
+    /** The context */
+    private final KielerCompilerContext context;
     /** Compilation Result */
     private CompilationResult result;
     /** Flag if compilation finished */
@@ -89,6 +91,17 @@ public class KiCoAsynchronousCompilation extends Job {
         this.sourceModel = sourceModel;
         this.selection = selection;
         this.tracing = tracing;
+        
+        // compile with progress monitor
+        context =
+                new KielerCompilerContext(selection.getFirst(), (EObject) sourceModel);
+        context.setAdvancedSelect(selection.getSecond());
+        context.setInplace(false);
+        if (tracing) {
+            context.setProperty(Tracing.ACTIVE_TRACING, true);
+        }
+        // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo selection view
+        context.setCreateDummyResource(false);
 
         // compilation placeholder
         this.model = new KiCoMessageModel("Compilation in progress...");
@@ -99,17 +112,7 @@ public class KiCoAsynchronousCompilation extends Job {
      */
     protected IStatus run(final IProgressMonitor monitor) {
         try {
-            // compile with progress monitor
-            KielerCompilerContext context =
-                    new KielerCompilerContext(selection.getFirst(), (EObject) sourceModel);
-            context.setAdvancedSelect(selection.getSecond());
-            context.setInplace(false);
             context.setProgressMonitor(monitor);
-            if (tracing) {
-                context.setProperty(Tracing.ACTIVE_TRACING, true);
-            }
-            // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo selection view
-            context.setCreateDummyResource(false);
             result = KielerCompiler.compile(context);
 
             if (monitor.isCanceled()) {
@@ -243,6 +246,13 @@ public class KiCoAsynchronousCompilation extends Job {
         }
         model = new KiCoErrorModel("Compilation aborted!");
         updateModelView();
+    }
+
+    /**
+     * @return the context
+     */
+    public KielerCompilerContext getContext() {
+        return context;
     }
 
 }

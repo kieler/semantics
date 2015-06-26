@@ -1146,6 +1146,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 }
 
                 // Give model synthesis access to the compilation result
+                properties.setProperty(KiCoProperties.COMPILATION_CONTEXT, compilation != null ? compilation.getContext() : null);
                 properties.setProperty(KiCoProperties.COMPILATION_RESULT, compilationResult);
                 publishCurrentModelInformation(model, compilationResult);
 
@@ -1157,6 +1158,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
             } else {
                 // Give model synthesis access to the compilation result
+                vc.setProperty(KiCoProperties.COMPILATION_CONTEXT, compilation != null ? compilation.getContext() : null);
                 vc.setProperty(KiCoProperties.COMPILATION_RESULT, compilationResult);
                 publishCurrentModelInformation(model, compilationResult);
                 // update case (keeps options and sidebar)

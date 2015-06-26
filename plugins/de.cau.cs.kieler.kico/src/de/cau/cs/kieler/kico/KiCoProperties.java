@@ -28,4 +28,6 @@ public final class KiCoProperties {
 
     public static final IProperty<CompilationResult> COMPILATION_RESULT =
             new Property<CompilationResult>("de.cau.cs.kieler.kico.klighd.compilation.result", null);
+    public static final IProperty<KielerCompilerContext> COMPILATION_CONTEXT = 
+            new Property<KielerCompilerContext>("de.cau.cs.kieler.kico.klighd.compilation.context", null);
 }

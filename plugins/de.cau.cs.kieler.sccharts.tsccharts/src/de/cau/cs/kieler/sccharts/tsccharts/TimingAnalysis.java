@@ -33,7 +33,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ui.progress.UIJob;
+import org.eclipse.xtend.lib.macro.declaration.CompilationStrategy.CompilationContext;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 
 import com.google.common.collect.HashMultimap;
@@ -53,12 +55,16 @@ import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.VerticalAlignment;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.kico.CompilationResult;
+import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerException;
+import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.kitt.tracing.Tracing;
+import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.util.ModelingUtil;
+import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.State;
@@ -91,6 +97,8 @@ public class TimingAnalysis extends Job {
 
     private FileWriter fileWriter = new FileWriter();
 
+    private Resource resource;
+
     private TimingAnnotationProvider timingAnnotationProvider = new TimingAnnotationProvider();
 
     // no side effects on runtime, so static OK here
@@ -98,20 +106,29 @@ public class TimingAnalysis extends Job {
     private static SCChartsExtension scchartsExtension = Guice.createInjector().getInstance(
             SCChartsExtension.class);
 
-    public static void startAnalysis(State rootState, KNode rootNode) {
+    public static void startAnalysis(State rootState, KNode rootNode, ViewContext viewContext) {
         // It is normal that some nodes of the SCG will be mapped to null, because they belong to
-        // the SCChart itself not to a Region of the SCChart (they cannot be attributed to the outermost
+        // the SCChart itself not to a Region of the SCChart (they cannot be attributed to the
+        // outermost
         // Region in the root state, because there may be several of those). So we use a dummy
-        // region to represent the SCChart in Timing Analysis. 
-        Region scchartDummyRegion= SCChartsFactory.eINSTANCE.createRegion();
+        // region to represent the SCChart in Timing Analysis.
+        Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
         scchartDummyRegion.setId("SCChartDummyRegion");
-        
+
+        Resource resource = null;
+        KielerCompilerContext context = viewContext.getProperty(KiCoProperties.COMPILATION_CONTEXT);
+        if (context != null) {
+            resource = context.getMainResource();
+        } else {
+            resource = rootState.eResource();
+        }
+
         // Step 0: (Preprocessing)
         // Add timing labels (while still in synthesis run)
-      
+
         // Hashmap contains weak references, thus the KGraph can be deleted completely while
         // timing analysis is running
-        
+
         HashMultimap<Region, WeakReference<KText>> timingLabels = HashMultimap.create();
         Iterator<EObject> graphIter =
                 ModelingUtil.eAllContentsOfType2(rootNode, KNode.class, KContainerRendering.class,
@@ -147,7 +164,7 @@ public class TimingAnalysis extends Job {
         rectangle.getChildren().add(text);
         timingLabels.put(null, new WeakReference<KText>(text));
         // start analysis job
-        new TimingAnalysis(rootState, timingLabels, scchartDummyRegion).schedule();
+        new TimingAnalysis(rootState, timingLabels, scchartDummyRegion, resource).schedule();
     }
 
     private State scchart;
@@ -158,15 +175,17 @@ public class TimingAnalysis extends Job {
     /**
      * @param name
      * @param rootState
-     * @param scchartDummyRegion 
+     * @param scchartDummyRegion
      * @param rootNode
      */
-    public TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels, Region scchartDummyRegion) {
+    public TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels,
+            Region scchartDummyRegion, Resource resource) {
         super("Timing Analysis");
         this.scchart = rootState;
         this.timingLabels = regionLabels;
         this.timingResults = new HashMap<Region, String>();
         this.scchartDummyRegion = scchartDummyRegion;
+        this.resource = resource;
     }
 
     /**
@@ -277,7 +296,6 @@ public class TimingAnalysis extends Job {
         }
         HashMap<String, Region> tppRegionMap = new HashMap<String, Region>();
 
-        
         // insert timing program points
         int highestInsertedTPPNumber =
                 insertTPP(scg, nodeRegionMapping, tppRegionMap, scchartDummyRegion);
@@ -321,9 +339,14 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-
-        IFile file = ResourceUtil.getFile(scchart.eResource());
-        String uri = file.getLocationURI().toString();
+        String uri = null;
+        if (resource != null) {
+            IFile file = ResourceUtil.getFile(resource);
+            uri = file.getLocationURI().toString();
+        } else {
+            return new Status(IStatus.ERROR, pluginId,
+                    "The resource for the given model could not be found.");
+        }
 
         // Write the generated code to file
         String codeTargetFile = uri.replace(".sct", ".c");
@@ -416,9 +439,10 @@ public class TimingAnalysis extends Job {
                                 String scchartTiming = timingResults.get(scchartDummyRegion);
                                 // add it to the timing for child regions
                                 if (scchartTiming != null) {
-                                Integer timingResultSum = 
-                                        Integer.parseInt(timingResult) + Integer.parseInt(scchartTiming);
-                                timingResult = timingResultSum.toString();
+                                    Integer timingResultSum =
+                                            Integer.parseInt(timingResult)
+                                                    + Integer.parseInt(scchartTiming);
+                                    timingResult = timingResultSum.toString();
                                 }
                             }
                             label.setText(timingResult);
@@ -472,10 +496,10 @@ public class TimingAnalysis extends Job {
             String step = pathIterator.next();
             // exit is not attributed to a region, it can be no start TPP
             if (step != "exit") {
-            Region currentRegion = tppRegionMap.get(step);
-            if(currentRegion != null) {
-            wcpRegions.add(currentRegion);
-            }
+                Region currentRegion = tppRegionMap.get(step);
+                if (currentRegion != null) {
+                    wcpRegions.add(currentRegion);
+                }
             }
         }
         HashMap<Region, Integer> deepValues = new HashMap<Region, Integer>();
@@ -507,11 +531,11 @@ public class TimingAnalysis extends Job {
             if (!(currentRegion == null)) {
                 // Possibly we have to mark this region as part of the WCET path (WCP)
                 String wcpMarker = "";
-                if (wcpRegions.contains(currentRegion)){
+                if (wcpRegions.contains(currentRegion)) {
                     wcpMarker = "W ";
-                } 
-                regionLabelStringMap.put(currentRegion, wcpMarker + flatValues.get(currentRegion) + " / "
-                        + deepValues.get(currentRegion));
+                }
+                regionLabelStringMap.put(currentRegion, wcpMarker + flatValues.get(currentRegion)
+                        + " / " + deepValues.get(currentRegion));
             } else {
                 Integer WCRT = 0;
                 Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();
@@ -520,10 +544,10 @@ public class TimingAnalysis extends Job {
                     Integer currentValue = deepValues.get(nextRegion);
                     WCRT = WCRT + currentValue;
                 }
-                //get the timing for the parts of the scchart that are not attributed to a region
+                // get the timing for the parts of the scchart that are not attributed to a region
                 Integer dummyTiming = flatValues.get(scchartDummyRegion);
                 if (dummyTiming != null) {
-                WCRT = WCRT + dummyTiming;
+                    WCRT = WCRT + dummyTiming;
                 }
                 regionLabelStringMap.put(currentRegion, WCRT.toString());
             }
@@ -614,7 +638,8 @@ public class TimingAnalysis extends Job {
         Integer tppCounter = 1;
         // Preprocessing step: Assign the first Region to the entry TPP
         ControlFlow firstEdge = edgeList.getFirst();
-        Region firstSourceRegion = getSourceRegion(firstEdge, nodeRegionMapping, scchartDummyRegion);
+        Region firstSourceRegion =
+                getSourceRegion(firstEdge, nodeRegionMapping, scchartDummyRegion);
         tppRegionMap.put("entry", firstSourceRegion);
         while (edgeListIterator.hasNext()) {
             if (tppCounter == 13) {
@@ -635,21 +660,22 @@ public class TimingAnalysis extends Job {
                 // parts
                 targetRegion = scchartDummyRegion;
             }
-            Region sourceRegion = getSourceRegion(currentEdge, nodeRegionMapping, scchartDummyRegion);
-//            // get the region the source node of the edge stems from
-//            EObject edgeEContainer = currentEdge.eContainer();
-//            Node sourceNode = null;
-//            if (edgeEContainer instanceof Node) {
-//                sourceNode = (Node) edgeEContainer;
-//            } else {
-//                // source node of edge could not be determined
-//                return -1;
-//            }
-//            Region sourceRegion = nodeRegionMapping.get(sourceNode);
-//            if (sourceRegion == null) {
-//                // Nodes that do not belong to a region are attributed to the scchart dummy region
-//                sourceRegion = scchartDummyRegion;
-//            }
+            Region sourceRegion =
+                    getSourceRegion(currentEdge, nodeRegionMapping, scchartDummyRegion);
+            // // get the region the source node of the edge stems from
+            // EObject edgeEContainer = currentEdge.eContainer();
+            // Node sourceNode = null;
+            // if (edgeEContainer instanceof Node) {
+            // sourceNode = (Node) edgeEContainer;
+            // } else {
+            // // source node of edge could not be determined
+            // return -1;
+            // }
+            // Region sourceRegion = nodeRegionMapping.get(sourceNode);
+            // if (sourceRegion == null) {
+            // // Nodes that do not belong to a region are attributed to the scchart dummy region
+            // sourceRegion = scchartDummyRegion;
+            // }
             // check if the mapping has yielded a complete answer
             if ((targetRegion != null) && (sourceRegion != null)) {
                 // check for a context switch, in any other case nothing will be done
@@ -686,23 +712,23 @@ public class TimingAnalysis extends Job {
                 System.out.println("A mapping for at least one node of an edge cannot be found.");
             }
         }
-        return tppCounter -1;
+        return tppCounter - 1;
     }
 
     /**
-     * This method retrieves the region the source node of the controlFlow edge given as a parameter is 
-     * attributed to.
+     * This method retrieves the region the source node of the controlFlow edge given as a parameter
+     * is attributed to.
      * 
      * @param nodeRegionMapping
-     *        The given mapping of nodes to regions
+     *            The given mapping of nodes to regions
      * @param scchartDummyRegion
-     *        The dummy region representing the SCChart itself (for not all elements can attributed to 
-     *        regions of the SCChart and are then attributed to the SCChart, resp. its dummy region)
+     *            The dummy region representing the SCChart itself (for not all elements can
+     *            attributed to regions of the SCChart and are then attributed to the SCChart, resp.
+     *            its dummy region)
      * @param controlFlow
-     *        The edge for which the start node region ist to be determined
-     * @return 
-     *     Returns the Region the source node of the controlFlow edge belongs to. Returns null, if the
-     *     edge container is no Node.
+     *            The edge for which the start node region ist to be determined
+     * @return Returns the Region the source node of the controlFlow edge belongs to. Returns null,
+     *         if the edge container is no Node.
      */
     private Region getSourceRegion(ControlFlow controlFlow,
             HashMap<Node, Region> nodeRegionMapping, Region scchartDummyRegion) {

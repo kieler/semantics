@@ -311,7 +311,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         }
         
         if(SHOW_TIMING.booleanValue){
-            TimingAnalysis.startAnalysis((model as State), rootNode);
+            TimingAnalysis.startAnalysis((model as State), rootNode, usedContext);
         }
         
 //        rootNode.eAdapters.remove(tracking)
