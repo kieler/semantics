@@ -17,6 +17,7 @@ import de.cau.cs.kieler.esterel.kexpressions.Input
 import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
 import de.cau.cs.kieler.esterel.kexpressions.Output
 import de.cau.cs.kieler.esterel.esterel.Module
+import de.cau.cs.kieler.esterel.kexpressions.ValueType
 
 /**
  * Transformation of Esterel code into a c simulation interface wrapper
@@ -65,7 +66,7 @@ class Esterel2CSimulationInterface {
 #define DEFAULT_BUFFER_SIZE 2048
 
 cJSON* output = 0;
-cJSON* value = 0;
+cJSON* jsonvalue = 0;
 	''' 
    }
    
@@ -88,7 +89,7 @@ void setInputs(){
 	cJSON* object = 0;
 	cJSON* child = 0;
 	cJSON* present = 0;
-	cJSON* value = 0;
+	cJSON* jsonvalue = 0;
 
 	object = cJSON_Parse(buffer);
 	
@@ -98,16 +99,21 @@ void setInputs(){
    }'''
 }
    
-   // -------------------------------------------------------------------------   
+   // -------------------------------------------------------------------------
+      
    
    // Generate the generic C main function
    def mainFunction(Module it) {
    	'''
+int doTick() {
+    «name»();
+}   
+   	
 int main(){«name»_reset();
   output = cJSON_CreateObject();
   while(1){
     setInputs();
-	«name»();
+	doTick();
 	char* outString = cJSON_Print(output);
 	strip_white_spaces(outString);
 	printf("%s\n", outString);
@@ -130,20 +136,20 @@ int main(){«name»_reset();
    	  		gen = gen + "int i";
    	  	}
    	  	gen = gen + '''){  	
-   	  		value = cJSON_CreateObject();
-			cJSON_AddTrueToObject(value, "present");'''.toString();
+   	  		jsonvalue = cJSON_CreateObject();
+			cJSON_AddTrueToObject(jsonvalue, "present");'''.toString();
    	  	if (signal.type.literal == "int") {
-   	  		gen = gen + ''' cJSON_AddNumberToObject(value, "value", i);'''.toString();
+   	  		gen = gen + ''' cJSON_AddNumberToObject(jsonvalue, "value", i);'''.toString();
    	  	} 
    	  	else if (signal.type.literal == "bool") {
 			gen = gen + ''' if (i == 0) {
-				cJSON_AddFalseToObject(value, "value"); }
+				cJSON_AddFalseToObject(jsonvalue, "value"); }
 				else {
-					cJSON_AddTrueToObject(value, "value");
+					cJSON_AddTrueToObject(jsonvalue, "value");
 				} 
 			'''.toString();
    	  	}
-   	  	gen = gen + '''cJSON_AddItemToObject(output, "«signal.name»", value);}'''.toString();
+   	  	gen = gen + '''cJSON_AddItemToObject(output, "«signal.name»", jsonvalue);}'''.toString();
    	  } // next signal
    	  gen;
    }
@@ -164,9 +170,26 @@ int main(){«name»_reset();
    	child = cJSON_GetObjectItem(object, "«signal.name»");
    	if (child != NULL){
    	present = cJSON_GetObjectItem(child, "present");
-   	value = cJSON_GetObjectItem(child, "value");
+   	jsonvalue = cJSON_GetObjectItem(child, "value");
    	if (present != NULL && present->type==cJSON_True) {
+   	    «IF signal.type == ValueType::PURE»
 			«moduleName»_I_«signal.name»();
+		«ENDIF»
+        «IF signal.type == ValueType::INT»
+            if (jsonvalue != NULL) {
+                 «moduleName»_I_«signal.name»(jsonvalue->valueint);               
+            }
+        «ENDIF»
+        «IF signal.type == ValueType::BOOL»
+             if (jsonvalue != NULL) {
+                if (jsonvalue->valueint) {
+                    «moduleName»_I_«signal.name»(_true);
+                }
+                else {
+                    «moduleName»_I_«signal.name»(_false);
+                }
+            }
+        «ENDIF»
    	}
    	}'''.toString();
    	} // next signal

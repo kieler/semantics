@@ -24,6 +24,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -55,7 +56,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet()
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
     }
 
     //-------------------------------------------------------------------------

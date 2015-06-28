@@ -111,6 +111,8 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.DO_WATCHING: return createDoWatching();
       case EsterelPackage.DO_WATCHING_END: return createDoWatchingEnd();
       case EsterelPackage.EMIT: return createEmit();
+      case EsterelPackage.UN_EMIT: return createUnEmit();
+      case EsterelPackage.RESET: return createReset();
       case EsterelPackage.EVERY_DO: return createEveryDo();
       case EsterelPackage.EXIT: return createExit();
       case EsterelPackage.HALT: return createHalt();
@@ -691,6 +693,28 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     EmitImpl emit = new EmitImpl();
     return emit;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public UnEmit createUnEmit()
+  {
+    UnEmitImpl unEmit = new UnEmitImpl();
+    return unEmit;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Reset createReset()
+  {
+    ResetImpl reset = new ResetImpl();
+    return reset;
   }
 
   /**

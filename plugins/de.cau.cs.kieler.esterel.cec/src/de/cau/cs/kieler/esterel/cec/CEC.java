@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -146,10 +147,10 @@ public final class CEC {
     // -------------------------------------------------------------------------
 
     /** The Constant INIT_TIME. */
-    private static final int INIT_TIME = 10000;
+    private static final int INIT_TIME = 1200000;
 
     /** The Constant TIMEOUT. */
-    private static final int TIMEOUT = 200;
+    private static final int TIMEOUT = 500;
 
     /** The Constant STEP_TIME. */
     private static final int STEP_TIME = 50;
@@ -161,42 +162,43 @@ public final class CEC {
     private static final String CEC_PREFIX = "cec-";
 
     // -------------------------------------------------------------------------
-    
+
     private static URL resolveBundleOrWorkspaceFile(final String file, final String pluginId) {
         // if the bundle is not ready then there is no image
         final Bundle bundle = Platform.getBundle(pluginId);
-        
+
         System.out.println("Bundle:" + bundle.getBundleId() + "///" + bundle.getSymbolicName());
 
         // first try to resolve bundle files (give preference to bundle files)
-        URL fileURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(file),
-                null);
+        URL fileURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(file), null);
 
         if (fileURL == null) {
             System.out.println("fileURL: NULL");
         } else {
             System.out.println("fileURL:" + fileURL.toString());
         }
-        
+
         return fileURL;
     }
-    
 
     /**
      * Resolve the path to the executable in a fragment for a specific CEC module.
-     *
-     * @param module the module
+     * 
+     * @param module
+     *            the module
      * @return the string
      */
     private static String resolveFragmentCECModule(final MODULE module) {
         try {
             // first try the non-windows case
-            URL resolvedFileName = resolveBundleOrWorkspaceFile(
-                     CEC_PREFIX + module, "de.cau.cs.kieler.esterel.cec");
+            URL resolvedFileName =
+                    resolveBundleOrWorkspaceFile(CEC_PREFIX + module,
+                            "de.cau.cs.kieler.esterel.cec");
             if (resolvedFileName == null) {
                 // second try the windows case
-                resolvedFileName = resolveBundleOrWorkspaceFile(
-                         CEC_PREFIX + module + WINDOWS_EXTENSION, "de.cau.cs.kieler.esterel.cec");
+                resolvedFileName =
+                        resolveBundleOrWorkspaceFile(CEC_PREFIX + module + WINDOWS_EXTENSION,
+                                "de.cau.cs.kieler.esterel.cec");
 
             }
             if (resolvedFileName != null) {
@@ -206,9 +208,10 @@ public final class CEC {
                 String resolvedModuleExecutable = KiemUtil.getAbsoluteFilePath(resolvedFileName);
                 return resolvedModuleExecutable;
             }
-//        } catch (URISyntaxException e) {
-//            throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'",
-//                    e);
+            // } catch (URISyntaxException e) {
+            // throw new RuntimeException("Cannot resolve executable of CEC module '" + module +
+            // "'",
+            // e);
         } catch (MalformedURLException e) {
             throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'",
                     e);
@@ -222,17 +225,20 @@ public final class CEC {
     // -------------------------------------------------------------------------
 
     /**
-     * Execute single CEC module.
+     * Execute single CEC module with an optional additional output.
      * 
      * @param module
      *            name of the module
      * @param input
      *            input stream for the compilation
+     * @param outputStream
+     *            the output stream can be null
      * @return result of the compilation
      * @throws IOException
      *             thrown for any execution error
      */
-    public static InputStream exec(final MODULE module, final InputStream input) throws IOException {
+    public static InputStream exec(final MODULE module, final InputStream input,
+            final OutputStream outputStream) throws IOException {
 
         String cmd = resolveFragmentCECModule(module);
 
@@ -253,7 +259,7 @@ public final class CEC {
 
         System.out.println(cmd);
 
-        return KonsoleExec.exec(cmd, input, INIT_TIME, TIMEOUT, STEP_TIME);
+        return KonsoleExec.exec(cmd, input, INIT_TIME, TIMEOUT, STEP_TIME, outputStream);
     }
 
     // -------------------------------------------------------------------------
@@ -283,7 +289,7 @@ public final class CEC {
      *             Signals that an I/O exception has occurred.
      */
     public static InputStream runSTRLXML(final InputStream strl) throws IOException {
-        return exec(MODULE.STRLXML, strl);
+        return exec(MODULE.STRLXML, strl, null);
     }
 
     // -------------------------------------------------------------------------
@@ -297,8 +303,9 @@ public final class CEC {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public static InputStream runEXPANDMODULE(final InputStream strlxml) throws IOException {
-        return exec(MODULE.EXPANDMODULE, strlxml);
+    public static InputStream runEXPANDMODULE(final InputStream strlxml,
+            final OutputStream outputStream) throws IOException {
+        return exec(MODULE.EXPANDMODULE, strlxml, outputStream);
     }
 
     // -------------------------------------------------------------------------
@@ -313,7 +320,7 @@ public final class CEC {
      *             Signals that an I/O exception has occurred.
      */
     public static InputStream runDISMANTLE(final InputStream expandmodule) throws IOException {
-        return exec(MODULE.DISMANTLE, expandmodule);
+        return exec(MODULE.DISMANTLE, expandmodule, null);
     }
 
     // -------------------------------------------------------------------------
@@ -328,7 +335,7 @@ public final class CEC {
      *             Signals that an I/O exception has occurred.
      */
     public static InputStream runASTGRC(final InputStream dismantle) throws IOException {
-        return exec(MODULE.ASTGRC, dismantle);
+        return exec(MODULE.ASTGRC, dismantle, null);
     }
 
     // -------------------------------------------------------------------------
@@ -343,7 +350,7 @@ public final class CEC {
      *             Signals that an I/O exception has occurred.
      */
     public static InputStream runGRCOPT(final InputStream astgrc) throws IOException {
-        return exec(MODULE.GRCOPT, astgrc);
+        return exec(MODULE.GRCOPT, astgrc, null);
     }
 
     // -------------------------------------------------------------------------
@@ -358,7 +365,7 @@ public final class CEC {
      *             Signals that an I/O exception has occurred.
      */
     public static InputStream runGRCPDG(final InputStream grcopt) throws IOException {
-        return exec(MODULE.GRCPDG, grcopt);
+        return exec(MODULE.GRCPDG, grcopt, null);
     }
 
     // -------------------------------------------------------------------------
@@ -373,7 +380,7 @@ public final class CEC {
      *             Signals that an I/O exception has occurred.
      */
     public static InputStream runPDGCCFG(final InputStream grcpdg) throws IOException {
-        return exec(MODULE.PDGCCFG, grcpdg);
+        return exec(MODULE.PDGCCFG, grcpdg, null);
     }
 
     // -------------------------------------------------------------------------
@@ -388,7 +395,7 @@ public final class CEC {
      *             Signals that an I/O exception has occurred.
      */
     public static InputStream runEEC(final InputStream pdgccfg) throws IOException {
-        return exec(MODULE.EEC, pdgccfg);
+        return exec(MODULE.EEC, pdgccfg, null);
     }
 
     // -------------------------------------------------------------------------
@@ -403,7 +410,7 @@ public final class CEC {
      *             Signals that an I/O exception has occurred.
      */
     public static InputStream runSCFGC(final InputStream eec) throws IOException {
-        return exec(MODULE.SCFGC, eec);
+        return exec(MODULE.SCFGC, eec, null);
     }
 
     // -------------------------------------------------------------------------
@@ -436,25 +443,29 @@ public final class CEC {
 
     /**
      * Compile Esterel file to C. This is directly derived from the CEC script with the default
-     * values.
+     * values. The expandedOutputStream is optional an may be null.
      * 
      * @param strlFile
      *            name of the input File.
      * @param outFile
      *            output file for the C code
+     * @param expandedOutputStream
+     *            the expanded output stream
      * @return URI of the generated C file
      * @throws IOException
      *             if file cannot be read/written or compiler can not be executed or for compilation
      *             errors
      */
-    public static URI run(final URI strlFile, final File outFile) throws IOException {
+    public static URI run(final URI strlFile, final File outFile,
+            final OutputStream expandedOutputStream) throws IOException {
         InputStream strl = CEC.runSTRL(strlFile);
         InputStream strlxml = CEC.runSTRLXML(strl);
-        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml);
+        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, expandedOutputStream);
         InputStream dismantle = CEC.runDISMANTLE(expandmodule);
         InputStream astgrc = CEC.runASTGRC(dismantle);
-        InputStream grcopt = CEC.runGRCOPT(astgrc);
-        InputStream grcpdg = CEC.runGRCPDG(grcopt);
+        //InputStream grcopt = CEC.runGRCOPT(astgrc);
+        //InputStream grcpdg = CEC.runGRCPDG(grcopt);
+        InputStream grcpdg = CEC.runGRCPDG(astgrc);
         InputStream pdgccfg = CEC.runPDGCCFG(grcpdg);
         InputStream eec = CEC.runEEC(pdgccfg);
         InputStream scfgc = CEC.runSCFGC(eec);
@@ -479,7 +490,7 @@ public final class CEC {
 
     /**
      * Compile Esterel file to C. This is directly derived from the CEC script with the default
-     * values.
+     * values. The expandedOutputStream is optional an may be null.
      * 
      * @param strlFile
      *            name of the input File.
@@ -488,8 +499,9 @@ public final class CEC {
      *             if file cannot be read/written or if compiler can not be executed or for
      *             compilation errors
      */
-    public static URI run(final URI strlFile) throws IOException {
-        return run(strlFile, getDefaultOutFile());
+    public static URI run(final URI strlFile, final OutputStream expandedOutputStream)
+            throws IOException {
+        return run(strlFile, getDefaultOutFile(), expandedOutputStream);
     }
 
 }

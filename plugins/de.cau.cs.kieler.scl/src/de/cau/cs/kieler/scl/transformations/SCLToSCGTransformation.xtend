@@ -53,22 +53,29 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.features.SCLFeatures
 import java.util.Set
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /** 
  * SCL to SCG Transformation 
  * 
- * @author ssm
+ * @author ssm, cmot
  * @kieler.design 2014-01-27 proposed 
  * @kieler.rating 2014-01-27 proposed yellow
  */
 // This class contains all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
 class SCLToSCGTransformation extends AbstractProductionTransformation {
 
+    private static val String ANNOTATION_HOSTCODE = "hostcode"
+
     @Inject
-    extension SCGControlFlowExtensions
+    extension SCGControlFlowExtensions 
 
     @Inject
     extension KExpressionsExtension
+
+    @Inject
+    extension AnnotationsExtensions
     
     @Inject
     extension SCLExtensions
@@ -158,8 +165,31 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
         scl.transform(scg, null)
         scl.eAllContents.filter(Goto).forEach[transform(scg, gotoFlows.get(it))]
 
+        scg.removeSuperflousConditionals
+        
+        val hostcodeAnnotations = scl.annotations.filter(typeof(StringAnnotation)).filter[ name == ANNOTATION_HOSTCODE ] 
+        hostcodeAnnotations.forEach [
+            scg.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+        ]        
+
         scg
     }
+    
+    
+    // Removes conditional nodes that have the same target for the then and the else branch.
+    private def removeSuperflousConditionals(SCGraph scg) {
+        val toDelete = <Conditional>newLinkedList
+        for (conditional : scg.eAllContents.filter(typeof(Conditional)).toList) {
+            if (conditional.^else.target == conditional.then.target) {
+                toDelete += conditional
+                for (previous : conditional.incoming.immutableCopy) {
+                    previous.target = conditional.^else.target
+                }
+            }
+        }
+        toDelete.forEach[it.remove]
+    }
+    
 
     private dispatch def SCLContinuation transform(SCLProgram program, SCGraph scg, List<ControlFlow> incoming) {
         val entry = ScgFactory::eINSTANCE.createEntry.createNodeList(program) as Entry => [

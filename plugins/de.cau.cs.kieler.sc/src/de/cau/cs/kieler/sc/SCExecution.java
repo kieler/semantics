@@ -142,10 +142,10 @@ public class SCExecution extends AbstractExecution {
 
         compile += compileBuf.toString();
 
-        // If Cycle counting activated include the header
-        if (this.isBenchmark()) {
-            compile += " " + bundleLocation + "cycle.h ";
-        }
+//        // If Cycle counting activated include the header
+//        if (this.isBenchmark()) {
+//            compile += " " + bundleLocation + "cycle.h ";
+//        }
 
         compile += " "
                 // + outPath
@@ -215,7 +215,7 @@ public class SCExecution extends AbstractExecution {
     public String filesPreProcessing(final String filePath) {
         try {
             //return addCycleCounterCode(filePath);
-            return addTimingCode(filePath);
+            return Benchmark.addTimingCodeFile(filePath, "tick");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -315,72 +315,7 @@ public class SCExecution extends AbstractExecution {
 //        return newFilePath;
 //    }
 
-  /**
-  * Adds timing measurement code.
-  * 
-  * @param filePath
-  *            the file path
-  * @return the string
-  * @throws IOException
-  *             Signals that an I/O exception has occurred.
-  */
- public static String addTimingCode(final String filePath) throws IOException {
 
-     String newFilePath = filePath.replace(".c", ".timing.c");
-
-     LinkedList<String> fileContent = new LinkedList<String>();
-
-     // Load original SC file
-     FileInputStream fis = new FileInputStream(filePath);
-     BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-     String lineIn;
-     while ((lineIn = br.readLine()) != null) {
-
-         // Before the main function, add
-         // #include<cycle.h>
-         // ticks t0, t1;
-         if (lineIn.contains("int main")) {
-           fileContent.add("#include<usertime.h>");
-           fileContent.add("double t;");
-         }
-         
-         // double elapsed(ticks t1, ticks t0);
-
-         // Instead of the tick() function add
-         // t0 = getticks();
-         // tick();
-         // t1 = getticks();
-         // value = cJSON_CreateObject();
-         // cJSON_AddItemToObject(value, "value",
-         // cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));
-         // cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
-         // cJSON_AddItemToObject(output, "cycles", value);
-         if (lineIn.contains("tick();")) {
-             fileContent.add("resetusertime();");
-             fileContent.add("tick();");
-             fileContent.add("t =  getusertime();");
-             // fileContent.add("value = cJSON_CreateObject();");
-             // fileContent.add("cJSON_AddItemToObject(value, \"value\", "
-             // + "cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
-             // fileContent.add("cJSON_AddItemToObject(value, \"present\", cJSON_CreateTrue());");
-             fileContent.add("cJSON_AddItemToObject(output, \"" + Benchmark.BENCHMARK_SIGNAL_TIME + "\""
-                     + ", cJSON_CreateNumber((double)(((double) t)*1)));");
-         } else {
-             fileContent.add(lineIn);
-         }
-     }
-     br.close();
-     fis.close();
-
-     // Write out SC modified file
-     PrintWriter out = new PrintWriter(newFilePath);
-     for (String lineOut : fileContent) {
-         out.println(lineOut);
-     }
-     out.close();
-
-     return newFilePath;
- }
     
     // -------------------------------------------------------------------------
     

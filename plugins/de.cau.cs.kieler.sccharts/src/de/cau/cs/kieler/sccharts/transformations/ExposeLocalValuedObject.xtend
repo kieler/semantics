@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 /**
@@ -50,7 +51,7 @@ class ExposeLocalValuedObject extends AbstractExpansionTransformation implements
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::SIGNAL_ID)
+        return Sets.newHashSet(SCChartsFeature::SIGNAL_ID, SCChartsFeatureGroup::EXPANSION_ID)
     }
 
     //-------------------------------------------------------------------------

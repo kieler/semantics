@@ -197,12 +197,12 @@ class S2C {
  		ENDIF»«ENDFOR»«ENDFOR»'''
    }
    
-   
+    
 
 
    def dispatch expand(ValueType valueType) {
        if (valueType == ValueType::BOOL) {
-           return '''int'''
+           return '''char'''
        }
        else if (valueType != ValueType::HOST) {
            return '''«valueType»'''

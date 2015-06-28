@@ -360,9 +360,7 @@ public class KiCoUtil {
      */
     public static int getModelHash(EObject eObject) {
         int hashValue = 0;
-        TreeIterator<?> treeIterator = eObject.eAllContents();
-        while (treeIterator.hasNext()) {
-            Object obj = treeIterator.next();
+        for (Object obj : eObject.eContents()) {
             if (obj instanceof EObject) {
                 EObject innerEObject = (EObject) obj;
                 hashValue += getModelHash(innerEObject);

@@ -81,6 +81,7 @@ import de.cau.cs.kieler.esterel.esterel.RelationType;
 import de.cau.cs.kieler.esterel.esterel.Renaming;
 import de.cau.cs.kieler.esterel.esterel.RenamingList;
 import de.cau.cs.kieler.esterel.esterel.Repeat;
+import de.cau.cs.kieler.esterel.esterel.Reset;
 import de.cau.cs.kieler.esterel.esterel.Run;
 import de.cau.cs.kieler.esterel.esterel.SensorDecl;
 import de.cau.cs.kieler.esterel.esterel.SensorWithType;
@@ -104,6 +105,7 @@ import de.cau.cs.kieler.esterel.esterel.Type;
 import de.cau.cs.kieler.esterel.esterel.TypeDecl;
 import de.cau.cs.kieler.esterel.esterel.TypeIdentifier;
 import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
+import de.cau.cs.kieler.esterel.esterel.UnEmit;
 import de.cau.cs.kieler.esterel.esterel.WeakAbort;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortBody;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortCase;
@@ -457,6 +459,20 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * @generated
    */
   private EClass emitEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass unEmitEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass resetEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -2102,6 +2118,76 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EReference getEmit_Expr()
   {
     return (EReference)emitEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getUnEmit()
+  {
+    return unEmitEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getUnEmit_Signal()
+  {
+    return (EReference)unEmitEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getUnEmit_Tick()
+  {
+    return (EAttribute)unEmitEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getReset()
+  {
+    return resetEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getReset_Signal()
+  {
+    return (EReference)resetEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getReset_Tick()
+  {
+    return (EAttribute)resetEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getReset_Expr()
+  {
+    return (EReference)resetEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -3847,6 +3933,15 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEAttribute(emitEClass, EMIT__TICK);
     createEReference(emitEClass, EMIT__EXPR);
 
+    unEmitEClass = createEClass(UN_EMIT);
+    createEReference(unEmitEClass, UN_EMIT__SIGNAL);
+    createEAttribute(unEmitEClass, UN_EMIT__TICK);
+
+    resetEClass = createEClass(RESET);
+    createEReference(resetEClass, RESET__SIGNAL);
+    createEAttribute(resetEClass, RESET__TICK);
+    createEReference(resetEClass, RESET__EXPR);
+
     everyDoEClass = createEClass(EVERY_DO);
     createEReference(everyDoEClass, EVERY_DO__DELAY);
     createEAttribute(everyDoEClass, EVERY_DO__OPT_END);
@@ -4121,6 +4216,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     doEClass.getESuperTypes().add(this.getStatement());
     doWatchingEndEClass.getESuperTypes().add(this.getStatementContainer());
     emitEClass.getESuperTypes().add(this.getStatement());
+    unEmitEClass.getESuperTypes().add(this.getStatement());
+    resetEClass.getESuperTypes().add(this.getStatement());
     everyDoEClass.getESuperTypes().add(this.getStatementContainer());
     everyDoEClass.getESuperTypes().add(this.getStatement());
     exitEClass.getESuperTypes().add(this.getStatement());
@@ -4332,6 +4429,15 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getEmit_Signal(), theKExpressionsPackage.getISignal(), null, "signal", null, 0, 1, Emit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getEmit_Tick(), ecorePackage.getEString(), "tick", null, 0, 1, Emit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEmit_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, Emit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(unEmitEClass, UnEmit.class, "UnEmit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getUnEmit_Signal(), theKExpressionsPackage.getISignal(), null, "signal", null, 0, 1, UnEmit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnEmit_Tick(), ecorePackage.getEString(), "tick", null, 0, 1, UnEmit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(resetEClass, Reset.class, "Reset", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getReset_Signal(), theKExpressionsPackage.getISignal(), null, "signal", null, 0, 1, Reset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getReset_Tick(), ecorePackage.getEString(), "tick", null, 0, 1, Reset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReset_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, Reset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(everyDoEClass, EveryDo.class, "EveryDo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEveryDo_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, EveryDo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

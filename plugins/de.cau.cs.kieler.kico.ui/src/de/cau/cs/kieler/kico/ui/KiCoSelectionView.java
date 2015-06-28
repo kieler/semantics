@@ -392,7 +392,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
 
     /**
-     * Possibly update model if visualization of transformation chain only otherwise do nothig.
+     * Possibly update model if visualization of transformation chain only otherwise do nothing.
      */
     public void possiblyUpdateModel() {
         // if visualization chain model, then update the whole model!
@@ -786,6 +786,8 @@ public class KiCoSelectionView extends DiagramViewPart {
                         lastEditorId = currentEditorId;
                         lastEditorModelName = currentPartName;
                         lastEditorTypeID = editorTypeID;
+                        // Enforce recomputation of kllighd element cache
+                        KiCoSelectionAction.clearCache();
                         updateView(getActiveEditorID(), visibleFeatures, preferredTransformations);
                     }
                 }

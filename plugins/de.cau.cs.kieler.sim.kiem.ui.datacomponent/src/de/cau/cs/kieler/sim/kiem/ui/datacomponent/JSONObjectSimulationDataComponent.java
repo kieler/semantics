@@ -571,7 +571,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             e.printStackTrace();
             throw new KiemInitializationException("Model could not be generated\n\n"
                     + "Please ensure that all simulation warnings in the "
-                    + "respective Eclipse Problems View have been cleared.\n\n", true, e);
+                    + "respective Eclipse Problems View have been cleared.\n\n" + KiemUtil.getStackTraceString(e), true, e);
         }
     }
 
@@ -856,4 +856,14 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     }
     // -------------------------------------------------------------------------
 
+
+    /**
+     * Checks whether the system is based on windows.
+     * 
+     * @return true, if is windows
+     */
+    public static boolean isWindows() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return (os.indexOf("win") >= 0);
+    }    
 }

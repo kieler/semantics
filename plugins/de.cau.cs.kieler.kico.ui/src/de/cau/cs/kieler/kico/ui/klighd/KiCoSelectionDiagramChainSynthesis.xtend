@@ -151,7 +151,7 @@ class KiCoSelectionDiagramChainSynthesis extends KiCoSynthesis {
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
                 it.invisible = false;
                 var label = transformation.label;
-                it.setProperty(KlighdProperties::TOOLTIP, transformation.id);
+                it.setProperty(KlighdProperties::TOOLTIP, transformation.idLabel);
                 // For simple states we want a larger area 
                 it.addText(" " + label).putToLookUpWith(transformation) => [
                     // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
