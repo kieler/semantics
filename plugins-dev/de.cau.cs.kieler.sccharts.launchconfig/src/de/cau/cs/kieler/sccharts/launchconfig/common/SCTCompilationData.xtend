@@ -11,13 +11,13 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.launchconfig
+package de.cau.cs.kieler.sccharts.launchconfig.common
 
+import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
+import java.util.HashMap
 import java.util.List
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.xtend.lib.annotations.Accessors
-import java.util.Map
-import java.util.HashMap
 
 /** 
  * Data container for sct files compilation.
@@ -25,7 +25,7 @@ import java.util.HashMap
  * 
  * @author aas
  */
-class SCTCompilationData {
+class SCTCompilationData extends SerializableData {
 
     new() {
     }
@@ -36,12 +36,16 @@ class SCTCompilationData {
         this.name = fileName
     }
 
+    // The fields are protected instead private
+    // so that they can be accessed by the SerializableData class
+    // to serialize/deserialize them.
+    
     @Accessors
-    private var String path = ""
+    protected var String path = ""
     @Accessors
-    private var String projectRelativePath = ""
+    protected var String projectRelativePath = ""
     @Accessors
-    private var String name = ""
+    protected var String name = ""
     
     /**
      * Loads all SCTCompilationData objects from the launch configuration.
@@ -68,31 +72,5 @@ class SCTCompilationData {
         ]
         
         return datas
-    }
-    
-    /**
-     * Try to loads the values of this objects fields by reading the map values.
-     * 
-     * @param map A map where the key is this object's field names
-     * and the value is the value this object's field should have.  
-     */
-    def loadAttributesFromMap(Map<String, String> map) {
-        val classObject = typeof(SCTCompilationData)
-        for(f : classObject.declaredFields){
-            f.set(this, map.get(f.name))
-        }
-    }
-    
-    /**
-     * Stores all fields of this class in a map
-     * where the key is a field's name and the value is the field's value.
-     */
-    def Map<String, String> getAttributeMap(){
-        val map = new HashMap<String, String>()
-        val classObject = typeof(SCTCompilationData)
-        for(f : classObject.declaredFields){
-            map.put(f.name, f.get(this).toString())
-        }
-        return map
     }
 }

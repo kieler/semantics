@@ -16,16 +16,13 @@ package de.cau.cs.kieler.sccharts.launchconfig.ui
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.sccharts.launchconfig.common.IProjectHolder
+import de.cau.cs.kieler.sccharts.launchconfig.common.UIUtil
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.List
 import java.util.Set
-import org.eclipse.core.resources.IProject
-import org.eclipse.core.resources.IResource
-import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.runtime.IPath
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
-import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.ComboViewer
@@ -37,21 +34,15 @@ import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
-import org.eclipse.swt.events.SelectionAdapter
-import org.eclipse.swt.events.SelectionEvent
-import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
-import org.eclipse.ui.dialogs.ContainerSelectionDialog
-import org.eclipse.ui.dialogs.ElementListSelectionDialog
-import org.eclipse.ui.dialogs.ResourceSelectionDialog
 
 /** 
  * @author aas
  */
-class MainTab extends AbstractLaunchConfigurationTab {
+class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
 
     /**
      * Control to select the target transformation (e.g. Java Code or C Code).
@@ -105,66 +96,24 @@ class MainTab extends AbstractLaunchConfigurationTab {
      * The button opens a selection dialog with the different projects in the workspace.
      */
     private def createProjectComponent(Composite parent) {
-        val group = SWTFactory.createGroup(parent, "Project", 1, 2, GridData.FILL_HORIZONTAL)
-        val comp = SWTFactory.createComposite(group, parent.getFont(), 5, 3, GridData.FILL_BOTH, 0, 0)
-
-        // Text
-        project = SWTFactory.createSingleText(comp, 4)
+        val group = UIUtil.createGroup(parent, "Project", 3) 
+        
+        project = UIUtil.createTextField(group, "", UIUtil.PROJECT_BUTTON)
         project.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                updateLaunchConfigurationDialog();
+                updateLaunchConfigurationDialog()
             }
         })
-
-        // Browse
-        val browse = createPushButton(comp, "Browse...", null)
-        browse.addSelectionListener(
-            new SelectionAdapter() {
-                override void widgetSelected(SelectionEvent e) {
-
-                    // Create a dialog with all projects in the workspace as possible selections.
-                    val dialog = new ElementListSelectionDialog(parent.shell, new LabelProvider() {
-                        override String getText(Object element) {
-                            val data = (element as IProject)
-                            if (data != null)
-                                return data.name
-                            else
-                                return ""
-                        }
-                    })
-                    dialog.title = "Project Selection"
-                    
-                    // Set the selectable elements of the dialog.
-                    // A project may be closed
-                    // so we use only open (accessible) projects as possible selection.
-                    dialog.elements = ResourcesPlugin.workspace.root.projects.filter[it.isAccessible]
-                    dialog.open()
-
-                    // Get result from dialog
-                    val results = dialog.result
-                    if (results != null && !results.isEmpty) {
-                        val result = results.get(0) as IProject
-                        project.text = result.name
-                    }
-                }
-
-            }
-        )
     }
 
     /**
      * Creates a group and composite with the target language selection controls.
      */
     private def createTargetComponent(Composite parent) {
-        val group = SWTFactory.createGroup(parent, "Target", 1, 2, GridData.FILL_HORIZONTAL)
-        val comp = SWTFactory.createComposite(group, parent.getFont(), 1, 3, GridData.FILL_BOTH, 0, 0)
-
-        // Composite for target language
-        val languageComp = SWTFactory.createComposite(comp, parent.getFont(), 8, 3, GridData.FILL_HORIZONTAL, 0, 0)
-        SWTFactory.createLabel(languageComp, "Language", 5)
+        val group = UIUtil.createGroup(parent, "Target", 2)
 
         // ComboViewer
-        targetLanguage = new ComboViewer(languageComp, SWT.DEFAULT)
+        targetLanguage = new ComboViewer(group, SWT.DEFAULT)
 
         // Fetch possible targets from KiCo
         var Set<Transformation> transformations
@@ -197,7 +146,7 @@ class MainTab extends AbstractLaunchConfigurationTab {
         targetLanguage.addSelectionChangedListener(new ISelectionChangedListener {
 
             override selectionChanged(SelectionChangedEvent event) {
-                updateLaunchConfigurationDialog();
+                updateLaunchConfigurationDialog()
             }
         })
     }
@@ -207,135 +156,55 @@ class MainTab extends AbstractLaunchConfigurationTab {
      * The button opens a file dialog to fill the input field.
      */
     private def createTargetTemplateComponent(Composite parent) {
-        val group = SWTFactory.createGroup(parent, "SCT output template", 1, 2, GridData.FILL_HORIZONTAL)
-        val comp = SWTFactory.createComposite(group, parent.getFont(), 5, 3, GridData.FILL_BOTH, 0, 0)
+        val group = UIUtil.createGroup(parent, "SCT output template", 2)
 
         // Text
-        targetTemplate = SWTFactory.createSingleText(comp, 4)
+        targetTemplate = UIUtil.createTextField(group, null, UIUtil.RESOURCE_BUTTON, this)
         targetTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                updateLaunchConfigurationDialog();
+                updateLaunchConfigurationDialog()
             }
         })
-
-        // Browse
-        val browse = createPushButton(comp, "Browse...", null)
-        browse.addSelectionListener(
-            new SelectionAdapter() {
-                override void widgetSelected(SelectionEvent e) {
-                    val currentProject = LaunchConfiguration.findProject(project.text)
-                    val dialog = new ResourceSelectionDialog(parent.shell, currentProject, "")
-                    dialog.open()
-
-                    val results = dialog.result
-                    if (results != null && results.size > 0) {
-                        val result = results.get(0) as IResource
-                        targetTemplate.setText(result.projectRelativePath.toOSString)
-                    }
-                }
-
-            }
-        )
     }
 
     /**
      * Creates a group and composite with the input controls for wrapper code generation. 
      */
     private def createWrapperCodeComponent(Composite parent) {
-        val group = SWTFactory.createGroup(parent, "Wrapper code generation", 1, 2, GridData.FILL_HORIZONTAL)
-        val comp = SWTFactory.createComposite(group, parent.getFont(), 8, 3, GridData.FILL_BOTH, 0, 0)
+        val group = UIUtil.createGroup(parent, "Wrapper code generation", 3)
 
         // Input file
-        SWTFactory.createLabel(comp, "Input file", 3)
-        wrapperCodeTemplate = SWTFactory.createSingleText(comp, 4)
+        wrapperCodeTemplate = UIUtil.createTextField(group, "Input file", UIUtil.RESOURCE_BUTTON, this)
         wrapperCodeTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                updateLaunchConfigurationDialog();
+                // Automaticly set default value for output as the template path without extension.
+                if (wrapperCodeTarget.text == null || wrapperCodeTarget.text == "") {
+                    val index = wrapperCodeTemplate.text.lastIndexOf('.')
+                    if (index > -1)
+                        wrapperCodeTarget.text = wrapperCodeTemplate.text.substring(0, index)
+                    else
+                        wrapperCodeTarget.text = wrapperCodeTemplate.text
+                }
+                
+                updateLaunchConfigurationDialog()
             }
         })
-
-        val browseWrapperCodeTemplate = createPushButton(comp, "Browse...", null)
-        browseWrapperCodeTemplate.addSelectionListener(
-            new SelectionAdapter() {
-                override void widgetSelected(SelectionEvent e) {
-                    val currentProject = LaunchConfiguration.findProject(project.text)
-                    val dialog = new ResourceSelectionDialog(parent.shell, currentProject, "")
-                    dialog.open()
-
-                    val results = dialog.result
-                    if (results != null && results.size > 0) {
-                        val result = results.get(0) as IResource
-                        val path = result.projectRelativePath.toOSString
-                        wrapperCodeTemplate.setText(path)
-                        
-                        // Automaticly set default value for output as the template path without extension.
-                        if(wrapperCodeTarget.text == null || wrapperCodeTarget.text == ""){
-                            val index = path.lastIndexOf('.')
-                            if(index > -1)
-                                wrapperCodeTarget.text = path.substring(0,index)
-                            else
-                                wrapperCodeTarget.text = path
-                        }
-                    }
-                }
-
-            }
-        )
 
         // Output file
-        SWTFactory.createLabel(comp, "Output file", 3)
-        wrapperCodeTarget = SWTFactory.createSingleText(comp, 4)
+        wrapperCodeTarget = UIUtil.createTextField(group, "Output file", UIUtil.RESOURCE_BUTTON, this)
         wrapperCodeTarget.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                updateLaunchConfigurationDialog();
+                updateLaunchConfigurationDialog()
             }
         })
-
-        val browseWrapperCodeTarget = createPushButton(comp, "Browse...", null)
-        browseWrapperCodeTarget.addSelectionListener(
-            new SelectionAdapter() {
-                override void widgetSelected(SelectionEvent e) {
-                    val currentProject = LaunchConfiguration.findProject(project.text)
-                    val dialog = new ResourceSelectionDialog(parent.shell, currentProject, "")
-                    dialog.open()
-
-                    val results = dialog.result
-                    if (results != null && results.size > 0) {
-                        val result = results.get(0) as IResource
-                        wrapperCodeTarget.setText(result.projectRelativePath.toOSString)
-                    }
-                }
-
-            }
-        )
-
+        
         // Directory with snippet definitions
-        SWTFactory.createLabel(comp, "Annotation snippets directory", 3)
-        wrapperCodeSnippets = SWTFactory.createSingleText(comp, 4)
+        wrapperCodeSnippets = UIUtil.createTextField(group, "Annotation snippets directory", UIUtil.CONTAINER_BUTTON, this)
         wrapperCodeSnippets.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                updateLaunchConfigurationDialog();
+                updateLaunchConfigurationDialog()
             }
         })
-
-        val browseWrapperCodeSnippets = createPushButton(comp, "Browse...", null)
-        browseWrapperCodeSnippets.addSelectionListener(
-            new SelectionAdapter() {
-                override void widgetSelected(SelectionEvent e) {
-                    val currentProject = LaunchConfiguration.findProject(project.text)
-                    val dialog = new ContainerSelectionDialog(getShell(), currentProject, false, "");
-
-                    dialog.open();
-                    val results = dialog.getResult()
-                    if ((results != null) && (results.length > 0) && (results.get(0) instanceof IPath)) {
-                        val result = results.get(0) as IPath;
-                        val relativeResult = result.makeRelativeTo(currentProject.fullPath)
-                        wrapperCodeSnippets.setText(relativeResult.toOSString);
-                    }
-                }
-            }
-        )
-
     }
 
     /** 
@@ -444,6 +313,10 @@ class MainTab extends AbstractLaunchConfigurationTab {
      */
     override String getName() {
         return "Main"
+    }
+    
+    override getProject() {
+        return LaunchConfiguration.findProject(project.text)
     }
 
 }

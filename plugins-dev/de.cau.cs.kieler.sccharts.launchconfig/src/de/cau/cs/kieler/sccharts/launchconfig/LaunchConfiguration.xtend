@@ -2,6 +2,7 @@ package de.cau.cs.kieler.sccharts.launchconfig
 
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.sccharts.launchconfig.common.SCTCompilationData
 import freemarker.template.Configuration
 import freemarker.template.Template
 import freemarker.template.TemplateExceptionHandler
@@ -26,9 +27,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
-import org.eclipse.swt.graphics.Font
-import org.eclipse.swt.graphics.Color
-import org.eclipse.core.internal.resources.Resource
 
 class LaunchConfiguration implements ILaunchConfigurationDelegate {
 

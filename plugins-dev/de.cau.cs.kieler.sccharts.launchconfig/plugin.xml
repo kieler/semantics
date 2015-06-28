@@ -82,5 +82,13 @@
          </description>
       </wizard>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="de.cau.cs.kieler.sccharts.environments.SCChartsEnvironmentsPage"
+            id="de.cau.cs.kieler.sccharts.environmentsPreferencesPage"
+            name="SCCharts Environments">
+      </page>
+   </extension>
 
 </plugin>

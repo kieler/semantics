@@ -14,14 +14,15 @@
 package de.cau.cs.kieler.sccharts.launchconfig.ui
 
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
-import de.cau.cs.kieler.sccharts.launchconfig.SCTCompilationData
+import de.cau.cs.kieler.sccharts.launchconfig.common.SCTCompilationData
+import de.cau.cs.kieler.sccharts.launchconfig.common.UIUtil
+import java.io.File
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
-import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.ISelectionChangedListener
@@ -35,11 +36,9 @@ import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
-import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.widgets.Control
-import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.swt.widgets.Button
-import java.io.File
+import org.eclipse.swt.widgets.Composite
+import org.eclipse.ui.dialogs.ResourceSelectionDialog
 
 /**
  * @author aas
@@ -97,11 +96,10 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
      * The remove button removes the currently selected item from the list. 
      */
     private def createSCTFilesComponent(Composite parent) {
-        val group = SWTFactory.createGroup(parent, "SCT files", 1, 2, GridData.FILL_HORIZONTAL)
-        val comp = SWTFactory.createComposite(group, parent.getFont(), 5, 3, GridData.FILL_HORIZONTAL, 0, 0)
-
+        val group = UIUtil.createGroup(parent, "SCT files", 2)
+        
         // List for SCT files
-        list = new ListViewer(comp, SWT.DEFAULT)
+        list = new ListViewer(group, SWT.DEFAULT)
         list.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
 
         // Content provider
@@ -129,7 +127,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         });
 
         // Buttons
-        val bcomp = SWTFactory.createComposite(comp, comp.getFont(), 1, 3, GridData.HORIZONTAL_ALIGN_END, 0, 0)
+        val bcomp = UIUtil.createComposite(group, 1, GridData.HORIZONTAL_ALIGN_END)
 
         // Add Button
         addButton = createPushButton(bcomp, "Add...", null)

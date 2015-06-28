@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.sccharts.launchconfig
 
 import com.google.common.io.Files
-import org.freemarker.FreeMarkerPlugin
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.launchconfig.common.SCTCompilationData
 import freemarker.template.Template
 import java.io.File
 import java.io.FileFilter
@@ -25,6 +25,7 @@ import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import org.eclipse.core.resources.IProject
+import org.freemarker.FreeMarkerPlugin
 
 import static org.freemarker.FreeMarkerPlugin.*
 

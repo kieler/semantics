@@ -28,6 +28,8 @@ import org.eclipse.jface.wizard.Wizard
 import org.eclipse.jface.wizard.WizardDialog
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchWizard
+import de.cau.cs.kieler.sccharts.filewizard.SCTFileCreationPage
+import org.eclipse.jface.wizard.IWizardPage
 
 /**
  * @author aas
@@ -42,6 +44,9 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
     override addPages() {
         val mainPage = new MainPage("SCChart Project");
         addPage(mainPage);
+        
+        val sctFilePage = new SCTFileCreationPage("SCCharts File", selection) 
+        addPage(sctFilePage)
     }
 
     override performFinish() {
@@ -103,6 +108,11 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
         helpAvailable = false
 
         projectsBeforeWizard = ResourcesPlugin.workspace.root.projects
+    }
+
+    override getNextPage(IWizardPage page){
+        println("Getting next page. Current page is "+page.title)
+        return super.getNextPage(page)
     }
 
     private def startWizard(String fullyQualifiedClassName) {
