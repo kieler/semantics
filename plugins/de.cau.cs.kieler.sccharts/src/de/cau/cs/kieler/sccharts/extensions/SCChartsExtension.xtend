@@ -116,8 +116,7 @@ class SCChartsExtension {
     // Get the single normal termination Transition. Return null if there is 
     // no outgoing normal termination Transition.
     def Transition getTerminationTransitions(State state) {
-        val allTerminationTransitions = state.outgoingTransitions.filter(
-            e|e.type == TransitionType::TERMINATION);
+        val allTerminationTransitions = state.outgoingTransitions.filter[ type == TransitionType::TERMINATION ]
         if (allTerminationTransitions.size == 0) {
             return null;
         }

@@ -142,7 +142,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                     for (OperatorExpression signalTest : allSignalValTests.immutableCopy) {
 
                         // Put a trim-able Operator here
-                        signalTest.setOperator(OperatorType::AND)
+                        signalTest.setOperator(OperatorType::LOGICAL_AND)
 
                         // Replace in valuedObjectReference
                         (signalTest.subExpressions.get(0) as ValuedObjectReference).setValuedObject(valueVariable)

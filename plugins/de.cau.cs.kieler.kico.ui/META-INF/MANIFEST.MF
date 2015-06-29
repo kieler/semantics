@@ -15,7 +15,7 @@ Require-Bundle: com.google.guava;bundle-version="10.0.1",
  de.cau.cs.kieler.klay.layered,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.sim.kiem
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kico.ui
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel

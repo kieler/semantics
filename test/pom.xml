@@ -31,7 +31,7 @@
     <!--  SJ IS CURRENTLY FAILING, responsible: cmot<module>de.cau.cs.kieler.sj.test</module> -->
     <!--  KIES IS CURRENTLY FAILING, responsible: cmot <module>de.cau.cs.kieler.kies.test</module> -->
     <!--  TEXT IS CURRENTLY FAILING, responsible: chsch <module>de.cau.cs.kieler.synccharts.text.bridge.test</module> -->
-    <!-- responsible: ssm --><module>de.cau.cs.kieler.core.kexpressions.test</module>
+    <!-- responsible: ssm <module>de.cau.cs.kieler.core.kexpressions.test</module>-->
     <!-- IS CURRENTLY FAILING responsible: ssm <module>de.cau.cs.kieler.scg.test</module> -->
   </modules>
 

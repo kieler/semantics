@@ -92,7 +92,7 @@ void readInputs() {
 
     object = cJSON_Parse(buffer);
     
-    «FOR valuedObject : scg.getValuedObjects().filter(e|e.isInput)» 
+    «FOR valuedObject : scg.getValuedObjects().filter[ isInput ]» 
     child = cJSON_GetObjectItem(object, "«valuedObject.name»");
     if (child != NULL) {
             present = cJSON_GetObjectItem(child, "present");
@@ -118,7 +118,7 @@ void readInputs() {
    	'''
 void writeOutputs() {
     cJSON* value;;
-	«FOR output : scg.getValuedObjects().filter(e|!e.isInput)»
+	«FOR output : scg.getValuedObjects().filter[ !isInput ]»
 	value = cJSON_CreateObject();
 	cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));
 	cJSON_AddItemToObject(output, "«output.name»", value);

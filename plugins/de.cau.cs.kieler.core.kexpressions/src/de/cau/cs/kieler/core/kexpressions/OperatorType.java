@@ -120,26 +120,22 @@ public enum OperatorType implements Enumerator {
     NE(14, "NE", "<>"),
 
     /**
-     * The '<em><b>AND</b></em>' literal object.
+     * The '<em><b>LOGICAL AND</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #AND_VALUE
+     * @see #LOGICAL_AND_VALUE
      * @generated
      * @ordered
      */
-    AND(4, "AND", "&"),
-
-    /**
-     * The '<em><b>OR</b></em>' literal object.
+    LOGICAL_AND(4, "LOGICAL_AND", "&&"), /**
+     * The '<em><b>LOGICAL OR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #OR_VALUE
+     * @see #LOGICAL_OR_VALUE
      * @generated
      * @ordered
      */
-    OR(5, "OR", "|"),
-
-    /**
+    LOGICAL_OR(5, "LOGICAL_OR", "||"), /**
      * The '<em><b>ADD</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -195,7 +191,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    BITWISE_OR(17, "BITWISE_OR", ""), /**
+    BITWISE_OR(17, "BITWISE_OR", "|"), /**
      * The '<em><b>BITWISE AND</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -203,7 +199,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    BITWISE_AND(16, "BITWISE_AND", "BITWISE_AND"), /**
+    BITWISE_AND(16, "BITWISE_AND", "&"), /**
      * The '<em><b>POSTFIX ADD</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -348,33 +344,33 @@ public enum OperatorType implements Enumerator {
     public static final int NE_VALUE = 14;
 
     /**
-     * The '<em><b>AND</b></em>' literal value.
+     * The '<em><b>LOGICAL AND</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Logical AND operator.
      * 
      * <!-- end-model-doc -->
-     * @see #AND
-     * @model literal="&"
+     * @see #LOGICAL_AND
+     * @model literal="&&"
      * @generated
      * @ordered
      */
-    public static final int AND_VALUE = 4;
+    public static final int LOGICAL_AND_VALUE = 4;
 
     /**
-     * The '<em><b>OR</b></em>' literal value.
+     * The '<em><b>LOGICAL OR</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Logical OR operator.
      * <!-- end-model-doc -->
-     * @see #OR
-     * @model literal="|"
+     * @see #LOGICAL_OR
+     * @model literal="||"
      * @generated
      * @ordered
      */
-    public static final int OR_VALUE = 5;
+    public static final int LOGICAL_OR_VALUE = 5;
 
     /**
      * The '<em><b>ADD</b></em>' literal value.
@@ -455,7 +451,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #BITWISE_OR
-     * @model literal=""
+     * @model literal="|"
      * @generated
      * @ordered
      */
@@ -470,7 +466,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #BITWISE_AND
-     * @model
+     * @model literal="&"
      * @generated
      * @ordered
      */
@@ -523,8 +519,8 @@ public enum OperatorType implements Enumerator {
             VAL,
             PRE,
             NE,
-            AND,
-            OR,
+            LOGICAL_AND,
+            LOGICAL_OR,
             ADD,
             SUB,
             MULT,
@@ -593,8 +589,8 @@ public enum OperatorType implements Enumerator {
             case VAL_VALUE: return VAL;
             case PRE_VALUE: return PRE;
             case NE_VALUE: return NE;
-            case AND_VALUE: return AND;
-            case OR_VALUE: return OR;
+            case LOGICAL_AND_VALUE: return LOGICAL_AND;
+            case LOGICAL_OR_VALUE: return LOGICAL_OR;
             case ADD_VALUE: return ADD;
             case SUB_VALUE: return SUB;
             case MULT_VALUE: return MULT;

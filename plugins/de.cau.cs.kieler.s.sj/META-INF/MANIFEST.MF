@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.core.kexpressions.keffects
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.s.sj,
  de.cau.cs.kieler.s.sj.xtend

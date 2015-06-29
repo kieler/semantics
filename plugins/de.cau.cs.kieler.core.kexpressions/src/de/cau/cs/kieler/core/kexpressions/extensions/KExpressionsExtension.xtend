@@ -521,7 +521,7 @@ class KExpressionsExtension {
             return operatorExpression
         }
         if (operatorExpression.subExpressions.size == 1 &&
-            ((operatorExpression.operator == OperatorType::AND) || (operatorExpression.operator == OperatorType::OR))) {
+            ((operatorExpression.operator == OperatorType::LOGICAL_AND) || (operatorExpression.operator == OperatorType::LOGICAL_OR))) {
 
             // if there is just one sub expression, we do not need an AND/OR!
             val innerExpression = operatorExpression.subExpressions.get(0);
@@ -647,7 +647,7 @@ class KExpressionsExtension {
     // Create an AND Expression.
     def OperatorExpression createAndExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
-        expression.setOperator(OperatorType::AND)
+        expression.setOperator(OperatorType::LOGICAL_AND)
         expression
     }
 
@@ -681,7 +681,7 @@ class KExpressionsExtension {
     // Create an OR Expression.
     def OperatorExpression createOrExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
-        expression.setOperator(OperatorType::OR)
+        expression.setOperator(OperatorType::LOGICAL_OR)
         expression
     }
 

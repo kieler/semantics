@@ -822,8 +822,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(operatorTypeEEnum, OperatorType.VAL);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.PRE);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.NE);
-        addEEnumLiteral(operatorTypeEEnum, OperatorType.AND);
-        addEEnumLiteral(operatorTypeEEnum, OperatorType.OR);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.LOGICAL_AND);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.LOGICAL_OR);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.ADD);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.SUB);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.MULT);

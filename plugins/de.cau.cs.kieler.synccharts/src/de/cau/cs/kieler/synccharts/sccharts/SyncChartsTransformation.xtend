@@ -330,7 +330,7 @@ class SyncChartsTransformation {
             return OperatorType::ADD
         }
         else if (operatorType == de.cau.cs.kieler.esterel.kexpressions.OperatorType::AND) {
-            return OperatorType::AND
+            return OperatorType::LOGICAL_AND
         }
         else if (operatorType == de.cau.cs.kieler.esterel.kexpressions.OperatorType::DIV) {
             return OperatorType::DIV
@@ -363,7 +363,7 @@ class SyncChartsTransformation {
             return OperatorType::NOT
         }
         else if (operatorType == de.cau.cs.kieler.esterel.kexpressions.OperatorType::OR) {
-            return OperatorType::OR
+            return OperatorType::LOGICAL_OR
         }
         else if (operatorType == de.cau.cs.kieler.esterel.kexpressions.OperatorType::PRE) {
             return OperatorType::PRE

@@ -528,7 +528,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
 
             // Create OR operator expression via kexpressions factory.
             val expr = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            expr.setOperator(OperatorType::OR)
+            expr.setOperator(OperatorType::LOGICAL_OR)
 
             // For each predecessor add its expression to the sub expressions list of the operator expression.
             relevantPredecessors.forEach [
@@ -590,7 +590,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
         // the condition of the conditional and return the expression.
         else if (predecessor.branchType == BranchType::TRUEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            expression.setOperator(OperatorType::AND)
+            expression.setOperator(OperatorType::LOGICAL_AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guard.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference
 
@@ -611,7 +611,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
         // the negated condition of the conditional and return the expression.
         else if (predecessor.branchType == BranchType::ELSEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            expression.setOperator(OperatorType::AND)
+            expression.setOperator(OperatorType::LOGICAL_AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guard.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference.negate
 

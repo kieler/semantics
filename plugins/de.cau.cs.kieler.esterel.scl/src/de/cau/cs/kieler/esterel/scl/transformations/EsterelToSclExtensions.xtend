@@ -650,7 +650,7 @@ class EsterelToSclExtensions {
      */
     def createAnd(Expression arg1, Expression arg2) {
         KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::AND
+            operator = OperatorType::LOGICAL_AND
             subExpressions.add(arg1)
             subExpressions.add(arg2)
         ]
@@ -664,7 +664,7 @@ class EsterelToSclExtensions {
      */
     def createOr(Expression arg1, Expression arg2) {
         KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::OR
+            operator = OperatorType::LOGICAL_OR
             subExpressions.add(arg1)
             subExpressions.add(arg2)
         ]

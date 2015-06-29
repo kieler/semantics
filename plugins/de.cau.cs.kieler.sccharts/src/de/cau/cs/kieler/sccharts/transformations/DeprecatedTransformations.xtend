@@ -1962,11 +1962,11 @@ class ExposeLocalSignals {
             // Create complex triggers to be filled with auxiliary valuedObjects (sorted strong or weak)                        
             var Expression strongTrigger;
             val strongTriggerOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-            strongTriggerOperatorExpression.setOperator(OperatorType::OR);
+            strongTriggerOperatorExpression.setOperator(OperatorType::LOGICAL_OR);
             strongTrigger = strongTriggerOperatorExpression;
             var Expression weakTrigger;
             val weakTriggerOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-            weakTriggerOperatorExpression.setOperator(OperatorType::OR);
+            weakTriggerOperatorExpression.setOperator(OperatorType::LOGICAL_OR);
             weakTrigger = weakTriggerOperatorExpression;
 
             // For every transition 

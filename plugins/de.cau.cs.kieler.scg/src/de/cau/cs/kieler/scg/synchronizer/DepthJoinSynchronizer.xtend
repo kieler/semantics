@@ -168,7 +168,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         // At first this simple scheduler assumes that the fork node spawns more than one thread.
         // Hence, we create an or-operator expression. 
         val terminationExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => 
-            [ setOperator(OperatorType::OR) ]
+            [ setOperator(OperatorType::LOGICAL_OR) ]
         
         data.createEmptyExpressions(terminationExpression)
         data.createGuardExpression(terminationExpression)

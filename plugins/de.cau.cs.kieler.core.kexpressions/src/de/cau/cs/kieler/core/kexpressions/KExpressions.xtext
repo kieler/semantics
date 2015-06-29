@@ -227,10 +227,10 @@ enum ValOperator returns OperatorType:
 	VAL="val";
 
 enum LogicalOrOperator returns OperatorType:
-	OR="||";
+	LOGICAL_OR="||";
 
 enum LogicalAndOperator returns OperatorType:
-	AND="&&";
+	LOGICAL_AND="&&";
 	
 enum PostfixAdd returns OperatorType:
     POSTFIX_ADD="++";

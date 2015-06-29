@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.kitt,
  de.cau.cs.kieler.core.kexpressions.keffects
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.cau.cs.kieler.scg,
  de.cau.cs.kieler.scg.analyzer,
  de.cau.cs.kieler.scg.extensions,

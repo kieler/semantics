@@ -1474,7 +1474,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         // Expression to check whether the delay expression is true and the counter holds the required value
         // (if a and c > i then...)
         val countExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::AND
+            operator = OperatorType::LOGICAL_AND
             subExpressions += suspend.delay.event.expr.transformExpression
             subExpressions += KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                 operator = OperatorType::GT
@@ -1581,7 +1581,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         // If several traps are declared, check if one of them was triggered
         else {
             exitExpressionVar = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-                operator = OperatorType::OR
+                operator = OperatorType::LOGICAL_OR
                 for (^var : exitVariables) {
                     subExpressions += ^var.createValuedObjectReference
                 }

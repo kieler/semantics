@@ -741,16 +741,27 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
             «subexpression.expand»
         «ENDFOR»)
     «ENDIF»
-    «IF expression.operator  == OperatorType::AND»
+    «IF expression.operator  == OperatorType::LOGICAL_AND»
         («FOR subexpression : expression.subExpressions SEPARATOR " && "»
             «subexpression.expand»
         «ENDFOR»)
     «ENDIF»
-    «IF expression.operator  == OperatorType::OR»
+    «IF expression.operator  == OperatorType::LOGICAL_OR»
         («FOR subexpression : expression.subExpressions SEPARATOR " || "»
             «subexpression.expand»
         «ENDFOR»)
     «ENDIF»
+    «IF expression.operator  == OperatorType::BITWISE_AND»
+        («FOR subexpression : expression.subExpressions SEPARATOR " & "»
+            «subexpression.expand»
+        «ENDFOR»)
+    «ENDIF»
+    «IF expression.operator  == OperatorType::BITWISE_OR»
+        («FOR subexpression : expression.subExpressions SEPARATOR " | "»
+            «subexpression.expand»
+        «ENDFOR»)
+    «ENDIF»
+
     «IF expression.operator  == OperatorType::ADD»
         («FOR subexpression : expression.subExpressions SEPARATOR " + "»
             «subexpression.expand»

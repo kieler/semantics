@@ -5,7 +5,7 @@ Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Version: 0.1.1.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.text.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.1.0",
+Require-Bundle: org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.builder,
  org.eclipse.ui.editors;bundle-version="3.5.0",
@@ -21,9 +21,10 @@ Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.1.0",
  de.cau.cs.kieler.core.kexpressions.keffects.ui,
  de.cau.cs.kieler.core.kexpressions.text.ui,
  de.cau.cs.kieler.core.kexpressions.keffects,
- de.cau.cs.kieler.core.kexpressions.text
+ de.cau.cs.kieler.core.kexpressions.text,
+ org.eclipse.xtext.generator;bundle-version="2.8.3"
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.cau.cs.kieler.sccharts.text.actions.ui.contentassist.antlr,
  de.cau.cs.kieler.sccharts.text.sct.ui,
  de.cau.cs.kieler.sccharts.text.sct.ui.contentassist.antlr,

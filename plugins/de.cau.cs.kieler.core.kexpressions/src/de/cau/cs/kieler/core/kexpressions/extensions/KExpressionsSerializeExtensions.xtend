@@ -138,11 +138,17 @@ class KExpressionsSerializeExtensions {
         if (expression.operator  == OperatorType::NE) 
             return combineOperators(expression.subExpressions.iterator, " != ")
                
-        if (expression.operator  == OperatorType::AND) 
+        if (expression.operator  == OperatorType::LOGICAL_AND) 
             return combineOperators(expression.subExpressions.iterator, " && ")
                
-        if (expression.operator  == OperatorType::OR) 
+        if (expression.operator  == OperatorType::LOGICAL_OR) 
             return combineOperators(expression.subExpressions.iterator, " || ")
+
+        if (expression.operator  == OperatorType::BITWISE_AND) 
+            return combineOperators(expression.subExpressions.iterator, " & ")
+               
+        if (expression.operator  == OperatorType::BITWISE_OR) 
+            return combineOperators(expression.subExpressions.iterator, " | ")
                
         if (expression.operator  == OperatorType::ADD) 
             return combineOperators(expression.subExpressions.iterator, " + ")

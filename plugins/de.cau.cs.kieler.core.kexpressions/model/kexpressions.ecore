@@ -101,12 +101,12 @@
         <details key="documentation" value="Not Equal operator.&#xA;"/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="AND" value="4" literal="&amp;">
+    <eLiterals name="LOGICAL_AND" value="4" literal="&amp;&amp;">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Logical AND operator.&#xA;"/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="OR" value="5" literal="|">
+    <eLiterals name="LOGICAL_OR" value="5" literal="||">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Logical OR operator."/>
       </eAnnotations>
@@ -136,8 +136,8 @@
         <details key="documentation" value="Arithmetic modulo operation. (Not commutative!)"/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="BITWISE_OR" value="17" literal=""/>
-    <eLiterals name="BITWISE_AND" value="16"/>
+    <eLiterals name="BITWISE_OR" value="17" literal="|"/>
+    <eLiterals name="BITWISE_AND" value="16" literal="&amp;"/>
     <eLiterals name="POSTFIX_ADD" value="18"/>
     <eLiterals name="POSTFIX_SUB" value="19"/>
   </eClassifiers>
