@@ -16,7 +16,7 @@
          <editor
                id="de.cau.cs.kieler.esterel.Esterel"
                name="KIELER Esterel Editor"
-               priority="99">
+               priority="101">
          </editor>
       </executionFile>
    </extension>
