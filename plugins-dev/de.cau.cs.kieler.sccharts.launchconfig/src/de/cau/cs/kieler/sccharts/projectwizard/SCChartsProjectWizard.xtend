@@ -13,23 +13,20 @@
  */
 package de.cau.cs.kieler.sccharts.projectwizard
 
+import de.cau.cs.kieler.sccharts.filewizard.SCTFileCreationPage
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.sccharts.launchconfig.common.ExtensionLookupUtil
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.runtime.IExtension
-import org.eclipse.core.runtime.Platform
-import org.eclipse.jdt.core.IClasspathEntry
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.viewers.IStructuredSelection
-import org.eclipse.jface.wizard.IWizard
+import org.eclipse.jface.wizard.IWizardPage
 import org.eclipse.jface.wizard.Wizard
 import org.eclipse.jface.wizard.WizardDialog
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchWizard
-import de.cau.cs.kieler.sccharts.filewizard.SCTFileCreationPage
-import org.eclipse.jface.wizard.IWizardPage
 
 /**
  * @author aas
@@ -116,51 +113,12 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
     }
 
     private def startWizard(String fullyQualifiedClassName) {
-        val wizard = getWizard(fullyQualifiedClassName)
+        val wizard = ExtensionLookupUtil.getWizard(fullyQualifiedClassName)
         if (wizard != null) {
             // Open the wizard
+            wizard.init(workbench, selection)
             val dialog = new WizardDialog(shell, wizard)
             dialog.open()
         }
-    }
-
-    def IWizard getWizard(String fullyQualifiedClassName) {
-        val extensions = getExtensions("org.eclipse.ui.newWizards")
-
-        // Search for wizards wich use the given class 
-        for (ext : extensions) {
-            val configElements = ext.getConfigurationElements();
-
-            // Search for wizard elements
-            for (configElement : configElements) {
-                if (configElement.name == "wizard") {
-                    val isProject = Boolean.valueOf(configElement.getAttribute("project"))
-                    val classAttribute = configElement.getAttribute("class")
-                    if(isProject){
-                        println(classAttribute)
-
-                        if (classAttribute == fullyQualifiedClassName) {
-                            // Instantiate class.
-                            try {
-                                val wizard = configElement.createExecutableExtension("class") as IWorkbenchWizard;
-                                wizard.init(workbench, selection)
-                                return wizard
-                            } catch (ClassCastException e) {
-                                return null
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return null
-    }
-
-    def IExtension[] getExtensions(String extensionId) {
-        // Get installed extensions from plugin registry
-        val reg = Platform.getExtensionRegistry()
-        val extensionPoint = reg.getExtensionPoint(extensionId)
-        return extensionPoint.getExtensions()
     }
 }

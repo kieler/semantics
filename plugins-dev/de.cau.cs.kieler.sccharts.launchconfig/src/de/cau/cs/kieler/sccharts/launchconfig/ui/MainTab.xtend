@@ -113,36 +113,7 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
         val group = UIUtil.createGroup(parent, "Target", 2)
 
         // ComboViewer
-        targetLanguage = new ComboViewer(group, SWT.DEFAULT)
-
-        // Fetch possible targets from KiCo
-        var Set<Transformation> transformations
-        val feature = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
-        if (feature != null) {
-            transformations = feature.expandingTransformations
-        }
-
-        // Fill combo
-        targetLanguage.contentProvider = ArrayContentProvider.instance
-        targetLanguage.input = transformations
-
-        // Select first element as default 
-        if (transformations != null && transformations.size > 0) {
-            targetLanguage.selection = new StructuredSelection(transformations.get(0))
-        }
-
-        // Label provider
-        targetLanguage.labelProvider = new LabelProvider() {
-            override String getText(Object element) {
-                val data = (element as Transformation)
-                if (data != null)
-                    return data.name
-                else
-                    return ""
-            }
-        }
-
-        // Selection listener
+        targetLanguage = UIUtil.createKiCoTargetsCombo(group)
         targetLanguage.addSelectionChangedListener(new ISelectionChangedListener {
 
             override selectionChanged(SelectionChangedEvent event) {

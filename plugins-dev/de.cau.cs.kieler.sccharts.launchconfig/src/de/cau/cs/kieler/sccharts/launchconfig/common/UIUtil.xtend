@@ -13,13 +13,23 @@
  */
 package de.cau.cs.kieler.sccharts.launchconfig.common
 
+import de.cau.cs.kieler.kico.KielerCompiler
+import de.cau.cs.kieler.kico.internal.Transformation
+import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
+import java.util.Set
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IPath
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.StringVariableSelectionDialog
+import org.eclipse.jface.viewers.ArrayContentProvider
+import org.eclipse.jface.viewers.ComboViewer
+import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.LabelProvider
+import org.eclipse.jface.viewers.SelectionChangedEvent
+import org.eclipse.jface.viewers.StructuredSelection
+import org.eclipse.swt.SWT
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.events.SelectionListener
@@ -36,6 +46,7 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
  */
 class UIUtil {
 
+    public static val NONE = 0
     public static val PROJECT_BUTTON = 1 << 0
     public static val RESOURCE_BUTTON = 1 << 1
     public static val CONTAINER_BUTTON = 1 << 2
@@ -206,12 +217,50 @@ class UIUtil {
         return browse
     }
 
+    static def createKiCoTargetsCombo(Composite parent){
+        // ComboViewer
+        val combo = new ComboViewer(parent, SWT.DEFAULT)
+
+        // Fetch possible targets from KiCo
+        var Set<Transformation> transformations
+        val feature = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
+        if (feature != null) {
+            transformations = feature.expandingTransformations
+        }
+
+        // Fill combo
+        combo.contentProvider = ArrayContentProvider.instance
+        combo.input = transformations
+
+        // Select first element as default 
+        if (transformations != null && transformations.size > 0) {
+            combo.selection = new StructuredSelection(transformations.get(0))
+        }
+
+        // Label provider
+        combo.labelProvider = new LabelProvider() {
+            override String getText(Object element) {
+                val data = (element as Transformation)
+                if (data != null)
+                    return data.name
+                else
+                    return ""
+            }
+        }
+
+        return combo
+    }
+
     static def createSpace(Composite parent) {
         createSpace(parent, 1)
     }
 
     static def createSpace(Composite parent, int columnsToBeEmpty) {
         SWTFactory.createHorizontalSpacer(parent, columnsToBeEmpty)
+    }
+
+    static def createButton(Composite parent, String label) {
+        return SWTFactory.createPushButton(parent, label, null)
     }
 
     private static def boolean isFlagSet(int bitmask, int flag) {

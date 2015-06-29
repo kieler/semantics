@@ -21,37 +21,45 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class EnvironmentData extends SerializableData {
     
-    @Accessors
-    protected String name
+    new(){
+        
+    }
+    
+    new(String name){
+        this.name = name
+    }
     
     @Accessors
-    protected String targetLanguage
-    @Accessors
-    protected String targetFileExtension
-    @Accessors
-    protected String targetTemplate
+    protected String name = ""
     
     @Accessors
-    protected String wrapperCodeTemplate
+    protected String targetLanguage = ""
     @Accessors
-    protected String wrapperCodeTarget
+    protected String targetFileExtension = ""
     @Accessors
-    protected String wrapperCodeSnippetDirectory
-    @Accessors
-    protected String wrapperCodeSnippetOrigin
+    protected String targetTemplate = ""
     
     @Accessors
-    protected String compileCommand
+    protected String wrapperCodeTemplate = ""
     @Accessors
-    protected String deployCommand
+    protected String wrapperCodeTarget = ""
     @Accessors
-    protected String runCommand
+    protected String wrapperCodeSnippetsDirectory = ""
+    @Accessors
+    protected String wrapperCodeSnippetsOrigin = ""
     
     @Accessors
-    protected String relatedProjectWizardClass
+    protected String compileCommand = ""
+    @Accessors
+    protected String deployCommand = ""
+    @Accessors
+    protected String runCommand = ""
     
     @Accessors
-    protected String mainFile
+    protected String relatedProjectWizardClass = ""
+    
     @Accessors
-    protected String mainFileOrigin
+    protected String mainFile = ""
+    @Accessors
+    protected String mainFileOrigin = ""
 }

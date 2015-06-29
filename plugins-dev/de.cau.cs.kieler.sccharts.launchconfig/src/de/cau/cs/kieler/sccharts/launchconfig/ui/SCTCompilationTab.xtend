@@ -104,7 +104,8 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
 
         // Content provider
         list.setContentProvider(ArrayContentProvider.instance);
-
+        list.input = new ArrayList<SCTCompilationData>()
+        
         // Label provider
         list.setLabelProvider(new LabelProvider() {
             override String getText(Object element) {
@@ -141,11 +142,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
                     // Get results.
                     val results = dialog.result
                     if (results != null) {
-                        // Compute new input for gui list by constructing new input.
-                        val List<SCTCompilationData> currentInput = list.input as List<SCTCompilationData>
-                        val newInput = new ArrayList()
-                        if (currentInput != null)
-                            newInput.addAll(currentInput)
+                        val inputArray = list.input as ArrayList<SCTCompilationData>
 
                         // Add resources to the gui list
                         for (var i = 0; i < results.length; i++) {
@@ -157,18 +154,18 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
                             // The ResourceSelectionDialog does not provide filter funcionality
                             // so we do this here manually.
                             var isOK = resource.fileExtension.toLowerCase == "sct"
-                            for (SCTCompilationData d : currentInput) {
+                            for (SCTCompilationData d : inputArray) {
                                 if (d.path == path)
                                     isOK = false
                             }
 
                             // Add if the new element is ok.
                             if (isOK)
-                                newInput.add(new SCTCompilationData(path, projectRelativePath, name))
+                                inputArray.add(new SCTCompilationData(path, projectRelativePath, name))
                             else
                                 println("Resource '" + resource.name + "' is no SCT file or already in list!")
                         }
-                        list.input = newInput
+                        list.refresh()
    
                         updateLaunchConfigurationDialog()
                     }                    
@@ -180,24 +177,12 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         removeButton = createPushButton(bcomp, "Remove", null)
         removeButton.addSelectionListener(new SelectionAdapter() {
             override void widgetSelected(SelectionEvent e) {
-                // The ListViewer does not provide an easy way to remove an element
-                // so we do it the hard way.
                 
-                // Remove the currently selected item from the list
-                // by computing the input as 
-                // 'everything in the list which is not the current selection'.
-                val currentInput = list.input as List<SCTCompilationData>
-                if (currentInput != null) {
-                    val newInput = newArrayList()
-                    currentInput.forEach [
-                        if (it != currentData)
-                            newInput += it
-                    ]
-                    list.input = newInput
-                    list.selection = new StructuredSelection()
-                    
-                    updateLaunchConfigurationDialog()
-                }
+                val inputArray = list.input as ArrayList<SCTCompilationData>
+                inputArray.remove(currentData)
+                list.refresh()
+                list.selection = new StructuredSelection()
+                updateLaunchConfigurationDialog()
             }
         })
     }
