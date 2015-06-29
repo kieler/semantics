@@ -132,10 +132,16 @@
           <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy/</url>
         </repository>
         <repository>
-          <id>p2.xtext</id>
+          <id>p2.xtext.2.8.3</id>
           <layout>p2</layout>
-          <url>http://download.itemis.de/updates/</url>
-        </repository>      </repositories>
+          <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.8.3/</url>
+        </repository>      
+        <repository>
+          <id>p2.emf.2.10</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/modeling/emf/emf/updates/2.10.x/</url>
+        </repository>      
+	</repositories>
 
       <modules>
         <module>../plugins</module>
