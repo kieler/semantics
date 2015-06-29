@@ -130,6 +130,7 @@ public class TimingAnalysis extends Job {
         // timing analysis is running
 
         HashMultimap<Region, WeakReference<KText>> timingLabels = HashMultimap.create();
+        HashMultimap<Region, WeakReference<KRectangle>> regionRectangles = HashMultimap.create();
         Iterator<EObject> graphIter =
                 ModelingUtil.eAllContentsOfType2(rootNode, KNode.class, KContainerRendering.class,
                         KRectangle.class);
@@ -148,6 +149,7 @@ public class TimingAnalysis extends Job {
                             VerticalAlignment.TOP, 5, 5, 0, 0);
                     rect.getChildren().add(text);
                     timingLabels.put((Region) sourceElem, new WeakReference<KText>(text));
+                    regionRectangles.put((Region)sourceElem, new WeakReference<KRectangle>(rect));
                 }
             }
         }
@@ -413,8 +415,11 @@ public class TimingAnalysis extends Job {
             return new Status(IStatus.ERROR, pluginId,
                     "An IO error occurred while timing information was retrieved from file.");
         }
-        extractTimingLabels(RequestType.FWCET, resultList, timingLabels, timingResults,
-                tppRegionMap, scchart);
+        // calculate timing values for all regions and store a list of regions that belong to the
+        // WCET path in wcpRegions for special display
+        ArrayList<Region> wcpRegions =
+                extractTimingLabels(RequestType.FWCET, resultList, timingLabels, timingResults,
+                        tppRegionMap, scchart);
 
         // Step 7: Feedback information back to the diagram
 
@@ -479,8 +484,9 @@ public class TimingAnalysis extends Job {
      * @param tppRegionMap
      *            A Mapping between Timing Program Points and Regions
      * @param rootState
+     * @return
      */
-    private void extractTimingLabels(RequestType requestType,
+    private ArrayList<Region> extractTimingLabels(RequestType requestType,
             LinkedList<TimingRequestResult> resultList,
             HashMultimap<Region, WeakReference<KText>> timingLabelList,
             HashMap<Region, String> regionLabelStringMap, HashMap<String, Region> tppRegionMap,
@@ -552,6 +558,7 @@ public class TimingAnalysis extends Job {
                 regionLabelStringMap.put(currentRegion, WCRT.toString());
             }
         }
+        return wcpRegions;
     }
 
     /**
