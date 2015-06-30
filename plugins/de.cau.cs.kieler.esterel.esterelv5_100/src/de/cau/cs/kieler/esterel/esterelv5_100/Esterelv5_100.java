@@ -130,6 +130,16 @@ public class Esterelv5_100 {
 
 		return EsterelExec.exec(cmd, input, INIT_TIME, TIMEOUT, STEP_TIME);
 	}
+	
+	public static InputStream execComp(final MODULE module, final InputStream input)
+			throws IOException {
+
+		String cmd = resolveFragmentModule(module);
+
+		System.out.println(cmd);
+
+		return EsterelExec.execComp(cmd, input);
+	}
 
 	public static InputStream runSTRL(final URI strlFile)
 			throws FileNotFoundException {
@@ -166,7 +176,7 @@ public class Esterelv5_100 {
 	}
 
 	public static InputStream runSSCC(final InputStream ssc) throws IOException {
-		return exec(MODULE.SSCC, ssc);
+		return execComp(MODULE.SSCC, ssc);
 	}
 
 	public static URI runCODEGEN(final InputStream c, final File outFile)

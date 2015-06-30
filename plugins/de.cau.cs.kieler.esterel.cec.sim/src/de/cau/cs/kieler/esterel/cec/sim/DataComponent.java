@@ -948,7 +948,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                     this.compileEsterelToC(esterelOutput, Esterelv5_100.getDefaultOutFile(),
                             esterelSimulationProgressMonitor).toURL(); 
             output = new URL("file:sscc_out.c");
-            System.out.println(output.toString());
+            //System.out.println(output.toString());
             System.out.println("M2M 9");
             
             // Possibly add #include for a header file

@@ -10,6 +10,7 @@ Require-Bundle: de.cau.cs.kieler.esterel;bundle-version="0.3.3",
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
- org.eclipse.xtend.lib.macro
+ org.eclipse.xtend.lib.macro,
+ de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.3"
 Export-Package: de.cau.cs.kieler.sccharts.esterel.transformation
 
