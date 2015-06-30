@@ -13,15 +13,18 @@
  */
 package de.cau.cs.kieler.core.kexpressions.keffects.extensions
 
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtensions
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeHumanReadableExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
+import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /**
  * @author ssm
@@ -29,7 +32,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression
  * @kieler.design 2015-06-08 proposed ssm
  * @kieler.rating 2015-06-08 proposed yellow
  */
-class KEffectsSerializeExtensions extends KExpressionsSerializeExtensions {
+class KEffectsSerializeExtensions extends KExpressionsSerializeHumanReadableExtensions {
     
     public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionString) {
         var res = assignment.valuedObject.name
@@ -103,18 +106,6 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeExtensions {
         }
     }
     
-//    def dispatch CharSequence serializeHR(EList<Effect> effects) {
-//        if (!effects.empty) {
-//            var String label = "" 
-//            for(effect : effects) {
-//                label = label + effect.serializeHR as String + "; "
-//            }
-//            label = label.substring(0, label.length - 2)
-//            return label
-//        }
-//        return ""
-//    }  
-    
     def dispatch CharSequence serializeHR(Emission emission) {
         val objectContainer = emission.valuedObject.eContainer
         if (objectContainer instanceof Declaration) {
@@ -128,8 +119,21 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeExtensions {
         }
     }
     
-    override dispatch CharSequence serializeHR(Expression expression) {
-        expression.serialize.humanReadable
-    }
-
+    
+    
+//    override dispatch CharSequence serializeHR(FunctionCall functionCall) {
+//    	super.serializeHR(functionCall)
+//    }    
+//    
+//    override dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
+//    	super.serializeHR(valuedObjectReference)
+//    }
+//
+//    override dispatch CharSequence serializeHR(OperatorExpression expression) {
+//    	super.serializeHR(expression)
+//    }
+//    
+//    override dispatch CharSequence serializeHR(Expression expression) {
+//        super.serializeHR(expression)
+//    }
 }
