@@ -1442,10 +1442,10 @@ ruleLogicalOrOperator
     }
 :
 (
-{ before(grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); }
+{ before(grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration()); }
 (	'||' 
 )
-{ after(grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); }
+{ after(grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration()); }
 )
 
 ;
@@ -1462,10 +1462,10 @@ ruleLogicalAndOperator
     }
 :
 (
-{ before(grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); }
+{ before(grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration()); }
 (	'&&' 
 )
-{ after(grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); }
+{ after(grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration()); }
 )
 
 ;

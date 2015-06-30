@@ -1288,34 +1288,34 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class LogicalOrOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "LogicalOrOperator");
-		private final EnumLiteralDeclaration cOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cORVerticalLineVerticalLineKeyword_0 = (Keyword)cOREnumLiteralDeclaration.eContents().get(0);
+		private final EnumLiteralDeclaration cLOGICAL_OREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cLOGICAL_ORVerticalLineVerticalLineKeyword_0 = (Keyword)cLOGICAL_OREnumLiteralDeclaration.eContents().get(0);
 		
 		//enum LogicalOrOperator returns OperatorType:
-		//	OR="||";
+		//	LOGICAL_OR="||";
 		public EnumRule getRule() { return rule; }
 
-		//OR="||"
-		public EnumLiteralDeclaration getOREnumLiteralDeclaration() { return cOREnumLiteralDeclaration; }
+		//LOGICAL_OR="||"
+		public EnumLiteralDeclaration getLOGICAL_OREnumLiteralDeclaration() { return cLOGICAL_OREnumLiteralDeclaration; }
 
 		//"||"
-		public Keyword getORVerticalLineVerticalLineKeyword_0() { return cORVerticalLineVerticalLineKeyword_0; }
+		public Keyword getLOGICAL_ORVerticalLineVerticalLineKeyword_0() { return cLOGICAL_ORVerticalLineVerticalLineKeyword_0; }
 	}
 
 	public class LogicalAndOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "LogicalAndOperator");
-		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cANDAmpersandAmpersandKeyword_0 = (Keyword)cANDEnumLiteralDeclaration.eContents().get(0);
+		private final EnumLiteralDeclaration cLOGICAL_ANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cLOGICAL_ANDAmpersandAmpersandKeyword_0 = (Keyword)cLOGICAL_ANDEnumLiteralDeclaration.eContents().get(0);
 		
 		//enum LogicalAndOperator returns OperatorType:
-		//	AND="&&";
+		//	LOGICAL_AND="&&";
 		public EnumRule getRule() { return rule; }
 
-		//AND="&&"
-		public EnumLiteralDeclaration getANDEnumLiteralDeclaration() { return cANDEnumLiteralDeclaration; }
+		//LOGICAL_AND="&&"
+		public EnumLiteralDeclaration getLOGICAL_ANDEnumLiteralDeclaration() { return cLOGICAL_ANDEnumLiteralDeclaration; }
 
 		//"&&"
-		public Keyword getANDAmpersandAmpersandKeyword_0() { return cANDAmpersandAmpersandKeyword_0; }
+		public Keyword getLOGICAL_ANDAmpersandAmpersandKeyword_0() { return cLOGICAL_ANDAmpersandAmpersandKeyword_0; }
 	}
 
 	public class PostfixAddElements extends AbstractEnumRuleElementFinder {
@@ -2103,7 +2103,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum LogicalOrOperator returns OperatorType:
-	//	OR="||";
+	//	LOGICAL_OR="||";
 	public LogicalOrOperatorElements getLogicalOrOperatorAccess() {
 		return unknownRuleLogicalOrOperator;
 	}
@@ -2113,7 +2113,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum LogicalAndOperator returns OperatorType:
-	//	AND="&&";
+	//	LOGICAL_AND="&&";
 	public LogicalAndOperatorElements getLogicalAndOperatorAccess() {
 		return unknownRuleLogicalAndOperator;
 	}

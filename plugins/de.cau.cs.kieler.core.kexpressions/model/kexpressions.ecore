@@ -96,7 +96,7 @@
         <details key="documentation" value="Pre operator, returns the previous state of a Signal referenced by a SignalReference."/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="NE" value="14" literal="&lt;>">
+    <eLiterals name="NE" value="14" literal="!=">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Not Equal operator.&#xA;"/>
       </eAnnotations>
@@ -131,7 +131,7 @@
         <details key="documentation" value="Aithmetic division operator. (Not commutative!)"/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="MOD" value="13" literal="mod">
+    <eLiterals name="MOD" value="13" literal="%">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Arithmetic modulo operation. (Not commutative!)"/>
       </eAnnotations>
