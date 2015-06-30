@@ -411,27 +411,27 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
         benchmark = benchmarkParam;
 
-        System.out.println("1");
+//        System.out.println("1");
         this.myModel = model;
         monitor.begin("SCCharts Simulation", 1);
-        System.out.println("2");
+//        System.out.println("2");
 
         String compile = "";
         try {
 
-            System.out.println("3");
+//            System.out.println("3");
             if (this.myModel == null) {
                 throw new KiemInitializationException(
                         "Cannot simulate active editor using the SCCharts Simulator", true, null);
             }
-            System.out.println("4");
+//            System.out.println("4");
 
             // if (this.getModelRootElement().eResource() == null) {
             // throw new KiemInitializationException(
             // "The active editor has must be saved in order to simulate the SCChart."
             // + " Volatile resources cannot be simulated.", true, null);
             // }
-            System.out.println("5");
+//            System.out.println("5");
 
             // Make a copy of the S program in case it was from
             // an active Editor
@@ -443,7 +443,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             // Calculate output path for possible S-m2m
             String inputPathString = this.getModelFilePath().toString();
-            System.out.println("6 " + inputPathString);
+//            System.out.println("6 " + inputPathString);
             URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
             sOutput = URI.createURI(input.toString());
 
@@ -453,7 +453,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             String lowLevelTransformations =
                     this.getProperties()[KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS + KIEM_PROPERTY_DIFF]
                             .getValue();
-            System.out.println("7");
+//            System.out.println("7");
 
             // If 'Full Debug Mode' is turned on then the user also wants to have
             // states and transitions visualized.
@@ -465,11 +465,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             if (debug) {
                 highLevelTransformations = debugTransformations + ", " + highLevelTransformations;
             }
-            System.out.println("8");
+//            System.out.println("8");
 
             // Compile the SCChart to C code
             EObject extendedSCChart = this.myModel;
-            System.out.println("9");
+//            System.out.println("9");
 
             KielerCompilerContext highLevelContext =
                     new KielerCompilerContext(highLevelTransformations, extendedSCChart);
@@ -479,10 +479,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             highLevelContext.setInplace(false);
             highLevelContext.setAdvancedSelect(true);
-            System.out.println("10");
+//            System.out.println("10");
             CompilationResult highLeveleCompilationResult =
                     KielerCompiler.compile(highLevelContext);
-            System.out.println("11");
+//            System.out.println("11");
 
             // The following should be a state or an SCG
             EObject stateOrSCG = highLeveleCompilationResult.getEObject();
@@ -503,12 +503,12 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             lowLevelContext.setCreateDummyResource(true);
             lowLevelContext.setInplace(false);
             lowLevelContext.setAdvancedSelect(true);
-            System.out.println("12");
+//            System.out.println("12");
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
-            System.out.println("13");
+//            System.out.println("13");
 
             String cSCChartCCode = lowLevelCompilationResult.getString();
-            System.out.println("14 " + cSCChartCCode);
+//            System.out.println("14 " + cSCChartCCode);
             if (cSCChartCCode == null) {
                 // compilation failed
                 throw new KiemInitializationException(
@@ -519,19 +519,19 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             // Generate Simulation wrapper C code
             String cSimulation = "";
             if (stateOrSCG instanceof State) {
-                System.out.println("15");
+//                System.out.println("15");
                 CSimulationSCChart cSimulationSCChart =
                         Guice.createInjector().getInstance(CSimulationSCChart.class);
-                System.out.println("16");
+//                System.out.println("16");
                 cSimulation = cSimulationSCChart.transform((State) stateOrSCG, "10000").toString();
             } else if (stateOrSCG instanceof SCGraph) {
-                System.out.println("15");
+//                System.out.println("15");
                 CSimulationSCG cSimulationSCG =
                         Guice.createInjector().getInstance(CSimulationSCG.class);
-                System.out.println("16");
+//                System.out.println("16");
                 cSimulation = cSimulationSCG.transform((SCGraph) stateOrSCG, "10000").toString();
             }
-            System.out.println("17 " + cSimulation);
+//            System.out.println("17 " + cSimulation);
             
             if (benchmark) {
                 cSimulation = Benchmark.addTimingCode(cSimulation, "tick");
@@ -539,21 +539,21 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
-            System.out.println("18 " + outputFolder);
+//            System.out.println("18 " + outputFolder);
 
             String fileNameSCChart = "scchart.c";
             String outputFileSCChart = outputFolder + fileNameSCChart;
-            System.out.println("19 " + outputFileSCChart);
+//            System.out.println("19 " + outputFileSCChart);
             writeOutputModel(outputFileSCChart, cSCChartCCode.getBytes());
 
             String fileNameSimulation = "simulation.c";
             String outputFileSimulation = outputFolder + fileNameSimulation;
-            System.out.println("20 " + outputFileSimulation);
+//            System.out.println("20 " + outputFileSimulation);
             writeOutputModel(outputFileSimulation, cSimulation.getBytes());
 
             String includePath = getBundlePath("templates");
-            System.out.println("21 " + includePath);
-            System.out.println(includePath);
+//            System.out.println("21 " + includePath);
+//            System.out.println(includePath);
             // Compile
             cExecution = new CExecution(outputFolder, benchmark);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
@@ -625,7 +625,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
         try {
             String out = jSONObject.toString();
-            System.out.println("> " + out);
+//            System.out.println("> " + out);
             cExecution.getInterfaceToExecution().write(out + "\n");
             cExecution.getInterfaceToExecution().flush();
             while (cExecution.getInterfaceError().ready()) {
@@ -635,7 +635,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             String receivedMessage = cExecution.getInterfaceFromExecution().readLine();
 
-            System.out.println("< " + receivedMessage);
+//            System.out.println("< " + receivedMessage);
             // if (debugConsole) {
             // printConsole("==============| TICK " + computedTick++ + " |==============");
             // while (!receivedMessage.startsWith("{\"")) {
