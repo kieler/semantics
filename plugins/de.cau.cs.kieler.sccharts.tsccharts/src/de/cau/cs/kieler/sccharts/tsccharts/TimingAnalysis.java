@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.tsccharts;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -46,14 +47,19 @@ import com.google.inject.Guice;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.core.krendering.Colors;
 import de.cau.cs.kieler.core.krendering.HorizontalAlignment;
+import de.cau.cs.kieler.core.krendering.KBackground;
+import de.cau.cs.kieler.core.krendering.KColor;
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
+import de.cau.cs.kieler.core.krendering.KLineWidth;
 import de.cau.cs.kieler.core.krendering.KRectangle;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.VerticalAlignment;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
+import de.cau.cs.kieler.core.krendering.impl.KColorImpl;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KielerCompiler;
@@ -142,14 +148,14 @@ public class TimingAnalysis extends Job {
                 if (sourceElem instanceof Region) {
                     KText text = KRenderingFactory.eINSTANCE.createKText();
                     text.setText("???/???");
-                    renderingExtensions.setFontSize(text, 14);
+                    renderingExtensions.setFontSize(text, 10);
                     renderingExtensions.setForegroundColor(text, 255, 0, 0);
                     renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5,
                             0, renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT,
                             VerticalAlignment.TOP, 5, 5, 0, 0);
                     rect.getChildren().add(text);
                     timingLabels.put((Region) sourceElem, new WeakReference<KText>(text));
-                    regionRectangles.put((Region)sourceElem, new WeakReference<KRectangle>(rect));
+                    regionRectangles.put((Region) sourceElem, new WeakReference<KRectangle>(rect));
                 }
             }
         }
@@ -166,28 +172,34 @@ public class TimingAnalysis extends Job {
         rectangle.getChildren().add(text);
         timingLabels.put(null, new WeakReference<KText>(text));
         // start analysis job
-        new TimingAnalysis(rootState, timingLabels, scchartDummyRegion, resource).schedule();
+        new TimingAnalysis(rootState, timingLabels, scchartDummyRegion, resource, regionRectangles)
+                .schedule();
     }
 
     private State scchart;
     private HashMultimap<Region, WeakReference<KText>> timingLabels;
     private HashMap<Region, String> timingResults;
     private Region scchartDummyRegion;
+    private HashMultimap<Region, WeakReference<KRectangle>> regionRectangles;
+    private ArrayList<Region> wcpRegions = new ArrayList<Region>();
 
     /**
      * @param name
      * @param rootState
      * @param scchartDummyRegion
+     * @param regionRectangles
      * @param rootNode
      */
     public TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels,
-            Region scchartDummyRegion, Resource resource) {
+            Region scchartDummyRegion, Resource resource,
+            HashMultimap<Region, WeakReference<KRectangle>> regionRectangles) {
         super("Timing Analysis");
         this.scchart = rootState;
         this.timingLabels = regionLabels;
         this.timingResults = new HashMap<Region, String>();
         this.scchartDummyRegion = scchartDummyRegion;
         this.resource = resource;
+        this.regionRectangles = regionRectangles;
     }
 
     /**
@@ -204,7 +216,7 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-
+        final KRenderingFactory renderingFactory = KRenderingFactory.eINSTANCE;
         KielerCompilerContext context =
                 new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID
                         + ",*T_ABORT,*T_scg.basicblock.sc", scchart);
@@ -417,7 +429,7 @@ public class TimingAnalysis extends Job {
         }
         // calculate timing values for all regions and store a list of regions that belong to the
         // WCET path in wcpRegions for special display
-        ArrayList<Region> wcpRegions =
+        wcpRegions =
                 extractTimingLabels(RequestType.FWCET, resultList, timingLabels, timingResults,
                         tppRegionMap, scchart);
 
@@ -451,6 +463,31 @@ public class TimingAnalysis extends Job {
                                 }
                             }
                             label.setText(timingResult);
+                            // If the region belongs to the WCET path, enlarge numbers
+                            if (wcpRegions.contains(region)) {
+                                renderingExtensions.setFontSize(label, 18);
+                            }
+                        }
+                    }
+                    // If the region belongs to the WCET path, set rectangle in red, thick lines
+                    if (wcpRegions.contains(region)) {
+                        Set<WeakReference<KRectangle>> rectangleRefs = regionRectangles.get(region);
+                        for (WeakReference<KRectangle> rectangleRef : rectangleRefs) {
+                            KRectangle regionRectangle = rectangleRef.get();
+                            KRectangle inner = KRenderingFactory.eINSTANCE.createKRectangle();
+                            regionRectangle.getChildren().add(0, inner);
+                            regionRectangle.getStyles().add(
+                                    renderingFactory.createKForeground().setColor(
+                                            Colors.RED));
+                            KBackground background = renderingFactory.createKBackground();
+                            background.setAlpha(30);
+//                            background.setTargetColor(Colors.RED);
+//                            background.setTargetAlpha(30);
+                            inner.getStyles().add(background.setColor(Colors.RED));
+                            final KLineWidth lwStyle =
+                                    KRenderingFactory.eINSTANCE.createKLineWidth();
+                            lwStyle.setLineWidth(3);
+                            regionRectangle.getStyles().add(lwStyle);
                         }
                     }
                 }
@@ -536,11 +573,7 @@ public class TimingAnalysis extends Job {
             Region currentRegion = regionIterator.next();
             if (!(currentRegion == null)) {
                 // Possibly we have to mark this region as part of the WCET path (WCP)
-                String wcpMarker = "";
-                if (wcpRegions.contains(currentRegion)) {
-                    wcpMarker = "W ";
-                }
-                regionLabelStringMap.put(currentRegion, wcpMarker + flatValues.get(currentRegion)
+                regionLabelStringMap.put(currentRegion, flatValues.get(currentRegion)
                         + " / " + deepValues.get(currentRegion));
             } else {
                 Integer WCRT = 0;
