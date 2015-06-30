@@ -102,7 +102,7 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHumanReadableExte
         if (assignment.expression == null) {
             assignment.serializeAssignment("")
         } else {
-            assignment.serializeAssignment(assignment.expression.serialize.humanReadable)
+            assignment.serializeAssignment(assignment.expression.serializeHR)
         }
     }
     

@@ -93,7 +93,7 @@ class KExpressionsSerializeExtensions {
 //    }
 
     // -------------------------------------------------------------------------
-    def String combineOperators(Iterator<Expression> expressions, String separator) {
+    protected def String combineOperators(Iterator<Expression> expressions, String separator) {
         var s = ""
         while (expressions.hasNext) {
             s = s + expressions.next.serialize

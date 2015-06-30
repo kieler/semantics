@@ -9,15 +9,19 @@ int I, J;
 signal int S;
 
 @check "comparison.mixed.sum.less.or.boolean"
+@strict "(((5 + 5) < 7) || A)"
 expression 5 + 5 < 7 || A
 
 @check "comparison.mixed.sum.greaterEquals.and.boolean"
+@strict "(((5 + 5) >= 7) & B)"
 expression 5 + 5 >= 7 & B
 
 @check "comparison.mixed.sum.equals.and.VOs"
+@strict "((5 + 5) == (I & J))"
 expression 5 + 5 == (I & J)
 
 @check "comparison.mixed.VO.notEquals.VO.sum"
+@strict "(J != (I + 5))"
 expression J != I + 5
 
 

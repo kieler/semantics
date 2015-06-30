@@ -7,6 +7,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import org.eclipse.emf.ecore.EObject
+import java.util.Iterator
 
 /**
  * @author ssm
@@ -135,7 +136,7 @@ class KExpressionsSerializeHumanReadableExtensions extends KExpressionsSerialize
 //    }
     
     dispatch def CharSequence serializeHR(OperatorExpression expression) {
-		val result = serializeOperatorExpression(expression)
+		val result = serializeHROperatorExpression(expression)
 		if ((expression.operator == OperatorType::NOT) || 
 			(expression.operator == OperatorType::VAL) ||
 			(expression.operator == OperatorType::PRE)) {
@@ -176,6 +177,150 @@ class KExpressionsSerializeHumanReadableExtensions extends KExpressionsSerialize
 		if (operatorType == OperatorType::LOGICAL_OR) return 12;
 		return 99
 	}
+	
+    protected def String combineOperatorsHR(Iterator<Expression> expressions, String separator) {
+        var s = ""
+        while (expressions.hasNext) {
+            s = s + expressions.next.serializeHR
+            if(expressions.hasNext) s = s + separator;
+        }
+        s
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionEQ(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " == ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionLT(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " < ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionLEQ(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " <= ")
+    }
+
+    protected def CharSequence serializeHROperatorExpressionGT(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " > ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionGEQ(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " >= ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionVAL(OperatorExpression expression) {
+    	"val(" + expression.subExpressions.head.serializeHR + ")"
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionPRE(OperatorExpression expression) {
+    	"pre(" + expression.subExpressions.head.serializeHR + ")"
+    }   
+    
+    protected def CharSequence serializeHROperatorExpressionNot(OperatorExpression expression) {
+    	"!" + expression.subExpressions.head.serializeHR
+    }
+
+    protected def CharSequence serializeHROperatorExpressionNE(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " != ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionLogicalAnd(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " && ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionLogicalOr(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " || ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionBitwiseAnd(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " & ")
+    }    
+    
+    protected def CharSequence serializeHROperatorExpressionBitwiseOr(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " | ")
+    }
+
+    protected def CharSequence serializeHROperatorExpressionAdd(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " + ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionSub(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " - ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionMul(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " * ")
+    }
+    
+    protected def CharSequence serializeHROperatorExpressionDiv(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " / ")
+    }        
+
+    protected def CharSequence serializeHROperatorExpressionMod(OperatorExpression expression) {
+    	combineOperatorsHR(expression.subExpressions.iterator, " % ")
+    }        
+        
+    // Expand a complex expression.
+    protected def CharSequence serializeHROperatorExpression(OperatorExpression expression) {
+        var CharSequence result = ""
+        
+        if (expression.operator == OperatorType::EQ) {
+            result = expression.serializeHROperatorExpressionEQ
+        } else if (expression.operator == OperatorType::LT) {
+            result = expression.serializeHROperatorExpressionLT
+        } else if (expression.operator == OperatorType::LEQ) {
+            result = expression.serializeHROperatorExpressionLEQ
+        } else if (expression.operator == OperatorType::GT) {
+            result = expression.serializeHROperatorExpressionGT
+        } else if (expression.operator == OperatorType::GEQ) {
+            result = expression.serializeHROperatorExpressionGEQ
+        } else if (expression.operator == OperatorType::NOT) {
+            return expression.serializeHROperatorExpressionNot
+        } else if (expression.operator == OperatorType::VAL) {
+            return expression.serializeHROperatorExpressionVAL
+        } else if (expression.operator == OperatorType::PRE) {
+            return expression.serializeHROperatorExpressionPRE
+        } else if (expression.operator == OperatorType::NE) {
+            result = expression.serializeHROperatorExpressionNE
+        } else if (expression.operator == OperatorType::LOGICAL_AND) {
+            result = expression.serializeHROperatorExpressionLogicalAnd
+        } else if (expression.operator == OperatorType::LOGICAL_OR) {
+            result = expression.serializeHROperatorExpressionLogicalOr
+        } else if (expression.operator == OperatorType::BITWISE_AND) {
+            result = expression.serializeHROperatorExpressionBitwiseAnd
+        } else if (expression.operator == OperatorType::BITWISE_OR) {
+            result = expression.serializeHROperatorExpressionBitwiseOr
+        } else if (expression.operator == OperatorType::ADD) {
+            result = expression.serializeHROperatorExpressionAdd
+        } else if (expression.operator == OperatorType::SUB) {
+            result = expression.serializeHROperatorExpressionSub
+        } else if (expression.operator == OperatorType::MULT) {
+            result = expression.serializeHROperatorExpressionMul
+        } else if (expression.operator == OperatorType::DIV) {
+            result = expression.serializeHROperatorExpressionDiv
+        } else if (expression.operator == OperatorType::MOD) {
+            result = expression.serializeHROperatorExpressionMod
+        }  
+            
+        return result
+    }	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
     dispatch def CharSequence serializeHR(Expression expression) {
         expression.serialize.humanReadable
