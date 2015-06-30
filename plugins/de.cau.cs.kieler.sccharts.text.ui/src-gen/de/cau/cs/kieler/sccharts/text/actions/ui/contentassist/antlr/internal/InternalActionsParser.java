@@ -5315,7 +5315,7 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1848:1: ( '||' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); 
+               before(grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration()); 
             }
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1849:1: ( '||' )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1849:3: '||'
@@ -5325,7 +5325,7 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); 
+               after(grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration()); 
             }
 
             }
@@ -5362,7 +5362,7 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1868:1: ( '&&' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); 
+               before(grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration()); 
             }
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1869:1: ( '&&' )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1869:3: '&&'
@@ -5372,7 +5372,7 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); 
+               after(grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration()); 
             }
 
             }

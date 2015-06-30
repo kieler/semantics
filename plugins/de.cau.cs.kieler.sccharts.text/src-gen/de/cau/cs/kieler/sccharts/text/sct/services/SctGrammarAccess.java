@@ -2699,7 +2699,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum LogicalOrOperator returns OperatorType:
-	//	OR="||";
+	//	LOGICAL_OR="||";
 	public KExpressionsGrammarAccess.LogicalOrOperatorElements getLogicalOrOperatorAccess() {
 		return gaActions.getLogicalOrOperatorAccess();
 	}
@@ -2709,7 +2709,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum LogicalAndOperator returns OperatorType:
-	//	AND="&&";
+	//	LOGICAL_AND="&&";
 	public KExpressionsGrammarAccess.LogicalAndOperatorElements getLogicalAndOperatorAccess() {
 		return gaActions.getLogicalAndOperatorAccess();
 	}

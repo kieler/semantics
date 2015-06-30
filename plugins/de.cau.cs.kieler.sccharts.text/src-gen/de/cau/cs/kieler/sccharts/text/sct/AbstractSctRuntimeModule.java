@@ -95,7 +95,7 @@ public abstract class AbstractSctRuntimeModule extends org.eclipse.xtext.service
 
 	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
 	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.sccharts.text.sct.validation.SctJavaValidator> bindSctJavaValidator() {
-		return de.cau.cs.kieler.sccharts.text.sct.validation.SctValidator.class;
+		return de.cau.cs.kieler.sccharts.text.sct.validation.SctJavaValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment

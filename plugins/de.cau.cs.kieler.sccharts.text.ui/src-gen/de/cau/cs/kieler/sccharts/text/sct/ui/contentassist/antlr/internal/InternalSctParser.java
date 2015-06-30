@@ -7194,7 +7194,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2453:1: ( '||' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); 
+               before(grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration()); 
             }
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2454:1: ( '||' )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2454:3: '||'
@@ -7204,7 +7204,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); 
+               after(grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration()); 
             }
 
             }
@@ -7241,7 +7241,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2473:1: ( '&&' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); 
+               before(grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration()); 
             }
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2474:1: ( '&&' )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2474:3: '&&'
@@ -7251,7 +7251,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); 
+               after(grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration()); 
             }
 
             }

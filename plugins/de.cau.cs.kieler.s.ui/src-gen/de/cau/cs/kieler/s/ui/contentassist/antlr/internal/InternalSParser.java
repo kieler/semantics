@@ -6572,7 +6572,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2252:1: ( '||' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); 
+               before(grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2253:1: ( '||' )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2253:3: '||'
@@ -6582,7 +6582,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); 
+               after(grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration()); 
             }
 
             }
@@ -6619,7 +6619,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2272:1: ( '&&' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); 
+               before(grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2273:1: ( '&&' )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2273:3: '&&'
@@ -6629,7 +6629,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); 
+               after(grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration()); 
             }
 
             }

@@ -31,7 +31,7 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
  de.cau.cs.kieler.core.kexpressions.keffects;visibility:=reexport,
  de.cau.cs.kieler.core.kexpressions.text;visibility:=reexport
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.cau.cs.kieler.scl,
  de.cau.cs.kieler.scl.extensions,
  de.cau.cs.kieler.scl.features,

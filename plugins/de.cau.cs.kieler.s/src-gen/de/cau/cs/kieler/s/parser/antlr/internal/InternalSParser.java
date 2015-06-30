@@ -15132,8 +15132,8 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             enumLiteral_0=(Token)match(input,67,FOLLOW_67_in_ruleLogicalOrOperator12083); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                      current = grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration().getEnumLiteral().getInstance();
-                      newLeafNode(enumLiteral_0, grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); 
+                      current = grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration().getEnumLiteral().getInstance();
+                      newLeafNode(enumLiteral_0, grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration()); 
                   
             }
 
@@ -15176,8 +15176,8 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             enumLiteral_0=(Token)match(input,68,FOLLOW_68_in_ruleLogicalAndOperator12126); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                      current = grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
-                      newLeafNode(enumLiteral_0, grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); 
+                      current = grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
+                      newLeafNode(enumLiteral_0, grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration()); 
                   
             }
 

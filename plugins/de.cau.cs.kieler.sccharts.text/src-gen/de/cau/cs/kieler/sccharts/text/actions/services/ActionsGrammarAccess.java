@@ -1269,7 +1269,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum LogicalOrOperator returns OperatorType:
-	//	OR="||";
+	//	LOGICAL_OR="||";
 	public KExpressionsGrammarAccess.LogicalOrOperatorElements getLogicalOrOperatorAccess() {
 		return gaKEXT.getLogicalOrOperatorAccess();
 	}
@@ -1279,7 +1279,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum LogicalAndOperator returns OperatorType:
-	//	AND="&&";
+	//	LOGICAL_AND="&&";
 	public KExpressionsGrammarAccess.LogicalAndOperatorElements getLogicalAndOperatorAccess() {
 		return gaKEXT.getLogicalAndOperatorAccess();
 	}

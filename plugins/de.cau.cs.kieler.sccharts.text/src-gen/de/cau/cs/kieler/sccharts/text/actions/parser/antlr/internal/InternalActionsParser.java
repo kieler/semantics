@@ -12413,8 +12413,8 @@ public class InternalActionsParser extends AbstractInternalAntlrParser {
             enumLiteral_0=(Token)match(input,62,FollowSets000.FOLLOW_62_in_ruleLogicalOrOperator9538); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                      current = grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration().getEnumLiteral().getInstance();
-                      newLeafNode(enumLiteral_0, grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); 
+                      current = grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration().getEnumLiteral().getInstance();
+                      newLeafNode(enumLiteral_0, grammarAccess.getLogicalOrOperatorAccess().getLOGICAL_OREnumLiteralDeclaration()); 
                   
             }
 
@@ -12457,8 +12457,8 @@ public class InternalActionsParser extends AbstractInternalAntlrParser {
             enumLiteral_0=(Token)match(input,63,FollowSets000.FOLLOW_63_in_ruleLogicalAndOperator9581); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                      current = grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
-                      newLeafNode(enumLiteral_0, grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); 
+                      current = grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
+                      newLeafNode(enumLiteral_0, grammarAccess.getLogicalAndOperatorAccess().getLOGICAL_ANDEnumLiteralDeclaration()); 
                   
             }
 
