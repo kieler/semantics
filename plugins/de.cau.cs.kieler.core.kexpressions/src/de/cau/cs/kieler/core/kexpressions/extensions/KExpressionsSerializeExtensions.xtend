@@ -39,191 +39,204 @@ import de.cau.cs.kieler.core.kexpressions.StringValue
 class KExpressionsSerializeExtensions {
 
    def dispatch CharSequence serialize(ValueType valueType) {
-       if (valueType == ValueType::BOOL) {
-           return 'bool'
-       }
-       else {
-           return valueType.getName;
-       }
-   }    
-   
-   def dispatch CharSequence serialize(TextExpression hostCodeString) {
+        if (valueType == ValueType::BOOL) {
+            return 'bool'
+        } else {
+            return valueType.getName;
+        }
+    }
+
+    def dispatch CharSequence serialize(TextExpression hostCodeString) {
         hostCodeString.text
-   }
+    }
 
-   // Combine operator
-   def dispatch CharSequence serialize(CombineOperator combineOperator) {
-       if (combineOperator.equals(CombineOperator::ADD)) {
-          return 'COMBINE_ADD'
-       }
-       else if (combineOperator.equals(CombineOperator::MULT)) {
-          return 'COMBINE_MULT'
-       }
-       else if (combineOperator.equals(CombineOperator::MAX)) {
-          return 'COMBINE_MAX'
-       }
-       else if (combineOperator.equals(CombineOperator::MIN)) {
-          return 'COMBINE_MIN'
-       }
-       else if (combineOperator.equals(CombineOperator::OR)) {
-          return 'COMBINE_OR'
-       }
-       else if (combineOperator.equals(CombineOperator::AND)) {
-          return 'OMBINE_AND'
-       }
-       // default case combine with +
-       return 'COMBINE_ADD';
-   }
+    // Combine operator
+    def dispatch CharSequence serialize(CombineOperator combineOperator) {
+        if (combineOperator.equals(CombineOperator::ADD)) {
+            return 'COMBINE_ADD'
+        } else if (combineOperator.equals(CombineOperator::MULT)) {
+            return 'COMBINE_MULT'
+        } else if (combineOperator.equals(CombineOperator::MAX)) {
+            return 'COMBINE_MAX'
+        } else if (combineOperator.equals(CombineOperator::MIN)) {
+            return 'COMBINE_MIN'
+        } else if (combineOperator.equals(CombineOperator::OR)) {
+            return 'COMBINE_OR'
+        } else if (combineOperator.equals(CombineOperator::AND)) {
+            return 'OMBINE_AND'
+        }
+        // default case combine with +
+        return 'COMBINE_ADD';
+    }
 
-   def initialValue(CombineOperator combineOperator) {
-       if (combineOperator.equals(CombineOperator::ADD)) {
-          return '''0'''
-       }
-       else if (combineOperator.equals(CombineOperator::MULT)) {
-          return '''1'''
-       }
-       else if (combineOperator.equals(CombineOperator::MAX)) {
-          return '''-999999'''
-       }
-       else if (combineOperator.equals(CombineOperator::MIN)) {
-          return '''999999'''
-       }
-       else if (combineOperator.equals(CombineOperator::OR)) {
-          return '''0'''
-       }
-       else if (combineOperator.equals(CombineOperator::AND)) {
-          return '''1'''
-       }
-       // default case combine with +
-       return '''0''';
-   }
+    def initialValue(CombineOperator combineOperator) {
+        if (combineOperator.equals(CombineOperator::ADD)) {
+            return '''0'''
+        } else if (combineOperator.equals(CombineOperator::MULT)) {
+            return '''1'''
+        } else if (combineOperator.equals(CombineOperator::MAX)) {
+            return '''-999999'''
+        } else if (combineOperator.equals(CombineOperator::MIN)) {
+            return '''999999'''
+        } else if (combineOperator.equals(CombineOperator::OR)) {
+            return '''0'''
+        } else if (combineOperator.equals(CombineOperator::AND)) {
+            return '''1'''
+        }
+        // default case combine with +
+        return '''0''';
+    }
 
-   // -------------------------------------------------------------------------
-   
+    // -------------------------------------------------------------------------
     def CharSequence combineOperators(Iterator<Expression> expressions, String separator) {
         var s = ""
-        while(expressions.hasNext){
+        while (expressions.hasNext) {
             s = s + expressions.next.serialize
-            if (expressions.hasNext) s = s + separator;
+            if(expressions.hasNext) s = s + separator;
         }
         s
     }
-   
-   //Expand a complex expression.
-    def dispatch CharSequence serialize(OperatorExpression expression) {
-        if (expression.operator  == OperatorType::EQ) 
-            return combineOperators(expression.subExpressions.iterator, " == ")   
 
-        if (expression.operator  == OperatorType::LT) 
-            return combineOperators(expression.subExpressions.iterator, " < ")   
-        
-        if (expression.operator  == OperatorType::LEQ) 
-            return combineOperators(expression.subExpressions.iterator, " <= ")   
-    
-        if (expression.operator  == OperatorType::GT) 
-            return combineOperators(expression.subExpressions.iterator, " > ")   
-        
-        if (expression.operator  == OperatorType::GEQ) 
+    // Expand a complex expression.
+    def dispatch CharSequence serialize(OperatorExpression expression) {
+        if (expression.operator == OperatorType::EQ)
+            return combineOperators(expression.subExpressions.iterator, " == ")
+
+        if (expression.operator == OperatorType::LT)
+            return combineOperators(expression.subExpressions.iterator, " < ")
+
+        if (expression.operator == OperatorType::LEQ)
+            return combineOperators(expression.subExpressions.iterator, " <= ")
+
+        if (expression.operator == OperatorType::GT)
+            return combineOperators(expression.subExpressions.iterator, " > ")
+
+        if (expression.operator == OperatorType::GEQ)
             return combineOperators(expression.subExpressions.iterator, " >= ")
-               
-        if (expression.operator  == OperatorType::NOT) 
-            return "!" + expression.subExpressions.head.serialize   
-        
-        if (expression.operator  == OperatorType::VAL) 
+
+        if (expression.operator == OperatorType::NOT)
+            return "!" + expression.subExpressions.head.serialize
+
+        if (expression.operator == OperatorType::VAL)
             return "VAL_SCC(" + expression.subExpressions.head.serialize + ")"
 
-        if (expression.operator  == OperatorType::PRE) 
-            return "(PRE_" + expression.subExpressions.head.serialize + ")"   
-        
-        if (expression.operator  == OperatorType::NE) 
+        if (expression.operator == OperatorType::PRE)
+            return "(PRE_" + expression.subExpressions.head.serialize + ")"
+
+        if (expression.operator == OperatorType::NE)
             return combineOperators(expression.subExpressions.iterator, " != ")
-               
-        if (expression.operator  == OperatorType::LOGICAL_AND) 
+
+        if (expression.operator == OperatorType::LOGICAL_AND)
             return combineOperators(expression.subExpressions.iterator, " && ")
-               
-        if (expression.operator  == OperatorType::LOGICAL_OR) 
+
+        if (expression.operator == OperatorType::LOGICAL_OR)
             return combineOperators(expression.subExpressions.iterator, " || ")
 
-        if (expression.operator  == OperatorType::BITWISE_AND) 
+        if (expression.operator == OperatorType::BITWISE_AND)
             return combineOperators(expression.subExpressions.iterator, " & ")
-               
-        if (expression.operator  == OperatorType::BITWISE_OR) 
+
+        if (expression.operator == OperatorType::BITWISE_OR)
             return combineOperators(expression.subExpressions.iterator, " | ")
-               
-        if (expression.operator  == OperatorType::ADD) 
+
+        if (expression.operator == OperatorType::ADD)
             return combineOperators(expression.subExpressions.iterator, " + ")
-               
-        if (expression.operator  == OperatorType::SUB) 
+
+        if (expression.operator == OperatorType::SUB)
             return combineOperators(expression.subExpressions.iterator, " - ")
-               
-        if (expression.operator  == OperatorType::MULT) 
+
+        if (expression.operator == OperatorType::MULT)
             return combineOperators(expression.subExpressions.iterator, " * ")
-               
-        if (expression.operator  == OperatorType::DIV) 
+
+        if (expression.operator == OperatorType::DIV)
             return combineOperators(expression.subExpressions.iterator, " / ")
-               
-        if (expression.operator  == OperatorType::MOD) 
+
+        if (expression.operator == OperatorType::MOD)
             return combineOperators(expression.subExpressions.iterator, " % ")
-   }
+    }
 
-   // -------------------------------------------------------------------------
-    
-   def dispatch CharSequence serialize(ValuedObject valuedObject) {
-       var vo = valuedObject.name
-       for (index : valuedObject.cardinalities) {
-           vo = vo + "[" + index.toString + "]"
-       }
-       vo
-   }
+    // -------------------------------------------------------------------------
+    def dispatch CharSequence serialize(ValuedObject valuedObject) {
+        var vo = valuedObject.name
+        for (index : valuedObject.cardinalities) {
+            vo = vo + "[" + index.toString + "]"
+        }
+        vo
+    }
 
-   def dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
-       var vo = valuedObjectReference.valuedObject.name
-       for (index : valuedObjectReference.indices) {
-           vo = vo + "[" + index.serialize + "]"
-       }
-       vo
-   }
-   
-   // Expand a int expression value.
-   def dispatch CharSequence serialize(IntValue expression) {
+    def dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
+        var vo = valuedObjectReference.valuedObject.name
+        for (index : valuedObjectReference.indices) {
+            vo = vo + "[" + index.serialize + "]"
+        }
+        vo
+    }
+
+    // Expand a int expression value.
+    def dispatch CharSequence serialize(IntValue expression) {
         expression.value.toString
-   }
+    }
 
-   // Expand a float expression value.
-   def dispatch CharSequence serialize(FloatValue expression) {
+    // Expand a float expression value.
+    def dispatch CharSequence serialize(FloatValue expression) {
         expression.value.toString
-   }
-   
-   def dispatch CharSequence serialize(StringValue expression) {
-       expression.value
-   }
+    }
 
-   // Expand a boolean expression value (true or false).
-   def dispatch CharSequence serialize(BoolValue expression) {
-        if (expression.value == true) return "true"
+    def dispatch CharSequence serialize(StringValue expression) {
+        expression.value
+    }
+
+    // Expand a boolean expression value (true or false).
+    def dispatch CharSequence serialize(BoolValue expression) {
+        if(expression.value == true) return "true"
         return "false"
-   }
-   
+    }
+
     def dispatch CharSequence serialize(FunctionCall functionCall) {
         var funcCall = functionCall.functionName + "("
-        
+
         var cnt = 0
-        for(par : functionCall.parameters) {
-            if (cnt>0) { funcCall = funcCall + ", " }
-            if (par.callByReference) { funcCall = funcCall + "&" }
+        for (par : functionCall.parameters) {
+            if (cnt > 0) {
+                funcCall = funcCall + ", "
+            }
+            if (par.callByReference) {
+                funcCall = funcCall + "&"
+            }
             funcCall = funcCall + par.expression.serialize
             cnt = cnt + 1
         }
         funcCall = funcCall + ")"
         funcCall
-   }    
-   
-   def dispatch CharSequence serialize(String s) {
-       s
-   }
-   
-   def dispatch CharSequence serialize(Void x) {
-       
-   }
+    }
+
+    def dispatch CharSequence serialize(String s) {
+        s
+    }
+
+    def dispatch CharSequence serialize(Void x) {
+    }
+
+    def CharSequence humanReadable(String s) {
+        if (s.startsWith("(") && s.endsWith(")")) {
+            var counter = 1
+            for(var i=1; i<s.length(); i++) {
+                val subString = s.substring(i,1)
+                if (subString == "(") { 
+                    counter++
+                } else if (subString == ")") {
+                    counter--
+                }
+                if (counter == 0) {
+                    return s
+                }
+            }
+            return s.substring(1,s.length - 2)
+        }
+        s
+    }
+    
+    def CharSequence humanReadable(CharSequence cs) {
+        cs.toString.humanReadable
+    }
     
 }

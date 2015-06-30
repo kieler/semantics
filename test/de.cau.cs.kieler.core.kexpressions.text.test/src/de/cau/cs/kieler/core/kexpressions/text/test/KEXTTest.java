@@ -49,6 +49,8 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
 @ModelPath("tests/")
 @ModelFilter("*.kext")
 public class KEXTTest {
+    
+    public static String KEXT_HUMANREADABLE_ANNOTATION = "readable";    
 
     /**
      * Provides a {@link ResourceSet} in order to load the models properly.
@@ -83,6 +85,33 @@ public class KEXTTest {
         }
     }
     
+    @Test
+    public void serializeHumanReadable(final EObject eObject, String expected) {
+        KEXTSerializeExtensions SE = Guice.createInjector().getInstance(KEXTSerializeExtensions.class);
+        TestEntity entity = (TestEntity) eObject;
+        if (entity.getExpression() != null) {
+                expected = expected.substring(11); 
+        }
+        
+        String serialized = SE.humanReadable(SE.serialize(entity)).toString();
+        
+        StringAnnotation humanReadableAnnotation = getHumanReadableAnnotation(entity);
+        if (humanReadableAnnotation != null) {
+            expected = humanReadableAnnotation.getValues().get(0);
+        }
+        
+        if (!serialized.equals(expected)) {
+                StringAnnotation checkAnnotation = getCheckAnnotation(entity);
+                String assertMessage = "Human readable serialization of " + checkAnnotation.getValues().get(0) + 
+                    " was \"" + serialized + 
+                    "\" but does not match expected output \"" + 
+                    expected + 
+                    "\"!";
+                System.out.println(assertMessage);
+            Assert.fail(assertMessage);
+        }
+    }    
+    
     
     private StringAnnotation getCheckAnnotation(TestEntity entity) {
     	if (entity.getEffect() != null) {
@@ -91,5 +120,14 @@ public class KEXTTest {
     		return (StringAnnotation) entity.getExpression().getAnnotation(KEXTTestRunner.KEXT_CHECK_ANNOTATION);
     	}
     }
+    
+    private StringAnnotation getHumanReadableAnnotation(TestEntity entity) {
+        if (entity.getEffect() != null) {
+                return (StringAnnotation) entity.getEffect().getAnnotation(KEXT_HUMANREADABLE_ANNOTATION);
+        } else {
+                return (StringAnnotation) entity.getExpression().getAnnotation(KEXT_HUMANREADABLE_ANNOTATION);
+        }
+    }
+    
 
 }
