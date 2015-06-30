@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,8 +38,6 @@ import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.s.extensions.SExtension;
-import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.sc.CExecution;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCChart;
@@ -66,7 +63,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
     /** A separate tick counter that is computed for the SC debug console as a reference. */
-    private long computedTick = 1;
+//    private long computedTick = 1;
 
     /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
     private int dirtyIndicator = 0;
@@ -155,13 +152,12 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     private EObject myModel = null;
 
     /** The single s / kexpression extension. */
-    private static SExtension sExtension = new SExtension();
+//    private static SExtension sExtension = new SExtension();
     private static KExpressionsExtension kExpressionExtension = new KExpressionsExtension();
 
     // -------------------------------------------------------------------------
 
     public SCChartsCDataComponent() {
-        // TODO Auto-generated constructor stub
     }
 
     // -------------------------------------------------------------------------
@@ -259,7 +255,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     // -------------------------------------------------------------------------
 
     public void initialize() throws KiemInitializationException {
-        computedTick = 1;
+//        computedTick = 1;
     }
 
     // -------------------------------------------------------------------------
@@ -435,17 +431,17 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             // Make a copy of the S program in case it was from
             // an active Editor
-            URI sOutput = URI.createURI("");
-            URI scOutput = URI.createURI("");
+//            URI sOutput = URI.createURI("");
+//            URI scOutput = URI.createURI("");
 
             // By default there is no additional transformation necessary
-            Program transformedProgram = null;
+//            Program transformedProgram = null;
 
             // Calculate output path for possible S-m2m
-            String inputPathString = this.getModelFilePath().toString();
+//            String inputPathString = this.getModelFilePath().toString();
 //            System.out.println("6 " + inputPathString);
-            URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
-            sOutput = URI.createURI(input.toString());
+//            URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
+//            sOutput = URI.createURI(input.toString());
 
             String highLevelTransformations =
                     this.getProperties()[KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS
@@ -538,6 +534,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             }
 
             // Set a random output folder for the compiled files
+            @SuppressWarnings("deprecation")
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
 //            System.out.println("18 " + outputFolder);
 
@@ -607,7 +604,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         // The return object to construct
         JSONObject returnObj = new JSONObject();
 
-        boolean debugConsole = false;
+//        boolean debugConsole = false;
 
         // Collect active statements
         StringBuffer activeStatesBuf = new StringBuffer();
