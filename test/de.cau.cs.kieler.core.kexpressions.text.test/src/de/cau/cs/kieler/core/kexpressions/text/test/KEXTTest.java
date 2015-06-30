@@ -24,10 +24,15 @@ import org.junit.runners.MethodSorters;
 
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.core.kexpressions.text.KEXTStandaloneSetup;
 import de.cau.cs.kieler.core.kexpressions.text.extensions.KEXTSerializeExtensions;
+import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId;
@@ -51,6 +56,8 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
 public class KEXTTest {
     
     public static String KEXT_HUMANREADABLE_ANNOTATION = "readable";    
+    
+    public static String KEXT_STRICT_ANNOTATION = "strict";
 
     /**
      * Provides a {@link ResourceSet} in order to load the models properly.
@@ -73,8 +80,34 @@ public class KEXTTest {
         
         String serialized = SE.serialize(entity).toString();
         
+        StringAnnotation strictAnnotation = getAnnotation(entity, KEXT_STRICT_ANNOTATION);
+        if (strictAnnotation != null) {
+            if (strictAnnotation.getValues().size() > 0) {
+                expected = strictAnnotation.getValues().get(0);
+            }
+        } else {
+            if (entity.getEffect() != null) {
+                Effect effect = entity.getEffect();
+                if (effect instanceof Assignment) {
+                    if (((Assignment) effect).getExpression() instanceof OperatorExpression) {
+                        String assignmentPart = SE.serializeAssignment((Assignment) effect, "").toString();
+                        int api = assignmentPart.length();
+                        String newExpected = expected.substring(0, api); 
+                        newExpected = newExpected + "(" + expected.substring(api, expected.length()) + ")";
+                        expected = newExpected;
+                    }
+                }
+            } else if (entity.getExpression() != null) {
+                if (entity.getExpression() instanceof AnnotatedExpression) {
+                    if (((AnnotatedExpression) entity.getExpression()).getExpression() instanceof OperatorExpression) {
+                        expected = "(" + expected + ")";
+                    }
+                }
+            }
+        }
+        
         if (!serialized.equals(expected)) {
-        	StringAnnotation checkAnnotation = getCheckAnnotation(entity);
+            StringAnnotation checkAnnotation = getAnnotation(entity, KEXTTestRunner.KEXT_CHECK_ANNOTATION);
         	String assertMessage = "Serialization of " + checkAnnotation.getValues().get(0) + 
                     " was \"" + serialized + 
                     "\" but does not match expected output \"" + 
@@ -93,15 +126,15 @@ public class KEXTTest {
                 expected = expected.substring(11); 
         }
         
-        String serialized = SE.humanReadable(SE.serialize(entity)).toString();
+        String serialized = SE.serializeHR(entity).toString();
         
-        StringAnnotation humanReadableAnnotation = getHumanReadableAnnotation(entity);
+        StringAnnotation humanReadableAnnotation = getAnnotation(entity, KEXT_HUMANREADABLE_ANNOTATION);
         if (humanReadableAnnotation != null) {
             expected = humanReadableAnnotation.getValues().get(0);
         }
         
         if (!serialized.equals(expected)) {
-                StringAnnotation checkAnnotation = getCheckAnnotation(entity);
+                StringAnnotation checkAnnotation = getAnnotation(entity, KEXTTestRunner.KEXT_CHECK_ANNOTATION);
                 String assertMessage = "Human readable serialization of " + checkAnnotation.getValues().get(0) + 
                     " was \"" + serialized + 
                     "\" but does not match expected output \"" + 
@@ -113,21 +146,23 @@ public class KEXTTest {
     }    
     
     
-    private StringAnnotation getCheckAnnotation(TestEntity entity) {
+    private StringAnnotation getAnnotation(TestEntity entity, String name) {
+        Annotation annotation = null;
     	if (entity.getEffect() != null) {
-    		return (StringAnnotation) entity.getEffect().getAnnotation(KEXTTestRunner.KEXT_CHECK_ANNOTATION);
+    	    annotation = entity.getEffect().getAnnotation(name);
     	} else {
-    		return (StringAnnotation) entity.getExpression().getAnnotation(KEXTTestRunner.KEXT_CHECK_ANNOTATION);
+    	    annotation =  entity.getExpression().getAnnotation(name);
     	}
-    }
-    
-    private StringAnnotation getHumanReadableAnnotation(TestEntity entity) {
-        if (entity.getEffect() != null) {
-                return (StringAnnotation) entity.getEffect().getAnnotation(KEXT_HUMANREADABLE_ANNOTATION);
-        } else {
-                return (StringAnnotation) entity.getExpression().getAnnotation(KEXT_HUMANREADABLE_ANNOTATION);
+        if (annotation instanceof StringAnnotation) {
+            return (StringAnnotation) annotation; 
+        } else if (annotation != null) {
+            StringAnnotation newStringAnnotation = AnnotationsFactory.eINSTANCE.createStringAnnotation();
+            newStringAnnotation.setName(annotation.getName());
+            return newStringAnnotation;
         }
+        return null;
     }
     
+ 
 
 }

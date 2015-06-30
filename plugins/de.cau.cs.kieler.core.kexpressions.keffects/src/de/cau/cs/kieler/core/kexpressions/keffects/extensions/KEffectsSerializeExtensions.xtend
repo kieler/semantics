@@ -20,6 +20,8 @@ import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.core.kexpressions.Expression
 
 /**
  * @author ssm
@@ -29,8 +31,43 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
  */
 class KEffectsSerializeExtensions extends KExpressionsSerializeExtensions {
     
+    public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionString) {
+        var res = assignment.valuedObject.name
+        if (!assignment.indices.nullOrEmpty) {
+            for(index : assignment.indices) {
+                res = res + "[" + index.serialize + "]"
+            }
+        }
+        
+        if (assignment.operator == AssignOperator::ASSIGN) {
+            res = res + " = " 
+        } else 
+        if (assignment.operator == AssignOperator::ASSIGNADD) {
+            res = res + " += " 
+        } else 
+        if (assignment.operator == AssignOperator::ASSIGNSUB) {
+            res = res + " -= " 
+        } else 
+        if (assignment.operator == AssignOperator::ASSIGNMUL) {
+            res = res + " *= " 
+        } else 
+        if (assignment.operator == AssignOperator::ASSIGNDIV) {
+            res = res + " /= " 
+        } else 
+        if (assignment.operator == AssignOperator::POSTFIXADD) {
+            res = res + "++"
+            return res; 
+        } else 
+        if (assignment.operator == AssignOperator::POSTFIXSUB) {
+            res = res + "--"
+            return res; 
+        }  
+        
+        return res + expressionString
+    }
+    
     def dispatch CharSequence serialize(Assignment assignment) {
-        assignment.valuedObject.name + " = " + assignment.expression.serialize
+        assignment.serializeAssignment(assignment.expression.serialize)
     }
     
     def dispatch CharSequence serialize(Emission emission) {
@@ -45,7 +82,7 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeExtensions {
             return emission.valuedObject.name
         }
     }
-   
+    
     def dispatch CharSequence serialize(EList<Effect> effects) {
         if (!effects.empty) {
             var String label = "" 
@@ -57,4 +94,42 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeExtensions {
         }
         return ""
     }
+    
+    def dispatch CharSequence serializeHR(Assignment assignment) {
+        if (assignment.expression == null) {
+            assignment.serializeAssignment("")
+        } else {
+            assignment.serializeAssignment(assignment.expression.serialize.humanReadable)
+        }
+    }
+    
+//    def dispatch CharSequence serializeHR(EList<Effect> effects) {
+//        if (!effects.empty) {
+//            var String label = "" 
+//            for(effect : effects) {
+//                label = label + effect.serializeHR as String + "; "
+//            }
+//            label = label.substring(0, label.length - 2)
+//            return label
+//        }
+//        return ""
+//    }  
+    
+    def dispatch CharSequence serializeHR(Emission emission) {
+        val objectContainer = emission.valuedObject.eContainer
+        if (objectContainer instanceof Declaration) {
+            if ((objectContainer as Declaration).type != ValueType::PURE) {
+                return (emission.valuedObject.name + "(" + emission.newValue.serializeHR + ")")             
+            } else {
+                return emission.valuedObject.name
+            }
+        } else {
+            return emission.valuedObject.name
+        }
+    }
+    
+    override dispatch CharSequence serializeHR(Expression expression) {
+        expression.serialize.humanReadable
+    }
+
 }

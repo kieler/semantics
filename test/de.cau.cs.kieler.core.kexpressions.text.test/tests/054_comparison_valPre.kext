@@ -8,58 +8,58 @@ bool A, B;
 int I, J;
 signal int S;
 
-@check "comparison.mixed.val.equals"
+@check "comparison.val.equals"
 expression val(S) == 5
 
-@check "comparison.mixed.val.notEquals"
+@check "comparison.val.notEquals"
 expression val(S) != 5
 
-@check "comparison.mixed.val.greater"
+@check "comparison.val.greater"
 expression val(S) > 5
 
-@check "comparison.mixed.val.less"
+@check "comparison.val.less"
 expression val(S) < 5
 
-@check "comparison.mixed.val.greaterEquals"
+@check "comparison.val.greaterEquals"
 expression val(S) >= 5
 
-@check "comparison.mixed.val.lessEquals"
+@check "comparison.val.lessEquals"
 expression val(S) <= 5
 
 
-@check "comparison.mixed.pre.equals"
+@check "comparison.pre.equals"
 expression pre(I) == 5
 
-@check "comparison.mixed.pre.notEquals"
+@check "comparison.pre.notEquals"
 expression pre(I) != 5
 
-@check "comparison.mixed.pre.greater"
+@check "comparison.pre.greater"
 expression pre(I) > 5
 
-@check "comparison.mixed.pre.less"
+@check "comparison.pre.less"
 expression pre(I) < 5
 
-@check "comparison.mixed.pre.greaterEquals"
+@check "comparison.pre.greaterEquals"
 expression pre(I) >= 5
 
-@check "comparison.mixed.pre.lessEquals"
+@check "comparison.pre.lessEquals"
 expression pre(I) <= 5
 
 
-@check "comparison.mixed.val.pre.equals"
+@check "comparison.val.pre.equals"
 expression val(pre(S)) == 5
 
-@check "comparison.mixed.val.pre.notEquals"
+@check "comparison.val.pre.notEquals"
 expression val(pre(S)) != 5
 
-@check "comparison.mixed.val.pre.greater"
+@check "comparison.val.pre.greater"
 expression val(pre(S)) > 5
 
-@check "comparison.mixed.val.pre.less"
+@check "comparison.val.pre.less"
 expression val(pre(S)) < 5
 
-@check "comparison.mixed.val.pre.greaterEquals"
+@check "comparison.val.pre.greaterEquals"
 expression val(pre(S)) >= 5
 
-@check "comparison.mixed.val.pre.lessEquals"
+@check "comparison.val.pre.lessEquals"
 expression val(pre(S)) <= 5

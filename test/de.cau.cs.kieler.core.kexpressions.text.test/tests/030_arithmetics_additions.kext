@@ -74,9 +74,13 @@ z = (1 + 2) + 3
 z = x + (2 + 3)
 
 @check arithmetics.additions.paranthesis#003
+@strict
+@readable "z = (1 + x) + y"
 z = ((1 + x) + y)
 
 @check arithmetics.additions.paranthesis#004
+@strict
+@readable "z = x + (2 + y)"
 z = (x + (2 + y))
 
 @check arithmetics.additions.paranthesis#005

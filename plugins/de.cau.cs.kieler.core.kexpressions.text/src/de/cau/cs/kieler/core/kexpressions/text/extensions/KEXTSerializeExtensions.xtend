@@ -36,5 +36,17 @@ class KEXTSerializeExtensions extends KEffectsSerializeExtensions {
     def dispatch CharSequence serialize(AnnotatedExpression annotatedExpression) {
     	annotatedExpression.expression.serialize
     }
+    
+    def dispatch CharSequence serializeHR(TestEntity entity) {
+        if (entity.effect != null) {
+            return entity.effect.serializeHR
+        } else {
+            return entity.expression.serializeHR
+        }
+    } 
+    
+    def dispatch CharSequence serializeHR(AnnotatedExpression annotatedExpression) {
+        annotatedExpression.expression.serializeHR
+    }       
 
 }

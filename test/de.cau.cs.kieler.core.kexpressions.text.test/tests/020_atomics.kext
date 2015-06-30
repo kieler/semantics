@@ -8,34 +8,49 @@ signal int SI;
 int I;
 
 @check valuedObject.value
+@strict
 I = val(SI)
 
 @check valuedObject.value.value
+@strict
 I = val(val(SI))
 
 @check valuedObject.value.value.value
+@strict
 I = val(val(val(SI)))
 
 @check "valuedObject.pre"
+@strict
 A = pre(A)
 
 @check "valuedObject.pre.pre"
+@strict
 A = pre(pre(A))
 
-@check "valuedObject.pre"
+@check "valuedObject.pre.pre.pre"
+@strict
 A = pre(pre(pre(A)))
 
 @check valuedObject.not
+@strict
 A = !A
 
 @check valuedObject.not.not
+@strict
 A = !!A
 
 @check valuedObject.not.not.not
+@strict
 A = !!!A
 
 @check "valuedObject.not.pre"
+@strict
 A = !pre(A)
 
 @check "valuedObject.not.not.pre"
+@strict
 A = !!pre(A)
+
+@check "valuedObject.not.not.not.pre"
+@strict
+A = !!!pre(A)

@@ -31,7 +31,6 @@ import org.osgi.framework.Bundle;
 import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
@@ -121,8 +120,8 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
             String line = textFile.get(lineCount);
             if (line.startsWith("@" + KEXT_CHECK_ANNOTATION)) {
                 if (line.contains(objectName)) {
-                    lineCount++;
                     while(lineCount < textFile.size()) {
+                        lineCount++;
                         if (!(textFile.get(lineCount).startsWith("@"))) {
                             return textFile.get(lineCount);
                         }
