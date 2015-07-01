@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>de.cau.cs.kieler</groupId>
-  <artifactId>de.cau.cs.kieler.esterel.cec.sim.kivi</artifactId>
+  <artifactId>de.cau.cs.kieler.esterel.sim.kivi</artifactId>
   <version>0.1.2-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>
