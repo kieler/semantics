@@ -9,5 +9,19 @@
             name="Benchmark Collector">
       </content>
    </extension>
-
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sim.benchmark.BenchmarkTestDataComponent"
+            id="de.cau.cs.kieler.sim.benchmarktest"
+            name="Benchmark Test">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.sim.benchmark.BenchmarkTestDataComponent">
+      </content>
+   </extension>
+   
 </plugin>
