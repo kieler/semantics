@@ -1,19 +1,6 @@
-/*
- * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client
- *
- * http://www.informatik.uni-kiel.de/rtsys/kieler/
- * 
- * Copyright 2012 by
- * + Christian-Albrechts-University of Kiel
- *   + Department of Computer Science
- *     + Real-Time and Embedded Systems Group
- * 
- * This code is provided under the terms of the Eclipse Public License (EPL).
- * See the file epl-v10.html for the license text.
- */
-package de.cau.cs.kieler.esterel.cec.sim;
+package de.cau.cs.kieler.esterel.sim;
 
-import org.eclipse.core.runtime.Plugin;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -23,20 +10,31 @@ import org.osgi.framework.BundleContext;
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-05-31 yellow KI-7
  */
-public class EsterelCECSimPlugin extends Plugin {
+public class EsterelSimPlugin extends AbstractUIPlugin {
 
     /** The plug-in ID. */
-    public static final String PLUGIN_ID = "de.cau.cs.kieler.esterel.cec.sim";
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.esterel.sim";
 
     /** The shared instance of this plugin. */
-    private static EsterelCECSimPlugin plugin;
+    private static EsterelSimPlugin plugin;
+
+    /**
+     * The Constant AUXILIARY_VARIABLE_TAG. This TAG is also defined in Esterel2Simulation.xtend.
+     * Both TAGs must match
+     */
+    public static final String AUXILIARY_VARIABLE_TAG =
+            "oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
+
+    /** The Constant ESTEREL_EDITOR_ID points to the Esterel Xtext Editor. */
+    public static final String ESTEREL_EDITOR_ID = "de.cau.cs.kieler.esterel.Esterel";
 
     // -----------------------------------------------------------------------------
 
     /**
      * The constructor.
      */
-    public EsterelCECSimPlugin() {
+
+    public EsterelSimPlugin() {
     }
 
     // -----------------------------------------------------------------------------
@@ -44,8 +42,7 @@ public class EsterelCECSimPlugin extends Plugin {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void start(final BundleContext context) throws Exception {
+    public void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
     }
@@ -55,8 +52,7 @@ public class EsterelCECSimPlugin extends Plugin {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void stop(final BundleContext context) throws Exception {
+    public void stop(BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
     }
@@ -64,13 +60,14 @@ public class EsterelCECSimPlugin extends Plugin {
     // -----------------------------------------------------------------------------
 
     /**
-     * Returns the shared instance.
+     * Gets the default.
      * 
-     * @return the shared instance
+     * @return the default
      */
-    public static EsterelCECSimPlugin getDefault() {
+    public static EsterelSimPlugin getDefault() {
         return plugin;
     }
 
     // -----------------------------------------------------------------------------
+
 }

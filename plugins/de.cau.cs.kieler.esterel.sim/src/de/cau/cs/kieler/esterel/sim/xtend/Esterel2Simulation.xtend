@@ -11,9 +11,9 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.cec.sim.xtend
+package de.cau.cs.kieler.esterel.sim.xtend
 
-import de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin
+import de.cau.cs.kieler.esterel.sim.EsterelSimPlugin
 
 import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.esterel.kexpressions.ValueType
@@ -73,7 +73,7 @@ class Esterel2Simulation {
     // General method to create the enriched Esterel simulation code
    	def Program transform2Simulation (Program program) {
    		// Use the same auxiliary variable tag 
-   		val AUXILIARY_VARIABLE_TAG = EsterelCECSimPlugin::AUXILIARY_VARIABLE_TAG
+   		val AUXILIARY_VARIABLE_TAG = EsterelSimPlugin::AUXILIARY_VARIABLE_TAG 
    		
 		// Clone the complete Esterel program
 		// clone the program and then copy modules to preserve the run-links

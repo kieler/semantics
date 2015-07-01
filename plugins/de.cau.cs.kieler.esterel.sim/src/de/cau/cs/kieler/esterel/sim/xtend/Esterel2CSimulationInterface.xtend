@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.cec.sim.xtend
+package de.cau.cs.kieler.esterel.sim.xtend
 
 import de.cau.cs.kieler.esterel.kexpressions.Input
 import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
