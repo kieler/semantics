@@ -366,7 +366,7 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec.sim.kivi"
+         id="de.cau.cs.kieler.esterel.sim.kivi"
          download-size="0"
          install-size="0"
          version="0.0.0"

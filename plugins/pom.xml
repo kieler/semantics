@@ -38,7 +38,7 @@
     <module>de.cau.cs.kieler.esterel.cec.macosx.x86_64</module>
     <module>de.cau.cs.kieler.esterel.cec.sim</module>
     <module>de.cau.cs.kieler.esterel.sim</module>
-    <module>de.cau.cs.kieler.esterel.cec.sim.kivi</module>
+    <module>de.cau.cs.kieler.esterel.sim.kivi</module>
     <module>de.cau.cs.kieler.esterel.cec.win32.x86</module>
     <module>de.cau.cs.kieler.esterel.examples</module>
     <module>de.cau.cs.kieler.esterel.ui</module>
