@@ -38,6 +38,7 @@ import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.sc.CExecution;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCChart;
@@ -132,6 +133,8 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     /** The executabe file size. */
     private long executabeFileSize = 0;
 
+    /** The compile time for benchmark. */
+    private long compileTime = 0;
     
     /** The C execution object for concurrent execution. */
     private CExecution cExecution = null;
@@ -479,6 +482,9 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             CompilationResult highLeveleCompilationResult =
                     KielerCompiler.compile(highLevelContext);
 //            System.out.println("11");
+            
+            // reset compile time and accumulate
+            compileTime = 0;
 
             // The following should be a state or an SCG
             EObject stateOrSCG = highLeveleCompilationResult.getEObject();
@@ -488,7 +494,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                         "Error compiling the SCChart (high-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view:" + highLeveleCompilationResult.getAllErrors(),
                         true, null);
             }
-
+            
+            // accumulate compile time
+            for (TransformationIntermediateResult intermediateResult : highLeveleCompilationResult.getTransformationIntermediateResults()) {
+                compileTime += intermediateResult.getDuration();
+            }
             
             // String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
             // writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
@@ -512,6 +522,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                         true, null);
             }
 
+            // accumulate compile time
+            for (TransformationIntermediateResult intermediateResult : lowLevelCompilationResult.getTransformationIntermediateResults()) {
+                compileTime += intermediateResult.getDuration();
+            }
+            
             // Generate Simulation wrapper C code
             String cSimulation = "";
             if (stateOrSCG instanceof State) {
@@ -712,6 +727,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             if (this.benchmark) {
                 returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE, sourceFileSize);
                 returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE, executabeFileSize);
+                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_COMPILETIME, compileTime);
             }
             
             // Finally accumulate all active Statements (activeStatements)

@@ -40,6 +40,9 @@ public class Benchmark {
     public static final String BENCHMARK_SIGNAL_TIME = "benchTime";
 
     /** The Constant BENCHMARK_SIGNAL. */
+    public static final String BENCHMARK_SIGNAL_COMPILETIME = "benchCompileTime";
+
+    /** The Constant BENCHMARK_SIGNAL. */
     public static final String BENCHMARK_SIGNAL_SOURCE = "benchSource";
 
     /** The Constant BENCHMARK_SIGNAL. */
