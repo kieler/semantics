@@ -4,21 +4,9 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.esterel.cec.sim.kivi.EsterelDataComponent"
+            class="de.cau.cs.kieler.esterel.sim.kivi.EsterelDataComponent"
             id="de.cau.cs.kieler.esterel.cec.sim.kivi"
             name="Esterel CEC Visualization">
       </content>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
-      <executionFile
-            file="execution/esterel_cec.execution">
-         <editor
-               id="de.cau.cs.kieler.esterel.Esterel"
-               name="KIELER Esterel Editor"
-               priority="101">
-         </editor>
-      </executionFile>
-   </extension>
-
 </plugin>

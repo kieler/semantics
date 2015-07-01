@@ -19,6 +19,17 @@
                priority="100">
          </editor>
       </executionFile>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/esterel_cec.execution">
+         <editor
+               id="de.cau.cs.kieler.esterel.Esterel"
+               name="KIELER Esterel Editor"
+               priority="101">
+         </editor>
+      </executionFile>
+   </extension>
    </extension>
 
 </plugin>
