@@ -34,7 +34,7 @@ public class EsterelDataComponent extends StateErrorXtextVisualizationDataCompon
      */
     @Override
     protected String getXtextEditorId() {
-        return EsterelCECSimPlugin.ESTEREL_EDITOR_ID;
+        return EsterelSimPlugin.ESTEREL_EDITOR_ID;
     }
 
     // -----------------------------------------------------------------------------
