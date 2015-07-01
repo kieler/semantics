@@ -48,7 +48,7 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
  * @kieler.rating 2012-11-28 proposed
  * 
  */
-public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent implements
+public class BenchmarkCollectorDataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
 
     /** The Constant KIEM_PROPERTY_MAX. */
@@ -84,7 +84,7 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
     /**
      * Instantiates a new benchmark data component.
      */
-    public BenchmarkDataComponent() {
+    public BenchmarkCollectorDataComponent() {
     }
 
     // -------------------------------------------------------------------------

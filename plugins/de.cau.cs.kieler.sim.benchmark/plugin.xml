@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.sim.benchmark.BenchmarkDataComponent"
+            class="de.cau.cs.kieler.sim.benchmark.BenchmarkCollectorDataComponent"
             id="de.cau.cs.kieler.sim.benchmark"
             name="Benchmark Collector">
       </content>
