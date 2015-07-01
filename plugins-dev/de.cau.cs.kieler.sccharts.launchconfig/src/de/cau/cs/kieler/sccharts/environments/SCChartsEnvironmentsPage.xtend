@@ -44,6 +44,10 @@ import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
 import de.cau.cs.kieler.sccharts.launchconfig.common.ExtensionLookupUtil
 import org.eclipse.core.runtime.IConfigurationElement
+import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
+import org.eclipse.core.runtime.preferences.ConfigurationScope
+import org.eclipse.jface.preference.PreferenceStore
+import org.eclipse.jface.preference.IPreferenceStore
 
 /**
  * @author aas
@@ -51,7 +55,8 @@ import org.eclipse.core.runtime.IConfigurationElement
  */
 class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePage {
 
-    private IWorkbench workbench
+    private var IWorkbench workbench
+    private var IPreferenceStore store
 
     private var ListViewer list
 
@@ -85,16 +90,58 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         createEnvironmentsComponent(comp)
         createTabFolder(comp)
 
+        loadSettings()    
+
         return comp
     }
 
     override init(IWorkbench workbench) {
         this.workbench = workbench
+        store = LaunchConfigPlugin.getDefault().preferenceStore
     }
 
-    override performApply() {
-        println("Applying stuff...")
-        errorMessage = "Alles Käse!"
+    override performOk() {
+        if(checkConsistency()){
+            saveSettings()
+            return true
+        }
+        return false
+    }
+    
+    private def loadSettings(){
+        list.input = EnvironmentData.loadAllFromPreferenceStore(store)
+    }
+    
+    private def saveSettings(){
+        val environments = list.input as ArrayList<EnvironmentData> 
+        EnvironmentData.saveAllToPreferenceStore(store, environments)
+    }
+    
+    private def boolean checkConsistency(){
+        errorMessage = checkErrors()
+        return errorMessage == null
+    }
+
+    private def checkErrors(){
+        val environments = list.input as ArrayList<EnvironmentData>
+        
+        // Check for unique names    
+        for(env : environments){
+            for(env2 : environments){
+                if(env != env2&& env.name == env2.name){
+                    return "Environment names must be unique."
+                }    
+            }
+            
+            // Check that there is no comma in a name
+            if(env.name.contains(","))
+                return "Environment names must not contain a comma (,)"
+                
+            // Check that origins of files exist
+            
+        }
+        
+        return null
     }
 
     private def createTabFolder(Composite parent) {
@@ -141,7 +188,8 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
                 if(currentData != null)
                     currentData.name = name.text
                     
-                updateList()
+                list.refresh()
+                checkConsistency()
             }
         })
     }
@@ -184,6 +232,7 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
                         val obj = selection.firstElement as IConfigurationElement
                         if (obj != null) {
                             currentData.relatedProjectWizardClass = obj.getAttribute("class")
+                            checkConsistency()
                         }
                     }
                }
@@ -197,16 +246,20 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         mainFile = UIUtil.createTextField(group, "Main file", UIUtil.NONE)
         mainFile.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(currentData != null)
+                if(currentData != null){
                     currentData.mainFile = mainFile.text
+                    checkConsistency()
+                }
             }
         })
         
         mainFileOrigin = UIUtil.createTextField(group, "Main file origin", UIUtil.NONE)
         mainFileOrigin.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(currentData != null)
+                if(currentData != null){
                     currentData.mainFileOrigin = mainFileOrigin.text
+                    checkConsistency()    
+                }
             }
         })
     }
@@ -232,6 +285,7 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
                         val trans = selection.firstElement as Transformation
                         if (trans != null) {
                             currentData.targetLanguage = trans.id
+                            checkConsistency()
                         }
                     }
                }
@@ -241,16 +295,20 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         targetFileExtension = UIUtil.createTextField(group, "File Extension", UIUtil.NONE)
         targetFileExtension.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(currentData != null)
+                if(currentData != null){
                     currentData.targetFileExtension = targetFileExtension.text
+                    checkConsistency()                    
+                }
             }
         })
         
         targetTemplate =  UIUtil.createTextField(group, "Output template", UIUtil.NONE)
         targetTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(currentData != null)
+                if(currentData != null){
                     currentData.targetTemplate = targetTemplate.text
+                    checkConsistency()    
+                }
             }
         })
     }
@@ -261,32 +319,40 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         wrapperCodeTemplate = UIUtil.createTextField(group, "Input file", UIUtil.NONE)
         wrapperCodeTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(currentData != null)
+                if(currentData != null){
                     currentData.wrapperCodeTemplate = wrapperCodeTemplate.text
+                    checkConsistency()
+                }
             }
         })
         
         wrapperCodeTarget = UIUtil.createTextField(group, "Output file", UIUtil.NONE)
         wrapperCodeTarget.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(currentData != null)
+                if(currentData != null){
                     currentData.wrapperCodeTarget = wrapperCodeTarget.text
+                    checkConsistency()    
+                }
             }
         })
         
         wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory", UIUtil.NONE)
         wrapperCodeSnippets.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(currentData != null)
+                if(currentData != null){
                     currentData.wrapperCodeSnippetsDirectory = wrapperCodeSnippets.text
+                    checkConsistency()
+                }
             }
         })
         
         wrapperCodeSnippetsOrigin = UIUtil.createTextField(group, "Snippets origin", UIUtil.NONE)
         wrapperCodeSnippetsOrigin.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(currentData != null)
+                if(currentData != null){
                     currentData.wrapperCodeSnippetsOrigin = wrapperCodeSnippetsOrigin.text
+                    checkConsistency()    
+                }
             }
         })
         
@@ -304,24 +370,30 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         compileCommand = UIUtil.createTextField(group, "Compile command", UIUtil.VARIABLE_BUTTON)
         compileCommand.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(currentData != null)
+                if(currentData != null){
                     currentData.compileCommand = compileCommand.text
+                    checkConsistency()    
+                }
             }
         })
         
         deployCommand = UIUtil.createTextField(group, "Deploy command", UIUtil.VARIABLE_BUTTON)
         deployCommand.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(currentData != null)
+                if(currentData != null){
                     currentData.deployCommand = deployCommand.text
+                    checkConsistency()    
+                }
             }
         })
         
         runCommand = UIUtil.createTextField(group, "Run command", UIUtil.VARIABLE_BUTTON)
         runCommand.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(currentData != null)
+                if(currentData != null){
                     currentData.runCommand = runCommand.text
+                    checkConsistency()    
+                }
             }
         })
     }
@@ -355,6 +427,7 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
                 val selection = event.selection as IStructuredSelection
                 currentData = selection.firstElement as EnvironmentData
                 updateControls(currentData)
+                checkConsistency()
             }
         })
 
@@ -370,6 +443,7 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
                 val inputArray = (list.input as ArrayList<EnvironmentData>)
                 inputArray.add(env)
                 list.refresh()
+                checkConsistency()
             }
         })
         val removeButton = UIUtil.createButton(bcomp, "Remove")
@@ -379,6 +453,7 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
                 inputArray.remove(currentData)
                 list.refresh()
                 list.selection = new StructuredSelection()
+                checkConsistency()
             }
         })
     }
@@ -416,8 +491,6 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
             
             mainFile.text = data.mainFile
             mainFileOrigin.text = data.mainFileOrigin
-            
-            
         }
     }
     
@@ -439,7 +512,4 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         return ""
     }
     
-    private def updateList(){
-        list.refresh()
-    }
 }

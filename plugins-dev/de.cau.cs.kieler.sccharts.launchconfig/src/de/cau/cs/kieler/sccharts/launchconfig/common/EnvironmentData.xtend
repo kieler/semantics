@@ -13,7 +13,10 @@
  */
 package de.cau.cs.kieler.sccharts.launchconfig.common
 
+import java.util.ArrayList
+import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.core.runtime.preferences.IPreferencesService
 
 /**
  * @author aas
@@ -62,4 +65,51 @@ class EnvironmentData extends SerializableData {
     protected String mainFile = ""
     @Accessors
     protected String mainFileOrigin = ""
+    
+    public static def ArrayList<EnvironmentData> loadAllFromPreferenceStore(IPreferenceStore store){
+        val environmentsCSV = store.getString("environments")
+        val environmentsNames = environmentsCSV.split(",")
+        
+        // Return list
+        val environments = new ArrayList<EnvironmentData>()
+        
+        // Load every environment
+        for(envName : environmentsNames){
+            var env = new EnvironmentData(envName)
+            environments += env
+            
+            // Load every field of the environment
+            val classObject = typeof(EnvironmentData)
+            for(f : classObject.declaredFields){
+                f.set(env, store.getString("environment."+env.name+"."+f.name))
+            }
+        }
+        
+        return environments
+    }
+    
+    public static def saveAllToPreferenceStore(IPreferenceStore store, ArrayList<EnvironmentData> environments){
+        // Save environment names as comma separated values
+        var environmentsCSV = "" 
+        for(env : environments){
+            if(environmentsCSV != "")
+                environmentsCSV += ","
+            environmentsCSV += env.name
+        }
+        store.setValue("environments", environmentsCSV)
+        
+        // Save environments
+        for(env : environments){
+            env.saveToPreferenceStore(store)
+        }
+    }
+    
+    private def saveToPreferenceStore(IPreferenceStore store){
+        // The unique identifier for the stored value is a concatenation
+        // of the environment name and the field name.
+        val classObject = this.class
+        for(f : classObject.declaredFields){
+            store.setValue("environment."+name+"."+f.name, f.get(this).toString())
+        }
+    }
 }
