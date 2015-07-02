@@ -28,16 +28,6 @@ public class EsterelCECSimPlugin extends Plugin {
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.esterel.cec.sim";
 
-    /**
-     * The Constant AUXILIARY_VARIABLE_TAG. This TAG is also defined in Esterel2Simulation.xtend.
-     * Both TAGs must match
-     */
-    public static final String AUXILIARY_VARIABLE_TAG 
-                                        = "oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
-
-    /** The Constant ESTEREL_EDITOR_ID points to the Esterel Xtext Editor. */
-    public static final String ESTEREL_EDITOR_ID = "de.cau.cs.kieler.esterel.Esterel";
-
     /** The shared instance of this plugin. */
     private static EsterelCECSimPlugin plugin;
 
