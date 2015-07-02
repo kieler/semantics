@@ -31,26 +31,28 @@ public class SimulationPerspective implements IPerspectiveFactory {
         /* Add the KIELER views to the layout. */
         String editor = layout.getEditorArea();
 
-        // Bottom Row - Left: KICO/KIEM, Right: Data Table
-        // Top Row - Left: Explorer/Signals, Center: Editor, Right: KLighD
+        // Bottom Row - Left: Project Explorer, Right: KiCo/KIEM
+        // Top Row - Left: Editor, Center: KLighD, Right: Signals and Table
         IFolderLayout bottomLeft =
                 layout.createFolder("bottomLeft", IPageLayout.BOTTOM, PerspectiveHelper.BIG, editor);
         IFolderLayout bottomRight =
-                layout.createFolder("bottomRight", IPageLayout.RIGHT, PerspectiveHelper.BIG,
+                layout.createFolder("bottomRight", IPageLayout.RIGHT, PerspectiveHelper.SMALL,
                         "bottomLeft");
-        IFolderLayout topLeftTop =
-                layout.createFolder("topLeftTop", IPageLayout.LEFT, PerspectiveHelper.SMALL, editor);
-        IFolderLayout topLeftBottom =
-                layout.createFolder("topLeftBottom", IPageLayout.BOTTOM, PerspectiveHelper.MEDIUM,
-                        "topLeftTop");
-        IFolderLayout topRight =
-                layout.createFolder("topRight", IPageLayout.RIGHT, PerspectiveHelper.MEDIUM, editor);
-        PerspectiveHelper.addViewIfExists(bottomLeft, PerspectiveHelper.VIEW_KIEM);
-        PerspectiveHelper.addViewIfExists(bottomLeft, PerspectiveHelper.VIEW_KICO);
-        PerspectiveHelper.addViewIfExists(bottomRight, PerspectiveHelper.VIEW_KIEM_TABLE);
-        PerspectiveHelper.addViewIfExists(topLeftTop, IPageLayout.ID_PROJECT_EXPLORER);
-        PerspectiveHelper.addViewIfExists(topLeftBottom, PerspectiveHelper.VIEW_KIEM_SIGNALS);
-        PerspectiveHelper.addViewIfExists(topRight, PerspectiveHelper.VIEW_KLIGHD);
+        IFolderLayout topRightTop =
+                layout.createFolder("topRightTop", IPageLayout.RIGHT,
+                        1.0f - PerspectiveHelper.SMALL, editor);
+        IFolderLayout topRightBottom =
+                layout.createFolder("topRightBottom", IPageLayout.BOTTOM, PerspectiveHelper.MEDIUM,
+                        "topRightTop");
+        IFolderLayout topCenter =
+                layout.createFolder("topCenter", IPageLayout.RIGHT, PerspectiveHelper.MEDIUM,
+                        editor);
+        PerspectiveHelper.addViewIfExists(bottomLeft, IPageLayout.ID_PROJECT_EXPLORER);
+        PerspectiveHelper.addViewIfExists(bottomRight, PerspectiveHelper.VIEW_KIEM);
+        PerspectiveHelper.addViewIfExists(bottomRight, PerspectiveHelper.VIEW_KICO);
+        PerspectiveHelper.addViewIfExists(topRightTop, PerspectiveHelper.VIEW_KIEM_SIGNALS);
+        PerspectiveHelper.addViewIfExists(topRightBottom, PerspectiveHelper.VIEW_KIEM_TABLE);
+        PerspectiveHelper.addViewIfExists(topCenter, PerspectiveHelper.VIEW_KLIGHD);
 
         // Activate editor
         layout.setEditorAreaVisible(true);
