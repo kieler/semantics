@@ -11,7 +11,7 @@
             name="KIELER">
          <property
                name="aboutText"
-               value="KIELER - Kiel Integrated Environment for Layout (Eclipse Rich Client)&#x0A;A research project on enhancing the model-based design of complex systems&#x0A;&#x0A;&#x0A;For more information, visit our website:&#x0A;http://www.informatik.uni-kiel.de/rtsys/kieler/&#x0A;&#x0A;Copyright 2012 by Christian-Albrechts-University of Kiel, Department of Computer Science, Real-Time and Embedded Systems Group">
+               value="KIELER - Kiel Integrated Environment for Layout (Eclipse Rich Client)&#x0A;A research project on enhancing the model-based design of complex systems&#x0A;&#x0A;&#x0A;For more information, visit our website:&#x0A;http://www.informatik.uni-kiel.de/rtsys/kieler/&#x0A;&#x0A;Copyright 2012 by Kiel University, Department of Computer Science, Real-Time and Embedded Systems Group">
          </property>
          <property
                name="aboutImage"
