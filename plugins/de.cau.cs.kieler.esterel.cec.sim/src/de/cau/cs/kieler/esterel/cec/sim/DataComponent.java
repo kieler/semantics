@@ -66,7 +66,6 @@ import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2CSimulationInterface;
 import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2Simulation;
 import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.esterel.Program;
-import de.cau.cs.kieler.esterel.esterelv5_100.Esterelv5_100;
 import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -245,7 +244,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     static final String SIMULATION_USERTIMEBIB = "usertime.h";
 
     /** The Constant SIMULATION_COMPILER_OPTIONS. */
-    static final String SIMULATION_COMPILER_OPTIONS = "-lm -o";
+    static final String SIMULATION_COMPILER_OPTIONS = "-O2 -lm -o";
 
     /** The benchmark flag for generating cycle and file size signals. */
     private boolean benchmark = false;
@@ -578,190 +577,89 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         monitor.subTask("Reading Esterel file");
         System.out.println("Compile 1" + strlFile.toString() + " , " + outFile.toString());
         java.net.URI inputURI = convertEMFtoJavaURI(strlFile);
-               
-        
-      
-      //ESTERELv5-Section
-      //*******************************************************************************************
-      //*******************************************************************************************
-      System.out.println("STRL: " + inputURI.toString());
-      InputStream strl = Esterelv5_100.runSTRL(inputURI);
-      monitor.worked(1);
-      if (monitor.isCanceled()) {
-          strl.close();
-          return null;
-      }
-      
-      System.out.println("STRLIC");
-      monitor.subTask("STRLIC Processor");
-      InputStream ic = Esterelv5_100.runSTRLIC(strl);
-      monitor.worked(1);
-      if (monitor.isCanceled()) {
-          strl.close();
-          return null;
-      }
-      
-      System.out.println("ICLC");
-      monitor.subTask("ICLC Processor");
-      InputStream lc = Esterelv5_100.runICLC(ic);
-      monitor.worked(1);
-      if (monitor.isCanceled()) {
-          strl.close();
-          return null;
-      }
-      
-      System.out.println("LCSC");
-      monitor.subTask("LCSC Processor");
-      InputStream sc = Esterelv5_100.runLCSC(lc);
-      monitor.worked(1);
-      if (monitor.isCanceled()) {
-          strl.close();
-          return null;
-      }
-      
-      System.out.println("SCSSC");
-      monitor.subTask("SCSSC Processor");
-      InputStream ssc = Esterelv5_100.runSCSSC(sc);
-      monitor.worked(1);
-      if (monitor.isCanceled()) {
-          strl.close();
-          return null;
-      }
-      
-//      System.out.println("SCOC");
-//      monitor.subTask("Parsing Esterel file");
-//      InputStream oc = Esterelv5_100.runSTRLIC(ssc);
-//      monitor.worked(1);
-//      if (monitor.isCanceled()) {
-//          strl.close();
-//          return null;
-//      }
-      
-//      System.out.println("SCC");
-//      monitor.subTask("Parsing Esterel file");
-//      InputStream c = Esterelv5_100.runSCC(ssc);
-//      monitor.worked(1);
-//      if (monitor.isCanceled()) {
-//          strl.close();
-//          return null;
-//      }
-      
-      System.out.println("SSCC");
-      monitor.subTask("SSCC Processor");
-      InputStream c = Esterelv5_100.runSSCC(ssc);
-      System.out.println(c.toString());
-      monitor.worked(1);
-      if (monitor.isCanceled()) {
-          strl.close();
-          return null;
-      }
-      
-//      System.out.println("OCC");
-//      monitor.subTask("Parsing Esterel file");
-//      InputStream c = Esterelv5_100.runOCC(oc);
-//      monitor.worked(1);
-//      if (monitor.isCanceled()) {
-//          strl.close();
-//          return null;
-//      }
-      
-      System.out.println("CODEGEN");
-      monitor.subTask("Generating C code");
-      java.net.URI uri = Esterelv5_100.runCODEGEN(c, outFile);
-      System.out.println(uri.toString());
-      //*******************************************************************************************
-      //*******************************************************************************************
-      
-        
 
-      //CEC-Section
-      //*******************************************************************************************
-      //*******************************************************************************************
-      
-//        System.out.println("Compile 2" + inputURI.toString());
-//        InputStream strl = CEC.runSTRL(inputURI);
-//        System.out.println("Compile 3");
-//        monitor.worked(1);
-//        if (monitor.isCanceled()) {
-//            strl.close();
-//            return null;
-//        }
-//        System.out.println("Compile 4");
-//        monitor.subTask("Parsing Esterel file");
-//        InputStream strlxml = CEC.runSTRLXML(strl);
-//        monitor.worked(1);
-//        if (monitor.isCanceled()) {
-//            strl.close();
-//            return null;
-//        }
-//        System.out.println("Compile 5");
-//        monitor.subTask("Expanding Esterel file");
-//        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
-//        monitor.worked(1);
-//        if (monitor.isCanceled()) {
-//            strl.close();
-//            return null;
-//        }
-//        System.out.println("Compile 6");
-//        monitor.subTask("Dismantle Esterel file");
-//        InputStream dismantle = CEC.runDISMANTLE(expandmodule);
-//        monitor.worked(1);
-//        if (monitor.isCanceled()) {
-//            strl.close();
-//            return null;
-//        }
-//        System.out.println("Compile 7");
-//        monitor.subTask("ASTGRC");
-//        InputStream astgrc = CEC.runASTGRC(dismantle);
-//        monitor.worked(1);
-//        if (monitor.isCanceled()) {
-//            strl.close();
-//            return null;
-//        }
-//        System.out.println("Compile 8");
-//        monitor.subTask("GRCOPT");
-//        InputStream grcopt = CEC.runGRCOPT(astgrc);
-//        monitor.worked(1);
-//        if (monitor.isCanceled()) {
-//            strl.close();
-//            return null;
-//        }
-//        monitor.subTask("GRCPDG");
-//        InputStream grcpdg = CEC.runGRCPDG(grcopt);
-//        monitor.worked(1);
-//        if (monitor.isCanceled()) {
-//            strl.close();
-//            return null;
-//        }
-//        monitor.subTask("PDGCCFG");
-//        InputStream pdgccfg = CEC.runPDGCCFG(grcpdg);
-//        monitor.worked(1);
-//        if (monitor.isCanceled()) {
-//            strl.close();
-//            return null;
-//        }
-//        System.out.println("Compile 9");
-//        monitor.subTask("EEC");
-//        InputStream eec = CEC.runEEC(pdgccfg);
-//        monitor.worked(1);
-//        if (monitor.isCanceled()) {
-//            strl.close();
-//            return null;
-//        }
-//        monitor.subTask("SCFGC");
-//        InputStream scfgc = CEC.runSCFGC(eec);
-//        monitor.worked(1);
-//        if (monitor.isCanceled()) {
-//            strl.close();
-//            return null;
-//        }
-//        System.out.println("Compile 10");
-//        monitor.subTask("Generating C code");
-//        java.net.URI uri = CEC.runCODEGEN(scfgc, outFile);
-//        System.out.println("Compile 11" + uri);
-      
-      	//*******************************************************************************************
-      	//*******************************************************************************************
+        System.out.println("Compile 2" + inputURI.toString());
+        InputStream strl = CEC.runSTRL(inputURI);
+        System.out.println("Compile 3");
+        monitor.worked(1);
+        if (monitor.isCanceled()) {
+            strl.close();
+            return null;
+        }
+        System.out.println("Compile 4");
+        monitor.subTask("Parsing Esterel file");
+        InputStream strlxml = CEC.runSTRLXML(strl);
+        monitor.worked(1);
+        if (monitor.isCanceled()) {
+            strl.close();
+            return null;
+        }
+        System.out.println("Compile 5");
+        monitor.subTask("Expanding Esterel file");
+        // InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
+        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
+        monitor.worked(1);
+        if (monitor.isCanceled()) {
+            strl.close();
+            return null;
+        }
+        System.out.println("Compile 6");
+        monitor.subTask("Dismantle Esterel file");
+        InputStream dismantle = CEC.runDISMANTLE(expandmodule);
+        monitor.worked(1);
+        if (monitor.isCanceled()) {
+            strl.close();
+            return null;
+        }
+        System.out.println("Compile 7");
+        monitor.subTask("ASTGRC");
+        InputStream astgrc = CEC.runASTGRC(dismantle);
+        monitor.worked(1);
+        if (monitor.isCanceled()) {
+            strl.close();
+            return null;
+        }
+        System.out.println("Compile 8");
+        monitor.subTask("GRCOPT");
+        InputStream grcopt = CEC.runGRCOPT(astgrc);
+        monitor.worked(1);
+        if (monitor.isCanceled()) {
+            strl.close();
+            return null;
+        }
+        monitor.subTask("GRCPDG");
+        InputStream grcpdg = CEC.runGRCPDG(grcopt);
+        monitor.worked(1);
+        if (monitor.isCanceled()) {
+            strl.close();
+            return null;
+        }
+        monitor.subTask("PDGCCFG");
+        InputStream pdgccfg = CEC.runPDGCCFG(grcpdg);
+        monitor.worked(1);
+        if (monitor.isCanceled()) {
+            strl.close();
+            return null;
+        }
+        System.out.println("Compile 9");
+        monitor.subTask("EEC");
+        InputStream eec = CEC.runEEC(pdgccfg);
+        monitor.worked(1);
+        if (monitor.isCanceled()) {
+            strl.close();
+            return null;
+        }
+        monitor.subTask("SCFGC");
+        InputStream scfgc = CEC.runSCFGC(eec);
+        monitor.worked(1);
+        if (monitor.isCanceled()) {
+            strl.close();
+            return null;
+        }
+        System.out.println("Compile 10");
+        monitor.subTask("Generating C code");
+        java.net.URI uri = CEC.runCODEGEN(scfgc, outFile);
+        System.out.println("Compile 11" + uri);
 
         if (benchmark) {
             File currentFile = new File(uri.getPath());
@@ -853,6 +751,35 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         }
     }
 
+//    /**
+//     * If there is a header file available, return the path to the header file in order to be able
+//     * to include it in the wrapper code.
+//     * 
+//     * @throws KiemInitializationException
+//     */
+//    private String getPossibleHeaderFile(final String mainModuleName, final URI inputModel,
+//            final URL cProgram) throws KiemInitializationException {
+//        // Build header file name
+//        String headerFileString;
+//        try {
+//            java.net.URI inputURI = convertEMFtoJavaURI(inputModel);
+//            headerFileString = inputURI.toString();
+//            headerFileString = headerFileString.replaceFirst(".strl", ".h");
+//        } catch (URISyntaxException e) {
+//            return "";
+//        }
+//        IPath headerFilePath = new Path(headerFileString);
+//
+//        // Test if header file exists
+//        File headerFile = new File(headerFileString);
+//        if (!headerFile.exists()) {
+//            // header file was not found, return the original cProgram path
+//            return "";
+//        }
+//
+//        return headerFilePath.toString();
+//    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -902,7 +829,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
             URI esterelOutput = URI.createURI("");
             // By default there is no additional transformation necessary
-            Program transformedProgram = myModel;
+            Program transformedProgram = EcoreUtil.copy(myModel);
             System.out.println("M2M 4");
 
             // If 'Full Debug Mode' is turned on then the user wants to have
@@ -945,19 +872,18 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
             // Compile Esterel to C
             URL output =
-                    this.compileEsterelToC(esterelOutput, Esterelv5_100.getDefaultOutFile(),
-                            esterelSimulationProgressMonitor).toURL(); 
-            output = new URL("file:sscc_out.c");
-            //System.out.println(output.toString());
+                    this.compileEsterelToC(esterelOutput, CEC.getDefaultOutFile(),
+                            esterelSimulationProgressMonitor).toURL();
             System.out.println("M2M 9");
-            
+
             // Possibly add #include for a header file
+            String possibleHeader = "";
             if (myModel.getModules() != null && myModel.getModules().size() > 0) {
                 String mainModuleName = myModel.getModules().get(0).getName();
-                output = copyPossibleHeaderFile(mainModuleName, input, output);
+//                possibleHeader = getPossibleHeaderFile(mainModuleName, input, output);
+                  output = copyPossibleHeaderFile(mainModuleName, input, output);
             }
             System.out.println("M2M 10");
-
 
             // Cannot be done before because otherwise the new model cannot be serialized
             // Do this on a copy to not destroy original program;
@@ -968,8 +894,17 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             interfaceDeclarationFix.fix(fixedTransformedProgram);
             System.out.println("M2M 11");
 
+            String esterelCCodeFile = output.getPath();
+            int i = esterelCCodeFile.lastIndexOf("strl");
+            String esterelCCodeFileName = esterelCCodeFile;
+            if (i >= 0) {
+                esterelCCodeFileName = esterelCCodeFile.substring(i);
+            }
+
             // Generate data.c
-            URL data = generateCSimulationInterface(fixedTransformedProgram, esterelOutput, benchmark);
+            URL data =
+                    generateCSimulationInterface(fixedTransformedProgram, esterelOutput, benchmark,
+                            esterelCCodeFileName, possibleHeader);
             System.out.println("M2M 12");
 
             // Compile C code
@@ -978,7 +913,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
             URL fileUrl = FileLocator.find(bundle, new Path(SIMULATION_SUBPATH), null);
             URL bundleLocation = FileLocator.toFileURL(fileUrl);
-            
+
             System.out.println("M2M 14");
 
             System.out.println("M2M 15");
@@ -993,19 +928,35 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                 compile =
                         compiler + " " + output.getPath() + " " + data.getPath() + " "
                                 + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
-                                + bundleLocation.getPath() + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS " + SIMULATION_COMPILER_OPTIONS
-                                + " " + executable;
+                                + bundleLocation.getPath()
+                                + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+                                + SIMULATION_COMPILER_OPTIONS + " " + executable;
+
+                // compile =
+                // compiler + " " + output.getPath() + " " + data.getPath() + " "
+                // + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
+                // + bundleLocation.getPath() +
+                // " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS " +
+                // SIMULATION_COMPILER_OPTIONS
+                // + " " + executable;
             } else {
                 // Windows
                 executable = File.createTempFile(SIMULATION_PREFIX, SIMULATION_SUFFIX);
                 compile =
-                        compiler + " " + output.getPath().substring(1) + " "
-                                + data.getPath().substring(1) + " "
+                        compiler + " " + data.getPath().substring(1) + " "
                                 + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
-                                + "-I " + bundleLocation.getPath().substring(1) + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+                                + "-I " + bundleLocation.getPath().substring(1)
+                                + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
                                 + SIMULATION_COMPILER_OPTIONS + " " + executable;
+                // compile =
+                // compiler + " " + output.getPath().substring(1) + " "
+                // + data.getPath().substring(1) + " "
+                // + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
+                // + "-I " + bundleLocation.getPath().substring(1) +
+                // " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+                // + SIMULATION_COMPILER_OPTIONS + " " + executable;
             }
-            
+
             // D_NO_EXTERN_DEFINITIONS
             // D_NO_FUNCTION_DEFINITIONS
 
@@ -1031,10 +982,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                         new Exception(errorString.toString()));
             } else {
                 if (benchmark) {
-                    File currentFile = new File(simFile.getPath());
-                    if (currentFile.exists()) {
-                        executabeFileSize = currentFile.length();
-                    } 
+                    String benchmalCompiler =
+                            (getProperties()[KIEM_PROPERTY_CCOMPILER
+                                    + JSONObjectSimulationDataComponent.KIEM_PROPERTY_DIFF]).getValue();
+                    
+                    executabeFileSize = Benchmark.benchmarkExecutable(output, benchmalCompiler, isWindows());
+                    // File currentFile = new File(simFile.getPath());
+                    // if (currentFile.exists()) {
+                    // executabeFileSize = currentFile.length();
+                    // }
                 }
 
             }
@@ -1112,18 +1068,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     // -------------------------------------------------------------------------
 
     /**
-     * Checks whether the system is based on windows.
-     * 
-     * @return true, if is windows
-     */
-    public static boolean isWindows() {
-        String os = System.getProperty("os.name").toLowerCase();
-        return (os.indexOf("win") >= 0);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Generate the CSimulationInterface.
      * 
      * @param esterelProgram
@@ -1135,7 +1079,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      *             the kiem initialization exception
      */
     private URL generateCSimulationInterface(final Program esterelProgram,
-            final URI esterelProgramURI, final boolean benchmark) throws KiemInitializationException {
+            final URI esterelProgramURI, final boolean benchmark, final String strlProgramFileName,
+            final String possibleHeader) throws KiemInitializationException {
         File data;
         try {
             data = File.createTempFile("data", ".c");
@@ -1155,10 +1100,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             String ccode =
                     transform.createCSimulationInterface(esterelProgram.getModules().get(0))
                             .toString();
-            
+
+            String additionalHeader = "";
+            if (possibleHeader != null && possibleHeader.length() > 0) {
+                additionalHeader = "#include \"" + possibleHeader + "\"\n\r";
+            }
+
+            ccode = additionalHeader + "#include \"" + strlProgramFileName + "\"\n\r" + ccode;
 
             if (benchmark) {
-                ccode = Benchmark.addTimingCode(ccode);
+                ccode = Benchmark.addTimingCode(ccode, "doTick");
             }
 
             // Write out c program
