@@ -13,11 +13,21 @@
  */
 package de.cau.cs.kieler.sccharts.projectwizard
 
+import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
+import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
+import de.cau.cs.kieler.sccharts.launchconfig.common.UIUtil
+import java.util.ArrayList
+import org.eclipse.jface.viewers.ArrayContentProvider
+import org.eclipse.jface.viewers.ComboViewer
+import org.eclipse.jface.viewers.IStructuredSelection
+import org.eclipse.jface.viewers.LabelProvider
+import org.eclipse.jface.viewers.ListViewer
+import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.wizard.WizardPage
 import org.eclipse.swt.SWT
-import org.eclipse.swt.layout.RowLayout
+import org.eclipse.swt.layout.GridData
+import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.widgets.Label
 
 /**
  * @author aas
@@ -25,25 +35,126 @@ import org.eclipse.swt.widgets.Label
  */
 class MainPage extends WizardPage {
 
+    var ArrayList<EnvironmentData> environments
+
+    var ComboViewer environmentsCombo
+    var ListViewer list
+
     protected new(String pageName) {
         super(pageName)
         title = pageName
     }
-    
+
     override createControl(Composite parent) {
         var Composite comp = new Composite(parent, SWT.NONE)
         setControl(comp)
 
-        comp.setLayout(new RowLayout(SWT.VERTICAL))
-        comp.setFont(parent.getFont())
+        comp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
+        comp.setLayout(new GridLayout())
 
-        createComponent(comp)
-        
+        loadEnvironments()
+
+        createEnvironmentsComponent(comp)
+        createWrapperCodeSnippetsComponent(comp)
+
         pageComplete = true
     }
 
-    private def createComponent(Composite parent){
-        val lbl = new Label(parent, SWT.NONE);
-        lbl.text = "LaLiLu"
+    private def loadEnvironments() {
+        val store = LaunchConfigPlugin.^default.preferenceStore
+        environments = EnvironmentData.loadAllFromPreferenceStore(store)
     }
+
+    private def createEnvironmentsComponent(Composite parent) {
+        val group = UIUtil.createGroup(parent, "Environment", 2)
+
+        // List
+        environmentsCombo = new ComboViewer(group, SWT.DEFAULT)
+        environmentsCombo.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
+
+        // Content provider
+        environmentsCombo.setContentProvider(ArrayContentProvider.instance)
+        environmentsCombo.input = environments
+
+        if (!environments.isEmpty)
+            environmentsCombo.selection = new StructuredSelection(environments.get(0))
+
+        // Label provider
+        environmentsCombo.setLabelProvider(new LabelProvider() {
+            override String getText(Object element) {
+                val data = (element as EnvironmentData)
+                if (data != null)
+                    return data.name
+                else
+                    return ""
+            }
+        })
+    }
+
+    private def createWrapperCodeSnippetsComponent(Composite parent) {
+        val group = UIUtil.createGroup(parent, "Wrapper Code Snippets", 2)
+
+        // List
+        list = new ListViewer(group, SWT.BORDER.bitwiseOr(SWT.MULTI).bitwiseOr(SWT.V_SCROLL))
+        list.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
+
+        // Content provider
+        list.setContentProvider(ArrayContentProvider.instance)
+        val input = new ArrayList<EnvironmentData>()
+        for (env : environments) {
+            if (env.wrapperCodeSnippetsDirectory != "" && env.wrapperCodeSnippetsOrigin != "")
+                input += env
+        }
+        list.input = input
+
+        // Label provider
+        list.setLabelProvider(new LabelProvider() {
+            override String getText(Object element) {
+                val data = (element as EnvironmentData)
+                if (data != null)
+                    return data.name
+                else
+                    return ""
+            }
+        })
+    }
+
+    public def ArrayList<EnvironmentData> getSelectedWrapperCodeEnvironments(){
+        val output = new ArrayList<EnvironmentData>()
+        val selection = list.selection as StructuredSelection
+        for(element : selection.toArray){
+            if(element instanceof EnvironmentData)
+                output += element as EnvironmentData
+        }
+        return output
+    }
+
+    public def EnvironmentData getSelectedEnvironment() {
+        val selection = environmentsCombo.getSelection();
+        if (!selection.isEmpty()) {
+            val structuredSelection = selection as IStructuredSelection
+            return structuredSelection.getFirstElement() as EnvironmentData
+        } else {
+            return null
+        }
+    }
+
+    public def String getEnvironmentWizardClassName() {
+        val env = getSelectedEnvironment()
+        if (env != null) {
+            return env.relatedProjectWizardClass
+        } else {
+            return ""
+
+        }
+    }
+
+    def performFinish() {
+        
+        
+        
+        // Copy templates
+        
+    }
+
 }

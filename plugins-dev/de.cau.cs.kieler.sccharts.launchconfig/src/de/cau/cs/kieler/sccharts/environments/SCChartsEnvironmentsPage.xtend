@@ -151,7 +151,7 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         val folder = new TabFolder(comp, SWT.NONE)
         folder.setLayout(new GridLayout())
         val gd = new GridData(GridData.FILL_BOTH)
-        gd.heightHint = 200
+        gd.heightHint = 300
         folder.setLayoutData(gd)
         
         // Create tabs

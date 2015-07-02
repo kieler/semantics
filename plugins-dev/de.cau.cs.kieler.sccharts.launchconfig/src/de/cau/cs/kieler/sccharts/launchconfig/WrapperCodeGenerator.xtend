@@ -78,7 +78,9 @@ class WrapperCodeGenerator {
         
         // Create template macro calls from annotations
         val map = getMacroCalls(annotationDatas)
-
+        if(!datas.isEmpty)
+            map.put("scchart_name", datas.get(0).name)
+        
         // Inject macro calls in input template
         FreeMarkerPlugin.templateDirectory = project.location.toOSString()
         val template = FreeMarkerPlugin.configuration.getTemplate(wrapperCodeTemplate)
@@ -202,6 +204,7 @@ class WrapperCodeGenerator {
         if (model != null && model instanceof State) {
             // Iterate over model to get all annotations
             val root = (model as State)
+            println(root.id)
             for (decl : root.declarations) {
                 // Only consider annotations of inputs and outputs.
                 if (decl.input || decl.output) {

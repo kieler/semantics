@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage
 import org.eclipse.ui.ide.IDE
+import org.eclipse.ui.internal.ide.misc.ResourceAndContainerGroup
 
 /**
  * @author aas
@@ -35,8 +36,25 @@ class SCTFileCreationPage extends WizardNewFileCreationPage {
         fileExtension = "sct"
     }
     
+    private Composite parent
+    
     public override createControl(Composite parent){
-         super.createControl(parent)
+        super.createControl(parent)
+        this.parent = parent
+    }
+    
+    def refreshResources(){
+        control.dispose
+        
+        createControl(parent)
+        
+        parent.layout()
+        parent.redraw()
+        parent.update()
+    }
+    
+    def boolean isOk(){
+        return validatePage()
     }
     
     def boolean performFinish(){
