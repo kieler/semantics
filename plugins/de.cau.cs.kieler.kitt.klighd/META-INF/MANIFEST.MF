@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Transformation Tracing KLighD Intergration
 Bundle-SymbolicName: de.cau.cs.kieler.kitt.klighd;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Require-Bundle: com.google.inject,

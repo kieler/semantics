@@ -4,7 +4,7 @@ Bundle-Name: SeqSCL to S Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.scl.seqscl.s;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.scl.seqscl.s.SeqSCLToSActivator
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf;bundle-version="2.6.0",

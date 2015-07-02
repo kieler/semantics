@@ -13,4 +13,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.kex.controller,
  de.cau.cs.kieler.kex.model
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University

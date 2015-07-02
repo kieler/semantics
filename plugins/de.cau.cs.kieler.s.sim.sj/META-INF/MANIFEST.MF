@@ -4,7 +4,7 @@ Bundle-Name: Sj
 Bundle-SymbolicName: de.cau.cs.kieler.s.sim.sj;singleton:=true
 Bundle-Version: 0.1.2.qualifier
 Bundle-Activator: de.cau.cs.kieler.s.sim.sj.SSimSJPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,
  com.google.inject;bundle-version="3.0.0",
  de.cau.cs.kieler.sim.kiem,

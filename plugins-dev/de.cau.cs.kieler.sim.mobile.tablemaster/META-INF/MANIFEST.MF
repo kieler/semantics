@@ -4,7 +4,7 @@ Bundle-Name: Tablemaster
 Bundle-SymbolicName: de.cau.cs.kieler.sim.mobile.tablemaster;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.mobile.tablemaster.TablemasterPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0",
  org.json;bundle-version="0.1.0",

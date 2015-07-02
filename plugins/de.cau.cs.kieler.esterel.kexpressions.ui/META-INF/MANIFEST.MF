@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Expressions UI Infrastructure
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-Version: 0.4.3.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.kexpressions.ui;singleton:=true
 Bundle-ActivationPolicy: lazy

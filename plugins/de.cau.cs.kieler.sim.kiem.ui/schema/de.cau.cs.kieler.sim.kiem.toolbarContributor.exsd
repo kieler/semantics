@@ -155,7 +155,7 @@ public final class ContributionsProvider implements IKiemToolbarContributor {
          <meta.section type="copyright"/>
       </appinfo>
       <documentation>
-         Christian-Albrechts-Universität zu Kiel, Germany
+         Kiel University, Germany
       </documentation>
    </annotation>
 

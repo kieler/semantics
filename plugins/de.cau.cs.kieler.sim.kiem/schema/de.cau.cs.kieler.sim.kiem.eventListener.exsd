@@ -146,7 +146,7 @@ public class FileEventListener implements IKiemEventListener {
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         Christian-Albrechts-Universität zu Kiel, Germany
+         Kiel University, Germany
       </documentation>
    </annotation>
 

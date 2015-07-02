@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCL Infrastructure
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.scl;singleton:=true
 Bundle-ActivationPolicy: lazy

@@ -4,7 +4,7 @@ Bundle-Name: ESO file generator for SCCharts
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.eso;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sccharts.eso.SCChartsEsoPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.core.model,

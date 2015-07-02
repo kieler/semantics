@@ -4,7 +4,7 @@ Bundle-Name: KIELER View Management for UML2
 Bundle-SymbolicName: de.cau.cs.kieler.uml2.kivi;singleton:=true
 Bundle-Version: 0.1.2.qualifier
 Bundle-Activator: de.cau.cs.kieler.uml2.kivi.Activator
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore;bundle-version="2.6.0",

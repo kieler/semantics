@@ -16,5 +16,5 @@ Export-Package: de.cau.cs.kieler.yakindu.model.sgraph.syncgraph,
  de.cau.cs.kieler.yakindu.model.sgraph.validator
 Import-Package: de.cau.cs.kieler.yakindu.model.sgraph.syncgraph,
  org.eclipse.xtext.validation
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-Localization: plugin

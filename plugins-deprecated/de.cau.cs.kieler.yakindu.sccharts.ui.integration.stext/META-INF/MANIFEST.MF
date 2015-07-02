@@ -16,4 +16,4 @@ Import-Package: org.eclipse.xtext.ui.editor.contentassist.antlr,
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.yakindu.sccharts.ui.integration.stext,
  de.cau.cs.kieler.yakindu.sccharts.ui.integration.stext.modules
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University

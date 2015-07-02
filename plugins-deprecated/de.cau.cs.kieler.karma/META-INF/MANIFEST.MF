@@ -22,4 +22,4 @@ Export-Package: de.cau.cs.kieler.karma,
  de.cau.cs.kieler.karma.kivi,
  de.cau.cs.kieler.karma.util,
  de.cau.cs.kieler.karma.util.expandcollapsebutton
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
