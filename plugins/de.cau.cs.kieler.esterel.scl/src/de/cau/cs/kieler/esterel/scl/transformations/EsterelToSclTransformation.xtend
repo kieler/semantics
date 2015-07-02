@@ -92,9 +92,10 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import java.util.Set
 import java.util.HashSet
-import de.cau.cs.kieler.esterel.features.EsterelFeatures
 import de.cau.cs.kieler.esterel.esterel.UnEmit
 import de.cau.cs.kieler.esterel.esterel.Reset
+import de.cau.cs.kieler.esterel.features.EsterelFeature
+import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
@@ -167,11 +168,11 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
     var Stack<(StatementSequence)=>StatementSequence> joinTransformation
     
     override getId() {
-        return EsterelTransformations.SCL_ID
+        return EsterelTransformation.SCL_ID
     }
 
     override getName() {
-        return EsterelTransformations.SCL_NAME
+        return EsterelTransformation.SCL_NAME
     }
     
     override getProducedFeatureId() {
@@ -179,7 +180,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
     }
     
     override Set<String> getRequiredFeatureIds() {
-        return newHashSet(EsterelFeatures.BASIC_ID);
+        return newHashSet(EsterelFeature.BASIC_ID);
     }
 
     /**
@@ -702,9 +703,13 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         targetStatementSequence.addLabel(awaitStartLabel)
         labelToThreadMap.put(currentThreadEndLabel, awaitStartLabel)
 
-        // await tick is just a pause
-        if (await.delay.event.expr == null && await.delay.expr == null) {
+        var awaitImmediateTick = false;
+        if (await.delay.event.expr == null && await.delay.expr == null && !await.delay.isImmediate) {
+            // await tick is just a pause
             return targetStatementSequence.createSclPause
+        } else if (await.delay.event.expr == null && await.delay.expr == null && await.delay.isImmediate) {
+            // await immediate tick case
+            awaitImmediateTick = true; 
         }
 
         // Depending on if it is immediate, pause is set before or after the check for the condition
@@ -722,7 +727,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
 
             // if s present increment counter
             // if await n tick just increment it
-            if (await.delay.event.expr != null) {
+            if (await.delay.event.expr != null || awaitImmediateTick) {
                 val condTimes = createConditional
                 condTimes.expression = transformExpression(await.delay.event.expr)
                 condTimes.statements.add(incrementInt(delayExpressionCounter))
@@ -743,7 +748,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         }
 
         // This is not an await tick, as an delay event expression is given
-        if (await.delay.event.expr != null) {
+        if (await.delay.event.expr != null || awaitImmediateTick) {
             val continueCondition = createNot(transformExpression(await.delay.event.expr)) // If b is true do return to label l
 
             // Conditional which has to be fulfilled to continue
@@ -753,7 +758,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             if (await.delay.expr != null) {
                 awaitConditional.expression = createGT(await.delay.expr.transformExp("int"),
                     delayExpressionCounter.createValuedObjectReference)
-            } else if (await.delay.event.expr != null) {
+            } else if (await.delay.event.expr != null || awaitImmediateTick) {
                 awaitConditional.expression = continueCondition
             }
             if (await.delay.isImmediate) {
@@ -1092,7 +1097,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
      * @return The transformed statement
      */
     def dispatch StatementSequence transformStatement(Abort abort, StatementSequence targetStatementSequence) {
-        val sScope = createStatementScope
+        val statementScope = createStatementScope
 
         // Abort Cases; transformed to nested aborts with additional checking which case was taken
         if (abort.body instanceof AbortCase) {
@@ -1103,7 +1108,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             labelToThreadMap.put(currentThreadEndLabel, abortEndLabel)
 
             // Create a depth flag to check whether delayed case may be taken or not
-            val f_depth = createFreshVar(sScope, "f_depth", ValueType::BOOL)
+            val f_depth = createFreshVar(statementScope, "f_depth", ValueType::BOOL)
             f_depth.initialValue = createBoolValue(false)
 
             // Set depth flag to true when a pause statement is executed
@@ -1113,12 +1118,12 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                 ])
 
             // Transform to nested abort and then to SCL
-            handleAbortCase(abort).transformStatement(sScope)
-            pauseTransformation.pop
+            handleAbortCase(abort).transformStatement(statementScope)
+            pauseTransformation.pop.apply(statementScope)
 
             // Check if and which case should be taken
             for (singleCase : saveAbort.cases) {
-                sScope.add(
+                statementScope.add(
                     createConditional => [
                         val eventExpr = singleCase.delay.event.expr
                         if (singleCase.delay.isImmediate) {
@@ -1152,8 +1157,8 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
 
             }
             signalToVariableMap.remove(f_depth)
-            sScope.addLabel(abortEndLabel)
-            targetStatementSequence.add(sScope)
+            statementScope.addLabel(abortEndLabel)
+            targetStatementSequence.add(statementScope)
 
             return targetStatementSequence
         }
@@ -1193,27 +1198,29 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
 
         // Weak abort
         if (abort.body instanceof WeakAbortInstance) {
-            handleWeakAbort(abort, sScope, abortEndLabel, counter, countExp)
+            handleWeakAbort(abort, statementScope, abortEndLabel, counter, countExp)
 
         // Strong abort
         } else {
-            handleStrongAbort(abort, sScope, abortEndLabel, counter, countExp)
+            handleStrongAbort(abort, statementScope, abortEndLabel, counter, countExp)
         }
-        pauseTransformation.pop
-        joinTransformation.pop
+        
+        // FIXME: apply closures
+        pauseTransformation.pop.apply(statementScope)
+        joinTransformation.pop.apply(statementScope)
 
         // If body was left without being preempted, doNothing
         val l_doNothing = createNewUniqueLabel
         if ((abort.body as AbortInstance).statement != null)
-            sScope.addGoto(l_doNothing)
-        sScope.addLabel(abortEndLabel)
+            statementScope.addGoto(l_doNothing)
+        statementScope.addLabel(abortEndLabel)
 
         // Some do statement
         if ((abort.body as AbortInstance).statement != null) {
-            (abort.body as AbortInstance).statement.transformStatement(sScope)
-            sScope.addLabel(l_doNothing)
+            (abort.body as AbortInstance).statement.transformStatement(statementScope)
+            statementScope.addLabel(l_doNothing)
         }
-        targetStatementSequence.add(sScope)
+        targetStatementSequence.add(statementScope)
 
         targetStatementSequence
     }
@@ -1615,8 +1622,9 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         if (trap.statement != null)
             trap.statement.transformStatement(statementScope)
 
-        pauseTransformation.pop
-        joinTransformation.pop
+        // FIX: apply closures
+        pauseTransformation.pop //.apply(statementScope)
+        joinTransformation.pop.apply(statementScope)
         statementScope.addLabel(trapEndLabel)
         statementScope.statements.removeInstantaneousGotos(trapEndLabel, exitVariables)
 

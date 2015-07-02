@@ -13,19 +13,32 @@
  */
 package de.cau.cs.kieler.esterel.sim.c;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.LinkedList;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +51,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationEsterel;
 import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationSCL;
+import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -480,6 +494,13 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
             // Compile the SCChart to C code
             EObject extendedSCChart = this.myModel;
+
+            System.out.println("8b");
+            
+            // Enforce the complete model to be loaded. Otherwise references to objects (signals)
+            // might not be resolvable resulting in nasty error messages.
+            EcoreUtil.resolveAll(myModel);
+            
             System.out.println("9");
 
             KielerCompilerContext highLevelContext =
@@ -537,7 +558,17 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                         Guice.createInjector().getInstance(CSimulationEsterel.class);
                 System.out.println("16");
                 Program program = (Program) esterelProgramOrSCLProgram;
-                cSimulation = cSimulationSCChart.transform(program, "10000").toString();
+
+                // Cannot be done before because otherwise the new model cannot be serialized
+                // Do this on a copy to not destroy original program;
+                // Make Esterel Interface declaration consistent
+                InterfaceDeclarationFix interfaceDeclarationFix =
+                        Guice.createInjector().getInstance(InterfaceDeclarationFix.class);
+                Program fixedTransformedProgram = (Program) EcoreUtil.copy(program);
+                interfaceDeclarationFix.fix(fixedTransformedProgram);
+
+                
+                cSimulation = cSimulationSCChart.transform(fixedTransformedProgram, "10000").toString();
             } else if (esterelProgramOrSCLProgram instanceof SCLProgram) {
                 System.out.println("15");
                 CSimulationSCL cSimulationSCG =
@@ -549,8 +580,12 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             }
 
             if (benchmark) {
-                cSimulation = Benchmark.addTimingCode(cSimulation);
+                cSimulation = Benchmark.addTimingCode(cSimulation, "tick");
             }
+
+            // Possibly add #include for a header file
+            cSimulation = copyPossibleHeaderFile(input, cSimulation);
+            System.out.println("M2M 10");
 
             System.out.println("17 " + cSimulation);
 
@@ -573,7 +608,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             System.out.println("21 " + includePath);
             System.out.println(includePath);
             // Compile
-            cExecution = new CExecution(outputFolder, false);
+            cExecution = new CExecution(outputFolder, benchmark);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
             generatedSCFiles.add(outputFileSimulation);
             // generatedSCFiles.add(outputFileSCChart);
@@ -584,7 +619,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             } else if (myModel instanceof SCLProgram) {
                 modelName = ((SCLProgram) myModel).getName();
             }
-            cExecution.compile(generatedSCFiles, modelName);
+            cExecution.compile(generatedSCFiles, modelName, outputFileSCChart);
 
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
@@ -679,12 +714,25 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
                             JSONObject valuedObject = output.getJSONObject(outputName);
                             Object value = ((JSONObject) valuedObject).get("value");
-
+                            
                             boolean present = false;
-                            if (value instanceof Boolean) {
-                                present = (Boolean) value;
-                            } else if (value instanceof Integer) {
-                                present = ((Integer) value) != 0;
+                            boolean isSignal = false;
+                            if (valuedObject.has("present")) {
+                                isSignal = true;
+                                Object isPresentValue = valuedObject.get("present");
+                                if (value instanceof Boolean) {
+                                    present = (Boolean) isPresentValue;
+                                } else if (value instanceof Integer) {
+                                    present = ((Integer) isPresentValue) != 0;
+                                }
+                            }
+                            
+                            if (!isSignal) {
+                                if (value instanceof Boolean) {
+                                    present = (Boolean) value;
+                                } else if (value instanceof Integer) {
+                                    present = ((Integer) value) != 0;
+                                }
                             }
 
                             if (outputName
@@ -778,6 +826,66 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                 return 1;
             }
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * If there is a header file available, add include directive to generated C program and return
+     * the path to the modified C program. Otherwise return the original path.
+     * 
+     * @throws KiemInitializationException
+     */
+    private String copyPossibleHeaderFile(final URI inputModel, String cCode)
+            throws KiemInitializationException {
+        // Build header file name
+        String headerFileString;
+        try {
+            java.net.URI inputURI = convertEMFtoJavaURI(inputModel);
+            headerFileString = inputURI.toString();
+            headerFileString = headerFileString.replaceFirst(".strl", ".h");
+        } catch (URISyntaxException e) {
+            return cCode;
+        }
+        IPath headerFilePath = new Path(headerFileString);
+
+        // Test if header file exists
+        File headerFile = new File(headerFileString);
+        if (!headerFile.exists()) {
+            // header file was not found, return the original cProgram path
+            return cCode;
+        }
+
+        // append include directive to cProgram
+        cCode = "#include \"" + headerFilePath + "\"\n" + cCode;
+        return cCode;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Convert an EMF URI to a Java.net.URI.
+     * 
+     * @param URI
+     *            the URI
+     * @return the java.net. URI
+     * @throws URISyntaxException
+     *             the URI syntax exception
+     */
+    private java.net.URI convertEMFtoJavaURI(final URI uri) throws URISyntaxException {
+        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+
+        System.out.println("convertEMFtoJavaURI 1");
+
+        IPath path = new Path(uri.toPlatformString(false));
+        System.out.println("convertEMFtoJavaURI 2" + path);
+        IFile file = myWorkspaceRoot.getFile(path);
+        System.out.println("convertEMFtoJavaURI 3" + file.toString());
+
+        IPath fullPath = file.getLocation();
+        System.out.println("convertEMFtoJavaURI 4" + fullPath.toString());
+
+        return new java.net.URI(fullPath.toString());
     }
 
     // -------------------------------------------------------------------------

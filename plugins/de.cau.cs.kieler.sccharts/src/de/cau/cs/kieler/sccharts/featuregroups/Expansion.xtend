@@ -38,7 +38,7 @@ class Expansion extends FeatureGroup {
     }
 
     override getFeatureIds() {
-        Sets.newHashSet(SCChartsFeature::FOR_ID, SCChartsFeature::CONST_ID,
+        Sets.newHashSet(SCChartsFeature::FOR_ID, SCChartsFeature::MAP_ID, SCChartsFeature::CONST_ID,
              SCChartsFeature::REFERENCE_ID )
     }
 

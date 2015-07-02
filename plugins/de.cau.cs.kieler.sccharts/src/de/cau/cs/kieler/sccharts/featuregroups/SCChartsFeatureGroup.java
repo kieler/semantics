@@ -32,9 +32,6 @@ public class SCChartsFeatureGroup {
     public final static String SYNCCHARTS_ID = "SYNCCHARTS";
     public final static String SYNCCHARTS_NAME = "SyncCharts";
 
-    public final static String EXPANSIONS_ID = "EXPANSIONS";
-    public final static String EXPANSIONS_NAME = "SCCharts Expansions";
-
     public final static String EXTENDED_ID = "EXTENDED";
     public final static String EXTENDED_NAME = "Extended SCCharts";
 

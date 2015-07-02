@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
@@ -54,7 +55,7 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet()
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
     }
 
     //-------------------------------------------------------------------------

@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -218,6 +219,9 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     private IPath getEsoFilePath() {
         IPath modelFilePath = this.getModelFilePath();
         IPath localEsoFilePath = null;
+//        //TODO: is there a better way do do this?
+//        String updatedPath = modelFilePath.toString().replace(".simulation.", ".");
+//        modelFilePath = new Path(updatedPath);
         if (modelFilePath != null) {
             localEsoFilePath =
                     modelFilePath.removeFileExtension().addFileExtension(

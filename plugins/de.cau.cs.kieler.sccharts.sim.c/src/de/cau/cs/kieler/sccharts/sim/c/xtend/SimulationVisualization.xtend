@@ -113,6 +113,7 @@ class SimulationVisualization extends AbstractExpansionTransformation {
         
         var targetRootState = rootState.fixAllPriorities
 
+
         // Traverse all transitions
         var i = 0;
         val originalTransitionsList = targetRootState.eAllContents().toIterable().filter(typeof(Transition)).toList

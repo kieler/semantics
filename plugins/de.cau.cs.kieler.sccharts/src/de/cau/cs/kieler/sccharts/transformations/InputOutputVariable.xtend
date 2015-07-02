@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 /**
@@ -54,7 +55,7 @@ class InputOutputVariable extends AbstractExpansionTransformation implements Tra
     override getNotHandlesFeatureIds() {
 
         // TODO: Check
-        return Sets.newHashSet()
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
     }
 
     //-------------------------------------------------------------------------

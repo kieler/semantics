@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
@@ -54,7 +55,7 @@ class Initialization extends AbstractExpansionTransformation implements Traceabl
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet()
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
     }
 
     //-------------------------------------------------------------------------
@@ -88,7 +89,7 @@ class Initialization extends AbstractExpansionTransformation implements Traceabl
 
         if (!valuedObjects.nullOrEmpty) {
             for (valuedObject : valuedObjects) {
-                valuedObject.setDefaultTrace
+                setDefaultTrace(valuedObject, valuedObject.declaration)
                 val entryAction = state.createEntryAction
                 entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
                 valuedObject.setInitialValue(null)

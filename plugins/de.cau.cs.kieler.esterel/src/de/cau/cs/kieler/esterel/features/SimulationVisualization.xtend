@@ -17,24 +17,23 @@ import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.esterel.esterel.Program
 
 /**
- * Esterel Feature.
+ * SCCharts Simulation Visualization Feature.
  * 
- * @author ssm
- * @kieler.design 2015-05-30 proposed 
- * @kieler.rating 2015-05-30 proposed yellow
- *
+ * @author cmot
+ * @kieler.design 2015-03-12 proposed 
+ * @kieler.rating 2015-03-12 proposed yellow
  */
-class Esterel extends Feature {
-    
+class SimulationVisualization extends Feature {
+
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return EsterelFeature::BASIC_ID
+        return EsterelFeature::SIMULATIONVISUALIZATION_ID
     }
 
     override getName() {
-        return EsterelFeature::BASIC_NAME
+        return EsterelFeature::SIMULATIONVISUALIZATION_NAME
     }
 
     //-------------------------------------------------------------------------
@@ -43,4 +42,5 @@ class Esterel extends Feature {
     def isContained(Program program) {
         return true
     }
+
 }

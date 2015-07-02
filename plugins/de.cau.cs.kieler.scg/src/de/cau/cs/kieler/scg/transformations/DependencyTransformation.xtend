@@ -326,7 +326,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         
         // Filter all other assignments.
         assignments.forEach[ node |
-            if (node != assignment) {
+            if (node != assignment && node.valuedObject == assignment.valuedObject) {
                 var DataDependency dependency = null
                 // If they write to the same variable...
                 if (node.isSameScalar(assignment)) {

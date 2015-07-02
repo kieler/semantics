@@ -256,7 +256,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
             Guice.createInjector().getInstance(typeof(CopyPropagation))    
 // FIXME: temporary disabled
 // needs further efficiency improvements and bug-fixing in conditional nodes       
-//        copyPropagation.optimize(scg)         
+        copyPropagation.optimize(scg)         
         
         scg     	
     }
