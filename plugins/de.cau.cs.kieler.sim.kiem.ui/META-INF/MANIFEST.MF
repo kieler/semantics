@@ -4,7 +4,7 @@ Bundle-Name: KIELER Execution Manager User Interface
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kiem.ui;singleton:=true
 Bundle-Version: 0.5.5.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kiem.ui.KiemUIPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.ide,

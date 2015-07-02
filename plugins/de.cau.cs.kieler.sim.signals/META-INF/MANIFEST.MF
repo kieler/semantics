@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Synchronous Simulation Signals
 Bundle-SymbolicName: de.cau.cs.kieler.sim.signals
 Bundle-Version: 0.1.3.qualifier
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,
  org.json
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

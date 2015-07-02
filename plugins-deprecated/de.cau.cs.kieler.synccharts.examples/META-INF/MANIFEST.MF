@@ -11,4 +11,4 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.kex.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University

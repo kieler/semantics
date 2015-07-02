@@ -29,5 +29,5 @@ Export-Package: de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.core.model.ui,
  de.cau.cs.kieler.core.model.util,
  de.cau.cs.kieler.core.model.validation
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Import-Package: com.google.inject;version="1.3.0"

@@ -47,7 +47,7 @@
          </property>
          <property
                name="introBrandingImageText"
-               value="KIELER by Christian-Albrechts-Universität zu Kiel">
+               value="KIELER by Kiel University">
          </property>
           <property
                 name="cssTheme"

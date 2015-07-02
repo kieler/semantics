@@ -474,7 +474,7 @@ public class DataComponent extends JSONObjectDataComponent implements&lt;BR&gt;
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         Christian-Albrechts-Universität zu Kiel, Germany
+         Kiel University, Germany
       </documentation>
    </annotation>
 

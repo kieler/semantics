@@ -3,7 +3,7 @@
       id="de.cau.cs.kieler.uml2.feature"
       label="KIELER Bridge to UML2 tools"
       version="0.5.0.qualifier"
-      provider-name="Christian-Albrechts-Universität zu Kiel"
+      provider-name="Kiel University"
       plugin="de.cau.cs.kieler.uml2">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler/">

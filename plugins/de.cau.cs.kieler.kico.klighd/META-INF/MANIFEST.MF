@@ -4,7 +4,7 @@ Bundle-Name: KIELER Compiler KLighD Model View
 Bundle-SymbolicName: de.cau.cs.kieler.kico.klighd;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide,
  org.eclipse.xtext.ui,

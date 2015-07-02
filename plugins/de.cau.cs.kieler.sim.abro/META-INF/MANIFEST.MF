@@ -12,4 +12,4 @@ Require-Bundle: de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0",
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: de.cau.cs.kieler.sim.kiem
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University

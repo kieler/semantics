@@ -4,7 +4,7 @@ Bundle-Name: C Simulation for STRL
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.sim.c;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.sim.c.EsterelCSimulationPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem,

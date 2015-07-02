@@ -3,7 +3,7 @@
       id="de.cau.cs.kieler.dependencies.feature"
       label="Dependencies"
       version="0.5.1.qualifier"
-      provider-name="Christian-Albrechts-Universität zu Kiel">
+      provider-name="Kiel University">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler/">
       Dependencies of the KIELER project used for building a Rich Client Application.
