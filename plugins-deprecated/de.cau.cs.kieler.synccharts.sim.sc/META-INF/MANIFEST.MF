@@ -25,4 +25,4 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: de.cau.cs.kieler.synccharts,
  de.cau.cs.kieler.synccharts.codegen.sc,
  org.json
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University

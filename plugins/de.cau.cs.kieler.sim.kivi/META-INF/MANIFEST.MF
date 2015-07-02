@@ -4,7 +4,7 @@ Bundle-Name: KIELER Simulation KIVi Data Component
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kivi
 Bundle-Version: 0.3.2.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kivi.Activator
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.klighd.ui,
  org.eclipse.ui.ide,

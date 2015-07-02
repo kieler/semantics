@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Model Annotations Text UI
 Bundle-SymbolicName: de.cau.cs.kieler.core.annotations.text.ui;singleton:=true
 Bundle-Version: 0.4.3.qualifier
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.xtext.ui;bundle-version="2.1.0",

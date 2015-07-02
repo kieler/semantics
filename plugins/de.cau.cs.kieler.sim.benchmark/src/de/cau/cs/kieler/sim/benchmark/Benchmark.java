@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -38,6 +38,9 @@ public class Benchmark {
 
     /** The Constant BENCHMARK_SIGNAL. */
     public static final String BENCHMARK_SIGNAL_TIME = "benchTime";
+
+    /** The Constant BENCHMARK_SIGNAL. */
+    public static final String BENCHMARK_SIGNAL_COMPILETIME = "benchCompileTime";
 
     /** The Constant BENCHMARK_SIGNAL. */
     public static final String BENCHMARK_SIGNAL_SOURCE = "benchSource";

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Esterel Kivi Simulation Visualization
+Bundle-SymbolicName: de.cau.cs.kieler.esterel.sim.kivi;singleton:=true
+Bundle-Version: 0.1.2.qualifier
+Bundle-Activator: de.cau.cs.kieler.esterel.sim.kivi.EsterelSimKiviPlugin
+Bundle-Vendor: Kiel University
+Require-Bundle: de.cau.cs.kieler.sim.kiem.ui.datacomponent,
+ org.eclipse.xtext.ui;bundle-version="2.1.1",
+ de.cau.cs.kieler.esterel.sim
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy

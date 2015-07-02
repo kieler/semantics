@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.esterel.sim.kivi.EsterelDataComponent"
+            id="de.cau.cs.kieler.esterel.cec.sim.kivi"
+            name="Esterel CEC Visualization">
+      </content>
+   </extension>
+</plugin>

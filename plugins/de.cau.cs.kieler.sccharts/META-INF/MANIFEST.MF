@@ -4,7 +4,7 @@ Bundle-Name: KIELER SCCharts
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts;singleton:=true
 Bundle-Version: 0.1.1.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.sccharts,

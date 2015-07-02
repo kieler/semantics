@@ -4,7 +4,7 @@ Bundle-Name: KIELER SyncCharts S Simulator
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.sim.s;singleton:=true
 Bundle-Version: 0.3.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.sim.s.SyncChartsSimSPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.xtend.util.stdlib;bundle-version="1.2.0",

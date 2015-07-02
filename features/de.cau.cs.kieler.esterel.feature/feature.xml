@@ -3,7 +3,7 @@
       id="de.cau.cs.kieler.esterel.feature"
       label="KIELER Esterel"
       version="0.3.1.qualifier"
-      provider-name="Christian-Albrechts-Universität zu Kiel"
+      provider-name="Kiel University"
       plugin="de.cau.cs.kieler.esterel.ui">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
@@ -12,7 +12,7 @@
 
    <copyright>
       Copyright 2013 by Real-Time and Embedded Systems Group, Department
-of Computer Science, Christian-Albrechts-University of Kiel
+of Computer Science, Kiel University
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
@@ -359,7 +359,14 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec.sim.kivi"
+         id="de.cau.cs.kieler.esterel.sim"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.esterel.sim.kivi"
          download-size="0"
          install-size="0"
          version="0.0.0"

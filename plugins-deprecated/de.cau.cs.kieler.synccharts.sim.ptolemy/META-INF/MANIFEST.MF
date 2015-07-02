@@ -4,7 +4,7 @@ Bundle-Name: KIELER SyncCharts Ptolemy Simulator
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.sim.ptolemy;singleton:=true
 Bundle-Version: 0.7.1.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimPtolemyPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.xmi,
