@@ -84,7 +84,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 
 
     //TODO Fix this shitty logging stuff
-    static final boolean DEBUG = false;
+    static final boolean DEBUG = true;
 
     def static void debug(String debugText) {
         debug(debugText, true);
@@ -126,6 +126,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
     protected val guardVOCache = <ValuedObject, Guard>newHashMap
 
     protected val placedVOs = <ValuedObject>newHashSet
+    protected val placedSBs = <SchedulingBlock>newHashSet
 
     // -------------------------------------------------------------------------
     // -- Scheduler 
@@ -161,6 +162,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
             topologicalSortVisited.add(schedulingBlock)
 
             val VOR = <ValuedObject>newArrayList
+            val SBs = <SchedulingBlock>newArrayList
             val lastVOs = <ValuedObject>newArrayList
             val addGuardBeforeScheduledBlock = <Guard>newHashSet
 
@@ -200,6 +202,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                             //			                    }
                             //			                } else {
                             VOR += sb.guard.valuedObject
+                            SBs += sb
 
                         //  			                }
                         }
@@ -238,6 +241,12 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                     }
                 }
             }
+            
+            for(sb : SBs) {
+                if (!placedSBs.contains(sb)) {
+                    sb.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, indent + "  ")
+                }
+            }
 
             var placeable = true
             for (ref : VOR) {
@@ -251,6 +260,12 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                     placeable = false
 
                 //					}
+                }
+            }
+            for(sb : SBs) {
+                if (!placedSBs.contains(sb)) {
+                    debug(indent + sb.label + " not placed!")
+                    placeable = false
                 }
             }
 
@@ -292,6 +307,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 
                 schedule += scheduleBlock
                 placedVOs += schedulingBlock.guard.valuedObject
+                placedSBs += schedulingBlock
                 remainingSchedulingBlocks -= schedulingBlock
             }
 
@@ -376,6 +392,8 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
         scg.guards.forEach [ g |
             guardVOCache.put(g.valuedObject, g)
         ]
+        
+        placedSBs.clear;
 
         val scedList = <ScheduleBlock>newLinkedList
         var schedulable = scg.createSchedule(scedList, schedulingConstraints, context)
