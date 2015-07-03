@@ -68,14 +68,19 @@ class SCChartsDiagramSynthesisControlflowRegions {
                 val initialStateNode = region.states.filter[ isInitial ].head.node
                 for(commentAnnotation : region.getCommentAnnotations) {
                     val commentNode = createCommentNode(synthesis, commentAnnotation)
-                    node.children += commentNode
-                    createEdge => [ edge |
-                        edge.target = initialStateNode
-                        edge.source = commentNode
+                    regionNode.children += commentNode;
+                    val commentEdge = commentNode.createEdge;
+                    commentEdge.target = initialStateNode
+                    commentEdge.source = commentNode
+                    val commentFigure = commentEdge.addSpline(2);
+                    commentFigure.invisible = true
+
 //                        edge.KRendering => [ invisible = true ]
-                    ]                        
+//                    val edgePoly = commentEdge.addPolygon;
+//                    edgePoly.foreground = "white".color
                 }
             }
+            
         }
         
         val regionLabel = region.label

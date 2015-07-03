@@ -12,6 +12,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 
 class SCChartsDiagramSynthesisComments {
     
@@ -22,20 +23,24 @@ class SCChartsDiagramSynthesisComments {
     extension KRenderingExtensions
     
     @Inject
-    extension KColorExtensions 
+    extension KColorExtensions
+    
+    @Inject
+    extension KContainerRenderingExtensions        
+ 
     
 	public def KNode createCommentNode(AbstractDiagramSynthesis<Scope> synthesis, CommentAnnotation commentAnnotation) {
-        val commentNode = commentAnnotation.createNode()
+        val commentNode = commentAnnotation.createNode
         commentNode.setLayoutOption(LayoutOptions::SPACING, 1f);
         val commentText = commentAnnotation.values.head
-        val commentRectangle = commentNode.addRectangle
+        val commentRectangle = commentNode.addRectangle;
         synthesis.associateWith(commentRectangle, commentAnnotation)
 
         commentRectangle.invisible = false;
         commentRectangle.foreground = "DarkGoldenrod".color
         commentRectangle.background = "LemonChiffon".color
         commentRectangle.lineWidth = 0.5f;
-        val commentKText = commentNode.addText(commentText)
+        val commentKText = commentRectangle.addText(commentText)
         synthesis.associateWith(commentKText, commentAnnotation) 
         if (synthesis.getBooleanValue(SCChartsDiagramSynthesisOptions::USE_ADAPTIVEZOOM)) {
             commentKText.lowerVisibilityScaleBound = 0.40f;
