@@ -48,6 +48,8 @@ import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
 import org.eclipse.core.runtime.preferences.ConfigurationScope
 import org.eclipse.jface.preference.PreferenceStore
 import org.eclipse.jface.preference.IPreferenceStore
+import java.util.Collection
+import java.util.Collections
 
 /**
  * @author aas
@@ -454,6 +456,31 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
                 list.refresh()
                 list.selection = new StructuredSelection()
                 checkConsistency()
+            }
+        })
+        
+        // Up / Down
+        val upButton =  UIUtil.createButton(bcomp, "Up")
+        upButton.addSelectionListener(new SelectionAdapter(){
+            override widgetSelected(SelectionEvent e) {
+                val inputArray = (list.input as ArrayList<EnvironmentData>)
+                val index = inputArray.indexOf(currentData)
+                if(index > 0){
+                    Collections.swap(inputArray, index, index-1)
+                    list.refresh()
+                }
+            }
+        })
+        
+        val downButton =  UIUtil.createButton(bcomp, "Down")
+        downButton.addSelectionListener(new SelectionAdapter(){
+            override widgetSelected(SelectionEvent e) {
+                val inputArray = (list.input as ArrayList<EnvironmentData>)
+                val index = inputArray.indexOf(currentData)
+                if(index > -1 && index < inputArray.size-1){
+                    Collections.swap(inputArray, index, index+1)
+                    list.refresh()
+                }
             }
         })
     }

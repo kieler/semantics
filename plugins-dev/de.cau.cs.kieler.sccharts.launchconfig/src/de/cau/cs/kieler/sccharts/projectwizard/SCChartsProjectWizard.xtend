@@ -130,10 +130,9 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
         // Copy templates to new project
         val wrapperEnvironments = mainPage.getSelectedWrapperCodeEnvironments()
         for (wrapperEnv : wrapperEnvironments) {
-            
+
             var File source
             if (wrapperEnv.wrapperCodeSnippetsOrigin.trim().startsWith("platform:")) {
-                
             } else {
                 source = new File(wrapperEnv.wrapperCodeSnippetsOrigin)
                 val target = new File(newlyCreatedProject.location + "/" + wrapperEnv.wrapperCodeSnippetsDirectory)
@@ -142,10 +141,7 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
         }
 
         // Add environment to project properties
-        newlyCreatedProject.setPersistentProperty(
-            new QualifiedName(LaunchConfigPlugin.ID, "environment"),
-            env.name
-        )
+        newlyCreatedProject.setPersistentProperty(LaunchConfigPlugin.ENVIRIONMENT_QUALIFIER, env.name)
 
         return true;
     }

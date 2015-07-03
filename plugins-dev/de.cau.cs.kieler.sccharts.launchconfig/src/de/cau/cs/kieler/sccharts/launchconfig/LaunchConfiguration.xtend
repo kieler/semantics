@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
+import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
 
 class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
@@ -37,8 +38,13 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val ATTR_SCT_FILES = "de.cau.cs.kieler.scchart.launchconfig.sct.files"
 
     public static val ATTR_PROJECT = "de.cau.cs.kieler.scchart.launchconfig.main.project"
+    
+    public static val ATTR_USE_ENVIRONMENT = "de.cau.cs.kieler.scchart.launchconfig.main.environment.use"
+    public static val ATTR_ENVIRONMENT = "de.cau.cs.kieler.scchart.launchconfig.main.environment"
+    
     public static val ATTR_TARGET_LANGUAGE = "de.cau.cs.kieler.scchart.launchconfig.main.target.language"
     public static val ATTR_TARGET_TEMPLATE = "de.cau.cs.kieler.scchart.launchconfig.main.target.template"
+    public static val ATTR_TARGET_LANGUAGE_FILE_EXTENSION = "de.cau.cs.kieler.scchart.launchconfig.main.target.file.extension"
 
     public static val ATTR_WRAPPER_CODE_TEMPLATE = "de.cau.cs.kieler.scchart.launchconfig.main.wrapper.template"
     public static val ATTR_WRAPPER_CODE_OUTPUT = "de.cau.cs.kieler.scchart.launchconfig.main.wrapper.output"
@@ -66,6 +72,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     var String compileCommand
     var String deployCommand
     var String runCommand
+
+    var String targetLanguageFileExtension
 
     // Jobs
     var Job compileJob;
@@ -247,20 +255,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         // Compute fully qualified target path
         return project.location + "/" + BUILD_DIRECTORY + "/" + projectRelativeRelevantPath +
-            getTargetLanguageExtension()
-    }
-
-    /**
-     * Get the file extension for the specified target language (e.g. ".java" for Java Code).
-     */
-    private def String getTargetLanguageExtension() {
-        // The target code feature of KiCo has the scheme s.java or s.c
-        // Thus we return everything after and including the dot.
-        val index = targetLanguage.lastIndexOf(".")
-        if (index > -1) {
-            return targetLanguage.substring(index)
-        }
-        return targetLanguage
+            targetLanguageFileExtension
     }
 
     /**
@@ -306,19 +301,51 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         val projectName = configuration.getAttribute(ATTR_PROJECT, "")
         project = findProject(projectName)
 
-        // Target
-        targetLanguage = configuration.getAttribute(ATTR_TARGET_LANGUAGE, "")
-        targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
-
-        // Wrapper code
-        wrapperCodeTarget = configuration.getAttribute(ATTR_WRAPPER_CODE_OUTPUT, "")
-        wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
-        wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
-
-        // Execution
-        compileCommand = configuration.getAttribute(ATTR_COMPILE_COMMAND, "")
-        deployCommand = configuration.getAttribute(ATTR_DEPLOY_COMMAND, "")
-        runCommand = configuration.getAttribute(ATTR_RUN_COMMAND, "")
+        // Environment
+        val useEnvironment = configuration.getAttribute(ATTR_USE_ENVIRONMENT, false)
+        if(useEnvironment){
+            
+            // Load environment data
+            val store = LaunchConfigPlugin.^default.preferenceStore
+            val environmentName = configuration.getAttribute(ATTR_ENVIRONMENT, "")
+            val env = EnvironmentData.loadFromPreferenceStore(store, environmentName)
+            if(env != null){
+                
+                // Target
+                targetLanguage = env.targetLanguage
+                targetTemplate = env.targetTemplate
+                targetLanguageFileExtension = env.targetFileExtension
+                
+                // Wrapper code
+                wrapperCodeTarget = env.wrapperCodeTarget
+                wrapperCodeTemplate = env.wrapperCodeTemplate
+                wrapperCodeSnippetDirectory = env.wrapperCodeSnippetsDirectory
+        
+                // Execution
+                compileCommand = env.compileCommand
+                deployCommand = env.deployCommand
+                runCommand = env.runCommand
+                
+                
+            } else {
+                throw new Exception("Environment "+ environmentName + " could not be loaded from preferences.")
+            }
+        } else {
+            // Target
+            targetLanguage = configuration.getAttribute(ATTR_TARGET_LANGUAGE, "")
+            targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
+            targetLanguageFileExtension = configuration.getAttribute(ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
+    
+            // Wrapper code
+            wrapperCodeTarget = configuration.getAttribute(ATTR_WRAPPER_CODE_OUTPUT, "")
+            wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
+            wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
+    
+            // Execution
+            compileCommand = configuration.getAttribute(ATTR_COMPILE_COMMAND, "")
+            deployCommand = configuration.getAttribute(ATTR_DEPLOY_COMMAND, "")
+            runCommand = configuration.getAttribute(ATTR_RUN_COMMAND, "")
+        }
     }
 
     /**

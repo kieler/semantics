@@ -68,27 +68,7 @@ class MainPage extends WizardPage {
     private def createEnvironmentsComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Environment", 2)
 
-        // List
-        environmentsCombo = new ComboViewer(group, SWT.DEFAULT)
-        environmentsCombo.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
-
-        // Content provider
-        environmentsCombo.setContentProvider(ArrayContentProvider.instance)
-        environmentsCombo.input = environments
-
-        if (!environments.isEmpty)
-            environmentsCombo.selection = new StructuredSelection(environments.get(0))
-
-        // Label provider
-        environmentsCombo.setLabelProvider(new LabelProvider() {
-            override String getText(Object element) {
-                val data = (element as EnvironmentData)
-                if (data != null)
-                    return data.name
-                else
-                    return ""
-            }
-        })
+        environmentsCombo = UIUtil.createEnvironmentsCombo(group, environments)
     }
 
     private def createWrapperCodeSnippetsComponent(Composite parent) {
@@ -147,14 +127,6 @@ class MainPage extends WizardPage {
             return ""
 
         }
-    }
-
-    def performFinish() {
-        
-        
-        
-        // Copy templates
-        
     }
 
 }

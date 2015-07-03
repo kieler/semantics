@@ -13,10 +13,11 @@
  */
 package de.cau.cs.kieler.sccharts.launchconfig.common
 
+import java.lang.reflect.Field
 import java.util.ArrayList
 import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.core.runtime.preferences.IPreferencesService
+import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
 
 /**
  * @author aas
@@ -67,7 +68,7 @@ class EnvironmentData extends SerializableData {
     protected String mainFileOrigin = ""
     
     public static def ArrayList<EnvironmentData> loadAllFromPreferenceStore(IPreferenceStore store){
-        val environmentsCSV = store.getString("environments")
+        val environmentsCSV = store.getString(LaunchConfigPlugin.ENVIRONMENTS_CSV_ATTR)
         val environmentsNames = environmentsCSV.split(",")
         
         // Return list
@@ -79,13 +80,26 @@ class EnvironmentData extends SerializableData {
             environments += env
             
             // Load every field of the environment
-            val classObject = typeof(EnvironmentData)
-            for(f : classObject.declaredFields){
-                f.set(env, store.getString("environment."+env.name+"."+f.name))
-            }
+            env.loadFields(store)
         }
         
         return environments
+    }
+    
+    public static def EnvironmentData loadFromPreferenceStore(IPreferenceStore store, String environmentName){
+        var env = new EnvironmentData(environmentName)
+        
+        // Load every field of the environment
+        env.loadFields(store)
+        
+        return env
+    } 
+    
+    private def loadFields(IPreferenceStore store){
+        val classObject = typeof(EnvironmentData)
+        for(f : classObject.declaredFields){
+            f.set(this, store.getString(getStoreKey(f)))
+        }
     }
     
     public static def saveAllToPreferenceStore(IPreferenceStore store, ArrayList<EnvironmentData> environments){
@@ -96,7 +110,7 @@ class EnvironmentData extends SerializableData {
                 environmentsCSV += ","
             environmentsCSV += env.name
         }
-        store.setValue("environments", environmentsCSV)
+        store.setValue(LaunchConfigPlugin.ENVIRONMENTS_CSV_ATTR, environmentsCSV)
         
         // Save environments
         for(env : environments){
@@ -109,7 +123,11 @@ class EnvironmentData extends SerializableData {
         // of the environment name and the field name.
         val classObject = this.class
         for(f : classObject.declaredFields){
-            store.setValue("environment."+name+"."+f.name, f.get(this).toString())
+            store.setValue(getStoreKey(f), f.get(this).toString())
         }
+    }
+    
+    private def getStoreKey(Field field){
+        LaunchConfigPlugin.ENVIRONMENT_ATTR+"."+name+"."+field.name
     }
 }

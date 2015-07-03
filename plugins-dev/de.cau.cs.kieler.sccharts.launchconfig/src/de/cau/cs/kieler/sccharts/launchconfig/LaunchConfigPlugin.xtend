@@ -1,13 +1,21 @@
 package de.cau.cs.kieler.sccharts.launchconfig
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.core.runtime.QualifiedName
+import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
 
 class LaunchConfigPlugin extends AbstractUIPlugin implements BundleActivator  {
     
     // The plug-in ID
-    public static String ID = "de.cau.kieler.sccharts.launchconfig"
+    public static val ID = "de.cau.kieler.sccharts.launchconfig"
+    
+    // The ID for the environment of a project.
+    // The ID is stored in the project's properties.
+    public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(LaunchConfigPlugin.ID, "environment")
+    
+    public static val ENVIRONMENTS_CSV_ATTR = "environments"
+    public static val ENVIRONMENT_ATTR = "environment"
     
     // The shared instance
     private static LaunchConfigPlugin plugin;
@@ -20,7 +28,7 @@ class LaunchConfigPlugin extends AbstractUIPlugin implements BundleActivator  {
 
     /*
      * (non-Javadoc)
-     * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+     * @see BundleActivator#start(org.osgi.framework.BundleContext)
      */
     override void start(BundleContext context) throws Exception {
         super.start(context);
@@ -29,7 +37,7 @@ class LaunchConfigPlugin extends AbstractUIPlugin implements BundleActivator  {
 
     /*
      * (non-Javadoc)
-     * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+     * @see BundleActivator#stop(org.osgi.framework.BundleContext)
      */
     override void stop(BundleContext context) throws Exception {
         plugin = null

@@ -36,13 +36,15 @@ import static org.freemarker.FreeMarkerPlugin.*
 class WrapperCodeGenerator {
 
     private IProject project
-    private String wrapperCodeTarget
-    private String wrapperCodeTemplate
-    private String wrapperCodeSnippetDirectory
+    private String wrapperCodeTarget = ""
+    private String wrapperCodeTemplate = ""
+    private String wrapperCodeSnippetDirectory = ""
 
     private File targetLocation
     private File templateLocation
     private File snippetDirectoryLocation
+
+    private String scchartName = ""
 
     new(IProject project, String wrapperCodeTarget, String wrapperCodeTemplate, String wrapperCodeSnippetDirectory) {
         this.project = project
@@ -78,8 +80,7 @@ class WrapperCodeGenerator {
         
         // Create template macro calls from annotations
         val map = getMacroCalls(annotationDatas)
-        if(!datas.isEmpty)
-            map.put("scchart_name", datas.get(0).name)
+        map.put("scchart_name", scchartName)
         
         // Inject macro calls in input template
         FreeMarkerPlugin.templateDirectory = project.location.toOSString()
@@ -204,7 +205,7 @@ class WrapperCodeGenerator {
         if (model != null && model instanceof State) {
             // Iterate over model to get all annotations
             val root = (model as State)
-            println(root.id)
+            scchartName = root.id
             for (decl : root.declarations) {
                 // Only consider annotations of inputs and outputs.
                 if (decl.input || decl.output) {

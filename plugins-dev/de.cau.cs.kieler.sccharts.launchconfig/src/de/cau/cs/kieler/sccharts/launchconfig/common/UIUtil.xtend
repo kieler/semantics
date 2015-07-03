@@ -39,6 +39,8 @@ import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ContainerSelectionDialog
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
+import org.eclipse.osgi.service.environment.EnvironmentInfo
+import java.util.ArrayList
 
 /**
  * @author aas
@@ -251,6 +253,32 @@ class UIUtil {
         return combo
     }
 
+    static def createEnvironmentsCombo(Composite parent, ArrayList<EnvironmentData> environments){        
+        // Combo
+        val combo = new ComboViewer(parent, SWT.DEFAULT)
+        combo.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
+
+        // Content provider
+        combo.setContentProvider(ArrayContentProvider.instance)
+        combo.input = environments
+
+        if (!environments.isEmpty)
+            combo.selection = new StructuredSelection(environments.get(0))
+
+        // Label provider
+        combo.setLabelProvider(new LabelProvider() {
+            override String getText(Object element) {
+                val data = (element as EnvironmentData)
+                if (data != null)
+                    return data.name
+                else
+                    return ""
+            }
+        })
+        
+        return combo
+    }
+    
     static def createSpace(Composite parent) {
         createSpace(parent, 1)
     }

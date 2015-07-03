@@ -13,28 +13,31 @@
  */
 package de.cau.cs.kieler.sccharts.launchconfig.ui
 
-import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.internal.Transformation
+import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
 import de.cau.cs.kieler.sccharts.launchconfig.common.IProjectHolder
 import de.cau.cs.kieler.sccharts.launchconfig.common.UIUtil
-import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
+import java.util.ArrayList
 import java.util.List
 import java.util.Set
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
+import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
-import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.IStructuredSelection
-import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
+import org.eclipse.swt.events.SelectionAdapter
+import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.layout.GridLayout
+import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
@@ -42,12 +45,20 @@ import org.eclipse.swt.widgets.Text
 /** 
  * @author aas
  */
-class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
+class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
+
+    private var Button useEnvironment
+    private var ComboViewer environment
 
     /**
      * Control to select the target transformation (e.g. Java Code or C Code).
      */
     private var ComboViewer targetLanguage
+
+    /**
+     * Control to select the target language file extension (e.g. '.java' for Java).
+     */
+    private var Text targetLanguageFileExtension
 
     /**
      * Input field for the project name.
@@ -86,6 +97,7 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
         comp.setFont(parent.getFont())
 
         createProjectComponent(comp)
+        createEnvironmentComponent(comp)
         createTargetComponent(comp)
         createTargetTemplateComponent(comp)
         createWrapperCodeComponent(comp)
@@ -96,8 +108,8 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
      * The button opens a selection dialog with the different projects in the workspace.
      */
     private def createProjectComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Project", 3) 
-        
+        val group = UIUtil.createGroup(parent, "Project", 3)
+
         project = UIUtil.createTextField(group, "", UIUtil.PROJECT_BUTTON)
         project.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
@@ -106,17 +118,48 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
         })
     }
 
+    private def createEnvironmentComponent(Composite parent) {
+        val group = UIUtil.createGroup(parent, "Environment", 1)
+
+        useEnvironment = SWTFactory.createCheckButton(group, "Use environment", null, false, 1)
+
+        useEnvironment.addSelectionListener(new SelectionAdapter() {
+            override void widgetSelected(SelectionEvent e) {
+                updateLaunchConfigurationDialog()
+            }
+        });
+
+        val store = LaunchConfigPlugin.^default.preferenceStore
+        val environments = EnvironmentData.loadAllFromPreferenceStore(store)
+        environment = UIUtil.createEnvironmentsCombo(group, environments)
+        environment.addSelectionChangedListener(new ISelectionChangedListener() {
+            override void selectionChanged(SelectionChangedEvent event) {
+                  updateLaunchConfigurationDialog()
+            }
+        });
+    }
+
     /**
      * Creates a group and composite with the target language selection controls.
      */
     private def createTargetComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Target", 2)
+        val group = UIUtil.createGroup(parent, "Target", 1)
 
         // ComboViewer
         targetLanguage = UIUtil.createKiCoTargetsCombo(group)
         targetLanguage.addSelectionChangedListener(new ISelectionChangedListener {
 
             override selectionChanged(SelectionChangedEvent event) {
+                updateLaunchConfigurationDialog()
+            }
+        })
+        
+        // File extension
+        val comp = UIUtil.createComposite(group, 2)
+        
+        targetLanguageFileExtension = UIUtil.createTextField(comp, "File extension", UIUtil.NONE)
+        targetLanguageFileExtension.addModifyListener(new ModifyListener() {
+            override modifyText(ModifyEvent e) {
                 updateLaunchConfigurationDialog()
             }
         })
@@ -156,7 +199,7 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
                     else
                         wrapperCodeTarget.text = wrapperCodeTemplate.text
                 }
-                
+
                 updateLaunchConfigurationDialog()
             }
         })
@@ -168,9 +211,10 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
                 updateLaunchConfigurationDialog()
             }
         })
-        
+
         // Directory with snippet definitions
-        wrapperCodeSnippets = UIUtil.createTextField(group, "Annotation snippets directory", UIUtil.CONTAINER_BUTTON, this)
+        wrapperCodeSnippets = UIUtil.createTextField(group, "Annotation snippets directory", UIUtil.CONTAINER_BUTTON,
+            this)
         wrapperCodeSnippets.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 updateLaunchConfigurationDialog()
@@ -191,6 +235,18 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
         // Project
         project.text = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
 
+        // Environment
+        useEnvironment.selection = configuration.getAttribute(LaunchConfiguration.ATTR_USE_ENVIRONMENT, false)
+
+        if (environment.input != null) {
+            val loadedEnvironmentName = configuration.getAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, "")
+            for (env : environment.input as ArrayList<EnvironmentData>) {
+                if (env.name == loadedEnvironmentName) {
+                    environment.selection = new StructuredSelection(env)
+                }
+            }
+        }
+
         // Target language
         if (targetLanguage.input != null) {
             val loadedTargetLanguage = configuration.getAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, "")
@@ -200,6 +256,8 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
                 }
             }
         }
+
+        targetLanguageFileExtension.text = configuration.getAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
 
         // Target template
         targetTemplate.text = configuration.getAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, "")
@@ -217,6 +275,14 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
         // Project
         configuration.setAttribute(LaunchConfiguration.ATTR_PROJECT, project.text)
 
+        // Environment
+        configuration.setAttribute(LaunchConfiguration.ATTR_USE_ENVIRONMENT, useEnvironment.selection)
+
+        val env = getSelectedEnvironment()
+        if (env != null) {
+            configuration.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, env.name)
+        }
+
         // Target selection
         val selection = targetLanguage.selection as IStructuredSelection
         if (selection != null) {
@@ -225,6 +291,8 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
                 configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, trans.id)
             }
         }
+
+        configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, targetLanguageFileExtension.text)
 
         // Target template.
         configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, targetTemplate.text)
@@ -261,7 +329,7 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
                         "Specified target template does not exist in this project"
                     } else if (wrapperCodeTemplate.text != "" && proj.findMember(wrapperCodeTemplate.text) == null) {
                         "Specified wrapper code template does not exist in this project"
-                    } else if (wrapperCodeSnippets.text != "" && proj.findMember(wrapperCodeSnippets.text) == null){
+                    } else if (wrapperCodeSnippets.text != "" && proj.findMember(wrapperCodeSnippets.text) == null) {
                         "Specified wrapper code snippet directory does not exist in this project"
                     }
                 }
@@ -275,7 +343,7 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
     private def updateEnabled() {
         val List<Control> controls = #[targetTemplate, targetLanguage.combo, wrapperCodeTemplate, wrapperCodeTarget,
             wrapperCodeSnippets]
-        val enabled =  LaunchConfiguration.findProject(project.text) != null
+        val enabled = LaunchConfiguration.findProject(project.text) != null
         SCChartsLaunchConfigurationTabGroup.enableControls(controls, enabled)
     }
 
@@ -285,9 +353,19 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder{
     override String getName() {
         return "Main"
     }
-    
+
     override getProject() {
         return LaunchConfiguration.findProject(project.text)
+    }
+
+    public def EnvironmentData getSelectedEnvironment() {
+        val selection = environment.getSelection();
+        if (!selection.isEmpty()) {
+            val structuredSelection = selection as IStructuredSelection
+            return structuredSelection.getFirstElement() as EnvironmentData
+        } else {
+            return null
+        }
     }
 
 }
