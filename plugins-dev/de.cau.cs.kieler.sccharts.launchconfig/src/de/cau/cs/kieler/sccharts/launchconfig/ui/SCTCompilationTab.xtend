@@ -18,6 +18,7 @@ import de.cau.cs.kieler.sccharts.launchconfig.common.SCTCompilationData
 import de.cau.cs.kieler.sccharts.launchconfig.common.UIUtil
 import java.io.File
 import java.util.ArrayList
+import java.util.Collections
 import java.util.List
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
@@ -123,7 +124,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
             override void selectionChanged(SelectionChangedEvent event) {
                 val selection = event.selection as IStructuredSelection
                 currentData = selection.firstElement as SCTCompilationData
-                updateControls(currentData)                
+                updateControls(currentData)
             }
         });
 
@@ -185,6 +186,36 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
                 updateLaunchConfigurationDialog()
             }
         })
+        
+        // Up Button
+        val upButton =  UIUtil.createButton(bcomp, "Up")
+        upButton.addSelectionListener(new SelectionAdapter(){
+            override widgetSelected(SelectionEvent e) {
+                val inputArray = (list.input as ArrayList<SCTCompilationData>)
+                val index = inputArray.indexOf(currentData)
+                if(index > 0){
+                    Collections.swap(inputArray, index, index-1)
+                    list.refresh()
+                    
+                    updateLaunchConfigurationDialog()
+                }
+            }
+        })
+        
+        // Down Button
+        val downButton =  UIUtil.createButton(bcomp, "Down")
+        downButton.addSelectionListener(new SelectionAdapter(){
+            override widgetSelected(SelectionEvent e) {
+                val inputArray = (list.input as ArrayList<SCTCompilationData>)
+                val index = inputArray.indexOf(currentData)
+                if(index > -1 && index < inputArray.size-1){
+                    Collections.swap(inputArray, index, index+1)
+                    list.refresh()
+                    
+                    updateLaunchConfigurationDialog()
+                }
+            }
+        })
     }
 
     /**type filter text
@@ -222,17 +253,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
     override performApply(ILaunchConfigurationWorkingCopy configuration) {
         // Get the sct files in the list
         val datas = list.input as List<SCTCompilationData>
-        if (datas != null) {
-            // Create a list with the paths of the selected SCT files.
-            val List<String> sctFiles = newArrayList()
-            datas.forEach [
-                sctFiles += it.path
-                
-                // Save the attributes of this file with the path as identification
-                configuration.setAttribute(it.path, it.attributeMap)
-            ]
-            configuration.setAttribute(LaunchConfiguration.ATTR_SCT_FILES, sctFiles)
-        }
+        SCTCompilationData.saveAllToConfiguration(configuration, datas)
         
         // Update project reference
         updateProjectReference(configuration)

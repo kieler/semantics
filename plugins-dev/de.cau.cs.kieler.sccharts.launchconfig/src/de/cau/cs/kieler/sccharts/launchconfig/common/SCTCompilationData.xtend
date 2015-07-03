@@ -14,9 +14,11 @@
 package de.cau.cs.kieler.sccharts.launchconfig.common
 
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
+import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import org.eclipse.debug.core.ILaunchConfiguration
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /** 
@@ -54,23 +56,45 @@ class SCTCompilationData extends SerializableData {
      */
     static def List<SCTCompilationData> loadAllFromConfiguration(ILaunchConfiguration configuration){
         // Load list with paths of sct files that should be compiled.
-        val List<String> sctFiles = configuration.getAttribute(LaunchConfiguration.ATTR_SCT_FILES, #[])
+        val List<String> sctFilePaths = configuration.getAttribute(LaunchConfiguration.ATTR_SCT_FILES, #[])
         
         // Prepare the result list.
         val List<SCTCompilationData> datas = newArrayList()
         
         // Create an object for each path and load its data.
-        sctFiles.forEach [
+        for(sctFilePath : sctFilePaths){
             val data = new SCTCompilationData()
-            data.path = it
+            data.path = sctFilePath
             
             // The data for the object is stored with its path as attribute identification. 
             data.loadAttributesFromMap(configuration.getAttribute(data.path, new HashMap()))
             
             // Add this object to the result list
             datas += data
-        ]
+        }
         
         return datas
+    }
+    
+    static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<SCTCompilationData> datas){
+        if (datas != null) {
+            // Create a list with the paths of the selected SCT files.
+            val List<String> sctFiles = newArrayList()
+            datas.forEach [
+                sctFiles += it.path
+                
+                // Save the attributes of this file with the path as identification
+                configuration.setAttribute(it.path, it.attributeMap)
+            ]
+            configuration.setAttribute(LaunchConfiguration.ATTR_SCT_FILES, sctFiles)
+        }
+    }
+    
+    override equals(Object o){
+        if(o instanceof SCTCompilationData){
+            val data = o as SCTCompilationData
+            return data.path == path
+        }
+        return false
     }
 }
