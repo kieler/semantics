@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -20,6 +20,9 @@ import org.eclipse.ui.PlatformUI;
  * External definition of common constants and functions for perspective definitions.
  * 
  * @author nbw
+ * 
+ * @kieler.design 2015-07-02 nbw cmot ssm als ima rvh
+ * @kieler.rating proposed yellow 2015-07-03 nbw cmot ssm als KI-87
  */
 public class PerspectiveHelper {
 
@@ -35,7 +38,7 @@ public class PerspectiveHelper {
     static final String VIEW_KIEM = "de.cau.cs.kieler.sim.kiem.view"; //$NON-NLS-1$
     static final String VIEW_KIEM_TABLE = "de.cau.cs.kieler.sim.table.view"; //$NON-NLS-1$
     static final String VIEW_KIEM_SIGNALS = "de.cau.cs.kieler.sim.signals.ui.view"; //$NON-NLS-1$
-    
+
     /* IDs of New-Wizards */
     // private static final String WIZ_SYNCCHART =
     //          "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsCreationWizardID"; //$NON-NLS-1$

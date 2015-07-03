@@ -3,8 +3,8 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
- * + Christian-Albrechts-University of Kiel
+ * Copyright 2015 by
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -21,8 +21,10 @@ import org.eclipse.ui.IPerspectiveFactory;
  * A Perspective for the modeling SCCharts with KIELER. It shows the project explorer, the textual
  * editor and the graphical representation as well as KiCo for compiling.
  * 
- * @author haf
  * @author nbw
+ * 
+ * @kieler.design 2015-07-02 nbw cmot ssm als ima rvh
+ * @kieler.rating proposed yellow 2015-07-03 nbw cmot ssm als KI-87
  */
 public class ModelingPerspective implements IPerspectiveFactory {
 
@@ -30,7 +32,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
     public void createInitialLayout(final IPageLayout layout) {
 
         /* Add shortcuts to the New-Dialog to relevant wizards. */
-//        layout.addNewWizardShortcut(PerspectiveHelper.WIZ_PROJECT);
+        // layout.addNewWizardShortcut(PerspectiveHelper.WIZ_PROJECT);
         layout.addNewWizardShortcut(PerspectiveHelper.WIZ_FILE);
 
         // Bottom Row - Left: Project Explorer, Right: KICO
@@ -39,7 +41,8 @@ public class ModelingPerspective implements IPerspectiveFactory {
         IFolderLayout bottomLeft =
                 layout.createFolder("bottomLeft", IPageLayout.BOTTOM, PerspectiveHelper.BIG, editor);
         IFolderLayout bottomRight =
-                layout.createFolder("bottomRight", IPageLayout.RIGHT, PerspectiveHelper.SMALL, "bottomLeft");
+                layout.createFolder("bottomRight", IPageLayout.RIGHT, PerspectiveHelper.SMALL,
+                        "bottomLeft");
         IFolderLayout topRight =
                 layout.createFolder("topRight", IPageLayout.RIGHT, PerspectiveHelper.MEDIUM, editor);
 
@@ -54,6 +57,5 @@ public class ModelingPerspective implements IPerspectiveFactory {
         layout.addShowViewShortcut(PerspectiveHelper.VIEW_KICO);
         layout.addShowViewShortcut(PerspectiveHelper.VIEW_KLIGHD);
         layout.addShowViewShortcut(IPageLayout.ID_PROJECT_EXPLORER);
-
     }
 }

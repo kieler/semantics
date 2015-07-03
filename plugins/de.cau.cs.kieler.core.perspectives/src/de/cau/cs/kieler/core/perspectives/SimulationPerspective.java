@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -23,6 +23,9 @@ import org.eclipse.ui.IPerspectiveFactory;
  * manager.
  * 
  * @author nbw
+ * 
+ * @kieler.design 2015-07-02 nbw cmot ssm als ima rvh
+ * @kieler.rating proposed yellow 2015-07-03 nbw cmot ssm als KI-87
  */
 public class SimulationPerspective implements IPerspectiveFactory {
 
