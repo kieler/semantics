@@ -38,10 +38,10 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val ATTR_SCT_FILES = "de.cau.cs.kieler.scchart.launchconfig.sct.files"
 
     public static val ATTR_PROJECT = "de.cau.cs.kieler.scchart.launchconfig.main.project"
-    
+
     public static val ATTR_USE_ENVIRONMENT = "de.cau.cs.kieler.scchart.launchconfig.main.environment.use"
     public static val ATTR_ENVIRONMENT = "de.cau.cs.kieler.scchart.launchconfig.main.environment"
-    
+
     public static val ATTR_TARGET_LANGUAGE = "de.cau.cs.kieler.scchart.launchconfig.main.target.language"
     public static val ATTR_TARGET_TEMPLATE = "de.cau.cs.kieler.scchart.launchconfig.main.target.template"
     public static val ATTR_TARGET_LANGUAGE_FILE_EXTENSION = "de.cau.cs.kieler.scchart.launchconfig.main.target.file.extension"
@@ -53,7 +53,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val BUILD_DIRECTORY = "sct-gen"
 
     public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
-    public static val LAUNCHED_PROJECT_PLACEHOLDER = "${"+LAUNCHED_PROJECT_VARIABLE+"}"
+    public static val LAUNCHED_PROJECT_PLACEHOLDER = "${" + LAUNCHED_PROJECT_VARIABLE + "}"
 
     // Objects from launch
     var ILaunchConfiguration configuration
@@ -145,7 +145,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     }
                 } catch (Exception e) {
                     // Remove this try-catch to notify the user with a popup window.
-                    consoleStream.println(e.message+"\n")
+                    consoleStream.println(e.message + "\n")
                     return Status.CANCEL_STATUS
                 }
 
@@ -165,15 +165,15 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
                 val startTime = System.currentTimeMillis()
 
-                try{
-                    val generator = new WrapperCodeGenerator(project, wrapperCodeTarget, wrapperCodeTemplate,
-                        wrapperCodeSnippetDirectory)
+                try {
+                    val generator = new WrapperCodeGenerator(project, wrapperCodeTemplate, wrapperCodeSnippetDirectory,
+                        computeTargetPath(wrapperCodeTemplate))
                     generator.generateWrapperCode(datas)
-                } catch (Exception e){
-                    consoleStream.println(e.message+"\n")
+                } catch (Exception e) {
+                    consoleStream.println(e.message + "\n")
                     return Status.CANCEL_STATUS
                 }
-                
+
                 System.err.println(
                     "Wrapper Code generation finished after " + (System.currentTimeMillis() - startTime) + "ms")
 
@@ -201,7 +201,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     executor.execute(commands)
                     return Status.OK_STATUS
                 } catch (Exception e) {
-                    consoleStream.println(e.message+"\n")
+                    consoleStream.println(e.message + "\n")
                     return Status.CANCEL_STATUS
                 }
             }
@@ -240,13 +240,14 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * The file extension of the target path is the extension for the current target language.
      */
     private def String computeTargetPath(String projectRelativePath) {
-        // The src directory of a typical java project is not part of the relevant target path
+        // The src directory of a typical java project is not part of the relevant target path.
+        // (Would be more accurate: if the first directory is a java build source folder, remove it)
         var String projectRelativeRelevantPath;
-        if(projectRelativePath.startsWith("src/") || projectRelativePath.startsWith("src\\"))
+        if (projectRelativePath.startsWith("src/") || projectRelativePath.startsWith("src\\"))
             projectRelativeRelevantPath = projectRelativePath.substring(4)
         else
             projectRelativeRelevantPath = projectRelativePath
-            
+
         // Remove extension from path 
         val index = projectRelativeRelevantPath.lastIndexOf(".")
         if (index > -1) {
@@ -303,44 +304,43 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         // Environment
         val useEnvironment = configuration.getAttribute(ATTR_USE_ENVIRONMENT, false)
-        if(useEnvironment){
-            
+        if (useEnvironment) {
+
             // Load environment data
             val store = LaunchConfigPlugin.^default.preferenceStore
             val environmentName = configuration.getAttribute(ATTR_ENVIRONMENT, "")
             val env = EnvironmentData.loadFromPreferenceStore(store, environmentName)
-            if(env != null){
-                
+            if (env != null) {
+
                 // Target
                 targetLanguage = env.targetLanguage
                 targetTemplate = env.targetTemplate
                 targetLanguageFileExtension = env.targetFileExtension
-                
+
                 // Wrapper code
                 wrapperCodeTarget = env.wrapperCodeTarget
                 wrapperCodeTemplate = env.wrapperCodeTemplate
                 wrapperCodeSnippetDirectory = env.wrapperCodeSnippetsDirectory
-        
+
                 // Execution
                 compileCommand = env.compileCommand
                 deployCommand = env.deployCommand
                 runCommand = env.runCommand
-                
-                
+
             } else {
-                throw new Exception("Environment "+ environmentName + " could not be loaded from preferences.")
+                throw new Exception("Environment " + environmentName + " could not be loaded from preferences.")
             }
         } else {
             // Target
             targetLanguage = configuration.getAttribute(ATTR_TARGET_LANGUAGE, "")
             targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
             targetLanguageFileExtension = configuration.getAttribute(ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
-    
+
             // Wrapper code
             wrapperCodeTarget = configuration.getAttribute(ATTR_WRAPPER_CODE_OUTPUT, "")
             wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
             wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
-    
+
             // Execution
             compileCommand = configuration.getAttribute(ATTR_COMPILE_COMMAND, "")
             deployCommand = configuration.getAttribute(ATTR_DEPLOY_COMMAND, "")

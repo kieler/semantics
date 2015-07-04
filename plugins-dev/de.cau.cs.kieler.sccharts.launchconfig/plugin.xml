@@ -90,5 +90,11 @@
             name="SCCharts Environments">
       </page>
    </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="de.cau.cs.kieler.sccharts.environments.Initializer">
+      </initializer>
+   </extension>
 
 </plugin>

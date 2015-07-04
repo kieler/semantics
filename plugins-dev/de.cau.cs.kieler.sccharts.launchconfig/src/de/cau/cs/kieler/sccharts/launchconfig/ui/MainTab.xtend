@@ -129,12 +129,14 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
             }
         });
 
+        val comp = UIUtil.createComposite(group, 1)
+        
         val store = LaunchConfigPlugin.^default.preferenceStore
         val environments = EnvironmentData.loadAllFromPreferenceStore(store)
-        environment = UIUtil.createEnvironmentsCombo(group, environments)
+        environment = UIUtil.createEnvironmentsCombo(comp, environments)
         environment.addSelectionChangedListener(new ISelectionChangedListener() {
             override void selectionChanged(SelectionChangedEvent event) {
-                  updateLaunchConfigurationDialog()
+                updateLaunchConfigurationDialog()
             }
         });
     }
@@ -153,10 +155,10 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
                 updateLaunchConfigurationDialog()
             }
         })
-        
+
         // File extension
         val comp = UIUtil.createComposite(group, 2)
-        
+
         targetLanguageFileExtension = UIUtil.createTextField(comp, "File extension", UIUtil.NONE)
         targetLanguageFileExtension.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
@@ -257,7 +259,8 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
             }
         }
 
-        targetLanguageFileExtension.text = configuration.getAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
+        targetLanguageFileExtension.text = configuration.getAttribute(
+            LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
 
         // Target template
         targetTemplate.text = configuration.getAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, "")
@@ -292,7 +295,8 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
             }
         }
 
-        configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, targetLanguageFileExtension.text)
+        configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION,
+            targetLanguageFileExtension.text)
 
         // Target template.
         configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, targetTemplate.text)
@@ -341,10 +345,12 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      * Enable the controls iff the project is set correctly.
      */
     private def updateEnabled() {
-        val List<Control> controls = #[targetTemplate, targetLanguage.combo, wrapperCodeTemplate, wrapperCodeTarget,
-            wrapperCodeSnippets]
-        val enabled = LaunchConfiguration.findProject(project.text) != null
+        val List<Control> controls = #[targetTemplate, targetLanguage.combo, wrapperCodeTemplate,
+            wrapperCodeTarget, wrapperCodeSnippets]
+        val enabled = (LaunchConfiguration.findProject(project.text) != null) && !useEnvironment.selection
         SCChartsLaunchConfigurationTabGroup.enableControls(controls, enabled)
+        
+        environment.combo.enabled = useEnvironment.selection
     }
 
     /** 

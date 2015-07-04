@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.launchconfig.common
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
+import java.util.ArrayList
 import java.util.Set
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
@@ -25,9 +26,7 @@ import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.StringVariableSelectionDialog
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.ComboViewer
-import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.LabelProvider
-import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.SelectionAdapter
@@ -35,12 +34,12 @@ import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.DirectoryDialog
+import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ContainerSelectionDialog
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
-import org.eclipse.osgi.service.environment.EnvironmentInfo
-import java.util.ArrayList
 
 /**
  * @author aas
@@ -54,6 +53,7 @@ class UIUtil {
     public static val CONTAINER_BUTTON = 1 << 2
     public static val VARIABLE_BUTTON = 1 << 3
     public static val FILE_SYSTEM_FILE_BUTTON = 1 << 4
+    public static val FILE_SYSTEM_DIRECTORY_BUTTON = 1 << 5
 
     static def createGroup(Composite parent, String text, int columns) {
         createGroup(parent, text, columns, GridData.FILL_HORIZONTAL)
@@ -91,11 +91,15 @@ class UIUtil {
         var browseProjectLabel = "Browse Projects..."
         var browseResourceLabel = "Browse Resources..."
         var browseContainerLabel = "Browse Folders..."
+        var browseFileSystemFileLabel = "Browse File System..."
+        var browseFileSystemDirectoryLabel = "Browse File System..."
         var browseVariableLabel = "Variables..."
         if (!moreThanOneButton) {
             browseProjectLabel = "Browse..."
             browseResourceLabel = "Browse..."
             browseContainerLabel = "Browse..."
+            browseFileSystemFileLabel = "Browse..."
+            browseFileSystemDirectoryLabel = "Browse..."
         }
 
         if (isFlagSet(buttonFlags, UIUtil.PROJECT_BUTTON))
@@ -107,10 +111,39 @@ class UIUtil {
         if (isFlagSet(buttonFlags, UIUtil.CONTAINER_BUTTON))
             createBrowseContainerButton(parent, text, browseContainerLabel, projectHolder)
 
+        if (isFlagSet(buttonFlags, UIUtil.FILE_SYSTEM_FILE_BUTTON))
+            createBrowseFileSystemButton(parent, text, browseFileSystemFileLabel, true)
+        
+        if (isFlagSet(buttonFlags, UIUtil.FILE_SYSTEM_DIRECTORY_BUTTON))
+            createBrowseFileSystemButton(parent, text, browseFileSystemDirectoryLabel, false)
+            
         if (isFlagSet(buttonFlags, UIUtil.VARIABLE_BUTTON))
             createBrowseVariableButton(parent, text, browseVariableLabel)
 
         return text
+    }
+
+    static def createBrowseFileSystemButton(Composite parent, Text text, String label, boolean isFileDialog){
+        val browse = SWTFactory.createPushButton(parent, label, null)
+        browse.addSelectionListener(
+            new SelectionAdapter() {
+                override void widgetSelected(SelectionEvent e) {
+                    
+                    var String result
+                    if(isFileDialog){
+                        val dialog = new FileDialog(parent.shell, SWT.OPEN);
+                        result = dialog.open()
+                    }else{
+                        val dialog = new DirectoryDialog(parent.shell, SWT.OPEN);
+                        result = dialog.open    
+                    }
+                    if (result != null && result != "") {
+                        text.text = result
+                    }
+                }
+
+            }
+        )
     }
 
     static def createBrowseProjectButton(Composite parent, Text text, String label) {

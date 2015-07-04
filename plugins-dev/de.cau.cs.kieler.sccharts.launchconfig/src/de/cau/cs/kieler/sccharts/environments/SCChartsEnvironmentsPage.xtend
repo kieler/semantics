@@ -110,6 +110,12 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         return false
     }
     
+    override performDefaults(){
+        list.input = Initializer.getDefaultEnvironments()
+        checkConsistency()
+        super.performDefaults()
+    }
+    
     private def loadSettings(){
         list.input = EnvironmentData.loadAllFromPreferenceStore(store)
     }
@@ -127,19 +133,24 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
     private def checkErrors(){
         val environments = list.input as ArrayList<EnvironmentData>
         
-        // Check for unique names    
+        
         for(env : environments){
+            // Unique names
             for(env2 : environments){
                 if(env != env2&& env.name == env2.name){
                     return "Environment names must be unique."
                 }    
             }
             
-            // Check that there is no comma in a name
+            // No empty name
+            if(env.name == "")
+                return "Environment name must not be empty."
+            
+            // No comma in a name
             if(env.name.contains(","))
-                return "Environment names must not contain a comma (,)"
+                return "Environment names must not contain a comma."
                 
-            // Check that origins of files exist
+            // Check that files exist
             
         }
         
@@ -229,14 +240,8 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
 
             override selectionChanged(SelectionChangedEvent event) {
                 if(currentData != null){
-                    val selection = combo.selection as IStructuredSelection
-                    if (selection != null) {
-                        val obj = selection.firstElement as IConfigurationElement
-                        if (obj != null) {
-                            currentData.relatedProjectWizardClass = obj.getAttribute("class")
-                            checkConsistency()
-                        }
-                    }
+                    currentData.relatedProjectWizardClass = getSelectedProjectWizardClass()
+                    checkConsistency()
                }
             }
         })
@@ -254,6 +259,8 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
                 }
             }
         })
+        
+        UIUtil.createSpace(group)
         
         mainFileOrigin = UIUtil.createTextField(group, "Main file origin", UIUtil.NONE)
         mainFileOrigin.addModifyListener(new ModifyListener() {
@@ -440,8 +447,13 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
             override widgetSelected(SelectionEvent e) {
                 val env = new EnvironmentData("New Environment")
                 env.targetLanguage = getSelectedTargetLanguageId()
-                env.relatedProjectWizardClass = getSelectedProjectWizardClass()
                 
+                // Get first project wizard in combo box
+                val input = relatedProjectWizard.input as ArrayList<IConfigurationElement> 
+                if(!input.isEmpty)
+                    env.relatedProjectWizardClass = input.get(0).getAttribute("class")
+                
+                // Add environment to list
                 val inputArray = (list.input as ArrayList<EnvironmentData>)
                 inputArray.add(env)
                 list.refresh()
@@ -531,8 +543,10 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
     }
     
     private def getSelectedProjectWizardClass(){
-        if (relatedProjectWizard.input != null) {
-            for (obj : relatedProjectWizard.input as ArrayList<IConfigurationElement>) {
+        val selection = relatedProjectWizard.selection as IStructuredSelection
+        if (selection != null) {
+            val obj = selection.firstElement as IConfigurationElement
+            if (obj != null) {
                 return obj.getAttribute("class")
             }
         }

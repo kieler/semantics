@@ -67,14 +67,22 @@ class EnvironmentData extends SerializableData {
     @Accessors
     protected String mainFileOrigin = ""
     
+    public static def boolean isPreferencesStoreEmpty(IPreferenceStore store){
+        return store.getString(LaunchConfigPlugin.ENVIRONMENTS_CSV_ATTR) == ""
+    }
+    
     public static def ArrayList<EnvironmentData> loadAllFromPreferenceStore(IPreferenceStore store){
         val environmentsCSV = store.getString(LaunchConfigPlugin.ENVIRONMENTS_CSV_ATTR)
+        
+        // No environments specified
+        if(environmentsCSV == "")
+            return newArrayList()
+        
+        // Split names on comma
         val environmentsNames = environmentsCSV.split(",")
         
-        // Return list
-        val environments = new ArrayList<EnvironmentData>()
-        
         // Load every environment
+        val environments = new ArrayList<EnvironmentData>()
         for(envName : environmentsNames){
             var env = new EnvironmentData(envName)
             environments += env

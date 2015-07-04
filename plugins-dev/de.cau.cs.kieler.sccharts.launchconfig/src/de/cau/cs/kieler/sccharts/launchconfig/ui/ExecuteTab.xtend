@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.launchconfig.ui
 
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
 import de.cau.cs.kieler.sccharts.launchconfig.common.UIUtil
+import java.util.List
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.debug.core.ILaunchConfiguration
@@ -26,6 +27,7 @@ import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 
@@ -53,6 +55,12 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
      * The project set in the main tab.
      */
     private var IProject project
+
+    /**
+     * Should an environment be is used for the settings?
+     * The value is set in the main tab.
+     */
+    private var boolean useEnvironment
 
     /** 
      * {@inheritDoc}
@@ -112,17 +120,21 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         return text
     }
 
-    private def updateProjectReference(ILaunchConfigurationWorkingCopy configuration) {
-        val projectName = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
-        project = LaunchConfiguration.findProject(projectName)
-    }
-
     /**
      * {@inheritDoc}
      */
     override activated(ILaunchConfigurationWorkingCopy workingCopy) {
         super.activated(workingCopy)
-        updateProjectReference(workingCopy)
+        
+        // Update project reference
+        val projectName = workingCopy.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
+        project = LaunchConfiguration.findProject(projectName)
+        
+        // Update use environment
+        useEnvironment = workingCopy.getAttribute(LaunchConfiguration.ATTR_USE_ENVIRONMENT, false)
+        
+        // Disable controls if environment is used
+        updateEnabled()
     }
 
     /** 
@@ -155,5 +167,10 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     override String getName() {
         return "Execute"
     }
-
+    
+    private def updateEnabled(){
+        val List<Control> controls = #[compileCommand, deployCommand, runCommand]
+        val enabled = !useEnvironment
+        SCChartsLaunchConfigurationTabGroup.enableControls(controls, enabled)
+    }
 }

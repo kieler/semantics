@@ -28,6 +28,7 @@ import org.eclipse.swt.SWT
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
+import de.cau.cs.kieler.sccharts.environments.Initializer
 
 /**
  * @author aas
@@ -62,6 +63,13 @@ class MainPage extends WizardPage {
 
     private def loadEnvironments() {
         val store = LaunchConfigPlugin.^default.preferenceStore
+        
+        // It might be that on a new installation there is no environments initialized.
+        // So we do it here manually.
+        if(EnvironmentData.isPreferencesStoreEmpty(store))
+            new Initializer().initializeDefaultPreferences()
+        
+        // Load environments from store
         environments = EnvironmentData.loadAllFromPreferenceStore(store)
     }
 
