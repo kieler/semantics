@@ -108,7 +108,7 @@ class Initializer extends AbstractPreferenceInitializer {
         env.wrapperCodeTemplate = "src/Main.ftl"
         env.wrapperCodeTarget = "sct-get/Main.java"
         env.wrapperCodeSnippetsDirectory = "templates/Mindstorms NXJ"
-        env.wrapperCodeSnippetsOrigin = "/home/aas/SCCharts Environments/Mindstorms NXJ/templates/"
+        env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.launchconfig/environments/mindstorms_nxj/templates"
         
         env.compileCommand = 'nxjc -cp "/opt/leJOS/lib:sct-gen:src" "sct-gen/Main.java"'
         env.deployCommand = 'nxj -cp "/opt/leJOS/lib:sct-gen:src" -o "Main.nxj" Main'
@@ -116,7 +116,7 @@ class Initializer extends AbstractPreferenceInitializer {
         
         env.relatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
         
-        env.mainFile = "scr/Main.ftl"
+        env.mainFile = "src/Main.ftl"
         env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.launchconfig/resources/environments/mindstorms_nxj/Main.ftl"
         
         datas += env

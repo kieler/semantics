@@ -24,8 +24,11 @@ import java.net.URL
 import org.apache.commons.io.FileUtils
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.runtime.QualifiedName
+import org.eclipse.core.runtime.CoreException
+import org.eclipse.core.runtime.FileLocator
+import org.eclipse.core.runtime.Platform
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.dialogs.IPageChangingListener
@@ -36,11 +39,9 @@ import org.eclipse.jface.wizard.WizardDialog
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchWizard
-import org.eclipse.core.runtime.Platform
-import java.io.PrintWriter
-import java.io.Writer
-import org.apache.commons.io.IOUtils
-import java.io.FileWriter
+import org.osgi.framework.Bundle
+import org.eclipse.core.resources.IFile
+import org.eclipse.xtext.util.StringInputStream
 
 /**
  * @author aas
@@ -131,10 +132,12 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
         val wrapperEnvironments = mainPage.getSelectedWrapperCodeEnvironments()
         for (wrapperEnv : wrapperEnvironments) {
 
-            var File source
             if (wrapperEnv.wrapperCodeSnippetsOrigin.trim().startsWith("platform:")) {
+                // Fill folder with files from plug-in
+                val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.wrapperCodeSnippetsDirectory)
+                initializeSnippetsFromDirectoryOfPlatformURL(snippetsDirectory, wrapperEnv.wrapperCodeSnippetsOrigin)
             } else {
-                source = new File(wrapperEnv.wrapperCodeSnippetsOrigin)
+                val source = new File(wrapperEnv.wrapperCodeSnippetsOrigin)
                 val target = new File(newlyCreatedProject.location + "/" + wrapperEnv.wrapperCodeSnippetsDirectory)
                 FileUtils.copyDirectory(source, target)
             }
@@ -144,6 +147,72 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
         newlyCreatedProject.setPersistentProperty(LaunchConfigPlugin.ENVIRIONMENT_QUALIFIER, env.name)
 
         return true;
+    }
+
+    private def void createResource(IResource resource, InputStream stream) throws CoreException {
+        if (resource == null || resource.exists())
+            return;
+
+        if (!resource.getParent().exists())
+            createResource(resource.getParent(), stream);
+
+        val type = resource.getType()
+        if (type == IResource.FILE)
+            (resource as IFile).create(stream, true, null)
+        else if (type == IResource.FOLDER)
+            (resource as IFolder).create(IResource.NONE, true, null)
+        else if (type == IResource.PROJECT) {
+            (resource as IProject).create(null)
+            (resource as IProject).open(null)
+        }
+    }
+
+    private def initializeSnippetsFromDirectoryOfPlatformURL(IFolder snippetsFolder, String url) {
+        // URL should be in form 'platform:/plugin/org.myplugin.bla/path/to/template/directory'
+
+        val uriWithUnifiedSegmentSeparator = url.trim().replace("\\", "/")
+        if (uriWithUnifiedSegmentSeparator.startsWith("platform:/plugin/")) {
+            // Remove 'platform:/plugin/'
+            val path = uriWithUnifiedSegmentSeparator.substring(17)
+
+            // First segment is the bundle name
+            val index = path.indexOf("/")
+            if (index > 0 && path.length > index + 1) {
+                val bundleName = path.substring(0, index)
+                val templatePath = path.substring(index + 1)
+
+                // Load bundle / plugin
+                var Bundle bundle
+                try {
+                    bundle = Platform.getBundle(bundleName);
+                } catch (Exception e) {
+                    e.printStackTrace()
+                    return;
+                }
+
+                // Copy files from bundle which are in sub directories of the template path.
+                val entries = bundle.findEntries(templatePath, "*.*", true)
+                if (entries != null) {
+                    for (var e = entries; e.hasMoreElements();) {
+                        val entry = e.nextElement
+                        val fileUrl = FileLocator.toFileURL(entry)
+
+                        // Get path from file relative to template path.
+                        // The file must contain the template path because it is a file in this directory.
+                        val i = fileUrl.toString.indexOf(templatePath) + templatePath.length
+                        var relativePath = fileUrl.toString.substring(i)
+                        if (relativePath.startsWith("/"))
+                            relativePath = relativePath.substring(1)
+
+                        // Create file in project with content of file from url
+                        val stream = fileUrl.openStream()
+                        val file = snippetsFolder.getFile(relativePath)
+                        createResource(file, stream)
+                        stream.close()
+                    }
+                }
+            }
+        }
     }
 
     private def addFolderToJavaClasspath(IJavaProject javaProject, IFolder sourceFolder) {

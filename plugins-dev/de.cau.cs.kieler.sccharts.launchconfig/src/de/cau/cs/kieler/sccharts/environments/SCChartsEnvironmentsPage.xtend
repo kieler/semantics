@@ -259,9 +259,7 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
                 }
             }
         })
-        
-        UIUtil.createSpace(group)
-        
+                
         mainFileOrigin = UIUtil.createTextField(group, "Main file origin", UIUtil.NONE)
         mainFileOrigin.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
