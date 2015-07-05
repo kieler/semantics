@@ -46,8 +46,6 @@ class EnvironmentData extends SerializableData {
     @Accessors
     protected String wrapperCodeTemplate = ""
     @Accessors
-    protected String wrapperCodeTarget = ""
-    @Accessors
     protected String wrapperCodeSnippetsDirectory = ""
     @Accessors
     protected String wrapperCodeSnippetsOrigin = ""

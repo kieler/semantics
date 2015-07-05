@@ -34,12 +34,14 @@ import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.DirectoryDialog
 import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ContainerSelectionDialog
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
+import java.util.List
 
 /**
  * @author aas
@@ -330,6 +332,43 @@ class UIUtil {
 
     private static def boolean isFlagSet(int bitmask, int flag) {
         return bitmask.bitwiseAnd(flag) > 0
+    }
+
+    /**
+     * Enable or disable all controls in the list and children recursive.
+     */
+    public static def enableControls(List<Control> controls, boolean value){
+        controls.forEach [
+            enableControlAndChildrenRecursive(it, value)
+        ]
+    }
+
+    /**
+     * Enable or disable all controls in the list and the controls on the same level recursive.
+     * A control is on the same level as an other control if both have the same parent.
+     */
+    public static def enableControlsOnSameLevel(List<Control> controls, boolean value){
+        
+        controls.forEach [
+            // We want to enable all controls on the same level as this control
+            // (e.g. browse buttons for a text field).
+            // Thus we set the field for all children of this control's parent.            
+            it.parent.children.forEach [
+                enableControlAndChildrenRecursive(it, value)
+            ]
+        ]
+    }
+
+    /**
+     * Enable or disable a control and possible children recursive.
+     */
+    public static def void enableControlAndChildrenRecursive(Control control, boolean value){
+        control.enabled = value
+        if(control instanceof Composite){
+            control.children.forEach[
+                enableControlAndChildrenRecursive(it, value)
+            ]
+        }
     }
 
 }

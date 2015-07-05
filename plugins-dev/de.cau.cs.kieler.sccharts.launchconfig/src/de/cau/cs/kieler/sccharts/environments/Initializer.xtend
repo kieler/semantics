@@ -37,7 +37,6 @@ class Initializer extends AbstractPreferenceInitializer {
         env.targetTemplate = ""
         
         env.wrapperCodeTemplate = ""
-        env.wrapperCodeTarget = ""
         env.wrapperCodeSnippetsDirectory = ""
         env.wrapperCodeSnippetsOrigin = ""
         
@@ -60,7 +59,6 @@ class Initializer extends AbstractPreferenceInitializer {
         env.targetTemplate = ""
         
         env.wrapperCodeTemplate = ""
-        env.wrapperCodeTarget = ""
         env.wrapperCodeSnippetsDirectory = ""
         env.wrapperCodeSnippetsOrigin = ""
         
@@ -83,7 +81,6 @@ class Initializer extends AbstractPreferenceInitializer {
         env.targetTemplate = ""
         
         env.wrapperCodeTemplate = ""
-        env.wrapperCodeTarget = ""
         env.wrapperCodeSnippetsDirectory = ""
         env.wrapperCodeSnippetsOrigin = ""
         
@@ -106,7 +103,6 @@ class Initializer extends AbstractPreferenceInitializer {
         env.targetTemplate = ""
         
         env.wrapperCodeTemplate = "src/Main.ftl"
-        env.wrapperCodeTarget = "sct-get/Main.java"
         env.wrapperCodeSnippetsDirectory = "templates/Mindstorms NXJ"
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.launchconfig/environments/mindstorms_nxj/templates"
         

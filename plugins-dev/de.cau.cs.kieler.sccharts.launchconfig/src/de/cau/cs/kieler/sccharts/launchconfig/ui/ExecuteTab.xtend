@@ -171,6 +171,6 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     private def updateEnabled(){
         val List<Control> controls = #[compileCommand, deployCommand, runCommand]
         val enabled = !useEnvironment
-        SCChartsLaunchConfigurationTabGroup.enableControls(controls, enabled)
+        UIUtil.enableControlsOnSameLevel(controls, enabled)
     }
 }

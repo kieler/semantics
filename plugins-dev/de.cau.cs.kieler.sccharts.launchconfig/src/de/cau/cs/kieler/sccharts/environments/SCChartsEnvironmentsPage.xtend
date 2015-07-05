@@ -71,7 +71,6 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
     private var Text targetTemplate
     
     private var Text wrapperCodeTemplate
-    private var Text wrapperCodeTarget
     private var Text wrapperCodeSnippets
     private var Text wrapperCodeSnippetsOrigin
     
@@ -336,16 +335,6 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
             }
         })
         
-        wrapperCodeTarget = UIUtil.createTextField(group, "Output file", UIUtil.NONE)
-        wrapperCodeTarget.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                if(currentData != null){
-                    currentData.wrapperCodeTarget = wrapperCodeTarget.text
-                    checkConsistency()    
-                }
-            }
-        })
-        
         wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory", UIUtil.NONE)
         wrapperCodeSnippets.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
@@ -517,7 +506,6 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
             targetTemplate.text = data.targetTemplate
             
             wrapperCodeTemplate.text = data.wrapperCodeTemplate
-            wrapperCodeTarget.text = data.wrapperCodeTarget
             wrapperCodeSnippets.text = data.wrapperCodeSnippetsDirectory
             wrapperCodeSnippetsOrigin.text = data.wrapperCodeSnippetsOrigin
             

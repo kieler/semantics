@@ -77,11 +77,6 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
     private var Text wrapperCodeTemplate
 
     /**
-     * Input field for the output file of the created wrapper code.
-     */
-    private var Text wrapperCodeTarget
-
-    /**
      * Input field for the directory with the wrapper code snippets.
      */
     private var Text wrapperCodeSnippets
@@ -193,23 +188,6 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         wrapperCodeTemplate = UIUtil.createTextField(group, "Input file", UIUtil.RESOURCE_BUTTON, this)
         wrapperCodeTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                // Automaticly set default value for output as the template path without extension.
-                if (wrapperCodeTarget.text == null || wrapperCodeTarget.text == "") {
-                    val index = wrapperCodeTemplate.text.lastIndexOf('.')
-                    if (index > -1)
-                        wrapperCodeTarget.text = wrapperCodeTemplate.text.substring(0, index)
-                    else
-                        wrapperCodeTarget.text = wrapperCodeTemplate.text
-                }
-
-                updateLaunchConfigurationDialog()
-            }
-        })
-
-        // Output file
-        wrapperCodeTarget = UIUtil.createTextField(group, "Output file", UIUtil.RESOURCE_BUTTON, this)
-        wrapperCodeTarget.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
                 updateLaunchConfigurationDialog()
             }
         })
@@ -267,7 +245,6 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
 
         // Wrapper code
         wrapperCodeTemplate.text = configuration.getAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, "")
-        wrapperCodeTarget.text = configuration.getAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_OUTPUT, "")
         wrapperCodeSnippets.text = configuration.getAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, "")
     }
 
@@ -303,7 +280,6 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
 
         // Wrapper code
         configuration.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, wrapperCodeTemplate.text)
-        configuration.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_OUTPUT, wrapperCodeTarget.text)
         configuration.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, wrapperCodeSnippets.text)
 
         // Check the user input for consistency
@@ -345,11 +321,11 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      * Enable the controls iff the project is set correctly.
      */
     private def updateEnabled() {
-        val List<Control> controls = #[targetTemplate, targetLanguage.combo, targetLanguageFileExtension, wrapperCodeTemplate,
-            wrapperCodeTarget, wrapperCodeSnippets]
+        val List<Control> controls = #[targetTemplate, targetLanguage.combo, targetLanguageFileExtension,
+            wrapperCodeTemplate, wrapperCodeSnippets]
         val enabled = (LaunchConfiguration.findProject(project.text) != null) && !useEnvironment.selection
-        SCChartsLaunchConfigurationTabGroup.enableControls(controls, enabled)
-        
+        UIUtil.enableControlsOnSameLevel(controls, enabled)
+
         environment.combo.enabled = useEnvironment.selection
     }
 

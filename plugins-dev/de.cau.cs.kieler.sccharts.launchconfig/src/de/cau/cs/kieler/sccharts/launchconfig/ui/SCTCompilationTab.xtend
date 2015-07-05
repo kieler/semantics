@@ -304,12 +304,12 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         // Enable controls that work on the currentData
         var enabled = (currentData != null)        
         var controls = #[]
-        SCChartsLaunchConfigurationTabGroup.enableControls(controls, enabled)
+        UIUtil.enableControlsOnSameLevel(controls, enabled)
         
         // Enable list control iff project is specified
         controls = #[list.list, addButton, removeButton]
         enabled = (project != null)
-        SCChartsLaunchConfigurationTabGroup.enableControls(controls, enabled)
+        UIUtil.enableControlsOnSameLevel(controls, enabled)
     }
     
 }

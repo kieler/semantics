@@ -47,7 +47,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val ATTR_TARGET_LANGUAGE_FILE_EXTENSION = "de.cau.cs.kieler.scchart.launchconfig.main.target.file.extension"
 
     public static val ATTR_WRAPPER_CODE_TEMPLATE = "de.cau.cs.kieler.scchart.launchconfig.main.wrapper.template"
-    public static val ATTR_WRAPPER_CODE_OUTPUT = "de.cau.cs.kieler.scchart.launchconfig.main.wrapper.output"
     public static val ATTR_WRAPPER_CODE_SNIPPETS = "de.cau.cs.kieler.scchart.launchconfig.main.wrapper.snippets"
 
     public static val BUILD_DIRECTORY = "sct-gen"
@@ -66,7 +65,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     var String targetLanguage
     var String targetTemplate
     var String wrapperCodeTemplate
-    var String wrapperCodeTarget
     var String wrapperCodeSnippetDirectory
 
     var String compileCommand
@@ -318,7 +316,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 targetLanguageFileExtension = env.targetFileExtension
 
                 // Wrapper code
-                wrapperCodeTarget = env.wrapperCodeTarget
                 wrapperCodeTemplate = env.wrapperCodeTemplate
                 wrapperCodeSnippetDirectory = env.wrapperCodeSnippetsDirectory
 
@@ -337,7 +334,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             targetLanguageFileExtension = configuration.getAttribute(ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
 
             // Wrapper code
-            wrapperCodeTarget = configuration.getAttribute(ATTR_WRAPPER_CODE_OUTPUT, "")
             wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
             wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
 
