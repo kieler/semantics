@@ -345,7 +345,7 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      * Enable the controls iff the project is set correctly.
      */
     private def updateEnabled() {
-        val List<Control> controls = #[targetTemplate, targetLanguage.combo, wrapperCodeTemplate,
+        val List<Control> controls = #[targetTemplate, targetLanguage.combo, targetLanguageFileExtension, wrapperCodeTemplate,
             wrapperCodeTarget, wrapperCodeSnippets]
         val enabled = (LaunchConfiguration.findProject(project.text) != null) && !useEnvironment.selection
         SCChartsLaunchConfigurationTabGroup.enableControls(controls, enabled)

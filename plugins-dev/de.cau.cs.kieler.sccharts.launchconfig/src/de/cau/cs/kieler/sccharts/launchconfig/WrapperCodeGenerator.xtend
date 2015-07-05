@@ -52,7 +52,12 @@ class WrapperCodeGenerator {
 
         this.targetLocation = new File(targetLocation)
         this.templateLocation = new File(project.location + "/" + wrapperCodeTemplate)
-        this.snippetDirectoryLocation = new File(project.location + "/" + wrapperCodeSnippetDirectory)
+        this.snippetDirectoryLocation = new File(wrapperCodeSnippetDirectory)
+        
+        // If the snippet directory is not an absolute path for itself,
+        // We interpret it as a directory in the project.
+        if(!snippetDirectoryLocation.isAbsolute)
+            this.snippetDirectoryLocation = new File(project.location + "/" + wrapperCodeSnippetDirectory)
     }
 
     public def generateWrapperCode(SCTCompilationData... datas) {

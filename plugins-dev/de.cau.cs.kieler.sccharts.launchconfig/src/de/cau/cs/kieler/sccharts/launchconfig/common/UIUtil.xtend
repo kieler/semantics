@@ -324,6 +324,10 @@ class UIUtil {
         return SWTFactory.createPushButton(parent, label, null)
     }
 
+    static def createLabel(Composite parent, String label) {
+        return SWTFactory.createLabel(parent, label, 1)
+    }
+
     private static def boolean isFlagSet(int bitmask, int flag) {
         return bitmask.bitwiseAnd(flag) > 0
     }

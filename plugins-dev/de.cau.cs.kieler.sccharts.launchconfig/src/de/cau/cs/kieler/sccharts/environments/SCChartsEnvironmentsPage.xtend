@@ -259,8 +259,11 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
                 }
             }
         })
-                
-        mainFileOrigin = UIUtil.createTextField(group, "Main file origin", UIUtil.NONE)
+        
+        UIUtil.createLabel(group, "Main file origin")
+        val comp = UIUtil.createComposite(group, 2)
+        
+        mainFileOrigin = UIUtil.createTextField(comp, null, UIUtil.FILE_SYSTEM_FILE_BUTTON)
         mainFileOrigin.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
@@ -353,7 +356,11 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
             }
         })
         
-        wrapperCodeSnippetsOrigin = UIUtil.createTextField(group, "Snippets origin", UIUtil.NONE)
+        
+        UIUtil.createLabel(group, "Snippets origin")
+        val comp = UIUtil.createComposite(group, 2)
+        
+        wrapperCodeSnippetsOrigin = UIUtil.createTextField(comp, null, UIUtil.FILE_SYSTEM_DIRECTORY_BUTTON)
         wrapperCodeSnippetsOrigin.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){

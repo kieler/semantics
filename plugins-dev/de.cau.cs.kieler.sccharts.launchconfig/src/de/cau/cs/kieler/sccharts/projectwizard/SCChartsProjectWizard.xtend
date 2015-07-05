@@ -101,13 +101,25 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
     }
 
     override performFinish() {
-        // Create sct file 
+        // Create sct file from sct page settings
+        createSCTFile()
+        // Create main file of environment
+        createMainFileOfEnvironment()
+        // Copy templates to new project
+        initializeSnippetDirectory()
+        // Add some data to properties of new project
+        initializeProjectProperties()
+        
+        return true;
+    }
+    
+    private def createSCTFile(){
         if (sctFilePage.isOk()) {
-
             sctFilePage.performFinish()
         }
-
-        // Create main file of environment
+    }
+    
+    private def createMainFileOfEnvironment(){
         val env = mainPage.getSelectedEnvironment()
         if (env != null) {
             if (env.mainFile != "" && env.mainFileOrigin != "") {
@@ -127,8 +139,18 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
                 mainFileOriginInput.close()
             }
         }
+    }
 
-        // Copy templates to new project
+    private def initializeSnippetDirectory(){
+        val env = mainPage.getSelectedEnvironment()
+        
+        // If the snippet directory of the environment is an absolute path,
+        // we do not copy anything to the new project to initialize it.
+        println(env.wrapperCodeSnippetsDirectory)
+        if(env.wrapperCodeSnippetsDirectory ==  "" || new File(env.wrapperCodeSnippetsDirectory).isAbsolute)
+            return;
+        
+        // Get environments of which the wrapper code snippets should be imported.
         val wrapperEnvironments = mainPage.getSelectedWrapperCodeEnvironments()
         for (wrapperEnv : wrapperEnvironments) {
 
@@ -142,11 +164,12 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
                 FileUtils.copyDirectory(source, target)
             }
         }
+    }
 
-        // Add environment to project properties
+    private def initializeProjectProperties(){
+        // Add used environment name to project properties
+        val env = mainPage.getSelectedEnvironment()
         newlyCreatedProject.setPersistentProperty(LaunchConfigPlugin.ENVIRIONMENT_QUALIFIER, env.name)
-
-        return true;
     }
 
     private def void createResource(IResource resource, InputStream stream) throws CoreException {

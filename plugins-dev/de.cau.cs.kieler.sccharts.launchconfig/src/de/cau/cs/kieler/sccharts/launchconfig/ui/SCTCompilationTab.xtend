@@ -101,7 +101,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab {
         
         // List for SCT files
         list = new ListViewer(group, SWT.DEFAULT)
-        list.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
+        list.getControl().setLayoutData(new GridData(GridData.FILL_BOTH))
 
         // Content provider
         list.setContentProvider(ArrayContentProvider.instance);
