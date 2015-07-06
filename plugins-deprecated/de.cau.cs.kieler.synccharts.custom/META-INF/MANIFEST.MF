@@ -40,4 +40,4 @@ Export-Package: de.cau.cs.kieler.synccharts.custom,
  de.cau.cs.kieler.synccharts.custom.providers,
  de.cau.cs.kieler.synccharts.custom.update
 Bundle-Vendor: Kiel University
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

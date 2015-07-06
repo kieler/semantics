@@ -19,4 +19,4 @@ Export-Package: de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.internal,
  de.cau.cs.kieler.sim.kiem.properties,
  de.cau.cs.kieler.sim.kiem.util
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

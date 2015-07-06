@@ -24,7 +24,7 @@ Import-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext.validation,
  de.itemis.xtext.utils.jface.viewers,
  org.apache.log4j,
  org.eclipse.xtext.xbase.lib
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.formatting,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.generator,

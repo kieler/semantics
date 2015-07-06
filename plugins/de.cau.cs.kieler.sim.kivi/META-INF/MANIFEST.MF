@@ -10,6 +10,6 @@ Require-Bundle: de.cau.cs.kieler.sim.kiem,
  org.eclipse.ui.ide,
  de.cau.cs.kieler.kico.klighd,
  de.cau.cs.kieler.kico
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.kivi

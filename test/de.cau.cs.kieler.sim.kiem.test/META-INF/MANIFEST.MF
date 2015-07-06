@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.semantics.test.common,
  org.eclipse.ui.ide,
  org.eclipse.swt
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.ui.part
 Export-Package: de.cau.cs.kieler.sim.kiem.test

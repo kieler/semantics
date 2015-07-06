@@ -18,6 +18,6 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.synccharts.diagram.custom,
  de.cau.cs.kieler.core.kivi
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.synccharts.ksbase
 Bundle-Vendor: Kiel University

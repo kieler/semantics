@@ -4,7 +4,7 @@ Bundle-Name: KIELER C to SCCharts Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.c.sccharts;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Kiel University
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
  com.google.guava,
