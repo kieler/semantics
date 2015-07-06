@@ -58,7 +58,6 @@ import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.s.extensions.SExtension;
 //import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.sc.CExecution;
-import de.cau.cs.kieler.sccharts.sim.c.SCChartsSimCPlugin;
 import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.esterel.Program;
 import de.cau.cs.kieler.esterel.kexpressions.Input;
