@@ -11,6 +11,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.debug.ui;bundle-version="3.6.0",
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.ui,
- de.cau.cs.kieler.sim.kiem.config
+ de.cau.cs.kieler.sim.kiem.config,
+ org.eclipse.xtext.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
