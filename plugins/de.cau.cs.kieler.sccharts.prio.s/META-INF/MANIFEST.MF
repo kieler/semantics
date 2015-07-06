@@ -23,7 +23,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtend.util.stdlib;bundle-version="1.2.0",
  de.cau.cs.kieler.sccharts.prio.dependencies,
  de.cau.cs.kieler.kico
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.prio.s,
  de.cau.cs.kieler.sccharts.prio.s.xtend

@@ -19,5 +19,5 @@ Require-Bundle: com.google.inject;bundle-version="3.0.0",
  de.cau.cs.kieler.sim.signals,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent,
  de.cau.cs.kieler.kico
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

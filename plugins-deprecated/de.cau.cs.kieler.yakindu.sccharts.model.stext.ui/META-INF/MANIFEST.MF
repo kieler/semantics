@@ -27,7 +27,7 @@ Import-Package: de.itemis.utils.jface.viewers,
  org.yakindu.sct.model.stext.ui.help,
  org.yakindu.sct.model.stext.ui.hyperlink,
  org.yakindu.sct.model.stext.ui.validation
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext.ui,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.contentassist,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.contentassist.antlr,

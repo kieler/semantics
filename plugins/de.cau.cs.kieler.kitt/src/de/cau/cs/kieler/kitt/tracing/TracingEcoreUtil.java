@@ -46,10 +46,11 @@ public class TracingEcoreUtil extends EcoreUtil {
     /**
      * {@inheritDoc}
      */
-    public static <T extends EObject> Collection<T> copyAll(Collection<? extends T> eObjects) {
+    @SuppressWarnings("unchecked")
+    public static <T> Collection<T> copyAll(Collection<? extends T> eObjects) {
         Collection<T> result = new ArrayList<T>(eObjects.size());
         for (T t : eObjects) {
-            result.add(TransformationTracing.tracedCopy(t));
+            result.add((T) TransformationTracing.tracedCopy((EObject)t));
         }
         return result;
     }

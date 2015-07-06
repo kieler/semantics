@@ -14,5 +14,5 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.sim.kart,
  de.cau.cs.kieler.sim.syncsignalreset,
  de.cau.cs.kieler.s.ui
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
