@@ -68,15 +68,6 @@
       </product>
    </extension>
    <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            class="de.cau.cs.kieler.core.product.ModelingPerspective"
-            icon="icons/foerde-logo-16.gif"
-            id="de.cau.cs.kieler.Modeling"
-            name="SCCharts Modeling">
-      </perspective>
-   </extension>
-   <extension
          point="org.eclipse.help.toc">
       <toc
             file="help/toc.xml"
