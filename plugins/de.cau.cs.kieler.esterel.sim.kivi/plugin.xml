@@ -6,7 +6,7 @@
       <content
             class="de.cau.cs.kieler.esterel.sim.kivi.EsterelDataComponent"
             id="de.cau.cs.kieler.esterel.cec.sim.kivi"
-            name="Esterel CEC Visualization">
+            name="Esterel Visualization">
       </content>
    </extension>
 </plugin>
