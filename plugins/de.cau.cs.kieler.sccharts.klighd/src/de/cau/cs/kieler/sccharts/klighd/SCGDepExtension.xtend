@@ -78,7 +78,7 @@ class SCGDepExtension {
         dependencyEdges.clear;
 
         //TODO This transformation selection should be sensetive to the user selection in KiCoSelectionView regarding its editor
-        val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID + ",*T_ABORT,*T_scg.basicblock.sc", scc);
+        val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID + ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION", scc);
         context.setProperty(Tracing.ACTIVE_TRACING, true);
         context.advancedSelect = true;
         val result = KielerCompiler.compile(context);

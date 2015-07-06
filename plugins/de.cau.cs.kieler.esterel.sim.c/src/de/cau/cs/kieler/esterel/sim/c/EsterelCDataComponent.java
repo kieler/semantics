@@ -317,7 +317,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     }
 
     // -------------------------------------------------------------------------
-
+    
     /**
      * Gets the bundle path.
      * 
@@ -329,18 +329,22 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
         Bundle bundle = Platform.getBundle(EsterelCSimulationPlugin.PLUGIN_ID);
 
         URL url = null;
-        try {
+        String bundleLocation = null;
+      try {
             url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(subDirectory), null));
+            IPath bla = new Path(url.getPath());
+//            bla.makeAbsolute();
+            bundleLocation = bla.toOSString();
         } catch (IOException e2) {
             e2.printStackTrace();
         }
-        String bundleLocation = url.getFile();
+//        String bundleLocation = url.getFile();
 
-        // Windows vs. Linux: Exchange possibly wrong slash/backslash
-        bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
-        if (bundleLocation.startsWith("\\")) {
-            bundleLocation = bundleLocation.substring(1);
-        }
+//        // Windows vs. Linux: Exchange possibly wrong slash/backslash
+//        bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
+//        if (bundleLocation.startsWith("\\")) {
+//            bundleLocation = bundleLocation.substring(1);
+//        }
         return bundleLocation;
     }
 

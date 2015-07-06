@@ -814,6 +814,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
 
             URL fileUrl = FileLocator.find(bundle, new Path(SIMULATION_SUBPATH), null);
             URL bundleLocation = FileLocator.toFileURL(fileUrl);
+            String bundelLocationString = (new Path(bundleLocation.getPath())).toOSString();
 
             System.out.println("M2M 14");
 
@@ -828,8 +829,8 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
                 executable = File.createTempFile(SIMULATION_PREFIX, "");
                 compile =
                         compiler + " " + output.getPath() + " " + data.getPath() + " "
-                                + bundleLocation.getPath() + SIMULATION_JSONBIB + " " + "-I "
-                                + bundleLocation.getPath()
+                                + bundelLocationString + SIMULATION_JSONBIB + " " + "-I "
+                                + bundelLocationString
                                 + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
                                 + SIMULATION_COMPILER_OPTIONS + " " + executable;
 
@@ -845,8 +846,8 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
                 executable = File.createTempFile(SIMULATION_PREFIX, SIMULATION_SUFFIX);
                 compile =
                         compiler + " " + data.getPath().substring(1) + " "
-                                + bundleLocation.getPath().substring(1) + SIMULATION_JSONBIB + " "
-                                + "-I " + bundleLocation.getPath().substring(1)
+                                + bundelLocationString + SIMULATION_JSONBIB + " "
+                                + "-I " + bundelLocationString
                                 + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
                                 + SIMULATION_COMPILER_OPTIONS + " " + executable;
                 // compile =
