@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.launchconfig.ui
 
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
 import de.cau.cs.kieler.sccharts.launchconfig.common.SCTCompilationData
-import de.cau.cs.kieler.sccharts.launchconfig.common.UIUtil
+import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
 import java.io.File
 import java.util.ArrayList
 import java.util.Collections

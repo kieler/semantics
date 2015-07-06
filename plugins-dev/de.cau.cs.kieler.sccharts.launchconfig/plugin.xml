@@ -2,6 +2,14 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="de.cau.cs.kieler.sccharts.launchconfig.scchartsLaunchConfiguration"
+            icon="images/sccharts_icon16.png"
+            id="de.cau.cs.kieler.sccharts.launchconfig.scchartsLaunchConfigurationImage">
+      </launchConfigurationTypeImage>
+   </extension>
+   <extension
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
             delegate="de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration"
@@ -29,6 +37,7 @@
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
             class="de.cau.cs.kieler.sccharts.launchconfig.SCTLaunchShortcut"
+            icon="images/sccharts_icon16.png"
             id="de.cau.cs.kieler.sccharts.launchconfig.SCTLaunchShortcut"
             label="SCT Application"
             modes="run, debug">
@@ -62,6 +71,7 @@
             category="de.cau.cs.kieler.sccharts.wizard.category"
             class="de.cau.cs.kieler.sccharts.projectwizard.SCChartsProjectWizard"
             hasPages="true"
+            icon="images/sccharts_icon16.png"
             id="de.cau.cs.kieler.sccharts.wizards.project"
             name="SCT Project"
             project="true">
@@ -74,11 +84,12 @@
             category="de.cau.cs.kieler.sccharts.wizard.category"
             class="de.cau.cs.kieler.sccharts.filewizard.SCChartsFileWizard"
             hasPages="true"
+            icon="images/sccharts_icon16.png"
             id="de.cau.cs.kieler.sccharts.wizards.file"
             name="SCT File"
             project="false">
          <description>
-            Create a new SCT model file.
+            Create a new SCT file.
          </description>
       </wizard>
    </extension>

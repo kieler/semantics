@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.environments
 
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
-import de.cau.cs.kieler.sccharts.launchconfig.common.UIUtil
+import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
 import java.util.ArrayList
 import java.util.Set
 import org.eclipse.debug.internal.ui.SWTFactory

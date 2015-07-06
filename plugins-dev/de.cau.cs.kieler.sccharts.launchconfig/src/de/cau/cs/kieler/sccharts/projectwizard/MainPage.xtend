@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.projectwizard
 
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
 import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
-import de.cau.cs.kieler.sccharts.launchconfig.common.UIUtil
+import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
 import java.util.ArrayList
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.ComboViewer

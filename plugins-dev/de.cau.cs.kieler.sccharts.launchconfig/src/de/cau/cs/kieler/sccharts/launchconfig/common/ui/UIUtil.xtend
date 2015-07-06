@@ -11,12 +11,14 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.launchconfig.common
+package de.cau.cs.kieler.sccharts.launchconfig.common.ui
 
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.internal.Transformation
+import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
+import java.util.List
 import java.util.Set
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
@@ -41,7 +43,6 @@ import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ContainerSelectionDialog
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
-import java.util.List
 
 /**
  * @author aas
@@ -371,8 +372,4 @@ class UIUtil {
         }
     }
 
-}
-
-interface IProjectHolder {
-    def IProject getProject()
 }

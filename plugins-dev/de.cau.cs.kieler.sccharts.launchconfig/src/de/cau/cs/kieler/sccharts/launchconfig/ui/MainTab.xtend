@@ -17,8 +17,8 @@ import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
 import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
-import de.cau.cs.kieler.sccharts.launchconfig.common.IProjectHolder
-import de.cau.cs.kieler.sccharts.launchconfig.common.UIUtil
+import de.cau.cs.kieler.sccharts.launchconfig.common.ui.IProjectHolder
+import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
 import java.util.ArrayList
 import java.util.List
 import java.util.Set

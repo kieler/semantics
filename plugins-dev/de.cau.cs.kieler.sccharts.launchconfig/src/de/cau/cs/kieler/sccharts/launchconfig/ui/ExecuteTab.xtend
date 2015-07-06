@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.launchconfig.ui
 
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
-import de.cau.cs.kieler.sccharts.launchconfig.common.UIUtil
+import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
 import java.util.List
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
