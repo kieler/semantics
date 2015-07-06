@@ -6,7 +6,7 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: de.cau.cs.kieler.yakindu.sccharts.ui.editor.editor.Activator
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
 Require-Bundle: org.yakindu.sct.ui.editor;bundle-version="2.0.0",

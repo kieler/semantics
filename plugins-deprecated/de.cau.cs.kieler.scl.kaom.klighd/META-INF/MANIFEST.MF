@@ -41,5 +41,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.ui,
  de.cau.cs.kieler.kaom;bundle-version="0.3.2",
  de.cau.cs.kieler.core.annotations;bundle-version="0.3.1"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

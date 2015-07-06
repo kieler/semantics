@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
  de.cau.cs.kieler.core.model;visibility:=reexport,
  de.cau.cs.kieler.core.annotations.text
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.synccharts.text.actions,
  de.cau.cs.kieler.synccharts.text.actions.formatting,
  de.cau.cs.kieler.synccharts.text.actions.parser.antlr,

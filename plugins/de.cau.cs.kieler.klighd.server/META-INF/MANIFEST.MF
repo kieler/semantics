@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KLighD TCP Server
 Bundle-SymbolicName: de.cau.cs.kieler.klighd.server;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.core.runtime,

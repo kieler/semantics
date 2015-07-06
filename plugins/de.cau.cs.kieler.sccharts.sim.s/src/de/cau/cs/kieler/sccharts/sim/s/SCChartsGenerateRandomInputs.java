@@ -46,7 +46,9 @@ import org.eclipse.ui.PlatformUI;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
 import de.cau.cs.kieler.s.extensions.SExtension;
+import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 
 /**
@@ -113,8 +115,8 @@ public class SCChartsGenerateRandomInputs implements IHandler {
         try {
             // Load SCCharts model
             inputResource.load(null);
-            Region rootRegion = (Region) inputResource.getContents().get(0);
-            List<String> inputSignalList = getInputSignalList(rootRegion);
+            State rootState = (State) inputResource.getContents().get(0);
+            List<String> inputSignalList = getInputSignalList(rootState);
 
             // This will hold the randomly generated data
             List<String> esoList = new LinkedList<String>();
@@ -253,10 +255,10 @@ public class SCChartsGenerateRandomInputs implements IHandler {
      *            the root region
      * @return the input signal list
      */
-    private List<String> getInputSignalList(final Region rootRegion) {
+    private List<String> getInputSignalList(final State rootState) {
         List<String> returnList = new LinkedList<String>();
-        if (rootRegion.getStates() != null && rootRegion.getStates().size() > 0) {
-            for (ValuedObject valuedObject : kExpressionsExtension.getValuedObjects(rootRegion.getStates().get(0))) {
+        if (rootState != null) {
+            for (ValuedObject valuedObject : kExpressionsExtension.getValuedObjects(rootState)) {
                 if (kExpressionsExtension.isInput(valuedObject)) {
                     returnList.add(valuedObject.getName());
                 }

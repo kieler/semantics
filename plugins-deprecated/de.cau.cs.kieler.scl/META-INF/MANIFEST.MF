@@ -39,7 +39,7 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
  org.eclipse.ui,
  org.eclipse.gmf.runtime.diagram.core,
  de.cau.cs.kieler.sim.kiem;bundle-version="0.6.1"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.scl,
  de.cau.cs.kieler.scl.basicblocks,
  de.cau.cs.kieler.scl.extensions,

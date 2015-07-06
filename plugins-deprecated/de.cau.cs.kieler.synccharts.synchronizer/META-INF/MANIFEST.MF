@@ -26,6 +26,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.8.0",
  de.cau.cs.kieler.synccharts.text.ui,
  de.cau.cs.kieler.kiml.gmf,
  de.cau.cs.kieler.core
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy

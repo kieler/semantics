@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.xtext.ui,
  de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.1",
  de.cau.cs.kieler.esterel.kexpressions.ui;bundle-version="0.4.1"
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.esterel.ui.contentassist.antlr,
  de.cau.cs.kieler.esterel.ui.contentassist,
  de.cau.cs.kieler.esterel.ui.quickfix

@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core.model;bundle-version="0.7.1",
  de.cau.cs.kieler.eso.coreeso;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: com.google.inject;version="1.3.0",
  de.cau.cs.kieler.scl.scl,
  org.eclipse.emf.common.util,
