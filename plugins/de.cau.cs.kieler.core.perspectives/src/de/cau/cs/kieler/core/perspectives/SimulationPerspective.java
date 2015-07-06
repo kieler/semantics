@@ -25,7 +25,7 @@ import org.eclipse.ui.IPerspectiveFactory;
  * @author nbw
  * 
  * @kieler.design 2015-07-02 nbw cmot ssm als ima rvh
- * @kieler.rating proposed yellow 2015-07-03 nbw cmot ssm als KI-87
+ * @kieler.rating yellow 2015-07-03 cmot ssm als KI-87
  */
 public class SimulationPerspective implements IPerspectiveFactory {
 

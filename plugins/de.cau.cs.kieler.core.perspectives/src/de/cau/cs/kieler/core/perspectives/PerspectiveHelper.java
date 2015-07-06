@@ -22,7 +22,7 @@ import org.eclipse.ui.PlatformUI;
  * @author nbw
  * 
  * @kieler.design 2015-07-02 nbw cmot ssm als ima rvh
- * @kieler.rating proposed yellow 2015-07-03 nbw cmot ssm als KI-87
+ * @kieler.rating yellow 2015-07-03 cmot ssm als KI-87
  */
 public class PerspectiveHelper {
 
@@ -40,13 +40,6 @@ public class PerspectiveHelper {
     static final String VIEW_KIEM_SIGNALS = "de.cau.cs.kieler.sim.signals.ui.view"; //$NON-NLS-1$
 
     /* IDs of New-Wizards */
-    // private static final String WIZ_SYNCCHART =
-    //          "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsCreationWizardID"; //$NON-NLS-1$
-    // private static final String WIZ_KAOM =
-    //          "de.cau.cs.kieler.kaom.diagram.part.KaomCreationWizardID"; //$NON-NLS-1$
-    // private static final String WIZ_GRAPHS =
-    //          "de.cau.cs.kieler.keg.diagram.part.GraphsCreationWizardID"; //$NON-NLS-1$
-    //  private static final String WIZ_GRAPHS_RANDOM = "de.cau.cs.kieler.keg.wizards.randomGraph"; //$NON-NLS-1$
     static final String WIZ_FILE = "org.eclipse.ui.wizards.new.file"; //$NON-NLS-1$
     static final String WIZ_PROJECT = "org.eclipse.ui.wizards.new.project"; //$NON-NLS-1$
 
