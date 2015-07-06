@@ -50,31 +50,4 @@ public class KiCoKLighDPlugin extends AbstractUIPlugin {
         return plugin;
     }
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the last used directory from preferences
-     * 
-     * @return last used directory
-     */
-    public static String getLastDir() {
-        Preferences prefs = getDefault().getPluginPreferences();
-        String value = prefs.getString("lastdir");
-        return value;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the last used directory from preferences
-     * 
-     * @param lastDir
-     *             last used directory
-     */
-    public static void setLastDir(String lastDir) {
-        Preferences prefs = getDefault().getPluginPreferences();
-        prefs.setValue("lastdir", lastDir);
-        plugin.savePluginPreferences();
-    }
-
 }

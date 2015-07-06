@@ -21,7 +21,7 @@ package de.cau.cs.kieler.kico.klighd.model;
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class KiCoMessageModel {
+public class MessageModel {
 
     private final String title;
     private final String message;
@@ -34,7 +34,7 @@ public class KiCoMessageModel {
      * 
      * @param message
      */
-    public KiCoMessageModel(String message) {
+    public MessageModel(String message) {
         this(null, message, null, null, 0);
     }
 
@@ -44,7 +44,7 @@ public class KiCoMessageModel {
      * @param title
      * @param message
      */
-    public KiCoMessageModel(String title, String message) {
+    public MessageModel(String title, String message) {
         this(title, message, null, null, 0);
     }
 
@@ -57,7 +57,7 @@ public class KiCoMessageModel {
      * @param iconPlugin
      * @param iconSize
      */
-    public KiCoMessageModel(String title, String message, String iconPath, String iconPlugin,
+    public MessageModel(String title, String message, String iconPath, String iconPlugin,
             int iconSize) {
         super();
         this.title = title != null && title.isEmpty() ? null : title;

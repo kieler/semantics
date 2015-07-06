@@ -14,14 +14,14 @@
 package de.cau.cs.kieler.kico.klighd.model;
 
 /**
- * Placeholder of KiCoModelView to represent code
+ * Placeholder of KiCoModelView to represent code.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class KiCoCodePlaceHolder {
+public class CodePlaceHolder {
 
     /** Code content */
     private final String code;
@@ -40,7 +40,7 @@ public class KiCoCodePlaceHolder {
      * 
      * @param code
      */
-    public KiCoCodePlaceHolder(String name, String code) {
+    public CodePlaceHolder(String name, String code) {
         this(name, code, null, "txt");
     }
     
@@ -49,7 +49,7 @@ public class KiCoCodePlaceHolder {
      * 
      * @param code
      */
-    public KiCoCodePlaceHolder(String name, String code, String editorID, String resourceExtension) {
+    public CodePlaceHolder(String name, String code, String editorID, String resourceExtension) {
         super();
         this.name = name;
         this.code = code;

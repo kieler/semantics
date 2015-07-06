@@ -39,7 +39,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
  * @kieler.rating 2014-07-30 proposed yellow
  *
  */
-class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlaceHolder> {
+class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder> {
 
     @Inject
     extension KNodeExtensions
@@ -71,7 +71,7 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
 
     // -------------------------------------------------------------------------
     // The Main entry transform function
-    override KNode transform(KiCoCodePlaceHolder code) {
+    override KNode transform(CodePlaceHolder code) {
         val rootNode = createNode();
         rootNode.children += createNode(code) => [
             it.associateWith(code);
@@ -100,7 +100,7 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
                 it.addHorizontalSeperatorLine(1, 0);
                 
                 //preprocess code to compress
-                val tokenizer = new StringTokenizer(code.code, "\n");
+                val tokenizer = new StringTokenizer(code.getCode, "\n");
                 val previewLines = new LinkedList<String>();
                 previewLines.add("");
                 while (previewLines.size < maxPreviewLines && tokenizer.hasMoreTokens) {

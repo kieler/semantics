@@ -11,14 +11,13 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd;
+package de.cau.cs.kieler.kico.klighd.internal;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.progress.UIJob;
 
 import de.cau.cs.kieler.core.util.Pair;
@@ -26,25 +25,26 @@ import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
-import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
-import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
-import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
-import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
+import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
+import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController;
+import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController.ChangeEvent;
+import de.cau.cs.kieler.kico.klighd.model.CodePlaceHolder;
+import de.cau.cs.kieler.kico.klighd.model.ErrorModel;
+import de.cau.cs.kieler.kico.klighd.model.MessageModel;
 import de.cau.cs.kieler.kitt.tracing.Tracing;
-import de.cau.cs.kieler.klighd.IViewer;
 
 /**
- * This Job start an asynchronous Compilation
+ * This Job start an asynchronous Compilation.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class KiCoAsynchronousCompilation extends Job {
+public class AsynchronousCompilation extends Job {
 
     /** ModelView which spawned this job */
-    private final KiCoModelView modelView;
+    private final KiCoModelUpdateController modelView;
     /** Model to compile */
     private final EObject sourceModel;
     /** Name of the source file */
@@ -55,7 +55,6 @@ public class KiCoAsynchronousCompilation extends Job {
     private final Pair<KielerCompilerSelection, Boolean> selection;
     /** Flag if additional progress information should be displayed */
     private final boolean tracing;
-    private boolean showsProgress = false;
     /** Flag if this job should update corresponding ModelView when finished compiling */
     private boolean updateModelView = false;
     /** Model to display in ModeView depending on current compilation state */
@@ -73,7 +72,7 @@ public class KiCoAsynchronousCompilation extends Job {
      * @param sourceFile
      * @param transformations
      */
-    public KiCoAsynchronousCompilation(KiCoModelView modelView, EObject sourceModel,
+    public AsynchronousCompilation(KiCoModelUpdateController modelView, EObject sourceModel,
             String sourceFile, Pair<KielerCompilerSelection, Boolean> selection, boolean tracing) {
         super("Compiling: " + sourceFile);
 
@@ -91,7 +90,7 @@ public class KiCoAsynchronousCompilation extends Job {
         this.tracing = tracing;
 
         // compilation placeholder
-        this.model = new KiCoMessageModel("Compilation in progress...");
+        this.model = new MessageModel("Compilation in progress...");
     }
 
     /**
@@ -108,7 +107,8 @@ public class KiCoAsynchronousCompilation extends Job {
             if (tracing) {
                 context.setProperty(Tracing.ACTIVE_TRACING, true);
             }
-            // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo selection view
+            // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo
+            // selection view
             context.setCreateDummyResource(false);
             result = KielerCompiler.compile(context);
 
@@ -118,10 +118,13 @@ public class KiCoAsynchronousCompilation extends Job {
 
             // check result
             if (!result.getPostponedErrors().isEmpty()) {
-                model = new KiCoErrorModel("Compilation Error!", result.getPostponedErrors().get(0).getMessage(), result.getAllErrors());
+                model =
+                        new ErrorModel("Compilation Error!", result.getPostponedErrors().get(0)
+                                .getMessage(), result.getAllErrors());
                 updateModelView();
                 return new Status(Status.INFO, KiCoKLighDPlugin.PLUGIN_ID, result.getAllErrors());
-            } else if (result == null || (result.getEObject() == null && result.getString() == null)) {
+            } else if (result == null
+                    || (result.getEObject() == null && result.getString() == null)) {
                 throw new NullPointerException(
                         "Compilation produced no result. Internal compilation error.");
             }
@@ -130,7 +133,7 @@ public class KiCoAsynchronousCompilation extends Job {
             if (result.getEObject() != null) {
                 model = result.getEObject();
             } else if (result.getString() != null) {
-                model = new KiCoCodePlaceHolder(sourceFileName, result.getString());
+                model = new CodePlaceHolder(sourceFileName, result.getString());
             }
 
             // abort if canceled
@@ -144,12 +147,11 @@ public class KiCoAsynchronousCompilation extends Job {
             if (monitor.isCanceled()) {
                 return Status.CANCEL_STATUS;
             }
-            model = new KiCoErrorModel("Compilation Error!", e);
+            model = new ErrorModel("Compilation Error!", e);
             updateModelView();
             return new Status(Status.WARNING, KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(),
                     e.getCause());
         }
-        // TODO hide progress
         return Status.OK_STATUS;
     }
 
@@ -162,8 +164,8 @@ public class KiCoAsynchronousCompilation extends Job {
 
                 @Override
                 public IStatus runInUIThread(IProgressMonitor monitor) {
-                    modelView.updateModel(ChangeEvent.COMPILATION_FINISHED,
-                            KiCoAsynchronousCompilation.this);
+                    modelView
+                            .update(ChangeEvent.COMPILATION_FINISHED, AsynchronousCompilation.this);
                     return Status.OK_STATUS;
                 }
             }.schedule();
@@ -171,6 +173,8 @@ public class KiCoAsynchronousCompilation extends Job {
     }
 
     /**
+     * Returns the result of the compilation.
+     * 
      * @return the compilation result or null if compilation not finished or failed
      */
     public CompilationResult getCompilationResult() {
@@ -204,44 +208,11 @@ public class KiCoAsynchronousCompilation extends Job {
     }
 
     /**
-     * Causes additional progressbars to show up ion model view.
-     */
-    public void showProgress(IViewer viewer) {
-        //if (!showsProgress && !hasFinishedCompilation()) {
-        // final KlighdCanvas canvas = (KlighdCanvas) viewer.getControl();
-        //
-        // Composite progressContainer = new Composite(canvas, SWT.NONE);
-        //
-        // addProgressComponents(progressContainer);
-        // progressContainer.setLocation(1,1);
-        // progressContainer.setLayout(new RowLayout());
-        // progressContainer.pack();
-        // canvas.layout(true, true);
-        //
-        // showsProgress = true;
-        //}
-    }
-
-    /**
-     * @param progressContainer
-     */
-    private void addProgressComponents(Composite parent) {
-        // TODO dispose color
-        // final Color white = new Color(parent.getDisplay(), KlighdConstants.WHITE);
-        // parent.setBackground(white);
-        // final Button zoomToFitBtn = new Button(parent, SWT.TOGGLE | SWT.FLAT);
-        // zoomToFitBtn.setText("test");
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     protected void canceling() {
-        if (showsProgress) {
-            // TODO hide progress
-        }
-        model = new KiCoErrorModel("Compilation aborted!");
+        model = new ErrorModel("Compilation aborted!");
         updateModelView();
     }
 

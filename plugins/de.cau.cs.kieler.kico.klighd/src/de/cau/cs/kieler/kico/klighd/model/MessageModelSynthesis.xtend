@@ -35,7 +35,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
  * @kieler.rating 2014-07-30 proposed yellow
  *
  */
-class KiCoMessageModelSynthesis extends AbstractDiagramSynthesis<KiCoMessageModel> {
+class MessageModelSynthesis extends AbstractDiagramSynthesis<MessageModel> {
 
     @Inject
     extension KNodeExtensions
@@ -63,7 +63,7 @@ class KiCoMessageModelSynthesis extends AbstractDiagramSynthesis<KiCoMessageMode
 
     // -------------------------------------------------------------------------
     // The Main entry transform function
-    override KNode transform(KiCoMessageModel model) {
+    override KNode transform(MessageModel model) {
         val rootNode = createNode();
         rootNode.children += createNode(model) => [
             it.addRectangle() => [
@@ -74,9 +74,9 @@ class KiCoMessageModelSynthesis extends AbstractDiagramSynthesis<KiCoMessageMode
                     it.addRectangle => [
                         it.invisible = true;
                         //set minimal size
-                        it.setGridPlacementData(model.iconSize, model.iconSize);
-                        it.addImage(model.iconPlugin, model.iconPath).setPointPlacementData(LEFT, 0, 0.5f, TOP, 0, 0.5f,
-                            H_CENTRAL, V_CENTRAL, 0, 0, model.iconSize, model.iconSize).addRectangularClip;
+                        it.setGridPlacementData(model.getIconSize, model.getIconSize);
+                        it.addImage(model.getIconPlugin, model.getIconPath).setPointPlacementData(LEFT, 0, 0.5f, TOP, 0, 0.5f,
+                            H_CENTRAL, V_CENTRAL, 0, 0, model.getIconSize, model.getIconSize).addRectangularClip;
                     ]
                 }
                 //lower part is message
@@ -84,8 +84,8 @@ class KiCoMessageModelSynthesis extends AbstractDiagramSynthesis<KiCoMessageMode
                     it.setGridPlacement(1);
                     it.lineWidth = 2;
                     //title
-                    if (model.title != null) {
-                        it.addText(model.title) => [
+                    if (model.getTitle != null) {
+                        it.addText(model.getTitle) => [
                             it.fontSize = 12;
                             it.setFontBold = true;
                             it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
@@ -93,10 +93,10 @@ class KiCoMessageModelSynthesis extends AbstractDiagramSynthesis<KiCoMessageMode
                         ]
                     }
                     //message
-                    if (model.message != null) {
-                        it.addText(model.message) => [
+                    if (model.getMessage != null) {
+                        it.addText(model.getMessage) => [
                             it.fontSize = 12;
-                            if (model.title != null) {
+                            if (model.getTitle != null) {
                                 it.setGridPlacementData().from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
                             } else {
                                 it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);

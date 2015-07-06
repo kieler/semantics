@@ -36,7 +36,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
  * @kieler.rating 2014-07-30 proposed yellow
  *
  */
-class KiCoErrorModelSynthesis extends AbstractDiagramSynthesis<KiCoErrorModel> {
+class ErrorModelSynthesis extends AbstractDiagramSynthesis<ErrorModel> {
 
     @Inject
     extension KNodeExtensions
@@ -64,7 +64,7 @@ class KiCoErrorModelSynthesis extends AbstractDiagramSynthesis<KiCoErrorModel> {
 
     // -------------------------------------------------------------------------
     // The Main entry transform function
-    override KNode transform(KiCoErrorModel errorModel) {
+    override KNode transform(ErrorModel errorModel) {
         val rootNode = createNode();
         rootNode.children += createNode(errorModel) => [
             it.addRectangle() => [
@@ -75,7 +75,7 @@ class KiCoErrorModelSynthesis extends AbstractDiagramSynthesis<KiCoErrorModel> {
                     it.invisible = true;
                     //set minimal size
                     it.setGridPlacementData(250, 250);
-                    it.addImage("de.cau.cs.kieler.kico.klighd", "icons/KiCoErrorModelSign.png").
+                    it.addImage("de.cau.cs.kieler.kico.klighd", "icons/ErrorModelSign.png").
                         setPointPlacementData(LEFT, 0, 0.5f, TOP, 0, 0.5f, H_CENTRAL, V_CENTRAL, 0, 0, 250, 250).
                         addRectangularClip;
                 ]
@@ -92,7 +92,7 @@ class KiCoErrorModelSynthesis extends AbstractDiagramSynthesis<KiCoErrorModel> {
                         it.suppressSelectability;
                     ]
                     //message
-                    it.addText(errorModel.message) => [
+                    it.addText(errorModel.getMessage) => [
                         it.fontSize = 12;
                         if (errorModel.stackTrace != null) {
                             it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);

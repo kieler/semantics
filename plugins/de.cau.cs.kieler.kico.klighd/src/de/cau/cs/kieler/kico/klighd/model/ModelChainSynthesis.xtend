@@ -51,7 +51,7 @@ import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
  * @kieler.rating 2014-07-30 proposed yellow
  *
  */
-class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
+class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
 
     @Inject
     extension KNodeExtensions
@@ -95,8 +95,8 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
 
     // -------------------------------------------------------------------------
     // The Main entry transform function
-    override KNode transform(KiCoModelChain chainWrapper) {
-        val chain = chainWrapper.models;
+    override KNode transform(ModelChain chainWrapper) {
+        val chain = chainWrapper.getModels;
         val rootNode = createNode();
         rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
         rootNode.addLayoutParam(LayoutOptions::DIRECTION, Direction.RIGHT);
@@ -114,12 +114,12 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                 val edge = createEdge => [
                     it.addPolyline => [
                         //if label name is null hide edge
-                        it.addArrowDecorator.invisible = chainWrapper.blankMode;
-                        it.invisible = chainWrapper.blankMode;
+                        it.addArrowDecorator.invisible = chainWrapper.isBlankMode;
+                        it.invisible = chainWrapper.isBlankMode;
                     ]
                     //if available add label
-                    if (!chainWrapper.blankMode && i - 1 < chainWrapper.tranformations.size) {
-                        it.createLabel.configureCenterEdgeLabel(chainWrapper.tranformations.get(i - 1),
+                    if (!chainWrapper.isBlankMode && i - 1 < chainWrapper.getTranformations.size) {
+                        it.createLabel.configureCenterEdgeLabel(chainWrapper.getTranformations.get(i - 1),
                             KlighdConstants::DEFAULT_FONT_SIZE,
                             KlighdConstants::DEFAULT_FONT_NAME);
                     }
@@ -132,13 +132,13 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         return rootNode;
     }
 
-    private def KNode transformModel(KiCoModelChain chain, Object model) {
+    private def KNode transformModel(ModelChain chain, Object model) {
         val node = createNode.associateWith(model);
 
         //if label is not null a parent node is created and model diagram is added in collapsed child area
-        if (!chain.blankMode) {
+        if (!chain.isBlankMode) {
 
-            node.setLayoutOption(KlighdProperties::EXPAND, !chain.collapse.get(model));
+            node.setLayoutOption(KlighdProperties::EXPAND, !chain.getCollapse.get(model));
 
             //Expanded Rectangle
             node.createFigure() => [

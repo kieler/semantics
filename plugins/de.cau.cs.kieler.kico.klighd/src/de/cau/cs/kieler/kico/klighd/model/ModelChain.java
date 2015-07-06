@@ -30,7 +30,7 @@ import de.cau.cs.kieler.kico.KielerCompilerSelection;
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class KiCoModelChain {
+public class ModelChain {
 
     private final LinkedList<Object> models = new LinkedList<Object>();
     private final LinkedList<String> tranformations = new LinkedList<String>();
@@ -46,9 +46,9 @@ public class KiCoModelChain {
      * @param secondModel
      *            second model
      */
-    public KiCoModelChain(final Object model) {
+    public ModelChain(final Object model) {
         if (model == null) {
-            models.add(new KiCoMessageModel("Missing Model"));
+            models.add(new MessageModel("Missing Model"));
         } else {
             models.add(model);
         }
@@ -62,14 +62,14 @@ public class KiCoModelChain {
      * @param secondModel
      *            second model
      */
-    public KiCoModelChain(final Object firstModel, final Object secondModel) {
+    public ModelChain(final Object firstModel, final Object secondModel) {
         if (firstModel == null) {
-            models.add(new KiCoMessageModel("Missing Model"));
+            models.add(new MessageModel("Missing Model"));
         } else {
             models.add(firstModel);
         }
         if (secondModel == null) {
-            models.add(new KiCoMessageModel("Missing Model"));
+            models.add(new MessageModel("Missing Model"));
         } else {
             models.add(secondModel);
         }
@@ -85,16 +85,16 @@ public class KiCoModelChain {
      * @param transformations
      *            the selected transformations
      */
-    public KiCoModelChain(Object sourceModel, final CompilationResult compilationResult, final String modelName,
+    public ModelChain(Object sourceModel, final CompilationResult compilationResult, final String modelName,
             KielerCompilerSelection selection) {
         models.add(sourceModel);
         collapse.put(sourceModel, false);
         for (IntermediateResult ir : compilationResult.getTransformationIntermediateResults()) {
             Object model = ir.getResult();
             if (model instanceof String) {
-                model = new KiCoCodePlaceHolder(modelName, (String) model);
+                model = new CodePlaceHolder(modelName, (String) model);
             } else if(model == null) {
-                model = new KiCoMessageModel("Missing Model");
+                model = new MessageModel("Missing Model");
             }
             if(!models.contains(model)) {
                 tranformations.add(ir.getId());

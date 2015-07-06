@@ -17,8 +17,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 
-import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
-import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
+import de.cau.cs.kieler.kico.klighd.model.ErrorModel;
+import de.cau.cs.kieler.kico.klighd.model.ModelChain;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
@@ -39,15 +39,15 @@ public class ErrorShowExceptionAction implements IAction {
      */
     public ActionResult execute(ActionContext context) {
         Object inputModel = context.getViewContext().getInputModel();
-        KiCoErrorModel errorModel = null;
+        ErrorModel errorModel = null;
         // get error model
         
-        if (inputModel instanceof KiCoErrorModel) {
-            errorModel = (KiCoErrorModel) inputModel;
-        }else if(inputModel instanceof KiCoModelChain){
-            for( Object model : ((KiCoModelChain) inputModel).getModels()){
-                if(model instanceof KiCoErrorModel){
-                    errorModel = (KiCoErrorModel) model;
+        if (inputModel instanceof ErrorModel) {
+            errorModel = (ErrorModel) inputModel;
+        }else if(inputModel instanceof ModelChain){
+            for( Object model : ((ModelChain) inputModel).getModels()){
+                if(model instanceof ErrorModel){
+                    errorModel = (ErrorModel) model;
                     break;
                 }
             }

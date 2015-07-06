@@ -4,20 +4,20 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoModelChainSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.KiCoModelChainSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.ModelChainSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.ModelChainSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolderSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.KiCoCodePlaceHolderSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.CodePlaceHolderSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.CodePlaceHolderSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoErrorModelSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.KiCoErrorModelSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.ErrorModelSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.ErrorModelSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoMessageModelSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.KiCoMessageModelSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.MessageModelSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.MessageModelSynthesis">
       </diagramSynthesis>
    </extension>
    <extension
@@ -25,9 +25,9 @@
       <view
             allowMultiple="true"
             category="de.cau.cs.kieler.sim"
-            class="de.cau.cs.kieler.kico.klighd.KiCoModelView"
-            icon="icons/KiCoModelView.gif"
-            id="de.cau.cs.kieler.kico.klighd.view"
+            class="de.cau.cs.kieler.kico.klighd.view.ModelView"
+            icon="icons/ModelView.gif"
+            id="de.cau.cs.kieler.kico.klighd.modelview"
             name="KIELER Model View"
             restorable="true">
       </view>
@@ -35,7 +35,7 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="de.cau.cs.kieler.kico.klighd.KiCoModelViewManager"></startup>
+            class="de.cau.cs.kieler.kico.klighd.view.ModelViewManager"></startup>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.extensions">

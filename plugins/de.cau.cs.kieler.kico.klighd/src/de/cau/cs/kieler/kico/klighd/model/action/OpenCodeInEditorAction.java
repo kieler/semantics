@@ -19,7 +19,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 
 import de.cau.cs.kieler.kico.klighd.editor.StringBasedEditorInput;
-import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
+import de.cau.cs.kieler.kico.klighd.model.CodePlaceHolder;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
@@ -41,14 +41,14 @@ public class OpenCodeInEditorAction implements IAction {
     public ActionResult execute(ActionContext context) {
         Object inputModel = context.getViewContext().getInputModel();
         // get error model
-        KiCoCodePlaceHolder codeModel = null;
-        if (inputModel instanceof KiCoCodePlaceHolder) {
-            codeModel = (KiCoCodePlaceHolder) inputModel;
+        CodePlaceHolder codeModel = null;
+        if (inputModel instanceof CodePlaceHolder) {
+            codeModel = (CodePlaceHolder) inputModel;
         } else if (context.getKNode() != null) {
             // if input model is not KiCoCodePlaceHolder check if clicked node is associated with it
             Object domainElement = context.getDomainElement(context.getKNode());
-            if (domainElement instanceof KiCoCodePlaceHolder) {
-                codeModel = (KiCoCodePlaceHolder) domainElement;
+            if (domainElement instanceof CodePlaceHolder) {
+                codeModel = (CodePlaceHolder) domainElement;
             }
         }
         // open editor

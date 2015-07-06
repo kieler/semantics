@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.Platform;
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class KiCoErrorModel {
+public class ErrorModel {
     private final String message;
     private final String reason;
     private final String stacktrace;
@@ -37,7 +37,7 @@ public class KiCoErrorModel {
      * @param message
      *            error message
      */
-    public KiCoErrorModel(String message) {
+    public ErrorModel(String message) {
         this.message = message;
         this.stacktrace = null;
         this.reason = "Unkown";
@@ -51,7 +51,7 @@ public class KiCoErrorModel {
      * @param reason
      * @param stacktrace
      */
-    public KiCoErrorModel(String message, String reason, String stacktrace) {
+    public ErrorModel(String message, String reason, String stacktrace) {
         this.message = message;
         // reason
         String reasonToSet = "Unkown";
@@ -91,7 +91,7 @@ public class KiCoErrorModel {
      *            error message
      * @param exception
      */
-    public KiCoErrorModel(String message, Exception exception) {
+    public ErrorModel(String message, Exception exception) {
         this(message, exception.getMessage(), getStackTrace(exception));
     }
 
