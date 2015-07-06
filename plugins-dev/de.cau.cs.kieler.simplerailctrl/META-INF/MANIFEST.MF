@@ -6,7 +6,7 @@ Bundle-Name: %pluginName
 Bundle-SymbolicName: de.cau.cs.kieler.simplerailctrl;singleton:=true
 Bundle-Version: 0.1.0
 Bundle-ClassPath: .
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
 Export-Package: de.cau.cs.kieler.simplerailctrl,
  de.cau.cs.kieler.simplerailctrl.impl,
@@ -16,4 +16,4 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core.ui;bundle-version="0.1.0",
  de.cau.cs.kieler.core;bundle-version="0.1.1"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

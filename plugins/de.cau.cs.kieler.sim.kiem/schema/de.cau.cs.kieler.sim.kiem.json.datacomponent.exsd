@@ -137,7 +137,7 @@ Your DataComponent may want to define properties that can be saved together with
  * http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;BR&gt;
  *&lt;BR&gt; 
  * Copyright 2009 by&lt;BR&gt;
- * + Christian-Albrechts-University of Kiel&lt;BR&gt;
+ * + Kiel University&lt;BR&gt;
  *   + Department of Computer Science&lt;BR&gt;
  *     + Real-Time and Embedded Systems Group&lt;BR&gt;
  *&lt;BR&gt; 
@@ -471,7 +471,7 @@ public class DataComponent extends JSONObjectDataComponent implements&lt;BR&gt;
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         Christian-Albrechts-Universität zu Kiel, Germany
+         Kiel University, Germany
       </documentation>
    </annotation>
 

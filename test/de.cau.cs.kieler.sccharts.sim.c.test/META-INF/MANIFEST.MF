@@ -3,8 +3,8 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Regression Test for SyncCharts S Simulator
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.sim.c.test;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: Kiel University
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem.test,

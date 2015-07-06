@@ -4,12 +4,12 @@ Bundle-Name: ESO file generator for Esterel
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.eso;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.eso.EsterelEsoPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.core.model,
  com.google.inject;bundle-version="3.0.0",
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.esterel.kexpressions
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

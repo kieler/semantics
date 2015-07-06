@@ -17,7 +17,7 @@ Require-Bundle: de.cau.cs.kieler.sim.coreeso;visibility:=reexport,
  org.eclipse.xtext.ui.codetemplates.ui,
  org.eclipse.compare
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.sim.coreeso.ui.contentassist,
  de.cau.cs.kieler.sim.coreeso.ui.contentassist.antlr,
  de.cau.cs.kieler.sim.coreeso.ui.internal

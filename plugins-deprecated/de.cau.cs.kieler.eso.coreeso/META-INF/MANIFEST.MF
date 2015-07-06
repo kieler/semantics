@@ -26,6 +26,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.json;bundle-version="0.1.0",
  de.cau.cs.kieler.sim.kiem;bundle-version="0.6.1"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.eso.coreeso.xtend
 

@@ -4,7 +4,7 @@ Bundle-Name: SCG to S Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.scg.s;singleton:=true
 Bundle-Version: 0.1.1.qualifier
 Bundle-Activator: de.cau.cs.kieler.scg.s.Activator
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend.lib,
  com.google.guava,
@@ -19,7 +19,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.s.sc,
  de.cau.cs.kieler.s.sj,
  de.cau.cs.kieler.kitt
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.scg.s;uses:="org.osgi.framework",
  de.cau.cs.kieler.scg.s.features,

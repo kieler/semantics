@@ -22,7 +22,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.eso;bundle-version="0.2.1",
  de.cau.cs.kieler.core.model;bundle-version="0.7.1"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.eso.vhdl,
  de.cau.cs.kieler.eso.vhdl.xtend
 Import-Package: de.cau.cs.kieler.eso.vhdl.xtend

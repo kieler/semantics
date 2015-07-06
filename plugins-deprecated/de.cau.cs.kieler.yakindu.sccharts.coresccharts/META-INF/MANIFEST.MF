@@ -4,7 +4,7 @@ Bundle-Name: SCCharts-to-SCCharts Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.yakindu.sccharts.coresccharts;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.yakindu.sccharts.coresccharts.SCChartsPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
@@ -19,7 +19,7 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core.model;bundle-version="0.7.1",
  de.cau.cs.kieler.yakindu.sccharts.model.stext,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.ui
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: com.google.inject;version="1.3.0",
  org.yakindu.sct.model.stext.resource.impl

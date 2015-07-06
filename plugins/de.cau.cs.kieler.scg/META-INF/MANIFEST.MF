@@ -5,7 +5,7 @@ Bundle-SymbolicName: de.cau.cs.kieler.scg;singleton:=true
 Bundle-Version: 0.1.1.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: de.cau.cs.kieler.scg.SCGPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
@@ -23,7 +23,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.kitt
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.scg,
  de.cau.cs.kieler.scg.analyzer,
  de.cau.cs.kieler.scg.extensions,

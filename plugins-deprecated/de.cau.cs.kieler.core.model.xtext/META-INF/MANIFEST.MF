@@ -4,7 +4,7 @@ Bundle-Name: KIELER Xtext Modeling Utility
 Bundle-SymbolicName: de.cau.cs.kieler.core.model.xtext
 Bundle-Version: 0.3.3.qualifier
 Bundle-Activator: de.cau.cs.kieler.core.model.xtext.ModelXtextPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.xtext;bundle-version="2.1.0",
@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core,
  de.cau.cs.kieler.core.kivi,
  de.cau.cs.kieler.core.model
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.core.model.xtext,
  de.cau.cs.kieler.core.model.xtext.effects,

@@ -24,12 +24,12 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.scl,
  de.cau.cs.kieler.kitt
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: de.cau.cs.kieler.core.model.handlers,
  de.cau.cs.kieler.core.model.util,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Export-Package: de.cau.cs.kieler.esterel.scl.transformations
 

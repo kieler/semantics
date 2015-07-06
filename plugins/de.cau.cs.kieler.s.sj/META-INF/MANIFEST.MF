@@ -4,7 +4,7 @@ Bundle-Name: KIELER S 2 SJ Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.s.sj;singleton:=true
 Bundle-Version: 0.1.2.qualifier
 Bundle-Activator: de.cau.cs.kieler.s.sj.S2SJPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.core.model;bundle-version="0.7.1"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.s.sj,
  de.cau.cs.kieler.s.sj.xtend
