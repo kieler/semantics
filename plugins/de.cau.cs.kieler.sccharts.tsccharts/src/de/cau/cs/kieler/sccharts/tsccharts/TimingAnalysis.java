@@ -522,6 +522,7 @@ public class TimingAnalysis extends Job {
      *            A Mapping between Timing Program Points and Regions
      * @param rootState
      * @return
+     *        Returns a list of the Regions that are on the WCET path
      */
     private ArrayList<Region> extractTimingLabels(RequestType requestType,
             LinkedList<TimingRequestResult> resultList,
@@ -624,6 +625,10 @@ public class TimingAnalysis extends Job {
             Region childRegion = regionListIterator.next();
             // Add the region's own flat value to its deep value
             Integer flatTiming = flatValues.get(childRegion);
+            // It is possible that there is no flat timing value stored for a region, set to zero
+            if (flatTiming == null) {
+                flatTiming = 0;
+            }
             if (deepValues.get(childRegion) != null) {
                 deepValues.put(childRegion, deepValues.get(childRegion) + flatTiming);
             } else {
