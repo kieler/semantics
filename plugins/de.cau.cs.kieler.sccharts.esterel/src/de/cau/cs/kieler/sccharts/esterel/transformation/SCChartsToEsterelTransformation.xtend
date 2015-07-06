@@ -56,9 +56,8 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
 		module.interface = createModuleInterface(model.declarations)
 
 		//creates the module body of the Esterel program
-		val body = esterel.createModuleBody
-		body.statements.add(createStatementForState(model))
-		module.body = body
+		module.body = createModuleBody(model)
+
 		module.end = "end module"
 
 		program
@@ -96,43 +95,60 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
 		mi
 	}
 
-	public def Statement createStatementForState(State rootState) {
-		val block = esterel.createBlock
+	public def ModuleBody createModuleBody(State model) {
+		val body = esterel.createModuleBody
+		body.statements.add(transformStates(model, true))
+		body
+	}
+
+	public def Statement transformStates(State rootState, boolean root) {
+
 		val seq = esterel.createSequence
-		block.statement = seq
 
 		val regions = rootState.regions
 		rootState.outgoingTransitions
 
 		if (regions.size == 0) {
 			if (rootState.outgoingTransitions.size > 0) {
-				seq.list.add(createStatementForTransitions(rootState.outgoingTransitions))
+				seq.list.add(transformTransitions(rootState.outgoingTransitions))
+			} else if (rootState.outgoingTransitions.size == 0 && !rootState.final) {
+				seq.list.add(esterel.createHalt)
+			} else {
+				seq.list.add(esterel.createNothing)
 			}
-		} else if (regions.size == 1) {
-			var states = rootState.eAllContents.filter(State).toList
-
-			var State initState
-			for (state : states) {
-				if (state.initial) {
-					initState = state
-				}
-			}
-			seq.list.add(createStatementForTransitions(initState.outgoingTransitions))
-
 		} else {
-			for (reg : regions) {
+
+			if (regions.size == 1) {
 				var states = rootState.eAllContents.filter(State).toList
 
 				var State initState
 				for (state : states) {
-					if (state.initial && state.parentRegion == reg) {
+					if (state.initial) {
 						initState = state
 					}
 				}
+				seq.list.add(transformStates(initState, false))
 
-				// TODO: Parallel operator must be implemented here
-				seq.list.add(createStatementForTransitions(initState.outgoingTransitions))
+			} else {
 
+				val parblock = esterel.createBlock
+				val par = esterel.createParallel
+				parblock.statement = par
+
+				for (reg : regions) {
+					var states = rootState.eAllContents.filter(State).toList
+
+					var State initState
+					for (state : states) {
+						if (state.initial && state.parentRegion == reg) {
+							initState = state
+						}
+					}
+
+					par.list.add(transformStates(initState, false))
+
+				}
+				seq.list.add(parblock)
 			}
 		}
 
@@ -140,40 +156,69 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
 			val state = esterel.createNothing
 			seq.list.add(state)
 		}
+
+		val block = esterel.createBlock
+		
+		var decls = rootState.eAllContents.filter(Declaration).toList
+
+		if (!root && decls.size > 0) {
+			val localSignals = esterel.createLocalSignalDecl
+			val localSignal = esterel.createLocalSignal
+			localSignals.signalList = localSignal
+
+			for (decl : rootState.declarations) {
+				for (valObj : decl.valuedObjects) {
+					val signal = kExpression.createISignal => [
+						name = valObj.name
+						channelDescr = esterel.createChannelDescription => [
+							type = kExpression.createTypeIdentifier => [
+								type = ValueType::getByName(decl.type.getName)
+							]
+						]
+					]
+					localSignal.signal.add(signal)
+				}
+			}
+			localSignals.statement = seq
+			block.statement = localSignals
+		} else {
+			block.statement = seq
+		}	
+
 		block
 	}
 
 	//creates Esterel Statement for the Transition
-	def Statement createStatementForTransitions(EList<Transition> transitions) {
+	def Statement transformTransitions(EList<Transition> transitions) {
 		val block = esterel.createBlock
 		val seq = esterel.createSequence
 		block.statement = seq
-		val awaitBlock = esterel.createAwait
-		seq.list.add(awaitBlock)
-		val awaitBody = esterel.createAwaitCase
-		awaitBlock.body = awaitBody
-		var awaitCases = awaitBody.cases
-		awaitBody.end = "end"
 
+		//		val awaitBlock = esterel.createAwait
+		//		seq.list.add(awaitBlock)
+		//		val awaitBody = esterel.createAwaitCase
+		//		awaitBlock.body = awaitBody
+		//		var awaitCases = awaitBody.cases
+		//		awaitBody.end = "end"
 		for (trans : transitions) {
 
-			if (trans.trigger != null) {
-				val oneCase = esterel.createAbortCaseSingle
-				awaitCases.add(oneCase)
-				oneCase.delay = esterel.createDelayExpr => [
-					event = esterel.createDelayEvent => [
-						FB = "["
-						EB = "]"
-						expr = transformExp(trans.trigger)					
-					]
-					isImmediate = trans.immediate
-				]
-			} else {
-			}
+			//			if (trans.trigger != null) {
+			//				val oneCase = esterel.createAbortCaseSingle
+			//				awaitCases.add(oneCase)
+			//				oneCase.delay = esterel.createDelayExpr => [
+			//					event = esterel.createDelayEvent => [
+			//						FB = "["
+			//						EB = "]"
+			//						expr = transformExp(trans.trigger)					
+			//					]
+			//					isImmediate = trans.immediate
+			//				]
+			//			} else {
+			//			}
+			seq.list.add(transformStates(trans.targetState, false))
 		}
 		while (seq.list.length < 2) {
-			val state = esterel.createNothing
-			seq.list.add(state)
+			seq.list.add(esterel.createNothing)
 		}
 		block
 	}
@@ -194,8 +239,6 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
 
 		state
 	}
-
-	
 
 	def dispatch ConstantExpression transformExp(de.cau.cs.kieler.core.kexpressions.BoolValue exp) {
 		esterel.createConstantExpression => [
@@ -232,6 +275,5 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
 			}
 		]
 	}
-	
 
 }

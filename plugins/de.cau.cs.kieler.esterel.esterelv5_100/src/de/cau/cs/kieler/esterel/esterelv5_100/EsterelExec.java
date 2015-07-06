@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,25 +36,29 @@ public final class EsterelExec {
 		}
 		stdin.close();
 		
-		File c;
-		try {
-			c = new File(new URI("file:/home/sna/sscc_out.c"));
-			while (!c.exists()) {}
-			FileReader file = new FileReader(c);
-			int t;	
-			BufferedReader br = new BufferedReader(file);
-			while ((t = br.read()) != (-1)) {
-				output.write(t);
-			}
-			//c.delete();
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println(output.toString());		
-		
-		return new ByteArrayInputStream(output.toByteArray());
+//		File c;
+//		try {
+//			c = new File(new URI("file:/home/sna/sscc_out.c"));
+//			while (!c.exists()) {}
+//			FileReader file = new FileReader(c);
+//			int t;	
+//			BufferedReader br = new BufferedReader(file);
+//			while ((t = br.read()) != (-1)) {
+//				output.write(t);
+//			}
+//			//c.delete();
+//		} catch (URISyntaxException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println(output.toString());
+		File c = new File("sscc_out.c");
+		while(!c.exists()) {}		
+		FileInputStream code = new FileInputStream("sscc_out.c");
+		c.delete();
+				
+		return code;
 	}
 
 	public static InputStream exec(final String cmd, final InputStream input,

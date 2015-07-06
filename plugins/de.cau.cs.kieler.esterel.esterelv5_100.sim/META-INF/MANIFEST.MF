@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Esterel Simulator (v5_100)
+Bundle-SymbolicName: de.cau.cs.kieler.esterel.esterelv5_100.sim;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.esterel.esterelv5_100.sim.Esterelv5_100SimPlugin
+Bundle-Vendor: Kiel University
+Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.7.2",
+ org.eclipse.xtext.xbase;bundle-version="2.7.2",
+ org.eclipse.xtend2.lib;bundle-version="2.7.2",
+ de.cau.cs.kieler.esterel;bundle-version="0.3.3",
+ de.cau.cs.kieler.esterel.sim;bundle-version="0.1.0",
+ de.cau.cs.kieler.esterel.kexpressions.ui;bundle-version="0.4.3",
+ de.cau.cs.kieler.sim.signals;bundle-version="0.1.3",
+ de.cau.cs.kieler.sim.benchmark;bundle-version="0.1.2",
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent;bundle-version="0.4.3",
+ de.cau.cs.kieler.esterel.esterelv5_100;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.esterel.esterelv5_100.sim

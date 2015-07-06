@@ -201,6 +201,7 @@ public class Esterelv5_100 {
 		InputStream sc = Esterelv5_100.runLCSC(lc);
 		// InputStream oc = Esterelv5_100.runSCOC(sc);
 		// InputStream c = Esterelv5_100.runOCC(oc);
+		// InputStream c = Esterelv5_100.runSCC(sc);
 		InputStream ssc = Esterelv5_100.runSCSSC(sc);
 		InputStream c = Esterelv5_100.runSSCC(ssc);
 		return runCODEGEN(c, outFile);
