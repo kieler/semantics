@@ -9,5 +9,27 @@
             name="Esterelv5_100 Simulator">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/esterelv5_100.execution">
+         <editor
+               id="de.cau.cs.kieler.esterel.Esterel"
+               name="KIELER Esterel Editor"
+               priority="100">
+         </editor>
+      </executionFile>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/esterelv5_100_no_visualization.execution">
+         <editor
+               id="de.cau.cs.kieler.esterel.Esterel"
+               name="KIELER Esterel Editor"
+               priority="101">
+         </editor>
+      </executionFile>
+   </extension>
 
 </plugin>
