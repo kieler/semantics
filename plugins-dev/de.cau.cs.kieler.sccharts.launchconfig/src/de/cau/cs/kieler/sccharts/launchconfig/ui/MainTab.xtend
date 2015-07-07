@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.launchconfig.ui
 
-import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
 import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
@@ -21,7 +20,6 @@ import de.cau.cs.kieler.sccharts.launchconfig.common.ui.IProjectHolder
 import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
 import java.util.ArrayList
 import java.util.List
-import java.util.Set
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.debug.internal.ui.SWTFactory
@@ -51,35 +49,14 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
     private var ComboViewer environment
 
     /**
-     * Control to select the target transformation (e.g. Java Code or C Code).
-     */
-    private var ComboViewer targetLanguage
-
-    /**
-     * Control to select the target language file extension (e.g. '.java' for Java).
-     */
-    private var Text targetLanguageFileExtension
-
-    /**
      * Input field for the project name.
      */
     private var Text project
-
+    
     /**
-     * Input field for the file used as template for the sct compilation output.
+     * Input field for the main file.
      */
-    private var Text targetTemplate
-
-    /**
-     * Input field for the file used as wrapper code template.
-     * The wrapper code will be inserted to this file template.
-     */
-    private var Text wrapperCodeTemplate
-
-    /**
-     * Input field for the directory with the wrapper code snippets.
-     */
-    private var Text wrapperCodeSnippets
+    private var Text mainFile
 
     /** 
      * {@inheritDoc}
@@ -92,10 +69,8 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         comp.setFont(parent.getFont())
 
         createProjectComponent(comp)
+        createMainFileComponent(comp)
         createEnvironmentComponent(comp)
-        createTargetComponent(comp)
-        createTargetTemplateComponent(comp)
-        createWrapperCodeComponent(comp)
     }
 
     /**
@@ -113,6 +88,18 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         })
     }
 
+    
+    private def createMainFileComponent(Composite parent) {
+        val group = UIUtil.createGroup(parent, "Main file", 3)
+
+        mainFile = UIUtil.createTextField(group, "", UIUtil.RESOURCE_BUTTON, this)
+        mainFile.addModifyListener(new ModifyListener() {
+            override modifyText(ModifyEvent e) {
+                updateLaunchConfigurationDialog()
+            }
+        })
+    }
+    
     private def createEnvironmentComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Environment", 1)
 
@@ -136,72 +123,6 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         });
     }
 
-    /**
-     * Creates a group and composite with the target language selection controls.
-     */
-    private def createTargetComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Target", 1)
-
-        // ComboViewer
-        targetLanguage = UIUtil.createKiCoTargetsCombo(group)
-        targetLanguage.addSelectionChangedListener(new ISelectionChangedListener {
-
-            override selectionChanged(SelectionChangedEvent event) {
-                updateLaunchConfigurationDialog()
-            }
-        })
-
-        // File extension
-        val comp = UIUtil.createComposite(group, 2)
-
-        targetLanguageFileExtension = UIUtil.createTextField(comp, "File extension", UIUtil.NONE)
-        targetLanguageFileExtension.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                updateLaunchConfigurationDialog()
-            }
-        })
-    }
-
-    /**
-     * Creates a group and composite with the target template input field and a button.
-     * The button opens a file dialog to fill the input field.
-     */
-    private def createTargetTemplateComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "SCT output template", 2)
-
-        // Text
-        targetTemplate = UIUtil.createTextField(group, null, UIUtil.RESOURCE_BUTTON, this)
-        targetTemplate.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                updateLaunchConfigurationDialog()
-            }
-        })
-    }
-
-    /**
-     * Creates a group and composite with the input controls for wrapper code generation. 
-     */
-    private def createWrapperCodeComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Wrapper code generation", 3)
-
-        // Input file
-        wrapperCodeTemplate = UIUtil.createTextField(group, "Input file", UIUtil.RESOURCE_BUTTON, this)
-        wrapperCodeTemplate.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                updateLaunchConfigurationDialog()
-            }
-        })
-
-        // Directory with snippet definitions
-        wrapperCodeSnippets = UIUtil.createTextField(group, "Annotation snippets directory", UIUtil.CONTAINER_BUTTON,
-            this)
-        wrapperCodeSnippets.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                updateLaunchConfigurationDialog()
-            }
-        })
-    }
-
     /** 
      * {@inheritDoc}
      */
@@ -214,10 +135,13 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
     override void initializeFrom(ILaunchConfiguration configuration) {
         // Project
         project.text = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
-
+        
+        // Main file
+        mainFile.text = configuration.getAttribute(LaunchConfiguration.ATTR_MAIN_FILE, "")
+        
         // Environment
         useEnvironment.selection = configuration.getAttribute(LaunchConfiguration.ATTR_USE_ENVIRONMENT, false)
-
+        
         if (environment.input != null) {
             val loadedEnvironmentName = configuration.getAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, "")
             for (env : environment.input as ArrayList<EnvironmentData>) {
@@ -226,26 +150,6 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
                 }
             }
         }
-
-        // Target language
-        if (targetLanguage.input != null) {
-            val loadedTargetLanguage = configuration.getAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, "")
-            for (transformation : targetLanguage.input as Set<Transformation>) {
-                if (transformation.id == loadedTargetLanguage) {
-                    targetLanguage.selection = new StructuredSelection(transformation)
-                }
-            }
-        }
-
-        targetLanguageFileExtension.text = configuration.getAttribute(
-            LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
-
-        // Target template
-        targetTemplate.text = configuration.getAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, "")
-
-        // Wrapper code
-        wrapperCodeTemplate.text = configuration.getAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, "")
-        wrapperCodeSnippets.text = configuration.getAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, "")
     }
 
     /** 
@@ -254,6 +158,9 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
     override void performApply(ILaunchConfigurationWorkingCopy configuration) {
         // Project
         configuration.setAttribute(LaunchConfiguration.ATTR_PROJECT, project.text)
+        
+        // Main file
+        configuration.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, mainFile.text)
 
         // Environment
         configuration.setAttribute(LaunchConfiguration.ATTR_USE_ENVIRONMENT, useEnvironment.selection)
@@ -262,25 +169,6 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         if (env != null) {
             configuration.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, env.name)
         }
-
-        // Target selection
-        val selection = targetLanguage.selection as IStructuredSelection
-        if (selection != null) {
-            val trans = selection.firstElement as Transformation
-            if (trans != null) {
-                configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, trans.id)
-            }
-        }
-
-        configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION,
-            targetLanguageFileExtension.text)
-
-        // Target template.
-        configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, targetTemplate.text)
-
-        // Wrapper code
-        configuration.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, wrapperCodeTemplate.text)
-        configuration.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, wrapperCodeSnippets.text)
 
         // Check the user input for consistency
         checkConsistency()
@@ -296,21 +184,16 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         errorMessage = {
             // Project is not empty
             if (project.text == null || project.text == "") {
-                "Project not specified"
+                "Project not specified."
             } else {
                 // Project exist
                 val proj = LaunchConfiguration.findProject(project.text)
                 if (proj == null) {
-                    "Project does not exist"
-                } else {
-
-                    // Resources in project exist
-                    if (targetTemplate.text != "" && proj.findMember(targetTemplate.text) == null) {
-                        "Specified target template does not exist in this project"
-                    } else if (wrapperCodeTemplate.text != "" && proj.findMember(wrapperCodeTemplate.text) == null) {
-                        "Specified wrapper code template does not exist in this project"
-                    } else if (wrapperCodeSnippets.text != "" && proj.findMember(wrapperCodeSnippets.text) == null) {
-                        "Specified wrapper code snippet directory does not exist in this project"
+                    "Project does not exist."
+                }else{
+                    // Main file exists
+                    if(mainFile.text != "" && proj.findMember(mainFile.text) == null){
+                        "Main file does not exist in the specified project."
                     }
                 }
             }
@@ -321,8 +204,7 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      * Enable the controls iff the project is set correctly.
      */
     private def updateEnabled() {
-        val List<Control> controls = #[targetTemplate, targetLanguage.combo, targetLanguageFileExtension,
-            wrapperCodeTemplate, wrapperCodeSnippets]
+        val List<Control> controls = #[]
         val enabled = (LaunchConfiguration.findProject(project.text) != null) && !useEnvironment.selection
         UIUtil.enableControlsOnSameLevel(controls, enabled)
 

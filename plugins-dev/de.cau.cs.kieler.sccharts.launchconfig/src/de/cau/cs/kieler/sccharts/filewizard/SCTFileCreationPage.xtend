@@ -20,13 +20,14 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage
 import org.eclipse.ui.ide.IDE
-import org.eclipse.ui.internal.ide.misc.ResourceAndContainerGroup
 
 /**
  * @author aas
  *
  */
 class SCTFileCreationPage extends WizardNewFileCreationPage {
+    
+    protected Composite parent
     
     new(String pageName, IStructuredSelection selection) {
         super(pageName, selection)
@@ -36,15 +37,13 @@ class SCTFileCreationPage extends WizardNewFileCreationPage {
         fileExtension = "sct"
     }
     
-    private Composite parent
-    
     public override createControl(Composite parent){
         super.createControl(parent)
         this.parent = parent
     }
     
-    def refreshResources(){
-        control.dispose
+    public def recreate(){
+        control.dispose()
         
         createControl(parent)
         
@@ -53,11 +52,11 @@ class SCTFileCreationPage extends WizardNewFileCreationPage {
         parent.update()
     }
     
-    def boolean isOk(){
+    public def boolean isOk(){
         return validatePage()
     }
     
-    def boolean performFinish(){
+    public def boolean performFinish(){
         val file = createNewFile()
         
         // Add default contents to sccharts
@@ -69,7 +68,7 @@ class SCTFileCreationPage extends WizardNewFileCreationPage {
         return true
     }
     
-    private def openFileInEditor(IFile file){
+    protected def openFileInEditor(IFile file){
         val wb = PlatformUI.getWorkbench();
         val win = wb.getActiveWorkbenchWindow();
         val page = win.getActivePage();
@@ -77,17 +76,16 @@ class SCTFileCreationPage extends WizardNewFileCreationPage {
     }
     
     /**
-     * Write the default contents for an sct file to a file.
+     * Writes the default contents for an sct file.
      */
-    private def writeDefaultContents(IFile file){
-        // Better copy This should be a default file 
+    protected def writeDefaultContents(IFile file){
         val writer = new PrintWriter(file.location.toOSString, "UTF-8");
         writer.println(defaultContents.replace("${name}", file.name.replace(".sct","") ));
         writer.close();
     }
     
     // This should really be loaded from a configurable file. 
-    private val defaultContents = ""  
+    protected val defaultContents = ""  
     + "scchart ${name} {\n"
     + "    \n"
     + "    initial state init;\n"

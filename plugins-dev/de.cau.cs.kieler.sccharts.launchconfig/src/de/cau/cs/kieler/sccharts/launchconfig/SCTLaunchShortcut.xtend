@@ -1,20 +1,26 @@
 package de.cau.cs.kieler.sccharts.launchconfig
 
+import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
+import de.cau.cs.kieler.sccharts.launchconfig.common.SCTCompilationData
 import java.util.ArrayList
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunchConfiguration
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.debug.ui.DebugUITools
 import org.eclipse.debug.ui.ILaunchShortcut
 import org.eclipse.jface.viewers.ISelection
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.ui.IEditorPart
+import org.eclipse.ui.PlatformUI
+import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.ResourceUtil
-import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
-import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
-import org.eclipse.core.resources.IProject
-import de.cau.cs.kieler.sccharts.launchconfig.common.SCTCompilationData
+import org.eclipse.core.resources.IResource
+import org.eclipse.swt.SWT
+import org.eclipse.jface.window.Window
 
 class SCTLaunchShortcut implements ILaunchShortcut {
     
@@ -105,7 +111,14 @@ class SCTLaunchShortcut implements ILaunchShortcut {
     }
     
     private def initializeConfiguration(ILaunchConfigurationWorkingCopy config){
+        // Set project
         config.setAttribute(LaunchConfiguration.ATTR_PROJECT, project.name)
+        
+        // Set main file of launch config as main file of project
+        var mainFile = project.getPersistentProperty(LaunchConfigPlugin.MAIN_FILE_QUALIFIER)
+        if(mainFile == null)
+            mainFile = getMainFileFromDialog()
+        config.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, mainFile)
         
         // Set environment of launch config as environment of project
         val environmentName = project.getPersistentProperty(LaunchConfigPlugin.ENVIRIONMENT_QUALIFIER)
@@ -115,6 +128,23 @@ class SCTLaunchShortcut implements ILaunchShortcut {
             config.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, env.name)
         }
     } 
+    
+    private def String getMainFileFromDialog(){
+        val dialog = new ResourceSelectionDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+            project,
+            "Select the main file of the project or cancel if the project does not need one.")
+        dialog.title = "Main File Selection"
+        
+        val returnCode = dialog.open()
+        if(returnCode == Window.OK){
+            val results = dialog.result
+            if (results != null && results.size > 0) {
+                val result = results.get(0) as IResource
+                return result.projectRelativePath.toOSString
+            }
+        }
+        return ""
+    }
     
     private def getLaunchConfigurations(){
         val result = new ArrayList<ILaunchConfiguration>()

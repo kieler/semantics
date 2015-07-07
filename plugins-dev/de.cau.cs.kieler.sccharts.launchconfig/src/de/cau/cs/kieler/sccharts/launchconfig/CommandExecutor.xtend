@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.launchconfig
 
+import java.io.File
 import java.util.ArrayList
 import java.util.List
 import java.util.regex.Pattern
@@ -23,7 +24,6 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunch
-import java.io.File
 
 /**
  * @author aas
@@ -40,9 +40,6 @@ class CommandExecutor {
     }
     
     public def IStatus execute(Command... commands){
-        // Set launched_project_loc variable.
-        setVariables()
-        
         // Execute every command squentially.
         for(c : commands){
             // Execute and proceed only if no error occured.
@@ -93,19 +90,5 @@ class CommandExecutor {
             list.add(m.group(1).replace("\"", ""))
         }
         return list
-    }
-
-    private def setVariables() {
-        val man = VariablesPlugin.getDefault.stringVariableManager
-        var ValueVariable variable = null;
-        val variables = man.variables.filter[it.name == LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE]
-        if (variables.isEmpty) {
-            variable = new ValueVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE, "Fully qualified path to the launched SCT project",
-                true, project.location.toOSString)
-            man.addVariables(#[variable])
-        } else {
-            variable = variables.get(0) as ValueVariable
-            variable.value = project.location.toOSString
-        }
     }
 }

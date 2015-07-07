@@ -2,6 +2,7 @@ package de.cau.cs.kieler.sccharts.launchconfig
 
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
 import de.cau.cs.kieler.sccharts.launchconfig.common.SCTCompilationData
 import freemarker.template.Configuration
 import freemarker.template.Template
@@ -12,6 +13,7 @@ import java.io.FileReader
 import java.io.FileWriter
 import java.io.PrintWriter
 import java.util.List
+import org.eclipse.core.internal.variables.ValueVariable
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
@@ -20,6 +22,7 @@ import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
+import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate
@@ -27,10 +30,13 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
-import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
+import org.eclipse.core.variables.IStringVariableManager
+import java.util.ArrayList
+import org.eclipse.core.variables.IValueVariable
 
 class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
+    // Attribute names
     public static val ATTR_COMPILE_COMMAND = "de.cau.cs.kieler.scchart.launchconfig.execute.command.compile"
     public static val ATTR_DEPLOY_COMMAND = "de.cau.cs.kieler.scchart.launchconfig.execute.command.deploy"
     public static val ATTR_RUN_COMMAND = "de.cau.cs.kieler.scchart.launchconfig.execute.command.run"
@@ -38,6 +44,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val ATTR_SCT_FILES = "de.cau.cs.kieler.scchart.launchconfig.sct.files"
 
     public static val ATTR_PROJECT = "de.cau.cs.kieler.scchart.launchconfig.main.project"
+    public static val ATTR_MAIN_FILE = "de.cau.cs.kieler.scchart.launchconfig.main.file"
 
     public static val ATTR_USE_ENVIRONMENT = "de.cau.cs.kieler.scchart.launchconfig.main.environment.use"
     public static val ATTR_ENVIRONMENT = "de.cau.cs.kieler.scchart.launchconfig.main.environment"
@@ -51,8 +58,20 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     public static val BUILD_DIRECTORY = "sct-gen"
 
+    // Variable names
     public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
-    public static val LAUNCHED_PROJECT_PLACEHOLDER = "${" + LAUNCHED_PROJECT_VARIABLE + "}"
+    
+    public static val MAIN_FILE_NAME_VARIABLE = "main_name"
+    public static val MAIN_FILE_PATH_VARIABLE = "main_path"
+    public static val MAIN_FILE_LOCATION_VARIABLE = "main_loc"
+    public static val MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE = "main_name_no_ext"
+
+    public static val COMPILED_MAIN_FILE_NAME_VARIABLE = "compiled_main_name"
+    public static val COMPILED_MAIN_FILE_PATH_VARIABLE = "compiled_main_path"
+    public static val COMPILED_MAIN_FILE_LOCATION_VARIABLE = "compiled_main_loc"
+    public static val COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE = "compiled_main_name_no_ext"
+
+    var IStringVariableManager variableManager
 
     // Objects from launch
     var ILaunchConfiguration configuration
@@ -62,6 +81,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     // Objects loaded from configuration
     var IProject project
+    var String mainFile
     var String targetLanguage
     var String targetTemplate
     var String wrapperCodeTemplate
@@ -100,7 +120,11 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         // Get data from config.
         loadSettingsFromConfiguration()
+        
         if (project != null) {
+            // Set variables (e.g. launched_project_loc, main_name, main_loc, ...)
+            setVariables()
+            
             // Create jobs.
             val datas = SCTCompilationData.loadAllFromConfiguration(configuration)
             compileJob = getCompileJob(datas)
@@ -164,9 +188,13 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 val startTime = System.currentTimeMillis()
 
                 try {
-                    val generator = new WrapperCodeGenerator(project, wrapperCodeTemplate, wrapperCodeSnippetDirectory,
-                        computeTargetPath(wrapperCodeTemplate))
+                    val generator = new WrapperCodeGenerator(project,
+                        variableManager.performStringSubstitution(wrapperCodeTemplate),
+                        variableManager.performStringSubstitution(wrapperCodeSnippetDirectory),
+                        computeTargetPath(variableManager.performStringSubstitution(wrapperCodeTemplate)))
+                        
                     generator.generateWrapperCode(datas)
+                    
                 } catch (Exception e) {
                     consoleStream.println(e.message + "\n")
                     return Status.CANCEL_STATUS
@@ -266,7 +294,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         if (targetTemplate != "") {
             // Use template
-            val reader = new FileReader(new File(project.location + "/" + targetTemplate))
+            val reader = new FileReader(new File(project.location + "/" + variableManager.performStringSubstitution(targetTemplate)))
             val cfg = new Configuration(new Version(2, 3, 0))
             cfg.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
 
@@ -300,6 +328,10 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         val projectName = configuration.getAttribute(ATTR_PROJECT, "")
         project = findProject(projectName)
 
+        // Main file
+        mainFile = configuration.getAttribute(ATTR_MAIN_FILE, "")
+        println("main:"+mainFile)
+        
         // Environment
         val useEnvironment = configuration.getAttribute(ATTR_USE_ENVIRONMENT, false)
         if (useEnvironment) {
@@ -341,6 +373,55 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             compileCommand = configuration.getAttribute(ATTR_COMPILE_COMMAND, "")
             deployCommand = configuration.getAttribute(ATTR_DEPLOY_COMMAND, "")
             runCommand = configuration.getAttribute(ATTR_RUN_COMMAND, "")
+        }
+    }
+
+    private def setVariables() {
+        variableManager = VariablesPlugin.getDefault.stringVariableManager
+        
+        // Project
+        setVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE, project.location.toOSString,
+                "Fully qualified path to the launched SCT application")
+        
+        // Main file
+        setVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE, new File(mainFile).name,
+                "Name of the main file of the launched SCT application")
+        setVariable(LaunchConfiguration.MAIN_FILE_LOCATION_VARIABLE, new File(project.location+"/"+mainFile).absolutePath,
+                "Fully qualified location of the main file of the launched SCT application")
+        setVariable(LaunchConfiguration.MAIN_FILE_PATH_VARIABLE, mainFile,
+                "Project relative path of the main file of the launched SCT application")
+        setVariable(LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, stripExtension(new File(mainFile).name),
+                "Project relative path of the main file of the launched SCT application without file extension")
+        
+        
+        // Compiled main file
+        val mainTarget = computeTargetPath(mainFile)
+        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE, new File(mainTarget).name,
+                "Name of the compiled main file of the launched SCT application")
+        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE, new File(project.location+"/"+mainTarget).absolutePath,
+                "Fully qualified location of the compiled main file of the launched SCT application")
+        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE, mainTarget,
+                "Project relative path of the compiled main file of the launched SCT application")
+        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, stripExtension(new File(mainTarget).name),
+                "Project relative path of the compiled main file of the launched SCT application without file extension")
+    }
+    
+    private def stripExtension(String path){
+        val index = path.lastIndexOf(".")
+        if(index != -1)
+            return path.substring(0, index)
+        else 
+            return path
+    }
+    
+    private def setVariable(String name, String value, String description){
+        var variable = variableManager.getValueVariable(name)
+        if(variable == null){
+            variable = variableManager.newValueVariable(name, description, false, value)
+            variableManager.addVariables(#[variable])
+        }else{
+            variable.description = description
+            variable.value = value
         }
     }
 

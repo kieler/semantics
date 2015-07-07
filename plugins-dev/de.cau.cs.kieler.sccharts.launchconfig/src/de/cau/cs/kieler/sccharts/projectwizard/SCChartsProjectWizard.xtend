@@ -13,21 +13,24 @@
  */
 package de.cau.cs.kieler.sccharts.projectwizard
 
-import de.cau.cs.kieler.sccharts.filewizard.SCTFileCreationPage
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
 import de.cau.cs.kieler.sccharts.launchconfig.common.ExtensionLookupUtil
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.InputStream
 import java.net.URL
 import org.apache.commons.io.FileUtils
+import org.apache.commons.io.IOUtils
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.FileLocator
+import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
@@ -40,8 +43,6 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchWizard
 import org.osgi.framework.Bundle
-import org.eclipse.core.resources.IFile
-import org.eclipse.xtext.util.StringInputStream
 
 /**
  * @author aas
@@ -55,9 +56,23 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
     private var IProject[] projectsBeforeWizard
     private var IProject newlyCreatedProject
 
-    private var MainPage mainPage
-    private var SCTFileCreationPage sctFilePage
+    private var IFile createdMainFile
 
+    private var MainPage mainPage
+    private var OptionalSCTFileCreationPage sctFilePage
+    private var OptionalMainFileCreationPage mainFilePage
+
+    override addPages() {
+        mainPage = new MainPage("SCChart Project");
+        addPage(mainPage);
+
+        sctFilePage = new OptionalSCTFileCreationPage("SCCharts File", selection)
+        addPage(sctFilePage)
+        
+        mainFilePage = new OptionalMainFileCreationPage("Main File", selection)
+        addPage(mainFilePage)
+    }
+    
     override createPageControls(Composite pageContainer) {
         super.createPageControls(pageContainer)
 
@@ -66,45 +81,59 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
         dialog.addPageChangingListener(new IPageChangingListener() {
 
             override handlePageChanging(PageChangingEvent event) {
-                // From main to file creation
+                // From main page to sct file creation
                 // -> Start other wizard
                 if (event.currentPage == mainPage && event.targetPage == sctFilePage) {
                     startWizard(mainPage.getEnvironmentWizardClassName())
 
-                    sctFilePage.refreshResources
-                    sctFilePage.fileName = ""
-
-                    // Don't continue to next page if the other wizard was canceled 
-                    event.doit = (newlyCreatedProject != null)
-                }
-
+                    if(newlyCreatedProject != null){
+                        event.doit = true
+                        
+                        // Fill following pages with data from the newly created project
+                        sctFilePage.recreate()
+                        sctFilePage.setContainerFullPath(new Path(newlyCreatedProject.name))
+    
+                        mainFilePage.recreate()
+                        mainFilePage.setContainerFullPath(new Path(newlyCreatedProject.name))
+                        
+                        // Initialize pages with data from the environment's main file
+                        val env = mainPage.selectedEnvironment
+                        if(env.mainFile != ""){
+                            val file = new File(env.mainFile)
+                            mainFilePage.fileName = file.name
+                            
+                            // Set container for pages to directory of main file
+                            val fileDir = file.parent
+                            if(fileDir != null){
+                                val sourceDirectory = new Path(newlyCreatedProject.name+"/"+fileDir)
+                                sctFilePage.setContainerFullPath(sourceDirectory)
+                                mainFilePage.setContainerFullPath(sourceDirectory)
+                            }
+                        }
+                    } else {
+                        // Don't continue to next page if the other wizard was canceled 
+                        event.doit = false
+                    }
+                    
                 // From file creation to main
                 // -> Remove created project
-                if (event.currentPage == sctFilePage && event.targetPage == mainPage) {
-                    newlyCreatedProject.delete(true, true, null)
-                    newlyCreatedProject = null
+                } else if (event.currentPage == sctFilePage && event.targetPage == mainPage) {
+                    deleteCreatedProject()
                 }
             }
         })
     }
 
-    override addPages() {
-        mainPage = new MainPage("SCChart Project");
-        addPage(mainPage);
-
-        sctFilePage = new SCTFileCreationPage("SCCharts File", selection)
-        addPage(sctFilePage)
-    }
-
     override canFinish() {
-        return container.currentPage == sctFilePage
+        return ((container.currentPage == sctFilePage) && sctFilePage.isPageComplete)
+                || ((container.currentPage == mainFilePage) && mainFilePage.isPageComplete)
     }
 
     override performFinish() {
         // Create sct file from sct page settings
         createSCTFile()
-        // Create main file of environment
-        createMainFileOfEnvironment()
+        // Create main file
+        createMainFile()
         // Copy templates to new project
         initializeSnippetDirectory()
         // Add some data to properties of new project
@@ -113,30 +142,44 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
         return true;
     }
     
+    override performCancel(){
+        deleteCreatedProject()
+        return true
+    }
+    
+    private def deleteCreatedProject(){
+        if(newlyCreatedProject != null){
+            newlyCreatedProject.delete(true, true, null)
+            newlyCreatedProject = null
+        }
+    }
+    
     private def createSCTFile(){
         if (sctFilePage.isOk()) {
             sctFilePage.performFinish()
         }
     }
     
-    private def createMainFileOfEnvironment(){
-        val env = mainPage.getSelectedEnvironment()
-        if (env != null) {
-            if (env.mainFile != "" && env.mainFileOrigin != "") {
-
+    private def createMainFile() {
+        if (mainFilePage.isOk()) {
+            // Create file
+            createdMainFile = mainFilePage.createNewFile()
+            
+            // Fill with content from environment main file origin
+            val env = mainPage.getSelectedEnvironment()
+            if(env != null && env.mainFileOrigin != "" && createdMainFile != null){
                 var InputStream mainFileOriginInput = null
-                if (env.mainFileOrigin != "") {
-                    if (env.mainFileOrigin.trim().startsWith("platform:")) {
-                        val url = new URL(env.mainFileOrigin);
-                        mainFileOriginInput = url.openStream
-                    } else {
-                        mainFileOriginInput = new FileInputStream(env.mainFileOrigin)
-                    }
+                if (env.mainFileOrigin.trim().startsWith("platform:")) {
+                    val url = new URL(env.mainFileOrigin);
+                    mainFileOriginInput = url.openStream
+                } else {
+                    mainFileOriginInput = new FileInputStream(env.mainFileOrigin)
                 }
-
-                val mainFile = newlyCreatedProject.getFile(env.mainFile)
-                mainFile.create(mainFileOriginInput, false, null)
-                mainFileOriginInput.close()
+                
+                val out = new FileOutputStream(createdMainFile.location.toOSString);
+                IOUtils.copy(mainFileOriginInput, out);
+                mainFileOriginInput.close();
+                out.close();
             }
         }
     }
@@ -146,7 +189,6 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
         
         // If the snippet directory of the environment is an absolute path,
         // we do not copy anything to the new project to initialize it.
-        println(env.wrapperCodeSnippetsDirectory)
         if(env.wrapperCodeSnippetsDirectory ==  "" || new File(env.wrapperCodeSnippetsDirectory).isAbsolute)
             return;
         
@@ -167,9 +209,14 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
     }
 
     private def initializeProjectProperties(){
-        // Add used environment name to project properties
+        // Used environment name
         val env = mainPage.getSelectedEnvironment()
         newlyCreatedProject.setPersistentProperty(LaunchConfigPlugin.ENVIRIONMENT_QUALIFIER, env.name)
+        
+        // Created main file
+        if (createdMainFile != null){
+            newlyCreatedProject.setPersistentProperty(LaunchConfigPlugin.MAIN_FILE_QUALIFIER, createdMainFile.projectRelativePath.toOSString)
+        }
     }
 
     private def void createResource(IResource resource, InputStream stream) throws CoreException {

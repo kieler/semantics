@@ -13,6 +13,7 @@ class LaunchConfigPlugin extends AbstractUIPlugin implements BundleActivator  {
     // The ID for the environment of a project.
     // The ID is stored in the project's properties.
     public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(LaunchConfigPlugin.ID, "environment")
+    public static val MAIN_FILE_QUALIFIER = new QualifiedName(LaunchConfigPlugin.ID, "main.file")
     
     public static val ENVIRONMENTS_CSV_ATTR = "environments"
     public static val ENVIRONMENT_ATTR = "environment"
