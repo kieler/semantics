@@ -64,9 +64,6 @@ class SCPDGTransformation extends Transformation {
     // -- Globals 
     // -------------------------------------------------------------------------
     public static val ANNOTATION_SCPDGTRANSFORMATION = "scpdg"
-    public var boolean one = true
-    public var boolean two = false
-    public var boolean three = true
     private var Entry programEntry;
 
     // -------------------------------------------------------------------------
@@ -97,20 +94,16 @@ class SCPDGTransformation extends Transformation {
         scg.nodes.forEach [ node |
             node.createDependencies(scg, context)
         ]
+
+        scg.removeUselessNodes
+
+        scg.minimizeControlDependencies
+
+        scg.nodes.forEach [ node |
+            node.removeNext
+        ]
+
         
-        
-        if (one)
-            scg.removeUselessNodes
-
-        if (two)
-            scg.minimizeControlDependencies
-
-        if (three) {
-            scg.nodes.forEach [ node |
-                node.removeNext
-            ]
-
-        }
         
 
         //        programEntry.transformSCPDG(cfs, scg, context)
@@ -169,11 +162,8 @@ class SCPDGTransformation extends Transformation {
             if (node.isUseless) {
                 removedNodes.add(node)
                 node.incoming.forEach [ link |
-                        System.out.println("link found")
                     if (link instanceof Dependency)
                         link.newTargets((link.eContainer as Node), link.target.allUntilNextControlNode)
-                    else
-                        System.out.println("Nein")
                 ]
 
             }
@@ -425,25 +415,7 @@ class SCPDGTransformation extends Transformation {
         return newHashSet()
     }
 
-//    def private boolean existsNonTrivialDependency(Node root, Node target) {
-//        val dependend = new BasicEList
-//        root.dependencies.forEach [ depend |
-//            if (target != depend.target)
-//                dependend.add(depend.target)
-//        ]
-//
-//        while (!dependend.empty) {
-//            val node = dependend.head
-//            if (!node.dependencies.forall [ dependency |
-//                dependend.add(dependency.target)
-//                dependency.target != target
-//            ]) {
-//                return true
-//            }
-//            dependend.remove(node)
-//        }
-//        false
-//    }
+    
 
 //    def private SCGraph removeUnnecessaryDependencies(SCGraph scg) {
 //        scg.nodes.forEach [ node |
@@ -489,9 +461,64 @@ class SCPDGTransformation extends Transformation {
     }
     
     def private removeUnnecessaryControlDependencies(SCGraph scg){
+        
         scg.nodes.forEach[node|
-            node.dependencies.forEach[]
+            if(node.isControlNode){
+//                if(!node.dependencies.forall [ dependency |
+//                    if (dependency instanceof ControlDependency) {
+//                        dependency.target.isControlNode
+//                    } else {
+//                        true
+//                    }
+//                ]){
+//                    val toRemove = newHashSet()
+//                    node.dependencies.forEach[dependency|
+//                        if(dependency.target.isControlNode){
+//                            toRemove.add(dependency)
+//                        }
+//                    ]
+//                    toRemove.forEach[dependency|
+//                        node.dependencies.remove(dependency)
+//                    ]
+//                }
+                val Nodes = node.allUntilNextControlNode
+                Nodes.add(node)
+                Nodes.forEach[innerNode|
+                    val toRemove = newHashSet()
+                    innerNode.dependencies.forEach[dependency|
+                        if(Nodes.contains(dependency.target)){
+                            if(existsNonTrivialDependency(innerNode, dependency.target, Nodes)){
+                                toRemove.add(dependency)
+                            }
+                        }
+                    ]
+                    toRemove.forEach[dependency|
+                        node.dependencies.remove(dependency)
+                    ]
+                ]
+            }
         ]
+    }
+    
+    def private boolean existsNonTrivialDependency(Node root, Node target, Set<Node> NodeSet) {
+        val dependend = new BasicEList
+        root.dependencies.forEach [ depend |
+            if (target != depend.target && NodeSet.contains(depend.target))
+                dependend.add(depend.target)
+        ]
+
+        while (!dependend.empty) {
+            val node = dependend.head
+            if (!node.dependencies.forall [ dependency |
+                if(NodeSet.contains(dependency.target))
+                    dependend.add(dependency.target)
+                dependency.target != target
+            ]) {
+                return true
+            }
+            dependend.remove(node)
+        }
+        false
     }
     
     def private removeUselessConditionalDependencies(SCGraph scg) {
@@ -507,6 +534,7 @@ class SCPDGTransformation extends Transformation {
                                     uselessDependencies += thenDependency
                                     uselessDependencies += elseDependency
                                     independendNodes += elseDependency.target
+                                    independendNodes.addAll(elseDependency.target?.allUntilNextControlNode)
                                 }
                             }
                         ]
