@@ -271,6 +271,13 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.core.perspectives"
+         download-size="0"
+         install-size="0"a
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="de.cau.cs.kieler.kev"
          download-size="0"
          install-size="0"
@@ -549,13 +556,13 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="de.cau.cs.kieler.sccharts.kivi"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>         
+         unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.sccharts.sim.c"
