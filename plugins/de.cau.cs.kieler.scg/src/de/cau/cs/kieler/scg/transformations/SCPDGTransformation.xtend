@@ -337,6 +337,19 @@ class SCPDGTransformation extends Transformation {
         ret
     }
     
+    private def Set<Node> allUntilNextControlNodeUsingControlDependencies(Node node){
+        val ret = newHashSet()
+        val nextNodes = node.nextNodeControlDependencies
+        
+        nextNodes.forEach[nextNode|
+            ret += nextNode
+            if(!nextNode.isControlNode){
+               ret.addAll(nextNode.allUntilNextControlNode)
+            }
+        ]
+        ret
+    }
+    
     private def Set<Node> allUntilNextBreak(Node node){
         val ret = newHashSet()
         
@@ -372,6 +385,15 @@ class SCPDGTransformation extends Transformation {
             (node as Conditional).then = null
             (node as Conditional).^else = null
         }
+    }
+    
+    private def Set<Node> nextNodeControlDependencies(Node node){
+        val ret = newHashSet()
+        node.dependencies.forEach[dependency|
+            if(dependency instanceof ControlDependency || dependency instanceof ConditionalDependency)
+                ret += dependency.target
+        ]
+        ret
     }
 
     private def Set<Node> nextNode(Node node) {

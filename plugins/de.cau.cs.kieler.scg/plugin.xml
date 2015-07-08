@@ -87,11 +87,31 @@
             method="sequentialize"
             name="Sequentialize">
       </transformationMethod>
+      <transformationGroup
+            alternatives="false"
+            id="SCPDG"
+            name="SCPDG"
+            transformations="SCPDGCD">
+      </transformationGroup>
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.SCPDGTransformation"
-            id="SCPDG"
+            id="SCPDGCD"
             method="transform"
-            name="SCPDG">
+            name="SCPDG Create Dependencies"
+            producesDependencies="SCPDGRN">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.transformations.SCPDGTransformation"
+            id="SCPDGRN"
+            method="transform"
+            name="SCPDG Remove Nodes"
+            producesDependencies="SCPDGMD">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.transformations.SCPDGTransformation"
+            id="SCPDGMD"
+            method="transform"
+            name="SCPDG Minimize Dependencies">
       </transformationMethod>
    </extension>
 
