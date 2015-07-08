@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.projectwizard
 
+import de.cau.cs.kieler.sccharts.environments.Initializer
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
 import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
 import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
@@ -28,24 +29,46 @@ import org.eclipse.swt.SWT
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
-import de.cau.cs.kieler.sccharts.environments.Initializer
 
 /**
+ * The main page for an SCCharts project wizard containing a control to select the environment to use
+ * and the wrapper code snippets to copy to the new project.
+ * 
  * @author aas
  * 
  */
 class MainPage extends WizardPage {
 
+    /**
+     * The environments loaded from this plugins preference store.
+     */
     var ArrayList<EnvironmentData> environments
 
+    /**
+     * The combobox with the environments.
+     */
     var ComboViewer environmentsCombo
+    
+    /**
+     * The multiselect list with all environments.
+     * The wrapper code snippets from the selected environments in this list
+     * will be copied to the newly created project. 
+     */
     var ListViewer list
+
+
 
     protected new(String pageName) {
         super(pageName)
+        
         title = pageName
+        description = "Set the environment for the SCCharts project."
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     override createControl(Composite parent) {
         var Composite comp = new Composite(parent, SWT.NONE)
         setControl(comp)
@@ -61,10 +84,13 @@ class MainPage extends WizardPage {
         pageComplete = true
     }
 
+    /**
+     * Loads the environments from this plugin's preference store. 
+     */
     private def loadEnvironments() {
         val store = LaunchConfigPlugin.^default.preferenceStore
         
-        // It might be that on a new installation there is no environments initialized.
+        // It might be that on a new installation there are no environments initialized.
         // So we do it here manually.
         if(EnvironmentData.isPreferencesStoreEmpty(store))
             new Initializer().initializeDefaultPreferences()
@@ -73,14 +99,21 @@ class MainPage extends WizardPage {
         environments = EnvironmentData.loadAllFromPreferenceStore(store)
     }
 
+    /**
+     * Creates a group with the environments combobox.
+     */
     private def createEnvironmentsComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Environment", 2)
 
         environmentsCombo = UIUtil.createEnvironmentsCombo(group, environments)
     }
 
+    /**
+     * Creates a group with the list of environments
+     * to specify which wrapper code snippets should be created.
+     */
     private def createWrapperCodeSnippetsComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Wrapper Code Snippets", 2)
+        val group = UIUtil.createGroup(parent, "Import Wrapper Code Snippets", 2)
 
         // List
         list = new ListViewer(group, SWT.BORDER.bitwiseOr(SWT.MULTI).bitwiseOr(SWT.V_SCROLL))
@@ -107,6 +140,9 @@ class MainPage extends WizardPage {
         })
     }
 
+    /**
+     * @return the selected environments in the list.
+     */
     public def ArrayList<EnvironmentData> getSelectedWrapperCodeEnvironments(){
         val output = new ArrayList<EnvironmentData>()
         val selection = list.selection as StructuredSelection
@@ -117,6 +153,9 @@ class MainPage extends WizardPage {
         return output
     }
 
+    /**
+     * @return the selected environment in the combobox.
+     */
     public def EnvironmentData getSelectedEnvironment() {
         val selection = environmentsCombo.getSelection();
         if (!selection.isEmpty()) {
@@ -127,6 +166,10 @@ class MainPage extends WizardPage {
         }
     }
 
+    /**
+     * @return the related project wizard class name of the selected environment in the combobox<br />
+     *         or an empty string if there is no environment selected. 
+     */
     public def String getEnvironmentWizardClassName() {
         val env = getSelectedEnvironment()
         if (env != null) {

@@ -96,8 +96,8 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="de.cau.cs.kieler.sccharts.environments.SCChartsEnvironmentsPage"
-            id="de.cau.cs.kieler.sccharts.environmentsPreferencesPage"
+            class="de.cau.cs.kieler.sccharts.environments.EnvironmentsPage"
+            id="de.cau.cs.kieler.sccharts.environmentsPreferencePage"
             name="SCCharts Environments">
       </page>
    </extension>

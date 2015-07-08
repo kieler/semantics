@@ -5,7 +5,7 @@ import de.cau.cs.kieler.sccharts.launchconfig.common.SCTCompilationData
 import java.util.ArrayList
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
-import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunchConfiguration
@@ -14,13 +14,11 @@ import org.eclipse.debug.ui.DebugUITools
 import org.eclipse.debug.ui.ILaunchShortcut
 import org.eclipse.jface.viewers.ISelection
 import org.eclipse.jface.viewers.IStructuredSelection
+import org.eclipse.jface.window.Window
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.ResourceUtil
-import org.eclipse.core.resources.IResource
-import org.eclipse.swt.SWT
-import org.eclipse.jface.window.Window
 
 class SCTLaunchShortcut implements ILaunchShortcut {
     

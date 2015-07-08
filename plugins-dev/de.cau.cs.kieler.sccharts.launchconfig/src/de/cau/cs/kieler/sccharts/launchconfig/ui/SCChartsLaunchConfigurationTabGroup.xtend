@@ -5,6 +5,9 @@ import org.eclipse.debug.ui.CommonTab
 import org.eclipse.debug.ui.ILaunchConfigurationDialog
 import org.eclipse.debug.ui.ILaunchConfigurationTab
 
+/**
+ * The tab group for an SCCharts launch configuration.
+ */
 class SCChartsLaunchConfigurationTabGroup extends AbstractLaunchConfigurationTabGroup {
 
     /**

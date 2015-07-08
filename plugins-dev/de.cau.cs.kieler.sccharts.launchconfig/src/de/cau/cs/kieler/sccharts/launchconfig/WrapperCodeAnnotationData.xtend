@@ -46,6 +46,9 @@ class WrapperCodeAnnotationData {
     @Accessors
     private String varType
     
+    @Accessors
+    private boolean ignoreNonExistingSnippet
+    
     new(){
     }    
     
@@ -71,6 +74,16 @@ class WrapperCodeAnnotationData {
             FloatAnnotation: arguments.add(String.valueOf(annotation.value))
             IntAnnotation: arguments.add(String.valueOf(annotation.value))
             StringAnnotation: arguments.add(String.valueOf(annotation.value))
+        }
+        
+        if(name == "Wrapper" && !arguments.isEmpty){
+            // Explicit wrapper annotation
+            // -> actual snippet name is the first argument.
+            name = arguments.remove(0)
+        }else{
+            // Not an explicit wrapper code annotation
+            // -> ignore if non existing.
+            ignoreNonExistingSnippet = true
         }
     }
     

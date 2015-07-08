@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sccharts.projectwizard
 
 import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
-import org.eclipse.core.resources.IFile
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.swt.SWT
@@ -24,28 +23,43 @@ import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Label
-import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage
-import org.eclipse.ui.ide.IDE
 
 /**
+ * A WizardPage with controls to specify a file to be created
+ * and a checkbox to specify if the file should actually be created. 
+ * 
  * @author aas
  *
  */
 class OptionalMainFileCreationPage extends WizardNewFileCreationPage{
-        
+
+    /**
+     * The parent composite of the controls of this class.
+     * The value is set in createControl(...) and used to recreate the controls using the same parent.
+     */
     private var Composite parent
+    
+    /**
+     * The checkbox to specify if the file should actually be created.
+     */
     private var Button createFileCheckbox
+    
+    
     
     new(String pageName, IStructuredSelection selection) {
         super(pageName, selection)
         
         title = pageName
         fileName = "Main"
+        description = "Set the main file of the project to be created and initialized."
     }
     
+    /**
+     * Creates the controls of this wizard page and sets the reference to the parent composite.
+     */
     public override createControl(Composite parent){
-        val comp = UIUtil.createComposite(parent,1)
+        val comp = UIUtil.createComposite(parent, 1)
         super.createControl(comp)
         
         // Horizontal line to separate new controls
@@ -65,6 +79,11 @@ class OptionalMainFileCreationPage extends WizardNewFileCreationPage{
         this.parent = parent
     }
     
+    /**
+     * Recreates the controls of this wizard page.
+     * This method can be used to refresh the resource tree.
+     * Note that user modifications to the old controls are lost when calling this method. 
+     */
     public def recreate(){
         control.dispose()
         
@@ -75,18 +94,30 @@ class OptionalMainFileCreationPage extends WizardNewFileCreationPage{
         parent.update()
     }
     
+    /**
+     * @return true if the user input is valid.<br />
+     *         false otherwise.
+     */
     public def boolean isOk(){
         return validatePage()
     }
     
+    /**
+     * Creates the file if the input is valid and the file should actually be created.
+     * After creation the file is opened in an editor.
+     */
     public def boolean performFinish(){
         if(createFileCheckbox.selection){
             val createdFile = createNewFile()
-            openFileInEditor(createdFile)
+            UIUtil.openFileInEditor(createdFile)
         }
         return true
     }
     
+    /**
+     * Creates the file if it should acutally be created.
+     * @return the created file or null if it was not created.
+     */
     public override createNewFile(){
         if(createFileCheckbox.selection)
             return super.createNewFile()
@@ -94,13 +125,10 @@ class OptionalMainFileCreationPage extends WizardNewFileCreationPage{
             return null
     }
     
-    protected def openFileInEditor(IFile file){
-        val wb = PlatformUI.getWorkbench();
-        val win = wb.getActiveWorkbenchWindow();
-        val page = win.getActivePage();
-        IDE.openEditor(page, file)
-    }
-    
+    /**
+     * Sets the error message and updates this wizard's container buttons
+     * because the buttons may be enabled/disabled when the error message changes. 
+     */
     override setErrorMessage(String message){
         super.setErrorMessage(message)
         
@@ -108,6 +136,11 @@ class OptionalMainFileCreationPage extends WizardNewFileCreationPage{
         getWizard().getContainer().updateButtons()
     }
     
+    /**
+     * @return true if the file should not be created<br />
+     *         or it should be created and the other input is valid.<br />
+     *         false otherwise.
+     */
     override boolean isPageComplete(){
         if(!createFileCheckbox.selection)
             return true

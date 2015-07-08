@@ -32,6 +32,8 @@ import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 
 /** 
+ * The tab with the controls to set the execution commands (compile, deploy, run)
+ * 
  * @author aas
  */
 class ExecuteTab extends AbstractLaunchConfigurationTab {
@@ -168,9 +170,13 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         return "Execute"
     }
     
+    /** 
+     * Enables this tabs controls if the project is not null and no environment is used.
+     * Disable the controls otherwise. 
+     */
     private def updateEnabled(){
         val List<Control> controls = #[compileCommand, deployCommand, runCommand]
-        val enabled = !useEnvironment
+        val enabled = (project != null) && (!useEnvironment)
         UIUtil.enableControlsOnSameLevel(controls, enabled)
     }
 }

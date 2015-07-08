@@ -14,11 +14,16 @@
 package de.cau.cs.kieler.sccharts.environments
 
 import de.cau.cs.kieler.kico.internal.Transformation
+import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
 import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
+import de.cau.cs.kieler.sccharts.launchconfig.common.ExtensionLookupUtil
 import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
 import java.util.ArrayList
+import java.util.Collections
 import java.util.Set
+import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.debug.internal.ui.SWTFactory
+import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.jface.preference.PreferencePage
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.ComboViewer
@@ -35,53 +40,114 @@ import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
-import org.eclipse.swt.widgets.Combo
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.TabFolder
 import org.eclipse.swt.widgets.TabItem
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
-import de.cau.cs.kieler.sccharts.launchconfig.common.ExtensionLookupUtil
-import org.eclipse.core.runtime.IConfigurationElement
-import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
-import org.eclipse.core.runtime.preferences.ConfigurationScope
-import org.eclipse.jface.preference.PreferenceStore
-import org.eclipse.jface.preference.IPreferenceStore
-import java.util.Collection
-import java.util.Collections
 
 /**
+ * Implementation of the preferences page for SCCharts environments.
+ * Contains controls to create,remove,update and show the environments in the plugin's preference store.  
+ * 
  * @author aas
  * 
  */
-class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePage {
+class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePage {
 
+    /**
+     * The workbench set in the init(...) method.
+     */
     private var IWorkbench workbench
+    
+    /**
+     * The preferences store which contains the SCCharts environments.
+     * This is the plugin's preference store.
+     */
     private var IPreferenceStore store
 
+    /**
+     * The list control to show the environments.
+     */
     private var ListViewer list
 
+    /**
+     * The currently selected EnvironmentData of the list
+     * or null if there is no environment selected.
+     */
     private var EnvironmentData currentData
 
+    /**
+     * The input field for the environment name.
+     */
     private var Text name
     
+    /**
+     * The combobox to choose the selected target language.
+     * It is filled with the target features supported by KiCo.
+     */
     private var ComboViewer targetLanguage
+    /**
+     * The input field for the file extension
+     * of the selected target language (e.g. '.java' for Java Code).
+     */
     private var Text targetFileExtension
+    /**
+     * The input field for an optional template used when saving the KiCo compiled output.
+     */
     private var Text targetTemplate
     
+    /**
+     * The input field for the wrapper code template.
+     * The wrapper code will be inserted in this template (e.g. a project's main file).
+     */
     private var Text wrapperCodeTemplate
+    /**
+     * The input field for the directory which contains the wrapper code snippet definitions.
+     */
     private var Text wrapperCodeSnippets
+    /**
+     * The input field for a directory which contains the inital data of the wrapper code snippet directory when creating a new project.
+     * This might either be a file system path or a URL with the platform protocol provided by eclipse
+     * (e.g. 'platform:/plugin/org.myplugin/directory/with/snippets').
+     */
     private var Text wrapperCodeSnippetsOrigin
     
+    /**
+     * The input field for a shell command that is run after the SCT compilation finished.
+     * This is typically used to further compile the generated code. 
+     */
     private var Text compileCommand
+    /**
+     * The input field for a shell command that is run after the compile command.
+     * This is typically used to link and deploy the output created by the compile command.
+     */
     private var Text deployCommand
+    /**
+     * The input field for a shell command that is run after the deploy command.
+     * This is typically used to run the deployed application. 
+     */
     private var Text runCommand
     
+    /**
+     * The combobox with the related project wizard class name of the environment.
+     * The combobox is filled with the extensions of 'org.eclipse.ui.newWizards' that create projects.
+     */
     private var ComboViewer relatedProjectWizard
+    /**
+     * The input field for the default main file of the environment.
+     */
     private var Text mainFile
+    /**
+     * The input field for a path to the file which contains the default contents
+     * of a newly created main file of the environment.
+     */
     private var Text mainFileOrigin
 
+    /**
+     * {@inheritDoc}
+     */
     override protected createContents(Composite parent) {
         val comp = new Composite(parent, SWT.NONE)
 
@@ -96,66 +162,10 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         return comp
     }
 
-    override init(IWorkbench workbench) {
-        this.workbench = workbench
-        store = LaunchConfigPlugin.getDefault().preferenceStore
-    }
-
-    override performOk() {
-        if(checkConsistency()){
-            saveSettings()
-            return true
-        }
-        return false
-    }
-    
-    override performDefaults(){
-        list.input = Initializer.getDefaultEnvironments()
-        checkConsistency()
-        super.performDefaults()
-    }
-    
-    private def loadSettings(){
-        list.input = EnvironmentData.loadAllFromPreferenceStore(store)
-    }
-    
-    private def saveSettings(){
-        val environments = list.input as ArrayList<EnvironmentData> 
-        EnvironmentData.saveAllToPreferenceStore(store, environments)
-    }
-    
-    private def boolean checkConsistency(){
-        errorMessage = checkErrors()
-        return errorMessage == null
-    }
-
-    private def checkErrors(){
-        val environments = list.input as ArrayList<EnvironmentData>
-        
-        
-        for(env : environments){
-            // Unique names
-            for(env2 : environments){
-                if(env != env2&& env.name == env2.name){
-                    return "Environment names must be unique."
-                }    
-            }
-            
-            // No empty name
-            if(env.name == "")
-                return "Environment name must not be empty."
-            
-            // No comma in a name
-            if(env.name.contains(","))
-                return "Environment names must not contain a comma."
-                
-            // Check that files exist
-            
-        }
-        
-        return null
-    }
-
+    /**
+     * Creates the tab folder and tabs with the controls
+     * to show and modify the data of the currently selected environment.
+     */
     private def createTabFolder(Composite parent) {
         val comp = UIUtil.createComposite(parent, 1, GridData.FILL_HORIZONTAL.bitwiseOr((GridData.FILL_VERTICAL)))
 
@@ -163,6 +173,8 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         val folder = new TabFolder(comp, SWT.NONE)
         folder.setLayout(new GridLayout())
         val gd = new GridData(GridData.FILL_BOTH)
+        // Without this height hint the tab folder sets its height to the sum of the heights of all pages.
+        // This is to much. A better value would be correct the maximum of the heights of all pages.
         gd.heightHint = 300
         folder.setLayoutData(gd)
         
@@ -172,6 +184,10 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         createExecuteTab(folder)
     }
     
+    /**
+     * Creates a tab in the tab folder with the given title.
+     * @return A composite which should contain the widgets of the tab. 
+     */
     private def createTab(TabFolder folder, String title){
         val tab = new TabItem(folder, SWT.NONE)
         tab.setText(title)
@@ -183,6 +199,9 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         return comp
     }
 
+    /**
+     * Creates the tab with the controls of the general settings of the current environment.  
+     */
     private def createGeneralTab(TabFolder folder){
         val comp = createTab(folder, "General")
         
@@ -191,6 +210,9 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         createMainFileComponent(comp)
     }
     
+    /**
+     * Creates the controls for the name of the current environment.
+     */
     private def createNameComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Name", 1)
         
@@ -206,6 +228,9 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         })
     }
     
+    /**
+     * Creates the controls for the related project wizard of the current environment.
+     */
     def createWizardComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Project Wizard", 2)
         
@@ -246,6 +271,9 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         })
     }
     
+    /**
+     * Creates the controls for the main file of the current environment.
+     */
     def createMainFileComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Main file", 2)
         
@@ -273,13 +301,19 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         })
     }
 
+    /**
+     * Creates the tab with the controls to set the environment's fields regarding the compilation of sct files.
+     */
     private def createSCTCompilationTab(TabFolder folder){
         val comp = createTab(folder, "SCT compilation")
         
         createCompilationComponent(comp)
         createWrapperCodeComponent(comp)
     }
-    
+
+    /**
+     * Creates the controls to set the target language, file extension and template.
+     */
     def createCompilationComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "SCT compilation", 2)
         
@@ -322,6 +356,9 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         })
     }
     
+    /**
+     * Creates the input controls for wrapper code generation.
+     */
     def createWrapperCodeComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Wrapper code generation", 2)
         
@@ -361,12 +398,18 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         
     }
 
+    /**
+     * Creates the execute tab.
+     */
     private def createExecuteTab(TabFolder folder){
         val comp = createTab(folder, "Execute")
         
         createExecuteComponent(comp)
     }
     
+    /**
+     * Creates the controls to set the compile, deploy and run commands.
+     */
     def createExecuteComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Execution", 3)
         
@@ -400,7 +443,10 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
             }
         })
     }
-
+    
+    /**
+     * Creates the list with environments and buttons to modify the list. 
+     */
     private def createEnvironmentsComponent(Composite parent) {
         val comp = UIUtil.createGroup(parent, "Environments", 2)
 
@@ -491,10 +537,28 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         })
     }
 
+    /**
+     * Updates the value of all controls with the values from the environment.
+     */
     private def updateControls(EnvironmentData data) {
         if(data != null){
+            // Name
             name.text = data.name
             
+            // Related project wizard
+            if (relatedProjectWizard.input != null) {
+                for (obj : relatedProjectWizard.input as ArrayList<IConfigurationElement>) {
+                    if (obj.getAttribute("class") == data.relatedProjectWizardClass) {
+                        relatedProjectWizard.selection = new StructuredSelection(obj)
+                    }
+                }
+            }
+            
+            // Main file
+            mainFile.text = data.mainFile
+            mainFileOrigin.text = data.mainFileOrigin
+            
+            // Target
             if (targetLanguage.input != null) {
                 for (transformation : targetLanguage.input as Set<Transformation>) {
                     if (transformation.id == data.targetLanguage) {
@@ -505,27 +569,22 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
             targetFileExtension.text = data.targetFileExtension
             targetTemplate.text = data.targetTemplate
             
+            // Wrapper code
             wrapperCodeTemplate.text = data.wrapperCodeTemplate
             wrapperCodeSnippets.text = data.wrapperCodeSnippetsDirectory
             wrapperCodeSnippetsOrigin.text = data.wrapperCodeSnippetsOrigin
             
+            // Commands
             compileCommand.text = data.compileCommand
             deployCommand.text = data.deployCommand
             runCommand.text = data.runCommand
-            
-            if (relatedProjectWizard.input != null) {
-                for (obj : relatedProjectWizard.input as ArrayList<IConfigurationElement>) {
-                    if (obj.getAttribute("class") == data.relatedProjectWizardClass) {
-                        relatedProjectWizard.selection = new StructuredSelection(obj)
-                    }
-                }
-            }
-            
-            mainFile.text = data.mainFile
-            mainFileOrigin.text = data.mainFileOrigin
         }
     }
     
+    /**
+     * @return The target language id from the KiCo transformation
+     * which is currently selected in the target language combobox.
+     */
     private def getSelectedTargetLanguageId(){
         if (targetLanguage.input != null) {
             for (transformation : targetLanguage.input as Set<Transformation>) {
@@ -535,6 +594,10 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
         return ""
     }
     
+    /**
+     * @return The class name of the extension point configuration
+     * which is currently selected in the related project wizard combobox.  
+     */
     private def getSelectedProjectWizardClass(){
         val selection = relatedProjectWizard.selection as IStructuredSelection
         if (selection != null) {
@@ -544,6 +607,95 @@ class SCChartsEnvironmentsPage extends PreferencePage implements IWorkbenchPrefe
             }
         }
         return ""
+    }
+    
+    /**
+     * Implementation of IWorkbenchPreferencePage.
+     * Saves the reference to the workbench and the used preference store.
+     */
+    override init(IWorkbench workbench) {
+        this.workbench = workbench
+        store = LaunchConfigPlugin.getDefault().preferenceStore
+    }
+
+    /**
+     * Checks the user input for consistency and saves it if applicable.
+     * The method is executed when the OK or Apply button is clicked.
+     * 
+     * @return true if the input is valid and the dialog may be closed by eclipse.<br />
+     *         false otherwise.
+     */
+    override performOk() {
+        if(checkConsistency()){
+            saveSettings()
+            return true
+        }
+        return false
+    }
+    
+    /**
+     * Reverts the preferences values to the default values from the initializer.
+     * The method is run if the 'Restore Defaults' button is clicked.
+     */
+    override performDefaults(){
+        list.input = Initializer.getDefaultEnvironments()
+        checkConsistency()
+        super.performDefaults()
+    }
+    
+    /**
+     * Loads the relevant data for this page from the preference store. 
+     */
+    private def loadSettings(){
+        list.input = EnvironmentData.loadAllFromPreferenceStore(store)
+    }
+    
+    /**
+     * Saves the relevant data from this page from the preference store. 
+     */
+    private def saveSettings(){
+        val environments = list.input as ArrayList<EnvironmentData> 
+        EnvironmentData.saveAllToPreferenceStore(store, environments)
+    }
+    
+    /**
+     * Checks the input for consistency and sets an error message if necessary.
+     * @return true if the input is valid.<br />
+     *         false otherwise. 
+     */
+    private def boolean checkConsistency(){
+        errorMessage = checkErrors()
+        return errorMessage == null
+    }
+
+    /**
+     * Checks the input for consistency and returns an appropriate error message.
+     * @return A string with an error message or null if the input is valid.
+     */
+    private def checkErrors(){
+        val environments = list.input as ArrayList<EnvironmentData>
+        
+        for(env : environments){
+            // Unique names
+            for(env2 : environments){
+                if(env != env2&& env.name == env2.name){
+                    return "Environment names must be unique."
+                }    
+            }
+            
+            // No empty name
+            if(env.name == "")
+                return "Environment name must not be empty."
+            
+            // No comma in a name
+            if(env.name.contains(","))
+                return "Environment names must not contain a comma."
+                
+            // Check that files exist
+            
+        }
+        
+        return null
     }
     
 }

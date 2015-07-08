@@ -6,26 +6,44 @@ import java.util.ArrayList
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer
 import org.eclipse.jface.preference.IPreferenceStore
 
+/**
+ * This class creates default environments if there are none.
+ */
 class Initializer extends AbstractPreferenceInitializer {
-    
+
+    /**
+     * Reference to the preference store in which the environments are saved.
+     */    
     private IPreferenceStore store
     
     new() {
         super()
-        
+
         store = LaunchConfigPlugin.getDefault().preferenceStore
     }
 
+    /**
+     * Fills the preference store with default environments if there are none.
+     * The method is called by eclipse
+     * if the preferences page is opened for the first time in this run.
+     */
     override void initializeDefaultPreferences() {
         if(EnvironmentData.isPreferencesStoreEmpty(store)){
             initializeDefaultEnvironments()
         }
     }
 
+    /** 
+     * Fills the preference store with default environments.
+     * Any other environment data in the store will be lost. 
+     */
     def initializeDefaultEnvironments(){
         EnvironmentData.saveAllToPreferenceStore(store, getDefaultEnvironments())
     }
 
+    /**
+     * Returns a list with the default environments ready to use.
+     */
     public static def getDefaultEnvironments(){
         val datas = new ArrayList<EnvironmentData>()
         
@@ -106,8 +124,8 @@ class Initializer extends AbstractPreferenceInitializer {
         env.wrapperCodeSnippetsDirectory = "templates/Mindstorms NXJ"
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.launchconfig/environments/mindstorms_nxj/templates"
         
-        env.compileCommand = 'nxjc -cp "/opt/leJOS/lib:sct-gen:src" "sct-gen/Main.java"'
-        env.deployCommand = 'nxj -cp "/opt/leJOS/lib:sct-gen:src" -o "Main.nxj" Main'
+        env.compileCommand = 'nxjc -cp "/opt/leJOS_0.9.1/lib:sct-gen:src" "sct-gen/Main.java"'
+        env.deployCommand = 'nxj -cp "/opt/leJOS_0.9.1/lib:sct-gen:src" -o "Main.nxj" Main'
         env.runCommand = ""
         
         env.relatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"

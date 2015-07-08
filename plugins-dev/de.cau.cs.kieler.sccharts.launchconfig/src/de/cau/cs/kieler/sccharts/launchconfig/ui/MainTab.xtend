@@ -41,11 +41,21 @@ import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
 
 /** 
+ * The tab with the controls for the main information for a SCChart launch config
+ * (project, main file, environment used).
+ * 
  * @author aas
  */
 class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
 
+    /**
+     * Checkbox to specify if an environment is used for the launch.
+     */
     private var Button useEnvironment
+    
+    /**
+     * Combobox with all environments.
+     */
     private var ComboViewer environment
 
     /**
@@ -74,7 +84,7 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
     }
 
     /**
-     * Creates a group and a component with the project text field and a button.
+     * Creates a group with the project text field and a button.
      * The button opens a selection dialog with the different projects in the workspace.
      */
     private def createProjectComponent(Composite parent) {
@@ -88,7 +98,10 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         })
     }
 
-    
+    /**
+     * Creates a group with the main file text field and a button.
+     * The button opens a resource selection dialog in the specified project.
+     */
     private def createMainFileComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Main file", 3)
 
@@ -100,6 +113,9 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         })
     }
     
+    /**
+     * Creates a group with the environment checkbox and combobox.
+     */
     private def createEnvironmentComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Environment", 1)
 
@@ -111,6 +127,9 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
             }
         });
 
+        // Because we do not want to enable/disable
+        // the checkbox when enabling/disabling the environments combobox in updateEnabled(),
+        // we put it on an extra component so they are not on the same level. 
         val comp = UIUtil.createComposite(group, 1)
         
         val store = LaunchConfigPlugin.^default.preferenceStore
@@ -218,10 +237,18 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         return "Main"
     }
 
+    /**
+     * @return a project handle of the selected project name<br />
+     *         or null if there is no project with the specified name.
+     */
     override getProject() {
         return LaunchConfiguration.findProject(project.text)
     }
 
+    /**
+     * @return the environment selected in the combobox<br />
+     *         or null if there is no selection.
+     */
     public def EnvironmentData getSelectedEnvironment() {
         val selection = environment.getSelection();
         if (!selection.isEmpty()) {

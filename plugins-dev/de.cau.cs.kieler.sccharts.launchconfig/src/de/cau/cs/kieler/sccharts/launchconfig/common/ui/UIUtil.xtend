@@ -20,6 +20,7 @@ import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
 import java.util.List
 import java.util.Set
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -40,44 +41,95 @@ import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.DirectoryDialog
 import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.swt.widgets.Text
+import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ContainerSelectionDialog
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
+import org.eclipse.ui.ide.IDE
 
 /**
- * @author aas
+ * Factory class to create SWT widgets
+ * and util class for general purpose UI actions such as enabling/disabling controls.
+ * If the same controls are created multiple times (e.g. an input with a browse button) it might be worthy to put it in UIUtil.
  * 
+ * @author aas
  */
 class UIUtil {
 
+    /**
+     * Flag to indicate that a text field should be created without any buttons.
+     */
     public static val NONE = 0
+    /**
+     * Flag to indicate that a text field should be created with a button to open a project selection dialog.
+     */
     public static val PROJECT_BUTTON = 1 << 0
+    /**
+     * Flag to indicate that a text field should be created with a button to open a resource selection dialog.
+     */
     public static val RESOURCE_BUTTON = 1 << 1
+    /**
+     * Flag to indicate that a text field should be created with a button to open a container selection dialog.
+     */
     public static val CONTAINER_BUTTON = 1 << 2
+    /**
+     * Flag to indicate that a text field should be created with a button to open a variable selection dialog.
+     */
     public static val VARIABLE_BUTTON = 1 << 3
+    /**
+     * Flag to indicate that a text field should be created with a button to open a file selection dialog of the file system.
+     */
     public static val FILE_SYSTEM_FILE_BUTTON = 1 << 4
+    /**
+     * Flag to indicate that a text field should be created with a button to open a folder selection dialog of the file system.
+     */
     public static val FILE_SYSTEM_DIRECTORY_BUTTON = 1 << 5
 
+
+    
     static def createGroup(Composite parent, String text, int columns) {
         createGroup(parent, text, columns, GridData.FILL_HORIZONTAL)
     }
 
+    /**
+     * Creates a new group for controls.
+     * @return the new group.
+     */
     static def createGroup(Composite parent, String text, int columns, int fill) {
         return SWTFactory.createGroup(parent, text, columns, 1, fill)
     }
+
+
 
     static def createComposite(Composite parent, int columns) {
         return createComposite(parent, columns, GridData.FILL_HORIZONTAL)
     }
 
+    /**
+     * Creates a new container for controls.
+     * @return the new composite.
+     */
     static def createComposite(Composite parent, int columns, int fill) {
         return SWTFactory.createComposite(parent, parent.font, columns, 1, fill, 0, 0)
     }
-
+    
+    
     static def createTextField(Composite parent, String label, int buttonFlags) {
         createTextField(parent, label, buttonFlags, null)
     }
 
+    /**
+     * Creates a new text field with a label to describe it and buttons to modify it.
+     * The label is created before the text field.
+     * The buttons are created after the text field. 
+     * 
+     * @param parent The parent composite
+     * @param label The label's text describing what this text field is for or null if there should not be a label.
+     * @param buttonFlags A bitmask of the buttons that should be created to ease the modification of the text field.
+     * @param projectHolder A class which holds a project reference to dynamically set the root of some dialogs (e.g. a resource selection dialog).
+     * 
+     * @return the new text field.
+     */
     static def createTextField(Composite parent, String label, int buttonFlags, IProjectHolder projectHolder) {
         // Label
         if (label != null) {
@@ -126,6 +178,10 @@ class UIUtil {
         return text
     }
 
+    /**
+     * Creates a button which opens a file or directory dialog and sets the text field's value to the selection.
+     * @return the new push button. 
+     */
     static def createBrowseFileSystemButton(Composite parent, Text text, String label, boolean isFileDialog){
         val browse = SWTFactory.createPushButton(parent, label, null)
         browse.addSelectionListener(
@@ -149,6 +205,10 @@ class UIUtil {
         )
     }
 
+    /**
+     * Creates a button which opens a project selection dialog and sets the text field's value to the selection.
+     * @return the new push button. 
+     */
     static def createBrowseProjectButton(Composite parent, Text text, String label) {
         val browse = SWTFactory.createPushButton(parent, label, null)
         browse.addSelectionListener(
@@ -186,6 +246,10 @@ class UIUtil {
         return browse
     }
 
+    /**
+     * Creates a button which opens a resource selection dialog and sets the text field's value to the selection.
+     * @return the new push button. 
+     */
     static def createBrowseResourceButton(Composite parent, Text text, String label, IProjectHolder projectHolder) {
         val browse = SWTFactory.createPushButton(parent, label, null)
         browse.addSelectionListener(
@@ -211,6 +275,10 @@ class UIUtil {
         return browse
     }
 
+    /**
+     * Creates a button which opens a container dialog and sets the text field's value to the selection.
+     * @return the new push button. 
+     */
     static def createBrowseContainerButton(Composite parent, Text text, String label, IProjectHolder projectHolder) {
         val browse = SWTFactory.createPushButton(parent, label, null)
         browse.addSelectionListener(
@@ -235,7 +303,11 @@ class UIUtil {
         )
         return browse
     }
-
+    
+    /**
+     * Creates a button which opens a variable selection dialog and inserts the selection to the text field.
+     * @return the new push button. 
+     */
     static def createBrowseVariableButton(Composite parent, Text text, String label) {
         val browse = SWTFactory.createPushButton(parent, label, null)
         browse.addSelectionListener(new SelectionListener() {
@@ -255,6 +327,10 @@ class UIUtil {
         return browse
     }
 
+    /**
+     * Creates a combobox with the KiCo transformations for code generation.
+     * @return a new combobox. 
+     */
     static def createKiCoTargetsCombo(Composite parent){
         // ComboViewer
         val combo = new ComboViewer(parent, SWT.DEFAULT)
@@ -289,6 +365,10 @@ class UIUtil {
         return combo
     }
 
+    /**
+     * Creates a combobox with the environments.
+     * @return the new combobox.
+     */
     static def createEnvironmentsCombo(Composite parent, ArrayList<EnvironmentData> environments){        
         // Combo
         val combo = new ComboViewer(parent, SWT.DEFAULT)
@@ -315,25 +395,47 @@ class UIUtil {
         return combo
     }
     
+    /**
+     * Creates a placeholder.
+     */
     static def createSpace(Composite parent) {
         createSpace(parent, 1)
     }
 
+    /**
+     * Creates a placeholder spanning over several columns in the parent's grid layout.
+     */
     static def createSpace(Composite parent, int columnsToBeEmpty) {
         SWTFactory.createHorizontalSpacer(parent, columnsToBeEmpty)
     }
 
+    /**
+     * Creates a button.
+     * @return a new push button.
+     */
     static def createButton(Composite parent, String label) {
         return SWTFactory.createPushButton(parent, label, null)
     }
 
+    /**
+     * Creates a label.
+     * @return a new push label.
+     */
     static def createLabel(Composite parent, String label) {
         return SWTFactory.createLabel(parent, label, 1)
     }
 
+
+
+    /**
+     * @return true if the flag in the bitmask is set.<br />
+     *         false otherwise.
+     */
     private static def boolean isFlagSet(int bitmask, int flag) {
         return bitmask.bitwiseAnd(flag) > 0
     }
+
+
 
     /**
      * Enable or disable all controls in the list and children recursive.
@@ -371,5 +473,16 @@ class UIUtil {
             ]
         }
     }
-
+    
+    
+    
+    /**
+     * Opens a file in an eclipse editor.
+     */
+    public static def openFileInEditor(IFile file){
+        val wb = PlatformUI.getWorkbench();
+        val win = wb.getActiveWorkbenchWindow();
+        val page = win.getActivePage();
+        IDE.openEditor(page, file)
+    }
 }

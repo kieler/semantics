@@ -50,6 +50,8 @@ import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 
 /**
+ * The tab with the controls to set SCT files to be compiled and how they should be compiled.
+ * 
  * @author aas
  * 
  */
@@ -462,6 +464,9 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
         UIUtil.enableControlsOnSameLevel(controls, project != null && !useEnvironment)
     }
     
+    /**
+     * Implementation of IProjectHolder.
+     */
     override getProject() {
         return project
     }

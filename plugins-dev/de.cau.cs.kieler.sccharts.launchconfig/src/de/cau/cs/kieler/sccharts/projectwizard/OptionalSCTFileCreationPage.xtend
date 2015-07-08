@@ -26,17 +26,30 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Label
 
 /**
+ * A WizardPage with controls to specify a sct file to be created
+ * and a checkbox to specify if the file should actually be created.
+ * 
  * @author aas
  *
  */
 class OptionalSCTFileCreationPage extends SCTFileCreationPage{
     
+    /**
+     * The checkbox to specify if the file should actually be created.
+     */
     var Button createFileCheckbox
+    
+    
     
     new(String pageName, IStructuredSelection selection) {
         super(pageName, selection)
+        
+        description = "Set the SCChart model to be created and initialied."
     }
     
+    /**
+     * Creates the controls of this wizard page and sets the reference to the parent composite.
+     */
     public override createControl(Composite parent){
         val comp = UIUtil.createComposite(parent,1)
         super.createControl(comp)
@@ -58,6 +71,10 @@ class OptionalSCTFileCreationPage extends SCTFileCreationPage{
         this.parent = parent
     }
     
+    /**
+     * Creates the file if the input is valid and the file should actually be created.
+     * After creation the file is opened in an editor.
+     */
     override boolean performFinish(){
         if(createFileCheckbox.selection){
             return super.performFinish()
@@ -65,6 +82,21 @@ class OptionalSCTFileCreationPage extends SCTFileCreationPage{
         return true    
     }
     
+    /**
+     * Creates the file if it should acutally be created.
+     * @return the created file or null if it was not created.
+     */
+    public override createNewFile(){
+        if(createFileCheckbox.selection)
+            return super.createNewFile()
+        else
+            return null
+    }
+    
+    /**
+     * Sets the error message and updates this wizard's container buttons
+     * because the buttons may be enabled/disabled when the error message changes. 
+     */
     override setErrorMessage(String message){
         super.setErrorMessage(message)
         
@@ -72,6 +104,11 @@ class OptionalSCTFileCreationPage extends SCTFileCreationPage{
         getWizard().getContainer().updateButtons()
     }
     
+    /**
+     * @return true if the file should not be created<br />
+     *         or it should be created and the other input is valid.<br />
+     *         false otherwise.
+     */
     override boolean isPageComplete(){
         if(!createFileCheckbox.selection)
             return true

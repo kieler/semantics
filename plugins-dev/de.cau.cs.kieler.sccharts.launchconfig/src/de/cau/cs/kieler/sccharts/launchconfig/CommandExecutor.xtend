@@ -17,7 +17,6 @@ import java.io.File
 import java.util.ArrayList
 import java.util.List
 import java.util.regex.Pattern
-import org.eclipse.core.internal.variables.ValueVariable
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
@@ -26,19 +25,35 @@ import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunch
 
 /**
+ * This class handles the execution of shell commands in the context of an SCT Application launch.
+ * 
  * @author aas
  * 
  */
 class CommandExecutor {
 
+    /**
+     * The project from the launch config.
+     */
     private var IProject project
+    /**
+     * The launch in which this object has been created.
+     */
     private var ILaunch launch
+
+
 
     new(IProject project, ILaunch launch){
         this.project = project
         this.launch = launch
     }
-    
+
+
+    /**
+     * Executes the commands and proceeds only if the commands before ended successfully
+     * with an error code of 0.
+     * Each executed command gets its own Console View.
+     */    
     public def IStatus execute(Command... commands){
         // Execute every command squentially.
         for(c : commands){
@@ -51,7 +66,7 @@ class CommandExecutor {
         
         return Status.OK_STATUS
     }
-
+    
     /**
      * Executes a command via OS and waits for the process termination.
      * The command may contain arguments separated by spaces.
@@ -76,7 +91,7 @@ class CommandExecutor {
     }
 
     /**
-     * Split input string on spaces, except if between double quotes ("hello world" would be one token.)
+     * Split input string on spaces, except if between double quotes (e.g. "hello world" would be one token.)
      * Surrounding double quotes are removed.
      * @return List<String> containing slices of the input string.
      */

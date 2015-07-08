@@ -20,11 +20,21 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.ui.IWorkbenchWizard
 
 /**
+ * Auxilary class to search for a extensions
+ * and create wizards using the fully qualified class name of a wizard's implementation
+ * 
  * @author aas
  *
  */
 class ExtensionLookupUtil {
     
+    /**
+     * Searches for newWizards and initializes the wizard with the fully qulified class name.
+     * Before the returned wizard is opened its init(...) method should be called.
+     * 
+     * @return The wizard implemented by the fully qualified class name<br />
+     *         or null if there is no such wizard.
+     */
     static def IWorkbenchWizard getWizard(String fullyQualifiedClassName) {
         val extensions = getExtensions("org.eclipse.ui.newWizards")
 
@@ -51,6 +61,9 @@ class ExtensionLookupUtil {
         return null
     }
 
+    /**
+     * @return a list with all configurations that contribute to the 'org.eclipse.ui.newWizards' extension point.
+     */
     static def ArrayList<IConfigurationElement> getWizardConfigurationElements(boolean onlyProjectWizards) {
         val extensions = getExtensions("org.eclipse.ui.newWizards")
 
@@ -71,8 +84,10 @@ class ExtensionLookupUtil {
         return wizards
     }
 
+    /**
+     * Searches and returns extensions which contribute to the given extension point id.
+     */
     static def IExtension[] getExtensions(String extensionId) {
-        // Get installed extensions from plugin registry
         val reg = Platform.getExtensionRegistry()
         val extensionPoint = reg.getExtensionPoint(extensionId)
         return extensionPoint.getExtensions()

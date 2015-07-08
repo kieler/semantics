@@ -16,6 +16,8 @@ package de.cau.cs.kieler.sccharts.launchconfig.common.ui
 import org.eclipse.core.resources.IProject
 
 /**
+ * Interface to dynamically get a project from a class.
+ * 
  * @author aas
  *
  */

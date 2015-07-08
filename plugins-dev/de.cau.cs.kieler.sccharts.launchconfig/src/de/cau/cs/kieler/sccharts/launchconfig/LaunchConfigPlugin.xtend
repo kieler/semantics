@@ -10,16 +10,28 @@ class LaunchConfigPlugin extends AbstractUIPlugin implements BundleActivator  {
     // The plug-in ID
     public static val ID = "de.cau.kieler.sccharts.launchconfig"
     
-    // The ID for the environment of a project.
-    // The ID is stored in the project's properties.
-    public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(LaunchConfigPlugin.ID, "environment")
-    public static val MAIN_FILE_QUALIFIER = new QualifiedName(LaunchConfigPlugin.ID, "main.file")
-    
-    public static val ENVIRONMENTS_CSV_ATTR = "environments"
-    public static val ENVIRONMENT_ATTR = "environment"
-    
     // The shared instance
     private static LaunchConfigPlugin plugin;
+    
+    /**
+     * Qualifier for a environment's name.
+     */
+    public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(LaunchConfigPlugin.ID, "environment")
+    /**
+     * Qualifier for a main files project relative path.
+     */
+    public static val MAIN_FILE_QUALIFIER = new QualifiedName(LaunchConfigPlugin.ID, "main.file")
+    
+    
+    
+    /**
+     * Key for an attribute which holds a comma separated string of environment names.
+     */
+    public static val ENVIRONMENTS_CSV_ATTR = "environments"
+    /**
+     * Key for an attribute which holds an name of an environment.
+     */
+    public static val ENVIRONMENT_ATTR = "environment"
 
     /**
      * The constructor

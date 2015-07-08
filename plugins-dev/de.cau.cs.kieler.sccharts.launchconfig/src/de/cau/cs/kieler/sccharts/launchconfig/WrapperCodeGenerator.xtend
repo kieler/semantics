@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.launchconfig
 
 import com.google.common.io.Files
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.launchconfig.common.ModelImporter
 import de.cau.cs.kieler.sccharts.launchconfig.common.SCTCompilationData
 import freemarker.template.Template
 import java.io.File
@@ -66,7 +67,8 @@ class WrapperCodeGenerator {
         if (wrapperCodeTemplate != "" && wrapperCodeSnippetDirectory != "") {
 
             val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
-//            System.err.println(templateWithMacroCalls)
+            System.err.println(templateWithMacroCalls)
+            
             processAndSaveOutput(templateWithMacroCalls)
         }
     }
@@ -129,17 +131,17 @@ class WrapperCodeGenerator {
             if (!alreadyInitialized.contains(data)) {
                 alreadyInitialized.add(data)
                 inits += getAssignments(data.varName, data.varType);
-                inits += getInitAnnotationMacro(data.name, data.arguments);
+                inits += getInitAnnotationMacro(data);
             }
 
             if (data.isInput) {
                 inputs += getAssignments(data.varName, data.varType);
-                inputs += getInputAnnotationMacro(data.name, data.arguments);
+                inputs += getInputAnnotationMacro(data);
             }
 
             if (data.isOutput) {
                 outputs += getAssignments(data.varName, data.varType);
-                outputs += getOutputAnnotationMacro(data.name, data.arguments);
+                outputs += getOutputAnnotationMacro(data);
             }
         }
         map.put("inits", inits)
@@ -153,25 +155,33 @@ class WrapperCodeGenerator {
             " init_snippet ='' output_snippet = '' input_snippet = '' />\n";
     }
 
-    private static def String getInitAnnotationMacro(String annotationName, String... args) {
-        return getAnnotationMacro(annotationName, args) + "${init_snippet!}\n";
+    private static def String getInitAnnotationMacro(WrapperCodeAnnotationData data) {
+        return getAnnotationMacro(data) + "${init_snippet!}\n";
     }
 
-    private static def String getInputAnnotationMacro(String annotationName, String... args) {
-        return getAnnotationMacro(annotationName, args) + "${input_snippet!}\n";
+    private static def String getInputAnnotationMacro(WrapperCodeAnnotationData data) {
+        return getAnnotationMacro(data) + "${input_snippet!}\n";
     }
 
-    private static def String getOutputAnnotationMacro(String annotationName, String... args) {
-        return getAnnotationMacro(annotationName, args) + "${output_snippet!}\n";
+    private static def String getOutputAnnotationMacro(WrapperCodeAnnotationData data) {
+        return getAnnotationMacro(data) + "${output_snippet!}\n";
     }
 
-    private static def String getAnnotationMacro(String annotationName, String... args) {
-        var txt = "<@" + annotationName + " ";
-        for (String arg : args) {
-            txt += "'" + arg + "' ";
-        }
-        txt += "/>\n";
-        return txt;
+    private static def String getAnnotationMacro(WrapperCodeAnnotationData data) {        
+        var txt = ""
+        if(data.ignoreNonExistingSnippet)
+            txt += '''<#if «data.name»??>'''
+            
+        txt += '''<@«data.name» '''
+        for (String arg : data.arguments)
+            txt += ''''«arg»' '''
+        
+        txt += '''/>''';
+        
+        if(data.ignoreNonExistingSnippet)
+            txt += "\n\n"+'''</#if><#t>'''
+        
+        return txt
     }
 
     def void getFilesRecursive(File folder, List<File> list) {
@@ -208,26 +218,11 @@ class WrapperCodeGenerator {
             // Iterate over model to get all annotations
             val root = (model as State)
             scchartName = root.id
-
-            // Annotations of root
-            for (annotation : root.annotations) {
-                if (annotation.name == "EnableWrapper")
-                    wrapperCodeGenerationEnabled = true
-                else if (annotation.name == "DisableWrapper")
-                    wrapperCodeGenerationEnabled = false
-            }
-
             for (decl : root.declarations) {
                 // Only consider annotations of inputs and outputs.
                 if (decl.input || decl.output) {
-
-                    for (annotation : decl.annotations){
-                        if (annotation.name == "EnableWrapper")
-                            wrapperCodeGenerationEnabled = true
-                        else if (annotation.name == "DisableWrapper")
-                            wrapperCodeGenerationEnabled = false
-                        else if(wrapperCodeGenerationEnabled)
-                            annotationDatas += new WrapperCodeAnnotationData(decl, annotation)        
+                    for (annotation : decl.annotations){    
+                        annotationDatas += new WrapperCodeAnnotationData(decl, annotation)        
                     }
                 }
             }

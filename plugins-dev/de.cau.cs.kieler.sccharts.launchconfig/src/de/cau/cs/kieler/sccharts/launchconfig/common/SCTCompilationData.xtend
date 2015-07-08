@@ -14,9 +14,9 @@
 package de.cau.cs.kieler.sccharts.launchconfig.common
 
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
-import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
+import java.util.Map
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -27,7 +27,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * 
  * @author aas
  */
-class SCTCompilationData extends SerializableData {
+class SCTCompilationData {
 
     new() {
     }
@@ -51,6 +51,7 @@ class SCTCompilationData extends SerializableData {
     
     /**
      * Loads all SCTCompilationData objects from the launch configuration.
+     * They can be stored via saveAllToConfiguration(...)
      * 
      * @return List of the loaded compilation data.
      */
@@ -76,6 +77,10 @@ class SCTCompilationData extends SerializableData {
         return datas
     }
     
+    /**
+     * Saves the list elements to the configuration.
+     * They can be retrieved via loadAllFromConfiguration(...)
+     */
     static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<SCTCompilationData> datas){
         if (datas != null) {
             // Create a list with the paths of the selected SCT files.
@@ -90,11 +95,42 @@ class SCTCompilationData extends SerializableData {
         }
     }
     
+    /**
+     * Compares this object with another object.
+     * @return true if the other object is an SCTCompilationData and the paths are equal.<br />
+     *         false otherwise.
+     */
     override equals(Object o){
         if(o instanceof SCTCompilationData){
             val data = o as SCTCompilationData
             return data.path == path
         }
         return false
+    }
+    
+    /**
+     * Try to loads the values of this objects fields by reading the map values.
+     * 
+     * @param map A map where the key is this object's field names
+     * and the value is the value this object's field should have.  
+     */
+    def loadAttributesFromMap(Map<String, String> map) {
+        val classObject = this.class
+        for(f : classObject.declaredFields){
+            f.set(this, map.get(f.name))
+        }
+    }
+    
+    /**
+     * Stores all fields of this class in a map
+     * where the key is a field's name and the value is the field's value.
+     */
+    def Map<String, String> getAttributeMap(){
+        val map = new HashMap<String, String>()
+        val classObject = this.class
+        for(f : classObject.declaredFields){
+            map.put(f.name, f.get(this).toString())
+        }
+        return map
     }
 }
