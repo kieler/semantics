@@ -228,7 +228,9 @@ public abstract class KiemAutomatedJUnitTest {
      *
      * @return true, if successful
      */
-    protected abstract boolean stopOnError();
+    protected boolean stopOnError() {
+        return false;
+    }
 
     // -------------------------------------------------------------------------
 
