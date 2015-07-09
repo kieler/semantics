@@ -221,6 +221,16 @@ public abstract class KiemAutomatedJUnitTest {
     protected abstract IPath getExternalRelativeTestPath();
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Stop this test set on any error if returning true. Otherwise, if returning false,
+     * the test set will be fully executed.
+     *
+     * @return true, if successful
+     */
+    protected abstract boolean stopOnError();
+
+    // -------------------------------------------------------------------------
 
     /**
      * Defines the file extension for the model files.
@@ -311,6 +321,7 @@ public abstract class KiemAutomatedJUnitTest {
      * from the KiemRunner.
      */
     public void kiemAutomatedJUnitTestInitialization() {
+        lastErrorMessage = null;
         // Only initialize for several consecutive tests iff this is the first test,
         // i.e., the static variable firstTest is true; set it to false in this case
         // it will be reset to true in the @AfterClass wrapup method.
@@ -426,7 +437,41 @@ public abstract class KiemAutomatedJUnitTest {
 
         // test this ESO file with all its included traces
         // the traceProperty is required to be able to update the trace number
-        testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(), getPluginId());
+        if (!shouldSkip(null)) {
+            String possibleErrorMessage = testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(), getPluginId());
+            shouldSkip(possibleErrorMessage);
+        } else {
+            // Skip due to previous error
+            logger.info("Skipping File: " + currentEsoFile);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    
+    String lastErrorMessage = null;
+    
+    /**
+     * Return true if an error has been detected and the stopOnError method suggests to
+     * stop on errors (because it returns true). if stopOnError retruns false this method
+     * will always return false as well. If no error was detected yet, this method also
+     * will return false.
+     * The possibleErrorMessage is the result of testEsoFile which is null if no error
+     * has been detected. The variable lastErrorMessage must be reset to null in the
+     * initialization.
+     *
+     * @return true, if successful
+     */
+    private boolean shouldSkip(String possibleErrorMessage) {
+        if (!stopOnError()) {
+            return false;
+        }
+        if (possibleErrorMessage != null) {
+            lastErrorMessage = possibleErrorMessage; 
+        }
+        if (lastErrorMessage != null) {
+            return true;
+        }
+        return false;
     }
 
     // -------------------------------------------------------------------------
