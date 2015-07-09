@@ -650,37 +650,39 @@ public abstract class KiemAutomatedJUnitTest {
             // Search for all files in the test directory
             Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(), "*.*",
                     false);
-            logger.debug("add testpath:" + bundleTestPath.toString());
-            while (allBundleFilesUrl.hasMoreElements()) {
-                URL bundleFileUrl = allBundleFilesUrl.nextElement();
-                try {
-                    logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
+            if (allBundleFilesUrl != null) {
+                logger.debug("add testpath:" + bundleTestPath.toString());
+                while (allBundleFilesUrl.hasMoreElements()) {
+                    URL bundleFileUrl = allBundleFilesUrl.nextElement();
+                    try {
+                        logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
 
-                    IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
-                            temporaryWorkspaceFolderName, false, true);
-                    if (!workspaceFile.exists()) {
+                        IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
+                                temporaryWorkspaceFolderName, false, true);
+                        if (!workspaceFile.exists()) {
+                            throw new RuntimeException(
+                                    "Cannot create temporary workspace link for the following bundle file (1) :"
+                                            + bundleFileUrl.toString());
+                        }
+                        IPath filePath = workspaceFile.getFullPath();
+                        allFiles.add(filePath);
+                    } catch (CoreException e) {
                         throw new RuntimeException(
-                                "Cannot create temporary workspace link for the following bundle file (1) :"
+                                "Cannot create temporary workspace link for the following bundle file (2) :"
+                                        + bundleFileUrl.toString());
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(
+                                "Cannot create temporary workspace link for the following bundle file (3) :"
+                                        + bundleFileUrl.toString());
+                    } catch (URISyntaxException e) {
+                        throw new RuntimeException(
+                                "Cannot create temporary workspace link for the following bundle file (4) :"
+                                        + bundleFileUrl.toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(
+                                "Cannot create temporary workspace link for the following bundle file (5) :"
                                         + bundleFileUrl.toString());
                     }
-                    IPath filePath = workspaceFile.getFullPath();
-                    allFiles.add(filePath);
-                } catch (CoreException e) {
-                    throw new RuntimeException(
-                            "Cannot create temporary workspace link for the following bundle file (2) :"
-                                    + bundleFileUrl.toString());
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(
-                            "Cannot create temporary workspace link for the following bundle file (3) :"
-                                    + bundleFileUrl.toString());
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(
-                            "Cannot create temporary workspace link for the following bundle file (4) :"
-                                    + bundleFileUrl.toString());
-                } catch (IOException e) {
-                    throw new RuntimeException(
-                            "Cannot create temporary workspace link for the following bundle file (5) :"
-                                    + bundleFileUrl.toString());
                 }
             }
         }
