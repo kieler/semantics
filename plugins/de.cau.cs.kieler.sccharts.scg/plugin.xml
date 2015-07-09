@@ -82,7 +82,7 @@
             id="SCGRAPH"
             isCategory="true"
             name="SCGraph"
-            transformations="SCG, SCGDEP, SCGBBGROUP, SCGSCHEDULE, SCGSEQUENTIALIZE, SCGGC, SCPDG, SCPDGCD, SCPDGRN, SCPDGMD">
+            transformations="SCG, SCGDEP, SCGBBGROUP, SCGSCHEDULE, SCGSEQUENTIALIZE, SCGGC, SCPDG">
       </transformationGroup>
    </extension>
    <extension

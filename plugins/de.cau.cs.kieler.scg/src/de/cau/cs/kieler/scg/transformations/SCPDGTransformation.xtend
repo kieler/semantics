@@ -63,7 +63,9 @@ class SCPDGTransformation extends Transformation {
     // -------------------------------------------------------------------------
     // -- Globals 
     // -------------------------------------------------------------------------
-    public static val ANNOTATION_SCPDGTRANSFORMATION = "scpdg"
+    public static val ANNOTATION_SCPDG_CD_TRANSFORMATION = "scpdgcd"
+    public static val ANNOTATION_SCPDG_RN_TRANSFORMATION = "scpdgrn"
+    public static val ANNOTATION_SCPDG_MD_TRANSFORMATION = "scpdgmd"
     private var Entry programEntry;
 
     // -------------------------------------------------------------------------
@@ -81,27 +83,68 @@ class SCPDGTransformation extends Transformation {
 
         return scg
     }
+    
+    def SCGraph transformCD(EObject eObject, KielerCompilerContext context) {
+        val SCGraph scg = (eObject as SCGraph)
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED) ||
+            scg.hasAnnotation(ANNOTATION_SCPDG_CD_TRANSFORMATION)) {
+            return scg
+        }
+        programEntry = (scg.nodes.head as Entry)
+        scg.nodes.forEach [ node |
+            node.createDependencies(scg, context)
+        ]
+        scg => [
+            annotations += createStringAnnotation(ANNOTATION_SCPDG_CD_TRANSFORMATION, "")
+        ]
+        scg
+    }
+
+    def SCGraph transformRN(EObject eObject, KielerCompilerContext context) {
+        val SCGraph scg = (eObject as SCGraph)
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED) ||
+            scg.hasAnnotation(ANNOTATION_SCPDG_RN_TRANSFORMATION) ||
+            !scg.hasAnnotation(ANNOTATION_SCPDG_CD_TRANSFORMATION)) {
+            return scg
+        }
+        programEntry = (scg.nodes.head as Entry)
+        scg.removeUselessNodes
+
+        scg.nodes.forEach [ node |
+            node.removeNext
+        ]
+        scg => [
+            annotations += createStringAnnotation(ANNOTATION_SCPDG_RN_TRANSFORMATION, "")
+        ]
+        scg
+    }
+
+    def SCGraph transformMD(EObject eObject, KielerCompilerContext context) {
+        val SCGraph scg = (eObject as SCGraph)
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED) ||
+            scg.hasAnnotation(ANNOTATION_SCPDG_MD_TRANSFORMATION) ||
+            !scg.hasAnnotation(ANNOTATION_SCPDG_CD_TRANSFORMATION)) {
+            return scg
+        }
+        programEntry = (scg.nodes.head as Entry)
+        scg.minimizeControlDependencies
+        scg => [
+            annotations += createStringAnnotation(ANNOTATION_SCPDG_MD_TRANSFORMATION, "")
+        ]
+        
+        scg
+    }
 
     def SCGraph transformSCGToSCPDG(SCGraph scg, KielerCompilerContext context) {
 
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED) ||
-            scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)) {
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)) {
             return scg
         }
 
         programEntry = (scg.nodes.head as Entry)
 
-        scg.nodes.forEach [ node |
-            node.createDependencies(scg, context)
-        ]
+        
 
-        scg.removeUselessNodes
-
-        scg.minimizeControlDependencies
-
-        scg.nodes.forEach [ node |
-            node.removeNext
-        ]
 
         
         
@@ -126,30 +169,30 @@ class SCPDGTransformation extends Transformation {
         //
         //            dummyDepth.transformSCPDG(cfs, scg, context)
         //        }
-        scg => [
-            annotations += createStringAnnotation(ANNOTATION_SCPDGTRANSFORMATION, "")
-        ]
+//        scg => [
+//            annotations += createStringAnnotation(ANNOTATION_SCPDGTRANSFORMATION, "")
+//        ]
 
         scg
     }
     
-    private def SCGraph removeDeadCode(SCGraph scg){
-        val deadNodes = newHashSet()
-        scg.nodes.forEach[node|
-            if(node.incoming.empty){
-                deadNodes += node
-            }
-        ]
-        
-        if(!deadNodes.empty){
-            deadNodes.forEach[deadNode|
-                scg.nodes.remove(deadNode)
-            ]
-            scg.removeDeadCode
-        }
-        
-        scg
-    }
+//    private def SCGraph removeDeadCode(SCGraph scg){
+//        val deadNodes = newHashSet()
+//        scg.nodes.forEach[node|
+//            if(node.incoming.empty){
+//                deadNodes += node
+//            }
+//        ]
+//        
+//        if(!deadNodes.empty){
+//            deadNodes.forEach[deadNode|
+//                scg.nodes.remove(deadNode)
+//            ]
+//            scg.removeDeadCode
+//        }
+//        
+//        scg
+//    }
     
     private def SCGraph removeUselessNodes(SCGraph scg){
         val allNodes = newHashSet()
@@ -162,8 +205,14 @@ class SCPDGTransformation extends Transformation {
             if (node.isUseless) {
                 removedNodes.add(node)
                 node.incoming.forEach [ link |
-                    if (link instanceof Dependency)
-                        link.newTargets((link.eContainer as Node), link.target.allUntilNextControlNode)
+                    if (link instanceof Dependency){
+                        if(link.eContainer instanceof Node){
+                            link.newTargets((link.eContainer as Node), node.allUntilNextControlNodeUsingControlDependencies)
+                            } else {
+                               System.out.println("nooo") 
+                            }
+                    }
+                        
                 ]
 
             }
@@ -525,14 +574,14 @@ class SCPDGTransformation extends Transformation {
     def private boolean existsNonTrivialDependency(Node root, Node target, Set<Node> NodeSet) {
         val dependend = new BasicEList
         root.dependencies.forEach [ depend |
-            if (target != depend.target && NodeSet.contains(depend.target))
+            if (target != depend.target && NodeSet.contains(depend.target) && !depend.target.isControlNode)
                 dependend.add(depend.target)
         ]
 
         while (!dependend.empty) {
             val node = dependend.head
             if (!node.dependencies.forall [ dependency |
-                if(NodeSet.contains(dependency.target))
+                if(NodeSet.contains(dependency.target) && !dependency.target.isControlNode)
                     dependend.add(dependency.target)
                 dependency.target != target
             ]) {
