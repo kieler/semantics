@@ -278,7 +278,6 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
             return null;
         }
 
-        System.out.println("+++ COMPARE TO BENCHMARK FILE: STAGE 1 ");
 
 
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -287,6 +286,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
 
         if (!file.exists()) {
             // Only validate if a *.bench file exists
+            System.out.println("+++ NO BENCHMARK FILE EXISTS!");
             return null;
         }
         
@@ -326,7 +326,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
             return null;
         }
         
-        System.out.println("+++ COMPARE TO BENCHMARK FILE: STAGE 2 ");
+        System.out.print("+++ COMPARE TO BENCHMARK FILE ... ");
         
         // Compare old data and current data using tolerance
 
@@ -347,6 +347,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
             JSONObject returnValue = new JSONObject();
             try {
             if (newValue > barrierValue) {
+                System.out.println("BENCHMARK FAILED ");
                 // This indicates an error
                 String message =
                         "Violation of benchmark limit for '" + marker + "': old value is '"
@@ -359,6 +360,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                     return returnValue;
                 
             } else {
+                System.out.println("BENCHMARK OK ");
                 returnValue.accumulate(ERRORMESSAGE, "");
                 return returnValue;
             }
