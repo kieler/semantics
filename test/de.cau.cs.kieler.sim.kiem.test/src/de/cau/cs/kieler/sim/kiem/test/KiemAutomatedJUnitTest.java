@@ -438,8 +438,7 @@ public abstract class KiemAutomatedJUnitTest {
         // test this ESO file with all its included traces
         // the traceProperty is required to be able to update the trace number
         if (!shouldSkip(null)) {
-            String possibleErrorMessage = testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(), getPluginId());
-            shouldSkip(possibleErrorMessage);
+            testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(), getPluginId());
         } else {
             // Skip due to previous error
             logger.info("Skipping File: " + currentEsoFile);
@@ -448,7 +447,7 @@ public abstract class KiemAutomatedJUnitTest {
 
     // -------------------------------------------------------------------------
     
-    String lastErrorMessage = null;
+    static String lastErrorMessage = null;
     
     /**
      * Return true if an error has been detected and the stopOnError method suggests to
@@ -613,13 +612,16 @@ public abstract class KiemAutomatedJUnitTest {
 
                 // If an error occurred tell!
                 if (errorFlag) {
+                    lastErrorMessage = errorInformation;
                     fail(errorInformation);
                 }
 
             } else {
-                throw new RuntimeException("KIEM cannot initialize execution. "
+                errorInformation = "KIEM cannot initialize execution. "
                         + "Try to do this manually for the following scheduling file:'"
-                        + executionFileName + "'. Error message: " + KiemPlugin.getLastError());
+                        + executionFileName + "'. Error message: " + KiemPlugin.getLastError();
+                lastErrorMessage = errorInformation;
+                throw new RuntimeException(errorInformation);
             }
         } // next trace
 
