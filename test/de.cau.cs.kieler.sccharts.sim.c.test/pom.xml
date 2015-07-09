@@ -16,7 +16,7 @@
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-surefire-plugin</artifactId>
-        <version>0.22.0</version>
+        <version>${tycho-version}</version>
         <configuration>
 			<systemPropertyVariables>
               <java.io.tmpdir>/tmp/</java.io.tmpdir>
