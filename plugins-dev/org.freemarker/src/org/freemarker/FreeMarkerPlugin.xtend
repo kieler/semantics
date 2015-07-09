@@ -77,20 +77,20 @@ class FreeMarkerPlugin implements BundleActivator {
     @Accessors
     public static val assignmentMacros = 
 "<#macro init>\n"+
-"   <#assign init_snippet>\n"+
+"   <#if phase=='init'>\n"+
 "       <#nested />\n"+
-"   </#assign>\n"+
+"   </#if>\n"+
 "</#macro>\n\n"+
 
 "<#macro input>\n"+
-"   <#assign input_snippet>\n"+
+"   <#if phase=='input'>\n"+
 "       <#nested />\n"+
-"   </#assign>\n"+
+"   </#if>\n"+
 "</#macro>\n\n"+
 
 "<#macro output>\n"+
-"   <#assign output_snippet>\n"+
+"   <#if phase=='output'>\n"+
 "       <#nested />\n"+
-"   </#assign>\n"+
+"   </#if>\n"+
 "</#macro>"
 }

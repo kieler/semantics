@@ -79,6 +79,12 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     private var EnvironmentData currentData
 
     /**
+     * The tab folder which contains the tabs with
+     * the controls to modify the values of the selected environment.
+     */
+    private var TabFolder tabFolder
+
+    /**
      * The input field for the environment name.
      */
     private var Text name
@@ -159,6 +165,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
 
         loadSettings()    
 
+        updateEnabled()
+
         return comp
     }
 
@@ -170,18 +178,18 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         val comp = UIUtil.createComposite(parent, 1, GridData.FILL_HORIZONTAL.bitwiseOr((GridData.FILL_VERTICAL)))
 
         // Create tab group
-        val folder = new TabFolder(comp, SWT.NONE)
-        folder.setLayout(new GridLayout())
+        tabFolder = new TabFolder(comp, SWT.NONE)
+        tabFolder.setLayout(new GridLayout())
         val gd = new GridData(GridData.FILL_BOTH)
         // Without this height hint the tab folder sets its height to the sum of the heights of all pages.
         // This is to much. A better value would be correct the maximum of the heights of all pages.
         gd.heightHint = 300
-        folder.setLayoutData(gd)
+        tabFolder.setLayoutData(gd)
         
         // Create tabs
-        createGeneralTab(folder)
-        createSCTCompilationTab(folder)
-        createExecuteTab(folder)
+        createGeneralTab(tabFolder)
+        createSCTCompilationTab(tabFolder)
+        createExecuteTab(tabFolder)
     }
     
     /**
@@ -476,6 +484,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 val selection = event.selection as IStructuredSelection
                 currentData = selection.firstElement as EnvironmentData
                 updateControls(currentData)
+                updateEnabled()
                 checkConsistency()
             }
         })
@@ -698,4 +707,13 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         return null
     }
     
+    /**
+     * Enables the controls of the tab folder if an environment is selected.
+     * Disables the controls otherwise.
+     */
+    private def updateEnabled(){
+        val controls = tabFolder.tabList
+        for(control : controls)
+            UIUtil.enableControls(controls, currentData != null)
+    }
 }

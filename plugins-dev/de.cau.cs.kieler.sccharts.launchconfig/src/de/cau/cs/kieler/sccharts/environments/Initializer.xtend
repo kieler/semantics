@@ -125,7 +125,7 @@ class Initializer extends AbstractPreferenceInitializer {
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.launchconfig/environments/mindstorms_nxj/templates"
         
         env.compileCommand = 'nxjc -cp "/opt/leJOS_0.9.1/lib:sct-gen:src" "sct-gen/Main.java"'
-        env.deployCommand = 'nxj -cp "/opt/leJOS_0.9.1/lib:sct-gen:src" -o "Main.nxj" Main'
+        env.deployCommand = 'nxj -r -cp "/opt/leJOS_0.9.1/lib:sct-gen:src" -o "Main.nxj" Main'
         env.runCommand = ""
         
         env.relatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"

@@ -120,6 +120,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         loadSettingsFromConfiguration()
         
         if (project != null) {
+            
             // Set variables (e.g. launched_project_loc, main_name, main_loc, ...)
             setVariables()
             
@@ -239,7 +240,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      */
     private def compile(SCTCompilationData data) {
         // Load model from file
-        val EObject model = ModelImporter.get(data.path)
+        val EObject model = ModelImporter.get(project.location.toOSString+"/"+data.projectRelativePath)
 
         if (model != null) {
             // Compile sct

@@ -32,8 +32,7 @@ class SCTCompilationData {
     new() {
     }
 
-    new(String filePath, String projectRelativePath, String fileName) {
-        this.path = filePath
+    new(String projectRelativePath, String fileName) {
         this.projectRelativePath = projectRelativePath
         this.name = fileName
     }
@@ -42,8 +41,6 @@ class SCTCompilationData {
     // so that they can be accessed by the SerializableData class
     // to serialize/deserialize them.
     
-    @Accessors
-    protected var String path = ""
     @Accessors
     protected var String projectRelativePath = ""
     @Accessors
@@ -65,13 +62,16 @@ class SCTCompilationData {
         // Create an object for each path and load its data.
         for(sctFilePath : sctFilePaths){
             val data = new SCTCompilationData()
-            data.path = sctFilePath
+            data.projectRelativePath = sctFilePath
             
-            // The data for the object is stored with its path as attribute identification. 
-            data.loadAttributesFromMap(configuration.getAttribute(data.path, new HashMap()))
-            
-            // Add this object to the result list
-            datas += data
+            // The data for the object is stored with its path as attribute identification.
+            val map = configuration.getAttribute(data.projectRelativePath, null as HashMap)
+            if(map != null){ 
+                data.loadAttributesFromMap(map)
+                
+                // Add this object to the result list
+                datas += data
+            }
         }
         
         return datas
@@ -86,10 +86,10 @@ class SCTCompilationData {
             // Create a list with the paths of the selected SCT files.
             val List<String> sctFiles = newArrayList()
             datas.forEach [
-                sctFiles += it.path
+                sctFiles += it.projectRelativePath
                 
                 // Save the attributes of this file with the path as identification
-                configuration.setAttribute(it.path, it.attributeMap)
+                configuration.setAttribute(it.projectRelativePath, it.attributeMap)
             ]
             configuration.setAttribute(LaunchConfiguration.ATTR_SCT_FILES, sctFiles)
         }
@@ -103,7 +103,7 @@ class SCTCompilationData {
     override equals(Object o){
         if(o instanceof SCTCompilationData){
             val data = o as SCTCompilationData
-            return data.path == path
+            return data.projectRelativePath == projectRelativePath
         }
         return false
     }

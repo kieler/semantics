@@ -111,6 +111,10 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
      */
     private var IProject project
 
+    /**
+     * Should an environment be used for this launch?
+     * The value is loaded from the launch configuration and set in the main page.
+     */
     private var boolean useEnvironment
 
     /**
@@ -127,8 +131,6 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
         createTargetComponent(comp)
         createTargetTemplateComponent(comp)
         createWrapperCodeComponent(comp)
-        
-        updateEnabled()
     }
 
     /**
@@ -189,7 +191,6 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
                         // Add resources to the gui list
                         for (var i = 0; i < results.length; i++) {
                             val resource = results.get(i) as IResource
-                            val path = resource.location.toOSString
                             val projectRelativePath = resource.projectRelativePath.toOSString
                             val name = resource.name
  
@@ -197,13 +198,13 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
                             // so we do this here manually.
                             var isOK = resource.fileExtension.toLowerCase == "sct"
                             for (SCTCompilationData d : inputArray) {
-                                if (d.path == path)
+                                if (d.projectRelativePath == projectRelativePath)
                                     isOK = false
                             }
 
                             // Add if the new element is ok.
                             if (isOK)
-                                inputArray.add(new SCTCompilationData(path, projectRelativePath, name))
+                                inputArray.add(new SCTCompilationData(projectRelativePath, name))
                             else
                                 println("Resource '" + resource.name + "' is no SCT file or already in list!")
                         }

@@ -65,7 +65,7 @@ class SCTLaunchShortcut implements ILaunchShortcut {
             // Check if already in list
             var alreadyInList = false
             for(data : datas){
-                if(data.path == file.location.toOSString)
+                if(data.projectRelativePath == file.projectRelativePath.toOSString)
                     alreadyInList = true
             }
             
@@ -73,7 +73,7 @@ class SCTLaunchShortcut implements ILaunchShortcut {
             if(!alreadyInList){
                 val workingCopy = configuration.getWorkingCopy()
                 
-                val data = new SCTCompilationData(file.location.toOSString, file.projectRelativePath.toOSString, file.name)
+                val data = new SCTCompilationData(file.projectRelativePath.toOSString, file.name)
                 datas += data
                 SCTCompilationData.saveAllToConfiguration(workingCopy, datas)
                 workingCopy.doSave()        
