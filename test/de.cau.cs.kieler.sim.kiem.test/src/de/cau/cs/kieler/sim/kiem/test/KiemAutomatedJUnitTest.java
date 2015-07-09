@@ -23,6 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -66,7 +67,6 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * The class KiemAutomatedJUnit enables the integration of several KIEM execution runs into a JUnit
@@ -174,13 +174,38 @@ public abstract class KiemAutomatedJUnitTest {
 
     /**
      * Defines a path in the bundle where the model files, the ESO files and the execution files are
-     * located.
+     * located. This method is an alternative to getBundleTestPaths(). This method is
+     * mandatory and is used in the getBundleTestPaths() method. The getBundleThestPaths()
+     * method may be overridden. 
      * 
      * E.g., return new Path("/testdata/");
      * 
      * @return the ESO files
      */
     protected abstract IPath getBundleTestPath();
+    // -------------------------------------------------------------------------
+
+    /**
+     * Defines a list of paths in the bundle where the model files and ESO files are located.
+     * This method is an alternative to getBundleTestPath(). The execution files should be
+     * defined only in one of the listed locations.
+     * The default implementation will only add the signle getBundleTestPath which is mandatory
+     * but can be null.
+     * 
+     * E.g.:
+     * List<IPath> paths =  (new ArrayList<IPath>()).add(new Path("/testdata/");
+     * return paths;
+     * 
+     * @return the file locations
+     */
+    protected List<IPath> getBundleTestPaths() {
+        List<IPath> paths = new ArrayList<IPath>();
+        IPath defaultPath = getBundleTestPath();
+        if (defaultPath != null) {
+            paths.add(defaultPath);
+        }
+        return paths;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -305,7 +330,7 @@ public abstract class KiemAutomatedJUnitTest {
 
         // First create links to local bundle file in a temporary workspace
         List<IPath> allWorkspaceFiles = createLinksForAllTestFiles(getPluginId(),
-                getBundleTestPath(), getTemporaryWorkspaceFolderName());
+                getBundleTestPaths(), getTemporaryWorkspaceFolderName());
         List<IPath> allExternalFiles = createLinksForAllExternalTestFiles(getPluginId(),
                 getExternalRelativeTestPath(), getTemporaryWorkspaceFolderName());
         // Add the external files if there are any specified
@@ -571,45 +596,47 @@ public abstract class KiemAutomatedJUnitTest {
      * @return the list
      */
     private static List<IPath> createLinksForAllTestFiles(final String pluginId,
-            final IPath bundleTestPath, final String temporaryWorkspaceFolderName) {
+            final List<IPath> bundleTestPaths, final String temporaryWorkspaceFolderName) {
         List<IPath> allFiles = new LinkedList<IPath>();
         // If the bundle is not ready then there is no image
         final Bundle bundle = Platform.getBundle(pluginId);
 
-        // Search for all files in the test directory
-        Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(), "*.*",
-                false);
-        logger.debug("testpath:" + bundleTestPath.toString());
-        while (allBundleFilesUrl.hasMoreElements()) {
-            URL bundleFileUrl = allBundleFilesUrl.nextElement();
-            try {
-                logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
+        for (IPath bundleTestPath : bundleTestPaths) {
+            // Search for all files in the test directory
+            Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(), "*.*",
+                    false);
+            logger.debug("add testpath:" + bundleTestPath.toString());
+            while (allBundleFilesUrl.hasMoreElements()) {
+                URL bundleFileUrl = allBundleFilesUrl.nextElement();
+                try {
+                    logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
 
-                IFile workspaceFile = KiemUtil.createLinkedWorkspaceFile(bundleFileUrl,
-                        temporaryWorkspaceFolderName, false, true);
-                if (!workspaceFile.exists()) {
+                    IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
+                            temporaryWorkspaceFolderName, false, true);
+                    if (!workspaceFile.exists()) {
+                        throw new RuntimeException(
+                                "Cannot create temporary workspace link for the following bundle file (1) :"
+                                        + bundleFileUrl.toString());
+                    }
+                    IPath filePath = workspaceFile.getFullPath();
+                    allFiles.add(filePath);
+                } catch (CoreException e) {
                     throw new RuntimeException(
-                            "Cannot create temporary workspace link for the following bundle file (1) :"
+                            "Cannot create temporary workspace link for the following bundle file (2) :"
+                                    + bundleFileUrl.toString());
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(
+                            "Cannot create temporary workspace link for the following bundle file (3) :"
+                                    + bundleFileUrl.toString());
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(
+                            "Cannot create temporary workspace link for the following bundle file (4) :"
+                                    + bundleFileUrl.toString());
+                } catch (IOException e) {
+                    throw new RuntimeException(
+                            "Cannot create temporary workspace link for the following bundle file (5) :"
                                     + bundleFileUrl.toString());
                 }
-                IPath filePath = workspaceFile.getFullPath();
-                allFiles.add(filePath);
-            } catch (CoreException e) {
-                throw new RuntimeException(
-                        "Cannot create temporary workspace link for the following bundle file (2) :"
-                                + bundleFileUrl.toString());
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(
-                        "Cannot create temporary workspace link for the following bundle file (3) :"
-                                + bundleFileUrl.toString());
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(
-                        "Cannot create temporary workspace link for the following bundle file (4) :"
-                                + bundleFileUrl.toString());
-            } catch (IOException e) {
-                throw new RuntimeException(
-                        "Cannot create temporary workspace link for the following bundle file (5) :"
-                                + bundleFileUrl.toString());
             }
         }
         return allFiles;
@@ -831,8 +858,8 @@ public abstract class KiemAutomatedJUnitTest {
      */
     private static String getEditorId(final IPath fullFilePath) throws URISyntaxException,
             IOException {
-        URL absoluteFileUrl = KiemUtil.resolveWorkspaceFile(fullFilePath.toString());
-        String absoluteFilePathString = KiemUtil.getAbsoluteFilePath(absoluteFileUrl);
+        URL absoluteFileUrl = ModelUtil.resolveWorkspaceFile(fullFilePath.toString());
+        String absoluteFilePathString = ModelUtil.getAbsoluteFilePath(absoluteFileUrl);
         IPath absoluteFilePath = new Path(absoluteFilePathString);
         IFileStore fileStore = EFS.getLocalFileSystem().getStore(absoluteFilePath);
         try {
