@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  *
- * Copyright 2012 by
+ * Copyright 2015 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -28,14 +28,14 @@ import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
-public class SCChartsSimSAutomatedJUnitTest extends KiemAutomatedJUnitTest {
+public class SCChartsSimCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
 
     /**
      * Instantiates a new simulation test.
      *
      * @param esoFile the ESO file
      */
-    public SCChartsSimSAutomatedJUnitTest(final IPath esoFile) {
+    public SCChartsSimCAutomatedJUnitTest(final IPath esoFile) {
         super(esoFile);
     }
 

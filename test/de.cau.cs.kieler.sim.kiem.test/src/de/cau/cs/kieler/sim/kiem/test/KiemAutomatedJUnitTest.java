@@ -61,6 +61,7 @@ import org.junit.runners.Parameterized.Parameters;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.util.ModelUtil;
+import de.cau.cs.kieler.sim.benchmark.BenchmarkTestDataComponent;
 import de.cau.cs.kieler.sim.kart.KartConstants;
 import de.cau.cs.kieler.sim.kart.KartPlugin;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -586,6 +587,7 @@ public abstract class KiemAutomatedJUnitTest {
                                     }
                                 }
                             }
+                            // ESO Verification Failure
                             if (jSONData.has(errorSignalName)) {
                                 Object errorContent = jSONData.get(errorSignalName);
                                 if (errorContent instanceof String) {
@@ -598,6 +600,26 @@ public abstract class KiemAutomatedJUnitTest {
                                         }
                                         errorFlag = true;
                                         errorInformation = "Error (" + (String) errorContent
+                                                + ") in tick " + tick + " of trace " + traceNumber
+                                                + " of ESO file '" + esoFilePath.toString()
+                                                + "' during execution '" + executionFileName + "'.";
+                                        break;
+                                    }
+                                }
+                            }
+                            // Benchmark Failure
+                            if (jSONData.has(BenchmarkTestDataComponent.ERRORMESSAGE)) {
+                                Object errorContent = jSONData.get(BenchmarkTestDataComponent.ERRORMESSAGE);
+                                if (errorContent instanceof String) {
+                                    if (!((String) errorContent).equals("")) {
+                                        // !!! ERRROR DETECTED !!! //
+                                        execution.stopExecutionSync();
+                                        execution.cancel();
+                                        while (kiemPlugin.getExecution() != null) {
+                                            pause();
+                                        }
+                                        errorFlag = true;
+                                        errorInformation = "Benchmark Error (" + (String) errorContent
                                                 + ") in tick " + tick + " of trace " + traceNumber
                                                 + " of ESO file '" + esoFilePath.toString()
                                                 + "' during execution '" + executionFileName + "'.";

@@ -51,7 +51,7 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent , IKiemEventListener {
 
-    public static final String ERRORMESSAGE = "BenchmarkError";
+    public static final String ERRORMESSAGE = "benchError";
 
     /** The Constant KIEM_PROPERTY_MAX. */
     private static final int KIEM_PROPERTY_MAX = 4;
@@ -172,7 +172,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
      * {@inheritDoc}
      */
     public boolean isProducer() {
-        return false;
+        return true;
     }
 
     // -------------------------------------------------------------------------
@@ -278,7 +278,8 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
             return null;
         }
 
-        System.out.println("+++ WRITE TEXT FILE ");
+        System.out.println("+++ COMPARE TO BENCHMARK FILE: STAGE 1 ");
+
 
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IWorkspaceRoot root = workspace.getRoot();
@@ -288,6 +289,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
             // Only validate if a *.bench file exists
             return null;
         }
+        
 
         String stringPath = file.getRawLocation().toString();
 
@@ -304,7 +306,6 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
         }
 
         while ((line = br.readLine()) != null) {
-
             String[] lineData = line.split(BENCHMARK_DATA_SEPARATOR);
             if (lineData.length == 2) {
                 String dataName = lineData[0];
@@ -319,12 +320,14 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
         }
         br.close();
         fis.close();
-
+        
         if (benchmarkTick != tick) {
             // The benchmark tick has not been reached
             return null;
         }
-
+        
+        System.out.println("+++ COMPARE TO BENCHMARK FILE: STAGE 2 ");
+        
         // Compare old data and current data using tolerance
 
         // Write header
@@ -341,6 +344,8 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
 
             double barrierValue = oldValue + overallToleranceAddition;
 
+            JSONObject returnValue = new JSONObject();
+            try {
             if (newValue > barrierValue) {
                 // This indicates an error
                 String message =
@@ -350,14 +355,15 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                                 + "' which is the barrier value including tolerance ("
                                 + absoluteToleranceArray[i] + " + " + relativeToleranceArray[i]
                                 + "%).";
-                JSONObject returnValue = new JSONObject();
-                try {
                     returnValue.accumulate(ERRORMESSAGE, message);
                     return returnValue;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
                 
+            } else {
+                returnValue.accumulate(ERRORMESSAGE, "");
+                return returnValue;
+            }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
         }
@@ -387,7 +393,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
         PrintWriter out = new PrintWriter(stringPath);
 
         // by convention the first number represents the last tick which is used to for evaluation
-        out.println(tick);
+        out.println(tick-1);
 
         for (String marker : markerArray) {
             String line = "";
