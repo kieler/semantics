@@ -1,0 +1,27 @@
+scchart _46_initial_states_with_hierarchy3 "46-initial-states-with-hierarchy3" {
+  output signal pure O;
+  output signal pure ExitSetC;
+  input signal pure I;
+  input signal pure I2;
+
+  initial state A {
+
+    state BB;
+
+    initial state AA
+    --> BB / ExitSetC;
+  }
+  --> Z with I
+  --> Y with I2;
+
+  state Z;
+
+  state Y;
+
+  region ExitActionRegion17159221:
+
+  initial state C
+  --> D with ExitSetC / O;
+
+  state D;
+}

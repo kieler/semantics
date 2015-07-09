@@ -1,7 +1,0 @@
-scchart _135_valued_input_signalS3 "135-valued-input-signalS" {
-  input signal int I = 0;
-  output signal int O = 0;
-
-  initial state s
-  --> s with I / O(val(I));
-}

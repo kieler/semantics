@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts.sim.c.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
@@ -47,10 +50,27 @@ public class SCChartsSimSAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      * {@inheritDoc}
      */
     protected IPath getBundleTestPath() {
+        return null;
 //        return new Path("knowntofail");
-        return new Path("testdata");
+//        return new Path("testdata");
 //        return new Path("inprogress");
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    protected List<IPath> getBundleTestPaths() {
+        List paths = new ArrayList<IPath>();
+        // first test simple tests
+        paths.add(new Path("/testdata-simple/"));
+        // then test advanced tests (if no failure)
+        paths.add(new Path("/testdata-advanced/"));
+        return paths;
+//        return new Path("knowntofail");
+//        return new Path("testdata");
+//        return new Path("inprogress");
+    }
+    
 
     /**
      * {@inheritDoc}
@@ -80,5 +100,13 @@ public class SCChartsSimSAutomatedJUnitTest extends KiemAutomatedJUnitTest {
     protected IPath getExternalRelativeTestPath() {
         return null;
         //return new Path("../../../models/sccharts/validation");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected boolean stopOnError() {
+        return true;
     }
 }

@@ -1,0 +1,35 @@
+scchart DVDPlayer2 "DVDPlayer" {
+  input signal pure POWER;
+  input signal pure PLAY;
+  output signal pure O;
+
+  initial state Off
+  --> On with POWER;
+
+  state On {
+
+    initial state H {
+
+      initial state English
+      --> French / O;
+
+      state German
+      --> English / O;
+
+      state French
+      --> German / O;
+
+      region:
+
+      initial state PAUSE
+      --> Playing with PLAY;
+
+      state Playing
+      --> PAUSE with PLAY
+      --> S;
+
+      final state S;
+    };
+  }
+  --> Off with POWER;
+}
