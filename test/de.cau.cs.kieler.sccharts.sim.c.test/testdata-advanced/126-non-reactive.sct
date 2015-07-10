@@ -1,0 +1,9 @@
+scchart S0 "non_reactive" {
+  output signal pure A;
+
+  initial state S0 "s1"
+  --> S1 with A
+  --> S1 / A;
+
+  state S1 "s2";
+}

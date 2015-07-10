@@ -23,6 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -60,13 +61,13 @@ import org.junit.runners.Parameterized.Parameters;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.util.ModelUtil;
+import de.cau.cs.kieler.sim.benchmark.BenchmarkTestDataComponent;
 import de.cau.cs.kieler.sim.kart.KartConstants;
 import de.cau.cs.kieler.sim.kart.KartPlugin;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * The class KiemAutomatedJUnit enables the integration of several KIEM execution runs into a JUnit
@@ -174,13 +175,38 @@ public abstract class KiemAutomatedJUnitTest {
 
     /**
      * Defines a path in the bundle where the model files, the ESO files and the execution files are
-     * located.
+     * located. This method is an alternative to getBundleTestPaths(). This method is
+     * mandatory and is used in the getBundleTestPaths() method. The getBundleThestPaths()
+     * method may be overridden. 
      * 
      * E.g., return new Path("/testdata/");
      * 
      * @return the ESO files
      */
     protected abstract IPath getBundleTestPath();
+    // -------------------------------------------------------------------------
+
+    /**
+     * Defines a list of paths in the bundle where the model files and ESO files are located.
+     * This method is an alternative to getBundleTestPath(). The execution files should be
+     * defined only in one of the listed locations.
+     * The default implementation will only add the signle getBundleTestPath which is mandatory
+     * but can be null.
+     * 
+     * E.g.:
+     * List<IPath> paths =  (new ArrayList<IPath>()).add(new Path("/testdata/");
+     * return paths;
+     * 
+     * @return the file locations
+     */
+    protected List<IPath> getBundleTestPaths() {
+        List<IPath> paths = new ArrayList<IPath>();
+        IPath defaultPath = getBundleTestPath();
+        if (defaultPath != null) {
+            paths.add(defaultPath);
+        }
+        return paths;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -194,6 +220,18 @@ public abstract class KiemAutomatedJUnitTest {
      * @return the ESO files
      */
     protected abstract IPath getExternalRelativeTestPath();
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Stop this test set on any error if returning true. Otherwise, if returning false,
+     * the test set will be fully executed.
+     *
+     * @return true, if successful
+     */
+    protected boolean stopOnError() {
+        return false;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -286,6 +324,7 @@ public abstract class KiemAutomatedJUnitTest {
      * from the KiemRunner.
      */
     public void kiemAutomatedJUnitTestInitialization() {
+        lastErrorMessage = null;
         // Only initialize for several consecutive tests iff this is the first test,
         // i.e., the static variable firstTest is true; set it to false in this case
         // it will be reset to true in the @AfterClass wrapup method.
@@ -305,7 +344,7 @@ public abstract class KiemAutomatedJUnitTest {
 
         // First create links to local bundle file in a temporary workspace
         List<IPath> allWorkspaceFiles = createLinksForAllTestFiles(getPluginId(),
-                getBundleTestPath(), getTemporaryWorkspaceFolderName());
+                getBundleTestPaths(), getTemporaryWorkspaceFolderName());
         List<IPath> allExternalFiles = createLinksForAllExternalTestFiles(getPluginId(),
                 getExternalRelativeTestPath(), getTemporaryWorkspaceFolderName());
         // Add the external files if there are any specified
@@ -401,7 +440,40 @@ public abstract class KiemAutomatedJUnitTest {
 
         // test this ESO file with all its included traces
         // the traceProperty is required to be able to update the trace number
-        testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(), getPluginId());
+        if (!shouldSkip(null)) {
+            testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(), getPluginId());
+        } else {
+            // Skip due to previous error
+            logger.info("Skipping File: " + currentEsoFile);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    
+    static String lastErrorMessage = null;
+    
+    /**
+     * Return true if an error has been detected and the stopOnError method suggests to
+     * stop on errors (because it returns true). if stopOnError retruns false this method
+     * will always return false as well. If no error was detected yet, this method also
+     * will return false.
+     * The possibleErrorMessage is the result of testEsoFile which is null if no error
+     * has been detected. The variable lastErrorMessage must be reset to null in the
+     * initialization.
+     *
+     * @return true, if successful
+     */
+    private boolean shouldSkip(String possibleErrorMessage) {
+        if (!stopOnError()) {
+            return false;
+        }
+        if (possibleErrorMessage != null) {
+            lastErrorMessage = possibleErrorMessage; 
+        }
+        if (lastErrorMessage != null) {
+            return true;
+        }
+        return false;
     }
 
     // -------------------------------------------------------------------------
@@ -515,6 +587,7 @@ public abstract class KiemAutomatedJUnitTest {
                                     }
                                 }
                             }
+                            // ESO Verification Failure
                             if (jSONData.has(errorSignalName)) {
                                 Object errorContent = jSONData.get(errorSignalName);
                                 if (errorContent instanceof String) {
@@ -534,6 +607,26 @@ public abstract class KiemAutomatedJUnitTest {
                                     }
                                 }
                             }
+                            // Benchmark Failure
+                            if (jSONData.has(BenchmarkTestDataComponent.ERRORMESSAGE)) {
+                                Object errorContent = jSONData.get(BenchmarkTestDataComponent.ERRORMESSAGE);
+                                if (errorContent instanceof String) {
+                                    if (!((String) errorContent).equals("")) {
+                                        // !!! ERRROR DETECTED !!! //
+                                        execution.stopExecutionSync();
+                                        execution.cancel();
+                                        while (kiemPlugin.getExecution() != null) {
+                                            pause();
+                                        }
+                                        errorFlag = true;
+                                        errorInformation = "Benchmark Error (" + (String) errorContent
+                                                + ") in tick " + tick + " of trace " + traceNumber
+                                                + " of ESO file '" + esoFilePath.toString()
+                                                + "' during execution '" + executionFileName + "'.";
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     } catch (JSONException e) {
                         logger.error(e.getMessage());
@@ -543,13 +636,16 @@ public abstract class KiemAutomatedJUnitTest {
 
                 // If an error occurred tell!
                 if (errorFlag) {
+                    lastErrorMessage = errorInformation;
                     fail(errorInformation);
                 }
 
             } else {
-                throw new RuntimeException("KIEM cannot initialize execution. "
+                errorInformation = "KIEM cannot initialize execution. "
                         + "Try to do this manually for the following scheduling file:'"
-                        + executionFileName + "'. Error message: " + KiemPlugin.getLastError());
+                        + executionFileName + "'. Error message: " + KiemPlugin.getLastError();
+                lastErrorMessage = errorInformation;
+                throw new RuntimeException(errorInformation);
             }
         } // next trace
 
@@ -571,45 +667,49 @@ public abstract class KiemAutomatedJUnitTest {
      * @return the list
      */
     private static List<IPath> createLinksForAllTestFiles(final String pluginId,
-            final IPath bundleTestPath, final String temporaryWorkspaceFolderName) {
+            final List<IPath> bundleTestPaths, final String temporaryWorkspaceFolderName) {
         List<IPath> allFiles = new LinkedList<IPath>();
         // If the bundle is not ready then there is no image
         final Bundle bundle = Platform.getBundle(pluginId);
 
-        // Search for all files in the test directory
-        Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(), "*.*",
-                false);
-        logger.debug("testpath:" + bundleTestPath.toString());
-        while (allBundleFilesUrl.hasMoreElements()) {
-            URL bundleFileUrl = allBundleFilesUrl.nextElement();
-            try {
-                logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
+        for (IPath bundleTestPath : bundleTestPaths) {
+            // Search for all files in the test directory
+            Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(), "*.*",
+                    false);
+            if (allBundleFilesUrl != null) {
+                logger.debug("add testpath:" + bundleTestPath.toString());
+                while (allBundleFilesUrl.hasMoreElements()) {
+                    URL bundleFileUrl = allBundleFilesUrl.nextElement();
+                    try {
+                        logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
 
-                IFile workspaceFile = KiemUtil.createLinkedWorkspaceFile(bundleFileUrl,
-                        temporaryWorkspaceFolderName, false, true);
-                if (!workspaceFile.exists()) {
-                    throw new RuntimeException(
-                            "Cannot create temporary workspace link for the following bundle file (1) :"
-                                    + bundleFileUrl.toString());
+                        IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
+                                temporaryWorkspaceFolderName, false, true);
+                        if (!workspaceFile.exists()) {
+                            throw new RuntimeException(
+                                    "Cannot create temporary workspace link for the following bundle file (1) :"
+                                            + bundleFileUrl.toString());
+                        }
+                        IPath filePath = workspaceFile.getFullPath();
+                        allFiles.add(filePath);
+                    } catch (CoreException e) {
+                        throw new RuntimeException(
+                                "Cannot create temporary workspace link for the following bundle file (2) :"
+                                        + bundleFileUrl.toString());
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(
+                                "Cannot create temporary workspace link for the following bundle file (3) :"
+                                        + bundleFileUrl.toString());
+                    } catch (URISyntaxException e) {
+                        throw new RuntimeException(
+                                "Cannot create temporary workspace link for the following bundle file (4) :"
+                                        + bundleFileUrl.toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(
+                                "Cannot create temporary workspace link for the following bundle file (5) :"
+                                        + bundleFileUrl.toString());
+                    }
                 }
-                IPath filePath = workspaceFile.getFullPath();
-                allFiles.add(filePath);
-            } catch (CoreException e) {
-                throw new RuntimeException(
-                        "Cannot create temporary workspace link for the following bundle file (2) :"
-                                + bundleFileUrl.toString());
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(
-                        "Cannot create temporary workspace link for the following bundle file (3) :"
-                                + bundleFileUrl.toString());
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(
-                        "Cannot create temporary workspace link for the following bundle file (4) :"
-                                + bundleFileUrl.toString());
-            } catch (IOException e) {
-                throw new RuntimeException(
-                        "Cannot create temporary workspace link for the following bundle file (5) :"
-                                + bundleFileUrl.toString());
             }
         }
         return allFiles;
@@ -831,8 +931,8 @@ public abstract class KiemAutomatedJUnitTest {
      */
     private static String getEditorId(final IPath fullFilePath) throws URISyntaxException,
             IOException {
-        URL absoluteFileUrl = KiemUtil.resolveWorkspaceFile(fullFilePath.toString());
-        String absoluteFilePathString = KiemUtil.getAbsoluteFilePath(absoluteFileUrl);
+        URL absoluteFileUrl = ModelUtil.resolveWorkspaceFile(fullFilePath.toString());
+        String absoluteFilePathString = ModelUtil.getAbsoluteFilePath(absoluteFileUrl);
         IPath absoluteFilePath = new Path(absoluteFilePathString);
         IFileStore fileStore = EFS.getLocalFileSystem().getStore(absoluteFilePath);
         try {

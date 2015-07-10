@@ -1,0 +1,17 @@
+scchart _107_weakabort_hierarchy_anomaly "107-weakabort-hierarchy-anomaly" {
+  input signal pure I;
+  output signal pure O;
+  output signal pure L;
+  output signal pure O2;
+
+  initial state A {
+
+    initial state B
+    --> C with L / O;
+
+    state C;
+  }
+  --> D with I / L; O2;
+
+  state D;
+}
