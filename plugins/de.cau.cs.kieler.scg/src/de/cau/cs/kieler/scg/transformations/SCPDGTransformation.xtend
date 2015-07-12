@@ -78,12 +78,7 @@ class SCPDGTransformation extends Transformation {
      *          the root element of the input model
      * @return Returns the root element of the transformed model.
      */
-    override transform(EObject eObject, KielerCompilerContext context) {
-        val SCGraph scg = transformSCGToSCPDG(eObject as SCGraph, context)
-
-        return scg
-    }
-    
+  
     def SCGraph transformCD(EObject eObject, KielerCompilerContext context) {
         val SCGraph scg = (eObject as SCGraph)
         if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED) ||
@@ -135,65 +130,6 @@ class SCPDGTransformation extends Transformation {
         scg
     }
 
-    def SCGraph transformSCGToSCPDG(SCGraph scg, KielerCompilerContext context) {
-
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)) {
-            return scg
-        }
-
-        programEntry = (scg.nodes.head as Entry)
-
-        
-
-
-        
-        
-
-        //        programEntry.transformSCPDG(cfs, scg, context)
-        //        
-        //        while(!depthToDo.empty){
-        //            val depth = depthToDo.head
-        //            depthDone += depth
-        //            depthToDo.remove(depth)
-        //            depth.transformSCPDG(cfs, scg, context)
-        //        }
-        //        cfs.clear
-        //
-        //        if (hasSurface) {
-        //            scg.nodes.forEach [ node |
-        //                if (node instanceof Depth && node != dummyDepth) {
-        //                    cfs += (node as Depth).next
-        //                    unusedDepth.add(node)
-        //                }
-        //            ]
-        //
-        //            dummyDepth.transformSCPDG(cfs, scg, context)
-        //        }
-//        scg => [
-//            annotations += createStringAnnotation(ANNOTATION_SCPDGTRANSFORMATION, "")
-//        ]
-
-        scg
-    }
-    
-//    private def SCGraph removeDeadCode(SCGraph scg){
-//        val deadNodes = newHashSet()
-//        scg.nodes.forEach[node|
-//            if(node.incoming.empty){
-//                deadNodes += node
-//            }
-//        ]
-//        
-//        if(!deadNodes.empty){
-//            deadNodes.forEach[deadNode|
-//                scg.nodes.remove(deadNode)
-//            ]
-//            scg.removeDeadCode
-//        }
-//        
-//        scg
-//    }
-    
     private def SCGraph removeUselessNodes(SCGraph scg){
         val allNodes = newHashSet()
         allNodes.addAll(scg.nodes)
@@ -217,17 +153,6 @@ class SCPDGTransformation extends Transformation {
 
             }
         }
-        
-//        uselessDependencies.forEach[dependency|
-//            if(dependency.eContainer instanceof Node){
-//                dependency.newTargets((dependency.eContainer as Node), dependency.target.allUntilNextControlNode)
-//                
-//                } else {
-//                    System.out.println("neiin!")
-//                }
-//                
-//        ]
-        
         removedNodes.forEach[node|
             
             scg.nodes.remove(node)
@@ -283,12 +208,14 @@ class SCPDGTransformation extends Transformation {
     }
 
     private def dispatch createDependencies(Assignment assignment, SCGraph scg, KielerCompilerContext context) {
-        assignment.allUntilNextControlNode.forEach[next|
-            ScgFactory::eINSTANCE.createControlDependency => [
-                target = next
-                next.incoming += it
-                assignment.dependencies += it
-            ]
+        assignment.allUntilNextControlNode.forEach [ next |
+            if (next.isControlNode) {
+                ScgFactory::eINSTANCE.createControlDependency => [
+                    target = next
+                    next.incoming += it
+                    assignment.dependencies += it
+                ]
+            }
         ]
     }
 
@@ -488,42 +415,6 @@ class SCPDGTransformation extends Transformation {
 
     
 
-//    def private SCGraph removeUnnecessaryDependencies(SCGraph scg) {
-//        scg.nodes.forEach [ node |
-//            node.removeUnnecessaryDependencies
-//        ]
-//
-//        return scg
-//    }
-//
-//    def private removeUnnecessaryDependencies(Node node) {
-//        val unnecessaryDependencies = new BasicEList
-//        node.dependencies.forEach [ dependcy |
-//            if (dependcy instanceof ControlDependency) {
-//                if (!node.dependencies.forall [ depend |
-//                    if (depend != dependcy && depend.target == dependcy.target && (depend instanceof ControlDependency)) {
-//
-//                        return false
-//
-//                    }
-//                    true
-//                ]) {
-//
-//                    unnecessaryDependencies.add(dependcy)
-//                }
-//
-//                if (existsNonTrivialDependency(node, dependcy.target)) {
-//
-//                    unnecessaryDependencies.add(dependcy)
-//                }
-//            }
-//        ]
-//
-//        unnecessaryDependencies.forEach [ dependency |
-//            node.dependencies.remove(dependency)
-//        ]
-//    }
-    
     def private SCGraph minimizeControlDependencies(SCGraph scg){
         scg.removeUnnecessaryControlDependencies
         scg.removeUselessConditionalDependencies
@@ -535,23 +426,6 @@ class SCPDGTransformation extends Transformation {
         
         scg.nodes.forEach[node|
             if(node.isControlNode){
-//                if(!node.dependencies.forall [ dependency |
-//                    if (dependency instanceof ControlDependency) {
-//                        dependency.target.isControlNode
-//                    } else {
-//                        true
-//                    }
-//                ]){
-//                    val toRemove = newHashSet()
-//                    node.dependencies.forEach[dependency|
-//                        if(dependency.target.isControlNode){
-//                            toRemove.add(dependency)
-//                        }
-//                    ]
-//                    toRemove.forEach[dependency|
-//                        node.dependencies.remove(dependency)
-//                    ]
-//                }
                 val Nodes = node.allUntilNextControlNode
                 Nodes.add(node)
                 Nodes.forEach[innerNode|
@@ -565,6 +439,7 @@ class SCPDGTransformation extends Transformation {
                     ]
                     toRemove.forEach[dependency|
                         node.dependencies.remove(dependency)
+                        (dependency as Dependency).target.incoming.remove(dependency)
                     ]
                 ]
             }
@@ -627,146 +502,9 @@ class SCPDGTransformation extends Transformation {
         ]
         
     }
-
-//     private def dispatch transformSCPDG(Entry entry, Set<ControlFlow> controlFlows, SCGraph scg,
-//        KielerCompilerContext context) {
-//        controlFlows += entry.allNext
-//
-//        while (!controlFlows.empty) {
-//            val cf = controlFlows.head
-//            val node = cf.target
-//            controlFlows.remove(cf)
-//
-//            val cdTarget = node.transformSCPDG(controlFlows, scg, context)
-//
-//            if ((cdTarget != null) && !(cdTarget instanceof Exit)) {
-//                ScgFactory::eINSTANCE.createControlDependency => [
-//                    target = cdTarget as Node
-//                    entry.dependencies += it
-//                ]
-//                (cdTarget as Node).nextControlFlowNode.forEach[target|
-//                ScgFactory::eINSTANCE.createControlDependency => [
-//                    val Node cfnode = target
-//                    setTarget(cfnode);
-//                    (cdTarget as Node).dependencies += it
-//                ]
-//                
-//                ]
-//            }
-//
-//            
-//        }
-//        
-//    }
-//
-//
-//    private def dispatch transformSCPDG(Surface surface, Set<ControlFlow> controlFlows, SCGraph scg,
-//        KielerCompilerContext context) {
-//        if(!depthDone.contains(surface.depth)){
-//            depthToDo.add(surface.depth)
-//        }
-//       
-//        surface
-//
-//    }
-//
-//    private def dispatch transformSCPDG(Depth depth, Set<ControlFlow> controlFlows, SCGraph scg,
-//        KielerCompilerContext context) {
-//        controlFlows += depth.allNext;
-//
-//        while (!controlFlows.empty) {
-//            val cf = controlFlows.head
-//            val node = cf.target
-//            controlFlows.remove(cf)
-//
-//            val cdTarget = node.transformSCPDG(controlFlows, scg, context)
-//
-//            if ((cdTarget != null) && !(cdTarget instanceof Exit) && !(cdTarget instanceof Depth)) {
-//                ScgFactory::eINSTANCE.createControlDependency => [
-//                    target = cdTarget as Node
-//                    depth.dependencies += it
-//                ]
-//                (cdTarget as Node).nextControlFlowNode.forEach[target|
-//                ScgFactory::eINSTANCE.createControlDependency => [
-//                    val Node cfnode = target
-//                    setTarget(cfnode);
-//                    (cdTarget as Node).dependencies += it
-//                ]
-//                
-//                ]
-//            }
-//
-//
-//        }
-//    }
-//
-//    private def dispatch transformSCPDG(Exit exit, Set<ControlFlow> controlFlows, SCGraph scg,
-//        KielerCompilerContext context) {
-//        controlFlows += exit.allNext
-//        if (exit.entry != programEntry) {
-//            scg.nodes.remove(exit)
-//            return null
-//        }
-//        exit
-//    }
-//    
-//    private def dispatch transformSCPDG(Conditional cond, Set<ControlFlow> controlFlows, SCGraph scg,
-//        KielerCompilerContext context) {
-//            controlFlows += cond.allNext
-//            
-//            ScgFactory::eINSTANCE.createElseDependency => [
-//            target = cond.^else.target
-//            cond.dependencies += it
-//        ]
-//
-//        ScgFactory::eINSTANCE.createThenDependency => [
-//            target = cond.then.target
-//            cond.dependencies += it
-//        ]
-//
-//        cond.^else.target.allNext.forEach [ cf |
-//            ScgFactory::eINSTANCE.createElseDependency => [
-//                target = cf.target
-//                cond.dependencies += it
-//            ]
-//        ]
-//
-//        cond.then.target.allNext.forEach [ cf |
-//            ScgFactory::eINSTANCE.createThenDependency => [
-//                target = cf.target
-//                cond.dependencies += it
-//            ]
-//        ]
-//        
-//        
-//
-//    }
-//
-//    private def dispatch transformSCPDG(Assignment assignment, Set<ControlFlow> controlFlows, SCGraph scg,
-//        KielerCompilerContext context) {
-//        controlFlows += assignment.allNext
-//        assignment
-//    }
-//
-//    private def dispatch transformSCPDG(Fork fork, Set<ControlFlow> controlFlows, SCGraph scg,
-//        KielerCompilerContext context) {
-//        fork.allNext.map[target].forEach[controlFlows += allNext]
-//        fork.allNext.map[target].forEach [ e |
-//            (e as Entry).next = null
-//            scg.nodes.remove(e)
-//        ]
-//
-//        fork.next.clear
-//        scg.nodes.remove(fork)
-//        null
-//    }
-//
-//    private def dispatch transformSCPDG(Join join, Set<ControlFlow> controlFlows, SCGraph scg,
-//        KielerCompilerContext context) {
-//        controlFlows += join.allNext
-//
-//        join.next = null      
-//        scg.nodes.remove(join)
-//        null
-//    }
+    
+    override transform(EObject eObject, KielerCompilerContext context) {
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+    }
+    
 }
