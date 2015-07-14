@@ -3249,7 +3249,7 @@ build   14-Jul-2015 22:42:29    +++ WRITE TEXT FILE
 build   14-Jul-2015 22:42:29    <#### BENCHMARK ####>
 build   14-Jul-2015 22:42:29    /test-sccharts-c/44-initial-states-with-hierarchy.bench
 build   14-Jul-2015 22:42:29    5
-build   14-Jul-2015 22:42:29    benchTime:0.0015970000000000001
+build   14-Jul-2015 22:42:29    benchTime:0.00334
 build   14-Jul-2015 22:42:29    benchSource:2018.0
 build   14-Jul-2015 22:42:29    benchExecutable:4032.0
 build   14-Jul-2015 22:42:29    benchCompileTime:31.0
@@ -3260,7 +3260,7 @@ build   14-Jul-2015 22:42:29    +++ WRITE TEXT FILE
 build   14-Jul-2015 22:42:29    <#### BENCHMARK ####>
 build   14-Jul-2015 22:42:29    /test-sccharts-c/44-initial-states-with-hierarchy.bench
 build   14-Jul-2015 22:42:29    5
-build   14-Jul-2015 22:42:29    benchTime:0.0015970000000000001
+build   14-Jul-2015 22:42:29    benchTime:0.00334
 build   14-Jul-2015 22:42:29    benchSource:2018.0
 build   14-Jul-2015 22:42:29    benchExecutable:4032.0
 build   14-Jul-2015 22:42:29    benchCompileTime:31.0
