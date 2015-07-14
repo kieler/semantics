@@ -4,7 +4,7 @@ Bundle-Name: KIELER SCCharts sgraph
 Bundle-SymbolicName: de.cau.cs.kieler.yakindu.model.sgraph;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.yakindu.base.types;visibility:=reexport,
@@ -16,5 +16,5 @@ Export-Package: de.cau.cs.kieler.yakindu.model.sgraph.syncgraph,
  de.cau.cs.kieler.yakindu.model.sgraph.validator
 Import-Package: de.cau.cs.kieler.yakindu.model.sgraph.syncgraph,
  org.eclipse.xtext.validation
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-Localization: plugin

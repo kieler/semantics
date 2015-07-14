@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,13 +13,19 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts During Transformation.
@@ -28,8 +34,33 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class During {
+class During extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::DURING_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::DURING_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::DURING_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::COMPLEXFINALSTATE_ID, SCChartsFeature::INITIALIZATION_ID,
+            SCChartsFeature::CONNECTOR_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -50,10 +81,10 @@ class During {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.toList.forEach[ targetState |
+        targetRootState.getAllStates.toList.forEach [ targetState |
             targetState.transformDuring(targetRootState);
         ]
-        targetRootState;//.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
@@ -65,97 +96,148 @@ class During {
         // Add a loop back to the initial state of the added region.
         // In case the during action is immediate, the looping transition is non-immediate.
         // In case the during action is non-immediate, the looping transition is immediate.
-        
         // MODIFICATION 26.07.2014: Do during BEFORE abort transformation,
         // benefit: do not need to handle terminations of concurrent regions any more!
-        
         // Modification 27.07.2014: We NEED to reaction to terminations, outgoing of the
         // current state (if present). In this case we add an auxiliary final state, and
         // a flag that is made absent when entering the state (entry) and made present 
         // when exiting it
         // calling transformDuringEx()
-        
-        
+        // Modification 21.05.2015: Decision in Meeting: Root-State has an implicit
+        // termination transition!
+        // For the root state we want the complex final state transition 
         if (state.duringActions != null && state.duringActions.size > 0) {
             val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
             val hasOutgoingTerminations = outgoingTerminations.length > 0
-            
+
             // If the state has outgoing terminations, we need to finalize the during
             // actions in case we end the states over these transitions
-            if (hasOutgoingTerminations) {
-               state.transformDuringComplexFinalStates(targetRootState)
+            if ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate) {
+                state.transformDuringComplexFinalStates(targetRootState)
             } else {
-               state.transformDuringSimple(targetRootState)
+                state.transformDuringSimple(targetRootState)
             }
-            
-          }
+
+        }
     }
-            
+
     // Traverse all simple states or super states w/o outgoing terminations that have actions to 
     // transform
     def void transformDuringSimple(State state, State targetRootRegion) {
-            
-            // Create the body of the dummy state - containing the during action
-            // For every during action: Create a region
-            for (duringAction : state.duringActions.immutableCopy) {
-                val immediateDuringAction = duringAction.isImmediate
-                val region = state.createRegion(GENERATED_PREFIX + "During").uniqueName
-                val initialState = region.createInitialState(GENERATED_PREFIX + "I")
-                val middleState = region.createState(GENERATED_PREFIX + "S");
-                if (!immediateDuringAction) {
-                    // Only set this as a connector if it is not an immediate during action!
-                    // Otherwise we like to rest here!
-                    middleState.setTypeConnector
-                }
-                val transition1 = initialState.createTransitionTo(middleState)
-                transition1.setDelay(duringAction.delay);
-                transition1.setImmediate(immediateDuringAction);
-                transition1.setTrigger(duringAction.trigger.copy);
-                for (action : duringAction.effects) {
-                    transition1.addEffect(action.copy);
-                }
-                val transition2 = middleState.createTransitionTo(initialState)
-                transition2.setImmediate(!immediateDuringAction);
 
-                // After transforming during actions, erase them
-                state.localActions.remove(duringAction)
+        // Create the body of the dummy state - containing the during action
+        // For every during action: Create a region
+        for (duringAction : state.duringActions.immutableCopy) {
+            duringAction.setDefaultTrace;
+            val immediateDuringAction = duringAction.isImmediate
+            val region = state.createControlflowRegion (GENERATED_PREFIX + "During").uniqueName
+            val initialState = region.createInitialState(GENERATED_PREFIX + "I")
+            var Transition duringTransition = null
+            if (immediateDuringAction) {
+                val secondState = region.createState(GENERATED_PREFIX + "S");
+                duringTransition = initialState.createTransitionTo(secondState)
+
+                // because we have a second state, we need another transition
+                secondState.createTransitionTo(initialState)
+            } else {
+
+                // Self loop in the non-immediate case
+                duringTransition = initialState.createTransitionTo(initialState)
             }
+            duringTransition.setDelay(duringAction.delay);
+            duringTransition.setImmediate(immediateDuringAction);
+            duringTransition.setTrigger(duringAction.trigger.copy);
+            for (action : duringAction.effects) {
+                duringTransition.addEffect(action.copy);
+            }
+
+            // After transforming during actions, erase them
+            state.localActions.remove(duringAction)
+        }
     }
-    
-    
+
     // Traverse all super states with outgoing terminations that have actions to transform. 
     // This default implementation will create / use a complex final state
     def void transformDuringComplexFinalStates(State state, State targetRootRegion) {
-            
-            // Create the body of the dummy state - containing the during action
-            // For every during action: Create a region
-            for (duringAction : state.duringActions.immutableCopy) {
-                val immediateDuringAction = duringAction.isImmediate
-                val region = state.createRegion(GENERATED_PREFIX + "During").uniqueName
-                val initialState = region.createInitialState(GENERATED_PREFIX + "I")
-                val finalState = region.createFinalState(GENERATED_PREFIX + "F");
-                val transition1 = initialState.createTransitionTo(finalState)
-                transition1.setDelay(duringAction.delay);
-                transition1.setImmediate(immediateDuringAction);
-                transition1.setTrigger(duringAction.trigger.copy);
-                if (immediateDuringAction) {
-                    for (action : duringAction.effects) {
-                        transition1.addEffect(action.copy);
-                    }
-                }
-                val transition2 = finalState.createTransitionTo(finalState)
-                transition2.setImmediate(false);
-                for (action : duringAction.effects) {
-                    transition2.addEffect(action.copy);
-                }
 
-                // After transforming during actions, erase them
-                state.localActions.remove(duringAction)
+        // Create the body of the dummy state - containing the during action
+        // For every during action: Create a region
+        for (duringAction : state.duringActions.immutableCopy) {
+            duringAction.setDefaultTrace;
+            val immediateDuringAction = duringAction.isImmediate
+            val region = state.createControlflowRegion(GENERATED_PREFIX + "During").uniqueName
+            val initialState = region.createInitialState(GENERATED_PREFIX + "I")
+            var Transition duringTransition = null
+            if (immediateDuringAction) {
+                val secondState = region.createState(GENERATED_PREFIX + "S");
+                duringTransition = initialState.createTransitionTo(secondState)
+
+                // because we have a second state, we need another transition
+                secondState.createTransitionTo(initialState)
+                if (duringAction.trigger != null) {
+
+                    // if the during action has a trigger we need a second immediate 
+                    // default path to the final state!
+                    val transition1b = initialState.createTransitionTo(secondState);
+                    transition1b.setImmediate(true);
+                }
+                secondState.setFinal
+            } else {
+
+                // Self loop in the non-immediate case
+                duringTransition = initialState.createTransitionTo(initialState)
+                initialState.setFinal
             }
+            duringTransition.setDelay(duringAction.delay);
+            duringTransition.setImmediate(immediateDuringAction);
+            duringTransition.setTrigger(duringAction.trigger.copy);
+            for (action : duringAction.effects) {
+                duringTransition.addEffect(action.copy);
+            }
+
+            // After transforming during actions, erase them
+            state.localActions.remove(duringAction)
+        }
+
+    //            // Create the body of the dummy state - containing the during action
+    //            // For every during action: Create a region
+    //            for (duringAction : state.duringActions.immutableCopy) {
+    //                duringAction.setDefaultTrace;
+    //                val immediateDuringAction = duringAction.isImmediate
+    //                val region = state.createRegion(GENERATED_PREFIX + "During").uniqueName
+    //                val initialState = region.createInitialState(GENERATED_PREFIX + "I")
+    //                val finalState = region.createFinalState(GENERATED_PREFIX + "F");
+    //                val transition1 = initialState.createTransitionTo(finalState)
+    //                transition1.setDelay(duringAction.delay);
+    //                transition1.setImmediate(true);
+    //                val transition2 = finalState.createTransitionTo(initialState)
+    //                transition2.setImmediate(false);
+    //                if (immediateDuringAction) {
+    //                    // In case of immediate during action, copy the trigger and effect
+    //                    if (duringAction.trigger != null) {
+    //                        transition1.setTrigger(duringAction.trigger.copy);
+    //                        // if the during action has a trigger we need a second immediate 
+    //                        // default path to the final state!
+    //                        val transition1b = initialState.createTransitionTo(finalState);  
+    //                        transition1b.setImmediate(true);
+    //                    }
+    //                    
+    //                    for (action : duringAction.effects) {
+    //                        transition1.addEffect(action.copy);
+    //                    }
+    //                } else {
+    //                   // non immediate during 
+    //                    transition2.setTrigger(duringAction.trigger.copy);
+    //                    for (action : duringAction.effects) {
+    //                        transition2.addEffect(action.copy);
+    //                    }
+    //                }
+    //
+    //                // After transforming during actions, erase them
+    //                state.localActions.remove(duringAction)
+    //            }
     }
-        
-    
-    
+
     // Traverse all super states with outgoing terminations that have actions to transform. 
     // This alternative implementation will create a main region to detect termination
     def void transformDuringEx(State state, State targetRootRegion) {
@@ -170,7 +252,7 @@ class During {
             val term = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
             term.setInitialValue(FALSE)
 
-            val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueName
+            val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
             val mainState = mainRegion.createState(GENERATED_PREFIX + "Main").setInitial
             for (region : state.regions.filter(e|e != mainRegion).toList.immutableCopy) {
                 mainState.regions.add(region)
@@ -183,11 +265,11 @@ class During {
             // For every during action: Create a region
             for (duringAction : state.duringActions.immutableCopy) {
                 val immediateDuringAction = duringAction.isImmediate
-                val region = state.createRegion(GENERATED_PREFIX + "During").uniqueName
+                val region = state.createControlflowRegion(GENERATED_PREFIX + "During").uniqueName
                 val initialState = region.createInitialState(GENERATED_PREFIX + "I")
                 val middleState = region.createState(GENERATED_PREFIX + "S")
                 if (!immediateDuringAction) {
-                    middleState.setTypeConnector                
+                    middleState.setTypeConnector
                 }
                 val finalState = region.createFinalState(GENERATED_PREFIX + "F")
                 val transition1 = initialState.createTransitionTo(middleState)
@@ -213,6 +295,5 @@ class During {
             }
         }
     }
-    
 
 }

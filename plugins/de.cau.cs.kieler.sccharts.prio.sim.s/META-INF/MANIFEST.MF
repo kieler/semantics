@@ -4,7 +4,7 @@ Bundle-Name: KIELER SCCharts S Simulator
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.prio.sim.s;singleton:=true
 Bundle-Version: 0.3.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sccharts.prio.sim.s.SCChartsPrioSimSPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.xtend.util.stdlib;bundle-version="1.2.0",
@@ -22,5 +22,5 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.s.sj,
  de.cau.cs.kieler.sjl,
  de.cau.cs.kieler.sim.benchmark
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

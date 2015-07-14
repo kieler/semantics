@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.sccharts.IterateAction
 
 /**
  * @author ssm
@@ -91,6 +92,9 @@ class SCChartsSerializeExtension extends KExpressionsSerializeExtension {
         }
         else if (action instanceof ExitAction) {
             label = label + "exit "
+        }
+        else if (action instanceof IterateAction) {
+            label = label + "iterate "
         }
         
         if (action.trigger != null) {

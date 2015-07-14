@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2011 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -664,16 +664,16 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                     scOutput.trimSegments(1).appendSegment(className).appendFileExtension("java");
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile scOutputFile = ModelUtil.convertIPathToIFile(scOutputPath);
-            String scOutputString = ModelUtil.getAbsoluteFilePath(scOutputFile);
-            S2SJPlugin.generateSJCode(transformedProgram, scOutputString, className, packageName,
+            String sjOutputString = ModelUtil.getAbsoluteFilePath(scOutputFile);
+            S2SJPlugin.generateSJCode(transformedProgram, sjOutputString, className, packageName,
                     debug);
 
             // Compile
             sjExecution = new SJExecution(outputFolder, benchmark);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
-            generatedSCFiles.add(scOutputString);
+            generatedSCFiles.add(sjOutputString);
             sjExecution.setDebug(debugConsole);
-            sjExecution.compile(generatedSCFiles, className);
+            sjExecution.compile(generatedSCFiles, className, sjOutputString);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);

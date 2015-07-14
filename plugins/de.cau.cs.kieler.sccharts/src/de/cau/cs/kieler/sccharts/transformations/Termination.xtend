@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,13 +13,20 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Termination Transformation.
@@ -28,8 +35,36 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Termination {
+class Termination extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::TERMINATION_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::TERMINATION_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::TERMINATION_ID
+    }
+
+    override getProducesFeatureIds() {
+
+        // TODO: Check
+        return Sets.newHashSet()
+    }
+
+    override getNotHandlesFeatureIds() {
+
+        // TODO: Check
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -64,7 +99,7 @@ class Termination {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach[ targetState |
+        targetRootState.getAllStates.forEach [ targetState |
             targetState.transformTermination(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
@@ -82,6 +117,7 @@ class Termination {
         // This is the special case where we must taken care of a normal termination 
         val terminationTransition = state.getTerminationTransitions;
         if (terminationTransition != null) {
+            terminationTransition.setDefaultTrace
             val otherTransitions = state.outgoingTransitions.filter(e|e.type != TransitionType::TERMINATION);
 
             terminationTransition.setType(TransitionType::WEAKABORT);
@@ -110,7 +146,7 @@ class Termination {
 
             // Walk thru all regions that must terminate and create one termination valuedObject per
             // region. For the weak abort create a conjunction of these valuedObjects as the trigger.
-            for (region : state.regions) {
+            for (region : state.regions.filter(ControlflowRegion)) {
 
                 // Setup the auxiliary termination valuedObject indicating that a normal termination
                 // should be taken.

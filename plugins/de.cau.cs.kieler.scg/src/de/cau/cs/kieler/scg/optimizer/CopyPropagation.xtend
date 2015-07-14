@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -78,7 +78,9 @@ class CopyPropagation extends AbstractOptimizer {
         ]
         
         scg.guards.filter[ expression instanceof ValuedObjectReference ].forEach[
-            if ((valuedObject.name.contains(GUARDPREFIX) || valuedObject.name.contains(CONDPREFIX))
+            if ((valuedObject.name.contains(GUARDPREFIX) 
+//            	|| valuedObject.name.contains(CONDPREFIX)
+            )
 //               && (!(expression as ValuedObjectReference).valuedObject.name.contains(GOGUARD))
             ) {
                 assignmentReferences.put(it.valuedObject, (expression as ValuedObjectReference).valuedObject)

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -15,10 +15,15 @@ package de.cau.cs.kieler.kico.ui;
 
 import org.eclipse.core.commands.common.EventManager;
 
+import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.kico.KielerCompilerSelection;
+
 /**
  * This manager handles change events produced by SelectionView
  * 
  * @author als
+ * @kieler.design 2015-05-18 proposed
+ * @kieler.rating 2015-05-18 proposed yellow
  * 
  */
 public class KiCoSelectionChangeEventManager extends EventManager {
@@ -35,7 +40,7 @@ public class KiCoSelectionChangeEventManager extends EventManager {
          * 
          * @param newSelection
          */
-        public void selectionChange(KiCoSelection newSelection);
+        public void selectionChange(int editorID, Pair<KielerCompilerSelection, Boolean> newSelection);
     }
 
     /**
@@ -64,11 +69,11 @@ public class KiCoSelectionChangeEventManager extends EventManager {
      * @param newSelection
      *            new selection
      */
-    public void fireSelectionChangeEvent(KiCoSelection newSelection) {
+    public void fireSelectionChangeEvent(int editorID, Pair<KielerCompilerSelection, Boolean> newSelection) {
         Object[] l = getListeners();
         for (int i = 0; i < l.length; i++) {
             try {
-                ((KiCoSelectionChangeEventListerner) l[i]).selectionChange(newSelection);
+                ((KiCoSelectionChangeEventListerner) l[i]).selectionChange(editorID, newSelection);
             } catch (RuntimeException e) {
                 e.printStackTrace();
             }

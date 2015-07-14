@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -16,15 +16,24 @@ package de.cau.cs.kieler.scg.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
+
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.Depth
+
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import org.eclipse.emf.ecore.EObject
+
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
+
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
@@ -38,13 +47,21 @@ import de.cau.cs.kieler.scg.ThenDependency
 import de.cau.cs.kieler.scg.ElseDependency
 import de.cau.cs.kieler.scg.ConditionalDependency
 
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.scg.features.SCGFeatures
+
+
 /** 
  * 
  * @author ssm
  * @kieler.design 2015-05-03 proposed 
  * @kieler.rating 2015-05-03 proposed yellow
  */
-class SCPDGTransformation extends Transformation {
+
+
+class SCPDGTransformation extends AbstractProductionTransformation implements Traceable {
+    
 
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -63,10 +80,32 @@ class SCPDGTransformation extends Transformation {
     // -------------------------------------------------------------------------
     // -- Globals 
     // -------------------------------------------------------------------------
+
     public static val ANNOTATION_SCPDG_CD_TRANSFORMATION = "scpdgcd"
     public static val ANNOTATION_SCPDG_RN_TRANSFORMATION = "scpdgrn"
     public static val ANNOTATION_SCPDG_MD_TRANSFORMATION = "scpdgmd"
-    private var Entry programEntry;
+    
+//    public static val ANNOTATION_SCPDGTRANSFORMATION = "scpdg"
+    
+    var Entry programEntry;
+    
+    override getId() {
+        return SCGTransformations::SCPDG_ID
+    }
+
+    override getName() {
+        return SCGTransformations::SCPDG_NAME
+    }    
+        
+    override getProducedFeatureId() {
+        return SCGFeatures::SCPDG_ID
+    }
+    
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::DEPENDENCY_ID)
+    }
+
+    
 
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -113,6 +152,19 @@ class SCPDGTransformation extends Transformation {
         ]
         scg
     }
+//=======
+////        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
+////            || scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)
+////        ) {
+////            return scg
+////        }
+//
+//    	val cfs = <ControlFlow> newHashSet;
+//    	programEntry = (scg.nodes.head as Entry)
+//        programEntry.transformSCPDG(cfs, scg, context)
+//        
+//        scg.addAnnotation(SCGFeatures.SCPDG_ID, SCGFeatures.SCPDG_NAME)   
+//>>>>>>> master
 
     def SCGraph transformMD(EObject eObject, KielerCompilerContext context) {
         val SCGraph scg = (eObject as SCGraph)
@@ -506,5 +558,7 @@ class SCPDGTransformation extends Transformation {
     override transform(EObject eObject, KielerCompilerContext context) {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
-    
+
+        
 }
+

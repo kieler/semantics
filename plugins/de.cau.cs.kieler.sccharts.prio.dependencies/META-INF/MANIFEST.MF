@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtend2.lib;bundle-version="2.2.1",
  org.eclipse.xtext.xbase,
  de.cau.cs.kieler.sccharts
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sccharts.prio.dependencies;uses:="org.eclipse.ui.plugin,org.osgi.framework",
  de.cau.cs.kieler.sccharts.prio.dependencies.dependency;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util,de.cau.cs.kieler.sccharts",

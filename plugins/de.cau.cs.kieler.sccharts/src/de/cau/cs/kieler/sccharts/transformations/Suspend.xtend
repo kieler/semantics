@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,11 +13,18 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Suspend Transformation.
@@ -26,8 +33,32 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Suspend {
+class Suspend extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::SUSPEND_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::SUSPEND_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::SUSPEND_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::DURING_ID, SCChartsFeature::INITIALIZATION_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -56,7 +87,7 @@ class Suspend {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach[ targetState |
+        targetRootState.getAllStates.forEach [ targetState |
             targetState.transformSuspend(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
@@ -64,6 +95,7 @@ class Suspend {
 
     def void transformSuspend(State state, State targetRootState) {
         for (suspension : state.suspendActions.filter[!weak].toList.immutableCopy) {
+            suspension.setDefaultTrace
             val suspendTrigger = suspension.trigger;
             val notSuspendTrigger = not(suspendTrigger)
             val immediateSuspension = suspension.isImmediate;

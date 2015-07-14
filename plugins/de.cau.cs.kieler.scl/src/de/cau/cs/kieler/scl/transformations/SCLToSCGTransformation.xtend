@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -18,7 +18,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -32,6 +32,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
 import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.Goto
@@ -41,6 +42,7 @@ import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.StatementScope
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.LinkedList
@@ -48,27 +50,53 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.scl.StatementSequence
-import de.cau.cs.kieler.scl.scl.StatementScope
+import de.cau.cs.kieler.scl.features.SCLFeatures
+import java.util.Set
+import com.google.common.collect.Sets
+import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /** 
  * SCL to SCG Transformation 
  * 
- * @author ssm
+ * @author ssm, cmot
  * @kieler.design 2014-01-27 proposed 
  * @kieler.rating 2014-01-27 proposed yellow
  */
 // This class contains all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
-class SCLToSCGTransformation extends AbstractModelTransformation {
+class SCLToSCGTransformation extends AbstractProductionTransformation {
+
+    private static val String ANNOTATION_HOSTCODE = "hostcode"
 
     @Inject
-    extension SCGControlFlowExtensions
+    extension SCGControlFlowExtensions 
 
     @Inject
     extension KExpressionsExtension
+
+    @Inject
+    extension AnnotationsExtensions
     
     @Inject
     extension SCLExtensions
+
+    override getProducedFeatureId() {
+        return SCGFeatures::BASIC_ID
+    }
+    
+    override getId() {
+        return SCLTransformations::SCG_ID
+    }
+    
+    
+        /**
+     * {@inheritDoc}
+     */
+    override Set<String> getRequiredFeatureIds() {
+        return Sets.newHashSet(SCLFeatures.BASIC_ID)
+    }
+    
+    
 
     // M2M Mapping
     //    private val nodeMapping = new HashMap<Node, Node>
@@ -137,8 +165,31 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         scl.transform(scg, null)
         scl.eAllContents.filter(Goto).forEach[transform(scg, gotoFlows.get(it))]
 
+        scg.removeSuperflousConditionals
+        
+        val hostcodeAnnotations = scl.annotations.filter(typeof(StringAnnotation)).filter[ name == ANNOTATION_HOSTCODE ] 
+        hostcodeAnnotations.forEach [
+            scg.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+        ]        
+
         scg
     }
+    
+    
+    // Removes conditional nodes that have the same target for the then and the else branch.
+    private def removeSuperflousConditionals(SCGraph scg) {
+        val toDelete = <Conditional>newLinkedList
+        for (conditional : scg.eAllContents.filter(typeof(Conditional)).toList) {
+            if (conditional.^else.target == conditional.then.target) {
+                toDelete += conditional
+                for (previous : conditional.incoming.immutableCopy) {
+                    previous.target = conditional.^else.target
+                }
+            }
+        }
+        toDelete.forEach[it.remove]
+    }
+    
 
     private dispatch def SCLContinuation transform(SCLProgram program, SCGraph scg, List<ControlFlow> incoming) {
         val entry = ScgFactory::eINSTANCE.createEntry.createNodeList(program) as Entry => [
@@ -344,6 +395,8 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     private def List<ControlFlow> toList(ControlFlow controlFlow) {
         <ControlFlow>newArrayList(controlFlow)
     }
+    
+
 
 // -------------------------------------------------------------------------   
 }

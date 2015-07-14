@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,18 +13,22 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.DoubleValue
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.DoubleValue
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Const Transformation.
@@ -33,8 +37,32 @@ import de.cau.cs.kieler.core.kexpressions.DoubleValue
  * @kieler.design 2014-05-22 proposed 
  * @kieler.rating 2014-05-22 proposed yellow
  */
-class Const {
+class Const extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::CONST_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::CONST_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::CONST_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::REFERENCE_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension AnnotationsExtensions
 
@@ -52,7 +80,7 @@ class Const {
     //-------------------------------------------------------------------------
     //--                           C O N S T                                 --
     //-------------------------------------------------------------------------
-    // ...
+
     def State transform(State rootState) {
         var targetRootState = rootState.fixAllPriorities;
 
@@ -70,7 +98,9 @@ class Const {
 
         for (const : constObjects.toList.immutableCopy) {
             val replacement = const.initialValue
-            state.replaceAllReferencesWithCopy(const, replacement.copy)
+            replacement.trace(const)
+            replacement.trace(const.declaration)
+            state.replaceAllReferencesWithCopy(const, replacement)
             if (const.declaration.hasAnnotation(HOSTCODE_ANNOTATION)) {
                 state.eAllContents.filter(typeof(TextExpression)).forEach [
                     var replacementString = ""
@@ -80,9 +110,10 @@ class Const {
                         replacementString = (replacement as BoolValue).value.toString
                     else if (replacement instanceof FloatValue)
                         replacementString = (replacement as FloatValue).value.toString
-                    else if(replacement instanceof DoubleValue) replacementString = (replacement as DoubleValue).value.
-                        toString else if(replacement instanceof TextExpression) replacementString = (replacement as TextExpression).
-                        text
+                    else if (replacement instanceof DoubleValue)
+                        replacementString = (replacement as DoubleValue).value.toString
+                    else if (replacement instanceof TextExpression)
+                        replacementString = (replacement as TextExpression).text
                     text = text.replaceAll(const.name, replacementString)
                 ]
             }

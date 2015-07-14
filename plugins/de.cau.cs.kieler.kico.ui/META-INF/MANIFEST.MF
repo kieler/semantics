@@ -4,13 +4,18 @@ Bundle-Name: KIELER Compiler KLighD Visualization
 Bundle-SymbolicName: de.cau.cs.kieler.kico.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kico.ui.KiCoUIPlugin
-Require-Bundle: de.cau.cs.kieler.kico;bundle-version="0.1.0",
+Require-Bundle: com.google.guava;bundle-version="10.0.1",
+ javax.inject;bundle-version="1.0.0",
+ de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.core.krendering.extensions,
  de.cau.cs.kieler.kiml.ui,
  org.eclipse.xtend.lib;bundle-version="2.3.0",
  de.cau.cs.kieler.klighd.ui;bundle-version="0.3.1",
- org.eclipse.xtext.ui;bundle-version="2.3.0"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+ org.eclipse.xtext.ui;bundle-version="2.3.0",
+ de.cau.cs.kieler.klay.layered,
+ de.cau.cs.kieler.kico,
+ de.cau.cs.kieler.sim.kiem
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kico.ui
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University

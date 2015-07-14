@@ -19,6 +19,21 @@
            isXMI="false">
      </ExtensionInformation>
   </extension>
+  <extension
+        point="de.cau.cs.kieler.kico.feature">
+     <featureClass
+           class="de.cau.cs.kieler.esterel.features.Esterel">
+     </featureClass>
+     <featureClass
+           class="de.cau.cs.kieler.esterel.features.SimulationVisualization">
+     </featureClass>
+  </extension>
+  <extension
+        point="de.cau.cs.kieler.kico.transformation">
+     <expansionTransformationClass
+           class="de.cau.cs.kieler.esterel.transformations.EsterelDummy">
+     </expansionTransformationClass>
+  </extension>
   <!--extension
         point="org.eclipse.ui.menus">
      <menuContribution

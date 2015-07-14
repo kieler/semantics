@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -28,7 +28,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.Parameter
 import java.util.List
@@ -559,16 +559,16 @@ class KExpressionsExtension {
 
             // In this case we do not need the fix
             //            return operatorExpression;
-            val oeCopy = operatorExpression.copy
+            val oeCopy = operatorExpression.nontracingCopy
             oeCopy.subExpressions.clear
             operatorExpression.subExpressions.forEach [
-                oeCopy.subExpressions += it.copy.fix
+                oeCopy.subExpressions += it.nontracingCopy.fix
             ]
             return oeCopy
         }
 
         // Here we apply the fix recursively
-        val operatorExpressionCopy = operatorExpression.copy;
+        val operatorExpressionCopy = operatorExpression.nontracingCopy;
         val newOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
         newOperatorExpression.setOperator(operatorExpression.operator);
         newOperatorExpression.subExpressions.add(operatorExpression.subExpressions.head);
@@ -592,17 +592,17 @@ class KExpressionsExtension {
         if (expression.text.startsWith("'"))
             return expression
         else
-            return expression.copy => [setText("'" + expression.getText + "'")]
+            return expression.nontracingCopy => [setText("'" + expression.getText + "'")]
     }
 
     def Expression fixHostCodeInOperatorExpression(OperatorExpression expression) {
         if (expression == null || expression.subExpressions.nullOrEmpty) {
             return expression
         }
-        val oeCopy = expression.copy
+        val oeCopy = expression.nontracingCopy
         oeCopy.subExpressions.clear
         expression.subExpressions.forEach [
-            oeCopy.subExpressions += it.copy.fixHostCode
+            oeCopy.subExpressions += it.nontracingCopy.fixHostCode
         ]
 
         oeCopy

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,16 +13,14 @@
  */
 package de.cau.cs.kieler.scg.sequentializer
 
-import com.google.inject.Guice
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Schedule
 import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.scg.synchronizer.HybridSynchronizer
+import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
 import java.util.HashMap
 
@@ -51,6 +49,28 @@ import java.util.HashMap
  
 
 class HybridSequentializer extends SimpleSequentializer {
+    
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    
+    override getId() {
+        //TODO: Create unique transformation ID and register this class as transformation
+        return null //SCGTransformations::SEQUENTIALIZE_ID
+    }
+
+    override getName() {
+        //TODO: see above
+        return null //SCGTransformations::SEQUENTIALIZE_NAME
+    }
+
+    override getProducedFeatureId() {
+        return SCGFeatures::SEQUENTIALIZE_ID
+    }
+
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::SCHEDULING_ID)
+    }   
     
     // -------------------------------------------------------------------------
     // -- Injections 

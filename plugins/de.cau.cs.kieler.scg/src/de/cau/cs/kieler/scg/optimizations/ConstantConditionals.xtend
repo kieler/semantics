@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.scg.optimizations
 
-import de.cau.cs.kieler.kico.Transformation
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.SCGraph
@@ -28,19 +27,27 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.kico.transformation.Processor
+import de.cau.cs.kieler.kitt.tracing.Traceable
 
 /**
  * Removes conditional nodes holding a constant (true/false)
  * 
- * @author krat
+ * @author krat ssm 
+ * @kieler.design 2015-05-25 proposed 
+ * @kieler.rating 2015-05-25 proposed yellow
  *
  */
-class ConstantConditionals extends Transformation {
+class ConstantConditionals extends Processor implements Traceable {
 
     private val processedNodes = <Node>newLinkedList
     private val deleteNodes = <Conditional>newLinkedList
 
-    override transform(EObject eObject, KielerCompilerContext context) {
+    override getId() {
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+    }
+    
+    override process(EObject eObject) {
         System.out.println("Removing constant conditionals")
         val scg = (eObject as SCGraph).nodes.head.transformCond(eObject as SCGraph)
 

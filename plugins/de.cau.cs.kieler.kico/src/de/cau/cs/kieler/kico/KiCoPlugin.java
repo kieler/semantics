@@ -3,8 +3,8 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * Copyright 2015 by
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,9 +13,10 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -29,27 +30,49 @@ import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import com.google.inject.Guice;
+import com.google.inject.Inject;
 
-import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.kico.features.Feature;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
+import de.cau.cs.kieler.kico.internal.ResourceExtension;
+import de.cau.cs.kieler.kico.internal.Transformation;
+import de.cau.cs.kieler.kico.transformation.IExpansionTransformation;
+import de.cau.cs.kieler.kico.transformation.IHook;
+import de.cau.cs.kieler.kico.transformation.IProductionTransformation;
+import de.cau.cs.kieler.kico.transformation.Processor;
 
-// TODO: Auto-generated Javadoc
 /**
  * The activator class controls the plug-in life cycle.
  * 
  * @author cmot ssm
- * @kieler.design 2014-03-11 proposed
- * @kieler.rating 2014-03-11 proposed yellow
+ * @kieler.design 2015-03-11 proposed
+ * @kieler.rating 2015-03-11 proposed yellow
  */
 public class KiCoPlugin extends Plugin {
+
+    /** The logger. */
+    @Inject
+    public static Logger logger;
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico"; //$NON-NLS-1$
 
+    /** The Constant PROCESSOR_EXTENSION_POINT_ID. */
+    public static final String PROCESSOR_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.processor";
+
+    /** The Constant FEATURE_EXTENSION_POINT_ID. */
+    public static final String FEATURE_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.feature";
+
+    /** The Constant TRANSFORMATION_EXTENSION_POINT_ID. */
+    public static final String TRANSFORMATION_EXTENSION_POINT_ID =
+            "de.cau.cs.kieler.kico.transformation";
+
     /** The Constant EXTENSION_POINT_ID. */
-    public static final String TRANSFORMATION_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.transformation";
-    
-    /** The Constant EXTENSION_EXTENSION_POINT_ID. */
-    public static final String EXTENSION_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.extension";
+    public static final String CREEPER_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.hook";
+
+    /** The Constant RESOURCEEXTENSION_EXTENSION_POINT_ID. */
+    public static final String RESOURCEEXTENSION_EXTENSION_POINT_ID =
+            "de.cau.cs.kieler.kico.extension";
 
     /** The Constant KICO_MSGDLG_TITLE. */
     public static final String KICO_MSGDLG_TITLE = "KIELER Compiler";
@@ -59,9 +82,6 @@ public class KiCoPlugin extends Plugin {
 
     /** The shared instance. */
     private static KiCoPlugin plugin;
-    
-    /** The resource extension cached. */
-    private static HashMap<String, ResourceExtension> resourceExtensionCached = null;
 
     /**
      * The parent shell iff a GUI is used. This shell may be used to prompt a save-dialog to save
@@ -75,6 +95,26 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
 
+    /* MAIN DATA CACHES */
+
+    /** The cached registered processors. */
+    private static HashMap<String, Processor> processorsCached = null;
+
+    /** The cached registered features. */
+    private static HashMap<String, Feature> featuresCached = null;
+
+    /** The cached registered transformations. */
+    private static HashMap<String, Transformation> transformationsCached = null;
+
+    /** The cached registered hooks. */
+    private static HashMap<String, IHook> hooksCached = null;
+
+    /** The cached resource extensions. */
+    private static HashMap<String, ResourceExtension> resourceExtensionsCached = null;
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
     /**
      * The constructor.
      */
@@ -86,7 +126,7 @@ public class KiCoPlugin extends Plugin {
 
     /**
      * Returns the shared instance.
-     *
+     * 
      * @return the shared instance
      */
     public static KiCoPlugin getInstance() {
@@ -95,35 +135,35 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Checks if is e object.
-     * 
-     * @param clazz
-     *            the clazz
-     * @return true, if is e object
-     */
-    private static boolean isEObject(Class<?> clazz) {
-        if (EObject.class.isAssignableFrom(clazz)) {
-            return true;
-        }
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Checks if is isKielerCompilerContext.
-     * 
-     * @param clazz
-     *            the clazz
-     * @return true, if is e object
-     */
-    private static boolean isKielerCompilerContext(Class<?> clazz) {
-        if (KielerCompilerContext.class.isAssignableFrom(clazz)) {
-            return true;
-        }
-        return false;
-    }
+    // /**
+    // * Checks if is e object.
+    // *
+    // * @param clazz
+    // * the clazz
+    // * @return true, if is e object
+    // */
+    // private static boolean isEObject(Class<?> clazz) {
+    // if (EObject.class.isAssignableFrom(clazz)) {
+    // return true;
+    // }
+    // return false;
+    // }
+    //
+    // // -------------------------------------------------------------------------
+    //
+    // /**
+    // * Checks if is isKielerCompilerContext.
+    // *
+    // * @param clazz
+    // * the clazz
+    // * @return true, if is e object
+    // */
+    // private static boolean isKielerCompilerContext(Class<?> clazz) {
+    // if (KielerCompilerContext.class.isAssignableFrom(clazz)) {
+    // return true;
+    // }
+    // return false;
+    // }
 
     // -------------------------------------------------------------------------
 
@@ -140,219 +180,409 @@ public class KiCoPlugin extends Plugin {
     }
 
     // -------------------------------------------------------------------------
+    
+    // /**
+    // * Gets the invokable method.
+    // *
+    // * @param object
+    // * the object
+    // * @param method
+    // * the method
+    // * @return the invokable method
+    // */
+    // private Method getInvokableMethod(Object object, String method) {
+    // for (Method providedMethod : object.getClass().getMethods()) {
+    // String providedMethodName = providedMethod.getName();
+    // Class<?>[] parameterTypes = providedMethod.getParameterTypes();
+    // if (providedMethodName.equals(method)) {
+    // // Case where signature is 'method(EObject eObject)'
+    // if (parameterTypes.length == 1) {
+    // Class<?> parameterType = parameterTypes[0];
+    // if (isEObject(parameterType)) {
+    // return providedMethod;
+    // }
+    // }
+    // // Case where signature is 'method(EObject eObject, KielerCompilerContext
+    // // kielerCompilerContext)'
+    // if (parameterTypes.length == 2) {
+    // Class<?> parameterType1 = parameterTypes[0];
+    // Class<?> parameterType2 = parameterTypes[1];
+    // if (isEObject(parameterType1) && isKielerCompilerContext(parameterType2)) {
+    // return providedMethod;
+    // }
+    // }
+    // }
+    // }
+    // return null;
+    // }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // ██████╗.███████╗.██████╗.██╗███████╗████████╗██████╗..█████╗.████████╗██╗.██████╗.███╗...██╗
+    // ██╔══██╗██╔════╝██╔════╝.██║██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝██║██╔═══██╗████╗..██║
+    // ██████╔╝█████╗..██║..███╗██║███████╗...██║...██████╔╝███████║...██║...██║██║...██║██╔██╗.██║
+    // ██╔══██╗██╔══╝..██║...██║██║╚════██║...██║...██╔══██╗██╔══██║...██║...██║██║...██║██║╚██╗██║
+    // ██║..██║███████╗╚██████╔╝██║███████║...██║...██║..██║██║..██║...██║...██║╚██████╔╝██║.╚████║
+    // ╚═╝..╚═╝╚══════╝.╚═════╝.╚═╝╚══════╝...╚═╝...╚═╝..╚═╝╚═╝..╚═╝...╚═╝...╚═╝.╚═════╝.╚═╝..╚═══╝
+    // -------------------------------------------------------------------------
+    // http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=registration
 
     /**
-     * Gets the invokable method.
+     * Gets the registered processors or the cached version.
      * 
-     * @param object
-     *            the object
-     * @param method
-     *            the method
-     * @return the invokable method
+     * @return the registered processors
      */
-    private Method getInvokableMethod(Object object, String method) {
-        for (Method providedMethod : object.getClass().getMethods()) {
-            String providedMethodName = providedMethod.getName();
-            Class<?>[] parameterTypes = providedMethod.getParameterTypes();
-            if (providedMethodName.equals(method)) {
-                // Case where signature is 'method(EObject eObject)'
-                if (parameterTypes.length == 1) {
-                    Class<?> parameterType = parameterTypes[0];
-                    if (isEObject(parameterType)) {
-                        return providedMethod;
-                    }
+    public static HashMap<String, Processor> getRegisteredProcessors(boolean forceReload) {
+        // Return the cache if there is any and not forced to reload
+        if (processorsCached != null && !forceReload) {
+            return processorsCached;
+        }
+        // Otherwise inspect the extensions
+        IConfigurationElement[] extensions =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        PROCESSOR_EXTENSION_POINT_ID);
+        // Clear the cache
+        processorsCached = new HashMap<String, Processor>();
+        // Walk thru every extension and instantiate the declared class, then put it into the cache
+        for (IConfigurationElement extension : extensions) {
+            String className = extension.getName();
+            try {
+                Processor instance = (Processor) extension.createExecutableExtension("class");
+                // Handle the case that wee need Google Guice for instantiation
+                instance = (Processor) getGuiceInstance(instance);
+                String id = instance.getId();
+                className += " (" + id + ")";
+                if (processorsCached.containsKey(id)) {
+                    KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register processor: "
+                            + extension + " for class " + className
+                            + " because this ID is already taken.", null);
+                } else {
+                    processorsCached.put(id, instance);
+                    logInfo("KiCo register processor: " + extension + " for class " + className);
                 }
-                // Case where signature is 'method(EObject eObject, KielerCompilerContext
-                // kielerCompilerContext)'
-                if (parameterTypes.length == 2) {
-                    Class<?> parameterType1 = parameterTypes[0];
-                    Class<?> parameterType2 = parameterTypes[1];
-                    if (isEObject(parameterType1) && isKielerCompilerContext(parameterType2)) {
-                        return providedMethod;
-                    }
-                }
+            } catch (CoreException e) {
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register processor: "
+                        + extension + " for class " + className, e);
             }
         }
-        return null;
+        return processorsCached;
+
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * This returns a new the TransformationMap with all registered and loaded plug-ins that extend
-     * the KiCo extension point.
-     *
-     * @return the TransformationList
+     * Gets the registered features and feature groups or the cached version.
+     * 
+     * @return the registered features and feature groups
      */
-    public HashMap<String, Transformation> getRegisteredTransformations() {
-        // if (transformationMap != null && !forceUpdate) {
-        // // return a cached version of the list
-        // // it is only built the first time
-        // return transformationMap;
-        // }
-        // // suggest calling the garbage collector: this may
-        // // remove any DataComponent threads still running (but not
-        // // linked==needed any more)
-        // System.gc();
-        // get the available interfaces and initialize them
-        IConfigurationElement[] transformations =
-                Platform.getExtensionRegistry().getConfigurationElementsFor(TRANSFORMATION_EXTENSION_POINT_ID);
-
-        HashMap<String, Transformation> transformationMap =
-                new HashMap<String, Transformation>(transformations.length);
-
-        for (int i = 0; i < transformations.length; i++) {
+    public static HashMap<String, Feature> getRegisteredFeatures(boolean forceReload) {
+        // Return the cache if there is any and not forced to reload
+        if (featuresCached != null && !forceReload) {
+            return featuresCached;
+        }
+        // Otherwise inspect the extensions
+        IConfigurationElement[] extensions =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        FEATURE_EXTENSION_POINT_ID);
+        // Clear the cache
+        featuresCached = new HashMap<String, Feature>();
+        // Walk thru every extension and instantiate the declared class, then put it into the cache
+        for (IConfigurationElement extension : extensions) {
+            String className = extension.getName();
             try {
-
-                String transformationClass = transformations[i].getAttribute("class");
-                Object transformationInstance = null;
-                if (transformationClass != null) {
-                    transformationInstance = transformations[i].createExecutableExtension("class");
-                }
-                String id = transformations[i].getAttribute("id");
-                String name = transformations[i].getAttribute("name");
-                String method = transformations[i].getAttribute("method");
-                String producesDependenciesString = transformations[i].getAttribute("producesDependencies");
-                String notHandlesDependenciesString = transformations[i].getAttribute("notHandlesDependencies");
-                String transformationsString = transformations[i].getAttribute("transformations");
-                String alternativesString = transformations[i].getAttribute("alternatives");
-
-                if (DEBUG) {
-                    // System.out.println("KiCo loading component: "
-                    // + transformations[i].getContributor().getName() + "::" + id);
-                }
-
-                Transformation transformation;
-                if (transformationInstance == null) {
-                    // The Transformation is defined as a GROUP by its dependencies
-                    transformation = new TransformationGroup();
-
-                    // Internally transformations of groups are represented as produces dependencies!
-                    // Rationale: If a group is selected, these transformations are applied
-                    if (transformationsString != null) {
-                        String[] dependenciesArray = transformationsString.split(",");
-                        for (String dependency : dependenciesArray) {
-                            transformation.getProducesDependencies().add(dependency.trim());
-                        }
-                    }
-
-                    if (alternativesString != null) {
-                        if (alternativesString.equals("true")) {
-                            ((TransformationGroup) transformation).setAlternatives(true);
-                        }
-                    }
-
-                } else if (transformationInstance instanceof Transformation
-                        && (method == null || method.trim().length() == 0)) {
-                    // The specified class is a Transformation, use it directly
-                    transformation =
-                            (Transformation) transformations[i].createExecutableExtension("class");
-                    // Handle the case that wee need Google Guice for instantiation
-                    transformation.setTransformationInstance(getGuiceInstance(transformation));
+                Feature instance = (Feature) extension.createExecutableExtension("class");
+                // Handle the case that wee need Google Guice for instantiation
+                instance = (Feature) getGuiceInstance(instance);                
+                String id = instance.getId();
+                className += " (" + id + ")";
+                if (featuresCached.containsKey(id)) {
+                    KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register feature: "
+                            + extension + " for class " + className
+                            + " because this ID is already taken.", null);
                 } else {
-                    // The specified class is not a Transformation, use a new Transformation
-                    // instance as a wrapper
-                    transformation = new TransformationWrapper();
-                    // Handle the case that wee need Google Guice for instantiation
-                    transformation
-                            .setTransformationInstance(getGuiceInstance(transformationInstance));
-                    // Find the correct method and save it in the wrapper for later reflection calls
-                    Method transformationMethod =
-                            getInvokableMethod(transformationInstance, method);
-                    transformation.setTransformationMethod(transformationMethod);
+                    featuresCached.put(id, instance);
+                    logInfo("KiCo register feature: " + extension + " for class " + className);
                 }
-
-                transformation.setConfigurationElemenet(transformations[i]);
-
-                if (id != null) {
-                    transformation.setId(id);
-                    // Check if ID is already taken
-                    if (transformationMap.containsKey(id)) {
-                        showWarning("Extension '" + id + "' from component: "
-                                + transformations[i].getContributor().getName()
-                                + " cannot be loaded because this ID is already taken.",
-                                KiCoPlugin.PLUGIN_ID, null, true);
-                    } else {
-                        transformationMap.put(id, transformation);
-                    }
-                } else {
-                    showWarning("Extension id not configured for component: "
-                            + transformations[i].getContributor().getName(), KiCoPlugin.PLUGIN_ID,
-                            null, true);
-                }
-
-                if (name != null) {
-                    transformation.setName(name);
-                }
-
-                if (method != null) {
-                    transformation.setMethod(method);
-                }
-
-                if (producesDependenciesString != null) {
-                    String[] dependenciesArray = producesDependenciesString.split(",");
-                    for (String dependency : dependenciesArray) {
-                        transformation.getProducesDependencies().add(dependency.trim());
-                    }
-                }
-
-                if (notHandlesDependenciesString != null) {
-                    String[] dependenciesArray = notHandlesDependenciesString.split(",");
-                    for (String dependency : dependenciesArray) {
-                        transformation.getNotHandlesDependencies().add(dependency.trim());
-                    }
-                }
-
-            } catch (Exception e) {
-                this.showWarning(transformations[i].getContributor().getName()
-                        + " could not be loaded.", null, e, true);
+            } catch (CoreException e) {
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register feature: "
+                        + extension + " for class " + className, e);
             }
         }
-        return transformationMap;
+        return featuresCached;
+
     }
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Gets the registered transformations or the cached version.
+     * 
+     * @return the registered transformations
+     */
+    public static HashMap<String, Transformation> getRegisteredTransformations(boolean forceReload) {
+        // Return the cache if there is any and not forced to reload
+        if (transformationsCached != null && !forceReload) {
+            return transformationsCached;
+        }
+        // Otherwise inspect the extensions
+        IConfigurationElement[] extensions =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        TRANSFORMATION_EXTENSION_POINT_ID);
+        // Clear the cache
+        transformationsCached = new HashMap<String, Transformation>();
+        // Walk thru every extension and instantiate the declared class, then put it into the cache
+        for (IConfigurationElement extension : extensions) {
+            String className = extension.getAttribute("class");
+            try {
+                Object rawTransformation = extension.createExecutableExtension("class");
+                Transformation transformation;
+                if (extension.getName().startsWith("production")) {//productionTransformationClass
+                    transformation =
+                            new Transformation(
+                                    (IProductionTransformation) getGuiceInstance(rawTransformation));
+                } else {//extensionTransformationClass
+                    transformation =
+                            new Transformation(
+                                    (IExpansionTransformation) getGuiceInstance(rawTransformation));
+                }
+                String id = transformation.getId();
+                if (transformationsCached.containsKey(id)) {
+                    KiCoUtil.logError(KiCoPlugin.PLUGIN_ID,
+                            "KiCo failed to register transformation: " + extension + " for class "
+                                    + className + " (" + id + ")"
+                                    + " because this ID is already taken.", null);
+                } else {
+                    transformationsCached.put(id, transformation);
+                    logInfo("KiCo register transformation: " + extension + " for class "
+                            + className + " (" + id + ")");
+                }
+            } catch (Exception e) {
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register transformation: "
+                        + extension + " for class " + className, e);
+            }
+        }
+        return transformationsCached;
+
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the registered processors or the cached version.
+     * 
+     * @return the registered processors
+     */
+    public static HashMap<String, IHook> getRegisteredHooks(boolean forceReload) {
+        // Return the cache if there is any and not forced to reload
+        if (hooksCached != null && !forceReload) {
+            return hooksCached;
+        }
+        // Otherwise inspect the extensions
+        IConfigurationElement[] extensions =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        CREEPER_EXTENSION_POINT_ID);
+        // Clear the cache
+        hooksCached = new HashMap<String, IHook>();
+        // Walk thru every extension and instantiate the declared class, then put it into the cache
+        for (IConfigurationElement extension : extensions) {
+            String className = extension.getName();
+            try {
+                IHook instance = (IHook) extension.createExecutableExtension("class");
+                // Handle the case that wee need Google Guice for instantiation
+                instance = (IHook) getGuiceInstance(instance);                
+                String id = instance.getId();
+                className += " (" + id + ")";
+                if (hooksCached.containsKey(id)) {
+                    KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register hook: "
+                            + extension + " for class " + className
+                            + " because this ID is already taken.", null);
+                } else {
+                    hooksCached.put(id, instance);
+                    logInfo("KiCo register hook: " + extension + " for class " + className);
+                }
+            } catch (CoreException e) {
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register hook: "
+                        + extension + " for class " + className, e);
+            }
+        }
+        return hooksCached;
+
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the registered resource extensions.
-     *
-     * @param forceReload the force reload
+     * 
+     * @param forceReload
+     *            the force reload
      * @return the registered resource extensions
      */
-    public HashMap<String, ResourceExtension> getRegisteredResourceExtensions(boolean forceReload) {
-        
-        if (resourceExtensionCached != null && !forceReload) {
-            return resourceExtensionCached;
+    public static HashMap<String, ResourceExtension> getRegisteredResourceExtensions(
+            boolean forceReload) {
+        if (resourceExtensionsCached != null && !forceReload) {
+            return resourceExtensionsCached;
         }
-        
         IConfigurationElement[] resourceExtensions =
-                Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_EXTENSION_POINT_ID);
-
-        resourceExtensionCached = new HashMap<String, ResourceExtension>();
-
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        RESOURCEEXTENSION_EXTENSION_POINT_ID);
+        resourceExtensionsCached = new HashMap<String, ResourceExtension>();
         for (int i = 0; i < resourceExtensions.length; i++) {
             try {
-
                 String className = resourceExtensions[i].getAttribute("className");
                 String extension = resourceExtensions[i].getAttribute("extensionName");
                 String isXMI = resourceExtensions[i].getAttribute("isXMI");
                 String editorID = resourceExtensions[i].getAttribute("editor_id");
-                resourceExtensionCached.put(className, new ResourceExtension(className, extension, isXMI.toLowerCase().equals("true"), editorID));
+                resourceExtensionsCached.put(className, new ResourceExtension(className, extension,
+                        isXMI.toLowerCase().equals("true"), editorID));
 
-                if (DEBUG) {
-                     System.out.println("KiCo register resource extension: "
-                       + extension + " for class " + className);
-                }
-            } 
-            finally {
-            
+                logInfo("KiCo register resource extension: " + extension + " for class "
+                        + className);
+            } finally {
+                // do nothing
             }
         }
-
-        return resourceExtensionCached;
+        return resourceExtensionsCached;
     }
-    
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // .....█████╗..██████╗.██████╗███████╗███████╗███████╗
+    // ....██╔══██╗██╔════╝██╔════╝██╔════╝██╔════╝██╔════╝
+    // ....███████║██║.....██║.....█████╗..███████╗███████╗
+    // ....██╔══██║██║.....██║.....██╔══╝..╚════██║╚════██║
+    // ....██║..██║╚██████╗╚██████╗███████╗███████║███████║
+    // ....╚═╝..╚═╝.╚═════╝.╚═════╝╚══════╝╚══════╝╚══════╝.
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the processor by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @param forceReload
+     *            the force reload flag
+     * @return the processor
+     */
+    public static Processor getProcessor(String id, boolean forceReload) {
+        HashMap<String, Processor> cache = getRegisteredProcessors(forceReload);
+        if (!cache.containsKey(id)) {
+            KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the processor with ID '" + id
+                    + "'", null);
+            return null;
+        }
+        return cache.get(id);
+    }
+
+    /**
+     * Gets the processor by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @return the processor
+     */
+    public static Processor getProcessor(String id) {
+        return getProcessor(id, false);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the feature by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @param forceReload
+     *            the force reload flag
+     * @return the feature
+     */
+    public static Feature getFeature(String id, boolean forceReload) {
+        HashMap<String, Feature> cache = getRegisteredFeatures(forceReload);
+        if (!cache.containsKey(id)) {
+            KiCoUtil.logWarning(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the feature with ID '" + id
+                    + "'", null);
+            return null;
+        }
+        return cache.get(id);
+    }
+
+    /**
+     * Gets the feature by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @return the feature
+     */
+    public static Feature getFeature(String id) {
+        return getFeature(id, false);
+    }
+
+    // -------------------------------------------------------------------------
+    /**
+     * Gets the transformation by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @param forceReload
+     *            the force reload flag
+     * @return the transformation
+     */
+    public static Transformation getTransformation(String id, boolean forceReload) {
+        HashMap<String, Transformation> cache = getRegisteredTransformations(forceReload);
+        if (!cache.containsKey(id)) {
+            KiCoUtil.logWarning(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the transformation with ID '"
+                    + id + "'", null);
+            return null;
+        }
+        return cache.get(id);
+    }
+
+    /**
+     * Gets the transformation by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @return the transformation
+     */
+    public static Transformation getTransformation(String id) {
+        return getTransformation(id, false);
+    }
+
+    // -------------------------------------------------------------------------
+    /**
+     * Gets the hook by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @param forceReload
+     *            the force reload flag
+     * @return the hook
+     */
+    public static IHook getHook(String id, boolean forceReload) {
+        HashMap<String, IHook> cache = getRegisteredHooks(forceReload);
+        if (!cache.containsKey(id)) {
+            KiCoUtil.logWarning(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the hook with ID '" + id
+                    + "'", null);
+            return null;
+        }
+        return cache.get(id);
+    }
+
+    /**
+     * Gets the hook by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @return the hook
+     */
+    public static IHook getHook(String id) {
+        return getHook(id, false);
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
     /**
      * Gets the resource extension for an model. Note that for this method to work there must be a
      * plugin that uses the extension point de.cau.cs.kieler.kico.extension to register a
@@ -365,8 +595,9 @@ public class KiCoPlugin extends Plugin {
      * @return the resource extension
      */
     public ResourceExtension getResourceExtension(Object model) {
+        KiCoPlugin.getInstance();
         HashMap<String, ResourceExtension> resourceExtensionMap =
-                KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
+                KiCoPlugin.getRegisteredResourceExtensions(false);
         ResourceExtension specificExtension = null;
         if (model instanceof EObject) {
             specificExtension = resourceExtensionMap.get(((EObject) model).eClass().getName());
@@ -380,7 +611,15 @@ public class KiCoPlugin extends Plugin {
     }
 
     // -------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+    // ....██████╗..███████╗███╗...██╗███████╗██████╗..█████╗.██╗.....
+    // ....██╔════╝.██╔════╝████╗..██║██╔════╝██╔══██╗██╔══██╗██║.....
+    // ....██║..███╗█████╗..██╔██╗.██║█████╗..██████╔╝███████║██║.....
+    // ....██║...██║██╔══╝..██║╚██╗██║██╔══╝..██╔══██╗██╔══██║██║.....
+    // ....╚██████╔╝███████╗██║.╚████║███████╗██║..██║██║..██║███████╗
+    // .....╚═════╝.╚══════╝╚═╝..╚═══╝╚══════╝╚═╝..╚═╝╚═╝..╚═╝╚══════╝
+    // -------------------------------------------------------------------------
+
     /**
      * Sets the parent shell that KIEM should use to display user dialogs.
      * 
@@ -390,6 +629,28 @@ public class KiCoPlugin extends Plugin {
     public void setShell(final Shell parentShellParam) {
         if (parentShellParam != null) {
             KiCoPlugin.parentShell = parentShellParam;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // ....███████╗██████╗.██████╗..██████╗.██████╗.███████╗
+    // ....██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██╔════╝
+    // ....█████╗..██████╔╝██████╔╝██║...██║██████╔╝███████╗
+    // ....██╔══╝..██╔══██╗██╔══██╗██║...██║██╔══██╗╚════██║
+    // ....███████╗██║..██║██║..██║╚██████╔╝██║..██║███████║
+    // ....╚══════╝╚═╝..╚═╝╚═╝..╚═╝.╚═════╝.╚═╝..╚═╝╚══════╝
+    // -------------------------------------------------------------------------
+
+    /**
+     * Log an info.
+     * 
+     * @param msg
+     *            the msg
+     */
+    public static void logInfo(String msg) {
+        if (logger != null) {
+            logger.info(msg);
         }
     }
 
@@ -635,31 +896,6 @@ public class KiCoPlugin extends Plugin {
     }
 
     // -------------------------------------------------------------------------
-
-    /**
-     * Gets the last error.
-     *
-     * @return the last error
-     * @deprecated Use the method getAllErrors()  of the compilation result, this method will only return null.
-     */
-    public static String getLastError() {
-        // TODO:
-        return "";// lastError;
-    }
-
     // -------------------------------------------------------------------------
-
-    /**
-     * Resets the last error.
-     * 
-     * @deprecated Use the method getAllErrors()  of the compilation result, this method will do nothing.
-     * 
-     */
-    public static void resetLastError() {
-        // TODO:
-        // KiCoPlugin.lastError = null;
-    }
-
-    // -------------------------------------------------------------------------
-
+    
 }

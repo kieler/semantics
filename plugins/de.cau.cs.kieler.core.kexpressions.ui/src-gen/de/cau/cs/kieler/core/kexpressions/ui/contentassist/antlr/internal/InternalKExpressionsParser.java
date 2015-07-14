@@ -18486,7 +18486,8 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     static final String DFA1_specialS =
         "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\2\uffff}>";
     static final String[] DFA1_transitionS = {
-            "\1\4\1\11\1\13\1\2\1\3\1\6\6\uffff\1\7\2\uffff\1\14\1\uffff\1\1\3\uffff\1\10\4\uffff\1\12\4\uffff\1\5",
+            "\1\4\1\11\1\13\1\2\1\3\1\6\6\uffff\1\7\2\uffff\1\14\1\uffff"+
+            "\1\1\3\uffff\1\10\4\uffff\1\12\4\uffff\1\5",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -18724,7 +18725,8 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     static final String DFA7_specialS =
         "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff}>";
     static final String[] DFA7_transitionS = {
-            "\1\1\1\11\1\13\2\1\1\6\6\uffff\1\7\2\uffff\1\14\1\uffff\1\1\3\uffff\1\10\4\uffff\1\12\4\uffff\1\5",
+            "\1\1\1\11\1\13\2\1\1\6\6\uffff\1\7\2\uffff\1\14\1\uffff\1\1"+
+            "\3\uffff\1\10\4\uffff\1\12\4\uffff\1\5",
             "",
             "",
             "",
@@ -18917,7 +18919,8 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     static final String DFA8_specialS =
         "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\uffff}>";
     static final String[] DFA8_transitionS = {
-            "\1\1\1\11\1\13\2\1\1\6\6\uffff\1\7\2\uffff\1\14\1\uffff\1\1\3\uffff\1\10\4\uffff\1\12\4\uffff\1\5",
+            "\1\1\1\11\1\13\2\1\1\6\6\uffff\1\7\2\uffff\1\14\1\uffff\1\1"+
+            "\3\uffff\1\10\4\uffff\1\12\4\uffff\1\5",
             "",
             "",
             "",
@@ -19094,7 +19097,8 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     static final String DFA12_specialS =
         "\4\uffff\1\0\7\uffff}>";
     static final String[] DFA12_transitionS = {
-            "\1\3\2\5\1\1\1\2\1\5\6\uffff\1\5\10\uffff\1\5\4\uffff\1\5\4\uffff\1\4",
+            "\1\3\2\5\1\1\1\2\1\5\6\uffff\1\5\10\uffff\1\5\4\uffff\1\5\4"+
+            "\uffff\1\4",
             "",
             "",
             "",
@@ -19183,7 +19187,8 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             "\1\1\35\uffff\1\2",
             "",
             "\1\3",
-            "\2\12\1\uffff\1\10\1\11\1\5\1\7\30\uffff\2\7\1\6\2\uffff\1\7\1\4",
+            "\2\12\1\uffff\1\10\1\11\1\5\1\7\30\uffff\2\7\1\6\2\uffff\1"+
+            "\7\1\4",
             "\1\13",
             "",
             "",
@@ -19191,7 +19196,8 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             "",
             "",
             "",
-            "\2\12\1\uffff\1\10\1\11\1\5\1\7\30\uffff\2\7\1\6\2\uffff\1\7\1\4"
+            "\2\12\1\uffff\1\10\1\11\1\5\1\7\30\uffff\2\7\1\6\2\uffff\1"+
+            "\7\1\4"
     };
 
     static final short[] DFA16_eot = DFA.unpackEncodedString(DFA16_eotS);

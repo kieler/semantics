@@ -3,7 +3,7 @@
       id="de.cau.cs.kieler.sccharts.feature"
       label="KIELER SCCharts"
       version="0.1.1.qualifier"
-      provider-name="Christian-Albrechts-Universität zu Kiel"
+      provider-name="Kiel University"
       plugin="de.cau.cs.kieler.sccharts">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
@@ -12,7 +12,7 @@
 
    <copyright>
       Copyright 2013 by Real-Time and Embedded Systems Group, Department
-of Computer Science, Christian-Albrechts-University of Kiel
+of Computer Science, Kiel University
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
@@ -271,6 +271,13 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.core.perspectives"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="de.cau.cs.kieler.kev"
          download-size="0"
          install-size="0"
@@ -307,6 +314,20 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.kico.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kitt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kitt.klighd"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -535,13 +556,13 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="de.cau.cs.kieler.sccharts.kivi"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>         
+         unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.sccharts.sim.c"

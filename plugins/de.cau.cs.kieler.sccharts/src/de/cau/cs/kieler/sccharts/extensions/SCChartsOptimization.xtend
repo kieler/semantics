@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Optimization Extensions.
@@ -44,11 +44,12 @@ class SCChartsOptimization {
     }
 
     def void optimizeSuperflousImmediateTransitions(State state, State targetRootState) {
-        if (state.outgoingTransitions.size == 1 && !state.hasInnerStatesOrRegions) {
+        if (state.outgoingTransitions.size == 1 && !state.hasInnerStatesOrControlflowRegions) {
             val transition = state.outgoingTransitions.get(0)
             val targetState = transition.targetState
             if (transition.immediate2) {
                 if (transition.trigger == null && transition.effects.nullOrEmpty) {
+                    targetState.trace(transition) //KITT: Redirect tracing relations before removing
                     targetState.incomingTransitions.remove(transition)
                     state.outgoingTransitions.remove(transition)
                     targetState.setInitial(state.initial || targetState.initial)
@@ -58,6 +59,7 @@ class SCChartsOptimization {
                     }
                     targetState.setId(state.id)
                     targetState.setLabel(state.label)
+                    targetState.trace(state) //KITT: Redirect tracing relations before removing
                     targetState.parentRegion.states.remove(state)
                 }
             }
@@ -78,11 +80,12 @@ class SCChartsOptimization {
     }
 
     def void optimizeSuperflousConditionalStates(State state, State targetRootState) {
-        if (state.outgoingTransitions.size == 2 && !state.hasInnerStatesOrRegions) {
+        if (state.outgoingTransitions.size == 2 && !state.hasInnerStatesOrControlflowRegions) {
             val transition1 = state.outgoingTransitions.get(0)
             val transition2 = state.outgoingTransitions.get(1)
             val targetState2 = transition1.targetState
             if ((transition1.immediate2) && (transition1.trigger == null)) {
+                transition1.trace(transition2) //KITT: Redirect tracing relations before removing
                 targetState2.incomingTransitions.remove(transition2)
                 state.outgoingTransitions.remove(transition2)
 

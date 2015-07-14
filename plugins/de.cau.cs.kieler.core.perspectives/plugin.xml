@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="de.cau.cs.kieler.core.perspectives.ModelingPerspective"
+            icon="icons/foerde-logo-16.gif"
+            id="de.cau.cs.kieler.Modeling"
+            name="SCCharts Modeling">
+      </perspective>
+      <perspective
+            class="de.cau.cs.kieler.core.perspectives.SimulationPerspective"
+            icon="icons/foerde-logo-16.gif"
+            id="de.cau.cs.kieler.simulation"
+            name="SCCharts Simulation">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <commonWizard
+            type="new"
+            wizardId="org.eclipse.ui.wizards.new.project">
+         <enablement>
+            <not>
+               <or>
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                  </adapt>
+                  <adapt
+                        type="org.eclipse.core.resources.IFolder">
+                  </adapt>
+                  <adapt
+                        type="org.eclipse.core.resources.IProject">
+                  </adapt>
+               </or>
+            </not>
+         </enablement>
+      </commonWizard>
+   </extension>
+  
+</plugin>

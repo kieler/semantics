@@ -3,7 +3,7 @@
       id="de.cau.cs.kieler.uml2.feature"
       label="KIELER Bridge to UML2 tools"
       version="0.5.0.qualifier"
-      provider-name="Christian-Albrechts-Universität zu Kiel"
+      provider-name="Kiel University"
       plugin="de.cau.cs.kieler.uml2">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler/">
@@ -13,7 +13,7 @@ layout to the UML2 tools.
 
    <copyright>
       Copyright 2009 by Real-Time and Embedded Systems Group, Department
-of Computer Science, Christian-Albrechts-University of Kiel
+of Computer Science, Kiel University
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">

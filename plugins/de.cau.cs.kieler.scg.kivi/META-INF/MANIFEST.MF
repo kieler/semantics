@@ -4,7 +4,7 @@ Bundle-Name: KIELER View Managenment for SCGs
 Bundle-SymbolicName: de.cau.cs.kieler.scg.kivi;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.scg.kivi.SCGKiViPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.ide;bundle-version="3.6.0",
@@ -27,7 +27,7 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core.krendering.extensions,
  de.cau.cs.kieler.klighd.ui,
  de.cau.cs.kieler.klighd.kivi
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.scg.kivi
 

@@ -6,7 +6,7 @@
       <content
             class="de.cau.cs.kieler.esterel.sim.c.EsterelCDataComponent"
             id="de.cau.cs.kieler.esterel.sim.c"
-            name="Esterel Simulator (SCG)">
+            name="Esterel Simulator (SCEst)">
       </content>
    </extension>
    <extension
@@ -70,6 +70,15 @@
             method="transformNoVisualization"
             name="No Visualization">
       </transformationMethod>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <expansionTransformationClass
+            class="de.cau.cs.kieler.esterel.sim.c.xtend.SimulationVisualization">
+      </expansionTransformationClass>
+      <expansionTransformationClass
+            class="de.cau.cs.kieler.esterel.sim.c.xtend.NoSimulationVisualization">
+      </expansionTransformationClass>
    </extension>
 
 </plugin>

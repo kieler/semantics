@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.c.sccharts.handler.CFileTransformHandler"
+            commandId="de.cau.cs.kieler.c.sccharts.commands.TransformC">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.c.sccharts.commands.TransformC"
+               label="Transform C File"
+               mnemonic="T"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="c">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler.c.commands.category"
+            id="de.cau.cs.kieler.c.sccharts.commands.TransformC "
+            name="TransformC">
+      </command>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformationMethod
+            class="de.cau.cs.kieler.c.sccharts.CDTProcessor"
+            id="C2SCT"
+            method="transform"
+            name="C2SCT">
+      </transformationMethod>
+   </extension>
+</plugin>

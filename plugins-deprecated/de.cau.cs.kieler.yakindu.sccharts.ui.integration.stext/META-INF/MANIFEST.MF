@@ -8,7 +8,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.ui;bundle-version="0.1.0",
  org.eclipse.jface.text;bundle-version="3.8.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.xtext.ui.editor.contentassist.antlr,
  org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
  org.yakindu.sct.model.stext.stext,
@@ -16,4 +16,4 @@ Import-Package: org.eclipse.xtext.ui.editor.contentassist.antlr,
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.yakindu.sccharts.ui.integration.stext,
  de.cau.cs.kieler.yakindu.sccharts.ui.integration.stext.modules
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University

@@ -4,16 +4,18 @@ Bundle-Name: KIELER Esterel Simulator
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.cec.sim;singleton:=true
 Bundle-Version: 0.1.5.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Require-Bundle: org.eclipse.xtext.ui,
+Bundle-Vendor: Kiel University
+Require-Bundle: de.cau.cs.kieler.esterel.cec,
+ org.eclipse.xtext.ui,
  org.eclipse.xtext.xbase;bundle-version="2.1.0",
  org.eclipse.xtend2.lib;bundle-version="2.2.1",
- de.cau.cs.kieler.esterel.cec,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent,
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.sim.signals,
- de.cau.cs.kieler.esterel.kexpressions.ui;bundle-version="0.4.1"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+ de.cau.cs.kieler.esterel.kexpressions.ui;bundle-version="0.4.1",
+ de.cau.cs.kieler.sim.benchmark,
+ de.cau.cs.kieler.esterel.sim
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.esterel.cec.sim
 

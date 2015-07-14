@@ -31,7 +31,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecoretools.diagram;bundle-version="1.0.0",
  de.cau.cs.kieler.klighd.xtext,
  org.eclipse.xtext.ui
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext,
  org.yakindu.sct.model.stext,

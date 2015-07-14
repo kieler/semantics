@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2009 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -88,7 +88,7 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
                     String key = fieldNames[c];
                     String value;
                     boolean isPresent = false; // default
-                    boolean isSignal = true;
+                    boolean isSignal = false;
                     if (obj instanceof JSONObject) {
                         // can be a signal
                         isPresent = JSONSignalValues.isPresent((JSONObject) obj);
@@ -104,13 +104,19 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
                         value = "";
                     } else if (obj instanceof Double) {
                         value = ((Double) obj) + "";
-                        isPresent = (Double)obj != 0;
+                        if (!isSignal) {
+                            isPresent = (Double)obj != 0;
+                        }
                     } else if (obj instanceof Integer) {
                         value = ((Integer) obj) + "";
-                        isPresent = (Integer)obj != 0;
+                        if (!isSignal) {
+                            isPresent = (Integer)obj != 0;
+                        }
                     } else if (obj instanceof Boolean) {
                         value = ((Boolean) obj).toString();
-                        isPresent = (Boolean)obj;
+                        if (!isSignal) {
+                            isPresent = (Boolean)obj;
+                        }
                     } else if (obj instanceof JSONObject) {
                         value = ((JSONObject) obj).toString();
                     } else if (obj instanceof JSONArray) {

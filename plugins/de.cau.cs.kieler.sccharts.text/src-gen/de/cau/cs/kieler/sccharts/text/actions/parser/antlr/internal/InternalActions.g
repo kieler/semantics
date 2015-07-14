@@ -254,6 +254,8 @@ ruleTransition returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRuleEffect
 entryRuleEffect returns [EObject current=null] 
 	:

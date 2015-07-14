@@ -944,7 +944,7 @@
   </diagram>
   <plugin
       name="SyncCharts Diagram Editor"
-      provider="Christian-Albrechts-Universität zu Kiel"
+      provider="Kiel University"
       version="0.5.0.qualifier"
       printingEnabled="true">
     <requiredPlugins>org.eclipse.draw2d</requiredPlugins>

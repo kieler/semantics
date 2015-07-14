@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.scg.schedulers
 
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
 
@@ -35,10 +35,10 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-abstract class AbstractScheduler extends Transformation {
+abstract class AbstractScheduler extends AbstractProductionTransformation {
 
-    override transform(EObject eObject, KielerCompilerContext context) {
-        return schedule(eObject as SCGraph, context)
+    public def transform(SCGraph scg, KielerCompilerContext context) {
+        return schedule(scg, context)
     }
 
     protected abstract def SchedulingConstraints orderSchedulingBlocks(SCGraph scg);

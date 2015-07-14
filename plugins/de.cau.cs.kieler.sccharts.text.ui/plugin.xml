@@ -352,30 +352,38 @@
 
    <extension
          point="de.cau.cs.kieler.kico.ui.transformation">
-      <editor
+      <!--<editor
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
             label="ARDOINO"
             priority="80"
             priorized="S2ARDUINO"
-            transformations="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT,ABORTNOWTO,ABORTWTO,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, SCGRAPH, SCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGSCHEDSIMPLE, SCGSCHEDDELAYAWARE, SCGSCHEDTHREADAWARE, SCGSEQGROUP, SCGSEQSIMPLE, SCGSEQHYBRID, SCGBBGROUP, SCGSCHEDGROUP, CODEGENERATION, SCG2S, S2TARGET, S2C, S2JAVA, S2ARDUINO">
-      </editor>
+            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, SCGRAPH, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, CODEGENERATION, SCG2S, S2TARGET, S2C, S2JAVA, S2ARDUINO"
+            preferred="ABORT, S2ARDUINO">
+      </editor>-->
       <editor
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
             label="Netlist Compilation"
             priority="100"
-            transformations="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT,ABORTWTO,ABORTNOWTO,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, SCGRAPH, SCGRAPH, SCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGBBGROUP, SCGSCHEDULE, SCGSEQUENTIALIZE, SCGGC, MAP, FOR, REFERENCE, CONST, EXPANSIONS, CODEGENERATION, SCG2S, S2TARGET, S2C, S2JAVA, S2ARDUINO, SCPDG, SCPDGCD, SCPDGRN, SCPDGMD"></editor>
-      <editor
+            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, codegeneration, s, s.target"
+            preferred="T_ABORT, INITIALIZATION, scg.basicblock.sc, s.c, sccharts.scg, NOSIMULATIONVISUALIZATION"></editor>
+      <!--<editor
+            editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
+            label="Demo Compilation"
+            priority="90"
+            features="ABORT,INITIALIZATION,ENTRY,EXIT,CONNECTOR, STATECHARTS"
+            preferred="ABORT"></editor>-->
+      <!--<editor
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
             label="Priority Based Compilation"
             priority="90"
-            transformations="SCCHARTSPRIO2S">
-      </editor>
+            features="SCCHARTSPRIO2S"
+            preferred=""></editor>-->
       <editor
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
             label="All Transformations"
             priority="80"
-            transformations="ALL">
-      </editor>
+            features="ALL"
+            preferred=""></editor>
    </extension>
        
     

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -84,7 +84,7 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.kico.klighd.KiCoKLighDProperties
+import de.cau.cs.kieler.kico.KiCoProperties
 import java.util.Set
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
@@ -100,6 +100,7 @@ import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ConditionalDependency
 import de.cau.cs.kieler.scg.ThenDependency
 import de.cau.cs.kieler.scg.ElseDependency
+import de.cau.cs.kieler.scg.features.SCGFeatures
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -441,9 +442,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // Connect the model to the scope provider for the serialization.
         scopeProvider.parent = model;
 
-        compilationResult = this.usedContext.getProperty(KiCoKLighDProperties.COMPILATION_RESULT)
+        compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
         if (compilationResult != null) {
-            val PILR = compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head
+            val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
             if (PILR != null) PIL_Nodes += PILR.criticalNodes
         }
 
@@ -490,7 +491,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             
             //Suasage folding on/off
-            if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
+            if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
                 node.addLayoutParam(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH);
                 node.addLayoutParam(Properties::SAUSAGE_FOLDING, true);
             }
@@ -591,7 +592,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                 }
                                 
                                     addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
-                                        it.foreground = REGIONLABEL.copy;
+                                        it.KRendering.foreground = REGIONLABEL.copy;
                                         if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
                                     ]
                                     
@@ -1368,22 +1369,34 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (SHOW_BASICBLOCKS.booleanValue) {
                 val bbNodes = <Node>newLinkedList
                 basicBlock.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
-                val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK, basicBlock)
+                val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK, basicBlock).associateWith(basicBlock)
                 bbContainerList.put(basicBlock, bbContainer)
 //                val bbName = serializer.serialize(bb.guards.head.reference)
                 var bbName = basicBlock.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
                 
                 if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-                    val expText = serializer.serialize(basicBlock.schedulingBlocks.head.guard.expression.copy.fix)  
-//                  expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
-                    bbName = bbName + "\n" + expText                    
+//<<<<<<< HEAD
+//                    val expText = serializer.serialize(basicBlock.schedulingBlocks.head.guard.expression.copy.fix)  
+////                  expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
+//                    bbName = bbName + "\n" + expText                    
+//=======
+                    val guard = basicBlock.schedulingBlocks.head.guard
+                    var String expText
+                    if (guard.dead) {
+                        expText = "<dead>"
+                    } else {
+                        val exp = guard.expression.copy.fix
+                    	expText = serializer.serialize(exp)	
+                    }
+//                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
+					bbName = bbName + "\n" + expText                	
                 }
                 
-                bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER.copy
+                bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = BASICBLOCKBORDER.copy
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
                 for (schedulingBlock : basicBlock.schedulingBlocks) {
-                    val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK, schedulingBlock)
+                    val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK, schedulingBlock).associateWith(schedulingBlock)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
 //                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
                      var sbName = "<null>"
@@ -1396,17 +1409,30 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                          }
                      }
 
-                    if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-                        var expText = "<null>"
-                        if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
-                            expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)
-                        }   
-//                      expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                 
-                        sbName = sbName + "\n" + expText       
-                    }
-                    
-                    sbName.createLabel(sbContainer).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
-                    
+//<<<<<<< HEAD
+//                    if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
+//                        var expText = "<null>"
+//                        if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
+//                            expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)
+//                        }   
+////                      expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                 
+//                        sbName = sbName + "\n" + expText       
+//                    }
+//                    
+//                    sbName.createLabel(sbContainer).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
+//                    
+//=======
+	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
+	                    var expText = "<null>"
+	                    if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
+        	            	expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)
+    	            	}	
+//        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
+						sbName = sbName + "\n" + expText       
+					}
+            	    
+                	sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = SCHEDULINGBLOCKBORDER.copy
+                	
                     if (basicBlock.deadBlock) {
                         sbContainer.getData(typeof(KRoundedRectangle)) => [
                             it.lineStyle = LineStyle::SOLID
@@ -1496,12 +1522,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
         for (n : PIL_Nodes) {
             val nextFlows = n.allNext
+            var hasFlows = false
             for (flow : nextFlows) {
                 if (PIL_Nodes.contains(flow.target)) {
                     flow.colorControlFlow(PROBLEM_COLOR.copy)
                     flow.thickenControlFlow(PROBLEM_WIDTH)
+                    hasFlows = true
                 } 
             }
+            
+            if (!hasFlows) {
+                val nextDeps = n.eContents.filter(DataDependency).filter[ concurrent == true && confluent == false].toList
+                for (flow : nextDeps) {
+                    if (PIL_Nodes.contains(flow.target)) {
+                        flow.colorDependency(PROBLEM_COLOR.copy)
+                        flow.thickenDependency(PROBLEM_WIDTH)
+                    } 
+                }
+            }            
         }
     }
 

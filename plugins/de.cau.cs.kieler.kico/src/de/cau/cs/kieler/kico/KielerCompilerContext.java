@@ -3,8 +3,8 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * Copyright 2015 by
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -14,31 +14,54 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import de.cau.cs.kieler.core.properties.MapPropertyHolder;
+import de.cau.cs.kieler.kico.features.Feature;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
+import de.cau.cs.kieler.kico.internal.Transformation;
+import de.cau.cs.kieler.kico.internal.TransformationDummy;
+import de.cau.cs.kieler.kico.internal.TransformationDummyGraph;
+
 /**
- * This class implements the context of a KielerCompiler call
+ * This class implements the context of a KielerCompiler call.
  * 
  * @author cmot
- * @kieler.design 2014-06-08 proposed
- * @kieler.rating 2014-06-08 proposed yellow
- * 
+ * @kieler.design 2015-03-09 proposed
+ * @kieler.rating 2015-03-09 proposed yellow
  */
-public class KielerCompilerContext {
+public class KielerCompilerContext extends MapPropertyHolder {
+
+    /** the serial version UID. */
+    private static final long serialVersionUID = -6086745674842248093L;
+
+    /** The (intermediate) compilation result. */
+    CompilationResult compilationResult = null;
+
+    /** The user selection for interactive compilation. */
+    private KielerCompilerSelection selection = new KielerCompilerSelection();
+
+    /**
+     * The flag to automatically select not only based on feature groups but also auto select
+     * transformations based on the selected features (defining the target) and the model features
+     * (defining the requirements).
+     */
+    private boolean advancedSelect = false;
+
+    /**
+     * The overall compilation is inplace and should happen directly on the source model (as far as
+     * there is no meta model change).
+     */
+    private boolean isInplace = false;
 
     /** The global verbose mode. */
     private boolean verboseMode = false;
-
-    /** Further included models can be searched by a scoper. */
-    private ArrayList<EObject> includedModels = new ArrayList<EObject>();
 
     /** The resource set of all models for a compile run. */
     private ResourceSet modelResourceSet = null;
@@ -46,36 +69,14 @@ public class KielerCompilerContext {
     /** The main resource for a compile run. */
     private Resource mainResource = null;
 
-    /** The originally selected transformation IDs. */
-    private List<String> selectedTransformationIDs = new ArrayList<String>();
+    /** Further included models can be searched by a scoper. */
+    private ArrayList<EObject> includedModels = new ArrayList<EObject>();
 
-    /** The originally priorized transformation IDs. */
-    private List<String> priorizedTransformationIDs = new ArrayList<String>();
+    /** The calculated transformation chain used for compilation. */
+    private List<Transformation> compilationChain = null;
 
-    /** The originally disabled transformation IDs. */
-    private List<String> disabledTransformationIDs = new ArrayList<String>();
-
-    /** The (intermediate) compilation result. */
-    CompilationResult compilationResult = null;
-
-    /** The transformation used for compilation. */
-    private List<String> compilationTransformationIDs = new ArrayList<String>();
-
-    /** The internal compile graph is the 'state' of a compilation. */
-    private List<TransformationDummy> graph = null;
-
-    /** The cached transformations to graph elements. */
-    private static HashMap<Transformation, TransformationDummy> transformation2graph =
-            new HashMap<Transformation, TransformationDummy>();;
-
-    /** The flag to output no grous. */
-    private boolean noGrous = false;
-
-    /** The flag to calculate prerequirements. */
-    private boolean prerequirements = false;
-
-    /** The flag to do all transformations inplace and NOT on a copy. */
-    private boolean inplace = false;
+    /** The internal graph. */
+    private TransformationDummyGraph graph = null;
 
     /**
      * The flag to create a dummy resource if no resource is present (e.g. because inplace ==
@@ -90,141 +91,104 @@ public class KielerCompilerContext {
     private KielerCompilerProgressMonitor currentTransformationProgressMonitor = null;
 
     // -------------------------------------------------------------------------
-
-    /**
-     * Gets the list of priorized transformations IDs which are preferred if an alternative group is
-     * selected an no other transformation is selected.
-     * 
-     * @return the priorized transformations
-     */
-    public List<String> getPriorizedTransformationsIDs() {
-        // FIXME: THIS IS A TEMPORARY HACK!!! REMOVE THIS HACK LATER AND EVAL THE EXTENSION POINT
-        // FROM KICO.UI TO FILL THIS!
-        priorizedTransformationIDs.clear();
-        priorizedTransformationIDs.add("S2ARDUINO");
-        return priorizedTransformationIDs;
-    }
-
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new kieler compiler context without any original source model. Using this
-     * constructor is only advised if you do not intent to compile any model but want to calculate
-     * pre-requirements.
+     * Instantiates a new kieler compiler context with an original source model. <BR>
+     * <BR>
+     * The string arguments are a list of IDs, where disabled IDs are marked with a "!" before the
+     * ID and preferred with a "*". Transformation IDs start with a preceding "T_" and processor
+     * options with "P_". <BR>
+     * Example:<BR>
+     * "ABORT, *T_ABORT_WTO,!P_DEADCODE"
      * 
-     * @param selectedAndDisabledTransformationIDs
-     *            the selected and disabled transformation i ds
-     */
-    public KielerCompilerContext(String selectedAndDisabledTransformationIDs) {
-        compilationResult = new CompilationResult();
-        parseSelectedAndDisabledTransformationIDs(selectedAndDisabledTransformationIDs);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Instantiates a new kieler compiler context with an original source model.
-     * 
-     * @param selectedAndDisabledTransformationIDs
-     *            the selected and disabled transformation i ds
+     * @param stringArguments
+     *            the string arguments
      * @param eObject
      *            the e object
      */
-    public KielerCompilerContext(String selectedAndDisabledTransformationIDs, EObject eObject) {
+    public KielerCompilerContext(String stringArguments, EObject eObject) {
         compilationResult = new CompilationResult(eObject);
-        parseSelectedAndDisabledTransformationIDs(selectedAndDisabledTransformationIDs);
+        selection = new KielerCompilerSelection(stringArguments);
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new kieler compiler context without any original source model. Using this
-     * constructor is only advised if you do not intent to compile any model but want to calculate
-     * pre-requirements.
+     * Validates the selection and produces warnings for transformation or feature IDs that cannot
+     * be resolved.
      * 
-     * @param selectedTransformationIDs
-     *            the selected transformation i ds
-     * @param disabledTransformationIDs
-     *            the disabled transformation i ds
      */
-    public KielerCompilerContext(List<String> selectedTransformationIDs,
-            List<String> disabledTransformationIDs) {
-        compilationResult = new CompilationResult();
-        copySelectedAndDisabledTransformationIDs(selectedTransformationIDs,
-                disabledTransformationIDs);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Instantiates a new kieler compiler context with an original source model.
-     * 
-     * @param selectedTransformationIDs
-     *            the selected transformation i ds
-     * @param disabledTransformationIDs
-     *            the disabled transformation i ds
-     * @param eObject
-     *            the e object
-     */
-    public KielerCompilerContext(List<String> selectedTransformationIDs,
-            List<String> disabledTransformationIDs, EObject eObject) {
-        compilationResult = new CompilationResult(eObject);
-        copySelectedAndDisabledTransformationIDs(selectedTransformationIDs,
-                disabledTransformationIDs);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Copy the selected and disabled transformation ID lists.
-     * 
-     * @param selectedTransformationIDs
-     *            the selected transformation i ds
-     * @param disabledTransformationIDs
-     *            the disabled transformation i ds
-     */
-    private void copySelectedAndDisabledTransformationIDs(List<String> selectedTransformationIDs,
-            List<String> disabledTransformationIDs) {
-        this.selectedTransformationIDs.clear();
-        this.disabledTransformationIDs.clear();
-        for (String transformationID : selectedTransformationIDs) {
-            this.selectedTransformationIDs.add(transformationID);
-        }
-        for (String transformationID : disabledTransformationIDs) {
-            this.disabledTransformationIDs.add(transformationID);
-        }
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Parses the selected and disabled transformation i ds.
-     * 
-     * @param selectedAndDisabledTransformationIDs
-     *            the selected and disabled transformation i ds
-     */
-    private void parseSelectedAndDisabledTransformationIDs(
-            String selectedAndDisabledTransformationIDs) {
-
-        String trimmed = selectedAndDisabledTransformationIDs.replace(" ", "");
-        if (trimmed.length() == 0) {
-            return;
-        }
-        String[] transformationIDArray = trimmed.split(",");
-        if (transformationIDArray == null) {
-            return;
-        }
-        this.selectedTransformationIDs.clear();
-        this.disabledTransformationIDs.clear();
-        for (String transformation : Arrays.asList(transformationIDArray)) {
-            if (transformation.startsWith("!")) {
-                disabledTransformationIDs.add(transformation.substring(1));
+    public void validateSelection() {
+        for (String id : selection.getSelectedFeatureAndTransformationIds()) {
+            if (id.startsWith("T_")) {
+                id = id.substring(2);
+                Transformation transformation = KielerCompiler.getTransformation(id);
+                if (transformation == null) {
+                    this.getCompilationResult().addPostponedWarning(
+                            new KielerCompilerException("KieleCompiler", "KielerCompiler",
+                                    "Transformation with '" + id + "' cannot be found."));
+                }
             } else {
-                selectedTransformationIDs.add(transformation);
+                Feature feature = KielerCompiler.getFeature(id);
+                if (feature == null) {
+                    this.getCompilationResult().addPostponedWarning(
+                            new KielerCompilerException("KieleCompiler", "KielerCompiler",
+                                    "Feature with '" + id + "' cannot be found."));
+                }
             }
         }
+
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new kieler compiler context with an original source model and an existing
+     * KielerCompilerSelection.
+     * 
+     * @param selection
+     *            the selection
+     * @param eObject
+     *            the e object
+     */
+    public KielerCompilerContext(KielerCompilerSelection selection, EObject eObject) {
+        compilationResult = new CompilationResult(eObject);
+        this.selection = selection;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new kieler compiler context with an original source model.
+     * 
+     * @param selectedFeatureAndTransformationIds
+     *            the selected feature and transformation IDs
+     * @param disabledTransformationIds
+     *            the disabled transformation IDs
+     * @param preferredTransformationIds
+     *            the preferred transformation ids
+     * @param enabledProcessorOptionIds
+     *            the enabled processor option ids
+     * @param disabledProcessorOptionIds
+     *            the disabled processor option ids
+     * @param eObject
+     *            the e object
+     */
+    public KielerCompilerContext(List<String> selectedFeatureAndTransformationIds,
+            List<String> disabledTransformationIds, List<String> preferredTransformationIds,
+            List<String> enabledProcessorOptionIds, List<String> disabledProcessorOptionIds,
+            EObject eObject) {
+        compilationResult = new CompilationResult(eObject);
+        selection.clear();
+        selection.setSelectedFeatureAndTransformationIds(selectedFeatureAndTransformationIds);
+        selection.setDisabledTransformationIds(disabledTransformationIds);
+        selection.setPreferredTransformationIds(preferredTransformationIds);
+        selection.setEnabledProcessorOptionIds(enabledProcessorOptionIds);
+        selection.setDisabledProcessorOptionIds(disabledProcessorOptionIds);
+    }
+
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
@@ -239,8 +203,8 @@ public class KielerCompilerContext {
     /**
      * Sets additionally included models that can be searched by a scoper.
      * 
-     * @param includedModels
-     *            the new included models
+     * @param includedModel
+     *            the included model
      */
     public void addIncludedModel(EObject includedModel) {
         this.includedModels.add(includedModel);
@@ -251,8 +215,6 @@ public class KielerCompilerContext {
     /**
      * Gets the included model resource.
      * 
-     * @param includedModel
-     *            the included model
      * @return the included model resource
      */
     public ResourceSet getModelResourceSet() {
@@ -263,8 +225,8 @@ public class KielerCompilerContext {
     /**
      * Sets the included model resource.
      * 
-     * @param includedModel
-     *            the included model
+     * @param resourceSet
+     *            the new model resource set
      * @return the included model resource
      */
     public void setModelResourceSet(ResourceSet resourceSet) {
@@ -283,11 +245,12 @@ public class KielerCompilerContext {
     }
 
     // -------------------------------------------------------------------------
+
     /**
      * Sets the included model resource.
      * 
-     * @param includedModel
-     *            the included model
+     * @param resource
+     *            the new main resource
      * @return the included model resource
      */
     public void setMainResource(Resource resource) {
@@ -299,8 +262,7 @@ public class KielerCompilerContext {
     /**
      * Get additionally included models that can be searched by a scoper.
      * 
-     * @param includedModels
-     *            the new included models
+     * @return the included models
      */
     public ArrayList<EObject> getIncludedModels() {
         return this.includedModels;
@@ -317,6 +279,8 @@ public class KielerCompilerContext {
         return this.verboseMode;
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * Sets the verbose mode.
      * 
@@ -325,17 +289,6 @@ public class KielerCompilerContext {
      */
     public void setVerboseMode(boolean verboseMode) {
         this.verboseMode = verboseMode;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the graph which represents the current compilation state of a compilation run.
-     * 
-     * @return the graph
-     */
-    public List<TransformationDummy> getGraph() {
-        return this.graph;
     }
 
     // -------------------------------------------------------------------------
@@ -352,254 +305,101 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the selected transformation IDs.
+     * Gets the user selection for interactive compilation.
      * 
-     * @return the selected transformation IDs
+     * @return the selection
      */
-    public List<String> getSelectedTransformationIDs() {
-        return selectedTransformationIDs;
+    public KielerCompilerSelection getSelection() {
+        return selection;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the disabled transformation IDs.
+     * Sets the user selection for interactive compilation.
      * 
-     * @return the disabled transformation IDs
+     * @param selection
+     *            the new selection
      */
-    public List<String> getDisabledTransformationIDs() {
-        return disabledTransformationIDs;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Builds the graph adding only defaults for alternatives iff not prioritized.
-     * 
-     * @param prioritizedTransformationIDs
-     *            the prioritized transformation i ds
-     * @return the list
-     */
-    public void buildGraph(List<String> prioritizedTransformationIDs) {
-        buildGraph(prioritizedTransformationIDs, true);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Builds the full graph with all alternatives.
-     * 
-     * @return the list
-     */
-    public void buildGraph() {
-        buildGraph(new ArrayList<String>(), false);
+    public void setSelection(KielerCompilerSelection selection) {
+        this.selection = selection;
     }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
-     * Builds the graph with filtering optional transformation IDs of alternative groups.
+     * Gets the transformation chain as it was calculated, derived by the selection. If there was
+     * not yet a compilation chain computed or forceUpdate is true then this method will first
+     * trigger a fresh computation of the compilation chain. The transformation chain is computed
+     * prior to the real compilation and can also be used for visualization purposes. If the model
+     * or the user selection changed forceUpdate should be true, otherwise it mostly should be
+     * false.
      * 
-     * @param prioritizedTransformationIDs
-     *            the prioritized transformation i ds
-     * @param preselectAlternatives
-     *            the preselect alternatives
-     * @return the list
+     * @param forceUpdate
+     *            the force update
+     * @return the transformation chain
      */
-    public void buildGraph(List<String> prioritizedTransformationIDs, boolean preselectAlternatives) {
-        ArrayList<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
-
-        transformation2graph.clear();
-        List<Transformation> transformations = KielerCompiler.getRegisteredTransformations();
-
-        // Build all nodes first
-        for (Transformation transformation : transformations) {
-            TransformationDummy transformationDummy = new TransformationDummy(transformation);
-
-            returnList.add(transformationDummy);
-            transformationDummy.parent = returnList;
-            transformation2graph.put(transformation, transformationDummy);
-            // System.out.println("Adding Dummy node for " + transformation.getId() + ", "
-            // + transformation.toString());
+    public List<Transformation> getTransformationChain(boolean forceUpdate) {
+        if (compilationChain == null || forceUpdate) {
+            recomputeTransformationChain(true);
         }
+        return compilationChain;
+    }
 
-        // Calculate dependencies
-        for (Transformation transformation : transformations) {
-            TransformationDummy transformationDummy = transformation2graph.get(transformation);
+    // -------------------------------------------------------------------------
 
-            List<String> producesDependencies = transformation.getProducesDependencies();
-            List<String> notHandlesDependencies = transformation.getNotHandlesDependencies();
-            if (transformationDummy.isAlternative()) {
-                producesDependencies = new ArrayList<String>();
-                if (preselectAlternatives) {
-                    // If this is an alternative group, then ONLY add the SELECTED alternative
-                    // according to the prioritizedTransformationIDs (input)
-                    TransformationGroup group =
-                            (TransformationGroup) transformationDummy.transformation;
-                    List<String> priorized = new ArrayList<String>();
-
-                    // FIXME: BAD HACK FOR WEIHNACHTSFEIER, USE KICO.UI EXTENSION POINT!!!
-                    // priorized.add("S2ARDUINO");
-
-                    String selectedAlternative =
-                            (group).getSelectedProducesDependency(prioritizedTransformationIDs,
-                                    disabledTransformationIDs, priorized);
-                    producesDependencies.add(selectedAlternative);
-                } else {
-                    // Also here by convention in GROUP alternatives consider ther produces dependencies
-                    List<String> allAlternative =
-                            ((TransformationGroup) transformationDummy.transformation)
-                                    .getProducesDependencies();
-                    for (String alternative : allAlternative) {
-                        producesDependencies.add(alternative);
-                    }
-                }
-            }
-
-            // Handle produces depencencies
-            for (String producesDependencyId : producesDependencies) {
-                Transformation otherTransformationOrGroup =
-                        KielerCompiler.getTransformation(producesDependencyId);
-                if (otherTransformationOrGroup != null) {
-                    // System.out.println("Dependencies for " + transformation.getId());
-                    // System.out.println("  " + otherTransformationOrGroup.getId());
-                    TransformationDummy otherTransformationDummy =
-                            transformation2graph.get(otherTransformationOrGroup);
-
-                    // Example: dummy-ABORT produces otherDummy=INIT ==> dummy=ABORT-->otherDummy=INIT
-                    // Insert dependency in dummy that produces other dummy
-                    transformationDummy.dependencies.add(otherTransformationDummy);
-                    // Insert reverse dependency in other dummy
-                    otherTransformationDummy.reverseDependencies.add(transformationDummy);
-                }
-            }
-
-            // Handle not handles dependencies
-            
-            // 14.02.2015: Attention: if we hit a transformation GROUP that is not handled, we mus
-            // fully resolve this group first into sets of transformations:
-            // we resolve group $G$ to the set of transformations $T$ where we follow all pseudo dependencies from $G$ until we hit
-            // the first transformation, which then must be part of $T$. If we hit another group $G_i$ we recursively follow each 
-            // pseudo dependencies of $G_i$.
-            
-            for (String notHandlesDependencyId : notHandlesDependencies) {
-                Transformation otherTransformationOrGroup =
-                        KielerCompiler.getTransformation(notHandlesDependencyId);
-                if (otherTransformationOrGroup != null) {
-                    // System.out.println("Dependencies for " + transformation.getId());
-                    // System.out.println("  " + otherTransformationOrGroup.getId());
-                    TransformationDummy otherTransformationDummy =
-                            transformation2graph.get(otherTransformationOrGroup);
-
-                    if (preselectAlternatives) {
-                        // If this is an alternative group, then ONLY add the SELECTED alternative
-                        // according to the prioritizedTransformationIDs (input)
-                        break;
-                    }
-
-                    HashSet<TransformationDummy> otherResolvedTransformationDummys = resolveTransformationGroup(otherTransformationDummy);
-                    for (TransformationDummy otherResolvedTransformationDummy : otherResolvedTransformationDummys) {
-                        // Example: dummy=ABORT not handles otherDummy=DURING ==> otherDummy=DURING-->dummy=ABORT
-                        // Insert dependency in other dummy
-                        otherResolvedTransformationDummy.dependencies.add(transformationDummy);
-                        // Insert reverse dependency in dummy that
-                        transformationDummy.reverseDependencies.add(otherResolvedTransformationDummy);
-                    }
-                }
-            }
-            
+    /**
+     * Recompute transformation chain as based on the current selection and the registered features,
+     * transformations and processors. If forceUpdate is true then the internal representation of
+     * transformations is also recomputed. If the model or the user selection changed forceUpdate
+     * should be true, otherwise it mostly should be false. <BR>
+     * <BR>
+     * This is also the hook to
+     * 
+     * @param forceUpdate
+     *            the force update
+     */
+    public TransformationDummyGraph recomputeTransformationChain(boolean forceUpdate) {
+        graph = new TransformationDummyGraph(this);
+        compilationChain = new ArrayList<Transformation>();
+        List<TransformationDummy> dummies = graph.getTransformationDummies(forceUpdate);
+        for (TransformationDummy dummy : dummies) {
+            compilationChain.add(dummy.transformation);
         }
-
-        // set the graph of this context to the new built graph
-        graph = returnList;
+        return graph;
     }
 
-    
     // -------------------------------------------------------------------------
-    
-    public HashSet<TransformationDummy> resolveTransformationGroup(TransformationDummy transformationDummy) {
-        HashSet<TransformationDummy> returnList = new HashSet<TransformationDummy>();
-        if (transformationDummy.isGroup()) {
-            // follow pseudo dependencies
-            for (TransformationDummy groupTransformationDummy : transformationDummy.dependencies) {
-                 returnList.addAll(resolveTransformationGroup(groupTransformationDummy));
-            }
-        }
-        else {
-            // We arrived at a transformation that is NOT a group. This is the resolved transformation we
-            // are looking for.
-            returnList.add(transformationDummy);
-        }
-        return returnList;
-    }
-
-    
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the graph transformation dummy.
+     * The flag to additionally automatically select transformations based on the selected features
+     * (defining the target) and the model features (defining the requirements). Note that if
+     * switched off no dependencies or model features are considered and only the current
+     * feature/feature group or transformation selection is processed. Note that selected features
+     * and transformations are possibly re-ordered and may also be filtered if not present in the
+     * model.
      * 
-     * @param transformation
-     *            the transformation
-     * @return the graph transformation dummy
+     * @return true, if is advancedSelect is switched on
      */
-    public TransformationDummy getGraphTransformationDummy(Transformation transformation) {
-        if (transformation2graph != null) {
-            return transformation2graph.get(transformation);
-        }
-        return null;
+    public boolean isAdvancedSelect() {
+        return this.advancedSelect;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if is no groups flag is set. If false then mark groups, i.e., boolean mark alternative
-     * groups if ONE of the alternatives is selected and mark non-alternatives groups if ALL are
-     * selected.
+     * Sets the advancedSelect flag to automatically advanced select transformations based on the
+     * selected features (defining the target) and the model features (defining the requirements)
+     * considering the produced and not-handled-by dependencies. Note that if switched off no
+     * dependencies are considered.
      * 
-     * @return true, if is no groups
+     * @param autoSelect
+     *            the new autoSelect
      */
-    public boolean isNoGroups() {
-        return this.noGrous;
-    }
-
-    /**
-     * Sets the no groups flag. If false then mark groups, i.e., boolean mark alternative groups if
-     * ONE of the alternatives is selected and mark non-alternatives groups if ALL are selected.
-     * 
-     * @param noGrous
-     *            the new no groups
-     */
-    public void setNoGroups(boolean noGrous) {
-        this.noGrous = noGrous;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Checks if is prerequirements. Note that if switched off no dependencies are considered. The
-     * transformations will be applied straight forward in the order defined by the
-     * transformationIDs list.
-     * 
-     * @return true, if is prerequirements
-     */
-    public boolean isPrerequirements() {
-        return this.prerequirements;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the prerequirements. Note that if switched off no dependencies are considered. The
-     * transformations will be applied straight forward in the order defined by the
-     * transformationIDs list.
-     * 
-     * @param prerequirements
-     *            the new prerequirements
-     */
-    public void setPrerequirements(boolean prerequirements) {
-        this.prerequirements = prerequirements;
+    public void setAdvancedSelect(boolean advancedSelect) {
+        this.advancedSelect = advancedSelect;
     }
 
     // -------------------------------------------------------------------------
@@ -628,62 +428,43 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if is inplace.
+     * Retrieves the set of features for the transformation object (the main source model). If
+     * contrary forceFastCached is true then this will just return the cached version if there
+     * exists one or null otherwise. ForceFastCached should ONLY be used if it is sure that the
+     * model has not changed. ForceFastCached will also prevent a recalculation if the model hash.
+     * If ForceFastCached is true the caller must be sure that the model has not changed and was
+     * previously been processed. The default is forceUpdate == false and forceFastCached == false.
      * 
-     * @return true, if is inplace
+     * @param forceUpdate
+     *            the force update
+     * @param forceFastCached
+     *            the force fast cached
+     * @return the transformation object features
      */
-    public boolean isInplace() {
-        return this.inplace;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the inplace.
-     * 
-     * @param inplace
-     *            the new inplace
-     */
-    public void setInplace(boolean inplace) {
-        this.inplace = inplace;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the transformationIDs that are/will be used for compilation.
-     * 
-     * @return the compilation transformation IDs
-     */
-    public List<String> getCompilationTransformationIDs() {
-        return compilationTransformationIDs;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the compilation transformation ID. Internally used by KiCo.
-     * 
-     * @param compilationTransformationIDs
-     *            the new compilation transformation ID
-     */
-    public void setCompilationTransformationIDs(List<String> compilationTransformationIDs) {
-        this.compilationTransformationIDs = compilationTransformationIDs;
+    public Set<Feature> getTransformationObjectFeatures(boolean forceUpdate, boolean forceFastCached) {
+        EObject mainModel = getTransformationObject();
+        if (mainModel != null) {
+            return KiCoUtil.getModelFeatures(mainModel, forceUpdate, forceFastCached);
+        }
+        throw new RuntimeException("No main model found to compile. Cannot calculate feature list.");
     }
 
     // -------------------------------------------------------------------------
 
     /**
      * Gets the transformation object that should exist if this is a compile run. By convention this
-     * is the first model of the intermediate results. The following will return null if you
-     * requested a pre-requirement analysis.
+     * is the first model of the intermediate results.
      * 
      * @return the transformation object
      */
     public EObject getTransformationObject() {
-        if ((getCompilationResult() == null
-                || getCompilationResult().getIntermediateResults().get(0) == null || (!(getCompilationResult()
-                .getTransformationObject() instanceof EObject)))) {
+        if (getCompilationResult() == null) {
+            return null;
+        }
+        if (getCompilationResult().getTransformationIntermediateResults().get(0) == null) {
+            return null;
+        }
+        if (!(getCompilationResult().getTransformationObject() instanceof EObject)) {
             // throw new RuntimeException(
             // "compiler(context) must be called with a model to compile as the first elements"
             // + " of intermediate results in the compiled results object");
@@ -700,6 +481,8 @@ public class KielerCompilerContext {
      * Sets the transformation object that must exist if this is a compile run. By convention this
      * is the first model of the intermediate results.
      * 
+     * @param eObject
+     *            the new transformation object
      * @return the e object
      */
     public void setTransformationObject(EObject eObject) {
@@ -707,12 +490,12 @@ public class KielerCompilerContext {
             this.compilationResult = new CompilationResult(eObject);
             return;
         } else {
-            if (getCompilationResult().getIntermediateResults().size() < 1) {
-                getCompilationResult().getIntermediateResults().add(
-                        new IntermediateResult("", eObject, 0));
+            if (getCompilationResult().getTransformationIntermediateResults().size() < 1) {
+                getCompilationResult().getTransformationIntermediateResults().add(
+                        new TransformationIntermediateResult(eObject));
             } else {
-                getCompilationResult().getIntermediateResults().add(0,
-                        new IntermediateResult("", eObject, 0));
+                getCompilationResult().getTransformationIntermediateResults().add(0,
+                        new TransformationIntermediateResult(eObject));
             }
         }
     }
@@ -771,4 +554,30 @@ public class KielerCompilerContext {
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * Checks if the overall compilation is inplace and should happen directly on the source model
+     * (as far as there is no meta model change).
+     * 
+     * @return true, if is inplace
+     */
+    public boolean isInplace() {
+        return isInplace;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the checks if the overall compilation is inplace and should happen directly on the
+     * source model (as far as there is no meta model change).
+     * 
+     * @param isInplace
+     *            the new checks if is inplace
+     */
+    public void setInplace(boolean isInplace) {
+        this.isInplace = isInplace;
+    }
+
+    // -------------------------------------------------------------------------
+
 }

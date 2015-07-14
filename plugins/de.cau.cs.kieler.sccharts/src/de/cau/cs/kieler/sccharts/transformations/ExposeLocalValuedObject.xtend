@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,10 +13,14 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 /**
  * SCCharts ExposeLocalValuedObject Transformation.
@@ -25,8 +29,32 @@ import de.cau.cs.kieler.sccharts.State
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class ExposeLocalValuedObject {
+class ExposeLocalValuedObject extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::EXPOSELOCALVALUEDOBJECT_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::EXPOSELOCALVALUEDOBJECT_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::EXPOSELOCALVALUEDOBJECT_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet();
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::SIGNAL_ID, SCChartsFeatureGroup::EXPANSION_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
 

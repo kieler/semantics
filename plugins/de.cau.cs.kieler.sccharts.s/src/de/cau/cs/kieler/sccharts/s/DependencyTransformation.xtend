@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -25,6 +25,7 @@ import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.sccharts.impl.AssignmentImpl
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /** 
  * SCCharts DependencyTransformation Extension builds up a sorted list of dependencies between states
@@ -63,7 +64,7 @@ class DependencyTransformation {
 
                 val dependencyNode = (new DependencyNode(state)).map(state, false)
                 dependencyNodes.add(dependencyNode)
-                if (state.hasInnerStatesOrRegions) {
+                if (state.hasInnerStatesOrControlflowRegions) {
 
                     // For hierarchical states additionally create a join-representation
                     val joinDependencyState = (new DependencyNode(state)).map(state, true)
@@ -182,8 +183,8 @@ class DependencyTransformation {
             }
 
             // Hierarchical extension FORK
-            if (transition.targetState.hasInnerStatesOrRegions) {
-                for (region : transition.targetState.regions) {
+            if (transition.targetState.hasInnerStatesOrControlflowRegions) {
+                for (region : transition.targetState.regions.filter(ControlflowRegion)) {
                     for (initialState : region.states.filter[isInitial]) {
                         if (state.canReach(state2, initialState)) {
                             return true
@@ -243,8 +244,8 @@ class DependencyTransformation {
         // Control Flow dependencies
         for (transition : state.incomingTransitions) {
 //            System.out.println("State: " + state.id + " <- " + transition.sourceState.id);
-            if (state.hasInnerStatesOrRegions) {
-                for (region : state.regions) {
+            if (state.hasInnerStatesOrControlflowRegions) {
+                for (region : state.regions.filter(ControlflowRegion)) {
                     for (initialState : region.states.filter[isInitial]) {
                         val newControlFlowDependency = new ControlflowDependency(initialState.dependencyNode,
                             state.dependencyNode)
@@ -259,7 +260,7 @@ class DependencyTransformation {
                     }
                 }
             } // else {
-            if (transition.sourceState.hasInnerStatesOrRegions) {
+            if (transition.sourceState.hasInnerStatesOrControlflowRegions) {
                 val newControlFlowDependency = new ControlflowDependency(state.dependencyNode,
                     transition.sourceState.joinDependencyState)
                 dependencies.add(newControlFlowDependency)
@@ -277,13 +278,13 @@ class DependencyTransformation {
         }
 
         // Go thru all regions and states recursively and build up dependencies
-        for (region : state.regions) {
+        for (region : state.regions.filter(ControlflowRegion)) {
             region.transformDependencies(dependencies)
         }
     }
 
     // -------------------------------------------------------------------------   
-    def private void transformDependencies(Region region, List<Dependency> dependencies) {
+    def private void transformDependencies(ControlflowRegion region, List<Dependency> dependencies) {
 
         // Go thru all states and states recursively and build up dependencies
         for (state : region.states) {
@@ -324,12 +325,12 @@ class DependencyTransformation {
     //-------------------------------------------------------------------------
     // Get a list of states sorted by their priority with highest priority first.
     def public List<DependencyNode> getPioritySortedStates(List<DependencyNode> dependencyNodes) {
-        dependencyNodes.sort(e1, e2|comparePriorities(e1, e2));
+        dependencyNodes.sortWith(e1, e2|comparePriorities(e1, e2));
     }
 
     // Get a list of states sorted by their order with highest order first.
     def public List<DependencyNode> getOrderSortedStates(List<DependencyNode> dependencyNodes) {
-        dependencyNodes.sort(e1, e2|compareOrdersRespectingRoot(e1, e2));
+        dependencyNodes.sortWith(e1, e2|compareOrdersRespectingRoot(e1, e2));
     }
 
     // Compare two priorities.
@@ -450,7 +451,7 @@ class DependencyTransformation {
             // This implicitly forms (splitted-) "basic blocks" of the same priority
             if (dependencyNode.outgoingDependencies(dependencies).filter(typeof(DataDependency)).size != 0 ||
                 dependencyNode.state.isFinal || dependencyNode.state.isInitial ||
-                dependencyNode.state.hasInnerStatesOrRegions) {
+                dependencyNode.state.hasInnerStatesOrControlflowRegions) {
                 tmpPrioAndOrder.incrementPriority
             }
             return // tmpPrioOrder;

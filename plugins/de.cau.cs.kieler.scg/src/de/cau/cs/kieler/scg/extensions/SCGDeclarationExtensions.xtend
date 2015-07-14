@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -21,8 +21,9 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.SCGraph
 import java.util.HashMap
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.scg.SchedulingBlock
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -49,7 +50,10 @@ class SCGDeclarationExtensions {
     
     @Inject
     extension KExpressionsExtension
-    
+
+    @Inject
+    extension SCGCoreExtensions
+
     /** Valued object mapping */
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>    
 
@@ -104,13 +108,35 @@ class SCGDeclarationExtensions {
    		return null
     }
     
+    def SchedulingBlock findSchedulingBlockByVO(SCGraph scg, ValuedObject valuedObject) {
+        for(bb : scg.basicBlocks) {
+            for(sb : bb.schedulingBlocks) {
+                if (sb.guard.valuedObject == valuedObject) return sb
+            }
+        }
+        return null
+    }    
+    
     public def void copyDeclarations(SCGraph source, SCGraph target) {
     	for (declaration : source.declarations) {
-    		val newDeclaration = createDeclaration(declaration)
+    		val newDeclaration = createDeclaration(declaration).trace(declaration)
     		declaration.valuedObjects.forEach[ copyValuedObject(newDeclaration) ]
     		target.declarations += newDeclaration
     	}
 	}     
+    
+    public def void copyDeclarationsWODead(SCGraph source, SCGraph target) {
+        for (declaration : source.declarations) {
+            val newDeclaration = createDeclaration(declaration).trace(declaration)
+            for(vo : declaration.valuedObjects) {
+                val sb = source.findSchedulingBlockByVO(vo)
+                if (sb == null || !sb.basicBlock.deadBlock) { 
+                    vo.copyValuedObject(newDeclaration) 
+                }
+            }
+            target.declarations += newDeclaration
+        }
+    }       
     
     public def void copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
         val newValuedObject = sourceObject.copy

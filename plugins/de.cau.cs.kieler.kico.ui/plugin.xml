@@ -5,16 +5,20 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis"
-            id="de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis"
+            id="de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramFlatSynthesis"
-            id="de.cau.cs.kieler.kico.ui.klighd.diagramFlatSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis"
+            id="de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramFlatNoGroupsSynthesis"
-            id="de.cau.cs.kieler.kico.ui.klighd.diagramFlatNoGroupsSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatGroupsSynthesis"
+            id="de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatGroupsSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramChainSynthesis"
+            id="de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramChainSynthesis">
       </diagramSynthesis>
    </extension>
    <extension
@@ -28,48 +32,6 @@
             name="KIELER Compiler Selection"
             restorable="true">
       </view>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kiml.layoutConfigs">
-      <staticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            option="de.cau.cs.kieler.spacing"
-            value="0.0">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            option="de.cau.cs.kieler.borderSpacing"
-            value="0.0">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            option="de.cau.cs.kieler.sizeConstraint"
-            value="[MINIMUM_SIZE, DEFAULT_MINIMUM_SIZE]">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            option="de.cau.cs.kieler.expandNodes"
-            value="true">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            option="de.cau.cs.kieler.interactive"
-            value="true">
-      </staticConfig>
-      <staticConfig
-            class="java.lang.Object"
-            option="de.cau.cs.kieler.spacing"
-            value="20.0">
-      </staticConfig>
-      <staticConfig
-            class="java.lang.Object"
-            option="de.cau.cs.kieler.direction"
-            value="RIGHT">
-      </staticConfig>
-      <semanticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            config="de.cau.cs.kieler.kico.ui.klighd.layout.TransformationDummyLayoutConfig">
-      </semanticConfig>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.extensions">

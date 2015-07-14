@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,13 +13,21 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
+import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.ArrayList
 import java.util.List
+
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts ComplexFinalState Transformation.
@@ -28,8 +36,32 @@ import java.util.List
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class ComplexFinalState {
+class ComplexFinalState extends AbstractExpansionTransformation implements Traceable {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::COMPLEXFINALSTATE_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::COMPLEXFINALSTATE_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return SCChartsFeature::COMPLEXFINALSTATE_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::ABORT_ID, SCChartsFeature::INITIALIZATION_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -38,7 +70,6 @@ class ComplexFinalState {
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
-
 
     //-------------------------------------------------------------------------
     //--              C O M P L E X   F I N A L   S T A T E                  --
@@ -61,15 +92,13 @@ class ComplexFinalState {
         var targetRootState = rootState.fixAllPriorities;
 
         //Find all possible complex final states
-        val globalFinalStates = targetRootState.getAllStates.filter(
-            e |
-                e.isFinal)
-                
+        val globalFinalStates = targetRootState.getAllStates.filter(e|e.isFinal)
+
         val globalComplexFinalStates = globalFinalStates.filter(
-            e |
-                ((!e.outgoingTransitions.nullOrEmpty && e.allContainedStates.size > 0))
-                 || e.entryActions.size > 0 || e.duringActions.size > 0 || e.exitActions.size > 0).toList
-                
+            e|
+                ((!e.outgoingTransitions.nullOrEmpty && e.allContainedStates.size > 0)) || e.entryActions.size > 0 ||
+                    e.duringActions.size > 0 || e.exitActions.size > 0).toList
+
         // Traverse all states containing complex final states
         for (targetState : globalComplexFinalStates.map[it.parentRegion.parentState].toList) {
             targetState.transformComplexFinalState(rootState, globalComplexFinalStates);
@@ -86,6 +115,7 @@ class ComplexFinalState {
         //                    e.allContainedStates.size > 0 || e.entryActions.size > 0 || e.duringActions.size > 0 ||
         //                    e.exitActions.size > 0)).toList()
         val complexFinalStates = globalComplexFinalStates.filter[it.parentRegion.parentState == state].toList
+        state.setDefaultTrace
 
         if (!complexFinalStates.nullOrEmpty) {
 
@@ -94,7 +124,7 @@ class ComplexFinalState {
 
             var ArrayList<ValuedObject> termVariables = new ArrayList
 
-            for (region : state.regions) {
+            for (region : state.regions.filter(ControlflowRegion)) {
                 val termVariable = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
                 termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {
@@ -116,7 +146,7 @@ class ComplexFinalState {
             }
 
             //Add Watcher Region
-            val watcherRegion = state.createRegion(GENERATED_PREFIX + "Watch").uniqueName
+            val watcherRegion = state.createControlflowRegion(GENERATED_PREFIX + "Watch").uniqueName
             val watcherTransition = watcherRegion.createInitialState(GENERATED_PREFIX + "Watch").
                 createImmediateTransitionTo(watcherRegion.createFinalState(GENERATED_PREFIX + "Aborted"))
             watcherTransition.addEffect(abortFlag.assign(TRUE))

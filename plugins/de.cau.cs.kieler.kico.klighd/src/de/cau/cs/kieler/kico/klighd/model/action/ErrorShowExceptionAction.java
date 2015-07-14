@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
+import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
@@ -38,9 +39,20 @@ public class ErrorShowExceptionAction implements IAction {
      */
     public ActionResult execute(ActionContext context) {
         Object inputModel = context.getViewContext().getInputModel();
+        KiCoErrorModel errorModel = null;
         // get error model
+        
         if (inputModel instanceof KiCoErrorModel) {
-            KiCoErrorModel errorModel = (KiCoErrorModel) inputModel;
+            errorModel = (KiCoErrorModel) inputModel;
+        }else if(inputModel instanceof KiCoModelChain){
+            for( Object model : ((KiCoModelChain) inputModel).getModels()){
+                if(model instanceof KiCoErrorModel){
+                    errorModel = (KiCoErrorModel) model;
+                    break;
+                }
+            }
+        }
+        if(errorModel != null){
             // if exception present show in error dialog
             if (errorModel.getStackTrace() != null) {
                 final Status status =

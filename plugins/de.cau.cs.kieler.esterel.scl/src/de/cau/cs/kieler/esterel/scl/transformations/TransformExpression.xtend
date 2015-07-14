@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -51,7 +51,7 @@ class TransformExpression {
 
     @Inject
     extension EsterelToSclTransformation
-    
+
     /**
      * Transforms Esterel Operator Expression to KExpression Operator Expression.
      * 
@@ -68,11 +68,16 @@ class TransformExpression {
             ].value
             return createValuedObjectReference(signalToValueMap.get(signal))
         }
-        
+
         KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             operator = operatorType
-            for (subExp : operatorExpression.subExpressions) {
-                subExpressions.add(transformExpression(subExp))
+            if (!operatorExpression.subExpressions.nullOrEmpty) {
+                for (subExp : operatorExpression.subExpressions) {
+                    subExpressions.add(transformExpression(subExp))
+                }
+            } else {
+                // FIXME: Special case for synchronous tick
+                transformExpression(null); 
             }
         ]
     }
@@ -87,7 +92,7 @@ class TransformExpression {
         return de.cau.cs.kieler.core.kexpressions.CombineOperator::get(combineOperator.toString)
     }
 
-	/**
+    /**
 	 * Transforms an Esterel ComplexExpression. This should either be an OperatorExpression 
 	 * (catched above) or a ValuedObjectReference.
 	 * 
@@ -98,20 +103,21 @@ class TransformExpression {
         if (complexExpression instanceof ValuedObjectReference) {
             transformExpression(complexExpression as ValuedObjectReference)
         } else {
-        	throw new TransformerException("Unhandled ComplexExpressions " + complexExpression)
+            throw new TransformerException("Unhandled ComplexExpressions " + complexExpression)
         }
     }
 
-	/**
+    /**
 	 * Transforms ValuedObjectReferences
 	 * 
 	 * @param valuedObjectReference The Esterel ValuedObjectReference to transform
 	 * @return The corresponding KExpressions ValuedObjectReference
 	 */
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExpression(ValuedObjectReference valuedObjectReference) {
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExpression(
+        ValuedObjectReference valuedObjectReference) {
         getValuedObjectReferenceByName(valuedObjectReference.valuedObject.name)
     }
-    
+
     /**
      * Transforms TrapExpressions
      * 
@@ -122,7 +128,7 @@ class TransformExpression {
         valuedExitVariables.get(trapExpression.trap).createValuedObjectReference
     }
 
-	/**
+    /**
 	 * Transforms an Expression given as String with additional information for its type.
 	 * 
 	 * @param expression The Esterel expression as a String
@@ -137,7 +143,7 @@ class TransformExpression {
         esterelExpression.transformExp(type)
     }
 
-	/**
+    /**
 	 * Transforms an expression with additional given String indicating the type. This is mainly for 
 	 * the case of ConstantExpressions which are parsed as Strings such that the type
 	 * is only given by its context.
@@ -147,6 +153,7 @@ class TransformExpression {
 	 * @return The corresponding KExpressions expression
 	 */
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(Expression expression, String type) {
+
         // If it is no ConstantExpression, it can be transformed without additional type information
         if (!(expression instanceof ConstantExpression)) {
             return expression.transformExpression
@@ -157,7 +164,7 @@ class TransformExpression {
             case ("int"):
                 if (Integer.parseInt(constantExpression.value) >= 0) {
                     return createIntValue(Integer.parseInt(constantExpression.value))
-                    
+
                 } else {
                     return createOperatorExpression(OperatorType::SUB) => [
                         subExpressions += createIntValue(-Integer.parseInt(constantExpression.value))
@@ -191,15 +198,16 @@ class TransformExpression {
                     text = "'" + constantExpression.value + "'"
                 ]
             default:
-                if (signalToVariableMap.findLast[ key == constantExpression.value ] != null) {
-                    return signalToVariableMap.findLast[ key == constantExpression.value ].value.createValuedObjectReference
+                if (signalToVariableMap.findLast[key == constantExpression.value] != null) {
+                    return signalToVariableMap.findLast[key == constantExpression.value].value.
+                        createValuedObjectReference
                 } else {
                     throw new IllegalArgumentException("Unknown datatype: " + type)
                 }
         }
     }
 
-	/**
+    /**
 	 * Transforms BooleanValue
 	 * 
 	 * @param booleanValue The Esterel boolean value
@@ -209,7 +217,7 @@ class TransformExpression {
         return createBoolValue(booleanValue.value)
     }
 
-	/**
+    /**
      * Transforms integer values
      * 
      * @param intValue The Esterel integer value
@@ -223,7 +231,7 @@ class TransformExpression {
             ]
         return createIntValue(intValue.value)
     }
-    
+
     /**
      * Transforms gloat values
      * 
@@ -239,7 +247,7 @@ class TransformExpression {
         return createFloatValue(floatValue.value)
     }
 
-	/**
+    /**
 	 * Transforms FunctionExpressions
 	 * 
 	 * @param functionExpression The function expression to transform
@@ -253,7 +261,7 @@ class TransformExpression {
             val type = functionExpression.function.idList.get(typeIndex).type.toString
             functionCall.parameters.add(
                 KExpressionsFactory::eINSTANCE.createParameter => [
-                        expression = expression.transformExp(type)
+                    expression = expression.transformExp(type)
                 ]
             )
             typeIndex = typeIndex + 1
@@ -261,14 +269,14 @@ class TransformExpression {
 
         functionCall
     }
-    
+
     /**
      * When there is no expression given, for the Esterel meta-model this means a tick.
      * 
      * @param operatorExpression The Esterel null expression to transform
      * @return The corresponding SCL OperatorExpression
      */
-     def dispatch transformExpression(Void nullExpression) {
-         synchronousTick.createValuedObjectReference
-     }
+    def dispatch transformExpression(Void nullExpression) {
+        synchronousTick.createValuedObjectReference
+    }
 }

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -41,6 +41,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.s.s.Fork
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.s.s.Prio
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /**
  * Converts a SyncChart into an S program.
@@ -237,7 +238,7 @@ class SCCharts2STransformation {
         val state = dependencyState.getState
         val sState = state.sState
         
-        if (state.hasInnerStatesOrRegions) {
+        if (state.hasInnerStatesOrControlflowRegions) {
             /////////////////////////
             // Handle macro states //
             /////////////////////////
@@ -256,7 +257,7 @@ class SCCharts2STransformation {
                 sJoinState.addInstruction(createHalt)
             }
             
-            for (region : state.regions) {
+            for (region : state.regions.filter(ControlflowRegion)) {
                 val initialState = region.states.filter[isInitial].get(0)
                 sState.forkTo(initialState.sState, initialState.priority)
             }
@@ -324,7 +325,7 @@ class SCCharts2STransformation {
             }
 
             // If necessary, insert a prio statement
-            var sourcePriority = state.priority(state.hasInnerStatesOrRegions)
+            var sourcePriority = state.priority(state.hasInnerStatesOrControlflowRegions)
             var targetPriority = transition.targetState.priority
             if (sourcePriority != targetPriority) {
                 // Change priority

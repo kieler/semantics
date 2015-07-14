@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER SCCharts Perspectives
+Bundle-SymbolicName: de.cau.cs.kieler.core.perspectives;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Kiel University
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.swt,
+ org.eclipse.ui.workbench,
+ org.eclipse.debug.ui,
+ org.eclipse.ui.ide.application;bundle-version="1.0.400"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy

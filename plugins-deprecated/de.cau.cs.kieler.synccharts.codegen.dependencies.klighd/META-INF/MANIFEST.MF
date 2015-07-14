@@ -4,7 +4,7 @@ Bundle-Name: KIELER Dependency Visualization
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.codegen.dependencies.klighd;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.SyncChartsCodegenDependenciesKLighDPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.core.kivi,
@@ -22,5 +22,5 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.kiml.graphviz.dot,
  de.cau.cs.kieler.synccharts,
  de.cau.cs.kieler.klay.layered
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2010 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -51,7 +51,7 @@ import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.impl.KRoundedRectangleImpl;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
-import de.cau.cs.kieler.kico.KiCoUtil;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
@@ -265,7 +265,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                 // Create a dummy resource by calling serialization (this creates a dummy
                 // resource on the fly)
                  @SuppressWarnings("unused")
-                 KielerCompilerContext context = new KielerCompilerContext("");
+                 KielerCompilerContext context = new KielerCompilerContext("", null);
                  String discard = KiCoUtil.serialize(modelRoot, context, true);
                  resource = context.getMainResource();
         }

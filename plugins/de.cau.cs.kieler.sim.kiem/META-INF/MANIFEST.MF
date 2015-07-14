@@ -4,7 +4,7 @@ Bundle-Name: KIELER Execution Manager
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kiem;singleton:=true
 Bundle-Version: 0.6.3.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kiem.KiemPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.common.ui,
  org.eclipse.core.resources;visibility:=reexport,
@@ -19,4 +19,4 @@ Export-Package: de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.internal,
  de.cau.cs.kieler.sim.kiem.properties,
  de.cau.cs.kieler.sim.kiem.util
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

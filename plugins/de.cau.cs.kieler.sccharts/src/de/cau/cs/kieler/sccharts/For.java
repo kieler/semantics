@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,12 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
+import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,114 +38,114 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface For extends EObject {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+	 * @generated
+	 */
+    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * Returns the value of the '<em><b>Loop Variable</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Loop Variable</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Loop Variable</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Loop Variable</em>' reference.
-     * @see #setLoopVariable(ValuedObject)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_LoopVariable()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Loop Variable</em>' reference.
+	 * @see #setLoopVariable(ValuedObject)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_LoopVariable()
+	 * @model
+	 * @generated
+	 */
     ValuedObject getLoopVariable();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getLoopVariable <em>Loop Variable</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getLoopVariable <em>Loop Variable</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Loop Variable</em>' reference.
-     * @see #getLoopVariable()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Loop Variable</em>' reference.
+	 * @see #getLoopVariable()
+	 * @generated
+	 */
     void setLoopVariable(ValuedObject value);
 
     /**
-     * Returns the value of the '<em><b>From</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>From</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>From</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>From</em>' attribute.
-     * @see #setFrom(int)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_From()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>From</em>' attribute.
+	 * @see #setFrom(int)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_From()
+	 * @model
+	 * @generated
+	 */
     int getFrom();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getFrom <em>From</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getFrom <em>From</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>From</em>' attribute.
-     * @see #getFrom()
-     * @generated
-     */
+	 * @param value the new value of the '<em>From</em>' attribute.
+	 * @see #getFrom()
+	 * @generated
+	 */
     void setFrom(int value);
 
     /**
-     * Returns the value of the '<em><b>To</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>To</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>To</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>To</em>' attribute.
-     * @see #setTo(int)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_To()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>To</em>' attribute.
+	 * @see #setTo(int)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_To()
+	 * @model
+	 * @generated
+	 */
     int getTo();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getTo <em>To</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getTo <em>To</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>To</em>' attribute.
-     * @see #getTo()
-     * @generated
-     */
+	 * @param value the new value of the '<em>To</em>' attribute.
+	 * @see #getTo()
+	 * @generated
+	 */
     void setTo(int value);
 
     /**
-     * Returns the value of the '<em><b>Valued Object</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Valued Object</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Valued Object</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Valued Object</em>' containment reference.
-     * @see #setValuedObject(ValuedObject)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_ValuedObject()
-     * @model containment="true" required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Valued Object</em>' containment reference.
+	 * @see #setValuedObject(ValuedObject)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_ValuedObject()
+	 * @model containment="true" required="true"
+	 * @generated
+	 */
     ValuedObject getValuedObject();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getValuedObject <em>Valued Object</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getValuedObject <em>Valued Object</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Valued Object</em>' containment reference.
-     * @see #getValuedObject()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Valued Object</em>' containment reference.
+	 * @see #getValuedObject()
+	 * @generated
+	 */
     void setValuedObject(ValuedObject value);
 
 } // For

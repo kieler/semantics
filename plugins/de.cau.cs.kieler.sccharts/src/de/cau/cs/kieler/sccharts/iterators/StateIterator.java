@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -16,12 +16,15 @@ package de.cau.cs.kieler.sccharts.iterators;
 import static com.google.common.collect.Iterators.concat;
 import static com.google.common.collect.Iterators.transform;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.emf.common.util.AbstractTreeIterator;
 
 import com.google.common.base.Function;
 
+import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
@@ -39,7 +42,11 @@ public final class StateIterator {
          * {@inheritDoc}
          */
         public Iterator<State> apply(Region r) {
-            return r.getStates().iterator();
+            if (r instanceof ControlflowRegion) {
+                return ((ControlflowRegion)r).getStates().iterator();
+            }
+            List<State> empty = new ArrayList<State>();
+            return empty.iterator();
         }
     };
     
@@ -71,7 +78,7 @@ public final class StateIterator {
         };
     };
     
-    public static Iterator<State> sccAllStates(Region r) {
+    public static Iterator<State> sccAllStates(ControlflowRegion r) {
         return concat(transform(r.getStates().iterator(),
                 new Function<State, Iterator<State>>() {
         /**
@@ -82,13 +89,14 @@ public final class StateIterator {
         }
         }));
     };
+
     
     public static Iterator<State> sccAllStates(Scope s) {
         if (s instanceof State) {
            return sccAllStates((State) s);
 
-        } else if (s instanceof Region) {
-           return sccAllStates((Region) s);
+        } else if (s instanceof ControlflowRegion) {
+           return sccAllStates((ControlflowRegion) s);
         }
         else {
             throw new IllegalArgumentException("Scope type not supported.");

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -16,6 +16,7 @@ package de.cau.cs.kieler.esterel.scl.transformations
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
@@ -32,6 +33,7 @@ import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.AwaitCase
 import de.cau.cs.kieler.esterel.esterel.AwaitInstance
 import de.cau.cs.kieler.esterel.esterel.Block
+import de.cau.cs.kieler.esterel.esterel.Constant
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.esterel.ConstantRenaming
 import de.cau.cs.kieler.esterel.esterel.Do
@@ -49,6 +51,7 @@ import de.cau.cs.kieler.esterel.esterel.LocalVariable
 import de.cau.cs.kieler.esterel.esterel.Loop
 import de.cau.cs.kieler.esterel.esterel.LoopDelay
 import de.cau.cs.kieler.esterel.esterel.Nothing
+import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls
 import de.cau.cs.kieler.esterel.esterel.Parallel
 import de.cau.cs.kieler.esterel.esterel.Present
 import de.cau.cs.kieler.esterel.esterel.PresentCaseList
@@ -65,9 +68,13 @@ import de.cau.cs.kieler.esterel.esterel.Trap
 import de.cau.cs.kieler.esterel.esterel.WeakAbort
 import de.cau.cs.kieler.esterel.esterel.WeakAbortInstance
 import de.cau.cs.kieler.esterel.kexpressions.ISignal
+import de.cau.cs.kieler.esterel.kexpressions.IVariable
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.scl.extensions.SCLExtensions
+import de.cau.cs.kieler.scl.features.SCLFeatures
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Pause
@@ -83,11 +90,12 @@ import java.util.Stack
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
-import de.cau.cs.kieler.esterel.kexpressions.IVariable
-import de.cau.cs.kieler.core.kexpressions.CombineOperator
-import de.cau.cs.kieler.scl.extensions.SCLExtensions
-import de.cau.cs.kieler.esterel.esterel.Constant
-import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls
+import java.util.Set
+import java.util.HashSet
+import de.cau.cs.kieler.esterel.esterel.UnEmit
+import de.cau.cs.kieler.esterel.esterel.Reset
+import de.cau.cs.kieler.esterel.features.EsterelFeature
+import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
@@ -100,10 +108,12 @@ import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls
  * Further informations and examples for the actual transformation rules can be found in the Stash
  * repository Papers/strl2scl.
  * 
- * @author krat
+ * @author krat ssm
+ * @kieler.design 2015-05-25 proposed 
  * @kieler.rating yellow 2015-03-14 review KI-63 by ssm, ima, cmot
+ * 
  */
-class EsterelToSclTransformation extends Transformation {
+class EsterelToSclTransformation extends AbstractProductionTransformation implements Traceable {
 
     @Inject
     extension KExpressionsExtension
@@ -156,23 +166,39 @@ class EsterelToSclTransformation extends Transformation {
     // List of transformation functions to manipulate pauses and join
     var Stack<(StatementSequence)=>StatementSequence> pauseTransformation
     var Stack<(StatementSequence)=>StatementSequence> joinTransformation
+    
+    override getId() {
+        return EsterelTransformation.SCL_ID
+    }
+
+    override getName() {
+        return EsterelTransformation.SCL_NAME
+    }
+    
+    override getProducedFeatureId() {
+        return SCLFeatures.BASIC_ID
+    }
+    
+    override Set<String> getRequiredFeatureIds() {
+        return newHashSet(EsterelFeature.BASIC_ID);
+    }
 
     /**
-     * Generic transformation method for KiCo. Compile without optimized ouput variable resetting
+     * Generic transformation method for KiCo. Compile without optimized output variable resetting
      * if the program does not terminate.
      */
-    override EObject transform(EObject eObject, KielerCompilerContext contex) {
+    def transformNoOpt(EObject eObject) {
         optimizeTransformation = false;
-        return transformProgram(eObject as Program) as EObject
+        return transformProgram(eObject as Program) 
     }
     
     /**
-     * Generic transformation method for KiCo. Compile without optimized ouput variable resetting
+     * Generic transformation method for KiCo. Compile without optimized output variable resetting
      * if the program does not terminate.
      */
-    def EObject transformOpt(EObject eObject, KielerCompilerContext contex) {
+    override transform(EObject eObject) {
         optimizeTransformation = true;
-        return transformProgram(eObject as Program) as EObject
+        return (transformProgram(eObject as Program).optimizeAll) 
     }
 
     /**
@@ -358,7 +384,7 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStatement(Emit emit, StatementSequence targetStatementSequence) {
 
         // Get the LAST defined valued object (with respect to local signals) as this is the one on the
-        // closest surrounding Scope. Signals with the same name defined in higher hierachical levels
+        // closest surrounding Scope. Signals with the same name defined in higher hierarchical levels
         // (and appear closer to the begin of the signal map) may be shadowed out.
         val emitVariable = signalToVariableMap.findLast[ it.key == emit.signal.name ].value
 
@@ -420,6 +446,68 @@ class EsterelToSclTransformation extends Transformation {
 
         targetStatementSequence
     }
+
+
+    /**
+     * unemit s
+     * -> s = false
+     * UnEmit is only available in SCEst not in pure Esterel. UnEmit is transformed to setting the 
+     * corresponding variable to false by an absolute write. The value is not affected.
+     * 
+     * @param unemit The UnEmit-statement
+     * @param targetStatementSequence The StatementSequence which should contain the transformed statements
+     * @return The transformed statement
+     */
+    def dispatch StatementSequence transformStatement(UnEmit unemit, StatementSequence targetStatementSequence) {
+
+        // Get the LAST defined valued object (with respect to local signals) as this is the one on the
+        // closest surrounding Scope. Signals with the same name defined in higher hierarchical levels
+        // (and appear closer to the begin of the signal map) may be shadowed out.
+        val unEmitVariable = signalToVariableMap.findLast[ it.key == unemit.signal.name ].value
+
+        // "unemits" the signal by setting it to false by an absolute write
+        val emitSignal = createStatement(createAssignment(unEmitVariable,  createBoolValue(false)))
+
+        targetStatementSequence.add(emitSignal)
+       return targetStatementSequence
+     }
+
+
+    /**
+     * reset s(t)
+     * -> s_val = t
+     * Reset is transformed to setting the corresponding s_val to the according value. The variable
+     * carrying the present status is left untouched.
+     * 
+     * @param reset The Reset-statement
+     * @param targetStatementSequence The StatementSequence which should contain the transformed statements
+     * @return The transformed statement
+     */
+    def dispatch StatementSequence transformStatement(Reset reset, StatementSequence targetStatementSequence) {
+
+        // Get the LAST defined valued object (with respect to local signals) as this is the one on the
+        // closest surrounding Scope. Signals with the same name defined in higher hierarchical levels
+        // (and appear closer to the begin of the signal map) may be shadowed out.
+        val resetVariable = signalToVariableMap.findLast[ it.key == reset.signal.name ].value
+
+        // Reset of a pure signal does nothing
+        if (reset.expr == null) {
+            return targetStatementSequence
+        }
+
+        // Reset of a valued signal makes sense
+        else {
+            // Get the corresponding valued variable
+            val resetValueVariable = signalToValueMap.get(resetVariable)
+            val sclEmittedExpression = reset.expr.transformExp(resetValueVariable.type.toString)
+
+            // Valued reset without combine function
+            targetStatementSequence.add(createAssignment(resetValueVariable, sclEmittedExpression))
+        }
+
+        targetStatementSequence
+    }
+
 
     /**
      * sustain s
@@ -615,9 +703,13 @@ class EsterelToSclTransformation extends Transformation {
         targetStatementSequence.addLabel(awaitStartLabel)
         labelToThreadMap.put(currentThreadEndLabel, awaitStartLabel)
 
-        // await tick is just a pause
-        if (await.delay.event.expr == null && await.delay.expr == null) {
+        var awaitImmediateTick = false;
+        if (await.delay.event.expr == null && await.delay.expr == null && !await.delay.isImmediate) {
+            // await tick is just a pause
             return targetStatementSequence.createSclPause
+        } else if (await.delay.event.expr == null && await.delay.expr == null && await.delay.isImmediate) {
+            // await immediate tick case
+            awaitImmediateTick = true; 
         }
 
         // Depending on if it is immediate, pause is set before or after the check for the condition
@@ -635,7 +727,7 @@ class EsterelToSclTransformation extends Transformation {
 
             // if s present increment counter
             // if await n tick just increment it
-            if (await.delay.event.expr != null) {
+            if (await.delay.event.expr != null || awaitImmediateTick) {
                 val condTimes = createConditional
                 condTimes.expression = transformExpression(await.delay.event.expr)
                 condTimes.statements.add(incrementInt(delayExpressionCounter))
@@ -656,7 +748,7 @@ class EsterelToSclTransformation extends Transformation {
         }
 
         // This is not an await tick, as an delay event expression is given
-        if (await.delay.event.expr != null) {
+        if (await.delay.event.expr != null || awaitImmediateTick) {
             val continueCondition = createNot(transformExpression(await.delay.event.expr)) // If b is true do return to label l
 
             // Conditional which has to be fulfilled to continue
@@ -666,7 +758,7 @@ class EsterelToSclTransformation extends Transformation {
             if (await.delay.expr != null) {
                 awaitConditional.expression = createGT(await.delay.expr.transformExp("int"),
                     delayExpressionCounter.createValuedObjectReference)
-            } else if (await.delay.event.expr != null) {
+            } else if (await.delay.event.expr != null || awaitImmediateTick) {
                 awaitConditional.expression = continueCondition
             }
             if (await.delay.isImmediate) {
@@ -1005,7 +1097,7 @@ class EsterelToSclTransformation extends Transformation {
      * @return The transformed statement
      */
     def dispatch StatementSequence transformStatement(Abort abort, StatementSequence targetStatementSequence) {
-        val sScope = createStatementScope
+        val statementScope = createStatementScope
 
         // Abort Cases; transformed to nested aborts with additional checking which case was taken
         if (abort.body instanceof AbortCase) {
@@ -1016,7 +1108,7 @@ class EsterelToSclTransformation extends Transformation {
             labelToThreadMap.put(currentThreadEndLabel, abortEndLabel)
 
             // Create a depth flag to check whether delayed case may be taken or not
-            val f_depth = createFreshVar(sScope, "f_depth", ValueType::BOOL)
+            val f_depth = createFreshVar(statementScope, "f_depth", ValueType::BOOL)
             f_depth.initialValue = createBoolValue(false)
 
             // Set depth flag to true when a pause statement is executed
@@ -1026,12 +1118,12 @@ class EsterelToSclTransformation extends Transformation {
                 ])
 
             // Transform to nested abort and then to SCL
-            handleAbortCase(abort).transformStatement(sScope)
-            pauseTransformation.pop
+            handleAbortCase(abort).transformStatement(statementScope)
+            pauseTransformation.pop.apply(statementScope)
 
             // Check if and which case should be taken
             for (singleCase : saveAbort.cases) {
-                sScope.add(
+                statementScope.add(
                     createConditional => [
                         val eventExpr = singleCase.delay.event.expr
                         if (singleCase.delay.isImmediate) {
@@ -1065,8 +1157,8 @@ class EsterelToSclTransformation extends Transformation {
 
             }
             signalToVariableMap.remove(f_depth)
-            sScope.addLabel(abortEndLabel)
-            targetStatementSequence.add(sScope)
+            statementScope.addLabel(abortEndLabel)
+            targetStatementSequence.add(statementScope)
 
             return targetStatementSequence
         }
@@ -1106,27 +1198,29 @@ class EsterelToSclTransformation extends Transformation {
 
         // Weak abort
         if (abort.body instanceof WeakAbortInstance) {
-            handleWeakAbort(abort, sScope, abortEndLabel, counter, countExp)
+            handleWeakAbort(abort, statementScope, abortEndLabel, counter, countExp)
 
         // Strong abort
         } else {
-            handleStrongAbort(abort, sScope, abortEndLabel, counter, countExp)
+            handleStrongAbort(abort, statementScope, abortEndLabel, counter, countExp)
         }
-        pauseTransformation.pop
-        joinTransformation.pop
+        
+        // FIXME: apply closures
+        pauseTransformation.pop.apply(statementScope)
+        joinTransformation.pop.apply(statementScope)
 
         // If body was left without being preempted, doNothing
         val l_doNothing = createNewUniqueLabel
         if ((abort.body as AbortInstance).statement != null)
-            sScope.addGoto(l_doNothing)
-        sScope.addLabel(abortEndLabel)
+            statementScope.addGoto(l_doNothing)
+        statementScope.addLabel(abortEndLabel)
 
         // Some do statement
         if ((abort.body as AbortInstance).statement != null) {
-            (abort.body as AbortInstance).statement.transformStatement(sScope)
-            sScope.addLabel(l_doNothing)
+            (abort.body as AbortInstance).statement.transformStatement(statementScope)
+            statementScope.addLabel(l_doNothing)
         }
-        targetStatementSequence.add(sScope)
+        targetStatementSequence.add(statementScope)
 
         targetStatementSequence
     }
@@ -1528,8 +1622,9 @@ class EsterelToSclTransformation extends Transformation {
         if (trap.statement != null)
             trap.statement.transformStatement(statementScope)
 
-        pauseTransformation.pop
-        joinTransformation.pop
+        // FIX: apply closures
+        pauseTransformation.pop //.apply(statementScope)
+        joinTransformation.pop.apply(statementScope)
         statementScope.addLabel(trapEndLabel)
         statementScope.statements.removeInstantaneousGotos(trapEndLabel, exitVariables)
 
@@ -1963,12 +2058,5 @@ class EsterelToSclTransformation extends Transformation {
 
         targetStatementSequence
     }
-
-    override getId() {
-        "ESTERELTOSCL"
-    }
-
-    override getName() {
-        "SCL"
-    }
+    
 }

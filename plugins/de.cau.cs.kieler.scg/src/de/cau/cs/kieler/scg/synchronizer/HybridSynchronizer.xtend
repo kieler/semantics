@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -25,11 +25,11 @@ import java.util.Map
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SchedulingBlock
 import java.util.List
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
 import de.cau.cs.kieler.scg.BasicBlock
 import java.util.Set
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler

@@ -46,55 +46,6 @@
       </command>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kico.transformation">
-      <transformationMethod
-            class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation"
-            dependencies="SCLTOSCG"
-            id="ESTERELTOSCL"
-            method="transform"
-            name="SCL"
-            producesDependencies="SCLTOSCG">
-      </transformationMethod>
-      <transformationGroup
-            alternatives="true"
-            id="SCLGROUP"
-            name="SCL"
-            transformations="ESTERELTOSCL_OPT,ESTERELTOSCL">
-      </transformationGroup>
-      <transformationMethod
-            class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation"
-            id="SCLOPT"
-            method="transform"
-            name="SCL Optimizations">
-      </transformationMethod>
-      <transformationGroup
-            id="SCLSCGGROUP"
-            name="SCGraph"
-            transformations="SCLTOSCG,SCGDEP, SCGBBGROUP, SCGSCHEDULE, SCGSEQUENTIALIZE, SCGGC">
-      </transformationGroup>
-      <transformationMethod
-            class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation"
-            dependencies="SCLTOSCG"
-            id="ESTERELTOSCL_OPT"
-            method="transformOpt"
-            name="SCL Optimized"
-            producesDependencies="SCLTOSCG">
-      </transformationMethod>
-      <transformationMethod
-            class="de.cau.cs.kieler.esterel.scl.transformations.SclToEsterelTransformation"
-            id="SCL_TO_ESTEREL"
-            method="transform"
-            name="Esterel">
-      </transformationMethod>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kico.ui.transformation">
-      <editor
-            editor="de.cau.cs.kieler.esterel.Esterel"
-            transformations="SCLGROUP,ESTERELTOSCL_OPT, ESTERELTOSCL,   SCLSCGGROUP,SCLTOSCG,SCGDEP, SCGBBGROUP, SCGBB,SCGBBSCPLUS,SCGSCHEDULE, SCGSEQUENTIALIZE, SCGGC,CODEGENERATION, SCG2S,SCG2C,S2TARGET,S2C,S2JAVA">
-      </editor>
-   </extension>
-   <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
@@ -119,6 +70,12 @@
             </visibleWhen>
          </command>
       </menuContribution>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <productionTransformationClass
+            class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation">
+      </productionTransformationClass>
    </extension>
 
 </plugin>

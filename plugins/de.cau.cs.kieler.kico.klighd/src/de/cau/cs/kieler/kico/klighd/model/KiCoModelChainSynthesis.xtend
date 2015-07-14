@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.kico.klighd.model
 
 import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
@@ -27,16 +28,20 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.util.List
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 
 /**
  * Diagram synthesis of a KiCoModelChain.
@@ -73,17 +78,18 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
     extension KColorExtensions
 
     // -------------------------------------------------------------------------
-    // Some color and pattern constants taken from SCCharts
-    private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 248; it.green = 249; it.blue = 253];
-    private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 205; it.green = 220; it.blue = 243];
+    private static val KColor BG_COLOR = RENDERING_FACTORY.createKColor() => [red = 255; green = 202; blue = 119];
+    private static val KColor SHADOW_COLOR = RENDERING_FACTORY.createKColor() => [it.color = Colors.BLACK];
+
+    override public getDisplayedSynthesisOptions() {
+        return newLinkedList(TracingSynthesisOption.synthesisOption);
+    }
 
     override public getDisplayedLayoutOptions() {
         return newLinkedList(
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::ALGORITHM, emptyList),
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name]),
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 50))
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION,
+                newImmutableList(Direction::DOWN, Direction::RIGHT)),
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
         );
     }
 
@@ -98,23 +104,22 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         if (!chain.empty) {
 
             //transform first
-            var first = transformModel(chain.get(0));
+            var first = chainWrapper.transformModel(chain.get(0));
             rootNode.children += first;
 
             //transform rest and add edges in between
             for (i : 1 ..< chain.size) {
-                val currentModel = chain.get(i);
-                val second = transformModel(currentModel);
+                val second = chainWrapper.transformModel(chain.get(i));
                 rootNode.children += second;
                 val edge = createEdge => [
                     it.addPolyline => [
                         //if label name is null hide edge
-                        it.addArrowDecorator.invisible = currentModel.edgeLabel == null;
-                        it.invisible = currentModel.edgeLabel == null;
+                        it.addArrowDecorator.invisible = chainWrapper.blankMode;
+                        it.invisible = chainWrapper.blankMode;
                     ]
                     //if available add label
-                    if (currentModel.edgeLabel != null) {
-                        it.createLabel.configureCenterEdgeLabel(currentModel.edgeLabel,
+                    if (!chainWrapper.blankMode && i - 1 < chainWrapper.tranformations.size) {
+                        it.createLabel.configureCenterEdgeLabel(chainWrapper.tranformations.get(i - 1),
                             KlighdConstants::DEFAULT_FONT_SIZE,
                             KlighdConstants::DEFAULT_FONT_NAME);
                     }
@@ -124,70 +129,49 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                 first = second;
             }
         }
-
         return rootNode;
     }
 
-    private def KNode transformModel(KiCoModelWrapper model) {
+    private def KNode transformModel(KiCoModelChain chain, Object model) {
         val node = createNode.associateWith(model);
-        var subDiagramParentNode = node
 
         //if label is not null a parent node is created and model diagram is added in collapsed child area
-        if (model.label != null) {
-            val figure = node.createFigure;
+        if (!chain.blankMode) {
 
-            //title of parent node
-            figure.addText(model.label).associateWith(model) => [
-                it.fontSize = 11;
-                it.setFontBold = true;
-                it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
-                it.suppressSelectability;
-            ];
+            node.setLayoutOption(KlighdProperties::EXPAND, !chain.collapse.get(model));
 
-            //Add regions for expanded/collapsed child area
-            figure.setGridPlacement(1);
-            figure.addChildArea();
-
-            subDiagramParentNode = createNode() => [
-                it.associateWith(model);
-                it.setLayoutOption(KlighdProperties::EXPAND, !model.collapsed);
-                figure.setGridPlacement(1);
-                //Collapse Rectangle
-                it.addRectangle() => [
-                    it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
-                    it.invisible = true;
-                    //This text is only for correct size estimation
-                    it.addText(model.label) => [
-                        it.fontSize = 11;
-                        it.setFontBold = true;
-                        it.invisible = true;
-                        it.suppressSelectability;
-                    ];
-                    it.addText("[Show Model]") => [
-                        it.foreground = "blue".color
-                        it.fontSize = 9
-                        it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                    ];
-                ]
-                //Expanded Rectangle
-                it.addRectangle() => [
-                    it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
+            //Expanded Rectangle
+            node.createFigure() => [
+                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
+                it.setGridPlacement(1);
+                it.addText("[Hide]") => [
+                    it.foreground = "blue".color
+                    it.fontSize = 9
+                    //center
+                    it.setSurroundingSpaceGrid(5, 0);
+                    it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                ];
+                it.addRectangle => [
+                    it.setGridPlacementData.from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
                     it.setBackground = "white".color;
-                    it.setSurroundingSpace(2, 0);
-                    it.invisible = false;
                     it.foreground = "gray".color
                     it.lineWidth = 1;
-                    it.addText("[Hide]") => [
-                        it.foreground = "blue".color
-                        it.fontSize = 9
-                        //center
-                        it.setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 4, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
-                        it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                    ];
-                    it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0);
+                    it.addChildArea()
                 ];
             ];
-            node.children += subDiagramParentNode
+
+            //Collapse Rectangle
+            node.createFigure() => [
+                it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
+                it.addText("[Show Model]") => [
+                    it.foreground = "blue".color
+                    it.fontSize = 9
+                    it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.setSurroundingSpace(5, 0);
+                ];
+            ];
         } else {
             node.addInvisibleContainerRendering;
         }
@@ -195,33 +179,47 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         //Create subdiagram from referenced model synthesis or fallback to component synthesis
         var KNode subDiagramNode = null;
         try {
-            subDiagramNode = LightDiagramServices::translateModel(model.model, usedContext);
+            val properties = new KlighdSynthesisProperties();
+            properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
+            subDiagramNode = LightDiagramServices::translateModel(model, usedContext, properties);
         } catch (Exception e) {
             //fallthrou
         }
-        if (subDiagramNode == null && model.model instanceof EObject) { //component synthesis
+        if ((subDiagramNode == null || subDiagramNode.children.isEmpty) && model instanceof EObject) { //component synthesis
             subDiagramNode = createNode();
-            val modelObject = model.model as EObject;
+            val modelObject = model as EObject;
+            subDiagramNode.children += modelObject.translateEObject
             subDiagramNode.children += modelObject.eAllContents.map [
-                it.translateEObject;
+                val child = it.translateEObject;
+                val container = it.eContainer;
+                if (container != null) {
+                    createEdge => [
+                        it.source = container.translateEObject;
+                        it.target = child;
+                        it.addPolyline.addArrowDecorator;
+                    ]
+                }
+                return child;
             ].toIterable;
         }
-        if (subDiagramNode != null) {
+        if (subDiagramNode != null && !subDiagramNode.children.isEmpty) {
+
             // prevent adding of rectangle by adding an invisible own one.
             subDiagramNode.addRectangle.invisible = true;
 
             //Add subdiagram to collapseable child area
-            subDiagramParentNode.children += subDiagramNode;
+            node.children += subDiagramNode;
+            node.setLayoutOption(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE, true);
         }
         return node;
     }
 
-    private def KNode translateEObject(EObject object) {
-        val node = object.createNode.associateWith(object);
+    private def create node : object.createNode translateEObject(EObject object) {
+        node.associateWith(object);
 
         //create and add colored rectangle for this node
         val figure = node.createFigure;
-        figure.background = "white".color;
+        figure.background = Colors.GRAY_95;
 
         //align all text fields in a column.
         figure.setGridPlacement(1);
@@ -243,26 +241,19 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                 it.suppressSelectability;
             ];
         ]
-
-        return node;
     }
 
     /**
      * Create and adds colored rectangle for given node.
-     * Style is taken from SCCharts L&F.
      */
     private def createFigure(KNode node) {
-
-        //Code taken from SCChartDiagramsynthesis
-        //val figure = node.addRectangle.background = "gray20".color;
-        val figure = node.addRoundedRectangle(8, 8, 1).background = "white".color;
+        val figure = node.addRoundedRectangle(8, 8, 1);
         figure.lineWidth = 1;
-        figure.foreground = "gray".color;
+        figure.foreground = Colors.GRAY;
+        figure.background = BG_COLOR;
 
-        figure.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
-
-        //add shadow if option is activated
-        figure.shadow = "black".color;
+        //add shadow
+        figure.shadow = SHADOW_COLOR.copy;
         figure.shadow.XOffset = 4;
         figure.shadow.YOffset = 4;
 

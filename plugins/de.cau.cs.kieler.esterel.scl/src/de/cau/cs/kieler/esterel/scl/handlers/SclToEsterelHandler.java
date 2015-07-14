@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -20,12 +20,16 @@ import org.eclipse.jface.viewers.ISelection;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
-import de.cau.cs.kieler.esterel.esterel.Program;
+import de.cau.cs.kieler.esterel.transformations.EsterelTransformation;
 import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scl.SCLStandaloneSetup;
 
 /**
- * @author krat
+ * @author krat ssm
+ * @kieler.design 2015-05-25 proposed 
+ * @kieler.rating 2015-05-25 proposed yellow
  *
  */
 public class SclToEsterelHandler extends AbstractConvertModelHandler {
@@ -66,7 +70,9 @@ public class SclToEsterelHandler extends AbstractConvertModelHandler {
 
         transformed = model;
         if (commandString.equals(SCL_TRANSFORMATION)) {
-            transformed = (Program) KielerCompiler.compile("SCL_TO_ESTEREL", model, false, false).getEObject();
+//            transformed = (Program) KielerCompiler.compile("SCL_TO_ESTEREL", model, false, false).getEObject();
+            KielerCompilerContext context = new KielerCompilerContext(EsterelTransformation.SCLTOESTEREL_ID, model);
+            transformed = (SCGraph) KielerCompiler.compile(context).getEObject();
         } 
         return transformed;
     }
