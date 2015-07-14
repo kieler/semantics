@@ -642,7 +642,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
         try {
             String out = jSONObject.toString();
-            System.out.println("> " + out);
+//            System.out.println("> " + out);
             cExecution.getInterfaceToExecution().write(out + "\n");
             cExecution.getInterfaceToExecution().flush();
             while (cExecution.getInterfaceError().ready()) {
@@ -652,7 +652,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             String receivedMessage = cExecution.getInterfaceFromExecution().readLine();
 
-            System.out.println("< " + receivedMessage);
+//            System.out.println("< " + receivedMessage);
             // if (debugConsole) {
             // printConsole("==============| TICK " + computedTick++ + " |==============");
             // while (!receivedMessage.startsWith("{\"")) {
