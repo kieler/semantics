@@ -372,13 +372,13 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
 
             try {
                 if (newValue > barrierValue) {
-                    System.out.println("BENCHMARK FAILED ");
                     // This indicates an error
                     String message = "Violation of benchmark limit for '" + marker
                             + "': old value is '" + oldValue + "', current value is '" + newValue
                             + "' > '" + barrierValue
                             + "' which is the barrier value including tolerance ("
                             + absoluteToleranceArray[i] + " + " + relativeToleranceArray[i] + "%).";
+                    System.out.println("BENCHMARK FAILED :" + message);
                     returnValue.accumulate(ERRORMESSAGE, message);
                     return returnValue;
                 }
