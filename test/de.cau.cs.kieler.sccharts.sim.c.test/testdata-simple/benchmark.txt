@@ -3073,7 +3073,7 @@ build   14-Jul-2015 17:29:07    +++ WRITE TEXT FILE
 build   14-Jul-2015 17:29:07    <#### BENCHMARK ####>
 build   14-Jul-2015 17:29:07    /test-sccharts-c/AO.bench
 build   14-Jul-2015 17:29:07    3
-build   14-Jul-2015 17:29:07    benchTime:4.2E-4
+build   14-Jul-2015 17:29:07    benchTime:6.17E-4
 build   14-Jul-2015 17:29:07    benchSource:1351.0
 build   14-Jul-2015 17:29:07    benchExecutable:2240.0
 build   14-Jul-2015 17:29:07    benchCompileTime:156.0
