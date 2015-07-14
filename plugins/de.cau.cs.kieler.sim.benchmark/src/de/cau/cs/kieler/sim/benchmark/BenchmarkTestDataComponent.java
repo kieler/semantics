@@ -119,7 +119,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
      */
     public static void setTrace(int trace) {
         BenchmarkTestDataComponent.trace = trace;
-        System.out.println("BENCHMARK setTrace()"+trace+" => " + BenchmarkTestDataComponent.trace);
+        System.out.println("BENCHMARK setTrace("+trace+") => trac := " + BenchmarkTestDataComponent.trace);
     }
 
     // -------------------------------------------------------------------------
@@ -455,6 +455,11 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                     }
                 }
             } else if (line.equals(Benchmark.BENCHMARK_CMDLINE_END_DELEMITER)) {
+                if (isSeekedBenchmarkInformation) {
+                    br.close();
+                    fis.close();
+                    return;
+                }
                 isBenchmarkInformation = false;
                 isSeekedBenchmarkInformation = false;
             }
