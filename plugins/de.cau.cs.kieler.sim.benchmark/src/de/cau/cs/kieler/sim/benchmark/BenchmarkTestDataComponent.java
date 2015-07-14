@@ -77,6 +77,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
     private static final String BENCHMARK_FILE_ENDING = "bench";
     private static final String BENCHMARK_DATA_SEPARATOR = ":";
     private static final String CMDLINEOUTPUTINPUT_FILE = "benchmark.txt";
+    private static final int CMDLINEOUTPUTINPUT_FILE_OFFSET = 32;
 
     private String[] markerArray;
     private double[] absoluteToleranceArray;
@@ -407,10 +408,13 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
         boolean isSeekedBenchmarkInformation = false; // true while within the seeked concrete
                                                       // benchmark information for the current model
         while ((line = br.readLine()) != null) {
+            
+            line = line.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
 
             if (line.equals(Benchmark.BENCHMARK_CMDLINE_START_DELEMITER)) {
                 isBenchmarkInformation = true;
                 String fileName = br.readLine();
+                fileName = fileName.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
                 if (fileName.equals(modelPath.toOSString())) {
                     isSeekedBenchmarkInformation = true;
                     String benchmarkTickString = br.readLine();
@@ -419,6 +423,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                     } catch (Exception e) {
                     }
                     line = br.readLine();
+                    line = line.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
                 }
             } else if (line.equals(Benchmark.BENCHMARK_CMDLINE_END_DELEMITER)) {
                 isBenchmarkInformation = false;
