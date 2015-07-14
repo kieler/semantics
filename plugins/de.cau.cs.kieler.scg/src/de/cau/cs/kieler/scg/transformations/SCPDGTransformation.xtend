@@ -16,41 +16,28 @@ package de.cau.cs.kieler.scg.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
-
-import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ConditionalDependency
 import de.cau.cs.kieler.scg.ControlDependency
+import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Depth
-
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
-import org.eclipse.emf.ecore.EObject
-
+import de.cau.cs.kieler.scg.ElseDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
-
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import de.cau.cs.kieler.scg.ThenDependency
+import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.Set
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scg.Dependency
-import de.cau.cs.kieler.scg.ThenDependency
-import de.cau.cs.kieler.scg.ElseDependency
-import de.cau.cs.kieler.scg.ConditionalDependency
-
-import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.scg.features.SCGFeatures
-
 
 /** 
  * 
@@ -85,7 +72,7 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
     public static val ANNOTATION_SCPDG_RN_TRANSFORMATION = "scpdgrn"
     public static val ANNOTATION_SCPDG_MD_TRANSFORMATION = "scpdgmd"
     
-//    public static val ANNOTATION_SCPDGTRANSFORMATION = "scpdg"
+    public static val ANNOTATION_SCPDGTRANSFORMATION = "scpdg"
     
     var Entry programEntry;
     
@@ -118,10 +105,12 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
      * @return Returns the root element of the transformed model.
      */
   
-    def SCGraph transformCD(EObject eObject, KielerCompilerContext context) {
-        val SCGraph scg = (eObject as SCGraph)
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED) ||
-            scg.hasAnnotation(ANNOTATION_SCPDG_CD_TRANSFORMATION)) {
+//    def SCGraph transformCD(EObject eObject, KielerCompilerContext context) {
+    def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+
+        if 
+//        (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED) ||
+            (scg.hasAnnotation(ANNOTATION_SCPDG_CD_TRANSFORMATION)) {
             return scg
         }
         programEntry = (scg.nodes.head as Entry)
@@ -136,9 +125,10 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
 
     def SCGraph transformRN(EObject eObject, KielerCompilerContext context) {
         val SCGraph scg = (eObject as SCGraph)
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED) ||
-            scg.hasAnnotation(ANNOTATION_SCPDG_RN_TRANSFORMATION) ||
-            !scg.hasAnnotation(ANNOTATION_SCPDG_CD_TRANSFORMATION)) {
+        if 
+//            scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED) ||
+            ((scg.hasAnnotation(ANNOTATION_SCPDG_RN_TRANSFORMATION)) ||
+            (!scg.hasAnnotation(ANNOTATION_SCPDG_CD_TRANSFORMATION))) {
             return scg
         }
         programEntry = (scg.nodes.head as Entry)
@@ -168,9 +158,10 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
 
     def SCGraph transformMD(EObject eObject, KielerCompilerContext context) {
         val SCGraph scg = (eObject as SCGraph)
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED) ||
-            scg.hasAnnotation(ANNOTATION_SCPDG_MD_TRANSFORMATION) ||
-            !scg.hasAnnotation(ANNOTATION_SCPDG_CD_TRANSFORMATION)) {
+        if 
+//        (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED) ||
+            ((scg.hasAnnotation(ANNOTATION_SCPDG_MD_TRANSFORMATION)) ||
+            (!scg.hasAnnotation(ANNOTATION_SCPDG_CD_TRANSFORMATION))) {
             return scg
         }
         programEntry = (scg.nodes.head as Entry)
@@ -555,10 +546,5 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
         
     }
     
-    override transform(EObject eObject, KielerCompilerContext context) {
-        throw new UnsupportedOperationException("TODO: auto-generated method stub")
-    }
-
-        
 }
 

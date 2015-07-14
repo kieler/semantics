@@ -54,6 +54,9 @@
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.sequentializer.GuardSequentializer">
       </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.SCPDGTransformation">
+      </productionTransformationClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.feature">
