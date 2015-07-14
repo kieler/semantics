@@ -129,7 +129,7 @@ public class CExecution extends AbstractExecution {
                 // -m32 = 32 bit compatibility mode to prevent compiler errors on
                 // 64bit machines/architectures.
                 // + " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
-                + " -O2 -lm  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+                + " -lrt -O2 -lm  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
 
 
         // -D_SC_SUPPRESS_ERROR_DETECT
