@@ -77,6 +77,7 @@ double getusertime()
 
     struct timeval tim;
     struct rusage ru;
+    double current_time;
     getrusage(RUSAGE_SELF, &ru);
     tim = ru.ru_utime;
     current_time = (double)tim.tv_sec*1000.0 + tim.tv_usec/1000.0;
