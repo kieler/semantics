@@ -31,12 +31,16 @@ LARGE_INTEGER remembered_time;
 
 #else
 // Non-Windows case
+#include <stdio.h>
+#include <time.h>
+#include <stdint.h>
 #include <sys/time.h>
+#include <sys/resource.h>
 double remembered_time;
 #endif
 
 
-void resetusertime() 
+void resetusertime()
 {
 #ifdef WIN32
 // Windows case
