@@ -436,7 +436,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                 fileName = fileName.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
                 if (fileName.equals(modelPath.toOSString())) {
                     if (BenchmarkTestDataComponent.trace > 0) {
-                        System.out.println("BENCHMARK TRACE NUMBER COUNT DOWN :" + --BenchmarkTestDataComponent.trace);
+                        System.out.println("BENCHMARK TRACE NUMBER COUNT DOWN :" + BenchmarkTestDataComponent.trace--);
                     }
                     else {
                         System.out.println("BENCHMARK TRACE NUMBER COUNT DOWN : 0");
