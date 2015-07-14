@@ -3933,7 +3933,7 @@ build   14-Jul-2015 22:42:41    +++ WRITE TEXT FILE
 build   14-Jul-2015 22:42:41    <#### BENCHMARK ####>
 build   14-Jul-2015 22:42:41    /test-sccharts-c/76-ptolemy-concurrent-and-hierarchical-read-write2.bench
 build   14-Jul-2015 22:42:41    4
-build   14-Jul-2015 22:42:41    benchTime:0.0026499999999999996
+build   14-Jul-2015 22:42:41    benchTime:0.0058379999999999994
 build   14-Jul-2015 22:42:41    benchSource:3400.0
 build   14-Jul-2015 22:42:41    benchExecutable:8232.0
 build   14-Jul-2015 22:42:41    benchCompileTime:55.0
@@ -3944,7 +3944,7 @@ build   14-Jul-2015 22:42:41    +++ WRITE TEXT FILE
 build   14-Jul-2015 22:42:41    <#### BENCHMARK ####>
 build   14-Jul-2015 22:42:41    /test-sccharts-c/76-ptolemy-concurrent-and-hierarchical-read-write2.bench
 build   14-Jul-2015 22:42:41    4
-build   14-Jul-2015 22:42:41    benchTime:0.0026499999999999996
+build   14-Jul-2015 22:42:41    benchTime:0.0058379999999999994
 build   14-Jul-2015 22:42:41    benchSource:3400.0
 build   14-Jul-2015 22:42:41    benchExecutable:8232.0
 build   14-Jul-2015 22:42:41    benchCompileTime:55.0
