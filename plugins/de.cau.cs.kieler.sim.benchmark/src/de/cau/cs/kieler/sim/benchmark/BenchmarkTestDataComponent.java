@@ -352,6 +352,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
         // Compare old data and current data using tolerance
 
         // Write header
+        JSONObject returnValue = new JSONObject();
         for (String marker : markerArray) {
             // Trim away any white space
             marker = marker.trim();
@@ -365,7 +366,6 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
 
             double barrierValue = oldValue + overallToleranceAddition;
 
-            JSONObject returnValue = new JSONObject();
             try {
                 if (newValue > barrierValue) {
                     System.out.println("BENCHMARK FAILED ");
@@ -377,11 +377,6 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                             + absoluteToleranceArray[i] + " + " + relativeToleranceArray[i] + "%).";
                     returnValue.accumulate(ERRORMESSAGE, message);
                     return returnValue;
-
-                } else {
-                    System.out.println("BENCHMARK OK ");
-                    returnValue.accumulate(ERRORMESSAGE, "");
-                    return returnValue;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -389,7 +384,13 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
 
         }
 
-        return null;
+        System.out.println("BENCHMARK OK ");
+        try {
+            returnValue.accumulate(ERRORMESSAGE, "");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return returnValue;
     }
 
     // -------------------------------------------------------------------------
