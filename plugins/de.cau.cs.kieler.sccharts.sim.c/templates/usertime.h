@@ -34,7 +34,7 @@ LARGE_INTEGER remembered_time;
 #include <stdio.h>
 #include <time.h>
 //#include <stdint.h>
-//#include <sys/time.h>
+#include <sys/time.h>
 //#include <errno.h>
 //#include <string.h>
 //#include <sys/resource.h>
