@@ -119,6 +119,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
      */
     public static void setTrace(int trace) {
         BenchmarkTestDataComponent.trace = trace;
+        System.out.println("BENCHMARK setTrace()"+trace+" => " + BenchmarkTestDataComponent.trace);
     }
 
     // -------------------------------------------------------------------------
@@ -418,6 +419,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
     public void readInOldDataFromGenericCmdLineTextFile(final double[] data, String stringPath,
             final IPath modelPath) throws IOException {
         oldData = new double[data.length];
+        int traceCntDown = BenchmarkTestDataComponent.trace;
 
         FileInputStream fis = new FileInputStream(stringPath);
         BufferedReader br = new BufferedReader(new InputStreamReader(fis));
@@ -435,8 +437,8 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                 String fileName = br.readLine();
                 fileName = fileName.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
                 if (fileName.equals(modelPath.toOSString())) {
-                    if (BenchmarkTestDataComponent.trace > 0) {
-                        System.out.println("BENCHMARK TRACE NUMBER COUNT DOWN :" + BenchmarkTestDataComponent.trace--);
+                    if (traceCntDown > 0) {
+                        System.out.println("BENCHMARK TRACE NUMBER COUNT DOWN :" + traceCntDown--);
                     }
                     else {
                         System.out.println("BENCHMARK TRACE NUMBER COUNT DOWN : 0");
@@ -466,7 +468,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                         double dataValue = Double.parseDouble(dataValueString);
                         int i = getMarkerIndex(dataName);
                         oldData[i] = dataValue;
-                        System.out.println("BENCHMARK dataName : " + dataValue);
+                        System.out.println("BENCHMARK "+dataName+" : " + dataValue);
                     } catch (Exception e) {
                     }
                 }
