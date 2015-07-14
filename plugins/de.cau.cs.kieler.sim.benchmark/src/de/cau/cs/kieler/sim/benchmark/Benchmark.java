@@ -177,7 +177,7 @@ public class Benchmark {
             
 //            String outputFolder = KiemUtil.generateRandomTempOutputFolder();
 
-           String tickeMethodFilePath = tickMethodFile.getPath();
+           String tickeMethodFilePath = tickMethodFile.toString().replace("file:/","").replace("file:", "");// getPath();
            
            tickeMethodFilePath = tickeMethodFilePath.replaceAll("[/\\\\]+", "\\" + File.separator);
            if (tickeMethodFilePath.startsWith("\\")) {
