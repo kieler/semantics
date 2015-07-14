@@ -518,6 +518,7 @@ public abstract class KiemAutomatedJUnitTest {
 
             // Set the current trace number
             traceProperty.setValue(traceNumber + "");
+            BenchmarkTestDataComponent.setTrace(traceNumber);
             // Now run the execution stepwise until it has stopped
 
             pause();
@@ -636,7 +637,7 @@ public abstract class KiemAutomatedJUnitTest {
 
                 // If an error occurred tell!
                 if (errorFlag) {
-                    lastErrorMessage = errorInformation;
+                    //lastErrorMessage = errorInformation;
                     fail(errorInformation);
                 }
 

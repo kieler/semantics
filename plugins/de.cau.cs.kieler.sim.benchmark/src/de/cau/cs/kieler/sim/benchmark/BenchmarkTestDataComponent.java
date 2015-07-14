@@ -106,6 +106,20 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
     private int benchmarkTick = -1;
 
     private double[] oldData = null;
+    
+    // seach for the trace'th occurrence in a global log file
+    private static int trace = 0;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the trace to search for the trace'th occurrence in a global log file.
+     *
+     * @param trace the new trace
+     */
+    public static void setTrace(int trace) {
+        BenchmarkTestDataComponent.trace = trace;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -203,6 +217,8 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                     true);
         }
         System.out.println("+++ wrapup done ");
+        // Reset for the next run!
+        BenchmarkTestDataComponent.trace = 0;
     }
 
     // -------------------------------------------------------------------------
@@ -419,15 +435,22 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                 String fileName = br.readLine();
                 fileName = fileName.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
                 if (fileName.equals(modelPath.toOSString())) {
-                    isSeekedBenchmarkInformation = true;
-                    String benchmarkTickString = br.readLine();
-                    benchmarkTickString = benchmarkTickString.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
-                    try {
-                        benchmarkTick = Integer.parseInt(benchmarkTickString);
-                    } catch (Exception e) {
+                    if (BenchmarkTestDataComponent.trace > 0) {
+                        System.out.println("BENCHMARK TRACE NUMBER COUNT DOWN :" + --BenchmarkTestDataComponent.trace);
                     }
-                    line = br.readLine();
-                    line = line.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
+                    else {
+                        System.out.println("BENCHMARK TRACE NUMBER COUNT DOWN : 0");
+                        isSeekedBenchmarkInformation = true;
+                        String benchmarkTickString = br.readLine();
+                        benchmarkTickString = benchmarkTickString.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
+                        try {
+                            benchmarkTick = Integer.parseInt(benchmarkTickString);
+                        } catch (Exception e) {
+                        }
+                        System.out.println("BENCHMARK benchmarkTick : " + benchmarkTick);
+                        line = br.readLine();
+                        line = line.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
+                    }
                 }
             } else if (line.equals(Benchmark.BENCHMARK_CMDLINE_END_DELEMITER)) {
                 isBenchmarkInformation = false;
@@ -443,6 +466,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                         double dataValue = Double.parseDouble(dataValueString);
                         int i = getMarkerIndex(dataName);
                         oldData[i] = dataValue;
+                        System.out.println("BENCHMARK dataName : " + dataValue);
                     } catch (Exception e) {
                     }
                 }
