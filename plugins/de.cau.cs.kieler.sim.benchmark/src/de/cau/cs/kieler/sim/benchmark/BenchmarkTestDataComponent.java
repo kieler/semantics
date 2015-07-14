@@ -335,6 +335,8 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
         }
 
         String stringPath = file.getRawLocation().toString();
+        System.out.println("+++ BENCHMARK FILE EXISTS:" + stringPath);
+
 
         // Read in old data
         if (cmdLineInputOutput) {
@@ -344,6 +346,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
         }
 
         if (benchmarkTick != tick) {
+            System.out.println("+++ BENCHMARK TICK "+benchmarkTick+" NOT REACHED YET ("+tick+")");
             // The benchmark tick has not been reached
             return null;
         }
