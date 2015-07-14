@@ -421,6 +421,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                 if (fileName.equals(modelPath.toOSString())) {
                     isSeekedBenchmarkInformation = true;
                     String benchmarkTickString = br.readLine();
+                    benchmarkTickString = benchmarkTickString.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
                     try {
                         benchmarkTick = Integer.parseInt(benchmarkTickString);
                     } catch (Exception e) {
