@@ -15,9 +15,11 @@ package de.cau.cs.kieler.sccharts.launchconfig.common.ui
 
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.internal.Transformation
+import de.cau.cs.kieler.sccharts.launchconfig.common.CommandData
 import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
+import java.util.Collections
 import java.util.List
 import java.util.Set
 import org.eclipse.core.resources.IFile
@@ -28,9 +30,17 @@ import org.eclipse.core.runtime.IPath
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.StringVariableSelectionDialog
 import org.eclipse.jface.viewers.ArrayContentProvider
+import org.eclipse.jface.viewers.CheckStateChangedEvent
+import org.eclipse.jface.viewers.CheckboxTableViewer
+import org.eclipse.jface.viewers.ColumnLabelProvider
 import org.eclipse.jface.viewers.ComboViewer
+import org.eclipse.jface.viewers.ContentViewer
+import org.eclipse.jface.viewers.ICheckStateListener
+import org.eclipse.jface.viewers.ICheckStateProvider
 import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.viewers.StructuredSelection
+import org.eclipse.jface.viewers.TableViewer
+import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
@@ -40,12 +50,15 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.DirectoryDialog
 import org.eclipse.swt.widgets.FileDialog
+import org.eclipse.swt.widgets.Table
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ContainerSelectionDialog
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.IDE
+
+import static de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil.*
 
 /**
  * Factory class to create SWT widgets
@@ -85,8 +98,6 @@ class UIUtil {
      */
     public static val FILE_SYSTEM_DIRECTORY_BUTTON = 1 << 5
 
-
-    
     static def createGroup(Composite parent, String text, int columns) {
         createGroup(parent, text, columns, GridData.FILL_HORIZONTAL)
     }
@@ -99,8 +110,6 @@ class UIUtil {
         return SWTFactory.createGroup(parent, text, columns, 1, fill)
     }
 
-
-
     static def createComposite(Composite parent, int columns) {
         return createComposite(parent, columns, GridData.FILL_HORIZONTAL)
     }
@@ -112,8 +121,7 @@ class UIUtil {
     static def createComposite(Composite parent, int columns, int fill) {
         return SWTFactory.createComposite(parent, parent.font, columns, 1, fill, 0, 0)
     }
-    
-    
+
     static def createTextField(Composite parent, String label, int buttonFlags) {
         createTextField(parent, label, buttonFlags, null)
     }
@@ -168,10 +176,10 @@ class UIUtil {
 
         if (isFlagSet(buttonFlags, UIUtil.FILE_SYSTEM_FILE_BUTTON))
             createBrowseFileSystemButton(parent, text, browseFileSystemFileLabel, true)
-        
+
         if (isFlagSet(buttonFlags, UIUtil.FILE_SYSTEM_DIRECTORY_BUTTON))
             createBrowseFileSystemButton(parent, text, browseFileSystemDirectoryLabel, false)
-            
+
         if (isFlagSet(buttonFlags, UIUtil.VARIABLE_BUTTON))
             createBrowseVariableButton(parent, text, browseVariableLabel)
 
@@ -182,19 +190,19 @@ class UIUtil {
      * Creates a button which opens a file or directory dialog and sets the text field's value to the selection.
      * @return the new push button. 
      */
-    static def createBrowseFileSystemButton(Composite parent, Text text, String label, boolean isFileDialog){
+    static def createBrowseFileSystemButton(Composite parent, Text text, String label, boolean isFileDialog) {
         val browse = SWTFactory.createPushButton(parent, label, null)
         browse.addSelectionListener(
             new SelectionAdapter() {
                 override void widgetSelected(SelectionEvent e) {
-                    
+
                     var String result
-                    if(isFileDialog){
+                    if (isFileDialog) {
                         val dialog = new FileDialog(parent.shell, SWT.OPEN);
                         result = dialog.open()
-                    }else{
+                    } else {
                         val dialog = new DirectoryDialog(parent.shell, SWT.OPEN);
-                        result = dialog.open    
+                        result = dialog.open
                     }
                     if (result != null && result != "") {
                         text.text = result
@@ -303,7 +311,7 @@ class UIUtil {
         )
         return browse
     }
-    
+
     /**
      * Creates a button which opens a variable selection dialog and inserts the selection to the text field.
      * @return the new push button. 
@@ -331,7 +339,7 @@ class UIUtil {
      * Creates a combobox with the KiCo transformations for code generation.
      * @return a new combobox. 
      */
-    static def createKiCoTargetsCombo(Composite parent){
+    static def createKiCoTargetsCombo(Composite parent) {
         // ComboViewer
         val combo = new ComboViewer(parent, SWT.DEFAULT)
 
@@ -369,7 +377,7 @@ class UIUtil {
      * Creates a combobox with the environments.
      * @return the new combobox.
      */
-    static def createEnvironmentsCombo(Composite parent, ArrayList<EnvironmentData> environments){        
+    static def createEnvironmentsCombo(Composite parent, ArrayList<EnvironmentData> environments) {
         // Combo
         val combo = new ComboViewer(parent, SWT.DEFAULT)
         combo.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
@@ -391,10 +399,150 @@ class UIUtil {
                     return ""
             }
         })
-        
+
         return combo
     }
-    
+
+    static def createCommandTable(Composite parent, boolean checkboxes) {
+        // Table
+        val table = if(checkboxes)
+                        new Table(parent, SWT.CHECK.bitwiseOr(SWT.BORDER))
+                    else
+                        new Table(parent, SWT.BORDER)
+        table.setHeaderVisible(true);
+        table.setLinesVisible(true);
+        table.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+        // Viewer
+        var TableViewer viewer
+        if (checkboxes) {
+            val checkViewer = new CheckboxTableViewer(table)
+            viewer = checkViewer
+
+            // Listener
+            checkViewer.addCheckStateListener(new ICheckStateListener() {
+                override checkStateChanged(CheckStateChangedEvent event) {
+                    val comm = event.element as CommandData
+                    comm.isEnabled = String.valueOf(!event.checked)
+                }
+            })
+
+            // State provider
+            checkViewer.checkStateProvider = new ICheckStateProvider() {
+
+                override isChecked(Object element) {
+                    val comm = element as CommandData
+                    return Boolean.valueOf(comm.isEnabled)
+                }
+
+                override isGrayed(Object element) {
+                    return false
+                }
+            }
+
+            // Checked column
+            val checkColumn = createTableColumn(viewer, "Execute", 75)
+            checkColumn.labelProvider = new ColumnLabelProvider() {
+                override String getText(Object element) {
+                    return "";
+                }
+            };
+        } else {
+            viewer = new TableViewer(table)
+        }
+
+        viewer.setContentProvider(ArrayContentProvider.instance);
+
+        // Columns
+        val nameColumn = createTableColumn(viewer, "Name", 150)
+        nameColumn.labelProvider = new ColumnLabelProvider() {
+            override String getText(Object element) {
+                val c = element as CommandData
+                return c.name;
+            }
+        };
+
+        val commandColumn = createTableColumn(viewer, "Command", 300)
+        commandColumn.labelProvider = new ColumnLabelProvider() {
+            override String getText(Object element) {
+                val c = element as CommandData
+                return c.command;
+            }
+        };
+
+        // Fill with input
+        viewer.input = newArrayList()
+
+        return viewer
+    }
+
+    static def createTableColumn(TableViewer viewer, String title, int width) {
+        val viewerColumn = new TableViewerColumn(viewer, SWT.NONE);
+        val column = viewerColumn.getColumn()
+        column.setText(title);
+        column.setWidth(width);
+        column.setResizable(true);
+        column.setMoveable(false);
+        return viewerColumn
+    }
+
+    static def createUpButton(Composite parent, ContentViewer viewer) {
+        val button = UIUtil.createButton(parent, "Up")
+        button.addSelectionListener(new SelectionAdapter() {
+
+            override widgetSelected(SelectionEvent e) {
+                val inputArray = viewer.input as ArrayList<Object>
+                val selection = viewer.selection as StructuredSelection
+                if (selection != null) {
+                    val index = inputArray.indexOf(selection.firstElement)
+                    if (index > 0) {
+                        Collections.swap(inputArray, index, index - 1)
+                        viewer.refresh()
+                    }
+                }
+
+            }
+        })
+        return button
+    }
+
+    static def createDownButton(Composite parent, ContentViewer viewer) {
+        val button = createButton(parent, "Down")
+        button.addSelectionListener(new SelectionAdapter() {
+
+            override widgetSelected(SelectionEvent e) {
+                val inputArray = viewer.input as ArrayList<Object>
+                val selection = viewer.selection as StructuredSelection
+                if (selection != null) {
+                    val index = inputArray.indexOf(selection.firstElement)
+                    if (index > -1 && index < inputArray.size - 1) {
+                        Collections.swap(inputArray, index, index + 1)
+                        viewer.refresh()
+                    }
+                }
+            }
+        })
+        return button
+    }
+
+    static def createRemoveButton(Composite parent, ContentViewer viewer) {
+        val button = UIUtil.createButton(parent, "Remove")
+        button.addSelectionListener(new SelectionAdapter() {
+
+            override widgetSelected(SelectionEvent e) {
+                val inputArray = viewer.input as ArrayList<Object>
+                val selection = viewer.selection as StructuredSelection
+                if (selection != null) {
+                    inputArray.remove(selection.firstElement)
+                    viewer.refresh()
+                    viewer.selection = new StructuredSelection()
+                }
+
+            }
+        })
+        return button
+    }
+
     /**
      * Creates a placeholder.
      */
@@ -425,8 +573,6 @@ class UIUtil {
         return SWTFactory.createLabel(parent, label, 1)
     }
 
-
-
     /**
      * @return true if the flag in the bitmask is set.<br />
      *         false otherwise.
@@ -435,12 +581,10 @@ class UIUtil {
         return bitmask.bitwiseAnd(flag) > 0
     }
 
-
-
     /**
      * Enable or disable all controls in the list and children recursive.
      */
-    public static def enableControls(List<Control> controls, boolean value){
+    public static def enableControls(List<Control> controls, boolean value) {
         controls.forEach [
             enableControlAndChildrenRecursive(it, value)
         ]
@@ -450,8 +594,8 @@ class UIUtil {
      * Enable or disable all controls in the list and the controls on the same level recursive.
      * A control is on the same level as an other control if both have the same parent.
      */
-    public static def enableControlsOnSameLevel(List<Control> controls, boolean value){
-        
+    public static def enableControlsOnSameLevel(List<Control> controls, boolean value) {
+
         controls.forEach [
             // We want to enable all controls on the same level as this control
             // (e.g. browse buttons for a text field).
@@ -465,21 +609,19 @@ class UIUtil {
     /**
      * Enable or disable a control and possible children recursive.
      */
-    public static def void enableControlAndChildrenRecursive(Control control, boolean value){
+    public static def void enableControlAndChildrenRecursive(Control control, boolean value) {
         control.enabled = value
-        if(control instanceof Composite){
-            control.children.forEach[
+        if (control instanceof Composite) {
+            control.children.forEach [
                 enableControlAndChildrenRecursive(it, value)
             ]
         }
     }
-    
-    
-    
+
     /**
      * Opens a file in an eclipse editor.
      */
-    public static def openFileInEditor(IFile file){
+    public static def openFileInEditor(IFile file) {
         val wb = PlatformUI.getWorkbench();
         val win = wb.getActiveWorkbenchWindow();
         val page = win.getActivePage();

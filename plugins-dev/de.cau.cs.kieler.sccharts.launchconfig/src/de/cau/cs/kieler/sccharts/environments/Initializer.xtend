@@ -5,6 +5,7 @@ import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
 import java.util.ArrayList
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer
 import org.eclipse.jface.preference.IPreferenceStore
+import de.cau.cs.kieler.sccharts.launchconfig.common.CommandData
 
 /**
  * This class creates default environments if there are none.
@@ -58,10 +59,6 @@ class Initializer extends AbstractPreferenceInitializer {
         env.wrapperCodeSnippetsDirectory = ""
         env.wrapperCodeSnippetsOrigin = ""
         
-        env.compileCommand = ""
-        env.deployCommand = ""
-        env.runCommand = ""
-        
         env.relatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
         
         env.mainFile = ""
@@ -79,10 +76,6 @@ class Initializer extends AbstractPreferenceInitializer {
         env.wrapperCodeTemplate = ""
         env.wrapperCodeSnippetsDirectory = ""
         env.wrapperCodeSnippetsOrigin = ""
-        
-        env.compileCommand = ""
-        env.deployCommand = ""
-        env.runCommand = ""
         
         env.relatedProjectWizardClass = "org.eclipse.jdt.internal.ui.wizards.JavaProjectWizard"
         
@@ -102,10 +95,6 @@ class Initializer extends AbstractPreferenceInitializer {
         env.wrapperCodeSnippetsDirectory = ""
         env.wrapperCodeSnippetsOrigin = ""
         
-        env.compileCommand = ""
-        env.deployCommand = ""
-        env.runCommand = ""
-        
         env.relatedProjectWizardClass = "org.eclipse.cdt.ui.wizards.CProjectWizard"
         
         env.mainFile = ""
@@ -121,12 +110,11 @@ class Initializer extends AbstractPreferenceInitializer {
         env.targetTemplate = ""
         
         env.wrapperCodeTemplate = "src/Main.ftl"
-        env.wrapperCodeSnippetsDirectory = "templates/Mindstorms NXJ"
-        env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.launchconfig/environments/mindstorms_nxj/templates"
+        env.wrapperCodeSnippetsDirectory = "snippets/mindstorms_nxj"
+        env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.launchconfig/environments/mindstorms_nxj/snippets"
         
-        env.compileCommand = 'nxjc -cp "/opt/leJOS_0.9.1/lib:sct-gen:src" "sct-gen/Main.java"'
-        env.deployCommand = 'nxj -r -cp "/opt/leJOS_0.9.1/lib:sct-gen:src" -o "Main.nxj" Main'
-        env.runCommand = ""
+        env.commands.add(new CommandData("Compile", 'nxjc -cp "/opt/leJOS_0.9.1/lib:sct-gen:src" "sct-gen/Main.java"'))
+        env.commands.add(new CommandData("Deploy and Run", 'nxj -r -cp "/opt/leJOS_0.9.1/lib:sct-gen:src" -o "Main.nxj" Main'))
         
         env.relatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
         

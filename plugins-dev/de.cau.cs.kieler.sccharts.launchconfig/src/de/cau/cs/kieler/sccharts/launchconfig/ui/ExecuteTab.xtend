@@ -14,20 +14,29 @@
 package de.cau.cs.kieler.sccharts.launchconfig.ui
 
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.sccharts.launchconfig.common.CommandData
 import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
+import java.util.ArrayList
 import java.util.List
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
+import org.eclipse.jface.viewers.ISelectionChangedListener
+import org.eclipse.jface.viewers.IStructuredSelection
+import org.eclipse.jface.viewers.SelectionChangedEvent
+import org.eclipse.jface.viewers.StructuredSelection
+import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.swt.SWT
+import org.eclipse.swt.events.ModifyEvent
+import org.eclipse.swt.events.ModifyListener
+import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 
@@ -38,20 +47,13 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
  */
 class ExecuteTab extends AbstractLaunchConfigurationTab {
 
-    /**
-     * The input field for the compile command.
-     */
-    Text compileCommand
-
-    /**
-     * The input field for the deploy command.
-     */
-    Text deployCommand
-
-    /**
-     * The input field for the run command.
-     */
-    Text runCommand
+    CommandData currentData
+    
+    TableViewer viewer
+    
+    Text name
+    
+    Text command
 
     /**
      * The project set in the main tab.
@@ -73,26 +75,96 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
 
         comp.setLayout(new GridLayout(1, true))
         comp.setFont(parent.getFont())
-
-        compileCommand = createCommandComponent(comp, "Compile command")
-        deployCommand = createCommandComponent(comp, "Deploy command")
-        runCommand = createCommandComponent(comp, "Run command")
+        
+        createTableComponent(comp)
+        createNameComponent(comp)
+        createCommandComponent(comp)
     }
 
-    /**
-     * Creates a text field and a button as part of a new group and composite.
-     * The button opens a variable selection dialog and adds its selection to the text field.
-     * 
-     * @param parent The parent composite
-     * @param title The title for the group
-     * @return The newly created text field 
-     */
-    private def Text createCommandComponent(Composite parent, String title) {
-        val group = UIUtil.createGroup(parent, title, 1)
+    private def createTableComponent(Composite parent){
+        val group = UIUtil.createGroup(parent, "Commands", 2)
+        
+        // Viewer
+        viewer = UIUtil.createCommandTable(group, true)
+        viewer.addSelectionChangedListener(new ISelectionChangedListener(){
+            
+            override selectionChanged(SelectionChangedEvent event) {
+                val selection = event.selection as IStructuredSelection
+                if(selection != null)
+                    currentData = selection.firstElement as CommandData
+                else
+                    currentData = null
+                    
+                updateControls(currentData)
+            }
+        })
+        
+        // Buttons
+        val bcomp = UIUtil.createComposite(group, 1)
+        
+        val updateDialogSelectionProvider =  new SelectionAdapter(){
+            
+            override widgetSelected(SelectionEvent e) {
+                updateLaunchConfigurationDialog()
+            }
+        }
+        
+        // Add Button
+        val addButton = UIUtil.createButton(bcomp, "Add")
+        addButton.addSelectionListener(new SelectionAdapter() {
+            override void widgetSelected(SelectionEvent e) {
+                val comm = new CommandData("New Command", 'echo "hello world"')
+                val inputArray = viewer.input as ArrayList<CommandData>
+                inputArray.add(comm)
+                viewer.refresh()
+                viewer.selection = new StructuredSelection(comm)
+            }
+        })
+        addButton.addSelectionListener(updateDialogSelectionProvider)
+        
+        // Remove Button
+        val removeButton = UIUtil.createRemoveButton(bcomp, viewer)
+        removeButton.addSelectionListener(updateDialogSelectionProvider)
+        
+        // Up Button
+        val upButton = UIUtil.createUpButton(bcomp, viewer)
+        upButton.addSelectionListener(updateDialogSelectionProvider)
+        
+        // Down Button
+        val downButton = UIUtil.createDownButton(bcomp, viewer)
+        downButton.addSelectionListener(updateDialogSelectionProvider)
+    }
 
+    private def createNameComponent(Composite parent){
+        val group = UIUtil.createGroup(parent, "Name", 1)
+        
+        name = UIUtil.createTextField(group, null, UIUtil.NONE)
+        name.addModifyListener(new ModifyListener() {
+            override modifyText(ModifyEvent e) {
+                if(currentData != null){
+                    currentData.name = name.text
+                    viewer.refresh()
+                    updateLaunchConfigurationDialog()
+                }
+            }
+        })
+    }
+    
+    private def createCommandComponent(Composite parent){
+        val group = UIUtil.createGroup(parent, "Command", 1)
+        
         // Text
-        val text = UIUtil.createTextField(group, null, 0)
-
+        command = UIUtil.createTextField(group, null, 0)
+        command.addModifyListener(new ModifyListener() {
+            override modifyText(ModifyEvent e) {
+                if(currentData != null){
+                    currentData.command = command.text
+                    viewer.refresh()
+                    updateLaunchConfigurationDialog()
+                }
+            }
+        })
+        
         // Buttons
         val comp = UIUtil.createComposite(group, 2, GridData.HORIZONTAL_ALIGN_END)
 
@@ -108,7 +180,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                     val results = dialog.result
                     if (results != null && !results.isEmpty) {
                         val resource = results.get(0) as IResource
-                        text.insert('"' + resource.projectRelativePath.toOSString + '"')
+                        command.insert('"' + resource.projectRelativePath.toOSString + '"')
                     }
                 }
             }
@@ -117,9 +189,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
             }
         });
 
-        UIUtil.createBrowseVariableButton(comp, text, "Variables...")
-
-        return text
+        UIUtil.createBrowseVariableButton(comp, command, "Variables...")
     }
 
     /**
@@ -134,9 +204,6 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         
         // Update use environment
         useEnvironment = workingCopy.getAttribute(LaunchConfiguration.ATTR_USE_ENVIRONMENT, false)
-        
-        // Disable controls if environment is used
-        updateEnabled()
     }
 
     /** 
@@ -149,18 +216,14 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
      * {@inheritDoc}
      */
     override void initializeFrom(ILaunchConfiguration configuration) {
-        compileCommand.text = configuration.getAttribute(LaunchConfiguration.ATTR_COMPILE_COMMAND, "")
-        deployCommand.text = configuration.getAttribute(LaunchConfiguration.ATTR_DEPLOY_COMMAND, "")
-        runCommand.text = configuration.getAttribute(LaunchConfiguration.ATTR_RUN_COMMAND, "")
+        viewer.input = CommandData.loadAllFromConfiguration(configuration)
     }
-
+ 
     /** 
      * {@inheritDoc}
      */
     override void performApply(ILaunchConfigurationWorkingCopy configuration) {
-        configuration.setAttribute(LaunchConfiguration.ATTR_COMPILE_COMMAND, compileCommand.text)
-        configuration.setAttribute(LaunchConfiguration.ATTR_DEPLOY_COMMAND, deployCommand.text)
-        configuration.setAttribute(LaunchConfiguration.ATTR_RUN_COMMAND, runCommand.text)
+        CommandData.saveAllToConfiguration(configuration, viewer.input as List<CommandData>)
     }
 
     /** 
@@ -170,13 +233,10 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         return "Execute"
     }
     
-    /** 
-     * Enables this tabs controls if the project is not null and no environment is used.
-     * Disable the controls otherwise. 
-     */
-    private def updateEnabled(){
-        val List<Control> controls = #[compileCommand, deployCommand, runCommand]
-        val enabled = (project != null) && (!useEnvironment)
-        UIUtil.enableControlsOnSameLevel(controls, enabled)
+    private def updateControls(CommandData comm){
+        if(comm != null){
+            name.text = comm.name
+            command.text = comm.command
+        }
     }
 }

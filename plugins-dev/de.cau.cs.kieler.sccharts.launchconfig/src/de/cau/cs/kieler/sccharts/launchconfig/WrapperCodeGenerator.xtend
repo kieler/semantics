@@ -109,7 +109,7 @@ class WrapperCodeGenerator {
         if (wrapperCodeTemplate != "" && wrapperCodeSnippetDirectory != "") {
 
             val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
-            System.err.println(templateWithMacroCalls)
+//            System.err.println(templateWithMacroCalls)
             
             processTemplateAndSaveOutput(templateWithMacroCalls)
         }

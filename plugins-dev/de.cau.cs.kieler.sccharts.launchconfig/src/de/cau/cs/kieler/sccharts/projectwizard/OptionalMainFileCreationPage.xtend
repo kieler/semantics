@@ -67,7 +67,7 @@ class OptionalMainFileCreationPage extends WizardNewFileCreationPage{
         separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         // Create checkbox to check if file should be created or not
-        createFileCheckbox = SWTFactory.createCheckButton(comp, "Create file", null, false, 1)
+        createFileCheckbox = SWTFactory.createCheckButton(comp, "Create file", null, true, 1)
         createFileCheckbox.addSelectionListener(new SelectionAdapter(){
             override void widgetSelected(SelectionEvent e) {
                 // Check if we are able to finish the dialog

@@ -13,11 +13,12 @@
  */
 package de.cau.cs.kieler.sccharts.launchconfig.common
 
-import java.lang.reflect.Field
+import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
 import java.util.ArrayList
+import java.util.List
 import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
+import java.lang.reflect.Modifier
 
 /**
  * Data container for SCCharts compilation and execution and creation of new SCCharts project.
@@ -26,6 +27,9 @@ import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
  *
  */
 class EnvironmentData {
+    
+    private static val String COMMAND_KEY = "command"
+    private static val String COMMAND_NAME_KEY = "command.name"
     
     new(){
     }
@@ -85,31 +89,12 @@ class EnvironmentData {
     @Accessors
     protected String wrapperCodeSnippetsOrigin = ""
 
-    
-    
-    /**
-     * A shell command to be run after all sct files are compiled and wrapper code has been generated.
-     * The command is typically used to further compile the result from KiCo.
-     * It is only executed if the KiCo compilation and the wrapper code generation finished successfully.
-     */
+
+
     @Accessors
-    protected String compileCommand = ""
-    /**
-     * A shell command to be run after the compile command.
-     * The command is typically used to link and deploy the result from the compilation command.
-     * It is only executed if the compile command finished without errors.
-     */
-    @Accessors
-    protected String deployCommand = ""
-    /**
-     * A shell command to be run after the deploy command.
-     * The command is typically used to run deployed application.
-     * It is only executed if the deploy command finished without errors.
-     */
-    @Accessors
-    protected String runCommand = ""
-    
-    
+    protected List<CommandData> commands = newArrayList()
+
+
     
     /**
      * The class name of an implementation of the related project wizard for this environment.
@@ -164,7 +149,7 @@ class EnvironmentData {
             environments += env
             
             // Load every field of the environment
-            env.loadFields(store)
+            env.loadFromPreferenceStore(store)
         }
         
         return environments
@@ -180,7 +165,7 @@ class EnvironmentData {
         var env = new EnvironmentData(environmentName)
         
         // Load every field of the environment
-        env.loadFields(store)
+        env.loadFromPreferenceStore(store)
         
         return env
     } 
@@ -189,11 +174,25 @@ class EnvironmentData {
      * Loads the values of this class's fields from the prefernce store.
      * The values are unambiguously stored using an environment's name.
      */
-    private def loadFields(IPreferenceStore store){
+    private def loadFromPreferenceStore(IPreferenceStore store){
         val classObject = typeof(EnvironmentData)
         for(f : classObject.declaredFields){
-            f.set(this, store.getString(getStoreKey(f)))
+            if (f.type == String && !Modifier.isStatic(f.modifiers))
+                f.set(this, store.getString(getStoreKey(f.name)))
         }
+        
+        // Non String attributes
+        var commandName = ""
+        var command = ""
+        var i = 0;
+        do{
+            commandName = store.getString(getStoreKey(COMMAND_NAME_KEY+i))
+            command = store.getString(getStoreKey(COMMAND_KEY+i))
+            if(commandName != "" || command != ""){
+                commands.add(new CommandData(commandName, command))
+            }
+            i++
+        }while(commandName != "" || command != "")
     }
     
     /**
@@ -220,18 +219,33 @@ class EnvironmentData {
      * Saves this environment's fields unambiguously to the preference store by using it's unique name.
      */
     private def saveToPreferenceStore(IPreferenceStore store){
-        // The unique identifier for the stored value is a concatenation
-        // of the environment name and the field name.
         val classObject = this.class
         for(f : classObject.declaredFields){
-            store.setValue(getStoreKey(f), f.get(this).toString())
+            if (f.type == String && !Modifier.isStatic(f.modifiers))
+                store.setValue(getStoreKey(f.name), f.get(this).toString())
+        }
+        
+        // Non String attributes
+        var i = 0
+        for(comm : commands){
+            store.setValue(getStoreKey(COMMAND_KEY+i), comm.command)
+            store.setValue(getStoreKey(COMMAND_NAME_KEY+i), comm.name)
+            i++
+        }
+        // Remove further commands from store which may have been there before items where removed
+        while(store.getString(getStoreKey(COMMAND_KEY+i)) != ""){
+            store.setValue(getStoreKey(COMMAND_KEY+i), "")
+            store.setValue(getStoreKey(COMMAND_NAME_KEY+i), "")
+            i++
         }
     }
     
     /**
      * Unique identifier for a field of this environment. 
      */
-    private def getStoreKey(Field field){
-        LaunchConfigPlugin.ENVIRONMENT_ATTR+"."+name+"."+field.name
+    private def getStoreKey(String fieldName){
+        // The unique identifier for the stored value is a concatenation
+        // of the environment name and the field name.
+        LaunchConfigPlugin.ENVIRONMENT_ATTR+"."+name+"."+fieldName
     }
 }

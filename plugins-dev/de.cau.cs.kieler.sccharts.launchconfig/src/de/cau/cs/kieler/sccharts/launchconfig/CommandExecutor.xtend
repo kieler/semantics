@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.launchconfig
 
+import de.cau.cs.kieler.sccharts.launchconfig.common.CommandData
 import java.io.File
 import java.util.ArrayList
 import java.util.List
@@ -48,19 +49,20 @@ class CommandExecutor {
         this.launch = launch
     }
 
-
     /**
      * Executes the commands and proceeds only if the commands before ended successfully
      * with an error code of 0.
      * Each executed command gets its own Console View.
      */    
-    public def IStatus execute(Command... commands){
+    public def IStatus execute(CommandData... commands){
         // Execute every command squentially.
         for(c : commands){
-            // Execute and proceed only if no error occured.
-            executeSingle(c)
-            if(c.errorCode != 0){
-                throw new Exception("Error while executing "+ c.label + "\n'"+ c.fullCommand +"'.")        
+            if(c.isEnabled != null && Boolean.valueOf(c.isEnabled)){
+                // Execute and proceed only if no error occured.
+                executeSingle(c)
+                if(Integer.valueOf(c.errorCode) != 0){
+                    throw new Exception("Error while executing "+ c.name + "\n'"+ c.fullCommand +"'.")        
+                }
             }
         }
         
@@ -73,7 +75,7 @@ class CommandExecutor {
      * Double quotes (") can be use to handle a command or argument with spaces as one entity.
      * The created process gets a console in the Console View to fetch its output.
      */
-    private def executeSingle(Command command) {
+    private def executeSingle(CommandData command) {
         if (command != null && command.command != null && command.command != "") {
             val man = VariablesPlugin.getDefault.stringVariableManager
             command.fullCommand = man.performStringSubstitution(command.command)
@@ -83,10 +85,10 @@ class CommandExecutor {
             val pBuilder = new ProcessBuilder(commandWithParameters)
             pBuilder.directory(new File(project.location.toOSString))
             val p = pBuilder.start()
-            DebugPlugin.newProcess(launch, p, command.label)
+            DebugPlugin.newProcess(launch, p, command.name)
 
             // Wait until the process finished
-            command.errorCode = p.waitFor()
+            command.errorCode = String.valueOf(p.waitFor())
         }
     }
 

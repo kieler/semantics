@@ -1,0 +1,78 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2015 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+package de.cau.cs.kieler.sccharts.launchconfig.common
+
+import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
+import java.util.List
+import org.eclipse.debug.core.ILaunchConfiguration
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
+import org.eclipse.xtend.lib.annotations.Accessors
+
+/**
+ * Container for shell commands.
+ * 
+ * @author aas
+ *
+ */
+class CommandData extends ConfigurationSerializableData{
+    
+    new(){
+    }
+    
+    new(String name){
+        this(name, "")
+    }
+    
+    new(String name, String command){
+        this.name = name
+        this.command = command
+    }
+    
+    override getIdentifier(){
+        return name
+    }
+    
+    @Accessors
+    protected var String name = ""
+    
+    @Accessors
+    protected var String isEnabled = ""
+    
+    /**
+     * The command to be executed e.g.'echo ${project_name}'
+     */
+    @Accessors
+    protected var String command = ""
+    
+    /**
+     * The command ready to be executed with all variables substituted e.g. 'echo MyProject'
+     */
+    @Accessors
+    protected var String fullCommand = ""
+    
+    /**
+     * The returned error code of the process from this command.
+     */
+    @Accessors
+    protected var String errorCode = "0"
+    
+    static def loadAllFromConfiguration(ILaunchConfiguration configuration) {
+        return ConfigurationSerializableData.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS,
+            CommandData) as List<CommandData>
+    }
+    
+     static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<CommandData> datas) {
+         ConfigurationSerializableData.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS, datas)
+     }
+}

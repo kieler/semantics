@@ -113,7 +113,7 @@ class MainPage extends WizardPage {
      * to specify which wrapper code snippets should be created.
      */
     private def createWrapperCodeSnippetsComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Import Wrapper Code Snippets", 2)
+        val group = UIUtil.createGroup(parent, "Import wrapper code snippets", 2)
 
         // List
         list = new ListViewer(group, SWT.BORDER.bitwiseOr(SWT.MULTI).bitwiseOr(SWT.V_SCROLL))

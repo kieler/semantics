@@ -15,11 +15,13 @@ package de.cau.cs.kieler.sccharts.environments
 
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
+import de.cau.cs.kieler.sccharts.launchconfig.common.CommandData
 import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
 import de.cau.cs.kieler.sccharts.launchconfig.common.ExtensionLookupUtil
 import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
 import java.util.ArrayList
 import java.util.Collections
+import java.util.List
 import java.util.Set
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.debug.internal.ui.SWTFactory
@@ -33,6 +35,7 @@ import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.viewers.ListViewer
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
+import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
@@ -120,21 +123,14 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      */
     private var Text wrapperCodeSnippetsOrigin
     
-    /**
-     * The input field for a shell command that is run after the SCT compilation finished.
-     * This is typically used to further compile the generated code. 
-     */
-    private var Text compileCommand
-    /**
-     * The input field for a shell command that is run after the compile command.
-     * This is typically used to link and deploy the output created by the compile command.
-     */
-    private var Text deployCommand
-    /**
-     * The input field for a shell command that is run after the deploy command.
-     * This is typically used to run the deployed application. 
-     */
-    private var Text runCommand
+    
+    CommandData currentCommandData
+    
+    TableViewer viewer
+    
+    Text commandName
+    
+    Text command
     
     /**
      * The combobox with the related project wizard class name of the environment.
@@ -240,7 +236,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * Creates the controls for the related project wizard of the current environment.
      */
     def createWizardComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Project Wizard", 2)
+        val group = UIUtil.createGroup(parent, "Project wizard", 2)
         
         // ComboViewer
         val combo = new ComboViewer(group, SWT.DEFAULT)
@@ -313,7 +309,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * Creates the tab with the controls to set the environment's fields regarding the compilation of sct files.
      */
     private def createSCTCompilationTab(TabFolder folder){
-        val comp = createTab(folder, "SCT compilation")
+        val comp = createTab(folder, "SCT Compilation")
         
         createCompilationComponent(comp)
         createWrapperCodeComponent(comp)
@@ -323,7 +319,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * Creates the controls to set the target language, file extension and template.
      */
     def createCompilationComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "SCT compilation", 2)
+        val group = UIUtil.createGroup(parent, "Compilation", 2)
         
         SWTFactory.createLabel(group, "Language", 1)
         targetLanguage = UIUtil.createKiCoTargetsCombo(group)
@@ -343,7 +339,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
         
-        targetFileExtension = UIUtil.createTextField(group, "File Extension", UIUtil.NONE)
+        targetFileExtension = UIUtil.createTextField(group, "File extension", UIUtil.NONE)
         targetFileExtension.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
@@ -412,44 +408,90 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     private def createExecuteTab(TabFolder folder){
         val comp = createTab(folder, "Execute")
         
-        createExecuteComponent(comp)
+        createCommandTableComponent(comp)
+        createCommandNameComponent(comp)
+        createCommandComponent(comp)
     }
     
     /**
      * Creates the controls to set the compile, deploy and run commands.
      */
-    def createExecuteComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Execution", 3)
+    def createCommandTableComponent(Composite parent) {
+        val group = UIUtil.createGroup(parent, "Commands", 2)
         
-        compileCommand = UIUtil.createTextField(group, "Compile command", UIUtil.VARIABLE_BUTTON)
-        compileCommand.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                if(currentData != null){
-                    currentData.compileCommand = compileCommand.text
-                    checkConsistency()    
+        // Viewer
+        viewer = UIUtil.createCommandTable(group, false)
+        viewer.addSelectionChangedListener(new ISelectionChangedListener(){
+            
+            override selectionChanged(SelectionChangedEvent event) {
+                val selection = event.selection as IStructuredSelection
+                if(selection != null){
+                    currentCommandData = selection.firstElement as CommandData
+                    
+                    if(currentCommandData != null) {
+                        commandName.text = currentCommandData.name
+                        command.text = currentCommandData.command
+                    }
+                } else {
+                    currentCommandData = null
                 }
             }
         })
         
-        deployCommand = UIUtil.createTextField(group, "Deploy command", UIUtil.VARIABLE_BUTTON)
-        deployCommand.addModifyListener(new ModifyListener() {
+        // Buttons
+        val bcomp = UIUtil.createComposite(group, 1)
+        
+        // Add Button
+        val addButton = UIUtil.createButton(bcomp, "Add")
+        addButton.addSelectionListener(new SelectionAdapter() {
+            override void widgetSelected(SelectionEvent e) {
+                val comm = new CommandData("New Command", 'echo "hello world"')
+                val inputArray = viewer.input as ArrayList<CommandData>
+                inputArray.add(comm)
+                viewer.refresh()
+                viewer.selection = new StructuredSelection(comm)
+            }
+        })
+        
+        // Remove Button
+        UIUtil.createRemoveButton(bcomp, viewer)
+        
+        // Up Button
+        UIUtil.createUpButton(bcomp, viewer)
+        
+        // Down Button
+        UIUtil.createDownButton(bcomp, viewer)
+    }
+    
+    private def createCommandNameComponent(Composite parent){
+        val group = UIUtil.createGroup(parent, "Name", 1)
+        
+        commandName = UIUtil.createTextField(group, null, UIUtil.NONE)
+        commandName.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(currentData != null){
-                    currentData.deployCommand = deployCommand.text
-                    checkConsistency()    
+                if(commandName != null){
+                    currentCommandData.name = commandName.text
+                    viewer.refresh()   
+                }
+            }
+        })
+    }
+    
+    private def createCommandComponent(Composite parent){
+        val group = UIUtil.createGroup(parent, "Command", 2)
+        
+        // Text
+        command = UIUtil.createTextField(group, null, 0)
+        command.addModifyListener(new ModifyListener() {
+            override modifyText(ModifyEvent e) {
+                if(command != null){
+                    currentCommandData.command = command.text
+                    viewer.refresh()
                 }
             }
         })
         
-        runCommand = UIUtil.createTextField(group, "Run command", UIUtil.VARIABLE_BUTTON)
-        runCommand.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                if(currentData != null){
-                    currentData.runCommand = runCommand.text
-                    checkConsistency()    
-                }
-            }
-        })
+        UIUtil.createBrowseVariableButton(group, commandName, "Variables...")
     }
     
     /**
@@ -584,9 +626,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             wrapperCodeSnippetsOrigin.text = data.wrapperCodeSnippetsOrigin
             
             // Commands
-            compileCommand.text = data.compileCommand
-            deployCommand.text = data.deployCommand
-            runCommand.text = data.runCommand
+            viewer.input = data.commands
         }
     }
     
@@ -656,7 +696,10 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * Loads the relevant data for this page from the preference store. 
      */
     private def loadSettings(){
-        list.input = EnvironmentData.loadAllFromPreferenceStore(store)
+        if(EnvironmentData.isPreferencesStoreEmpty(store))
+            list.input = Initializer.defaultEnvironments
+        else
+            list.input = EnvironmentData.loadAllFromPreferenceStore(store)
     }
     
     /**

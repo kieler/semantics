@@ -2,6 +2,7 @@ package de.cau.cs.kieler.sccharts.launchconfig
 
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.sccharts.launchconfig.common.CommandData
 import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
 import de.cau.cs.kieler.sccharts.launchconfig.common.ModelImporter
 import de.cau.cs.kieler.sccharts.launchconfig.common.SCTCompilationData
@@ -35,9 +36,7 @@ import org.eclipse.ui.console.MessageConsoleStream
 class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     // Attribute names
-    public static val ATTR_COMPILE_COMMAND = "de.cau.cs.kieler.scchart.launchconfig.execute.command.compile"
-    public static val ATTR_DEPLOY_COMMAND = "de.cau.cs.kieler.scchart.launchconfig.execute.command.deploy"
-    public static val ATTR_RUN_COMMAND = "de.cau.cs.kieler.scchart.launchconfig.execute.command.run"
+    public static val ATTR_COMMANDS = "de.cau.cs.kieler.scchart.launchconfig.commands"
 
     public static val ATTR_SCT_FILES = "de.cau.cs.kieler.scchart.launchconfig.sct.files"
 
@@ -85,9 +84,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     var String wrapperCodeTemplate
     var String wrapperCodeSnippetDirectory
 
-    var String compileCommand
-    var String deployCommand
-    var String runCommand
+    var List<CommandData> commands
 
     var String targetLanguageFileExtension
 
@@ -216,13 +213,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         return new Job("SCT Execute Commands") {
 
             override protected run(IProgressMonitor monitor) {
-
-                val commands = #[
-                    new Command(compileCommand, "SCT Compile Command"),
-                    new Command(deployCommand, "SCT Deploy Command"),
-                    new Command(runCommand, "SCT Run Command")
-                ]
-
                 try {
                     val executor = new CommandExecutor(project, launch)
                     executor.execute(commands)
@@ -353,9 +343,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 wrapperCodeSnippetDirectory = env.wrapperCodeSnippetsDirectory
 
                 // Execution
-                compileCommand = env.compileCommand
-                deployCommand = env.deployCommand
-                runCommand = env.runCommand
+                commands = CommandData.loadAllFromConfiguration(configuration)
 
             } else {
                 throw new Exception("Environment " + environmentName + " could not be loaded from preferences.")
@@ -371,9 +359,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
 
             // Execution
-            compileCommand = configuration.getAttribute(ATTR_COMPILE_COMMAND, "")
-            deployCommand = configuration.getAttribute(ATTR_DEPLOY_COMMAND, "")
-            runCommand = configuration.getAttribute(ATTR_RUN_COMMAND, "")
+            commands = CommandData.loadAllFromConfiguration(configuration)
         }
     }
 
@@ -417,13 +403,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 "Project relative path of the compiled main file of the launched SCT application")
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainTargetWithoutExtension,
                 "Project relative path of the compiled main file of the launched SCT application without file extension")
-                
-//        setFileVariables("main",
-//            #[mainFileName, "Name of the main file of the launched SCT application"],
-//            #[mainFileLocation, "Fully qualified location of the main file of the launched SCT application"],
-//            #[mainFilePath, "Project relative path of the main file of the launched SCT application"],
-//            #[mainFileWithoutExtension, "Project relative path of the main file of the launched SCT application without file extension"]
-//        )
     }
     
     /**
