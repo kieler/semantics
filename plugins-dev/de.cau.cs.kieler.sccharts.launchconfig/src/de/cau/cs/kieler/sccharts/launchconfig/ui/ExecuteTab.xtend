@@ -60,12 +60,6 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
      */
     private var IProject project
 
-    /**
-     * Should an environment be is used for the settings?
-     * The value is set in the main tab.
-     */
-    private var boolean useEnvironment
-
     /** 
      * {@inheritDoc}
      */
@@ -201,9 +195,6 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         // Update project reference
         val projectName = workingCopy.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
         project = LaunchConfiguration.findProject(projectName)
-        
-        // Update use environment
-        useEnvironment = workingCopy.getAttribute(LaunchConfiguration.ATTR_USE_ENVIRONMENT, false)
     }
 
     /** 
@@ -237,6 +228,9 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         if(comm != null){
             name.text = comm.name
             command.text = comm.command
+        }else{
+            name.text = ""
+            command.text = ""
         }
     }
 }

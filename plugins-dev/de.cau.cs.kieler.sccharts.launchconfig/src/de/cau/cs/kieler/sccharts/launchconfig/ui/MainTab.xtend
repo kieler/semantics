@@ -48,11 +48,8 @@ import org.eclipse.swt.widgets.Text
  */
 class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
 
-    /**
-     * Checkbox to specify if an environment is used for the launch.
-     */
-    private var Button useEnvironment
-    
+    ILaunchConfiguration configuration
+
     /**
      * Combobox with all environments.
      */
@@ -117,29 +114,35 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      * Creates a group with the environment checkbox and combobox.
      */
     private def createEnvironmentComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Environment", 1)
+        val group = UIUtil.createGroup(parent, "Environment", 2)
 
-        useEnvironment = SWTFactory.createCheckButton(group, "Use environment", null, false, 1)
-
-        useEnvironment.addSelectionListener(new SelectionAdapter() {
-            override void widgetSelected(SelectionEvent e) {
-                updateLaunchConfigurationDialog()
-            }
-        });
-
-        // Because we do not want to enable/disable
-        // the checkbox when enabling/disabling the environments combobox in updateEnabled(),
-        // we put it on an extra component so they are not on the same level. 
-        val comp = UIUtil.createComposite(group, 1)
-        
         val store = LaunchConfigPlugin.^default.preferenceStore
         val environments = EnvironmentData.loadAllFromPreferenceStore(store)
-        environment = UIUtil.createEnvironmentsCombo(comp, environments)
+        
+        
+        // Combobox
+        environment = UIUtil.createEnvironmentsCombo(group, environments)
         environment.addSelectionChangedListener(new ISelectionChangedListener() {
             override void selectionChanged(SelectionChangedEvent event) {
                 updateLaunchConfigurationDialog()
             }
         });
+        
+        // Button
+        val button = UIUtil.createButton(group, "Reset values")
+        button.addSelectionListener(new SelectionAdapter(){
+            
+            override widgetSelected(SelectionEvent e) {
+                val config = configuration.getWorkingCopy()
+                selectedEnvironment?.applyToLaunchConfiguration(config)
+                config.doSave()
+                
+                // Update UI
+                for(tab : launchConfigurationDialog.tabs){
+                    tab.initializeFrom(configuration)
+                } 
+            }
+        })
     }
 
     /** 
@@ -152,6 +155,8 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      * {@inheritDoc}
      */
     override void initializeFrom(ILaunchConfiguration configuration) {
+        this.configuration = configuration
+        
         // Project
         project.text = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
         
@@ -159,8 +164,6 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         mainFile.text = configuration.getAttribute(LaunchConfiguration.ATTR_MAIN_FILE, "")
         
         // Environment
-        useEnvironment.selection = configuration.getAttribute(LaunchConfiguration.ATTR_USE_ENVIRONMENT, false)
-        
         if (environment.input != null) {
             val loadedEnvironmentName = configuration.getAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, "")
             for (env : environment.input as ArrayList<EnvironmentData>) {
@@ -182,12 +185,9 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         configuration.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, mainFile.text)
 
         // Environment
-        configuration.setAttribute(LaunchConfiguration.ATTR_USE_ENVIRONMENT, useEnvironment.selection)
-
         val env = getSelectedEnvironment()
-        if (env != null) {
+        if (env != null) 
             configuration.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, env.name)
-        }
 
         // Check the user input for consistency
         checkConsistency()
@@ -224,10 +224,8 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      */
     private def updateEnabled() {
         val List<Control> controls = #[]
-        val enabled = (LaunchConfiguration.findProject(project.text) != null) && !useEnvironment.selection
+        val enabled = (LaunchConfiguration.findProject(project.text) != null)
         UIUtil.enableControlsOnSameLevel(controls, enabled)
-
-        environment.combo.enabled = useEnvironment.selection
     }
 
     /** 

@@ -43,7 +43,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val ATTR_PROJECT = "de.cau.cs.kieler.scchart.launchconfig.main.project"
     public static val ATTR_MAIN_FILE = "de.cau.cs.kieler.scchart.launchconfig.main.file"
 
-    public static val ATTR_USE_ENVIRONMENT = "de.cau.cs.kieler.scchart.launchconfig.main.environment.use"
     public static val ATTR_ENVIRONMENT = "de.cau.cs.kieler.scchart.launchconfig.main.environment"
 
     public static val ATTR_TARGET_LANGUAGE = "de.cau.cs.kieler.scchart.launchconfig.main.target.language"
@@ -323,44 +322,17 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         // Main file
         mainFile = configuration.getAttribute(ATTR_MAIN_FILE, "")
         
-        // Environment
-        val useEnvironment = configuration.getAttribute(ATTR_USE_ENVIRONMENT, false)
-        if (useEnvironment) {
+        // Target
+        targetLanguage = configuration.getAttribute(ATTR_TARGET_LANGUAGE, "")
+        targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
+        targetLanguageFileExtension = configuration.getAttribute(ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
 
-            // Load environment data
-            val store = LaunchConfigPlugin.^default.preferenceStore
-            val environmentName = configuration.getAttribute(ATTR_ENVIRONMENT, "")
-            val env = EnvironmentData.loadFromPreferenceStore(store, environmentName)
-            if (env != null) {
+        // Wrapper code
+        wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
+        wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
 
-                // Target
-                targetLanguage = env.targetLanguage
-                targetTemplate = env.targetTemplate
-                targetLanguageFileExtension = env.targetFileExtension
-
-                // Wrapper code
-                wrapperCodeTemplate = env.wrapperCodeTemplate
-                wrapperCodeSnippetDirectory = env.wrapperCodeSnippetsDirectory
-
-                // Execution
-                commands = CommandData.loadAllFromConfiguration(configuration)
-
-            } else {
-                throw new Exception("Environment " + environmentName + " could not be loaded from preferences.")
-            }
-        } else {
-            // Target
-            targetLanguage = configuration.getAttribute(ATTR_TARGET_LANGUAGE, "")
-            targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
-            targetLanguageFileExtension = configuration.getAttribute(ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
-
-            // Wrapper code
-            wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
-            wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
-
-            // Execution
-            commands = CommandData.loadAllFromConfiguration(configuration)
-        }
+        // Execution
+        commands = CommandData.loadAllFromConfiguration(configuration)
     }
 
     /**

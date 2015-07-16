@@ -14,11 +14,13 @@
 package de.cau.cs.kieler.sccharts.launchconfig.common
 
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
+import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
+import java.lang.reflect.Modifier
 import java.util.ArrayList
 import java.util.List
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.xtend.lib.annotations.Accessors
-import java.lang.reflect.Modifier
 
 /**
  * Data container for SCCharts compilation and execution and creation of new SCCharts project.
@@ -238,6 +240,21 @@ class EnvironmentData {
             store.setValue(getStoreKey(COMMAND_NAME_KEY+i), "")
             i++
         }
+    }
+    
+    def applyToLaunchConfiguration(ILaunchConfigurationWorkingCopy config){
+        config.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, name)
+        config.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, targetLanguage)
+        config.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, targetFileExtension)
+        config.setAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, targetTemplate)
+        config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, wrapperCodeTemplate)
+        config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, wrapperCodeSnippetsDirectory)
+        
+        // Commands
+        for(command : commands){
+            command.isEnabled = String.valueOf(true)
+        }
+        CommandData.saveAllToConfiguration(config, commands)
     }
     
     /**

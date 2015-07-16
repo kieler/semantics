@@ -19,6 +19,7 @@ import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.ResourceUtil
+import de.cau.cs.kieler.sccharts.launchconfig.common.CommandData
 
 class SCTLaunchShortcut implements ILaunchShortcut {
     
@@ -122,8 +123,9 @@ class SCTLaunchShortcut implements ILaunchShortcut {
         val environmentName = project.getPersistentProperty(LaunchConfigPlugin.ENVIRIONMENT_QUALIFIER)
         if(environmentName != null){ 
             val env =  EnvironmentData.loadFromPreferenceStore(LaunchConfigPlugin.^default.preferenceStore, environmentName) 
-            config.setAttribute(LaunchConfiguration.ATTR_USE_ENVIRONMENT, true)
-            config.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, env.name)
+            
+            // Copy values from environment
+            env.applyToLaunchConfiguration(config)
         }
     } 
     

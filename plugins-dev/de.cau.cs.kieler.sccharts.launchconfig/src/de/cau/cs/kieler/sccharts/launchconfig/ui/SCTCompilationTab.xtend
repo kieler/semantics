@@ -112,12 +112,6 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
     private var IProject project
 
     /**
-     * Should an environment be used for this launch?
-     * The value is loaded from the launch configuration and set in the main page.
-     */
-    private var boolean useEnvironment
-
-    /**
      * {@inheritDoc}
      */
     override createControl(Composite parent) {
@@ -366,15 +360,13 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
      */
     override activated(ILaunchConfigurationWorkingCopy workingCopy) {
         super.activated(workingCopy)
+        
         currentData= null
         
         // Update project reference
         val projectName = workingCopy.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
         project = LaunchConfiguration.findProject(projectName)
         
-        // Update use environment
-        useEnvironment = workingCopy.getAttribute(LaunchConfiguration.ATTR_USE_ENVIRONMENT, false)
-       
         updateEnabled()
     }
 
@@ -422,18 +414,9 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
                 if(!file.exists)
                     errorMessage = "File '"+data.projectRelativePath+"' does not exist in the specified project"
             }
-            
-            // Resources in project exist
-            if (targetTemplate.text != "" && project.findMember(targetTemplate.text) == null) {
-                errorMessage = "Specified target template does not exist in this project"
-            } else if (wrapperCodeTemplate.text != "" && project.findMember(wrapperCodeTemplate.text) == null) {
-                errorMessage = "Specified wrapper code template does not exist in this project"
-            } else if (wrapperCodeSnippets.text != "" && project.findMember(wrapperCodeSnippets.text) == null) {
-                errorMessage = "Specified wrapper code snippet directory does not exist in this project"
-            }  
         }
     }
-    
+      
     /**
      * {@inheritDoc}
      */
@@ -462,7 +445,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
         
         // Enable controls that are not necessary if an environment is used
         controls = #[targetLanguage.combo, targetLanguageFileExtension, targetTemplate, wrapperCodeSnippets, wrapperCodeTemplate]
-        UIUtil.enableControlsOnSameLevel(controls, project != null && !useEnvironment)
+        UIUtil.enableControlsOnSameLevel(controls, project != null)
     }
     
     /**
