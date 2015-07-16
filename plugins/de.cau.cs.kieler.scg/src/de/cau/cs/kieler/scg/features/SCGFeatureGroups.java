@@ -26,4 +26,7 @@ public class SCGFeatureGroups {
     public final static String SCG_ID = "scg";
     public final static String SCG_NAME = "SCGraph";
     
+    public final static String SCPDG_ID = "scpdg";
+    public final static String SCPDG_NAME = "SCPDG";
+    
 }

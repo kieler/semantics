@@ -47,7 +47,7 @@ import org.eclipse.emf.ecore.EObject
  */
 
 
-class SCPDGTransformation extends AbstractProductionTransformation implements Traceable {
+class SCPDGTransformation{
     
 
     // -------------------------------------------------------------------------
@@ -76,21 +76,7 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
     
     var Entry programEntry;
     
-    override getId() {
-        return SCGTransformations::SCPDG_ID
-    }
-
-    override getName() {
-        return SCGTransformations::SCPDG_NAME
-    }    
-        
-    override getProducedFeatureId() {
-        return SCGFeatures::SCPDG_ID
-    }
-    
-    override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::DEPENDENCY_ID)
-    }
+   
 
     
 

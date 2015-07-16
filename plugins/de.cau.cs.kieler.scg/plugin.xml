@@ -55,7 +55,13 @@
             class="de.cau.cs.kieler.scg.sequentializer.GuardSequentializer">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.SCPDGTransformation">
+            class="de.cau.cs.kieler.scg.transformations.SCPDGCreateDependenciesTransformation">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.SCPDGMinimizeDependenciesTransformation">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.SCPDGRemoveNodesTransformation">
       </productionTransformationClass>
    </extension>
    <extension
@@ -81,8 +87,17 @@
       <featureGroupClass
             class="de.cau.cs.kieler.scg.features.SCGraphGroup">
       </featureGroupClass>
-      <featureClass
+      <featureGroupClass
             class="de.cau.cs.kieler.scg.features.SCPDG">
+      </featureGroupClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.features.SCPDGCreateDependencies">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.features.SCPDGMinimizeDependencies">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.features.SCPDGRemoveNode">
       </featureClass>
    </extension>
 

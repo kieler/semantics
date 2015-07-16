@@ -44,6 +44,12 @@ public class SCGTransformations {
     public final static String SEQUENTIALIZE_ID = "scg.sequentialize";
     public final static String SEQUENTIALIZE_NAME = "Sequentialize";
     
-    public final static String SCPDG_ID = "scg.scpdg";
-    public final static String SCPDG_NAME = "SCPDG";
+    public final static String SCPDG_CD_ID = "scg.scpdg.cd";
+    public final static String SCPDG_CD_NAME = "SCPDG Create Dependencies";
+    
+    public final static String SCPDG_MD_ID = "scg.scpdg.md";
+    public final static String SCPDG_MD_NAME = "SCPDG Minimize Dependencies";
+    
+    public final static String SCPDG_RN_ID = "scg.scpdg.rn";
+    public final static String SCPDG_RN_NAME = "SCPDG Remove Nodes";
 }

@@ -17,6 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.kico.features.FeatureGroup
 
 /**
  * SCG Guard Feature.
@@ -26,7 +27,7 @@ import de.cau.cs.kieler.scg.SCGraph
  * @kieler.rating 2015-05-23 proposed yellow
  *
  */
-class SCPDG extends Feature {
+class SCPDG extends FeatureGroup {
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -38,13 +39,11 @@ class SCPDG extends Feature {
     override getName() {
         return SCGFeatures::SCPDG_NAME
     }
+    
+    override getFeatureIds() {
+        newHashSet(SCGFeatures::SCPDG_CD_ID, SCGFeatures::SCPDG_MD_ID, SCGFeatures::SCPDG_RN_ID)
+    }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension AnnotationsExtensions
-
-    // This method checks, if this feature is contained in a model
-    def isContained(SCGraph scg) {
-        return scg.hasAnnotation(SCGFeatures::SCPDG_ID)
-    }
+   
 }
