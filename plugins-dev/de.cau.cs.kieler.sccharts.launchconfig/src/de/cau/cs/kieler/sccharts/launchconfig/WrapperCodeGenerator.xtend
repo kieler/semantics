@@ -91,13 +91,13 @@ class WrapperCodeGenerator {
         this.wrapperCodeSnippetDirectory = wrapperCodeSnippetDirectory
 
         this.targetLocation = new File(targetLocation)
-        this.templateLocation = new File(project.location + "/" + wrapperCodeTemplate)
+        this.templateLocation = new File(project.location + File.separator + wrapperCodeTemplate)
         this.snippetDirectoryLocation = new File(wrapperCodeSnippetDirectory)
         
         // If the snippet directory is not an absolute path for itself,
         // we interpret it as a directory in the project.
         if(!snippetDirectoryLocation.isAbsolute)
-            this.snippetDirectoryLocation = new File(project.location + "/" + wrapperCodeSnippetDirectory)
+            this.snippetDirectoryLocation = new File(project.location + File.separator + wrapperCodeSnippetDirectory)
     }
 
     /**
@@ -282,8 +282,8 @@ class WrapperCodeGenerator {
     private def getWrapperCodeAnnotationData(SCTCompilationData sctData,
         List<WrapperCodeAnnotationData> annotationDatas) {
 
-        println(project.location.toOSString+"/"+sctData.projectRelativePath)
-        val model = ModelImporter.get(project.location.toOSString+"/"+sctData.projectRelativePath)
+        println(project.location.toOSString+File.separator+sctData.projectRelativePath)
+        val model = ModelImporter.get(project.location.toOSString+File.separator+sctData.projectRelativePath)
 
         if (model != null && model instanceof State) {
             // Iterate over model to get all annotations

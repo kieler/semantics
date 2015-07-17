@@ -229,7 +229,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      */
     private def compile(SCTCompilationData data) {
         // Load model from file
-        val EObject model = ModelImporter.get(project.location.toOSString+"/"+data.projectRelativePath)
+        val EObject model = ModelImporter.get(project.location.toOSString+File.separator+data.projectRelativePath)
 
         if (model != null) {
             // Compile sct
@@ -271,7 +271,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         }
 
         // Compute fully qualified target path
-        return project.location + "/" + BUILD_DIRECTORY + "/" + projectRelativeRelevantPath +
+        return project.location + File.separator + BUILD_DIRECTORY + File.separator + projectRelativeRelevantPath +
             targetLanguageFileExtension
     }
 
@@ -285,7 +285,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         if (targetTemplate != "") {
             // Use template
-            val reader = new FileReader(new File(project.location + "/" + variableManager.performStringSubstitution(targetTemplate)))
+            val reader = new FileReader(new File(project.location + File.separator + variableManager.performStringSubstitution(targetTemplate)))
             val cfg = new Configuration(new Version(2, 3, 0))
             cfg.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
 
@@ -348,7 +348,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         
         // Main file
         val mainFileName = new File(mainFile).name
-        val mainFileLocation = if(mainFileName != "") new File(project.location+"/"+mainFile).absolutePath else ""
+        val mainFileLocation = if(mainFileName != "") new File(project.location+File.separator+mainFile).absolutePath else ""
         val mainFilePath = mainFile
         val mainFileWithoutExtension = stripExtension(new File(mainFile).name)
         setVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE, mainFileName,
@@ -364,7 +364,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         // Compiled main file
         val mainTarget = computeTargetPath(mainFile)
         val mainTargetName = new File(mainTarget).name
-        val mainTargetLocation = if(mainTargetName != "") new File(project.location+"/"+mainTarget).absolutePath else ""
+        val mainTargetLocation = if(mainTargetName != "") new File(project.location+File.separator+mainTarget).absolutePath else ""
         val mainTargetPath = mainTarget
         val mainTargetWithoutExtension = stripExtension(new File(mainTarget).name)
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName,

@@ -230,6 +230,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 checkConsistency()
             }
         })
+        name.toolTipText = "Unique name of the environment"
     }
     
     /**
@@ -241,6 +242,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         // ComboViewer
         val combo = new ComboViewer(group, SWT.DEFAULT)
         relatedProjectWizard = combo
+        relatedProjectWizard.combo.toolTipText = "Project wizard to run when creating a SCCharts project"
         
         // Fill combo
         combo.contentProvider = ArrayContentProvider.instance
@@ -273,6 +275,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                }
             }
         })
+        
     }
     
     /**
@@ -290,6 +293,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
+        mainFile.toolTipText = "Default main file name in SCChart project wizard"
+        
         
         UIUtil.createLabel(group, "Main file origin")
         val comp = UIUtil.createComposite(group, 2)
@@ -303,6 +308,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
+        mainFileOrigin.toolTipText = "Path to resource (file system or plugin) with default content for main file"
     }
 
     /**
@@ -338,6 +344,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                }
             }
         })
+        targetLanguage.combo.toolTipText = "Target transformation of the KIELER Compiler"
         
         targetFileExtension = UIUtil.createTextField(group, "File extension", UIUtil.NONE)
         targetFileExtension.addModifyListener(new ModifyListener() {
@@ -348,6 +355,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
+        targetFileExtension.toolTipText = "File extension for the target language (e.g. '.java' for Java)"
         
         targetTemplate =  UIUtil.createTextField(group, "Output template", UIUtil.NONE)
         targetTemplate.addModifyListener(new ModifyListener() {
@@ -358,6 +366,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
+        targetTemplate.toolTipText = "Optional file path with surrounding content for compiled output"
     }
     
     /**
@@ -375,6 +384,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
+        wrapperCodeTemplate.toolTipText = "Template where wrapper code is inserted"
         
         wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory", UIUtil.NONE)
         wrapperCodeSnippets.addModifyListener(new ModifyListener() {
@@ -385,7 +395,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        
+        wrapperCodeSnippets.toolTipText = "Directory path containing wrapper code snippets"
         
         UIUtil.createLabel(group, "Snippets origin")
         val comp = UIUtil.createComposite(group, 2)
@@ -399,7 +409,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        
+        wrapperCodeSnippetsOrigin.toolTipText = "Directory path (file system or platform) with default content for snippets directory when creating a SCChart project"
     }
 
     /**
@@ -452,6 +462,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 viewer.selection = new StructuredSelection(comm)
             }
         })
+        addButton.toolTipText = "Add a shell command to be run after compilation and wrapper code generation"
         
         // Remove Button
         UIUtil.createRemoveButton(bcomp, viewer)
@@ -475,6 +486,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
+        commandName.toolTipText = "User defined name for the selected command"
     }
     
     private def createCommandComponent(Composite parent){
@@ -490,6 +502,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
+        command.toolTipText = "Shell command to be executed when preceding command finished successful."
         
         UIUtil.createBrowseVariableButton(group, commandName, "Variables...")
     }

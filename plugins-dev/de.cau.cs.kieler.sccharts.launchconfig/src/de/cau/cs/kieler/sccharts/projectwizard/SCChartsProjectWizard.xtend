@@ -148,7 +148,7 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
                             // Set container for pages to directory of main file
                             val fileDir = file.parent
                             if(fileDir != null){
-                                val sourceDirectory = new Path(newlyCreatedProject.name+"/"+fileDir)
+                                val sourceDirectory = new Path(newlyCreatedProject.name+File.separator+fileDir)
                                 sctFilePage.setContainerFullPath(sourceDirectory)
                                 mainFilePage.setContainerFullPath(sourceDirectory)
                             }
@@ -272,7 +272,7 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
                 initializeSnippetsFromDirectoryOfPlatformURL(snippetsDirectory, wrapperEnv.wrapperCodeSnippetsOrigin)
             } else {
                 val source = new File(wrapperEnv.wrapperCodeSnippetsOrigin)
-                val target = new File(newlyCreatedProject.location + "/" + wrapperEnv.wrapperCodeSnippetsDirectory)
+                val target = new File(newlyCreatedProject.location + File.separator + wrapperEnv.wrapperCodeSnippetsDirectory)
                 FileUtils.copyDirectory(source, target)
             }
         }

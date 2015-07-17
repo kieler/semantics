@@ -268,7 +268,8 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
                 updateLaunchConfigurationDialog()
             }
         })
-
+        targetLanguage.combo.toolTipText = "Target transformation of the KIELER Compiler"
+        
         // File extension
         val comp = UIUtil.createComposite(group, 2)
 
@@ -278,6 +279,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
                 updateLaunchConfigurationDialog()
             }
         })
+        targetLanguageFileExtension.toolTipText = "File extension for the target language (e.g. '.java' for Java)"
     }
 
     /**
@@ -294,30 +296,33 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
                 updateLaunchConfigurationDialog()
             }
         })
+        targetTemplate.toolTipText = "Optional file path with surrounding content for compiled output"
     }
 
     /**
      * Creates a group and composite with the input controls for wrapper code generation. 
      */
     private def createWrapperCodeComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Wrapper code generation", 3)
+        val group = UIUtil.createGroup(parent, "Wrapper code generation", 4)
 
         // Input file
-        wrapperCodeTemplate = UIUtil.createTextField(group, "Input file", UIUtil.RESOURCE_BUTTON, this)
+        wrapperCodeTemplate = UIUtil.createTextField(group, "Input file", UIUtil.RESOURCE_BUTTON.bitwiseOr(UIUtil.VARIABLE_BUTTON), this)
         wrapperCodeTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 updateLaunchConfigurationDialog()
             }
         })
-
+        wrapperCodeTemplate.toolTipText = "Template where wrapper code is inserted"
+        
         // Directory with snippet definitions
-        wrapperCodeSnippets = UIUtil.createTextField(group, "Annotation snippets directory", UIUtil.CONTAINER_BUTTON,
+        wrapperCodeSnippets = UIUtil.createTextField(group, "Annotation snippets directory", UIUtil.CONTAINER_BUTTON.bitwiseOr(UIUtil.VARIABLE_BUTTON),
             this)
         wrapperCodeSnippets.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 updateLaunchConfigurationDialog()
             }
         })
+        wrapperCodeSnippets.toolTipText = "Directory path containing wrapper code snippets"
     }
 
     /**type filter text
@@ -410,7 +415,7 @@ class SCTCompilationTab extends AbstractLaunchConfigurationTab implements IProje
         if (project != null) {
             // All SCT files exist in this project
             for(data : list.input as List<SCTCompilationData>){
-                val file = new File(project.location + "/" + data.projectRelativePath)
+                val file = new File(project.location + File.separator + data.projectRelativePath)
                 if(!file.exists)
                     errorMessage = "File '"+data.projectRelativePath+"' does not exist in the specified project"
             }

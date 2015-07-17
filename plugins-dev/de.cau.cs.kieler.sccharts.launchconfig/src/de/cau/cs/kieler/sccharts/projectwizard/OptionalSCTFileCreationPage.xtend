@@ -44,7 +44,7 @@ class OptionalSCTFileCreationPage extends SCTFileCreationPage{
     new(String pageName, IStructuredSelection selection) {
         super(pageName, selection)
         
-        description = "Set the SCChart model to be created and initialied."
+        description = "Specify where the SCChart model should be created and initialized."
     }
     
     /**
@@ -66,6 +66,7 @@ class OptionalSCTFileCreationPage extends SCTFileCreationPage{
                 getWizard().getContainer().updateButtons()
             }
         })
+        createFileCheckbox.toolTipText = "The file is only created if this checkbox is checked."
         
         setControl(comp)
         this.parent = parent

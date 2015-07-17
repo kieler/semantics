@@ -14,72 +14,74 @@ import org.eclipse.debug.ui.DebugUITools
 import org.eclipse.debug.ui.ILaunchShortcut
 import org.eclipse.jface.viewers.ISelection
 import org.eclipse.jface.viewers.IStructuredSelection
+import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.window.Window
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.PlatformUI
+import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.ResourceUtil
-import de.cau.cs.kieler.sccharts.launchconfig.common.CommandData
+import de.cau.cs.kieler.sccharts.environments.Initializer
 
 class SCTLaunchShortcut implements ILaunchShortcut {
-    
+
     private IFile file
     private IProject project
-    
+
     val launchConfigurationTypeId = "de.cau.cs.kieler.sccharts.launchconfig.scchartsLaunchConfiguration"
-    
+
     /**
      * {@inheritDoc}
      */
     override void launch(IEditorPart editor, String mode) {
         val file = ResourceUtil.getFile(editor.editorInput)
-        if(file != null)
+        if (file != null)
             launch(file, mode)
     }
-    
+
     /**
      * {@inheritDoc}
      */
     override void launch(ISelection selection, String mode) {
         if (selection instanceof IStructuredSelection) {
             val s = selection as IStructuredSelection
-            if(s.firstElement instanceof IFile)
+            if (s.firstElement instanceof IFile)
                 launch(s.firstElement as IFile, mode)
         }
     }
-    
+
     /**
      * Launch the sct file by adding it to an existing launch config of this project
      * or creating a new one if none yet.
      * If a new config is created the environment used will be fetched from the project properties.
      */
-    def launch(IFile file, String mode){
-        this.file = file 
+    def launch(IFile file, String mode) {
+        this.file = file
         this.project = file.project
-        
+
         val configuration = findLaunchConfiguration(mode)
-        if(configuration != null){
+        if (configuration != null) {
             // Add the input file to the list of sct file which should be compiled
             // unless it is already in the list
             val datas = SCTCompilationData.loadAllFromConfiguration(configuration)
-            
+
             // Check if already in list
             var alreadyInList = false
-            for(data : datas){
-                if(data.projectRelativePath == file.projectRelativePath.toOSString)
+            for (data : datas) {
+                if (data.projectRelativePath == file.projectRelativePath.toOSString)
                     alreadyInList = true
             }
-            
+
             // Add if not in list
-            if(!alreadyInList){
+            if (!alreadyInList) {
                 val workingCopy = configuration.getWorkingCopy()
-                
+
                 val data = new SCTCompilationData(file.projectRelativePath.toOSString, file.name)
                 datas += data
                 SCTCompilationData.saveAllToConfiguration(workingCopy, datas)
-                workingCopy.doSave()        
+                workingCopy.doSave()
             }
-            
+
             // Launch 
             DebugUITools.launch(configuration, mode)
         }
@@ -95,7 +97,7 @@ class SCTLaunchShortcut implements ILaunchShortcut {
         }
         return configuration
     }
-    
+
     private def ILaunchConfiguration createNewConfiguration() {
         try {
             val lm = DebugPlugin.getDefault().getLaunchManager()
@@ -108,35 +110,39 @@ class SCTLaunchShortcut implements ILaunchShortcut {
         }
         return null
     }
-    
-    private def initializeConfiguration(ILaunchConfigurationWorkingCopy config){
+
+    private def initializeConfiguration(ILaunchConfigurationWorkingCopy config) {
         // Set project
         config.setAttribute(LaunchConfiguration.ATTR_PROJECT, project.name)
-        
+
         // Set main file of launch config as main file of project
         var mainFile = project.getPersistentProperty(LaunchConfigPlugin.MAIN_FILE_QUALIFIER)
-        if(mainFile == null)
+        if (mainFile == null)
             mainFile = getMainFileFromDialog()
         config.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, mainFile)
+
+        // Initialize launch config with environment
+        var EnvironmentData env
         
-        // Set environment of launch config as environment of project
+        // Get environment from project properties if possible
         val environmentName = project.getPersistentProperty(LaunchConfigPlugin.ENVIRIONMENT_QUALIFIER)
-        if(environmentName != null){ 
-            val env =  EnvironmentData.loadFromPreferenceStore(LaunchConfigPlugin.^default.preferenceStore, environmentName) 
-            
+        if (environmentName != null)
+            env = EnvironmentData.loadFromPreferenceStore(LaunchConfigPlugin.^default.preferenceStore, environmentName)
+        else
+            env = getEnvironmentFromDialog()
+
+        if (env != null)
             // Copy values from environment
             env.applyToLaunchConfiguration(config)
-        }
-    } 
-    
-    private def String getMainFileFromDialog(){
+    }
+
+    private def String getMainFileFromDialog() {
         val dialog = new ResourceSelectionDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-            project,
-            "Select the main file of the project or cancel if the project does not need one.")
+            project, "Select the main file of the project or cancel if the project does not need one.")
         dialog.title = "Main File Selection"
-        
+
         val returnCode = dialog.open()
-        if(returnCode == Window.OK){
+        if (returnCode == Window.OK) {
             val results = dialog.result
             if (results != null && results.size > 0) {
                 val result = results.get(0) as IResource
@@ -145,10 +151,44 @@ class SCTLaunchShortcut implements ILaunchShortcut {
         }
         return ""
     }
+
+    private def EnvironmentData getEnvironmentFromDialog() {
+        // Load environments
+        val store = LaunchConfigPlugin.^default.preferenceStore
+        var environments = EnvironmentData.loadAllFromPreferenceStore(store)
+        if(environments.isEmpty){
+            environments = Initializer.getDefaultEnvironments()
+            EnvironmentData.saveAllToPreferenceStore(store, environments)
+        }
+        
+        // Label provider to display environment
+        val labelProvider = new LabelProvider() {
+            override getText(Object o) {
+                return (o as EnvironmentData).name
+            }
+        }
     
-    private def getLaunchConfigurations(){
+        // Selection dialog
+        val dialog = new ElementListSelectionDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+            labelProvider)
+        dialog.title = "Environment selection"
+        dialog.message = "Select the environment which will be used to initialize the launch configuration."
+        dialog.setElements(environments)
+
+        val returnCode = dialog.open()
+        if (returnCode == Window.OK) {
+            val results = dialog.result
+            if (results != null && results.size > 0) {
+                val result = results.get(0) as EnvironmentData
+                return result
+            }
+        }
+        return null
+    }
+
+    private def getLaunchConfigurations() {
         val result = new ArrayList<ILaunchConfiguration>()
-        try{ 
+        try {
             val manager = DebugPlugin.getDefault().getLaunchManager()
             val type = manager.getLaunchConfigurationType(launchConfigurationTypeId)
             val configurations = manager.getLaunchConfigurations(type)
@@ -162,8 +202,8 @@ class SCTLaunchShortcut implements ILaunchShortcut {
         }
         return result
     }
-    
-    private def boolean isGoodMatch(ILaunchConfiguration configuration){
+
+    private def boolean isGoodMatch(ILaunchConfiguration configuration) {
         val projectName = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
         return projectName == project.name
     }

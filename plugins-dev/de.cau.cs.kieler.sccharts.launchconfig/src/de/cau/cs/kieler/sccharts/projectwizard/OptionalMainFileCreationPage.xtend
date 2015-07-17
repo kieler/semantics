@@ -52,7 +52,7 @@ class OptionalMainFileCreationPage extends WizardNewFileCreationPage{
         
         title = pageName
         fileName = "Main"
-        description = "Set the main file of the project to be created and initialized."
+        description = "Specify where the main file, containing wrapper code to run the Model, should be created and initialized."
     }
     
     /**
@@ -74,6 +74,7 @@ class OptionalMainFileCreationPage extends WizardNewFileCreationPage{
                 getWizard().getContainer().updateButtons()
             }
         })
+        createFileCheckbox.toolTipText = "The file is only created if this checkbox is checked."
         
         setControl(comp)
         this.parent = parent

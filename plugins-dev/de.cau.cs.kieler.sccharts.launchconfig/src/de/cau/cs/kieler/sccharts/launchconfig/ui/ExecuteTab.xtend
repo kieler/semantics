@@ -39,6 +39,7 @@ import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
+import org.eclipse.swt.widgets.Control
 
 /** 
  * The tab with the controls to set the execution commands (compile, deploy, run)
@@ -115,6 +116,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
             }
         })
         addButton.addSelectionListener(updateDialogSelectionProvider)
+        addButton.toolTipText = "Add a shell command to be run after compilation and wrapper code generation"
         
         // Remove Button
         val removeButton = UIUtil.createRemoveButton(bcomp, viewer)
@@ -142,6 +144,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                 }
             }
         })
+        name.toolTipText = "User defined name for the selected command"
     }
     
     private def createCommandComponent(Composite parent){
@@ -158,6 +161,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                 }
             }
         })
+        command.toolTipText = "Shell command to be executed when preceding command finished successful."
         
         // Buttons
         val comp = UIUtil.createComposite(group, 2, GridData.HORIZONTAL_ALIGN_END)
@@ -195,6 +199,8 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         // Update project reference
         val projectName = workingCopy.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
         project = LaunchConfiguration.findProject(projectName)
+        
+        updateEnabled()
     }
 
     /** 
@@ -208,6 +214,8 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
      */
     override void initializeFrom(ILaunchConfiguration configuration) {
         viewer.input = CommandData.loadAllFromConfiguration(configuration)
+        
+        updateEnabled()
     }
  
     /** 
@@ -232,5 +240,10 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
             name.text = ""
             command.text = ""
         }
+    }
+    
+    private def updateEnabled(){
+        val List<Control> controls = #[viewer.table, name, command]
+        UIUtil.enableControlsOnSameLevel(controls, project != null)
     }
 }

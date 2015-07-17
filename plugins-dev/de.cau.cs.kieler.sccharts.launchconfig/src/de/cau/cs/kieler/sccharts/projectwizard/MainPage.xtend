@@ -29,6 +29,7 @@ import org.eclipse.swt.SWT
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Label
 
 /**
  * The main page for an SCCharts project wizard containing a control to select the environment to use
@@ -48,7 +49,7 @@ class MainPage extends WizardPage {
      * The combobox with the environments.
      */
     var ComboViewer environmentsCombo
-    
+
     /**
      * The multiselect list with all environments.
      * The wrapper code snippets from the selected environments in this list
@@ -56,15 +57,12 @@ class MainPage extends WizardPage {
      */
     var ListViewer list
 
-
-
     protected new(String pageName) {
         super(pageName)
-        
-        title = pageName
-        description = "Set the environment for the SCCharts project."
-    }
 
+        title = pageName
+        description = "Set the environment for the project."
+    }
 
     /**
      * {@inheritDoc}
@@ -89,12 +87,12 @@ class MainPage extends WizardPage {
      */
     private def loadEnvironments() {
         val store = LaunchConfigPlugin.^default.preferenceStore
-        
+
         // It might be that on a new installation there are no environments initialized.
         // So we do it here manually.
-        if(EnvironmentData.isPreferencesStoreEmpty(store))
+        if (EnvironmentData.isPreferencesStoreEmpty(store))
             new Initializer().initializeDefaultPreferences()
-        
+
         // Load environments from store
         environments = EnvironmentData.loadAllFromPreferenceStore(store)
     }
@@ -103,9 +101,13 @@ class MainPage extends WizardPage {
      * Creates a group with the environments combobox.
      */
     private def createEnvironmentsComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Environment", 2)
+        val group = UIUtil.createGroup(parent, "Environment", 1)
 
         environmentsCombo = UIUtil.createEnvironmentsCombo(group, environments)
+
+        // Information label
+        UIUtil.createLabel(group, "The environment specifies the following project wizard\n" +
+            "and is used to initialize launches and resources.")
     }
 
     /**
@@ -113,7 +115,7 @@ class MainPage extends WizardPage {
      * to specify which wrapper code snippets should be created.
      */
     private def createWrapperCodeSnippetsComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Import wrapper code snippets", 2)
+        val group = UIUtil.createGroup(parent, "Import wrapper code snippets", 1)
 
         // List
         list = new ListViewer(group, SWT.BORDER.bitwiseOr(SWT.MULTI).bitwiseOr(SWT.V_SCROLL))
@@ -138,16 +140,20 @@ class MainPage extends WizardPage {
                     return ""
             }
         })
+
+        // Information label
+        UIUtil.createLabel(group, "Wrapper code snippets of the selected environments\n" +
+            "are copied to the new project to use them for wrapper code generation.")
     }
 
     /**
      * @return the selected environments in the list.
      */
-    public def ArrayList<EnvironmentData> getSelectedWrapperCodeEnvironments(){
+    public def ArrayList<EnvironmentData> getSelectedWrapperCodeEnvironments() {
         val output = new ArrayList<EnvironmentData>()
         val selection = list.selection as StructuredSelection
-        for(element : selection.toArray){
-            if(element instanceof EnvironmentData)
+        for (element : selection.toArray) {
+            if (element instanceof EnvironmentData)
                 output += element as EnvironmentData
         }
         return output
