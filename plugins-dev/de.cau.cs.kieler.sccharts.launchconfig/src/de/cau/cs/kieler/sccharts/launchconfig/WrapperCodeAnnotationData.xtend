@@ -23,31 +23,61 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * Data container for wrapper code annotations in an SCT file.
+ * 
  * @author aas
  *
  */
 class WrapperCodeAnnotationData {
     
+    /**
+     * True if the variable of this annotation is an input variable.
+     */
     @Accessors
     private boolean input
     
+    /**
+     * True if the variable of this annotation is an output variable.
+     */
     @Accessors
     private boolean output
     
+    /**
+     * The name of the annotation.
+     * e.g. 'Clock' for an annotation '@Clock 500'.
+     */
     @Accessors
     private String name
     
+    /**
+     * A list with the arguments for this annotation.
+     * e.g. #['500'] for an annotation '@Clock 500'.
+     */
     @Accessors
     private List<String> arguments = newArrayList()
     
+    /**
+     * Variable's name of this annotation.
+     * e.g. 'clock' for an 'input int clock'.
+     */
     @Accessors
     private String varName
     
+    /**
+     * Variable's type of this annotation.
+     * e.g. 'int' for an 'input int clock'.
+     */
     @Accessors
     private String varType
     
+    /**
+     * Specifies if the template engine should throw an error or ignore it
+     * if a wrapper code snippet for this annotation does not exist.
+     */
     @Accessors
     private boolean ignoreNonExistingSnippet
+    
+    
     
     new(){
     }    
@@ -57,6 +87,10 @@ class WrapperCodeAnnotationData {
         getData(annotation)
     }
     
+    
+    /**
+     * Fetches the data for wrapper code generation from a variable declaration of an SCT file.
+     */
     def getData(Declaration decl){
         input = decl.input
         output = decl.output
@@ -67,6 +101,9 @@ class WrapperCodeAnnotationData {
         }
     }
     
+    /**
+     * Fetches the data for wrapper code generation from a variable's annotation of an SCT file.
+     */
     def getData(Annotation annotation){
         name = annotation.name
         switch (annotation) {

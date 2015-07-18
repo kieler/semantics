@@ -21,6 +21,10 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
 
+/**
+ * Dummy implementation for the SCCharts preference page.
+ * Currently this is used only to have a parent for the environments page. 
+ */
 class SCChartsPage extends PreferencePage implements IWorkbenchPreferencePage {
 
     override init(IWorkbench workbench) {

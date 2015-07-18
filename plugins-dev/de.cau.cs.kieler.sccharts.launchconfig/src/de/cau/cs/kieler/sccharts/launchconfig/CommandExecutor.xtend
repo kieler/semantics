@@ -26,7 +26,7 @@ import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunch
 
 /**
- * This class handles the execution of shell commands in the context of an SCT Application launch.
+ * This class handles the execution of shell commands in the context of an SCT project launch.
  * 
  * @author aas
  * 
@@ -37,6 +37,7 @@ class CommandExecutor {
      * The project from the launch config.
      */
     private var IProject project
+    
     /**
      * The launch in which this object has been created.
      */
@@ -50,10 +51,11 @@ class CommandExecutor {
     }
 
     /**
-     * Executes the commands and proceeds only if the commands before ended successfully
-     * with an error code of 0.
+     * Executes the commands and waits for their termination.
+     * Successive commands are executed only if the commands before ended successfully
+     * (with an error code of 0).
      * Each executed command gets its own Console View.
-     */    
+     */
     public def IStatus execute(CommandData... commands){
         // Execute every command squentially.
         for(c : commands){

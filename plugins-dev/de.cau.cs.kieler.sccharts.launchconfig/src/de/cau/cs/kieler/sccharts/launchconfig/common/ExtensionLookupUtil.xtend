@@ -20,8 +20,8 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.ui.IWorkbenchWizard
 
 /**
- * Auxilary class to search for a extensions
- * and create wizards using the fully qualified class name of a wizard's implementation
+ * Auxilary class to search for installed extensions
+ * and create wizards using the fully qualified class name of a wizard's implementation.
  * 
  * @author aas
  *

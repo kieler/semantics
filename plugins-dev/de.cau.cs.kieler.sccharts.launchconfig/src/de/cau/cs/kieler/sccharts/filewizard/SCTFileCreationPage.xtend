@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage
 
 /**
- * Implementation of a IWizardPage
+ * Implementation of an IWizardPage
  * that contains controls to specify a sct file which should be created.
  * 
  * @author aas
@@ -75,6 +75,8 @@ class SCTFileCreationPage extends WizardNewFileCreationPage {
      *         false otherwise.
      */
     public def boolean isOk(){
+        // isOk is basically only a public wrapper for validatePage
+        // such that it can be accessed from anywhere. 
         return validatePage()
     }
     
@@ -84,6 +86,7 @@ class SCTFileCreationPage extends WizardNewFileCreationPage {
      */
     public def boolean performFinish(){
         if(isOk()){
+            // Create file
             val file = createNewFile()
             
             // Add default contents to sccharts
@@ -107,7 +110,7 @@ class SCTFileCreationPage extends WizardNewFileCreationPage {
         writer.close();
     }
     
-     /**
+    /**
      * A string with the default contents of an sct file.
      */
     //This should really be loaded from a (configurable?) file.

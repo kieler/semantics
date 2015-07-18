@@ -27,25 +27,15 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class CommandData extends ConfigurationSerializableData{
     
-    new(){
-    }
-    
-    new(String name){
-        this(name, "")
-    }
-    
-    new(String name, String command){
-        this.name = name
-        this.command = command
-    }
-    
-    override getIdentifier(){
-        return name
-    }
-    
+    /**
+     * User defined name of this command.
+     */
     @Accessors
     protected var String name = ""
     
+    /**
+     * Specifies if this command should be executed in a SCT launch.
+     */
     @Accessors
     protected var String isEnabled = ""
     
@@ -67,12 +57,50 @@ class CommandData extends ConfigurationSerializableData{
     @Accessors
     protected var String errorCode = "0"
     
+    
+    
+    
+    new(){
+    }
+    
+    new(String name){
+        this(name, "")
+    }
+    
+    new(String name, String command){
+        this.name = name
+        this.command = command
+    }
+    
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getIdentifier(){
+        return name
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override setIdentifier(String value){
+        name = value
+    }
+    
+    /**
+     * Loads all data objects from the given launch configuration.
+     * @return list with the loaded command data objects.
+     */
     static def loadAllFromConfiguration(ILaunchConfiguration configuration) {
         return ConfigurationSerializableData.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS,
             CommandData) as List<CommandData>
     }
     
-     static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<CommandData> datas) {
-         ConfigurationSerializableData.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS, datas)
-     }
+    /**
+     * Saves a list with data objects to the given launch configuration.
+     * All other command data in the launch configuration is overwritten.
+     */
+    static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<CommandData> datas) {
+        ConfigurationSerializableData.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS, datas)
+    }
 }

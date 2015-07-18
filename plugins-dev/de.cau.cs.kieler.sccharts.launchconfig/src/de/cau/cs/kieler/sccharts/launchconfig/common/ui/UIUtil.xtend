@@ -63,7 +63,8 @@ import static de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil.*
 /**
  * Factory class to create SWT widgets
  * and util class for general purpose UI actions such as enabling/disabling controls.
- * If the same controls are created multiple times (e.g. an input with a browse button) it might be worthy to put it in UIUtil.
+ * If the same controls are created multiple times (e.g. an input with a browse button or a ComboViewer for KiCo transformations)
+ * it might be worthy to put it in UIUtil.
  * 
  * @author aas
  */
@@ -98,6 +99,10 @@ class UIUtil {
      */
     public static val FILE_SYSTEM_DIRECTORY_BUTTON = 1 << 5
 
+    /**
+     * Creates a new group for controls.
+     * @return the new group.
+     */
     static def createGroup(Composite parent, String text, int columns) {
         createGroup(parent, text, columns, GridData.FILL_HORIZONTAL)
     }
@@ -110,6 +115,10 @@ class UIUtil {
         return SWTFactory.createGroup(parent, text, columns, 1, fill)
     }
 
+    /**
+     * Creates a new group for controls.
+     * @return the new group.
+     */
     static def createComposite(Composite parent, int columns) {
         return createComposite(parent, columns, GridData.FILL_HORIZONTAL)
     }
@@ -122,6 +131,9 @@ class UIUtil {
         return SWTFactory.createComposite(parent, parent.font, columns, 1, fill, 0, 0)
     }
 
+    /**
+     * @see createTextField(Composite, String, int, IProjectHolder)
+     */
     static def createTextField(Composite parent, String label, int buttonFlags) {
         createTextField(parent, label, buttonFlags, null)
     }
@@ -377,7 +389,7 @@ class UIUtil {
      * Creates a combobox with the environments.
      * @return the new combobox.
      */
-    static def createEnvironmentsCombo(Composite parent, ArrayList<EnvironmentData> environments) {
+    static def createEnvironmentsCombo(Composite parent, List<EnvironmentData> environments) {
         // Combo
         val combo = new ComboViewer(parent, SWT.DEFAULT)
         combo.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
@@ -403,12 +415,16 @@ class UIUtil {
         return combo
     }
 
+    /**
+     * Creates a table viewer for command data objects optionally with or without checkboxes.
+     * @return the created table viewer 
+     */
     static def createCommandTable(Composite parent, boolean checkboxes) {
         // Table
-        val table = if(checkboxes)
-                        new Table(parent, SWT.CHECK.bitwiseOr(SWT.BORDER))
-                    else
-                        new Table(parent, SWT.BORDER)
+        val table = if (checkboxes)
+                new Table(parent, SWT.CHECK.bitwiseOr(SWT.BORDER))
+            else
+                new Table(parent, SWT.BORDER)
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
         table.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -451,8 +467,6 @@ class UIUtil {
             viewer = new TableViewer(table)
         }
 
-        viewer.setContentProvider(ArrayContentProvider.instance);
-
         // Columns
         val nameColumn = createTableColumn(viewer, "Name", 150)
         nameColumn.labelProvider = new ColumnLabelProvider() {
@@ -470,12 +484,17 @@ class UIUtil {
             }
         };
 
-        // Fill with input
+        // Content
+        viewer.setContentProvider(ArrayContentProvider.instance);
         viewer.input = newArrayList()
 
         return viewer
     }
 
+    /**
+     * Creates a column for a table viewer with the given title and width.
+     * @return the created column.
+     */
     static def createTableColumn(TableViewer viewer, String title, int width) {
         val viewerColumn = new TableViewerColumn(viewer, SWT.NONE);
         val column = viewerColumn.getColumn()
@@ -485,7 +504,11 @@ class UIUtil {
         column.setMoveable(false);
         return viewerColumn
     }
-
+    
+    /**
+     * Creates a button to move an element in a content viewer,
+     * which uses an ArrayList as content, one element up.
+     */
     static def createUpButton(Composite parent, ContentViewer viewer) {
         val button = UIUtil.createButton(parent, "Up")
         button.addSelectionListener(new SelectionAdapter() {
@@ -506,6 +529,10 @@ class UIUtil {
         return button
     }
 
+    /**
+     * Creates a button to move an element in a content viewer,
+     * which uses an ArrayList as content, one element down.
+     */
     static def createDownButton(Composite parent, ContentViewer viewer) {
         val button = createButton(parent, "Down")
         button.addSelectionListener(new SelectionAdapter() {
@@ -525,6 +552,10 @@ class UIUtil {
         return button
     }
 
+    /**
+     * Creates a button to remove an element in a content viewer,
+     * which uses an ArrayList as content.
+     */
     static def createRemoveButton(Composite parent, ContentViewer viewer) {
         val button = UIUtil.createButton(parent, "Remove")
         button.addSelectionListener(new SelectionAdapter() {
@@ -567,7 +598,7 @@ class UIUtil {
 
     /**
      * Creates a label.
-     * @return a new push label.
+     * @return a new label.
      */
     static def createLabel(Composite parent, String label) {
         return SWTFactory.createLabel(parent, label, 1)
@@ -579,6 +610,13 @@ class UIUtil {
      */
     private static def boolean isFlagSet(int bitmask, int flag) {
         return bitmask.bitwiseAnd(flag) > 0
+    }
+    
+    /**
+     * @return bitmask where a bit is set if one of the input integers has this bit set.
+     */
+    public static def getBitmask(int... bits){
+        return bits.fold(0)[a,b | a.bitwiseOr(b)]
     }
 
     /**

@@ -15,13 +15,12 @@ package de.cau.cs.kieler.sccharts.environments
 
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
+import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
 import de.cau.cs.kieler.sccharts.launchconfig.common.CommandData
 import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
 import de.cau.cs.kieler.sccharts.launchconfig.common.ExtensionLookupUtil
 import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
 import java.util.ArrayList
-import java.util.Collections
-import java.util.List
 import java.util.Set
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.debug.internal.ui.SWTFactory
@@ -51,8 +50,9 @@ import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
 
 /**
- * Implementation of the preferences page for SCCharts environments.
- * Contains controls to create,remove,update and show the environments in the plugin's preference store.  
+ * Implementation of the preferences page for SCChart environments.
+ * Contains controls to create, remove, update and show the environments in the plugin's preference store.
+ * Environments contain defaults to create, initialize and launch an SCChart project.  
  * 
  * @author aas
  * 
@@ -60,7 +60,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage
 class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePage {
 
     /**
-     * The workbench set in the init(...) method.
+     * The workbench from the init(...) method.
      */
     private var IWorkbench workbench
     
@@ -117,20 +117,31 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      */
     private var Text wrapperCodeSnippets
     /**
-     * The input field for a directory which contains the inital data of the wrapper code snippet directory when creating a new project.
+     * The input field for a directory which contains the inital data
+     * of the wrapper code snippet directory when creating a new project.
      * This might either be a file system path or a URL with the platform protocol provided by eclipse
      * (e.g. 'platform:/plugin/org.myplugin/directory/with/snippets').
      */
     private var Text wrapperCodeSnippetsOrigin
     
     
-    CommandData currentCommandData
-    
+    /**
+     * The control to display all shell commands for the currently selected environment.
+     */
     TableViewer viewer
-    
+    /**
+     * The currently selected command from the table viewer or null if there is no selection.
+     */
+    CommandData currentCommandData
+    /**
+     * The input field for the name of the currently selected command.
+     */
     Text commandName
-    
+    /**
+     * The input field for the shell command to be executed.
+     */
     Text command
+    
     
     /**
      * The combobox with the related project wizard class name of the environment.
@@ -143,7 +154,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     private var Text mainFile
     /**
      * The input field for a path to the file which contains the default contents
-     * of a newly created main file of the environment.
+     * of a newly created main file.
      */
     private var Text mainFileOrigin
 
@@ -284,6 +295,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     def createMainFileComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Main file", 2)
         
+        // Main file
         mainFile = UIUtil.createTextField(group, "Main file", UIUtil.NONE)
         mainFile.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
@@ -293,9 +305,9 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        mainFile.toolTipText = "Default main file name in SCChart project wizard"
+        mainFile.toolTipText = "Default main file name for SCChart project wizard"
         
-        
+        // Main file origin
         UIUtil.createLabel(group, "Main file origin")
         val comp = UIUtil.createComposite(group, 2)
         
@@ -308,7 +320,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        mainFileOrigin.toolTipText = "Path to resource (file system or plugin) with default content for main file"
+        mainFileOrigin.toolTipText = "Path to resource (file system or platform) with default content for main file"
     }
 
     /**
@@ -327,6 +339,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     def createCompilationComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Compilation", 2)
         
+        // Language
         SWTFactory.createLabel(group, "Language", 1)
         targetLanguage = UIUtil.createKiCoTargetsCombo(group)
         targetLanguage.addSelectionChangedListener(new ISelectionChangedListener {
@@ -346,6 +359,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         targetLanguage.combo.toolTipText = "Target transformation of the KIELER Compiler"
         
+        // File extension
         targetFileExtension = UIUtil.createTextField(group, "File extension", UIUtil.NONE)
         targetFileExtension.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
@@ -357,6 +371,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         targetFileExtension.toolTipText = "File extension for the target language (e.g. '.java' for Java)"
         
+        // Template
         targetTemplate =  UIUtil.createTextField(group, "Output template", UIUtil.NONE)
         targetTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
@@ -366,7 +381,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        targetTemplate.toolTipText = "Optional file path with surrounding content for compiled output"
+        targetTemplate.toolTipText = "Template for the compiled output.\nUse ${" +
+            LaunchConfiguration.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
     }
     
     /**
@@ -375,6 +391,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     def createWrapperCodeComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Wrapper code generation", 2)
         
+        // Input template
         wrapperCodeTemplate = UIUtil.createTextField(group, "Input file", UIUtil.NONE)
         wrapperCodeTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
@@ -386,6 +403,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         wrapperCodeTemplate.toolTipText = "Template where wrapper code is inserted"
         
+        // Snippets directory
         wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory", UIUtil.NONE)
         wrapperCodeSnippets.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
@@ -397,6 +415,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         wrapperCodeSnippets.toolTipText = "Directory path containing wrapper code snippets"
         
+        // Snippets origin
         UIUtil.createLabel(group, "Snippets origin")
         val comp = UIUtil.createComposite(group, 2)
         
@@ -474,6 +493,9 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         UIUtil.createDownButton(bcomp, viewer)
     }
     
+    /**
+     * Creates the control to set the user defined name of the currently selected command.
+     */
     private def createCommandNameComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Name", 1)
         
@@ -489,10 +511,12 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         commandName.toolTipText = "User defined name for the selected command"
     }
     
+    /**
+     * Creates the control to set the shell command.
+     */
     private def createCommandComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Command", 2)
         
-        // Text
         command = UIUtil.createTextField(group, null, 0)
         command.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
@@ -545,6 +569,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
 
         // Buttons
+        
+        // Add
         val bcomp = UIUtil.createComposite(comp, 1, GridData.HORIZONTAL_ALIGN_END)
         val addButton = UIUtil.createButton(bcomp, "Add")
         addButton.addSelectionListener(new SelectionAdapter(){
@@ -564,41 +590,18 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 checkConsistency()
             }
         })
-        val removeButton = UIUtil.createButton(bcomp, "Remove")
+        
+        // Remove
+        val removeButton = UIUtil.createRemoveButton(bcomp, list)
         removeButton.addSelectionListener(new SelectionAdapter(){
             override widgetSelected(SelectionEvent e) {
-                val inputArray = (list.input as ArrayList<EnvironmentData>)
-                inputArray.remove(currentData)
-                list.refresh()
-                list.selection = new StructuredSelection()
                 checkConsistency()
             }
         })
         
         // Up / Down
-        val upButton =  UIUtil.createButton(bcomp, "Up")
-        upButton.addSelectionListener(new SelectionAdapter(){
-            override widgetSelected(SelectionEvent e) {
-                val inputArray = (list.input as ArrayList<EnvironmentData>)
-                val index = inputArray.indexOf(currentData)
-                if(index > 0){
-                    Collections.swap(inputArray, index, index-1)
-                    list.refresh()
-                }
-            }
-        })
-        
-        val downButton =  UIUtil.createButton(bcomp, "Down")
-        downButton.addSelectionListener(new SelectionAdapter(){
-            override widgetSelected(SelectionEvent e) {
-                val inputArray = (list.input as ArrayList<EnvironmentData>)
-                val index = inputArray.indexOf(currentData)
-                if(index > -1 && index < inputArray.size-1){
-                    Collections.swap(inputArray, index, index+1)
-                    list.refresh()
-                }
-            }
-        })
+        UIUtil.createUpButton(bcomp, list)
+        UIUtil.createDownButton(bcomp, list)
     }
 
     /**
@@ -709,7 +712,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * Loads the relevant data for this page from the preference store. 
      */
     private def loadSettings(){
-        if(EnvironmentData.isPreferencesStoreEmpty(store))
+        if(EnvironmentData.isPreferenceStoreEmpty(store))
             list.input = Initializer.defaultEnvironments
         else
             list.input = EnvironmentData.loadAllFromPreferenceStore(store)
@@ -755,9 +758,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             // No comma in a name
             if(env.name.contains(","))
                 return "Environment names must not contain a comma."
-                
-            // Check that files exist
-            
         }
         
         return null

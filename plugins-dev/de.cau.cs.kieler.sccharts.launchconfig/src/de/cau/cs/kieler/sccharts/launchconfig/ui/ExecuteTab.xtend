@@ -37,27 +37,40 @@ import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
-import org.eclipse.swt.widgets.Control
 
 /** 
- * The tab with the controls to set the execution commands (compile, deploy, run)
+ * The tab with the controls to set shell commands which will be executed
+ * after the compilation and wrapper code generation have been finished.
  * 
  * @author aas
  */
 class ExecuteTab extends AbstractLaunchConfigurationTab {
 
-    CommandData currentData
-    
+    /**
+     * The control to show all commands and enable/disable them. 
+     */
     TableViewer viewer
     
+    /**
+     * The input field to set the user defined name of a command.
+     */
     Text name
     
-    Text command
-
     /**
-     * The project set in the main tab.
+     * The input field to set the shell command which should be executed.
+     */
+    Text command
+    
+    /**
+     * The currently selected command data or null if there is nothing selected.
+     */
+    CommandData currentData
+    
+    /**
+     * The project of this launch configuration.
      */
     private var IProject project
 
@@ -76,6 +89,9 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         createCommandComponent(comp)
     }
 
+    /**
+     * Creates the table viewer with checkboxes to show all commands and enable/disable them.
+     */
     private def createTableComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Commands", 2)
         
@@ -131,6 +147,9 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         downButton.addSelectionListener(updateDialogSelectionProvider)
     }
 
+    /**
+     * Creates the control to set a command's user defined name.
+     */
     private def createNameComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Name", 1)
         
@@ -147,6 +166,9 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         name.toolTipText = "User defined name for the selected command"
     }
     
+    /**
+     * Creates the controls to set the shell command.
+     */
     private def createCommandComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Command", 1)
         
@@ -232,6 +254,9 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         return "Execute"
     }
     
+    /**
+     * Update all controls content with the given command data object.
+     */
     private def updateControls(CommandData comm){
         if(comm != null){
             name.text = comm.name
@@ -242,6 +267,9 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         }
     }
     
+    /**
+     * Enable or disable all controls depending on this launch configuration's project. 
+     */
     private def updateEnabled(){
         val List<Control> controls = #[viewer.table, name, command]
         UIUtil.enableControlsOnSameLevel(controls, project != null)

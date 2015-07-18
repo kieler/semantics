@@ -20,12 +20,19 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /** 
- * Data container for sct files compilation.
- * The objects are created in the launch configuration dialog of SCCharts applications.
+ * Data container for sct file compilation.
+ * The objects are created in the launch configuration dialog of SCChart applications.
  * 
  * @author aas
  */
 class SCTCompilationData extends ConfigurationSerializableData {
+
+    @Accessors
+    protected var String projectRelativePath = ""
+    @Accessors
+    protected var String name = ""
+
+
 
     new() {
     }
@@ -35,18 +42,39 @@ class SCTCompilationData extends ConfigurationSerializableData {
         this.name = fileName
     }
 
+
+
+    /**
+     * {@inheritDoc}
+     */    
     override getIdentifier() {
         return projectRelativePath
     }
+    
+    /**
+     * {@inheritDoc}
+     */    
+    override setIdentifier(String value) {
+        projectRelativePath = value
+    }
+    
+    /**
+     * Loads all data objects from the given launch configuration.
+     * @return list with the loaded compilation data objects.
+     */
+    static def loadAllFromConfiguration(ILaunchConfiguration configuration) {
+        return ConfigurationSerializableData.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_SCT_FILES,
+            SCTCompilationData) as List<SCTCompilationData>
+    }
 
-    // The fields are protected instead private
-    // so that they can be accessed by the ConfigurationSerializableData class
-    // to serialize/deserialize them.
-    @Accessors
-    protected var String projectRelativePath = ""
-    @Accessors
-    protected var String name = ""
-
+    /**
+     * Saves a list with data objects to the given launch configuration.
+     * All other sct compilation data in the launch configuration is overwritten.
+     */
+    static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<SCTCompilationData> datas) {
+        ConfigurationSerializableData.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_SCT_FILES, datas)
+    }
+    
     /**
      * Compares this object with another object.
      * @return true if the other object is an SCTCompilationData and the paths are equal.<br />
@@ -59,13 +87,4 @@ class SCTCompilationData extends ConfigurationSerializableData {
         }
         return false
     }
-
-    static def loadAllFromConfiguration(ILaunchConfiguration configuration) {
-        return ConfigurationSerializableData.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_SCT_FILES,
-            SCTCompilationData) as List<SCTCompilationData>
-    }
-    
-     static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<SCTCompilationData> datas) {
-         ConfigurationSerializableData.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_SCT_FILES, datas)
-     }
 }

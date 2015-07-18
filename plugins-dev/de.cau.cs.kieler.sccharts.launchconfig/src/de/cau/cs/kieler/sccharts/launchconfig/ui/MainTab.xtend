@@ -22,7 +22,6 @@ import java.util.ArrayList
 import java.util.List
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
-import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ISelectionChangedListener
@@ -35,7 +34,6 @@ import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.layout.GridLayout
-import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
@@ -48,6 +46,9 @@ import org.eclipse.swt.widgets.Text
  */
 class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
 
+    /**
+     * The launch configuration this object is working on.
+     */
     ILaunchConfiguration configuration
 
     /**
@@ -112,7 +113,9 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
     }
     
     /**
-     * Creates a group with the environment checkbox and combobox.
+     * Creates a group with a combobox showing all environments
+     * and a button to revert the values of this launch configuration
+     * to the values of the selected environment.
      */
     private def createEnvironmentComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Environment", 2)

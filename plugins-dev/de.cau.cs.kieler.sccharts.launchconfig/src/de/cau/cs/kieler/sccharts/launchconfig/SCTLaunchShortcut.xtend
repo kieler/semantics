@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.sccharts.launchconfig
 
+import de.cau.cs.kieler.sccharts.environments.Initializer
 import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
 import de.cau.cs.kieler.sccharts.launchconfig.common.SCTCompilationData
 import java.util.ArrayList
@@ -21,13 +22,21 @@ import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.ResourceUtil
-import de.cau.cs.kieler.sccharts.environments.Initializer
 
 class SCTLaunchShortcut implements ILaunchShortcut {
 
+    /**
+     * The file handle from which this launch shortcut has been startet.
+     */
     private IFile file
+    /**
+     * The project handle from which this launch shortcut has been startet.
+     */
     private IProject project
 
+    /**
+     * The extension id of this launch shortcut set in the plugin.xml.
+     */
     val launchConfigurationTypeId = "de.cau.cs.kieler.sccharts.launchconfig.scchartsLaunchConfiguration"
 
     /**
@@ -44,24 +53,26 @@ class SCTLaunchShortcut implements ILaunchShortcut {
      */
     override void launch(ISelection selection, String mode) {
         if (selection instanceof IStructuredSelection) {
-            val s = selection as IStructuredSelection
-            if (s.firstElement instanceof IFile)
-                launch(s.firstElement as IFile, mode)
+            val structuredSelection = selection as IStructuredSelection
+            if (structuredSelection.firstElement instanceof IFile)
+                launch(structuredSelection.firstElement as IFile, mode)
         }
     }
 
     /**
      * Launch the sct file by adding it to an existing launch config of this project
      * or creating a new one if none yet.
-     * If a new config is created the environment used will be fetched from the project properties.
+     * If a new config is created the main file and environment used to initialize it
+     * will be fetched from the project preferences if possible or from a user dialog if not.
      */
     def launch(IFile file, String mode) {
         this.file = file
         this.project = file.project
 
+        // Find launch config for the project or initialize new one.
         val configuration = findLaunchConfiguration(mode)
         if (configuration != null) {
-            // Add the input file to the list of sct file which should be compiled
+            // Add the input file to the list of sct files which should be compiled
             // unless it is already in the list
             val datas = SCTCompilationData.loadAllFromConfiguration(configuration)
 
@@ -87,17 +98,24 @@ class SCTLaunchShortcut implements ILaunchShortcut {
         }
     }
 
+    /**
+     * Searches for a sct launch configuration in the project. Creates a new one if none found.
+     * @return sct launch configuration for the project. 
+     */
     private def ILaunchConfiguration findLaunchConfiguration(String mode) {
         val configs = getLaunchConfigurations()
         var ILaunchConfiguration configuration
-        if (configs.length == 0) {
+        if (configs.isEmpty) 
             configuration = createNewConfiguration()
-        } else {
+        else 
             configuration = configs.get(0)
-        }
+        
         return configuration
     }
 
+    /**
+     * Creates and initializes a new sct launch config for the project.
+     */
     private def ILaunchConfiguration createNewConfiguration() {
         try {
             val lm = DebugPlugin.getDefault().getLaunchManager()
@@ -111,6 +129,11 @@ class SCTLaunchShortcut implements ILaunchShortcut {
         return null
     }
 
+    /**
+     * Initializes a new sct launch config for the project.
+     * The main file and environment used are loaded from the project's properties
+     * if possible or from dialogs if not.
+     */
     private def initializeConfiguration(ILaunchConfigurationWorkingCopy config) {
         // Set project
         config.setAttribute(LaunchConfiguration.ATTR_PROJECT, project.name)
@@ -136,6 +159,10 @@ class SCTLaunchShortcut implements ILaunchShortcut {
             env.applyToLaunchConfiguration(config)
     }
 
+    /**
+     * Opens a dialog such that the user can select this project's main file.
+     * @return the project relative path of the selected file.  
+     */
     private def String getMainFileFromDialog() {
         val dialog = new ResourceSelectionDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
             project, "Select the main file of the project or cancel if the project does not need one.")
@@ -152,6 +179,10 @@ class SCTLaunchShortcut implements ILaunchShortcut {
         return ""
     }
 
+    /**
+     * Opens a dialog such that the user can select an SCChart environment for this launch.
+     * @return the selected EnvironmentData.
+     */
     private def EnvironmentData getEnvironmentFromDialog() {
         // Load environments
         val store = LaunchConfigPlugin.^default.preferenceStore
@@ -186,6 +217,10 @@ class SCTLaunchShortcut implements ILaunchShortcut {
         return null
     }
 
+    /**
+     * Searches for all sct launch configurations for this project.
+     * @return list with the launch configurations.
+     */
     private def getLaunchConfigurations() {
         val result = new ArrayList<ILaunchConfiguration>()
         try {
@@ -203,6 +238,9 @@ class SCTLaunchShortcut implements ILaunchShortcut {
         return result
     }
 
+    /**
+     * Checks if the launch configuration is for this project.
+     */
     private def boolean isGoodMatch(ILaunchConfiguration configuration) {
         val projectName = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
         return projectName == project.name

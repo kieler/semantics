@@ -14,24 +14,13 @@ class LaunchConfigPlugin extends AbstractUIPlugin implements BundleActivator  {
     private static LaunchConfigPlugin plugin;
     
     /**
-     * Qualifier for a environment's name.
+     * Qualifier used to set the environment name property of a SCCharts project.
      */
     public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(LaunchConfigPlugin.ID, "environment")
     /**
-     * Qualifier for a main files project relative path.
+     * Qualifier used to set the main file's project relative path of a SCCharts project.
      */
     public static val MAIN_FILE_QUALIFIER = new QualifiedName(LaunchConfigPlugin.ID, "main.file")
-    
-    
-    
-    /**
-     * Key for an attribute which holds a comma separated string of environment names.
-     */
-    public static val ENVIRONMENTS_CSV_ATTR = "environments"
-    /**
-     * Key for an attribute which holds an name of an environment.
-     */
-    public static val ENVIRONMENT_ATTR = "environment"
 
     /**
      * The constructor

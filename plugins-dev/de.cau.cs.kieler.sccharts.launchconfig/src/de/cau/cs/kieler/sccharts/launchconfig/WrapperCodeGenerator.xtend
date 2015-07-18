@@ -31,7 +31,7 @@ import org.freemarker.FreeMarkerPlugin
 import static org.freemarker.FreeMarkerPlugin.*
 
 /**
- * This class generates wrapper code for sct models.
+ * This class generates wrapper code for SCT models.
  * Annotations in the SCT file are mapped to macro calls which are injected in the input template.
  * Afterwards the macro calls are evaluated by the template engine and the wrapper code which they define is inserted.
  * 
@@ -109,6 +109,8 @@ class WrapperCodeGenerator {
         if (wrapperCodeTemplate != "" && wrapperCodeSnippetDirectory != "") {
 
             val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
+
+            // Debug output macro calls
 //            System.err.println(templateWithMacroCalls)
             
             processTemplateAndSaveOutput(templateWithMacroCalls)
@@ -116,7 +118,8 @@ class WrapperCodeGenerator {
     }
 
     /**
-     * @return a String with the input template's wrapper code plus injected macro calls from annotations of the given SCT files.
+     * @return a String with the input template's wrapper code
+     * plus injected macro calls from annotations of the given SCT files.
      */
     private def String getTemplateWithMacroCalls(SCTCompilationData... datas) {
         
@@ -204,8 +207,8 @@ class WrapperCodeGenerator {
     }
 
     /**
-     * @return a String which globally sets variables with information
-     *         about the next variable to be used.  
+     * @return a string to set information about the variable which the annotation is used for.
+     *         as well as the macro call for the annotation.    
      */
     private static def String getTemplateCodeForAnnotation(WrapperCodeAnnotationData data) {
         return getMetaAssignments(data.varName, data.varType)+
@@ -213,7 +216,7 @@ class WrapperCodeGenerator {
     }
 
     /**
-     * @return a String which globally sets information
+     * @return a string which globally sets information
      *         about the next variable to be used.  
      */
     private static def String getMetaAssignments(String varname, String vartype) {
@@ -221,7 +224,7 @@ class WrapperCodeGenerator {
     }
 
     /**
-     * @return a String with the macro call for an wrapper code annotation data.
+     * @return a string with the macro call for an wrapper code annotation data.
      */
     private static def String getMacroCall(WrapperCodeAnnotationData data) {        
         var txt = ""

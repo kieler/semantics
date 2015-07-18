@@ -18,6 +18,7 @@ import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
 import de.cau.cs.kieler.sccharts.launchconfig.common.EnvironmentData
 import de.cau.cs.kieler.sccharts.launchconfig.common.ui.UIUtil
 import java.util.ArrayList
+import java.util.List
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.IStructuredSelection
@@ -29,7 +30,6 @@ import org.eclipse.swt.SWT
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.widgets.Label
 
 /**
  * The main page for an SCCharts project wizard containing a control to select the environment to use
@@ -43,7 +43,7 @@ class MainPage extends WizardPage {
     /**
      * The environments loaded from this plugins preference store.
      */
-    var ArrayList<EnvironmentData> environments
+    var List<EnvironmentData> environments
 
     /**
      * The combobox with the environments.
@@ -57,7 +57,9 @@ class MainPage extends WizardPage {
      */
     var ListViewer list
 
-    protected new(String pageName) {
+
+
+    new(String pageName) {
         super(pageName)
 
         title = pageName
@@ -90,7 +92,7 @@ class MainPage extends WizardPage {
 
         // It might be that on a new installation there are no environments initialized.
         // So we do it here manually.
-        if (EnvironmentData.isPreferencesStoreEmpty(store))
+        if (EnvironmentData.isPreferenceStoreEmpty(store))
             new Initializer().initializeDefaultPreferences()
 
         // Load environments from store
@@ -107,7 +109,7 @@ class MainPage extends WizardPage {
 
         // Information label
         UIUtil.createLabel(group, "The environment specifies the following project wizard\n" +
-            "and is used to initialize launches and resources.")
+            "and is used to initialize launches and resources.\nEnvironments are configured in the preferences.")
     }
 
     /**
@@ -143,7 +145,7 @@ class MainPage extends WizardPage {
 
         // Information label
         UIUtil.createLabel(group, "Wrapper code snippets of the selected environments\n" +
-            "are copied to the new project to use them for wrapper code generation.")
+            "will be copied to the new project.\nSelect or deselect multiple items by holding Control.")
     }
 
     /**

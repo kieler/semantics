@@ -27,17 +27,17 @@ import org.eclipse.ui.IWorkbenchWizard
 class SCChartsFileWizard extends Wizard implements IWorkbenchWizard {
     
     /**
-     * The workbench set in the init(...) method.
+     * The workbench from the init(...) method.
      */
     private var IWorkbench workbench
     
     /**
-     * The selection set in the init(...) method.
+     * The selection from the init(...) method.
      */
     private var IStructuredSelection selection
     
     /**
-     * The page to create an sct file.
+     * Page to create an sct file.
      */
     private SCTFileCreationPage sctPage
     

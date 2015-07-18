@@ -20,6 +20,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl
 
 /** 
+ * Auxilary class to load an EObject from a fully qualified file path.
+ * 
  * @author aas
  */
 class ModelImporter {

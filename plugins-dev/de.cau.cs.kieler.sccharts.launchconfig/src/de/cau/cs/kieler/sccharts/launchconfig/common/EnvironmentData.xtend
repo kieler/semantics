@@ -13,39 +13,62 @@
  */
 package de.cau.cs.kieler.sccharts.launchconfig.common
 
-import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfigPlugin
 import de.cau.cs.kieler.sccharts.launchconfig.LaunchConfiguration
-import java.lang.reflect.Modifier
-import java.util.ArrayList
 import java.util.List
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * Data container for SCCharts compilation and execution and creation of new SCCharts project.
+ * Data container for default settings to use in SCCharts compilation and execution
+ * as well as creation of new SCCharts project.
  * 
  * @author aas
  *
  */
-class EnvironmentData {
+class EnvironmentData extends ConfigurationSerializableData {
+    // Attribute names for the preference store.
+    /**
+     * Key for the attribute which holds a comma separated string of environment names.
+     */
+    private static val ENVIRONMENT_IDENTIFIERS_ATTR = "environments"
     
+    /**
+     * Key for the attributes which holds the shell commands.
+     */
     private static val String COMMAND_KEY = "command"
+    /**
+     * Key for the attribute which holds the user defined names of commands.
+     */
     private static val String COMMAND_NAME_KEY = "command.name"
     
-    new(){
-    }
-    
-    new(String name){
-        this.name = name
-    }
-    
+    // Fields
     /**
      * The unique name of the environment.
      * It is used to unambiguously store this environment's data in a preference store. 
      */
     @Accessors
     protected String name = ""
+    
+    /**
+     * The class name of an implementation of the related project wizard for this environment.
+     */
+    @Accessors
+    protected String relatedProjectWizardClass = ""
+    
+    /**
+     * A project relative path to the default main file.
+     * When creating a new SCCharts project, this value is used to initialize the main file creation page. 
+     */
+    @Accessors
+    protected String mainFile = ""
+    /**
+     * A path to a file with the initial contents of a newly created main file of this environment.
+     * This might either be a file system path or a URL with the platform protocol provided by eclipse
+     * (e.g. 'platform:/plugin/org.myplugin/path/to/my/Main.java').
+     */
+    @Accessors
+    protected String mainFileOrigin = ""
     
     
     
@@ -67,9 +90,7 @@ class EnvironmentData {
      */
     @Accessors
     protected String targetTemplate = ""
-    
-    
-    
+
     /**
      * A path to a file used as template for wrapper code generation.
      * Generated wrapper code is inserted in this file.
@@ -93,97 +114,106 @@ class EnvironmentData {
 
 
 
+    /**
+     * List with commands which should be executed after the compilation and wrapper code generation
+     * of an SCT launch ended successfully.
+     */
     @Accessors
     protected List<CommandData> commands = newArrayList()
 
 
     
+    new(){
+    }
+    
+    new(String name){
+        this.name = name
+    }
+    
+    
     /**
-     * The class name of an implementation of the related project wizard for this environment.
-     */
-    @Accessors
-    protected String relatedProjectWizardClass = ""
-    
-    
+     * {@inheritDoc}
+     */    
+    override getIdentifier() {
+        return name
+    }
     
     /**
-     * A project relative path to the default main file.
-     * When creating a new SCCharts project, this value is used to initialize the main file creation page. 
-     */
-    @Accessors
-    protected String mainFile = ""
-    /**
-     * A path to a file with the initial contents of a newly created main file of this environment.
-     * This might either be a file system path or a URL with the platform protocol provided by eclipse
-     * (e.g. 'platform:/plugin/org.myplugin/path/to/my/Main.java').
-     */
-    @Accessors
-    protected String mainFileOrigin = ""
-    
-    
+     * {@inheritDoc}
+     */    
+    override setIdentifier(String value) {
+        name = value
+    }
     
     /**
      * @return true if the preference store does not contain any environment definitions.<br />
      *         false otherwise.
      */
-    public static def boolean isPreferencesStoreEmpty(IPreferenceStore store){
-        return store.getString(LaunchConfigPlugin.ENVIRONMENTS_CSV_ATTR) == ""
+    public static def boolean isPreferenceStoreEmpty(IPreferenceStore store){
+        return store.getString(EnvironmentData.ENVIRONMENT_IDENTIFIERS_ATTR) == ""
     }
     
     /**
-     * Loads all environments from the preference store which have been saved using saveAllToPreferenceStore(...).
-     * @return list with the environments saved in the preference store.
+     * Saves the environments to the preference store.
+     * They can be retrieved by using loadAllFromPreferenceStore(...)
      */
-    public static def ArrayList<EnvironmentData> loadAllFromPreferenceStore(IPreferenceStore store){
-        val environmentsCSV = store.getString(LaunchConfigPlugin.ENVIRONMENTS_CSV_ATTR)
+    public static def saveAllToPreferenceStore(IPreferenceStore store, List<EnvironmentData> environments){
+        ConfigurationSerializableData.saveAllToPreferenceStore(store, EnvironmentData.ENVIRONMENT_IDENTIFIERS_ATTR, environments)
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    protected override saveToPreferenceStore(IPreferenceStore store){
+        // String attributes
+        super.saveToPreferenceStore(store)
         
-        // No environments specified
-        if(environmentsCSV == "")
-            return newArrayList()
-        
-        // Split names on comma
-        val environmentsNames = environmentsCSV.split(",")
-        
-        // Load every environment
-        val environments = new ArrayList<EnvironmentData>()
-        for(envName : environmentsNames){
-            var env = new EnvironmentData(envName)
-            environments += env
-            
-            // Load every field of the environment
-            env.loadFromPreferenceStore(store)
+        // Non string attributes
+        var i = 0
+        for(comm : commands){
+            store.setValue(getStoreKey(COMMAND_KEY+i), comm.command)
+            store.setValue(getStoreKey(COMMAND_NAME_KEY+i), comm.name)
+            i++
         }
         
-        return environments
+        // Remove further commands from store
+        // which might have been there in an earlier state of this environment.
+        while(store.getString(getStoreKey(COMMAND_KEY+i)) != ""){
+            store.setValue(getStoreKey(COMMAND_KEY+i), "")
+            store.setValue(getStoreKey(COMMAND_NAME_KEY+i), "")
+            i++
+        }
     }
     
     /**
-     * Creates an environment with the data from a preference store.
-     * The name is used to unambiguously identify the environment.
-     * @return the loaded environment.
+     * Loads all environments from the preference store
+     * which have been saved using saveAllToPreferenceStore(...).
+     * @return list with the environments from the preference store.
+     */
+    public static def List<EnvironmentData> loadAllFromPreferenceStore(IPreferenceStore store){
+        return ConfigurationSerializableData.loadAllFromPreferenceStore(store, EnvironmentData.ENVIRONMENT_IDENTIFIERS_ATTR, EnvironmentData)
+                as List<EnvironmentData>
+    }
+    
+    /**
+     * Creates an environment with the name and loads its settings from the preference store.
+     * @return the created environment.
      */
     public static def EnvironmentData loadFromPreferenceStore(IPreferenceStore store, String environmentName) {
-        
         var env = new EnvironmentData(environmentName)
-        
-        // Load every field of the environment
         env.loadFromPreferenceStore(store)
         
         return env
-    } 
+    }
     
     /**
-     * Loads the values of this class's fields from the prefernce store.
-     * The values are unambiguously stored using an environment's name.
+     * {@inheritDoc}
      */
-    private def loadFromPreferenceStore(IPreferenceStore store){
-        val classObject = typeof(EnvironmentData)
-        for(f : classObject.declaredFields){
-            if (f.type == String && !Modifier.isStatic(f.modifiers))
-                f.set(this, store.getString(getStoreKey(f.name)))
-        }
+    protected override loadFromPreferenceStore(IPreferenceStore store){
+        // String attributes
+        super.loadFromPreferenceStore(store)
         
-        // Non String attributes
+        // Non string attributes
         var commandName = ""
         var command = ""
         var i = 0;
@@ -198,50 +228,8 @@ class EnvironmentData {
     }
     
     /**
-     * Saves the environments in the preference store.
-     * They can be retrieved by using loadAllFromPreferenceStore(...)
+     * Set this environment's values as values of the launch configuration. 
      */
-    public static def saveAllToPreferenceStore(IPreferenceStore store, ArrayList<EnvironmentData> environments){
-        // Save environment names as comma separated values
-        var environmentsCSV = "" 
-        for(env : environments){
-            if(environmentsCSV != "")
-                environmentsCSV += ","
-            environmentsCSV += env.name
-        }
-        store.setValue(LaunchConfigPlugin.ENVIRONMENTS_CSV_ATTR, environmentsCSV)
-        
-        // Save environments
-        for(env : environments){
-            env.saveToPreferenceStore(store)
-        }
-    }
-    
-    /**
-     * Saves this environment's fields unambiguously to the preference store by using it's unique name.
-     */
-    private def saveToPreferenceStore(IPreferenceStore store){
-        val classObject = this.class
-        for(f : classObject.declaredFields){
-            if (f.type == String && !Modifier.isStatic(f.modifiers))
-                store.setValue(getStoreKey(f.name), f.get(this).toString())
-        }
-        
-        // Non String attributes
-        var i = 0
-        for(comm : commands){
-            store.setValue(getStoreKey(COMMAND_KEY+i), comm.command)
-            store.setValue(getStoreKey(COMMAND_NAME_KEY+i), comm.name)
-            i++
-        }
-        // Remove further commands from store which may have been there before items where removed
-        while(store.getString(getStoreKey(COMMAND_KEY+i)) != ""){
-            store.setValue(getStoreKey(COMMAND_KEY+i), "")
-            store.setValue(getStoreKey(COMMAND_NAME_KEY+i), "")
-            i++
-        }
-    }
-    
     def applyToLaunchConfiguration(ILaunchConfigurationWorkingCopy config){
         config.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, name)
         config.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, targetLanguage)
@@ -251,18 +239,9 @@ class EnvironmentData {
         config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, wrapperCodeSnippetsDirectory)
         
         // Commands
-        for(command : commands){
+        for(command : commands)
             command.isEnabled = String.valueOf(true)
-        }
-        CommandData.saveAllToConfiguration(config, commands)
-    }
-    
-    /**
-     * Unique identifier for a field of this environment. 
-     */
-    private def getStoreKey(String fieldName){
-        // The unique identifier for the stored value is a concatenation
-        // of the environment name and the field name.
-        LaunchConfigPlugin.ENVIRONMENT_ATTR+"."+name+"."+fieldName
+            
+        CommandData.saveAllToConfiguration(config, commands)    
     }
 }
