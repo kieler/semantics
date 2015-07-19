@@ -680,14 +680,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (topdown()) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOING, 37, 24, 0, PortSide::SOUTH)
-                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 24, 0, PortSide::SOUTH)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 40, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 40, 24, 0, PortSide::SOUTH)
                 node.addPort("DEBUGPORT", MINIMALWIDTH, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
             } else {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 1, PortSide::EAST)
-                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 15, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 15, 1, PortSide::EAST)
             }
         ]
     }
@@ -780,8 +780,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 7, 12.5f, 0, PortSide::WEST)
                 else
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 68, 12.5f, 0, PortSide::EAST)
-                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 21, 1, PortSide::SOUTH)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 40, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 40, 21, 1, PortSide::SOUTH)
                 port.addLayoutParam(LayoutOptions::OFFSET, -1.5f)
             } else {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
@@ -790,8 +790,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 37.5f, 0, 0, PortSide::NORTH)
                 else
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 37.5f, 20, 0, PortSide::SOUTH)
-                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 15, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 15, 1, PortSide::EAST)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0f)
             }
         ]
@@ -833,12 +833,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             if (topdown) {
                 val port = node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
-                node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 40, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 40, 24, 0, PortSide::SOUTH)
             } else {
                 val port = node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
-                node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 15, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 15, 1, PortSide::EAST)
             }
         ]
     }
@@ -884,10 +888,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 val port = node.addPort(SCGPORTID_OUTGOING, 37.5f, 25, 0, PortSide::SOUTH)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 40, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 40, 24, 0, PortSide::SOUTH)
             } else {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 val port = node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 15, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 15, 1, PortSide::EAST)
             }
         ]
     }
@@ -921,9 +929,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 40, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 40, 24, 0, PortSide::SOUTH)
             } else {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 15, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 15, 1, PortSide::EAST)
             }
         ]
     }
@@ -957,9 +969,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 40, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 40, 24, 0, PortSide::SOUTH)
             } else {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 15, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 15, 1, PortSide::EAST)
             }
         ]
     }
@@ -1005,9 +1021,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (topdown) {
                 val port = node.addPort(SCGPORTID_INCOMING, 36, 0, 1, PortSide::NORTH)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 40, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 40, 24, 0, PortSide::SOUTH)
             } else {
                 val port = node.addPort(SCGPORTID_INCOMING, 0, 37.5f, 1, PortSide::WEST)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 15, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 15, 1, PortSide::EAST)
             }
         ]
     }
@@ -1055,9 +1075,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (topdown) {
                 val port = node.addPort(SCGPORTID_OUTGOING, 36, 25, 0, PortSide::SOUTH)
                 port.addLayoutParam(LayoutOptions::OFFSET, -0.5f)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 40, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 40, 24, 0, PortSide::SOUTH)
             } else {
                 val port = node.addPort(SCGPORTID_OUTGOING, 0, 37.5f, 0, PortSide::EAST)
                 port.addLayoutParam(LayoutOptions::OFFSET, -0.5f)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 15, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 15, 1, PortSide::EAST)
             }
         ]
     }
