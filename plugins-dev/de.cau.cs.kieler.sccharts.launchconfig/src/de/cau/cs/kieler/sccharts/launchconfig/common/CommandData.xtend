@@ -91,7 +91,7 @@ class CommandData extends ConfigurationSerializableData{
      * Loads all data objects from the given launch configuration.
      * @return list with the loaded command data objects.
      */
-    static def loadAllFromConfiguration(ILaunchConfiguration configuration) {
+    static def List<CommandData> loadAllFromConfiguration(ILaunchConfiguration configuration) {
         return ConfigurationSerializableData.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS,
             CommandData) as List<CommandData>
     }

@@ -23,7 +23,9 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.106.1",
  org.eclipse.ui.console;bundle-version="3.5.300",
  de.cau.cs.kieler.core.annotations.text;bundle-version="0.4.3",
  org.eclipse.jdt.core;bundle-version="3.10.2",
- org.apache.commons.io;bundle-version="2.0.1"
+ org.apache.commons.io;bundle-version="2.0.1",
+ de.cau.cs.kieler.kex;bundle-version="0.3.4",
+ de.cau.cs.kieler.kex.ui;bundle-version="0.3.4"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPoliBundle-Vendor: Christian-Albrechts-Universität zu Kiel
 cy: lazy

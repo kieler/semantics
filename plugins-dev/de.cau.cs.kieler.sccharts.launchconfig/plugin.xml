@@ -65,7 +65,7 @@
          point="org.eclipse.ui.newWizards">
       <category
             id="de.cau.cs.kieler.sccharts.wizard.category"
-            name="SCCharts">
+            name="KIELER SCCharts">
       </category>
       <wizard
             category="de.cau.cs.kieler.sccharts.wizard.category"
@@ -112,6 +112,69 @@
       <initializer
             class="de.cau.cs.kieler.sccharts.environments.Initializer">
       </initializer>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kex">
+      <category
+            id="de.cau.cs.kieler.sccharts.examples"
+            title="SCCharts">
+      </category>
+      <example
+            author="KIELER Workgroup"
+            category="de.cau.cs.kieler.sccharts.examples"
+            contact="kieler@informatik.uni-kiel.de"
+            description="Example project with wrapper code from annotations which compiles and deploys to LEGO Mindstorms with leJOS NXT"
+            generation_date="folks_this_field_is_user_input_idenpendent"
+            id="de.cau.cs.kieler.sccharts.examples.mindstorms.nxj"
+            overview_pic="examples/nxj_project/image.png"
+            root_directory="examples/nxj_project/"
+            title="SCCharts for leJOS NXT">
+         <resource
+               direct_open="false"
+               local_path="examples/nxj_project/src/"
+               resource_type="folder">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxj_project/sct-gen/"
+               resource_type="folder">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxj_project/snippets/"
+               resource_type="folder">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxj_project/snippets/mindstorms_nxj/"
+               resource_type="folder">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxj_project/sct-gen/Main.java"
+               resource_type="file">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxj_project/sct-gen/Model.java"
+               resource_type="file">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxj_project/snippets/mindstorms_nxj/snippets.ftl"
+               resource_type="file">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxj_project/src/Main.ftl"
+               resource_type="file">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxj_project/src/Model.sct"
+               resource_type="file">
+         </resource>
+      </example>
    </extension>
 
 </plugin>
