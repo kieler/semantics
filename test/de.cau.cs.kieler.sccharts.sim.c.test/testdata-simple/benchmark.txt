@@ -4068,7 +4068,7 @@ build   14-Jul-2015 22:42:43    +++ WRITE TEXT FILE
 build   14-Jul-2015 22:42:43    <#### BENCHMARK ####>
 build   14-Jul-2015 22:42:43    /test-sccharts-c/02-hierarchyimmediatecommunication.bench
 build   14-Jul-2015 22:42:43    13
-build   14-Jul-2015 22:42:43    benchTime:0.008610000000000001
+build   14-Jul-2015 22:42:43    benchTime:0.017691
 build   14-Jul-2015 22:42:43    benchSource:3378.0
 build   14-Jul-2015 22:42:43    benchExecutable:8464.0
 build   14-Jul-2015 22:42:43    benchCompileTime:41.0
@@ -5245,7 +5245,7 @@ build   14-Jul-2015 22:43:01    +++ WRITE TEXT FILE
 build   14-Jul-2015 22:43:01    <#### BENCHMARK ####>
 build   14-Jul-2015 22:43:01    /test-sccharts-c/129-priorities.bench
 build   14-Jul-2015 22:43:01    4
-build   14-Jul-2015 22:43:01    benchTime:0.002054
+build   14-Jul-2015 22:43:01    benchTime:0.005296
 build   14-Jul-2015 22:43:01    benchSource:2348.0
 build   14-Jul-2015 22:43:01    benchExecutable:5120.0
 build   14-Jul-2015 22:43:01    benchCompileTime:19.0
@@ -5514,7 +5514,7 @@ build   14-Jul-2015 22:43:06    +++ WRITE TEXT FILE
 build   14-Jul-2015 22:43:06    <#### BENCHMARK ####>
 build   14-Jul-2015 22:43:06    /test-sccharts-c/121-goodcycle.bench
 build   14-Jul-2015 22:43:06    5
-build   14-Jul-2015 22:43:06    benchTime:0.001862
+build   14-Jul-2015 22:43:06    benchTime:0.004177
 build   14-Jul-2015 22:43:06    benchSource:2127.0
 build   14-Jul-2015 22:43:06    benchExecutable:4552.0
 build   14-Jul-2015 22:43:06    benchCompileTime:10.0
@@ -7443,7 +7443,7 @@ build   14-Jul-2015 22:43:38    +++ WRITE TEXT FILE
 build   14-Jul-2015 22:43:38    <#### BENCHMARK ####>
 build   14-Jul-2015 22:43:38    /test-sccharts-c/145-immediate-normaltermination.bench
 build   14-Jul-2015 22:43:38    5
-build   14-Jul-2015 22:43:38    benchTime:0.001274
+build   14-Jul-2015 22:43:38    benchTime:0.0028070000000000005
 build   14-Jul-2015 22:43:38    benchSource:1769.0
 build   14-Jul-2015 22:43:38    benchExecutable:3640.0
 build   14-Jul-2015 22:43:38    benchCompileTime:7.0
