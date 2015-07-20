@@ -4,14 +4,13 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.ui;
 
-import org.eclipse.xtext.ui.DefaultUiModule;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Manual modifications go to {de.cau.cs.kieler.sccharts.text.sct.ui.SctUiModule}
  */
 @SuppressWarnings("all")
-public abstract class AbstractSctUiModule extends DefaultUiModule {
+public abstract class AbstractSctUiModule extends org.eclipse.xtext.ui.DefaultUiModule {
 	
 	public AbstractSctUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
@@ -101,6 +100,11 @@ public abstract class AbstractSctUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.generator.builder.BuilderIntegrationFragment
 	public Class<? extends org.eclipse.xtext.ui.editor.IXtextEditorCallback> bindIXtextEditorCallback() {
 		return org.eclipse.xtext.builder.nature.NatureAddingEditorCallback.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.builder.BuilderIntegrationFragment
+	public Class<? extends org.eclipse.xtext.generator.IContextualOutputConfigurationProvider> bindIContextualOutputConfigurationProvider() {
+		return org.eclipse.xtext.builder.EclipseOutputConfigurationProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.builder.BuilderIntegrationFragment
