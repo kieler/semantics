@@ -13,10 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.validation
 
-import org.eclipse.xtext.validation.Check
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
+import org.eclipse.xtext.validation.Check
 
 /**
  * @author ssm
@@ -25,7 +24,7 @@ import de.cau.cs.kieler.sccharts.TransitionType
 class SctValidator extends SctJavaValidator {
 
     @Check
-    public def void checkInitialState(de.cau.cs.kieler.sccharts.ControlflowRegion region) {
+    public def void checkInitialState(ControlflowRegion region) {
         // Do not consider the root region == SCChart
         if (region.getParentState() != null) {
             // check if parent state has declared any REAL region not only a
@@ -66,5 +65,11 @@ class SctValidator extends SctJavaValidator {
                 }
             }
         }
+    } 
+    
+    @Check
+    public def void checkConstInitializationInStates(de.cau.cs.kieler.sccharts.Scope scope) {
+        scope.declarations.forEach[ it.checkConstInitialization ]
     }    
+
 }

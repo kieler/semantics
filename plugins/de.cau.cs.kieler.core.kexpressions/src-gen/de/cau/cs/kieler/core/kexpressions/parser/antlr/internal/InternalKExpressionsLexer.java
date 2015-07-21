@@ -12,45 +12,45 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalKExpressionsLexer extends Lexer {
+    public static final int RULE_COMMENT_ANNOTATION=10;
     public static final int RULE_BOOLEAN=8;
-    public static final int T__40=40;
-    public static final int RULE_ID=4;
-    public static final int T__41=41;
-    public static final int T__29=29;
-    public static final int T__28=28;
-    public static final int T__27=27;
-    public static final int T__26=26;
-    public static final int T__25=25;
-    public static final int T__24=24;
-    public static final int T__23=23;
-    public static final int T__22=22;
-    public static final int RULE_ANY_OTHER=15;
-    public static final int T__21=21;
-    public static final int T__20=20;
-    public static final int RULE_FLOAT=7;
-    public static final int RULE_SL_COMMENT=13;
-    public static final int EOF=-1;
-    public static final int RULE_HOSTCODE=5;
-    public static final int RULE_ML_COMMENT=11;
-    public static final int T__30=30;
-    public static final int T__19=19;
-    public static final int T__31=31;
-    public static final int T__32=32;
     public static final int RULE_STRING=9;
+    public static final int RULE_SL_COMMENT=13;
+    public static final int T__19=19;
+    public static final int T__37=37;
     public static final int T__16=16;
+    public static final int T__38=38;
+    public static final int T__17=17;
+    public static final int T__39=39;
+    public static final int T__18=18;
     public static final int T__33=33;
     public static final int T__34=34;
-    public static final int T__18=18;
     public static final int T__35=35;
-    public static final int T__17=17;
     public static final int T__36=36;
-    public static final int T__37=37;
-    public static final int RULE_NUMBER=12;
-    public static final int T__38=38;
-    public static final int T__39=39;
-    public static final int RULE_INT=6;
+    public static final int EOF=-1;
+    public static final int T__30=30;
+    public static final int T__31=31;
+    public static final int T__32=32;
+    public static final int RULE_ID=4;
     public static final int RULE_WS=14;
-    public static final int RULE_COMMENT_ANNOTATION=10;
+    public static final int RULE_ANY_OTHER=15;
+    public static final int RULE_NUMBER=12;
+    public static final int T__26=26;
+    public static final int RULE_HOSTCODE=5;
+    public static final int T__27=27;
+    public static final int T__28=28;
+    public static final int RULE_INT=6;
+    public static final int T__29=29;
+    public static final int T__22=22;
+    public static final int RULE_ML_COMMENT=11;
+    public static final int T__23=23;
+    public static final int RULE_FLOAT=7;
+    public static final int T__24=24;
+    public static final int T__25=25;
+    public static final int T__40=40;
+    public static final int T__41=41;
+    public static final int T__20=20;
+    public static final int T__21=21;
 
     // delegates
     // delegators
@@ -1795,13 +1795,13 @@ public class InternalKExpressionsLexer extends Lexer {
     static final String DFA15_maxS =
         "\2\71\1\146\2\uffff";
     static final String DFA15_acceptS =
-        "\3\uffff\1\1\1\2";
+        "\3\uffff\1\2\1\1";
     static final String DFA15_specialS =
         "\5\uffff}>";
     static final String[] DFA15_transitionS = {
             "\1\1\2\uffff\12\2",
             "\12\2",
-            "\1\3\1\uffff\12\2\54\uffff\1\4",
+            "\1\4\1\uffff\12\2\54\uffff\1\3",
             "",
             ""
     };
@@ -1866,7 +1866,7 @@ public class InternalKExpressionsLexer extends Lexer {
         "\27\1\uffff\1\33\1\36\1\37\2\uffff\1\41\1\44\1\uffff\1\34\1\35\3"+
         "\uffff\1\20\1\30\2\uffff\1\40\1\uffff";
     static final String DFA24_specialS =
-        "\1\0\24\uffff\1\3\3\uffff\1\1\36\uffff\1\2\26\uffff}>";
+        "\1\3\24\uffff\1\1\3\uffff\1\0\36\uffff\1\2\26\uffff}>";
     static final String[] DFA24_transitionS = {
             "\11\35\2\34\2\35\1\34\22\35\1\34\1\16\1\31\2\35\1\22\1\10\1"+
             "\25\1\1\1\2\1\21\1\17\1\6\1\20\1\12\1\23\12\26\2\35\1\5\1\13"+
@@ -1989,6 +1989,36 @@ public class InternalKExpressionsLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
+                        int LA24_25 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA24_25>='\u0000' && LA24_25<='\uFFFF')) ) {s = 65;}
+
+                        else s = 29;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA24_21 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA24_21>='\u0000' && LA24_21<='\uFFFF')) ) {s = 60;}
+
+                        else s = 29;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA24_56 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA24_56=='*') ) {s = 68;}
+
+                        else if ( ((LA24_56>='\u0000' && LA24_56<=')')||(LA24_56>='+' && LA24_56<='\uFFFF')) ) {s = 69;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 3 : 
                         int LA24_0 = input.LA(1);
 
                         s = -1;
@@ -2049,36 +2079,6 @@ public class InternalKExpressionsLexer extends Lexer {
                         else if ( ((LA24_0>='\t' && LA24_0<='\n')||LA24_0=='\r'||LA24_0==' ') ) {s = 28;}
 
                         else if ( ((LA24_0>='\u0000' && LA24_0<='\b')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\u001F')||(LA24_0>='#' && LA24_0<='$')||(LA24_0>=':' && LA24_0<=';')||LA24_0=='?'||LA24_0=='\\'||LA24_0=='`'||LA24_0=='{'||(LA24_0>='}' && LA24_0<='\uFFFF')) ) {s = 29;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA24_25 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA24_25>='\u0000' && LA24_25<='\uFFFF')) ) {s = 65;}
-
-                        else s = 29;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA24_56 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA24_56=='*') ) {s = 68;}
-
-                        else if ( ((LA24_56>='\u0000' && LA24_56<=')')||(LA24_56>='+' && LA24_56<='\uFFFF')) ) {s = 69;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 3 : 
-                        int LA24_21 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA24_21>='\u0000' && LA24_21<='\uFFFF')) ) {s = 60;}
-
-                        else s = 29;
 
                         if ( s>=0 ) return s;
                         break;
