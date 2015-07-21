@@ -236,6 +236,16 @@ public class SCGraphItemProvider extends AnnotatableItemProvider {
 
         newChildDescriptors.add
             (createChildParameter
+                (ScgPackage.Literals.SC_GRAPH__NODES,
+                 ScgFactory.eINSTANCE.createOr()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.SC_GRAPH__NODES,
+                 ScgFactory.eINSTANCE.createAnd()));
+
+        newChildDescriptors.add
+            (createChildParameter
                 (ScgPackage.Literals.SC_GRAPH__DECLARATIONS,
                  KExpressionsFactory.eINSTANCE.createDeclaration()));
 

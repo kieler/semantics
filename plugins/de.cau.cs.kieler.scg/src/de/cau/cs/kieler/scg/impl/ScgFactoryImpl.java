@@ -85,6 +85,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
             case ScgPackage.SCHEDULE_BLOCK: return createScheduleBlock();
             case ScgPackage.SCHEDULE: return createSchedule();
             case ScgPackage.GUARD: return createGuard();
+            case ScgPackage.OR: return createOr();
+            case ScgPackage.AND: return createAnd();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -398,6 +400,26 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     public Guard createGuard() {
         GuardImpl guard = new GuardImpl();
         return guard;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Or createOr() {
+        OrImpl or = new OrImpl();
+        return or;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public And createAnd() {
+        AndImpl and = new AndImpl();
+        return and;
     }
 
                 /**

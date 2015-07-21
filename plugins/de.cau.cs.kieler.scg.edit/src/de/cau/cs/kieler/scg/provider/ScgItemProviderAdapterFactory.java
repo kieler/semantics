@@ -727,6 +727,52 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
     }
 
                 /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Or} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected OrItemProvider orItemProvider;
+
+                /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Or}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createOrAdapter() {
+        if (orItemProvider == null) {
+            orItemProvider = new OrItemProvider(this);
+        }
+
+        return orItemProvider;
+    }
+
+                /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.And} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected AndItemProvider andItemProvider;
+
+                /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.And}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createAndAdapter() {
+        if (andItemProvider == null) {
+            andItemProvider = new AndItemProvider(this);
+        }
+
+        return andItemProvider;
+    }
+
+                /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -853,6 +899,8 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
         if (scheduleBlockItemProvider != null) scheduleBlockItemProvider.dispose();
         if (scheduleItemProvider != null) scheduleItemProvider.dispose();
         if (guardItemProvider != null) guardItemProvider.dispose();
+        if (orItemProvider != null) orItemProvider.dispose();
+        if (andItemProvider != null) andItemProvider.dispose();
     }
 
 }

@@ -17,6 +17,7 @@ import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.scg.AbsoluteWrite_Read;
 import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite;
+import de.cau.cs.kieler.scg.And;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.BasicBlock;
 import de.cau.cs.kieler.scg.BranchType;
@@ -35,6 +36,7 @@ import de.cau.cs.kieler.scg.Guard;
 import de.cau.cs.kieler.scg.Join;
 import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.Node;
+import de.cau.cs.kieler.scg.Or;
 import de.cau.cs.kieler.scg.Predecessor;
 import de.cau.cs.kieler.scg.RelativeWrite_Read;
 import de.cau.cs.kieler.scg.SCGraph;
@@ -257,6 +259,20 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	private EClass guardEClass = null;
 
 	/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass orEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass andEClass = null;
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -1076,6 +1092,24 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
     /**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getOr() {
+        return orEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getAnd() {
+        return andEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -1222,6 +1256,10 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         createEAttribute(guardEClass, GUARD__SEQUENTIALIZE);
         createEAttribute(guardEClass, GUARD__DEAD);
 
+        orEClass = createEClass(OR);
+
+        andEClass = createEClass(AND);
+
         // Create enums
         branchTypeEEnum = createEEnum(BRANCH_TYPE);
     }
@@ -1280,6 +1318,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         relativeWrite_ReadEClass.getESuperTypes().add(this.getDataDependency());
         absoluteWrite_RelativeWriteEClass.getESuperTypes().add(this.getDataDependency());
         write_WriteEClass.getESuperTypes().add(this.getDataDependency());
+        orEClass.getESuperTypes().add(this.getNode());
+        andEClass.getESuperTypes().add(this.getNode());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scGraphEClass, SCGraph.class, "SCGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1392,6 +1432,10 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEReference(getGuard_OriginalObject(), theKExpressionsPackage.getValuedObject(), null, "originalObject", null, 0, -1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getGuard_Sequentialize(), ecorePackage.getEBoolean(), "sequentialize", "true", 1, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getGuard_Dead(), ecorePackage.getEBoolean(), "dead", null, 0, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(orEClass, Or.class, "Or", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(andEClass, And.class, "And", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(branchTypeEEnum, BranchType.class, "BranchType");

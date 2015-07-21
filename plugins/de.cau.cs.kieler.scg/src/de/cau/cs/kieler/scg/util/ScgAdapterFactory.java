@@ -193,6 +193,14 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
                 return createGuardAdapter();
             }
             @Override
+            public Adapter caseOr(Or object) {
+                return createOrAdapter();
+            }
+            @Override
+            public Adapter caseAnd(And object) {
+                return createAndAdapter();
+            }
+            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
@@ -605,6 +613,34 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createGuardAdapter() {
+        return null;
+    }
+
+                /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Or <em>Or</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.Or
+     * @generated
+     */
+    public Adapter createOrAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.And <em>And</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.And
+     * @generated
+     */
+    public Adapter createAndAdapter() {
         return null;
     }
 

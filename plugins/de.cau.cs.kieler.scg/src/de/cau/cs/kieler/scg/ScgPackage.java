@@ -1682,6 +1682,116 @@ public interface ScgPackage extends EPackage {
 	int GUARD_FEATURE_COUNT = 7;
 
 	/**
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.OrImpl <em>Or</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scg.impl.OrImpl
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getOr()
+     * @generated
+     */
+    int OR = 28;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OR__ANNOTATIONS = NODE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OR__INCOMING = NODE__INCOMING;
+
+    /**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OR__IS_INITIAL = NODE__IS_INITIAL;
+
+    /**
+     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OR__DEPENDENCIES = NODE__DEPENDENCIES;
+
+    /**
+     * The number of structural features of the '<em>Or</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OR_FEATURE_COUNT = NODE_FEATURE_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.AndImpl <em>And</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scg.impl.AndImpl
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getAnd()
+     * @generated
+     */
+    int AND = 29;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int AND__ANNOTATIONS = NODE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int AND__INCOMING = NODE__INCOMING;
+
+    /**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int AND__IS_INITIAL = NODE__IS_INITIAL;
+
+    /**
+     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int AND__DEPENDENCIES = NODE__DEPENDENCIES;
+
+    /**
+     * The number of structural features of the '<em>And</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int AND_FEATURE_COUNT = NODE_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1689,7 +1799,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBranchType()
      * @generated
      */
-	int BRANCH_TYPE = 28;
+	int BRANCH_TYPE = 30;
 
 
 	/**
@@ -2578,6 +2688,26 @@ public interface ScgPackage extends EPackage {
     EAttribute getGuard_Dead();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Or <em>Or</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Or</em>'.
+     * @see de.cau.cs.kieler.scg.Or
+     * @generated
+     */
+    EClass getOr();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.And <em>And</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>And</em>'.
+     * @see de.cau.cs.kieler.scg.And
+     * @generated
+     */
+    EClass getAnd();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3328,6 +3458,26 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
         EAttribute GUARD__DEAD = eINSTANCE.getGuard_Dead();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.OrImpl <em>Or</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.impl.OrImpl
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getOr()
+         * @generated
+         */
+        EClass OR = eINSTANCE.getOr();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.AndImpl <em>And</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.impl.AndImpl
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getAnd()
+         * @generated
+         */
+        EClass AND = eINSTANCE.getAnd();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
