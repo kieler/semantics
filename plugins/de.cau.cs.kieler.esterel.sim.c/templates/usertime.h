@@ -31,12 +31,18 @@ LARGE_INTEGER remembered_time;
 
 #else
 // Non-Windows case
+#include <stdio.h>
+#include <time.h>
+//#include <stdint.h>
 #include <sys/time.h>
+//#include <errno.h>
+//#include <string.h>
+//#include <sys/resource.h>
 double remembered_time;
 #endif
 
 
-void resetusertime() 
+void resetusertime()
 {
 #ifdef WIN32
 // Windows case
@@ -44,11 +50,19 @@ void resetusertime()
     return;
 #else
 // Non-Windows case
-    struct timeval tim;
-    struct rusage ru;
-    getrusage(RUSAGE_SELF, &ru);
-    tim = ru.ru_utime;
-    remembered_time = (double)tim.tv_sec*1000.0 + tim.tv_usec/1000.0;
+//    time_t current_time;
+//    gettimeofday(&tv, NULL); 
+//    remembered_time=tv.tv_sec;
+
+struct timespec ts_current;
+clock_gettime(CLOCK_MONOTONIC, &ts_current);
+remembered_time = (double)((ts_current.tv_sec*1000.0) + (ts_current.tv_nsec/1000000.0));
+
+//    struct timeval tim;
+//    struct rusage ru;
+//    getrusage(RUSAGE_SELF, &ru);
+//    tim = ru.ru_utime;
+//    remembered_time = (double)((tim.tv_sec*1000.0) + (tim.tv_usec/1000.0));
 #endif
 }
 
@@ -71,13 +85,29 @@ double getusertime()
 #else
 // Non-Windows case
 
-    struct timeval tim;
-    struct rusage ru;
-    getrusage(RUSAGE_SELF, &ru);
-    tim = ru.ru_utime;
-    current_time = (double)tim.tv_sec*1000.0 + tim.tv_usec/1000.0;
+//struct timeval tv;
+//    time_t current_time;
+//    gettimeofday(&tv, NULL); 
+//    current_time=tv.tv_sec;
 
-    return current_time - remembered_time;
+double current_time;
+struct timespec ts_current;
+clock_gettime(CLOCK_MONOTONIC, &ts_current);
+current_time = (double)((ts_current.tv_sec*1000.0) + (ts_current.tv_nsec/1000000.0));
+
+
+//    struct timeval tim;
+//    struct rusage ru;
+//    double current_time;
+//    if (getrusage(RUSAGE_SELF, &ru) != -1) {
+//    tim = ru.ru_utime;
+//    current_time = (double)((tim.tv_sec*1000.0) + (tim.tv_usec/1000.0));
+//    } else {
+//       printf("Oh dear, something went wrong:%i\n", errno);
+//       return -1;
+//    }
+
+    return (current_time - remembered_time);
 
 #endif
 }
