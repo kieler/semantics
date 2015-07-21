@@ -4,7 +4,7 @@ Bundle-Name: KLighD TCP Server UI
 Bundle-SymbolicName: de.cau.cs.kieler.klighd.server.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Kiel University
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: KlighdServerUIPlugin
 Require-Bundle: de.cau.cs.kieler.klighd.server,
  org.eclipse.ui,

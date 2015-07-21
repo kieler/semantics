@@ -4,7 +4,7 @@ Bundle-Name: KExpressions Test
 Bundle-SymbolicName: de.cau.cs.kieler.core.kexpressions.test
 Bundle-Version: 0.2.0.qualifier
 Bundle-Vendor: Christian-Albrechts-Univeristät zu Kiel
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: de.cau.cs.kieler.core.kexpressions,
  com.google.inject;bundle-version="3.0.0",
  org.junit;bundle-version="4.8.2",

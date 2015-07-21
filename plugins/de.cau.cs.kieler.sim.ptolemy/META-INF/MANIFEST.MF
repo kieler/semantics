@@ -4,7 +4,7 @@ Bundle-Name: KIELER Ptolemy Simulation Extensions
 Bundle-SymbolicName: de.cau.cs.kieler.sim.ptolemy;singleton:=true
 Bundle-Version: 0.3.2.qualifier
 Bundle-Vendor: Kiel University
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Export-Package: ptolemy.actor.kiel
 Require-Bundle: org.ptolemy;bundle-version="8.0.0"

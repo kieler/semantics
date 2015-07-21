@@ -26,7 +26,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.5.0",
  org.json,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.signals
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.sim.eso;uses:="org.eclipse.xtext,org.eclipse.xtext.service,com.google.inject",
  de.cau.cs.kieler.sim.eso.eso;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util",
  de.cau.cs.kieler.sim.eso.eso.impl; uses:="de.cau.cs.kieler.sim.eso.eso,  org.eclipse.emf.ecore,  org.eclipse.emf.common.util,  org.eclipse.emf.ecore.impl,  org.eclipse.emf.common.notify",

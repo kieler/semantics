@@ -585,7 +585,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                 }
                                 
                                     addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
-                                        it.foreground = REGIONLABEL.copy;
+                                        it.KRendering.foreground = REGIONLABEL.copy;
                                         if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
                                     ]
                                     
@@ -1371,7 +1371,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 					bbName = bbName + "\n" + expText                	
                 }
                 
-                bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER.copy
+                bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = BASICBLOCKBORDER.copy
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
                 for (schedulingBlock : basicBlock.schedulingBlocks) {
@@ -1397,7 +1397,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 						sbName = sbName + "\n" + expText       
 					}
             	    
-                	sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
+                	sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = SCHEDULINGBLOCKBORDER.copy
                 	
                     if (basicBlock.deadBlock) {
                         sbContainer.getData(typeof(KRoundedRectangle)) => [

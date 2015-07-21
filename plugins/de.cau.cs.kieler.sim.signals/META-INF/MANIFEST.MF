@@ -6,6 +6,6 @@ Bundle-Version: 0.1.3.qualifier
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,
  org.json
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.sim.signals
 Import-Package: org.eclipse.core.resources

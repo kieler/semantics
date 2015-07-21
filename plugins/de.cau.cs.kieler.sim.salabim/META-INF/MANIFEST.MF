@@ -7,4 +7,4 @@ Bundle-Activator: de.cau.cs.kieler.sim.salabim.Taube
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
