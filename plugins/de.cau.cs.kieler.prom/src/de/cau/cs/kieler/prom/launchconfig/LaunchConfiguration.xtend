@@ -241,10 +241,14 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         val EObject model = ModelImporter.get(project.location.toOSString+File.separator+data.projectRelativePath)
 
         if (model != null) {
-            // Compile sct
-            val context = new KielerCompilerContext("T_" + targetLanguage, model)
+            // Get compiler context with settings for KiCo
+            
+            // ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
+            val context = new KielerCompilerContext("!T_ESTERELSIMULATIONVISUALIZATION, T_" + targetLanguage, model)
             context.inplace = false
             context.advancedSelect = true
+            
+            // Compile
             val result = KielerCompiler.compile(context)
 
             // Flush compilation result to target

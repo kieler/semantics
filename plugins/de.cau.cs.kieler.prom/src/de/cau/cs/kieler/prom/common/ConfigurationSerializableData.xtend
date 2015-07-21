@@ -105,7 +105,7 @@ abstract class ConfigurationSerializableData {
 
     /**
      * Saves the data objects to the configuration.
-     * The identifiers key is used to store the data object's identifiers.
+     * The identifiers key is used to store the data object identifiers.
      * The objects can be retrieved via loadAllFromConfiguration(...)
      */
     protected static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, String identifiersKey,
@@ -129,7 +129,7 @@ abstract class ConfigurationSerializableData {
     
     /**
      * Saves the data objects to the preference store.
-     * The identifiers key is used to store the data object's identifiers.
+     * The identifiers key is used to store the data object identifiers.
      * They can be retrieved by using loadAllFromPreferenceStore(...)
      */
     protected static def saveAllToPreferenceStore(IPreferenceStore store, String identifiersKey,

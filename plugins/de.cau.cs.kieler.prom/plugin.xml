@@ -51,9 +51,14 @@
                   <iterate>
                      <or>
                         <test
-                              forcePluginActivation="true"
+                              forcePluginActivation="false"
                               property="org.eclipse.debug.ui.matchesPattern"
                               value="*.sct"/>
+                        <test
+                              forcePluginActivation="false"
+                              property="org.eclipse.debug.ui.matchesPattern"
+                              value="*.strl">
+                        </test>
                      </or>
                   </iterate>
                </with>
@@ -63,12 +68,8 @@
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
-      <category
-            id="de.cau.cs.kieler.prom.wizard.category"
-            name="KIELER SCCharts">
-      </category>
       <wizard
-            category="de.cau.cs.kieler.prom.wizard.category"
+            category="de.cau.cs.kieler.sccharts"
             class="de.cau.cs.kieler.prom.projectwizard.SCChartsProjectWizard"
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"
@@ -82,7 +83,7 @@
       </wizard>
       <wizard
             canFinishEarly="false"
-            category="de.cau.cs.kieler.prom.wizard.category"
+            category="de.cau.cs.kieler.sccharts"
             class="de.cau.cs.kieler.prom.filewizard.SCChartsFileWizard"
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"

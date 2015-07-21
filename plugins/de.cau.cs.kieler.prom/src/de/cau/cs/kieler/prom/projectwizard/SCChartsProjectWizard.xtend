@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchWizard
 import org.osgi.framework.Bundle
+import org.eclipse.jface.dialogs.MessageDialog
 
 /**
  * Wizard implementation for a new SCChart project.
@@ -184,15 +185,16 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
      */
     override performFinish() {
         // Create sct file from sct page settings
-        createSCTFile()
+        val isSctOk = createSCTFile()
         // Create main file
-        createMainFile()
+        val isMainFileOk = createMainFile()
         // Copy templates to new project
-        initializeSnippetDirectory()
+        val isSnippetDirectoryOk = initializeSnippetDirectory()
         // Add some data to properties of new project
-        initializeProjectProperties()
+        val isProjectPropertiesOk = initializeProjectProperties()
         
-        return true;
+        // If everything finished successful, the wizard can finish successful
+        return isSctOk && isMainFileOk && isSnippetDirectoryOk && isProjectPropertiesOk;
     }
     
     /**
@@ -235,17 +237,27 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
             val env = mainPage.getSelectedEnvironment()
             if(env != null && env.mainFileOrigin != "" && createdMainFile != null){
                 var InputStream mainFileOriginInput = null
-                if (env.mainFileOrigin.trim().startsWith("platform:")) {
-                    val url = new URL(env.mainFileOrigin);
-                    mainFileOriginInput = url.openStream
-                } else {
-                    mainFileOriginInput = new FileInputStream(env.mainFileOrigin)
+                try {
+                    if (env.mainFileOrigin.trim().startsWith("platform:")) {
+                        val url = new URL(env.mainFileOrigin);
+                        mainFileOriginInput = url.openStream
+                    } else {
+                        mainFileOriginInput = new FileInputStream(env.mainFileOrigin)
+                    }
+                    
+                    val out = new FileOutputStream(createdMainFile.location.toOSString);
+                    IOUtils.copy(mainFileOriginInput, out);
+                    mainFileOriginInput.close();
+                    out.close();
+                    return true;
+                    
+                } catch(Exception e) {
+                    MessageDialog.openError(shell, "Error", "The default content for the main file could not be loaded from\n"
+                        + "'"+env.mainFileOrigin+"'.\n"
+                        + "Check the environment settings in the preferences.");
+                    
+                    return false;
                 }
-                
-                val out = new FileOutputStream(createdMainFile.location.toOSString);
-                IOUtils.copy(mainFileOriginInput, out);
-                mainFileOriginInput.close();
-                out.close();
             }
         }
     }
@@ -260,22 +272,35 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
         // If the snippet directory of the environment is an absolute path,
         // we do not copy anything to the new project to initialize it.
         if(env.wrapperCodeSnippetsDirectory ==  "" || new File(env.wrapperCodeSnippetsDirectory).isAbsolute)
-            return;
+            return true;
         
         // Get environments of which the wrapper code snippets should be imported.
         val wrapperEnvironments = mainPage.getSelectedWrapperCodeEnvironments()
         for (wrapperEnv : wrapperEnvironments) {
 
-            if (wrapperEnv.wrapperCodeSnippetsOrigin.trim().startsWith("platform:")) {
-                // Fill folder with files from plug-in
-                val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.wrapperCodeSnippetsDirectory)
-                initializeSnippetsFromDirectoryOfPlatformURL(snippetsDirectory, wrapperEnv.wrapperCodeSnippetsOrigin)
-            } else {
-                val source = new File(wrapperEnv.wrapperCodeSnippetsOrigin)
-                val target = new File(newlyCreatedProject.location + File.separator + wrapperEnv.wrapperCodeSnippetsDirectory)
-                FileUtils.copyDirectory(source, target)
+            try {
+                if (wrapperEnv.wrapperCodeSnippetsOrigin.trim().startsWith("platform:")) {
+                    // Fill folder with files from plug-in
+                    val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.wrapperCodeSnippetsDirectory)
+                    initializeSnippetsFromDirectoryOfPlatformURL(snippetsDirectory, wrapperEnv.wrapperCodeSnippetsOrigin)
+                    
+                } else {
+                    val source = new File(wrapperEnv.wrapperCodeSnippetsOrigin)
+                    val target = new File(newlyCreatedProject.location + File.separator + wrapperEnv.wrapperCodeSnippetsDirectory)
+                    
+                    FileUtils.copyDirectory(source, target)
+                }
+                
+            } catch (Exception e) {
+                MessageDialog.openError(shell, "Error", "The default content for the snippet directory could not be loaded from\n"
+                            + "'"+wrapperEnv.wrapperCodeSnippetsOrigin+"'.\n"
+                            + "Check the environment settings in the preferences.");
+                            
+                return false
             }
         }
+        
+        return true;
     }
 
     /**
@@ -292,6 +317,8 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
         if (createdMainFile != null){
             newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, createdMainFile.projectRelativePath.toOSString)
         }
+        
+        return true
     }
 
     /**
@@ -320,7 +347,7 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
      * Copies the contents of the resources from the platform url
      * to the snippet directory of the newly created project. 
      */
-    private def initializeSnippetsFromDirectoryOfPlatformURL(IFolder snippetsFolder, String url) {
+    private def initializeSnippetsFromDirectoryOfPlatformURL(IFolder snippetsFolder, String url) throws Exception {
         // URL should be in form 'platform:/plugin/org.myplugin.bla/path/to/template/directory'
 
         val uriWithUnifiedSegmentSeparator = url.trim().replace("\\", "/")
@@ -328,23 +355,18 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
             // Remove 'platform:/plugin/'
             val path = uriWithUnifiedSegmentSeparator.substring(17)
 
-            // First segment is the bundle name
+            // First segment is the bundle name,
+            // followed by the path of the snippet directory.
             val index = path.indexOf("/")
             if (index > 0 && path.length > index + 1) {
                 val bundleName = path.substring(0, index)
-                val templatePath = path.substring(index + 1)
+                val snippetDir = path.substring(index + 1)
 
                 // Load bundle / plugin
-                var Bundle bundle
-                try {
-                    bundle = Platform.getBundle(bundleName);
-                } catch (Exception e) {
-                    e.printStackTrace()
-                    return;
-                }
+                val bundle = Platform.getBundle(bundleName);
 
-                // Copy files from bundle which are in sub directories of the template path.
-                val entries = bundle.findEntries(templatePath, "*.*", true)
+                // Copy files from bundle which are in sub directories of the snippet directory.
+                val entries = bundle.findEntries(snippetDir, "*.*", true)
                 if (entries != null) {
                     for (var e = entries; e.hasMoreElements();) {
                         val entry = e.nextElement
@@ -352,7 +374,7 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
 
                         // Get path from file relative to template path.
                         // The file must contain the template path because it is a file in this directory.
-                        val i = fileUrl.toString.indexOf(templatePath) + templatePath.length
+                        val i = fileUrl.toString.indexOf(snippetDir) + snippetDir.length
                         var relativePath = fileUrl.toString.substring(i)
                         if (relativePath.startsWith("/"))
                             relativePath = relativePath.substring(1)
@@ -363,6 +385,9 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
                         createResource(file, stream)
                         stream.close()
                     }
+                } else {
+                    throw new Exception("The directory '"+snippetDir+"'\n"
+                        + "of the plugin '"+bundleName+"' does not exist or is empty.")
                 }
             }
         }
