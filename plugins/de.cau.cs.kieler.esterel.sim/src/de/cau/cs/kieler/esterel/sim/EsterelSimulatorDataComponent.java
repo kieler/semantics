@@ -176,15 +176,15 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
 
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getDataComponentId() {
-        // This method should be removed for release because it disables the compability check of
-        // KIEM.
-        return "ESTERELDATACOMPONENTID";
-    }
-
+//    /**
+//     * {@inheritDoc}
+//     */
+//    public String getDataComponentId() {
+//        // This method should be removed for release because it disables the compability check of
+//        // KIEM.
+//        return "ESTERELDATACOMPONENTID";
+//    }
+//
     // -------------------------------------------------------------------------
 
     /**
