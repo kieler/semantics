@@ -23,24 +23,24 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_COMMENT_ANNOTATION", "RULE_BOOLEAN", "RULE_INT", "RULE_FLOAT", "RULE_STRING", "RULE_ID", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'@'", "'('", "')'", "'['", "']'", "'.'"
     };
+    public static final int RULE_COMMENT_ANNOTATION=4;
     public static final int RULE_BOOLEAN=5;
-    public static final int RULE_ID=9;
-    public static final int RULE_ANY_OTHER=14;
-    public static final int T__20=20;
-    public static final int RULE_FLOAT=7;
-    public static final int EOF=-1;
-    public static final int RULE_SL_COMMENT=12;
-    public static final int RULE_ML_COMMENT=10;
-    public static final int T__19=19;
     public static final int RULE_STRING=8;
-    public static final int T__16=16;
+    public static final int RULE_SL_COMMENT=12;
+    public static final int T__19=19;
     public static final int T__15=15;
-    public static final int T__18=18;
+    public static final int T__16=16;
     public static final int T__17=17;
+    public static final int T__18=18;
+    public static final int EOF=-1;
+    public static final int RULE_ID=9;
+    public static final int RULE_WS=13;
+    public static final int RULE_ANY_OTHER=14;
     public static final int RULE_NUMBER=11;
     public static final int RULE_INT=6;
-    public static final int RULE_WS=13;
-    public static final int RULE_COMMENT_ANNOTATION=4;
+    public static final int RULE_ML_COMMENT=10;
+    public static final int RULE_FLOAT=7;
+    public static final int T__20=20;
 
     // delegates
     // delegators
@@ -1932,20 +1932,20 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
     static final String DFA1_eotS =
         "\14\uffff";
     static final String DFA1_eofS =
-        "\3\uffff\1\11\7\uffff\1\11";
+        "\3\uffff\1\5\7\uffff\1\5";
     static final String DFA1_minS =
         "\1\4\1\uffff\1\11\1\4\1\11\6\uffff\1\4";
     static final String DFA1_maxS =
         "\1\17\1\uffff\1\11\1\24\1\11\6\uffff\1\24";
     static final String DFA1_acceptS =
-        "\1\uffff\1\1\3\uffff\1\3\1\7\1\6\1\5\1\2\1\4\1\uffff";
+        "\1\uffff\1\1\3\uffff\1\2\1\7\1\4\1\6\1\3\1\5\1\uffff";
     static final String DFA1_specialS =
         "\14\uffff}>";
     static final String[] DFA1_transitionS = {
             "\1\1\12\uffff\1\2",
             "",
             "\1\3",
-            "\1\11\1\10\1\7\1\6\2\5\5\uffff\3\11\1\12\1\uffff\1\4",
+            "\1\5\1\12\1\10\1\6\2\11\5\uffff\3\5\1\7\1\uffff\1\4",
             "\1\13",
             "",
             "",
@@ -1953,7 +1953,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             "",
             "",
             "",
-            "\1\11\1\10\1\7\1\6\2\5\5\uffff\3\11\1\12\1\uffff\1\4"
+            "\1\5\1\12\1\10\1\6\2\11\5\uffff\3\5\1\7\1\uffff\1\4"
     };
 
     static final short[] DFA1_eot = DFA.unpackEncodedString(DFA1_eotS);
