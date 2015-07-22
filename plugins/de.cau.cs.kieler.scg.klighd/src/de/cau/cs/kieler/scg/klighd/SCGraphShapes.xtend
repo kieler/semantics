@@ -93,6 +93,16 @@ class SCGraphShapes {
         return node;
     }
     
+    def KPolygon createOrShape(KPolygon poly){
+        poly => [
+            it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.0f)
+            it.points += createKPosition(LEFT, 0, 0.5f, TOP, 0, 0.0f)
+            it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.5f)
+            it.points += createKPosition(LEFT, 0, 0.5f, TOP, 0, 0.5f)
+            it.background = "white".color
+        ]
+    }
+    
     def KPolygon createTriangleShape(KPolygon poly) {
         poly => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
