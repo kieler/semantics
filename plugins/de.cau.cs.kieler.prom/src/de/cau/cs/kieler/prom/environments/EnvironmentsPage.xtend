@@ -195,7 +195,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         
         // Create tabs
         createGeneralTab(tabFolder)
-        createSCTCompilationTab(tabFolder)
+        createCompilationTab(tabFolder)
         createExecuteTab(tabFolder)
     }
     
@@ -324,10 +324,10 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
 
     /**
-     * Creates the tab with the controls to set the environment's fields regarding the compilation of sct files.
+     * Creates the tab with the controls to set the environment's fields regarding the compilation of files.
      */
-    private def createSCTCompilationTab(TabFolder folder){
-        val comp = createTab(folder, "SCT Compilation")
+    private def createCompilationTab(TabFolder folder){
+        val comp = createTab(folder, "Compilation")
         
         createCompilationComponent(comp)
         createWrapperCodeComponent(comp)

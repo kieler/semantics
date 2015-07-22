@@ -15,7 +15,6 @@ package de.cau.cs.kieler.prom.launchconfig
 
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.common.ModelImporter
-import de.cau.cs.kieler.prom.common.SCTCompilationData
 import de.cau.cs.kieler.sccharts.State
 import freemarker.template.Template
 import java.io.File
@@ -29,10 +28,11 @@ import org.eclipse.core.resources.IProject
 import org.freemarker.FreeMarkerPlugin
 
 import static org.freemarker.FreeMarkerPlugin.*
+import de.cau.cs.kieler.prom.common.FileCompilationData
 
 /**
- * This class generates wrapper code for SCT models.
- * Annotations in the SCT file are mapped to macro calls which are injected in the input template.
+ * This class generates wrapper code for models.
+ * Annotations are mapped to macro calls which are injected in the input template.
  * Afterwards the macro calls are evaluated by the template engine and the wrapper code which they define is inserted.
  * 
  * @author aas
@@ -41,7 +41,7 @@ import static org.freemarker.FreeMarkerPlugin.*
 class WrapperCodeGenerator {
 
     /**
-     * The project of the SCT launch configuration which started the generator.
+     * The project of the launch configuration which started the generator.
      */
     private IProject project
 
@@ -49,7 +49,7 @@ class WrapperCodeGenerator {
     
     /**
      * The file path to the input template for wrapper code generation.
-     * Wrapper code will be inserted in this file's text and the output is saved in the sct build directory.
+     * Wrapper code will be inserted in this file's text and the output is saved in the build directory.
      */
     private String wrapperCodeTemplate = ""
     
@@ -101,9 +101,9 @@ class WrapperCodeGenerator {
     }
 
     /**
-     * Generates and saves the wrapper code for a list of sct files. 
+     * Generates and saves the wrapper code for a list of files. 
      */
-    public def generateWrapperCode(SCTCompilationData... datas) {
+    public def generateWrapperCode(FileCompilationData... datas) {
  
         // Check consistency of paths
         if (wrapperCodeTemplate != "" && wrapperCodeSnippetDirectory != "") {
@@ -119,11 +119,11 @@ class WrapperCodeGenerator {
 
     /**
      * @return a String with the input template's wrapper code
-     * plus injected macro calls from annotations of the given SCT files.
+     * plus injected macro calls from annotations of the given files.
      */
-    private def String getTemplateWithMacroCalls(SCTCompilationData... datas) {
+    private def String getTemplateWithMacroCalls(FileCompilationData... datas) {
         
-        // Get all annotations of input and output variables from the SCT files.
+        // Get all annotations of input and output variables from the files.
         val List<WrapperCodeAnnotationData> annotationDatas = newArrayList()
         for (data : datas) {
             getWrapperCodeAnnotationData(data, annotationDatas)
@@ -279,14 +279,13 @@ class WrapperCodeGenerator {
     }
 
     /**
-     * Generates wrapper code with the settings from the launch configuration.
-     * This is done independently from the sct compilation in a separate job.
+     * Adds wrapper code data objects to the annotationDatas list,
+     * which where found in the given files.
      */
-    private def getWrapperCodeAnnotationData(SCTCompilationData sctData,
+    private def getWrapperCodeAnnotationData(FileCompilationData data,
         List<WrapperCodeAnnotationData> annotationDatas) {
 
-        println(project.location.toOSString+File.separator+sctData.projectRelativePath)
-        val model = ModelImporter.get(project.location.toOSString+File.separator+sctData.projectRelativePath)
+        val model = ModelImporter.get(project.location.toOSString+File.separator+data.projectRelativePath)
 
         if (model != null && model instanceof State) {
             // Iterate over model to get all annotations

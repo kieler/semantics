@@ -15,11 +15,11 @@ class LaunchConfigurationTabGroup extends AbstractLaunchConfigurationTabGroup {
      */
     override void createTabs(ILaunchConfigurationDialog dialog, String mode) {
         var mainTab = new MainTab()
-        var sctTab = new CompilationTab()
+        var compilationTab = new CompilationTab()
         var execTab = new ExecuteTab()
         var commonTab = new CommonTab()
         
-        var tabs = (#[mainTab, sctTab, execTab, commonTab] as ILaunchConfigurationTab[])
+        var tabs = (#[mainTab, compilationTab, execTab, commonTab] as ILaunchConfigurationTab[])
         setTabs(tabs)
     }
 }

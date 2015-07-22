@@ -23,7 +23,7 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * Data container for wrapper code annotations in an SCT file.
+ * Data container for wrapper code annotations in Model file.
  * 
  * @author aas
  *

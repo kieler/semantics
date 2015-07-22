@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.prom.filewizard
+package de.cau.cs.kieler.sccharts.prom
 
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.wizard.Wizard
@@ -39,13 +39,18 @@ class SCChartsFileWizard extends Wizard implements IWorkbenchWizard {
     /**
      * Page to create an sct file.
      */
-    private SCTFileCreationPage sctPage
+    private de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage sctPage
     
     /**
      * Instantiates and adds the sct file creation page to this wizard.
      */
     override addPages(){
-        sctPage = new SCTFileCreationPage("SCChart Text File", selection);
+        sctPage = new de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage("SCChart Text File", selection, false);
+        sctPage.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/resources/default.sct"
+        sctPage.fileName = "NewModel.sct"
+        sctPage.fileExtension = "sct"
+        sctPage.description = "Create a new SCT file."
+        
         addPage(sctPage);
     }
     

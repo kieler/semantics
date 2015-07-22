@@ -2,7 +2,6 @@ package de.cau.cs.kieler.prom.launchconfig
 
 import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.PromPlugin
-import de.cau.cs.kieler.prom.common.SCTCompilationData
 import de.cau.cs.kieler.prom.environments.Initializer
 import java.util.ArrayList
 import org.eclipse.core.resources.IFile
@@ -23,6 +22,7 @@ import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.ResourceUtil
+import de.cau.cs.kieler.prom.common.FileCompilationData
 
 class LaunchShortcut implements ILaunchShortcut {
 
@@ -61,7 +61,7 @@ class LaunchShortcut implements ILaunchShortcut {
     }
 
     /**
-     * Launch the sct file by adding it to an existing launch config of this project
+     * Launch the file by adding it to an existing launch config of this project
      * or creating a new one if none yet.
      * If a new config is created the main file and environment used to initialize it
      * will be fetched from the project preferences if possible or from a user dialog if not.
@@ -73,9 +73,9 @@ class LaunchShortcut implements ILaunchShortcut {
         // Find launch config for the project or initialize new one.
         val configuration = findLaunchConfiguration(mode)
         if (configuration != null) {
-            // Add the input file to the list of sct files which should be compiled
+            // Add the input file to the list of files which should be compiled
             // unless it is already in the list
-            val datas = SCTCompilationData.loadAllFromConfiguration(configuration)
+            val datas = FileCompilationData.loadAllFromConfiguration(configuration)
 
             // Check if already in list
             var alreadyInList = false
@@ -88,9 +88,9 @@ class LaunchShortcut implements ILaunchShortcut {
             if (!alreadyInList) {
                 val workingCopy = configuration.getWorkingCopy()
 
-                val data = new SCTCompilationData(file.projectRelativePath.toOSString, file.name)
+                val data = new FileCompilationData(file.projectRelativePath.toOSString, file.name)
                 datas += data
-                SCTCompilationData.saveAllToConfiguration(workingCopy, datas)
+                FileCompilationData.saveAllToConfiguration(workingCopy, datas)
                 workingCopy.doSave()
             }
 
@@ -100,8 +100,8 @@ class LaunchShortcut implements ILaunchShortcut {
     }
 
     /**
-     * Searches for a sct launch configuration in the project. Creates a new one if none found.
-     * @return sct launch configuration for the project. 
+     * Searches for a launch configuration in the project. Creates a new one if none found.
+     * @return launch configuration for the project. 
      */
     private def ILaunchConfiguration findLaunchConfiguration(String mode) {
         val configs = getLaunchConfigurations()
@@ -115,7 +115,7 @@ class LaunchShortcut implements ILaunchShortcut {
     }
 
     /**
-     * Creates and initializes a new sct launch config for the project.
+     * Creates and initializes a new launch config for the project.
      */
     private def ILaunchConfiguration createNewConfiguration() {
         try {
@@ -131,7 +131,7 @@ class LaunchShortcut implements ILaunchShortcut {
     }
 
     /**
-     * Initializes a new sct launch config for the project.
+     * Initializes a new launch config for the project.
      * The main file and environment used are loaded from the project's properties
      * if possible or from dialogs if not.
      */
@@ -219,7 +219,7 @@ class LaunchShortcut implements ILaunchShortcut {
     }
 
     /**
-     * Searches for all sct launch configurations for this project.
+     * Searches for all applicable launch configurations for this project.
      * @return list with the launch configurations.
      */
     private def getLaunchConfigurations() {

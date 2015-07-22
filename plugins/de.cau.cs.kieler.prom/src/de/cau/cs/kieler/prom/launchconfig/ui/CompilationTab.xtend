@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.prom.launchconfig.ui
 
 import de.cau.cs.kieler.kico.internal.Transformation
-import de.cau.cs.kieler.prom.common.SCTCompilationData
 import de.cau.cs.kieler.prom.common.ui.IProjectHolder
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
@@ -47,9 +46,10 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
+import de.cau.cs.kieler.prom.common.FileCompilationData
 
 /**
- * The tab with the controls to set SCT files to be compiled and how they should be compiled.
+ * The tab with the controls to set files to be compiled via KiCo.
  * 
  * @author aas
  * 
@@ -59,16 +59,16 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
     /**
      * The currently selected data of the list control.
      */
-    private var SCTCompilationData currentData
+    private var FileCompilationData currentData
 
     /**
-     * The list control for the SCT compilation data objects.
+     * The list control for the file data objects.
      */
     private var ListViewer list
 
     /**
      * The button which
-     * opens a Resource selection dialog and adds all selected SCT files to the list.
+     * opens a Resource selection dialog and adds all selected files to the list.
      */
     private var Button addButton
 
@@ -89,7 +89,7 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
     private var Text targetLanguageFileExtension
 
     /**
-     * The input field for the file used as template for the sct compilation output.
+     * The input field for the file used as template for the compilation output.
      */
     private var Text targetTemplate
 
@@ -119,7 +119,7 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
         comp.setLayout(new GridLayout(1, true))
         comp.setFont(parent.getFont())
 
-        createSCTFilesComponent(comp)
+        createFilesComponent(comp)
         createTargetComponent(comp)
         createWrapperCodeComponent(comp)
     }
@@ -127,24 +127,24 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
     /**
      * Creates a new group with a list control and add and remove buttons.
      * The add button opens a resource selection dialog such that the user can add
-     * sct files to the list.
+     * files to the list.
      * The remove button removes the currently selected item from the list. 
      */
-    private def createSCTFilesComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "SCT files", 2)
+    private def createFilesComponent(Composite parent) {
+        val group = UIUtil.createGroup(parent, "Files", 2)
 
-        // List for SCT files
+        // List for files
         list = new ListViewer(group, SWT.DEFAULT)
         list.getControl().setLayoutData(new GridData(GridData.FILL_BOTH))
 
         // Content provider
         list.setContentProvider(ArrayContentProvider.instance);
-        list.input = new ArrayList<SCTCompilationData>()
+        list.input = new ArrayList<FileCompilationData>()
 
         // Label provider
         list.setLabelProvider(new LabelProvider() {
             override String getText(Object element) {
-                val data = (element as SCTCompilationData)
+                val data = (element as FileCompilationData)
                 if (data != null)
                     return data.projectRelativePath
                 else
@@ -157,7 +157,7 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
         list.addSelectionChangedListener(new ISelectionChangedListener() {
             override void selectionChanged(SelectionChangedEvent event) {
                 val selection = event.selection as IStructuredSelection
-                currentData = selection.firstElement as SCTCompilationData
+                currentData = selection.firstElement as FileCompilationData
                 updateControls(currentData)
             }
         });
@@ -172,13 +172,13 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
                 override void widgetSelected(SelectionEvent e) {
                     // Create dialog.
                     val dialog = new ResourceSelectionDialog(shell, project,
-                        "Select SCT files that should be compiled.")
+                        "Select files that should be compiled via KiCo.")
                     dialog.open()
 
                     // Get results.
                     val results = dialog.result
                     if (results != null) {
-                        val inputArray = list.input as ArrayList<SCTCompilationData>
+                        val inputArray = list.input as ArrayList<FileCompilationData>
 
                         // Add resources to the gui list
                         for (var i = 0; i < results.length; i++) {
@@ -186,19 +186,18 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
                             val projectRelativePath = resource.projectRelativePath.toOSString
                             val name = resource.name
 
-                            // The ResourceSelectionDialog does not provide filter funcionality
-                            // so we do this here manually.
-                            var isOK = resource.fileExtension.toLowerCase == "sct"
-                            for (SCTCompilationData d : inputArray) {
+                            // Filter files which are already in the list.
+                            var isOK = true
+                            for (FileCompilationData d : inputArray) {
                                 if (d.projectRelativePath == projectRelativePath)
                                     isOK = false
                             }
 
                             // Add if the new element is ok.
                             if (isOK)
-                                inputArray.add(new SCTCompilationData(projectRelativePath, name))
+                                inputArray.add(new FileCompilationData(projectRelativePath, name))
                             else
-                                println("Resource '" + resource.name + "' is no SCT file or already in list!")
+                                println("Resource '" + resource.name + "' is already in list!")
                         }
                         list.refresh()
 
@@ -304,15 +303,15 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
      * {@inheritDoc}
      */
     override getName() {
-        return "SCT Compilation"
+        return "Compilation"
     }
 
     /**
      * {@inheritDoc}
      */
     override initializeFrom(ILaunchConfiguration configuration) {
-        // SCT files
-        list.input = SCTCompilationData.loadAllFromConfiguration(configuration)
+        // Files
+        list.input = FileCompilationData.loadAllFromConfiguration(configuration)
 
         // Target language
         if (targetLanguage.input != null) {
@@ -354,9 +353,8 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
      * {@inheritDoc}
      */
     override performApply(ILaunchConfigurationWorkingCopy configuration) {
-        // SCT files
-        val datas = list.input as List<SCTCompilationData>
-        SCTCompilationData.saveAllToConfiguration(configuration, datas)
+        // Files
+        val datas = list.input as List<FileCompilationData> FileCompilationData.saveAllToConfiguration(configuration, datas)
 
         // Target selection
         val selection = targetLanguage.selection as IStructuredSelection
@@ -388,8 +386,8 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
         errorMessage = null
 
         if (project != null) {
-            // All SCT files exist in this project
-            for (data : list.input as List<SCTCompilationData>) {
+            // All files exist in this project
+            for (data : list.input as List<FileCompilationData>) {
                 val file = new File(project.location + File.separator + data.projectRelativePath)
                 if (!file.exists)
                     errorMessage = "File '" + data.projectRelativePath + "' does not exist in the specified project"
@@ -406,7 +404,7 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
     /**
      * Updates the values of all controls with the newly selected data.
      */
-    private def updateControls(SCTCompilationData data) {
+    private def updateControls(FileCompilationData data) {
         updateEnabled()
 
         if (data != null) {
@@ -415,7 +413,7 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
     }
 
     /**
-     * Enable or disable all controls that work on the currently selected sct file data.
+     * Enable or disable all controls that work on the currently selected file data.
      * Enable list control iff the project is set correct.
      */
     private def updateEnabled() {

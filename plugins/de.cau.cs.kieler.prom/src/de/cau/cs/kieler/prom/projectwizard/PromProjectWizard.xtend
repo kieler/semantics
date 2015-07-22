@@ -15,14 +15,11 @@ package de.cau.cs.kieler.prom.projectwizard
 
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.PromPlugin
+import de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.InputStream
-import java.net.URL
 import org.apache.commons.io.FileUtils
-import org.apache.commons.io.IOUtils
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IProject
@@ -35,6 +32,7 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.dialogs.IPageChangingListener
+import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.dialogs.PageChangingEvent
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.wizard.Wizard
@@ -42,76 +40,85 @@ import org.eclipse.jface.wizard.WizardDialog
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchWizard
-import org.osgi.framework.Bundle
-import org.eclipse.jface.dialogs.MessageDialog
 
 /**
- * Wizard implementation for a new SCChart project.
+ * Wizard implementation wich creates a project
+ * and optionally initializes a model file and a main file by using enviroments.
  * Shows a main page to set the environment and snippets to be imported.
  * Then the related project wizard of the environment is run.
- * Afterwards there is a page to create a new sct file and main file in the newly created project.
+ * Afterwards there are pages to create a new model file and main file in the newly created project.
  * 
  * @author aas
  * 
  */
-class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
+class PromProjectWizard extends Wizard implements IWorkbenchWizard {
 
     /**
      * The workbench set in the init(...) method.
      */
-    private var IWorkbench workbench
+    protected var IWorkbench workbench
     /**
      * The selection set in the init(...) method.
      */
-    private var IStructuredSelection selection
+    protected var IStructuredSelection selection
 
 
 
     /**
-     * The project in the workspace before the related wizard of the environment was run.
+     * The projects in the workspace before the related wizard of the environment was run.
      */
-    private var IProject[] projectsBeforeWizard
+    protected var IProject[] projectsBeforeWizard
     
     /**
-     * The project created by the related wizard of the environment.
+     * The project created by the wizard of the environment.
      */
-    private var IProject newlyCreatedProject
+    protected var IProject newlyCreatedProject
 
 
     
     /**
-     * The file created with data from the main file creation page.
+     * The file created by the main file creation page.
      */    
-    private var IFile createdMainFile
+    protected var IFile createdMainFile
 
     /**
      * The main page of the wizard.
      * It is the first page.
      */
-    private var MainPage mainPage
+    protected var MainPage mainPage
     
     /**
-     * The page to create a sct file in the newly created project.
+     * The page to create a model file (e.g. for sct or esterel).
      */
-    private var OptionalSCTFileCreationPage sctFilePage
+    protected var AdvancedNewFileCreationPage modelFilePage
     
     /**
-     * The page to create a main file for the newly created project.
+     * The page to create a main file with wrapper code to run the model.
      */
-    private var OptionalMainFileCreationPage mainFilePage
+    protected var AdvancedNewFileCreationPage mainFilePage
 
     /**
      * @{inheritDoc}
      */
     override addPages() {
-        mainPage = new MainPage("SCChart Project");
+        mainPage = new MainPage("");
         addPage(mainPage);
 
-        sctFilePage = new OptionalSCTFileCreationPage("SCCharts File", selection)
-        addPage(sctFilePage)
+        modelFilePage = createModelFileCreationPage()
+        modelFilePage.openOnCreation = true
+        addPage(modelFilePage)
         
-        mainFilePage = new OptionalMainFileCreationPage("Main File", selection)
+        mainFilePage = createMainFileCreationPage()
+        mainFilePage.openOnCreation = false
         addPage(mainFilePage)
+    }
+
+    protected def AdvancedNewFileCreationPage createModelFileCreationPage(){
+        return new AdvancedNewFileCreationPage("Model File", selection, true)
+    }
+    
+    protected def AdvancedNewFileCreationPage createMainFileCreationPage(){
+        return new AdvancedNewFileCreationPage("Main File", selection, true)
     }
 
     /**
@@ -125,17 +132,18 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
         dialog.addPageChangingListener(new IPageChangingListener() {
 
             override handlePageChanging(PageChangingEvent event) {
-                // From main page to sct file creation
+                // From main page to model file creation
                 // -> Start other wizard
-                if (event.currentPage == mainPage && event.targetPage == sctFilePage) {
+                if (event.currentPage == mainPage && event.targetPage == modelFilePage) {
                     startWizard(mainPage.getEnvironmentWizardClassName())
 
+                    // Update following pages
                     if(newlyCreatedProject != null){
                         event.doit = true
                         
                         // Fill following pages with data from the newly created project
-                        sctFilePage.recreate()
-                        sctFilePage.setContainerFullPath(new Path(newlyCreatedProject.name))
+                        modelFilePage.recreate()
+                        modelFilePage.setContainerFullPath(new Path(newlyCreatedProject.name))
     
                         mainFilePage.recreate()
                         mainFilePage.setContainerFullPath(new Path(newlyCreatedProject.name))
@@ -145,12 +153,13 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
                         if(env.mainFile != ""){
                             val file = new File(env.mainFile)
                             mainFilePage.fileName = file.name
+                            mainFilePage.initialContentsURL = env.mainFileOrigin
                             
                             // Set container for pages to directory of main file
                             val fileDir = file.parent
                             if(fileDir != null){
                                 val sourceDirectory = new Path(newlyCreatedProject.name+File.separator+fileDir)
-                                sctFilePage.setContainerFullPath(sourceDirectory)
+                                modelFilePage.setContainerFullPath(sourceDirectory)
                                 mainFilePage.setContainerFullPath(sourceDirectory)
                             }
                         }
@@ -161,7 +170,7 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
                     
                 // From file creation to main
                 // -> Remove created project
-                } else if (event.currentPage == sctFilePage && event.targetPage == mainPage) {
+                } else if (event.currentPage == modelFilePage && event.targetPage == mainPage) {
                     deleteCreatedProject()
                 }
             }
@@ -170,12 +179,13 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
 
     /**
      * Returns true if the wizard can successfully be finished.
-     * @return true if the current page is the sct file creation page and this page is complete<br />
-     *         or the current page is the main file creation page and this page is complete.
+     * @return true if the current page is the model file creation page or the main file creation page
+     *         and both pages are complete.
      */
     override canFinish() {
-        return ((container.currentPage == sctFilePage) && sctFilePage.isPageComplete)
-                || ((container.currentPage == mainFilePage) && mainFilePage.isPageComplete)
+        return (container.currentPage == modelFilePage || container.currentPage == mainFilePage)
+                && modelFilePage.isPageComplete
+                && mainFilePage.isPageComplete
     }
 
     /**
@@ -184,8 +194,8 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
      * The used environment and main file is saved in the newly created project's properties.
      */
     override performFinish() {
-        // Create sct file from sct page settings
-        val isSctOk = createSCTFile()
+        // Create model file
+        val isModelFileOk = createModelFile()
         // Create main file
         val isMainFileOk = createMainFile()
         // Copy templates to new project
@@ -194,7 +204,7 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
         val isProjectPropertiesOk = initializeProjectProperties()
         
         // If everything finished successful, the wizard can finish successful
-        return isSctOk && isMainFileOk && isSnippetDirectoryOk && isProjectPropertiesOk;
+        return isModelFileOk && isMainFileOk && isSnippetDirectoryOk && isProjectPropertiesOk;
     }
     
     /**
@@ -208,19 +218,25 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
     /**
      * Deletes the newly created project.
      */
-    private def deleteCreatedProject(){
+    protected def deleteCreatedProject(){
         if(newlyCreatedProject != null){
             newlyCreatedProject.delete(true, true, null)
             newlyCreatedProject = null
         }
     }
-    
+
     /**
-     * Creates the sct file if the corresponding page has valid data.
+     * Creates the model file if the corresponding page has valid data.
      */
-    private def createSCTFile(){
-        if (sctFilePage.isOk()) {
-            sctFilePage.performFinish()
+    protected def createModelFile(){
+        try {
+            return modelFilePage.performFinish()
+            
+        } catch (Exception e) {
+            MessageDialog.openError(shell, "Error", "The model file '"+modelFilePage.fileName+"' could not be created.\n"
+                + "Check the container path and file name.");
+
+            return false
         }
     }
     
@@ -228,37 +244,16 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
      * Creates the main file if the corresponding page has valid data
      * and possibly initializes it with the contents of the used environment's main file origin.
      */
-    private def createMainFile() {
-        if (mainFilePage.isOk()) {
-            // Create file
-            createdMainFile = mainFilePage.createNewFile()
+    protected def createMainFile() {
+        try {
+            return mainFilePage.performFinish()
             
-            // Fill with content from environment main file origin
-            val env = mainPage.getSelectedEnvironment()
-            if(env != null && env.mainFileOrigin != "" && createdMainFile != null){
-                var InputStream mainFileOriginInput = null
-                try {
-                    if (env.mainFileOrigin.trim().startsWith("platform:")) {
-                        val url = new URL(env.mainFileOrigin);
-                        mainFileOriginInput = url.openStream
-                    } else {
-                        mainFileOriginInput = new FileInputStream(env.mainFileOrigin)
-                    }
-                    
-                    val out = new FileOutputStream(createdMainFile.location.toOSString);
-                    IOUtils.copy(mainFileOriginInput, out);
-                    mainFileOriginInput.close();
-                    out.close();
-                    return true;
-                    
-                } catch(Exception e) {
-                    MessageDialog.openError(shell, "Error", "The default content for the main file could not be loaded from\n"
-                        + "'"+env.mainFileOrigin+"'.\n"
-                        + "Check the environment settings in the preferences.");
-                    
-                    return false;
-                }
-            }
+        } catch(Exception e) {
+            MessageDialog.openError(shell, "Error", "The default content for the main file could not be loaded from\n"
+                + "'"+mainFilePage.initialContentsURL+"'.\n"
+                + "Check the environment settings in the preferences.");
+            
+            return false;
         }
     }
 
@@ -266,7 +261,7 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
      * Creates the snippet directory of the used environment
      * and initializes it with the snippets from the selected environments of the main page.
      */
-    private def initializeSnippetDirectory(){
+    protected def initializeSnippetDirectory(){
         val env = mainPage.getSelectedEnvironment()
         
         // If the snippet directory of the environment is an absolute path,
@@ -308,7 +303,7 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
      * to the properties of the newly created project.
      * This data is used by the SCCharts launch config shortcut to use as reasonable defaults.
      */
-    private def initializeProjectProperties(){
+    protected def initializeProjectProperties(){
         // Used environment name
         val env = mainPage.getSelectedEnvironment()
         newlyCreatedProject.setPersistentProperty(PromPlugin.ENVIRIONMENT_QUALIFIER, env.name)
@@ -325,21 +320,22 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
      * Creates a resource and all needed parent folders in a project.
      * The created resource is initialized with the inputs of the stream. 
      */
-    private def void createResource(IResource resource, InputStream stream) throws CoreException {
+    protected def void createResource(IResource resource, InputStream stream) throws CoreException {
         if (resource == null || resource.exists())
             return;
 
         if (!resource.getParent().exists())
             createResource(resource.getParent(), stream);
 
-        val type = resource.getType()
-        if (type == IResource.FILE)
-            (resource as IFile).create(stream, true, null)
-        else if (type == IResource.FOLDER)
-            (resource as IFolder).create(IResource.NONE, true, null)
-        else if (type == IResource.PROJECT) {
-            (resource as IProject).create(null)
-            (resource as IProject).open(null)
+        switch(resource.getType()){
+            case IResource.FILE:
+                (resource as IFile).create(stream, true, null)
+            case IResource.FOLDER:
+                (resource as IFolder).create(IResource.NONE, true, null)
+            case IResource.PROJECT: {
+                (resource as IProject).create(null)
+                (resource as IProject).open(null)
+            }
         }
     }
 
@@ -347,7 +343,7 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
      * Copies the contents of the resources from the platform url
      * to the snippet directory of the newly created project. 
      */
-    private def initializeSnippetsFromDirectoryOfPlatformURL(IFolder snippetsFolder, String url) throws Exception {
+    protected def initializeSnippetsFromDirectoryOfPlatformURL(IFolder snippetsFolder, String url) throws Exception {
         // URL should be in form 'platform:/plugin/org.myplugin.bla/path/to/template/directory'
 
         val uriWithUnifiedSegmentSeparator = url.trim().replace("\\", "/")
@@ -394,21 +390,9 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
     }
 
     /**
-     * Adds a folder resource of a java project to the project's build path source folders.
-     */
-    private def addFolderToJavaClasspath(IJavaProject javaProject, IFolder sourceFolder) {
-        val root = javaProject.getPackageFragmentRoot(sourceFolder);
-        val oldEntries = javaProject.getRawClasspath();
-        val newEntries = newArrayOfSize(oldEntries.length + 1);
-        System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
-        newEntries.set(oldEntries.length, JavaCore.newSourceEntry(root.getPath()));
-        javaProject.setRawClasspath(newEntries, null);
-    }
-
-    /**
      * Return the project that has been created since this wizard has been opened.
      */
-    private def IProject findNewlyCreatedProject() {
+    protected def IProject findNewlyCreatedProject() {
         // The other project wizard does not return any information about what has been created.
         // -> Compare the list of current projects with projects from before the wizard was run.
         // Return project that is not in the list of old projects.
@@ -461,7 +445,7 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
      */
     private def initializeNewProject(){
         if (newlyCreatedProject != null) {
-            // Create folder for sct generated files
+            // Create folder for generated files
             val sourceFolder = newlyCreatedProject.getFolder(LaunchConfiguration.BUILD_DIRECTORY);
             sourceFolder.create(false, true, null);
 
@@ -471,5 +455,17 @@ class SCChartsProjectWizard extends Wizard implements IWorkbenchWizard {
                 addFolderToJavaClasspath(javaProject, sourceFolder)
             }
         }
+    }
+    
+    /**
+     * Adds a folder resource of a java project to the project's build path source folders.
+     */
+    private def addFolderToJavaClasspath(IJavaProject javaProject, IFolder sourceFolder) {
+        val root = javaProject.getPackageFragmentRoot(sourceFolder);
+        val oldEntries = javaProject.getRawClasspath();
+        val newEntries = newArrayOfSize(oldEntries.length + 1);
+        System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
+        newEntries.set(oldEntries.length, JavaCore.newSourceEntry(root.getPath()));
+        javaProject.setRawClasspath(newEntries, null);
     }
 }

@@ -20,12 +20,12 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /** 
- * Data container for sct file compilation.
- * The objects are created in the launch configuration dialog of SCChart applications.
+ * Data container for files which should be compiled via KiCo.
+ * Objects of this class are created in the launch configuration dialog.
  * 
  * @author aas
  */
-class SCTCompilationData extends ConfigurationSerializableData {
+class FileCompilationData extends ConfigurationSerializableData {
 
     @Accessors
     protected var String projectRelativePath = ""
@@ -63,26 +63,26 @@ class SCTCompilationData extends ConfigurationSerializableData {
      * @return list with the loaded compilation data objects.
      */
     static def loadAllFromConfiguration(ILaunchConfiguration configuration) {
-        return ConfigurationSerializableData.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_SCT_FILES,
-            SCTCompilationData) as List<SCTCompilationData>
+        return ConfigurationSerializableData.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_FILES,
+            FileCompilationData) as List<FileCompilationData>
     }
 
     /**
      * Saves a list with data objects to the given launch configuration.
-     * All other sct compilation data in the launch configuration is overwritten.
+     * All other file compilation data objects in the launch configuration are overwritten.
      */
-    static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<SCTCompilationData> datas) {
-        ConfigurationSerializableData.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_SCT_FILES, datas)
+    static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<FileCompilationData> datas) {
+        ConfigurationSerializableData.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_FILES, datas)
     }
     
     /**
      * Compares this object with another object.
-     * @return true if the other object is an SCTCompilationData and the paths are equal.<br />
+     * @return true if the other object is a FileCompilationData and the paths are equal.<br />
      *         false otherwise.
      */
     override equals(Object o) {
-        if (o instanceof SCTCompilationData) {
-            val data = o as SCTCompilationData
+        if (o instanceof FileCompilationData) {
+            val data = o as FileCompilationData
             return data.projectRelativePath == projectRelativePath
         }
         return false

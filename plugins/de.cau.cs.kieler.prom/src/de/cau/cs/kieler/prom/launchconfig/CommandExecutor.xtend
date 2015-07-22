@@ -26,7 +26,7 @@ import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunch
 
 /**
- * This class handles the execution of shell commands in the context of an SCT project launch.
+ * This class handles the execution of shell commands in the context of a project launch.
  * 
  * @author aas
  * 

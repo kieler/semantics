@@ -73,7 +73,7 @@ class EnvironmentData extends ConfigurationSerializableData {
     
     
     /**
-     * The target language for SCT compilation via KiCo.
+     * The target language for KiCo compilation.
      * This is the id of a KiCo transformation feature.
      */
     @Accessors
@@ -116,7 +116,7 @@ class EnvironmentData extends ConfigurationSerializableData {
 
     /**
      * List with commands which should be executed after the compilation and wrapper code generation
-     * of an SCT launch ended successfully.
+     * of a launch ended successfully.
      */
     @Accessors
     protected List<CommandData> commands = newArrayList()

@@ -34,7 +34,7 @@ class CommandData extends ConfigurationSerializableData{
     protected var String name = ""
     
     /**
-     * Specifies if this command should be executed in a SCT launch.
+     * Specifies if this command should be executed in a project launch.
      */
     @Accessors
     protected var String isEnabled = ""
