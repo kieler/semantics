@@ -58,6 +58,7 @@ import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.scg.AbsoluteWrite_Read
 import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
+import de.cau.cs.kieler.scg.And
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
@@ -519,6 +520,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (n instanceof Depth) { node.children += n.synthesize }
                 if (n instanceof Fork) { node.children += n.synthesize }
                 if (n instanceof Conditional) { node.children += n.synthesize }
+                if (n instanceof Or) { node.children += n.synthesize}
+                if (n instanceof And) { node.children += n.synthesize}
             }
             // For each node transform the control flow edges.
             // This must be done after all nodes have been created.
@@ -913,7 +916,35 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
                 node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
                 node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 40, 0, 1, PortSide::NORTH)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 40, 24, 0, PortSide::SOUTH)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 40, 24, 1, PortSide::SOUTH)
+            } else {
+                val port = node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
+                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 7, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 37, 7, 1, PortSide::EAST)
+            }
+        ]
+    }
+    
+    private def dispatch KNode synthesize(And and){
+        return and.createNode.putToLookUpWith(and) => [ node|
+             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
+              var KPolygon figure
+                figure = node.addPolygon().createAndShape()
+                figure => [
+                    node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
+                    if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
+                ]
+          
+            // Add ports for control-flow/tick edge routing.
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            if (topdown) {
+                val port = node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
+                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 40, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 40, 12, 1, PortSide::SOUTH)
             } else {
                 val port = node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)

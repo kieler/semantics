@@ -96,9 +96,19 @@ class SCGraphShapes {
     def KPolygon createOrShape(KPolygon poly){
         poly => [
             it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.0f)
-            it.points += createKPosition(LEFT, 0, 0.5f, TOP, 0, 0.0f)
-            it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.5f)
-            it.points += createKPosition(LEFT, 0, 0.5f, TOP, 0, 0.5f)
+            it.points += createKPosition(LEFT, 0, 1f, TOP, 0, 0.0f)
+            it.points += createKPosition(LEFT, 0, 1f, TOP, 0, 1f)
+            it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 1f)
+            it.background = "black".color
+        ]
+    }
+    
+    def KPolygon createAndShape(KPolygon poly){
+        poly => [
+            it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 0.0f)
+            it.points += createKPosition(LEFT, 0, 1f, TOP, 0, 0.0f)
+            it.points += createKPosition(LEFT, 0, 0.0f, TOP, 0, 1f)
+            it.points += createKPosition(LEFT, 0, 1f, TOP, 0, 1f)
             it.background = "white".color
         ]
     }
