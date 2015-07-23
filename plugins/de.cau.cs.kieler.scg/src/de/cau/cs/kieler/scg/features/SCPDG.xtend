@@ -41,7 +41,7 @@ class SCPDG extends FeatureGroup {
     }
     
     override getFeatureIds() {
-        newHashSet(SCGFeatures::SCPDG_CD_ID, SCGFeatures::SCPDG_MD_ID, SCGFeatures::SCPDG_RN_ID)
+        newHashSet(SCGFeatures::SCPDG_CD_ID, SCGFeatures::SCPDG_MD_ID, SCGFeatures::SCPDG_RN_ID, SCGFeatures::SCPDG_CN_ID)
     }
 
     //-------------------------------------------------------------------------

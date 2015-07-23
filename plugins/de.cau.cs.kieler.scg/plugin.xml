@@ -63,6 +63,9 @@
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.transformations.SCPDGRemoveNodesTransformation">
       </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.SCPDGChangeNodes">
+      </productionTransformationClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.feature">
@@ -98,6 +101,9 @@
       </featureClass>
       <featureClass
             class="de.cau.cs.kieler.scg.features.SCPDGRemoveNode">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.features.SCPDGChangeNodes">
       </featureClass>
    </extension>
 

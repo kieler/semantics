@@ -49,7 +49,10 @@ public class SCGTransformations {
     
     public final static String SCPDG_MD_ID = "scg.scpdg.md";
     public final static String SCPDG_MD_NAME = "SCPDG Minimize Dependencies";
-    
+
     public final static String SCPDG_RN_ID = "scg.scpdg.rn";
     public final static String SCPDG_RN_NAME = "SCPDG Remove Nodes";
+    
+    public final static String SCPDG_CN_ID = "scg.scpdg.cn";
+    public final static String SCPDG_CN_NAME = "SCPDG Change Nodes";
 }

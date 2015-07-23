@@ -50,6 +50,9 @@ public class SCGFeatures {
     public final static String SCPDG_RN_ID = "scg.scpdg.rn";
     public final static String SCPDG_RN_NAME = "SCPDG Remove Nodes";
     
+    public final static String SCPDG_CN_ID = "scg.scpdg.cn";
+    public final static String SCPDG_CN_NAME = "SCPDG Change Nodes";
+    
     public final static String SCPDG_ID = "scg.scpdg";
     public final static String SCPDG_NAME = "SCPDG";
 }
