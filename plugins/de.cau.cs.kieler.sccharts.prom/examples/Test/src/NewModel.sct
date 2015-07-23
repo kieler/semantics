@@ -1,0 +1,4 @@
+scchart NewModel {
+
+    initial state init;
+}

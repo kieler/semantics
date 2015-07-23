@@ -61,6 +61,12 @@
       </shortcut>
    </extension>
    <extension
+         point="de.cau.cs.kieler.prom.environmentInitializer">
+      <initializer
+            class="de.cau.cs.kieler.sccharts.prom.SCChartsEnvironmentInitializer">
+      </initializer>
+   </extension>
+   <extension
          point="de.cau.cs.kieler.kex">
       <category
             id="de.cau.cs.kieler.sccharts.prom.examples"
@@ -124,10 +130,10 @@
       </example>
    </extension>
    <extension
-         point="de.cau.cs.kieler.prom.environmentInitializer">
-      <initializer
-            class="de.cau.cs.kieler.sccharts.prom.SCChartsEnvironmentInitializer">
-      </initializer>
+         point="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer">
+      <analyzer
+            class="de.cau.cs.kieler.sccharts.prom.SCTWrapperCodeAnnotationAnalyzer">
+      </analyzer>
    </extension>
 
 </plugin>

@@ -13,12 +13,6 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
-import de.cau.cs.kieler.core.annotations.Annotation
-import de.cau.cs.kieler.core.annotations.BooleanAnnotation
-import de.cau.cs.kieler.core.annotations.FloatAnnotation
-import de.cau.cs.kieler.core.annotations.IntAnnotation
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.kexpressions.Declaration
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -76,53 +70,8 @@ class WrapperCodeAnnotationData {
      */
     @Accessors
     private boolean ignoreNonExistingSnippet
-    
-    
-    
-    new(){
-    }    
-    
-    new(Declaration decl, Annotation annotation){
-        getData(decl)
-        getData(annotation)
-    }
-    
-    
-    /**
-     * Fetches the data for wrapper code generation from a variable declaration of an SCT file.
-     */
-    def getData(Declaration decl){
-        input = decl.input
-        output = decl.output
-        varType = decl.type.literal
-        if (decl.valuedObjects != null && !decl.valuedObjects.isEmpty) {
-            val obj = decl.valuedObjects.get(0)
-            varName = obj.name
-        }
-    }
-    
-    /**
-     * Fetches the data for wrapper code generation from a variable's annotation of an SCT file.
-     */
-    def getData(Annotation annotation){
-        name = annotation.name
-        switch (annotation) {
-            BooleanAnnotation: arguments.add(String.valueOf(annotation.value))
-            FloatAnnotation: arguments.add(String.valueOf(annotation.value))
-            IntAnnotation: arguments.add(String.valueOf(annotation.value))
-            StringAnnotation: arguments.add(String.valueOf(annotation.value))
-        }
-        
-        if(name == "Wrapper" && !arguments.isEmpty){
-            // Explicit wrapper annotation
-            // -> actual snippet name is the first argument.
-            name = arguments.remove(0)
-        }else{
-            // Not an explicit wrapper code annotation
-            // -> ignore if non existing.
-            ignoreNonExistingSnippet = true
-        }
-    }
+
+
     
     /**
      * Two WrapperCodeAnnotationData are equal if the name is equal

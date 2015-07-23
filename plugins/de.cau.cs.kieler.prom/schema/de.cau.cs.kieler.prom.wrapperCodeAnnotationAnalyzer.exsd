@@ -3,11 +3,13 @@
 <schema targetNamespace="de.cau.cs.kieler.prom" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="de.cau.cs.kieler.prom" id="de.cau.cs.kieler.prom.environmentInitializer" name="Environment Initializer"/>
+         <meta.schema plugin="de.cau.cs.kieler.prom" id="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer" name="Wrapper Code Annotation Analyzer"/>
       </appinfo>
       <documentation>
-         This extension point can be used to add default environments to use for KiCo compilation and project creation.
-The environments are restored when there are no environments in the preference store.
+         This extension point is used to add implementations which analyze an EObject and return the defined wrapper code annotations.
+
+The analysis is done when starting a launch configuration for KiCo compilation.
+The wrapper code annotation data is then used to generate wrapper code for the model as part of the launch process.
       </documentation>
    </annotation>
 
@@ -19,7 +21,7 @@ The environments are restored when there are no environments in the preference s
       </annotation>
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="initializer"/>
+            <element ref="analyzer"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -48,20 +50,20 @@ The environments are restored when there are no environments in the preference s
       </complexType>
    </element>
 
-   <element name="initializer">
+   <element name="analyzer">
       <annotation>
          <documentation>
-            An implementation of an environment initializer
+            Add an implementation of a class that searches for wrapper code annotations in an EObject.
          </documentation>
       </annotation>
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  A fully qualified name of the java class implementing de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
+                  A fully qualified name of the java class implementing de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer"/>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer"/>
                </appinfo>
             </annotation>
          </attribute>

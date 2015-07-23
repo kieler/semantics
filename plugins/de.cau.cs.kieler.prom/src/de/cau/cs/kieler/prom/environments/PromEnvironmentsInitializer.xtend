@@ -41,6 +41,8 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
     public static def getAllDefaultEnvironments(){
         val datas = new ArrayList<EnvironmentData>()
         
+        // Get environments defined by extensions
+        // that implement an environment initializer.
         val config = Platform.getExtensionRegistry().getConfigurationElementsFor(INITIALIZER_EXTENSION_POINT_ID);
         try {
             for (IConfigurationElement e : config) {
