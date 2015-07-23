@@ -40,6 +40,8 @@ import de.cau.cs.kieler.prom.common.FileCompilationData
  */
 class WrapperCodeGenerator {
 
+    static val MODEL_NAME_VARIABLE = "model_name"
+
     /**
      * The project of the launch configuration which started the generator.
      */
@@ -79,9 +81,10 @@ class WrapperCodeGenerator {
 
 
     /**
-     * The name of the last processed SCChart.  
+     * The name of the last processed model
+     * (e.g. the name for an SCChart).  
      */
-    private String scchartName = ""
+    private String modelName = ""
 
 
 
@@ -131,7 +134,7 @@ class WrapperCodeGenerator {
 
         // Create template macro calls from annotations
         val map = getMacroCalls(annotationDatas)
-        map.put("scchart_name", scchartName)
+        map.put(MODEL_NAME_VARIABLE, modelName)
 
         // Inject macro calls in input template
         FreeMarkerPlugin.templateDirectory = project.location.toOSString()
@@ -290,8 +293,7 @@ class WrapperCodeGenerator {
         if (model != null && model instanceof State) {
             // Iterate over model to get all annotations
             val root = (model as State)
-            scchartName = root.id
-            println("scname:"+scchartName)
+            modelName = root.id
             for (decl : root.declarations) {
                 // Only consider annotations of inputs and outputs.
                 if (decl.input || decl.output) {

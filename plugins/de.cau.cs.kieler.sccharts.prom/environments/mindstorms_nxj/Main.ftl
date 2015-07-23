@@ -3,7 +3,7 @@ import lejos.nxt.comm.RConsole;
 
 public class Main {
     // Instantiate SCChart
-    public static ${scchart_name} scchart = new ${scchart_name}();
+    public static ${model_name} scchart = new ${model_name}();
     
     // Init Annotations
 ${inits}

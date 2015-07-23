@@ -20,8 +20,8 @@ import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * Data container for default settings to use in SCCharts compilation and execution
- * as well as creation of new SCCharts project.
+ * Data container for default settings to use in KiCo compilation and execution
+ * as well as creation of new projects.
  * 
  * @author aas
  *
@@ -58,7 +58,7 @@ class EnvironmentData extends ConfigurationSerializableData {
     
     /**
      * A project relative path to the default main file.
-     * When creating a new SCCharts project, this value is used to initialize the main file creation page. 
+     * When creating a new project, this value is used to initialize the main file creation page. 
      */
     @Accessors
     protected String mainFile = ""

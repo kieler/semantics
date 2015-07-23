@@ -22,10 +22,10 @@ import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
 
 /**
- * Dummy implementation for the SCCharts preference page.
+ * Dummy implementation for the KIELER preference page.
  * Currently this is used only to have a parent for the environments page. 
  */
-class SCChartsPage extends PreferencePage implements IWorkbenchPreferencePage {
+class KielerPage extends PreferencePage implements IWorkbenchPreferencePage {
 
     override init(IWorkbench workbench) {
     }

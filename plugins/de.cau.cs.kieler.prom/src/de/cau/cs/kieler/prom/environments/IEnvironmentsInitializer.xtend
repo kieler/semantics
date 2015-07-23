@@ -11,9 +11,19 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.prom.common;
+package de.cau.cs.kieler.prom.environments
 
+import de.cau.cs.kieler.prom.common.EnvironmentData
+import java.util.List
 
 /**
- * The common packages contains utility and data container classes which are used by at least two other packages.
- */ 
+ * @author aas
+ *
+ */
+interface IEnvironmentsInitializer {
+    
+    /**
+     * Returns a list with default environments ready to use.
+     */
+    public def List<EnvironmentData> getDefaultEnvironments()
+}

@@ -39,10 +39,8 @@ class ModelImporter {
             val resourceLoad = resourceSet.getResource(input, true);
             return resourceLoad.getContents().get(0);
         } else {
-            // Try to load SCCharts model
+            // Load model
             val inputResource = new XMIResourceImpl(input);
-
-            // Load SCCharts model
             inputResource.load(null);
             return inputResource.getContents().get(0);
         }

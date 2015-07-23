@@ -34,7 +34,7 @@ import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
 
 /**
- * Implementation of a launch configuration for SCChart projects.
+ * Implementation of a launch configuration that uses KiCo.
  */
 class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
@@ -50,21 +50,21 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val BUILD_DIRECTORY = "kieler-gen"
 
     // Attribute names
-    public static val ATTR_COMMANDS = "de.cau.cs.kieler.scchart.launchconfig.commands"
+    public static val ATTR_COMMANDS = "de.cau.cs.kieler.prom.launchconfig.commands"
 
-    public static val ATTR_FILES = "de.cau.cs.kieler.scchart.launchconfig.files"
+    public static val ATTR_FILES = "de.cau.cs.kieler.prom.launchconfig.files"
 
-    public static val ATTR_PROJECT = "de.cau.cs.kieler.scchart.launchconfig.main.project"
-    public static val ATTR_MAIN_FILE = "de.cau.cs.kieler.scchart.launchconfig.main.file"
+    public static val ATTR_PROJECT = "de.cau.cs.kieler.prom.launchconfig.main.project"
+    public static val ATTR_MAIN_FILE = "de.cau.cs.kieler.prom.launchconfig.main.file"
 
-    public static val ATTR_ENVIRONMENT = "de.cau.cs.kieler.scchart.launchconfig.main.environment"
+    public static val ATTR_ENVIRONMENT = "de.cau.cs.kieler.prom.launchconfig.main.environment"
 
-    public static val ATTR_TARGET_LANGUAGE = "de.cau.cs.kieler.scchart.launchconfig.main.target.language"
-    public static val ATTR_TARGET_TEMPLATE = "de.cau.cs.kieler.scchart.launchconfig.main.target.template"
-    public static val ATTR_TARGET_LANGUAGE_FILE_EXTENSION = "de.cau.cs.kieler.scchart.launchconfig.main.target.file.extension"
+    public static val ATTR_TARGET_LANGUAGE = "de.cau.cs.kieler.prom.launchconfig.main.target.language"
+    public static val ATTR_TARGET_TEMPLATE = "de.cau.cs.kieler.prom.launchconfig.main.target.template"
+    public static val ATTR_TARGET_LANGUAGE_FILE_EXTENSION = "de.cau.cs.kieler.prom.launchconfig.main.target.file.extension"
 
-    public static val ATTR_WRAPPER_CODE_TEMPLATE = "de.cau.cs.kieler.scchart.launchconfig.main.wrapper.template"
-    public static val ATTR_WRAPPER_CODE_SNIPPETS = "de.cau.cs.kieler.scchart.launchconfig.main.wrapper.snippets"
+    public static val ATTR_WRAPPER_CODE_TEMPLATE = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.template"
+    public static val ATTR_WRAPPER_CODE_SNIPPETS = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.snippets"
 
     // Variable names
     public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
@@ -151,7 +151,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 getExecuteCommandsJob().schedule()
             }
         } else {
-            consoleStream.println("Project of SCChart launch configuration '" + configuration.name +
+            consoleStream.println("Project of launch configuration '" + configuration.name +
                 "' does not exist.\n");
         }
     }

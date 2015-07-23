@@ -358,10 +358,10 @@ class UIUtil {
         // Fetch possible targets from KiCo
         var Set<Transformation> transformations
         val feature = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
-        if (feature != null) {
+        
+        if (feature != null)
             transformations = feature.expandingTransformations
-        }
-
+        
         // Fill combo
         combo.contentProvider = ArrayContentProvider.instance
         combo.input = transformations

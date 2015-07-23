@@ -301,7 +301,7 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
     /**
      * Sets the used environment and possibly created main file
      * to the properties of the newly created project.
-     * This data is used by the SCCharts launch config shortcut to use as reasonable defaults.
+     * This data is used by the launch configuration shortcut, to use as reasonable defaults.
      */
     protected def initializeProjectProperties(){
         // Used environment name
@@ -410,7 +410,7 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
         this.workbench = workbench
         this.selection = selection
 
-        windowTitle = "New SCCharts Project"
+        windowTitle = "New Project"
         helpAvailable = false
 
         projectsBeforeWizard = ResourcesPlugin.workspace.root.projects
@@ -441,7 +441,7 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
     }
     
     /**
-     * Add resources for an SCCharts project to the newly created project.
+     * Add resources to the newly created project.
      */
     private def initializeNewProject(){
         if (newlyCreatedProject != null) {

@@ -1,8 +1,9 @@
 package de.cau.cs.kieler.prom.launchconfig
 
 import de.cau.cs.kieler.prom.common.EnvironmentData
+import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.PromPlugin
-import de.cau.cs.kieler.prom.environments.Initializer
+import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
 import java.util.ArrayList
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
@@ -22,7 +23,6 @@ import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.ResourceUtil
-import de.cau.cs.kieler.prom.common.FileCompilationData
 
 class LaunchShortcut implements ILaunchShortcut {
 
@@ -181,7 +181,7 @@ class LaunchShortcut implements ILaunchShortcut {
     }
 
     /**
-     * Opens a dialog such that the user can select an SCChart environment for this launch.
+     * Opens a dialog such that the user can select an environment for this launch.
      * @return the selected EnvironmentData.
      */
     private def EnvironmentData getEnvironmentFromDialog() {
@@ -189,7 +189,7 @@ class LaunchShortcut implements ILaunchShortcut {
         val store = PromPlugin.^default.preferenceStore
         var environments = EnvironmentData.loadAllFromPreferenceStore(store)
         if(environments.isEmpty){
-            environments = Initializer.getDefaultEnvironments()
+            environments = PromEnvironmentsInitializer.getAllDefaultEnvironments()
             EnvironmentData.saveAllToPreferenceStore(store, environments)
         }
         

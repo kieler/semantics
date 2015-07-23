@@ -8,17 +8,17 @@ import org.osgi.framework.BundleContext
 class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
     
     // The plug-in ID
-    public static val ID = "de.cau.kieler.sccharts.launchconfig"
+    public static val ID = "de.cau.kieler.prom.launchconfig"
     
     // The shared instance
     private static PromPlugin plugin;
     
     /**
-     * Qualifier used to set the environment name property of a SCCharts project.
+     * Qualifier used to set the environment name property of a project.
      */
     public static val ENVIRIONMENT_QUALIFIER = new QualifiedName(PromPlugin.ID, "environment")
     /**
-     * Qualifier used to set the main file's project relative path of a SCCharts project.
+     * Qualifier used to set the main file's project relative path of a project.
      */
     public static val MAIN_FILE_QUALIFIER = new QualifiedName(PromPlugin.ID, "main.file")
 

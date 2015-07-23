@@ -9,7 +9,7 @@
             class="de.cau.cs.kieler.sccharts.prom.SCChartsFileWizard"
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"
-            icon="icons/sccharts_icon16.png"
+            icon="icons/foerde-logo-16.png"
             id="de.cau.cs.kieler.sccharts.prom.filewizard"
             name="SCT File"
             project="false">
@@ -22,7 +22,7 @@
             class="de.cau.cs.kieler.sccharts.prom.SCChartsProjectWizard"
             finalPerspective="de.cau.cs.kieler.Modeling"
             hasPages="true"
-            icon="icons/sccharts_icon16.png"
+            icon="icons/foerde-logo-16.png"
             id="de.cau.cs.kieler.sccharts.prom.projectwizard"
             name="SCT Project"
             project="true">
@@ -35,7 +35,7 @@
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
             class="de.cau.cs.kieler.prom.launchconfig.LaunchShortcut"
-            icon="icons/sccharts_icon16.png"
+            icon="icons/foerde-logo-16.png"
             id="de.cau.cs.kieler.sccharts.prom.launchShortcut"
             label="SCT Application"
             modes="run, debug">
@@ -122,6 +122,12 @@
                resource_type="file">
          </resource>
       </example>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.prom.environmentInitializer">
+      <initializer
+            class="de.cau.cs.kieler.sccharts.prom.SCChartsEnvironmentInitializer">
+      </initializer>
    </extension>
 
 </plugin>

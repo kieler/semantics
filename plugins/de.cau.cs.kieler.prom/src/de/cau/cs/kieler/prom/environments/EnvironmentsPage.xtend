@@ -50,9 +50,9 @@ import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
 
 /**
- * Implementation of the preferences page for SCChart environments.
+ * Implementation of the preferences page for environments.
  * Contains controls to create, remove, update and show the environments in the plugin's preference store.
- * Environments contain defaults to create, initialize and launch an SCChart project.  
+ * Environments contain defaults to create, initialize and launch a project.  
  * 
  * @author aas
  * 
@@ -65,7 +65,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     private var IWorkbench workbench
     
     /**
-     * The preferences store which contains the SCCharts environments.
+     * The preferences store which contains the environments.
      * This is the plugin's preference store.
      */
     private var IPreferenceStore store
@@ -253,7 +253,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         // ComboViewer
         val combo = new ComboViewer(group, SWT.DEFAULT)
         relatedProjectWizard = combo
-        relatedProjectWizard.combo.toolTipText = "Project wizard to run when creating a SCCharts project"
+        relatedProjectWizard.combo.toolTipText = "Project wizard to run when creating a new project"
         
         // Fill combo
         combo.contentProvider = ArrayContentProvider.instance
@@ -305,7 +305,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        mainFile.toolTipText = "Default main file name for SCChart project wizard"
+        mainFile.toolTipText = "Default main file name in project wizard"
         
         // Main file origin
         UIUtil.createLabel(group, "Main file origin")
@@ -428,7 +428,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        wrapperCodeSnippetsOrigin.toolTipText = "Directory path (file system or platform) with default content for snippets directory when creating a SCChart project"
+        wrapperCodeSnippetsOrigin.toolTipText = "Directory path (file system or platform) with default content for snippets directory when creating a new project"
     }
 
     /**
@@ -703,7 +703,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * The method is run if the 'Restore Defaults' button is clicked.
      */
     override performDefaults(){
-        list.input = Initializer.getDefaultEnvironments()
+        list.input = PromEnvironmentsInitializer.getAllDefaultEnvironments()
         checkConsistency()
         super.performDefaults()
     }
@@ -713,7 +713,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      */
     private def loadSettings(){
         if(EnvironmentData.isPreferenceStoreEmpty(store))
-            list.input = Initializer.defaultEnvironments
+            list.input = PromEnvironmentsInitializer.getAllDefaultEnvironments()
         else
             list.input = EnvironmentData.loadAllFromPreferenceStore(store)
     }

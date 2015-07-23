@@ -1,28 +1,20 @@
 package de.cau.cs.kieler.prom.environments
 
-import de.cau.cs.kieler.prom.common.CommandData
 import de.cau.cs.kieler.prom.common.EnvironmentData
+import de.cau.cs.kieler.prom.common.PromPlugin
 import java.util.ArrayList
+import org.eclipse.core.runtime.CoreException
+import org.eclipse.core.runtime.IConfigurationElement
+import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer
 import org.eclipse.jface.preference.IPreferenceStore
-import de.cau.cs.kieler.prom.common.PromPlugin
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 
 /**
  * This class creates default environments if there are none.
  */
-class Initializer extends AbstractPreferenceInitializer {
+class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implements IEnvironmentsInitializer{
 
-    /**
-     * Reference to the preference store in which the environments are saved.
-     */    
-    private IPreferenceStore store
-    
-    new() {
-        super()
-
-        store = PromPlugin.getDefault().preferenceStore
-    }
+    static val INITIALIZER_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.environmentInitializer"
 
     /**
      * Fills the preference store with default environments if there are none.
@@ -39,14 +31,35 @@ class Initializer extends AbstractPreferenceInitializer {
      * Fills the preference store with default environments.
      * Any other environment data in the store will be lost. 
      */
-    def initializeDefaultEnvironments(){
-        EnvironmentData.saveAllToPreferenceStore(store, getDefaultEnvironments())
+    public static def initializeDefaultEnvironments(){
+        EnvironmentData.saveAllToPreferenceStore(store, getAllDefaultEnvironments())
     }
 
     /**
-     * Returns a list with the default environments ready to use.
+     * Fetches all default environments from all registered environment initializers.
      */
-    public static def getDefaultEnvironments(){
+    public static def getAllDefaultEnvironments(){
+        val datas = new ArrayList<EnvironmentData>()
+        
+        val config = Platform.getExtensionRegistry().getConfigurationElementsFor(INITIALIZER_EXTENSION_POINT_ID);
+        try {
+            for (IConfigurationElement e : config) {
+            val o = e.createExecutableExtension("class");
+                if (o instanceof IEnvironmentsInitializer) {
+                    datas += o.getDefaultEnvironments()
+                }
+            }
+        } catch (CoreException ex) {
+            System.err.println(ex.getMessage());
+        }
+        
+        return datas
+    }
+
+    /**
+     * @{inheritDoc}
+     */
+    override getDefaultEnvironments(){
         val datas = new ArrayList<EnvironmentData>()
         
         // Generic
@@ -103,27 +116,10 @@ class Initializer extends AbstractPreferenceInitializer {
         
         datas += env
         
-        // Mindstorms NXJ
-        env = new EnvironmentData("Mindstorms NXJ")
-        
-        env.targetLanguage = "s.java"
-        env.targetFileExtension = ".java"
-        env.targetTemplate = ""
-        
-        env.wrapperCodeTemplate = "src/Main.ftl"
-        env.wrapperCodeSnippetsDirectory = "snippets/mindstorms_nxj"
-        env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/snippets"
-        
-        env.commands.add(new CommandData("Compile", '''nxjc -cp "/opt/leJOS_0.9.1/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" "«LaunchConfiguration.BUILD_DIRECTORY»/Main.java"'''))
-        env.commands.add(new CommandData("Deploy and Run", '''nxj -r -cp "/opt/leJOS_0.9.1/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" -o "Main.nxj" Main'''))
-        
-        env.relatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
-        
-        env.mainFile = "src/Main.ftl"
-        env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/Main.ftl"
-        
-        datas += env
-        
         return datas
+    }
+    
+    private static def getStore(){
+        return PromPlugin.^default.preferenceStore
     }
 }

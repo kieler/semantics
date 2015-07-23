@@ -16,7 +16,7 @@ package de.cau.cs.kieler.prom.projectwizard
 import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.UIUtil
-import de.cau.cs.kieler.prom.environments.Initializer
+import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.jface.viewers.ArrayContentProvider
@@ -32,8 +32,9 @@ import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
 
 /**
- * The main page for an SCCharts project wizard containing a control to select the environment to use
- * and the wrapper code snippets to copy to the new project.
+ * The main page for the project wizard.
+ * It contains a control to select the environment to use
+ * and the wrapper code snippets to import in the new project.
  * 
  * @author aas
  * 
@@ -93,7 +94,7 @@ class MainPage extends WizardPage {
         // It might be that on a new installation there are no environments initialized.
         // So we do it here manually.
         if (EnvironmentData.isPreferenceStoreEmpty(store))
-            new Initializer().initializeDefaultPreferences()
+            PromEnvironmentsInitializer.initializeDefaultEnvironments()
 
         // Load environments from store
         environments = EnvironmentData.loadAllFromPreferenceStore(store)

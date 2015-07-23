@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="de.cau.cs.kieler.prom.environmentInitializer" name="Environment Initializer" schema="schema/de.cau.cs.kieler.prom.environmentInitializer.exsd"/>
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
@@ -42,15 +43,21 @@
             name="Environments">
       </page>
       <page
-            class="de.cau.cs.kieler.prom.environments.SCChartsPage"
+            class="de.cau.cs.kieler.prom.environments.KielerPage"
             id="de.cau.cs.kieler.prom.scchartsPage"
-            name="KIELER SCCharts">
+            name="KIELER">
       </page>
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="de.cau.cs.kieler.prom.environments.Initializer">
+            class="de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.prom.environmentInitializer">
+      <initializer
+            class="de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer">
       </initializer>
    </extension>
 

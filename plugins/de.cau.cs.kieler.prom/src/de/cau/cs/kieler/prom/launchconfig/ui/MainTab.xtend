@@ -39,8 +39,8 @@ import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
 
 /** 
- * The tab with the controls for the main information for a SCChart launch config
- * (project, main file, environment used).
+ * The tab with the controls for the main information for a KiCo launch.
+ * This is the project, main file and environment used.
  * 
  * @author aas
  */
