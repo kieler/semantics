@@ -52,6 +52,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.Equation
 
 /**
  * SCCharts Extensions.
@@ -1275,7 +1276,7 @@ class SCChartsExtension {
         val relevantObjects = scope.eAllContents.filter(
             e|
                 e instanceof ValuedObjectReference || e instanceof Assignment ||
-                    e instanceof Emission || e instanceof Binding
+                    e instanceof Emission || e instanceof Binding || e instanceof Equation
         ).immutableCopy;
         for (obj : relevantObjects) {
             if (obj instanceof ValuedObjectReference && (obj as ValuedObjectReference).valuedObject == valuedObject) {
@@ -1300,7 +1301,9 @@ class SCChartsExtension {
             } else if (obj instanceof Binding) {
                 if((obj as Binding).formal == valuedObject) (obj as Binding).formal = replacement
                 if((obj as Binding).actual == valuedObject) (obj as Binding).actual = replacement
-            }
+            } else if (obj instanceof Equation && (obj as Equation).valuedObject == valuedObject) {
+                (obj as Equation).valuedObject = replacement;
+            }      
 
         }
     }
