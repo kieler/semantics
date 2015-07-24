@@ -675,7 +675,9 @@ public abstract class KiemAutomatedJUnitTest {
 
             if (benchmarkError) {
                 benchmarkReRunCountdown--;
+                System.out.println("*** BENCHMARK ERROR *** - COUNT DOWN " + benchmarkReRunCountdown + " for model " + modelFilePath);
                 if (benchmarkReRunCountdown == 0) {
+                    System.out.println("*** BENCHMARK ERROR *** - FAILING ");
                     // Claim this a real benchmark error now
                     fail(errorInformation);
                 }
