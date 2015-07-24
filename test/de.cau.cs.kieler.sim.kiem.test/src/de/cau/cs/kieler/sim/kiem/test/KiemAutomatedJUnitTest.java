@@ -518,13 +518,14 @@ public abstract class KiemAutomatedJUnitTest {
         // }
         // }
 
-        // Set modelFile in execution manager
-        // modelFilePath = getWorkspaceFile(modelFilePath).getProjectRelativePath();
-        // Set the global model file in KIEM, other components will retrieve this
-        KiemPlugin.setCurrentModelFile(modelFilePath);
-        logger.info("Model File: " + modelFilePath);
 
         while (benchmarkError && benchmarkReRunCountdown > 0) {
+            // Set modelFile in execution manager
+            // modelFilePath = getWorkspaceFile(modelFilePath).getProjectRelativePath();
+            // Set the global model file in KIEM, other components will retrieve this
+            KiemPlugin.setCurrentModelFile(modelFilePath);
+            logger.info("Model File: " + modelFilePath);
+
             // initially set the error to false
             benchmarkError = false;
 
@@ -636,19 +637,21 @@ public abstract class KiemAutomatedJUnitTest {
                                     if (errorContent instanceof String) {
                                         if (!((String) errorContent).equals("")) {
                                             // !!! ERRROR DETECTED !!! //
-                                            execution.stopExecutionSync();
-                                            execution.cancel();
-                                            while (kiemPlugin.getExecution() != null) {
-                                                pause();
+                                            //execution.stopExecutionSync();
+                                            //execution.cancel();
+//                                            while (kiemPlugin.getExecution() != null) {
+//                                                pause();
+//                                            }
+                                            if (!errorFlag) {
+                                                errorFlag = true;
+                                                errorInformation = "Benchmark Error ("
+                                                        + (String) errorContent + ") in tick " + tick
+                                                        + " of trace " + traceNumber + " of ESO file '"
+                                                        + esoFilePath.toString()
+                                                        + "' during execution '" + executionFileName
+                                                        + "'.";
                                             }
-                                            errorFlag = true;
-                                            errorInformation = "Benchmark Error ("
-                                                    + (String) errorContent + ") in tick " + tick
-                                                    + " of trace " + traceNumber + " of ESO file '"
-                                                    + esoFilePath.toString()
-                                                    + "' during execution '" + executionFileName
-                                                    + "'.";
-                                            break;
+//                                            break;
                                         }
                                     }
                                 }
