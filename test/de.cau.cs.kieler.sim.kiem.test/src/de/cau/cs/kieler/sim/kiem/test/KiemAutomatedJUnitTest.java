@@ -498,8 +498,8 @@ public abstract class KiemAutomatedJUnitTest {
      */
     private static String testEsoFile(final IPath esoFilePath, final KiemProperty traceProperty,
             final String executionFileName, final String pluginId, final int rerunbenchmark) {
-        boolean errorFlag = false;
 
+        boolean errorFlag = false;
         int benchmarkReRunCountdown = rerunbenchmark;
         boolean benchmarkError = true;
 
@@ -520,6 +520,8 @@ public abstract class KiemAutomatedJUnitTest {
 
 
         while (benchmarkError && benchmarkReRunCountdown > 0) {
+            errorFlag = false;
+            
             // Set modelFile in execution manager
             // modelFilePath = getWorkspaceFile(modelFilePath).getProjectRelativePath();
             // Set the global model file in KIEM, other components will retrieve this
