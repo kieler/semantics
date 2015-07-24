@@ -47,10 +47,85 @@ class SCPDGMinimizeDependenciesTransformation extends AbstractProductionTransfor
    }
    
     def private SCGraph minimizeControlDependencies(SCGraph scg){
+        val conds = newHashSet()
+        scg.nodes.forEach[node|
+            if(node instanceof Conditional)
+                conds.add(node)
+        ]
+        
+        conds.forEach[cond|
+            deleteUselessConditionalDependencies(cond)
+        ]
         scg.removeUnnecessaryControlDependencies
         scg.removeUselessConditionalDependencies
         
         return scg
+    }
+    
+    def private deleteUselessConditionalDependencies(Conditional cond){
+        val thenTargets = newHashSet()
+        val elseTargets = newHashSet()
+        val doubleTargets = newHashSet()
+        val doubleTargetsIncoming = newHashSet()
+        val uselessCondDependencies = newHashSet()
+        cond.dependencies.forEach[dependency|
+            if(dependency instanceof ElseDependency){
+                elseTargets.add(dependency.target)
+            } else if(dependency instanceof ThenDependency){
+                thenTargets.add(dependency.target)
+            }
+        ]
+        cond.dependencies.forEach[dependency|
+            if(elseTargets.contains(dependency.target) && thenTargets.contains(dependency.target)){
+                uselessCondDependencies.add(dependency)
+                doubleTargets.add(dependency.target)
+            }
+        ]
+        
+        cond.dependencies.removeAll(uselessCondDependencies)
+        
+//        doubleTargets.forEach[target|
+//            target.incoming.forEach[dependency|
+//                if(dependency instanceof ConditionalDependency || dependency instanceof ControlDependency){
+//                    val node = ((dependency as Dependency).eContainer) as Node
+//                    if(!thenTargets.contains(node) && !elseTargets.contains(node))
+//                        doubleTargetsIncoming.add(node)
+//                }
+//            ]
+//        
+//        ]
+//        
+        thenTargets.forEach[target|
+            val uselessDependencies = newHashSet()
+            target.dependencies.forEach[dependency|
+                if(dependency instanceof ConditionalDependency || dependency instanceof ControlDependency){
+                    if(doubleTargets.contains(dependency.target)){
+                        uselessDependencies.add(dependency)
+                    }
+                }
+            ]
+            target.dependencies.removeAll(uselessDependencies)
+        ]
+        
+        elseTargets.forEach[target|
+            val uselessDependencies = newHashSet()
+            target.dependencies.forEach[dependency|
+                if(dependency instanceof ConditionalDependency || dependency instanceof ControlDependency){
+                    if(doubleTargets.contains(dependency.target)){
+                        uselessDependencies.add(dependency)
+                    }
+                }
+            ]
+             target.dependencies.removeAll(uselessDependencies)
+        ]
+        
+        cond.incoming.forEach[dependency|
+             if(dependency instanceof ConditionalDependency || dependency instanceof ControlDependency){
+                 (dependency as Dependency).newTargets((dependency.eContainer) as Node, doubleTargets)
+             }
+        ]
+        
+        
     }
     
     def private removeUnnecessaryControlDependencies(SCGraph scg){
@@ -62,9 +137,11 @@ class SCPDGMinimizeDependenciesTransformation extends AbstractProductionTransfor
                 Nodes.forEach[innerNode|
                     val toRemove = newHashSet()
                     innerNode.dependencies.forEach[dependency|
-                        if(Nodes.contains(dependency.target)){
-                            if(existsNonTrivialDependency(innerNode, dependency.target, Nodes)){
-                                toRemove.add(dependency)
+                        if(dependency instanceof ControlDependency){
+                            if(Nodes.contains(dependency.target)){
+                                if(existsNonTrivialDependency(innerNode, dependency.target, Nodes)){
+                                    toRemove.add(dependency)
+                                }
                             }
                         }
                     ]
