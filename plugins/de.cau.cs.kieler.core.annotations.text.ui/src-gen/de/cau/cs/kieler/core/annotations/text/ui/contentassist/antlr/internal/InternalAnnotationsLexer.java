@@ -12,25 +12,25 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalAnnotationsLexer extends Lexer {
+    public static final int RULE_COMMENT_ANNOTATION=8;
     public static final int RULE_BOOLEAN=9;
-    public static final int RULE_ID=5;
-    public static final int RULE_ANY_OTHER=14;
-    public static final int T__21=21;
-    public static final int T__20=20;
-    public static final int RULE_FLOAT=7;
-    public static final int EOF=-1;
-    public static final int RULE_SL_COMMENT=12;
-    public static final int RULE_ML_COMMENT=10;
-    public static final int T__19=19;
     public static final int RULE_STRING=4;
-    public static final int T__16=16;
+    public static final int RULE_SL_COMMENT=12;
+    public static final int T__19=19;
     public static final int T__15=15;
-    public static final int T__18=18;
+    public static final int T__16=16;
     public static final int T__17=17;
+    public static final int T__18=18;
+    public static final int EOF=-1;
+    public static final int RULE_ID=5;
+    public static final int RULE_WS=13;
+    public static final int RULE_ANY_OTHER=14;
     public static final int RULE_NUMBER=11;
     public static final int RULE_INT=6;
-    public static final int RULE_WS=13;
-    public static final int RULE_COMMENT_ANNOTATION=8;
+    public static final int RULE_ML_COMMENT=10;
+    public static final int RULE_FLOAT=7;
+    public static final int T__20=20;
+    public static final int T__21=21;
 
     // delegates
     // delegators
@@ -1119,12 +1119,12 @@ public class InternalAnnotationsLexer extends Lexer {
     static final String DFA11_maxS =
         "\1\71\1\146\2\uffff";
     static final String DFA11_acceptS =
-        "\2\uffff\1\1\1\2";
+        "\2\uffff\1\2\1\1";
     static final String DFA11_specialS =
         "\4\uffff}>";
     static final String[] DFA11_transitionS = {
             "\12\1",
-            "\1\2\1\uffff\12\1\54\uffff\1\3",
+            "\1\3\1\uffff\12\1\54\uffff\1\2",
             "",
             ""
     };
@@ -1180,7 +1180,7 @@ public class InternalAnnotationsLexer extends Lexer {
         "\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff\1\17\1\12\1\13\2\uffff\1\16\1\uffff"+
         "\1\15\1\20\1\10\1\11\4\uffff\1\14\1\uffff";
     static final String DFA20_specialS =
-        "\1\0\13\uffff\1\2\13\uffff\1\1\21\uffff}>";
+        "\1\1\13\uffff\1\2\13\uffff\1\0\21\uffff}>";
     static final String[] DFA20_transitionS = {
             "\11\20\2\17\2\20\1\17\22\20\1\17\1\20\1\14\1\6\10\20\1\2\1"+
             "\7\1\5\1\10\12\11\6\20\1\1\32\16\1\3\1\20\1\4\1\15\1\16\1\20"+
@@ -1265,6 +1265,16 @@ public class InternalAnnotationsLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
+                        int LA20_24 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA20_24=='*') ) {s = 34;}
+
+                        else if ( ((LA20_24>='\u0000' && LA20_24<=')')||(LA20_24>='+' && LA20_24<='\uFFFF')) ) {s = 35;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
                         int LA20_0 = input.LA(1);
 
                         s = -1;
@@ -1299,16 +1309,6 @@ public class InternalAnnotationsLexer extends Lexer {
                         else if ( ((LA20_0>='\t' && LA20_0<='\n')||LA20_0=='\r'||LA20_0==' ') ) {s = 15;}
 
                         else if ( ((LA20_0>='\u0000' && LA20_0<='\b')||(LA20_0>='\u000B' && LA20_0<='\f')||(LA20_0>='\u000E' && LA20_0<='\u001F')||LA20_0=='!'||(LA20_0>='$' && LA20_0<='+')||(LA20_0>=':' && LA20_0<='?')||LA20_0=='\\'||LA20_0=='`'||(LA20_0>='{' && LA20_0<='\uFFFF')) ) {s = 16;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA20_24 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA20_24=='*') ) {s = 34;}
-
-                        else if ( ((LA20_24>='\u0000' && LA20_24<=')')||(LA20_24>='+' && LA20_24<='\uFFFF')) ) {s = 35;}
 
                         if ( s>=0 ) return s;
                         break;

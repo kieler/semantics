@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -25,6 +25,7 @@ import java.util.LinkedList;
 
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * This Benchmark class is supposed to contain basic benchmark constants and code.
@@ -35,9 +36,18 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
  * 
  */
 public class Benchmark {
+    
+    /** The Constant BENCHMARK_CMDLINE_START_DELEMITER. */
+    public static final String BENCHMARK_CMDLINE_START_DELEMITER = "<#### BENCHMARK ####>";
+
+    /** The Constant BENCHMARK_CMDLINE_END_DELEMITER. */
+    public static final String BENCHMARK_CMDLINE_END_DELEMITER = "</#### BENCHMARK ####>";
 
     /** The Constant BENCHMARK_SIGNAL. */
     public static final String BENCHMARK_SIGNAL_TIME = "benchTime";
+
+    /** The Constant BENCHMARK_SIGNAL. */
+    public static final String BENCHMARK_SIGNAL_COMPILETIME = "benchCompileTime";
 
     /** The Constant BENCHMARK_SIGNAL. */
     public static final String BENCHMARK_SIGNAL_SOURCE = "benchSource";
@@ -164,21 +174,37 @@ public class Benchmark {
         String compile = "";
 
         try {
-            if (!isWindows) {
-                // Non-Windows
-                executable = File.createTempFile(BENCHMARK_PREFIX, ".o");
-                compile =
-                        compiler + " " + tickMethodFile.getPath()  + " "
-                              //  + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
-                                + BENCHMARK_COMPILER_OPTIONS + " " + executable;
-            } else {
-                // Windows
-                executable = File.createTempFile(BENCHMARK_PREFIX, ".o");
-                compile =
-                        compiler + " " + tickMethodFile.getPath().substring(1) + " "
-                               // + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
-                                + BENCHMARK_COMPILER_OPTIONS + " " + executable;
-            }
+            
+//            String outputFolder = KiemUtil.generateRandomTempOutputFolder();
+
+           String tickeMethodFilePath = tickMethodFile.toString().replace("file:/","").replace("file:", "");// getPath();
+           
+           tickeMethodFilePath = tickeMethodFilePath.replaceAll("[/\\\\]+", "\\" + File.separator);
+           if (tickeMethodFilePath.startsWith("\\")) {
+               tickeMethodFilePath = tickeMethodFilePath.substring(1);
+           }
+           
+          executable = File.createTempFile(BENCHMARK_PREFIX, ".o");
+          compile =
+                  compiler + " " + tickeMethodFilePath + " "
+                        //  + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+                          + BENCHMARK_COMPILER_OPTIONS + " " + executable;
+
+//            if (!isWindows) {
+//                // Non-Windows
+//                executable = File.createTempFile(BENCHMARK_PREFIX, ".o");
+//                compile =
+//                        compiler + " " + tickMethodFile.getPath()  + " "
+//                              //  + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+//                                + BENCHMARK_COMPILER_OPTIONS + " " + executable;
+//            } else {
+//                // Windows
+//                executable = File.createTempFile(BENCHMARK_PREFIX, ".o");
+//                compile =
+//                        compiler + " " + tickMethodFile.getPath().substring(1) + " "
+//                               // + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
+//                                + BENCHMARK_COMPILER_OPTIONS + " " + executable;
+//            }
             
             
             System.out.println("M2M 17 benchmak: " + compile);

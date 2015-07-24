@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER S Language Editor
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-Version: 0.3.3.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.s.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
@@ -20,7 +20,7 @@ Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.1.0",
  de.cau.cs.kieler.core.kexpressions.keffects,
  de.cau.cs.kieler.core.kexpressions.text
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.s.ui.contentassist.antlr,
  de.cau.cs.kieler.s.ui.contentassist,
  de.cau.cs.kieler.s.ui.quickfix

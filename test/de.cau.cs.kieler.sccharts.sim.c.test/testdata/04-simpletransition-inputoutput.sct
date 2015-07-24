@@ -1,9 +1,0 @@
-scchart _04_simpletransition "04-simpletransition" {
-  input signal pure I;
-  output signal pure O;
-
-  initial state S
-  --> F with I / O;
-
-  state F;
-}

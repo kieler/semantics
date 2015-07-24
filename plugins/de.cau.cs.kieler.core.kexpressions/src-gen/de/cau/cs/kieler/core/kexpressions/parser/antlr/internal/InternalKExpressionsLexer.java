@@ -12,46 +12,46 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalKExpressionsLexer extends Lexer {
-    public static final int T__42=42;
+    public static final int RULE_COMMENT_ANNOTATION=10;
     public static final int RULE_BOOLEAN=8;
-    public static final int RULE_ID=4;
-    public static final int T__40=40;
-    public static final int T__41=41;
-    public static final int T__29=29;
-    public static final int T__28=28;
-    public static final int T__27=27;
-    public static final int T__26=26;
-    public static final int T__25=25;
-    public static final int T__24=24;
-    public static final int T__23=23;
-    public static final int T__22=22;
-    public static final int RULE_ANY_OTHER=15;
-    public static final int T__21=21;
-    public static final int T__20=20;
-    public static final int RULE_FLOAT=7;
-    public static final int RULE_SL_COMMENT=13;
-    public static final int EOF=-1;
-    public static final int RULE_HOSTCODE=5;
-    public static final int RULE_ML_COMMENT=11;
-    public static final int T__30=30;
-    public static final int T__19=19;
-    public static final int T__31=31;
-    public static final int T__32=32;
     public static final int RULE_STRING=9;
+    public static final int RULE_SL_COMMENT=13;
+    public static final int T__19=19;
+    public static final int T__37=37;
     public static final int T__16=16;
+    public static final int T__38=38;
+    public static final int T__17=17;
+    public static final int T__39=39;
+    public static final int T__18=18;
     public static final int T__33=33;
     public static final int T__34=34;
-    public static final int T__18=18;
     public static final int T__35=35;
-    public static final int T__17=17;
     public static final int T__36=36;
-    public static final int T__37=37;
-    public static final int RULE_NUMBER=12;
-    public static final int T__38=38;
-    public static final int T__39=39;
-    public static final int RULE_INT=6;
+    public static final int EOF=-1;
+    public static final int T__30=30;
+    public static final int T__31=31;
+    public static final int T__32=32;
+    public static final int RULE_ID=4;
     public static final int RULE_WS=14;
-    public static final int RULE_COMMENT_ANNOTATION=10;
+    public static final int RULE_ANY_OTHER=15;
+    public static final int RULE_NUMBER=12;
+    public static final int T__26=26;
+    public static final int RULE_HOSTCODE=5;
+    public static final int T__27=27;
+    public static final int T__28=28;
+    public static final int RULE_INT=6;
+    public static final int T__29=29;
+    public static final int T__22=22;
+    public static final int RULE_ML_COMMENT=11;
+    public static final int T__23=23;
+    public static final int RULE_FLOAT=7;
+    public static final int T__24=24;
+    public static final int T__25=25;
+    public static final int T__40=40;
+    public static final int T__41=41;
+    public static final int T__20=20;
+    public static final int T__42=42;
+    public static final int T__21=21;
 
     // delegates
     // delegators
@@ -1769,12 +1769,12 @@ public class InternalKExpressionsLexer extends Lexer {
     static final String DFA12_maxS =
         "\1\71\1\146\2\uffff";
     static final String DFA12_acceptS =
-        "\2\uffff\1\2\1\1";
+        "\2\uffff\1\1\1\2";
     static final String DFA12_specialS =
         "\4\uffff}>";
     static final String[] DFA12_transitionS = {
             "\12\1",
-            "\1\3\1\uffff\12\1\54\uffff\1\2",
+            "\1\2\1\uffff\12\1\54\uffff\1\3",
             "",
             ""
     };
@@ -1815,30 +1815,30 @@ public class InternalKExpressionsLexer extends Lexer {
     static final String DFA21_eotS =
         "\1\uffff\1\40\3\uffff\1\45\1\uffff\1\50\1\52\1\54\4\uffff\1\36"+
         "\1\63\1\65\3\uffff\1\73\1\63\1\36\1\76\2\63\2\36\26\uffff\1\63\11"+
-        "\uffff\1\63\2\uffff\1\76\1\uffff\2\63\2\uffff\1\113\2\uffff\1\114"+
-        "\2\63\2\uffff\1\117\1\63\1\uffff\1\117";
+        "\uffff\1\63\3\uffff\1\76\2\63\2\uffff\1\113\2\uffff\1\114\2\63\2"+
+        "\uffff\1\117\1\63\1\uffff\1\117";
     static final String DFA21_eofS =
         "\121\uffff";
     static final String DFA21_minS =
         "\1\0\1\51\3\uffff\1\75\1\uffff\2\75\1\46\4\uffff\1\75\1\162\1\174"+
         "\3\uffff\1\52\1\141\1\0\1\56\1\162\1\141\1\0\1\101\26\uffff\1\145"+
-        "\6\uffff\1\0\2\uffff\1\154\2\uffff\1\56\1\uffff\1\165\1\154\2\uffff"+
-        "\1\60\2\uffff\1\60\1\145\1\163\2\uffff\1\60\1\145\1\uffff\1\60";
+        "\6\uffff\1\0\2\uffff\1\154\3\uffff\1\56\1\165\1\154\2\uffff\1\60"+
+        "\2\uffff\1\60\1\145\1\163\2\uffff\1\60\1\145\1\uffff\1\60";
     static final String DFA21_maxS =
         "\1\uffff\1\51\3\uffff\1\75\1\uffff\2\75\1\46\4\uffff\1\75\1\162"+
         "\1\174\3\uffff\1\57\1\141\1\uffff\1\146\1\162\1\141\1\uffff\1\172"+
-        "\26\uffff\1\145\6\uffff\1\uffff\2\uffff\1\154\2\uffff\1\146\1\uffff"+
-        "\1\165\1\154\2\uffff\1\172\2\uffff\1\172\1\145\1\163\2\uffff\1\172"+
-        "\1\145\1\uffff\1\172";
+        "\26\uffff\1\145\6\uffff\1\uffff\2\uffff\1\154\3\uffff\1\146\1\165"+
+        "\1\154\2\uffff\1\172\2\uffff\1\172\1\145\1\163\2\uffff\1\172\1\145"+
+        "\1\uffff\1\172";
     static final String DFA21_acceptS =
         "\2\uffff\1\2\1\3\1\4\1\uffff\1\6\3\uffff\1\13\1\14\1\15\1\16\3"+
         "\uffff\1\25\1\26\1\27\10\uffff\1\43\1\45\1\46\1\7\1\1\1\2\1\3\1"+
         "\4\1\20\1\5\1\6\1\21\1\10\1\22\1\11\1\33\1\12\1\13\1\14\1\15\1\16"+
         "\1\17\1\uffff\1\43\1\32\1\24\1\25\1\26\1\27\1\uffff\1\44\1\30\1"+
-        "\uffff\1\34\1\37\1\uffff\1\40\2\uffff\1\42\1\45\1\uffff\1\35\1\36"+
-        "\3\uffff\1\23\1\31\2\uffff\1\41\1\uffff";
+        "\uffff\1\34\1\37\1\40\3\uffff\1\42\1\45\1\uffff\1\35\1\36\3\uffff"+
+        "\1\23\1\31\2\uffff\1\41\1\uffff";
     static final String DFA21_specialS =
-        "\1\3\25\uffff\1\2\3\uffff\1\0\36\uffff\1\1\27\uffff}>";
+        "\1\3\25\uffff\1\1\3\uffff\1\0\36\uffff\1\2\27\uffff}>";
     static final String[] DFA21_transitionS = {
             "\11\36\2\35\2\36\1\35\22\36\1\35\1\10\1\32\1\14\1\36\1\23\1"+
             "\11\1\26\1\1\1\2\1\22\1\21\1\6\1\15\1\13\1\24\12\27\2\36\1\5"+
@@ -1866,7 +1866,7 @@ public class InternalKExpressionsLexer extends Lexer {
             "\1\71\4\uffff\1\72",
             "\1\74",
             "\0\75",
-            "\1\100\1\uffff\12\77\54\uffff\1\100",
+            "\1\77\1\uffff\12\100\54\uffff\1\77",
             "\1\101",
             "\1\102",
             "\0\103",
@@ -1906,8 +1906,8 @@ public class InternalKExpressionsLexer extends Lexer {
             "\1\110",
             "",
             "",
-            "\1\100\1\uffff\12\77\54\uffff\1\100",
             "",
+            "\1\77\1\uffff\12\100\54\uffff\1\77",
             "\1\111",
             "\1\112",
             "",
@@ -1973,22 +1973,22 @@ public class InternalKExpressionsLexer extends Lexer {
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA21_57 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA21_57=='*') ) {s = 70;}
-
-                        else if ( ((LA21_57>='\u0000' && LA21_57<=')')||(LA21_57>='+' && LA21_57<='\uFFFF')) ) {s = 71;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
                         int LA21_22 = input.LA(1);
 
                         s = -1;
                         if ( ((LA21_22>='\u0000' && LA21_22<='\uFFFF')) ) {s = 61;}
 
                         else s = 30;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA21_57 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA21_57=='*') ) {s = 70;}
+
+                        else if ( ((LA21_57>='\u0000' && LA21_57<=')')||(LA21_57>='+' && LA21_57<='\uFFFF')) ) {s = 71;}
 
                         if ( s>=0 ) return s;
                         break;

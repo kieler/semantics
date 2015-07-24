@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,11 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import org.eclipse.emf.common.util.EList;
-
 import de.cau.cs.kieler.core.annotations.Annotatable;
+
 import de.cau.cs.kieler.core.kexpressions.Expression;
+
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -63,7 +65,7 @@ public interface Action extends Annotatable {
      * <!-- end-user-doc -->
      * @generated
      */
-    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
      * Returns the value of the '<em><b>Effects</b></em>' containment reference list.
@@ -135,32 +137,6 @@ public interface Action extends Annotatable {
     void setDelay(int value);
 
     /**
-     * Returns the value of the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Immediate</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Immediate</em>' attribute.
-     * @see #setImmediate(boolean)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Immediate()
-     * @model
-     * @generated
-     */
-    boolean isImmediate();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Immediate</em>' attribute.
-     * @see #isImmediate()
-     * @generated
-     */
-    void setImmediate(boolean value);
-
-    /**
      * Returns the value of the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
@@ -185,5 +161,31 @@ public interface Action extends Annotatable {
      * @generated
      */
     void setLabel(String value);
+
+    /**
+     * Returns the value of the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Immediate</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Immediate</em>' attribute.
+     * @see #setImmediate(boolean)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Immediate()
+     * @model
+     * @generated
+     */
+    boolean isImmediate();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Immediate</em>' attribute.
+     * @see #isImmediate()
+     * @generated
+     */
+    void setImmediate(boolean value);
 
 } // Action

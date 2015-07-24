@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.xtext.validation.ComposedChecks;
 
-@ComposedChecks(validators= {de.cau.cs.kieler.sccharts.text.sct.validation.SctValidator.class})
 public class AbstractSctJavaValidator extends de.cau.cs.kieler.sccharts.text.actions.validation.ActionsJavaValidator {
 
 	@Override

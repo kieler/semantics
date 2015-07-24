@@ -3,8 +3,13 @@
  * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
+<<<<<<< HEAD:plugins/de.cau.cs.kieler.core.annotations.edit/src/de/cau/cs/kieler/core/annotations/provider/CommentAnnotationItemProvider.java
  * Copyright 2010 by
  * + Christian-Albrechts-University of Kiel
+=======
+ * Copyright 2013 by
+ * + Kiel University
+>>>>>>> master:plugins/de.cau.cs.kieler.sccharts.edit/src/de/cau/cs/kieler/sccharts/provider/InputNodeItemProvider.java
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 

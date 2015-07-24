@@ -1,0 +1,28 @@
+scchart _77_several_same_state_ids_empty_region_ids
+"77-several-same-state-ids-empty-region-ids" {
+  input signal pure I;
+  output signal pure O;
+  output signal pure O2;
+  output signal pure O3;
+
+  initial state ^state {
+
+    initial state ^state {
+
+      initial state ^state
+      --> state2 with I / O;
+
+      state state2;
+
+      region:
+
+      initial state ^state
+      --> state2 / O2;
+
+      state state2;
+    }
+    --> state2 / O3;
+
+    state state2;
+  };
+}

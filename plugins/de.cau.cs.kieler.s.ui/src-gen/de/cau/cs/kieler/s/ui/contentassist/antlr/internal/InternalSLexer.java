@@ -12,82 +12,82 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalSLexer extends Lexer {
-    public static final int T__68=68;
+    public static final int T__50=50;
     public static final int RULE_BOOLEAN=9;
-    public static final int T__69=69;
-    public static final int T__66=66;
-    public static final int RULE_ID=5;
-    public static final int T__67=67;
-    public static final int T__29=29;
-    public static final int T__64=64;
-    public static final int T__28=28;
-    public static final int T__65=65;
-    public static final int T__27=27;
-    public static final int T__62=62;
-    public static final int T__26=26;
-    public static final int T__63=63;
-    public static final int T__25=25;
-    public static final int T__24=24;
-    public static final int T__23=23;
-    public static final int T__22=22;
-    public static final int RULE_ANY_OTHER=15;
-    public static final int T__21=21;
-    public static final int T__20=20;
-    public static final int T__61=61;
-    public static final int EOF=-1;
-    public static final int T__60=60;
+    public static final int T__19=19;
+    public static final int T__59=59;
+    public static final int T__16=16;
+    public static final int T__17=17;
+    public static final int T__18=18;
     public static final int T__55=55;
     public static final int T__56=56;
-    public static final int T__19=19;
     public static final int T__57=57;
     public static final int T__58=58;
-    public static final int T__16=16;
     public static final int T__51=51;
     public static final int T__52=52;
-    public static final int T__18=18;
     public static final int T__53=53;
-    public static final int T__17=17;
     public static final int T__54=54;
-    public static final int RULE_NUMBER=12;
-    public static final int T__59=59;
-    public static final int RULE_INT=6;
-    public static final int T__50=50;
-    public static final int RULE_COMMENT_ANNOTATION=10;
-    public static final int T__42=42;
-    public static final int T__43=43;
-    public static final int T__40=40;
-    public static final int T__41=41;
-    public static final int T__46=46;
-    public static final int T__47=47;
-    public static final int T__44=44;
-    public static final int T__45=45;
-    public static final int T__48=48;
-    public static final int T__49=49;
-    public static final int RULE_FLOAT=7;
-    public static final int RULE_SL_COMMENT=13;
+    public static final int T__60=60;
+    public static final int T__61=61;
+    public static final int RULE_ID=5;
+    public static final int T__26=26;
     public static final int RULE_HOSTCODE=8;
+    public static final int T__27=27;
+    public static final int T__28=28;
+    public static final int RULE_INT=6;
+    public static final int T__29=29;
+    public static final int T__22=22;
+    public static final int T__66=66;
     public static final int RULE_ML_COMMENT=11;
-    public static final int T__30=30;
-    public static final int T__31=31;
-    public static final int T__32=32;
-    public static final int RULE_STRING=4;
-    public static final int T__33=33;
-    public static final int T__71=71;
-    public static final int T__34=34;
-    public static final int T__72=72;
-    public static final int T__35=35;
-    public static final int T__36=36;
+    public static final int T__23=23;
+    public static final int T__67=67;
+    public static final int T__24=24;
+    public static final int T__68=68;
+    public static final int T__25=25;
+    public static final int T__69=69;
+    public static final int T__62=62;
+    public static final int T__63=63;
+    public static final int T__20=20;
+    public static final int T__64=64;
+    public static final int T__21=21;
+    public static final int T__65=65;
     public static final int T__70=70;
+    public static final int T__71=71;
+    public static final int T__72=72;
+    public static final int RULE_COMMENT_ANNOTATION=10;
+    public static final int RULE_STRING=4;
+    public static final int RULE_SL_COMMENT=13;
     public static final int T__37=37;
     public static final int T__38=38;
     public static final int T__39=39;
+    public static final int T__33=33;
+    public static final int T__77=77;
+    public static final int T__34=34;
+    public static final int T__78=78;
+    public static final int T__35=35;
+    public static final int T__36=36;
+    public static final int T__73=73;
+    public static final int EOF=-1;
+    public static final int T__30=30;
+    public static final int T__74=74;
+    public static final int T__31=31;
+    public static final int T__75=75;
+    public static final int T__32=32;
     public static final int T__76=76;
     public static final int RULE_WS=14;
-    public static final int T__75=75;
-    public static final int T__74=74;
-    public static final int T__73=73;
-    public static final int T__78=78;
-    public static final int T__77=77;
+    public static final int RULE_ANY_OTHER=15;
+    public static final int RULE_NUMBER=12;
+    public static final int T__48=48;
+    public static final int T__49=49;
+    public static final int T__44=44;
+    public static final int T__45=45;
+    public static final int RULE_FLOAT=7;
+    public static final int T__46=46;
+    public static final int T__47=47;
+    public static final int T__40=40;
+    public static final int T__41=41;
+    public static final int T__42=42;
+    public static final int T__43=43;
 
     // delegates
     // delegators
@@ -2918,7 +2918,7 @@ public class InternalSLexer extends Lexer {
         "\1\33\1\77\1\uffff\1\62\2\uffff\1\76\3\uffff\1\70\1\30\5\uffff\1"+
         "\67\1\40";
     static final String DFA21_specialS =
-        "\1\0\46\uffff\1\2\1\uffff\1\3\24\uffff\1\1\u00b6\uffff}>";
+        "\1\3\46\uffff\1\2\1\uffff\1\1\24\uffff\1\0\u00b6\uffff}>";
     static final String[] DFA21_transitionS = {
             "\11\55\2\54\2\55\1\54\22\55\1\54\1\4\1\51\1\45\1\55\1\10\1"+
             "\3\1\47\1\13\1\27\1\7\1\5\1\35\1\6\1\44\1\11\12\50\1\55\1\32"+
@@ -3209,6 +3209,36 @@ public class InternalSLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
+                        int LA21_62 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA21_62=='*') ) {s = 118;}
+
+                        else if ( ((LA21_62>='\u0000' && LA21_62<=')')||(LA21_62>='+' && LA21_62<='\uFFFF')) ) {s = 119;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA21_41 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA21_41>='\u0000' && LA21_41<='\uFFFF')) ) {s = 112;}
+
+                        else s = 45;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA21_39 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA21_39>='\u0000' && LA21_39<='\uFFFF')) ) {s = 108;}
+
+                        else s = 45;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 3 : 
                         int LA21_0 = input.LA(1);
 
                         s = -1;
@@ -3301,36 +3331,6 @@ public class InternalSLexer extends Lexer {
                         else if ( ((LA21_0>='\t' && LA21_0<='\n')||LA21_0=='\r'||LA21_0==' ') ) {s = 44;}
 
                         else if ( ((LA21_0>='\u0000' && LA21_0<='\b')||(LA21_0>='\u000B' && LA21_0<='\f')||(LA21_0>='\u000E' && LA21_0<='\u001F')||LA21_0=='$'||LA21_0==':'||LA21_0=='?'||LA21_0=='\\'||LA21_0=='`'||(LA21_0>='~' && LA21_0<='\uFFFF')) ) {s = 45;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA21_62 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA21_62=='*') ) {s = 118;}
-
-                        else if ( ((LA21_62>='\u0000' && LA21_62<=')')||(LA21_62>='+' && LA21_62<='\uFFFF')) ) {s = 119;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA21_39 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA21_39>='\u0000' && LA21_39<='\uFFFF')) ) {s = 108;}
-
-                        else s = 45;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 3 : 
-                        int LA21_41 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA21_41>='\u0000' && LA21_41<='\uFFFF')) ) {s = 112;}
-
-                        else s = 45;
 
                         if ( s>=0 ) return s;
                         break;

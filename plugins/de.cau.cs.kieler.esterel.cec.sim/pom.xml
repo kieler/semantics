@@ -11,20 +11,4 @@
   <artifactId>de.cau.cs.kieler.esterel.cec.sim</artifactId>
   <version>0.1.5-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <plugins>
-      <plugin>
-        <groupId>org.eclipse.xtend</groupId>
-        <artifactId>xtend-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 </project>

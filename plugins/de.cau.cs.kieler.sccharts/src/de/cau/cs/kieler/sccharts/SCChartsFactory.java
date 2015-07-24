@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -29,7 +29,7 @@ public interface SCChartsFactory extends EFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
      * The singleton instance of the factory.
@@ -47,6 +47,42 @@ public interface SCChartsFactory extends EFactory {
      * @generated
      */
     Action createAction();
+
+    /**
+     * Returns a new object of class '<em>State</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>State</em>'.
+     * @generated
+     */
+    State createState();
+
+    /**
+     * Returns a new object of class '<em>Region</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Region</em>'.
+     * @generated
+     */
+    Region createRegion();
+
+    /**
+     * Returns a new object of class '<em>Controlflow Region</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Controlflow Region</em>'.
+     * @generated
+     */
+    ControlflowRegion createControlflowRegion();
+
+    /**
+     * Returns a new object of class '<em>Dataflow Region</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Dataflow Region</em>'.
+     * @generated
+     */
+    DataflowRegion createDataflowRegion();
 
     /**
      * Returns a new object of class '<em>Node</em>'.
@@ -103,42 +139,6 @@ public interface SCChartsFactory extends EFactory {
     Binding createBinding();
 
     /**
-     * Returns a new object of class '<em>State</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>State</em>'.
-     * @generated
-     */
-    State createState();
-
-    /**
-     * Returns a new object of class '<em>Region</em>'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return a new object of class '<em>Region</em>'.
-     * @generated
-     */
-	Region createRegion();
-
-				/**
-     * Returns a new object of class '<em>Controlflow Region</em>'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return a new object of class '<em>Controlflow Region</em>'.
-     * @generated
-     */
-	ControlflowRegion createControlflowRegion();
-
-				/**
-     * Returns a new object of class '<em>Dataflow Region</em>'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return a new object of class '<em>Dataflow Region</em>'.
-     * @generated
-     */
-	DataflowRegion createDataflowRegion();
-
-				/**
      * Returns a new object of class '<em>Transition</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

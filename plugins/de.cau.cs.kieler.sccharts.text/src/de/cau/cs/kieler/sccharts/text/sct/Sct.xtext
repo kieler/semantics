@@ -35,7 +35,7 @@ SingleDataflowRegion returns sccharts::DataflowRegion:
       (annotations += Annotation)*
       'dataflow' (id=ID)? (label=STRING)? ':'
       (declarations+=Declaration)*
-     )?
+     )
     (
         (equations += Equation) 
         |
@@ -92,17 +92,11 @@ SCChart returns sccharts::State:
        )
      | 
       ('{'
-          (
             (declarations+=Declaration |
              localActions+=LocalAction)*
             (
-//                (concurrencies+=SingleRegion)|
-//             	(concurrencies+=SingleDataflow)|
-//             	(concurrencies+=Concurrency)*
-//				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-				(regions+=SingleControlflowRegion|regions+=SingleDataflowRegion)(regions+=Region)*
+				(regions+=SingleDataflowRegion|regions+=SingleControlflowRegion)(regions+=Region)*
              )?
-            )
           '}') 
      )?
 ;
@@ -141,18 +135,10 @@ State returns sccharts::State:
        )
      | 
       ('{'
-          (
-            (declarations+=Declaration |
-             localActions+=LocalAction)*
-            (
-//                (concurrencies+=SingleRegion)|
-//             	(concurrencies+=SingleDataflow)|
-//             	(concurrencies+=Concurrency)*
-				(regions+=SingleControlflowRegion|regions+=SingleDataflowRegion)(regions+=Region)*
-             )
-            )
-          '}') 
-     )?
+            (declarations+=Declaration | localActions+=LocalAction)*
+		    (regions+=SingleDataflowRegion|regions+=SingleControlflowRegion)(regions+=Region)*
+      '}') 
+      )?
      // The semicolon is mandatory for backtracking!
     (outgoingTransitions+=Transition)* ';';
 

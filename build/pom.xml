@@ -12,7 +12,11 @@
   <properties>
     <tycho-version>0.21.0</tycho-version>
     <xtend-version>2.8.3</xtend-version>
+<<<<<<< HEAD
     <targetJdk>1.6</targetJdk>
+=======
+    <targetJdk>1.8</targetJdk>
+>>>>>>> master
 	
 
     <!-- chsch: copied from https://eclipse.googlesource.com/recommenders/org.eclipse.recommenders/+/3dae4575d3370da2da25a1cbce3dfcff198f0611/features/pom.xml -->
@@ -83,6 +87,16 @@
           <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics</url>
         </repository>
         <repository>
+          <id>p2.xtext.2.8.3</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.8.3/</url>
+        </repository>      
+        <repository>
+          <id>p2.emf.2.10</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/modeling/emf/emf/updates/2.10.x/</url>
+        </repository>  		
+        <repository>
           <id>p2.ptolemy</id>
           <layout>p2</layout>
           <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy/</url>
@@ -126,6 +140,16 @@
           <layout>p2</layout>
           <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics/</url>
         </repository>
+        <repository>
+          <id>p2.xtext.2.8.3</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.8.3/</url>
+        </repository>      
+        <repository>
+          <id>p2.emf.2.10</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/modeling/emf/emf/updates/2.10.x/</url>
+        </repository>  		
         <repository>
           <id>p2.ptolemy</id>
           <layout>p2</layout>

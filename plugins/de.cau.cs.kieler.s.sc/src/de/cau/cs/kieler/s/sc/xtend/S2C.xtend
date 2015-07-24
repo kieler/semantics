@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -27,7 +27,6 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.s.s.Abort
-import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.s.s.Await
 import de.cau.cs.kieler.s.s.Emit
 import de.cau.cs.kieler.s.s.Fork
@@ -48,6 +47,8 @@ import java.util.List
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.s.s.Assignment
+
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -106,7 +107,7 @@ class S2C {
     /*                                                                           */
     /* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
     /* Copyright 2014 by                                                         */
-    /* + Christian-Albrechts-University of Kiel                                  */
+    /* + Kiel University                                  */
     /*   + Department of Computer Science                                        */
     /*     + Real-Time and Embedded Systems Group                                */
     /*                                                                           */

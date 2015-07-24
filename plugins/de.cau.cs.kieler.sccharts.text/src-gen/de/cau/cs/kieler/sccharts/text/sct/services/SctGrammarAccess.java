@@ -136,12 +136,12 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//// ---------------------------------------------------------------------------------------------------
 		//
 		//SingleDataflowRegion returns sccharts::DataflowRegion:
-		//	{sccharts::DataflowRegion} (annotations+=Annotation* "dataflow" id=ID? label=STRING? ":" declarations+=Declaration*)?
+		//	{sccharts::DataflowRegion} (annotations+=Annotation* "dataflow" id=ID? label=STRING? ":" declarations+=Declaration*)
 		//	(equations+=Equation // alt: + (nodes+=Node)+
 		// | nodes+=Node)*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::DataflowRegion} (annotations+=Annotation* "dataflow" id=ID? label=STRING? ":" declarations+=Declaration*)?
+		//{sccharts::DataflowRegion} (annotations+=Annotation* "dataflow" id=ID? label=STRING? ":" declarations+=Declaration*)
 		//(equations+=Equation // alt: + (nodes+=Node)+
 		// | nodes+=Node)*
 		public Group getGroup() { return cGroup; }
@@ -149,7 +149,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//{sccharts::DataflowRegion}
 		public Action getDataflowRegionAction_0() { return cDataflowRegionAction_0; }
 
-		//(annotations+=Annotation* "dataflow" id=ID? label=STRING? ":" declarations+=Declaration*)?
+		//annotations+=Annotation* "dataflow" id=ID? label=STRING? ":" declarations+=Declaration*
 		public Group getGroup_1() { return cGroup_1; }
 
 		//annotations+=Annotation*
@@ -479,21 +479,20 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cBindingsBindingParserRuleCall_4_0_2_2_1_0 = (RuleCall)cBindingsAssignment_4_0_2_2_1.eContents().get(0);
 		private final Group cGroup_4_1 = (Group)cAlternatives_4.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_4_1_0 = (Keyword)cGroup_4_1.eContents().get(0);
-		private final Group cGroup_4_1_1 = (Group)cGroup_4_1.eContents().get(1);
-		private final Alternatives cAlternatives_4_1_1_0 = (Alternatives)cGroup_4_1_1.eContents().get(0);
-		private final Assignment cDeclarationsAssignment_4_1_1_0_0 = (Assignment)cAlternatives_4_1_1_0.eContents().get(0);
-		private final RuleCall cDeclarationsDeclarationParserRuleCall_4_1_1_0_0_0 = (RuleCall)cDeclarationsAssignment_4_1_1_0_0.eContents().get(0);
-		private final Assignment cLocalActionsAssignment_4_1_1_0_1 = (Assignment)cAlternatives_4_1_1_0.eContents().get(1);
-		private final RuleCall cLocalActionsLocalActionParserRuleCall_4_1_1_0_1_0 = (RuleCall)cLocalActionsAssignment_4_1_1_0_1.eContents().get(0);
-		private final Group cGroup_4_1_1_1 = (Group)cGroup_4_1_1.eContents().get(1);
-		private final Alternatives cAlternatives_4_1_1_1_0 = (Alternatives)cGroup_4_1_1_1.eContents().get(0);
-		private final Assignment cRegionsAssignment_4_1_1_1_0_0 = (Assignment)cAlternatives_4_1_1_1_0.eContents().get(0);
-		private final RuleCall cRegionsSingleControlflowRegionParserRuleCall_4_1_1_1_0_0_0 = (RuleCall)cRegionsAssignment_4_1_1_1_0_0.eContents().get(0);
-		private final Assignment cRegionsAssignment_4_1_1_1_0_1 = (Assignment)cAlternatives_4_1_1_1_0.eContents().get(1);
-		private final RuleCall cRegionsSingleDataflowRegionParserRuleCall_4_1_1_1_0_1_0 = (RuleCall)cRegionsAssignment_4_1_1_1_0_1.eContents().get(0);
-		private final Assignment cRegionsAssignment_4_1_1_1_1 = (Assignment)cGroup_4_1_1_1.eContents().get(1);
-		private final RuleCall cRegionsRegionParserRuleCall_4_1_1_1_1_0 = (RuleCall)cRegionsAssignment_4_1_1_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_4_1_2 = (Keyword)cGroup_4_1.eContents().get(2);
+		private final Alternatives cAlternatives_4_1_1 = (Alternatives)cGroup_4_1.eContents().get(1);
+		private final Assignment cDeclarationsAssignment_4_1_1_0 = (Assignment)cAlternatives_4_1_1.eContents().get(0);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_4_1_1_0_0 = (RuleCall)cDeclarationsAssignment_4_1_1_0.eContents().get(0);
+		private final Assignment cLocalActionsAssignment_4_1_1_1 = (Assignment)cAlternatives_4_1_1.eContents().get(1);
+		private final RuleCall cLocalActionsLocalActionParserRuleCall_4_1_1_1_0 = (RuleCall)cLocalActionsAssignment_4_1_1_1.eContents().get(0);
+		private final Group cGroup_4_1_2 = (Group)cGroup_4_1.eContents().get(2);
+		private final Alternatives cAlternatives_4_1_2_0 = (Alternatives)cGroup_4_1_2.eContents().get(0);
+		private final Assignment cRegionsAssignment_4_1_2_0_0 = (Assignment)cAlternatives_4_1_2_0.eContents().get(0);
+		private final RuleCall cRegionsSingleDataflowRegionParserRuleCall_4_1_2_0_0_0 = (RuleCall)cRegionsAssignment_4_1_2_0_0.eContents().get(0);
+		private final Assignment cRegionsAssignment_4_1_2_0_1 = (Assignment)cAlternatives_4_1_2_0.eContents().get(1);
+		private final RuleCall cRegionsSingleControlflowRegionParserRuleCall_4_1_2_0_1_0 = (RuleCall)cRegionsAssignment_4_1_2_0_1.eContents().get(0);
+		private final Assignment cRegionsAssignment_4_1_2_1 = (Assignment)cGroup_4_1_2.eContents().get(1);
+		private final RuleCall cRegionsRegionParserRuleCall_4_1_2_1_0 = (RuleCall)cRegionsAssignment_4_1_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4_1_3 = (Keyword)cGroup_4_1.eContents().get(3);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		// SCChart returns
@@ -503,15 +502,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		// //    
 		// "scchart"
 		//	id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
-		//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)*
-		//	((regions+=SingleControlflowRegion //                (concurrencies+=SingleRegion)|
-		//
-		//	//             	(concurrencies+=SingleDataflow)|
-		// //             	(concurrencies+=Concurrency)*
-		//
-		//	//				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// | regions+=SingleDataflowRegion) regions+=Region*)?)
-		//	"}")?;
+		//	bindings+=Binding)*)? | "{" (declarations+=Declaration | localActions+=LocalAction)* ((regions+=SingleDataflowRegion
+		//	| regions+=SingleControlflowRegion) regions+=Region*)? "}")?;
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* //    ('package' name = QualifiedName)?
@@ -519,14 +511,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		// //    
 		// "scchart" id=ID
 		//label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? |
-		//"{" ((declarations+=Declaration | localActions+=LocalAction)* ((regions+=SingleControlflowRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
-		////             	(concurrencies+=Concurrency)*
-		// //				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// |
-		//regions+=SingleDataflowRegion) regions+=Region*)?) "}")?
+		//"{" (declarations+=Declaration | localActions+=LocalAction)* ((regions+=SingleDataflowRegion |
+		//regions+=SingleControlflowRegion) regions+=Region*)? "}")?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -551,14 +537,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLabelSTRINGTerminalRuleCall_3_0() { return cLabelSTRINGTerminalRuleCall_3_0; }
 
 		//("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? | "{"
-		//((declarations+=Declaration | localActions+=LocalAction)* ((regions+=SingleControlflowRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
-		////             	(concurrencies+=Concurrency)*
-		// //				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// |
-		//regions+=SingleDataflowRegion) regions+=Region*)?) "}")?
+		//(declarations+=Declaration | localActions+=LocalAction)* ((regions+=SingleDataflowRegion |
+		//regions+=SingleControlflowRegion) regions+=Region*)? "}")?
 		public Alternatives getAlternatives_4() { return cAlternatives_4; }
 
 		//"references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)?
@@ -600,82 +580,54 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Binding
 		public RuleCall getBindingsBindingParserRuleCall_4_0_2_2_1_0() { return cBindingsBindingParserRuleCall_4_0_2_2_1_0; }
 
-		//"{" ((declarations+=Declaration | localActions+=LocalAction)* ((regions+=SingleControlflowRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
-		////             	(concurrencies+=Concurrency)*
-		// //				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// |
-		//regions+=SingleDataflowRegion) regions+=Region*)?) "}"
+		//"{" (declarations+=Declaration | localActions+=LocalAction)* ((regions+=SingleDataflowRegion |
+		//regions+=SingleControlflowRegion) regions+=Region*)? "}"
 		public Group getGroup_4_1() { return cGroup_4_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_4_1_0() { return cLeftCurlyBracketKeyword_4_1_0; }
 
-		//(declarations+=Declaration | localActions+=LocalAction)* ((regions+=SingleControlflowRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
-		////             	(concurrencies+=Concurrency)*
-		// //				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// |
-		//regions+=SingleDataflowRegion) regions+=Region*)?
-		public Group getGroup_4_1_1() { return cGroup_4_1_1; }
-
 		//(declarations+=Declaration | localActions+=LocalAction)*
-		public Alternatives getAlternatives_4_1_1_0() { return cAlternatives_4_1_1_0; }
+		public Alternatives getAlternatives_4_1_1() { return cAlternatives_4_1_1; }
 
 		//declarations+=Declaration
-		public Assignment getDeclarationsAssignment_4_1_1_0_0() { return cDeclarationsAssignment_4_1_1_0_0; }
+		public Assignment getDeclarationsAssignment_4_1_1_0() { return cDeclarationsAssignment_4_1_1_0; }
 
 		//Declaration
-		public RuleCall getDeclarationsDeclarationParserRuleCall_4_1_1_0_0_0() { return cDeclarationsDeclarationParserRuleCall_4_1_1_0_0_0; }
+		public RuleCall getDeclarationsDeclarationParserRuleCall_4_1_1_0_0() { return cDeclarationsDeclarationParserRuleCall_4_1_1_0_0; }
 
 		//localActions+=LocalAction
-		public Assignment getLocalActionsAssignment_4_1_1_0_1() { return cLocalActionsAssignment_4_1_1_0_1; }
+		public Assignment getLocalActionsAssignment_4_1_1_1() { return cLocalActionsAssignment_4_1_1_1; }
 
 		//LocalAction
-		public RuleCall getLocalActionsLocalActionParserRuleCall_4_1_1_0_1_0() { return cLocalActionsLocalActionParserRuleCall_4_1_1_0_1_0; }
+		public RuleCall getLocalActionsLocalActionParserRuleCall_4_1_1_1_0() { return cLocalActionsLocalActionParserRuleCall_4_1_1_1_0; }
 
-		//((regions+=SingleControlflowRegion //                (concurrencies+=SingleRegion)|
-		//
-		////             	(concurrencies+=SingleDataflow)|
-		// //             	(concurrencies+=Concurrency)*
-		//
-		////				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// | regions+=SingleDataflowRegion) regions+=Region*)?
-		public Group getGroup_4_1_1_1() { return cGroup_4_1_1_1; }
+		//((regions+=SingleDataflowRegion | regions+=SingleControlflowRegion) regions+=Region*)?
+		public Group getGroup_4_1_2() { return cGroup_4_1_2; }
 
-		//regions+=SingleControlflowRegion //                (concurrencies+=SingleRegion)|
-		//
-		////             	(concurrencies+=SingleDataflow)|
-		// //             	(concurrencies+=Concurrency)*
-		//
-		////				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// | regions+=SingleDataflowRegion
-		public Alternatives getAlternatives_4_1_1_1_0() { return cAlternatives_4_1_1_1_0; }
-
-		//regions+=SingleControlflowRegion
-		public Assignment getRegionsAssignment_4_1_1_1_0_0() { return cRegionsAssignment_4_1_1_1_0_0; }
-
-		//SingleControlflowRegion
-		public RuleCall getRegionsSingleControlflowRegionParserRuleCall_4_1_1_1_0_0_0() { return cRegionsSingleControlflowRegionParserRuleCall_4_1_1_1_0_0_0; }
+		//regions+=SingleDataflowRegion | regions+=SingleControlflowRegion
+		public Alternatives getAlternatives_4_1_2_0() { return cAlternatives_4_1_2_0; }
 
 		//regions+=SingleDataflowRegion
-		public Assignment getRegionsAssignment_4_1_1_1_0_1() { return cRegionsAssignment_4_1_1_1_0_1; }
+		public Assignment getRegionsAssignment_4_1_2_0_0() { return cRegionsAssignment_4_1_2_0_0; }
 
 		//SingleDataflowRegion
-		public RuleCall getRegionsSingleDataflowRegionParserRuleCall_4_1_1_1_0_1_0() { return cRegionsSingleDataflowRegionParserRuleCall_4_1_1_1_0_1_0; }
+		public RuleCall getRegionsSingleDataflowRegionParserRuleCall_4_1_2_0_0_0() { return cRegionsSingleDataflowRegionParserRuleCall_4_1_2_0_0_0; }
+
+		//regions+=SingleControlflowRegion
+		public Assignment getRegionsAssignment_4_1_2_0_1() { return cRegionsAssignment_4_1_2_0_1; }
+
+		//SingleControlflowRegion
+		public RuleCall getRegionsSingleControlflowRegionParserRuleCall_4_1_2_0_1_0() { return cRegionsSingleControlflowRegionParserRuleCall_4_1_2_0_1_0; }
 
 		//regions+=Region*
-		public Assignment getRegionsAssignment_4_1_1_1_1() { return cRegionsAssignment_4_1_1_1_1; }
+		public Assignment getRegionsAssignment_4_1_2_1() { return cRegionsAssignment_4_1_2_1; }
 
 		//Region
-		public RuleCall getRegionsRegionParserRuleCall_4_1_1_1_1_0() { return cRegionsRegionParserRuleCall_4_1_1_1_1_0; }
+		public RuleCall getRegionsRegionParserRuleCall_4_1_2_1_0() { return cRegionsRegionParserRuleCall_4_1_2_1_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_4_1_2() { return cRightCurlyBracketKeyword_4_1_2; }
+		public Keyword getRightCurlyBracketKeyword_4_1_3() { return cRightCurlyBracketKeyword_4_1_3; }
 	}
 
 	public class RegionElements extends AbstractParserRuleElementFinder {
@@ -737,21 +689,19 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cBindingsBindingParserRuleCall_6_0_2_2_1_0 = (RuleCall)cBindingsAssignment_6_0_2_2_1.eContents().get(0);
 		private final Group cGroup_6_1 = (Group)cAlternatives_6.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_6_1_0 = (Keyword)cGroup_6_1.eContents().get(0);
-		private final Group cGroup_6_1_1 = (Group)cGroup_6_1.eContents().get(1);
-		private final Alternatives cAlternatives_6_1_1_0 = (Alternatives)cGroup_6_1_1.eContents().get(0);
-		private final Assignment cDeclarationsAssignment_6_1_1_0_0 = (Assignment)cAlternatives_6_1_1_0.eContents().get(0);
-		private final RuleCall cDeclarationsDeclarationParserRuleCall_6_1_1_0_0_0 = (RuleCall)cDeclarationsAssignment_6_1_1_0_0.eContents().get(0);
-		private final Assignment cLocalActionsAssignment_6_1_1_0_1 = (Assignment)cAlternatives_6_1_1_0.eContents().get(1);
-		private final RuleCall cLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0 = (RuleCall)cLocalActionsAssignment_6_1_1_0_1.eContents().get(0);
-		private final Group cGroup_6_1_1_1 = (Group)cGroup_6_1_1.eContents().get(1);
-		private final Alternatives cAlternatives_6_1_1_1_0 = (Alternatives)cGroup_6_1_1_1.eContents().get(0);
-		private final Assignment cRegionsAssignment_6_1_1_1_0_0 = (Assignment)cAlternatives_6_1_1_1_0.eContents().get(0);
-		private final RuleCall cRegionsSingleControlflowRegionParserRuleCall_6_1_1_1_0_0_0 = (RuleCall)cRegionsAssignment_6_1_1_1_0_0.eContents().get(0);
-		private final Assignment cRegionsAssignment_6_1_1_1_0_1 = (Assignment)cAlternatives_6_1_1_1_0.eContents().get(1);
-		private final RuleCall cRegionsSingleDataflowRegionParserRuleCall_6_1_1_1_0_1_0 = (RuleCall)cRegionsAssignment_6_1_1_1_0_1.eContents().get(0);
-		private final Assignment cRegionsAssignment_6_1_1_1_1 = (Assignment)cGroup_6_1_1_1.eContents().get(1);
-		private final RuleCall cRegionsRegionParserRuleCall_6_1_1_1_1_0 = (RuleCall)cRegionsAssignment_6_1_1_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_6_1_2 = (Keyword)cGroup_6_1.eContents().get(2);
+		private final Alternatives cAlternatives_6_1_1 = (Alternatives)cGroup_6_1.eContents().get(1);
+		private final Assignment cDeclarationsAssignment_6_1_1_0 = (Assignment)cAlternatives_6_1_1.eContents().get(0);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_6_1_1_0_0 = (RuleCall)cDeclarationsAssignment_6_1_1_0.eContents().get(0);
+		private final Assignment cLocalActionsAssignment_6_1_1_1 = (Assignment)cAlternatives_6_1_1.eContents().get(1);
+		private final RuleCall cLocalActionsLocalActionParserRuleCall_6_1_1_1_0 = (RuleCall)cLocalActionsAssignment_6_1_1_1.eContents().get(0);
+		private final Alternatives cAlternatives_6_1_2 = (Alternatives)cGroup_6_1.eContents().get(2);
+		private final Assignment cRegionsAssignment_6_1_2_0 = (Assignment)cAlternatives_6_1_2.eContents().get(0);
+		private final RuleCall cRegionsSingleDataflowRegionParserRuleCall_6_1_2_0_0 = (RuleCall)cRegionsAssignment_6_1_2_0.eContents().get(0);
+		private final Assignment cRegionsAssignment_6_1_2_1 = (Assignment)cAlternatives_6_1_2.eContents().get(1);
+		private final RuleCall cRegionsSingleControlflowRegionParserRuleCall_6_1_2_1_0 = (RuleCall)cRegionsAssignment_6_1_2_1.eContents().get(0);
+		private final Assignment cRegionsAssignment_6_1_3 = (Assignment)cGroup_6_1.eContents().get(3);
+		private final RuleCall cRegionsRegionParserRuleCall_6_1_3_0 = (RuleCall)cRegionsAssignment_6_1_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_6_1_4 = (Keyword)cGroup_6_1.eContents().get(4);
 		private final Assignment cOutgoingTransitionsAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_7_0 = (RuleCall)cOutgoingTransitionsAssignment_7.eContents().get(0);
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
@@ -775,26 +725,16 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//sccharts::State:
 		//	annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 		//	"state" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
-		//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)*
-		//	((regions+=SingleControlflowRegion //                (concurrencies+=SingleRegion)|
-		//
-		//	//             	(concurrencies+=SingleDataflow)|
-		// //             	(concurrencies+=Concurrency)*
-		// |
-		//	regions+=SingleDataflowRegion) regions+=Region*)) "}")? // The semicolon is mandatory for backtracking!
+		//	bindings+=Binding)*)? | "{" (declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleDataflowRegion |
+		//	regions+=SingleControlflowRegion) regions+=Region* "}")? // The semicolon is mandatory for backtracking!
 		//
 		//	outgoingTransitions+=Transition* ";";
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 		//"state" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
-		//bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)*
-		//((regions+=SingleControlflowRegion //                (concurrencies+=SingleRegion)|
-		//
-		////             	(concurrencies+=SingleDataflow)|
-		// //             	(concurrencies+=Concurrency)*
-		// |
-		//regions+=SingleDataflowRegion) regions+=Region*)) "}")? // The semicolon is mandatory for backtracking!
+		//bindings+=Binding)*)? | "{" (declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleDataflowRegion |
+		//regions+=SingleControlflowRegion) regions+=Region* "}")? // The semicolon is mandatory for backtracking!
 		//
 		//outgoingTransitions+=Transition* ";"
 		public Group getGroup() { return cGroup; }
@@ -860,12 +800,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLabelSTRINGTerminalRuleCall_5_0() { return cLabelSTRINGTerminalRuleCall_5_0; }
 
 		//("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? | "{"
-		//((declarations+=Declaration | localActions+=LocalAction)* ((regions+=SingleControlflowRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
-		////             	(concurrencies+=Concurrency)*
-		// | regions+=SingleDataflowRegion) regions+=Region*)) "}")?
+		//(declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleDataflowRegion |
+		//regions+=SingleControlflowRegion) regions+=Region* "}")?
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 
 		//"references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)?
@@ -907,76 +843,51 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Binding
 		public RuleCall getBindingsBindingParserRuleCall_6_0_2_2_1_0() { return cBindingsBindingParserRuleCall_6_0_2_2_1_0; }
 
-		//"{" ((declarations+=Declaration | localActions+=LocalAction)* ((regions+=SingleControlflowRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
-		////             	(concurrencies+=Concurrency)*
-		// | regions+=SingleDataflowRegion) regions+=Region*)) "}"
+		//"{" (declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleDataflowRegion |
+		//regions+=SingleControlflowRegion) regions+=Region* "}"
 		public Group getGroup_6_1() { return cGroup_6_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_6_1_0() { return cLeftCurlyBracketKeyword_6_1_0; }
 
-		//(declarations+=Declaration | localActions+=LocalAction)* ((regions+=SingleControlflowRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
-		////             	(concurrencies+=Concurrency)*
-		// | regions+=SingleDataflowRegion) regions+=Region*)
-		public Group getGroup_6_1_1() { return cGroup_6_1_1; }
-
 		//(declarations+=Declaration | localActions+=LocalAction)*
-		public Alternatives getAlternatives_6_1_1_0() { return cAlternatives_6_1_1_0; }
+		public Alternatives getAlternatives_6_1_1() { return cAlternatives_6_1_1; }
 
 		//declarations+=Declaration
-		public Assignment getDeclarationsAssignment_6_1_1_0_0() { return cDeclarationsAssignment_6_1_1_0_0; }
+		public Assignment getDeclarationsAssignment_6_1_1_0() { return cDeclarationsAssignment_6_1_1_0; }
 
 		//Declaration
-		public RuleCall getDeclarationsDeclarationParserRuleCall_6_1_1_0_0_0() { return cDeclarationsDeclarationParserRuleCall_6_1_1_0_0_0; }
+		public RuleCall getDeclarationsDeclarationParserRuleCall_6_1_1_0_0() { return cDeclarationsDeclarationParserRuleCall_6_1_1_0_0; }
 
 		//localActions+=LocalAction
-		public Assignment getLocalActionsAssignment_6_1_1_0_1() { return cLocalActionsAssignment_6_1_1_0_1; }
+		public Assignment getLocalActionsAssignment_6_1_1_1() { return cLocalActionsAssignment_6_1_1_1; }
 
 		//LocalAction
-		public RuleCall getLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0() { return cLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0; }
+		public RuleCall getLocalActionsLocalActionParserRuleCall_6_1_1_1_0() { return cLocalActionsLocalActionParserRuleCall_6_1_1_1_0; }
 
-		//(regions+=SingleControlflowRegion //                (concurrencies+=SingleRegion)|
-		//
-		////             	(concurrencies+=SingleDataflow)|
-		// //             	(concurrencies+=Concurrency)*
-		// |
-		//regions+=SingleDataflowRegion) regions+=Region*
-		public Group getGroup_6_1_1_1() { return cGroup_6_1_1_1; }
-
-		//regions+=SingleControlflowRegion //                (concurrencies+=SingleRegion)|
-		//
-		////             	(concurrencies+=SingleDataflow)|
-		// //             	(concurrencies+=Concurrency)*
-		// |
-		//regions+=SingleDataflowRegion
-		public Alternatives getAlternatives_6_1_1_1_0() { return cAlternatives_6_1_1_1_0; }
-
-		//regions+=SingleControlflowRegion
-		public Assignment getRegionsAssignment_6_1_1_1_0_0() { return cRegionsAssignment_6_1_1_1_0_0; }
-
-		//SingleControlflowRegion
-		public RuleCall getRegionsSingleControlflowRegionParserRuleCall_6_1_1_1_0_0_0() { return cRegionsSingleControlflowRegionParserRuleCall_6_1_1_1_0_0_0; }
+		//regions+=SingleDataflowRegion | regions+=SingleControlflowRegion
+		public Alternatives getAlternatives_6_1_2() { return cAlternatives_6_1_2; }
 
 		//regions+=SingleDataflowRegion
-		public Assignment getRegionsAssignment_6_1_1_1_0_1() { return cRegionsAssignment_6_1_1_1_0_1; }
+		public Assignment getRegionsAssignment_6_1_2_0() { return cRegionsAssignment_6_1_2_0; }
 
 		//SingleDataflowRegion
-		public RuleCall getRegionsSingleDataflowRegionParserRuleCall_6_1_1_1_0_1_0() { return cRegionsSingleDataflowRegionParserRuleCall_6_1_1_1_0_1_0; }
+		public RuleCall getRegionsSingleDataflowRegionParserRuleCall_6_1_2_0_0() { return cRegionsSingleDataflowRegionParserRuleCall_6_1_2_0_0; }
+
+		//regions+=SingleControlflowRegion
+		public Assignment getRegionsAssignment_6_1_2_1() { return cRegionsAssignment_6_1_2_1; }
+
+		//SingleControlflowRegion
+		public RuleCall getRegionsSingleControlflowRegionParserRuleCall_6_1_2_1_0() { return cRegionsSingleControlflowRegionParserRuleCall_6_1_2_1_0; }
 
 		//regions+=Region*
-		public Assignment getRegionsAssignment_6_1_1_1_1() { return cRegionsAssignment_6_1_1_1_1; }
+		public Assignment getRegionsAssignment_6_1_3() { return cRegionsAssignment_6_1_3; }
 
 		//Region
-		public RuleCall getRegionsRegionParserRuleCall_6_1_1_1_1_0() { return cRegionsRegionParserRuleCall_6_1_1_1_1_0; }
+		public RuleCall getRegionsRegionParserRuleCall_6_1_3_0() { return cRegionsRegionParserRuleCall_6_1_3_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_6_1_2() { return cRightCurlyBracketKeyword_6_1_2; }
+		public Keyword getRightCurlyBracketKeyword_6_1_4() { return cRightCurlyBracketKeyword_6_1_4; }
 
 		//outgoingTransitions+=Transition*
 		public Assignment getOutgoingTransitionsAssignment_7() { return cOutgoingTransitionsAssignment_7; }
@@ -1803,7 +1714,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------------------------------------------------------------------------------------------
 	//
 	//SingleDataflowRegion returns sccharts::DataflowRegion:
-	//	{sccharts::DataflowRegion} (annotations+=Annotation* "dataflow" id=ID? label=STRING? ":" declarations+=Declaration*)?
+	//	{sccharts::DataflowRegion} (annotations+=Annotation* "dataflow" id=ID? label=STRING? ":" declarations+=Declaration*)
 	//	(equations+=Equation // alt: + (nodes+=Node)+
 	// | nodes+=Node)*;
 	public SingleDataflowRegionElements getSingleDataflowRegionAccess() {
@@ -1860,15 +1771,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	// //    
 	// "scchart"
 	//	id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
-	//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)*
-	//	((regions+=SingleControlflowRegion //                (concurrencies+=SingleRegion)|
-	//
-	//	//             	(concurrencies+=SingleDataflow)|
-	// //             	(concurrencies+=Concurrency)*
-	//
-	//	//				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-	// | regions+=SingleDataflowRegion) regions+=Region*)?)
-	//	"}")?;
+	//	bindings+=Binding)*)? | "{" (declarations+=Declaration | localActions+=LocalAction)* ((regions+=SingleDataflowRegion
+	//	| regions+=SingleControlflowRegion) regions+=Region*)? "}")?;
 	public SCChartElements getSCChartAccess() {
 		return pSCChart;
 	}
@@ -1906,13 +1810,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//sccharts::State:
 	//	annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 	//	"state" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
-	//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)*
-	//	((regions+=SingleControlflowRegion //                (concurrencies+=SingleRegion)|
-	//
-	//	//             	(concurrencies+=SingleDataflow)|
-	// //             	(concurrencies+=Concurrency)*
-	// |
-	//	regions+=SingleDataflowRegion) regions+=Region*)) "}")? // The semicolon is mandatory for backtracking!
+	//	bindings+=Binding)*)? | "{" (declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleDataflowRegion |
+	//	regions+=SingleControlflowRegion) regions+=Region* "}")? // The semicolon is mandatory for backtracking!
 	//
 	//	outgoingTransitions+=Transition* ";";
 	public StateElements getStateAccess() {

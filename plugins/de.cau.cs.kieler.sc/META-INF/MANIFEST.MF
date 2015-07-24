@@ -4,11 +4,11 @@ Bundle-Name: KIELER SC
 Bundle-SymbolicName: de.cau.cs.kieler.sc
 Bundle-Version: 0.3.2.qualifier
 Bundle-Activator: de.cau.cs.kieler.sc.SCPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem;bundle-version="0.5.1",
  de.cau.cs.kieler.sim.benchmark;bundle-version="0.1.0"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sc

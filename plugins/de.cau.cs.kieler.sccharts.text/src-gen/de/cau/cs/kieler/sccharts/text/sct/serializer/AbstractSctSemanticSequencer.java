@@ -363,7 +363,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
 	 *             (
 	 *                 (declarations+=Declaration | localActions+=LocalAction)* 
-	 *                 ((regions+=SingleControlflowRegion | regions+=SingleDataflowRegion) regions+=Region*)?
+	 *                 ((regions+=SingleDataflowRegion | regions+=SingleControlflowRegion) regions+=Region*)?
 	 *             )
 	 *         )?
 	 *     )
@@ -384,7 +384,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((annotations+=Annotation* id=ID? label=STRING? declarations+=Declaration*)? (equations+=Equation | nodes+=Node)*)
+	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=Declaration* (equations+=Equation | nodes+=Node)*)
 	 */
 	protected void sequence_SingleDataflowRegion(EObject context, DataflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -401,7 +401,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         (
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
-	 *             ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion) regions+=Region*)
+	 *             ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion) regions+=Region*)
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
 	 *     )

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SC Graph KlighD Binding
 Bundle-SymbolicName: de.cau.cs.kieler.scg.klighd;singleton:=true
 Bundle-Version: 0.1.1.qualifier
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.core.krendering,
  de.cau.cs.kieler.core.krendering.extensions,
@@ -19,5 +19,5 @@ Require-Bundle: de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.kico.klighd,
  de.cau.cs.kieler.core.annotations.text
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.scg.klighd

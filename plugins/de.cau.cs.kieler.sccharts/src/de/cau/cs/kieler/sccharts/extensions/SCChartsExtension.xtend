@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -556,8 +556,9 @@ class SCChartsExtension {
         val region = createControlflowRegion(id)
         // ATTENTION: if this is the first region and there already is an IMPLICIT region,
         // e.g., because of inner actions, then return THIS region only!
-        if (state.regions.size == 1 && state.regions.get(0).allContainedStates.size == 0 &&
-            state.regions.get(0) instanceof ControlflowRegion) {
+        if (state.regions.size == 1 &&
+            state.regions.head instanceof ControlflowRegion && 
+            state.regions.head.allContainedStates.size == 0) {
             return state.regions.get(0) as ControlflowRegion
         }
         state.regions += region

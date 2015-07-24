@@ -4,11 +4,15 @@ package de.cau.cs.kieler.core.kexpressions.keffects.provider;
 
 
 import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
+
 import java.util.Collection;
 import java.util.List;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
@@ -17,8 +21,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * <!-- end-user-doc -->
  * @generated
  */
-public class EffectItemProvider 
-    extends AnnotatableItemProvider {
+public class EffectItemProvider extends AnnotatableItemProvider {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -15,8 +15,10 @@ package de.cau.cs.kieler.semantics.test.common.runners;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.runner.Runner;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.Parameterized;
@@ -49,6 +51,8 @@ import org.junit.runners.model.TestClass;
  * 
  */
 public abstract class KielerTestRunner extends Parameterized {
+    
+    List<Runner> privateRunners = new ArrayList<Runner>();
 
     /**
      * Initialize the test run. Do some initialization on an instance of the TestClass. The (only)
@@ -126,13 +130,19 @@ public abstract class KielerTestRunner extends Parameterized {
         // but now after all initialization (initialize()) has been done.
         List<Object[]> parametersList = getParametersList(getTestClass());
         for (int parameterNumber = 0; parameterNumber < parametersList.size(); parameterNumber++) {
-            this.getChildren().add(
-                    new KielerTestClassRunnerForParameters(getTestClass().getJavaClass(),
-                            parametersList, parameterNumber, this));
+            KielerTestClassRunnerForParameters runner = new KielerTestClassRunnerForParameters(getTestClass().getJavaClass(),
+                    parametersList, parameterNumber, this);
+            //this.getChildren().add(runner);
+            privateRunners.add(runner);
         }
 
     }
 
+    @Override
+    protected List<Runner> getChildren() {
+        return privateRunners;
+    }
+    
     // -------------------------------------------------------------------------
 
     /**

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCL
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-Version: 0.2.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.scl;singleton:=true
 Bundle-ActivationPolicy: lazy
@@ -29,9 +29,14 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.core.kexpressions.keffects;visibility:=reexport,
- de.cau.cs.kieler.core.kexpressions.text;visibility:=reexport
-Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+ de.cau.cs.kieler.core.kexpressions.text;visibility:=reexport,
+ de.cau.cs.kieler.kico;bundle-version="0.1.0"
+Import-Package: com.google.common.base,
+ org.apache.log4j,
+ org.apache.xerces.util;version="2.9.0",
+ org.eclipse.xtext.ui.editor.syntaxcoloring,
+ org.eclipse.xtext.xbase.scoping
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.scl,
  de.cau.cs.kieler.scl.extensions,
  de.cau.cs.kieler.scl.features,

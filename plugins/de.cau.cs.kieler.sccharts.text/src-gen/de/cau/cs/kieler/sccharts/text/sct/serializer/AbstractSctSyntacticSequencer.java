@@ -35,9 +35,8 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	protected AbstractElementAlias match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q;
 	protected AbstractElementAlias match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
 	protected AbstractElementAlias match_IterateAction_SemicolonKeyword_5_q;
-	protected AbstractElementAlias match_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_2__q;
+	protected AbstractElementAlias match_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q;
 	protected AbstractElementAlias match_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q;
-	protected AbstractElementAlias match_SingleDataflowRegion___DataflowKeyword_1_1_ColonKeyword_1_4__q;
 	protected AbstractElementAlias match_SuspendAction_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_Transition_DoKeyword_3_3_0_1_0_1_or_SolidusKeyword_3_3_0_1_0_0;
 	protected AbstractElementAlias match_Transition_WithKeyword_3_3_0_0_1_q;
@@ -58,9 +57,8 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 		match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallEffectAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
 		match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
 		match_IterateAction_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getIterateActionAccess().getSemicolonKeyword_5());
-		match_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSCChartAccess().getLeftCurlyBracketKeyword_4_1_0()), new TokenAlias(false, false, grammarAccess.getSCChartAccess().getRightCurlyBracketKeyword_4_1_2()));
+		match_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSCChartAccess().getLeftCurlyBracketKeyword_4_1_0()), new TokenAlias(false, false, grammarAccess.getSCChartAccess().getRightCurlyBracketKeyword_4_1_3()));
 		match_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSingleControlflowRegionAccess().getRegionKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getSingleControlflowRegionAccess().getColonKeyword_1_4()));
-		match_SingleDataflowRegion___DataflowKeyword_1_1_ColonKeyword_1_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSingleDataflowRegionAccess().getDataflowKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getSingleDataflowRegionAccess().getColonKeyword_1_4()));
 		match_SuspendAction_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getSuspendActionAccess().getSemicolonKeyword_5());
 		match_Transition_DoKeyword_3_3_0_1_0_1_or_SolidusKeyword_3_3_0_1_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getTransitionAccess().getDoKeyword_3_3_0_1_0_1()), new TokenAlias(false, false, grammarAccess.getTransitionAccess().getSolidusKeyword_3_3_0_1_0_0()));
 		match_Transition_WithKeyword_3_3_0_0_1_q = new TokenAlias(false, true, grammarAccess.getTransitionAccess().getWithKeyword_3_3_0_0_1());
@@ -104,12 +102,10 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 				emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_IterateAction_SemicolonKeyword_5_q.equals(syntax))
 				emit_IterateAction_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_2__q.equals(syntax))
-				emit_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q.equals(syntax))
+				emit_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q.equals(syntax))
 				emit_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_SingleDataflowRegion___DataflowKeyword_1_1_ColonKeyword_1_4__q.equals(syntax))
-				emit_SingleDataflowRegion___DataflowKeyword_1_1_ColonKeyword_1_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_SuspendAction_SemicolonKeyword_5_q.equals(syntax))
 				emit_SuspendAction_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_Transition_DoKeyword_3_3_0_1_0_1_or_SolidusKeyword_3_3_0_1_0_0.equals(syntax))
@@ -305,7 +301,7 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	 *     id=ID (ambiguity) (rule end)
 	 *     label=STRING (ambiguity) (rule end)
 	 */
-	protected void emit_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -318,19 +314,6 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	 *     (rule start) (ambiguity) states+=State
 	 */
 	protected void emit_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     ('dataflow' ':')?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) (rule start)
-	 *     (rule start) (ambiguity) equations+=Equation
-	 *     (rule start) (ambiguity) nodes+=Node
-	 */
-	protected void emit_SingleDataflowRegion___DataflowKeyword_1_1_ColonKeyword_1_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

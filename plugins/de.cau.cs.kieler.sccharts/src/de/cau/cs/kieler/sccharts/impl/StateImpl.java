@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -57,181 +57,181 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class StateImpl extends ScopeImpl implements State {
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
-	/**
+    /**
      * The default value of the '{@link #getType() <em>Type</em>}' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getType()
      * @generated
      * @ordered
      */
-	protected static final StateType TYPE_EDEFAULT = StateType.NORMAL;
+    protected static final StateType TYPE_EDEFAULT = StateType.NORMAL;
 
-	/**
+    /**
      * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getType()
      * @generated
      * @ordered
      */
-	protected StateType type = TYPE_EDEFAULT;
+    protected StateType type = TYPE_EDEFAULT;
 
-	/**
+    /**
      * The cached value of the '{@link #getRegions() <em>Regions</em>}' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getRegions()
      * @generated
      * @ordered
      */
-	protected EList<Region> regions;
+    protected EList<Region> regions;
 
-	/**
+    /**
      * The default value of the '{@link #isInitial() <em>Initial</em>}' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #isInitial()
      * @generated
      * @ordered
      */
-	protected static final boolean INITIAL_EDEFAULT = false;
+    protected static final boolean INITIAL_EDEFAULT = false;
 
-	/**
+    /**
      * The cached value of the '{@link #isInitial() <em>Initial</em>}' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #isInitial()
      * @generated
      * @ordered
      */
-	protected boolean initial = INITIAL_EDEFAULT;
+    protected boolean initial = INITIAL_EDEFAULT;
 
-	/**
+    /**
      * The default value of the '{@link #isFinal() <em>Final</em>}' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #isFinal()
      * @generated
      * @ordered
      */
-	protected static final boolean FINAL_EDEFAULT = false;
+    protected static final boolean FINAL_EDEFAULT = false;
 
-	/**
+    /**
      * The cached value of the '{@link #isFinal() <em>Final</em>}' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #isFinal()
      * @generated
      * @ordered
      */
-	protected boolean final_ = FINAL_EDEFAULT;
+    protected boolean final_ = FINAL_EDEFAULT;
 
-	/**
+    /**
      * The cached value of the '{@link #getOutgoingTransitions() <em>Outgoing Transitions</em>}' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getOutgoingTransitions()
      * @generated
      * @ordered
      */
-	protected EList<Transition> outgoingTransitions;
+    protected EList<Transition> outgoingTransitions;
 
-	/**
+    /**
      * The cached value of the '{@link #getIncomingTransitions() <em>Incoming Transitions</em>}' reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getIncomingTransitions()
      * @generated
      * @ordered
      */
-	protected EList<Transition> incomingTransitions;
+    protected EList<Transition> incomingTransitions;
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	protected StateImpl() {
+    protected StateImpl() {
         super();
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	protected EClass eStaticClass() {
+    @Override
+    protected EClass eStaticClass() {
         return SCChartsPackage.Literals.STATE;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public StateType getType() {
+    public StateType getType() {
         return type;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public void setType(StateType newType) {
+    public void setType(StateType newType) {
         StateType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__TYPE, oldType, type));
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Region> getRegions() {
+    public EList<Region> getRegions() {
         if (regions == null) {
             regions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, SCChartsPackage.STATE__REGIONS, SCChartsPackage.REGION__PARENT_STATE);
         }
         return regions;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public ControlflowRegion getParentRegion() {
+    public ControlflowRegion getParentRegion() {
         if (eContainerFeatureID() != SCChartsPackage.STATE__PARENT_REGION) return null;
         return (ControlflowRegion)eInternalContainer();
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public NotificationChain basicSetParentRegion(ControlflowRegion newParentRegion, NotificationChain msgs) {
+    public NotificationChain basicSetParentRegion(ControlflowRegion newParentRegion, NotificationChain msgs) {
         msgs = eBasicSetContainer((InternalEObject)newParentRegion, SCChartsPackage.STATE__PARENT_REGION, msgs);
         return msgs;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public void setParentRegion(ControlflowRegion newParentRegion) {
+    public void setParentRegion(ControlflowRegion newParentRegion) {
         if (newParentRegion != eInternalContainer() || (eContainerFeatureID() != SCChartsPackage.STATE__PARENT_REGION && newParentRegion != null)) {
             if (EcoreUtil.isAncestor(this, newParentRegion))
                 throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -247,80 +247,80 @@ public class StateImpl extends ScopeImpl implements State {
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__PARENT_REGION, newParentRegion, newParentRegion));
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public boolean isInitial() {
+    public boolean isInitial() {
         return initial;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public void setInitial(boolean newInitial) {
+    public void setInitial(boolean newInitial) {
         boolean oldInitial = initial;
         initial = newInitial;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__INITIAL, oldInitial, initial));
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public boolean isFinal() {
+    public boolean isFinal() {
         return final_;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public void setFinal(boolean newFinal) {
+    public void setFinal(boolean newFinal) {
         boolean oldFinal = final_;
         final_ = newFinal;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__FINAL, oldFinal, final_));
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Transition> getOutgoingTransitions() {
+    public EList<Transition> getOutgoingTransitions() {
         if (outgoingTransitions == null) {
             outgoingTransitions = new EObjectContainmentWithInverseEList<Transition>(Transition.class, this, SCChartsPackage.STATE__OUTGOING_TRANSITIONS, SCChartsPackage.TRANSITION__SOURCE_STATE);
         }
         return outgoingTransitions;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Transition> getIncomingTransitions() {
+    public EList<Transition> getIncomingTransitions() {
         if (incomingTransitions == null) {
             incomingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, SCChartsPackage.STATE__INCOMING_TRANSITIONS, SCChartsPackage.TRANSITION__TARGET_STATE);
         }
         return incomingTransitions;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@SuppressWarnings("unchecked")
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SCChartsPackage.STATE__REGIONS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getRegions()).basicAdd(otherEnd, msgs);
@@ -336,13 +336,13 @@ public class StateImpl extends ScopeImpl implements State {
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SCChartsPackage.STATE__REGIONS:
                 return ((InternalEList<?>)getRegions()).basicRemove(otherEnd, msgs);
@@ -356,13 +356,13 @@ public class StateImpl extends ScopeImpl implements State {
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+    @Override
+    public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
             case SCChartsPackage.STATE__PARENT_REGION:
                 return eInternalContainer().eInverseRemove(this, SCChartsPackage.CONTROLFLOW_REGION__STATES, ControlflowRegion.class, msgs);
@@ -370,13 +370,13 @@ public class StateImpl extends ScopeImpl implements State {
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case SCChartsPackage.STATE__TYPE:
                 return getType();
@@ -396,14 +396,14 @@ public class StateImpl extends ScopeImpl implements State {
         return super.eGet(featureID, resolve, coreType);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void eSet(int featureID, Object newValue) {
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case SCChartsPackage.STATE__TYPE:
                 setType((StateType)newValue);
@@ -433,13 +433,13 @@ public class StateImpl extends ScopeImpl implements State {
         super.eSet(featureID, newValue);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public void eUnset(int featureID) {
+    @Override
+    public void eUnset(int featureID) {
         switch (featureID) {
             case SCChartsPackage.STATE__TYPE:
                 setType(TYPE_EDEFAULT);
@@ -466,13 +466,13 @@ public class StateImpl extends ScopeImpl implements State {
         super.eUnset(featureID);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public boolean eIsSet(int featureID) {
+    @Override
+    public boolean eIsSet(int featureID) {
         switch (featureID) {
             case SCChartsPackage.STATE__TYPE:
                 return type != TYPE_EDEFAULT;
@@ -492,13 +492,13 @@ public class StateImpl extends ScopeImpl implements State {
         return super.eIsSet(featureID);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public String toString() {
+    @Override
+    public String toString() {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());

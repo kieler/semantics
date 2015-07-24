@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -45,83 +45,83 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
-	/**
+    /**
      * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getNodes()
      * @generated
      * @ordered
      */
-	protected EList<Node> nodes;
+    protected EList<Node> nodes;
 
-	/**
+    /**
      * The cached value of the '{@link #getEquations() <em>Equations</em>}' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getEquations()
      * @generated
      * @ordered
      */
-	protected EList<Equation> equations;
+    protected EList<Equation> equations;
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	protected DataflowRegionImpl() {
+    protected DataflowRegionImpl() {
         super();
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	protected EClass eStaticClass() {
+    @Override
+    protected EClass eStaticClass() {
         return SCChartsPackage.Literals.DATAFLOW_REGION;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Node> getNodes() {
+    public EList<Node> getNodes() {
         if (nodes == null) {
             nodes = new EObjectContainmentEList<Node>(Node.class, this, SCChartsPackage.DATAFLOW_REGION__NODES);
         }
         return nodes;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Equation> getEquations() {
+    public EList<Equation> getEquations() {
         if (equations == null) {
             equations = new EObjectContainmentEList<Equation>(Equation.class, this, SCChartsPackage.DATAFLOW_REGION__EQUATIONS);
         }
         return equations;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW_REGION__NODES:
                 return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
@@ -131,13 +131,13 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW_REGION__NODES:
                 return getNodes();
@@ -147,14 +147,14 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
         return super.eGet(featureID, resolve, coreType);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void eSet(int featureID, Object newValue) {
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW_REGION__NODES:
                 getNodes().clear();
@@ -168,13 +168,13 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
         super.eSet(featureID, newValue);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public void eUnset(int featureID) {
+    @Override
+    public void eUnset(int featureID) {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW_REGION__NODES:
                 getNodes().clear();
@@ -186,13 +186,13 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
         super.eUnset(featureID);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public boolean eIsSet(int featureID) {
+    @Override
+    public boolean eIsSet(int featureID) {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW_REGION__NODES:
                 return nodes != null && !nodes.isEmpty();

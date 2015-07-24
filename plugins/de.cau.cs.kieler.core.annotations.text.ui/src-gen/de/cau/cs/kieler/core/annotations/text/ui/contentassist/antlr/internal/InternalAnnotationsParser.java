@@ -24,25 +24,25 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_COMMENT_ANNOTATION", "RULE_BOOLEAN", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'@'", "','", "'['", "']'", "'.'", "'#'", "'-'"
     };
+    public static final int RULE_COMMENT_ANNOTATION=8;
     public static final int RULE_BOOLEAN=9;
-    public static final int RULE_ID=5;
-    public static final int RULE_ANY_OTHER=14;
-    public static final int T__21=21;
-    public static final int T__20=20;
-    public static final int RULE_FLOAT=7;
-    public static final int RULE_SL_COMMENT=12;
-    public static final int EOF=-1;
-    public static final int RULE_ML_COMMENT=10;
-    public static final int T__19=19;
     public static final int RULE_STRING=4;
-    public static final int T__16=16;
+    public static final int RULE_SL_COMMENT=12;
+    public static final int T__19=19;
     public static final int T__15=15;
-    public static final int T__18=18;
+    public static final int T__16=16;
     public static final int T__17=17;
+    public static final int T__18=18;
+    public static final int EOF=-1;
+    public static final int RULE_ID=5;
+    public static final int RULE_WS=13;
+    public static final int RULE_ANY_OTHER=14;
     public static final int RULE_NUMBER=11;
     public static final int RULE_INT=6;
-    public static final int RULE_WS=13;
-    public static final int RULE_COMMENT_ANNOTATION=8;
+    public static final int RULE_ML_COMMENT=10;
+    public static final int RULE_FLOAT=7;
+    public static final int T__20=20;
+    public static final int T__21=21;
 
     // delegates
     // delegators
@@ -6499,33 +6499,33 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     static final String DFA1_eotS =
         "\17\uffff";
     static final String DFA1_eofS =
-        "\3\uffff\1\12\11\uffff\2\12";
+        "\3\uffff\1\13\11\uffff\2\13";
     static final String DFA1_minS =
-        "\1\10\1\uffff\1\5\1\4\1\5\2\6\6\uffff\2\4";
+        "\1\10\1\uffff\1\5\1\4\1\5\1\6\2\uffff\1\6\4\uffff\2\4";
     static final String DFA1_maxS =
-        "\1\17\1\uffff\1\5\1\25\1\5\1\6\1\7\6\uffff\2\25";
+        "\1\17\1\uffff\1\5\1\25\1\5\1\6\2\uffff\1\7\4\uffff\2\25";
     static final String DFA1_acceptS =
-        "\1\uffff\1\1\5\uffff\1\6\1\3\1\5\1\7\1\2\1\4\2\uffff";
+        "\1\uffff\1\1\4\uffff\1\2\1\4\1\uffff\1\5\1\6\1\7\1\3\2\uffff";
     static final String DFA1_specialS =
         "\17\uffff}>";
     static final String[] DFA1_transitionS = {
             "\1\1\6\uffff\1\2",
             "",
             "\1\3",
-            "\2\13\1\11\1\7\1\uffff\1\14\7\uffff\1\10\1\uffff\1\4\1\5\1"+
-            "\6",
+            "\2\6\1\11\1\12\1\uffff\1\7\7\uffff\1\14\1\uffff\1\4\1\5\1"+
+            "\10",
             "\1\15",
             "\1\16",
-            "\1\11\1\7",
+            "",
+            "",
+            "\1\11\1\12",
             "",
             "",
             "",
             "",
-            "",
-            "",
-            "\2\13\1\11\1\7\1\uffff\1\14\7\uffff\1\10\1\uffff\1\4\1\5\1"+
-            "\6",
-            "\2\13\1\11\1\7\1\uffff\1\14\7\uffff\1\10\3\uffff\1\6"
+            "\2\6\1\11\1\12\1\uffff\1\7\7\uffff\1\14\1\uffff\1\4\1\5\1"+
+            "\10",
+            "\2\6\1\11\1\12\1\uffff\1\7\7\uffff\1\14\3\uffff\1\10"
     };
 
     static final short[] DFA1_eot = DFA.unpackEncodedString(DFA1_eotS);

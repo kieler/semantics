@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.ui,
  com.google.guava;bundle-version="10.0.0",
  de.cau.cs.kieler.core
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.kex.controller,
  de.cau.cs.kieler.kex.model
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University

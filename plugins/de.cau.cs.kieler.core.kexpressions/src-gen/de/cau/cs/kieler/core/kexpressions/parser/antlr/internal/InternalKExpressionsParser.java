@@ -25,46 +25,46 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_STRING", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'('", "')'", "'['", "']'", "'<'", "','", "'()'", "'>'", "'!'", "'&'", "'@'", "'.'", "'#'", "'-'", "'=='", "'<='", "'>='", "'!='", "'pre'", "'|'", "'+'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'"
     };
-    public static final int T__42=42;
+    public static final int RULE_COMMENT_ANNOTATION=10;
     public static final int RULE_BOOLEAN=8;
-    public static final int RULE_ID=4;
-    public static final int T__40=40;
-    public static final int T__41=41;
-    public static final int T__29=29;
-    public static final int T__28=28;
-    public static final int T__27=27;
-    public static final int T__26=26;
-    public static final int T__25=25;
-    public static final int T__24=24;
-    public static final int T__23=23;
-    public static final int T__22=22;
-    public static final int RULE_ANY_OTHER=15;
-    public static final int T__21=21;
-    public static final int T__20=20;
-    public static final int RULE_FLOAT=7;
-    public static final int RULE_SL_COMMENT=13;
-    public static final int EOF=-1;
-    public static final int RULE_HOSTCODE=5;
-    public static final int RULE_ML_COMMENT=11;
-    public static final int T__19=19;
-    public static final int T__30=30;
-    public static final int T__31=31;
     public static final int RULE_STRING=9;
-    public static final int T__32=32;
-    public static final int T__33=33;
+    public static final int RULE_SL_COMMENT=13;
+    public static final int T__19=19;
+    public static final int T__37=37;
     public static final int T__16=16;
+    public static final int T__38=38;
+    public static final int T__17=17;
+    public static final int T__39=39;
+    public static final int T__18=18;
+    public static final int T__33=33;
     public static final int T__34=34;
     public static final int T__35=35;
-    public static final int T__18=18;
     public static final int T__36=36;
-    public static final int T__17=17;
-    public static final int RULE_NUMBER=12;
-    public static final int T__37=37;
-    public static final int T__38=38;
-    public static final int T__39=39;
-    public static final int RULE_INT=6;
+    public static final int EOF=-1;
+    public static final int T__30=30;
+    public static final int T__31=31;
+    public static final int T__32=32;
+    public static final int RULE_ID=4;
     public static final int RULE_WS=14;
-    public static final int RULE_COMMENT_ANNOTATION=10;
+    public static final int RULE_ANY_OTHER=15;
+    public static final int RULE_NUMBER=12;
+    public static final int T__26=26;
+    public static final int RULE_HOSTCODE=5;
+    public static final int T__27=27;
+    public static final int T__28=28;
+    public static final int RULE_INT=6;
+    public static final int T__29=29;
+    public static final int T__22=22;
+    public static final int RULE_ML_COMMENT=11;
+    public static final int T__23=23;
+    public static final int RULE_FLOAT=7;
+    public static final int T__24=24;
+    public static final int T__25=25;
+    public static final int T__40=40;
+    public static final int T__41=41;
+    public static final int T__20=20;
+    public static final int T__42=42;
+    public static final int T__21=21;
 
     // delegates
     // delegators
@@ -8350,6 +8350,20 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
 
     // Delegated rules
 
+    public final boolean synpred26_InternalKExpressions() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred26_InternalKExpressions_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
     public final boolean synpred11_InternalKExpressions() {
         state.backtracking++;
         int start = input.mark();
@@ -8369,20 +8383,6 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred1_InternalKExpressions_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred26_InternalKExpressions() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred26_InternalKExpressions_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
