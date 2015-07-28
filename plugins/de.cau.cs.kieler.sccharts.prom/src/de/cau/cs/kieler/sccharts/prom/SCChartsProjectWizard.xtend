@@ -25,6 +25,7 @@ class SCChartsProjectWizard extends PromProjectWizard {
 
     override createModelFileCreationPage(){
         val page = new AdvancedNewFileCreationPage("SCT File", selection, true)
+        page.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/resources/default.sct"
         page.fileName = "NewModel.sct"
         page.fileExtension = "sct"
         page.description = "Specify where the SCChart model should be created and initialized."

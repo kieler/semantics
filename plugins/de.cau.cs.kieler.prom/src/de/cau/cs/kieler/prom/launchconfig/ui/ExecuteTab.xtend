@@ -116,6 +116,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         val updateDialogSelectionProvider =  new SelectionAdapter(){
             
             override widgetSelected(SelectionEvent e) {
+                checkConsistency()
                 updateLaunchConfigurationDialog()
             }
         }
@@ -129,6 +130,8 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                 inputArray.add(comm)
                 viewer.refresh()
                 viewer.selection = new StructuredSelection(comm)
+                
+                checkConsistency()
             }
         })
         addButton.addSelectionListener(updateDialogSelectionProvider)
@@ -159,6 +162,8 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                 if(currentData != null){
                     currentData.name = name.text
                     viewer.refresh()
+                    
+                    checkConsistency()
                     updateLaunchConfigurationDialog()
                 }
             }
@@ -179,6 +184,8 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                 if(currentData != null){
                     currentData.command = command.text
                     viewer.refresh()
+                    
+                    checkConsistency()
                     updateLaunchConfigurationDialog()
                 }
             }
@@ -252,6 +259,38 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
      */
     override String getName() {
         return "Execute"
+    }
+    
+    /**
+     * Checks the user input for consistency and sets an appropriate error message.
+     * @return true if the user input is valid.
+     */
+    private def checkConsistency(){
+        errorMessage = checkError()
+        
+        return errorMessage == null
+    }
+    
+    /**
+     * Checks the user input for consistency.
+     * @return an error message if the input is inconsistent<br>
+     *         or null if the input is valid. 
+     */
+    private def checkError(){
+        val commands = viewer.input as List<CommandData> 
+        for(comm : commands){
+            // Unique names
+            for(comm2 : commands){
+                if(comm != comm2 && comm.name == comm2.name)
+                    return "Command names must be unique."
+            }
+            
+            // No comma in name
+            if(comm.name.contains(","))
+                return "Command names must not contain a comma."
+        }
+        
+        return null
     }
     
     /**
