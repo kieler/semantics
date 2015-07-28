@@ -17,6 +17,7 @@
     </@>
 </#macro>
 
+
 <#-- Floodlight -->
 <#macro Floodlight port>
     <@init>
@@ -32,6 +33,7 @@
     </@>
 </#macro>
 
+
 <#-- Clock -->
 <#macro Clock millis>
     <@init>
@@ -46,6 +48,7 @@
         }
     </@>
 </#macro>
+
 
 <#-- MotorSpeed -->
 <#macro MotorSpeed port>
@@ -67,3 +70,16 @@
             motor${port}.backward();
     </@>
 </#macro>
+
+<#-- Sleep -->
+<#macro Sleep millis>
+    <@output>
+        // Sleep ${millis}
+        if(scchart.${varname} > 0) {
+            try {
+                Thread.sleep(scchart.${varname});
+            } catch (InterruptedException e) { }
+        }
+    </@>
+</#macro>
+

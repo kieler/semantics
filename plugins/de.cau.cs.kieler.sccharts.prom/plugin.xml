@@ -67,6 +67,12 @@
       </initializer>
    </extension>
    <extension
+         point="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer">
+      <analyzer
+            class="de.cau.cs.kieler.sccharts.prom.SCTWrapperCodeAnnotationAnalyzer">
+      </analyzer>
+   </extension>
+   <extension
          point="de.cau.cs.kieler.kex">
       <category
             id="de.cau.cs.kieler.sccharts.prom.examples"
@@ -89,7 +95,7 @@
          </resource>
          <resource
                direct_open="false"
-               local_path="examples/nxj_project/sct-gen/"
+               local_path="examples/nxj_project/kieler-gen/"
                resource_type="folder">
          </resource>
          <resource
@@ -104,12 +110,12 @@
          </resource>
          <resource
                direct_open="false"
-               local_path="examples/nxj_project/sct-gen/Main.java"
+               local_path="examples/nxj_project/kieler-gen/Main.java"
                resource_type="file">
          </resource>
          <resource
                direct_open="false"
-               local_path="examples/nxj_project/sct-gen/Model.java"
+               local_path="examples/nxj_project/kieler-gen/Model.java"
                resource_type="file">
          </resource>
          <resource
@@ -128,12 +134,51 @@
                resource_type="file">
          </resource>
       </example>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer">
-      <analyzer
-            class="de.cau.cs.kieler.sccharts.prom.SCTWrapperCodeAnnotationAnalyzer">
-      </analyzer>
+      <example
+            author="KIELER Workgroup"
+            category="de.cau.cs.kieler.sccharts.prom.examples"
+            contact="kieler@informatik.uni-kiel.de"
+            description="Example project with wrapper code from annotations which compiles and deploys to LEGO Mindstorms with Not Exactly C (NXC)"
+            generation_date="folks_this_field_is_user_input_idenpendent"
+            id="de.cau.cs.kieler.sccharts.prom.examples.mindstorms.nxc"
+            root_directory="examples/nxc_project/"
+            title="SCCharts for Mindstorms via NXC">
+         <resource
+               direct_open="false"
+               local_path="examples/nxc_project/snippets/"
+               resource_type="folder">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxc_project/snippets/mindstorms_nxc/"
+               resource_type="folder">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxc_project/snippets/mindstorms_nxc/snippets.ftl"
+               resource_type="file">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxc_project/kieler-gen/"
+               resource_type="folder">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxc_project/kieler-gen/main.nxc"
+               resource_type="file">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxc_project/kieler-gen/NxcModel.nxc"
+               resource_type="file">
+         </resource>
+         <resource
+               direct_open="false"
+               local_path="examples/nxc_project/NxcModel.sct"
+               resource_type="file">
+         </resource>
+      </example>
    </extension>
 
 </plugin>

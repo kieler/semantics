@@ -201,7 +201,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     val generator = new WrapperCodeGenerator(project,
                         variableManager.performStringSubstitution(wrapperCodeTemplate),
                         variableManager.performStringSubstitution(wrapperCodeSnippetDirectory),
-                        computeTargetPath(variableManager.performStringSubstitution(wrapperCodeTemplate)))
+                        computeTargetPath(variableManager.performStringSubstitution(wrapperCodeTemplate), false))
 
                     generator.generateWrapperCode(datas)
 
@@ -257,7 +257,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
             // Flush compilation result to target
             if (result.string != null && result.string != "") {
-                saveCompilationResult(result.string, computeTargetPath(data.projectRelativePath))
+                saveCompilationResult(result.string, computeTargetPath(data.projectRelativePath, false))
             } else {
                 var errorMessage = "Compilation of '" + data.name + "' failed:\n\n" + result.allErrors
 
@@ -274,7 +274,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * 
      * @return the computed path.
      */
-    private def String computeTargetPath(String projectRelativePath) {
+    private def String computeTargetPath(String projectRelativePath, boolean projectRelative) {
         // The src directory of a typical java project is not part of the relevant target path.
         // (Would be more accurate: if the first directory is a java build source folder, remove it)
         var String projectRelativeRelevantPath;
@@ -286,9 +286,12 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         // Remove extension
         val projectRelativeRelevantPathWithoutExtension = FilenameUtils.removeExtension(projectRelativeRelevantPath)        
     
-        // Compute fully qualified target path
-        return project.location + File.separator + BUILD_DIRECTORY + File.separator +
-            projectRelativeRelevantPathWithoutExtension + targetLanguageFileExtension
+        // Compute target path
+        val projectRelativeTargetPath = BUILD_DIRECTORY + File.separator + projectRelativeRelevantPathWithoutExtension + targetLanguageFileExtension
+        if(projectRelative)
+            return projectRelativeTargetPath
+        else
+            return project.location + File.separator + projectRelativeTargetPath
     }
 
     /**
@@ -368,7 +371,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         val mainFileLocation = if(mainFileName != "") new File(project.location + File.separator + mainFile).
                 absolutePath else ""
         val mainFilePath = mainFile
-        val mainFileWithoutExtension = FilenameUtils.removeExtension(new File(mainFile).name)
+        val mainFileWithoutExtension = FilenameUtils.removeExtension(mainFileName)
         setVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE, mainFileName,
             "Name of the main file of the launched application")
         setVariable(LaunchConfiguration.MAIN_FILE_LOCATION_VARIABLE, mainFileLocation,
@@ -379,12 +382,12 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             "Project relative path of the main file of the launched application without file extension")
 
         // Compiled main file
-        val mainTarget = computeTargetPath(mainFile)
+        val mainTarget = computeTargetPath(mainFile, true)
         val mainTargetName = new File(mainTarget).name
         val mainTargetLocation = if(mainTargetName != "") new File(project.location + File.separator + mainTarget).
                 absolutePath else ""
         val mainTargetPath = mainTarget
-        val mainTargetWithoutExtension = FilenameUtils.removeExtension(new File(mainTarget).name)
+        val mainTargetWithoutExtension = FilenameUtils.removeExtension(mainTargetName)
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName,
             "Name of the compiled main file of the launched application")
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation,

@@ -77,11 +77,6 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
 
     
     /**
-     * The file created by the main file creation page.
-     */    
-    protected var IFile createdMainFile
-
-    /**
      * The main page of the wizard.
      * It is the first page.
      */
@@ -309,8 +304,8 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
         newlyCreatedProject.setPersistentProperty(PromPlugin.ENVIRIONMENT_QUALIFIER, env.name)
         
         // Created main file
-        if (createdMainFile != null){
-            newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, createdMainFile.projectRelativePath.toOSString)
+        if (mainFilePage.newFile != null){
+            newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, mainFilePage.newFile.projectRelativePath.toOSString)
         }
         
         return true

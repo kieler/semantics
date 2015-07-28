@@ -28,25 +28,43 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         val datas = newArrayList()
         
         // Mindstorms NXJ
-        val env = new EnvironmentData("Mindstorms NXJ")
+        var env = new EnvironmentData("Mindstorms NXJ")
+        datas += env
         
         env.targetLanguage = "s.java"
         env.targetFileExtension = ".java"
         env.targetTemplate = ""
         
-        env.wrapperCodeTemplate = "src/Main.ftl"
+        env.wrapperCodeTemplate = '''${«LaunchConfiguration.MAIN_FILE_PATH_VARIABLE»}'''
         env.wrapperCodeSnippetsDirectory = "snippets/mindstorms_nxj"
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/snippets"
         
-        env.commands.add(new CommandData("Compile", '''nxjc -cp "/opt/leJOS_0.9.1/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" "«LaunchConfiguration.BUILD_DIRECTORY»/Main.java"'''))
-        env.commands.add(new CommandData("Deploy and Run", '''nxj -r -cp "/opt/leJOS_0.9.1/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" -o "Main.nxj" Main'''))
+        env.commands.add(new CommandData("Compile", '''nxjc -cp "/opt/leJOS_0.9.1/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" "${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}"'''))
+        env.commands.add(new CommandData("Deploy and Run", '''nxj -r -cp "/opt/leJOS_0.9.1/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" -o "${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}.nxj" ${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}'''))
         
         env.relatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
         
         env.mainFile = "src/Main.ftl"
         env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/Main.ftl"
         
+        // Mindstorms NXC
+        env = new EnvironmentData("Mindstorms NXC")
         datas += env
+        
+        env.targetLanguage = "s.c"
+        env.targetFileExtension = ".nxc"
+        env.targetTemplate = ""
+        
+        env.wrapperCodeTemplate = '''${«LaunchConfiguration.MAIN_FILE_PATH_VARIABLE»}'''
+        env.wrapperCodeSnippetsDirectory = "snippets/mindstorms_nxc"
+        env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxc/snippets"
+        
+        env.commands.add(new CommandData("Compile & Deploy & Run", '''/opt/nxc/nbc -S=usb -EF -r ${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}'''))
+        
+        env.relatedProjectWizardClass = "org.eclipse.cdt.ui.wizards.CProjectWizard"
+        
+        env.mainFile = "main.ftl"
+        env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxc/main.ftl"
         
         return datas
     }
