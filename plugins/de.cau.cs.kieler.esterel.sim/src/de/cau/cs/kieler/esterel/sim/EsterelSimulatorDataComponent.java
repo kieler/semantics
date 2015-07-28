@@ -828,7 +828,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
                 // Non-Windows
                 executable = File.createTempFile(SIMULATION_PREFIX, "");
                 compile =
-                        compiler + " " + output.getPath() + " " + data.getPath() + " "
+                        compiler + " " + data.getPath() + " "
                                 + bundelLocationString + SIMULATION_JSONBIB + " " + "-I "
                                 + bundelLocationString
                                 + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
