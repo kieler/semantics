@@ -1,0 +1,48 @@
+#!/bin/sh
+# script used to check if an Esterel program is constructive using sccausal
+# produces not output.
+
+# current release
+VERSION=v5_100
+
+# sccausal and sccheck should be in the ESTEREL directory.
+# if ESTEREL is not set, use the directory where sccheck is
+# In this case
+if [ -z "$ESTEREL" ]
+then
+    SCCAUSAL=`dirname $0`/sccausal
+else
+    SCCAUSAL=${ESTEREL}/bin/sccausal
+fi
+
+
+if [ ! -x $SCCAUSAL ]
+then
+  cat >&2 <<ERROR
+*** sccheck: System error
+        cannot find sccausal as $SCCAUSAL
+        sccheck and sccausal should be with the other
+        Esterel processors.
+ERROR
+  exit 1
+fi
+
+case $1 in 
+  -info)    
+      echo "--- sccheck: education version $VERSION" >&2
+      exec $SCCAUSAL -info
+      ;;
+  -version) 
+      echo "--- sccheck: version $VERSION" >&2
+      exec $SCCAUSAL -version
+      ;;
+   *) 
+      exec $SCCAUSAL -check "$@" 1>/dev/null
+      ;;
+esac
+
+cat >&2 <<ERROR
+*** sccheck: System error
+        cannot exec $SCCAUSAL
+ERROR
+exit 1
