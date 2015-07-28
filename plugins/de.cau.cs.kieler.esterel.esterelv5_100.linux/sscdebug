@@ -1,7 +1,0 @@
-#!/bin/sh
-if test -z "$ESTEREL"
-then
-ESTEREL=../esterelv5_100.linux-i686
-fi
-export ESTEREL
-$ESTEREL/bin/ocdebug -ssc "$@"
