@@ -40,6 +40,7 @@ import java.util.HashMap
 import java.util.List
 import java.util.Set
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.Join
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -84,7 +85,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 
 
     //TODO Fix this shitty logging stuff
-    static final boolean DEBUG = false;
+    static final boolean DEBUG = true;
 
     def static void debug(String debugText) {
         debug(debugText, true);
@@ -254,15 +255,16 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                 }
             }
 
-            neededNodes += schedulingBlock.nodes.head.incoming.filter(typeof(ControlFlow)).map[eContainer as Node]
-
-            for (node : neededNodes) {
-                var prevSB = schedulingBlockCache.get(node)
-                if (!topologicalSortVisited.contains(prevSB)) {
-                    debug(indent + "Previous SB is missing: " + prevSB.label)
-                    prevSB.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, indent + "  ")
+            if (!(schedulingBlock.nodes.head instanceof Join)) {
+                neededNodes += schedulingBlock.nodes.head.incoming.filter(typeof(ControlFlow)).map[eContainer as Node]
+                for (node : neededNodes) {
+                    var prevSB = schedulingBlockCache.get(node)
                     if (!topologicalSortVisited.contains(prevSB)) {
-                        placeable = false
+                        debug(indent + "Previous SB is missing: " + prevSB.label)
+                        prevSB.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, indent + "  ")
+                        if (!topologicalSortVisited.contains(prevSB)) {
+                            placeable = false
+                        }
                     }
                 }
             }
