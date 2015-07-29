@@ -55,6 +55,7 @@ import java.util.Set
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /** 
  * SCL to SCG Transformation 
@@ -67,9 +68,13 @@ import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 class SCLToSCGTransformation extends AbstractProductionTransformation {
 
     private static val String ANNOTATION_HOSTCODE = "hostcode"
+    private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
 
     @Inject
     extension SCGControlFlowExtensions 
+    
+    @Inject
+    extension SCGThreadExtensions    
 
     @Inject
     extension KExpressionsExtension
@@ -170,7 +175,12 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
         val hostcodeAnnotations = scl.annotations.filter(typeof(StringAnnotation)).filter[ name == ANNOTATION_HOSTCODE ] 
         hostcodeAnnotations.forEach [
             scg.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
-        ]        
+        ]   
+        
+        val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
+        for (entry : threadPathTypes.keySet) {
+            entry.addAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+        }             
 
         scg
     }
