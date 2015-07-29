@@ -61,7 +61,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         
         env.commands.add(new CommandData("Compile & Deploy & Run", '''/opt/nxc/nbc -S=usb -EF -r ${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}'''))
         
-        env.relatedProjectWizardClass = "org.eclipse.cdt.ui.wizards.CProjectWizard"
+        env.relatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
         
         env.mainFile = "main.ftl"
         env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxc/main.ftl"

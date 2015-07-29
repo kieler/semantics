@@ -37,7 +37,7 @@
             class="de.cau.cs.kieler.prom.launchconfig.LaunchShortcut"
             icon="icons/foerde-logo-16.png"
             id="de.cau.cs.kieler.sccharts.prom.launchShortcut"
-            label="SCT Application"
+            label="KiCo Compilation"
             modes="run, debug">
          <contextualLaunch>
             <enablement>
