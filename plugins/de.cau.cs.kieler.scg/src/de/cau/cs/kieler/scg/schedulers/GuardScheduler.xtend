@@ -85,7 +85,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 
 
     //TODO Fix this shitty logging stuff
-    static final boolean DEBUG = true;
+    static final boolean DEBUG = false;
 
     def static void debug(String debugText) {
         debug(debugText, true);
@@ -357,7 +357,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                 val vo = sb.guard.valuedObject
                 if (schedulingBlockVOCache.keySet.contains(vo)) {
                     val sbSet = schedulingBlockVOCache.get(vo)
-                    sbSet += sbSet
+                    sbSet += sb
                 } else {
                     val sbSet = <SchedulingBlock>newHashSet
                     sbSet += sb
@@ -376,7 +376,8 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 
         guardVOCache.clear
         scg.guards.forEach [ g |
-            guardVOCache.put(g.valuedObject, g)
+//            if (!g.schedulingBlockLink.basicBlock.deadBlock)
+                guardVOCache.put(g.valuedObject, g)
         ]
 
         val scedList = <ScheduleBlock>newLinkedList
@@ -404,14 +405,13 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
     private def Set<DataDependency> getAllDataDependencies(SchedulingBlock schedulingBlock, SCGraph scg) {
         val returnSet = <DataDependency>newHashSet;
 
-        //    	val guard = schedulingBlock.guard
-        //    	for (sb : scg.allSchedulingBlocks) {
-        //    		if (sb.guard == guard) {
-        //    			returnSet += sb.dependencies
-        //    		}
-        //    	} 
-        //(schedulingBlock.eContainer as BasicBlock).schedulingBlocks.forEach[ returnSet += it.dependencies ]
-        returnSet += schedulingBlock.dependencies.filter(typeof(DataDependency))
+//        returnSet += schedulingBlock.dependencies.filter(typeof(DataDependency))
+
+        for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
+            val node = dependency.eContainer as Node
+            val sb = schedulingBlockCache.get(node)
+            if (!sb.basicBlock.deadBlock) returnSet += dependency
+        }
 
         returnSet
     }

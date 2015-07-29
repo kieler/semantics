@@ -147,7 +147,12 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         if (!(scg.nodes.head instanceof Entry)) throw new UnsupportedSCGException("The basic block analysis expects an entry node as first node!")
         
         val basicBlockCache = <BasicBlock> newLinkedList
-        scg.createBasicBlocks(scg.nodes.head, 0, basicBlockCache)
+        var index = 0
+        for(node : scg.nodes) {
+            if (!processedNodes.contains(node)) {
+                index = scg.createBasicBlocks(node, index, basicBlockCache)
+            }
+        }
         scg.basicBlocks += basicBlockCache
         
         //KITT
@@ -328,7 +333,11 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
             	 * Therefore, check the next block for these properties.
             	 */
             	// Retrieve the target of the next control flow.
-                val next = node.eAllContents?.filter(typeof(ControlFlow))?.head?.target
+                var next = node.eContents.filter(typeof(ControlFlow))?.head?.target
+                // if the node has already been processed, skip it.
+                if (processedNodes.contains(next) && next.incoming.filter(typeof(ControlFlow)).size < 2) {
+                    next = null
+                }
                 if (next instanceof Join || next == null) {
                 	/**
                 	 * If the next node would be a join node, we would exit the thread border. 
@@ -388,7 +397,9 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         }
         
         /** If the block has no predecessors but is also not the entry block, it is a dead block. */
-        if (!basicBlock.goBlock && predecessorBlocks.size == 0 && nodeList.head.allPrevious.size == 0) {
+        if (!basicBlock.goBlock && predecessorBlocks.size == 0 
+//            && (nodeList.head.allPrevious.size == 0)
+        ) {
             basicBlock.deadBlock = true
         }
         
