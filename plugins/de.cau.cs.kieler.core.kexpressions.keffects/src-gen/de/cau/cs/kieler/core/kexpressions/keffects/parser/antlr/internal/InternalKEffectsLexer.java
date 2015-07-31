@@ -13,52 +13,52 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalKEffectsLexer extends Lexer {
     public static final int RULE_BOOLEAN=8;
-    public static final int RULE_ID=4;
-    public static final int T__29=29;
-    public static final int T__28=28;
-    public static final int T__27=27;
-    public static final int T__26=26;
-    public static final int T__25=25;
-    public static final int T__24=24;
-    public static final int T__23=23;
-    public static final int T__22=22;
-    public static final int T__21=21;
-    public static final int RULE_ANY_OTHER=15;
-    public static final int T__20=20;
-    public static final int EOF=-1;
     public static final int T__19=19;
     public static final int T__16=16;
-    public static final int T__18=18;
     public static final int T__17=17;
-    public static final int RULE_NUMBER=12;
-    public static final int RULE_INT=6;
-    public static final int RULE_COMMENT_ANNOTATION=10;
-    public static final int T__42=42;
-    public static final int T__43=43;
-    public static final int T__40=40;
-    public static final int T__41=41;
-    public static final int T__46=46;
-    public static final int T__47=47;
-    public static final int T__44=44;
-    public static final int T__45=45;
-    public static final int T__48=48;
-    public static final int T__49=49;
-    public static final int RULE_FLOAT=7;
-    public static final int RULE_SL_COMMENT=13;
+    public static final int T__18=18;
+    public static final int RULE_ID=4;
+    public static final int T__26=26;
     public static final int RULE_HOSTCODE=5;
+    public static final int T__27=27;
+    public static final int T__28=28;
+    public static final int RULE_INT=6;
+    public static final int T__29=29;
+    public static final int T__22=22;
     public static final int RULE_ML_COMMENT=11;
-    public static final int T__30=30;
-    public static final int T__31=31;
+    public static final int T__23=23;
+    public static final int T__24=24;
+    public static final int T__25=25;
+    public static final int T__20=20;
+    public static final int T__21=21;
+    public static final int RULE_COMMENT_ANNOTATION=10;
     public static final int RULE_STRING=9;
-    public static final int T__32=32;
+    public static final int RULE_SL_COMMENT=13;
+    public static final int T__37=37;
+    public static final int T__38=38;
+    public static final int T__39=39;
     public static final int T__33=33;
     public static final int T__34=34;
     public static final int T__35=35;
     public static final int T__36=36;
-    public static final int T__37=37;
-    public static final int T__38=38;
-    public static final int T__39=39;
+    public static final int EOF=-1;
+    public static final int T__30=30;
+    public static final int T__31=31;
+    public static final int T__32=32;
     public static final int RULE_WS=14;
+    public static final int RULE_ANY_OTHER=15;
+    public static final int RULE_NUMBER=12;
+    public static final int T__48=48;
+    public static final int T__49=49;
+    public static final int T__44=44;
+    public static final int T__45=45;
+    public static final int RULE_FLOAT=7;
+    public static final int T__46=46;
+    public static final int T__47=47;
+    public static final int T__40=40;
+    public static final int T__41=41;
+    public static final int T__42=42;
+    public static final int T__43=43;
 
     // delegates
     // delegators
@@ -1971,12 +1971,12 @@ public class InternalKEffectsLexer extends Lexer {
     static final String DFA12_maxS =
         "\1\71\1\146\2\uffff";
     static final String DFA12_acceptS =
-        "\2\uffff\1\2\1\1";
+        "\2\uffff\1\1\1\2";
     static final String DFA12_specialS =
         "\4\uffff}>";
     static final String[] DFA12_transitionS = {
             "\12\1",
-            "\1\3\1\uffff\12\1\54\uffff\1\2",
+            "\1\2\1\uffff\12\1\54\uffff\1\3",
             "",
             ""
     };
@@ -2039,7 +2039,7 @@ public class InternalKEffectsLexer extends Lexer {
         "\52\1\41\1\33\1\36\1\uffff\1\43\1\46\1\47\3\uffff\1\51\1\54\1\44"+
         "\1\45\4\uffff\1\32\1\40\2\uffff\1\50\1\uffff";
     static final String DFA21_specialS =
-        "\1\2\25\uffff\1\3\3\uffff\1\1\40\uffff\1\0\34\uffff}>";
+        "\1\3\25\uffff\1\1\3\uffff\1\0\40\uffff\1\2\34\uffff}>";
     static final String[] DFA21_transitionS = {
             "\11\36\2\35\2\36\1\35\22\36\1\35\1\10\1\32\1\14\1\36\1\24\1"+
             "\11\1\26\1\1\1\2\1\20\1\17\1\6\1\15\1\13\1\21\12\27\2\36\1\5"+
@@ -2171,16 +2171,6 @@ public class InternalKEffectsLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA21_59 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA21_59=='*') ) {s = 76;}
-
-                        else if ( ((LA21_59>='\u0000' && LA21_59<=')')||(LA21_59>='+' && LA21_59<='\uFFFF')) ) {s = 77;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
                         int LA21_26 = input.LA(1);
 
                         s = -1;
@@ -2190,7 +2180,27 @@ public class InternalKEffectsLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
+                    case 1 : 
+                        int LA21_22 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA21_22>='\u0000' && LA21_22<='\uFFFF')) ) {s = 68;}
+
+                        else s = 30;
+
+                        if ( s>=0 ) return s;
+                        break;
                     case 2 : 
+                        int LA21_59 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA21_59=='*') ) {s = 76;}
+
+                        else if ( ((LA21_59>='\u0000' && LA21_59<=')')||(LA21_59>='+' && LA21_59<='\uFFFF')) ) {s = 77;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 3 : 
                         int LA21_0 = input.LA(1);
 
                         s = -1;
@@ -2253,16 +2263,6 @@ public class InternalKEffectsLexer extends Lexer {
                         else if ( ((LA21_0>='\t' && LA21_0<='\n')||LA21_0=='\r'||LA21_0==' ') ) {s = 29;}
 
                         else if ( ((LA21_0>='\u0000' && LA21_0<='\b')||(LA21_0>='\u000B' && LA21_0<='\f')||(LA21_0>='\u000E' && LA21_0<='\u001F')||LA21_0=='$'||(LA21_0>=':' && LA21_0<=';')||LA21_0=='?'||LA21_0=='\\'||LA21_0=='`'||LA21_0=='{'||(LA21_0>='}' && LA21_0<='\uFFFF')) ) {s = 30;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 3 : 
-                        int LA21_22 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA21_22>='\u0000' && LA21_22<='\uFFFF')) ) {s = 68;}
-
-                        else s = 30;
 
                         if ( s>=0 ) return s;
                         break;

@@ -385,39 +385,44 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorAddOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsSubExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorAddOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsSubExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
+		////LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+)?;
 		//// Example: 1 + 2
 		//AddExpression returns Expression:
-		//	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
+		//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*
+		//SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?
 		public Group getGroup() { return cGroup; }
 
 		//SubExpression
 		public RuleCall getSubExpressionParserRuleCall_0() { return cSubExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*
+		//({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
+		//(operator=AddOperator subExpressions+=SubExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
 		//operator=AddOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
 		//AddOperator
-		public RuleCall getOperatorAddOperatorEnumRuleCall_1_1_0() { return cOperatorAddOperatorEnumRuleCall_1_1_0; }
+		public RuleCall getOperatorAddOperatorEnumRuleCall_1_1_0_0() { return cOperatorAddOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=SubExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//SubExpression
-		public RuleCall getSubExpressionsSubExpressionParserRuleCall_1_2_0() { return cSubExpressionsSubExpressionParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsSubExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsSubExpressionParserRuleCall_1_1_1_0; }
 	}
 
 	public class SubExpressionElements extends AbstractParserRuleElementFinder {
@@ -426,39 +431,44 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cMultExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorSubOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsMultExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorSubOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsMultExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
 		//// Example: varA - ?B
 		//SubExpression returns Expression:
-		//	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
+		//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator
+		//	subExpressions+=MultExpression)+)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*
+		//MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)+)?
 		public Group getGroup() { return cGroup; }
 
 		//MultExpression
 		public RuleCall getMultExpressionParserRuleCall_0() { return cMultExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*
+		//({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)+)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
+		//(operator=SubOperator subExpressions+=MultExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
 		//operator=SubOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
 		//SubOperator
-		public RuleCall getOperatorSubOperatorEnumRuleCall_1_1_0() { return cOperatorSubOperatorEnumRuleCall_1_1_0; }
+		public RuleCall getOperatorSubOperatorEnumRuleCall_1_1_0_0() { return cOperatorSubOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=MultExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//MultExpression
-		public RuleCall getSubExpressionsMultExpressionParserRuleCall_1_2_0() { return cSubExpressionsMultExpressionParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsMultExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsMultExpressionParserRuleCall_1_1_1_0; }
 	}
 
 	public class MultExpressionElements extends AbstractParserRuleElementFinder {
@@ -467,42 +477,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDivExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorMultOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsDivExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorMultOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsDivExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
 		////    ({OperatorExpression} subExpressions+=MultExpression (operator=SubOperator subExpressions+=MultExpression)+)
 		////	| ({OperatorExpression} subExpressions+=MultExpression subExpressions+=NIntValue)
 		////    | MultExpression;
 		//// Example: 2 * 4
 		//MultExpression returns Expression:
-		//	DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*;
+		//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*
+		//DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?
 		public Group getGroup() { return cGroup; }
 
 		//DivExpression
 		public RuleCall getDivExpressionParserRuleCall_0() { return cDivExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*
+		//({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
+		//(operator=MultOperator subExpressions+=DivExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
 		//operator=MultOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
 		//MultOperator
-		public RuleCall getOperatorMultOperatorEnumRuleCall_1_1_0() { return cOperatorMultOperatorEnumRuleCall_1_1_0; }
+		public RuleCall getOperatorMultOperatorEnumRuleCall_1_1_0_0() { return cOperatorMultOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=DivExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//DivExpression
-		public RuleCall getSubExpressionsDivExpressionParserRuleCall_1_2_0() { return cSubExpressionsDivExpressionParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsDivExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsDivExpressionParserRuleCall_1_1_1_0; }
 	}
 
 	public class DivExpressionElements extends AbstractParserRuleElementFinder {
@@ -511,40 +525,44 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cModExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorDivOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsModExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorDivOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsModExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
 		//// Example: (2 / 4)
 		//// note: division always has to have parentheses because the '/' sign is also used for trigger/effect delimiter
 		//DivExpression returns Expression:
-		//	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
+		//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?
+		//ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?
 		public Group getGroup() { return cGroup; }
 
 		//ModExpression
 		public RuleCall getModExpressionParserRuleCall_0() { return cModExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?
+		//({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
+		//(operator=DivOperator subExpressions+=ModExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
 		//operator=DivOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
 		//DivOperator
-		public RuleCall getOperatorDivOperatorEnumRuleCall_1_1_0() { return cOperatorDivOperatorEnumRuleCall_1_1_0; }
+		public RuleCall getOperatorDivOperatorEnumRuleCall_1_1_0_0() { return cOperatorDivOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=ModExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//ModExpression
-		public RuleCall getSubExpressionsModExpressionParserRuleCall_1_2_0() { return cSubExpressionsModExpressionParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsModExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsModExpressionParserRuleCall_1_1_1_0; }
 	}
 
 	public class ModExpressionElements extends AbstractParserRuleElementFinder {
@@ -553,41 +571,45 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNegExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorModOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cOperatorAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cOperatorModOperatorEnumRuleCall_1_1_0_0 = (RuleCall)cOperatorAssignment_1_1_0.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_1.eContents().get(0);
 		
 		//// Example: varA mod ?B
 		//ModExpression returns Expression:
-		//	NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
-		//	subExpressions+=AtomicValuedExpression)?;
+		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
+		//	subExpressions+=AtomicValuedExpression)+)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
-		//subExpressions+=AtomicValuedExpression)?
+		//NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
+		//subExpressions+=AtomicValuedExpression)+)?
 		public Group getGroup() { return cGroup; }
 
 		//NegExpression
 		public RuleCall getNegExpressionParserRuleCall_0() { return cNegExpressionParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=AtomicValuedExpression)?
+		//({OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=AtomicValuedExpression)+)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
+		//(operator=ModOperator subExpressions+=AtomicValuedExpression)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
 		//operator=ModOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 
 		//ModOperator
-		public RuleCall getOperatorModOperatorEnumRuleCall_1_1_0() { return cOperatorModOperatorEnumRuleCall_1_1_0; }
+		public RuleCall getOperatorModOperatorEnumRuleCall_1_1_0_0() { return cOperatorModOperatorEnumRuleCall_1_1_0_0; }
 
 		//subExpressions+=AtomicValuedExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 
 		//AtomicValuedExpression
-		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_0; }
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0; }
 	}
 
 	public class NegExpressionElements extends AbstractParserRuleElementFinder {
@@ -1781,9 +1803,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedExpressionAccess().getRule();
 	}
 
+	////LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+)?;
 	//// Example: 1 + 2
 	//AddExpression returns Expression:
-	//	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
+	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?;
 	public AddExpressionElements getAddExpressionAccess() {
 		return pAddExpression;
 	}
@@ -1794,7 +1817,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: varA - ?B
 	//SubExpression returns Expression:
-	//	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
+	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator
+	//	subExpressions+=MultExpression)+)?;
 	public SubExpressionElements getSubExpressionAccess() {
 		return pSubExpression;
 	}
@@ -1808,7 +1832,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	////    | MultExpression;
 	//// Example: 2 * 4
 	//MultExpression returns Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*;
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?;
 	public MultExpressionElements getMultExpressionAccess() {
 		return pMultExpression;
 	}
@@ -1820,7 +1844,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: (2 / 4)
 	//// note: division always has to have parentheses because the '/' sign is also used for trigger/effect delimiter
 	//DivExpression returns Expression:
-	//	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
+	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?;
 	public DivExpressionElements getDivExpressionAccess() {
 		return pDivExpression;
 	}
@@ -1831,8 +1855,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: varA mod ?B
 	//ModExpression returns Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
-	//	subExpressions+=AtomicValuedExpression)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
+	//	subExpressions+=AtomicValuedExpression)+)?;
 	public ModExpressionElements getModExpressionAccess() {
 		return pModExpression;
 	}

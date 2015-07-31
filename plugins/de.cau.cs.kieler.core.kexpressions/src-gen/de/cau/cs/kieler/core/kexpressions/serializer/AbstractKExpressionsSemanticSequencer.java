@@ -163,11 +163,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     (
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=ModOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=DivOperator subExpressions+=ModExpression) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 operator=MultOperator subExpressions+=DivExpression) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=MultExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=SubExpression) | 
+	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 (operator=ModOperator subExpressions+=AtomicValuedExpression)+) | 
+	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 (operator=DivOperator subExpressions+=ModExpression)+) | 
+	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=MultOperator subExpressions+=DivExpression)+) | 
+	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=SubOperator subExpressions+=MultExpression)+) | 
+	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=AddOperator subExpressions+=SubExpression)+) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 (operator=BitwiseAndOperator subExpressions+=CompareOperation)+) | 

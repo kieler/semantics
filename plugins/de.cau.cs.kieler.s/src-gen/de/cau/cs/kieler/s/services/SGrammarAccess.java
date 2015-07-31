@@ -1574,9 +1574,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedExpressionAccess().getRule();
 	}
 
+	////LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+)?;
 	//// Example: 1 + 2
 	//AddExpression returns Expression:
-	//	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
+	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?;
 	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
 		return gaKEXT.getAddExpressionAccess();
 	}
@@ -1587,7 +1588,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: varA - ?B
 	//SubExpression returns Expression:
-	//	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
+	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator
+	//	subExpressions+=MultExpression)+)?;
 	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
 		return gaKEXT.getSubExpressionAccess();
 	}
@@ -1601,7 +1603,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	////    | MultExpression;
 	//// Example: 2 * 4
 	//MultExpression returns Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*;
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKEXT.getMultExpressionAccess();
 	}
@@ -1613,7 +1615,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: (2 / 4)
 	//// note: division always has to have parentheses because the '/' sign is also used for trigger/effect delimiter
 	//DivExpression returns Expression:
-	//	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
+	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?;
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
 		return gaKEXT.getDivExpressionAccess();
 	}
@@ -1624,8 +1626,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: varA mod ?B
 	//ModExpression returns Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
-	//	subExpressions+=AtomicValuedExpression)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
+	//	subExpressions+=AtomicValuedExpression)+)?;
 	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
 		return gaKEXT.getModExpressionAccess();
 	}

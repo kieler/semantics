@@ -79,15 +79,15 @@ NotExpression returns Expression:
 ValuedExpression returns Expression:
 	AddExpression;
 
-
+//LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+)?;
 // Example: 1 + 2
 AddExpression returns Expression:
-	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
+	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?;
 
 
 // Example: varA - ?B
 SubExpression returns Expression:
-	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
+	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)+)?;
 //    ({OperatorExpression} subExpressions+=MultExpression (operator=SubOperator subExpressions+=MultExpression)+)
 //	| ({OperatorExpression} subExpressions+=MultExpression subExpressions+=NIntValue)
 //    | MultExpression;
@@ -95,18 +95,18 @@ SubExpression returns Expression:
 
 // Example: 2 * 4
 MultExpression returns Expression:
-	DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*;
+	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?;
 
 
 // Example: (2 / 4)
 // note: division always has to have parentheses because the '/' sign is also used for trigger/effect delimiter
 DivExpression returns Expression:
-	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
+	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?;
 	
 
 // Example: varA mod ?B
 ModExpression returns Expression:
-	NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=AtomicValuedExpression)?;
+	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=AtomicValuedExpression)+)?;
 
 
 // Example: -?A, -(?A + ?B)
