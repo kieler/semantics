@@ -11,12 +11,16 @@ bool A, B, C, D;
 A = B & C
 
 @check boolean.bitwise.and.parenthesis
+@strict
+@readable "A = B & C"
 A = (B & C)
 
 @check boolean.bitwise.and.and
 A = B & C & D
 
 @check boolean.bitwise.and.and.parenthesis#001
+@strict
+@readable "A = B & C & D"
 A = (B & C & D)
 
 @check boolean.bitwise.and.and.parenthesis#002
@@ -30,12 +34,16 @@ A = (B & C) & D
 A = B | C
 
 @check boolean.bitwise.or.parenthesis
+@strict
+@readable "A = B | C"
 A = (B | C)
 
 @check boolean.bitwise.or.or
 A = B | C | D
 
 @check boolean.bitwise.or.or.parenthesis#001
+@strict
+@readable "A = B | C | D"
 A = (B | C | D)
 
 @check boolean.bitwise.or.or.parenthesis#002
@@ -46,19 +54,25 @@ A = (B | C) | D
 
 
 @check boolean.bitwise.and.or
+@expect "A = (B & C) | D"
+@readable "A = B & C | D"
 A = B & C | D
 
 @check boolean.bitwise.and.or.parenthesis#001
 A = B & (C | D)
 
 @check boolean.bitwise.and.or.parenthesis#002
+@readable "A = B & C | D"
 A = (B & C) | D
 
 
 @check boolean.bitwise.or.and
+@expect "A = B | (C & D)"
+@readable "A = B | C & D"
 A = B | C & D
 
 @check boolean.bitwise.or.and.parenthesis#001
+@readable "A = B | C & D"
 A = B | (C & D)
 
 @check boolean.bitwise.or.and.parenthesis#002
@@ -66,40 +80,55 @@ A = (B | C) & D
 
 
 @check boolean.bitwise.not.and#001
+@strict
 A = !(B & C)
 
 @check boolean.bitwise.not.and#002
+@expect "A = !B & C"
 A = !B & C
 
 @check boolean.bitwise.not.and#003
+@strict
+@readable "A = !B & C"
 A = (!B & C)
 
 @check boolean.bitwise.not.and#004
 A = !B & !C
 
 @check boolean.bitwise.not.and#005
+@strict
+@readable "A = !B & !C"
 A = (!B & !C)
 
 @check boolean.bitwise.not.and#006
+@strict
 A = !(!B & !C)
 
 
 @check boolean.bitwise.not.or#001
+@strict
 A = !(B | C)
 
 @check boolean.bitwise.not.or#002
+@expect "A = !B | C"
 A = !B | C
 
 @check boolean.bitwise.not.or#003
+@strict
+@readable "A = !B | C"
 A = (!B | C)
 
 @check boolean.bitwise.not.or#004
+@expect "A = !B | !C"
 A = !B | !C
 
 @check boolean.bitwise.not.or#005
+@strict
+@readable "A = !B | !C"
 A = (!B | !C)
 
 @check boolean.bitwise.not.or#006
+@strict
 A = !(!B | !C)
 
 
@@ -110,19 +139,28 @@ A = (B | C) & (B | C) & (B | C)
 A = (B | C) & ((B | C) & (B | C))
 
 @check boolean.bitwise.mixed#003
+@readable "A = D | B & (B | C & (C | D))"
 A = D | (B & (B | (C & (C | D))))
 
 @check boolean.bitwise.mixed#004
+@strict
+@readable "A = D | B & (B | C & (C | D))"
 A = (D | (B & (B | (C & (C | D)))))
 
 @check boolean.bitwise.mixed#005
 A = !A | !(A & B)
 
 @check boolean.bitwise.mixed#006
+@strict
+@readable "A = !A | !(A & B)"
 A = (!A | !(A & B))
 
 @check boolean.bitwise.mixed#007
+@strict
 A = !(!A | !(A & B))
 
 @check boolean.bitwise.mixed#008
+@expect "A = !(!A | !(A & B))" 
+@strict
+@readable "A = !(!A | !(A & B))"
 A = (!(!A | !(A & B)))
