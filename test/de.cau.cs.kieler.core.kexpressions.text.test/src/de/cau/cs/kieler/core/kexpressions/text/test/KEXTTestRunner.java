@@ -59,8 +59,6 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
 
         String line;
 
-        System.out.println(modelName);
-
         if (!(object instanceof Kext)) {
             throw new IllegalArgumentException(
                     "The KEXT test runner expects a KEXT object as input.");

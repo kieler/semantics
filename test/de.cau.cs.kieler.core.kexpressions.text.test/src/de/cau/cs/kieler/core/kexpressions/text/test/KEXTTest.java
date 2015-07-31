@@ -34,7 +34,6 @@ import de.cau.cs.kieler.core.kexpressions.text.KEXTStandaloneSetup;
 import de.cau.cs.kieler.core.kexpressions.text.extensions.KEXTSerializeExtensions;
 import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
-import de.cau.cs.kieler.core.kexpressions.text.services.KEXTGrammarAccess;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter;
