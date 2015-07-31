@@ -499,6 +499,18 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                 // => create new region with initial and final state for each expression
                 val rRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
                 rRegion.label = dataflow.label + regionCounter
+                
+                // ssm: copy all local declarations
+                val voMap = <ValuedObject, ValuedObject> newHashMap
+                for (declaration : dataflow.declarations) {
+                    val newDeclaration = createDeclaration(declaration).trace(declaration)
+                    declaration.valuedObjects.forEach [
+                        val newValuedObject = it.copy
+                        newDeclaration.valuedObjects += newValuedObject
+                        voMap.put(it, newValuedObject)
+                    ]
+                    rRegion.declarations += newDeclaration
+                }
                     
                 val newState = rRegion.createState("_" + dataflow.ID + idCounter)
                 newState.label = dataflow.label + idCounter + "_start"
@@ -518,6 +530,11 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                 
                 for (assign: assignmentList) {
                     transition.effects += assign
+                }
+                
+                //ssm: create consistent local variable state 
+                for(vo : voMap.keySet) {
+                    rRegion.replaceAllOccurrences(vo, voMap.get(vo))
                 }
             }
             // recursive call, to get all nested dataflows after reference
