@@ -244,7 +244,11 @@ class KExpressionsSerializeHumanReadableExtensions extends KExpressionsSerialize
     }
     
     protected def CharSequence serializeHROperatorExpressionSub(OperatorExpression expression) {
-    	combineOperatorsHR(expression.subExpressions.iterator, " - ")
+        if (expression.subExpressions.size == 1) {
+            "-" + expression.subExpressions.head.serializeHR
+        } else {
+    	   combineOperatorsHR(expression.subExpressions.iterator, " - ")
+        }
     }
     
     protected def CharSequence serializeHROperatorExpressionMul(OperatorExpression expression) {

@@ -1,5 +1,5 @@
 /* KEXT Test File for arithmetic operations
- * Addition specific operations
+ * Subtraction specific operations
  * 
  * @author ssm
  * @date 2015-06-10
@@ -8,10 +8,11 @@
 int z, x = 1, y = 3;
 
 @check arithmetics.negative
-expression - 5
+expression -5
 
 @check arithmetics.negative.distorted
-expression -5
+@expect "-5"
+expression - 5
 
 @check arithmetics.subtraction.literals
 z = 5 - 5

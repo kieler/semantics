@@ -34,6 +34,7 @@ import de.cau.cs.kieler.core.kexpressions.text.KEXTStandaloneSetup;
 import de.cau.cs.kieler.core.kexpressions.text.extensions.KEXTSerializeExtensions;
 import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
+import de.cau.cs.kieler.core.kexpressions.text.services.KEXTGrammarAccess;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter;
@@ -56,8 +57,9 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
 public class KEXTTest {
     
     public static String KEXT_HUMANREADABLE_ANNOTATION = "readable";    
-    
     public static String KEXT_STRICT_ANNOTATION = "strict";
+    
+    public static String KEXT_EXPRESSION_KEYWORD = "expression";
 
     /**
      * Provides a {@link ResourceSet} in order to load the models properly.
@@ -74,8 +76,8 @@ public class KEXTTest {
     public void serialize(final EObject eObject, String expected) {
         KEXTSerializeExtensions SE = Guice.createInjector().getInstance(KEXTSerializeExtensions.class);
         TestEntity entity = (TestEntity) eObject;
-        if (entity.getExpression() != null) {
-        	expected = expected.substring(11); 
+        if (entity.getExpression() != null && expected.startsWith(KEXT_EXPRESSION_KEYWORD)) {
+            expected = expected.substring(11); 
         }
         
         String serialized = SE.serialize(entity).toString();
@@ -122,7 +124,7 @@ public class KEXTTest {
     public void serializeHumanReadable(final EObject eObject, String expected) {
         KEXTSerializeExtensions SE = Guice.createInjector().getInstance(KEXTSerializeExtensions.class);
         TestEntity entity = (TestEntity) eObject;
-        if (entity.getExpression() != null) {
+        if (entity.getExpression() != null && expected.startsWith(KEXT_EXPRESSION_KEYWORD)) {
                 expected = expected.substring(11); 
         }
         

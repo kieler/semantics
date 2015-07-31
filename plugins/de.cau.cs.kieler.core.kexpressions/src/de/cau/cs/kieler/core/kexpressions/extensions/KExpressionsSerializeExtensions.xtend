@@ -159,7 +159,11 @@ class KExpressionsSerializeExtensions {
     }
     
     protected def CharSequence serializeOperatorExpressionSub(OperatorExpression expression) {
-    	combineOperators(expression.subExpressions.iterator, " - ")
+        if (expression.subExpressions.size == 1) {
+            "-" + expression.subExpressions.head.serialize
+        } else {
+        	combineOperators(expression.subExpressions.iterator, " - ")
+    	}
     }
     
     protected def CharSequence serializeOperatorExpressionMul(OperatorExpression expression) {
