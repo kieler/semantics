@@ -56,7 +56,7 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
 @ModelFilter("*.kext")
 public class KEXTTest {
     
-    public static String KEXT_HUMANREADABLE_ANNOTATION = "readable";    
+    public static String KEXT_HUMANREADABLE_ANNOTATION = "readable";  
     public static String KEXT_STRICT_ANNOTATION = "strict";
     
     public static String KEXT_EXPRESSION_KEYWORD = "expression";
