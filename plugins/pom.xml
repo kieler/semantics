@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -27,6 +26,7 @@
     <module>de.cau.cs.kieler.core.kexpressions.edit</module>
     <module>de.cau.cs.kieler.core.kexpressions.ui</module>
     <module>de.cau.cs.kieler.core.model</module>
+    <module>de.cau.cs.kieler.core.perspectives</module>	
     <module>de.cau.cs.kieler.core.product</module>
     <module>de.cau.cs.kieler.esterel</module>
     <module>de.cau.cs.kieler.esterel.kexpressions</module>
@@ -43,114 +43,7 @@
     <module>de.cau.cs.kieler.esterel.cec.macosx.x86</module>
     <module>de.cau.cs.kieler.esterel.cec.macosx.x86_64</module>
     <module>de.cau.cs.kieler.esterel.cec.sim</module>
-    <module>de.cau.cs.kieler.esterel.cec.sim.kivi</module>
-    <module>de.cau.cs.kieler.esterel.cec.win32.x86</module>
-    <module>de.cau.cs.kieler.esterel.examples</module>
-    <module>de.cau.cs.kieler.esterel.ui</module>
-    <module>de.cau.cs.kieler.kev</module>
-    <module>de.cau.cs.kieler.kex</module>
-    <module>de.cau.cs.kieler.kico</module>
-    <module>de.cau.cs.kieler.kico.klighd</module>
-    <module>de.cau.cs.kieler.kico.ui</module>
-    <module>de.cau.cs.kieler.kico.server</module>
-    <module>de.cau.cs.kieler.kico.server.ui</module>
-    <module>de.cau.cs.kieler.server</module>
-    <module>de.cau.cs.kieler.klighd.server</module>
-    <module>de.cau.cs.kieler.klighd.server.ui</module>
-    <module>de.cau.cs.kieler.kex.ui</module>
-    <module>de.cau.cs.kieler.kitt</module>
-    <module>de.cau.cs.kieler.kitt.klighd</module>
-    <module>de.cau.cs.kieler.s</module>
-    <module>de.cau.cs.kieler.s.sc</module>
-    <module>de.cau.cs.kieler.s.sj</module>
-    <module>de.cau.cs.kieler.s.sim</module>
-    <module>de.cau.cs.kieler.s.sim.kivi</module>
-    <module>de.cau.cs.kieler.s.sim.sc</module>
-    <module>de.cau.cs.kieler.s.sim.sj</module>
-    <module>de.cau.cs.kieler.s.ui</module>
-    <module>de.cau.cs.kieler.sc</module>
-    <module>de.cau.cs.kieler.sim.abro</module>
-    <module>de.cau.cs.kieler.sim.benchmark</module>
-    <module>de.cau.cs.kieler.sim.eso</module>
-    <module>de.cau.cs.kieler.sim.eso.ui</module>
-    <module>de.cau.cs.kieler.sim.instructions</module>
-    <module>de.cau.cs.kieler.sim.kart</module>
-    <module>de.cau.cs.kieler.sim.kart.ui</module>
-    <module>de.cau.cs.kieler.sim.kiem</module>
-    <module>de.cau.cs.kieler.sim.kiem.config</module>
-    <module>de.cau.cs.kieler.sim.kiem.ui</module>
-    <module>de.cau.cs.kieler.sim.kiem.ui.datacomponent</module>
-    <module>de.cau.cs.kieler.sim.kiem.ui.launching</module>
-    <module>de.cau.cs.kieler.sim.kivi</module>
-    <module>de.cau.cs.kieler.sim.signals</module>
-    <module>de.cau.cs.kieler.sim.signals.ui</module>
-    <module>de.cau.cs.kieler.sim.syncsignalreset</module>
-    <module>de.cau.cs.kieler.sim.table</module>
-    <module>de.cau.cs.kieler.sj</module>
-    <module>de.cau.cs.kieler.sjl</module>
-    <module>de.cau.cs.kieler.sccharts</module>
-    <module>de.cau.cs.kieler.sccharts.edit</module>
-    <module>de.cau.cs.kieler.sccharts.editor</module>
-    <module>de.cau.cs.kieler.sccharts.klighd</module>
-    <module>de.cau.cs.kieler.sccharts.s</module>
-    <module>de.cau.cs.kieler.sccharts.scg</module>
-    <module>de.cau.cs.kieler.sccharts.text</module>
-    <module>de.cau.cs.kieler.sccharts.text.ui</module>
-    <module>de.cau.cs.kieler.sccharts.sim.c</module>
-    <module>de.cau.cs.kieler.sccharts.kivi</module>
-    <module>de.cau.cs.kieler.synccharts</module>
-    <module>de.cau.cs.kieler.scg</module>
-    <module>de.cau.cs.kieler.scg.edit</module>
-    <module>de.cau.cs.kieler.scg.editor</module>
-    <module>de.cau.cs.kieler.scg.klighd</module>
-    <module>de.cau.cs.kieler.scg.s</module>
-    <module>org.json</module>
-  </modules>
-
-</project>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>de.cau.cs.kieler</groupId>
-  <artifactId>plugins</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
-
-  <parent>
-    <groupId>de.cau.cs.kieler</groupId>
-    <artifactId>parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../build/pom.xml</relativePath>
-  </parent>
-
-<!-- all plugins need to be listed as module -->
-
-  <modules>
-    <module>../test</module>
-    <module>de.cau.cs.kieler.core.annotations</module>
-    <module>de.cau.cs.kieler.core.annotations.edit</module>
-    <module>de.cau.cs.kieler.core.annotations.text</module>
-    <module>de.cau.cs.kieler.core.annotations.text.ui</module>
-    <module>de.cau.cs.kieler.core.kexpressions</module>
-    <module>de.cau.cs.kieler.core.kexpressions.edit</module>
-    <module>de.cau.cs.kieler.core.kexpressions.ui</module>
-    <module>de.cau.cs.kieler.core.model</module>
-    <module>de.cau.cs.kieler.core.perspectives</module>
-    <module>de.cau.cs.kieler.core.product</module>
-    <module>de.cau.cs.kieler.esterel</module>
-    <module>de.cau.cs.kieler.esterel.kexpressions</module>
-    <module>de.cau.cs.kieler.esterel.kexpressions.edit</module>
-    <module>de.cau.cs.kieler.esterel.kexpressions.ui</module>
-    <module>de.cau.cs.kieler.esterel.cec</module>
-    <module>de.cau.cs.kieler.esterel.cec.linux.x86</module>
-    <module>de.cau.cs.kieler.esterel.cec.linux.x86_64</module>
-    <module>de.cau.cs.kieler.esterel.cec.macosx.x86</module>
-    <module>de.cau.cs.kieler.esterel.cec.macosx.x86_64</module>
-    <module>de.cau.cs.kieler.esterel.cec.sim</module>
     <module>de.cau.cs.kieler.esterel.sim</module>
-    <module>de.cau.cs.kieler.esterel.sim.kivi</module>
     <module>de.cau.cs.kieler.esterel.cec.win32.x86</module>
     <module>de.cau.cs.kieler.esterel.examples</module>
     <module>de.cau.cs.kieler.esterel.ui</module>
@@ -215,4 +108,4 @@
   </modules>
 
 </project>
->>>>>>> master
+
