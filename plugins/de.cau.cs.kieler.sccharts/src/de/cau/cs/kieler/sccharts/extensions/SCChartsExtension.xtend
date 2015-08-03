@@ -1252,6 +1252,7 @@ class SCChartsExtension {
                 if (expose) {
                     localValuedObject.setName(newValuedObjectName)
                 } else {
+                    localValuedObject.setName(newValuedObjectName)
                     localValuedObject.uniqueNameCached(uniqueNameCache)
                 }
 
