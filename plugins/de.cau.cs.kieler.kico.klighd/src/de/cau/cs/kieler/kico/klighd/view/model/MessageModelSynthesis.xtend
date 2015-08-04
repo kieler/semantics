@@ -104,6 +104,7 @@ class MessageModelSynthesis extends AbstractDiagramSynthesis<MessageModel> {
                             it.suppressSelectability;
                         ]
                     }
+                    model.customizeMessageSynthesis(it);
                 ]
             ]
         ]

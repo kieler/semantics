@@ -74,7 +74,7 @@ public class MessageModel {
      * @param iconSize
      *            The minimal icon size
      */
-    public MessageModel(String title, String message, String iconPath, String iconPlugin,
+    public MessageModel(String title, String message, String iconPlugin, String iconPath,
             int iconSize) {
         // Set or nullify title
         this.title = title != null && title.isEmpty() ? null : title;

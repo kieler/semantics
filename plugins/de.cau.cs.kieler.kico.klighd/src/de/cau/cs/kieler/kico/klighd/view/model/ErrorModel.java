@@ -71,7 +71,7 @@ public class ErrorModel extends MessageModel {
      *            the stacktrace
      */
     public ErrorModel(String message, String reason, String stacktrace) {
-        super(message, reason, "de.cau.cs.kieler.kico.klighd", "icons/ErrorModelSign.png", 250);
+        super(message, reason, "de.cau.cs.kieler.kico.klighd", "icons/ErrorSign.png", 250);
         // reason
         String reasonToSet = "Unkown";
         if (reason == null) {
@@ -133,6 +133,7 @@ public class ErrorModel extends MessageModel {
     // -- Synthesis
     // -------------------------------------------------------------------------
 
+    @Override
     public void customizeMessageSynthesis(KContainerRendering parent) {
         // red title
         KRE.setForeground(parent.getChildren().get(0), Colors.RED);
