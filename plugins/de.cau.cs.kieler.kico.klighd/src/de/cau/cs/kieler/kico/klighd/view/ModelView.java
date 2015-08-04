@@ -61,8 +61,8 @@ import com.google.common.collect.Maps;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
-import de.cau.cs.kieler.kico.klighd.model.ErrorModel;
-import de.cau.cs.kieler.kico.klighd.model.MessageModel;
+import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
+import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
 import de.cau.cs.kieler.kiml.config.ILayoutConfig;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
@@ -455,60 +455,67 @@ public final class ModelView extends DiagramViewPart {
      */
     @Override
     public void saveState(IMemento memento) {
-        super.saveState(memento);
-        if (memento != null) {
-            // State
-            if (lastSaveDirectory != null) {
-                memento.putString("lastSaveDirectory", lastSaveDirectory.toPortableString());
-            }
-
-            memento.putBoolean("synchronizeEditor", synchronizeEditor);
-
-            memento.putBoolean("showDiagramPlaceholder", showDiagramPlaceholder);
-
-            if (activeEditor != null && !isPrimaryView()) {
-                IPersistableElement editorPersistable =
-                        activeEditor.getEditorInput().getPersistable();
-                if (editorPersistable != null) {
-                    memento.putString("activeEditorFactory", editorPersistable.getFactoryId());
-                    editorPersistable.saveState(memento.createChild("activeEditorInput"));
+        try {
+            super.saveState(memento);
+            if (memento != null) {
+                // State
+                if (lastSaveDirectory != null) {
+                    memento.putString("lastSaveDirectory", lastSaveDirectory.toPortableString());
                 }
-            }
 
-            // Save synthesis options
-            IMemento recentSynthesisOptionsMemento = memento.createChild("recentSynthesisOptions");
-            for (Entry<ISynthesis, HashMap<SynthesisOption, Object>> entry : recentSynthesisOptions
-                    .entrySet()) {
-                IMemento synthesisMemento =
-                        recentSynthesisOptionsMemento.createChild(KlighdDataManager.getInstance()
-                                .getSynthesisID(entry.getKey()));
-                for (Entry<SynthesisOption, Object> optionEntry : entry.getValue().entrySet()) {
-                    SynthesisOption option = optionEntry.getKey();
-                    Object value = optionEntry.getValue();
-                    try {
-                        if (value instanceof Boolean) {
-                            synthesisMemento.putBoolean(option.getName(), (Boolean) value);
-                        } else if (value instanceof Integer) {
-                            synthesisMemento.putInteger(option.getName(), (Integer) value);
-                        } else if (value instanceof Float) {
-                            synthesisMemento.putFloat(option.getName(), (Float) value);
-                        } else if (value instanceof String) {
-                            synthesisMemento.putString(option.getName(), (String) value);
-                        }
-                    } catch (Exception e) {
-                        // Do nothing, just fail
+                memento.putBoolean("synchronizeEditor", synchronizeEditor);
+
+                memento.putBoolean("showDiagramPlaceholder", showDiagramPlaceholder);
+
+                if (activeEditor != null && !isPrimaryView()) {
+                    IPersistableElement editorPersistable =
+                            activeEditor.getEditorInput().getPersistable();
+                    if (editorPersistable != null) {
+                        memento.putString("activeEditorFactory", editorPersistable.getFactoryId());
+                        editorPersistable.saveState(memento.createChild("activeEditorInput"));
                     }
                 }
-            }
 
-            // Save synthesis selection
-            synthesisSelection.saveState(memento.createChild("synthesisSelection"));
+                // Save synthesis options
+                IMemento recentSynthesisOptionsMemento =
+                        memento.createChild("recentSynthesisOptions");
+                for (Entry<ISynthesis, HashMap<SynthesisOption, Object>> entry : recentSynthesisOptions
+                        .entrySet()) {
+                    IMemento synthesisMemento =
+                            recentSynthesisOptionsMemento.createChild(KlighdDataManager
+                                    .getInstance().getSynthesisID(entry.getKey()));
+                    for (Entry<SynthesisOption, Object> optionEntry : entry.getValue().entrySet()) {
+                        SynthesisOption option = optionEntry.getKey();
+                        Object value = optionEntry.getValue();
+                        try {
+                            if (value instanceof Boolean) {
+                                synthesisMemento.putBoolean(option.getName(), (Boolean) value);
+                            } else if (value instanceof Integer) {
+                                synthesisMemento.putInteger(option.getName(), (Integer) value);
+                            } else if (value instanceof Float) {
+                                synthesisMemento.putFloat(option.getName(), (Float) value);
+                            } else if (value instanceof String) {
+                                synthesisMemento.putString(option.getName(), (String) value);
+                            }
+                        } catch (Exception e) {
+                            // Do nothing, just fail
+                        }
+                    }
+                }
 
-            // Save controllers
-            IMemento controllersMemento = memento.createChild("controllers");
-            for (AbstractModelUpdateController controller : controllers) {
-                controller.saveState(controllersMemento.createChild(controller.getID()));
+                // Save synthesis selection
+                synthesisSelection.saveState(memento.createChild("synthesisSelection"));
+
+                // Save controllers
+                IMemento controllersMemento = memento.createChild("controllers");
+                for (AbstractModelUpdateController controller : controllers) {
+                    controller.saveState(controllersMemento.createChild(controller.getID()));
+                }
             }
+        } catch (Exception e) {
+            StatusManager.getManager().handle(
+                    new Status(IStatus.WARNING, KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(),
+                            e.getCause()), StatusManager.LOG);
         }
     }
 
@@ -519,106 +526,115 @@ public final class ModelView extends DiagramViewPart {
      *            saved configuration
      */
     private void loadState(IMemento memento) {
-        // Load state
-        String lastSaveDirectoryValue = memento.getString("lastSaveDirectory");
-        if (lastSaveDirectoryValue != null) {
-            Path.fromPortableString(lastSaveDirectoryValue);
-        }
-
-        Boolean synchronizeEditorValue = memento.getBoolean("synchronizeEditor");
-        if (synchronizeEditorValue != null) {
-            synchronizeEditor = synchronizeEditorValue;
-            if (actionSyncEditor != null) {
-                actionSyncEditor.setChecked(synchronizeEditor);
+        try {
+            // Load state
+            String lastSaveDirectoryValue = memento.getString("lastSaveDirectory");
+            if (lastSaveDirectoryValue != null) {
+                Path.fromPortableString(lastSaveDirectoryValue);
             }
-        }
 
-        Boolean showDiagramPlaceholderValue = memento.getBoolean("showDiagramPlaceholder");
-        if (showDiagramPlaceholderValue != null) {
-            showDiagramPlaceholder = showDiagramPlaceholderValue;
-            if (actionDiagramPlaceholder != null) {
-                actionDiagramPlaceholder.setChecked(showDiagramPlaceholder);
+            Boolean synchronizeEditorValue = memento.getBoolean("synchronizeEditor");
+            if (synchronizeEditorValue != null) {
+                synchronizeEditor = synchronizeEditorValue;
+                if (actionSyncEditor != null) {
+                    actionSyncEditor.setChecked(synchronizeEditor);
+                }
             }
-        }
 
-        String editorInputFactory = memento.getString("activeEditorFactory");
-        if (editorInputFactory != null) {
-            IElementFactory elementFactory =
-                    PlatformUI.getWorkbench().getElementFactory(editorInputFactory);
-            IMemento editorInputMemento = memento.getChild("activeEditorInput");
-            if (elementFactory != null && editorInputMemento != null) {
-                IAdaptable editorInputElelemt = elementFactory.createElement(editorInputMemento);
-                if (editorInputElelemt instanceof IEditorInput) {
-                    IEditorInput editorInput = (IEditorInput) editorInputElelemt;
-                    for (IWorkbenchWindow window : PlatformUI.getWorkbench().getWorkbenchWindows()) {
-                        for (IWorkbenchPage page : window.getPages()) {
-                            IEditorPart foundEditor = page.findEditor(editorInput);
-                            if (foundEditor != null) {
-                                setEditor(foundEditor);
+            Boolean showDiagramPlaceholderValue = memento.getBoolean("showDiagramPlaceholder");
+            if (showDiagramPlaceholderValue != null) {
+                showDiagramPlaceholder = showDiagramPlaceholderValue;
+                if (actionDiagramPlaceholder != null) {
+                    actionDiagramPlaceholder.setChecked(showDiagramPlaceholder);
+                }
+            }
+
+            String editorInputFactory = memento.getString("activeEditorFactory");
+            if (editorInputFactory != null) {
+                IElementFactory elementFactory =
+                        PlatformUI.getWorkbench().getElementFactory(editorInputFactory);
+                IMemento editorInputMemento = memento.getChild("activeEditorInput");
+                if (elementFactory != null && editorInputMemento != null) {
+                    IAdaptable editorInputElelemt =
+                            elementFactory.createElement(editorInputMemento);
+                    if (editorInputElelemt instanceof IEditorInput) {
+                        IEditorInput editorInput = (IEditorInput) editorInputElelemt;
+                        for (IWorkbenchWindow window : PlatformUI.getWorkbench()
+                                .getWorkbenchWindows()) {
+                            for (IWorkbenchPage page : window.getPages()) {
+                                IEditorPart foundEditor = page.findEditor(editorInput);
+                                if (foundEditor != null) {
+                                    setEditor(foundEditor);
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        // Load synthesis options
-        IMemento synthesisOptionsMemento = memento.getChild("recentSynthesisOptions");
-        if (synthesisOptionsMemento != null) {
-            for (IMemento synthesisOptionMemento : synthesisOptionsMemento.getChildren()) {
-                ISynthesis synthesis =
-                        KlighdDataManager.getInstance().getDiagramSynthesisById(
-                                synthesisOptionMemento.getType());
-                if (synthesis != null) {
-                    HashMap<String, SynthesisOption> optionMap =
-                            new HashMap<String, SynthesisOption>(synthesis
-                                    .getDisplayedSynthesisOptions().size());
-                    for (SynthesisOption synthesisOption : synthesis.getDisplayedSynthesisOptions()) {
-                        optionMap.put(synthesisOption.getName(), synthesisOption);
-                    }
-                    HashMap<SynthesisOption, Object> values =
-                            new HashMap<SynthesisOption, Object>();
-                    for (String key : synthesisOptionMemento.getAttributeKeys()) {
-                        SynthesisOption option = optionMap.get(key.substring(1));
-                        if (option != null) {
-                            Object value = null;
-                            if (key.startsWith("b")) {
-                                value = synthesisOptionMemento.getBoolean(key);
-                            } else if (key.startsWith("i")) {
-                                value = synthesisOptionMemento.getInteger(key);
-                            } else if (key.startsWith("f")) {
-                                value = synthesisOptionMemento.getFloat(key);
-                            } else if (key.startsWith("s")) {
-                                value = synthesisOptionMemento.getString(key);
-                            }
-                            if (value != null) {
-                                values.put(option, value);
+            // Load synthesis options
+            IMemento synthesisOptionsMemento = memento.getChild("recentSynthesisOptions");
+            if (synthesisOptionsMemento != null) {
+                for (IMemento synthesisOptionMemento : synthesisOptionsMemento.getChildren()) {
+                    ISynthesis synthesis =
+                            KlighdDataManager.getInstance().getDiagramSynthesisById(
+                                    synthesisOptionMemento.getType());
+                    if (synthesis != null) {
+                        HashMap<String, SynthesisOption> optionMap =
+                                new HashMap<String, SynthesisOption>(synthesis
+                                        .getDisplayedSynthesisOptions().size());
+                        for (SynthesisOption synthesisOption : synthesis
+                                .getDisplayedSynthesisOptions()) {
+                            optionMap.put(synthesisOption.getName(), synthesisOption);
+                        }
+                        HashMap<SynthesisOption, Object> values =
+                                new HashMap<SynthesisOption, Object>();
+                        for (String key : synthesisOptionMemento.getAttributeKeys()) {
+                            SynthesisOption option = optionMap.get(key.substring(1));
+                            if (option != null) {
+                                Object value = null;
+                                if (key.startsWith("b")) {
+                                    value = synthesisOptionMemento.getBoolean(key);
+                                } else if (key.startsWith("i")) {
+                                    value = synthesisOptionMemento.getInteger(key);
+                                } else if (key.startsWith("f")) {
+                                    value = synthesisOptionMemento.getFloat(key);
+                                } else if (key.startsWith("s")) {
+                                    value = synthesisOptionMemento.getString(key);
+                                }
+                                if (value != null) {
+                                    values.put(option, value);
+                                }
                             }
                         }
+                        recentSynthesisOptions.put(synthesis, values);
                     }
-                    recentSynthesisOptions.put(synthesis, values);
                 }
             }
-        }
 
-        // Load synthesis selection
-        IMemento synthesisSelectionMemento = memento.getChild("synthesisSelection");
-        if (synthesisSelectionMemento != null) {
-            synthesisSelection.loadState(synthesisSelectionMemento);
-        }
+            // Load synthesis selection
+            IMemento synthesisSelectionMemento = memento.getChild("synthesisSelection");
+            if (synthesisSelectionMemento != null) {
+                synthesisSelection.loadState(synthesisSelectionMemento);
+            }
 
-        // Load controllers
-        IMemento controllersMemento = memento.getChild("controllers");
-        if (controllersMemento != null) {
-            for (IMemento controllerMemento : controllersMemento.getChildren()) {
-                AbstractModelUpdateController controller =
-                        ModelUpdateControllerManager.getNewInstance(controllerMemento.getType(),
-                                this);
-                if (controller != null) {
-                    controller.loadState(controllerMemento);
-                    controllers.add(controller);
+            // Load controllers
+            IMemento controllersMemento = memento.getChild("controllers");
+            if (controllersMemento != null) {
+                for (IMemento controllerMemento : controllersMemento.getChildren()) {
+                    AbstractModelUpdateController controller =
+                            ModelUpdateControllerManager.getNewInstance(
+                                    controllerMemento.getType(), this);
+                    if (controller != null) {
+                        controller.loadState(controllerMemento);
+                        controllers.add(controller);
+                    }
                 }
             }
+        } catch (Exception e) {
+            StatusManager.getManager().handle(
+                    new Status(IStatus.WARNING, KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(),
+                            e.getCause()), StatusManager.LOG);
         }
     }
 
@@ -637,6 +653,13 @@ public final class ModelView extends DiagramViewPart {
             controller.reset();
         }
         updateViewTitle();
+    }
+
+    /**
+     * @return the synthesisSelectionMenu
+     */
+    public SynthesisSelectionMenu getSynthesisSelectionMenu() {
+        return synthesisSelection;
     }
 
     // -- Editor
@@ -895,7 +918,7 @@ public final class ModelView extends DiagramViewPart {
 
             @Override
             public IStatus runInUIThread(IProgressMonitor monitor) {
-                doUpdateDiagram(displayModel, properties, activeController, false);
+                doUpdateDiagram(displayModel, properties, activeController, activeEditor, false);
                 return Status.OK_STATUS;
             }
         }.schedule();
@@ -917,7 +940,7 @@ public final class ModelView extends DiagramViewPart {
      *            error occurred in the actual update.
      */
     private void doUpdateDiagram(Object model, KlighdSynthesisProperties properties,
-            AbstractModelUpdateController controller, boolean isErrorModel) {
+            AbstractModelUpdateController controller, IEditorPart editor, boolean isErrorModel) {
         try {
             boolean modelTypeChanged = false;
             ViewContext vc = null;
@@ -939,7 +962,7 @@ public final class ModelView extends DiagramViewPart {
             }
             // If preparation needed
             if (selectedSynthesis.getSecond()) {
-                model = synthesisSelection.prepareModel(model, synthesis, properties);
+                model = synthesisSelection.prepareModel(model, editor, synthesis, properties);
                 if (vc != null && vc.getInputModel() != null
                         && vc.getInputModel() == model.getClass()) {
                     modelTypeChanged = false;
@@ -948,6 +971,7 @@ public final class ModelView extends DiagramViewPart {
 
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     KlighdDataManager.getInstance().getSynthesisID(synthesis));
+            properties.setProperty(ModelViewProperties.EDITOR_PART, editor);
 
             // Update diagram
             boolean success = false;
@@ -1007,8 +1031,8 @@ public final class ModelView extends DiagramViewPart {
             }
 
             // enable synchronous selection between diagram and editor
-            if (activeEditor != null && !isErrorModel) {
-                this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
+            if (editor != null && !isErrorModel) {
+                this.getViewer().getViewContext().setSourceWorkbenchPart(editor);
             }
 
             if (controller != null) {
@@ -1017,7 +1041,7 @@ public final class ModelView extends DiagramViewPart {
         } catch (Exception e) {
             if (!isErrorModel) {
                 doUpdateDiagram(new ErrorModel(UPDATE_DIAGRAM_EXCEPTION, e), properties,
-                        controller, true);
+                        controller, editor, true);
             } else {
                 StatusManager.getManager().handle(
                         new Status(IStatus.WARNING, KiCoKLighDPlugin.PLUGIN_ID,

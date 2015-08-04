@@ -85,9 +85,13 @@ public class ModelUpdateControllerManager {
             instance.loadControllerExtension();
             instance.loadEditorExtension();
         } catch (final Exception e) {
-            StatusManager.getManager().handle(
-                    new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
-                            "ModelView: Unexptected failure while loading registered controllers.",
+            StatusManager
+                    .getManager()
+                    .handle(new Status(
+                            IStatus.ERROR,
+                            KiCoKLighDPlugin.PLUGIN_ID,
+                            ModelUpdateControllerManager.class.getName()
+                                    + ": Unexptected failure while loading registered controllers.",
                             e));
         }
     }
@@ -221,16 +225,23 @@ public class ModelUpdateControllerManager {
      * @param modelView
      *            The ModelView
      * @return The new instance of null if the controller does not exist
-     * @throws Exception
      */
     public static AbstractModelUpdateController getNewInstance(String controllerID,
-            ModelView modelView) throws Exception {
+            ModelView modelView) {
         if (controllerID != null && modelView != null) {
             ModelUpdateControllerManager mucm = ModelUpdateControllerManager.getInstance();
             Class<? extends AbstractModelUpdateController> clazz =
                     mucm.idControllerMapping.get(controllerID);
             if (clazz != null) {
-                return clazz.getConstructor(ModelView.class).newInstance(modelView);
+                try {
+                    return clazz.getConstructor(ModelView.class).newInstance(modelView);
+                } catch (Exception e) {
+                    StatusManager.getManager().handle(
+                            new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
+                                    ModelUpdateControllerManager.class.getName()
+                                            + ": Cannot instanciate controller", e),
+                            StatusManager.LOG);
+                }
             }
         }
         return null;

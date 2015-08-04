@@ -11,28 +11,28 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.model.action;
+package de.cau.cs.kieler.kico.klighd.view.model.action;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 
-import de.cau.cs.kieler.kico.klighd.model.ErrorModel;
-import de.cau.cs.kieler.kico.klighd.model.ModelChain;
+import de.cau.cs.kieler.kico.klighd.internal.ModelChain;
+import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
- * Action to open a ErrorDialog to show additional exception information of KiCoErrorModel.
+ * Action to open a ErrorDialog to show additional exception information of {@link ErrorModel}.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class ErrorShowExceptionAction implements IAction {
+public class ShowExceptionAction implements IAction {
 
     public final static String ID =
-            "de.cau.cs.kieler.kico.klighd.model.action.ErrorShowExceptionAction";
+            "de.cau.cs.kieler.kico.klighd.model.action.ShowExceptionAction";
 
     /**
      * {@inheritDoc}
@@ -56,7 +56,7 @@ public class ErrorShowExceptionAction implements IAction {
             // if exception present show in error dialog
             if (errorModel.getStackTrace() != null) {
                 final Status status =
-                        new Status(IStatus.INFO, ID, errorModel.getReason(),
+                        new Status(IStatus.INFO, ID, errorModel.getMessage(),
                                 new Exception(errorModel.getStackTrace()));
                 ErrorDialog errorDialog =
                         new ErrorDialog(context.getViewContext().getDiagramWorkbenchPart()

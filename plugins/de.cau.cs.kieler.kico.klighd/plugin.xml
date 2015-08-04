@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="de.cau.cs.kieler.kico.klighd.controller" name="ModelView Update Controller" schema="schema/controller.exsd"/>
+   <extension-point id="de.cau.cs.kieler.kico.klighd.editor" name="ModelView Editor Controller Association" schema="schema/editor.exsd"/>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.ModelChainSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.ModelChainSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.internal.ModelChainSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.internal.ModelChainSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.CodePlaceHolderSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.CodePlaceHolderSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolderSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolderSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.ErrorModelSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.ErrorModelSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.view.model.MessageModelSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.view.model.MessageModelSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.MessageModelSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.MessageModelSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.view.model.EcoreModelSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.view.model.EcoreModelSynthesis">
       </diagramSynthesis>
    </extension>
    <extension
@@ -40,13 +42,24 @@
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
-            class="de.cau.cs.kieler.kico.klighd.model.action.ErrorShowExceptionAction"
-            id="de.cau.cs.kieler.kico.klighd.model.action.ErrorShowExceptionAction">
+            class="de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction"
+            id="de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction">
       </action>
       <action
-            class="de.cau.cs.kieler.kico.klighd.model.action.OpenCodeInEditorAction"
-            id="de.cau.cs.kieler.kico.klighd.model.action.OpenCodeInEditorAction">
+            class="de.cau.cs.kieler.kico.klighd.view.model.action.OpenCodeInEditorAction"
+            id="de.cau.cs.kieler.kico.klighd.view.model.action.OpenCodeInEditorAction">
       </action>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.klighd.controller">
+      <controller
+            class="de.cau.cs.kieler.kico.klighd.view.DefaultEcoreXtextModelUpdateController"
+            id="de.cau.cs.kieler.kico.klighd.view.DefaultEcoreXtextModelUpdateController">
+      </controller>
+      <controller
+            class="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
+            id="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController">
+      </controller>
    </extension>
 
 </plugin>

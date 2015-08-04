@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.model
+package de.cau.cs.kieler.kico.klighd.view.model
 
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
@@ -28,7 +28,7 @@ import javax.inject.Inject
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
- * Diagram synthesis of a KiCoMessageModel.
+ * Diagram synthesis of a {@link MessageModel}.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed

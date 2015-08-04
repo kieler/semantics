@@ -11,25 +11,44 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.model;
+package de.cau.cs.kieler.kico.klighd.view.model;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import org.eclipse.core.runtime.Platform;
 
+import com.google.inject.Guice;
+
+import de.cau.cs.kieler.core.krendering.Colors;
+import de.cau.cs.kieler.core.krendering.KContainerRendering;
+import de.cau.cs.kieler.core.krendering.KGridPlacementData;
+import de.cau.cs.kieler.core.krendering.KText;
+import de.cau.cs.kieler.core.krendering.Trigger;
+import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions;
+import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
+import de.cau.cs.kieler.core.krendering.extensions.PositionReferenceX;
+import de.cau.cs.kieler.core.krendering.extensions.PositionReferenceY;
+import de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction;
+
 /**
- * Model of KiCoModelView to represent errors and exceptions
+ * Displays errors and exceptions with a huge error sign.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class ErrorModel {
-    private final String message;
-    private final String reason;
-    private final String stacktrace;
+public class ErrorModel extends MessageModel {
+
+    /** Synthesis Extension */
+    private final static KContainerRenderingExtensions KCRE = Guice.createInjector().getInstance(
+            KContainerRenderingExtensions.class);
+    private final static KRenderingExtensions KRE = Guice.createInjector().getInstance(
+            KRenderingExtensions.class);
+
+    /** The error stack trace */
+    protected final String stacktrace;
 
     /**
      * Constructs a error model given message
@@ -38,9 +57,7 @@ public class ErrorModel {
      *            error message
      */
     public ErrorModel(String message) {
-        this.message = message;
-        this.stacktrace = null;
-        this.reason = "Unkown";
+        this(message, "Unkown", null);
     }
 
     /**
@@ -49,10 +66,12 @@ public class ErrorModel {
      * @param message
      *            error message
      * @param reason
+     *            the reason
      * @param stacktrace
+     *            the stacktrace
      */
     public ErrorModel(String message, String reason, String stacktrace) {
-        this.message = message;
+        super(message, reason, "de.cau.cs.kieler.kico.klighd", "icons/ErrorModelSign.png", 250);
         // reason
         String reasonToSet = "Unkown";
         if (reason == null) {
@@ -71,7 +90,7 @@ public class ErrorModel {
         } else {
             reasonToSet = reason;
         }
-        this.reason = reasonToSet;
+        this.message = reasonToSet;
         // stacktrace
         String stacktraceToSet = stacktrace;
         if (!Platform.getOS().equals(Platform.OS_WIN32)) {
@@ -92,8 +111,11 @@ public class ErrorModel {
      * @param exception
      */
     public ErrorModel(String message, Exception exception) {
-        this(message, exception.getMessage(), getStackTrace(exception));
+        this(message, exception.getMessage(), getStackTraceString(exception));
     }
+
+    // -- Util
+    // -------------------------------------------------------------------------
 
     /**
      * Prints the stack trace of an Exception into String
@@ -102,31 +124,39 @@ public class ErrorModel {
      *            Exception
      * @return StackTrace as String
      */
-    private final static String getStackTrace(Exception exception) {
+    private final static String getStackTraceString(Exception exception) {
         StringWriter traceReader = new StringWriter();
         exception.printStackTrace(new PrintWriter(traceReader));
         return traceReader.toString();
     }
 
-    /**
-     * @return the error message
-     */
-    public String getMessage() {
-        return message;
+    // -- Synthesis
+    // -------------------------------------------------------------------------
+
+    public void customizeMessageSynthesis(KContainerRendering parent) {
+        // red title
+        KRE.setForeground(parent.getChildren().get(0), Colors.RED);
+        // link to exception if available
+        if (stacktrace != null) {
+            KText link = KCRE.addText(parent, "[Show Exception]");
+            KRE.setForeground(link, Colors.BLUE);
+            KRE.setFontSize(link, 9);
+            KRE.addAction(link, Trigger.SINGLECLICK, ShowExceptionAction.ID);
+            KRE.addAction(link, Trigger.DOUBLECLICK, ShowExceptionAction.ID);
+            KGridPlacementData placementData = KRE.setGridPlacementData(link);
+            KRE.from(placementData, PositionReferenceX.LEFT, 8, 0, PositionReferenceY.TOP, 4, 0);
+            KRE.to(placementData, PositionReferenceX.RIGHT, 8, 0, PositionReferenceY.BOTTOM, 8, 0);
+        }
     }
+
+    // -- Getter
+    // -------------------------------------------------------------------------
 
     /**
      * @return the exception
      */
     public String getStackTrace() {
         return stacktrace;
-    }
-
-    /**
-     * @return the reason
-     */
-    public String getReason() {
-        return reason;
     }
 
 }

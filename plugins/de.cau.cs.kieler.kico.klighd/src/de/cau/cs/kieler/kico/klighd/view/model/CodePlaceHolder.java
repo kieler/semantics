@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.model;
+package de.cau.cs.kieler.kico.klighd.view.model;
 
 /**
  * Placeholder of KiCoModelView to represent code.
@@ -23,31 +23,43 @@ package de.cau.cs.kieler.kico.klighd.model;
  */
 public class CodePlaceHolder {
 
+    /** The default editor */
+    private final static String DEFAULT_EDITOR = "org.eclipse.ui.DefaultTextEditor";
+
     /** Code content */
-    private final String code;
-    
-    /** name of program represented by code */
-    private final String name;
+    protected String code;
+
+    /** Name of program represented by code */
+    protected String name;
 
     /** ID of the editor to open */
-    private final String editorID;
-    
+    protected String editorID;
+
     /** The file/resource extension. */
-    private final String resourceExtension;
+    protected String resourceExtension;
 
     /**
      * Creates a CodePlaceHolder for given code.
      * 
+     * @param name
+     *            The name of the file/code
      * @param code
+     *            The content
      */
     public CodePlaceHolder(String name, String code) {
         this(name, code, null, "txt");
     }
-    
+
     /**
-     * Creates a CodePlaceHolder for given code.
      * 
+     * @param name
+     *            The name of the file/code
      * @param code
+     *            The content
+     * @param editorID
+     *            The editor to open
+     * @param resourceExtension
+     *            The file/resource extension for the code type
      */
     public CodePlaceHolder(String name, String code, String editorID, String resourceExtension) {
         super();
@@ -57,29 +69,31 @@ public class CodePlaceHolder {
         this.resourceExtension = resourceExtension;
     }
 
-    public String getResourceExtension() {
-        return resourceExtension;
-    }
-    
     /**
-     * @return the code string
+     * @return the code string, never null
      */
     public String getCode() {
-        return code;
+        return code == null ? "" : code;
     }
 
     /**
-     * @return name of program represented by code
+     * @return name of program represented by code, never null
      */
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     /**
      * @return the editorID
      */
     public String getEditorID() {
-        return editorID != null ? editorID : "org.eclipse.ui.DefaultTextEditor";
+        return editorID != null ? editorID : DEFAULT_EDITOR;
     }
-    
+
+    /**
+     * @return the resource extension, never null
+     */
+    public String getResourceExtension() {
+        return resourceExtension == null ? "" : resourceExtension;
+    }
 }

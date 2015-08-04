@@ -21,13 +21,17 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
+import org.eclipse.xtext.xbase.lib.Functions.Function3;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.kico.klighd.view.model.EcoreModelSynthesis;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
 import de.cau.cs.kieler.klighd.internal.ISynthesis;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
@@ -43,13 +47,30 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  */
 public class SynthesisSelectionMenu extends MenuManager {
 
+    /** A class to hold id and activation functions for general syntheses */
+    private static class LocalSynthesisData {
+        public final String id;
+        public final String synthesis;
+        public final Predicate<Object> enabled;
+        public final Function3<Object, IEditorPart, KlighdSynthesisProperties, Object> prepare;
+
+        public LocalSynthesisData(String id, String synthesis, Predicate<Object> enabled,
+                Function3<Object, IEditorPart, KlighdSynthesisProperties, Object> prepare) {
+            super();
+            this.id = id;
+            this.synthesis = synthesis;
+            this.enabled = enabled;
+            this.prepare = prepare;
+        }
+    }
+
     /** Property to indicate the use of a fallback synthesis. */
     public static final IProperty<Boolean> USE_FALLBACK_SYSTHESIS = new Property<Boolean>(
             "de.cau.cs.kieler.kico.klighd.systhesis.fallback", false);
 
-    /** Special synthesis IDs. */
-    private static final String ECORE_SYNTHESIS = "EMF";// EcoreSynthesis.ID;
-    private static final String XTEXT_SYNTHESIS = "XTEXT";// XtextSynthesis.ID;
+    /** Map of Synthesis independent from model */
+    private static final HashMap<String, LocalSynthesisData> generalSynthesisMap =
+            new HashMap<String, LocalSynthesisData>();
 
     /** Map of all selections made until now. */
     private final HashMap<Class<? extends Object>, String> selections =
@@ -73,6 +94,20 @@ public class SynthesisSelectionMenu extends MenuManager {
     public SynthesisSelectionMenu(ModelView modelView) {
         this.modelView = modelView;
         this.setMenuText("Synthesis");
+    }
+
+    // -- Special Synthesis Items
+    // -------------------------------------------------------------------------
+
+    public static void registerGeneralSynthesis(String id, String synthesis,
+            Predicate<Object> enabled,
+            Function3<Object, IEditorPart, KlighdSynthesisProperties, Object> prepare) {
+        if (id != null && !id.isEmpty() && synthesis != null && !synthesis.isEmpty()
+                && enabled != null && prepare != null) {
+            generalSynthesisMap.put(id, new LocalSynthesisData(id, synthesis, enabled, prepare));
+        } else {
+            throw new IllegalArgumentException("Any argument is null or emptystring");
+        }
     }
 
     // -- State
@@ -152,9 +187,10 @@ public class SynthesisSelectionMenu extends MenuManager {
                 }
 
                 // Add general EObject synthesis
-                if (model instanceof EObject) {
-                    actionMap.put(ECORE_SYNTHESIS, createAction(newModelClass, ECORE_SYNTHESIS));
-                    actionMap.put(XTEXT_SYNTHESIS, createAction(newModelClass, XTEXT_SYNTHESIS));
+                for (LocalSynthesisData data : generalSynthesisMap.values()) {
+                    if (data.enabled.apply(model)) {
+                        actionMap.put(data.id, createAction(newModelClass, data.id));
+                    }
                 }
 
                 // Set selected synthesis item checked
@@ -168,8 +204,8 @@ public class SynthesisSelectionMenu extends MenuManager {
                         actionMap.get(id).setChecked(true);
                         selections.put(newModelClass, id);
                     } else if (model instanceof EObject) {
-                        actionMap.get(ECORE_SYNTHESIS).setChecked(true);
-                        selections.put(newModelClass, ECORE_SYNTHESIS);
+                        actionMap.get(EcoreModelSynthesis.ID).setChecked(true);
+                        selections.put(newModelClass, EcoreModelSynthesis.ID);
                     }
                 }
             }
@@ -181,7 +217,12 @@ public class SynthesisSelectionMenu extends MenuManager {
     }
 
     private Action createAction(final Class<? extends Object> clazz, final String id) {
-        Action action = new Action(id, IAction.AS_RADIO_BUTTON) {
+        // get name from id
+        String name = id;
+        if (id.contains(".") && !id.endsWith(".")) {
+            name = id.substring(id.lastIndexOf('.') + 1);
+        }
+        Action action = new Action(name, IAction.AS_RADIO_BUTTON) {
 
             @Override
             public void run() {
@@ -219,19 +260,20 @@ public class SynthesisSelectionMenu extends MenuManager {
                 String synthesisID =
                         properties
                                 .getProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS);
-                if (synthesisID == null
-                        || !(synthesisID.equals(ECORE_SYNTHESIS) || synthesisID
-                                .equals(XTEXT_SYNTHESIS)) && model instanceof EObject) {
+                if ((synthesisID == null || !synthesisID.equals(EcoreModelSynthesis.ID))
+                        && model instanceof EObject) {
                     return new Pair<ISynthesis, Boolean>(
-                            kdm.getDiagramSynthesisById(ECORE_SYNTHESIS), true);
+                            kdm.getDiagramSynthesisById(EcoreModelSynthesis.ID), true);
                 }
             } else {
                 String selectedID = selections.get(model.getClass());
                 if (selectedID != null) {
                     // Return selected synthesis
-                    if (selectedID.equals(ECORE_SYNTHESIS) || selectedID.equals(XTEXT_SYNTHESIS)) {
+                    if (generalSynthesisMap.containsKey(selectedID)) {
+                        // Prepare only if special synthesis is selected
                         return new Pair<ISynthesis, Boolean>(
-                                kdm.getDiagramSynthesisById(selectedID), true);
+                                kdm.getDiagramSynthesisById(generalSynthesisMap.get(selectedID).synthesis),
+                                true);
                     } else {
                         return new Pair<ISynthesis, Boolean>(
                                 kdm.getDiagramSynthesisById(selectedID), false);
@@ -265,40 +307,15 @@ public class SynthesisSelectionMenu extends MenuManager {
      * @throws Exception
      *             if model cannot be prepared
      */
-    public Object prepareModel(Object model, ISynthesis synthesis,
+    public Object prepareModel(Object model, IEditorPart editor, ISynthesis synthesis,
             KlighdSynthesisProperties properties) throws Exception {
         String synthesisID = KlighdDataManager.getInstance().getSynthesisID(synthesis);
         // Only the special EObject syntheses need a wrap up in special models
-        if (synthesisID != null && model instanceof EObject) {
-            if (synthesisID.equals(ECORE_SYNTHESIS)) {
-                // TODO return new EcoreSynthesisModel((EObject) model);
-            } else if (synthesisID.equals(XTEXT_SYNTHESIS)) {
-                // TODO return new XtextSynthesisModel((EObject) model);
-            }
+        if (synthesisID != null && generalSynthesisMap.containsKey(synthesisID)) {
+            return generalSynthesisMap.get(synthesisID).prepare.apply(model, editor, properties);
         }
         // else
         throw new Exception("Cannot prepare model for given synthsis");
-        //
-        // if (model instanceof EObject && !(model instanceof CodePlaceHolder) && controller !=
-        // null) {
-        //
-        // String editorID = null;
-        // // Adding file extension
-        // ResourceExtension resourceExtension =
-        // KiCoPlugin.getInstance().getResourceExtension(model);
-        // String resourceExtensionString = "txt";
-        // if (resourceExtension != null) {
-        // resourceExtensionString = resourceExtension.getExtension();
-        // }
-        // // TODO Cannot open xtext editor because it fails to create a resource for
-        // // the special StringEditorInput because it has no path
-        // ResourceExtension ext = KiCoPlugin.getInstance().getResourceExtension(model);
-        // if (ext != null) {
-        // editorID = ext.getEditorID();
-        // }
-        // updateDiagram(new CodePlaceHolder(controller.getResourceName(activeEditor, model),
-        // KiCoUtil.serialize((EObject) model, null, false), editorID,
-        // resourceExtensionString), properties);
-        // }
     }
+
 }

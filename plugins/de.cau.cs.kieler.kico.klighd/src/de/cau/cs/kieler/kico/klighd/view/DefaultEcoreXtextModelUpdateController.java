@@ -44,7 +44,7 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
 
     /** Controller ID */
     private static final String ID =
-            "de.cau.cs.kieler.kico.klighd.DefaultEcoreXtextModelUpdateController";
+            "de.cau.cs.kieler.kico.klighd.view.DefaultEcoreXtextModelUpdateController";
 
     /**
      * Default Constructor.

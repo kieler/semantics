@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.model;
+package de.cau.cs.kieler.kico.klighd.internal;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,6 +20,8 @@ import java.util.ListIterator;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.IntermediateResult;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
+import de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolder;
+import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
 
 /**
  * This is a Wrapper for a list of KiCoModelWrapper because KLighD does not support diagram
