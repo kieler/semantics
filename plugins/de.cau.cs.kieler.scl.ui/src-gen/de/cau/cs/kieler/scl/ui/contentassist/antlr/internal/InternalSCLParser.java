@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSCLParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'host'", "'()'", "'pure'", "'bool'", "'unsigned'", "'int'", "'float'", "'string'", "'=='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'none'", "'max'", "'min'", "'module'", "'{'", "'}'", "';'", "','", "'='", "'combine'", "':'", "'if'", "'then'", "'end'", "'else'", "'goto'", "'this'", "'fork'", "'join'", "'par'", "'pause'", "'('", "')'", "'['", "']'", "'@'", "'.'", "'const'", "'input'", "'output'", "'static'", "'signal'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'host'", "'()'", "'pure'", "'bool'", "'unsigned'", "'int'", "'float'", "'string'", "'=='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'none'", "'max'", "'min'", "'module'", "'{'", "'}'", "';'", "','", "'='", "'combine'", "':'", "'if'", "'then'", "'end'", "'else'", "'goto'", "'thread'", "'fork'", "'join'", "'par'", "'pause'", "'('", "')'", "'['", "']'", "'@'", "'.'", "'const'", "'input'", "'output'", "'static'", "'signal'"
     };
     public static final int T__50=50;
     public static final int RULE_BOOLEAN=9;
@@ -14769,24 +14769,24 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Thread__Group_1__1__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:4843:1: rule__Thread__Group_1__1__Impl : ( 'this' ) ;
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:4843:1: rule__Thread__Group_1__1__Impl : ( 'thread' ) ;
     public final void rule__Thread__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:4847:1: ( ( 'this' ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:4848:1: ( 'this' )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:4847:1: ( ( 'thread' ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:4848:1: ( 'thread' )
             {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:4848:1: ( 'this' )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:4849:1: 'this'
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:4848:1: ( 'thread' )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:4849:1: 'thread'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getThreadAccess().getThisKeyword_1_1()); 
+               before(grammarAccess.getThreadAccess().getThreadKeyword_1_1()); 
             }
             match(input,58,FollowSets000.FOLLOW_58_in_rule__Thread__Group_1__1__Impl10079); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getThreadAccess().getThisKeyword_1_1()); 
+               after(grammarAccess.getThreadAccess().getThreadKeyword_1_1()); 
             }
 
             }

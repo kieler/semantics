@@ -4846,11 +4846,11 @@ rule__Thread__Group_1__1__Impl
     }
 :
 (
-{ before(grammarAccess.getThreadAccess().getThisKeyword_1_1()); }
+{ before(grammarAccess.getThreadAccess().getThreadKeyword_1_1()); }
 
-	'this' 
+	'thread' 
 
-{ after(grammarAccess.getThreadAccess().getThisKeyword_1_1()); }
+{ after(grammarAccess.getThreadAccess().getThreadKeyword_1_1()); }
 )
 
 ;

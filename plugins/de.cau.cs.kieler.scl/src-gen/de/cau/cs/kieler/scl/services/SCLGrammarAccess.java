@@ -744,7 +744,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0_0 = (RuleCall)cAnnotationsAssignment_1_0.eContents().get(0);
-		private final Keyword cThisKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Keyword cThreadKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Alternatives cAlternatives_2_0 = (Alternatives)cGroup_2.eContents().get(0);
 		private final Group cGroup_2_0_0 = (Group)cAlternatives_2_0.eContents().get(0);
@@ -760,18 +760,18 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatementsEmptyStatementParserRuleCall_2_1_1_0 = (RuleCall)cStatementsAssignment_2_1_1.eContents().get(0);
 		
 		//Thread:
-		//	{Thread} (annotations+=Annotation* "this")? ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
+		//	{Thread} (annotations+=Annotation* "thread")? ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
 		//	(statements+=InstructionStatement statements+=EmptyStatement*)?);
 		@Override public ParserRule getRule() { return rule; }
 
-		//{Thread} (annotations+=Annotation* "this")? ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
+		//{Thread} (annotations+=Annotation* "thread")? ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
 		//(statements+=InstructionStatement statements+=EmptyStatement*)?)
 		public Group getGroup() { return cGroup; }
 
 		//{Thread}
 		public Action getThreadAction_0() { return cThreadAction_0; }
 
-		//(annotations+=Annotation* "this")?
+		//(annotations+=Annotation* "thread")?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//annotations+=Annotation*
@@ -780,8 +780,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0_0() { return cAnnotationsAnnotationParserRuleCall_1_0_0; }
 
-		//"this"
-		public Keyword getThisKeyword_1_1() { return cThisKeyword_1_1; }
+		//"thread"
+		public Keyword getThreadKeyword_1_1() { return cThreadKeyword_1_1; }
 
 		//(statements+=InstructionStatement ";" | statements+=EmptyStatement)* (statements+=InstructionStatement
 		//statements+=EmptyStatement*)?
@@ -1241,7 +1241,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Thread:
-	//	{Thread} (annotations+=Annotation* "this")? ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
+	//	{Thread} (annotations+=Annotation* "thread")? ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
 	//	(statements+=InstructionStatement statements+=EmptyStatement*)?);
 	public ThreadElements getThreadAccess() {
 		return pThread;

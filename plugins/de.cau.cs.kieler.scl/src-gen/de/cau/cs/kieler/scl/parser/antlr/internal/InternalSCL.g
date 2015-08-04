@@ -1165,9 +1165,9 @@ ruleThread returns [EObject current=null]
 	    }
 
 )
-)*	otherlv_2='this' 
+)*	otherlv_2='thread' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getThreadAccess().getThisKeyword_1_1());
+    	newLeafNode(otherlv_2, grammarAccess.getThreadAccess().getThreadKeyword_1_1());
     }
 )?((((
 (
