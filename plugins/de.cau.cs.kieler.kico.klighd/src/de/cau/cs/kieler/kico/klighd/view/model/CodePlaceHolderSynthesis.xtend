@@ -69,14 +69,15 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
     // Constants
     
     public static val String ID = "de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolderSynthesis";
-    val int maxPreviewLines = 50;
+    static val int maxPreviewLines = 50;
 
     // -------------------------------------------------------------------------
-    // The Main entry transform function
-    override KNode transform(CodePlaceHolder code) {
+    // Synthesis
+    override KNode transform(CodePlaceHolder placeholder) {
         val rootNode = createNode();
-        rootNode.children += createNode(code) => [
-            it.associateWith(code);
+        rootNode.children += createNode(placeholder) => [
+            it.associateWith(placeholder);
+            //outer frame
             it.addRoundedRectangle(8, 8) => [
                 it.addDoubleClickAction(OpenCodeInEditorAction.ID);
                 it.setGridPlacement(1);
@@ -89,7 +90,7 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
                     it.suppressSelectability;
                 ]
 
-                // open option
+                // open in editor button
                 it.addText("[Open in Editor]") => [
                     it.fontSize = 10;
                     it.foreground = "blue".color
@@ -101,30 +102,8 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
                 // separator
                 it.addHorizontalSeperatorLine(1, 0);
 
-                // preprocess code to compress
-                val tokenizer = new StringTokenizer(code.getCode, "\n");
-                val previewLines = new LinkedList<String>();
-                previewLines.add("");
-                while (previewLines.size < maxPreviewLines && tokenizer.hasMoreTokens) {
-                    val line = tokenizer.nextToken;
-
-                    // skip multiple empty lines
-                    if (!line.trim.empty || !previewLines.getLast().trim.empty) {
-                        previewLines.add(line);
-                    }
-                }
-
-                // rebuild to single string
-                val preview = new StringBuilder();
-                previewLines.forEach[preview.append(it).append("\n")];
-
-                // add continue sign
-                if (tokenizer.hasMoreTokens) {
-                    preview.append("...")
-                }
-
                 // code preview
-                it.addText(preview.toString()) => [
+                it.addText(placeholder.code.generatePreview) => [
                     it.fontSize = 8;
                     it.fontName = KlighdConstants.DEFAULT_MONOSPACE_FONT_NAME;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
@@ -134,5 +113,24 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
             ]
         ];
         return rootNode;
+    }
+    
+    def generatePreview(String text){
+        val StringBuffer preview = new StringBuffer(text);
+        var start = 0;
+        var index = 0;
+        var count = 0;
+        // Find nth occurrence of newline. With n <= maxPreviewLines or indexOf(nth occurrence) == length
+        while((index = preview.indexOf("\n", start)) != -1 && count < maxPreviewLines){
+            start = index + 1;
+            count += 1;
+        }
+        // If original is longer than maxPreviewLines
+        if(count == maxPreviewLines){
+            preview.setLength(index + 1);
+            preview.append("\n...");
+        }
+        
+        return preview.toString();
     }
 }
