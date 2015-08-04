@@ -9,7 +9,8 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 
-generate scl "http://kieler.cs.cau.de/scl/scl"
+import "http://kieler.cs.cau.de/scl/scl"  
+//generate scl "http://kieler.cs.cau.de/scl/scl"
 
 SCLProgram:
 	(annotations+=Annotation)*
@@ -104,6 +105,7 @@ StatementSequence:
 
 Thread:
     {Thread}
+    ((annotations+=Annotation)* 'this')?
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
             (statements +=  InstructionStatement statements += EmptyStatement*)?
