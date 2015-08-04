@@ -16,8 +16,15 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.Set
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import com.google.inject.Inject
 
 class SCPDGCreateDependenciesTransformation extends AbstractProductionTransformation implements Traceable {
+    
+    @Inject
+    extension AnnotationsExtensions
+    
+    private static val String ANNOTATION_SCPDGTRANSFORMATION = "scpdg" 
     
     override getId() {
         return SCGTransformations::SCPDG_CD_ID
@@ -46,9 +53,9 @@ class SCPDGCreateDependenciesTransformation extends AbstractProductionTransforma
         scg.nodes.forEach [ node |
             node.createDependencies(scg, context)
         ]
-//        scg => [
-//            annotations += createStringAnnotation(ANNOTATION_SCPDG_CD_TRANSFORMATION, "")
-//        ]
+        scg => [
+            annotations += createStringAnnotation(ANNOTATION_SCPDGTRANSFORMATION, "")
+        ]
         scg
     }
     
