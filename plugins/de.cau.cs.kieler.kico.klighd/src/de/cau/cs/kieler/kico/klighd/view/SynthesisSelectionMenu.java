@@ -61,9 +61,12 @@ public class SynthesisSelectionMenu extends MenuManager {
     /** The general fallback synthesis */
     private static final EcoreGeneralSynthesis fallbackSynthesis = new EcoreGeneralSynthesis();
 
-    /** Map of all selections made until now. */
-    private final HashMap<Class<? extends Object>, String> selections =
-            new HashMap<Class<? extends Object>, String>();
+    /**
+     * Map of all selections made until now.
+     * <p>
+     * The model classes are saved as classname because this menu should be saved in a memento.
+     */
+    private final HashMap<String, String> selections = new HashMap<String, String>();
 
     /** Class of the model currently associated with the menu configuration. */
     private Class<? extends Object> modelClass;
@@ -122,8 +125,8 @@ public class SynthesisSelectionMenu extends MenuManager {
      * @param memento
      */
     public void saveState(IMemento memento) {
-        for (Entry<Class<? extends Object>, String> entry : selections.entrySet()) {
-            memento.putString(entry.getKey().getName(), entry.getValue());
+        for (Entry<String, String> entry : selections.entrySet()) {
+            memento.putString(entry.getKey(), entry.getValue());
         }
     }
 
@@ -134,13 +137,7 @@ public class SynthesisSelectionMenu extends MenuManager {
      */
     public void loadState(IMemento memento) {
         for (String key : memento.getAttributeKeys()) {
-            String value = memento.getString(key);
-            try {
-                Class<? extends Object> clazz = Class.forName(key);
-                selections.put(clazz, value);
-            } catch (ClassNotFoundException e) {
-                // Do nothing, just fail
-            }
+            selections.put(key, memento.getString(key));
         }
     }
 
@@ -157,6 +154,7 @@ public class SynthesisSelectionMenu extends MenuManager {
         if (model != null) {
             KlighdDataManager kdm = KlighdDataManager.getInstance();
             Class<? extends Object> newModelClass = model.getClass();
+            String newModelClassName = newModelClass.getCanonicalName();
             if (!newModelClass.equals(modelClass)) {
                 // If model type changed
                 removeAll();
@@ -169,29 +167,29 @@ public class SynthesisSelectionMenu extends MenuManager {
                 // Add model specific synthesis
                 for (ISynthesis synthesis : availableSynthesis) {
                     String id = kdm.getSynthesisID(synthesis);
-                    actionMap.put(id, createAction(newModelClass, id));
+                    actionMap.put(id, createAction(newModelClassName, id));
                 }
 
                 // Add general EObject synthesis
                 for (ISelectableGeneralSynthesis data : selectableGeneralSyntheses.values()) {
                     if (data.isApplicable(model)) {
-                        actionMap.put(data.getID(), createAction(newModelClass, data.getID()));
+                        actionMap.put(data.getID(), createAction(newModelClassName, data.getID()));
                     }
                 }
 
                 // Set selected synthesis item checked
                 if (getItems().length > 0) {
-                    String selectedID = selections.get(newModelClass);
+                    String selectedID = selections.get(newModelClassName);
                     if (selectedID != null) {
-                        actionMap.get(selections.get(newModelClass)).setChecked(true);
+                        actionMap.get(selections.get(newModelClassName)).setChecked(true);
                     } else if (availableSynthesis.length > 0) {
                         String id =
                                 kdm.getSynthesisID(availableSynthesis[availableSynthesis.length - 1]);
                         actionMap.get(id).setChecked(true);
-                        selections.put(newModelClass, id);
+                        selections.put(newModelClassName, id);
                     } else if (model instanceof EObject) {
                         actionMap.get(EcoreModelSynthesis.ID).setChecked(true);
-                        selections.put(newModelClass, EcoreModelSynthesis.ID);
+                        selections.put(newModelClassName, EcoreModelSynthesis.ID);
                     }
                 }
                 this.updateAll(false);
@@ -203,7 +201,7 @@ public class SynthesisSelectionMenu extends MenuManager {
         }
     }
 
-    private Action createAction(final Class<? extends Object> clazz, final String id) {
+    private Action createAction(final String clazz, final String id) {
         // get name from id
         String name = id;
         if (id.contains(".") && !id.endsWith(".")) {
@@ -257,7 +255,7 @@ public class SynthesisSelectionMenu extends MenuManager {
                             fallbackSynthesis.prepare(model, editor, properties));
                 }
             } else {
-                String selectedID = selections.get(model.getClass());
+                String selectedID = selections.get(model.getClass().getCanonicalName());
                 if (selectedID != null) {
                     // Return selected synthesis
                     if (selectableGeneralSyntheses.containsKey(selectedID)) {
