@@ -346,7 +346,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         // SCG thread path types
         val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
         for (entry : threadPathTypes.keySet) {
-            entry.addAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE))
+                entry.addAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
         }
 
         scg

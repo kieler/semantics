@@ -413,7 +413,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         var synchronizable = true
         
         for(tpt : threadPathTypes) {
-            if (tpt == ThreadPathType::POTENTIAL_INSTANTANEOUS) synchronizable = false
+            if (tpt == ThreadPathType::POTENTIALLY_INSTANTANEOUS) synchronizable = false
         } 
         
         synchronizable
