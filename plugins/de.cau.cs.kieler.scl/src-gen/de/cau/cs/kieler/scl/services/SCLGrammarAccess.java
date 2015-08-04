@@ -45,6 +45,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatementsEmptyStatementParserRuleCall_5_1_1_0 = (RuleCall)cStatementsAssignment_5_1_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
+		////generate scl "http://kieler.cs.cau.de/scl/scl"
 		//SCLProgram:
 		//	annotations+=Annotation* "module" name=ID declarations+=Declaration* "{" ((statements+=InstructionStatement ";" |
 		//	statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) "}";
@@ -1111,6 +1112,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
+	////generate scl "http://kieler.cs.cau.de/scl/scl"
 	//SCLProgram:
 	//	annotations+=Annotation* "module" name=ID declarations+=Declaration* "{" ((statements+=InstructionStatement ";" |
 	//	statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) "}";
