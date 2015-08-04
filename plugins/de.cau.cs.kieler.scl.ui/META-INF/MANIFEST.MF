@@ -11,10 +11,14 @@ Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.1.0",
  de.cau.cs.kieler.scl;bundle-version="0.1.0",
  de.cau.cs.kieler.core.kexpressions.ui,
  de.cau.cs.kieler.core.annotations.text.ui,
- de.cau.cs.kieler.kico.ui
+ de.cau.cs.kieler.kico.ui,
+ de.cau.cs.kieler.core.model,
+ de.cau.cs.kieler.kico,
+ de.cau.cs.kieler.scg
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.scl.ui.contentassist,
  de.cau.cs.kieler.scl.ui.contentassist.antlr,
+ de.cau.cs.kieler.scl.ui.handlers,
  de.cau.cs.kieler.scl.ui.quickfix
 Bundle-Activator: de.cau.cs.kieler.scl.ui.internal.SCLActivator

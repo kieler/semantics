@@ -36,6 +36,12 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * 
  */
 public class Benchmark {
+    
+    /** The Constant BENCHMARK_CMDLINE_START_DELEMITER. */
+    public static final String BENCHMARK_CMDLINE_START_DELEMITER = "<#### BENCHMARK ####>";
+
+    /** The Constant BENCHMARK_CMDLINE_END_DELEMITER. */
+    public static final String BENCHMARK_CMDLINE_END_DELEMITER = "</#### BENCHMARK ####>";
 
     /** The Constant BENCHMARK_SIGNAL. */
     public static final String BENCHMARK_SIGNAL_TIME = "benchTime";
@@ -171,7 +177,7 @@ public class Benchmark {
             
 //            String outputFolder = KiemUtil.generateRandomTempOutputFolder();
 
-           String tickeMethodFilePath = tickMethodFile.getPath();
+           String tickeMethodFilePath = tickMethodFile.toString().replace("file:/","").replace("file:", "");// getPath();
            
            tickeMethodFilePath = tickeMethodFilePath.replaceAll("[/\\\\]+", "\\" + File.separator);
            if (tickeMethodFilePath.startsWith("\\")) {
