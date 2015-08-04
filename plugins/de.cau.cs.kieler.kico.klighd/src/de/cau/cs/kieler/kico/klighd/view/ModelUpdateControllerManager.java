@@ -48,8 +48,11 @@ public class ModelUpdateControllerManager {
     /** Name of the 'controller' element. */
     private static final String ELEMENT_CONTROLLER = "controller";
 
+    /** Name of the 'generalSynthesis' element. */
+    private static final String ELEMENT_SYNTHESIS = "generalSynthesis";
+
     /** Name of the 'editor' element. */
-    private static final String ELEMENT_EDITOR = "controller";
+    private static final String ELEMENT_EDITOR = "editor";
 
     /** Name of the 'id' attribute in the extension points. */
     private static final String ATTRIBUTE_ID = "id";
@@ -125,7 +128,7 @@ public class ModelUpdateControllerManager {
 
         for (final IConfigurationElement element : extensions) {
             if (ELEMENT_CONTROLLER.equals(element.getName())) {
-                // initialize controller classes from the extension point
+                // initialize controller class from the extension point
                 try {
                     Class<? extends AbstractModelUpdateController> controllerClass =
                             (Class<? extends AbstractModelUpdateController>) Class.forName(element
@@ -140,6 +143,20 @@ public class ModelUpdateControllerManager {
                             new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
                                     this.getClass().getName()
                                             + ": Error while parsing controller extension point",
+                                    exception));
+                }
+            } else if (ELEMENT_SYNTHESIS.equals(element.getName())) {
+                // initialize general synthesis class from the extension point
+                try {
+                    ISelectableGeneralSynthesis synthesis =
+                            (ISelectableGeneralSynthesis) element
+                                    .createExecutableExtension(ATTRIBUTE_CLASS);
+                    SynthesisSelectionMenu.addGeneralSynthesis(synthesis.getID(), synthesis);
+                } catch (final Exception exception) {
+                    StatusManager.getManager().handle(
+                            new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID, this.getClass()
+                                    .getName()
+                                    + ": Error while parsing general synthesis extension point",
                                     exception));
                 }
             }

@@ -15,11 +15,8 @@ package de.cau.cs.kieler.kico.klighd.view.model;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.xtext.xbase.lib.Functions.Function3;
 
-import com.google.common.base.Predicates;
-
-import de.cau.cs.kieler.kico.klighd.view.SynthesisSelectionMenu;
+import de.cau.cs.kieler.kico.klighd.view.ISelectableGeneralSynthesis;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**
@@ -34,20 +31,6 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  * 
  */
 public class EcoreModelWrapper {
-
-    // Register this model and synthesis as multi-model synthesis in menu
-    static {
-        SynthesisSelectionMenu.registerGeneralSynthesis(EcoreModelSynthesis.ID,
-                EcoreModelSynthesis.ID, Predicates.instanceOf(EObject.class),
-                new Function3<Object, IEditorPart, KlighdSynthesisProperties, Object>() {
-
-                    @Override
-                    public Object apply(Object model, IEditorPart editor,
-                            KlighdSynthesisProperties properties) {
-                        return new EcoreModelWrapper((EObject) model);
-                    }
-                });
-    }
 
     /** The model. */
     private final EObject model;

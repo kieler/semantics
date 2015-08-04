@@ -19,9 +19,10 @@ To activate a controller for a specific editor use the editor extension point.
          </appinfo>
       </annotation>
       <complexType>
-         <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="controller"/>
-         </sequence>
+         <choice minOccurs="1" maxOccurs="unbounded">
+            <element ref="controller" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="generalSynthesis" minOccurs="1" maxOccurs="unbounded"/>
+         </choice>
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
@@ -66,10 +67,30 @@ To activate a controller for a specific editor use the editor extension point.
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  Implementing class of the controller
+                  Implementing class of the controller.
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.klighd.view.AbstractModelUpdateController:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="generalSynthesis">
+      <annotation>
+         <documentation>
+            The registered general synthesis to provide alternative diagram visualization.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Implementing class of the general synthesis.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.kico.klighd.view.ISelectableGeneralSynthesis"/>
                </appinfo>
             </annotation>
          </attribute>

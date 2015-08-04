@@ -185,6 +185,7 @@ public final class ModelView extends DiagramViewPart {
                         notifyEditorSaved();
                     }
                 };
+        actionRefresh.setId("actionRefresh");
 
         // Automatic Layout Button
         actionLayout = new Action("Arrange", IAction.AS_PUSH_BUTTON) {
@@ -193,6 +194,7 @@ public final class ModelView extends DiagramViewPart {
                 LightDiagramServices.layoutDiagram(ModelView.this);
             }
         };
+        actionLayout.setId("actionLayout");
         actionLayout.setImageDescriptor(KimlUiPlugin
                 .getImageDescriptor("icons/menu16/kieler-arrange.gif"));
 
@@ -203,6 +205,7 @@ public final class ModelView extends DiagramViewPart {
                 forkView();
             }
         };
+        actionFork.setId("actionFork");
         actionFork.setToolTipText("Fork this view");
         actionFork.setImageDescriptor(ICON_FORK);
 
@@ -213,6 +216,7 @@ public final class ModelView extends DiagramViewPart {
                 saveCurrentModel();
             }
         };
+        actionSave.setId("actionSave");
         actionSave.setToolTipText("Save displayed main model");
         actionSave.setImageDescriptor(ICON_SAVE);
 
@@ -226,6 +230,7 @@ public final class ModelView extends DiagramViewPart {
                 reset();
             }
         };
+        actionResetOptions.setId("actionResetOptions");
         actionResetOptions.setId(ACTION_ID_RESET_LAYOUT_OPTIONS);
 
         // Sync Menu Item
@@ -243,6 +248,7 @@ public final class ModelView extends DiagramViewPart {
                 }
             }
         };
+        actionSyncEditor.setId("actionSyncEditor");
         actionSyncEditor
                 .setToolTipText("If Synchronize is disabled, this view will no longer update its status when editor changes.");
         actionSyncEditor.setChecked(synchronizeEditor);
@@ -255,6 +261,7 @@ public final class ModelView extends DiagramViewPart {
                 updateDiagram(currentModel, null);
             }
         };
+        actionDiagramPlaceholder.setId("actionDiagramPlaceholder");
         actionDiagramPlaceholder
                 .setToolTipText("If visualization is deactiveted, all diagrams will be replaced by a placeholder diagram.");
         actionDiagramPlaceholder.setChecked(showDiagramPlaceholder);
@@ -293,10 +300,12 @@ public final class ModelView extends DiagramViewPart {
         menuManager = bars.getMenuManager();
 
         updateViewTitle();
-        // Some events may occur before this and need to be triggered again
-        if (activeController == null) {
+        // Some events may occur before this and need to be triggered again (e.g. setEditor)
+        if (activeController == null && activeEditor != null) {
             updateController();
             notifyEditorChanged();
+        } else {
+            addContributions();
         }
     }
 
@@ -736,8 +745,8 @@ public final class ModelView extends DiagramViewPart {
                     menuManager.removeAll();
                     addContributions();
                     activeController.addContributions(toolBarManager, menuManager);
-                    toolBarManager.update(true);
-                    menuManager.updateAll(true);
+                    toolBarManager.update(false);
+                    menuManager.updateAll(false);
                     // activate
                     activeController.setActive(true);
                 }
@@ -755,7 +764,7 @@ public final class ModelView extends DiagramViewPart {
     }
 
     /**
-     * Notifies the changed editor.
+     * Notifies the controller about changed editor.
      */
     void notifyEditorChanged() {
         if (activeController != null && synchronizeEditor) {
@@ -954,19 +963,17 @@ public final class ModelView extends DiagramViewPart {
                 }
             }
 
-            Pair<ISynthesis, Boolean> selectedSynthesis =
-                    synthesisSelection.getSynthesis(model, properties);
-            ISynthesis synthesis = selectedSynthesis.getFirst();
+            Pair<ISynthesis, Object> synthesisModelPair =
+                    synthesisSelection.getSynthesis(model, editor, properties);
+            ISynthesis synthesis = synthesisModelPair.getFirst();
             if (synthesis == null) {
                 throw new NullPointerException("No synthesis available");
             }
-            // If preparation needed
-            if (selectedSynthesis.getSecond()) {
-                model = synthesisSelection.prepareModel(model, editor, synthesis, properties);
-                if (vc != null && vc.getInputModel() != null
-                        && vc.getInputModel() == model.getClass()) {
-                    modelTypeChanged = false;
-                }
+            // In case model was specially prepared take the return instance
+            model = synthesisModelPair.getSecond();
+            // Maybe adjust type change flag
+            if (vc != null && vc.getInputModel() != null && vc.getInputModel() == model.getClass()) {
+                modelTypeChanged = false;
             }
 
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
