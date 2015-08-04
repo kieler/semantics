@@ -1246,7 +1246,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // If non concurrent dependency are hidden and the given dependency is not concurrent, exit at once.
         if(dependency instanceof DataDependency) {
             val dataDependency = dependency as DataDependency
-            if((!isSCPDG) && ((!SHOW_NONCONCURRENT.booleanValue && !dataDependency.isConcurrent))) return dependency;
+            if(!SHOW_NONCONCURRENT.booleanValue && !dataDependency.isConcurrent) return dependency;
             if(!SHOW_CONFLUENT.booleanValue && dataDependency.confluent) return dependency;    
         }
 
@@ -1294,8 +1294,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             // If dependency edges are layouted, use the dependency ports to attach the edges.
             if ((LAYOUT_DEPENDENCIES.booleanValue) || (isSCPDG)) {
-                edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
-                edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)
+                if (!isSCPDG) {
+                    edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
+                    edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)
+                } else {
+                    if (topdown) {
+                        edge.sourcePort = sourceNode.addPort(SCGPORTID_OUTGOINGDEPENDENCY + edge.hashCode.toString, 40, sourceNode.height, 0, PortSide::SOUTH)
+                        edge.targetPort = targetNode.addPort(SCGPORTID_INCOMINGDEPENDENCY + edge.hashCode.toString, 40, 0, 1, PortSide::NORTH)
+                    } else {
+                        edge.sourcePort = sourceNode.addPort(SCGPORTID_OUTGOINGDEPENDENCY + edge.hashCode.toString, sourceNode.width, 15, 1, PortSide::EAST)
+                        edge.targetPort = targetNode.addPort(SCGPORTID_INCOMINGDEPENDENCY + edge.hashCode.toString, 0, 15, 1, PortSide::WEST)
+                    }
+                }
             } else {
 
                 // Otherwise, add NO_LAYOUT as layout option to trigger node-to-node hierarchy-crossover
