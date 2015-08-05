@@ -27,150 +27,146 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class GotoImpl extends InstructionImpl implements Goto
 {
   /**
-   * The default value of the '{@link #getTargetLabel() <em>Target Label</em>}' attribute.
-   * <!-- begin-user-doc -->
+     * The default value of the '{@link #getTargetLabel() <em>Target Label</em>}' attribute.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTargetLabel()
-   * @generated
-   * @ordered
-   */
+     * @see #getTargetLabel()
+     * @generated
+     * @ordered
+     */
   protected static final String TARGET_LABEL_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getTargetLabel() <em>Target Label</em>}' attribute.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getTargetLabel() <em>Target Label</em>}' attribute.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTargetLabel()
-   * @generated
-   * @ordered
-   */
+     * @see #getTargetLabel()
+     * @generated
+     * @ordered
+     */
   protected String targetLabel = TARGET_LABEL_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected GotoImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return SclPackage.Literals.GOTO;
-  }
+        return SclPackage.Literals.GOTO;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public String getTargetLabel()
   {
-    return targetLabel;
-  }
+        return targetLabel;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setTargetLabel(String newTargetLabel)
   {
-    String oldTargetLabel = targetLabel;
-    targetLabel = newTargetLabel;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.GOTO__TARGET_LABEL, oldTargetLabel, targetLabel));
-  }
+        String oldTargetLabel = targetLabel;
+        targetLabel = newTargetLabel;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.GOTO__TARGET_LABEL, oldTargetLabel, targetLabel));
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case SclPackage.GOTO__TARGET_LABEL:
-        return getTargetLabel();
+        switch (featureID) {
+            case SclPackage.GOTO__TARGET_LABEL:
+                return getTargetLabel();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case SclPackage.GOTO__TARGET_LABEL:
-        setTargetLabel((String)newValue);
-        return;
+        switch (featureID) {
+            case SclPackage.GOTO__TARGET_LABEL:
+                setTargetLabel((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case SclPackage.GOTO__TARGET_LABEL:
-        setTargetLabel(TARGET_LABEL_EDEFAULT);
-        return;
+        switch (featureID) {
+            case SclPackage.GOTO__TARGET_LABEL:
+                setTargetLabel(TARGET_LABEL_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case SclPackage.GOTO__TARGET_LABEL:
-        return TARGET_LABEL_EDEFAULT == null ? targetLabel != null : !TARGET_LABEL_EDEFAULT.equals(targetLabel);
+        switch (featureID) {
+            case SclPackage.GOTO__TARGET_LABEL:
+                return TARGET_LABEL_EDEFAULT == null ? targetLabel != null : !TARGET_LABEL_EDEFAULT.equals(targetLabel);
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (targetLabel: ");
-    result.append(targetLabel);
-    result.append(')');
-    return result.toString();
-  }
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (targetLabel: ");
+        result.append(targetLabel);
+        result.append(')');
+        return result.toString();
+    }
 
 } //GotoImpl

@@ -4,14 +4,13 @@
  */
 package de.cau.cs.kieler.sccharts.text.actions.ui;
 
-import org.eclipse.xtext.ui.DefaultUiModule;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Manual modifications go to {de.cau.cs.kieler.sccharts.text.actions.ui.ActionsUiModule}
  */
 @SuppressWarnings("all")
-public abstract class AbstractActionsUiModule extends DefaultUiModule {
+public abstract class AbstractActionsUiModule extends org.eclipse.xtext.ui.DefaultUiModule {
 	
 	public AbstractActionsUiModule(AbstractUIPlugin plugin) {
 		super(plugin);

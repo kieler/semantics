@@ -66,6 +66,7 @@ Workflow {
 			fragment = validation.JavaValidatorFragment {
             //    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
             //    composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+//                composedCheck = "de.cau.cs.kieler.sccharts.text.actions.validation.ActionsJavaValidator"
             }
             
 			// scoping and exporting API

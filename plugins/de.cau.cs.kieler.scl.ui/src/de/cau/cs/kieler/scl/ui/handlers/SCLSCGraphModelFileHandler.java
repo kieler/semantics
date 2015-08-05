@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scl.handlers;
+package de.cau.cs.kieler.scl.ui.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
@@ -21,18 +21,21 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
+import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scl.SCLStandaloneSetup;
-import de.cau.cs.kieler.scl.transformations.SCGToSCLTransformation;
+import de.cau.cs.kieler.scl.transformations.SCLToSCGTransformation;
+import de.cau.cs.kieler.scl.transformations.SCLTransformations;
 
 /**
  * @author ssm
  *
  */
-public class SCGraphSCLModelFileHandler extends AbstractConvertModelHandler {
+public class SCLSCGraphModelFileHandler extends AbstractConvertModelHandler {
 
-    public static final String SCG_TRANSFORMATION =
-            "de.cau.cs.kieler.scl.commands.SCGToSCLTransformation";
+    public static final String SCL_TRANSFORMATION =
+            "de.cau.cs.kieler.scl.ui.commands.SCLToSCGTransformation";
 
     private static Injector injector = new SCLStandaloneSetup()
         .createInjectorAndDoEMFRegistration();
@@ -42,7 +45,7 @@ public class SCGraphSCLModelFileHandler extends AbstractConvertModelHandler {
      */
     @Override
     protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
-        return "scl";
+        return "scg";
     }
 
     /**
@@ -65,14 +68,16 @@ public class SCGraphSCLModelFileHandler extends AbstractConvertModelHandler {
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
 
-        SCGToSCLTransformation transformation =
-        Guice.createInjector().getInstance(SCGToSCLTransformation.class);
+        SCLToSCGTransformation transformation =
+        		Guice.createInjector().getInstance(SCLToSCGTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         transformed = model;
-        if (commandString.equals(SCG_TRANSFORMATION)) {
-            transformed = transformation.transformSCGToSCL((SCGraph) model);
+        if (commandString.equals(SCL_TRANSFORMATION)) {
+//            transformed = transformation.transformSCLToSCG((Program) model);
+            KielerCompilerContext context = new KielerCompilerContext(SCLTransformations.SCG_ID, model);
+            transformed = (SCGraph) KielerCompiler.compile(context).getEObject();
         } 
         return transformed;
     }

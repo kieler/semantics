@@ -78,6 +78,7 @@ abstract class AbstractSynchronizer {
     extension AnnotationsExtensions	
     
     protected static val ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
+    protected static val ANNOTATION_IGNORETHREAD = "ignore"
 	
 	protected var KielerCompilerContext compilerContext = null
 	protected var Map<Node, SchedulingBlock> schedulingCache = null

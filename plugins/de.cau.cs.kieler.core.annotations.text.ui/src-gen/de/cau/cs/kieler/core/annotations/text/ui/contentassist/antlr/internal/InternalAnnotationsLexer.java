@@ -12,24 +12,24 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalAnnotationsLexer extends Lexer {
+    public static final int RULE_COMMENT_ANNOTATION=6;
     public static final int RULE_BOOLEAN=7;
-    public static final int RULE_ID=5;
-    public static final int RULE_ANY_OTHER=14;
-    public static final int T__20=20;
-    public static final int RULE_FLOAT=9;
-    public static final int EOF=-1;
-    public static final int RULE_SL_COMMENT=12;
-    public static final int RULE_ML_COMMENT=10;
-    public static final int T__19=19;
     public static final int RULE_STRING=4;
-    public static final int T__16=16;
+    public static final int RULE_SL_COMMENT=12;
+    public static final int T__19=19;
     public static final int T__15=15;
-    public static final int T__18=18;
+    public static final int T__16=16;
     public static final int T__17=17;
+    public static final int T__18=18;
+    public static final int EOF=-1;
+    public static final int RULE_ID=5;
+    public static final int RULE_WS=13;
+    public static final int RULE_ANY_OTHER=14;
     public static final int RULE_NUMBER=11;
     public static final int RULE_INT=8;
-    public static final int RULE_WS=13;
-    public static final int RULE_COMMENT_ANNOTATION=6;
+    public static final int RULE_ML_COMMENT=10;
+    public static final int RULE_FLOAT=9;
+    public static final int T__20=20;
 
     // delegates
     // delegators
@@ -1145,13 +1145,13 @@ public class InternalAnnotationsLexer extends Lexer {
     static final String DFA14_maxS =
         "\2\71\1\146\2\uffff";
     static final String DFA14_acceptS =
-        "\3\uffff\1\1\1\2";
+        "\3\uffff\1\2\1\1";
     static final String DFA14_specialS =
         "\5\uffff}>";
     static final String[] DFA14_transitionS = {
             "\1\1\2\uffff\12\2",
             "\12\2",
-            "\1\3\1\uffff\12\2\54\uffff\1\4",
+            "\1\4\1\uffff\12\2\54\uffff\1\3",
             "",
             ""
     };
@@ -1207,7 +1207,7 @@ public class InternalAnnotationsLexer extends Lexer {
         "\1\3\1\4\1\5\1\6\1\uffff\1\16\1\uffff\1\11\1\12\1\uffff\1\15\1\uffff"+
         "\1\14\1\17\1\7\1\10\4\uffff\1\13\1\uffff";
     static final String DFA23_specialS =
-        "\1\2\13\uffff\1\1\12\uffff\1\0\21\uffff}>";
+        "\1\0\13\uffff\1\1\12\uffff\1\2\21\uffff}>";
     static final String[] DFA23_transitionS = {
             "\11\20\2\17\2\20\1\17\22\20\1\17\1\20\1\14\5\20\1\2\1\3\3\20"+
             "\1\10\1\6\1\7\12\11\6\20\1\1\32\16\1\4\1\20\1\5\1\15\1\16\1"+
@@ -1291,26 +1291,6 @@ public class InternalAnnotationsLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA23_23 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA23_23=='*') ) {s = 33;}
-
-                        else if ( ((LA23_23>='\u0000' && LA23_23<=')')||(LA23_23>='+' && LA23_23<='\uFFFF')) ) {s = 34;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA23_12 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA23_12>='\u0000' && LA23_12<='\uFFFF')) ) {s = 31;}
-
-                        else s = 16;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
                         int LA23_0 = input.LA(1);
 
                         s = -1;
@@ -1345,6 +1325,26 @@ public class InternalAnnotationsLexer extends Lexer {
                         else if ( ((LA23_0>='\t' && LA23_0<='\n')||LA23_0=='\r'||LA23_0==' ') ) {s = 15;}
 
                         else if ( ((LA23_0>='\u0000' && LA23_0<='\b')||(LA23_0>='\u000B' && LA23_0<='\f')||(LA23_0>='\u000E' && LA23_0<='\u001F')||LA23_0=='!'||(LA23_0>='#' && LA23_0<='\'')||(LA23_0>='*' && LA23_0<=',')||(LA23_0>=':' && LA23_0<='?')||LA23_0=='\\'||LA23_0=='`'||(LA23_0>='{' && LA23_0<='\uFFFF')) ) {s = 16;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA23_12 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA23_12>='\u0000' && LA23_12<='\uFFFF')) ) {s = 31;}
+
+                        else s = 16;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA23_23 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA23_23=='*') ) {s = 33;}
+
+                        else if ( ((LA23_23>='\u0000' && LA23_23<=')')||(LA23_23>='+' && LA23_23<='\uFFFF')) ) {s = 34;}
 
                         if ( s>=0 ) return s;
                         break;
