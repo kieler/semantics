@@ -13,14 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.klighd;
 
-import org.eclipse.swt.graphics.FontData;
-
 import de.cau.cs.kieler.core.kgraph.KLabel;
-import de.cau.cs.kieler.core.math.KVector;
-import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
-import de.cau.cs.kieler.klighd.microlayout.Bounds;
-import de.cau.cs.kieler.klighd.microlayout.PlacementUtil;
 
 /**
  * Modifies the size of labels by truncating them once the target width is reached. This label
@@ -30,127 +24,83 @@ import de.cau.cs.kieler.klighd.microlayout.PlacementUtil;
  * @author cds
  */
 public final class TransitionLabelManager extends AbstractKlighdLabelManager {
-    
-    /** The string appended to a truncated label text. */
-    private static final String ELLIPSES = "...";
-    
-    
+
+    /**
+     * {@link AbstractKlighdLabelManager} to handle the trigger of the transition
+     */
+    private final AbstractKlighdLabelManager labelManagerTrigger;
+
+    /**
+     * {@link AbstractKlighdLabelManager} to handle the effect of the transition
+     */
+    private final AbstractKlighdLabelManager labelManagerEffect;
+
     /**
      * Create a new instance that is either switched on or off initially. If it is switched off, the
      * user will need to explicitly switch it on.
      * 
-     * @param initiallyActive whether the label size modifier is switched on or not.
+     * @param initiallyActive
+     *            whether the label size modifier is switched on or not.
+     * @param labelManager
+     *            {@link AbstractKlighdLabelManager} to shorten label of the transition
      */
-    public TransitionLabelManager(final boolean initiallyActive) {
+    public TransitionLabelManager(final boolean initiallyActive,
+            final AbstractKlighdLabelManager labelManager) {
         super(initiallyActive);
+        this.labelManagerTrigger = labelManager;
+        this.labelManagerEffect = labelManager;
+
     }
-    
-    
-    //////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Create a new instance that is either switched on or off initially. If it is switched off, the
+     * user will need to explicitly switch it on.
+     * 
+     * @param initiallyActive
+     *            whether the label size modifier is switched on or not.
+     * @param labelManagerTrigger
+     *            {@link AbstractKlighdLabelManager} to shorten label of the trigger
+     * 
+     * @param labelManagerEffect
+     *            {@link AbstractKlighdLabelManager} to shorten label of the effect
+     */
+    public TransitionLabelManager(final boolean initiallyActive,
+            final AbstractKlighdLabelManager labelManagerTrigger,
+            final AbstractKlighdLabelManager labelManagerEffect) {
+        super(initiallyActive);
+        this.labelManagerTrigger = labelManagerTrigger;
+        this.labelManagerEffect = labelManagerEffect;
+    }
+
+    // ////////////////////////////////////////////////////////////////////////////////////////
     // Label Size Modification
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
-    protected KVector doResizeLabelToWidth(KLabel label, double targetWidth) {
-        final KShapeLayout labelLayout = label.getData(KShapeLayout.class);
-        
-        if (labelLayout.getWidth() > targetWidth) {
-            // Label exceeds target width, so shorten it
-            return truncateTransitionLabel(label, targetWidth);
-        } else {
-            return null;
-        }
-    }
-    
-    /**
-     * Truncates the given transition label.
-     * 
-     * @param label
-     *            the transition label.
-     * @param targetWidth
-     *            the width the label shouldn't exceed.
-     * @return the label's new size as estimated.
-     */
-    private KVector truncateTransitionLabel(final KLabel label, final double targetWidth) {
-        // The label's font data
-        final FontData font = PlacementUtil.fontDataFor(label);
-        
-        // Look for the '/' character that separates condition and action
-        int separatorIndex = label.getText().indexOf('/');
-        if (separatorIndex == -1) {
-            label.setText(truncateOverlyWideLabel(label.getText(), font, targetWidth));
-            
-            Bounds newBounds = PlacementUtil.estimateTextSize(font, label.getText());
-            return new KVector(newBounds.getWidth(), newBounds.getHeight());
-        } else {
-            // First, shorten the label's two parts
-            String shortenedCondition = truncateOverlyWideLabel(
-                    label.getText().substring(0, separatorIndex).trim(),
-                    font,
-                    targetWidth / 2.0);
-            String shortenedAction = truncateOverlyWideLabel(
-                    label.getText().substring(separatorIndex + 1).trim(),
-                    font,
-                    targetWidth / 2.0);
-            
-            // Apply shortened label
-            label.setText(shortenedCondition + " / " + shortenedAction);
+    public String resizeLabel(KLabel label, double targetWidth) {
+        String[] triggerEffect = label.getText().split("/");
+        String newText = label.getText();
 
-            Bounds newBounds = PlacementUtil.estimateTextSize(font, label.getText());
-            return new KVector(newBounds.getWidth(), newBounds.getHeight());
-        }
-    }
-    
-    /**
-     * Truncates the given text until it falls below the given target width when rendered with the given
-     * font.
-     * 
-     * @param text
-     *            the text to truncate.
-     * @param targetWidth
-     *            the width the label shouldn't exceed.
-     * @return the new text.
-     */
-    private String truncateOverlyWideLabel(final String text, final FontData fontData,
-            final double targetWidth) {
-        
-        // Our current index inside the label's text
-        int currentIndex = 0;
-        // The character at the current position
-        char currentChar;
-        // Index of the last non-whitespace character
-        int lastNonWhitespaceCharacter = 0;
-        // The new text
-        String resultText = text;
-        
-        // The label's size from the beginning up to the character we're currently at
-        Bounds currentSize = null;
-        
-        // Iterate over the characters until we find a newline character or until the width exceeds
-        // the target width; after this loop, currentSize is the (possibly new) size of the label
-        while (currentIndex < text.length()) {
-            // Measure the length of the string from the beginning up to the current position
-            currentSize = PlacementUtil.estimateTextSize(fontData, text.substring(0, currentIndex));
-            
-            // If we exceed the target width or find a newline character, truncate!
-            currentChar = text.charAt(currentIndex);
-            if (currentSize.getWidth() > targetWidth || currentChar == '\n') {
-                resultText = text.substring(0, lastNonWhitespaceCharacter) + ELLIPSES;
-                currentSize = PlacementUtil.estimateTextSize(fontData, resultText);
-                break;
+        if (triggerEffect.length == 1) {
+            //there is no Trigger or effect
+            if (!label.getText().startsWith("/")) {
+                newText = labelManagerTrigger.resizeLabel(label, targetWidth);
+            } else {
+                newText = labelManagerEffect.resizeLabel(label, targetWidth);
             }
+        } else if (triggerEffect.length == 2) {
+            //shorten trigger
+            label.setText(triggerEffect[0]);
+            String firstHalf = labelManagerTrigger.resizeLabel(label, targetWidth / 2.0);
             
-            // If this is not a whitespace character, remember its position
-            if (!Character.isWhitespace(currentChar)) {
-                lastNonWhitespaceCharacter = currentIndex;
-            }
-            
-            currentIndex++;
+            //shorten effect
+            label.setText(triggerEffect[1]);
+            String secondHalf = labelManagerEffect.resizeLabel(label, targetWidth / 2.0);
+            newText = firstHalf + " / " + secondHalf;
         }
-        
-        return resultText;
+        return newText;
     }
-    
+
 }
