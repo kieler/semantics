@@ -186,6 +186,7 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
         var KNode subDiagramNode = null;
         try {
             val properties = new KlighdSynthesisProperties();
+            properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
             val viewpart = usedContext.diagramWorkbenchPart;
             if (viewpart instanceof ModelView) {
                 val synthesisSelection = (viewpart as ModelView).synthesisSelectionMenu;
@@ -203,8 +204,10 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
         }
         // If normal synthesis failed create message
         if ((subDiagramNode == null || subDiagramNode.children.isEmpty) && model instanceof EObject) { // component synthesis
+            val properties = new KlighdSynthesisProperties();
+            properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
             subDiagramNode = LightDiagramServices::translateModel(new MessageModel("Cannot create sub-diagram"),
-                usedContext, new KlighdSynthesisProperties());
+                usedContext, properties);
         }
         // Add subdiagram
         if (subDiagramNode != null && !subDiagramNode.children.isEmpty) {

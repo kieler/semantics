@@ -54,14 +54,12 @@ import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.statushandlers.StatusManager;
-import org.eclipse.xtext.util.StringInputStream;
 
 import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
-import de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
 import de.cau.cs.kieler.kico.klighd.view.model.ISaveableModel;
 import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
@@ -782,7 +780,7 @@ public final class ModelView extends DiagramViewPart {
      * Stores the current synthesis options configured in the {@link ViewContext}.
      */
     private synchronized void storeCurrentSynthesisOptions() {
-        if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
+        if (this.getViewer() != null && this.getViewer().getViewContext() != null) {
             ViewContext viewContext = this.getViewer().getViewContext();
             ISynthesis usedSynthesis = viewContext.getDiagramSynthesis();
             if (usedSynthesis != null) {
@@ -1032,6 +1030,10 @@ public final class ModelView extends DiagramViewPart {
                 if (synthesis != null && recentSynthesisOptions.containsKey(synthesis)) {
                     properties
                             .configureSynthesisOptionValues(recentSynthesisOptions.get(synthesis));
+                } else {
+                    // Configure with empty map to reset possible configuration
+                    properties
+                            .configureSynthesisOptionValues(new HashMap<SynthesisOption, Object>());
                 }
 
                 // the (re)initialization case

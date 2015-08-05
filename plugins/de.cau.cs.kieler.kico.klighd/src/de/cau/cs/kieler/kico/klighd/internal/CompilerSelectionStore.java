@@ -38,7 +38,7 @@ import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
  * @kieler.rating 2015-06-29 proposed yellow
  *
  */
-public class CompilerSelectionStore implements IPartListener, KiCoSelectionChangeEventListerner {
+public class CompilerSelectionStore implements KiCoSelectionChangeEventListerner {
     /** Map from editors (hash) to selected transformations. */
     private static final HashMap<Integer, Pair<KielerCompilerSelection, Boolean>> selections =
             new HashMap<Integer, Pair<KielerCompilerSelection, Boolean>>();
@@ -66,8 +66,12 @@ public class CompilerSelectionStore implements IPartListener, KiCoSelectionChang
     public static void register(KiCoModelUpdateController controller) {
         if (listener == null) {
             listener = new CompilerSelectionStore();
-            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                    .addPartListener(listener);
+            if(KiCoSelectionView.getInstance() != null){
+                KiCoSelectionView.getInstance().addSelectionChangeEventListener(listener);
+            }else{
+                //TODO fix
+                throw new IllegalStateException("KiCoSelectionView is not open.");
+            }
         }
         listeners.add(controller);
     }
@@ -82,42 +86,6 @@ public class CompilerSelectionStore implements IPartListener, KiCoSelectionChang
      */
     public static void unregister(KiCoModelUpdateController controller) {
         listeners.remove(controller);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void partActivated(IWorkbenchPart part) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void partBroughtToTop(IWorkbenchPart part) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void partClosed(IWorkbenchPart part) {
-        if (part instanceof KiCoSelectionView) {
-            ((KiCoSelectionView) part).removeSelectionChangeEventListener(listener);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void partDeactivated(IWorkbenchPart part) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void partOpened(IWorkbenchPart part) {
-        if (part instanceof KiCoSelectionView) {
-            ((KiCoSelectionView) part).addSelectionChangeEventListener(listener);
-        }
     }
 
     // -- Selection Listener

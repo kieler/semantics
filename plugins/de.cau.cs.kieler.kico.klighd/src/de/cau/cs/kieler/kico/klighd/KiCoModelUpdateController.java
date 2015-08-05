@@ -639,10 +639,10 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
         ViewContext viewContext = getModelView().getViewContext();
         // Assure that model chain is always layouted left to right
         if (viewContext.getInputModel() instanceof ModelChain) {
-            return new CompoundLayoutConfig(Lists.newArrayList(super.getLayoutConfig(),
-                    new VolatileLayoutConfig(KlighdConstants.SIDE_BAR_LAYOUT_CONFIG_PRIORITY + 1)
-                            .setValue(LayoutOptions.DIRECTION, viewContext.getViewModel(),
-                                    LayoutContext.DIAGRAM_PART, Direction.RIGHT)));
+            return new CompoundLayoutConfig(Lists.newArrayList(new VolatileLayoutConfig(
+                    KlighdConstants.SIDE_BAR_LAYOUT_CONFIG_PRIORITY + 1).setValue(
+                    LayoutOptions.DIRECTION, viewContext.getViewModel(),
+                    LayoutContext.DIAGRAM_PART, Direction.RIGHT)));
         } else {
             return super.getLayoutConfig();
         }

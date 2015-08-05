@@ -32,7 +32,7 @@ import de.cau.cs.kieler.klighd.IAction;
 public class ShowExceptionAction implements IAction {
 
     /** Action ID. */
-    public final static String ID = "de.cau.cs.kieler.kico.klighd.model.action.ShowExceptionAction";
+    public final static String ID = "de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction";
 
     /**
      * {@inheritDoc}
