@@ -24,12 +24,13 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Diagram synthesis of a {@link EcoreModelWrapper}.
@@ -68,71 +69,155 @@ class EcoreModelSynthesis extends AbstractDiagramSynthesis<EcoreModelWrapper> {
     // -------------------------------------------------------------------------
     // Constants
     public static val String ID = "de.cau.cs.kieler.kico.klighd.view.model.EcoreModelSynthesis";
-    private static val KColor BACKGROUND_COLOR = RENDERING_FACTORY.createKColor() => [red = 255; green = 202; blue = 119];
-    private static val KColor SHADOW_COLOR = RENDERING_FACTORY.createKColor() => [it.color = Colors.BLACK];
+    private static val KColor BACKGROUND_COLOR = RENDERING_FACTORY.createKColor() =>
+        [red = 255; green = 202; blue = 119];
+        private static val KColor SHADOW_COLOR = RENDERING_FACTORY.createKColor() => [it.color = Colors.BLACK];
 
-    // -------------------------------------------------------------------------
-    // Synthesis
-    override KNode transform(EcoreModelWrapper wrapper) {
-        val model = wrapper.model;
-        val rootNode = createNode(wrapper);
-        // transform root object
-        rootNode.children += model.translateEObject
-        // transform and connect all succeeding objects
-        rootNode.children += model.eAllContents.map [
-            val child = it.translateEObject;
-            val container = it.eContainer;
-            if (container != null) {
-                createEdge => [
-                    it.source = container.translateEObject;
-                    it.target = child;
-                    it.addPolyline.addArrowDecorator;
-                ]
-            }
-            return child;
-        ].toIterable;
+        // -------------------------------------------------------------------------
+        // Synthesis
+        override KNode transform(EcoreModelWrapper wrapper) {
+            val model = wrapper.model;
+            val rootNode = createNode(wrapper);
+            // transform root object
+            rootNode.children += model.translateEObject
+            // transform and connect all succeeding objects
+            rootNode.children += model.eAllContents.map [
+                val child = it.translateEObject;
+                val container = it.eContainer;
+                if (container != null) {
+                    createEdge => [
+                        it.source = container.translateEObject;
+                        it.target = child;
+                        it.addPolyline.addArrowDecorator;
+                    ]
+                }
+                return child;
+            ].toIterable;
 
-        return rootNode;
-    }
+            return rootNode;
+        }
 
-    private def create node : object.createNode translateEObject(EObject object) {
-        node.associateWith(object);
+        private def create node : object.createNode translateEObject(EObject object) {
+            node.associateWith(object);
+            node.setLayoutOption(KlighdProperties::EXPAND, false);
 
-        // create and add colored rectangle for this node
-        val figure = node.addRoundedRectangle(8, 8, 1);
-        figure.lineWidth = 1;
-        figure.foreground = Colors.GRAY;
-        figure.background = BACKGROUND_COLOR;
-
-        // add shadow
-        // omit shadow to increase performance
-        //figure.shadow = SHADOW_COLOR.copy;
-        //figure.shadow.XOffset = 4;
-        //figure.shadow.YOffset = 4;
-
-        // minimal node size is necessary if no text will be added
-        node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
-        figure.background = Colors.GRAY_95;
-
-        // align all text fields in a column.
-        figure.setGridPlacement(1);
-
-        // add name of object as text
-        figure.addText(object.eClass.name).associateWith(object) => [
-            it.fontSize = 11;
-            it.setFontBold(true);
-            it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
-            it.suppressSelectability;
-        ];
-
-        // add all attributes as string representation
-        object.eClass.EAllAttributes.filterNull.forEach [
-            // add a text with name and value of the attribute
-            figure.addText(it.name + ": " + String::valueOf(object.eGet(it))) => [
-                it.fontSize = 9;
-                it.setGridPlacementData().from(LEFT, 5, 0, TOP, 2, 0).to(RIGHT, 5, 0, BOTTOM, 2, 0);
-                it.suppressSelectability;
+            val eclass = object.eClass;
+            val hasAttributes = !eclass.EAllAttributes.empty
+            val hasSuperTypes = !eclass.EAllSuperTypes.empty
+            // Expanded Rectangle
+            node.createFigure() => [
+                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
+                it.setGridPlacement(1);
+                
+                // add name of object as text
+                it.addText(object.eClass.name).associateWith(object) => [
+                    it.fontSize = 11;
+                    it.setFontBold(true);
+                    it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                    it.suppressSelectability;
+                ];
+                
+                //collapse button
+                it.addText("[Hide]") => [
+                    it.foreground = "blue".color
+                    it.fontSize = 9
+                    it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.setGridPlacementData().from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 0, 0);
+                ];
+                
+                if (hasAttributes || hasSuperTypes) {
+                    // Add Details
+                    it.addRectangle => [
+                        it.setGridPlacementData.from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+                        it.setBackground = "white".color;
+                        it.foreground = "gray".color
+                        it.lineWidth = 1;
+                        it.setGridPlacement(1);
+                        
+                        // Content
+                        val container = it;
+                        // add all super types as string representation
+                        if (hasSuperTypes) {
+                            it.addText("SuperTypes") => [
+                                it.foreground = "gray".color;
+                                it.fontSize = 8;
+                                it.setGridPlacementData().from(LEFT, 5, 0, TOP, 2, 0).to(RIGHT, 5, 0, BOTTOM, 2, 0);
+                                it.suppressSelectability;
+                            ];
+                            eclass.EAllSuperTypes.filterNull.forEach [
+                                // add a text with name and value of the attribute
+                                container.addText(it.name) => [
+                                    it.fontSize = 9;
+                                    it.setGridPlacementData().from(LEFT, 5, 0, TOP, 2, 0).to(RIGHT, 5, 0, BOTTOM, 2, 0);
+                                    it.suppressSelectability;
+                                ];
+                            ]
+                        }
+                        // add all attributes as string representation
+                        if (hasAttributes) {
+                            if (hasSuperTypes) {
+                                it.addHorizontalSeperatorLine(1, 1).foreground = "gray".color;
+                            }
+                            it.addText("Attributes") => [
+                                it.foreground = "gray".color;
+                                it.fontSize = 8;
+                                it.setGridPlacementData().from(LEFT, 5, 0, TOP, 2, 0).to(RIGHT, 5, 0, BOTTOM, 2, 0);
+                                it.suppressSelectability;
+                            ];
+                            eclass.EAllAttributes.filterNull.forEach [
+                                // add a text with name and value of the attribute
+                                container.addText(it.name + ": " + String::valueOf(object.eGet(it))) => [
+                                    it.fontSize = 9;
+                                    it.setGridPlacementData().from(LEFT, 5, 0, TOP, 2, 0).to(RIGHT, 5, 0, BOTTOM, 2, 0);
+                                    it.suppressSelectability;
+                                ];
+                            ]
+                        }
+                    ];
+                }
             ];
-        ]
+
+            // Collapse Rectangle
+            node.createFigure() =>
+                [
+                    it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
+                    it.setGridPlacement(1);
+                    // add name of object as text
+                    it.addText(object.eClass.name).associateWith(object) =>
+                        [
+                            it.fontSize = 11;
+                            it.setFontBold(true);
+                            it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM,
+                                if(hasAttributes || hasSuperTypes) 4 else 8, 0);
+                            it.suppressSelectability;
+                        ];
+                    if (hasAttributes || hasSuperTypes) {
+                        // Add details button
+                        it.addText("[Details]") => [
+                            it.foreground = "blue".color
+                            it.fontSize = 9
+                            it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                            it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                            it.setGridPlacementData().from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+                        ];
+                    }
+                ];
+        }
+
+        private def createFigure(KNode node) {
+            val figure = node.addRoundedRectangle(8, 8, 1);
+            figure.lineWidth = 1;
+            figure.foreground = Colors.GRAY;
+            figure.background = BACKGROUND_COLOR;
+
+            // add shadow
+            // omit shadow to increase performance
+            // figure.shadow = SHADOW_COLOR.copy;
+            // figure.shadow.XOffset = 4;
+            // figure.shadow.YOffset = 4;
+            // minimal node size is necessary if no text will be added
+            node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
+            figure.background = Colors.GRAY_95;
+        }
     }
-}
