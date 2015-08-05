@@ -26,7 +26,7 @@ import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IStorageEditorInput;
 
 /**
- * Editor Input which can handle Strings as editor input without a file in as backup. If content
+ * Editor Input which can handle Strings as editor input without a file in as resource. If content
  * should be persisted 'Save as' option should be used.
  * 
  * @author als
@@ -37,11 +37,11 @@ import org.eclipse.ui.IStorageEditorInput;
 public class StringBasedEditorInput implements IStorageEditorInput {
 
     class StringStorage implements IStorage {
-        /** string content */
+        /** String content. */
         protected String content;
-        /** read.only */
+        /** Read only flag. */
         private boolean readOnly;
-        
+
         /** The resource extension. */
         private String resourceExtension;
 
@@ -72,8 +72,8 @@ public class StringBasedEditorInput implements IStorageEditorInput {
          */
         public IPath getFullPath() {
             String num = (this.hashCode() + "").replace("-", "");
-            //URI uri = URI.createURI("dummy:/inmemory." + num + "." + resourceExtension);
-            IPath path = new Path("dummy:/inmemory/" + num + "." + resourceExtension); 
+            // URI uri = URI.createURI("dummy:/inmemory." + num + "." + resourceExtension);
+            IPath path = new Path("dummy:/inmemory/" + num + "." + resourceExtension);
             return path;
         }
 
@@ -109,15 +109,15 @@ public class StringBasedEditorInput implements IStorageEditorInput {
         }
     }
 
-    /** Editor title */
+    /** Editor title. */
     private final String name;
-    /** Editor tooltip */
+    /** Editor tooltip. */
     private final String tooltip;
-    /** Editor string content storage */
+    /** Editor string content storage. */
     private final StringStorage storage;
 
     /**
-     * Constructs editor input with given name
+     * Constructs editor input with given name.
      * 
      * @param name
      *            title text maybe null
@@ -128,7 +128,8 @@ public class StringBasedEditorInput implements IStorageEditorInput {
      * @param readonly
      *            if editing should be enabled before saving
      */
-    public StringBasedEditorInput(String name, String tooltip, String content, boolean readonly, String resourceExtension) {
+    public StringBasedEditorInput(String name, String tooltip, String content, boolean readonly,
+            String resourceExtension) {
         this.name = name == null ? "Anonymous" : name;
         this.tooltip = tooltip == null ? "" : tooltip;
         this.storage = new StringStorage(content, readonly, resourceExtension);

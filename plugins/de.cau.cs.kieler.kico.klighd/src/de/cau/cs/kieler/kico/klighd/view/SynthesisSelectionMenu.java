@@ -36,8 +36,8 @@ import de.cau.cs.kieler.klighd.internal.ISynthesis;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**
- * This sub-menu handles different available synthesis for models including special one for EMF and
- * Xtext models.
+ * This sub-menu handles different available synthesis for models including general syntheses
+ * implementing {@link ISelectableGeneralSynthesis}.
  * 
  * @author als
  * @kieler.design 2015-06-22 proposed
@@ -46,19 +46,15 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  */
 public class SynthesisSelectionMenu extends MenuManager {
 
-    /** Property to indicate the use of a fallback synthesis. */
-    public static final IProperty<Boolean> USE_FALLBACK_SYSTHESIS = new Property<Boolean>(
-            "de.cau.cs.kieler.kico.klighd.systhesis.fallback", false);
-
     /**
-     * Map of Synthesis independent from model
+     * Map of Synthesis independent from model.
      * <p>
-     * The initialization of this map is done by {@link ModelUpdateControllerManager}
+     * The initialization of this map is done by {@link ModelUpdateControllerFactory}
      */
     private static final HashMap<String, ISelectableGeneralSynthesis> selectableGeneralSyntheses =
             new HashMap<String, ISelectableGeneralSynthesis>();
 
-    /** The general fallback synthesis */
+    /** The general fallback synthesis. */
     private static final EcoreGeneralSynthesis fallbackSynthesis = new EcoreGeneralSynthesis();
 
     /**
@@ -91,7 +87,15 @@ public class SynthesisSelectionMenu extends MenuManager {
     // -- Special Synthesis Items
     // -------------------------------------------------------------------------
 
-    static void addGeneralSynthesis(String id, ISelectableGeneralSynthesis generalSynthesis) {
+    /**
+     * Adds an {@link ISelectableGeneralSynthesis} to be available for selection.
+     * 
+     * @param id
+     *            the id
+     * @param generalSynthesis
+     *            the general synthesis
+     */
+    public static void addGeneralSynthesis(String id, ISelectableGeneralSynthesis generalSynthesis) {
         if (id != null && !id.isEmpty() && generalSynthesis != null) {
             selectableGeneralSyntheses.put(id, generalSynthesis);
         } else {
@@ -103,10 +107,10 @@ public class SynthesisSelectionMenu extends MenuManager {
     // -------------------------------------------------------------------------
 
     /**
-     * Copies the internal state of another SynthesisSelectionMenu.
+     * Copies the internal state of another {@link SynthesisSelectionMenu}.
      * 
      * @param source
-     *            the SynthesisSelectionMenu to copy from
+     *            the {@link SynthesisSelectionMenu} to copy from
      */
     public void copy(SynthesisSelectionMenu source) {
         selections.putAll(source.selections);
@@ -201,18 +205,30 @@ public class SynthesisSelectionMenu extends MenuManager {
         }
     }
 
-    private Action createAction(final String clazz, final String id) {
-        // get name from id
+    /**
+     * Creates a new action item and adds it to this menu.
+     * <p>
+     * The action selects the given is as synthesis for the given class.
+     * 
+     * @param className
+     *            the class name this item chooses for
+     * @param id
+     *            the synthsis id to set
+     * @return the created action
+     */
+    private Action createAction(final String className, final String id) {
+        // Parse name from id
         String name = id;
         if (id.contains(".") && !id.endsWith(".")) {
             name = id.substring(id.lastIndexOf('.') + 1);
         }
+        // create item
         Action action = new Action(name, IAction.AS_RADIO_BUTTON) {
 
             @Override
             public void run() {
                 if (isChecked()) {
-                    selections.put(clazz, id);
+                    selections.put(className, id);
                     modelView.updateDiagram();
                 }
             }
@@ -227,9 +243,9 @@ public class SynthesisSelectionMenu extends MenuManager {
     // -------------------------------------------------------------------------
 
     /**
-     * Returns the synthesis which should be used for the given model. Additionally returns the
-     * model. The return model may differ from the original model if the synthesis need the model
-     * prepared (transformed) before the synthesis run.
+     * Returns the synthesis which should be used for the given model and the model. The return
+     * model may differ from the original model if the synthesis needs the model prepared
+     * (transformed) before the synthesis run.
      * 
      * @param model
      *            the model

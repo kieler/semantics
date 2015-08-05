@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.kico.klighd.view.model;
 
 /**
- * Placeholder of KiCoModelView to represent code.
+ * Placeholder for a huge text or code.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed
@@ -23,16 +23,16 @@ package de.cau.cs.kieler.kico.klighd.view.model;
  */
 public class CodePlaceHolder {
 
-    /** The default editor */
+    /** The default editor. */
     private final static String DEFAULT_EDITOR = "org.eclipse.ui.DefaultTextEditor";
 
-    /** Code content */
+    /** Content. */
     protected String code;
 
-    /** Name of program represented by code */
+    /** Name of program represented by code. */
     protected String name;
 
-    /** ID of the editor to open */
+    /** ID of the editor to open. */
     protected String editorID;
 
     /** The file/resource extension. */
@@ -51,6 +51,7 @@ public class CodePlaceHolder {
     }
 
     /**
+     * Creates a CodePlaceHolder for given code with specified editor.
      * 
      * @param name
      *            The name of the file/code
@@ -68,6 +69,9 @@ public class CodePlaceHolder {
         this.editorID = editorID;
         this.resourceExtension = resourceExtension;
     }
+
+    // -- Getters
+    // -------------------------------------------------------------------------
 
     /**
      * @return the code string, never null

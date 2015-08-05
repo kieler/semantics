@@ -26,7 +26,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**
  * 
- * Abstract controller for the ModelView.
+ * Abstract controller for the {@link ModelView}.
  * <p>
  * The controller handles the update of the displayed model.
  * 
@@ -37,9 +37,9 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  */
 public abstract class AbstractModelUpdateController {
 
-    /** Indicated if this controller is active and should update the ModelView */
+    /** Indicated if this controller is active and should update the ModelView. */
     private boolean active = false;
-    /** The related ModelView */
+    /** The related ModelView. */
     private final ModelView modelView;
 
     /**

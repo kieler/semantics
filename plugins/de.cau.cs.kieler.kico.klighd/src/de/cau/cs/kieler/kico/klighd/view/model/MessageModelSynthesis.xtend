@@ -28,7 +28,7 @@ import javax.inject.Inject
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
- * Diagram synthesis of a {@link MessageModel}.
+ * Diagram synthesis for a {@link MessageModel}.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed
@@ -60,9 +60,13 @@ class MessageModelSynthesis extends AbstractDiagramSynthesis<MessageModel> {
 
     @Inject
     extension KColorExtensions
+    
+    // -------------------------------------------------------------------------
+    // Constants
+    public static val String ID = "de.cau.cs.kieler.kico.klighd.view.model.MessageModelSynthesis";
 
     // -------------------------------------------------------------------------
-    // The Main entry transform function
+    // Synthesis
     override KNode transform(MessageModel model) {
         val rootNode = createNode();
         rootNode.children += createNode(model) => [
@@ -104,6 +108,7 @@ class MessageModelSynthesis extends AbstractDiagramSynthesis<MessageModel> {
                             it.suppressSelectability;
                         ]
                     }
+                    //customization
                     model.customizeMessageSynthesis(it);
                 ]
             ]

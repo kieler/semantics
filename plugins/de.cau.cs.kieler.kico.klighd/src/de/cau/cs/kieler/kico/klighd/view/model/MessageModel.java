@@ -16,7 +16,7 @@ package de.cau.cs.kieler.kico.klighd.view.model;
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
 
 /**
- * Displays a simple message model.
+ * A simple message model. Provides a title, message and icon.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed
@@ -25,22 +25,22 @@ import de.cau.cs.kieler.core.krendering.KContainerRendering;
  */
 public class MessageModel {
 
-    /** The title */
+    /** The title. */
     protected String title;
-    /** The message */
+    /** The message. */
     protected String message;
-    /** The icon path */
+    /** The icon path. */
     protected String iconPath;
-    /** The icon plugin */
+    /** The icon plugin. */
     protected String iconPlugin;
-    /** The minimal icon size */
+    /** The minimal icon size. */
     protected int iconSize;
 
     // -- Constructors
     // -------------------------------------------------------------------------
 
     /**
-     * Constructs a model with given message
+     * Constructs a model with given message.
      * 
      * @param message
      *            The message
@@ -50,7 +50,7 @@ public class MessageModel {
     }
 
     /**
-     * Constructs a model with given title and message
+     * Constructs a model with given title and message.
      * 
      * @param title
      * @param message
@@ -61,7 +61,7 @@ public class MessageModel {
     }
 
     /**
-     * Constructs a model with given title, message and icon
+     * Constructs a model with given title, message and icon.
      * 
      * @param title
      *            The title
@@ -96,11 +96,17 @@ public class MessageModel {
     // -- Synthesis
     // -------------------------------------------------------------------------
 
+    /**
+     * This callback allows to customize the synthesized diagram.
+     * 
+     * @param parent
+     *            the parent element in the KGraph
+     */
     public void customizeMessageSynthesis(KContainerRendering parent) {
         // do nothing
     }
 
-    // -- Getter
+    // -- Getters
     // -------------------------------------------------------------------------
 
     /**

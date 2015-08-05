@@ -25,14 +25,12 @@ import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kico.klighd.view.model.action.OpenCodeInEditorAction
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import java.util.LinkedList
-import java.util.StringTokenizer
 import javax.inject.Inject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
- * Diagram synthesis of a {@link CodePlaceHolder}.
+ * Diagram synthesis for a {@link CodePlaceHolder}.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed

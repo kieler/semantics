@@ -32,7 +32,7 @@ import de.cau.cs.kieler.core.krendering.extensions.PositionReferenceY;
 import de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction;
 
 /**
- * Displays errors and exceptions with a huge error sign.
+ * Represents errors and exceptions. Displayed as error message with a huge error sign.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed
@@ -41,17 +41,17 @@ import de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction;
  */
 public class ErrorModel extends MessageModel {
 
-    /** Synthesis Extension */
-    private final static KContainerRenderingExtensions KCRE = Guice.createInjector().getInstance(
+    /** Synthesis Extension. */
+    private static final KContainerRenderingExtensions KCRE = Guice.createInjector().getInstance(
             KContainerRenderingExtensions.class);
-    private final static KRenderingExtensions KRE = Guice.createInjector().getInstance(
+    private static final KRenderingExtensions KRE = Guice.createInjector().getInstance(
             KRenderingExtensions.class);
 
-    /** The error stack trace */
+    /** The error stack trace. */
     protected final String stacktrace;
 
     /**
-     * Constructs a error model given message
+     * Constructs an error model given message.
      * 
      * @param message
      *            error message
@@ -61,7 +61,7 @@ public class ErrorModel extends MessageModel {
     }
 
     /**
-     * Constructs a error model given message and details
+     * Constructs an error model given message and details.
      * 
      * @param message
      *            error message
@@ -93,6 +93,8 @@ public class ErrorModel extends MessageModel {
         this.message = reasonToSet;
         // stacktrace
         String stacktraceToSet = stacktrace;
+        // Fix newlines
+        // TODO still not working under windows, maybe the error dialog is evil
         if (!Platform.getOS().equals(Platform.OS_WIN32)) {
             // Fix newlines
             String newline = System.getProperty("line.separator");
@@ -104,7 +106,7 @@ public class ErrorModel extends MessageModel {
     }
 
     /**
-     * Constructs a error model given message and exception
+     * Constructs an error model given message and exception.
      * 
      * @param message
      *            error message
@@ -114,11 +116,11 @@ public class ErrorModel extends MessageModel {
         this(message, exception.getMessage(), getStackTraceString(exception));
     }
 
-    // -- Util
+    // -- Utility Functions
     // -------------------------------------------------------------------------
 
     /**
-     * Prints the stack trace of an Exception into String
+     * Prints the stack trace of an Exception into String.
      * 
      * @param exception
      *            Exception
@@ -150,7 +152,7 @@ public class ErrorModel extends MessageModel {
         }
     }
 
-    // -- Getter
+    // -- Getters
     // -------------------------------------------------------------------------
 
     /**

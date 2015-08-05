@@ -68,7 +68,7 @@ class EcoreModelSynthesis extends AbstractDiagramSynthesis<EcoreModelWrapper> {
     // -------------------------------------------------------------------------
     // Constants
     public static val String ID = "de.cau.cs.kieler.kico.klighd.view.model.EcoreModelSynthesis";
-    private static val KColor BG_COLOR = RENDERING_FACTORY.createKColor() => [red = 255; green = 202; blue = 119];
+    private static val KColor BACKGROUND_COLOR = RENDERING_FACTORY.createKColor() => [red = 255; green = 202; blue = 119];
     private static val KColor SHADOW_COLOR = RENDERING_FACTORY.createKColor() => [it.color = Colors.BLACK];
 
     // -------------------------------------------------------------------------
@@ -76,7 +76,9 @@ class EcoreModelSynthesis extends AbstractDiagramSynthesis<EcoreModelWrapper> {
     override KNode transform(EcoreModelWrapper wrapper) {
         val model = wrapper.model;
         val rootNode = createNode(wrapper);
+        // transform root object
         rootNode.children += model.translateEObject
+        // transform and connect all succeeding objects
         rootNode.children += model.eAllContents.map [
             val child = it.translateEObject;
             val container = it.eContainer;
@@ -97,7 +99,19 @@ class EcoreModelSynthesis extends AbstractDiagramSynthesis<EcoreModelWrapper> {
         node.associateWith(object);
 
         // create and add colored rectangle for this node
-        val figure = node.createFigure;
+        val figure = node.addRoundedRectangle(8, 8, 1);
+        figure.lineWidth = 1;
+        figure.foreground = Colors.GRAY;
+        figure.background = BACKGROUND_COLOR;
+
+        // add shadow
+        // omit shadow to increase performance
+        //figure.shadow = SHADOW_COLOR.copy;
+        //figure.shadow.XOffset = 4;
+        //figure.shadow.YOffset = 4;
+
+        // minimal node size is necessary if no text will be added
+        node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
         figure.background = Colors.GRAY_95;
 
         // align all text fields in a column.
@@ -120,21 +134,5 @@ class EcoreModelSynthesis extends AbstractDiagramSynthesis<EcoreModelWrapper> {
                 it.suppressSelectability;
             ];
         ]
-    }
-
-    private def createFigure(KNode node) {
-        val figure = node.addRoundedRectangle(8, 8, 1);
-        figure.lineWidth = 1;
-        figure.foreground = Colors.GRAY;
-        figure.background = BG_COLOR;
-
-        // add shadow
-        figure.shadow = SHADOW_COLOR.copy;
-        figure.shadow.XOffset = 4;
-        figure.shadow.YOffset = 4;
-
-        // minimal node size is necessary if no text will be added
-        node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
-        return figure;
     }
 }

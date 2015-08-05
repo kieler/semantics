@@ -25,18 +25,19 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
 
 /**
- * Manages the different ModelUpdateController for the ModelView.
+ * Manages the different {@link AbstractModelUpdateController} instances for the {@link ModelView}
+ * and provides correct instantiation.
  * <p>
- * This class evaluates the extension point.
+ * This class evaluates the controller extension point.
  * <p>
- * This class is a singleton
+ * This class is a singleton.
  * 
  * @author als
  * @kieler.design 2015-06-22 proposed
  * @kieler.rating 2015-06-22 proposed yellow
  *
  */
-public class ModelUpdateControllerManager {
+public class ModelUpdateControllerFactory {
 
     // -- CONSTANTS --
     /** Identifier of the extension point for controllers. */
@@ -69,12 +70,12 @@ public class ModelUpdateControllerManager {
     // -- SINGLETON --
 
     /** the singleton instance. */
-    private static ModelUpdateControllerManager instance;
+    private static ModelUpdateControllerFactory instance;
 
     /**
      * A private constructor to prevent instantiation.
      */
-    private ModelUpdateControllerManager() {
+    private ModelUpdateControllerFactory() {
         // do nothing
     }
 
@@ -82,7 +83,7 @@ public class ModelUpdateControllerManager {
      * Creates the singleton and initializes it with the data from the extension point.
      */
     static {
-        instance = new ModelUpdateControllerManager();
+        instance = new ModelUpdateControllerFactory();
         // load the data from the extension points
         try {
             instance.loadControllerExtension();
@@ -93,7 +94,7 @@ public class ModelUpdateControllerManager {
                     .handle(new Status(
                             IStatus.ERROR,
                             KiCoKLighDPlugin.PLUGIN_ID,
-                            ModelUpdateControllerManager.class.getName()
+                            ModelUpdateControllerFactory.class.getName()
                                     + ": Unexptected failure while loading registered controllers.",
                             e));
         }
@@ -104,18 +105,18 @@ public class ModelUpdateControllerManager {
      *
      * @return the singleton
      */
-    public static ModelUpdateControllerManager getInstance() {
+    public static ModelUpdateControllerFactory getInstance() {
         return instance;
     }
 
     // -- ATTRIBUES --
-    /** The mapping of ids to the corresponding classes of {@link AbstractModelUpdateController} . */
+    /** The mapping of IDs to the corresponding classes of {@link AbstractModelUpdateController} . */
     private final HashMap<String, Class<? extends AbstractModelUpdateController>> idControllerMapping =
             new HashMap<String, Class<? extends AbstractModelUpdateController>>();
-    /** The mapping of editor-ids to the corresponding controller ids. */
+    /** The mapping of editor-IDs to the corresponding controller IDs. */
     private final HashMap<String, String> editorControllerMapping = new HashMap<String, String>();
 
-    // -- Extension Point
+    // -- Extension Point Parsing
     // -------------------------------------------------------------------------
 
     /**
@@ -213,7 +214,7 @@ public class ModelUpdateControllerManager {
      */
     public static boolean isHandledEditor(IEditorPart editor) {
         if (editor != null) {
-            return ModelUpdateControllerManager.getInstance().editorControllerMapping
+            return ModelUpdateControllerFactory.getInstance().editorControllerMapping
                     .containsKey(editor.getEditorSite().getId());
         }
         return true;
@@ -228,7 +229,7 @@ public class ModelUpdateControllerManager {
      */
     public static String getHandlingControllerID(IEditorPart editor) {
         if (editor != null) {
-            return ModelUpdateControllerManager.getInstance().editorControllerMapping.get(editor
+            return ModelUpdateControllerFactory.getInstance().editorControllerMapping.get(editor
                     .getEditorSite().getId());
         }
         return null;
@@ -246,7 +247,7 @@ public class ModelUpdateControllerManager {
     public static AbstractModelUpdateController getNewInstance(String controllerID,
             ModelView modelView) {
         if (controllerID != null && modelView != null) {
-            ModelUpdateControllerManager mucm = ModelUpdateControllerManager.getInstance();
+            ModelUpdateControllerFactory mucm = ModelUpdateControllerFactory.getInstance();
             Class<? extends AbstractModelUpdateController> clazz =
                     mucm.idControllerMapping.get(controllerID);
             if (clazz != null) {
@@ -255,7 +256,7 @@ public class ModelUpdateControllerManager {
                 } catch (Exception e) {
                     StatusManager.getManager().handle(
                             new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
-                                    ModelUpdateControllerManager.class.getName()
+                                    ModelUpdateControllerFactory.class.getName()
                                             + ": Cannot instanciate controller", e),
                             StatusManager.LOG);
                 }

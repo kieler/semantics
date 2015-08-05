@@ -32,6 +32,7 @@ import de.cau.cs.kieler.klighd.IAction;
  */
 public class OpenCodeInEditorAction implements IAction {
 
+    /** Action ID. */
     public final static String ID =
             "de.cau.cs.kieler.kico.klighd.model.action.OpenCodeInEditorAction";
 
@@ -40,12 +41,13 @@ public class OpenCodeInEditorAction implements IAction {
      */
     public ActionResult execute(ActionContext context) {
         Object inputModel = context.getViewContext().getInputModel();
-        // get error model
+
+        // get placeholder model
         CodePlaceHolder codeModel = null;
         if (inputModel instanceof CodePlaceHolder) {
             codeModel = (CodePlaceHolder) inputModel;
         } else if (context.getKNode() != null) {
-            // if input model is not KiCoCodePlaceHolder check if clicked node is associated with it
+            // if input model is not CodePlaceHolder check if clicked node is associated with it
             Object domainElement = context.getDomainElement(context.getKNode());
             if (domainElement instanceof CodePlaceHolder) {
                 codeModel = (CodePlaceHolder) domainElement;
@@ -67,12 +69,13 @@ public class OpenCodeInEditorAction implements IAction {
 
             // open editor
             IWorkbenchPage page = window.getActivePage();
-            if (page != null)
+            if (page != null) {
                 try {
                     page.openEditor(input, codeModel.getEditorID());
                 } catch (PartInitException e) {
                     e.printStackTrace();
                 }
+            }
         }
         return ActionResult.createResult(false);
 

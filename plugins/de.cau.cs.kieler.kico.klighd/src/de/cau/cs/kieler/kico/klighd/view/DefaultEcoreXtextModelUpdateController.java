@@ -33,7 +33,7 @@ import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**
- * Simple controller for XText and ECore model editors.
+ * Simple controller for XText and Ecore model editors.
  * 
  * @author als
  * @kieler.design 2015-06-29 proposed
@@ -42,7 +42,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  */
 public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateController {
 
-    /** Controller ID */
+    /** Controller ID. */
     private static final String ID =
             "de.cau.cs.kieler.kico.klighd.view.DefaultEcoreXtextModelUpdateController";
 

@@ -14,16 +14,12 @@
 package de.cau.cs.kieler.kico.klighd.view.model;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ui.IEditorPart;
-
-import de.cau.cs.kieler.kico.klighd.view.ISelectableGeneralSynthesis;
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**
  * This class wraps a Ecore model to allow usage of the {@link EcoreModelSythesis}.
  * <p>
- * This wrapping is done to prevent registering the synthesis for EObjct in general and cause
- * problem wit all other registered syntheses.
+ * This wrapping is done to prevent registering the synthesis for EObjct in general and cause clash
+ * problem with all other registered syntheses.
  * 
  * @author als
  * @kieler.design 2015-07-06 proposed
@@ -33,12 +29,13 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 public class EcoreModelWrapper {
 
     /** The model. */
-    private final EObject model;
+    protected final EObject model;
 
     /**
-     * Default Constructor.
+     * Constructs an error model for Ecore tree representation.
      * 
      * @param model
+     *            the actual model
      */
     public EcoreModelWrapper(EObject model) {
         this.model = model;

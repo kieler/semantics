@@ -50,23 +50,23 @@ public class ModelViewManager extends UIJob implements IStartup {
     // -- PSEUDO SINGLETON
     // -------------------------------------------------------------------------
 
-    /** Singleton instance */
+    /** Singleton instance. */
     private static ModelViewManager instance;
 
     /**
-     * Standard Constructor
+     * Standard Constructor.
      */
     public ModelViewManager() {
         super(jobName);
         if (instance == null) {
             instance = this;
         } else {
-            throw new IllegalStateException("KiCoModelViewManager can only be instanciated once");
+            throw new IllegalStateException("ModelViewManager can only be instanciated once");
         }
     }
 
     /**
-     * @return Singleton instance of KiCoModelViewManager or null if not yet instantiated by startup
+     * @return Singleton instance of {@link ModelViewManager} or null if not yet instantiated by startup
      */
     public static ModelViewManager getInstance() {
         return instance;
@@ -75,16 +75,16 @@ public class ModelViewManager extends UIJob implements IStartup {
     // -- ATTRIBUTES
     // -------------------------------------------------------------------------
 
-    /** Name of this class used for Jobs */
+    /** Name of this class used for jobs. */
     private static final String jobName = "KIELER ModelView Manager Startup";
 
-    /** Global Listener Adapter */
+    /** Global Listener Adapter. */
     private GlobalPartAdapter adapter;
     /** List of open model editors which MAY contain valid models. */
     private LinkedList<IEditorPart> editors = new LinkedList<IEditorPart>();
     /** List of open KiCoModelViews. */
     private LinkedList<ModelView> modelViews = new LinkedList<ModelView>();
-    /** Active editor the primary model view is listening to */
+    /** Active editor the primary model view is listening to. */
     private IEditorPart activeEditor = null;
 
     // -- STARTUP
@@ -122,7 +122,7 @@ public class ModelViewManager extends UIJob implements IStartup {
             IWorkbenchPart part = partRef.getPart(false);
             if (part != null) {
                 if (part instanceof IEditorPart
-                        && ModelUpdateControllerManager.isHandledEditor((IEditorPart) part)) {
+                        && ModelUpdateControllerFactory.isHandledEditor((IEditorPart) part)) {
                     IEditorPart editor = (IEditorPart) part;
                     editors.add(editor);
                     editor.addPropertyListener(dirtyPropertyListener);
