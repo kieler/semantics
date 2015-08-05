@@ -258,7 +258,7 @@ public class SynthesisSelectionMenu extends MenuManager {
             KlighdSynthesisProperties properties) {
         KlighdDataManager kdm = KlighdDataManager.getInstance();
         if (model != null) {
-            if (properties.getProperty(USE_FALLBACK_SYSTHESIS)) {
+            if (properties.getProperty(ModelViewProperties.USE_FALLBACK_SYSTHESIS)) {
                 // In this case the first synthesis failed
                 String synthesisID =
                         properties

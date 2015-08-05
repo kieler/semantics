@@ -46,9 +46,10 @@ import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.klighd.view.model.MessageModel
 
 /**
- * Diagram synthesis of a ModelChain.
+ * Diagram synthesis for a ModelChain.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed
@@ -99,7 +100,7 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
     private static val KColor SHADOW_COLOR = RENDERING_FACTORY.createKColor() => [it.color = Colors.BLACK];
 
     // -------------------------------------------------------------------------
-    // The Main entry transform function
+    // Synthesis
     override KNode transform(ModelChain chainWrapper) {
         val chain = chainWrapper.getModels;
         val rootNode = createNode();
@@ -120,8 +121,8 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
                     [
                         it.addPolyline => [
                             // if label name is null hide edge
-                            it.addArrowDecorator.invisible = chainWrapper.isBlankMode;
                             it.invisible = chainWrapper.isBlankMode;
+                            it.addArrowDecorator.invisible = chainWrapper.isBlankMode;
                         ]
                         // if available add label
                         if (!chainWrapper.isBlankMode && i - 1 < chainWrapper.getTranformations.size) {
@@ -185,33 +186,27 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
         var KNode subDiagramNode = null;
         try {
             val properties = new KlighdSynthesisProperties();
-            properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
             val viewpart = usedContext.diagramWorkbenchPart;
             if (viewpart instanceof ModelView) {
                 val synthesisSelection = (viewpart as ModelView).synthesisSelectionMenu;
-                val synthesisPair = synthesisSelection.getSynthesis(model, properties);
+                val synthesisModelPair = synthesisSelection.getSynthesis(model,
+                    properties.getProperty(ModelViewProperties.EDITOR_PART), properties);
                 properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-                    KlighdDataManager.instance.getSynthesisID(synthesisPair.first));
-                if (synthesisPair.second) {
-                    subDiagramNode = LightDiagramServices::translateModel(
-                        synthesisSelection.prepareModel(model, usedContext.getProperty(ModelViewProperties.EDITOR_PART),
-                            synthesisPair.first, properties), usedContext, properties);
-                } else {
-                    subDiagramNode = LightDiagramServices::translateModel(model, usedContext, properties);
-                }
+                    KlighdDataManager.instance.getSynthesisID(synthesisModelPair.first));
+                subDiagramNode = LightDiagramServices::translateModel(synthesisModelPair.second, usedContext,
+                    properties);
             } else {
                 subDiagramNode = LightDiagramServices::translateModel(model, usedContext, properties);
             }
         } catch (Exception e) {
             // fallthrou
         }
+        // If normal synthesis failed create message
         if ((subDiagramNode == null || subDiagramNode.children.isEmpty) && model instanceof EObject) { // component synthesis
-            val properties = new KlighdSynthesisProperties();
-            properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
-            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, EcoreModelSynthesis.ID);
-            subDiagramNode = LightDiagramServices::translateModel(new EcoreModelWrapper(model as EObject),
-                usedContext, properties);
+            subDiagramNode = LightDiagramServices::translateModel(new MessageModel("Cannot create sub-diagram"),
+                usedContext, new KlighdSynthesisProperties());
         }
+        // Add subdiagram
         if (subDiagramNode != null && !subDiagramNode.children.isEmpty) {
 
             // prevent adding of rectangle by adding an invisible own one.

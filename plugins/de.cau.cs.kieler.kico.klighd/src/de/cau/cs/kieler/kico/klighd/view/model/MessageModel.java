@@ -13,6 +13,10 @@
  */
 package de.cau.cs.kieler.kico.klighd.view.model;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.xtext.util.StringInputStream;
+
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
 
 /**
@@ -23,7 +27,7 @@ import de.cau.cs.kieler.core.krendering.KContainerRendering;
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class MessageModel {
+public class MessageModel implements ISaveableModel {
 
     /** The title. */
     protected String title;
@@ -106,6 +110,31 @@ public class MessageModel {
         // do nothing
     }
 
+    // -- Save
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void save(IFile file, URI uri) throws Exception {
+        StringBuilder text = new StringBuilder();
+        String newline = System.getProperty("line.separator");
+        if (title != null) {
+            text.append(title);
+            text.append(newline);
+        }
+        if (message != null) {
+            text.append(message);
+        }
+        // save to text file (create it if necessary)
+        if (!file.exists()) {
+            file.create(new StringInputStream(text.toString()), 0, null);
+        } else {
+            file.setContents(new StringInputStream(text.toString()), 0, null);
+        }
+    }
+
     // -- Getters
     // -------------------------------------------------------------------------
 
@@ -150,4 +179,5 @@ public class MessageModel {
     public int getIconSize() {
         return iconSize;
     }
+
 }

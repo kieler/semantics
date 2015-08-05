@@ -54,13 +54,16 @@ import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.xtext.util.StringInputStream;
 
 import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
+import de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
+import de.cau.cs.kieler.kico.klighd.view.model.ISaveableModel;
 import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
 import de.cau.cs.kieler.kiml.config.ILayoutConfig;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
@@ -854,12 +857,21 @@ public final class ModelView extends DiagramViewPart {
                     try {
                         file.refreshLocal(IResource.DEPTH_INFINITE, null);
                     } catch (CoreException e) {
-                        e.printStackTrace();
+                        StatusManager.getManager().handle(
+                                new Status(IStatus.WARNING, KiCoKLighDPlugin.PLUGIN_ID,
+                                        e.getMessage(), e), StatusManager.LOG);
                     }
                 }
 
+                // perform saving
                 try {
-                    activeController.saveModel(currentModel, file, uri);
+                    // if model is a saveable model of the ModelView handle directly otherwise
+                    // redirect save operation to controller
+                    if (currentModel instanceof ISaveableModel) {
+                        ((ISaveableModel) currentModel).save(file, uri);
+                    } else {
+                        activeController.saveModel(currentModel, file, uri);
+                    }
                 } catch (Exception e) {
                     StatusManager.getManager()
                             .handle(new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,

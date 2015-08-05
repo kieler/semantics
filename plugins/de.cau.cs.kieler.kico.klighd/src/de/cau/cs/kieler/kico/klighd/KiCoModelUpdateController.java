@@ -49,6 +49,7 @@ import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KielerCompilerException;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.internal.ResourceExtension;
 import de.cau.cs.kieler.kico.klighd.internal.AsynchronousCompilation;
 import de.cau.cs.kieler.kico.klighd.internal.CompilerSelectionStore;
@@ -58,6 +59,7 @@ import de.cau.cs.kieler.kico.klighd.view.DefaultEcoreXtextModelUpdateController;
 import de.cau.cs.kieler.kico.klighd.view.ModelView;
 import de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
+import de.cau.cs.kieler.kico.klighd.view.model.ISaveableModel;
 import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
 import de.cau.cs.kieler.kiml.config.CompoundLayoutConfig;
 import de.cau.cs.kieler.kiml.config.ILayoutConfig;
@@ -81,11 +83,10 @@ import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination;
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-@SuppressWarnings("restriction")
 public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateController {
 
     /**
-     * Events that can cause a update of shown model
+     * Events that can cause an update of displayed model
      * 
      * @author als
      * 
@@ -103,9 +104,9 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
 
     /**
      * Indicates how long this view should wait before starting REAL asynchronous compilation. This
-     * timer makes the common case faster (without intermediate model)
+     * timer makes the common case faster (without intermediate model).
      */
-    private static final int waitForAsync = 500;
+    private static final int ASYNC_DELAY = 500;
 
     // -- Icons --
     /** The icon for toggling side-by-side display mode button. */
@@ -113,8 +114,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
             "de.cau.cs.kieler.kico.klighd", "icons/Compile.png");
     /** The icon for fork view button. */
     private static final ImageDescriptor ICON_SIDE_BY_SIDE = AbstractUIPlugin
-            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd",
-                    "icons/SideBySide.png");
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/SideBySide.png");
     /** The icon for toggling chain display mode button. */
     private static final ImageDescriptor ICON_CHAIN = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.klighd", "icons/Chain.png");
@@ -165,7 +165,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
     private AsynchronousCompilation currentCompilation = null;
 
     /**
-     * Current compilation result associated with current model or null if current model is not
+     * Current compilation result associated with current model or null if current model was not
      * compiled
      */
     private CompilationResult currentCompilationResult = null;
@@ -190,7 +190,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
         super(modelView);
         CompilerSelectionStore.register(this);
 
-        // Compile Button
+        // Compile button
         actionCompileToggle = new Action("Show compiled model", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
@@ -202,7 +202,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
         actionCompileToggle.setImageDescriptor(ICON_COMPILE);
         actionCompileToggle.setChecked(compileModel);
 
-        // Pin Button
+        // Pin button
         actionPinToggle = new Action("Pin selected transformations", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
@@ -222,7 +222,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
         actionPinToggle.setImageDescriptor(ICON_PIN);
         actionPinToggle.setChecked(false);
 
-        // Side-by-Side Button
+        // Side-by-Side button
         actionSideBySideToggle =
                 new Action("Activate side-by-side display mode", IAction.AS_CHECK_BOX) {
                     @Override
@@ -235,7 +235,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
         actionSideBySideToggle.setImageDescriptor(ICON_SIDE_BY_SIDE);
         actionSideBySideToggle.setChecked(displaySideBySide);
 
-        // Tracing Item
+        // Tracing item
         actionTracingToggle = new Action("Tracing", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
@@ -337,20 +337,15 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
      */
     @Override
     public void saveModel(Object model, IFile file, URI uri) throws Exception {
+        // decompose chain
         if (model instanceof ModelChain) {
             model = ((ModelChain) model).getSelectedModel();
         }
-        // TODO Handle Compiled intermeduate result
-        if (model instanceof EObject) {
+        // save
+        if (model instanceof ISaveableModel) {
+            ((ISaveableModel) model).save(file, uri);
+        } else {
             super.saveModel(model, file, uri);
-        } else if (model instanceof CodePlaceHolder) {
-            // save to text file (create if necessary)
-            if (!file.exists()) {
-                file.create(new StringInputStream(((CodePlaceHolder) model).getCode()), 0, null);
-            } else {
-                file.setContents(new StringInputStream(((CodePlaceHolder) model).getCode()), 0,
-                        null);
-            }
         }
     }
 
@@ -364,7 +359,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
             if (filename.contains(".")) {
                 filename = filename.substring(0, filename.lastIndexOf('.'));
             }
-            // Adding file extension
+            // Adding correct file extension if available
             ResourceExtension ext = KiCoPlugin.getInstance().getResourceExtension(model);
             if (ext != null) {
                 filename += "." + ext.getExtension();
@@ -405,7 +400,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
             }
             warningMessageContainer = null;
         }
-        // show warnings
+        // show warnings composite
         CompilationResult compilationResult =
                 properties.getProperty(KiCoProperties.COMPILATION_RESULT);
         if (compilationResult != null && !compilationResult.getPostponedWarnings().isEmpty()) {
@@ -434,11 +429,14 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
      * Updates the model caused by changeEvent including return of asynchronous compilation.
      * 
      * @param change
+     *            the change event
+     * @param compilation
+     *            the finished {@link AsynchronousCompilation} or null
      */
     public synchronized void update(ChangeEvent change, AsynchronousCompilation compilation) {
         IEditorPart editor = getEditor();
         if (editor != null) {
-            // change event flags
+            // determine event flags
             boolean is_active_editor_update = change == ChangeEvent.ACTIVE_EDITOR;
             boolean is_save_update = change == ChangeEvent.SAVED;
             boolean is_selection_update = change == ChangeEvent.SELECTION;
@@ -446,7 +444,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
             boolean is_compile_update =
                     change == ChangeEvent.COMPILE || change == ChangeEvent.COMPILATION_FINISHED;
 
-            // Evaluate if source model should be updated
+            // Evaluate if source model should be read from source editor
             boolean do_get_model = false;
             do_get_model |= is_active_editor_update;
             do_get_model |= is_save_update;
@@ -469,10 +467,10 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
                 return;
             }
 
-            // Create model to pass to update
+            // Create model to passed to update
             Object model = sourceModel;
 
-            // Evaluate if current transformation configuration should be asked
+            // Evaluate if current transformation configuration should be read
             boolean do_get_selection = false;
             do_get_selection |= is_selection_update;
             do_get_selection |= is_active_editor_update;
@@ -541,7 +539,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
                     boolean showProgress = true;
                     // To make the common case fast
                     // First wait some seconds for cases with fast compilation
-                    for (int i = 0; i < waitForAsync / 10; i++) {
+                    for (int i = 0; i < ASYNC_DELAY / 10; i++) {
                         // check if finished
                         if (currentCompilation.hasFinishedCompilation()) {
                             showProgress = false;
@@ -557,9 +555,6 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
                     }
 
                     if (showProgress) {// if not the fast case
-                        // if (this.getViewer() != null) {
-                        // currentCompilation.showProgress(this.getViewer());
-                        // }
                         currentCompilation.setUpdateModelView(true);
                     } else { // directly take result and suppress additional update
                         model = currentCompilation.getModel();
@@ -571,7 +566,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
                     model = currentCompilation.getModel();
                     currentCompilationResult = currentCompilation.getCompilationResult();
                     currentCompilation = null;
-                } else {// This is not the most recent compilation
+                } else {// In case this is not the most recent compilation
                     return;
                 }
             } else if (!is_selection_update || selection_changed) {
@@ -600,6 +595,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
                 }
             }
 
+            // Evaluate if diagram update is necessary
             boolean do_update_diagram = false;
             do_update_diagram |= do_get_model;
             do_update_diagram |= do_compile;
@@ -641,6 +637,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
     @Override
     public ILayoutConfig getLayoutConfig() {
         ViewContext viewContext = getModelView().getViewContext();
+        // Assure that model chain is always layouted left to right
         if (viewContext.getInputModel() instanceof ModelChain) {
             return new CompoundLayoutConfig(Lists.newArrayList(super.getLayoutConfig(),
                     new VolatileLayoutConfig(KlighdConstants.SIDE_BAR_LAYOUT_CONFIG_PRIORITY + 1)
@@ -680,7 +677,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
             }
         }
     }
-    
+
     // -- Visual error feedback
     // -------------------------------------------------------------------------
 

@@ -44,6 +44,8 @@ public abstract class AbstractModelUpdateController {
 
     /**
      * Default Constructor.
+     * <p>
+     * All extending classes need a Constructor with this one Attribute to be instantiated.
      * 
      * @param modelView
      *            the ModelView this controller is associated with
@@ -199,7 +201,7 @@ public abstract class AbstractModelUpdateController {
     // -------------------------------------------------------------------------
 
     /**
-     * Saved the given model into given file.
+     * Saves the given model into given file.
      * 
      * @param model
      *            model to save

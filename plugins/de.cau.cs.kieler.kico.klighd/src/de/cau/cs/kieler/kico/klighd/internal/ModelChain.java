@@ -24,8 +24,7 @@ import de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
 
 /**
- * This is a Wrapper for a list of KiCoModelWrapper because KLighD does not support diagram
- * synthesis on Lists properly.
+ * This is a Wrapper model for a list of models. Related to {@link ModelChainSynthesis}.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed
@@ -34,30 +33,24 @@ import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
  */
 public class ModelChain {
 
+    /** The list (chain) of models. */
     private final LinkedList<Object> models = new LinkedList<Object>();
+
+    /** The transition labels between models */
     private final LinkedList<String> tranformations = new LinkedList<String>();
+
+    /** A map of models in the chain and a flag indicating if this model is collapsed or not */
     private final HashMap<Object, Boolean> collapse = new HashMap<Object, Boolean>();
+
+    /**
+     * A flag indicating if this chain should be dispalyed in blank mode. Non blank mode will draw
+     * container around each model.
+     */
     private boolean blankMode = true;
 
     /**
-     * Creates a one element model chain from given model. This is used to have a fall-back
-     * synthesis for models without a own synthesis.
-     * 
-     * @param firstModel
-     *            first model
-     * @param secondModel
-     *            second model
-     */
-    public ModelChain(final Object model) {
-        if (model == null) {
-            models.add(new MessageModel("Missing Model"));
-        } else {
-            models.add(model);
-        }
-    }
-
-    /**
-     * Creates a two element model chain from given models representing a side-by-side model.
+     * Creates a two elemental model chain from given models representing a blank side-by-side view
+     * on both.
      * 
      * @param firstModel
      *            first model
@@ -87,21 +80,21 @@ public class ModelChain {
      * @param transformations
      *            the selected transformations
      */
-    public ModelChain(Object sourceModel, final CompilationResult compilationResult, final String modelName,
-            KielerCompilerSelection selection) {
+    public ModelChain(Object sourceModel, final CompilationResult compilationResult,
+            final String modelName, KielerCompilerSelection selection) {
         models.add(sourceModel);
         collapse.put(sourceModel, false);
         for (IntermediateResult ir : compilationResult.getTransformationIntermediateResults()) {
             Object model = ir.getResult();
             if (model instanceof String) {
                 model = new CodePlaceHolder(modelName, (String) model);
-            } else if(model == null) {
+            } else if (model == null) {
                 model = new MessageModel("Missing Model");
             }
-            if(!models.contains(model)) {
+            if (!models.contains(model)) {
                 tranformations.add(ir.getId());
                 models.add(model);
-                collapse.put(model, false);//true
+                collapse.put(model, false);// true
             }
         }
         collapse.put(models.getLast(), false);
@@ -132,7 +125,7 @@ public class ModelChain {
     }
 
     /**
-     * @return the tranformations
+     * @return the transformations
      */
     public LinkedList<String> getTranformations() {
         return tranformations;

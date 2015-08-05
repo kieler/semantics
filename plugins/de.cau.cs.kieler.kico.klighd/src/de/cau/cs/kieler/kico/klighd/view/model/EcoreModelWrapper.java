@@ -13,7 +13,12 @@
  */
 package de.cau.cs.kieler.kico.klighd.view.model;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.util.StringInputStream;
+
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 
 /**
  * This class wraps a Ecore model to allow usage of the {@link EcoreModelSythesis}.
@@ -26,7 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  * @kieler.rating 2015-07-06 proposed yellow
  * 
  */
-public class EcoreModelWrapper {
+public class EcoreModelWrapper implements ISaveableModel {
 
     /** The model. */
     protected final EObject model;
@@ -41,6 +46,20 @@ public class EcoreModelWrapper {
         this.model = model;
     }
 
+    // -- Save
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void save(IFile file, URI uri) throws Exception {
+        ModelUtil.saveModel(model, uri);
+    }
+
+    // -- Getters
+    // -------------------------------------------------------------------------
+    
     /**
      * @return the model
      */

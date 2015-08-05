@@ -13,6 +13,10 @@
  */
 package de.cau.cs.kieler.kico.klighd.view.model;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.xtext.util.StringInputStream;
+
 /**
  * Placeholder for a huge text or code.
  * 
@@ -21,7 +25,7 @@ package de.cau.cs.kieler.kico.klighd.view.model;
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class CodePlaceHolder {
+public class CodePlaceHolder implements ISaveableModel {
 
     /** The default editor. */
     private final static String DEFAULT_EDITOR = "org.eclipse.ui.DefaultTextEditor";
@@ -68,6 +72,22 @@ public class CodePlaceHolder {
         this.code = code;
         this.editorID = editorID;
         this.resourceExtension = resourceExtension;
+    }
+
+    // -- Save
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void save(IFile file, URI uri) throws Exception {
+        // save to text file (create it if necessary)
+        if (!file.exists()) {
+            file.create(new StringInputStream(getCode()), 0, null);
+        } else {
+            file.setContents(new StringInputStream(getCode()), 0, null);
+        }
     }
 
     // -- Getters

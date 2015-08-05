@@ -16,7 +16,10 @@ package de.cau.cs.kieler.kico.klighd.view.model;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.xtext.util.StringInputStream;
 
 import com.google.inject.Guice;
 
@@ -149,6 +152,35 @@ public class ErrorModel extends MessageModel {
             KGridPlacementData placementData = KRE.setGridPlacementData(link);
             KRE.from(placementData, PositionReferenceX.LEFT, 8, 0, PositionReferenceY.TOP, 4, 0);
             KRE.to(placementData, PositionReferenceX.RIGHT, 8, 0, PositionReferenceY.BOTTOM, 8, 0);
+        }
+    }
+
+    // -- Save
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void save(IFile file, URI uri) throws Exception {
+        StringBuilder text = new StringBuilder();
+        String newline = System.getProperty("line.separator");
+        if (title != null) {
+            text.append(title);
+            text.append(newline);
+        }
+        if (message != null) {
+            text.append(message);
+            text.append(newline);
+        }
+        if (stacktrace != null) {
+            text.append(stacktrace);
+        }
+        // save to text file (create it if necessary)
+        if (!file.exists()) {
+            file.create(new StringInputStream(text.toString()), 0, null);
+        } else {
+            file.setContents(new StringInputStream(text.toString()), 0, null);
         }
     }
 
