@@ -1237,8 +1237,10 @@ public class KiCoSelectionView extends DiagramViewPart {
     // TransformationChange Event Manager
     // -------------------------------------------------------------------------
 
+    // TODO merge with CompilerSelectionStore from kico.klighd
+    
     /** Manager to handle listeners on selection change events */
-    private final static KiCoSelectionChangeEventManager selectionEventManger =
+    public final static KiCoSelectionChangeEventManager selectionEventManger =
             new KiCoSelectionChangeEventManager();
 
     // -------------------------------------------------------------------------
@@ -1266,7 +1268,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     /**
      * Notifies all listeners about the new selection
      */
-    public static void notifySelectionChangeEventListener() {
+    static void notifySelectionChangeEventListener() {
         int id = getActiveEditorID();
         KielerCompilerSelection selection = getSelectionModel(id).getContext().getSelection();
         selectionEventManger.fireSelectionChangeEvent(id,
