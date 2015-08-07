@@ -22,6 +22,7 @@ import de.cau.cs.kieler.scg.ThenDependency
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.Set
 import org.eclipse.emf.common.util.BasicEList
+import de.cau.cs.kieler.scg.DataDependency
 
 class SCPDGMinimizeDependenciesTransformation extends AbstractProductionTransformation implements Traceable {
     
@@ -66,7 +67,7 @@ class SCPDGMinimizeDependenciesTransformation extends AbstractProductionTransfor
         val thenTargets = newHashSet()
         val elseTargets = newHashSet()
         val doubleTargets = newHashSet()
-        val doubleTargetsIncoming = newHashSet()
+        val allTargets = newHashSet()
         val uselessCondDependencies = newHashSet()
         cond.dependencies.forEach[dependency|
             if(dependency instanceof ElseDependency){
@@ -75,6 +76,9 @@ class SCPDGMinimizeDependenciesTransformation extends AbstractProductionTransfor
                 thenTargets.add(dependency.target)
             }
         ]
+        
+        allTargets.addAll(thenTargets)
+        allTargets.addAll(elseTargets)
         cond.dependencies.forEach[dependency|
             if(elseTargets.contains(dependency.target) && thenTargets.contains(dependency.target)){
                 uselessCondDependencies.add(dependency)
@@ -117,6 +121,30 @@ class SCPDGMinimizeDependenciesTransformation extends AbstractProductionTransfor
                 }
             ]
              target.dependencies.removeAll(uselessDependencies)
+        ]
+        
+        thenTargets.forEach[target|
+            val uselessDependencies = newHashSet()
+            target.dependencies.forEach[dependency|
+                if(dependency instanceof ControlDependency && !dependency.target.isControlNode){
+                    if(thenTargets.contains(dependency.target)){
+                        uselessDependencies.add(dependency)
+                    }
+                }
+            ]
+            target.dependencies.removeAll(uselessDependencies)
+        ]
+        
+        elseTargets.forEach[target|
+            val uselessDependencies = newHashSet()
+            target.dependencies.forEach[dependency|
+                if(dependency instanceof ControlDependency && !dependency.target.isControlNode){
+                    if(elseTargets.contains(dependency.target)){
+                        uselessDependencies.add(dependency)
+                    }
+                }
+            ]
+            target.dependencies.removeAll(uselessDependencies)
         ]
         
         cond.incoming.forEach[dependency|
