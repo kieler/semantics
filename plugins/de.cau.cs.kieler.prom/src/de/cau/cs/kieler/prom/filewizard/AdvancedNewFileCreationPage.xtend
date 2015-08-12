@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -42,21 +42,35 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * This class also provides a recreate() method which can be used to refresh the resource tree.
  * 
  * @author aas
- * 
  */
 class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
 
+    /**
+     * A URL to a file which contains initial content for the newly created file.
+     */
     @Accessors
     protected String initialContentsURL = ""
 
+    /**
+     * A flag that specifies if the created file should be opened with an editor within Eclipse.
+     */
     @Accessors
     protected boolean openOnCreation = true
 
+    /**
+     * A flag that specifies
+     * if this page might be skipped although the input to create a file is not valid.
+     */
     @Accessors
     protected boolean fileCreationIsOptional = false
 
+    /**
+     * File handle of the file which has been created by this page.
+     */
     @Accessors
     protected IFile newFile
+
+
 
     /**
      * The parent composite of the controls of this class.
@@ -68,10 +82,18 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
      * The checkbox to specify if the file should actually be created.
      * The checkbox is only created if file creation is optional.
      */
-    var Button createFileCheckbox
-
-
-
+    protected Button createFileCheckbox
+    
+    
+    
+    /**
+     * Creates a new instance of this class with the given page name and selection.
+     * 
+     * @param pageName The title of the page
+     * @param selection The selection
+     * @param fileCreationIsOptional Specifies
+     * if this page might be skipped although the input to create a file is not valid.
+     */
     new(String pageName, IStructuredSelection selection, boolean fileCreationIsOptional) {
         super(pageName, selection)
          
@@ -81,8 +103,10 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
 
     /**
      * Creates the controls of this wizard page and sets the reference to the parent composite.
+     * 
+     * @param parent The parent composite for the controls
      */
-    public override createControl(Composite parent) {
+    override createControl(Composite parent) {
         this.parent = parent
 
         if (fileCreationIsOptional) {
@@ -122,7 +146,7 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
      * This method can be used to refresh all controls, notably the resource tree.
      * Note that user modifications to the old controls are lost when calling this method. 
      */
-    public def recreate() {
+    public def void recreate() {
         // Remove old
         control.dispose()
 
@@ -148,6 +172,8 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
     /**
      * Creates the file if the input is valid and fills it with the default contents from the url.
      * After creation the file may be opened in an editor.
+     * 
+     * @return true if the process ended sucessfully. false otherwise.
      */
     public def boolean performFinish() {
         if ((fileCreationIsOptional && createFileCheckbox.selection) || !fileCreationIsOptional) {
@@ -173,7 +199,9 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
 
     /**
      * Sets the error message and updates this wizard's container buttons
-     * because the buttons may be enabled/disabled when the error message changes. 
+     * because the buttons may be enabled/disabled when the error message changes.
+     * 
+     * @param message The new error message 
      */
     override setErrorMessage(String message){
         super.setErrorMessage(message)
@@ -185,6 +213,8 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
     /**
      * Returns an input stream with the initial contents from the initialContentsURL
      * where the ${name} placeholder is replaced with the name of the newly created file.
+     * 
+     * @return an input stream with initial contents for the new file
      */
     protected override getInitialContents() {
         // Get input stream from url

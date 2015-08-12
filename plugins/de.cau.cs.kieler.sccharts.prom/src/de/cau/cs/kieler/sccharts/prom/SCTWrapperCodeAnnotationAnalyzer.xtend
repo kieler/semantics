@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EObject
 
 /**
  * @author aas
- *
  */
 class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer{
     
@@ -65,7 +64,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
     /**
      * Fetches the data for wrapper code generation from a variable declaration of an SCT file.
      */
-    private def initData(WrapperCodeAnnotationData data, Declaration decl){
+    private def void initData(WrapperCodeAnnotationData data, Declaration decl){
         data.input = decl.input
         data.output = decl.output
         data.varType = decl.type.literal
@@ -78,8 +77,12 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
     /**
      * Fetches the data for wrapper code generation from a variable's annotation of an SCT file.
      */
-    private def initData(WrapperCodeAnnotationData data, Annotation annotation){
+    private def void initData(WrapperCodeAnnotationData data, Annotation annotation){
         data.name = annotation.name
+        
+        // Xtend autocast switch expression
+        // (the data object is always casted to different
+        // classes such that arguments always calls a different getter)
         switch (annotation) {
             BooleanAnnotation: data.arguments.add(String.valueOf(annotation.value))
             FloatAnnotation: data.arguments.add(String.valueOf(annotation.value))

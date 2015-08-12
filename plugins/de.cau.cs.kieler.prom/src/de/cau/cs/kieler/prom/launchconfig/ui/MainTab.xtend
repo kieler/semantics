@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,12 +13,14 @@
  */
 package de.cau.cs.kieler.prom.launchconfig.ui
 
+import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.IProjectHolder
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.util.ArrayList
+import java.util.EnumSet
 import java.util.List
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
@@ -49,7 +51,7 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
     /**
      * The launch configuration this object is working on.
      */
-    ILaunchConfiguration configuration
+    private ILaunchConfiguration configuration
 
     /**
      * Combobox with all environments.
@@ -84,11 +86,13 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
     /**
      * Creates a group with the project text field and a button.
      * The button opens a selection dialog with the different projects in the workspace.
+     * 
+     * @param parent The parent composite
      */
-    private def createProjectComponent(Composite parent) {
+    private def void createProjectComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Project", 3)
 
-        project = UIUtil.createTextField(group, "", UIUtil.PROJECT_BUTTON)
+        project = UIUtil.createTextField(group, "", EnumSet.of(UIUtil.Buttons.PROJECT_BUTTON))
         project.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 updateLaunchConfigurationDialog()
@@ -99,11 +103,13 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
     /**
      * Creates a group with the main file text field and a button.
      * The button opens a resource selection dialog in the specified project.
+     * 
+     * @param parent The parent composite
      */
-    private def createMainFileComponent(Composite parent) {
+    private def void createMainFileComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Main file", 3)
 
-        mainFile = UIUtil.createTextField(group, "", UIUtil.RESOURCE_BUTTON, this)
+        mainFile = UIUtil.createTextField(group, "", EnumSet.of(UIUtil.Buttons.RESOURCE_BUTTON), this)
         mainFile.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 updateLaunchConfigurationDialog()
@@ -116,15 +122,17 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      * Creates a group with a combobox showing all environments
      * and a button to revert the values of this launch configuration
      * to the values of the selected environment.
+     * 
+     * @param parent The parent composite
      */
-    private def createEnvironmentComponent(Composite parent) {
+    private def void createEnvironmentComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Environment", 2)
 
         val store = PromPlugin.^default.preferenceStore
         val environments = EnvironmentData.loadAllFromPreferenceStore(store)
         
         
-        // Combobox
+        // Create combobox
         environment = UIUtil.createEnvironmentsCombo(group, environments)
         environment.addSelectionChangedListener(new ISelectionChangedListener() {
             override void selectionChanged(SelectionChangedEvent event) {
@@ -132,7 +140,7 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
             }
         });
         
-        // Button
+        // Create button
         val button = UIUtil.createButton(group, "Reset values")
         button.addSelectionListener(new SelectionAdapter(){
             
@@ -162,13 +170,13 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
     override void initializeFrom(ILaunchConfiguration configuration) {
         this.configuration = configuration
         
-        // Project
+        // Load project
         project.text = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
         
-        // Main file
+        // Load main file
         mainFile.text = configuration.getAttribute(LaunchConfiguration.ATTR_MAIN_FILE, "")
         
-        // Environment
+        // Load environment
         if (environment.input != null) {
             val loadedEnvironmentName = configuration.getAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, "")
             for (env : environment.input as ArrayList<EnvironmentData>) {
@@ -183,13 +191,13 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      * {@inheritDoc}
      */
     override void performApply(ILaunchConfigurationWorkingCopy configuration) {
-        // Project
+        // Save project
         configuration.setAttribute(LaunchConfiguration.ATTR_PROJECT, project.text)
         
-        // Main file
+        // Save main file
         configuration.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, mainFile.text)
 
-        // Environment
+        // Save environment
         val env = getSelectedEnvironment()
         if (env != null) 
             configuration.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, env.name)
@@ -203,31 +211,42 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
 
     /**
      * Checks if the current input makes sense and set an error message accordingly.
+     * 
+     * @return true if the input is valid. false otherwise
      */
-    private def checkConsistency() {
-        errorMessage = {
-            // Project is not empty
-            if (project.text == null || project.text == "") {
-                "Project not specified."
-            } else {
-                // Project exist
-                val proj = LaunchConfiguration.findProject(project.text)
-                if (proj == null) {
-                    "Project does not exist."
-                }else{
-                    // Main file exists
-                    if(mainFile.text != "" && proj.findMember(mainFile.text) == null){
-                        "Main file does not exist in the specified project."
-                    }
-                }
+    private def boolean checkConsistency() {
+        errorMessage = checkErrors() 
+        return errorMessage == null
+    }
+
+    /**
+     * Checks if the current input makes sense and returns an error message accordingly.
+     * @return an appropriate error message or null if there is no error. 
+     */
+    private def String checkErrors() {
+        // Project is not empty
+        if (Strings.isNullOrEmpty(project.text)) {
+            return "Project not specified."
+        }
+        
+        // Project exists
+        val proj = LaunchConfiguration.findProject(project.text)
+        if (proj == null) {
+            return "Project does not exist."
+        } else {
+            // Main file exists
+            if(mainFile.text != "" && proj.findMember(mainFile.text) == null){
+                return "Main file does not exist in the specified project."
             }
         }
+        
+        return null
     }
 
     /**
      * Enable the controls iff the project is set correctly.
      */
-    private def updateEnabled() {
+    private def void updateEnabled() {
         val List<Control> controls = #[]
         val enabled = (LaunchConfiguration.findProject(project.text) != null)
         UIUtil.enableControlsOnSameLevel(controls, enabled)

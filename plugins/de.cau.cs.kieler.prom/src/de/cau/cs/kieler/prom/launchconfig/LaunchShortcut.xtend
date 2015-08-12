@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2015 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.prom.launchconfig
 
 import de.cau.cs.kieler.prom.common.EnvironmentData
@@ -24,6 +37,15 @@ import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.ResourceUtil
 
+/**
+ * An implementation for a launch shortcut
+ * that will add a file to an existing KiCo launch configuration
+ * if there is one for the project the file is in.
+ * Otherwise a new launch configuration is created
+ * using the environment and main file the project has been created with.
+ * 
+ * @author aas
+ */
 class LaunchShortcut implements ILaunchShortcut {
 
     /**
@@ -38,7 +60,9 @@ class LaunchShortcut implements ILaunchShortcut {
     /**
      * The extension id of this launch shortcut set in the plugin.xml.
      */
-    val launchConfigurationTypeId = "de.cau.cs.kieler.prom.launchconfig.launchConfiguration"
+    private static val LAUNCH_CONFIGURATION_TYPE_ID = "de.cau.cs.kieler.prom.launchconfig.launchConfiguration"
+
+
 
     /**
      * {@inheritDoc}
@@ -65,8 +89,11 @@ class LaunchShortcut implements ILaunchShortcut {
      * or creating a new one if none yet.
      * If a new config is created the main file and environment used to initialize it
      * will be fetched from the project preferences if possible or from a user dialog if not.
+     * 
+     * @param file The file to be launched
+     * @param mode The mode the launch should be performed in (e.g. 'run' or 'debug')
      */
-    def launch(IFile file, String mode) {
+    private def void launch(IFile file, String mode) {
         this.file = file
         this.project = file.project
 
@@ -88,7 +115,7 @@ class LaunchShortcut implements ILaunchShortcut {
             if (!alreadyInList) {
                 val workingCopy = configuration.getWorkingCopy()
 
-                val data = new FileCompilationData(file.projectRelativePath.toOSString, file.name)
+                val data = new FileCompilationData(file.projectRelativePath.toOSString)
                 datas += data
                 FileCompilationData.saveAllToConfiguration(workingCopy, datas)
                 workingCopy.doSave()
@@ -101,6 +128,8 @@ class LaunchShortcut implements ILaunchShortcut {
 
     /**
      * Searches for a launch configuration in the project. Creates a new one if none found.
+     * 
+     * @param mode The mode the launch should be performed in (e.g. 'run' or 'debug')
      * @return launch configuration for the project. 
      */
     private def ILaunchConfiguration findLaunchConfiguration(String mode) {
@@ -116,11 +145,13 @@ class LaunchShortcut implements ILaunchShortcut {
 
     /**
      * Creates and initializes a new launch config for the project.
+     * 
+     * @return the new launch configuration
      */
     private def ILaunchConfiguration createNewConfiguration() {
         try {
             val lm = DebugPlugin.getDefault().getLaunchManager()
-            val type = lm.getLaunchConfigurationType(launchConfigurationTypeId)
+            val type = lm.getLaunchConfigurationType(LAUNCH_CONFIGURATION_TYPE_ID)
             val name = project.name
             val wc = type.newInstance(null, name)
             initializeConfiguration(wc)
@@ -134,8 +165,10 @@ class LaunchShortcut implements ILaunchShortcut {
      * Initializes a new launch config for the project.
      * The main file and environment used are loaded from the project's properties
      * if possible or from dialogs if not.
+     * 
+     * @param config The launch configuration to be initialized
      */
-    private def initializeConfiguration(ILaunchConfigurationWorkingCopy config) {
+    private def void initializeConfiguration(ILaunchConfigurationWorkingCopy config) {
         // Set project
         config.setAttribute(LaunchConfiguration.ATTR_PROJECT, project.name)
 
@@ -162,6 +195,7 @@ class LaunchShortcut implements ILaunchShortcut {
 
     /**
      * Opens a dialog such that the user can select this project's main file.
+     * 
      * @return the project relative path of the selected file.  
      */
     private def String getMainFileFromDialog() {
@@ -182,6 +216,7 @@ class LaunchShortcut implements ILaunchShortcut {
 
     /**
      * Opens a dialog such that the user can select an environment for this launch.
+     * 
      * @return the selected EnvironmentData.
      */
     private def EnvironmentData getEnvironmentFromDialog() {
@@ -220,13 +255,14 @@ class LaunchShortcut implements ILaunchShortcut {
 
     /**
      * Searches for all applicable launch configurations for this project.
+     * 
      * @return list with the launch configurations.
      */
-    private def getLaunchConfigurations() {
+    private def ArrayList<ILaunchConfiguration> getLaunchConfigurations() {
         val result = new ArrayList<ILaunchConfiguration>()
         try {
             val manager = DebugPlugin.getDefault().getLaunchManager()
-            val type = manager.getLaunchConfigurationType(launchConfigurationTypeId)
+            val type = manager.getLaunchConfigurationType(LAUNCH_CONFIGURATION_TYPE_ID)
             val configurations = manager.getLaunchConfigurations(type)
             for (var i = 0; i < configurations.length; i++) {
                 val config = configurations.get(i)
@@ -241,6 +277,8 @@ class LaunchShortcut implements ILaunchShortcut {
 
     /**
      * Checks if the launch configuration is for this project.
+     * 
+     * @param configuration The configuration to be checked
      */
     private def boolean isGoodMatch(ILaunchConfiguration configuration) {
         val projectName = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")

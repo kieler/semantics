@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -28,9 +28,11 @@ class ModelImporter {
     
     /**
      * Loads an EObject from a file path.
-     * @param fullPath The fully qualified path to the file.
+     * 
+     * @param fullPath The fully qualified path to a file
+     * @return the loaded EObject
      */
-    public static def EObject get(String fullPath){
+    static def EObject get(String fullPath){
         val input = URI.createFileURI(fullPath);
 
         val rInjector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();

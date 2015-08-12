@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -18,18 +18,21 @@ import org.eclipse.emf.ecore.EObject
 
 /**
  * @author aas
- *
  */
 interface IWrapperCodeAnnotationAnalyzer {
     
     /**
      * Searches for annotations or similar semantical entities which describe that wrapper code should be injected
-     * and returns a list with corresponding wrapper code annotation data. 
+     * and returns a list with corresponding wrapper code annotation data.
+     * 
+     * @param model The model to fetch wrapper code annotations from 
      */
     public def List<WrapperCodeAnnotationData> getAnnotations(EObject model)
     
     /**
-     * Returns the name for a model (e.g. the name of an SCChart) or null if there is none. 
+     * Returns the name for a model (e.g. the name of an SCChart) or null if there is none.
+     * 
+     * @param model The model to fetch the name from 
      */
     public def String getModelName(EObject model)    
 }

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -16,7 +16,6 @@ package de.cau.cs.kieler.prom.launchconfig
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.ModelImporter
-import de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
 import freemarker.template.Template
 import java.io.File
 import java.io.FileFilter
@@ -40,26 +39,25 @@ import static org.freemarker.FreeMarkerPlugin.*
  * Afterwards the macro calls are evaluated by the template engine and the wrapper code which they define is inserted.
  * 
  * @author aas
- * 
  */
 class WrapperCodeGenerator {
 
     /**
      * The id of the extension point for wrapper code annotation analyzers.
      */
-    static val WRAPPER_CODE_ANNOTATION_ANALYZER_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer"
+    private static val WRAPPER_CODE_ANNOTATION_ANALYZER_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer"
 
     /**
      * List with all wrapper code annotation analyzers loaded from extensions.
      */
-    static var List<IWrapperCodeAnnotationAnalyzer> wrapperCodeAnnotationAnalyzers
+    private static var List<IWrapperCodeAnnotationAnalyzer> wrapperCodeAnnotationAnalyzers
 
 
 
     /**
      * A template variable which is replaced with the name of the last analyzed model.
      */
-    static val MODEL_NAME_VARIABLE = "model_name"
+    private static val MODEL_NAME_VARIABLE = "model_name"
     
     
 
@@ -103,6 +101,13 @@ class WrapperCodeGenerator {
 
 
 
+    /**
+     * Creates a new instance of this class and inititlizes it with the given parameters.
+     * 
+     * @param wrapperCodeTemplate File path to the wrapper code template
+     * @param wrapperCodeSnippetDirectory Directory path to the wrapper code snippet directory
+     * @param targetLocation File path where the generated output will be saved
+     */
     new(IProject project, String wrapperCodeTemplate, String wrapperCodeSnippetDirectory, String targetLocation) {
         this.project = project
         this.wrapperCodeTemplate = wrapperCodeTemplate
@@ -121,9 +126,11 @@ class WrapperCodeGenerator {
 
 
     /**
-     * Generates and saves the wrapper code for a list of files. 
+     * Generates and saves the wrapper code for a list of files.
+     * 
+     * @param datas The data objects to generate wrapper code for 
      */
-    public def generateWrapperCode(FileCompilationData... datas) {
+    public def void generateWrapperCode(FileCompilationData... datas) {
 
         // Check consistency of paths
         if (wrapperCodeTemplate != "" && wrapperCodeSnippetDirectory != "") {
@@ -137,6 +144,10 @@ class WrapperCodeGenerator {
     }
 
     /**
+     * Searches for wrapper code annotations in the models
+     * and injects macro calls accordingly in the template.
+     * 
+     * @param datas List with containers holding paths to model files
      * @return a String with the input template's wrapper code
      * plus injected macro calls from annotations of the given files.
      */
@@ -164,9 +175,11 @@ class WrapperCodeGenerator {
 
     /**
      * Processes the given template and saves the output to the target location of this generator.
-     * The template is processed using all macro definitions from the wrapper code snippet directory. 
+     * The template is processed using all macro definitions from the wrapper code snippet directory.
+     * 
+     * @param templateWithMacroCalls The template text to be processed 
      */
-    private def processTemplateAndSaveOutput(String templateWithMacroCalls) {
+    private def void processTemplateAndSaveOutput(String templateWithMacroCalls) {
         // Set the snippets directory to implicitly load the macro definitions
         FreeMarkerPlugin.templateDirectory = snippetDirectoryLocation.absolutePath
 
@@ -193,10 +206,13 @@ class WrapperCodeGenerator {
     }
 
     /**
+     * Creates macro calls from wrapper code annotation datas.
+     * 
+     * @param annotationDatas List with the datas to generate macro calls for 
      * @return a map where the keys 'inits', 'inputs' and 'outputs'
      *         are mapped to the corresponding macro calls for the given annotations.
      */
-    private def getMacroCalls(WrapperCodeAnnotationData... annotationDatas) {
+    private def HashMap<String, String> getMacroCalls(WrapperCodeAnnotationData... annotationDatas) {
         val map = new HashMap<String, String>()
 
         // The assignment macros such as <@init> and <@output> use the variable 'phase'
@@ -226,22 +242,30 @@ class WrapperCodeGenerator {
     }
 
     /**
+     * Creates meta assignments and macro calls for an wrapper code annotation data.
+     * 
+     * @param data The annotation data
      * @return a string to set information about the variable which the annotation is used for.
      *         as well as the macro call for the annotation.    
      */
     private static def String getTemplateCodeForAnnotation(WrapperCodeAnnotationData data) {
-        return getMetaAssignments(data.varName, data.varType) + getMacroCall(data);
+        return getMetaAssignments(data) + getMacroCall(data);
     }
 
     /**
-     * @return a string which globally sets information
-     *         about the next variable to be used.  
+     * Creates a statements that sets meta information about the next variable to be used.
+     * 
+     * @param data The wrapper code annotation data 
+     * @return a string which globally sets meta information.  
      */
-    private static def String getMetaAssignments(String varname, String vartype) {
-        return "<#assign varname = '" + varname + "' " + "vartype = '" + vartype + "' />\n";
+    private static def String getMetaAssignments(WrapperCodeAnnotationData data) {
+        return '''<#assign varname = '«data.varName»' vartype = '«data.varType»' />\n'''
     }
 
     /**
+     * Creates a statement that calls a macro to generate code for the wrapper code annotation data.
+     * 
+     * @param data The wrapper code annotation data
      * @return a string with the macro call for an wrapper code annotation data.
      */
     private static def String getMacroCall(WrapperCodeAnnotationData data) {
@@ -262,10 +286,13 @@ class WrapperCodeGenerator {
     }
 
     /**
-     * @return a list with file handles from files in the given directory and all sub directories
-     *         wich have the given file extension.
+     * Searches for files of a given file extension in a directory and sub directories.
+     * 
+     * @param folder The directory to start the search in
+     * @param fileExtension A file extension that found files must match
+     * @return a list with file handles for the found files.
      */
-    private def getFilesRecursive(File folder, String fileExtension) {
+    private def List<File> getFilesRecursive(File folder, String fileExtension) {
         // Filter that accepts directories and files with the given extension.
         val filter = new FileFilter() {
             override accept(File file) {
@@ -283,6 +310,10 @@ class WrapperCodeGenerator {
      * Auxilary method for getFilesRecursive(...).
      * Searches for files in the given folder and recursive in all sub folders.
      * Each file which is not filtered is added to the list.
+     * 
+     * @param folder the current folder to be searched for files
+     * @param list A list of found files
+     * @param filter A filter that found files must match
      */
     private def void getFilesRecursiveHelper(File folder, List<File> list, FileFilter filter) {
         // Iterate over files in the folder recursively.
@@ -299,6 +330,9 @@ class WrapperCodeGenerator {
     /**
      * Adds wrapper code data objects to the annotationDatas list,
      * which where found in the given files.
+     * 
+     * @param data File data holding a path to a model file
+     * @param annotationDatas List to add found annotation datas to
      */
     private def getWrapperCodeAnnotationData(FileCompilationData data,
         List<WrapperCodeAnnotationData> annotationDatas) {
@@ -329,13 +363,16 @@ class WrapperCodeGenerator {
         }
     }
     
-    private def initAnalyzers(){
+    /**
+     * Load and initialize wrapper code annotation analyzers from all implementing extensions
+     * if not yet done.
+     */
+    private def void initAnalyzers(){
         if(wrapperCodeAnnotationAnalyzers == null){
             // Initialize list
             wrapperCodeAnnotationAnalyzers = newArrayList()
-        
-            // Fill list with wrapper code annotation analyzers
-            // from extensions.
+            
+            // Fill list with wrapper code annotation analyzers from extensions.
             val config = Platform.getExtensionRegistry().getConfigurationElementsFor(WRAPPER_CODE_ANNOTATION_ANALYZER_EXTENSION_POINT_ID);
             try {
                 for (IConfigurationElement e : config) {

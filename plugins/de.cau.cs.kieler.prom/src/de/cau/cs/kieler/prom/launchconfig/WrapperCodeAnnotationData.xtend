@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -20,7 +20,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * Data container for wrapper code annotations in Model file.
  * 
  * @author aas
- *
  */
 class WrapperCodeAnnotationData {
     
@@ -76,6 +75,8 @@ class WrapperCodeAnnotationData {
     /**
      * Two WrapperCodeAnnotationData are equal if the name is equal
      * and their argument lists are equal.
+     * 
+     * @param obj The other object
      */
     override boolean equals(Object obj){
         if(obj instanceof WrapperCodeAnnotationData){

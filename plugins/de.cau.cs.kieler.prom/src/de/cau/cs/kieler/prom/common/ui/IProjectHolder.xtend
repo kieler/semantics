@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -16,11 +16,15 @@ package de.cau.cs.kieler.prom.common.ui
 import org.eclipse.core.resources.IProject
 
 /**
- * Interface to dynamically get a project from a class.
+ * Interface to dynamically get a project from an object.
  * 
  * @author aas
- *
  */
 interface IProjectHolder {
+    /**
+     * Returns the project associated with this object.
+     * 
+     * @return the project
+     */
     def IProject getProject()
 }

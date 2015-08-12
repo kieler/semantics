@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -21,6 +21,7 @@ import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.util.ArrayList
+import java.util.EnumSet
 import java.util.Set
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.debug.internal.ui.SWTFactory
@@ -55,7 +56,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage
  * Environments contain defaults to create, initialize and launch a project.  
  * 
  * @author aas
- * 
  */
 class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePage {
 
@@ -128,19 +128,19 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     /**
      * The control to display all shell commands for the currently selected environment.
      */
-    TableViewer viewer
+    private TableViewer viewer
     /**
      * The currently selected command from the table viewer or null if there is no selection.
      */
-    CommandData currentCommandData
+    private CommandData currentCommandData
     /**
      * The input field for the name of the currently selected command.
      */
-    Text commandName
+    private Text commandName
     /**
      * The input field for the shell command to be executed.
      */
-    Text command
+    private Text command
     
     
     /**
@@ -180,8 +180,10 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     /**
      * Creates the tab folder and tabs with the controls
      * to show and modify the data of the currently selected environment.
+     * 
+     * @param parent The parent composite
      */
-    private def createTabFolder(Composite parent) {
+    private def void createTabFolder(Composite parent) {
         val comp = UIUtil.createComposite(parent, 1, GridData.FILL_HORIZONTAL.bitwiseOr((GridData.FILL_VERTICAL)))
 
         // Create tab group
@@ -201,9 +203,12 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     
     /**
      * Creates a tab in the tab folder with the given title.
+     * 
+     * @param folder The TabFolder to add a tab to
+     * @param title The title for the new tab
      * @return A composite which should contain the widgets of the tab. 
      */
-    private def createTab(TabFolder folder, String title){
+    private def Composite createTab(TabFolder folder, String title){
         val tab = new TabItem(folder, SWT.NONE)
         tab.setText(title)
 
@@ -215,23 +220,27 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
 
     /**
-     * Creates the tab with the controls of the general settings of the current environment.  
+     * Creates the tab with the controls of the general settings of the current environment.
+     * 
+     * @param folder The TabFolder where the tab will be added to  
      */
-    private def createGeneralTab(TabFolder folder){
+    private def Composite createGeneralTab(TabFolder folder){
         val comp = createTab(folder, "General")
         
         createNameComponent(comp)
         createWizardComponent(comp)
         createMainFileComponent(comp)
+        
+        return comp
     }
     
     /**
      * Creates the controls for the name of the current environment.
      */
-    private def createNameComponent(Composite parent){
+    private def void createNameComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Name", 1)
         
-        name = UIUtil.createTextField(group, null, UIUtil.NONE)
+        name = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.NONE))
         name.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null)
@@ -247,10 +256,10 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     /**
      * Creates the controls for the related project wizard of the current environment.
      */
-    def createWizardComponent(Composite parent) {
+    private def void createWizardComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Project wizard", 2)
         
-        // ComboViewer
+        // Create ComboViewer
         val combo = new ComboViewer(group, SWT.DEFAULT)
         relatedProjectWizard = combo
         relatedProjectWizard.combo.toolTipText = "Project wizard to run when creating a new project"
@@ -265,7 +274,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             combo.selection = new StructuredSelection(input.get(0))
         }
 
-        // Label provider
+        // Create label provider
         combo.labelProvider = new LabelProvider() {
             override String getText(Object element) {
                 val data = (element as IConfigurationElement)
@@ -292,11 +301,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     /**
      * Creates the controls for the main file of the current environment.
      */
-    def createMainFileComponent(Composite parent) {
+    private def void createMainFileComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Main file", 2)
         
-        // Main file
-        mainFile = UIUtil.createTextField(group, "Main file", UIUtil.NONE)
+        // Create main file text field
+        mainFile = UIUtil.createTextField(group, "Main file", EnumSet.of(UIUtil.Buttons.NONE))
         mainFile.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
@@ -307,11 +316,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         mainFile.toolTipText = "Default main file name in project wizard"
         
-        // Main file origin
+        // Create main file origin text field
         UIUtil.createLabel(group, "Main file origin")
         val comp = UIUtil.createComposite(group, 2)
         
-        mainFileOrigin = UIUtil.createTextField(comp, null, UIUtil.FILE_SYSTEM_FILE_BUTTON)
+        mainFileOrigin = UIUtil.createTextField(comp, null, EnumSet.of(UIUtil.Buttons.FILE_SYSTEM_FILE_BUTTON))
         mainFileOrigin.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
@@ -325,21 +334,27 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
 
     /**
      * Creates the tab with the controls to set the environment's fields regarding the compilation of files.
+     * 
+     * @param folder The TabFolder where the tab will be added to
      */
-    private def createCompilationTab(TabFolder folder){
+    private def Composite createCompilationTab(TabFolder folder){
         val comp = createTab(folder, "Compilation")
         
         createCompilationComponent(comp)
         createWrapperCodeComponent(comp)
+        
+        return comp
     }
 
     /**
      * Creates the controls to set the target language, file extension and template.
+     * 
+     * @param parent The parent composite
      */
-    def createCompilationComponent(Composite parent) {
+    private def void createCompilationComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Compilation", 2)
         
-        // Language
+        // Create language control
         SWTFactory.createLabel(group, "Language", 1)
         targetLanguage = UIUtil.createKiCoTargetsCombo(group)
         targetLanguage.addSelectionChangedListener(new ISelectionChangedListener {
@@ -359,8 +374,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         targetLanguage.combo.toolTipText = "Target transformation of the KIELER Compiler"
         
-        // File extension
-        targetFileExtension = UIUtil.createTextField(group, "File extension", UIUtil.NONE)
+        // Create file extension control
+        targetFileExtension = UIUtil.createTextField(group, "File extension", EnumSet.of(UIUtil.Buttons.NONE))
         targetFileExtension.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
@@ -371,8 +386,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         targetFileExtension.toolTipText = "File extension for the target language (e.g. '.java' for Java)"
         
-        // Template
-        targetTemplate =  UIUtil.createTextField(group, "Output template", UIUtil.NONE)
+        // Create template control
+        targetTemplate =  UIUtil.createTextField(group, "Output template", EnumSet.of(UIUtil.Buttons.NONE))
         targetTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
@@ -387,12 +402,14 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     
     /**
      * Creates the input controls for wrapper code generation.
+     * 
+     * @param parent The parent composite
      */
-    def createWrapperCodeComponent(Composite parent) {
+    private def void createWrapperCodeComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Wrapper code generation", 2)
         
-        // Input template
-        wrapperCodeTemplate = UIUtil.createTextField(group, "Input file", UIUtil.NONE)
+        // Create input template control
+        wrapperCodeTemplate = UIUtil.createTextField(group, "Input file", EnumSet.of(UIUtil.Buttons.NONE))
         wrapperCodeTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
@@ -403,8 +420,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         wrapperCodeTemplate.toolTipText = "Template where wrapper code is inserted"
         
-        // Snippets directory
-        wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory", UIUtil.NONE)
+        // Create snippets directory control
+        wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory", EnumSet.of(UIUtil.Buttons.NONE))
         wrapperCodeSnippets.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
@@ -415,11 +432,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         wrapperCodeSnippets.toolTipText = "Directory path containing wrapper code snippets"
         
-        // Snippets origin
+        // Create snippets origin control
         UIUtil.createLabel(group, "Snippets origin")
         val comp = UIUtil.createComposite(group, 2)
         
-        wrapperCodeSnippetsOrigin = UIUtil.createTextField(comp, null, UIUtil.FILE_SYSTEM_DIRECTORY_BUTTON)
+        wrapperCodeSnippetsOrigin = UIUtil.createTextField(comp, null, EnumSet.of(UIUtil.Buttons.FILE_SYSTEM_DIRECTORY_BUTTON))
         wrapperCodeSnippetsOrigin.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
@@ -433,22 +450,28 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
 
     /**
      * Creates the execute tab.
+     * 
+     * @param folder The TabFolder where the tab will be added to
      */
-    private def createExecuteTab(TabFolder folder){
+    private def Composite createExecuteTab(TabFolder folder){
         val comp = createTab(folder, "Execute")
         
         createCommandTableComponent(comp)
         createCommandNameComponent(comp)
         createCommandComponent(comp)
+        
+        comp
     }
     
     /**
      * Creates the controls to set the compile, deploy and run commands.
+     * 
+     * @param parent The parent composite
      */
-    def createCommandTableComponent(Composite parent) {
+    private def void createCommandTableComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Commands", 2)
         
-        // Viewer
+        // Create viewer
         viewer = UIUtil.createCommandTable(group, false)
         viewer.addSelectionChangedListener(new ISelectionChangedListener(){
             
@@ -467,10 +490,10 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
         
-        // Buttons
+        // Create buttons
         val bcomp = UIUtil.createComposite(group, 1)
         
-        // Add Button
+        // Create add button
         val addButton = UIUtil.createButton(bcomp, "Add")
         addButton.addSelectionListener(new SelectionAdapter() {
             override void widgetSelected(SelectionEvent e) {
@@ -483,23 +506,25 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         addButton.toolTipText = "Add a shell command to be run after compilation and wrapper code generation"
         
-        // Remove Button
+        // Create remove Button
         UIUtil.createRemoveButton(bcomp, viewer)
         
-        // Up Button
+        // Create up Button
         UIUtil.createUpButton(bcomp, viewer)
         
-        // Down Button
+        // Create down Button
         UIUtil.createDownButton(bcomp, viewer)
     }
     
     /**
      * Creates the control to set the user defined name of the currently selected command.
+     * 
+     * @param parent The parent composite
      */
-    private def createCommandNameComponent(Composite parent){
+    private def void createCommandNameComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Name", 1)
         
-        commandName = UIUtil.createTextField(group, null, UIUtil.NONE)
+        commandName = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.NONE))
         commandName.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(commandName != null){
@@ -513,11 +538,13 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     
     /**
      * Creates the control to set the shell command.
+     * 
+     * @param parent The parent composite
      */
-    private def createCommandComponent(Composite parent){
+    private def void createCommandComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Command", 2)
         
-        command = UIUtil.createTextField(group, null, 0)
+        command = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.NONE))
         command.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(command != null){
@@ -532,20 +559,22 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
     
     /**
-     * Creates the list with environments and buttons to modify the list. 
+     * Creates the list with environments and buttons to modify the list.
+     * 
+     * @param parent The parent composite 
      */
-    private def createEnvironmentsComponent(Composite parent) {
+    private def void createEnvironmentsComponent(Composite parent) {
         val comp = UIUtil.createGroup(parent, "Environments", 2)
 
-        // List
+        // Create list
         list = new ListViewer(comp, SWT.DEFAULT)
         list.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
 
-        // Content provider
+        // Create content provider
         list.setContentProvider(ArrayContentProvider.instance)
         list.input = new ArrayList<EnvironmentData>()
         
-        // Label provider
+        // Create label provider
         list.setLabelProvider(new LabelProvider() {
             override String getText(Object element) {
                 val data = (element as EnvironmentData)
@@ -556,8 +585,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
 
-        // Selection event
-        // Updates the currentData reference.
+        // Create selection event
         list.addSelectionChangedListener(new ISelectionChangedListener() {
             override void selectionChanged(SelectionChangedEvent event) {
                 val selection = event.selection as IStructuredSelection
@@ -567,10 +595,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 checkConsistency()
             }
         })
-
-        // Buttons
         
-        // Add
+        // Create add button
         val bcomp = UIUtil.createComposite(comp, 1, GridData.HORIZONTAL_ALIGN_END)
         val addButton = UIUtil.createButton(bcomp, "Add")
         addButton.addSelectionListener(new SelectionAdapter(){
@@ -591,7 +617,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
         
-        // Remove
+        // Create remove button
         val removeButton = UIUtil.createRemoveButton(bcomp, list)
         removeButton.addSelectionListener(new SelectionAdapter(){
             override widgetSelected(SelectionEvent e) {
@@ -599,20 +625,24 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
         
-        // Up / Down
+        // Create up button
         UIUtil.createUpButton(bcomp, list)
+        
+        // Create down button 
         UIUtil.createDownButton(bcomp, list)
     }
 
     /**
      * Updates the value of all controls with the values from the environment.
+     * 
+     * @param data The environment to be displayed in the controls
      */
-    private def updateControls(EnvironmentData data) {
+    private def void updateControls(EnvironmentData data) {
         if(data != null){
-            // Name
+            // Update name
             name.text = data.name
             
-            // Related project wizard
+            // Update related project wizard
             if (relatedProjectWizard.input != null) {
                 for (obj : relatedProjectWizard.input as ArrayList<IConfigurationElement>) {
                     if (obj.getAttribute("class") == data.relatedProjectWizardClass) {
@@ -621,11 +651,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
             
-            // Main file
+            // Update main file
             mainFile.text = data.mainFile
             mainFileOrigin.text = data.mainFileOrigin
             
-            // Target
+            // Update target
             if (targetLanguage.input != null) {
                 for (transformation : targetLanguage.input as Set<Transformation>) {
                     if (transformation.id == data.targetLanguage) {
@@ -636,21 +666,23 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             targetFileExtension.text = data.targetFileExtension
             targetTemplate.text = data.targetTemplate
             
-            // Wrapper code
+            // Update wrapper code
             wrapperCodeTemplate.text = data.wrapperCodeTemplate
             wrapperCodeSnippets.text = data.wrapperCodeSnippetsDirectory
             wrapperCodeSnippetsOrigin.text = data.wrapperCodeSnippetsOrigin
             
-            // Commands
+            // Update commands
             viewer.input = data.commands
         }
     }
     
     /**
+     * Fetches the selected target transformation id of the language combobox.
+     * 
      * @return The target language id from the KiCo transformation
-     * which is currently selected in the target language combobox.
+     * which is currently selected in the target language combobox
      */
-    private def getSelectedTargetLanguageId(){
+    private def String getSelectedTargetLanguageId(){
         if (targetLanguage.input != null) {
             for (transformation : targetLanguage.input as Set<Transformation>) {
                 return transformation.id
@@ -660,10 +692,13 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
     
     /**
+     * Fetches the fully qualified class name
+     * of the selected entry in the project wizard combobox.
+     * 
      * @return The class name of the extension point configuration
      * which is currently selected in the related project wizard combobox.  
      */
-    private def getSelectedProjectWizardClass(){
+    private def String getSelectedProjectWizardClass(){
         val selection = relatedProjectWizard.selection as IStructuredSelection
         if (selection != null) {
             val obj = selection.firstElement as IConfigurationElement
@@ -677,8 +712,10 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     /**
      * Implementation of IWorkbenchPreferencePage.
      * Saves the reference to the workbench and the used preference store.
+     * 
+     * @param workbench The workbench
      */
-    override init(IWorkbench workbench) {
+    override void init(IWorkbench workbench) {
         this.workbench = workbench
         store = PromPlugin.getDefault().preferenceStore
     }
@@ -690,7 +727,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * @return true if the input is valid and the dialog may be closed by eclipse.<br />
      *         false otherwise.
      */
-    override performOk() {
+    override boolean performOk() {
         if(checkConsistency()){
             saveSettings()
             return true
@@ -702,7 +739,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * Reverts the preferences values to the default values from the initializer.
      * The method is run if the 'Restore Defaults' button is clicked.
      */
-    override performDefaults(){
+    override void performDefaults(){
         list.input = PromEnvironmentsInitializer.getAllDefaultEnvironments()
         checkConsistency()
         super.performDefaults()
@@ -711,7 +748,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     /**
      * Loads the relevant data for this page from the preference store. 
      */
-    private def loadSettings(){
+    private def void loadSettings(){
         if(EnvironmentData.isPreferenceStoreEmpty(store))
             list.input = PromEnvironmentsInitializer.getAllDefaultEnvironments()
         else
@@ -721,13 +758,14 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     /**
      * Saves the relevant data from this page from the preference store. 
      */
-    private def saveSettings(){
+    private def void saveSettings(){
         val environments = list.input as ArrayList<EnvironmentData> 
         EnvironmentData.saveAllToPreferenceStore(store, environments)
     }
     
     /**
      * Checks the input for consistency and sets an error message if necessary.
+     * 
      * @return true if the input is valid.<br />
      *         false otherwise. 
      */
@@ -738,24 +776,25 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
 
     /**
      * Checks the input for consistency and returns an appropriate error message.
+     * 
      * @return A string with an error message or null if the input is valid.
      */
-    private def checkErrors(){
+    private def String checkErrors(){
         val environments = list.input as ArrayList<EnvironmentData>
         
         for(env : environments){
-            // Unique names
+            // Check for unique names
             for(env2 : environments){
                 if(env != env2&& env.name == env2.name){
                     return "Environment names must be unique."
                 }    
             }
             
-            // No empty name
+            // Check for a non empty name
             if(env.name == "")
                 return "Environment name must not be empty."
             
-            // No comma in a name
+            // Check for no comma in names
             if(env.name.contains(","))
                 return "Environment names must not contain a comma."
         }
@@ -767,7 +806,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * Enables the controls of the tab folder if an environment is selected.
      * Disables the controls otherwise.
      */
-    private def updateEnabled(){
+    private def void updateEnabled(){
         val controls = tabFolder.tabList
         for(control : controls)
             UIUtil.enableControls(controls, currentData != null)

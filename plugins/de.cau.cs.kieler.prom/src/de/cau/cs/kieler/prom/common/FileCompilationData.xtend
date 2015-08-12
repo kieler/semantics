@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -18,6 +18,7 @@ import java.util.List
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.apache.commons.io.FilenameUtils
 
 /** 
  * Data container for files which should be compiled via KiCo.
@@ -29,20 +30,30 @@ class FileCompilationData extends ConfigurationSerializableData {
 
     @Accessors
     protected var String projectRelativePath = ""
-    @Accessors
-    protected var String name = ""
 
 
 
+    /**
+     * Creates a new instance of the class.
+     */
     new() {
     }
 
-    new(String projectRelativePath, String fileName) {
+    /**
+     * Creates a new instance of the class with the given path.
+     */
+    new(String projectRelativePath) {
         this.projectRelativePath = projectRelativePath
-        this.name = fileName
     }
 
-
+    /**
+     * Returns the file name (including extension) of the project relative path.
+     * 
+     * @return the name of the file of this object's project relative path
+     */
+    public def String getName(){
+        return FilenameUtils.getName(projectRelativePath)
+    }
 
     /**
      * {@inheritDoc}
@@ -60,9 +71,11 @@ class FileCompilationData extends ConfigurationSerializableData {
     
     /**
      * Loads all data objects from the given launch configuration.
+     * 
+     * @param configuration The launch configuration where the data should be loaded from
      * @return list with the loaded compilation data objects.
      */
-    static def loadAllFromConfiguration(ILaunchConfiguration configuration) {
+    static def List<FileCompilationData> loadAllFromConfiguration(ILaunchConfiguration configuration) {
         return ConfigurationSerializableData.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_FILES,
             FileCompilationData) as List<FileCompilationData>
     }
@@ -70,17 +83,22 @@ class FileCompilationData extends ConfigurationSerializableData {
     /**
      * Saves a list with data objects to the given launch configuration.
      * All other file compilation data objects in the launch configuration are overwritten.
+     * 
+     * @param configuration The launch configuration where the data should be saved to
+     * @param datas The data objects to be saved
      */
-    static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<FileCompilationData> datas) {
+    static def void saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<FileCompilationData> datas) {
         ConfigurationSerializableData.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_FILES, datas)
     }
     
     /**
      * Compares this object with another object.
-     * @return true if the other object is a FileCompilationData and the paths are equal.<br />
+     * 
+     * @param o The other object.
+     * @return true if the other object is a FileCompilationData with the same path.<br />
      *         false otherwise.
      */
-    override equals(Object o) {
+    override boolean equals(Object o) {
         if (o instanceof FileCompilationData) {
             val data = o as FileCompilationData
             return data.projectRelativePath == projectRelativePath

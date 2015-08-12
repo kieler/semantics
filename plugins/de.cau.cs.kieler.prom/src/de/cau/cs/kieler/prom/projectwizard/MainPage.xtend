@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -37,29 +37,33 @@ import org.eclipse.swt.widgets.Composite
  * and the wrapper code snippets to import in the new project.
  * 
  * @author aas
- * 
  */
 class MainPage extends WizardPage {
 
     /**
      * The environments loaded from this plugins preference store.
      */
-    var List<EnvironmentData> environments
+    private List<EnvironmentData> environments
 
     /**
      * The combobox with the environments.
      */
-    var ComboViewer environmentsCombo
+    private ComboViewer environmentsCombo
 
     /**
      * The multiselect list with all environments.
      * The wrapper code snippets from the selected environments in this list
      * will be copied to the newly created project. 
      */
-    var ListViewer list
+    private ListViewer list
 
 
 
+    /**
+     * Creates a new instance of this class with the given page name as title.
+     * 
+     * @param pageName The title for the page
+     */
     new(String pageName) {
         super(pageName)
 
@@ -88,7 +92,7 @@ class MainPage extends WizardPage {
     /**
      * Loads the environments from this plugin's preference store. 
      */
-    private def loadEnvironments() {
+    private def void loadEnvironments() {
         val store = PromPlugin.^default.preferenceStore
 
         // It might be that on a new installation there are no environments initialized.
@@ -102,8 +106,10 @@ class MainPage extends WizardPage {
 
     /**
      * Creates a group with the environments combobox.
+     * 
+     * @param parent The parent compisite
      */
-    private def createEnvironmentsComponent(Composite parent) {
+    private def void createEnvironmentsComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Environment", 1)
 
         environmentsCombo = UIUtil.createEnvironmentsCombo(group, environments)
@@ -116,15 +122,17 @@ class MainPage extends WizardPage {
     /**
      * Creates a group with the list of environments
      * to specify which wrapper code snippets should be created.
+     * 
+     * @param parent The parent composite
      */
-    private def createWrapperCodeSnippetsComponent(Composite parent) {
+    private def void createWrapperCodeSnippetsComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Import wrapper code snippets", 1)
 
-        // List
+        // Create list
         list = new ListViewer(group, SWT.BORDER.bitwiseOr(SWT.MULTI).bitwiseOr(SWT.V_SCROLL))
         list.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
 
-        // Content provider
+        // Create content provider
         list.setContentProvider(ArrayContentProvider.instance)
         val input = new ArrayList<EnvironmentData>()
         for (env : environments) {
@@ -133,7 +141,7 @@ class MainPage extends WizardPage {
         }
         list.input = input
 
-        // Label provider
+        // Create label provider
         list.setLabelProvider(new LabelProvider() {
             override String getText(Object element) {
                 val data = (element as EnvironmentData)
@@ -144,7 +152,7 @@ class MainPage extends WizardPage {
             }
         })
 
-        // Information label
+        // Create information label
         UIUtil.createLabel(group, "Wrapper code snippets of the selected environments\n" +
             "will be copied to the new project.\nSelect or deselect multiple items by holding Control.")
     }

@@ -17,9 +17,7 @@ import de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage
 import de.cau.cs.kieler.prom.projectwizard.PromProjectWizard
 
 /**
- * 
  * @author aas
- * 
  */
 class EsterelProjectWizard extends PromProjectWizard {
 

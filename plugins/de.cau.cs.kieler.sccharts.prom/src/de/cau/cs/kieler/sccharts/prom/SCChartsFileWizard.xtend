@@ -22,7 +22,6 @@ import org.eclipse.ui.IWorkbenchWizard
  * Implementation of a newWizard which contains a page to create an sct file. 
  * 
  * @author aas
- *
  */
 class SCChartsFileWizard extends Wizard implements IWorkbenchWizard {
     

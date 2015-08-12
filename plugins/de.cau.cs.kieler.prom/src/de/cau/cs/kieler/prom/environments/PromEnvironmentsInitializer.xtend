@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2015 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.prom.environments
 
 import de.cau.cs.kieler.prom.common.EnvironmentData
@@ -10,16 +23,21 @@ import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer
 import org.eclipse.jface.preference.IPreferenceStore
 
 /**
- * This class creates default environments if there are none.
+ * This class handles initialization of default environments.
+ * 
+ * @author aas
  */
 class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implements IEnvironmentsInitializer{
 
-    static val INITIALIZER_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.environmentInitializer"
+    /**
+     * The extension point id of prom environment initializers. 
+     */
+    private static val INITIALIZER_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.environmentInitializer"
 
     /**
      * Fills the preference store with default environments if there are none.
      * The method is called by eclipse
-     * if the preferences page is opened for the first time in this run.
+     * when the preferences page is opened for the first time in this run.
      */
     override void initializeDefaultPreferences() {
         if(EnvironmentData.isPreferenceStoreEmpty(store)){
@@ -31,7 +49,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      * Fills the preference store with default environments.
      * Any other environment data in the store will be lost. 
      */
-    public static def initializeDefaultEnvironments(){
+    public static def void initializeDefaultEnvironments(){
         EnvironmentData.saveAllToPreferenceStore(store, getAllDefaultEnvironments())
     }
 
@@ -121,7 +139,10 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
         return datas
     }
     
-    private static def getStore(){
+    /**
+     * Returns the preference store of the Prom plugin
+     */
+    private static def IPreferenceStore getStore(){
         return PromPlugin.^default.preferenceStore
     }
 }

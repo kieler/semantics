@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EObject
 
 /**
  * @author aas
- *
  */
 class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer{
     override getAnnotations(EObject model) {

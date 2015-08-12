@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2015 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.prom.launchconfig
 
 import de.cau.cs.kieler.kico.KielerCompiler
@@ -32,9 +45,12 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
+import com.google.common.base.Strings
 
 /**
  * Implementation of a launch configuration that uses KiCo.
+ * 
+ * @author aas
  */
 class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
@@ -79,34 +95,35 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val COMPILED_MAIN_FILE_LOCATION_VARIABLE = "compiled_main_loc"
     public static val COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE = "compiled_main_name_no_ext"
 
-    var IStringVariableManager variableManager
+    private IStringVariableManager variableManager
 
     // Objects from launch
-    var ILaunchConfiguration configuration
-    var String mode
-    var ILaunch launch
-    var IProgressMonitor monitor
+    private ILaunchConfiguration configuration
+    private String mode
+    private ILaunch launch
+    private IProgressMonitor monitor
 
     // Objects loaded from configuration
-    var IProject project
-    var String mainFile
-    var String targetLanguage
-    var String targetTemplate
-    var String wrapperCodeTemplate
-    var String wrapperCodeSnippetDirectory
+    private IProject project
+    private String mainFile
+    private List<FileCompilationData> files
+    private String targetLanguage
+    private String targetTemplate
+    private String wrapperCodeTemplate
+    private String wrapperCodeSnippetDirectory
 
-    var List<CommandData> commands
+    private List<CommandData> commands
 
-    var String targetLanguageFileExtension
+    private String targetLanguageFileExtension
 
     // Jobs
-    var Job compileJob;
-    var Job wrapperCodeJob;
+    private Job compileJob;
+    private Job wrapperCodeJob;
 
     // Message console
-    val CONSOLE_NAME = "Project Launch"
-    var MessageConsole console;
-    var MessageConsoleStream consoleStream;
+    private static val CONSOLE_NAME = "Project Launch"
+    private MessageConsole console;
+    private MessageConsoleStream consoleStream;
 
     /**
      * {@inheritDoc}
@@ -134,9 +151,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             setVariables() 
 
             // Create jobs.
-            val datas = FileCompilationData.loadAllFromConfiguration(configuration)
-            compileJob = getCompileJob(datas)
-            wrapperCodeJob = getWrapperCodeGenerationJob(datas)
+            compileJob = getCompileJob()
+            wrapperCodeJob = getWrapperCodeGenerationJob()
 
             // Start jobs.
             compileJob.schedule()
@@ -158,9 +174,10 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     /**
      * Creates a job that compiles a list of FileCompildationData via KiCo.
+     * 
      * @return the created job.
      */
-    private def Job getCompileJob(List<FileCompilationData> datas) {
+    private def Job getCompileJob() {
 
         return new Job("KiCo Compilation") {
             override protected IStatus run(IProgressMonitor monitor) {
@@ -168,7 +185,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 val startTime = System.currentTimeMillis()
 
                 try {
-                    for (data : datas) {
+                    for (data : files) {
                         compile(data)
 
                         if (monitor.isCanceled())
@@ -189,9 +206,10 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     /**
      * Creates a job that generates and saves the wrapper code for a list of FileCompilationData.
+     * 
      * @return the created job. 
      */
-    private def Job getWrapperCodeGenerationJob(FileCompilationData... datas) {
+    private def Job getWrapperCodeGenerationJob() {
         return new Job("Wrapper Code Generation") {
             override protected IStatus run(IProgressMonitor monitor) {
 
@@ -203,7 +221,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                         variableManager.performStringSubstitution(wrapperCodeSnippetDirectory),
                         computeTargetPath(variableManager.performStringSubstitution(wrapperCodeTemplate), false))
 
-                    generator.generateWrapperCode(datas)
+                    generator.generateWrapperCode(files)
 
                 } catch (Exception e) {
                     consoleStream.println(e.message + "\n")
@@ -220,6 +238,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     /**
      * Creates a job that executes the commands for this launch config successively.
+     * 
      * @return the created job.
      */
     private def Job getExecuteCommandsJob() {
@@ -240,8 +259,10 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     /**
      * Compile a file via KiCo and save the result.
+     * 
+     * @param data The file to be compiled
      */
-    private def compile(FileCompilationData data) {
+    private def void compile(FileCompilationData data) {
         // Load model from file
         val EObject model = ModelImporter.get(project.location.toOSString + File.separator + data.projectRelativePath)
 
@@ -272,7 +293,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * has the same directory structure as the original file in the project.
      * The file extension of the target path is the extension for the current target language.
      * 
-     * @return the computed path.
+     * @param projectRelativePath Project relative path of a file in the project
+     * @param projectRelative Flag to specify if the computed path should be projectRelative or not
+     * @return the computed path
      */
     private def String computeTargetPath(String projectRelativePath, boolean projectRelative) {
         // The src directory of a typical java project is not part of the relevant target path.
@@ -297,8 +320,11 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     /**
      * Saves the result to the fully qualified target path,
      * possibly using the target template for the output.
+     * 
+     * @param result The text to be saved
+     * @param targetPath File path where the result should be saved
      */
-    private def saveCompilationResult(String result, String targetPath) {
+    private def void saveCompilationResult(String result, String targetPath) {
         // Create directory for the output if none yet.
         createDirectories(targetPath)
 
@@ -316,6 +342,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
             reader.close()
         } else {
+            // Don't use template
             val writer = new PrintWriter(targetPath, "UTF-8");
             writer.print(result)
             writer.close()
@@ -324,34 +351,37 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     /**
      * Creates the folder structure for a fully qualified file path.
-     * @param path The path to a fully qualified file.
-     * @return true if the folder structure of the path exists or could be created. False otherwise.
+     * 
+     * @param path The path to a fully qualified file
      */
-    private def createDirectories(String path) {
+    private def void createDirectories(String path) {
         new File(path).parentFile.mkdirs()
     }
 
     /**
      * Loads all necessary data from the launch configuration.
      */
-    private def loadSettingsFromConfiguration() {
-        // Project
+    private def void loadSettingsFromConfiguration() {
+        // Load project
         val projectName = configuration.getAttribute(ATTR_PROJECT, "")
         project = findProject(projectName)
 
-        // Main file
+        // Load main file
         mainFile = configuration.getAttribute(ATTR_MAIN_FILE, "")
 
-        // Target
+        // Model files to be compiled
+        files = FileCompilationData.loadAllFromConfiguration(configuration)
+    
+        // Load target
         targetLanguage = configuration.getAttribute(ATTR_TARGET_LANGUAGE, "")
         targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
         targetLanguageFileExtension = configuration.getAttribute(ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
 
-        // Wrapper code
+        // Load wrapper code
         wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
         wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
 
-        // Shell commands
+        // Load shell commands
         commands = CommandData.loadAllFromConfiguration(configuration)
     }
 
@@ -359,14 +389,14 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * Sets several eclipse string variables for this launch (e.g. ${main_name}, ${compiled_main_name}).
      * The variables can be used for example in the commands and file paths.
      */
-    private def setVariables() {
+    private def void setVariables() {
         variableManager = VariablesPlugin.getDefault.stringVariableManager
 
-        // Project
+        // Set project
         setVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE, project.location.toOSString,
             "Fully qualified path to the launched application")
 
-        // Main file
+        // Set main file
         val mainFileName = new File(mainFile).name
         val mainFileLocation = if(mainFileName != "") new File(project.location + File.separator + mainFile).
                 absolutePath else ""
@@ -381,7 +411,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         setVariable(LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainFileWithoutExtension,
             "Project relative path of the main file of the launched application without file extension")
 
-        // Compiled main file
+        // Set compiled main file
         val mainTarget = computeTargetPath(mainFile, true)
         val mainTargetName = new File(mainTarget).name
         val mainTargetLocation = if(mainTargetName != "") new File(project.location + File.separator + mainTarget).
@@ -397,50 +427,58 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
             mainTargetWithoutExtension,
             "Project relative path of the compiled main file of the launched application without file extension")
-        }
+    }
 
-        /**
-         * Creates or modifies the variable with the given name and data. 
-         */
-        private def setVariable(String name, String value, String description) {
-            var variable = variableManager.getValueVariable(name)
-            if (variable == null) {
-                variable = variableManager.newValueVariable(name, description, false, value)
-                variableManager.addVariables(#[variable])
-            } else {
-                variable.description = description
-                variable.value = value
-            }
-        }
-
-        /**
-         * Returns a project handle if the project name is a valid name for a project
-         * and the project exists in the current workspace.
-         */
-        static def IProject findProject(String name) {
-            if (name != null && name != "" && new Path(name).isValidPath(name)) {
-                val p = ResourcesPlugin.workspace.root.getProject(name)
-                if (p.location != null)
-                    return p
-            }
-            return null
-        }
-
-        /**
-         * Search for a console with a given name in the Console View.
-         * If the console can't be found it will be created.
-         */
-        private def MessageConsole findConsole(String name) {
-            val plugin = ConsolePlugin.getDefault();
-            val conMan = plugin.getConsoleManager();
-            val existing = conMan.getConsoles();
-            for (var i = 0; i < existing.length; i++)
-                if (name.equals(existing.get(i).getName()))
-                    return existing.get(i) as MessageConsole;
-
-            // No console found, so create a new one.
-            val myConsole = new MessageConsole(name, null);
-            conMan.addConsoles(#[myConsole]);
-            return myConsole;
+    /**
+     * Creates or modifies the variable with the given name and data.
+     * 
+     * @param name The variable's name
+     * @param value The variable's value
+     * @param description The variable's description 
+     */
+    private def void setVariable(String name, String value, String description) {
+        var variable = variableManager.getValueVariable(name)
+        if (variable == null) {
+            variable = variableManager.newValueVariable(name, description, false, value)
+            variableManager.addVariables(#[variable])
+        } else {
+            variable.description = description
+            variable.value = value
         }
     }
+
+    /**
+     * Returns a project handle if the project exists in the current workspace.
+     * 
+     * @param name The name of a project to be found
+     */
+    static def IProject findProject(String name) {
+        if (!Strings.isNullOrEmpty(name) && new Path(name).isValidPath(name)) {
+            val p = ResourcesPlugin.workspace.root.getProject(name)
+            if (p.location != null)
+                return p
+        }
+        return null
+    }
+
+    /**
+     * Search for a console with a given name in the Console View.
+     * If the console can't be found it will be created.
+     * 
+     * @param name The name of a message console to be found or created
+     * @return The found or newly created message console
+     */
+    private def MessageConsole findConsole(String name) {
+        val plugin = ConsolePlugin.getDefault();
+        val conMan = plugin.getConsoleManager();
+        val existing = conMan.getConsoles();
+        for (var i = 0; i < existing.length; i++)
+            if (name.equals(existing.get(i).getName()))
+                return existing.get(i) as MessageConsole;
+
+        // No console found, so create a new one.
+        val myConsole = new MessageConsole(name, null);
+        conMan.addConsoles(#[myConsole]);
+        return myConsole;
+    }
+}

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -17,8 +17,9 @@ import de.cau.cs.kieler.prom.common.EnvironmentData
 import java.util.List
 
 /**
+ * Interface which can be implemented by extensions to add new default environments.
+ * 
  * @author aas
- *
  */
 interface IEnvironmentsInitializer {
     

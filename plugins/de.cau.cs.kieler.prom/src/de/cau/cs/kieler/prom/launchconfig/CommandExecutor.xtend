@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
+import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.common.CommandData
 import java.io.File
 import java.util.ArrayList
@@ -29,7 +30,6 @@ import org.eclipse.debug.core.ILaunch
  * This class handles the execution of shell commands in the context of a project launch.
  * 
  * @author aas
- * 
  */
 class CommandExecutor {
 
@@ -44,7 +44,12 @@ class CommandExecutor {
     private var ILaunch launch
 
 
-
+    /**
+     * Creates a new instance of this class and sets the project and launch associated with it.
+     * 
+     * @param project The project
+     * @param launch The launch
+     */
     new(IProject project, ILaunch launch){
         this.project = project
         this.launch = launch
@@ -55,14 +60,16 @@ class CommandExecutor {
      * Successive commands are executed only if the commands before ended successfully
      * (with an error code of 0).
      * Each executed command gets its own Console View.
+     * 
+     * @param commands A list with commands to be executed sequentially
      */
     public def IStatus execute(CommandData... commands){
         // Execute every command squentially.
         for(c : commands){
-            if(c.isEnabled != null && Boolean.valueOf(c.isEnabled)){
+            if(c.isEnabled){
                 // Execute and proceed only if no error occured.
                 executeSingle(c)
-                if(Integer.valueOf(c.errorCode) != 0){
+                if(c.getErrorCode() != 0){
                     throw new Exception("Error while executing "+ c.name + "\n'"+ c.fullCommand +"'.")        
                 }
             }
@@ -76,9 +83,11 @@ class CommandExecutor {
      * The command may contain arguments separated by spaces.
      * Double quotes (") can be use to handle a command or argument with spaces as one entity.
      * The created process gets a console in the Console View to fetch its output.
+     * 
+     * @param command The command to be executed
      */
-    private def executeSingle(CommandData command) {
-        if (command != null && command.command != null && command.command != "") {
+    private def void executeSingle(CommandData command) {
+        if (command != null && !Strings.isNullOrEmpty(command.command)) {
             val man = VariablesPlugin.getDefault.stringVariableManager
             command.fullCommand = man.performStringSubstitution(command.command)
             val commandWithParameters = splitStringOnWhitespace(command.fullCommand)
@@ -90,13 +99,15 @@ class CommandExecutor {
             DebugPlugin.newProcess(launch, p, command.name)
 
             // Wait until the process finished
-            command.errorCode = String.valueOf(p.waitFor())
+            command.errorCode = p.waitFor()
         }
     }
 
     /**
      * Split input string on spaces, except if between double quotes (e.g. "hello world" would be one token.)
      * Surrounding double quotes are removed.
+     * 
+     * @param str The string to be splitted
      * @return List<String> containing slices of the input string.
      */
     private def List<String> splitStringOnWhitespace(String str) {

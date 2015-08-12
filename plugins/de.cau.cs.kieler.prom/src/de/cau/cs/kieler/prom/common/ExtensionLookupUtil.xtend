@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -29,22 +29,46 @@ import org.eclipse.ui.IWorkbenchWizard
 class ExtensionLookupUtil {
     
     /**
+     * The extension id of newWizards.
+     */
+    private static val WIZARD_EXTENSION_ID = "org.eclipse.ui.newWizards"
+    
+    /**
+     * The element name for wizard extensions
+     */
+    private static val WIZARD_ELEMENT_NAME = "wizard"
+    
+    /**
+     * The attribute name for a class which implements a wizard
+     */
+    private static val CLASS_ATTRIBUTE_NAME = "class"
+    
+    /**
+     * The attribute name for a flag
+     * indicating if a wizard creates a project (flag is true) or resource (flag is false).
+     */
+    private static val PROJECT_ATTRIBUTE_NAME = "project"
+    
+    
+    
+    /**
      * Searches for newWizards and initializes the wizard with the fully qulified class name.
      * Before the returned wizard is opened its init(...) method should be called.
      * 
+     * @param fullyQualifiedClassName The fully qualified class name of an implementation of a newWizard.
      * @return The wizard implemented by the fully qualified class name<br />
      *         or null if there is no such wizard.
      */
     static def IWorkbenchWizard getWizard(String fullyQualifiedClassName) {
-        val extensions = getExtensions("org.eclipse.ui.newWizards")
+        val extensions = getExtensions(WIZARD_EXTENSION_ID)
 
         for (ext : extensions) {
             val configElements = ext.getConfigurationElements();
 
             // Search for wizard elements
             for (configElement : configElements) {
-                if (configElement.name == "wizard") {
-                    if (configElement.getAttribute("class") == fullyQualifiedClassName) {
+                if (configElement.name == WIZARD_ELEMENT_NAME) {
+                    if (configElement.getAttribute(CLASS_ATTRIBUTE_NAME) == fullyQualifiedClassName) {
                         
                         // Instantiate class.
                         try {
@@ -62,10 +86,13 @@ class ExtensionLookupUtil {
     }
 
     /**
+     * Searches for extension point configurations of newWizards.
+     * 
+     * @param onlyProjectWizards Specifies if only project wizards should be included in the search, or not.
      * @return a list with all configurations that contribute to the 'org.eclipse.ui.newWizards' extension point.
      */
     static def ArrayList<IConfigurationElement> getWizardConfigurationElements(boolean onlyProjectWizards) {
-        val extensions = getExtensions("org.eclipse.ui.newWizards")
+        val extensions = getExtensions(WIZARD_EXTENSION_ID)
 
         val wizards = new ArrayList<IConfigurationElement>()
         for (ext : extensions) {
@@ -73,8 +100,8 @@ class ExtensionLookupUtil {
 
             // Search for wizard elements
             for (configElement : configElements) {
-                if (configElement.name == "wizard") {
-                    val isProject = Boolean.valueOf(configElement.getAttribute("project"))
+                if (configElement.name == WIZARD_ELEMENT_NAME) {
+                    val isProject = Boolean.valueOf(configElement.getAttribute(PROJECT_ATTRIBUTE_NAME))
                     if(isProject || !onlyProjectWizards)
                         wizards.add(configElement)
                 }
@@ -86,6 +113,8 @@ class ExtensionLookupUtil {
 
     /**
      * Searches and returns extensions which contribute to the given extension point id.
+     * 
+     * @param extensionId The extension id
      */
     static def IExtension[] getExtensions(String extensionId) {
         val reg = Platform.getExtensionRegistry()

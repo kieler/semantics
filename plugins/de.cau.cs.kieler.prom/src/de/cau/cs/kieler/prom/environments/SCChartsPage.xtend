@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -24,12 +24,14 @@ import org.eclipse.ui.IWorkbenchPreferencePage
 /**
  * Dummy implementation for the KIELER preference page.
  * Currently this is used only to have a parent for the environments page. 
+ * 
+ * @author aas
  */
 class KielerPage extends PreferencePage implements IWorkbenchPreferencePage {
 
     override init(IWorkbench workbench) {
     }
-    
+
     override createContents(Composite parent) {
         val comp = new Composite(parent, SWT.NONE)
 

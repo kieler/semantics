@@ -20,7 +20,6 @@ import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 
 /**
  * @author aas
- *
  */
 class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
     

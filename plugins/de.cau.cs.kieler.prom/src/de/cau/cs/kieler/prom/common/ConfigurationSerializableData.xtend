@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -31,25 +31,34 @@ import org.eclipse.jface.preference.IPreferenceStore
 abstract class ConfigurationSerializableData {
 
     /**
-     * Returns a unique identifier for this data object to store and load it. 
+     * Returns an unique identifier which must not contain a comma.
+     * The identifier is used to store and load the data object.<br>
+     * 
+     * The check for uniqueness and that there is no comma in it
+     * has to be done by the instantiating component e.g. UI.
+     * 
+     * @return an identifier for the object
      */
-    def getIdentifier() {
-        return ""
-    }
+    abstract def String getIdentifier()
     
     /**
-     * Sets the unique identifier for this data object to store and load it. 
+     * Sets the unique identifier for this data object to store and load it.
+     * The identifier must not contain a comma.<br>
+     * 
+     * The check for uniqueness and that there is no comma in it
+     * has to be done by the instantiating component e.g. UI.
+     * 
+     * @param value The new value of the identifier
      */
-    def setIdentifier(String identifier) {
-    }
+    abstract def String setIdentifier(String value)
 
     /**
      * Try to load the values of this object's string fields by reading the map values.
      * 
      * @param map A map where the key is this object's field names
-     * and the value is the value of the fields.  
+     * and the value is the value of the fields
      */
-    def loadAttributesFromMap(Map<String, String> map) {
+    public def void loadAttributesFromMap(Map<String, String> map) {
         val classObject = this.class
         for (f : classObject.declaredFields) {
             if (f.type == String && !Modifier.isStatic(f.modifiers))
@@ -60,8 +69,10 @@ abstract class ConfigurationSerializableData {
     /**
      * Stores all string fields of this class in a map
      * where the key is a field's name and the value is the field's value.
+     * 
+     * @return a map with the attributes of this object
      */
-    def Map<String, String> getAttributeMap() {
+    public def Map<String, String> getAttributeMap() {
         val map = new HashMap<String, String>()
         val classObject = this.class
         for (f : classObject.declaredFields) {
@@ -75,7 +86,7 @@ abstract class ConfigurationSerializableData {
      * Loads all data objects from the launch configuration
      * which have been stored using saveAllToConfiguration(...)
      * 
-     * @return List of the loaded data objects.
+     * @return List of the loaded data objects
      */
     protected static def List<? extends ConfigurationSerializableData> loadAllFromConfiguration(
         ILaunchConfiguration configuration, String AttributeKey, Class<? extends ConfigurationSerializableData> classObject) {
@@ -107,6 +118,10 @@ abstract class ConfigurationSerializableData {
      * Saves the data objects to the configuration.
      * The identifiers key is used to store the data object identifiers.
      * The objects can be retrieved via loadAllFromConfiguration(...)
+     * 
+     * @param configuration The launch configuration where the data objects should be saved
+     * @param identifiersKey A key to store a list of identifiers in the configuration
+     * @param datas The list of data objects to be saved
      */
     protected static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, String identifiersKey,
         List<? extends ConfigurationSerializableData> datas) {
@@ -131,6 +146,10 @@ abstract class ConfigurationSerializableData {
      * Saves the data objects to the preference store.
      * The identifiers key is used to store the data object identifiers.
      * They can be retrieved by using loadAllFromPreferenceStore(...)
+     * 
+     * @param store The preference store where the data objects should be saved
+     * @param identifiersKey A key to store a list of identifiers
+     * @param datas The list of data objects to be saved
      */
     protected static def saveAllToPreferenceStore(IPreferenceStore store, String identifiersKey,
         List<? extends ConfigurationSerializableData> datas) {
@@ -151,8 +170,10 @@ abstract class ConfigurationSerializableData {
     
     /**
      * Saves this data object's fields to the preference store.
+     * 
+     * @param store The preference store where the data should be saved
      */
-    protected def saveToPreferenceStore(IPreferenceStore store){
+    protected def void saveToPreferenceStore(IPreferenceStore store){
         // Save string fields
         val classObject = this.class
         for(f : classObject.declaredFields){
@@ -164,7 +185,11 @@ abstract class ConfigurationSerializableData {
     /**
      * Loads all data objects from the preference store
      * which have been saved using saveAllToPreferenceStore(...).
-     * @return list with the data objects from the preference store.
+     * 
+     * @param store The preference store where the data should be loaded from
+     * @param identifiersKey A key for the list of identifiers the store contains
+     * @param classObject A class of which objects are instantiated and loaded from the store
+     * @return list with the loaded data objects from the preference store
      */
     protected static def List<? extends ConfigurationSerializableData> loadAllFromPreferenceStore(IPreferenceStore store, String identifiersKey,
             Class<? extends ConfigurationSerializableData> classObject) {
@@ -194,8 +219,10 @@ abstract class ConfigurationSerializableData {
     
     /**
      * Loads the values of this class's fields from the preference store.
+     * 
+     * @param store The preference store to load the data from
      */
-    protected def loadFromPreferenceStore(IPreferenceStore store){
+    protected def void loadFromPreferenceStore(IPreferenceStore store){
         // Load string fields
         val classObject = this.class
         for(f : classObject.declaredFields){
@@ -205,9 +232,12 @@ abstract class ConfigurationSerializableData {
     }
     
     /**
+     * Constructs unique name for a field of this object
+     * by concatenating identifiers of this class, object and field.
+     * 
      * @return unique identifier for a field of this data object. 
      */
-    protected def getStoreKey(String fieldName){
+    protected def String getStoreKey(String fieldName){
         return class.name+"."+getIdentifier()+"."+fieldName
     }
 }

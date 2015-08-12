@@ -23,7 +23,6 @@ import org.eclipse.ui.IWorkbenchWizard
  * Implementation of a newWizard which contains a page to create an esterel file. 
  * 
  * @author aas
- *
  */
 class EsterelFileWizard extends Wizard implements IWorkbenchWizard {
     

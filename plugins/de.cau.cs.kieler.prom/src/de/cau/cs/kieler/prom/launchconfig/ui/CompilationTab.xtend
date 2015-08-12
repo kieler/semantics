@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -14,11 +14,13 @@
 package de.cau.cs.kieler.prom.launchconfig.ui
 
 import de.cau.cs.kieler.kico.internal.Transformation
+import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.ui.IProjectHolder
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.io.File
 import java.util.ArrayList
+import java.util.EnumSet
 import java.util.List
 import java.util.Set
 import org.eclipse.core.resources.IProject
@@ -46,13 +48,11 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
-import de.cau.cs.kieler.prom.common.FileCompilationData
 
 /**
  * The tab with the controls to set files to be compiled via KiCo.
  * 
  * @author aas
- * 
  */
 class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
 
@@ -128,20 +128,22 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
      * Creates a new group with a list control and add and remove buttons.
      * The add button opens a resource selection dialog such that the user can add
      * files to the list.
-     * The remove button removes the currently selected item from the list. 
+     * The remove button removes the currently selected item from the list.
+     * 
+     * @param parent The parent composite 
      */
-    private def createFilesComponent(Composite parent) {
+    private def void createFilesComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Files", 2)
 
-        // List for files
+        // Create list for files
         list = new ListViewer(group, SWT.DEFAULT)
         list.getControl().setLayoutData(new GridData(GridData.FILL_BOTH))
 
-        // Content provider
+        // Create content provider
         list.setContentProvider(ArrayContentProvider.instance);
         list.input = new ArrayList<FileCompilationData>()
 
-        // Label provider
+        // Create label provider
         list.setLabelProvider(new LabelProvider() {
             override String getText(Object element) {
                 val data = (element as FileCompilationData)
@@ -152,20 +154,25 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
             }
         });
 
-        // Selection event
-        // Updates the currentData reference.
+        // Create selection event
         list.addSelectionChangedListener(new ISelectionChangedListener() {
             override void selectionChanged(SelectionChangedEvent event) {
                 val selection = event.selection as IStructuredSelection
                 currentData = selection.firstElement as FileCompilationData
-                updateControls(currentData)
+                updateEnabled()
             }
         });
 
-        // Buttons
+        // Create buttons
         val bcomp = UIUtil.createComposite(group, 1, GridData.HORIZONTAL_ALIGN_END)
+        
+        val simpleSelectionListener = new SelectionAdapter() {
+            override widgetSelected(SelectionEvent e) {
+                updateLaunchConfigurationDialog()
+            }
+        }
 
-        // Add Button
+        // Create add Button
         addButton = createPushButton(bcomp, "Add...", null)
         addButton.addSelectionListener(
             new SelectionAdapter() {
@@ -184,7 +191,6 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
                         for (var i = 0; i < results.length; i++) {
                             val resource = results.get(i) as IResource
                             val projectRelativePath = resource.projectRelativePath.toOSString
-                            val name = resource.name
 
                             // Filter files which are already in the list.
                             var isOK = true
@@ -195,7 +201,7 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
 
                             // Add if the new element is ok.
                             if (isOK)
-                                inputArray.add(new FileCompilationData(projectRelativePath, name))
+                                inputArray.add(new FileCompilationData(projectRelativePath))
                             else
                                 println("Resource '" + resource.name + "' is already in list!")
                         }
@@ -207,38 +213,28 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
             }
         )
 
-        // Remove Button
+        // Create remove Button
         removeButton = UIUtil.createRemoveButton(bcomp, list)
-        removeButton.addSelectionListener(new SelectionAdapter() {
-            override widgetSelected(SelectionEvent e) {
-                updateLaunchConfigurationDialog()
-            }
-        })
+        removeButton.addSelectionListener(simpleSelectionListener)
 
-        // Up Button
+        // Create up Button
         val upButton = UIUtil.createUpButton(bcomp, list)
-        upButton.addSelectionListener(new SelectionAdapter() {
-            override widgetSelected(SelectionEvent e) {
-                updateLaunchConfigurationDialog()
-            }
-        })
+        upButton.addSelectionListener(simpleSelectionListener)
 
-        // Down Button
+        // Create down Button
         val downButton =UIUtil.createDownButton(bcomp, list)
-        downButton.addSelectionListener(new SelectionAdapter() {
-            override widgetSelected(SelectionEvent e) {
-                updateLaunchConfigurationDialog()
-            }
-        })
+        downButton.addSelectionListener(simpleSelectionListener)
     }
 
     /**
      * Creates a group and composite with controls to specify the target language and output template.
+     * 
+     * @param parent The parent composite
      */
-    private def createTargetComponent(Composite parent) {
+    private def void createTargetComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Target", 1)
 
-        // Language
+        // Create language control
         targetLanguage = UIUtil.createKiCoTargetsCombo(group)
         targetLanguage.addSelectionChangedListener(new ISelectionChangedListener {
 
@@ -248,10 +244,10 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
         })
         targetLanguage.combo.toolTipText = "Target transformation of the KIELER Compiler"
 
-        // File extension
+        // Create file extension control
         val comp2 = UIUtil.createComposite(group, 2)
 
-        targetLanguageFileExtension = UIUtil.createTextField(comp2, "File extension", UIUtil.NONE)
+        targetLanguageFileExtension = UIUtil.createTextField(comp2, "File extension", EnumSet.of(UIUtil.Buttons.NONE))
         targetLanguageFileExtension.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 updateLaunchConfigurationDialog()
@@ -259,10 +255,10 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
         })
         targetLanguageFileExtension.toolTipText = "File extension for the target language (e.g. '.java' for Java)"
         
-        // Template
+        // Create template control
         val comp3 = UIUtil.createComposite(group, 3)
         
-        targetTemplate = UIUtil.createTextField(comp3, "Output template", UIUtil.RESOURCE_BUTTON, this)
+        targetTemplate = UIUtil.createTextField(comp3, "Output template", EnumSet.of(UIUtil.Buttons.RESOURCE_BUTTON), this)
         targetTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 updateLaunchConfigurationDialog()
@@ -273,14 +269,16 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
     }
 
     /**
-     * Creates a group and composite with the input controls for wrapper code generation. 
+     * Creates a group and composite with the input controls for wrapper code generation.
+     * 
+     * @param parent The parent composite 
      */
-    private def createWrapperCodeComponent(Composite parent) {
+    private def void createWrapperCodeComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Wrapper code generation", 4)
 
-        // Input file
+        // Create input file control
         wrapperCodeTemplate = UIUtil.createTextField(group, "Input file",
-            UIUtil.RESOURCE_BUTTON.bitwiseOr(UIUtil.VARIABLE_BUTTON), this)
+            EnumSet.of(UIUtil.Buttons.RESOURCE_BUTTON, UIUtil.Buttons.VARIABLE_BUTTON), this)
         wrapperCodeTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 updateLaunchConfigurationDialog()
@@ -288,9 +286,9 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
         })
         wrapperCodeTemplate.toolTipText = "Template where wrapper code is inserted"
 
-        // Directory with snippet definitions
+        // Create control for directory with snippet definitions
         wrapperCodeSnippets = UIUtil.createTextField(group, "Annotation snippets directory",
-            UIUtil.CONTAINER_BUTTON.bitwiseOr(UIUtil.VARIABLE_BUTTON), this)
+            EnumSet.of(UIUtil.Buttons.CONTAINER_BUTTON, UIUtil.Buttons.VARIABLE_BUTTON), this)
         wrapperCodeSnippets.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 updateLaunchConfigurationDialog()
@@ -299,7 +297,7 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
         wrapperCodeSnippets.toolTipText = "Directory path containing wrapper code snippets"
     }
 
-    /**type filter text
+    /**
      * {@inheritDoc}
      */
     override getName() {
@@ -310,10 +308,10 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
      * {@inheritDoc}
      */
     override initializeFrom(ILaunchConfiguration configuration) {
-        // Files
+        // Load files to be compiled
         list.input = FileCompilationData.loadAllFromConfiguration(configuration)
 
-        // Target language
+        // Load target language
         if (targetLanguage.input != null) {
             val loadedTargetLanguage = configuration.getAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, "")
             for (transformation : targetLanguage.input as Set<Transformation>) {
@@ -326,10 +324,10 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
         targetLanguageFileExtension.text = configuration.getAttribute(
             LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
 
-        // Target template
+        // Load target template
         targetTemplate.text = configuration.getAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, "")
 
-        // Wrapper code
+        // Load wrapper code
         wrapperCodeTemplate.text = configuration.getAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, "")
         wrapperCodeSnippets.text = configuration.getAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, "")
     }
@@ -340,6 +338,7 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
     override activated(ILaunchConfigurationWorkingCopy workingCopy) {
         super.activated(workingCopy)
 
+        // Reset current selection
         currentData = null
 
         // Update project reference
@@ -353,10 +352,10 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
      * {@inheritDoc}
      */
     override performApply(ILaunchConfigurationWorkingCopy configuration) {
-        // Files
+        // Set files to be compiled
         val datas = list.input as List<FileCompilationData> FileCompilationData.saveAllToConfiguration(configuration, datas)
 
-        // Target selection
+        // Set target language
         val selection = targetLanguage.selection as IStructuredSelection
         if (selection != null) {
             val trans = selection.firstElement as Transformation
@@ -368,10 +367,10 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
         configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION,
             targetLanguageFileExtension.text)
 
-        // Target template.
+        // Set target template.
         configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, targetTemplate.text)
 
-        // Wrapper code
+        // Set wrapper code
         configuration.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, wrapperCodeTemplate.text)
         configuration.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, wrapperCodeSnippets.text)
 
@@ -381,18 +380,30 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
 
     /**
      * Checks if the current input makes sense and set an error message accordingly.
+     * 
+     * @return true if the input is valid
      */
-    private def checkConsistency() {
-        errorMessage = null
-
+    private def boolean checkConsistency() {
+        errorMessage = checkErrors()
+        return errorMessage == null
+    }
+    
+    /**
+     * Checks the input for consistency and returns an error message accordingly.
+     * 
+     * @return an error message or null if there is no error
+     */
+    private def String checkErrors(){
         if (project != null) {
             // All files exist in this project
             for (data : list.input as List<FileCompilationData>) {
                 val file = new File(project.location + File.separator + data.projectRelativePath)
                 if (!file.exists)
-                    errorMessage = "File '" + data.projectRelativePath + "' does not exist in the specified project"
+                    return "File '" + data.projectRelativePath + "' does not exist in the specified project"
             }
         }
+        
+        return null
     }
 
     /**
@@ -402,21 +413,10 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
     }
 
     /**
-     * Updates the values of all controls with the newly selected data.
-     */
-    private def updateControls(FileCompilationData data) {
-        updateEnabled()
-
-        if (data != null) {
-            // Set values of controls
-        }
-    }
-
-    /**
      * Enable or disable all controls that work on the currently selected file data.
      * Enable list control iff the project is set correct.
      */
-    private def updateEnabled() {
+    private def void updateEnabled() {
         // Enable controls that need an existing project specified
         val List<Control> controls = #[list.list, targetLanguage.combo, targetLanguageFileExtension, targetTemplate,
             wrapperCodeSnippets, wrapperCodeTemplate]

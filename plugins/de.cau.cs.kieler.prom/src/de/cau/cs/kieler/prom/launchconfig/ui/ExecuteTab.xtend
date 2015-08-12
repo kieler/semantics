@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -17,6 +17,7 @@ import de.cau.cs.kieler.prom.common.CommandData
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.util.ArrayList
+import java.util.EnumSet
 import java.util.List
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
@@ -33,7 +34,6 @@ import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
-import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
@@ -52,22 +52,22 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     /**
      * The control to show all commands and enable/disable them. 
      */
-    TableViewer viewer
+    private TableViewer viewer
     
     /**
      * The input field to set the user defined name of a command.
      */
-    Text name
+    private Text name
     
     /**
      * The input field to set the shell command which should be executed.
      */
-    Text command
+    private Text command
     
     /**
      * The currently selected command data or null if there is nothing selected.
      */
-    CommandData currentData
+    private CommandData currentData
     
     /**
      * The project of this launch configuration.
@@ -91,11 +91,13 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
 
     /**
      * Creates the table viewer with checkboxes to show all commands and enable/disable them.
+     * 
+     * @param parent The parent composite
      */
-    private def createTableComponent(Composite parent){
+    private def void createTableComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Commands", 2)
         
-        // Viewer
+        // Create viewer
         viewer = UIUtil.createCommandTable(group, true)
         viewer.addSelectionChangedListener(new ISelectionChangedListener(){
             
@@ -110,7 +112,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
             }
         })
         
-        // Buttons
+        // Create buttons
         val bcomp = UIUtil.createComposite(group, 1)
         
         val updateDialogSelectionProvider =  new SelectionAdapter(){
@@ -121,7 +123,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
             }
         }
         
-        // Add Button
+        // Create add Button
         val addButton = UIUtil.createButton(bcomp, "Add")
         addButton.addSelectionListener(new SelectionAdapter() {
             override void widgetSelected(SelectionEvent e) {
@@ -137,26 +139,28 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         addButton.addSelectionListener(updateDialogSelectionProvider)
         addButton.toolTipText = "Add a shell command to be run after compilation and wrapper code generation"
         
-        // Remove Button
+        // Create remove Button
         val removeButton = UIUtil.createRemoveButton(bcomp, viewer)
         removeButton.addSelectionListener(updateDialogSelectionProvider)
         
-        // Up Button
+        // Create up Button
         val upButton = UIUtil.createUpButton(bcomp, viewer)
         upButton.addSelectionListener(updateDialogSelectionProvider)
         
-        // Down Button
+        // Create down Button
         val downButton = UIUtil.createDownButton(bcomp, viewer)
         downButton.addSelectionListener(updateDialogSelectionProvider)
     }
 
     /**
      * Creates the control to set a command's user defined name.
+     * 
+     * @param parent The parent composite
      */
-    private def createNameComponent(Composite parent){
+    private def void createNameComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Name", 1)
         
-        name = UIUtil.createTextField(group, null, UIUtil.NONE)
+        name = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.VARIABLE_BUTTON))
         name.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
@@ -173,12 +177,14 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     
     /**
      * Creates the controls to set the shell command.
+     * 
+     * @param parent The parent composite
      */
-    private def createCommandComponent(Composite parent){
+    private def void createCommandComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Command", 1)
         
-        // Text
-        command = UIUtil.createTextField(group, null, 0)
+        // Create text
+        command = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.NONE))
         command.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
@@ -192,11 +198,11 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         })
         command.toolTipText = "Shell command to be executed when preceding command finished successful."
         
-        // Buttons
+        // Create buttons
         val comp = UIUtil.createComposite(group, 2, GridData.HORIZONTAL_ALIGN_END)
 
         val browse = createPushButton(comp, "Browse Project...", null);
-        browse.addSelectionListener(new SelectionListener() {
+        browse.addSelectionListener(new SelectionAdapter() {
 
             override void widgetSelected(SelectionEvent e) {
                 if (project != null) {
@@ -210,9 +216,6 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                         command.insert('"' + resource.projectRelativePath.toOSString + '"')
                     }
                 }
-            }
-
-            override void widgetDefaultSelected(SelectionEvent e) {
             }
         });
 
@@ -263,9 +266,10 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     
     /**
      * Checks the user input for consistency and sets an appropriate error message.
+     * 
      * @return true if the user input is valid.
      */
-    private def checkConsistency(){
+    private def boolean checkConsistency(){
         errorMessage = checkError()
         
         return errorMessage == null
@@ -276,16 +280,16 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
      * @return an error message if the input is inconsistent<br>
      *         or null if the input is valid. 
      */
-    private def checkError(){
+    private def String checkError(){
         val commands = viewer.input as List<CommandData> 
         for(comm : commands){
-            // Unique names
+            // Check for unique names
             for(comm2 : commands){
                 if(comm != comm2 && comm.name == comm2.name)
                     return "Command names must be unique."
             }
             
-            // No comma in name
+            // Check that there is no comma in name
             if(comm.name.contains(","))
                 return "Command names must not contain a comma."
         }
@@ -295,8 +299,9 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     
     /**
      * Update all controls content with the given command data object.
+     * @param comm The command data
      */
-    private def updateControls(CommandData comm){
+    private def void updateControls(CommandData comm){
         if(comm != null){
             name.text = comm.name
             command.text = comm.command
@@ -309,7 +314,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     /**
      * Enable or disable all controls depending on this launch configuration's project. 
      */
-    private def updateEnabled(){
+    private def void updateEnabled(){
         val List<Control> controls = #[viewer.table, name, command]
         UIUtil.enableControlsOnSameLevel(controls, project != null)
     }

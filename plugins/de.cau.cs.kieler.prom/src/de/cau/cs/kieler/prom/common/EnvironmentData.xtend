@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -32,7 +32,7 @@ class EnvironmentData extends ConfigurationSerializableData {
      * Key for the attribute which holds a comma separated string of environment names.
      */
     private static val ENVIRONMENT_IDENTIFIERS_ATTR = "environments"
-    
+     
     /**
      * Key for the attributes which holds the shell commands.
      */
@@ -41,6 +41,8 @@ class EnvironmentData extends ConfigurationSerializableData {
      * Key for the attribute which holds the user defined names of commands.
      */
     private static val String COMMAND_NAME_KEY = "command.name"
+    
+    
     
     // Fields
     /**
@@ -123,12 +125,21 @@ class EnvironmentData extends ConfigurationSerializableData {
 
 
     
+    /**
+     * Creates a new instance of the class.
+     */
     new(){
     }
     
+    /**
+     * Creates a new instance of the class with the given name.
+     * 
+     * @param name The initial name
+     */
     new(String name){
         this.name = name
     }
+    
     
     
     /**
@@ -157,7 +168,7 @@ class EnvironmentData extends ConfigurationSerializableData {
      * Saves the environments to the preference store.
      * They can be retrieved by using loadAllFromPreferenceStore(...)
      */
-    public static def saveAllToPreferenceStore(IPreferenceStore store, List<EnvironmentData> environments){
+    public static def void saveAllToPreferenceStore(IPreferenceStore store, List<EnvironmentData> environments){
         ConfigurationSerializableData.saveAllToPreferenceStore(store, EnvironmentData.ENVIRONMENT_IDENTIFIERS_ATTR, environments)
     }
     
@@ -230,7 +241,7 @@ class EnvironmentData extends ConfigurationSerializableData {
     /**
      * Set this environment's values as values of the launch configuration. 
      */
-    def applyToLaunchConfiguration(ILaunchConfigurationWorkingCopy config){
+    def void applyToLaunchConfiguration(ILaunchConfigurationWorkingCopy config){
         config.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, name)
         config.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, targetLanguage)
         config.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, targetFileExtension)
@@ -240,7 +251,7 @@ class EnvironmentData extends ConfigurationSerializableData {
         
         // Commands
         for(command : commands)
-            command.isEnabled = String.valueOf(true)
+            command.enabled = String.valueOf(true)
             
         CommandData.saveAllToConfiguration(config, commands)    
     }

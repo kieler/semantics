@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -49,7 +49,6 @@ import org.eclipse.ui.IWorkbenchWizard
  * Afterwards there are pages to create a new model file and main file in the newly created project.
  * 
  * @author aas
- * 
  */
 class PromProjectWizard extends Wizard implements IWorkbenchWizard {
 
@@ -108,11 +107,21 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
         addPage(mainFilePage)
     }
 
-    protected def AdvancedNewFileCreationPage createModelFileCreationPage(){
+    /**
+     * Creates the page to specify if and where the model file should be created.
+     * 
+     * @return the created page
+     */
+    protected def AdvancedNewFileCreationPage createModelFileCreationPage() {
         return new AdvancedNewFileCreationPage("Model File", selection, true)
     }
     
-    protected def AdvancedNewFileCreationPage createMainFileCreationPage(){
+    /**
+     * Creates the page to specify if and where the main file for wrapper code should be created.
+     * 
+     * @return the created page
+     */
+    protected def AdvancedNewFileCreationPage createMainFileCreationPage() {
         return new AdvancedNewFileCreationPage("Main File", selection, true)
     }
 
@@ -174,6 +183,7 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
 
     /**
      * Returns true if the wizard can successfully be finished.
+     * 
      * @return true if the current page is the model file creation page or the main file creation page
      *         and both pages are complete.
      */
@@ -187,6 +197,8 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
      * Closes the wizard after creating the specified files
      * and copying the selected wrapper code snippets to the new project.
      * The used environment and main file is saved in the newly created project's properties.
+     * 
+     * @return true if everything finished successful
      */
     override performFinish() {
         // Create model file
@@ -213,7 +225,7 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
     /**
      * Deletes the newly created project.
      */
-    protected def deleteCreatedProject(){
+    protected def void deleteCreatedProject(){
         if(newlyCreatedProject != null){
             newlyCreatedProject.delete(true, true, null)
             newlyCreatedProject = null
@@ -222,8 +234,10 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
 
     /**
      * Creates the model file if the corresponding page has valid data.
+     * 
+     * @return true if the creation ended sucessfully. false otherwise.
      */
-    protected def createModelFile(){
+    protected def boolean createModelFile(){
         try {
             return modelFilePage.performFinish()
             
@@ -238,8 +252,10 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
     /**
      * Creates the main file if the corresponding page has valid data
      * and possibly initializes it with the contents of the used environment's main file origin.
+     * 
+     * @return true if the creation ended sucessfully. false otherwise.
      */
-    protected def createMainFile() {
+    protected def boolean createMainFile() {
         try {
             return mainFilePage.performFinish()
             
@@ -255,8 +271,10 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
     /**
      * Creates the snippet directory of the used environment
      * and initializes it with the snippets from the selected environments of the main page.
+     * 
+     * @return true if it ended sucessfully. false otherwise.
      */
-    protected def initializeSnippetDirectory(){
+    protected def boolean initializeSnippetDirectory(){
         val env = mainPage.getSelectedEnvironment()
         
         // If the snippet directory of the environment is an absolute path,
@@ -297,8 +315,10 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
      * Sets the used environment and possibly created main file
      * to the properties of the newly created project.
      * This data is used by the launch configuration shortcut, to use as reasonable defaults.
+     * 
+     * @return true if it ended sucessfully. false otherwise.
      */
-    protected def initializeProjectProperties(){
+    protected def boolean initializeProjectProperties(){
         // Used environment name
         val env = mainPage.getSelectedEnvironment()
         newlyCreatedProject.setPersistentProperty(PromPlugin.ENVIRIONMENT_QUALIFIER, env.name)
@@ -313,7 +333,10 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
 
     /**
      * Creates a resource and all needed parent folders in a project.
-     * The created resource is initialized with the inputs of the stream. 
+     * The created resource is initialized with the inputs of the stream.
+     * 
+     * @param resource The resource handle to be created
+     * @param stream Input stream with initial content for the resource
      */
     protected def void createResource(IResource resource, InputStream stream) throws CoreException {
         if (resource == null || resource.exists())
@@ -336,9 +359,12 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
 
     /**
      * Copies the contents of the resources from the platform url
-     * to the snippet directory of the newly created project. 
+     * to the snippet directory of the newly created project.
+     * 
+     * @param snippetsFolder The folder to be created and initialized
+     * @param url URL to a plugin's directory with initial content for snippets
      */
-    protected def initializeSnippetsFromDirectoryOfPlatformURL(IFolder snippetsFolder, String url) throws Exception {
+    protected def void initializeSnippetsFromDirectoryOfPlatformURL(IFolder snippetsFolder, String url) throws Exception {
         // URL should be in form 'platform:/plugin/org.myplugin.bla/path/to/template/directory'
 
         val uriWithUnifiedSegmentSeparator = url.trim().replace("\\", "/")
@@ -385,7 +411,10 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
     }
 
     /**
-     * Return the project that has been created since this wizard has been opened.
+     * Compares the current projects with the projects
+     * which existed before the environment's related project wizard has been opened.
+     * 
+     * @return the project that has been created since this wizard has been opened.
      */
     protected def IProject findNewlyCreatedProject() {
         // The other project wizard does not return any information about what has been created.
@@ -400,6 +429,9 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
 
     /**
      * Implementation of IWorkbenchWizard. 
+     * 
+     * @param workbench The workbench
+     * @param selection The selection
      */
     override init(IWorkbench workbench, IStructuredSelection selection) {
         this.workbench = workbench
@@ -416,8 +448,10 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
      * After the wizard has been finished the newly created project is set and initialized.
      * If there is no project wizard with the fully qualified class name,
      * the newly created project is set to null.
+     * 
+     * @param fullyQualifiedClassName The fully qualified class name
      */
-    private def startWizard(String fullyQualifiedClassName) {
+    private def void startWizard(String fullyQualifiedClassName) {
         val wizard = ExtensionLookupUtil.getWizard(fullyQualifiedClassName)
         if (wizard != null) {
             // Open the wizard.
@@ -438,7 +472,7 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
     /**
      * Add resources to the newly created project.
      */
-    private def initializeNewProject(){
+    private def void initializeNewProject(){
         if (newlyCreatedProject != null) {
             // Create folder for generated files
             val sourceFolder = newlyCreatedProject.getFolder(LaunchConfiguration.BUILD_DIRECTORY);
@@ -453,9 +487,12 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
     }
     
     /**
-     * Adds a folder resource of a java project to the project's build path source folders.
+     * Adds a folder of a java project to the build path source folders.
+     * 
+     * @param javaProject The java project
+     * @param sourceFolder The source folder to be added
      */
-    private def addFolderToJavaClasspath(IJavaProject javaProject, IFolder sourceFolder) {
+    private def void addFolderToJavaClasspath(IJavaProject javaProject, IFolder sourceFolder) {
         val root = javaProject.getPackageFragmentRoot(sourceFolder);
         val oldEntries = javaProject.getRawClasspath();
         val newEntries = newArrayOfSize(oldEntries.length + 1);
