@@ -13,12 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.tsccharts;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,21 +37,24 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ui.progress.UIJob;
-import org.eclipse.xtend.lib.macro.declaration.CompilationStrategy.CompilationContext;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.Colors;
 import de.cau.cs.kieler.core.krendering.HorizontalAlignment;
 import de.cau.cs.kieler.core.krendering.KBackground;
-import de.cau.cs.kieler.core.krendering.KColor;
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
 import de.cau.cs.kieler.core.krendering.KLineWidth;
 import de.cau.cs.kieler.core.krendering.KRectangle;
@@ -59,18 +63,16 @@ import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.VerticalAlignment;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
-import de.cau.cs.kieler.core.krendering.impl.KColorImpl;
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerException;
-import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.kitt.tracing.Tracing;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.util.ModelingUtil;
-import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.State;
@@ -97,7 +99,11 @@ import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
  */
 public class TimingAnalysis extends Job {
 
+    private static HashMap<Pair<String, String>, Set<String>> debugTracingHistory =
+            new HashMap<Pair<String, String>, Set<String>>();
+
     public static final boolean DEBUG = true;
+    public static final boolean DEBUG_VERBOSE = true;
 
     private String pluginId = "de.cau.cs.kieler.sccharts.tsccharts";
 
@@ -443,6 +449,10 @@ public class TimingAnalysis extends Job {
         if (monitor.isCanceled()) {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
+        }
+        
+        if(DEBUG){
+            debugTracing(nodeRegionMapping);
         }
 
         // Changing diagram should be in UI thread (maybe ask chsch)
@@ -908,5 +918,71 @@ public class TimingAnalysis extends Job {
         controlFlow.setTarget(tpp);
         scg.getNodes().add(tpp);
         return tpp;
+    }
+    
+    // DEBUG METHODS
+    
+    private void debugTracing(HashMap<Node, Region> nodeRegionMapping) {
+        // get all regions
+        Set<Region> regions = new HashSet<Region>(nodeRegionMapping.values());
+        regions.addAll(Arrays.asList((Iterators.toArray(
+                Iterators.filter(scchart.eAllContents(), Region.class), Region.class))));
+
+        for (Region r : regions) {
+            String regionID = r == null ? "root" : r.getId();
+            if (regionID == null) {
+                State parentState = r.getParentState();
+                regionID = parentState.getId() + parentState.getLabel() + parentState.getRegions().indexOf(r) + r.getLabel();
+            }else if(r != null) {
+                regionID += r.getLabel();
+            }
+            Pair<String, String> pair =
+                    new Pair<String, String>((scchart.getId() + scchart.getLabel()), regionID);
+            Set<String> prev = debugTracingHistory.get(pair);
+
+            Set<String> results = new HashSet<String>();
+            for (java.util.Map.Entry<Node, Region> entry : nodeRegionMapping.entrySet()) {
+                if (entry.getValue() == r) {
+                    results.add(nodeToString(entry.getKey()));
+                }
+            }
+
+            if (prev == null) {
+                debugTracingHistory.put(pair, results);
+            } else if (results.size() != prev.size()
+                    || !Sets.symmetricDifference(results, prev).isEmpty()) {
+                String message = "Error: Tracing produced inconsistent mappings over multiple run";
+                String fails =
+                        "Errornous nodes of region '" + regionID + "': "
+                                + Joiner.on(",").join(Sets.symmetricDifference(results, prev));
+                StatusManager.getManager().handle(
+                        new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
+                                new Throwable(fails)), StatusManager.LOG);
+                StatusManager.getManager().handle(
+                        new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
+                                new Throwable(fails)), StatusManager.SHOW);
+            }
+
+            if (DEBUG_VERBOSE) {
+                timingResults.put(r, Joiner.on(",").join(results) + "[" + results.size() + "]");
+            }
+        }
+    }
+
+    private String nodeToString(Node node) {
+        if (node instanceof Assignment) {
+            ValuedObject vo = ((Assignment) node).getValuedObject();
+            if (vo != null) {
+                return "Ass:" + vo.getName();
+            } else {
+                return "Hostcode";
+            }
+        } else if (node instanceof Conditional) {
+            return "Cond:"
+                    + ((ValuedObjectReference) ((Conditional) node).getCondition())
+                            .getValuedObject().getName();
+        } else {
+            return node.eClass().getName();
+        }
     }
 }
