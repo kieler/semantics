@@ -155,7 +155,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
     private void setValue(final Annotation annotation, final LayoutOptionData optionData,
             final Object value) {
         if (annotation instanceof StringAnnotation) {
-            ((StringAnnotation) annotation).getValues().set(0, value.toString());
+            ((StringAnnotation) annotation).getValues().add(value.toString());
         } else if (annotation instanceof IntAnnotation) {
             if (optionData.getType() == LayoutOptionData.Type.INT && value instanceof Integer) {
                 ((IntAnnotation) annotation).setValue((Integer) value);
@@ -188,7 +188,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
                 } else {
                     StringAnnotation newAnnot = AnnotationsFactory.eINSTANCE.createStringAnnotation();
                     newAnnot.setName(layoutOption.getId());
-                    newAnnot.getValues().set(0, value.toString());
+                    newAnnot.getValues().add(value.toString());
                     annotatable.getAnnotations().add(newAnnot);
                 }
             }
