@@ -1313,26 +1313,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val portName = SCGPORTID_HIERARCHYPORTS + ne.hashCode.toString + nodeGrouping.toString +
                 ne.source.hashCode.toString + kContainer.hashCode.toString
 
-            //            System.out.println("Creating helper port: " + portName)
+//                        System.out.println("Creating helper port: " + portName)
             val hPort = kContainer.addHelperPort(portName)
             val origSource = ne.source
             val origSourcePort = ne.sourcePort
             ne.source = kContainer
             ne.sourcePort = hPort
-            ne.semanticObject.createNewEdge() => [
-                it.source = origSource
-                it.sourcePort = origSourcePort
-                it.target = kContainer
-                it.targetPort = kContainer.getPort(portName)
-                it.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-                if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
-                it.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
-                    it.lineStyle = ne.KRendering.lineStyleValue
-                    it.foreground = ne.KRendering.foreground
-                ]
-                it.labels.addAll(ne.labels)
+            val newEdge = ne.semanticObject.createNewEdge()
+            newEdge.source = origSource
+            newEdge.sourcePort = origSourcePort
+            newEdge.target = kContainer
+            newEdge.targetPort = kContainer.getPort(portName)
+            newEdge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+            if (USE_ADAPTIVEZOOM.booleanValue) newEdge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
+            newEdge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
+                it.lineStyle = ne.KRendering.lineStyleValue
+                it.foreground = ne.KRendering.foreground
             ]
-
+            newEdge.labels.addAll(ne.labels)
         }
         kContainer
     }

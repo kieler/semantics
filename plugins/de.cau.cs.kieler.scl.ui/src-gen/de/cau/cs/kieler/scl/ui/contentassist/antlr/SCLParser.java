@@ -38,13 +38,10 @@ public class SCLParser extends AbstractContentAssistParser {
 				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getSCLProgramAccess().getAlternatives_5_0(), "rule__SCLProgram__Alternatives_5_0");
-					put(grammarAccess.getStatementAccess().getAlternatives(), "rule__Statement__Alternatives");
-					put(grammarAccess.getInstructionStatementAccess().getInstructionAlternatives_1_0(), "rule__InstructionStatement__InstructionAlternatives_1_0");
 					put(grammarAccess.getInstructionAccess().getAlternatives(), "rule__Instruction__Alternatives");
 					put(grammarAccess.getConditionalAccess().getAlternatives_4_0(), "rule__Conditional__Alternatives_4_0");
 					put(grammarAccess.getConditionalAccess().getAlternatives_5_2_0(), "rule__Conditional__Alternatives_5_2_0");
-					put(grammarAccess.getStatementSequenceAccess().getAlternatives(), "rule__StatementSequence__Alternatives");
-					put(grammarAccess.getThreadAccess().getAlternatives_1_0(), "rule__Thread__Alternatives_1_0");
+					put(grammarAccess.getThreadAccess().getAlternatives_2_0(), "rule__Thread__Alternatives_2_0");
 					put(grammarAccess.getStatementScopeAccess().getAlternatives_3_0(), "rule__StatementScope__Alternatives_3_0");
 					put(grammarAccess.getTestEntityAccess().getAlternatives(), "rule__TestEntity__Alternatives");
 					put(grammarAccess.getDeclarationAccess().getAlternatives_5(), "rule__Declaration__Alternatives_5");
@@ -89,8 +86,9 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getGotoAccess().getGroup(), "rule__Goto__Group__0");
 					put(grammarAccess.getThreadAccess().getGroup(), "rule__Thread__Group__0");
 					put(grammarAccess.getThreadAccess().getGroup_1(), "rule__Thread__Group_1__0");
-					put(grammarAccess.getThreadAccess().getGroup_1_0_0(), "rule__Thread__Group_1_0_0__0");
-					put(grammarAccess.getThreadAccess().getGroup_1_1(), "rule__Thread__Group_1_1__0");
+					put(grammarAccess.getThreadAccess().getGroup_2(), "rule__Thread__Group_2__0");
+					put(grammarAccess.getThreadAccess().getGroup_2_0_0(), "rule__Thread__Group_2_0_0__0");
+					put(grammarAccess.getThreadAccess().getGroup_2_1(), "rule__Thread__Group_2_1__0");
 					put(grammarAccess.getParallelAccess().getGroup(), "rule__Parallel__Group__0");
 					put(grammarAccess.getParallelAccess().getGroup_1(), "rule__Parallel__Group_1__0");
 					put(grammarAccess.getParallelAccess().getGroup_1_1(), "rule__Parallel__Group_1_1__0");
@@ -201,10 +199,11 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getConditionalAccess().getElseStatementsAssignment_5_2_1_0(), "rule__Conditional__ElseStatementsAssignment_5_2_1_0");
 					put(grammarAccess.getConditionalAccess().getElseStatementsAssignment_5_2_1_1(), "rule__Conditional__ElseStatementsAssignment_5_2_1_1");
 					put(grammarAccess.getGotoAccess().getTargetLabelAssignment_1(), "rule__Goto__TargetLabelAssignment_1");
-					put(grammarAccess.getThreadAccess().getStatementsAssignment_1_0_0_0(), "rule__Thread__StatementsAssignment_1_0_0_0");
-					put(grammarAccess.getThreadAccess().getStatementsAssignment_1_0_1(), "rule__Thread__StatementsAssignment_1_0_1");
-					put(grammarAccess.getThreadAccess().getStatementsAssignment_1_1_0(), "rule__Thread__StatementsAssignment_1_1_0");
-					put(grammarAccess.getThreadAccess().getStatementsAssignment_1_1_1(), "rule__Thread__StatementsAssignment_1_1_1");
+					put(grammarAccess.getThreadAccess().getAnnotationsAssignment_1_0(), "rule__Thread__AnnotationsAssignment_1_0");
+					put(grammarAccess.getThreadAccess().getStatementsAssignment_2_0_0_0(), "rule__Thread__StatementsAssignment_2_0_0_0");
+					put(grammarAccess.getThreadAccess().getStatementsAssignment_2_0_1(), "rule__Thread__StatementsAssignment_2_0_1");
+					put(grammarAccess.getThreadAccess().getStatementsAssignment_2_1_0(), "rule__Thread__StatementsAssignment_2_1_0");
+					put(grammarAccess.getThreadAccess().getStatementsAssignment_2_1_1(), "rule__Thread__StatementsAssignment_2_1_1");
 					put(grammarAccess.getParallelAccess().getThreadsAssignment_1_0(), "rule__Parallel__ThreadsAssignment_1_0");
 					put(grammarAccess.getParallelAccess().getThreadsAssignment_1_1_1(), "rule__Parallel__ThreadsAssignment_1_1_1");
 					put(grammarAccess.getStatementScopeAccess().getDeclarationsAssignment_2(), "rule__StatementScope__DeclarationsAssignment_2");

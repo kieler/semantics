@@ -296,17 +296,7 @@ public abstract class AbstractSCLSemanticSequencer extends KEXTSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         (
-	 *             instruction=Assignment | 
-	 *             instruction=Conditional | 
-	 *             instruction=Goto | 
-	 *             instruction=Parallel | 
-	 *             instruction=Pause | 
-	 *             instruction=StatementScope
-	 *         )
-	 *     )
+	 *     (annotations+=Annotation* instruction=Instruction)
 	 */
 	protected void sequence_InstructionStatement(EObject context, InstructionStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -361,7 +351,11 @@ public abstract class AbstractSCLSemanticSequencer extends KEXTSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     ((statements+=InstructionStatement | statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         (statements+=InstructionStatement | statements+=EmptyStatement)* 
+	 *         (statements+=InstructionStatement statements+=EmptyStatement*)?
+	 *     )
 	 */
 	protected void sequence_Thread(EObject context, de.cau.cs.kieler.scl.scl.Thread semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

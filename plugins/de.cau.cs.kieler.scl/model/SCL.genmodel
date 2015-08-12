@@ -34,7 +34,9 @@
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//StatementSequence">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//StatementSequence/statements"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Thread"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Thread">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Thread/annotations"/>
+    </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Parallel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Parallel/threads"/>
     </genClasses>

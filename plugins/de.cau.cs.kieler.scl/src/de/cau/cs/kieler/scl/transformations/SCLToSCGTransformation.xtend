@@ -179,7 +179,8 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
         
         val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
         for (entry : threadPathTypes.keySet) {
-            entry.createStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE))
+                entry.createStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
         }             
 
         scg
@@ -305,14 +306,15 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
                 scg.nodes += it
                 it.fork = fork
             ]
-            parallel.threads.forEach [
+            parallel.threads.forEach [ thread |
                 val forkFlow = fork.createControlFlow
-                val threadEntry = ScgFactory::eINSTANCE.createEntry.createNodeList(it) => [
+                val threadEntry = ScgFactory::eINSTANCE.createEntry.createNodeList(thread) => [
                     scg.nodes += it
                     it.controlFlowTarget(forkFlow.toList)
+                    thread.copyAnnotations(it) 
                 ]
-                val continuation = it.statements.transform(scg, threadEntry.createControlFlow.toList)
-                ScgFactory::eINSTANCE.createExit.createNodeList(it) => [
+                val continuation = thread.statements.transform(scg, threadEntry.createControlFlow.toList)
+                ScgFactory::eINSTANCE.createExit.createNodeList(thread) => [
                     (it as Exit).entry = threadEntry as Entry
                     scg.nodes += it
                     it.controlFlowTarget(continuation.controlFlows)

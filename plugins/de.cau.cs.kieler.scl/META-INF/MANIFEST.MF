@@ -29,8 +29,7 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.core.kexpressions.keffects;visibility:=reexport,
- de.cau.cs.kieler.core.kexpressions.text;visibility:=reexport,
- de.cau.cs.kieler.kico;bundle-version="0.1.0"
+ de.cau.cs.kieler.core.kexpressions.text;visibility:=reexport
 Import-Package: com.google.common.base,
  org.apache.log4j,
  org.apache.xerces.util;version="2.9.0",

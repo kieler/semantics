@@ -139,7 +139,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         var synchronizable = false
 
 		if ((!threadPathTypes.filter[ it == ThreadPathType::DELAYED ].empty) &&
-			(!threadPathTypes.filter[ it == ThreadPathType::POTENTIAL_INSTANTANEOUS ].empty)
+			(!threadPathTypes.filter[ it == ThreadPathType::POTENTIALLY_INSTANTANEOUS ].empty)
 		) {
 			synchronizable = true
 		}         
