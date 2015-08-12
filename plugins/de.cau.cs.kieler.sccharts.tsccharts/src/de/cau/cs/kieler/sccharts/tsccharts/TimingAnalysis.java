@@ -371,7 +371,12 @@ public class TimingAnalysis extends Job {
         String assumptionFile = uri.replace(".sct", ".asu");
         String assumptionFilePath = assumptionFile.replace("file:", "");
         StringBuilder stringBuilder = new StringBuilder();
-        timingAnnotationProvider.getAssumptions(assumptionFilePath, stringBuilder);
+        boolean assumptionFileFound = 
+                timingAnnotationProvider.getAssumptions(assumptionFilePath, stringBuilder);
+        if (!assumptionFileFound) {
+            return new Status(IStatus.ERROR, pluginId, "An associated assumption file for this model "
+                    + "could not be found.");
+        }
         // just debug, may be removed
         System.out.println(stringBuilder.toString());
 
@@ -628,6 +633,7 @@ public class TimingAnalysis extends Job {
             // It is possible that there is no flat timing value stored for a region, set to zero
             if (flatTiming == null) {
                 flatTiming = 0;
+                flatValues.put(childRegion, flatTiming);
             }
             if (deepValues.get(childRegion) != null) {
                 deepValues.put(childRegion, deepValues.get(childRegion) + flatTiming);

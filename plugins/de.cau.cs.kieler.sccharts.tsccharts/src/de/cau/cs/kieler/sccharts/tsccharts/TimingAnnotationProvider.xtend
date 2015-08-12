@@ -306,9 +306,9 @@ class TimingAnnotationProvider {
      * @param stringBuilder
      *     The StringBuilder to which the content of the assumptions file will be appended
      * @return
-     *     The content of the assumptions file as a string, may be empty string, if no such file exists
+     *     Returns true, if assumptions file could be found, false else.
      */
-    def void getAssumptions(String uri, StringBuilder stringBuilder) {
+    def boolean getAssumptions(String uri, StringBuilder stringBuilder) {
         var BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(uri));
@@ -320,9 +320,9 @@ class TimingAnnotationProvider {
                 stringBuilder.append(line);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Timing information could not be found.");
+            System.out.println("Assumptions file could not be found.");
             e.printStackTrace();
-            return;
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -334,7 +334,7 @@ class TimingAnnotationProvider {
                 }
             }
         }
-        return;
+        return true;
     }
 
     /**
