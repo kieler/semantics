@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -40,6 +40,7 @@ import java.util.HashMap
 import java.util.List
 import java.util.Set
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.Join
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -254,15 +255,16 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                 }
             }
 
-            neededNodes += schedulingBlock.nodes.head.incoming.filter(typeof(ControlFlow)).map[eContainer as Node]
-
-            for (node : neededNodes) {
-                var prevSB = schedulingBlockCache.get(node)
-                if (!topologicalSortVisited.contains(prevSB)) {
-                    debug(indent + "Previous SB is missing: " + prevSB.label)
-                    prevSB.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, indent + "  ")
+            if (!(schedulingBlock.nodes.head instanceof Join)) {
+                neededNodes += schedulingBlock.nodes.head.incoming.filter(typeof(ControlFlow)).map[eContainer as Node]
+                for (node : neededNodes) {
+                    var prevSB = schedulingBlockCache.get(node)
                     if (!topologicalSortVisited.contains(prevSB)) {
-                        placeable = false
+                        debug(indent + "Previous SB is missing: " + prevSB.label)
+                        prevSB.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, indent + "  ")
+                        if (!topologicalSortVisited.contains(prevSB)) {
+                            placeable = false
+                        }
                     }
                 }
             }
@@ -355,7 +357,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                 val vo = sb.guard.valuedObject
                 if (schedulingBlockVOCache.keySet.contains(vo)) {
                     val sbSet = schedulingBlockVOCache.get(vo)
-                    sbSet += sbSet
+                    sbSet += sb
                 } else {
                     val sbSet = <SchedulingBlock>newHashSet
                     sbSet += sb
@@ -374,7 +376,8 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 
         guardVOCache.clear
         scg.guards.forEach [ g |
-            guardVOCache.put(g.valuedObject, g)
+//            if (!g.schedulingBlockLink.basicBlock.deadBlock)
+                guardVOCache.put(g.valuedObject, g)
         ]
 
         val scedList = <ScheduleBlock>newLinkedList
@@ -402,14 +405,13 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
     private def Set<DataDependency> getAllDataDependencies(SchedulingBlock schedulingBlock, SCGraph scg) {
         val returnSet = <DataDependency>newHashSet;
 
-        //    	val guard = schedulingBlock.guard
-        //    	for (sb : scg.allSchedulingBlocks) {
-        //    		if (sb.guard == guard) {
-        //    			returnSet += sb.dependencies
-        //    		}
-        //    	} 
-        //(schedulingBlock.eContainer as BasicBlock).schedulingBlocks.forEach[ returnSet += it.dependencies ]
-        returnSet += schedulingBlock.dependencies.filter(typeof(DataDependency))
+//        returnSet += schedulingBlock.dependencies.filter(typeof(DataDependency))
+
+        for(dependency : schedulingBlock.dependencies.filter(typeof(DataDependency))) {
+            val node = dependency.eContainer as Node
+            val sb = schedulingBlockCache.get(node)
+            if (!sb.basicBlock.deadBlock) returnSet += dependency
+        }
 
         returnSet
     }

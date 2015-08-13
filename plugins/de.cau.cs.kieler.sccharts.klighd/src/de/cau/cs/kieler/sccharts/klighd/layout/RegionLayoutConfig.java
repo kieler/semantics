@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  *
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  *
@@ -17,7 +17,8 @@ import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
 import de.cau.cs.kieler.kiml.config.SemanticLayoutConfig;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
-import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.ControlflowRegion;
+import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.State;
 
 /**
@@ -63,11 +64,16 @@ public class RegionLayoutConfig extends SemanticLayoutConfig{
                 return "de.cau.cs.kieler.box";
             }
         }
-        if (semanticElem instanceof Region) {
+        if (semanticElem instanceof ControlflowRegion) {
             if (layoutOption.equals(LayoutOptions.ALGORITHM)) {
                 return "de.cau.cs.kieler.graphviz.dot";
             }
-        }        
+        }       
+        if (semanticElem instanceof DataflowRegion) {
+            if (layoutOption.equals(LayoutOptions.ALGORITHM)) {
+                return "de.cau.cs.kieler.klay.layered";
+            }
+        }          
         return null;
     }
 

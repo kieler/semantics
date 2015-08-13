@@ -1,0 +1,14 @@
+scchart SyncChart {
+  input signal pure power;
+  output signal pure running;
+
+  initial state off
+  --> on with power;
+
+  state on {
+
+    initial state sustain
+    --> sustain / running;
+  }
+  o-> off with power;
+}

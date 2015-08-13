@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Esterel Editor
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-Version: 0.2.4.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
@@ -15,9 +15,10 @@ Require-Bundle: org.eclipse.xtext.ui,
  de.cau.cs.kieler.core.annotations.text.ui,
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.1",
- de.cau.cs.kieler.esterel.kexpressions.ui;bundle-version="0.4.1"
+ de.cau.cs.kieler.esterel.kexpressions.ui;bundle-version="0.4.1",
+ org.eclipse.xtext.xtext.ui
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.esterel.ui.contentassist.antlr,
  de.cau.cs.kieler.esterel.ui.contentassist,
  de.cau.cs.kieler.esterel.ui.quickfix

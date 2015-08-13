@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Test Plugin for S Simulation
 Bundle-SymbolicName: de.cau.cs.kieler.s.sim.sc.test
 Bundle-Version: 0.2.0.qualifier
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem.test,
@@ -14,5 +14,5 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.sim.kart,
  de.cau.cs.kieler.sim.syncsignalreset,
  de.cau.cs.kieler.s.ui
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

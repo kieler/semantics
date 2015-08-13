@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -139,7 +139,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         var synchronizable = false
 
 		if ((!threadPathTypes.filter[ it == ThreadPathType::DELAYED ].empty) &&
-			(!threadPathTypes.filter[ it == ThreadPathType::POTENTIAL_INSTANTANEOUS ].empty)
+			(!threadPathTypes.filter[ it == ThreadPathType::POTENTIALLY_INSTANTANEOUS ].empty)
 		) {
 			synchronizable = true
 		}         

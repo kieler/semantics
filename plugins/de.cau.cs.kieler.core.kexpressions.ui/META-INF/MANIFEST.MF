@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Expressions UI Infrastructure
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-Version: 0.5.1.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.core.kexpressions.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.1.0",
  de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
  de.cau.cs.kieler.core.annotations.text.ui
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.core.kexpressions.ui,
  de.cau.cs.kieler.core.kexpressions.ui.contentassist,
  de.cau.cs.kieler.core.kexpressions.ui.contentassist.antlr,

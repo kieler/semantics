@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -52,6 +52,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.Equation
 
 /**
  * SCCharts Extensions.
@@ -556,8 +557,9 @@ class SCChartsExtension {
         val region = createControlflowRegion(id)
         // ATTENTION: if this is the first region and there already is an IMPLICIT region,
         // e.g., because of inner actions, then return THIS region only!
-        if (state.regions.size == 1 && state.regions.get(0).allContainedStates.size == 0 &&
-            state.regions.get(0) instanceof ControlflowRegion) {
+        if (state.regions.size == 1 &&
+            state.regions.head instanceof ControlflowRegion && 
+            state.regions.head.allContainedStates.size == 0) {
             return state.regions.get(0) as ControlflowRegion
         }
         state.regions += region
@@ -1227,10 +1229,15 @@ class SCChartsExtension {
         }
 
         // There are local valuedObjects, raise them
-        if (state.valuedObjects != null && state.valuedObjects.size > 0) {
+        val VOs = <ValuedObject> newArrayList => [ vos |  
+            vos += state.valuedObjects
+            state.regions.forEach[ vos += it.valuedObjects ]
+        ] 
+        
+        if (!VOs.empty) {
             val hierarchicalStateName = state.getHierarchicalName("LOCAL");
 
-            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
+            for (ValuedObject localValuedObject : VOs) {
                 val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
 
                 // Possibly expose
@@ -1245,6 +1252,7 @@ class SCChartsExtension {
                 if (expose) {
                     localValuedObject.setName(newValuedObjectName)
                 } else {
+                    localValuedObject.setName(newValuedObjectName)
                     localValuedObject.uniqueNameCached(uniqueNameCache)
                 }
 
@@ -1274,7 +1282,7 @@ class SCChartsExtension {
         val relevantObjects = scope.eAllContents.filter(
             e|
                 e instanceof ValuedObjectReference || e instanceof Assignment ||
-                    e instanceof Emission || e instanceof Binding
+                    e instanceof Emission || e instanceof Binding || e instanceof Equation
         ).immutableCopy;
         for (obj : relevantObjects) {
             if (obj instanceof ValuedObjectReference && (obj as ValuedObjectReference).valuedObject == valuedObject) {
@@ -1299,7 +1307,9 @@ class SCChartsExtension {
             } else if (obj instanceof Binding) {
                 if((obj as Binding).formal == valuedObject) (obj as Binding).formal = replacement
                 if((obj as Binding).actual == valuedObject) (obj as Binding).actual = replacement
-            }
+            } else if (obj instanceof Equation && (obj as Equation).valuedObject == valuedObject) {
+                (obj as Equation).valuedObject = replacement;
+            }      
 
         }
     }

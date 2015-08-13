@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: SCCharts KLighD binding
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.klighd;singleton:=true
 Bundle-Version: 0.1.1.qualifier
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: de.cau.cs.kieler.core.krendering.extensions,
  de.cau.cs.kieler.klighd,
  org.eclipse.xtend.lib;bundle-version="2.3.0",
@@ -20,7 +20,7 @@ Require-Bundle: de.cau.cs.kieler.core.krendering.extensions,
  de.cau.cs.kieler.sccharts.s;bundle-version="0.1.0",
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.kico,
- de.cau.cs.kieler.klighd.piccolo,
- de.cau.cs.kieler.sccharts.tsccharts
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+ de.cau.cs.kieler.klighd.piccolo
+Bundle-Vendor: Kiel University
+
 

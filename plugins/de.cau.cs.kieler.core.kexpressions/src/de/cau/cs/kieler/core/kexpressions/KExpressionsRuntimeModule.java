@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2010 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -23,5 +23,9 @@ public class KExpressionsRuntimeModule extends
     public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
         return de.cau.cs.kieler.core.kexpressions.formatting.KExpressionsValueConverter.class;
     }
+    
+    public Class<? extends de.cau.cs.kieler.core.kexpressions.validation.KExpressionsJavaValidator> bindKExpressionsJavaValidator() {
+            return de.cau.cs.kieler.core.kexpressions.validation.KExpressionsJavaValidator.class;
+    }    
 
 }

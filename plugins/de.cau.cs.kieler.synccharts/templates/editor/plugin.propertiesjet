@@ -19,7 +19,7 @@
 <%@ include file="../Header.propertiesjetinc"%>
 
 pluginName = <%=genModel.getModelName()%> Editor
-providerName = Christian-Albrechts-Universitaet zu Kiel
+providerName = Kiel University
 
 <%boolean hasMultiPageEditor = false;%>
 <%for (GenPackage genPackage : genModel.getAllGenPackagesWithClassifiers()) {if (genPackage.isMultipleEditorPages()) { hasMultiPageEditor = true; }%>

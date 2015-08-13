@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -78,6 +78,7 @@ abstract class AbstractSynchronizer {
     extension AnnotationsExtensions	
     
     protected static val ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
+    protected static val ANNOTATION_IGNORETHREAD = "ignore"
 	
 	protected var KielerCompilerContext compilerContext = null
 	protected var Map<Node, SchedulingBlock> schedulingCache = null

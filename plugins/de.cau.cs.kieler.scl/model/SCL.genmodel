@@ -3,7 +3,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.scl/src-gen" editDirectory="/de.cau.cs.kieler.scl.edit/src"
     editorDirectory="/de.cau.cs.kieler.scl.editor/src" modelPluginID="de.cau.cs.kieler.scl"
     forceOverwrite="true" modelName="SCL" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.scl.edit"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.scl.edit"
     editorPluginID="de.cau.cs.kieler.scl.editor" runtimeVersion="2.10" usedGenPackages="platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <genPackages prefix="Scl" basePackage="de.cau.cs.kieler.scl" disposableProviderFactory="true"
       ecorePackage="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#/">
@@ -37,7 +37,9 @@
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//StatementSequence">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//StatementSequence/statements"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Thread"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Thread">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Thread/annotations"/>
+    </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Parallel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Parallel/threads"/>
     </genClasses>

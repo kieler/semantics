@@ -1,0 +1,23 @@
+scchart ABRO2 "ABRO" {
+  input signal pure A;
+  input signal pure B;
+  output signal pure O;
+
+  initial state WaitAB {
+
+    initial state wA
+    --> dA with A / B;
+
+    final state dA;
+
+    region:
+
+    initial state wB
+    --> dB with B;
+
+    final state dB;
+  }
+  >-> done / O;
+
+  state done;
+}

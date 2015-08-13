@@ -6,7 +6,6 @@ package de.cau.cs.kieler.sccharts.text.sct;
 import java.util.Properties;
 
 import org.eclipse.xtext.Constants;
-import org.eclipse.xtext.service.DefaultRuntimeModule;
 
 import com.google.inject.Binder;
 import com.google.inject.name.Names;
@@ -14,8 +13,8 @@ import com.google.inject.name.Names;
 /**
  * Manual modifications go to {de.cau.cs.kieler.sccharts.text.sct.SctRuntimeModule}
  */
- @SuppressWarnings("all")
-public abstract class AbstractSctRuntimeModule extends DefaultRuntimeModule {
+@SuppressWarnings("all")
+public abstract class AbstractSctRuntimeModule extends org.eclipse.xtext.service.DefaultRuntimeModule {
 
 	protected Properties properties = null;
 
@@ -96,7 +95,7 @@ public abstract class AbstractSctRuntimeModule extends DefaultRuntimeModule {
 
 	// contributed by org.eclipse.xtext.generator.validation.JavaValidatorFragment
 	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends de.cau.cs.kieler.sccharts.text.sct.validation.SctJavaValidator> bindSctJavaValidator() {
-		return de.cau.cs.kieler.sccharts.text.sct.validation.SctValidator.class;
+		return de.cau.cs.kieler.sccharts.text.sct.validation.SctJavaValidator.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment

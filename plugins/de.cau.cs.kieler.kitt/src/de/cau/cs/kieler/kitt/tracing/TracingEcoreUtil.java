@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -46,10 +46,11 @@ public class TracingEcoreUtil extends EcoreUtil {
     /**
      * {@inheritDoc}
      */
-    public static <T extends EObject> Collection<T> copyAll(Collection<? extends T> eObjects) {
+    @SuppressWarnings("unchecked")
+    public static <T> Collection<T> copyAll(Collection<? extends T> eObjects) {
         Collection<T> result = new ArrayList<T>(eObjects.size());
         for (T t : eObjects) {
-            result.add(TransformationTracing.tracedCopy(t));
+            result.add((T) TransformationTracing.tracedCopy((EObject)t));
         }
         return result;
     }
