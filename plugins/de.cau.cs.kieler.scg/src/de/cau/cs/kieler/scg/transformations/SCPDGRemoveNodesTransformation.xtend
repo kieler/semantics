@@ -22,6 +22,23 @@ import de.cau.cs.kieler.scg.ThenDependency
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.Set
 
+/** 
+ * This class is part of the SPDG Transformation Chain. The chain is used to
+ * parallize the SCG as much as possible.
+ * 
+ * <pre>
+ * SCG
+ *  |   Create Dependencies
+ *  |   Minimize Dependencies
+ *  |   Remove Nodes            <== You are here
+ * SCPDG
+ * </pre>
+ * 
+ * @author twe
+ * @kieler.design 
+ * @kieler.rating 
+ */
+
 class SCPDGRemoveNodesTransformation extends AbstractProductionTransformation implements Traceable {
     var Entry programEntry;
     

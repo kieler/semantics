@@ -22,7 +22,23 @@ import de.cau.cs.kieler.scg.ThenDependency
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.Set
 import org.eclipse.emf.common.util.BasicEList
-import de.cau.cs.kieler.scg.DataDependency
+
+/** 
+ * This class is part of the SPDG Transformation Chain. The chain is used to
+ * parallize the SCG as much as possible.
+ * 
+ * <pre>
+ * SCG
+ *  |   Create Dependencies
+ *  |   Minimize Dependencies   <== You are here
+ *  |   Remove Nodes
+ * SCPDG
+ * </pre>
+ * 
+ * @author twe
+ * @kieler.design 
+ * @kieler.rating 
+ */
 
 class SCPDGMinimizeDependenciesTransformation extends AbstractProductionTransformation implements Traceable {
     
@@ -67,7 +83,6 @@ class SCPDGMinimizeDependenciesTransformation extends AbstractProductionTransfor
         val thenTargets = newHashSet()
         val elseTargets = newHashSet()
         val doubleTargets = newHashSet()
-        val allTargets = newHashSet()
         val uselessCondDependencies = newHashSet()
         cond.dependencies.forEach[dependency|
             if(dependency instanceof ElseDependency){
@@ -77,8 +92,6 @@ class SCPDGMinimizeDependenciesTransformation extends AbstractProductionTransfor
             }
         ]
         
-        allTargets.addAll(thenTargets)
-        allTargets.addAll(elseTargets)
         cond.dependencies.forEach[dependency|
             if(elseTargets.contains(dependency.target) && thenTargets.contains(dependency.target)){
                 uselessCondDependencies.add(dependency)
@@ -88,17 +101,6 @@ class SCPDGMinimizeDependenciesTransformation extends AbstractProductionTransfor
         
         cond.dependencies.removeAll(uselessCondDependencies)
         
-//        doubleTargets.forEach[target|
-//            target.incoming.forEach[dependency|
-//                if(dependency instanceof ConditionalDependency || dependency instanceof ControlDependency){
-//                    val node = ((dependency as Dependency).eContainer) as Node
-//                    if(!thenTargets.contains(node) && !elseTargets.contains(node))
-//                        doubleTargetsIncoming.add(node)
-//                }
-//            ]
-//        
-//        ]
-//        
         thenTargets.forEach[target|
             val uselessDependencies = newHashSet()
             target.dependencies.forEach[dependency|

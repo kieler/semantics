@@ -19,6 +19,23 @@ import java.util.Set
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import com.google.inject.Inject
 
+/** 
+ * This class is part of the SPDG Transformation Chain. The chain is used to
+ * parallize the SCG as much as possible.
+ * 
+ * <pre>
+ * SCG
+ *  |   Create Dependencies     <== You are here
+ *  |   Minimize Dependencies
+ *  |   Remove Nodes
+ * SCPDG
+ * </pre>
+ * 
+ * @author twe
+ * @kieler.design 
+ * @kieler.rating 
+ */
+
 class SCPDGCreateDependenciesTransformation extends AbstractProductionTransformation implements Traceable {
     
     @Inject
