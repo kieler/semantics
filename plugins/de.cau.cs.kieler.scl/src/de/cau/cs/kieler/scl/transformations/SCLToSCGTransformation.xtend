@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -56,6 +55,8 @@ import com.google.common.collect.Sets
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * SCL to SCG Transformation 
@@ -77,7 +78,10 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
     extension SCGThreadExtensions    
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsDeclarationExtensions
+
+    @Inject
+    extension KExpressionsValuedObjectExtensions
 
     @Inject
     extension AnnotationsExtensions
