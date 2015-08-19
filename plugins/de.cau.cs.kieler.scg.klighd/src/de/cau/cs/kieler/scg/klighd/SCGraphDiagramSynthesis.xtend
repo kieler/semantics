@@ -21,7 +21,6 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
 import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KPort
@@ -159,10 +158,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     /** Inject color extensions. */
     @Inject
     extension KColorExtensions
-
-    /** Inject KExpression extension. */
-    @Inject
-    extension KExpressionsExtension
 
     /** Inject SCGraph shapes extensions. */
     @Inject
@@ -614,7 +609,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private def String getTextExpressionString(Expression expression) {
         if (expression instanceof TextExpression) {
             val text = (expression as TextExpression).getText
-            return removeEnclosingQuotes(text)
+            return text
         }
         return null
     }
@@ -638,7 +633,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 // Serialize the assignment
                 // Additionally, remove unnecessary parenthesis and add spacing in line breaks.
                 if (assignment.valuedObject != null && assignment.assignment != null) {
-                    var assignmentText = serializer.serialize(assignment.assignment.copy.fix) //.removeParenthesis
+                    var assignmentText = serializer.serialize(assignment.assignment.copy) //.removeParenthesis
                     var valuedObjectName = assignment.valuedObject.name
                     if (!assignment.indices.nullOrEmpty) {
                         valuedObjectName = valuedObjectName + serializer.serializeIndices(assignment.indices)
@@ -662,7 +657,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                     ]
                 } else if (assignment.assignment instanceof FunctionCall) {
-                    var assignmentText = serializer.serialize(assignment.assignment.copy.fix) //.removeParenthesis
+                    var assignmentText = serializer.serialize(assignment.assignment.copy) //.removeParenthesis
                     it.addText(assignmentText).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
                         if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);    
                     ]
@@ -749,7 +744,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (conditional.condition != null)
                     node.KContainerRendering.addText(
 //                        serializer.serialize(conditional.condition.copy.fix).removeParenthesis).setAreaPlacementData.
-                        serializer.serialize(conditional.condition.copy.fix)).setAreaPlacementData.
+                        serializer.serialize(conditional.condition.copy)).setAreaPlacementData.
                         from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0).putToLookUpWith(conditional) => [
                             if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
@@ -1362,7 +1357,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     if (guard.dead) {
                         expText = "<dead>"
                     } else {
-                        val exp = guard.expression.copy.fix
+                        val exp = guard.expression.copy
                     	expText = serializer.serialize(exp)	
                     }
 //                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
@@ -1389,7 +1384,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
 	                    var expText = "<null>"
 	                    if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
-        	            	expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)
+        	            	expText = serializer.serialize(schedulingBlock.guard.expression.copy)
     	            	}	
 //        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
 						sbName = sbName + "\n" + expText       
