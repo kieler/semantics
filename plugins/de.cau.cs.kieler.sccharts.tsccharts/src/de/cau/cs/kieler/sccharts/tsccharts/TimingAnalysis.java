@@ -103,7 +103,7 @@ public class TimingAnalysis extends Job {
             new HashMap<Pair<String, String>, Set<String>>();
 
     public static final boolean DEBUG = true;
-    public static final boolean DEBUG_VERBOSE = true;
+    public static final boolean DEBUG_VERBOSE = false;
 
     private String pluginId = "de.cau.cs.kieler.sccharts.tsccharts";
 
