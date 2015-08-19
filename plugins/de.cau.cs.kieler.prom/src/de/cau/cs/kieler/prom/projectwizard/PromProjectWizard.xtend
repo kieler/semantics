@@ -40,6 +40,7 @@ import org.eclipse.jface.wizard.WizardDialog
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchWizard
+import org.eclipse.swt.widgets.MessageBox
 
 /**
  * Wizard implementation wich creates a project
@@ -466,6 +467,12 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
             initializeNewProject()
         } else {
             newlyCreatedProject = null
+            
+            // Output an error message
+            MessageDialog.openError(shell, "Project Wizard Not Found", "The project wizard '"+fullyQualifiedClassName+"'\n"
+                + "of the selected environment could not be loaded.\n"
+                + "Ensure that required plug-ins are installed and check the environment preferences."
+            )
         }
     }
     
