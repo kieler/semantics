@@ -22,13 +22,11 @@ import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
@@ -43,9 +41,8 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -99,7 +96,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     extension SCGThreadExtensions
     
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
     
     @Inject
     extension AnnotationsExtensions    

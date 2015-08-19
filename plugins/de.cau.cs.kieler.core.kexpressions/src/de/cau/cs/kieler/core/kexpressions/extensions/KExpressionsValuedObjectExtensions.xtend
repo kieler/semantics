@@ -91,9 +91,19 @@ class KExpressionsValuedObjectExtensions {
         valuedObject.declaration.isSignal
     }   
     
+    def ValuedObject createValuedObject() {
+        KExpressionsFactory::eINSTANCE.createValuedObject()
+    }
+
     def ValuedObject createValuedObject(String valuedObjectName) {
-        KExpressionsFactory::eINSTANCE.createValuedObject() => [
+        createValuedObject() => [
             setName(valuedObjectName)
+        ]
+    }     
+
+    def Declaration attach(Declaration declaration, ValuedObject valuedObject) {
+        declaration => [
+            valuedObjects += valuedObject
         ]
     }     
     

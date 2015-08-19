@@ -21,7 +21,6 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kitt.tracing.Traceable
@@ -49,6 +48,8 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -124,7 +125,10 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
     extension SCGControlFlowExtensions
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
+
+    @Inject
+    extension KExpressionsCreateExtensions
 
     @Inject
     extension AnnotationsExtensions
@@ -605,7 +609,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
             }
             predecessorTwinMark.add(schedulingBlock)
 
-            return expression.fix
+            return expression
         }
         // If we are in the true branch of the predecessor, combine the predecessor guard reference with
         // the negated condition of the conditional and return the expression.
@@ -626,7 +630,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
             }
             predecessorTwinMark.add(schedulingBlock)
 
-            return expression.fix
+            return expression
         }
 
         throw new UnsupportedSCGException(

@@ -18,12 +18,12 @@ import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.SCGraph
 import java.util.HashMap
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -49,7 +49,7 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 class SCGDeclarationExtensions { 
     
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsDeclarationExtensions
 
     @Inject
     extension SCGCoreExtensions
@@ -75,20 +75,20 @@ class SCGDeclarationExtensions {
 //         ]
 //    }
    
-    /** 
-     * Creates a new ValuedObject in an SCG.
-     * 
-     * @param scg 
-     * 			the SCG in question
-     * @param valuedObjectName
-     * 			the name of the valued object
-     * @return Returns the new valued object. 
-     */
-    def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
-         createValuedObject(valuedObjectName) => [
-             scg.valuedObjects.add(it)
-         ]
-    }
+//    /** 
+//     * Creates a new ValuedObject in an SCG.
+//     * 
+//     * @param scg 
+//     * 			the SCG in question
+//     * @param valuedObjectName
+//     * 			the name of the valued object
+//     * @return Returns the new valued object. 
+//     */
+//    def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
+//         createValuedObject(valuedObjectName) => [
+//             scg.valuedObjects.add(it)
+//         ]
+//    }
    
 	/** 
 	 * Finds and retrieves a valued object by its name. May return null.

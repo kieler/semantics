@@ -14,19 +14,14 @@
  package de.cau.cs.kieler.scg.synchronizer
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Predecessor
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
-import java.util.List
-import java.util.Map
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -64,7 +59,7 @@ class InstantaneousSynchronizer extends AbstractSynchronizer {
     // -------------------------------------------------------------------------
     
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
     
     @Inject
     extension SCGControlFlowExtensions

@@ -21,12 +21,13 @@ import java.util.HashMap
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scg.Conditional
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+
 /**
  * @author ssm
  *
@@ -34,7 +35,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 class NotGuardMinimizer extends AbstractOptimizer {
     
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
     
     private val notGuardMapping = new HashMap<ValuedObject, Expression>
     

@@ -19,7 +19,6 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.kitt.tracing.Traceable
@@ -109,9 +108,6 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 
     @Inject
     extension SCGCacheExtensions
-
-    @Inject
-    extension KExpressionsExtension
 
     @Inject
     extension AnnotationsExtensions
