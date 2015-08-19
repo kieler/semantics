@@ -21,7 +21,6 @@ import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Instruction
@@ -40,6 +39,7 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * Transform SCG to S
@@ -76,7 +76,7 @@ class SCG2S extends AbstractProductionTransformation {
     // -------------------------------------------------------------------------
     
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsDeclarationExtensions
 
     @Inject
     extension SExtension
@@ -179,7 +179,9 @@ class SCG2S extends AbstractProductionTransformation {
         if (assignment.valuedObject != null && assignment.assignment != null) {
             val sAssignment = SFactory::eINSTANCE.createAssignment.trace(assignment)
             sAssignment.valuedObject = valuedObjectMapping.get(assignment.valuedObject)
-            val expression = assignment.assignment.copyExpression.fix.fixHostCode
+// TODO: VERIFY removal of fixHostCode            
+//            val expression = assignment.assignment.copyExpression.fixHostCode            
+            val expression = assignment.assignment.copyExpression
             sAssignment.expression = expression
             for (index : assignment.indices) {
                 sAssignment.indices += index.copyExpression
@@ -192,7 +194,7 @@ class SCG2S extends AbstractProductionTransformation {
             instructions += hostCode.createHostCode
         } else if (assignment.assignment instanceof FunctionCall) {
             val sAssignment = SFactory::eINSTANCE.createAssignment.trace(assignment)
-            sAssignment.expression = assignment.assignment.copyExpression.fix
+            sAssignment.expression = assignment.assignment.copyExpression
             instructions += sAssignment
         }
 
