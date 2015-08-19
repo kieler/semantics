@@ -41,7 +41,7 @@ import de.cau.cs.kieler.core.kexpressions.StringValue
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class KExpressionsExtension {
+class KExpressionsExtensionOLD {
 
     //    public val Injector i = ActionsStandaloneSetup::doSetup();
     //    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
@@ -92,9 +92,9 @@ class KExpressionsExtension {
     // Return the list of all contained ValuedObjects. 
     // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
     // list they will be added to  the container of a Declaration.
-    def public ValuedObjectList getValuedObjects(EObject eObject) {
+    def public ValuedObjectListOLD getValuedObjects(EObject eObject) {
         val declarations = eObject.eContents.filter(typeof(Declaration)).toList
-        val returnList = new ValuedObjectList()
+        val returnList = new ValuedObjectListOLD()
 
         // This is necessary for adding ValuedObjects later
         returnList.setContainer(eObject)
