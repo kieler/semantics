@@ -138,7 +138,7 @@ class WrapperCodeGenerator {
             val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
 
             // Debug output macro calls
-//            System.err.println(templateWithMacroCalls)
+            System.err.println(templateWithMacroCalls)
             processTemplateAndSaveOutput(templateWithMacroCalls)
         }
     }
@@ -259,7 +259,7 @@ class WrapperCodeGenerator {
      * @return a string which globally sets meta information.  
      */
     private static def String getMetaAssignments(WrapperCodeAnnotationData data) {
-        return '''<#assign varname = '«data.varName»' vartype = '«data.varType»' />\n'''
+        return '''<#assign varname = '«data.varName»' vartype = '«data.varType»' />'''+"\n"
     }
 
     /**

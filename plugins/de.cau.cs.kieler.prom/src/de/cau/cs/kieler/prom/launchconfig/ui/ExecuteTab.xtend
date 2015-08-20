@@ -160,7 +160,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     private def void createNameComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Name", 1)
         
-        name = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.VARIABLE_BUTTON))
+        name = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.NONE))
         name.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
