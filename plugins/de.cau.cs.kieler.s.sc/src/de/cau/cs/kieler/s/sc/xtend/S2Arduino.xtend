@@ -18,6 +18,7 @@ import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
@@ -25,7 +26,8 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.s.s.Await
@@ -43,10 +45,8 @@ import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
-import de.cau.cs.kieler.s.extensions.SExtension
-import java.util.List
 import java.util.HashMap
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import java.util.List
 
 /**
  * Transformation of S code into Arduino "C" code for be executed
@@ -58,7 +58,7 @@ import de.cau.cs.kieler.core.kexpressions.FunctionCall
 class S2Arduino { 
     
     @Inject
-    extension KExpressionsExtension    
+    extension KExpressionsValuedObjectExtensions    
 
     @Inject
     extension SExtension

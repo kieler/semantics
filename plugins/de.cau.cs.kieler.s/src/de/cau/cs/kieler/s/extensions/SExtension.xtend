@@ -13,40 +13,25 @@
  */
  package de.cau.cs.kieler.s.extensions
 
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.common.collect.ImmutableList
-import java.util.List
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.s.s.Abort
+import de.cau.cs.kieler.s.s.Assignment
+import de.cau.cs.kieler.s.s.Emit
+import de.cau.cs.kieler.s.s.Fork
+import de.cau.cs.kieler.s.s.Halt
+import de.cau.cs.kieler.s.s.HostCodeInstruction
+import de.cau.cs.kieler.s.s.If
+import de.cau.cs.kieler.s.s.Instruction
+import de.cau.cs.kieler.s.s.Join
+import de.cau.cs.kieler.s.s.Pause
+import de.cau.cs.kieler.s.s.Prio
+import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.SFactory
 import de.cau.cs.kieler.s.s.State
-import de.cau.cs.kieler.s.s.Program
-import de.cau.cs.kieler.s.s.Join
-import de.cau.cs.kieler.s.s.Instruction
-import de.cau.cs.kieler.s.s.If
-import de.cau.cs.kieler.s.s.Trans
-import de.cau.cs.kieler.s.s.Abort
-import de.cau.cs.kieler.s.s.Emit
-import de.cau.cs.kieler.s.s.Pause
-import de.cau.cs.kieler.s.s.Fork
 import de.cau.cs.kieler.s.s.Term
-import de.cau.cs.kieler.s.s.Halt
-import de.cau.cs.kieler.s.s.Prio
-import org.eclipse.emf.common.util.EList
-import java.util.ArrayList
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import com.google.inject.Inject
-import de.cau.cs.kieler.s.s.HostCodeInstruction
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.s.s.Assignment
+import de.cau.cs.kieler.s.s.Trans
 
 /**
  * S Extensions. 
@@ -57,10 +42,6 @@ import de.cau.cs.kieler.s.s.Assignment
  */
 class SExtension { 
     
-    @Inject
-    extension KExpressionsExtension
-    
-
     // This prefix is used for namings of all generated signals, states and regions
     static final String GENERATED_PREFIX = "_"
     

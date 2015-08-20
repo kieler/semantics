@@ -24,7 +24,7 @@ import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.xtend.S2C;
 import de.cau.cs.kieler.s.sc.xtend.S2SCC;
@@ -57,7 +57,7 @@ public class S2SCPlugin extends AbstractUIPlugin {
 
     /** The single s / kexpression extension. */
     private static SExtension sExtension = new SExtension();
-    private static KExpressionsExtension kExpressionExtension = new KExpressionsExtension();
+    private static KExpressionsValuedObjectExtensions kExpressionValuedObjectExtensions = new KExpressionsValuedObjectExtensions();
     
     // -----------------------------------------------------------------------------
 
@@ -148,9 +148,9 @@ public class S2SCPlugin extends AbstractUIPlugin {
      */
     public static String estimateBufferSize(final Program program) {
         int bufferSizeInt = 0;
-        for (ValuedObject signal : kExpressionExtension.getValuedObjects(program)) {
-            if (kExpressionExtension.isSignal(signal)) {
-                if (kExpressionExtension.getType(signal) == ValueType.PURE) {
+        for (ValuedObject signal : kExpressionValuedObjectExtensions.getValuedObjects(program)) {
+            if (kExpressionValuedObjectExtensions.isSignal(signal)) {
+                if (kExpressionValuedObjectExtensions.getType(signal) == ValueType.PURE) {
                     bufferSizeInt += signal.getName().length() + PURE_SIGNAL_BUFFER_CONSTANT;
                 } else {
                     bufferSizeInt += signal.getName().length() + VALUED_SIGNAL_BUFFER_CONSTANT;
