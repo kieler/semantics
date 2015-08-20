@@ -29,7 +29,6 @@ import de.cau.cs.kieler.core.kexpressions.StringValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Region
@@ -68,6 +67,9 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect
 import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
 import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -99,7 +101,13 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+    
+    @Inject 
+    extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions
 
     @Inject
     extension AnnotationsExtensions
@@ -784,7 +792,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // Apply conversion to textual host code 
     def dispatch Expression convertToSCGExpression(TextExpression expression) {
         val textExpression = createTextExpression.trace(expression)
-        textExpression.setText(new String(expression.text).removeEnclosingQuotes)
+        textExpression.setText(expression.text)
         textExpression
     }
 

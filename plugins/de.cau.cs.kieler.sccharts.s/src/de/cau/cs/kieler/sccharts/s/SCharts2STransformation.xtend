@@ -22,7 +22,6 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.SFactory
@@ -41,6 +40,9 @@ import de.cau.cs.kieler.s.s.Prio
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 
 /**
  * Converts a SyncChart into an S program.
@@ -55,7 +57,14 @@ class SCCharts2STransformation {
     // Other extensions necessary
     
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
+
+    @Inject
+    extension KExpressionsCreateExtensions
+
 
     @Inject
     extension SExtension
@@ -184,15 +193,7 @@ class SCCharts2STransformation {
         // Set s program name (as the root state's name)
         target.setName(rootState.id)
         
-        // Add interface signals to s program (as the root state's signals)
-        for (valuedObject : rootState.valuedObjects) {
-            val sValuedObject = valuedObject.copy
-            sValuedObject.map(valuedObject)
-            target.valuedObjects.add(sValuedObject)
-            sValuedObject.applyAttributes(valuedObject)
-//            System::out.println("S" + valuedObject.name + ": I=" + valuedObject.isInput + ", O="+ valuedObject.isOutput)
-//            System::out.println("T" + sValuedObject.name + ": I=" + sValuedObject.isInput + ", O="+ sValuedObject.isOutput)
-        }
+        target.declarations += rootState.copyDeclarations
 
 //        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
 

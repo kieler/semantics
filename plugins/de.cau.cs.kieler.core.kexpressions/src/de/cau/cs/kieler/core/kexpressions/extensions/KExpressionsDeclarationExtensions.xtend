@@ -16,7 +16,11 @@ package de.cau.cs.kieler.core.kexpressions.extensions
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import org.eclipse.emf.ecore.EObject
+import java.util.List
 
 /**
  * @author ssm
@@ -76,5 +80,21 @@ class KExpressionsDeclarationExtensions {
         declaration.valuedObjects.immutableCopy.forEach[ remove ]
         declaration.remove
     }
+    
+    public def List<Declaration> copyDeclarations(EObject source) {
+        <Declaration> newArrayList => [ targetList | 
+            for (declaration : source.eContents.filter(typeof(Declaration))) {
+                // @als: is this trace necessary?
+                targetList += createDeclaration(declaration).trace(declaration) => [ newDec |
+                    declaration.valuedObjects.forEach[ _copyValuedObject(newDec) ]
+                ]
+            }
+        ]
+    }
+    
+    private def void _copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
+        val newValuedObject = sourceObject.copy
+        targetDeclaration.valuedObjects += newValuedObject
+    }            
     
 }

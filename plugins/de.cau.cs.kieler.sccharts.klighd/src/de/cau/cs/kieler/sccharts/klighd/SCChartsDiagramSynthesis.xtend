@@ -24,7 +24,6 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KPort
@@ -98,6 +97,7 @@ import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -152,7 +152,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     extension DependencyTransformation
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
     
     @Inject
     extension SCChartsSerializeExtension

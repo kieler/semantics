@@ -14,7 +14,7 @@
  package de.cau.cs.kieler.sccharts.sim.c.xtend
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.State
 
 /**
@@ -25,7 +25,7 @@ import de.cau.cs.kieler.sccharts.State
 class CSimulationSCChart { 
 
     @Inject
-    extension KExpressionsExtension    
+    extension KExpressionsValuedObjectExtensions    
 
     // General method to create the c simulation interface.
 	def transform (State scchart, String bufferSize) {
