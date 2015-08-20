@@ -657,6 +657,17 @@ class UIUtil {
     }
 
     /**
+     * Creates a checkbox.
+     * 
+     * @param parent The parent composite
+     * @param label The label
+     * @param checked The initial state of the Checkbox
+     */
+    static def Button createCheckButton(Composite parent, String label, boolean checked) {
+        return SWTFactory.createCheckButton(parent, label, null, checked, 1)
+    }
+    
+    /**
      * Creates a button.
      * 
      * @param parent The parent composite

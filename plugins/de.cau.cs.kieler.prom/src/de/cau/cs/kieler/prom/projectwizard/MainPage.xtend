@@ -17,18 +17,14 @@ import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
-import java.util.ArrayList
 import java.util.List
-import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.IStructuredSelection
-import org.eclipse.jface.viewers.LabelProvider
-import org.eclipse.jface.viewers.ListViewer
-import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.wizard.WizardPage
 import org.eclipse.swt.SWT
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
+import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 
 /**
@@ -51,14 +47,20 @@ class MainPage extends WizardPage {
     private ComboViewer environmentsCombo
 
     /**
-     * The multiselect list with all environments.
-     * The wrapper code snippets from the selected environments in this list
-     * will be copied to the newly created project. 
+     * Checkbox to specify if a model file (e.g. SCT) should be created and initialized
      */
-    private ListViewer list
-
-
-
+    private Button createModelFileCheckbox
+    
+    /**
+     * Checkbox to specify if a main file, containing wrapper code, should be created and initialized
+     */
+    private Button createMainFileCheckbox
+    
+    /**
+     * Checkbox to specify the snippets directory should be initialized with the settings from the environment
+     */
+    private Button importSnippetsCheckbox
+    
     /**
      * Creates a new instance of this class with the given page name as title.
      * 
@@ -84,8 +86,8 @@ class MainPage extends WizardPage {
         loadEnvironments()
 
         createEnvironmentsComponent(comp)
-        createWrapperCodeSnippetsComponent(comp)
-
+        createProjectInitializationComponent(comp)
+        
         pageComplete = true
     }
 
@@ -120,56 +122,27 @@ class MainPage extends WizardPage {
     }
 
     /**
-     * Creates a group with the list of environments
-     * to specify which wrapper code snippets should be created.
+     * Creates a group with a checkbox to specify if wrapper code snippets should be imported.
      * 
      * @param parent The parent composite
      */
-    private def void createWrapperCodeSnippetsComponent(Composite parent) {
-        val group = UIUtil.createGroup(parent, "Import wrapper code snippets", 1)
+    private def void createProjectInitializationComponent(Composite parent) {
+        val group = UIUtil.createGroup(parent, "Project initialization", 1)
 
-        // Create list
-        list = new ListViewer(group, SWT.BORDER.bitwiseOr(SWT.MULTI).bitwiseOr(SWT.V_SCROLL))
-        list.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
-
-        // Create content provider
-        list.setContentProvider(ArrayContentProvider.instance)
-        val input = new ArrayList<EnvironmentData>()
-        for (env : environments) {
-            if (env.wrapperCodeSnippetsDirectory != "" && env.wrapperCodeSnippetsOrigin != "")
-                input += env
-        }
-        list.input = input
-
-        // Create label provider
-        list.setLabelProvider(new LabelProvider() {
-            override String getText(Object element) {
-                val data = (element as EnvironmentData)
-                if (data != null)
-                    return data.name
-                else
-                    return ""
-            }
-        })
-
-        // Create information label
-        UIUtil.createLabel(group, "Wrapper code snippets of the selected environments\n" +
-            "will be copied to the new project.\nSelect or deselect multiple items by holding Control.")
+        // Wrapper code components
+        importSnippetsCheckbox = UIUtil.createCheckButton(group, "Import wrapper code snippets", true);
+        importSnippetsCheckbox.toolTipText = "Wrapper code snippets of the selected environment\n" +
+            "will be copied to the new project."
+        
+        // Create model file components     
+        createModelFileCheckbox = UIUtil.createCheckButton(group, "Create model file", true);
+        createModelFileCheckbox.toolTipText = "Specify if the project should contain an initialized model file."
+        
+        // Create main file components
+        createMainFileCheckbox = UIUtil.createCheckButton(group, "Create main file", true);
+        createMainFileCheckbox.toolTipText = "Specify if a file with wrapper code should be created and initialized."
     }
-
-    /**
-     * @return the selected environments in the list.
-     */
-    public def ArrayList<EnvironmentData> getSelectedWrapperCodeEnvironments() {
-        val output = new ArrayList<EnvironmentData>()
-        val selection = list.selection as StructuredSelection
-        for (element : selection.toArray) {
-            if (element instanceof EnvironmentData)
-                output += element as EnvironmentData
-        }
-        return output
-    }
-
+    
     /**
      * @return the selected environment in the combobox.
      */
@@ -195,6 +168,33 @@ class MainPage extends WizardPage {
             return ""
 
         }
+    }
+
+    /**
+     * Returns weather a main file should be created.
+     * 
+     * @return the selection state of the respective checkbox
+     */
+    public def boolean isCreateMainFile(){
+        return createMainFileCheckbox.selection
+    }
+    
+    /**
+     * Returns weather a model file should be created.
+     * 
+     * @return the selection state of the respective checkbox
+     */
+    public def boolean isCreateModelFile(){
+        return createModelFileCheckbox.selection
+    }
+
+    /**
+     * Returns weather the wrapper code snippets should be initialized. 
+     * 
+     * @return the selection state of the respective checkbox
+     */
+    public def boolean isImportSnippets(){
+        return importSnippetsCheckbox.selection
     }
 
 }

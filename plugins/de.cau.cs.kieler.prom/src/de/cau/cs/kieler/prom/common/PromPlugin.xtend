@@ -13,6 +13,12 @@
  */
 package de.cau.cs.kieler.prom.common
 
+import java.io.FileInputStream
+import java.io.InputStream
+import java.net.URL
+import java.util.Map
+import org.apache.commons.io.FilenameUtils
+import org.apache.commons.io.IOUtils
 import org.eclipse.core.runtime.QualifiedName
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.osgi.framework.BundleActivator
@@ -72,5 +78,50 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
      */
     public static def PromPlugin getDefault() {
         return plugin;
+    }
+    
+    /**
+     * Returns an input stream for a file loaded from either a file path or an url path.
+     * It is only loaded from an url if the url uses the platform protocol from Eclipse.
+     * The contents of the returned input stream optionally may have placeholders which can be directly replaced in this method.
+     * 
+     * @param filePathOrURL The file path or an URL with the platform protocol
+     * @param placeholderReplacement A map where the keys are placeholders of the stream and the values are the values of the placeholders. 
+     *
+     * @return the loaded input stream
+     */
+    public static def InputStream getInputStream(String filePathOrURL, Map<String, String> placeholderReplacement) {
+        // Get input stream from url
+        var InputStream inputStream= null
+        if(filePathOrURL != null && filePathOrURL != ""){
+            
+            // Load contents either from platform url or file path
+            if (filePathOrURL.trim().startsWith("platform:")) {
+                val url = new URL(filePathOrURL);
+                inputStream = url.openStream
+            } else {
+                inputStream = new FileInputStream(filePathOrURL)
+            }
+        }
+
+        // Return stream
+        if(inputStream != null){
+            
+            // Return stream of content where all placeholders are replaced with actual values.
+            if(placeholderReplacement != null){
+                val contents = IOUtils.toString(inputStream)
+                inputStream.close()
+                
+                // Replace placeholders
+                var contentsWithoutPlaceholders = contents
+                for(placeholder : placeholderReplacement.keySet) {
+                    contentsWithoutPlaceholders = contentsWithoutPlaceholders.replace(placeholder, placeholderReplacement.get(placeholder))
+                }
+            
+                return IOUtils.toInputStream(contentsWithoutPlaceholders)
+            } else {
+                return inputStream
+            }    
+        }
     }
 }

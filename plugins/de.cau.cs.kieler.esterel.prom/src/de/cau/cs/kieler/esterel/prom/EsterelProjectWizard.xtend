@@ -21,21 +21,11 @@ import de.cau.cs.kieler.prom.projectwizard.PromProjectWizard
  */
 class EsterelProjectWizard extends PromProjectWizard {
 
-    override createModelFileCreationPage(){
-        val page = new AdvancedNewFileCreationPage("Esterel File", selection, true)
-        page.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.esterel.prom/resources/default.strl"
-        page.fileName = "NewModel.strl"
-        page.fileExtension = "strl"
-        page.description = "Specify where the Esterel model should be created and initialized."
-        return page
-    }
-    
-    override createMainFileCreationPage(){
-        val page = new AdvancedNewFileCreationPage("Main File", selection, true)
-        page.fileName = "Main"
-        page.fileExtension = ""
-        page.description = "Specify where the main file, containing wrapper code to run the Model, should be created and initialized."
-        return page
+    override addPages(){
+        super.addPages()
+        
+        modelFileExtension = ".strl"
+        modelFileInitialContentURL = "platform:/plugin/de.cau.cs.kieler.esterel.prom/resources/default.strl"
     }
     
 }

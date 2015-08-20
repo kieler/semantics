@@ -13,13 +13,16 @@
  */
 package de.cau.cs.kieler.prom.projectwizard
 
+import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.PromPlugin
+import de.cau.cs.kieler.prom.common.ui.UIUtil
 import de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.io.File
 import java.io.InputStream
 import org.apache.commons.io.FileUtils
+import org.apache.commons.io.FilenameUtils
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IProject
@@ -27,20 +30,18 @@ import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.FileLocator
-import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
-import org.eclipse.jface.dialogs.IPageChangingListener
 import org.eclipse.jface.dialogs.MessageDialog
-import org.eclipse.jface.dialogs.PageChangingEvent
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.wizard.Wizard
 import org.eclipse.jface.wizard.WizardDialog
+import org.eclipse.jface.wizard.WizardPage
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchWizard
-import org.eclipse.swt.widgets.MessageBox
+import org.eclipse.xtext.util.StringInputStream
 
 /**
  * Wizard implementation wich creates a project
@@ -75,6 +76,28 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
     protected var IProject newlyCreatedProject
 
 
+
+    /**
+     * The directory path of an initial model file for the new project
+     */
+    protected var String modelFileDirectory
+    
+    /**
+     * The base file name of an initial model file for the new project
+     */
+     protected var String modelFileNameWithoutExtension
+     
+     /**
+     * The file extension (e.g. '.sct') of an initial model file for the new project
+     */
+    protected var String modelFileExtension
+    
+    /**
+     * An platform URL or file path with initial contents for a model file for the new project
+     */
+    protected var String modelFileInitialContentURL
+
+
     
     /**
      * The main page of the wizard.
@@ -83,14 +106,10 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
     protected var MainPage mainPage
     
     /**
-     * The page to create a model file (e.g. for sct or esterel).
+     * Dummy page to have the next button available.
+     * But this page is never reached.
      */
-    protected var AdvancedNewFileCreationPage modelFilePage
-    
-    /**
-     * The page to create a main file with wrapper code to run the model.
-     */
-    protected var AdvancedNewFileCreationPage mainFilePage
+    protected var DummyPage secondPage
 
     /**
      * @{inheritDoc}
@@ -98,121 +117,46 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
     override addPages() {
         mainPage = new MainPage("");
         addPage(mainPage);
-
-        modelFilePage = createModelFileCreationPage()
-        modelFilePage.openOnCreation = true
-        addPage(modelFilePage)
-        
-        mainFilePage = createMainFileCreationPage()
-        mainFilePage.openOnCreation = false
-        addPage(mainFilePage)
-    }
-
-    /**
-     * Creates the page to specify if and where the model file should be created.
-     * 
-     * @return the created page
-     */
-    protected def AdvancedNewFileCreationPage createModelFileCreationPage() {
-        return new AdvancedNewFileCreationPage("Model File", selection, true)
-    }
-    
-    /**
-     * Creates the page to specify if and where the main file for wrapper code should be created.
-     * 
-     * @return the created page
-     */
-    protected def AdvancedNewFileCreationPage createMainFileCreationPage() {
-        return new AdvancedNewFileCreationPage("Main File", selection, true)
     }
 
     /**
      * {@inheritDoc}
-     */    
-    override createPageControls(Composite pageContainer) {
-        super.createPageControls(pageContainer)
-
-        // Add page changing listener 
-        val dialog = container as WizardDialog
-        dialog.addPageChangingListener(new IPageChangingListener() {
-
-            override handlePageChanging(PageChangingEvent event) {
-                // From main page to model file creation
-                // -> Start other wizard
-                if (event.currentPage == mainPage && event.targetPage == modelFilePage) {
-                    startWizard(mainPage.getEnvironmentWizardClassName())
-
-                    // Update following pages
-                    if(newlyCreatedProject != null){
-                        event.doit = true
-                        
-                        // Fill following pages with data from the newly created project
-                        modelFilePage.recreate()
-                        modelFilePage.setContainerFullPath(new Path(newlyCreatedProject.name))
-    
-                        mainFilePage.recreate()
-                        mainFilePage.setContainerFullPath(new Path(newlyCreatedProject.name))
-                        
-                        // Initialize pages with data from the environment's main file
-                        val env = mainPage.selectedEnvironment
-                        if(env.mainFile != ""){
-                            val file = new File(env.mainFile)
-                            mainFilePage.fileName = file.name
-                            mainFilePage.initialContentsURL = env.mainFileOrigin
-                            
-                            // Set container for pages to directory of main file
-                            val fileDir = file.parent
-                            if(fileDir != null){
-                                val sourceDirectory = new Path(newlyCreatedProject.name+File.separator+fileDir)
-                                modelFilePage.setContainerFullPath(sourceDirectory)
-                                mainFilePage.setContainerFullPath(sourceDirectory)
-                            }
-                        }
-                    } else {
-                        // Don't continue to next page if the other wizard was canceled 
-                        event.doit = false
-                    }
-                    
-                // From file creation to main
-                // -> Remove created project
-                } else if (event.currentPage == modelFilePage && event.targetPage == mainPage) {
-                    deleteCreatedProject()
-                }
-            }
-        })
-    }
-
-    /**
-     * Returns true if the wizard can successfully be finished.
-     * 
-     * @return true if the current page is the model file creation page or the main file creation page
-     *         and both pages are complete.
      */
     override canFinish() {
-        return (container.currentPage == modelFilePage || container.currentPage == mainFilePage)
-                && modelFilePage.isPageComplete
-                && mainFilePage.isPageComplete
+        return true
     }
 
     /**
-     * Closes the wizard after creating the specified files
-     * and copying the selected wrapper code snippets to the new project.
-     * The used environment and main file is saved in the newly created project's properties.
+     * Opens the related wizard and initializes the newly created project of this wizard.
      * 
      * @return true if everything finished successful
      */
     override performFinish() {
-        // Create model file
-        val isModelFileOk = createModelFile()
-        // Create main file
-        val isMainFileOk = createMainFile()
-        // Copy templates to new project
-        val isSnippetDirectoryOk = initializeSnippetDirectory()
-        // Add some data to properties of new project
-        val isProjectPropertiesOk = initializeProjectProperties()
+        // Start other wizard
+        startWizard(mainPage.getEnvironmentWizardClassName())
         
-        // If everything finished successful, the wizard can finish successful
-        return isModelFileOk && isMainFileOk && isSnippetDirectoryOk && isProjectPropertiesOk;
+        // Continue only if project has been created
+        if(newlyCreatedProject != null) {
+            // Create model file
+            val isModelFileOk = createModelFile()
+            // Create main file
+            val isMainFileOk = createMainFile()
+            // Copy templates to new project
+            val isSnippetDirectoryOk = initializeSnippetDirectory()
+            // Add some data to properties of new project
+            val isProjectPropertiesOk = initializeProjectProperties()
+            
+            // If everything finished successful, the wizard can finish successful
+            val isOK = isModelFileOk && isMainFileOk && isSnippetDirectoryOk && isProjectPropertiesOk
+            
+            if(!isOK)
+                deleteCreatedProject
+            
+            return isOK
+            
+        } else {
+            return false
+        }
     }
     
     /**
@@ -239,11 +183,48 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
      * @return true if the creation ended sucessfully. false otherwise.
      */
     protected def boolean createModelFile(){
+        // If the file should not be created, we are done immediately
+        if(!mainPage.isCreateModelFile)
+            return true
+        
         try {
-            return modelFilePage.performFinish()
+            // Infere parent directory of file
+            // from main file directory
+            if(Strings.isNullOrEmpty(modelFileDirectory)){
+                modelFileDirectory = ""
+                val env = mainPage.selectedEnvironment
+                if(env.mainFile != ""){
+                    val file = new File(env.mainFile)
+                    val fileDir = file.parent
+                    if(fileDir != null)
+                        modelFileDirectory = fileDir + File.separator
+                }
+            }
+            
+            // Infere file name from project name
+            if(Strings.isNullOrEmpty(modelFileNameWithoutExtension)) {
+                modelFileNameWithoutExtension = newlyCreatedProject.name
+                // We use only alphanumeric characters of the project name
+                modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("[^\\w]", "")
+                // the file name may not begin with a number
+                modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("^\\d*", "")
+            }
+            
+            // Open initial content stream
+            var InputStream initialContentStream = null
+            if(!Strings.isNullOrEmpty(modelFileInitialContentURL)){
+                initialContentStream = PromPlugin.getInputStream(modelFileInitialContentURL, #{"${name}" -> modelFileNameWithoutExtension})
+            }
+            
+            // Create file
+            val fileHandle = newlyCreatedProject.getFile(modelFileDirectory + modelFileNameWithoutExtension + modelFileExtension)
+            createResource(fileHandle, initialContentStream)
+            UIUtil.openFileInEditor(fileHandle)
+            
+            return true
             
         } catch (Exception e) {
-            MessageDialog.openError(shell, "Error", "The model file '"+modelFilePage.fileName+"' could not be created.\n"
+            MessageDialog.openError(shell, "Error", "The model file '"+modelFileNameWithoutExtension+"' could not be created.\n"
                 + "Check the container path and file name.");
 
             return false
@@ -257,12 +238,31 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
      * @return true if the creation ended sucessfully. false otherwise.
      */
     protected def boolean createMainFile() {
+        // If the file should not be created, we are done immediately
+        if(!mainPage.isCreateMainFile)
+            return true
+        
+        val env = mainPage.selectedEnvironment
         try {
-            return mainFilePage.performFinish()
+            if(!Strings.isNullOrEmpty(env.mainFile)){
+                // Prepare initial content
+                var InputStream initialContentStream = null
+                if(!Strings.isNullOrEmpty(env.mainFileOrigin)){
+                    val fileName = new File(env.mainFile).name
+                    val fileNameWithoutExtension = FilenameUtils.removeExtension(fileName)
+                    initialContentStream = PromPlugin.getInputStream(env.mainFileOrigin, #{"${name}" -> fileNameWithoutExtension})
+                }
+                
+                // Create resource
+                val fileHanlde = newlyCreatedProject.getFile(env.mainFile)
+                createResource(fileHanlde, initialContentStream)
+            }
+            
+            return true
             
         } catch(Exception e) {
             MessageDialog.openError(shell, "Error", "The default content for the main file could not be loaded from\n"
-                + "'"+mainFilePage.initialContentsURL+"'.\n"
+                + "'"+env.mainFileOrigin+"'.\n"
                 + "Check the environment settings in the preferences.");
             
             return false;
@@ -276,6 +276,10 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
      * @return true if it ended sucessfully. false otherwise.
      */
     protected def boolean initializeSnippetDirectory(){
+        // If the directory should not be initialized, we are done immediately
+        if(!mainPage.isImportSnippets)
+            return true
+            
         val env = mainPage.getSelectedEnvironment()
         
         // If the snippet directory of the environment is an absolute path,
@@ -284,8 +288,8 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
             return true;
         
         // Get environments of which the wrapper code snippets should be imported.
-        val wrapperEnvironments = mainPage.getSelectedWrapperCodeEnvironments()
-        for (wrapperEnv : wrapperEnvironments) {
+        val wrapperEnv = mainPage.getSelectedEnvironment()
+        if(wrapperEnv != null) {
 
             try {
                 if (wrapperEnv.wrapperCodeSnippetsOrigin.trim().startsWith("platform:")) {
@@ -325,9 +329,8 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
         newlyCreatedProject.setPersistentProperty(PromPlugin.ENVIRIONMENT_QUALIFIER, env.name)
         
         // Created main file
-        if (mainFilePage.newFile != null){
-            newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, mainFilePage.newFile.projectRelativePath.toOSString)
-        }
+        if(!Strings.isNullOrEmpty(env.mainFile))
+            newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, env.mainFile)
         
         return true
     }
@@ -347,11 +350,19 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
             createResource(resource.getParent(), stream);
 
         switch(resource.getType()){
-            case IResource.FILE:
-                (resource as IFile).create(stream, true, null)
-            case IResource.FOLDER:
+            case IResource.FILE : {
+                if(stream != null) {
+                    (resource as IFile).create(stream, true, null)
+                    stream.close()
+                } else {
+                    val stringStream = new StringInputStream("")
+                    (resource as IFile).create(stringStream, true, null)
+                    stringStream.close()
+                }
+            }
+            case IResource.FOLDER :
                 (resource as IFolder).create(IResource.NONE, true, null)
-            case IResource.PROJECT: {
+            case IResource.PROJECT : {
                 (resource as IProject).create(null)
                 (resource as IProject).open(null)
             }
@@ -506,5 +517,18 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
         System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
         newEntries.set(oldEntries.length, JavaCore.newSourceEntry(root.getPath()));
         javaProject.setRawClasspath(newEntries, null);
+    }
+    
+    private static class DummyPage extends WizardPage {
+        
+        protected new(String pageName) {
+            super(pageName)
+        }
+        
+        override createControl(Composite parent) {
+            val comp = UIUtil.createComposite(parent, 1)
+            control = comp
+        }
+        
     }
 }

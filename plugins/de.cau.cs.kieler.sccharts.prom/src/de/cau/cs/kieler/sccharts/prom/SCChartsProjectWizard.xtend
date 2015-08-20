@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.prom
 
-import de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage
 import de.cau.cs.kieler.prom.projectwizard.PromProjectWizard
 
 /**
@@ -21,21 +20,11 @@ import de.cau.cs.kieler.prom.projectwizard.PromProjectWizard
  */
 class SCChartsProjectWizard extends PromProjectWizard {
 
-    override createModelFileCreationPage(){
-        val page = new AdvancedNewFileCreationPage("SCT File", selection, true)
-        page.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/resources/default.sct"
-        page.fileName = "NewModel.sct"
-        page.fileExtension = "sct"
-        page.description = "Specify where the SCChart model should be created and initialized."
-        return page
-    }
-    
-    override createMainFileCreationPage(){
-        val page = new AdvancedNewFileCreationPage("Main File", selection, true)
-        page.fileName = "Main"
-        page.fileExtension = ""
-        page.description = "Specify where the main file, containing wrapper code to run the Model, should be created and initialized."
-        return page
+    override addPages(){
+        super.addPages()
+        
+        modelFileExtension = ".sct"
+        modelFileInitialContentURL = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/resources/default.sct"
     }
     
 }

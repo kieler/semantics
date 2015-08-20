@@ -138,7 +138,8 @@ class WrapperCodeGenerator {
             val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
 
             // Debug output macro calls
-            System.err.println(templateWithMacroCalls)
+//            System.err.println(templateWithMacroCalls)
+
             processTemplateAndSaveOutput(templateWithMacroCalls)
         }
     }

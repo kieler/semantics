@@ -13,11 +13,9 @@
  */
 package de.cau.cs.kieler.prom.common
 
-import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 
 /** 
  * Auxilary class to load an EObject from a fully qualified file path.
@@ -28,23 +26,21 @@ class ModelImporter {
     
     /**
      * Loads an EObject from a file path.
+     * Other plug-ins have to take care that they register their DSL for EMF.
      * 
      * @param fullPath The fully qualified path to a file
      * @return the loaded EObject
      */
     static def EObject get(String fullPath){
-        val input = URI.createFileURI(fullPath);
-
-        val rInjector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
-        if (rInjector != null) {
-            val resourceSet = rInjector.getInstance(typeof(ResourceSet));
-            val resourceLoad = resourceSet.getResource(input, true);
-            return resourceLoad.getContents().get(0);
-        } else {
-            // Load model
-            val inputResource = new XMIResourceImpl(input);
-            inputResource.load(null);
-            return inputResource.getContents().get(0);
-        }
+        val uri = URI.createFileURI(fullPath);
+        
+            val resSet = new ResourceSetImpl();
+            
+            // Get the resource
+            val resource = resSet.getResource(uri, true);
+            if(!resource.getContents().isEmpty)
+                return resource.getContents().get(0)
+            else
+                return null
     }
 }

@@ -13,12 +13,9 @@
  */
 package de.cau.cs.kieler.prom.filewizard
 
+import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.UIUtil
-import java.io.FileInputStream
-import java.io.InputStream
-import java.net.URL
 import org.apache.commons.io.FilenameUtils
-import org.apache.commons.io.IOUtils
 import org.eclipse.core.resources.IFile
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.jface.viewers.IStructuredSelection
@@ -217,27 +214,8 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
      * @return an input stream with initial contents for the new file
      */
     protected override getInitialContents() {
-        // Get input stream from url
-        var InputStream inputStream= null
-        if(initialContentsURL != null && initialContentsURL != ""){
-            
-            // Load contents either from platform url or file path
-            if (initialContentsURL.trim().startsWith("platform:")) {
-                val url = new URL(initialContentsURL);
-                inputStream = url.openStream
-            } else {
-                inputStream = new FileInputStream(initialContentsURL)
-            }
-        }
-
-        // Return stream of content where all placeholders are replaced with actual values.
-        if(inputStream != null){
-            val contents = IOUtils.toString(inputStream)
-            inputStream.close()
-            
-            val fileNameWithoutExtension = FilenameUtils.removeExtension(fileName)
-            val contentsWithoutPlaceholders = contents.replace("${name}", fileNameWithoutExtension)
-            return IOUtils.toInputStream(contentsWithoutPlaceholders)    
-        }
+        val fileNameWithoutExtension = FilenameUtils.removeExtension(fileName)
+        val placeholderMap = #{"${name}" -> fileNameWithoutExtension}
+        return PromPlugin.getInputStream(initialContentsURL, placeholderMap)
     }
 }
