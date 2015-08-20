@@ -13,17 +13,10 @@
  */
 package de.cau.cs.kieler.esterel.sim.c;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -46,9 +39,13 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
+import de.cau.cs.kieler.esterel.esterel.Module;
+import de.cau.cs.kieler.esterel.esterel.Program;
+import de.cau.cs.kieler.esterel.kexpressions.Input;
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
+import de.cau.cs.kieler.esterel.kexpressions.Output;
+import de.cau.cs.kieler.esterel.kexpressions.Signal;
 import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationEsterel;
 import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationSCL;
 import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
@@ -58,13 +55,6 @@ import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.s.extensions.SExtension;
 //import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.sc.CExecution;
-import de.cau.cs.kieler.esterel.esterel.Module;
-import de.cau.cs.kieler.esterel.esterel.Program;
-import de.cau.cs.kieler.esterel.kexpressions.Input;
-import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
-import de.cau.cs.kieler.esterel.kexpressions.Output;
-import de.cau.cs.kieler.esterel.kexpressions.Signal;
-import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -164,7 +154,6 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
     /** The single s / kexpression extension. */
     private static SExtension sExtension = new SExtension();
-    private static KExpressionsExtension kExpressionExtension = new KExpressionsExtension();
 
     /** The benchmark flag for generating cycle and file size signals. */
     private boolean benchmark = false;
