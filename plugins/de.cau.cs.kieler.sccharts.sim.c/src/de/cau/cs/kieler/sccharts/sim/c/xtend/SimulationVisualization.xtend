@@ -157,6 +157,7 @@ class SimulationVisualization extends AbstractExpansionTransformation {
             createBoolDeclaration => [
                 input = true
                 attach(active)
+                targetRootState.declarations += it
             ]
             
             // Add action - TRUE iff this transition is taken
@@ -182,6 +183,7 @@ class SimulationVisualization extends AbstractExpansionTransformation {
             createBoolDeclaration => [
                 input = true
                 attach(active)
+                targetRootState.declarations += it
             ]
             
             if (!state.final) {

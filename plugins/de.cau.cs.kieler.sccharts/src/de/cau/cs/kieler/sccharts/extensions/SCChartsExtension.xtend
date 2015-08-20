@@ -21,11 +21,19 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
+import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Binding
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.IterateAction
@@ -46,14 +54,10 @@ import org.eclipse.emf.ecore.EObject
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.core.kexpressions.keffects.Emission
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
-import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
-import de.cau.cs.kieler.sccharts.Equation
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsReplacementExtensions
+
+//import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * SCCharts Extensions.
@@ -65,7 +69,13 @@ import de.cau.cs.kieler.sccharts.Equation
 class SCChartsExtension {
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
+
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+
+    @Inject
+    extension KExpressionsReplacementExtensions
 
     // This prefix is used for namings of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -320,7 +330,7 @@ class SCChartsExtension {
     }
 
     def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
-        val state = (valuedObject.getEContainer as State);
+        val state = (valuedObject.eContainer as State);
         val rootState = state.getRootState
         var notFound = valuedObject.uniqueNameTest(rootState, newName)
         for (innerState : rootState.allContainedStatesList) {
@@ -993,9 +1003,10 @@ class SCChartsExtension {
 
     //============  SIGNALS  ============
     // Creates a new variable ValuedObject in a Scope.
-    def ValuedObject createSignal(Scope scope, String variableName) {
-        scope.createValuedObject(variableName).setIsSignal
-    }
+// TODO: VERIFY: That's not the way it's meant to be.
+//    def ValuedObject createSignal(Scope scope, String variableName) {
+//        scope.createValuedObject(variableName).setIsSignal
+//    }
 
     //-------------------------------------------------------------------------
     //--                           N A M I N G S                             --
@@ -1178,31 +1189,20 @@ class SCChartsExtension {
         if (state == targetRootState) {
             return;
         }
-
-        // There are local valuedObjects, raise them
-        if (state.valuedObjects != null && state.valuedObjects.size > 0) {
-            val hierarchicalStateName = state.getHierarchicalName("LOCAL");
-
-            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
-                val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
-
-                // Possibly expose
+        
+        val declarations = state.declarations.toList
+        val hierarchicalStateName = state.getHierarchicalName("LOCAL");
+        for(declaration : declarations) {
+            targetRootState.declarations += declaration
+            if (expose) declaration.output = true
+            for(valuedObject : declaration.valuedObjects) {
                 if (expose) {
-                    localValuedObject.setIsOutput
-                }
-
-                // Relocate
-                targetRootState.valuedObjects.add(localValuedObject)
-
-                // Rename
-                if (expose) {
-                    localValuedObject.setName(newValuedObjectName)
+                    valuedObject.name = hierarchicalStateName + "_" + valuedObject.name
                 } else {
-                    localValuedObject.uniqueName
+                    valuedObject.uniqueName
                 }
-
             }
-        } // end if local valuedObjects present
+        }
 
     }
 
@@ -1227,37 +1227,23 @@ class SCChartsExtension {
         if (state == targetRootState) {
             return;
         }
-
-        // There are local valuedObjects, raise them
-        val VOs = <ValuedObject> newArrayList => [ vos |  
-            vos += state.valuedObjects
-            state.regions.forEach[ vos += it.valuedObjects ]
-        ] 
         
-        if (!VOs.empty) {
-            val hierarchicalStateName = state.getHierarchicalName("LOCAL");
-
-            for (ValuedObject localValuedObject : VOs) {
-                val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
-
-                // Possibly expose
+        val declarations = state.declarations.toList => [ list |
+            state.regions.forEach[ list += it.declarations ]
+        ]
+        val hierarchicalStateName = state.getHierarchicalName("LOCAL");
+        for(declaration : declarations) {
+            targetRootState.declarations += declaration
+            if (expose) declaration.output = true
+            for(valuedObject : declaration.valuedObjects) {
                 if (expose) {
-                    localValuedObject.setIsOutput
-                }
-
-                // Relocate
-                targetRootState.valuedObjects.add(localValuedObject)
-
-                // Rename
-                if (expose) {
-                    localValuedObject.setName(newValuedObjectName)
+                    valuedObject.name = hierarchicalStateName + "_" + valuedObject.name
                 } else {
-                    localValuedObject.setName(newValuedObjectName)
-                    localValuedObject.uniqueNameCached(uniqueNameCache)
+                    valuedObject.name = hierarchicalStateName + "_" + valuedObject.name
+                    valuedObject.uniqueName
                 }
-
             }
-        } // end if local valuedObjects present
+        }        
 
     }
 
