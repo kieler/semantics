@@ -14,7 +14,6 @@
 grammar de.cau.cs.kieler.core.annotations.text.Annotations with org.eclipse.xtext.common.Terminals
 
 import "http://kieler.cs.cau.de/annotations"
-
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 /**
