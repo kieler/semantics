@@ -287,7 +287,7 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
         wrapperCodeTemplate.toolTipText = "Template where wrapper code is inserted"
 
         // Create control for directory with snippet definitions
-        wrapperCodeSnippets = UIUtil.createTextField(group, "Annotation snippets directory",
+        wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory",
             EnumSet.of(UIUtil.Buttons.CONTAINER_BUTTON, UIUtil.Buttons.VARIABLE_BUTTON), this)
         wrapperCodeSnippets.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {

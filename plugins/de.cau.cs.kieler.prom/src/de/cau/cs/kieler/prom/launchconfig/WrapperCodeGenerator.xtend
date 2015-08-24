@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.Platform
 import org.freemarker.FreeMarkerPlugin
 
 import static org.freemarker.FreeMarkerPlugin.*
+import java.util.HashSet
 
 /**
  * This class generates wrapper code for models.
@@ -165,7 +166,7 @@ class WrapperCodeGenerator {
         map.put(MODEL_NAME_VARIABLE, modelName)
 
         // Inject macro calls in input template
-        FreeMarkerPlugin.templateDirectory = project.location.toOSString()
+        FreeMarkerPlugin.newConfiguration(project.location.toOSString())
         val template = FreeMarkerPlugin.configuration.getTemplate(wrapperCodeTemplate)
 
         val writer = new StringWriter()
@@ -182,7 +183,7 @@ class WrapperCodeGenerator {
      */
     private def void processTemplateAndSaveOutput(String templateWithMacroCalls) {
         // Set the snippets directory to implicitly load the macro definitions
-        FreeMarkerPlugin.templateDirectory = snippetDirectoryLocation.absolutePath
+        FreeMarkerPlugin.newConfiguration(snippetDirectoryLocation.absolutePath)
 
         // Add implicit include of assignment macros such as <@init> and <@output>
         FreeMarkerPlugin.stringTemplateLoader.putTemplate("assignmentMacros", FreeMarkerPlugin.assignmentMacros)
@@ -221,7 +222,7 @@ class WrapperCodeGenerator {
         var inits = "<#assign phase='init' />\n"
         var inputs = "<#assign phase='input' />\n"
         var outputs = "<#assign phase='output' />\n"
-        val alreadyInitialized = new ArrayList<WrapperCodeAnnotationData>()
+        val alreadyInitialized = new HashSet<WrapperCodeAnnotationData>()
         for (data : annotationDatas) {
             // We initialize every annotation only once
             // although the same annotation might be used twice: as input and output.
@@ -279,9 +280,11 @@ class WrapperCodeGenerator {
             txt += ''''«arg»' '''
 
         txt += '''/>''';
-
+ 
         if (data.ignoreNonExistingSnippet)
             txt += '''</#if>'''
+        
+        txt += "\n"
 
         return txt
     }

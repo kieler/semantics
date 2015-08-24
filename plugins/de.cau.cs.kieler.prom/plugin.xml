@@ -61,5 +61,18 @@
             class="de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer">
       </initializer>
    </extension>
+   <extension
+         point="org.eclipse.ltk.core.refactoring.renameParticipants">
+      <renameParticipant
+            class="de.cau.cs.kieler.prom.launchconfig.LaunchConfigRenameParticipant"
+            id="de.cau.cs.kieler.prom.renameParticipant"
+            name="KiCo Launch Config Rename Participant">
+         <enablement>
+            <instanceof
+                  value="org.eclipse.core.resources.IResource">
+            </instanceof>
+         </enablement>
+      </renameParticipant>
+   </extension>
 
 </plugin>
