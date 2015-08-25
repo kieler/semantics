@@ -1229,10 +1229,15 @@ class SCChartsExtension {
         }
 
         // There are local valuedObjects, raise them
-        if (state.valuedObjects != null && state.valuedObjects.size > 0) {
+        val VOs = <ValuedObject> newArrayList => [ vos |  
+            vos += state.valuedObjects
+            state.regions.forEach[ vos += it.valuedObjects ]
+        ] 
+        
+        if (!VOs.empty) {
             val hierarchicalStateName = state.getHierarchicalName("LOCAL");
 
-            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
+            for (ValuedObject localValuedObject : VOs) {
                 val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
 
                 // Possibly expose
@@ -1247,6 +1252,7 @@ class SCChartsExtension {
                 if (expose) {
                     localValuedObject.setName(newValuedObjectName)
                 } else {
+                    localValuedObject.setName(newValuedObjectName)
                     localValuedObject.uniqueNameCached(uniqueNameCache)
                 }
 

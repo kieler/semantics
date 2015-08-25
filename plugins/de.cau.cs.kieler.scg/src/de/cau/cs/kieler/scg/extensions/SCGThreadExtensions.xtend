@@ -80,6 +80,8 @@ class SCGThreadExtensions {
         // with aid of the opposite relation in the entry node. 
         returnList.add(entry)
         val exit = entry.exit
+        // Add a list for exit nodes for nested threads.
+        val exitList = <Exit> newArrayList(exit)
         
         // If the exit node follows the entry node directly, exit here.
         if (entry.next.target == exit) {
@@ -103,8 +105,11 @@ class SCGThreadExtensions {
             if (nextNode instanceof Surface) {
 	            // Since surface node do not have extra control flows to their 
     	        // corresponding depth, set the next node manually.
-                nextNode = (nextNode as Surface).depth
+                nextNode = nextNode.depth
                 if (!returnList.contains(nextNode)) returnList.add(nextNode);                                
+            }
+            if (nextNode instanceof Entry) {
+                exitList += nextNode.exit
             }
             
             // Now, add all succeeding control flow provided 
@@ -120,24 +125,28 @@ class SCGThreadExtensions {
         }
         
         // Reverse search outgoing from the exit node
-        controlFlows.addAll(exit.allPrevious)
-        while(!controlFlows.empty) {
-            var nextNode = controlFlows.head.eContainer as Node
-            controlFlows.remove(0)
-            if (!returnList.contains(nextNode)) returnList.add(nextNode)
-            if (nextNode instanceof Depth) {
-                nextNode = (nextNode as Depth).surface
+        for(exitNode : exitList) {
+            controlFlows.addAll(exitNode.allPrevious)
+            while(!controlFlows.empty) {
+                var nextNode = controlFlows.head.eContainer as Node
+                controlFlows.remove(0)
                 if (!returnList.contains(nextNode)) returnList.add(nextNode)
+                if (nextNode instanceof Depth) {
+                    nextNode = (nextNode as Depth).surface
+                    if (!returnList.contains(nextNode)) returnList.add(nextNode)
+                }
+                if (nextNode != null)
+                nextNode.allPrevious.filter[ 
+                    (!returnList.contains(it.eContainer)) && 
+                    (!controlFlows.contains(it)) ] 
+                        => [ controlFlows.addAll(it) ]
             }
-            if (nextNode != null)
-            nextNode.allPrevious.filter[ 
-                (!returnList.contains(it.eContainer)) && 
-                (!controlFlows.contains(it)) ] 
-                    => [ controlFlows.addAll(it) ]
+            // Add the exit node.
+            if (!returnList.contains(exitNode)) { 
+                returnList.add(exitNode)
+            }
         }
         
-        // Add the exit node and return.
-        returnList.add(exit)
         returnList
     }
     
@@ -537,7 +546,7 @@ class SCGThreadExtensions {
     			newType = oldType
     		}
     		else if (type != ThreadPathType::INSTANTANEOUS) {
-    			newType = ThreadPathType::POTENTIAL_INSTANTANEOUS
+    			newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS
     		}
     	} 
     	else if (oldType == ThreadPathType::DELAYED) {
@@ -545,11 +554,11 @@ class SCGThreadExtensions {
     			newType = oldType
     		}
     		else if (type != ThreadPathType::DELAYED) {
-    			newType = ThreadPathType::POTENTIAL_INSTANTANEOUS
+    			newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS
     		}
     	}
-    	else if (oldType == ThreadPathType::POTENTIAL_INSTANTANEOUS) {
-    		newType = ThreadPathType::POTENTIAL_INSTANTANEOUS
+    	else if (oldType == ThreadPathType::POTENTIALLY_INSTANTANEOUS) {
+    		newType = ThreadPathType::POTENTIALLY_INSTANTANEOUS
     	}
     	
     	newType
@@ -566,7 +575,7 @@ class SCGThreadExtensions {
     	if (type == ThreadPathType::DISCONNECTED) return "Disconnected"
     	if (type == ThreadPathType::DELAYED) return "Delayed"
     	if (type == ThreadPathType::INSTANTANEOUS) return "Instantaneous"
-    	if (type == ThreadPathType::POTENTIAL_INSTANTANEOUS) return "Potential instantaneous"
+    	if (type == ThreadPathType::POTENTIALLY_INSTANTANEOUS) return "Potentially instantaneous"
     	return "Unknown"
     }
     
@@ -574,7 +583,7 @@ class SCGThreadExtensions {
         if (string == "Disconnected") return ThreadPathType::DISCONNECTED
         if (string == "Delayed") return ThreadPathType::DELAYED
         if (string == "Instantaneous") return ThreadPathType::INSTANTANEOUS
-        if (string == "Potential instantaneous") return ThreadPathType::POTENTIAL_INSTANTANEOUS
+        if (string == "Potentially instantaneous") return ThreadPathType::POTENTIALLY_INSTANTANEOUS
         return ThreadPathType::UNKNOWN;
     }
     

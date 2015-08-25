@@ -2,6 +2,9 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 
 import de.cau.cs.kieler.scl.scl.SclPackage;
@@ -28,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getStatements <em>Statements</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
@@ -38,207 +42,276 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class StatementScopeImpl extends InstructionImpl implements StatementScope
 {
   /**
-   * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAnnotations()
+     * @generated
+     * @ordered
+     */
+    protected EList<Annotation> annotations;
+
+/**
+     * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStatements()
-   * @generated
-   * @ordered
-   */
+     * @see #getStatements()
+     * @generated
+     * @ordered
+     */
   protected EList<Statement> statements;
 
   /**
-   * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getDeclarations()
-   * @generated
-   * @ordered
-   */
+     * @see #getDeclarations()
+     * @generated
+     * @ordered
+     */
   protected EList<Declaration> declarations;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected StatementScopeImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return SclPackage.Literals.STATEMENT_SCOPE;
-  }
+        return SclPackage.Literals.STATEMENT_SCOPE;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Annotation> getAnnotations() {
+        if (annotations == null) {
+            annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SclPackage.STATEMENT_SCOPE__ANNOTATIONS);
+        }
+        return annotations;
+    }
+
+/**
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EList<Statement> getStatements()
   {
-    if (statements == null)
-    {
-      statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.STATEMENT_SCOPE__STATEMENTS);
+        if (statements == null) {
+            statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.STATEMENT_SCOPE__STATEMENTS);
+        }
+        return statements;
     }
-    return statements;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EList<Declaration> getDeclarations()
   {
-    if (declarations == null)
-    {
-      declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SclPackage.STATEMENT_SCOPE__DECLARATIONS);
+        if (declarations == null) {
+            declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SclPackage.STATEMENT_SCOPE__DECLARATIONS);
+        }
+        return declarations;
     }
-    return declarations;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Annotation getAnnotation(String name) {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Annotation> getAllAnnotations(String name) {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void removeAllAnnotations(String name) {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+/**
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case SclPackage.STATEMENT_SCOPE__STATEMENTS:
-        return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
-      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-        return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
+        switch (featureID) {
+            case SclPackage.STATEMENT_SCOPE__ANNOTATIONS:
+                return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+            case SclPackage.STATEMENT_SCOPE__STATEMENTS:
+                return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
+            case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case SclPackage.STATEMENT_SCOPE__STATEMENTS:
-        return getStatements();
-      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-        return getDeclarations();
+        switch (featureID) {
+            case SclPackage.STATEMENT_SCOPE__ANNOTATIONS:
+                return getAnnotations();
+            case SclPackage.STATEMENT_SCOPE__STATEMENTS:
+                return getStatements();
+            case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+                return getDeclarations();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case SclPackage.STATEMENT_SCOPE__STATEMENTS:
-        getStatements().clear();
-        getStatements().addAll((Collection<? extends Statement>)newValue);
-        return;
-      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-        getDeclarations().clear();
-        getDeclarations().addAll((Collection<? extends Declaration>)newValue);
-        return;
+        switch (featureID) {
+            case SclPackage.STATEMENT_SCOPE__ANNOTATIONS:
+                getAnnotations().clear();
+                getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+                return;
+            case SclPackage.STATEMENT_SCOPE__STATEMENTS:
+                getStatements().clear();
+                getStatements().addAll((Collection<? extends Statement>)newValue);
+                return;
+            case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case SclPackage.STATEMENT_SCOPE__STATEMENTS:
-        getStatements().clear();
-        return;
-      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-        getDeclarations().clear();
-        return;
+        switch (featureID) {
+            case SclPackage.STATEMENT_SCOPE__ANNOTATIONS:
+                getAnnotations().clear();
+                return;
+            case SclPackage.STATEMENT_SCOPE__STATEMENTS:
+                getStatements().clear();
+                return;
+            case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case SclPackage.STATEMENT_SCOPE__STATEMENTS:
-        return statements != null && !statements.isEmpty();
-      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-        return declarations != null && !declarations.isEmpty();
+        switch (featureID) {
+            case SclPackage.STATEMENT_SCOPE__ANNOTATIONS:
+                return annotations != null && !annotations.isEmpty();
+            case SclPackage.STATEMENT_SCOPE__STATEMENTS:
+                return statements != null && !statements.isEmpty();
+            case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+                return declarations != null && !declarations.isEmpty();
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
   {
-    if (baseClass == StatementSequence.class)
-    {
-      switch (derivedFeatureID)
-      {
-        case SclPackage.STATEMENT_SCOPE__STATEMENTS: return SclPackage.STATEMENT_SEQUENCE__STATEMENTS;
-        default: return -1;
-      }
+        if (baseClass == Annotatable.class) {
+            switch (derivedFeatureID) {
+                case SclPackage.STATEMENT_SCOPE__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+                default: return -1;
+            }
+        }
+        if (baseClass == StatementSequence.class) {
+            switch (derivedFeatureID) {
+                case SclPackage.STATEMENT_SCOPE__STATEMENTS: return SclPackage.STATEMENT_SEQUENCE__STATEMENTS;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
     }
-    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
   {
-    if (baseClass == StatementSequence.class)
-    {
-      switch (baseFeatureID)
-      {
-        case SclPackage.STATEMENT_SEQUENCE__STATEMENTS: return SclPackage.STATEMENT_SCOPE__STATEMENTS;
-        default: return -1;
-      }
+        if (baseClass == Annotatable.class) {
+            switch (baseFeatureID) {
+                case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return SclPackage.STATEMENT_SCOPE__ANNOTATIONS;
+                default: return -1;
+            }
+        }
+        if (baseClass == StatementSequence.class) {
+            switch (baseFeatureID) {
+                case SclPackage.STATEMENT_SEQUENCE__STATEMENTS: return SclPackage.STATEMENT_SCOPE__STATEMENTS;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
-    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-  }
 
 } //StatementScopeImpl
