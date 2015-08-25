@@ -144,7 +144,10 @@ class LaunchConfigRenameParticipant extends RenameParticipant {
      * Update the main file and model file paths of the configuration.
      */
     private def void updateFiles(ILaunchConfigurationWorkingCopy wc) {
-        if(file != null) {            
+        // Only work on files of the launch config's project
+        val projectName = wc.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
+        
+        if(file != null && file.project != null && file.project.name == projectName) {
             // Rename main file
             if(oldPath == wc.getAttribute(LaunchConfiguration.ATTR_MAIN_FILE, "")){
                 wc.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, newPath)
