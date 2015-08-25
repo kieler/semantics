@@ -24,26 +24,24 @@ import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.ltk.core.refactoring.RefactoringStatus
 import org.eclipse.ltk.core.refactoring.participants.CheckConditionsContext
-import org.eclipse.ltk.core.refactoring.participants.RenameParticipant
+import org.eclipse.ltk.core.refactoring.participants.DeleteParticipant
 
 /**
- * In case of renaming a resource,
- * this participant will rename fields of KiCo launch configurations,
+ * In case of deleting a resource,
+ * this participant will empty fields of KiCo launch configurations,
  * if they contain the old values.
  * 
- * The project, main file and model files are thus renamed automatically.
+ * The project, main file and model files are thus cleared automatically.
  * @author aas
  */
-class LaunchConfigRenameParticipant extends RenameParticipant {
+class LaunchConfigDeleteParticipant extends DeleteParticipant {
     
     private IProject project
     private IFile file
     
     private var String oldName
-    private var String newName
     
     private var String oldPath
-    private var String newPath
     
     /**
      * {@inheritDoc}
@@ -69,7 +67,7 @@ class LaunchConfigRenameParticipant extends RenameParticipant {
             updateConfiguration(wc)
         }
         
-        // Update project properties
+        // Update project properites
         updateProperties()
         
         return null
@@ -79,7 +77,7 @@ class LaunchConfigRenameParticipant extends RenameParticipant {
      * {@inheritDoc}
      */
     override getName() {
-        return "KiCo Launch Config Rename Participant"
+        return "KiCo Launch Config Delete Participant"
     }
     
     /**
@@ -90,18 +88,12 @@ class LaunchConfigRenameParticipant extends RenameParticipant {
             project = element
             
             oldName = project.name
-            newName = getArguments().getNewName()
-            
             oldPath = ""
-            newPath = ""
         } else if(element instanceof IFile){
             file = element
             
             oldName = file.name
-            newName = getArguments().getNewName()
-            
             oldPath = file.projectRelativePath.toOSString
-            newPath = oldPath.substring(0,(oldPath.length-file.name.length)) + getArguments().newName
         }
         return true
     }    
@@ -110,9 +102,9 @@ class LaunchConfigRenameParticipant extends RenameParticipant {
      * Update the project properties.
      */
     private def void updateProperties(){
-        // Rename main file
+        // Remove main file
         if(file != null && oldPath == file.project.getPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER)){
-            file.project.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, newPath)
+            file.project.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, null)
         }
     }
     
@@ -120,11 +112,11 @@ class LaunchConfigRenameParticipant extends RenameParticipant {
      * Update fields of the configuration.
      */
     private def void updateConfiguration(ILaunchConfigurationWorkingCopy wc){
-        // Change project name
-        updateProject(wc)
-        
-        // Change paths
+        // Delete files
         updateFiles(wc)
+        
+        // Delete project
+        updateProject(wc)
     }
     
     /**
@@ -132,10 +124,11 @@ class LaunchConfigRenameParticipant extends RenameParticipant {
      */
     private def void updateProject(ILaunchConfigurationWorkingCopy wc) {
         if(project != null) {
-            // Rename project
+            val oldName = project.name
+            // Delete complete launch configuration
             if(oldName == wc.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")){
-                wc.setAttribute(LaunchConfiguration.ATTR_PROJECT, newName)
-                wc.doSave()
+                wc.delete()
+                wc.doSave().delete()
             }
         }
     }
@@ -144,20 +137,28 @@ class LaunchConfigRenameParticipant extends RenameParticipant {
      * Update the main file and model file paths of the configuration.
      */
     private def void updateFiles(ILaunchConfigurationWorkingCopy wc) {
-        if(file != null) {            
-            // Rename main file
+        if(file != null) {
+            val oldPath = file.projectRelativePath.toOSString
+            
+            // Clear main file field
             if(oldPath == wc.getAttribute(LaunchConfiguration.ATTR_MAIN_FILE, "")){
-                wc.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, newPath)
+                wc.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, "")
                 wc.doSave()
             }
+            // Main file in project properties
+            if(oldPath == file.project.getPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER)){
+                file.project.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, null)
+            }
             
-            // Rename model files
+            // Remove model files
             val modelFiles = FileCompilationData.loadAllFromConfiguration(wc)
+            val cloneOfModelFiles = modelFiles.clone()
             var changed = false;
             // First change all data objects
-            for(modelFile : modelFiles){
+            // (We iterate over a clone of the collection, because the original will be modified)
+            for(modelFile : cloneOfModelFiles){
                 if(oldPath == modelFile.projectRelativePath){
-                    modelFile.projectRelativePath = newPath
+                    modelFiles.remove(modelFile)
                     changed = true
                 }
             }

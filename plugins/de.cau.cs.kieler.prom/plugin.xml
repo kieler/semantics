@@ -74,5 +74,17 @@
          </enablement>
       </renameParticipant>
    </extension>
+   <extension
+         point="org.eclipse.ltk.core.refactoring.deleteParticipants">
+      <deleteParticipant
+            class="de.cau.cs.kieler.prom.launchconfig.LaunchConfigDeleteParticipant"
+            id="de.cau.cs.kieler.prom.deleteParticipant"
+            name="KiCo Launch Config Delete Participant">
+         <enablement>
+            <instanceof
+                  value="org.eclipse.core.resources.IResource">
+            </instanceof></enablement>
+      </deleteParticipant>
+   </extension>
 
 </plugin>

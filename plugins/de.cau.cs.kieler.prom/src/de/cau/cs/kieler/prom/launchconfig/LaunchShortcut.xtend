@@ -57,12 +57,6 @@ class LaunchShortcut implements ILaunchShortcut {
      */
     private IProject project
 
-    /**
-     * The extension id of this launch shortcut set in the plugin.xml.
-     */
-    private static val LAUNCH_CONFIGURATION_TYPE_ID = "de.cau.cs.kieler.prom.launchconfig.launchConfiguration"
-
-
 
     /**
      * {@inheritDoc}
@@ -151,7 +145,7 @@ class LaunchShortcut implements ILaunchShortcut {
     private def ILaunchConfiguration createNewConfiguration() {
         try {
             val lm = DebugPlugin.getDefault().getLaunchManager()
-            val type = lm.getLaunchConfigurationType(LAUNCH_CONFIGURATION_TYPE_ID)
+            val type = lm.getLaunchConfigurationType(LaunchConfiguration.LAUNCH_CONFIGURATION_TYPE_ID)
             val name = project.name
             val wc = type.newInstance(null, name)
             initializeConfiguration(wc)
@@ -262,7 +256,7 @@ class LaunchShortcut implements ILaunchShortcut {
         val result = new ArrayList<ILaunchConfiguration>()
         try {
             val manager = DebugPlugin.getDefault().getLaunchManager()
-            val type = manager.getLaunchConfigurationType(LAUNCH_CONFIGURATION_TYPE_ID)
+            val type = manager.getLaunchConfigurationType(LaunchConfiguration.LAUNCH_CONFIGURATION_TYPE_ID)
             val configurations = manager.getLaunchConfigurations(type)
             for (var i = 0; i < configurations.length; i++) {
                 val config = configurations.get(i)
