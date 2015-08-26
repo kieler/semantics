@@ -585,6 +585,10 @@ class SCChartsExtension {
     def boolean hasInnerStatesOrControlflowRegions(State state) {
         return ((state.regions != null && state.regions.size != 0 && state.controlflowRegionsNotEmpty))
     }
+    
+    def boolean hasDataflowRegions(State state) {
+        return state.regions != null && state.regions.size != 0 && !state.regions.filter(DataflowRegion).empty
+    }
 
     // These are actions that expand to INNER content like during or exit actions.
     def boolean hasInnerActions(State state) {

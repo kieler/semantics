@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -13,37 +13,41 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
-import de.cau.cs.kieler.sccharts.Assignment
-import de.cau.cs.kieler.sccharts.Effect
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.Emission
-import de.cau.cs.kieler.sccharts.EntryAction
-import de.cau.cs.kieler.sccharts.DuringAction
-import de.cau.cs.kieler.sccharts.ExitAction
+import com.google.common.base.Joiner
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
+import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.Assignment
+import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.Effect
+import de.cau.cs.kieler.sccharts.Emission
+import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.IterateAction
+import de.cau.cs.kieler.sccharts.SuspendAction
+import de.cau.cs.kieler.sccharts.Transition
+import java.util.List
+import org.eclipse.emf.common.util.EList
 
 /**
- * @author ssm
- *
+ * @author ssm als
+ * 
  * @kieler.design 2014-09-04 proposed ssm
  * @kieler.rating 2014-09-04 proposed yellow
  */
 class SCChartsSerializeExtension extends KExpressionsSerializeExtension {
-    
+
     def dispatch CharSequence serialize(Assignment assignment) {
-        assignment.valuedObject.name + " = " + assignment.expression.serialize
+        return new StringBuilder(assignment.valuedObject.name).append(" = ").append(assignment.expression.serialize).toString
     }
-    
+
     def dispatch CharSequence serialize(Emission emission) {
         val objectContainer = emission.valuedObject.eContainer
+
         if (objectContainer instanceof Declaration) {
             if ((objectContainer as Declaration).type != ValueType::PURE) {
-                return (emission.valuedObject.name + "(" + emission.newValue.serialize + ")")             
+                return new StringBuilder(emission.valuedObject.name).append("(").append(emission.newValue.serialize).append(")").toString
             } else {
                 return emission.valuedObject.name
             }
@@ -51,60 +55,71 @@ class SCChartsSerializeExtension extends KExpressionsSerializeExtension {
             return emission.valuedObject.name
         }
     }
-   
+
     def dispatch CharSequence serialize(EList<Effect> effects) {
-        if (!effects.empty) {
-            var String label = "" 
-            for(effect : effects) {
-                label = label + effect.serialize as String + "; "
-            }
-            label = label.substring(0, label.length - 2)
-            return label
+        val label = new StringBuilder();
+
+        for (effect : effects) {
+            label.append(effect.serialize);
+            label.append("; ");
         }
-        return ""
+
+        label.setLength(label.length - 2);
+
+        return label.toString
     }
-    
+
     def dispatch CharSequence serialize(Transition transition) {
-        var label = ""
-        if (transition.trigger != null) { 
+        val label = new StringBuilder();
+
+        if (transition.trigger != null) {
             if (transition.delay > 1) {
-                label = label + transition.delay.toString + " "
+                label.append(transition.delay.toString).append(" ");
             }
-            label = label + transition.trigger.serialize as String
+            label.append(transition.trigger.serialize);
         }
+
         if (!transition.effects.empty) {
-            label = label + " / " + transition.effects.serialize
-            label = label.trim
+            label.append(" / ")
+            label.append(transition.effects.serialize);
         }
-        label
+
+        return label.toString;
     }
-    
+
     def dispatch CharSequence serialize(Action action) {
-        var label = "";
-        if (action.immediate) { 
-            label = label + "immediate ";
+        val joiner = Joiner.on(" ");
+        val parts = action.serializeComponents
+        return joiner.join(parts.key) + joiner.join(parts.value);
+    }
+
+    def Pair<List<String>, List<String>> serializeComponents(Action action) {
+        val keywords = newLinkedList;
+        val content = newLinkedList;
+
+        if (action.immediate) {
+            keywords += "immediate";
         }
-        if (action instanceof EntryAction) { 
-            label = label + "entry "
+
+        keywords += switch action {
+            EntryAction: "entry"
+            DuringAction: "during"
+            ExitAction: "exit"
+            SuspendAction case action.isWeak: "weak suspend"
+            SuspendAction: "suspend"
+            IterateAction: "iterate"
+            default: ""
         }
-        else if (action instanceof DuringAction) {
-            label = label + "during "
-        }
-        else if (action instanceof ExitAction) {
-            label = label + "exit "
-        }
-        else if (action instanceof IterateAction) {
-            label = label + "iterate "
-        }
-        
+
         if (action.trigger != null) {
-            var trigger = action.trigger.serialize as String
-            label = label + trigger;
+            content += action.trigger.serialize as String
         }
+
         if (!action.effects.empty) {
-            label = label + " / " + action.effects.serialize
-            label = label.trim
+            content += "/"
+            content += action.effects.serialize as String
         }
-        label        
+
+        return new Pair(keywords, content);
     }
 }

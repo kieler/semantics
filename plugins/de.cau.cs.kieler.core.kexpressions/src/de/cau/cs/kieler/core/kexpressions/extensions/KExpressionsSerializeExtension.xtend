@@ -13,22 +13,22 @@
  */
 package de.cau.cs.kieler.core.kexpressions.extensions
 
+import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.Expression
-import java.util.List
-import java.util.Iterator
+import de.cau.cs.kieler.core.kexpressions.StringValue
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.StringValue
-
+import java.util.Iterator
+import java.util.List
 /**
  * @author ssm
  * 
@@ -219,5 +219,45 @@ class KExpressionsSerializeExtension {
    def dispatch CharSequence serialize(Void x) {
        
    }
+   
+   def Pair<List<String>, List<String>> serializeComponents(Declaration declaration) {
+        val keywords = newLinkedList;
+        val content = newLinkedList;
+
+        //Modifiers
+        if (declaration.isExtern) {
+            keywords += "extern";
+        }
+        if (declaration.isStatic) {
+            keywords += "static ";
+        }
+        if (declaration.isConst) {
+            keywords += "const";
+        }
+        if (declaration.isInput) {
+            keywords += "input";
+        }
+        if (declaration.isOutput) {
+            keywords += "output"
+        }
+        if (declaration.isSignal) {
+            keywords += "signal";
+        }
+
+        //Type
+        keywords += declaration.type.serialize as String
+
+        //Content
+        for (valuedObject : declaration.valuedObjects) {
+            content += valuedObject.serialize + ",";
+        }
+        // Remove last comma
+        if (!content.empty) {
+            content.removeLast;
+            content += declaration.valuedObjects.last.serialize as String;
+        }
+
+        return new Pair(keywords, content);
+    }
     
 }
