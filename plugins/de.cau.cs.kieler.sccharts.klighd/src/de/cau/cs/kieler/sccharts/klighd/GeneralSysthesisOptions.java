@@ -24,7 +24,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption;
 public interface GeneralSysthesisOptions {
 
     public static final SynthesisOption USE_KLAY = SynthesisOption.createCheckOption(
-            "KLayLayered", false);
+            "KLayLayered", true);
     
     public static final SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption.createCheckOption(
             "Adaptive Zoom", false);

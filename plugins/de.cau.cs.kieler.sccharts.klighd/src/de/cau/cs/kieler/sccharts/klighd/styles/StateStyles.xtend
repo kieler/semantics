@@ -152,13 +152,19 @@ class StateStyles {
     def setShadowStyle(KNode node) {
         node.KContainerRendering.setShadow("black".color, 4, 4);
     }
+    
 
-    def KText addStateLabel(KNode node, String text) {
+    def KText addSimpleStateLabel(KNode node, String text) {
+        node.addMacroStateLabel(text) => [
+            fontBold = true;
+        ]
+    }
+    
+    def KText addMacroStateLabel(KNode node, String text) {
         node.contentContainer.addText(text) => [
             fontSize = 11;
-            fontBold = true;
             // Add surrounding space
-            setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+            setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0);
         ]
     }
 

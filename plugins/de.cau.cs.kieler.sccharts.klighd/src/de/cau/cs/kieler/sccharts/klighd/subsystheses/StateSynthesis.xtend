@@ -77,8 +77,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         switch state {
             case isConnector:
                 node.addConnectorFigure
-            case state.hasInnerStatesOrControlflowRegions || state.hasDataflowRegions || !state.localActions.empty ||
-                !state.declarations.empty || state.isReferencedState:
+            case state.isMacroState:
                 node.addMacroFigure
             default:
                 node.addDefaultFigure
@@ -103,13 +102,16 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         // Add content
         if (!isConnector) {
             // Add label
-            if (!state.label.empty) {
-                if (state.isReferencedState) {
-                    node.addStateLabel(
-                        state.label + " @ " + (state.referencedScope as State).label ?: "UnresolvedReference").
-                        associateWith(state);
-                } else {
-                    node.addStateLabel(state.label).associateWith(state);
+            if (!state.label.nullOrEmpty) {
+                switch state {
+                    case state.isReferencedState:
+                        node.addMacroStateLabel(
+                            state.label + " @ " + (state.referencedScope as State).label ?: "UnresolvedReference").
+                            associateWith(state)
+                    case state.isMacroState:
+                        node.addMacroStateLabel(state.label).associateWith(state)
+                    default:
+                        node.addSimpleStateLabel(state.label).associateWith(state)
                 }
             }
 
@@ -124,7 +126,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
             // Add actions
             for (action : state.localActions) {
-                //TODO Maybe improve string representation
+                // TODO Maybe improve string representation
 //                text = text.replace("'", "")
 //                if (text.length > 1 && text.substring(text.length - 1, text.length).equals(";")) {
 //                    text = text.substring(0, text.length - 1)
@@ -154,13 +156,18 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 DataflowRegion: node.children += region.transform
             }
         }
-        
+
         // Add reference region
         if (state.isReferencedState) {
             node.children += state.createReferenceRegion
         }
 
         return node;
+    }
+
+    def boolean isMacroState(State state) {
+        return state.hasInnerStatesOrControlflowRegions || state.hasDataflowRegions || !state.localActions.empty ||
+            !state.declarations.empty || state.isReferencedState;
     }
 
 }

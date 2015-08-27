@@ -67,11 +67,13 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
         if (USE_KLAY.booleanValue) {
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+            node.setLayoutOption(LayoutOptions::SPACING, 3f);
+            node.setLayoutOption(LayoutOptions::BORDER_SPACING, 8f);
         } else {
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
+            node.setLayoutOption(LayoutOptions::SPACING, 40f);
         }
         node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-        node.setLayoutOption(LayoutOptions::SPACING, 40f);
         node.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
 
         node.setLayoutOption(KlighdProperties::EXPAND, true);
