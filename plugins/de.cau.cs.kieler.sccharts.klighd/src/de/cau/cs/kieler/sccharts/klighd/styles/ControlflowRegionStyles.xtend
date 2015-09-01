@@ -53,7 +53,7 @@ class ControlflowRegionStyles {
     @Inject
     extension StateStyles
 
-    private static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
+    public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.region.declarations", null);
 
     def KRectangle addRegionFigure(KNode node) {

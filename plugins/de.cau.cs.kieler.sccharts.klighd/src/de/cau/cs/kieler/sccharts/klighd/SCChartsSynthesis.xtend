@@ -20,6 +20,7 @@ import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -118,7 +119,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.klighd.DeprecatedSCChartsSynthesis");
         rootNode.children += LightDiagramServices::translateModel(root, usedContext, properties).children;
         
-        hooks.invokeStart(root);
+        hooks.invokeStart(root, rootNode);
 
         if (root instanceof State) {
             rootNode.children += stateSynthesis.transform(root);
@@ -127,7 +128,12 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
             rootNode.children += controlflowSynthesis.transform(root).children;
         }
         
-        hooks.invokeFinish(rootNode);
+        // Add tracking adapter to allow access to source model associations
+        val trackingAdapter = new SourceModelTrackingAdapter();
+        rootNode.setLayoutOption(DiagramProperties::MODEL_TRACKER, trackingAdapter);
+        rootNode.eAdapters.add(trackingAdapter);
+        
+        hooks.invokeFinish(root, rootNode);
 
         // Log elapsed time
         logger.info(

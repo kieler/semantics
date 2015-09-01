@@ -13,11 +13,10 @@
  */
 package de.cau.cs.kieler.sccharts.klighd;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import javax.inject.Provider;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
@@ -26,12 +25,10 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import com.google.common.collect.Collections2;
-import com.google.inject.Guice;
+import com.google.inject.Binding;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
-import com.google.inject.util.Providers;
 
 import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
@@ -65,6 +62,8 @@ public class SCChartsSynthesisHooks {
     private static final String ATTRIBUTE_CLASS = "class";
 
     private final static ArrayList<Class<? extends SCChartsSynthesisHook>> registeredHooks;
+    
+    private static Map<Key<?>, Binding<?>> bindings;
 
     /**
      * Initializes this class with the data from the extension point.
@@ -115,6 +114,9 @@ public class SCChartsSynthesisHooks {
     @Inject
     public SCChartsSynthesisHooks(Injector injector) {
         hooks = new ArrayList<SCChartsSynthesisHook>(registeredHooks.size());
+        if (bindings == null) {
+            bindings = new HashMap<Key<?>, Binding<?>>(injector.getAllBindings());
+        }
         for (Class<? extends SCChartsSynthesisHook> hookClass : registeredHooks) {
             hooks.add(injector.getInstance(hookClass));
         }
@@ -124,15 +126,15 @@ public class SCChartsSynthesisHooks {
         return Collections.unmodifiableList(hooks);
     }
 
-    public void invokeStart(Scope scope) {
+    public void invokeStart(Scope scope, KNode node) {
         for (SCChartsSynthesisHook hook : hooks) {
-            hook.start(scope);
+            hook.start(scope, node);
         }
     }
 
-    public void invokeFinish(KNode node) {
+    public void invokeFinish(Scope scope, KNode node) {
         for (SCChartsSynthesisHook hook : hooks) {
-            hook.finish(node);
+            hook.finish(scope, node);
         }
     }
 
@@ -168,6 +170,13 @@ public class SCChartsSynthesisHooks {
                 break;
             }
         }
+    }
+
+    /**
+     * @return the bindings
+     */
+    public static Map<Key<?>, Binding<?>> getBindings() {
+        return bindings;
     }
 
 }

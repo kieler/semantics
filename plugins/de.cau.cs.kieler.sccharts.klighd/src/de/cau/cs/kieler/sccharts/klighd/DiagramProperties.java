@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.klighd;
 
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
+import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter;
 
 /**
  * @author als
@@ -22,13 +23,15 @@ import de.cau.cs.kieler.core.properties.Property;
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
-public final class SCChartsDiagramProperties {
+@SuppressWarnings("restriction")
+public final class DiagramProperties {
     /**
      * Prevent Instantiation.
      */
-    private SCChartsDiagramProperties() {
+    private DiagramProperties() {
     }
 
-//    public static final IProperty<CompilationResult> COMPILATION_RESULT =
-//            new Property<CompilationResult>("de.cau.cs.kieler.kico.klighd.compilation.result", null);
+    public static final IProperty<SourceModelTrackingAdapter> MODEL_TRACKER =
+            new Property<SourceModelTrackingAdapter>("de.cau.cs.kieler.sccharts.klighd.tracker",
+                    null);
 }

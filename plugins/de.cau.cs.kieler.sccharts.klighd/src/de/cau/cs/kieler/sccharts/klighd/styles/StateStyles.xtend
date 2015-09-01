@@ -54,11 +54,11 @@ class StateStyles {
     @Inject
     extension KColorExtensions
 
-    private static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
+    public static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.state.content", false);
-    private static final IProperty<KContainerRendering> ACTIONS_CONTAINER = new Property<KContainerRendering>(
+    public static final IProperty<KContainerRendering> ACTIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.state.actions", null);
-    private static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
+    public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.state.declarations", null);
 
     val baseLineWidth = 1; // TODO PAPER BW +1
@@ -215,7 +215,7 @@ class StateStyles {
         return null
     }
 
-    def getActionsContainer(KNode node) {
+    private def getActionsContainer(KNode node) {
         val content = node.contentContainer;
         var container = content.getProperty(ACTIONS_CONTAINER);
         if (container == null) {
@@ -225,7 +225,7 @@ class StateStyles {
         return container;
     }
 
-    def getDeclarationsContainer(KNode node) {
+    private def getDeclarationsContainer(KNode node) {
         val content = node.contentContainer;
         var container = content.getProperty(DECLARATIONS_CONTAINER);
         if (container == null) {

@@ -15,23 +15,31 @@ package de.cau.cs.kieler.sccharts.klighd.hooks
 
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KLabel
+import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.klighd.SCChartsSynthesisHook
+import de.cau.cs.kieler.sccharts.klighd.SCChartsSynthesisActionHook
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
 /**
+ * Shows or hides transition labels.
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
 @ViewSynthesisShared
-class TransitionLabelHook extends SCChartsSynthesisHook {
+class TransitionLabelHook extends SCChartsSynthesisActionHook {
 
-    public static final SynthesisOption SHOW_LABELS = SynthesisOption.createCheckOption("Transition labels", true);
+    /** Action ID */
+    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.hooks.TransitionLabelHook";
+    /** The related synthesis option */
+    public static final SynthesisOption SHOW_LABELS = SynthesisOption.createCheckOption("Transition labels", true).
+        setUpdateAction(TransitionLabelHook.ID); // Register this action as updater
 
     override getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_LABELS);
@@ -41,5 +49,15 @@ class TransitionLabelHook extends SCChartsSynthesisHook {
         if (!SHOW_LABELS.booleanValue) {
             edge.eContents.filter(KLabel).forEach[initiallyHide]
         }
+    }
+
+    override executeAction(KNode rootNode) {
+        val viewer = usedContext.viewer
+        if (SHOW_LABELS.booleanValue) {
+            rootNode.eAllContentsOfType(KNode, KEdge, KLabel).filter(KLabel).forEach[viewer.show(it)]
+        } else {
+            rootNode.eAllContentsOfType(KNode, KEdge, KLabel).filter(KLabel).forEach[viewer.hide(it)]
+        }
+        return ActionResult.createResult(true);
     }
 }

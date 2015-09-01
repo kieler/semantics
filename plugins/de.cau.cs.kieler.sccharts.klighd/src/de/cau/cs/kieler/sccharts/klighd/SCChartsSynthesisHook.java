@@ -35,10 +35,11 @@ import de.cau.cs.kieler.sccharts.Transition;
  * @kieler.rating 2015-08-13 proposed yellow
  *
  */
-public abstract class SCChartsSynthesisHook {
+public class SCChartsSynthesisHook {
+    
     @Inject
     private SCChartsSynthesis parent;
-    
+
     /**
      * @return
      * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getDisplayedSynthesisOptions()
@@ -49,14 +50,16 @@ public abstract class SCChartsSynthesisHook {
 
     /**
      * @param scope
+     * @param node
      */
-    public void start(Scope scope) {
+    public void start(Scope scope, KNode node) {
     }
 
     /**
+     * @param scope
      * @param node
      */
-    public void finish(KNode node) {
+    public void finish(Scope scope, KNode node) {
     }
 
     /**
@@ -155,4 +158,5 @@ public abstract class SCChartsSynthesisHook {
     public ViewContext getUsedContext() {
         return parent.getUsedContext();
     }
+
 }

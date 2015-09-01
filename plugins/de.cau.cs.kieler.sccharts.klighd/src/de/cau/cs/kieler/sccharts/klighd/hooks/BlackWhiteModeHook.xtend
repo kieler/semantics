@@ -35,7 +35,8 @@ class BlackWhiteModeHook extends SCChartsSynthesisHook {
 
     @Inject
     extension KRenderingExtensions
-
+    
+    /** The related synthesis option */
     public static final SynthesisOption PAPER_BW = SynthesisOption.createCheckOption("Black/White (Paper)", false);
 
     // TODO BW for background gradient
@@ -50,7 +51,7 @@ class BlackWhiteModeHook extends SCChartsSynthesisHook {
         return newLinkedList(PAPER_BW)
     }
 
-    override start(Scope scope) {
+    override start(Scope scope, KNode root) {
         // TODO change all colors to gray
     }
 

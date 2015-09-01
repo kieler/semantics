@@ -29,10 +29,4 @@ public interface GeneralSysthesisOptions {
     public static final SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption.createCheckOption(
             "Adaptive Zoom", false);
 
-    public static final SynthesisOption SHOW_SCG_DEPENDENCIES = SynthesisOption.createCheckOption(
-            "SCG Dependencies", false);
-
-    public static final SynthesisOption SHOW_SCG_LOOPS = SynthesisOption.createCheckOption(
-            "SCG Loops", false);
-
 }

@@ -23,6 +23,10 @@ import de.cau.cs.kieler.sccharts.klighd.SCChartsSynthesisHook
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
 
 /**
+ * Shows priority label of the priority based compilation.
+ * 
+ * TODO Move this class to de.cau.cs.kieler.sccharts.s
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
