@@ -31,8 +31,6 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.klighd.DiagramProperties
-import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisActionHook
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
@@ -45,16 +43,20 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.ui.progress.UIJob
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook.*
+import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 
 /**
  * Highlights the SCCharts elements lying on a illegal loop in SCG.
+ * 
+ * TODO Move this class to de.cau.cs.kieler.sccharts.scg
  * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
-class SCGLoopHook extends SCChartsSynthesisActionHook {
+class SCGLoopHook extends SynthesisActionHook {
 
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
 
@@ -62,13 +64,13 @@ class SCGLoopHook extends SCChartsSynthesisActionHook {
     public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook";
     /** Job name */
     public static final String JOB_NAME = "Calculating SCG Loops";
-    /** The related synthesis option */
+    /** The related synthesis option. */
     public static final SynthesisOption SHOW_SCG_LOOPS = SynthesisOption.createCheckOption("SCG Loops", false).
         setUpdateAction(SCGLoopHook.ID); // Add this action as updater
-    /** Property to store analysis results */
+    /** Property to store analysis results. */
     private static final IProperty<List<KRendering>> LOOP_ELEMENTS = new Property<List<KRendering>>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.loops.elements", null);
-    /** Property to mark highlighting styles */
+    /** Property to mark highlighting styles. */
     private static final IProperty<Boolean> IS_HIGHLIGHTING = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.loops.highlighting", false);
 
@@ -91,6 +93,9 @@ class SCGLoopHook extends SCChartsSynthesisActionHook {
         return ActionResult.createResult(false);
     }
 
+    /** 
+     * If necessary calculate the loops and show the highlighting.
+     */
     private def showLoops(KNode rootNode, Object model) {
         if (!(model instanceof State)) {
             throw new IllegalArgumentException("Cannot perform SCG analysis on models other than states");
@@ -103,11 +108,14 @@ class SCGLoopHook extends SCChartsSynthesisActionHook {
         }
 
         val loopElements = propertyHolder.getProperty(LOOP_ELEMENTS);
+        // If not already calculated
         if (loopElements == null) {
-            val tracker = propertyHolder.getProperty(DiagramProperties::MODEL_TRACKER);
+            val tracker = propertyHolder.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
             if (tracker == null) {
                 throw new IllegalArgumentException("Missing source model tracker");
             }
+
+            // Create and start background job for compiling
             new Job(JOB_NAME) {
 
                 override protected run(IProgressMonitor monitor) {
@@ -136,6 +144,9 @@ class SCGLoopHook extends SCChartsSynthesisActionHook {
         }
     }
 
+    /** 
+     * Hide the loop highlighting.
+     */
     private def hideLoops(KNode rootNode) {
         val propertyHolder = rootNode.data.filter(KLayoutData).head;
         val loopElements = propertyHolder?.getProperty(LOOP_ELEMENTS);
@@ -144,10 +155,13 @@ class SCGLoopHook extends SCChartsSynthesisActionHook {
         }
     }
 
+    /** 
+     * Calculate diagram elements related to SCG elements on loops.
+     */
     private def List<KRendering> calculateSCGLoopElements(KNode rootNode, State scc,
         SourceModelTrackingAdapter tracking) {
 
-        // TODO This transformation selection should be sensetive to the user selection in KiCoSelectionView regarding its editor
+        // TODO This transformation selection should be sensitive to the user selection in KiCoSelectionView regarding its editor
         val context = new KielerCompilerContext(SCGFeatures.GUARD_ID +
             ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION",
             scc);
@@ -174,8 +188,8 @@ class SCGLoopHook extends SCChartsSynthesisActionHook {
                 equivalenceClasses.putAll(it, elements);
             }
         ];
-        
-        // Analyze loops with tracing
+
+        // Analyze loops and tracing
         val loopElements = newLinkedList;
         if (mapping != null) {
             for (PotentialInstantaneousLoopResult loop : loops) {
@@ -186,6 +200,7 @@ class SCGLoopHook extends SCChartsSynthesisActionHook {
                         loop.criticalNodes.contains(it.eContainer)
                     ]);
                 }
+                // Get diagram elements form tracing
                 for (Object crit : criticalSCGElements) {
                     for (Object source : mapping.get(crit)) {
                         val elements = newArrayList();
@@ -205,6 +220,9 @@ class SCGLoopHook extends SCChartsSynthesisActionHook {
         return loopElements;
     }
 
+    /** 
+     * Adds the highlighting style to the given rendering.
+     */
     private def void addHighlighting(KRendering rendering) {
         rendering.styles += createKForeground() => [
             setColor(Colors.RED);
@@ -215,6 +233,9 @@ class SCGLoopHook extends SCChartsSynthesisActionHook {
         ]
     }
 
+    /** 
+     * Removed the highlighting style from the given rendering if present.
+     */
     private def void removeHighlighting(KRendering rendering) {
         rendering.styles.removeIf[getProperty(IS_HIGHLIGHTING)];
     }

@@ -35,6 +35,8 @@ import java.util.List
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
+ * Styles for {@link Transition}.
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
@@ -69,12 +71,18 @@ class TransitionStyles {
     private static val KRenderingFactory RENDERING_FACTORY = KRenderingFactory.eINSTANCE;
     private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() => [it.red = 60; it.green = 60; it.blue = 60];
 
+    /**
+     * Adds a basic transition spline.
+     */
     def KSpline addTransitionSpline(KEdge edge) {
         edge.addSpline => [
             lineWidth = 2;
         ]
     }
-
+    
+    /**
+     * Sets the style of the line to immediate.
+     */
     def setImmediateStyle(KEdge edge) {
         edge.line => [
             lineStyle = LineStyle::CUSTOM;
@@ -83,6 +91,10 @@ class TransitionStyles {
         ]
     }
 
+    /**
+     * Adds a history head arrow decorator.<br>
+     * Incompatible with {@link addDeepHistoryDecorator}.
+     */
     def addShallowHistoryDecorator(KEdge edge) {
         edge.line.addHeadArrowDecorator() => [
             (placementData as KDecoratorPlacementData).absolute = -17.0f;
@@ -105,6 +117,10 @@ class TransitionStyles {
         ]
     }
 
+    /**
+     * Adds a deep history head arrow decorator.<br>
+     * Incompatible with {@link addShallowHistoryDecorator}.
+     */
     def addDeepHistoryDecorator(KEdge edge) {
         edge.line.addHeadArrowDecorator() => [
             (placementData as KDecoratorPlacementData).absolute = -17.0f;
@@ -131,10 +147,10 @@ class TransitionStyles {
         ]
     }
 
-    def addDefaultDecorator(KEdge edge) {
-        edge.line.addHeadArrowDecorator();
-    }
-
+    /**
+     * Adds a deferred head arrow decorator.<br>
+     * If used in combination with other head decorators set isAdditionalArrowHead to true.
+     */
     def addDeferredDecorator(KEdge edge, boolean isAdditionalArrowHead) {
         if (isAdditionalArrowHead) {
             (edge.line.children.head.placementData as KDecoratorPlacementData).absolute = 26;
@@ -153,7 +169,18 @@ class TransitionStyles {
             }
         ];
     }
-
+        
+    /**
+     * Adds a normal pointy head arrow decorator.
+     */
+    def addDefaultDecorator(KEdge edge) {
+        edge.line.addHeadArrowDecorator();
+    }
+    
+    /**
+     * Adds a abort tail arrow decorator.<br>
+     * Incompatible with {@link addNormalTerminationDecorator}.
+     */
     def addStrongAbortionDecorator(KEdge edge) {
         edge.line.addEllipse() => [
             setDecoratorPlacementData(10, 10, 4, 0, false);
@@ -161,7 +188,11 @@ class TransitionStyles {
             background = "red".color // PAPER_BW = gray
         ]
     }
-
+    
+    /**
+     * Adds a termination tail arrow decorator.<br>
+     * Incompatible with {@link addStrongAbortionDecorator}.
+     */
     def addNormalTerminationDecorator(KEdge edge) {
         edge.line.drawTriangle() => [
             setDecoratorPlacementData(11, 11, 5, 0, true);
@@ -170,6 +201,7 @@ class TransitionStyles {
         ]
     }
 
+    /** Add an edge label */
     def KLabel addLabel(KEdge edge, String text) {
         val label = edge.createLabel;
         label.configureCenterEdgeLabel(text); // Add text
@@ -180,6 +212,9 @@ class TransitionStyles {
         return label;
     }
 
+    /** 
+     * Returns the polyline rending of the edge.
+     */
     private def line(KEdge edge) {
         return edge.getKContainerRendering as KPolyline;
     }

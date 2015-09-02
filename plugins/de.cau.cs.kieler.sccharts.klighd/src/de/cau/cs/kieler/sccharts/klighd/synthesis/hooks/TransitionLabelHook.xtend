@@ -20,10 +20,10 @@ import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.IAction.ActionResult
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisActionHook
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 
 /**
  * Shows or hides transition labels.
@@ -34,7 +34,7 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
  * 
  */
 @ViewSynthesisShared
-class TransitionLabelHook extends SCChartsSynthesisActionHook {
+class TransitionLabelHook extends SynthesisActionHook {
 
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.TransitionLabelHook";
@@ -54,11 +54,13 @@ class TransitionLabelHook extends SCChartsSynthesisActionHook {
 
     override executeAction(KNode rootNode) {
         val viewer = usedContext.viewer
+        
         if (SHOW_LABELS.booleanValue) {
             rootNode.eAllContentsOfType(KNode, KEdge, KLabel).filter(KLabel).forEach[viewer.show(it)]
         } else {
             rootNode.eAllContentsOfType(KNode, KEdge, KLabel).filter(KLabel).forEach[viewer.hide(it)]
         }
+        
         return ActionResult.createResult(true);
     }
 }

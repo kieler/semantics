@@ -22,24 +22,32 @@ import com.google.inject.Scopes;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
+import de.cau.cs.kieler.kiml.config.ILayoutConfig;
 import de.cau.cs.kieler.klighd.IAction;
+import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis;
 
 /**
- * Register as sccharts hook and action in klighd
+ * Normal {@link SynthesisHook} with additional {@link IAction} capability. If the action
+ * should handle dynamic updates for {@link SynthesisOption} the ID must be set as in
+ * {@link SynthesisOption.setUpdateAction}.
+ * <p>
+ * Any extending class must be double registered in the extension points. A klighd.action and
+ * sccharts.hook.
  * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  *
  */
-public abstract class SCChartsSynthesisActionHook extends SCChartsSynthesisHook implements IAction {
+public abstract class SynthesisActionHook extends SynthesisHook implements IAction {
 
     @Inject
     private SCChartsSynthesis parent;
-    
+
+    /** Injector for injecting member if this class was not injected (the action instance) */
     private static final Injector injector = Guice.createInjector(new Module() {
-        
+
         @Override
         public void configure(Binder binder) {
             binder.bindScope(ViewSynthesisShared.class, Scopes.SINGLETON);
@@ -49,6 +57,16 @@ public abstract class SCChartsSynthesisActionHook extends SCChartsSynthesisHook 
     // -------------------------------------------------------------------------
     // Action
 
+    /**
+     * This method performs the intended action on a diagram.
+     *
+     * @param rootNode
+     *            the root node of the diagram.
+     * @return an {@link ActionResult} providing {@link ILayoutConfig layout config(s)} to be
+     *         incorporated while updating the layout after the action has been performed, as well
+     *         as configurations of 'animateLayout', 'zoomToFit', etc.<br>
+     *         Use {@link ActionResult#createResult(boolean, ILayoutConfig...)} for creation.
+     */
     abstract public ActionResult executeAction(KNode rootNode);
 
     /**
@@ -60,10 +78,15 @@ public abstract class SCChartsSynthesisActionHook extends SCChartsSynthesisHook 
         if (parent == null) {
             injector.injectMembers(this);
         }
+        
+        // set used view context
         parent.use(context.getViewContext());
+        
+        // invoke execution
         if (context.getKNode() != null) {
             return executeAction(context.getKNode());
         }
+        
         return ActionResult.createResult(false);
     }
 

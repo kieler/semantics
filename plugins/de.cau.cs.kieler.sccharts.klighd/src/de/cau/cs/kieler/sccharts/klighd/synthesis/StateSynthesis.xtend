@@ -30,6 +30,8 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
+ * Transforms {@link State} into {@link KNode} diagram elements.
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
@@ -38,8 +40,6 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 @ViewSynthesisShared
 class StateSynthesis extends SubSynthesis<State, KNode> {
 
-    // -------------------------------------------------------------------------
-    // Extensions 
     @Inject
     extension KNodeExtensions
 
@@ -63,13 +63,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     override performTranformation(State state) {
         val node = state.createNode().associateWith(state);
-        node.associateWith(state);
 
         node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
         node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
         node.setLayoutOption(LayoutOptions::SPACING, 1f);
         node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
+        //pre-evaluate type
         val isConnector = state.type == StateType::CONNECTOR
 
         // Basic state style
@@ -93,7 +93,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             node.setFinalStyle
         }
 
-        // Optional Shadow
+        // Shadow
         if (!isConnector) {
             node.setShadowStyle
         }
@@ -164,6 +164,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         return node;
     }
 
+    /** Checks if given state should be visualized as macro state */
     def boolean isMacroState(State state) {
         return state.hasInnerStatesOrControlflowRegions || state.hasDataflowRegions || !state.localActions.empty ||
             !state.declarations.empty || state.isReferencedState;

@@ -19,12 +19,12 @@ import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisHook
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 
 /**
  * Shows priority label of the priority based compilation.
- * 
+ * FIXME Unfinished
  * TODO Move this class to de.cau.cs.kieler.sccharts.s
  * 
  * @author als
@@ -33,7 +33,7 @@ import de.cau.cs.kieler.sccharts.s.DependencyTransformation
  * 
  */
  @ViewSynthesisShared
-class PrioritybasedCompilationHook extends SCChartsSynthesisHook {
+class PrioritybasedCompilationHook extends SynthesisHook {
 
     @Inject
     extension SCChartsExtension
@@ -62,6 +62,7 @@ class PrioritybasedCompilationHook extends SCChartsSynthesisHook {
                 dependencyGraph = state.getRootState.getDependencyGraph
             }
         }
+// general states
 //                var priority = ""
 //                if (SHOW_ORDER.booleanValue || SHOW_DEPENDENCIES.booleanValue) {
 //                    if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).nullOrEmpty) {

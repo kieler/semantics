@@ -23,10 +23,13 @@ import de.cau.cs.kieler.sccharts.State
  * synthesizes the referenced diagram on the first expansion of the node.
  * 
  * @author ssm als
+ * @kieler.design 2015-08-13 proposed
+ * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
 class ReferenceExpandAction extends CollapseExpandAction {
 
+    /** The action id */
     public static val String ID = "de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction"
 
     override execute(ActionContext context) {

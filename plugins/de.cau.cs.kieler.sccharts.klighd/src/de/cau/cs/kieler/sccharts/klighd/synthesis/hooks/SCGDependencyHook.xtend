@@ -46,8 +46,6 @@ import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.klighd.DiagramProperties
-import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisActionHook
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Dependency
@@ -66,14 +64,20 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGDependencyHook
 
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 
 /**
+ * Adds the SCG dependencies into the SCChart.
+ * 
+ * TODO Move this class to de.cau.cs.kieler.sccharts.scg
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
-class SCGDependencyHook extends SCChartsSynthesisActionHook {
+class SCGDependencyHook extends SynthesisActionHook {
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
@@ -119,6 +123,9 @@ class SCGDependencyHook extends SCChartsSynthesisActionHook {
         return ActionResult.createResult(false);
     }
 
+    /** 
+     * If necessary create the dependency edges and show them.
+     */
     private def showDependencies(KNode rootNode, Object model) {
         if (!(model instanceof State)) {
             throw new IllegalArgumentException("Cannot perform SCG analysis on models other than states");
@@ -131,15 +138,22 @@ class SCGDependencyHook extends SCChartsSynthesisActionHook {
         }
 
         val edges = propertyHolder.getProperty(DEPENDENCY_EDGES);
+        // If not already created
         if (edges == null) {
-            val tracker = propertyHolder.getProperty(DiagramProperties::MODEL_TRACKER);
+            val tracker = propertyHolder.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
             if (tracker == null) {
                 throw new IllegalArgumentException("Missing source model tracker");
             }
+            val attachNode = rootNode.children.head;
+            if (attachNode == null) {
+                return;
+            }
+
+            // Create and start background job for compiling
             new Job(JOB_NAME) {
 
                 override protected run(IProgressMonitor monitor) {
-                    val newLoopElements = calculateSCGDependencyEdges(rootNode, scc, tracker);
+                    val newLoopElements = calculateSCGDependencyEdges(rootNode, scc, tracker, attachNode);
 
                     // This part should be synchronized with the ui
                     new UIJob(JOB_NAME) {
@@ -148,7 +162,11 @@ class SCGDependencyHook extends SCChartsSynthesisActionHook {
                             if (propertyHolder.getProperty(DEPENDENCY_EDGES) == null) {
                                 propertyHolder.setProperty(DEPENDENCY_EDGES, newLoopElements);
                                 if (!context.getOptionValue(SHOW_SCG_DEPENDENCIES) as Boolean) {
-                                    newLoopElements.forEach[initiallyHide];
+                                    newLoopElements.forEach [
+                                        source = attachNode;
+                                        target = attachNode;
+                                        initiallyHide
+                                    ];
                                 }
                             }
                             return Status.OK_STATUS;
@@ -165,6 +183,9 @@ class SCGDependencyHook extends SCChartsSynthesisActionHook {
         }
     }
 
+    /** 
+     * Hide the dependency edges
+     */
     private def hideDependencies(KNode rootNode) {
         val propertyHolder = rootNode.data.filter(KLayoutData).head;
         val edges = propertyHolder?.getProperty(DEPENDENCY_EDGES);
@@ -174,8 +195,13 @@ class SCGDependencyHook extends SCChartsSynthesisActionHook {
         }
     }
 
-    private def calculateSCGDependencyEdges(KNode rootNode, State scc, SourceModelTrackingAdapter tracking) {
-        // TODO This transformation selection should be sensetive to the user selection in KiCoSelectionView regarding its editor
+    /** 
+     * Calculate and create the dependency edges
+     */
+    private def calculateSCGDependencyEdges(KNode rootNode, State scc, SourceModelTrackingAdapter tracking,
+        KNode attachNode) {
+        // Compile
+        // TODO This transformation selection should be sensitive to the user selection in KiCoSelectionView regarding its editor
         val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID +
             ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION",
             scc);
@@ -183,8 +209,7 @@ class SCGDependencyHook extends SCChartsSynthesisActionHook {
         context.advancedSelect = true;
         val result = KielerCompiler.compile(context);
         val compiledModel = result.object;
-        val attachNode = rootNode.children.head;
-        
+
         // Calculate equivalence classes for diagram elements
         val equivalenceClasses = new TracingMapping(null);
         scc.eAllContents.forEach [
@@ -199,24 +224,24 @@ class SCGDependencyHook extends SCChartsSynthesisActionHook {
                 equivalenceClasses.putAll(it, elements);
             }
         ];
-        
-        // Analyze dependencies with tracing
+
+        // Analyze dependencies and tracing
         val HashMap<Pair<EObject, EObject>, KEdge> edges = newHashMap;
-        if (compiledModel instanceof SCGraph && attachNode != null) {
+        if (compiledModel instanceof SCGraph) {
             val scg = compiledModel as SCGraph;
 
             val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(scg, scc);
             if (mapping != null) {
                 val filterDiagramPredicate = KLabel.instanceOf.or(KRectangle.instanceOf);
                 val filterModelPredicate = Action.instanceOf.or(ValuedObject.instanceOf);
-                for (Assignment asng : scg.nodes.filter(Assignment)) {
-                    val sources = mapping.get(asng).filter(filterModelPredicate).fold(newHashSet()) [ list, item |
+                for (Assignment asgn : scg.nodes.filter(Assignment)) {
+                    val sources = mapping.get(asgn).filter(filterModelPredicate).fold(newHashSet()) [ list, item |
                         list.addAll(tracking.getTargetElements(item).filter(filterDiagramPredicate));
                         list.addAll(
                             equivalenceClasses.getTargets(item).filter(EObject).filter(filterDiagramPredicate).toList);
                         list;
                     ];
-                    for (dep : asng.dependencies.filter(DataDependency)) {
+                    for (dep : asgn.dependencies.filter(DataDependency)) {
                         if (!dep.confluent && dep.concurrent) {
                             val targets = mapping.get(dep.target).filter(filterModelPredicate).fold(newHashSet()) [ list, item |
                                 list.addAll(tracking.getTargetElements(item).filter(filterDiagramPredicate));
@@ -238,17 +263,23 @@ class SCGDependencyHook extends SCChartsSynthesisActionHook {
         return edges.values.toList;
     }
 
-    private def void createDependencyEdge(HashMap<Pair<EObject, EObject>, KEdge> edges, KNode attachNode, EObject source, EObject target, Dependency dependency) {
+    /** 
+     * Create and configure the edge for the given dependency
+     */
+    private def void createDependencyEdge(HashMap<Pair<EObject, EObject>, KEdge> edges, KNode attachNode,
+        EObject source, EObject target, Dependency dependency) {
         val sourceTargetPair = new Pair(source, target);
         val targetSourcePair = new Pair(target, source);
         var opposite = false;
         var KEdge edge;
+        // If the is a mutual dependency use the already crested edge
         if (edges.containsKey(sourceTargetPair)) {
             edge = edges.get(sourceTargetPair);
         } else if (edges.containsKey(targetSourcePair)) {
             edge = edges.get(targetSourcePair);
             opposite = true;
         } else {
+            // Create edge
             edge = createEdge(source, target);
             edges.put(sourceTargetPair, edge);
             edge.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
@@ -265,10 +296,9 @@ class SCGDependencyHook extends SCChartsSynthesisActionHook {
                     it.foreground.propagateToChildren = true;
                 ];
             ];
-            edge.source = attachNode;
-            edge.target = attachNode;
         }
         val line = edge.getData(KCustomRendering).children.filter(KPolyline).head;
+        // Configure mutual dependency with additional arrow
         if (dependency instanceof Write_Write) {
             line.foreground = Colors.RED
             line.foreground.propagateToChildren = true;

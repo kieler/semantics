@@ -21,11 +21,9 @@ import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.klighd.IAction.ActionResult
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisActionHook
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
@@ -39,13 +37,10 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
  * 
  */
 @ViewSynthesisShared
-class StateActionsHook extends SCChartsSynthesisActionHook {
+class StateActionsHook extends SynthesisActionHook {
 
     @Inject
     extension StateStyles
-
-    @Inject
-    extension SCChartsExtension
 
     @Inject
     extension KRenderingExtensions
@@ -68,6 +63,8 @@ class StateActionsHook extends SCChartsSynthesisActionHook {
         if (!state.declarations.empty && !SHOW_STATE_ACTIONS.booleanValue) {
             val container = node.contentContainer;
             val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER);
+
+            // Hide actions
             if (actions != null) {
                 val idx = container.children.indexOf(actions)
                 actions.setProperty(INDEX, idx);
@@ -83,6 +80,8 @@ class StateActionsHook extends SCChartsSynthesisActionHook {
                 val state = usedContext.getSourceElement(node) as State;
                 val container = node.contentContainer;
                 val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER);
+
+                // Show or hide actions
                 if (actions != null) {
                     if (SHOW_STATE_ACTIONS.booleanValue && !state.declarations.empty) {
                         // Insert actions in correct position
@@ -101,6 +100,9 @@ class StateActionsHook extends SCChartsSynthesisActionHook {
         return ActionResult.createResult(true).dontAnimateLayout;
     }
 
+    /** 
+     * Adds an invisible places holder to the given container in the specific position.
+     */
     private def addInvisiblePlaceholder(KContainerRendering container, int index) {
         val rendering = createKRectangle() => [
             invisible = true;

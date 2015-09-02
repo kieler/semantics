@@ -33,6 +33,8 @@ import java.util.List
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
+ * Styles for {@link State}.
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
@@ -40,8 +42,6 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class StateStyles {
 
-    // -------------------------------------------------------------------------
-    // Extensions 
     @Inject
     extension KNodeExtensions
 
@@ -54,10 +54,13 @@ class StateStyles {
     @Inject
     extension KColorExtensions
 
+    /** This property is set a rendering and indicates the content container */
     public static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.content", false);
+    /** This property is set on the content container rendering and points to the container holding the action labels */
     public static final IProperty<KContainerRendering> ACTIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.actions", null);
+    /** This property is set on the content container rendering and points to the container holding the declaration labels */
     public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.declarations", null);
 
@@ -77,15 +80,21 @@ class StateStyles {
 
     private static val KColor KEYWORD = RENDERING_FACTORY.createKColor() => [it.red = 115; it.green = 0; it.blue = 65];
 
+    /**
+     * Adds a connector figure.
+     */
     def KRoundedRectangle addConnectorFigure(KNode node) {
         node.setNodeSize(7, 7);
         node.addRoundedRectangle(7, 7, baseLineWidth) => [
             background = "black".color;
-            foreground = "black".color; // white ???
+            foreground = "black".color; // white/alpha ???
             // lineWidth = baseLineWidth + 2; ????
         ]
     }
 
+    /**
+     * Adds a small state figure.
+     */
     def KRoundedRectangle addDefaultFigure(KNode node) {
         node.setMinimalNodeSize(34, 34); // 2 x corner radius
         node.addRoundedRectangle(17, 17, baseLineWidth) => [
@@ -96,6 +105,9 @@ class StateStyles {
         ]
     }
 
+    /**
+     * Adds a macro state figure.
+     */
     def KRoundedRectangle addMacroFigure(KNode node) {
         node.setMinimalNodeSize(34, 34); // same as default figure
         node.addRoundedRectangle(8, 8, baseLineWidth) => [
@@ -107,6 +119,9 @@ class StateStyles {
         ]
     }
 
+    /**
+     * Sets the style of an existing figure to immediate.
+     */
     def setInitialStyle(KNode node) {
         node.getKContainerRendering => [
             lineWidth = baseLineWidth + 2;
@@ -114,6 +129,9 @@ class StateStyles {
         ]
     }
 
+    /**
+     * Sets the style of an existing figure to final.
+     */
     def setFinalStyle(KNode node) {
         // Add an additional rectangle to achieve the double line
         val outer = node.getKContainerRendering as KRoundedRectangle;
@@ -143,23 +161,34 @@ class StateStyles {
         ]
     }
 
+    /**
+     * Sets the style of an existing figure to referenced.
+     */
     def setReferencedStyle(KNode node) {
         return node.contentContainer => [
             setBackgroundGradient("#fefef0".color, "#e0b0099".color, 90.0f);
         ]
     }
 
+    /**
+     * Add a shadow to an existing figure.
+     */
     def setShadowStyle(KNode node) {
         node.getKContainerRendering.setShadow("black".color, 4, 4);
     }
-    
 
+    /**
+     * Adds a title label to a simple state figure.
+     */
     def KText addSimpleStateLabel(KNode node, String text) {
         node.addMacroStateLabel(text) => [
             fontBold = true;
         ]
     }
-    
+
+    /**
+     * Adds a title label to a macro state figure.
+     */
     def KText addMacroStateLabel(KNode node, String text) {
         node.contentContainer.addText(text) => [
             fontSize = 11;
@@ -168,14 +197,25 @@ class StateStyles {
         ]
     }
 
+    /**
+     * Adds a label in declaration style with the given components to a macro state.<br>
+     * The first part will be highlighted as keywords.
+     */
     def KRectangle addActionLabel(KNode node, Pair<List<String>, List<String>> components) {
         node.actionsContainer.addKeywordLabel(components);
     }
 
+    /**
+     * Adds a label in action style with the given components to a macro state.<br>
+     * The first part will be highlighted as keywords.
+     */
     def KRectangle addDeclarationLabel(KNode node, Pair<List<String>, List<String>> components) {
         node.declarationsContainer.addKeywordLabel(components);
     }
 
+    /**
+     * Creates a text with highlighted keywords.
+     */
     package def addKeywordLabel(KContainerRendering container, Pair<List<String>, List<String>> components) {
         container.addRectangle() => [
             // This additional rectangle allows left align in grid placement
@@ -195,6 +235,9 @@ class StateStyles {
         ]
     }
 
+    /**
+     * Add a child area to a macro state
+     */
     def addRegionsArea(KNode node) {
         node.contentContainer.addChildArea().setGridPlacementData() => [
             from(LEFT, 5, 0, TOP, -4, 0).to(RIGHT, 5, 0, BOTTOM, 5, 0)
@@ -203,6 +246,9 @@ class StateStyles {
         ]
     }
 
+    /**
+     * Returns the content container of a state figure.
+     */
     def getContentContainer(KNode node) {
         var KContainerRendering figure = node.getKContainerRendering;
         while (figure != null) {
@@ -215,6 +261,10 @@ class StateStyles {
         return null
     }
 
+    /**
+     * Returns the actions container of a state figure.<br>
+     * Creates the container if it does not exist!
+     */
     private def getActionsContainer(KNode node) {
         val content = node.contentContainer;
         var container = content.getProperty(ACTIONS_CONTAINER);
@@ -225,6 +275,10 @@ class StateStyles {
         return container;
     }
 
+    /**
+     * Returns the declarations container of a state figure.<br>
+     * Creates the container if it does not exist!
+     */
     private def getDeclarationsContainer(KNode node) {
         val content = node.contentContainer;
         var container = content.getProperty(DECLARATIONS_CONTAINER);
@@ -235,6 +289,9 @@ class StateStyles {
         return container;
     }
 
+    /**
+     * Adds an invisible container to the given parent container, assuming grid layout.
+     */
     private def addInvisibleContainer(KContainerRendering container) {
         container.addRectangle => [
             invisible = true;

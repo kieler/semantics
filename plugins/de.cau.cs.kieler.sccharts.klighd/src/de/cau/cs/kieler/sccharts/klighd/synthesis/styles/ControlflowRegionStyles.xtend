@@ -20,26 +20,23 @@ import de.cau.cs.kieler.core.krendering.KRectangle
 import de.cau.cs.kieler.core.krendering.KText
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import java.util.List
 
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
 
 /**
+ * Styles for {@link ControlflowRegion}.
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
 class ControlflowRegionStyles {
-
-    // -------------------------------------------------------------------------
-    // Extensions 
-    @Inject
-    extension KNodeExtensions
 
     @Inject
     extension KRenderingExtensions
@@ -53,9 +50,13 @@ class ControlflowRegionStyles {
     @Inject
     extension StateStyles
 
+    /** This property is set on the expanded rendering and points to the container holding the declaration labels */
     public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.style.region.declarations", null);
 
+    /**
+     * Adds a region figure.
+     */
     def KRectangle addRegionFigure(KNode node) {
         node.addRectangle() => [
             background = "white".color;
@@ -65,6 +66,9 @@ class ControlflowRegionStyles {
         ]
     }
 
+    /**
+     * Adds a button with text.
+     */
     def KText addButton(KContainerRendering container, String text) {
         container.addText(text) => [
             foreground = "dimGray".color;
@@ -74,6 +78,10 @@ class ControlflowRegionStyles {
         ]
     }
 
+    /**
+     * Adds an area for inner states.<br>
+     * Incompatible with {@link addStatesAndDeclarationsArea}.
+     */
     def addStatesArea(KContainerRendering container, boolean useHeaderSpace) {
         container.addChildArea() => [
             if (useHeaderSpace) {
@@ -84,6 +92,10 @@ class ControlflowRegionStyles {
         ]
     }
 
+    /**
+     * Adds an area for inner states and a container for declarations.<br>
+     * Incompatible with {@link addStatesArea}.
+     */
     def addStatesAndDeclarationsArea(KContainerRendering container) {
         container.addRectangle() => [
             invisible = true;
@@ -100,6 +112,10 @@ class ControlflowRegionStyles {
         ]
     }
 
+    /**
+     * Adds a label in declaration style with the given components.<br>
+     * The first part will be highlighted as keywords.
+     */
     def KRectangle addDeclarationLabel(KContainerRendering container, Pair<List<String>, List<String>> components) {
         container.getProperty(DECLARATIONS_CONTAINER)?.addKeywordLabel(components);
     }

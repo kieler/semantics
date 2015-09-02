@@ -29,6 +29,8 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
+ * Transforms {@link Transition} into {@link KEdge} diagram elements.
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
@@ -37,8 +39,6 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 @ViewSynthesisShared
 class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
-    // -------------------------------------------------------------------------
-    // Extensions 
     @Inject
     extension KNodeExtensions
 
@@ -91,7 +91,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         val label = new StringBuilder();
         if (transition.label.nullOrEmpty) {
             label.append(transition.serialize);
-            // TODO Beatify hostcode ?
+            // TODO Beautify hostcode ?
             // Pattern.compile("'").matcher(label).replaceAll("");
         } else {
             label.append(transition.label);

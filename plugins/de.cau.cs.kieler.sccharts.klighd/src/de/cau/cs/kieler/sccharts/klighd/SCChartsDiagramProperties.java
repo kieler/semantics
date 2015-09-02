@@ -18,19 +18,22 @@ import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter;
 
 /**
+ * This class holds the the public properties available for SCCharts diagrams.
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
 @SuppressWarnings("restriction")
-public final class DiagramProperties {
+public final class SCChartsDiagramProperties {
     /**
      * Prevent Instantiation.
      */
-    private DiagramProperties() {
+    private SCChartsDiagramProperties() {
     }
 
+    /** The {@link SourceModelTrackingAdapter} set on a diagram when synthesis finished */
     public static final IProperty<SourceModelTrackingAdapter> MODEL_TRACKER =
             new Property<SourceModelTrackingAdapter>("de.cau.cs.kieler.sccharts.klighd.tracker",
                     null);

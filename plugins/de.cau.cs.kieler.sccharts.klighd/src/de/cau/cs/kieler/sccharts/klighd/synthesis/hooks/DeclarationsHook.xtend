@@ -29,11 +29,11 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisActionHook
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 
 /**
  * Shows or hides state declarations.
@@ -44,7 +44,7 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
  * 
  */
 @ViewSynthesisShared
-class DeclarationsHook extends SCChartsSynthesisActionHook {
+class DeclarationsHook extends SynthesisActionHook {
 
     @Inject
     extension StateStyles
@@ -73,6 +73,7 @@ class DeclarationsHook extends SCChartsSynthesisActionHook {
         if (!state.declarations.empty && !SHOW_DECLARATIONS.booleanValue) {
             val container = node.contentContainer;
             val declarations = container?.getProperty(StateStyles.DECLARATIONS_CONTAINER);
+
             if (declarations != null) {
                 val idx = container.children.indexOf(declarations)
                 declarations.setProperty(INDEX, idx);
@@ -87,6 +88,7 @@ class DeclarationsHook extends SCChartsSynthesisActionHook {
             val parent = node.regionExtendedContainer
             val declarations = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER);
             val container = parent?.children?.filter(KContainerRendering)?.head;
+            // Hide declarations
             if (declarations != null && container != null) {
                 val idx = container.children.indexOf(declarations)
                 declarations.setProperty(INDEX, idx);
@@ -104,6 +106,7 @@ class DeclarationsHook extends SCChartsSynthesisActionHook {
                     var KContainerRendering container;
                     var KContainerRendering declarations;
                     var innerContent = false;
+                    // Element specific retrieving of the correct container
                     if (scope instanceof ControlflowRegion) {
                         innerContent = !(scope as ControlflowRegion).states.nullOrEmpty
                         val parent = node.regionExtendedContainer
@@ -115,6 +118,7 @@ class DeclarationsHook extends SCChartsSynthesisActionHook {
                         container = node.contentContainer;
                         declarations = container?.getProperty(StateStyles.DECLARATIONS_CONTAINER);
                     }
+                    // Show or hide declarations
                     if (declarations != null) {
                         if (SHOW_DECLARATIONS.booleanValue && !scope.declarations.empty) {
                             // Insert actions in correct position
@@ -134,12 +138,18 @@ class DeclarationsHook extends SCChartsSynthesisActionHook {
         return ActionResult.createResult(true).dontAnimateLayout;
     }
 
+    /** 
+     * Retrieves the extended container for the region.
+     */
     private def getRegionExtendedContainer(KNode node) {
         return node.data.filter(KContainerRendering).filter [
             getProperty(KlighdProperties.EXPANDED_RENDERING)
         ].head;
     }
 
+    /** 
+     * Adds an invisible places holder to the given container in the specific position.
+     */
     private def addInvisiblePlaceholder(KContainerRendering container, int index) {
         val rendering = createKRectangle() => [
             invisible = true;

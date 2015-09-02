@@ -31,18 +31,23 @@ import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis;
 
 /**
+ * This class allows hooking into the {@link SCChartsSynthesis}. Before and after each main
+ * structural element the related method is invoked allowing modification of the input and output of
+ * each step.
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  *
  */
-public class SCChartsSynthesisHook {
-    
+public abstract class SynthesisHook {
+
     @Inject
     private SCChartsSynthesis parent;
 
     /**
-     * @return
+     * The {@link SynthesisOption} this hook contributes to the synthesis.
+     * 
      * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getDisplayedSynthesisOptions()
      */
     public List<SynthesisOption> getDisplayedSynthesisOptions() {
@@ -50,56 +55,85 @@ public class SCChartsSynthesisHook {
     }
 
     /**
+     * Invoked before the translation of the model starts.
+     * 
      * @param scope
+     *            the input model
      * @param node
+     *            the empty diagram root node
      */
     public void start(Scope scope, KNode node) {
     }
 
     /**
+     * Invoked after the translation of the model finished.
+     * 
      * @param scope
+     *            the input model
      * @param node
+     *            the diagram root node
      */
     public void finish(Scope scope, KNode node) {
     }
 
     /**
-     * @param object
+     * Invoked before a {@link State} is translated.
+     * 
+     * @param state
+     *            the state
      */
-    public void preState(State object) {
+    public void preState(State state) {
     }
 
     /**
-     * @param object
-     * @param elem
+     * Invoked after a {@link State} is translated.
+     * 
+     * @param state
+     *            the state
+     * @param node
+     *            the translated state
      */
-    public void postState(State object, KNode elem) {
+    public void postState(State state, KNode node) {
     }
 
     /**
-     * @param object
+     * Invoked before a {@link Transition} is translated.
+     * 
+     * @param transition
+     *            the transition
      */
-    public void preTransition(Transition object) {
+    public void preTransition(Transition transition) {
     }
 
     /**
-     * @param object
-     * @param elem
+     * Invoked after a {@link Transition} is translated.
+     * 
+     * @param transition
+     *            the transition
+     * @param edge
+     *            the translated edge
      */
-    public void postTransition(Transition object, KEdge elem) {
+    public void postTransition(Transition transition, KEdge edge) {
     }
 
     /**
-     * @param object
+     * Invoked before a {@link Region} is translated.
+     * 
+     * @param region
+     *            the region
      */
-    public void preRegion(Region object) {
+    public void preRegion(Region region) {
     }
 
     /**
-     * @param object
-     * @param elem
+     * Invoked after a {@link Region} is translated.
+     * 
+     * @param region
+     *            the region
+     * @param node
+     *            the translated region
      */
-    public void postRegion(Region object, KNode elem) {
+    public void postRegion(Region region, KNode node) {
     }
 
     // -------------------------------------------------------------------------

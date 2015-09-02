@@ -19,15 +19,13 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.klighd.DiagramProperties
-import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisHooks
+import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks
 import java.util.LinkedHashSet
 import java.util.List
 import java.util.logging.Logger
@@ -40,10 +38,8 @@ import java.util.logging.Logger
  * @kieler.rating 2012-10-08 proposed yellow
  */
 @ViewSynthesisShared
-class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements GeneralSysthesisOptions {
-    
-    // -------------------------------------------------------------------------
-    // Extensions 
+class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements GeneralSynthesisOptions {
+
     @Inject 
     extension KNodeExtensions
     
@@ -64,7 +60,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
     // -------------------------------------------------------------------------
     // Hooks
     @Inject
-    SCChartsSynthesisHooks hooks  
+    SynthesisHooks hooks  
     
     // -------------------------------------------------------------------------
     // Fields
@@ -76,7 +72,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
     override public getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();
         // Add general options
-        options.addAll(USE_KLAY);//USE_ADAPTIVEZOOM
+        options.addAll(GeneralSynthesisOptions.USE_KLAY);//USE_ADAPTIVEZOOM
         // Add options of subsyntheses
         options.addAll(stateSynthesis.displayedSynthesisOptions);
         options.addAll(transitionSynthesis.displayedSynthesisOptions);
@@ -121,7 +117,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
         
         // Add tracking adapter to allow access to source model associations
         val trackingAdapter = new SourceModelTrackingAdapter();
-        rootNode.setLayoutOption(DiagramProperties::MODEL_TRACKER, trackingAdapter);
+        rootNode.setLayoutOption(SCChartsDiagramProperties::MODEL_TRACKER, trackingAdapter);
         rootNode.eAdapters.add(trackingAdapter);
         
         hooks.invokeFinish(root, rootNode);

@@ -39,32 +39,39 @@ import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.klighd.SCChartsKlighdPlugin;
+import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis;
 
 /**
+ * This class provides new instances of all available hooks for the {@link SCChartsSynthesis}.
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  *
  */
 @ViewSynthesisShared
-public class SCChartsSynthesisHooks {
+public class SynthesisHooks {
 
+    /**
+     * Enumeration for fast invocation of the correct hook method.
+     * 
+     * @author als
+     */
     public enum Type {
         NONE, STATE, TRANSITION, REGION
     };
 
-    /** identifier of the extension point for hooks. */
+    /** Identifier of the extension point for hooks. */
     private static final String EXTP_ID_HOOKS = "de.cau.cs.kieler.sccharts.klighd.hooks";
 
-    /** name of the 'hook' element. */
+    /** Name of the 'hook' element. */
     private static final String ELEMENT_HOOK = "hook";
 
     /** Name of the 'class' attribute in the extension points. */
     private static final String ATTRIBUTE_CLASS = "class";
 
-    private final static ArrayList<Class<? extends SCChartsSynthesisHook>> registeredHooks;
-    
-    private static Map<Key<?>, Binding<?>> bindings;
+    /** The list of hooks classes registered in the extension point */
+    private final static ArrayList<Class<? extends SynthesisHook>> registeredHooks;
 
     /**
      * Initializes this class with the data from the extension point.
@@ -73,27 +80,34 @@ public class SCChartsSynthesisHooks {
         final IConfigurationElement[] extensions =
                 Platform.getExtensionRegistry().getConfigurationElementsFor(EXTP_ID_HOOKS);
 
-        registeredHooks = new ArrayList<Class<? extends SCChartsSynthesisHook>>(extensions.length);
+        registeredHooks = new ArrayList<Class<? extends SynthesisHook>>(extensions.length);
 
         for (final IConfigurationElement element : extensions) {
             if (ELEMENT_HOOK.equals(element.getName())) {
-                // initialize controller classes from the extension point
                 try {
-                    Class<? extends SCChartsSynthesisHook> hookClass =
-                            (Class<? extends SCChartsSynthesisHook>) Class.forName(element
+                    @SuppressWarnings("unchecked")
+                    Class<? extends SynthesisHook> hookClass =
+                            (Class<? extends SynthesisHook>) Class.forName(element
                                     .getAttribute(ATTRIBUTE_CLASS));
                     registeredHooks.add(hookClass);
                 } catch (final Exception exception) {
                     StatusManager.getManager().handle(
                             new Status(IStatus.ERROR, SCChartsKlighdPlugin.PLUGIN_ID,
-                                    SCChartsSynthesisHooks.class.getName()
-                                            + ": Error while parsing controller extension point",
+                                    SynthesisHooks.class.getName()
+                                            + ": Error while parsing hook extension point",
                                     exception));
                 }
             }
         }
     }
 
+    /**
+     * Returns the type of the given class.
+     * 
+     * @param clazz
+     *            the input class
+     * @return the fast type
+     */
     public static Type getType(Class<? extends EObject> clazz) {
         if (clazz != null) {
             if (State.class.isAssignableFrom(clazz)) {
@@ -107,77 +121,111 @@ public class SCChartsSynthesisHooks {
         return Type.NONE;
     }
 
-    private final ArrayList<SCChartsSynthesisHook> hooks;
+    // -- NON-STATIC --
+
+    /** The instances of the hooks. */
+    private final ArrayList<SynthesisHook> hooks;
 
     /**
-     * This inject is the injector used for the injection of this class.
+     * Standard constructor.
+     * 
+     * @param injector
+     *            the injector used for the injection of this class.
      */
     @Inject
-    public SCChartsSynthesisHooks(Injector injector) {
-        hooks = new ArrayList<SCChartsSynthesisHook>(registeredHooks.size());
-        if (bindings == null) {
-            bindings = new HashMap<Key<?>, Binding<?>>(injector.getAllBindings());
-        }
-        for (Class<? extends SCChartsSynthesisHook> hookClass : registeredHooks) {
+    public SynthesisHooks(Injector injector) {
+        hooks = new ArrayList<SynthesisHook>(registeredHooks.size());
+        for (Class<? extends SynthesisHook> hookClass : registeredHooks) {
             hooks.add(injector.getInstance(hookClass));
         }
     }
 
-    public Iterable<SCChartsSynthesisHook> getAllHooks() {
+    /**
+     * Returns the list of hooks.
+     * 
+     * @return the hooks
+     */
+    public Iterable<SynthesisHook> getAllHooks() {
         return Collections.unmodifiableList(hooks);
     }
 
+    /**
+     * Invokes the start procedures for all hooks.
+     * 
+     * @param scope
+     *            the input model.
+     * @param node
+     *            the empty diagram root node
+     */
     public void invokeStart(Scope scope, KNode node) {
-        for (SCChartsSynthesisHook hook : hooks) {
+        for (SynthesisHook hook : hooks) {
             hook.start(scope, node);
         }
     }
 
+    /**
+     * Invokes the finish procedures for all hooks.
+     * 
+     * @param scope
+     *            the input model.
+     * @param node
+     *            the diagram root node
+     */
     public void invokeFinish(Scope scope, KNode node) {
-        for (SCChartsSynthesisHook hook : hooks) {
+        for (SynthesisHook hook : hooks) {
             hook.finish(scope, node);
         }
     }
 
+    /**
+     * Invokes the pre element procedures for all hooks.
+     * 
+     * @param type
+     *            the element type.
+     * @param element
+     *            the element
+     */
     @SuppressWarnings("incomplete-switch")
-    public void invokePre(Type type, EObject object) {
-        for (SCChartsSynthesisHook hook : hooks) {
+    public void invokePre(Type type, EObject element) {
+        for (SynthesisHook hook : hooks) {
             switch (type) {
             case STATE:
-                hook.preState((State) object);
+                hook.preState((State) element);
                 break;
             case TRANSITION:
-                hook.preTransition((Transition) object);
+                hook.preTransition((Transition) element);
                 break;
             case REGION:
-                hook.preRegion((Region) object);
-                break;
-            }
-        }
-    }
-
-    @SuppressWarnings("incomplete-switch")
-    public void invokePost(Type type, EObject object, KGraphElement elem) {
-        for (SCChartsSynthesisHook hook : hooks) {
-            switch (type) {
-            case STATE:
-                hook.postState((State) object, (KNode) elem);
-                break;
-            case TRANSITION:
-                hook.postTransition((Transition) object, (KEdge) elem);
-                break;
-            case REGION:
-                hook.postRegion((Region) object, (KNode) elem);
+                hook.preRegion((Region) element);
                 break;
             }
         }
     }
 
     /**
-     * @return the bindings
+     * Invokes the post element procedures for all hooks.
+     * 
+     * @param type
+     *            the element type.
+     * @param element
+     *            the element
+     * @param result
+     *            the translated element
      */
-    public static Map<Key<?>, Binding<?>> getBindings() {
-        return bindings;
+    @SuppressWarnings("incomplete-switch")
+    public void invokePost(Type type, EObject element, KGraphElement result) {
+        for (SynthesisHook hook : hooks) {
+            switch (type) {
+            case STATE:
+                hook.postState((State) element, (KNode) result);
+                break;
+            case TRANSITION:
+                hook.postTransition((Transition) element, (KEdge) result);
+                break;
+            case REGION:
+                hook.postRegion((Region) element, (KNode) result);
+                break;
+            }
+        }
     }
-
 }

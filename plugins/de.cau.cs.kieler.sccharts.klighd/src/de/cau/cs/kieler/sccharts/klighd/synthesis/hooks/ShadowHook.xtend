@@ -19,10 +19,10 @@ import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisHook
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 
 /**
- * Removes shadow if necessary.
+ * Removes shadows.
  * 
  * @author als
  * @kieler.design 2015-08-13 proposed
@@ -30,7 +30,7 @@ import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisHook
  * 
  */
 @ViewSynthesisShared
-class ShadowHook extends SCChartsSynthesisHook {
+class ShadowHook extends SynthesisHook {
 
     @Inject
     extension KRenderingExtensions

@@ -39,8 +39,7 @@ import de.cau.cs.kieler.sccharts.klighd.deprecated.SCGLoopExtension
  */
 @ViewSynthesisShared
 class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
-    // -------------------------------------------------------------------------
-    // Extensions 
+
     @Inject
     extension KNodeExtensions
 

@@ -14,18 +14,25 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis;
 
 import de.cau.cs.kieler.klighd.SynthesisOption;
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook;
 
 /**
+ * The {@link SynthesisOption}s generally used in the {@link SCChartsSynthesis}. <br>
+ * Specific {@link SynthesisOption} related to {@link SynthesisHook} are declared in the
+ * corresponding class.
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  *
  */
-public interface GeneralSysthesisOptions {
+public interface GeneralSynthesisOptions {
 
-    public static final SynthesisOption USE_KLAY = SynthesisOption.createCheckOption(
-            "KLayLayered", true);
-    
+    /** Option for setting the KLayLayered layout */
+    public static final SynthesisOption USE_KLAY = SynthesisOption.createCheckOption("KLayLayered",
+            true);
+
+    /** Option for enabling adaptive zoom */
     public static final SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption.createCheckOption(
             "Adaptive Zoom", false);
 

@@ -25,42 +25,66 @@ import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
-import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisHooks;
-import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisHooks.Type;
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks;
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks.Type;
 
 /**
+ * Abstract class for partial syntheses, delegating helper methods.
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
 @ViewSynthesisShared
-public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> implements GeneralSysthesisOptions {
-    
-   
-    @Inject private SCChartsSynthesisHooks hooks;
-    @Inject private SCChartsSynthesis parent;
-    
+public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> implements
+        GeneralSynthesisOptions {
+
+    @Inject
+    private SynthesisHooks hooks;
+
+    @Inject
+    private SCChartsSynthesis parent;
+
+    /** The input type this synthesis handles */
     private final Type hookType;
 
     @Inject
     @SuppressWarnings("unchecked")
     public SubSynthesis() {
-        this.hookType = SCChartsSynthesisHooks.getType((Class<I>) ((ParameterizedType) getClass().getGenericSuperclass())
-                        .getActualTypeArguments()[0]);
+        // Get hook type from input generic type
+        this.hookType =
+                SynthesisHooks.getType((Class<I>) ((ParameterizedType) getClass()
+                        .getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
+    /**
+     * Transforms the given element into a diagram element and invokes hooks correctly.
+     * 
+     * @param element
+     *            the model element to transform.
+     * @return the transformed diagram element.
+     */
     public final O transform(I element) {
         hooks.invokePre(hookType, element);
         O result = performTranformation(element);
         hooks.invokePost(hookType, element, result);
+
         return result;
     }
 
-    abstract public O performTranformation(I element);
-    
     /**
-     * @return
+     * Performs the actual transformation on the given element.
+     * 
+     * @param element
+     *            the model element to transform.
+     * @return the transformed diagram element.
+     */
+    abstract public O performTranformation(I element);
+
+    /**
+     * The {@link SynthesisOption} this hook contributes to the synthesis.
+     * 
      * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getDisplayedSynthesisOptions()
      */
     public List<SynthesisOption> getDisplayedSynthesisOptions() {
@@ -124,7 +148,5 @@ public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> i
     public ViewContext getUsedContext() {
         return parent.getUsedContext();
     }
-    
-    
 
 }

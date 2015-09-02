@@ -26,7 +26,6 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
@@ -34,6 +33,8 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
+ * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
+ * 
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
@@ -42,16 +43,11 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 @ViewSynthesisShared
 class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> {
 
-    // -------------------------------------------------------------------------
-    // Extensions 
     @Inject
     extension KNodeExtensions
 
     @Inject
     extension KRenderingExtensions
-
-    @Inject
-    extension SCChartsExtension
 
     @Inject
     extension SCChartsSerializeExtension
@@ -78,7 +74,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
         node.setLayoutOption(KlighdProperties::EXPAND, true);
 
-        if (!region.states.empty || region.parentState.isReferencedState) {
+        if (!region.states.empty) {
 
             val label = if(region.label.nullOrEmpty) "" else " " + region.label;
 
@@ -120,12 +116,26 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         return node;
     }
 
+    /**
+     * Create region area for reference states
+     * 
+     * @param state 
+     *          the reference state
+     */
     def KNode createReferenceRegion(State state) {
         val node = createNode().associateWith(state); // This association is important for the ReferenceExpandAction
-        node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
+        if (USE_KLAY.booleanValue) {
+            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+            node.setLayoutOption(LayoutOptions::SPACING, 3f);
+            node.setLayoutOption(LayoutOptions::BORDER_SPACING, 8f);
+        } else {
+            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
+            node.setLayoutOption(LayoutOptions::SPACING, 40f);
+        }
         node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         node.setLayoutOption(LayoutOptions::SPACING, 40f);
 
+        // Set initially collapsed
         node.setLayoutOption(KlighdProperties::EXPAND, false);
 
         // Expanded
@@ -133,6 +143,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             setAsExpandedView;
             addStatesArea(true);
             // Add Button after area to assure correct overlapping
+            // Use special expand action to resolve references
             addButton("[-]").addDoubleClickAction(ReferenceExpandAction::ID);
         ]
 
@@ -141,6 +152,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             setAsCollapsedView;
             addButton("[+]").addDoubleClickAction(ReferenceExpandAction::ID);
         ]
+
         return node;
     }
 
