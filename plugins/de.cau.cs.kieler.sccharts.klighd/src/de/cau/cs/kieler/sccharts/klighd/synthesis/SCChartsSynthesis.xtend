@@ -118,7 +118,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
         // Add tracking adapter to allow access to source model associations
         val trackingAdapter = new SourceModelTrackingAdapter();
         rootNode.setLayoutOption(SCChartsDiagramProperties::MODEL_TRACKER, trackingAdapter);
-        rootNode.eAdapters.add(trackingAdapter);
+        // Since the root node will node use to display the diagram (SimpleUpdateStrategy) the tracker must be set on the children.
+        rootNode.children.forEach[eAdapters.add(trackingAdapter)]
         
         hooks.invokeFinish(root, rootNode);
 

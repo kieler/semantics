@@ -151,7 +151,7 @@ class SCGLoopHook extends SynthesisActionHook {
         val propertyHolder = rootNode.data.filter(KLayoutData).head;
         val loopElements = propertyHolder?.getProperty(LOOP_ELEMENTS);
         if (loopElements != null) {
-            rootNode.eAllContents.filter(KRendering).forEach[removeHighlighting];
+            loopElements.forEach[removeHighlighting];
         }
     }
 
@@ -176,18 +176,18 @@ class SCGLoopHook extends SynthesisActionHook {
 
         // Calculate equivalence classes for diagram elements
         val equivalenceClasses = new TracingMapping(null);
-        scc.eAllContents.forEach [
-            var elements = tracking.getTargetElements(it);
+        for (EObject obj : scc.eAllContents.toIterable) {
+            var elements = tracking.getTargetElements(obj);
             // If no diagram element is associated with the given model element its container is used to find an appropriate representation
-            if (elements.empty && it instanceof EObject) {
-                var next = (it as EObject)
+            if (elements.empty) {
+                var next = obj;
                 while (elements.empty && next != null) {
                     next = next.eContainer;
                     elements = tracking.getTargetElements(next);
                 }
-                equivalenceClasses.putAll(it, elements);
+                equivalenceClasses.putAll(obj, elements);
             }
-        ];
+        }
 
         // Analyze loops and tracing
         val loopElements = newLinkedList;
