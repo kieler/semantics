@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.styles
+package de.cau.cs.kieler.sccharts.klighd.synthesis.styles
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KNode
@@ -54,7 +54,7 @@ class ControlflowRegionStyles {
     extension StateStyles
 
     public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
-        "de.cau.cs.kieler.sccharts.klighd.synthesis.region.declarations", null);
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.style.region.declarations", null);
 
     def KRectangle addRegionFigure(KNode node) {
         node.addRectangle() => [

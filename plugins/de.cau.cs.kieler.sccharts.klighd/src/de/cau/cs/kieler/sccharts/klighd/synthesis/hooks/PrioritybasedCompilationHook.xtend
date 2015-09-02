@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.hooks
+package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KNode
@@ -19,7 +19,7 @@ import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.klighd.SCChartsSynthesisHook
+import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisHook
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
 
 /**

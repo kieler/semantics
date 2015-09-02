@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.hooks
+package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KNode
@@ -21,6 +21,7 @@ import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.klighd.IAction.ActionResult
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -28,9 +29,9 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.klighd.SCChartsSynthesisActionHook
-import de.cau.cs.kieler.sccharts.klighd.styles.ControlflowRegionStyles
-import de.cau.cs.kieler.sccharts.klighd.styles.StateStyles
+import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisActionHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
+import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
@@ -56,13 +57,13 @@ class DeclarationsHook extends SCChartsSynthesisActionHook {
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
 
     /** Action ID */
-    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.hooks.DeclarationsHook";
+    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.DeclarationsHook";
     /** The related synthesis option */
     public static final SynthesisOption SHOW_DECLARATIONS = SynthesisOption.createCheckOption("Declarations", true).
         setUpdateAction(DeclarationsHook.ID); // Add this action as updater
     /** Property to save position of the container */
     private static final IProperty<Integer> INDEX = new Property<Integer>(
-        "de.cau.cs.kieler.sccharts.klighd.hooks.declarations.index", 0);
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.declarations.index", 0);
 
     override getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_DECLARATIONS)

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd;
+package de.cau.cs.kieler.sccharts.klighd.hooks;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
+import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis;
 
 /**
  * @author als

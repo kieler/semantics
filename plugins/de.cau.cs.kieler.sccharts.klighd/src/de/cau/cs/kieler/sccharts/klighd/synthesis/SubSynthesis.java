@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.subsystheses;
+package de.cau.cs.kieler.sccharts.klighd.synthesis;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
@@ -25,10 +25,8 @@ import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
-import de.cau.cs.kieler.sccharts.klighd.SCChartsSynthesis;
-import de.cau.cs.kieler.sccharts.klighd.SCChartsSynthesisHooks;
-import de.cau.cs.kieler.sccharts.klighd.SCChartsSynthesisHooks.Type;
-import de.cau.cs.kieler.sccharts.klighd.GeneralSysthesisOptions;
+import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisHooks;
+import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisHooks.Type;
 
 /**
  * @author als

@@ -11,16 +11,14 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.hooks
+package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
-import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KGraphElement
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.core.krendering.KPolyline
 import de.cau.cs.kieler.core.krendering.KRendering
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kico.KielerCompiler
@@ -28,12 +26,13 @@ import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
+import de.cau.cs.kieler.klighd.IAction.ActionResult
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.DiagramProperties
-import de.cau.cs.kieler.sccharts.klighd.SCChartsSynthesisActionHook
+import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisActionHook
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
@@ -45,7 +44,8 @@ import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.ui.progress.UIJob
 
-import static de.cau.cs.kieler.sccharts.klighd.hooks.SCGLoopHook.*
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook.*
+
 /**
  * Highlights the SCCharts elements lying on a illegal loop in SCG.
  * 
@@ -59,7 +59,7 @@ class SCGLoopHook extends SCChartsSynthesisActionHook {
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
 
     /** Action ID */
-    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.hooks.SCGLoopHook";
+    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook";
     /** Job name */
     public static final String JOB_NAME = "Calculating SCG Loops";
     /** The related synthesis option */
@@ -67,10 +67,10 @@ class SCGLoopHook extends SCChartsSynthesisActionHook {
         setUpdateAction(SCGLoopHook.ID); // Add this action as updater
     /** Property to store analysis results */
     private static final IProperty<List<KRendering>> LOOP_ELEMENTS = new Property<List<KRendering>>(
-        "de.cau.cs.kieler.sccharts.klighd.hooks.loops.elements", null);
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.loops.elements", null);
     /** Property to mark highlighting styles */
     private static final IProperty<Boolean> IS_HIGHLIGHTING = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.klighd.hooks.loops.highlighting", false);
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.loops.highlighting", false);
 
     override getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SCG_LOOPS);

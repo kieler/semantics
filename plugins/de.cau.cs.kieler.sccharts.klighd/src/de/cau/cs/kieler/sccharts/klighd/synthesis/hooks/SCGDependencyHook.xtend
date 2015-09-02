@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.hooks
+package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
@@ -39,6 +39,7 @@ import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingEdgeNode
 import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
+import de.cau.cs.kieler.klighd.IAction.ActionResult
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.util.KlighdProperties
@@ -46,7 +47,7 @@ import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.DiagramProperties
-import de.cau.cs.kieler.sccharts.klighd.SCChartsSynthesisActionHook
+import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisActionHook
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Dependency
@@ -61,7 +62,7 @@ import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.ui.progress.UIJob
 
-import static de.cau.cs.kieler.sccharts.klighd.hooks.SCGDependencyHook.*
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGDependencyHook.*
 
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
@@ -89,7 +90,7 @@ class SCGDependencyHook extends SCChartsSynthesisActionHook {
     extension KContainerRenderingExtensions
 
     /** Action ID */
-    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.hooks.SCGDependencyHook";
+    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGDependencyHook";
     /** Job name */
     public static final String JOB_NAME = "Calculating SCG Dependencies";
     /** The related synthesis option */
@@ -97,7 +98,7 @@ class SCGDependencyHook extends SCChartsSynthesisActionHook {
         "SCG Dependencies", false).setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
     /** Property to store analysis results */
     private static final IProperty<List<KEdge>> DEPENDENCY_EDGES = new Property<List<KEdge>>(
-        "de.cau.cs.kieler.sccharts.klighd.hooks.dependency.edges", null);
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.dependency.edges", null);
 
     override getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SCG_DEPENDENCIES);

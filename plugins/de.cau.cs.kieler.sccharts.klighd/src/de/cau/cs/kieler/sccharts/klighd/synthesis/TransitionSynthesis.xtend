@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.subsystheses
+package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KEdge
@@ -24,7 +24,7 @@ import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
-import de.cau.cs.kieler.sccharts.klighd.styles.TransitionStyles
+import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 

@@ -11,13 +11,12 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.subsystheses
+package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -26,7 +25,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
-import de.cau.cs.kieler.sccharts.klighd.styles.StateStyles
+import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 

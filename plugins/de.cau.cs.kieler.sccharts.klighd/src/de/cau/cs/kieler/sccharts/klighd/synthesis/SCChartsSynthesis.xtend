@@ -10,7 +10,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd
+package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
@@ -26,10 +26,8 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.klighd.subsystheses.ControlflowRegionSynthesis
-import de.cau.cs.kieler.sccharts.klighd.subsystheses.DataflowRegionSynthesis
-import de.cau.cs.kieler.sccharts.klighd.subsystheses.StateSynthesis
-import de.cau.cs.kieler.sccharts.klighd.subsystheses.TransitionSynthesis
+import de.cau.cs.kieler.sccharts.klighd.DiagramProperties
+import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisHooks
 import java.util.LinkedHashSet
 import java.util.List
 import java.util.logging.Logger

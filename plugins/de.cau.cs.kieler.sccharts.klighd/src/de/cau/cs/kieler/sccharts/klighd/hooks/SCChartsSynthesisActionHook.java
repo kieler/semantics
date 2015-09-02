@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd;
+package de.cau.cs.kieler.sccharts.klighd.hooks;
 
 import com.google.inject.Binder;
 import com.google.inject.Guice;
@@ -23,6 +23,7 @@ import com.google.inject.Scopes;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.IAction;
+import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis;
 
 /**
  * Register as sccharts hook and action in klighd

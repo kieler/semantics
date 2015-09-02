@@ -11,15 +11,16 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.hooks
+package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KLabel
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.IAction.ActionResult
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.klighd.SCChartsSynthesisActionHook
+import de.cau.cs.kieler.sccharts.klighd.hooks.SCChartsSynthesisActionHook
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
@@ -36,7 +37,7 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 class TransitionLabelHook extends SCChartsSynthesisActionHook {
 
     /** Action ID */
-    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.hooks.TransitionLabelHook";
+    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.TransitionLabelHook";
     /** The related synthesis option */
     public static final SynthesisOption SHOW_LABELS = SynthesisOption.createCheckOption("Transition labels", true).
         setUpdateAction(TransitionLabelHook.ID); // Register this action as updater

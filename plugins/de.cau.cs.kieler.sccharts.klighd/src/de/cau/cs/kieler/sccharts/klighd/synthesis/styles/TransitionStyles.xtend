@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.styles
+package de.cau.cs.kieler.sccharts.klighd.synthesis.styles
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KEdge
@@ -173,7 +173,7 @@ class TransitionStyles {
     def KLabel addLabel(KEdge edge, String text) {
         val label = edge.createLabel;
         label.configureCenterEdgeLabel(text); // Add text
-        label.KRendering => [ // Configure text
+        label.getKRendering => [ // Configure text
             fontSize = 11;
             fontBold = true;
         ]
@@ -181,7 +181,7 @@ class TransitionStyles {
     }
 
     private def line(KEdge edge) {
-        return edge.KContainerRendering as KPolyline;
+        return edge.getKContainerRendering as KPolyline;
     }
 
 }

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.styles
+package de.cau.cs.kieler.sccharts.klighd.synthesis.styles
 
 import com.google.common.base.Joiner
 import com.google.inject.Inject
@@ -55,11 +55,11 @@ class StateStyles {
     extension KColorExtensions
 
     public static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.klighd.synthesis.state.content", false);
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.content", false);
     public static final IProperty<KContainerRendering> ACTIONS_CONTAINER = new Property<KContainerRendering>(
-        "de.cau.cs.kieler.sccharts.klighd.synthesis.state.actions", null);
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.actions", null);
     public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
-        "de.cau.cs.kieler.sccharts.klighd.synthesis.state.declarations", null);
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.declarations", null);
 
     val baseLineWidth = 1; // TODO PAPER BW +1
     private static val KRenderingFactory RENDERING_FACTORY = KRenderingFactory.eINSTANCE;
@@ -108,7 +108,7 @@ class StateStyles {
     }
 
     def setInitialStyle(KNode node) {
-        node.KContainerRendering => [
+        node.getKContainerRendering => [
             lineWidth = baseLineWidth + 2;
             foreground = "black".color;
         ]
@@ -116,7 +116,7 @@ class StateStyles {
 
     def setFinalStyle(KNode node) {
         // Add an additional rectangle to achieve the double line
-        val outer = node.KContainerRendering as KRoundedRectangle;
+        val outer = node.getKContainerRendering as KRoundedRectangle;
         val inner = outer.copy;
         val offset = outer.lineWidthValue + if(outer.lineWidthValue == baseLineWidth) 2 else 1;
         outer => [
@@ -150,7 +150,7 @@ class StateStyles {
     }
 
     def setShadowStyle(KNode node) {
-        node.KContainerRendering.setShadow("black".color, 4, 4);
+        node.getKContainerRendering.setShadow("black".color, 4, 4);
     }
     
 
@@ -204,7 +204,7 @@ class StateStyles {
     }
 
     def getContentContainer(KNode node) {
-        var KContainerRendering figure = node.KContainerRendering;
+        var KContainerRendering figure = node.getKContainerRendering;
         while (figure != null) {
             if (figure.getProperty(IS_CONTENT_CONTAINER)) {
                 return figure;
