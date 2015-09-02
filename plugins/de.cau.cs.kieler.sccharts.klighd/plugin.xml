@@ -39,6 +39,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.deprecated.SCChartsDiagramSynthesis"
             id="de.cau.cs.kieler.sccharts.klighd.DeprecatedSCChartsSynthesis">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.deprecated.ComparisonSynthesis"
+            id="de.cau.cs.kieler.sccharts.klighd.ComparisonSynthesis">
+      </diagramSynthesis>
    </extension>
    <extension
          point="de.cau.cs.kieler.kiml.layoutConfigs">

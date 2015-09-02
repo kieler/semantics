@@ -101,8 +101,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
         
         val rootNode = createNode();
         
-        // usedContext.setProperty(KlighdProperties.EDGES_FIRST, true); //Why?
-        
         // Configure synthesis options via annotation
         // TODO Check avaliable synthesis option and activate, requires id in options
 //                for (Annotation a : root.annotations) {
@@ -111,11 +109,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
 //                    }
 //                }
 
-        // FIXME: ONLY for Debug
-        val properties = new KlighdSynthesisProperties();
-        properties.copyProperties(usedContext);
-        properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.klighd.DeprecatedSCChartsSynthesis");
-        rootNode.children += LightDiagramServices::translateModel(root, usedContext, properties).children;
         
         hooks.invokeStart(root, rootNode);
 
