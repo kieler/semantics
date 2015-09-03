@@ -138,7 +138,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             }
 
             // Add child area for regions
-            if (state.hasInnerStatesOrControlflowRegions || state.isReferencedState) {
+            if (state.hasInnerStatesOrControlflowRegions || state.hasDataflowRegions || state.isReferencedState) {
                 node.addRegionsArea;
             }
         }

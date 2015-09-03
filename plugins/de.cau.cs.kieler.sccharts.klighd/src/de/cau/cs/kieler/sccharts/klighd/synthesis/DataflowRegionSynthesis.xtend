@@ -14,23 +14,24 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.kiml.options.Direction
+import de.cau.cs.kieler.kiml.options.EdgeRouting
+import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
+import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
-import de.cau.cs.kieler.sccharts.klighd.deprecated.SCGDepExtension
-import de.cau.cs.kieler.sccharts.klighd.deprecated.SCGLoopExtension
+import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import static extension de.cau.cs.kieler.core.krendering.KRenderingUtil.*
 /**
  * @author als
  * @kieler.design 2015-08-13 proposed
@@ -42,57 +43,58 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
 
     @Inject
     extension KNodeExtensions
-
-    @Inject
-    extension KEdgeExtensions
-
-    @Inject
-    extension KLabelExtensions
-
-    @Inject
-    extension KPortExtensions
-
+    
     @Inject
     extension KRenderingExtensions
-
+    
     @Inject
-    extension KContainerRenderingExtensions
-
-    @Inject
-    extension KPolylineExtensions
-
-    @Inject
-    extension KColorExtensions
-
-    @Inject
-    extension SCChartsExtension
-
-    @Inject
-    extension KExpressionsExtension
-
+    extension ControlflowRegionStyles
+    
     @Inject
     extension SCChartsSerializeExtension
 
-    @Inject
-    extension SCGDepExtension
-
-    @Inject
-    extension SCGLoopExtension
-    
-    @Inject
-    extension TransitionSynthesis
-    
     override performTranformation(DataflowRegion region) {
-        return region.createNode();
-    }
-    // -------------------------------------------------------------------------
-    // Transform a dataflow region
-//        val dNode = d.createNode().putToLookUpWith(d) => [ node |
-//            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
-//            node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-//            node.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT)
-//            node.addLayoutParam(Properties::THOROUGHNESS, 100)
-//            node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::BRANDES_KOEPF)
+        val node = region.createNode().associateWith(region);
+
+        node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        node.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT);
+        node.addLayoutParam(Properties::THOROUGHNESS, 100);
+        node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::BRANDES_KOEPF);
+
+        node.setLayoutOption(KlighdProperties::EXPAND, true);
+
+        val label = if(region.label.nullOrEmpty) "" else " " + region.label;
+
+        // Expanded
+        node.addRegionFigure => [
+            setAsExpandedView
+            if (region.declarations.empty) {
+                addStatesArea(label.nullOrEmpty);
+            } else {
+                addStatesAndDeclarationsArea();
+                // Add declarations
+                for (declaration : region.declarations) {
+                    addDeclarationLabel(declaration.serializeComponents) => [
+                        setProperty(TracingVisualizationProperties.TRACING_NODE, true);
+                        associateWith(declaration);
+                        children.forEach[associateWith(declaration)];
+                    ]
+                }
+            }
+            // Add Button after area to assure correct overlapping
+            addButton("[-]" + label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        ]
+
+        // Collapsed
+        node.addRegionFigure => [
+            setAsCollapsedView
+            addButton("[+]" + label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+        ]
+        
+        node.children += createNode() => [addText("Dataflow visualization currently not supported").foreground = "red".color]; //Dummy content
+
+        // Add inner dataflow nodes
 //            for (n : d.nodes) {
 //                if (n instanceof DefineNode) {
 //                    //skip
@@ -121,10 +123,9 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
 //                    node.children += expr.translate(d.equations.indexOf(eq), node, d)
 //                ]
 //            }
-//            node.addCollapseExpand(d.label)
-//        ]
-//        return dNode
-//    }
+
+        return node;
+    }
 //
 //    // -------------------------------------------------------------------------
 //    // create collapse and expand functionality
@@ -877,5 +878,4 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
 //class DelegateSCChartsDiagramSynthesis extends SCChartsSynthesis {
 //
 //}
-
 }

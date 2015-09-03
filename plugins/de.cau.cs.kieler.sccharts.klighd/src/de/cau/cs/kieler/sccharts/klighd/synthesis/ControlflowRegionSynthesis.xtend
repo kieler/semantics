@@ -105,8 +105,8 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             ]
 
             // Add inner states
-            for (s : region.states) {
-                node.children += s.transform;
+            for (state : region.states) {
+                node.children += state.transform;
             }
 
         } else {
