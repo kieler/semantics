@@ -374,6 +374,18 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 			        val newRegion = parentState.createControlflowRegion("_" + dataflow.id + regionCounter)
                     newRegion.label = dataflow.label + regionCounter
                     
+                     // ssm: copy all local declarations
+                    val voMap = <ValuedObject, ValuedObject>newHashMap
+                    for (declaration : dataflow.declarations) {
+                        val newDeclaration = createDeclaration(declaration).trace(declaration)
+                        declaration.valuedObjects.forEach [
+                            val newValuedObject = it.copy
+                            newDeclaration.valuedObjects += newValuedObject
+                            voMap.put(it, newValuedObject)
+                        ]
+                        newRegion.declarations += newDeclaration
+                    }                    
+                    
                     val transitionMapping = <Transition, Transition> newHashMap
                     // copy states
                     for (s: defNode.states) {
@@ -403,6 +415,12 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                         }
                         newRegion.states += newState
                     }
+                    
+                    // ssm: create consistent local variable state 
+//                    for (vo : voMap.keySet) {
+//                        newRegion.replaceAllOccurrences(vo, voMap.get(vo))
+//                    }                    
+                    
                     /*
                      * remove transitions with no source or target state attached
                      * because they are not visualized
@@ -478,6 +496,12 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                             }
                         }
                     }
+                    
+                    // ssm: create consistent local variable state 
+                    for (vo : voMap.keySet) {
+                        newRegion.replaceAllOccurrences(vo, voMap.get(vo))
+                    }
+                    
 			    }
 			}
 			
