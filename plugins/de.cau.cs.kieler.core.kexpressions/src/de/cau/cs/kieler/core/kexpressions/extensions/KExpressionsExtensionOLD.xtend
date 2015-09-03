@@ -92,17 +92,17 @@ class KExpressionsExtensionOLD {
     // Return the list of all contained ValuedObjects. 
     // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
     // list they will be added to  the container of a Declaration.
-    def public ValuedObjectListOLD getValuedObjects(EObject eObject) {
-        val declarations = eObject.eContents.filter(typeof(Declaration)).toList
-        val returnList = new ValuedObjectListOLD()
-
-        // This is necessary for adding ValuedObjects later
-        returnList.setContainer(eObject)
-        for (declaration : declarations) {
-            returnList.addAll(declaration.valuedObjects)
-        }
-        returnList
-    }
+//    def public ValuedObjectListOLD getValuedObjects(EObject eObject) {
+//        val declarations = eObject.eContents.filter(typeof(Declaration)).toList
+//        val returnList = new ValuedObjectListOLD()
+//
+//        // This is necessary for adding ValuedObjects later
+//        returnList.setContainer(eObject)
+//        for (declaration : declarations) {
+//            returnList.addAll(declaration.valuedObjects)
+//        }
+//        returnList
+//    }
 
     //=======  DECLARATION WRAPPINGS  ======
     // Add a valuedObject to an eObject

@@ -59,6 +59,11 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsReplacementExte
 
 //import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
+import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.Equation
+
 /**
  * SCCharts Extensions.
  * 
@@ -160,6 +165,10 @@ class SCChartsExtension {
         } else {
             return scope.getAllContainedStates
         }
+    }
+    
+    def Iterator<Scope> getAllScopes(Scope scope) {
+        scope.sccAllScopes
     }
 
     // Return the list of all contained Regions.
@@ -1040,51 +1049,15 @@ class SCChartsExtension {
 
     // This helper method returns the hierarchical name of a state considering all hierarchical
     // higher states. A string is formed by the traversed state IDs.
-    def String getHierarchicalName(State state) {
-        state.getHierarchicalName(null)
+    def String getHierarchicalName(Scope scope) {
+        scope.getHierarchicalName(null)
     }
 
-    def String getHierarchicalName(State state, String startSymbol) {
-        if (state.isRootState) {
-            return "root"
-        } else {
-            return getHierarchicalNameHelper(state, startSymbol);
-        }
+    def String getHierarchicalName(Scope scope, String startSymbol) {
+        if (scope == null) return startSymbol
+        while (scope != null) return (scope.eContainer as Scope).getHierarchicalName(scope.id+"_")
     }
 
-    def String getHierarchicalNameHelper(State state, String startSymbol) {
-        if (state.parentRegion != null) {
-            if (state.parentRegion.parentState != null) {
-                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalNameHelper(startSymbol);
-                var regionId = state.parentRegion.id.removeSpecialCharacters;
-                var stateId = state.id.removeSpecialCharacters;
-
-                // Region IDs can be empty, state IDs normally aren't but the code generation handles 
-                // also this case. 
-                if (stateId.nullOrEmpty) {
-                    stateId = state.id
-                }
-                if (regionId.nullOrEmpty) {
-                    regionId = "R" + (state.parentRegion.parentState.regions.indexOf(state.parentRegion) + 1)
-                }
-                if (!higherHierarchyReturnedName.nullOrEmpty) {
-                    higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
-                }
-                if (state.parentRegion.parentState.regions.size > 1) {
-                    return higherHierarchyReturnedName + regionId + "_" + stateId;
-                } else {
-
-                    // this is the simplified case, where there is just one region and we can
-                    // omit the region id
-                    return higherHierarchyReturnedName + stateId;
-                }
-            }
-        }
-        if (startSymbol != null) {
-            return startSymbol; // +  "_";
-        }
-        return ""
-    }
 
     //-------------------------------------------------------------------------
     //--  F I X   F O R   T E R M I N A T I O N S   / W    E F F E C T S     --
@@ -1206,17 +1179,16 @@ class SCChartsExtension {
 
     }
 
-    def State transformLocalValuedObjectCached(State rootState, List<State> stateList, List<String> uniqueNameCache) {
+    def void transformLocalValuedObjectCached(List<Scope> scopeList, Scope targetScope, List<String> uniqueNameCache) {
 
         // Traverse all states
-        for (targetState : stateList) {
-            targetState.transformExposeLocalValuedObjectCached(rootState, false, uniqueNameCache);
+        for (scope : scopeList) {
+            scope.transformExposeLocalValuedObjectCached(targetScope, false, uniqueNameCache);
         }
-        rootState;
     }
 
     // Traverse all states and transform possible local valuedObjects.
-    def void transformExposeLocalValuedObjectCached(State state, State targetRootState, boolean expose,
+    def void transformExposeLocalValuedObjectCached(Scope scope, Scope targetScope, boolean expose,
         List<String> uniqueNameCache) {
 
         // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
@@ -1224,27 +1196,20 @@ class SCChartsExtension {
         // valuedObject.
         // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
         // Exclude the top level state
-        if (state == targetRootState) {
+        if (scope == targetScope) {
             return;
         }
-        
-        val declarations = state.declarations.toList => [ list |
-            state.regions.forEach[ list += it.declarations ]
-        ]
-        val hierarchicalStateName = state.getHierarchicalName("LOCAL");
+
+        var hierarchicalScopeName = targetScope.getHierarchicalName("local")
+        val declarations = scope.declarations.iterator.toList
         for(declaration : declarations) {
-            targetRootState.declarations += declaration
+            targetScope.declarations.add(declaration)
             if (expose) declaration.output = true
             for(valuedObject : declaration.valuedObjects) {
-                if (expose) {
-                    valuedObject.name = hierarchicalStateName + "_" + valuedObject.name
-                } else {
-                    valuedObject.name = hierarchicalStateName + "_" + valuedObject.name
-                    valuedObject.uniqueName
-                }
+                valuedObject.name = ("_" + hierarchicalScopeName + "_" + valuedObject.name)
+                valuedObject.uniqueNameCached(uniqueNameCache)
             }
-        }        
-
+        }
     }
 
     // -------------------------------------------------------------------------   

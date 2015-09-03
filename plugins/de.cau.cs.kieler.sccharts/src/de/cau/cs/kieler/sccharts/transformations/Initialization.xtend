@@ -25,11 +25,12 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * SCCharts Initialization Transformation.
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
@@ -77,21 +78,26 @@ class Initialization extends AbstractExpansionTransformation implements Traceabl
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllStates.immutableCopy) {
-            targetState.transformInitialization(targetRootState);
+        for (scope : targetRootState.getAllScopes.immutableCopy) {
+            scope.transformInitialization(targetRootState);
         }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
-    def void transformInitialization(State state, State targetRootState) {
-        val valuedObjects = state.valuedObjects.filter[initialValue != null]
+    def void transformInitialization(Scope scope, State targetRootState) {
+        val valuedObjects = scope.valuedObjects.filter[initialValue != null]
 
         if (!valuedObjects.nullOrEmpty) {
             for (valuedObject : valuedObjects) {
                 setDefaultTrace(valuedObject, valuedObject.declaration)
-                val entryAction = state.createEntryAction
-                entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
+                if (scope instanceof State) {
+                    val entryAction = scope.createEntryAction
+                    entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
+                } else {
+                    val entryAction = (scope.eContainer as State).createEntryAction
+                    entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
+                }
                 valuedObject.setInitialValue(null)
             }
         }
