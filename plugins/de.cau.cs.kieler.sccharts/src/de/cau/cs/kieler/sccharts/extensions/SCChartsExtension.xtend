@@ -50,6 +50,7 @@ import org.eclipse.emf.ecore.EObject
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
+import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Equation
@@ -150,6 +151,10 @@ class SCChartsExtension {
         } else {
             return scope.getAllContainedStates
         }
+    }
+    
+    def Iterator<Scope> getAllScopes(Scope scope) {
+        scope.sccAllScopes
     }
 
     // Return the list of all contained Regions.
