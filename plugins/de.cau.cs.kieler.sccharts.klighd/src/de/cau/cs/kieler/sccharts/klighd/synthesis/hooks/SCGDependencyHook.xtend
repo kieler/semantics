@@ -39,13 +39,15 @@ import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingEdgeNode
 import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
-import de.cau.cs.kieler.klighd.IAction.ActionResult
+import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Dependency
@@ -64,8 +66,6 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGDependencyHook
 
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
-import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 
 /**
  * Adds the SCG dependencies into the SCChart.
@@ -169,6 +169,8 @@ class SCGDependencyHook extends SynthesisActionHook {
                                         initiallyHide;
                                     }
                                 ];
+                                //Re layout to place edges correctly
+                                LightDiagramServices.layoutDiagram(context);
                             }
                             return Status.OK_STATUS;
                         }
