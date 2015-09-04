@@ -42,7 +42,6 @@ protected class ThisRootNode extends RootToken {
 			case 9: return new KeyBooleanValueAnnotation_Group(this, this, 9, inst);
 			case 10: return new KeyIntValueAnnotation_Group(this, this, 10, inst);
 			case 11: return new KeyFloatValueAnnotation_Group(this, this, 11, inst);
-			case 12: return new ImportAnnotation_Group(this, this, 12, inst);
 			default: return null;
 		}	
 	}	
@@ -51,18 +50,24 @@ protected class ThisRootNode extends RootToken {
 
 /************ begin Rule Annotation ****************
  *
- * // --------------------------
- *  //
- *  //   ANNOTATIONS
- *  //
- *  // --------------------------
+ * / **
+ *  * @author ssm
+ *  * @kieler.design 2015-08-21 proposed 
+ *  * @kieler.rating 2015-08-21 proposed yellow
+ *  * /
+ * // ------------------ //
+ *  //  Annotation Rules  // 
+ *  // ------------------ //
+ *  // General rule for annotations
+ * 
+ * // The different annotation sub rules are tested in order. Hence, order matters! 
  *  Annotation:
- * 	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+ * 	CommentAnnotation | KeyBooleanValueAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
  * 	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
  *
  **/
 
-// CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+// CommentAnnotation | KeyBooleanValueAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
 // KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation
 protected class Annotation_Alternatives extends AlternativesToken {
 
@@ -79,9 +84,9 @@ protected class Annotation_Alternatives extends AlternativesToken {
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
 			case 0: return new Annotation_CommentAnnotationParserRuleCall_0(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new Annotation_KeyStringValueAnnotationParserRuleCall_1(lastRuleCallOrigin, this, 1, inst);
-			case 2: return new Annotation_TypedKeyStringValueAnnotationParserRuleCall_2(lastRuleCallOrigin, this, 2, inst);
-			case 3: return new Annotation_KeyBooleanValueAnnotationParserRuleCall_3(lastRuleCallOrigin, this, 3, inst);
+			case 1: return new Annotation_KeyBooleanValueAnnotationParserRuleCall_1(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new Annotation_KeyStringValueAnnotationParserRuleCall_2(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new Annotation_TypedKeyStringValueAnnotationParserRuleCall_3(lastRuleCallOrigin, this, 3, inst);
 			case 4: return new Annotation_KeyIntValueAnnotationParserRuleCall_4(lastRuleCallOrigin, this, 4, inst);
 			case 5: return new Annotation_KeyFloatValueAnnotationParserRuleCall_5(lastRuleCallOrigin, this, 5, inst);
 			case 6: return new Annotation_TagAnnotationParserRuleCall_6(lastRuleCallOrigin, this, 6, inst);
@@ -140,16 +145,52 @@ protected class Annotation_CommentAnnotationParserRuleCall_0 extends RuleCallTok
 	}	
 }
 
-// KeyStringValueAnnotation
-protected class Annotation_KeyStringValueAnnotationParserRuleCall_1 extends RuleCallToken {
+// KeyBooleanValueAnnotation
+protected class Annotation_KeyBooleanValueAnnotationParserRuleCall_1 extends RuleCallToken {
 	
-	public Annotation_KeyStringValueAnnotationParserRuleCall_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Annotation_KeyBooleanValueAnnotationParserRuleCall_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1();
+		return grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyBooleanValueAnnotation_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getKeyBooleanValueAnnotationRule().getType().getClassifier())
+			return null;
+		if(checkForRecursion(KeyBooleanValueAnnotation_Group.class, eObjectConsumer)) return null;
+		return eObjectConsumer;
+	}
+	
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+// KeyStringValueAnnotation
+protected class Annotation_KeyStringValueAnnotationParserRuleCall_2 extends RuleCallToken {
+	
+	public Annotation_KeyStringValueAnnotationParserRuleCall_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2();
 	}
 
     @Override
@@ -177,15 +218,15 @@ protected class Annotation_KeyStringValueAnnotationParserRuleCall_1 extends Rule
 }
 
 // TypedKeyStringValueAnnotation
-protected class Annotation_TypedKeyStringValueAnnotationParserRuleCall_2 extends RuleCallToken {
+protected class Annotation_TypedKeyStringValueAnnotationParserRuleCall_3 extends RuleCallToken {
 	
-	public Annotation_TypedKeyStringValueAnnotationParserRuleCall_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Annotation_TypedKeyStringValueAnnotationParserRuleCall_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2();
+		return grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3();
 	}
 
     @Override
@@ -201,42 +242,6 @@ protected class Annotation_TypedKeyStringValueAnnotationParserRuleCall_2 extends
 		if(getEObject().eClass() != grammarAccess.getTypedKeyStringValueAnnotationRule().getType().getClassifier())
 			return null;
 		if(checkForRecursion(TypedKeyStringValueAnnotation_Group.class, eObjectConsumer)) return null;
-		return eObjectConsumer;
-	}
-	
-    @Override
-	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
-		switch(index) {
-			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
-		}	
-	}	
-}
-
-// KeyBooleanValueAnnotation
-protected class Annotation_KeyBooleanValueAnnotationParserRuleCall_3 extends RuleCallToken {
-	
-	public Annotation_KeyBooleanValueAnnotationParserRuleCall_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public RuleCall getGrammarElement() {
-		return grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_3();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new KeyBooleanValueAnnotation_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-    @Override
-	public IEObjectConsumer tryConsume() {
-		if(getEObject().eClass() != grammarAccess.getKeyBooleanValueAnnotationRule().getType().getClassifier())
-			return null;
-		if(checkForRecursion(KeyBooleanValueAnnotation_Group.class, eObjectConsumer)) return null;
 		return eObjectConsumer;
 	}
 	
@@ -362,6 +367,12 @@ protected class Annotation_TagAnnotationParserRuleCall_6 extends RuleCallToken {
 
 /************ begin Rule ValuedAnnotation ****************
  *
+ * // Valued Annotation Rule
+ *  // Valued annotations must have a value. For instance, tag annotations are not allowed.
+ * 
+ * // Derived grammars may use this rule if the general annotation rules compromises the grammar
+ *  // due to ambiguities.
+ * 
  * ValuedAnnotation returns Annotation:
  * 	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
  * 	KeyIntValueAnnotation | KeyFloatValueAnnotation;
@@ -630,7 +641,16 @@ protected class ValuedAnnotation_KeyFloatValueAnnotationParserRuleCall_5 extends
 
 /************ begin Rule RestrictedAnnotation ****************
  *
- * RestrictedAnnotation returns Annotation:
+ * // Restiricted Annotation Rule
+ * 
+ * // The restricted annotation rules uses quoted key string annotations. You can use this rule in 
+ * 
+ * // derived grammars if you don't want to permit unquoted strings. 
+ * 
+ * // (If you are looking for an example, the keffects grammar uses this rule for their emission
+ * 
+ * // rule and to avoid grammar ambiguities.)  
+ *  RestrictedAnnotation returns Annotation:
  * 	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
  * 	| KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
  *
@@ -936,7 +956,8 @@ protected class RestrictedAnnotation_TagAnnotationParserRuleCall_6 extends RuleC
 
 /************ begin Rule CommentAnnotation ****************
  *
- * // e.g.: / ** semantic comment * /
+ * // CommentAnnotation
+ *  // e.g.: / ** semantic comment * /
  *  CommentAnnotation:
  * 	values+=COMMENT_ANNOTATION;
  *
@@ -982,7 +1003,8 @@ protected class CommentAnnotation_ValuesAssignment extends AssignmentToken  {
 
 /************ begin Rule TagAnnotation ****************
  *
- * // e.g.: @HVlayout
+ * // TagAnnotation
+ *  // e.g.: @HVlayout
  *  TagAnnotation returns Annotation:
  * 	"@" name=ExtendedID;
  *
@@ -1078,8 +1100,11 @@ protected class TagAnnotation_NameAssignment_1 extends AssignmentToken  {
 
 /************ begin Rule KeyStringValueAnnotation ****************
  *
- * // e.g.: @layouter dot;   
- *  KeyStringValueAnnotation returns StringAnnotation:
+ * // KeyStringValueAnnotation
+ *  // e.g.: @layouter dot
+ *  // You may separate different values via comma.   
+ * 
+ * KeyStringValueAnnotation returns StringAnnotation:
  * 	"@" name=ExtendedID values+=EString ("," values+=EString)*;
  *
  **/
@@ -1289,9 +1314,10 @@ protected class KeyStringValueAnnotation_ValuesAssignment_3_1 extends Assignment
 
 /************ begin Rule TypedKeyStringValueAnnotation ****************
  *
- * // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
- *  TypedKeyStringValueAnnotation returns
- * TypedStringAnnotation:
+ * // TypedKeyStringValueAnnotation
+ *  // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
+ * 
+ * TypedKeyStringValueAnnotation returns TypedStringAnnotation:
  * 	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString ("," values+=EString)*;
  *
  **/
@@ -1579,7 +1605,12 @@ protected class TypedKeyStringValueAnnotation_ValuesAssignment_6_1 extends Assig
 
 /************ begin Rule QuotedKeyStringValueAnnotation ****************
  *
- * QuotedKeyStringValueAnnotation returns StringAnnotation:
+ * // QuotedKeyStringValueAnnotation
+ *  // The quoted key string value annotation is a replacement derived grammars may use
+ * 
+ * // if they want to disallow quote-less strings in a key string annotation. 
+ *  QuotedKeyStringValueAnnotation returns
+ * StringAnnotation:
  * 	"@" name=ExtendedID values+=STRING ("," values+=STRING)*;
  *
  **/
@@ -1789,9 +1820,13 @@ protected class QuotedKeyStringValueAnnotation_ValuesAssignment_3_1 extends Assi
 
 /************ begin Rule QuotedTypedKeyStringValueAnnotation ****************
  *
- * // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
- *  QuotedTypedKeyStringValueAnnotation returns
- * TypedStringAnnotation:
+ * // QuotedTypedKeyStringValueAnnotation
+ * 
+ * // The quoted typed key string value annotation is a replacement derived grammars may use
+ * 
+ * // if they want to disallow quote-less strings in a key string annotation. 
+ *  QuotedTypedKeyStringValueAnnotation
+ * returns TypedStringAnnotation:
  * 	"@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*;
  *
  **/
@@ -2079,7 +2114,8 @@ protected class QuotedTypedKeyStringValueAnnotation_ValuesAssignment_6_1 extends
 
 /************ begin Rule KeyBooleanValueAnnotation ****************
  *
- * // e.g.: @visible true;
+ * // KeyBooleanValueAnnotation    
+ *  // e.g.: @visible true;
  *  KeyBooleanValueAnnotation returns BooleanAnnotation:
  * 	"@" name=ExtendedID value=BOOLEAN;
  *
@@ -2209,7 +2245,8 @@ protected class KeyBooleanValueAnnotation_ValueAssignment_2 extends AssignmentTo
 
 /************ begin Rule KeyIntValueAnnotation ****************
  *
- * // e.g.: @minSpace 10;    
+ * // KeyIntValueAnnotation
+ *  // e.g.: @minSpace 10;    
  *  KeyIntValueAnnotation returns IntAnnotation:
  * 	"@" name=ExtendedID value=Integer;
  *
@@ -2339,7 +2376,8 @@ protected class KeyIntValueAnnotation_ValueAssignment_2 extends AssignmentToken 
 
 /************ begin Rule KeyFloatValueAnnotation ****************
  *
- * // e.g.: @minSpace 10.0;    
+ * // KeyFloatValueAnnotation
+ *  // e.g.: @minSpace 10.0;    
  *  KeyFloatValueAnnotation returns FloatAnnotation:
  * 	"@" name=ExtendedID value=Floateger;
  *
@@ -2465,102 +2503,6 @@ protected class KeyFloatValueAnnotation_ValueAssignment_2 extends AssignmentToke
 
 
 /************ end Rule KeyFloatValueAnnotation ****************/
-
-
-/************ begin Rule ImportAnnotation ****************
- *
- * // needed for importing other resources
- *  ImportAnnotation:
- * 	"import" importURI=STRING;
- *
- **/
-
-// "import" importURI=STRING
-protected class ImportAnnotation_Group extends GroupToken {
-	
-	public ImportAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getImportAnnotationAccess().getGroup();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new ImportAnnotation_ImportURIAssignment_1(lastRuleCallOrigin, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-    @Override
-	public IEObjectConsumer tryConsume() {
-		if(getEObject().eClass() != grammarAccess.getImportAnnotationRule().getType().getClassifier())
-			return null;
-		return eObjectConsumer;
-	}
-
-}
-
-// "import"
-protected class ImportAnnotation_ImportKeyword_0 extends KeywordToken  {
-	
-	public ImportAnnotation_ImportKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getImportAnnotationAccess().getImportKeyword_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
-		}	
-	}
-
-}
-
-// importURI=STRING
-protected class ImportAnnotation_ImportURIAssignment_1 extends AssignmentToken  {
-	
-	public ImportAnnotation_ImportURIAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getImportAnnotationAccess().getImportURIAssignment_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new ImportAnnotation_ImportKeyword_0(lastRuleCallOrigin, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-    @Override	
-	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("importURI",true)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("importURI");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getImportAnnotationAccess().getImportURISTRINGTerminalRuleCall_1_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getImportAnnotationAccess().getImportURISTRINGTerminalRuleCall_1_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-
-/************ end Rule ImportAnnotation ****************/
 
 
 

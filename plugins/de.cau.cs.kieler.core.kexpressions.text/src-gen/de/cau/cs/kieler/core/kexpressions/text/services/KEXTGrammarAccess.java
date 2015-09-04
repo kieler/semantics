@@ -28,7 +28,20 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cEntitiesAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cEntitiesTestEntityParserRuleCall_1_0 = (RuleCall)cEntitiesAssignment_1.eContents().get(0);
 		
-		////generate kext "http://kieler.cs.cau.de/kext/kext"
+		/// **
+		// * @author ssm
+		// * @kieler.design 2015-08-23 proposed 
+		// * @kieler.rating 2015-08-23 proposed yellow
+		// * / / *
+		// * KEXT (KText) provides a general stub for subsequent grammars that will use kexpressions, keffects
+		// * and need some kind of declaration mechanism. It is also used to generate the textual KEXT language 
+		// * that is used for testing kexpressions and keffects.  
+		// * / // ------------ //
+		////  KEXT Rules  // 
+		//// ------------ //
+		//// KEXT Rule
+		//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
+		//// test entities may follow.
 		//Kext returns kext::Kext:
 		//	declarations+=Declaration* entities+=TestEntity*;
 		@Override public ParserRule getRule() { return rule; }
@@ -57,6 +70,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cEffectAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cEffectEffectParserRuleCall_1_0 = (RuleCall)cEffectAssignment_1.eContents().get(0);
 		
+		//// Test Entity Rule
+		//// A test entity is either an annotation expression or an effect.
 		//TestEntity returns kext::TestEntity:
 		//	expression=AnnotatedExpression | effect=Effect;
 		@Override public ParserRule getRule() { return rule; }
@@ -86,6 +101,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
 		
+		//// Annotated Expression Rule
+		//// An annotated expression is declared with the keyword "expression". It may be preceded by a list
+		//// of annotations. The expression itself follows the keyword.
 		//AnnotatedExpression returns kext::AnnotatedExpression:
 		//	annotations+=Annotation* "expression" expression=Expression;
 		@Override public ParserRule getRule() { return rule; }
@@ -138,6 +156,12 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_7_1_0 = (RuleCall)cValuedObjectsAssignment_7_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
+		//// Declaration Rule
+		//// A declaration follows the general KIELER pattern for variable declaration. More specific:
+		//// this centralized declaration rule should replace any other declaration in drived grammars.
+		//// It may start with arbitrary many declarations followed by keywords affecting the type of the
+		//// valued objects that follow.
+		//// Examples: const float pi = 3.14, input signal I, output bool z  
 		//Declaration returns kexpressions::Declaration:
 		//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
 		//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
@@ -242,15 +266,17 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cCombineOperatorAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_3_1_0 = (RuleCall)cCombineOperatorAssignment_3_1.eContents().get(0);
 		
-		//ValuedObject returns kexpressions::ValuedObject: //    (annotations+=Annotation)*
+		//// Valued Object Rule
+		//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
+		//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
+		//// Examples: array[10], initial = false, z = 0 combine max
+		//ValuedObject returns kexpressions::ValuedObject:
 		//	name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		////    (annotations+=Annotation)*
 		//name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?
 		public Group getGroup() { return cGroup; }
 
-		////    (annotations+=Annotation)*
 		//name=ID
 		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
 
@@ -347,7 +373,20 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	////generate kext "http://kieler.cs.cau.de/kext/kext"
+	/// **
+	// * @author ssm
+	// * @kieler.design 2015-08-23 proposed 
+	// * @kieler.rating 2015-08-23 proposed yellow
+	// * / / *
+	// * KEXT (KText) provides a general stub for subsequent grammars that will use kexpressions, keffects
+	// * and need some kind of declaration mechanism. It is also used to generate the textual KEXT language 
+	// * that is used for testing kexpressions and keffects.  
+	// * / // ------------ //
+	////  KEXT Rules  // 
+	//// ------------ //
+	//// KEXT Rule
+	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
+	//// test entities may follow.
 	//Kext returns kext::Kext:
 	//	declarations+=Declaration* entities+=TestEntity*;
 	public KextElements getKextAccess() {
@@ -358,6 +397,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getKextAccess().getRule();
 	}
 
+	//// Test Entity Rule
+	//// A test entity is either an annotation expression or an effect.
 	//TestEntity returns kext::TestEntity:
 	//	expression=AnnotatedExpression | effect=Effect;
 	public TestEntityElements getTestEntityAccess() {
@@ -368,6 +409,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getTestEntityAccess().getRule();
 	}
 
+	//// Annotated Expression Rule
+	//// An annotated expression is declared with the keyword "expression". It may be preceded by a list
+	//// of annotations. The expression itself follows the keyword.
 	//AnnotatedExpression returns kext::AnnotatedExpression:
 	//	annotations+=Annotation* "expression" expression=Expression;
 	public AnnotatedExpressionElements getAnnotatedExpressionAccess() {
@@ -378,6 +422,12 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotatedExpressionAccess().getRule();
 	}
 
+	//// Declaration Rule
+	//// A declaration follows the general KIELER pattern for variable declaration. More specific:
+	//// this centralized declaration rule should replace any other declaration in drived grammars.
+	//// It may start with arbitrary many declarations followed by keywords affecting the type of the
+	//// valued objects that follow.
+	//// Examples: const float pi = 3.14, input signal I, output bool z  
 	//Declaration returns kexpressions::Declaration:
 	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
 	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
@@ -389,7 +439,11 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getDeclarationAccess().getRule();
 	}
 
-	//ValuedObject returns kexpressions::ValuedObject: //    (annotations+=Annotation)*
+	//// Valued Object Rule
+	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
+	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
+	//// Examples: array[10], initial = false, z = 0 combine max
+	//ValuedObject returns kexpressions::ValuedObject:
 	//	name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
 	public ValuedObjectElements getValuedObjectAccess() {
 		return pValuedObject;
@@ -399,7 +453,20 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectAccess().getRule();
 	}
 
-	//// generate keffects "http://kieler.cs.cau.de/kexpressions/keffects/keffects"
+	/// **
+	// * @author ssm
+	// * @kieler.design 2015-08-23 proposed 
+	// * @kieler.rating 2015-08-23 proposed yellow
+	// * / / *
+	// * KEffects allow deriving grammars to use a range of different effects, namely assignments,
+	// * postfix effects, esterel like emissions, host code and function call effects.
+	// * Of course other grammars may extend this list.
+	// * / // ---------------- //
+	////  KEffects Rules  // 
+	//// ---------------- //
+	//// Effect Rule
+	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
+	//// function call effect.
 	//Effect returns keffects::Effect:
 	//	Assignment | PostfixEffect | Emission | HostcodeEffect | FunctionCallEffect;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
@@ -410,6 +477,13 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getEffectAccess().getRule();
 	}
 
+	//// Emission Rule
+	//// An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
+	//// an emission for a specific signal to emit it. Additionally, emission may include a parameter part for
+	//// a new value in the case of valued signals. 
+	//// Example: A, B(2)
+	//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
+	//// annotations defined in the annotations grammar.		
 	//Emission returns keffects::Emission:
 	//	annotations+=RestrictedAnnotation* valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
 	public KEffectsGrammarAccess.EmissionElements getEmissionAccess() {
@@ -420,6 +494,11 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getEmissionAccess().getRule();
 	}
 
+	//// Assignment Rule
+	//// An assignment may start with a list of arbitrary annotatations.
+	//// Then, an arbitrary expression is assigned to a valued object. The object may be suffixed by an 
+	//// indices part. The type of assignment is determined by the type of the operator.
+	//// Example: A = true, I[0] = I[1], I += 1     
 	//Assignment returns keffects::Assignment:
 	//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
 	//	operator=AssignOperator expression=Expression;
@@ -431,6 +510,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getAssignmentAccess().getRule();
 	}
 
+	//// Postfix Effect
+	//// A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
+	//// must be a postfix operator.
+	//// Example: I++, I-- 
 	//PostfixEffect returns keffects::Assignment:
 	//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
 	//	operator=PostfixOperator;
@@ -442,6 +525,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getPostfixEffectAccess().getRule();
 	}
 
+	//// Hostcode Effect Rule
+	//// A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
 	//HostcodeEffect returns keffects::HostcodeEffect:
 	//	annotations+=Annotation* text=HOSTCODE;
 	public KEffectsGrammarAccess.HostcodeEffectElements getHostcodeEffectAccess() {
@@ -452,6 +537,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getHostcodeEffectAccess().getRule();
 	}
 
+	//// Function Call Effect Rule
+	//// A function call effect works similar to the function call expression. Additionally, it may be
+	//// preceded by a list of annotations.
 	//FunctionCallEffect returns keffects::FunctionCallEffect:
 	//	annotations+=Annotation* "<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" |
 	//	"()")? ">";
@@ -463,6 +551,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallEffectAccess().getRule();
 	}
 
+	//// ---------------- //
+	////  KEffects Enums  // 
+	//// ---------------- //
+	//// Assign Operator Enum    
 	//enum AssignOperator returns keffects::AssignOperator:
 	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
 	public KEffectsGrammarAccess.AssignOperatorElements getAssignOperatorAccess() {
@@ -473,6 +565,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getAssignOperatorAccess().getRule();
 	}
 
+	//// Postfix Operator Enum    
 	//enum PostfixOperator returns keffects::AssignOperator:
 	//	POSTFIXADD="++" | POSTFIXSUB="--";
 	public KEffectsGrammarAccess.PostfixOperatorElements getPostfixOperatorAccess() {
@@ -483,6 +576,47 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getPostfixOperatorAccess().getRule();
 	}
 
+	/// **
+	// * @author ssm
+	// * @kieler.design 2015-08-21 proposed 
+	// * @kieler.rating 2015-08-21 proposed yellow
+	// * / // -------------------- //
+	////  KExpressions Rules  // 
+	//// -------------------- //
+	/// * Expression rules are organized in a chain. They pass the actual instance to the next rule but may 
+	// * consume tokens to create a specific expression element. Following this pattern, complex constructs
+	// * can be created. This also implies an order of precedence.
+	// *
+	// * Expression
+	// * + BooleanExpression
+	// *   + LogicalOrExpression
+	// *     + LogicalAndExpression
+	// *       + BitwiseOrExpression
+	// *         + BitwiseAndExpression
+	// *           + CompareExpression
+	// *             + NotOrValuedExpression
+	// *               + ValuedExpression (see valued expression below)
+	// *               + NotExpression *
+	// *                 + AtomicExpression *
+	// *                   + BoolValue
+	// *                   + ValuedObjectTestExpression
+	// *                     + ValuedObjectReference
+	// *                   + FunctionCall
+	// *                   + TextExpression
+	// * + ValuedExpression
+	// *   + AddExpression
+	// *     + SubExpression
+	// *       + MultExpression
+	// *         + DivExpression
+	// *           + ModExpression
+	// *             + NegExpression *
+	// *               + AtomicValuedExpression *
+	// *                 + IntValue
+	// *                 + FloatValue
+	// *                 + StringValue
+	// *                 + AtomicExpression
+	// * / // Root Rule
+	//// Always return an expression.
 	//Root returns ecore::EObject:
 	//	Expression;
 	public KExpressionsGrammarAccess.RootElements getRootAccess() {
@@ -493,6 +627,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getRootAccess().getRule();
 	}
 
+	//// Expression Rule
+	//// An expression is either a boolean expression or a valued expression.
 	//Expression:
 	//	BoolExpression | ValuedExpression;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
@@ -503,6 +639,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getExpressionAccess().getRule();
 	}
 
+	//// Boolean Expression Rule
+	//// Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
+	//// One could skip directly to the next rule.
 	//BoolExpression returns Expression:
 	//	LogicalOrExpression;
 	public KExpressionsGrammarAccess.BoolExpressionElements getBoolExpressionAccess() {
@@ -513,19 +652,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getBoolExpressionAccess().getRule();
 	}
 
-	////OrAndExpression returns Expression:
-	////	CompareOperation 
-	////	(
-	////		({OperatorExpression.subExpressions+=current} (operator=OrOperator subExpressions+=CompareOperation)*)
-	////		|	
-	////		({OperatorExpression.subExpressions+=current} (operator=AndOperator subExpressions+=CompareOperation)*)
-	////		|
-	////        ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator subExpressions+=CompareOperation)*)
-	////        |   
-	////        ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator subExpressions+=CompareOperation)*)
-	////
-	////	)
-	////;
+	//// Logical Or Expression Rule
+	//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
+	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalOrExpression returns Expression:
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
 	//	subExpressions+=LogicalAndExpression)+)?;
@@ -537,6 +666,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalOrExpressionAccess().getRule();
 	}
 
+	//// Logical And Expression Rule
+	//// Directs to the 'bitwise or' rule and may create an operator expression for 'logical and' operations
+	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalAndExpression returns Expression:
 	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
 	//	subExpressions+=BitwiseOrExpression)+)?;
@@ -548,6 +680,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalAndExpressionAccess().getRule();
 	}
 
+	//// Bitwiese Or Expression Rule
+	//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
+	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseOrExpression returns Expression:
 	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
 	//	subExpressions+=BitwiseAndExpression)+)?;
@@ -559,6 +694,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getBitwiseOrExpressionAccess().getRule();
 	}
 
+	//// Bitwise And Expression Rule
+	//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
+	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//BitwiseAndExpression returns Expression:
 	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
 	//	subExpressions+=CompareOperation)+)?;
@@ -570,8 +708,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getBitwiseAndExpressionAccess().getRule();
 	}
 
+	//// Compare Operation Rule
+	//// Directs to the 'not or valued expression' rule and may create an operator expression for compares. 
 	//// Example: 42 <= val(A)
-	////	| NotExpression
 	//CompareOperation returns Expression:
 	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
 	//	subExpressions+=NotOrValuedExpression)?;
@@ -583,7 +722,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getCompareOperationAccess().getRule();
 	}
 
-	//// order IS IMPORTANT
+	//// 'Not or Valued Expression' Rule
+	//// ORDER IS IMPORTANT!
 	//NotOrValuedExpression returns Expression:
 	//	ValuedExpression | NotExpression;
 	public KExpressionsGrammarAccess.NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
@@ -594,8 +734,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getNotOrValuedExpressionAccess().getRule();
 	}
 
-	//// Example: not A, not false, not (A or B)
-	//// at the latter we need the parents to indicate the right binding
+	//// Not Expression Rule
+	//// Example: !A, !false, !(A or B)
+	//// At the latter we need the parents to indicate the right binding.
+	//// A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
 	//NotExpression returns Expression:
 	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
 	public KExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
@@ -606,7 +748,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getNotExpressionAccess().getRule();
 	}
 
-	//// everything that evaluates to a primitive number value
+	//// Valued Expression Rule    
+	//// Everything that evaluates to a primitive number value.
+	//// Similar to the boolean rule this rule is there for overview reasons.
 	//ValuedExpression returns Expression:
 	//	AddExpression;
 	public KExpressionsGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
@@ -617,7 +761,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedExpressionAccess().getRule();
 	}
 
-	////LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+)?;
+	//// Add Expression Rule
+	//// The rule directs the 'sub expression' rule and creates an operator expression for additions
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 1 + 2
 	//AddExpression returns Expression:
 	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?;
@@ -629,7 +775,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getAddExpressionAccess().getRule();
 	}
 
-	//// Example: varA - ?B
+	//// Sub Expression Rule
+	//// The rule directs the 'mult expression' rule and creates an operator expression for subtractions
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+	//// Example: var(A) - i
 	//SubExpression returns Expression:
 	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator
 	//	subExpressions+=MultExpression)+)?;
@@ -641,9 +790,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getSubExpressionAccess().getRule();
 	}
 
-	////    ({OperatorExpression} subExpressions+=MultExpression (operator=SubOperator subExpressions+=MultExpression)+)
-	////	| ({OperatorExpression} subExpressions+=MultExpression subExpressions+=NIntValue)
-	////    | MultExpression;
+	//// Mult Expression Rule
+	//// The rule directs the 'div expression' rule and creates an operator expression for multiplications
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression returns Expression:
 	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?;
@@ -655,8 +804,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getMultExpressionAccess().getRule();
 	}
 
-	//// Example: (2 / 4)
-	//// note: division always has to have parentheses because the '/' sign is also used for trigger/effect delimiter
+	//// Div Expression Rule
+	//// The rule directs the 'mod expression' rule and creates an operator expression for divisions
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+	//// Example: 2 / 4
 	//DivExpression returns Expression:
 	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?;
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
@@ -667,7 +818,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getDivExpressionAccess().getRule();
 	}
 
-	//// Example: varA mod ?B
+	//// Mod Expression Rule
+	//// The rule directs the 'neg expression' rule and creates an operator expression for modulo operations
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+	//// Example: i % j
 	//ModExpression returns Expression:
 	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
 	//	subExpressions+=AtomicValuedExpression)+)?;
@@ -679,11 +833,11 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getModExpressionAccess().getRule();
 	}
 
-	//// Example: -?A, -(?A + ?B)
-	//// at the latter we need the parents to indicate the right binding
+	//// Neg Expression Rule
+	//// The rule negates the actual instance or directs the atomic value expression rule if necessary. 
+	//// Example: -i, -2
 	//NegExpression returns Expression:
-	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression //	| PostfixAddExpression
-	//	| AtomicValuedExpression;
+	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression;
 	public KExpressionsGrammarAccess.NegExpressionElements getNegExpressionAccess() {
 		return gaKEffects.getNegExpressionAccess();
 	}
@@ -692,15 +846,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getNegExpressionAccess().getRule();
 	}
 
-	////PostfixAddExpression returns Expression:
-	////    {OperatorExpression} subExpressions+=(PostfixAddExpression) operator=PostfixAdd
-	////    | PostfixSubExpression
-	////;
-	////
-	////PostfixSubExpression returns Expression:
-	////    {OperatorExpression} subExpressions+=(PostfixSubExpression) operator=PostfixSub
-	////    | AtomicValuedExpression
-	////;
+	//// Atomic Expression Rule
+	//// An atomic expression is either a simple boolean value, a test expression, another boolean expression
+	//// encapsulated in braces, a function call or a text expression.
+	//// Basically, the rule chain may start over again at this point.     
 	//AtomicExpression returns Expression:
 	//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | FunctionCall | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
@@ -711,6 +860,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getAtomicExpressionAccess().getRule();
 	}
 
+	//// Atomic Valued Expression Rule
+	//// An atomic valued expression is either a simple int float or string literal, another valued expression
+	//// encapsulated in braces, or a atomic expression.
+	//// Basically, the rule chain may start over again at this point.     
 	//AtomicValuedExpression returns Expression:
 	//	IntValue | FloatValue | StringValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
@@ -721,7 +874,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getAtomicValuedExpressionAccess().getRule();
 	}
 
-	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A), A varX
+	//// Valued Object Test Expression Rule
+	//// This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
+	//// valued object reference.
+	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 	//ValuedObjectTestExpression returns Expression:
 	//	{OperatorExpression} operator=(PreOperator | ValOperator) "(" subExpressions+=ValuedObjectTestExpression ")" |
 	//	ValuedObjectReference;
@@ -733,7 +889,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectTestExpressionAccess().getRule();
 	}
 
-	//// Example: A, varB
+	//// Valued Object Reference Rule
+	//// References a valued object with arbitrary (including none) indices part.
+	//// Example: A, B
 	//ValuedObjectReference:
 	//	valuedObject=[ValuedObject] ("[" indices+=Expression "]")*;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
@@ -744,6 +902,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectReferenceAccess().getRule();
 	}
 
+	//// Function Call Rule
+	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
 	//FunctionCall:
 	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
@@ -754,6 +914,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionCallAccess().getRule();
 	}
 
+	//// Parameter Rule
+	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
+	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
+	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 	//Parameter:
 	//	(pureOutput?="!"? callByReference?="&")? expression=Expression;
 	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
@@ -764,6 +928,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getParameterAccess().getRule();
 	}
 
+	//// Text Expression Rule
+	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
 	//// Example: 'printf(...)'
 	//TextExpression:
 	//	text=HOSTCODE;
@@ -775,6 +941,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getTextExpressionAccess().getRule();
 	}
 
+	//// Int Value Rule
 	//IntValue:
 	//	value=INT;
 	public KExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
@@ -785,6 +952,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getIntValueAccess().getRule();
 	}
 
+	//// Float Value Rule
 	//FloatValue:
 	//	value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
@@ -795,6 +963,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloatValueAccess().getRule();
 	}
 
+	//// Bool Value Rule
 	//BoolValue:
 	//	value=BOOLEAN;
 	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
@@ -805,6 +974,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getBoolValueAccess().getRule();
 	}
 
+	//// String Value Rule	
 	//StringValue:
 	//	value=STRING;
 	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
@@ -815,11 +985,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getStringValueAccess().getRule();
 	}
 
-	////terminal POSINT returns ecore::EInt:
-	////    NUMBER+;
-	//// data type rule allowing any kind of value to be accepted,
-	//// e.g. as initialValues of valuedObjects
-	//// used in Kits.xtext 
+	//// Any Type Rule
+	//// Data type rule allowing any kind of value to be accepted,
+	//// e.g. as initialValues of valued objects used in Kits.xtext. 
 	//AnyType returns ecore::EString:
 	//	BOOLEAN | INT | FLOAT | ID | STRING;
 	public KExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
@@ -830,6 +998,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnyTypeAccess().getRule();
 	}
 
+	//// -------------------- //
+	////  KExpressions Enums  // 
+	//// -------------------- //
+	//// Compare Operator Enum 
 	//enum CompareOperator returns OperatorType:
 	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 	public KExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
@@ -840,6 +1012,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getCompareOperatorAccess().getRule();
 	}
 
+	//// Pre Operator Enum
 	//enum PreOperator returns OperatorType:
 	//	PRE="pre";
 	public KExpressionsGrammarAccess.PreOperatorElements getPreOperatorAccess() {
@@ -850,6 +1023,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getPreOperatorAccess().getRule();
 	}
 
+	//// Bitewise Or Operator Enum
 	//enum BitwiseOrOperator returns OperatorType:
 	//	BITWISE_OR="|";
 	public KExpressionsGrammarAccess.BitwiseOrOperatorElements getBitwiseOrOperatorAccess() {
@@ -860,6 +1034,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getBitwiseOrOperatorAccess().getRule();
 	}
 
+	//// Bitwise And Operator Enum
 	//enum BitwiseAndOperator returns OperatorType:
 	//	BITWISE_AND="&";
 	public KExpressionsGrammarAccess.BitwiseAndOperatorElements getBitwiseAndOperatorAccess() {
@@ -870,6 +1045,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getBitwiseAndOperatorAccess().getRule();
 	}
 
+	//// Not Operator Enum
 	//enum NotOperator returns OperatorType:
 	//	NOT="!";
 	public KExpressionsGrammarAccess.NotOperatorElements getNotOperatorAccess() {
@@ -880,6 +1056,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getNotOperatorAccess().getRule();
 	}
 
+	//// Add Operator Enum
 	//enum AddOperator returns OperatorType:
 	//	ADD="+";
 	public KExpressionsGrammarAccess.AddOperatorElements getAddOperatorAccess() {
@@ -890,6 +1067,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getAddOperatorAccess().getRule();
 	}
 
+	//// Sub Operator Enum
 	//enum SubOperator returns OperatorType:
 	//	SUB="-";
 	public KExpressionsGrammarAccess.SubOperatorElements getSubOperatorAccess() {
@@ -900,6 +1078,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getSubOperatorAccess().getRule();
 	}
 
+	//// Mult Operator Enum
 	//enum MultOperator returns OperatorType:
 	//	MULT="*";
 	public KExpressionsGrammarAccess.MultOperatorElements getMultOperatorAccess() {
@@ -910,6 +1089,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getMultOperatorAccess().getRule();
 	}
 
+	//// Mod Operator Enum
 	//enum ModOperator returns OperatorType:
 	//	MOD="%";
 	public KExpressionsGrammarAccess.ModOperatorElements getModOperatorAccess() {
@@ -920,6 +1100,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getModOperatorAccess().getRule();
 	}
 
+	//// Div Operator Enum
 	//enum DivOperator returns OperatorType:
 	//	DIV="/";
 	public KExpressionsGrammarAccess.DivOperatorElements getDivOperatorAccess() {
@@ -930,6 +1111,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getDivOperatorAccess().getRule();
 	}
 
+	//// Val Operator Enum
 	//enum ValOperator returns OperatorType:
 	//	VAL="val";
 	public KExpressionsGrammarAccess.ValOperatorElements getValOperatorAccess() {
@@ -940,6 +1122,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getValOperatorAccess().getRule();
 	}
 
+	//// Logical Or Operator Enum
 	//enum LogicalOrOperator returns OperatorType:
 	//	LOGICAL_OR="||";
 	public KExpressionsGrammarAccess.LogicalOrOperatorElements getLogicalOrOperatorAccess() {
@@ -950,6 +1133,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalOrOperatorAccess().getRule();
 	}
 
+	//// Logical And Operator Enum
 	//enum LogicalAndOperator returns OperatorType:
 	//	LOGICAL_AND="&&";
 	public KExpressionsGrammarAccess.LogicalAndOperatorElements getLogicalAndOperatorAccess() {
@@ -960,6 +1144,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalAndOperatorAccess().getRule();
 	}
 
+	//// Postfix Operator Enum
 	//enum PostfixAdd returns OperatorType:
 	//	POSTFIX_ADD="++";
 	public KExpressionsGrammarAccess.PostfixAddElements getPostfixAddAccess() {
@@ -970,6 +1155,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getPostfixAddAccess().getRule();
 	}
 
+	//// Postfix Operator Enum
 	//enum PostfixSub returns OperatorType:
 	//	POSTFIX_SUB="--";
 	public KExpressionsGrammarAccess.PostfixSubElements getPostfixSubAccess() {
@@ -980,9 +1166,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getPostfixSubAccess().getRule();
 	}
 
-	/// *
-	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
-	// * / enum ValueType:
+	//// Value Type Enum
+	//enum ValueType:
 	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string" | HOST="host";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaKEffects.getValueTypeAccess();
@@ -992,6 +1177,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getValueTypeAccess().getRule();
 	}
 
+	//// Host Type Enum
 	//enum HostType returns ValueType:
 	//	HOST="host";
 	public KExpressionsGrammarAccess.HostTypeElements getHostTypeAccess() {
@@ -1002,6 +1188,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getHostTypeAccess().getRule();
 	}
 
+	//// Combine Operator Enum
 	//enum CombineOperator:
 	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="|" | AND="&" | HOST="host";
 	public KExpressionsGrammarAccess.CombineOperatorElements getCombineOperatorAccess() {
@@ -1012,20 +1199,30 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getCombineOperatorAccess().getRule();
 	}
 
-	//// custom terminal rule allowing to save transition label string as they are
+	//// ------------------------ //
+	////  KExpressions Terminals  // 
+	//// ------------------------ //
+	//// Hostcode Terminals
+	//// Custom terminal rule allowing to save transition label string as they are
 	//terminal HOSTCODE:
 	//	"\'" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getHOSTCODERule() {
 		return gaKEffects.getHOSTCODERule();
 	} 
 
-	//// --------------------------
-	// //
-	// //   ANNOTATIONS
-	// //
-	// // --------------------------
+	/// **
+	// * @author ssm
+	// * @kieler.design 2015-08-21 proposed 
+	// * @kieler.rating 2015-08-21 proposed yellow
+	// * /
+	//// ------------------ //
+	// //  Annotation Rules  // 
+	// // ------------------ //
+	// // General rule for annotations
+	//
+	//// The different annotation sub rules are tested in order. Hence, order matters! 
 	// Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+	//	CommentAnnotation | KeyBooleanValueAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
 	//	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaKEffects.getAnnotationAccess();
@@ -1035,6 +1232,12 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
+	//// Valued Annotation Rule
+	// // Valued annotations must have a value. For instance, tag annotations are not allowed.
+	//
+	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
+	// // due to ambiguities.
+	//
 	//ValuedAnnotation returns Annotation:
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
 	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
@@ -1046,7 +1249,16 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedAnnotationAccess().getRule();
 	}
 
-	//RestrictedAnnotation returns Annotation:
+	//// Restiricted Annotation Rule
+	//
+	//// The restricted annotation rules uses quoted key string annotations. You can use this rule in 
+	//
+	//// derived grammars if you don't want to permit unquoted strings. 
+	//
+	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
+	//
+	//// rule and to avoid grammar ambiguities.)  
+	// RestrictedAnnotation returns Annotation:
 	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
 	//	| KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.RestrictedAnnotationElements getRestrictedAnnotationAccess() {
@@ -1057,7 +1269,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getRestrictedAnnotationAccess().getRule();
 	}
 
-	//// e.g.: / ** semantic comment * /
+	//// CommentAnnotation
+	// // e.g.: / ** semantic comment * /
 	// CommentAnnotation:
 	//	values+=COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
@@ -1068,7 +1281,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getCommentAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @HVlayout
+	//// TagAnnotation
+	// // e.g.: @HVlayout
 	// TagAnnotation returns Annotation:
 	//	"@" name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
@@ -1079,8 +1293,11 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @layouter dot;   
-	// KeyStringValueAnnotation returns StringAnnotation:
+	//// KeyStringValueAnnotation
+	// // e.g.: @layouter dot
+	// // You may separate different values via comma.   
+	//
+	//KeyStringValueAnnotation returns StringAnnotation:
 	//	"@" name=ExtendedID values+=EString ("," values+=EString)*;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaKEffects.getKeyStringValueAnnotationAccess();
@@ -1090,9 +1307,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-	// TypedKeyStringValueAnnotation returns
-	//TypedStringAnnotation:
+	//// TypedKeyStringValueAnnotation
+	// // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
+	//
+	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
 	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString ("," values+=EString)*;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaKEffects.getTypedKeyStringValueAnnotationAccess();
@@ -1102,7 +1320,12 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//QuotedKeyStringValueAnnotation returns StringAnnotation:
+	//// QuotedKeyStringValueAnnotation
+	// // The quoted key string value annotation is a replacement derived grammars may use
+	//
+	//// if they want to disallow quote-less strings in a key string annotation. 
+	// QuotedKeyStringValueAnnotation returns
+	//StringAnnotation:
 	//	"@" name=ExtendedID values+=STRING ("," values+=STRING)*;
 	public AnnotationsGrammarAccess.QuotedKeyStringValueAnnotationElements getQuotedKeyStringValueAnnotationAccess() {
 		return gaKEffects.getQuotedKeyStringValueAnnotationAccess();
@@ -1112,9 +1335,13 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getQuotedKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-	// QuotedTypedKeyStringValueAnnotation returns
-	//TypedStringAnnotation:
+	//// QuotedTypedKeyStringValueAnnotation
+	//
+	//// The quoted typed key string value annotation is a replacement derived grammars may use
+	//
+	//// if they want to disallow quote-less strings in a key string annotation. 
+	// QuotedTypedKeyStringValueAnnotation
+	//returns TypedStringAnnotation:
 	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*;
 	public AnnotationsGrammarAccess.QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
 		return gaKEffects.getQuotedTypedKeyStringValueAnnotationAccess();
@@ -1124,7 +1351,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @visible true;
+	//// KeyBooleanValueAnnotation    
+	// // e.g.: @visible true;
 	// KeyBooleanValueAnnotation returns BooleanAnnotation:
 	//	"@" name=ExtendedID value=BOOLEAN;
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
@@ -1135,7 +1363,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyBooleanValueAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @minSpace 10;    
+	//// KeyIntValueAnnotation
+	// // e.g.: @minSpace 10;    
 	// KeyIntValueAnnotation returns IntAnnotation:
 	//	"@" name=ExtendedID value=Integer;
 	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
@@ -1146,7 +1375,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyIntValueAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @minSpace 10.0;    
+	//// KeyFloatValueAnnotation
+	// // e.g.: @minSpace 10.0;    
 	// KeyFloatValueAnnotation returns FloatAnnotation:
 	//	"@" name=ExtendedID value=Floateger;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
@@ -1157,18 +1387,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyFloatValueAnnotationAccess().getRule();
 	}
 
-	//// needed for importing other resources
-	// ImportAnnotation:
-	//	"import" importURI=STRING;
-	public AnnotationsGrammarAccess.ImportAnnotationElements getImportAnnotationAccess() {
-		return gaKEffects.getImportAnnotationAccess();
-	}
-	
-	public ParserRule getImportAnnotationRule() {
-		return getImportAnnotationAccess().getRule();
-	}
-
-	//// allow strings without quotes as they don'c contain spaces
+	//// EString
+	// // Allow strings without quotes if they don't contain spaces.
+	//
+	//// For quoteless strings the ExtendedID rule is used.
 	// EString returns ecore::EString:
 	//	STRING | ExtendedID;
 	public AnnotationsGrammarAccess.EStringElements getEStringAccess() {
@@ -1179,7 +1401,12 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getEStringAccess().getRule();
 	}
 
-	//ExtendedID returns ecore::EString:
+	//// ExtendedID
+	// // ExtendedID extends the ID rule provided by the terminals grammar.
+	//
+	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
+	// ExtendedID returns
+	//ecore::EString:
 	//	ID ("." ID)* ("#" INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaKEffects.getExtendedIDAccess();
@@ -1189,7 +1416,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getExtendedIDAccess().getRule();
 	}
 
-	//Integer returns ecore::EInt:
+	//// Integer
+	// // The integer rule extends the EInt terminal by an optional sign for negative numbers.
+	// Integer returns
+	//ecore::EInt:
 	//	"-"? INT;
 	public AnnotationsGrammarAccess.IntegerElements getIntegerAccess() {
 		return gaKEffects.getIntegerAccess();
@@ -1199,7 +1429,10 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getIntegerAccess().getRule();
 	}
 
-	//Floateger returns ecore::EFloat:
+	//// Floateger
+	// // The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
+	// Floateger
+	//returns ecore::EFloat:
 	//	"-"? FLOAT;
 	public AnnotationsGrammarAccess.FloategerElements getFloategerAccess() {
 		return gaKEffects.getFloategerAccess();
@@ -1209,67 +1442,62 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloategerAccess().getRule();
 	}
 
-	//// --------------------------
-	// //
-	// //  Terminals...
-	// //
-	// // --------------------------
-	// // custom terminals
+	//// ---------------------- //
+	// //  Annotation Terminals  // 
+	// // ---------------------- //
 	//
-	//// custom terminal rule introducing semantic comments
+	//// Comment Annotation Terminal
+	// // Custom terminal rule introducing semantic comments.
 	// terminal COMMENT_ANNOTATION:
 	//	"/ **"->"* /";
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return gaKEffects.getCOMMENT_ANNOTATIONRule();
 	} 
 
-	//// modified version of Terminals.ML_COMMENT as
-	// // COMMENT_ANNOTATION is not recognized correctly with original one 
+	//// Multiline Comment Terminal
+	// // Modified version of Terminals.ML_COMMENT as
 	//
-	//terminal ML_COMMENT:
+	//// COMMENT_ANNOTATION is not recognized correctly with original one.
+	// terminal ML_COMMENT:
 	//	"/ *" !"*"->"* /";
 	public TerminalRule getML_COMMENTRule() {
 		return gaKEffects.getML_COMMENTRule();
 	} 
 
-	//// generic terminals
+	//// Number Terminal
 	// terminal fragment NUMBER:
 	//	"0".."9";
 	public TerminalRule getNUMBERRule() {
 		return gaKEffects.getNUMBERRule();
 	} 
 
-	//// redefine INT terminal to allow negative numbers
+	//// Integer Terminal
+	// // An INT is a list of numbers.   
 	// terminal INT returns ecore::EInt:
 	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaKEffects.getINTRule();
 	} 
 
-	//// make sure the Float rule does not shadow the INT rule
-	// terminal FLOAT returns ecore::EFloatObject:
+	//// Float Terminal    
+	// // Make sure the Float rule does not shadow the INT rule
+	// terminal FLOAT returns
+	//ecore::EFloatObject:
 	//	NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | NUMBER+ "f";
 	public TerminalRule getFLOATRule() {
 		return gaKEffects.getFLOATRule();
 	} 
 
-	//// redefine INT terminal to allow negative numbers
-	// //terminal NEGINT returns ecore::EInt:
-	// //    '-' INT;
-	// //    
-	//
-	////// make sure the Float rule does not shadow the INT rule
-	// //terminal NEGFLOAT returns ecore::EFloatObject :
-	//
-	////    '-' FLOAT;
-	// // introduce boolean values
+	//// Boolean Terminal   
+	// // Introduce boolean values.
 	// terminal BOOLEAN returns ecore::EBooleanObject:
 	//	"true" | "false";
 	public TerminalRule getBOOLEANRule() {
 		return gaKEffects.getBOOLEANRule();
 	} 
 
-	//// custom terminal rule for strings
+	//// String Terminal
+	// // Custom terminal rule for strings, only use double quotes.
 	// terminal STRING:
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
 	public TerminalRule getSTRINGRule() {

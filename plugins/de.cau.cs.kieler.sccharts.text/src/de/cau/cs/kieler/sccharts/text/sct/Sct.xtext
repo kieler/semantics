@@ -183,7 +183,7 @@ LocalAction returns sccharts::LocalAction:
 
 Transition returns sccharts::Transition:
     (annotations += Annotation)*
-    (type=TransitionTypeLegacy | type=TransitionType) 
+    (type=TransitionType) 
     targetState=[sccharts::State|ID] 
 //	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
 	( (immediate?='immediate')? (deferred?='deferred')? (history=HistoryType)?  (
@@ -210,8 +210,5 @@ enum StateType returns sccharts::StateType:
 	NORMAL = 'normal' | CONNECTOR = 'connector' | REFERENCE = 'reference' | TEXTUAL = 'textual';
 
 enum TransitionType returns sccharts::TransitionType:
-	WEAKABORT = 'goto' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
-	
-enum TransitionTypeLegacy returns sccharts::TransitionType:
     WEAKABORT = '-->' | STRONGABORT = 'o->' | TERMINATION = '>->';
 	

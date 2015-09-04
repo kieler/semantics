@@ -10,7 +10,6 @@ import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
 import de.cau.cs.kieler.core.annotations.CommentAnnotation;
 import de.cau.cs.kieler.core.annotations.FloatAnnotation;
-import de.cau.cs.kieler.core.annotations.ImportAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
@@ -44,9 +43,6 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 				return; 
 			case AnnotationsPackage.FLOAT_ANNOTATION:
 				sequence_KeyFloatValueAnnotation(context, (FloatAnnotation) semanticObject); 
-				return; 
-			case AnnotationsPackage.IMPORT_ANNOTATION:
-				sequence_ImportAnnotation(context, (ImportAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.INT_ANNOTATION:
 				sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
@@ -86,15 +82,6 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	 *     values+=COMMENT_ANNOTATION
 	 */
 	protected void sequence_CommentAnnotation(EObject context, CommentAnnotation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     importURI=STRING
-	 */
-	protected void sequence_ImportAnnotation(EObject context, ImportAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

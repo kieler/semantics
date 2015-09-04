@@ -2477,11 +2477,11 @@ ruleAnnotation returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_1()); 
     }
-    this_KeyStringValueAnnotation_1=ruleKeyStringValueAnnotation
+    this_KeyBooleanValueAnnotation_1=ruleKeyBooleanValueAnnotation
     { 
-        $current = $this_KeyStringValueAnnotation_1.current; 
+        $current = $this_KeyBooleanValueAnnotation_1.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -2490,11 +2490,11 @@ ruleAnnotation returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2()); 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2()); 
     }
-    this_TypedKeyStringValueAnnotation_2=ruleTypedKeyStringValueAnnotation
+    this_KeyStringValueAnnotation_2=ruleKeyStringValueAnnotation
     { 
-        $current = $this_TypedKeyStringValueAnnotation_2.current; 
+        $current = $this_KeyStringValueAnnotation_2.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -2503,11 +2503,11 @@ ruleAnnotation returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_3()); 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); 
     }
-    this_KeyBooleanValueAnnotation_3=ruleKeyBooleanValueAnnotation
+    this_TypedKeyStringValueAnnotation_3=ruleTypedKeyStringValueAnnotation
     { 
-        $current = $this_KeyBooleanValueAnnotation_3.current; 
+        $current = $this_TypedKeyStringValueAnnotation_3.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -3313,8 +3313,6 @@ ruleKeyFloatValueAnnotation returns [EObject current=null]
 )
 ))
 ;
-
-
 
 
 

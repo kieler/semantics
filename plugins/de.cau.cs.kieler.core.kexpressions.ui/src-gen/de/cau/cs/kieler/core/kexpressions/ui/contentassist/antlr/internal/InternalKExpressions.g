@@ -1101,8 +1101,6 @@ finally {
 
 
 
-
-
 // Entry rule entryRuleEString
 entryRuleEString 
 :
@@ -6113,7 +6111,6 @@ finally {
 
 
 
-
 rule__ExtendedID__Group__0
     @init {
 		int stackSize = keepStackSize();
@@ -7394,7 +7391,6 @@ rule__KeyFloatValueAnnotation__ValueAssignment_2
 finally {
 	restoreStackSize(stackSize);
 }
-
 
 
 RULE_HOSTCODE : '\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'';
