@@ -11,6 +11,7 @@ Require-Bundle: de.cau.cs.kieler.esterel;bundle-version="0.3.3",
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
- de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.3"
+ de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.3",
+ com.google.inject;bundle-version="3.0.0"
 Export-Package: de.cau.cs.kieler.sccharts.esterel.transformation
 

@@ -88,12 +88,12 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 //           .getInputKeyword_0_1().getValue()));
           c.setIndentation(f.getInterfaceSignalDeclAccess().getInputKeyword_0_1(), f
           .getInterfaceSignalDeclAccess().getSemicolonKeyword_0_4());
-        // // // ==> Output <==
-        // // c.setLinewrap()
-        // // .after(f.getSignalDeclAccess().getSemicolonKeyword_1_4());
-        // // c.setLinewrap().after(f.getSignalDeclAccess().getCommaKeyword_1_3_0());
-        // // c.setIndentation(f.getSignalDeclAccess().getOutputKeyword_1_1(), f
-        // // .getSignalDeclAccess().getSemicolonKeyword_1_4());
+        // // ==> Output <==
+          c.setLinewrap()
+          .after(f.getInterfaceSignalDeclAccess().getSemicolonKeyword_1_4());
+          c.setLinewrap().after(f.getInterfaceSignalDeclAccess().getCommaKeyword_1_3_0());
+          c.setIndentation(f.getInterfaceSignalDeclAccess().getOutputKeyword_1_1(), f
+          .getInterfaceSignalDeclAccess().getSemicolonKeyword_1_4());
         // // // ==> InputOutput <==
         // // c.setLinewrap()
         // // .after(f.getSignalDeclAccess().getSemicolonKeyword_2_4());
@@ -159,8 +159,8 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
          f.getBlockAccess().getLeftSquareBracketKeyword_0());
          c.setLinewrap().before(
          f.getBlockAccess().getRightSquareBracketKeyword_2());
-         c.setIndentation(f.getBlockAccess().getLeftSquareBracketKeyword_0(), f
-         .getBlockAccess().getRightSquareBracketKeyword_2());
+//         c.setIndentation(f.getBlockAccess().getLeftSquareBracketKeyword_0(), f
+//         .getBlockAccess().getRightSquareBracketKeyword_2());
 //         // ==> Assignment <==
           c.setLinewrap().before(
           f.getAssignmentAccess().getVarAssignment_0());
@@ -205,17 +205,18 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
          c.setLinewrap().before(f.getHaltAccess().getHaltKeyword_1());
 //         // ==> If <==
          c.setLinewrap().before(f.getIfTestAccess().getIfKeyword_0());
-         // c.setLinewrap().before(f.getIfTestAccess().getEndKeyword_5());
+         c.setLinewrap().before(f.getIfTestAccess().getEndKeyword_5());
          c.setLinewrap().before(f.getElsIfAccess().getElsifKeyword_0());
          c.setLinewrap().before(f.getElsePartAccess().getElseKeyword_0());
          c.setLinewrap().before(f.getThenPartAccess().getThenKeyword_0());
+         c.setIndentation(f.getIfTestAccess().getIfKeyword_0(), f.getIfTestAccess().getEndKeyword_5());
 //         // TODO If indentation
 //         // ==> Loop <==
          // TODO Indentation for Loop
          c.setLinewrap().before(f.getLoopAccess().getLoopKeyword_0());
          c.setLinewrap().before(f.getEndLoopAccess().getEndKeyword_1());
-         // c.setIndentation(f.getLoopAccess().getLoopKeyword_0(), f
-         // .getEndLoopAccess().getEndKeyword_0());
+          c.setIndentation(f.getLoopAccess().getLoopKeyword_0(), f
+          .getEndLoopAccess().getEndKeyword_1());
          c.setLinewrap().before(f.getLoopEachAccess().getEachKeyword_0());
          // c.setIndentation(f.getLoopAccess().getLoopKeyword_0(), f
          // .getLoopEachAccess().getEachKeyword_0());
@@ -225,7 +226,8 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
          c.setLinewrap().before(f.getPauseAccess().getPauseKeyword_0());
 //         // ==> Present <==
          c.setLinewrap().before(f.getPresentAccess().getPresentKeyword_0());
-//         // c.setLinewrap().before(f.getPresentAccess().getEndKeyword_3());
+         c.setLinewrap().before(f.getPresentAccess().getEndKeyword_3());
+         c.setIndentation(f.getPresentAccess().getPresentKeyword_0(), f.getPresentAccess().getEndKeyword_3());
 //         // TODO Present indents
 //         // ==> Repeat <==
          c.setLinewrap().before(f.getRepeatAccess().getGroup());
@@ -239,12 +241,12 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 //         // ==> Local Signal <==
          c.setLinewrap().before(
          f.getLocalSignalDeclAccess().getSignalKeyword_0());
-         c.setLinewrap().before(f.getLocalSignalDeclAccess().getInKeyword_2());
-         // c.setLinewrap().before(f.getLocalSignalDeclAccess().getEndKeyword_4());
+//         c.setLinewrap().before(f.getLocalSignalDeclAccess().getInKeyword_2());
+         c.setLinewrap().before(f.getLocalSignalDeclAccess().getEndKeyword_4());
          // c.setIndentation(f.getLocalSignalDeclAccess().getSignalKeyword_0(), f
          // .getLocalSignalDeclAccess().getEndKeyword_4());
-         // c.setIndentation(f.getLocalSignalDeclAccess().getInKeyword_2(), f
-         // .getLocalSignalDeclAccess().getEndKeyword_4());
+          c.setIndentation(f.getLocalSignalDeclAccess().getInKeyword_2(), f
+          .getLocalSignalDeclAccess().getEndKeyword_4());
 //         // ==> Suspend <==
          c.setLinewrap().before(f.getSuspendAccess().getSuspendKeyword_0());
          c.setLinewrap().before(f.getSuspendAccess().getWhenKeyword_2());
@@ -254,8 +256,9 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
          c.setLinewrap().before(f.getSustainAccess().getSustainKeyword_0());
 //         // ==> Trap <==
          c.setLinewrap().before(f.getTrapAccess().getTrapKeyword_0());
-         c.setLinewrap().before(f.getTrapAccess().getInKeyword_2());
+//         c.setLinewrap().before(f.getTrapAccess().getInKeyword_2());
          c.setLinewrap().before(f.getTrapAccess().getEndKeyword_5());
+         c.setIndentation(f.getTrapAccess().getTrapKeyword_0(), f.getTrapAccess().getEndKeyword_5());
 //         // ==> Var <==
          // c.setLinewrap().before(f.getVariableAccess().getVarKeyword_0());
          // c.setLinewrap().before(f.getVariableAccess().getInKeyword_2());

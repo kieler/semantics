@@ -1,50 +1,46 @@
 package de.cau.cs.kieler.sccharts.esterel.transformation
 
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.esterel.esterel.EsterelFactory
-import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.esterel.esterel.Program
-import de.cau.cs.kieler.esterel.esterel.ModuleInterface
-import de.cau.cs.kieler.sccharts.esterel.transformation.HelpFunctions
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.esterel.kexpressions.ISignal
-import de.cau.cs.kieler.esterel.kexpressions.Value
-import de.cau.cs.kieler.esterel.kexpressions.ValueType
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.esterel.esterel.ModuleBody
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.esterel.esterel.Statement
-import de.cau.cs.kieler.sccharts.Transition
-import java.util.Comparator
-import de.cau.cs.kieler.esterel.esterel.ConstantExpression
-import de.cau.cs.kieler.esterel.kexpressions.Expression
-import de.cau.cs.kieler.esterel.kexpressions.OperatorType
-import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
-import java.util.LinkedList
-import de.cau.cs.kieler.sccharts.Assignment
-import de.cau.cs.kieler.sccharts.Emission
-import de.cau.cs.kieler.sccharts.Effect
-import de.cau.cs.kieler.esterel.kexpressions.BooleanValue
 import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.esterel.esterel.EsterelTypeIdentifier
-import de.cau.cs.kieler.esterel.esterel.TrapDecl
-import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.sccharts.TransitionType
-import de.cau.cs.kieler.sccharts.EntryAction
-import de.cau.cs.kieler.sccharts.DuringAction
-import de.cau.cs.kieler.sccharts.ExitAction
-import de.cau.cs.kieler.sccharts.SuspendAction
-import de.cau.cs.kieler.sccharts.IterateAction
-import java.util.HashMap
-import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
-import de.cau.cs.kieler.esterel.esterel.Emit
-import de.cau.cs.kieler.esterel.kexpressions.Signal
-import de.cau.cs.kieler.esterel.esterel.Abort
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 import de.cau.cs.kieler.esterel.esterel.Block
+import de.cau.cs.kieler.esterel.esterel.ConstantExpression
+import de.cau.cs.kieler.esterel.esterel.Emit
+import de.cau.cs.kieler.esterel.esterel.EsterelFactory
+import de.cau.cs.kieler.esterel.esterel.ModuleInterface
+import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.esterel.esterel.Statement
+import de.cau.cs.kieler.esterel.esterel.TrapDecl
+import de.cau.cs.kieler.esterel.kexpressions.Expression
+import de.cau.cs.kieler.esterel.kexpressions.ISignal
+import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
+import de.cau.cs.kieler.esterel.kexpressions.OperatorType
+import de.cau.cs.kieler.esterel.kexpressions.ValueType
+import de.cau.cs.kieler.sccharts.Assignment
+import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.SuspendAction
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.TransitionType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import java.util.HashMap
+import java.util.LinkedList
+import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.EObject
+import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.esterel.Sequence
 
 class SCChartsToEsterelTransformation extends AbstractModelTransformation {
+
+    @Inject
+    extension SCChartsExtension
 
     val esterel = EsterelFactory::eINSTANCE
     val kExpression = KExpressionsFactory::eINSTANCE
@@ -54,7 +50,13 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
     var HashMap<State, Boolean> stateDoneMap
     var HashMap<Region, ISignal> regionSignalMap
     var HashMap<Transition, ISignal> abortSignalMap
+    var HashMap<Transition, ISignal> abortTriggerMap
     var ISignal deferredSignal
+
+    var boolean hasEntry
+    var boolean hasDuring
+    var boolean hasExit
+    var boolean hasSuspend
 
     // var LinkedList<ISignal> stateSignals
     // var LinkedList<State> statesDone
@@ -72,6 +74,7 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
         stateDoneMap = new HashMap<State, Boolean>
         regionSignalMap = new HashMap<Region, ISignal>
         abortSignalMap = new HashMap<Transition, ISignal>
+        abortTriggerMap = new HashMap<Transition, ISignal>
 
         // stateSignals = new LinkedList<ISignal>
         // statesDone = new LinkedList<State>
@@ -100,11 +103,16 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
             for (valObj : decl.valuedObjects) {
                 val signal = kExpression.createISignal => [
                     name = valObj.name
-                    channelDescr = esterel.createChannelDescription => [
-                        type = kExpression.createTypeIdentifier => [
-                            type = ValueType::getByName(decl.type.getName)
+                    if (!decl.type.getName.equals(ValueType::PURE)) {
+                        channelDescr = esterel.createChannelDescription => [
+                            type = kExpression.createTypeIdentifier => [
+                                type = ValueType::getByName(decl.type.getName)
+                            ]
+                            if (valObj.initialValue != null) {
+                                expression = transformExp(valObj.initialValue)
+                            }
                         ]
-                    ]
+                    }
                 ]
                 if (decl.isOutput && decl.isInput) {
                     mi.intSignalDecls += kExpression.createInputOutput => [
@@ -133,11 +141,6 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
         for (state : root.eAllContents.filter(State).toList) {
             val stateSignal = kExpression.createISignal => [
                 name = "s" + state.hashCode.toString
-                channelDescr = esterel.createChannelDescription => [
-                    type = kExpression.createTypeIdentifier => [
-                        type = ValueType::PURE
-                    ]
-                ]
             ]
             localSignal.signal.add(stateSignal)
             stateSignalMap.put(state, stateSignal)
@@ -145,11 +148,6 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
         // signal "deferred" for check if the taken transition is deferred
         deferredSignal = kExpression.createISignal => [
             name = "deferred"
-            channelDescr = esterel.createChannelDescription => [
-                type = kExpression.createTypeIdentifier => [
-                    type = ValueType::PURE
-                ]
-            ]
         ]
         localSignal.signal.add(deferredSignal)
 
@@ -248,6 +246,20 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
 
         val LinkedList<ISignal> locRegSignals = new LinkedList<ISignal>
 
+        /*
+         * check for state got incoming deferred transitions
+         */
+        var gotDeferredIncoming = false;
+        var gotImmediateIncoming = false;
+        for (inTrans : state.incomingTransitions) {
+            if (inTrans.deferred) {
+                gotDeferredIncoming = true
+            }
+            if (inTrans.immediate) {
+                gotImmediateIncoming = true
+            }
+        }
+
         // Present test for proving the permission to enter
         val stateTest = esterel.createPresent
         val stateTestBody = esterel.createPresentEventBody
@@ -266,11 +278,6 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
 
         val lSignal = kExpression.createISignal => [
             name = "surface" + state.hashCode.toString
-            channelDescr = esterel.createChannelDescription => [
-                type = kExpression.createTypeIdentifier => [
-                    type = ValueType::PURE
-                ]
-            ]
         ]
         locSignal.signal.add(lSignal)
 
@@ -291,7 +298,7 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
         val localSignal = esterel.createLocalSignal
         localSignals.signalList = localSignal
 
-        // pure signal "done..." to identify if all regions are in final states
+        // Boolean signal "done..." to identify if all regions are in final states
         val doneSignal = kExpression.createISignal => [
             name = "done" + state.hashCode.toString
             channelDescr = esterel.createChannelDescription => [
@@ -316,24 +323,16 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
             }
         }
 
-        val progSeq = esterel.createSequence
-        localSignals.statement = progSeq
-        /*
-         * place holder for the actions
-         * 
-         * 
-         */
-        progSeq.list.add(esterel.createNothing)
         // Trap to leave the state when done
         val bodyTrap = esterel.createTrap
-        progSeq.list.add(bodyTrap)
+        localSignals.statement = bodyTrap
         val bodyTrapDecls = esterel.createTrapDeclList
         bodyTrap.trapDeclList = bodyTrapDecls
         val bodyTrapDecl = esterel.createTrapDecl
         bodyTrapDecls.trapDecls.add(bodyTrapDecl)
         bodyTrapDecl.name = "trap" + state.hashCode.toString
 
-        // Block zum handeln der ineinander geschachtelten Aborts
+        // Block for encapsulate the aborts into each other
         var helpBlock = esterel.createBlock
         var Block helpBlockIn
         bodyTrap.statement = helpBlock
@@ -341,43 +340,60 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
         if (!state.regions.empty) {
             for (trans : state.outgoingTransitions) {
 
-                // Abort-Statements geschachtelt nach der Reihenfolge der Transitionen im State
+                // Abort-Statements nested in order based on priority of corresponding transitions
                 if (trans.type.equals(TransitionType::STRONGABORT)) {
-                    // signal zum Auslösen eines weakAborts
+                    // signal for trigger of the strongAbort
                     val abortSignal = kExpression.createISignal => [
                         name = "sAbort" + trans.hashCode.toString
-                        channelDescr = esterel.createChannelDescription => [
-                            type = kExpression.createTypeIdentifier => [
-                                type = ValueType::PURE
-                            ]
-                        ]
                     ]
                     localSignal.signal.add(abortSignal)
                     abortSignalMap.put(trans, abortSignal)
-
+                    /*
+                     * TODO: need to trigger abort from outside
+                     */
+//                    val triggerSignal = kExpression.createISignal => [
+//                        name = "sTrigger" + trans.hashCode.toString
+//                        channelDescr = esterel.createChannelDescription => [
+//                            type = kExpression.createTypeIdentifier => [
+//                                type = ValueType::PURE
+//                            ]
+//                        ]
+//                    ]
+//                    localSignal.signal.add(triggerSignal)
+//                    abortTriggerMap.put(trans, triggerSignal)
+                    val abPar = esterel.createParallel
                     val abort = esterel.createAbort
                     abort.body = esterel.createAbortInstance => [
                         delay = esterel.createDelayExpr => [
                             isImmediate = trans.immediate
                             event = esterel.createDelayEvent
-                            // tick = "tick"
-                            event.expr = createExpression(abortSignal)
+                            event.expr = createExpression(abortSignal) // triggerSignal 
                         ]
                     ]
-                    helpBlockIn = esterel.createBlock
+//                    val abSeq = esterel.createSequence
+//                    abSeq.list.add(esterel.createAwait => [
+//                        body = esterel.createAwaitInstance => [
+//                            delay = esterel.createDelayExpr => [
+//                                event = esterel.createDelayEvent => [
+//                                    expr = kExpression.createValuedObjectReference => [
+//                                        valuedObject = abortSignal
+//                                    ]
+//                                ]
+//                            ]
+//                        ]
+//                    ])
+//                    abSeq.list.add(createEmit(triggerSignal))
+//                    abPar.list.add(abort)
+//                    abPar.list.add(abSeq)
                     helpBlock.statement = abort
+                    helpBlockIn = esterel.createBlock
                     abort.statement = helpBlockIn
                     helpBlock = helpBlockIn
 
                 } else if (trans.type.equals(TransitionType::WEAKABORT)) {
-                    // signal zum Auslösen eines weakAborts
+                    // signal for trigger of the weakAbort
                     val abortSignal = kExpression.createISignal => [
                         name = "wAbort" + trans.hashCode.toString
-                        channelDescr = esterel.createChannelDescription => [
-                            type = kExpression.createTypeIdentifier => [
-                                type = ValueType::PURE
-                            ]
-                        ]
                     ]
                     localSignal.signal.add(abortSignal)
                     abortSignalMap.put(trans, abortSignal)
@@ -387,7 +403,6 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
                         delay = esterel.createDelayExpr => [
                             isImmediate = trans.immediate
                             event = esterel.createDelayEvent
-                            // tick = "tick"
                             event.expr = createExpression(abortSignal)
                         ]
                     ]
@@ -402,86 +417,481 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
 
         val bodyTransitionParBlock = esterel.createParallel
         helpBlock.statement = bodyTransitionParBlock
+        val bodyBlock = esterel.createBlock
 
-        if (state.regions.empty) {
+        var Block inBody
+        inBody = bodyBlock
+
+        // Block for the transformation of reference states
+        /**************************************************************************************/
+        if (state.isReferencedState) {
+            val runSeq = esterel.createSequence
+            val run = esterel.createRun
+            runSeq.list.add(run)
+            runSeq.list.add(createControllEmit(doneSignal, "true"))
+            val modRen = esterel.createModuleRenaming
+            run.module = modRen
+            modRen.module = transformModel(state).modules.findFirst[name == state.id]
+
+            if (!state.bindings.empty) {
+                val renList = esterel.createRenamingList
+                run.list = renList
+                val ren = esterel.createRenaming
+                renList.list.add(ren)
+                for (bind : state.bindings) {
+                    val sRen = esterel.createSignalRenaming => [
+                        newName = allSignals.findFirst[name == bind.actual.name]
+                        for (decl : modRen.module.interface.intSignalDecls) {
+                            var value = decl.signals.findFirst[name == bind.formal.name]
+                            if (value != null) {
+                                oldName = value
+                            }
+                        }
+                    ]
+                    ren.renamings.add(sRen)
+                }
+            }
+            bodyTransitionParBlock.list.add(runSeq)
+        } /**************************************************************************************/ else if (state.
+            regions.empty) {
             bodyTransitionParBlock.list.add(createControllEmit(doneSignal, "true"))
         } else {
-            // Transformation of the single regions
-            for (reg : state.regions) {
-                // boolean valued signals for each region to handle the termination
-                val regSignal = kExpression.createISignal => [
-                    name = "region" + reg.hashCode.toString
-                    channelDescr = esterel.createChannelDescription => [
-                        type = kExpression.createTypeIdentifier => [
-                            type = ValueType::BOOL
-                        ]
-                    ]
-                ]
-                localSignal.signal.add(regSignal)
-                regionSignalMap.put(reg, regSignal)
-                locRegSignals.add(regSignal)
 
-                // var State initState
-                val seqBlock = esterel.createBlock
-                val regSeq = esterel.createSequence
-                seqBlock.statement = regSeq
-                bodyTransitionParBlock.list.add(seqBlock)
-                // Emit of a Signal for entering the initial state
-                for (s : state.eAllContents.filter(State).toList) {
-                    if (s.initial && state.parentRegion.equals(reg)) {
-                        regSeq.list.add(createEmit(stateSignalMap.get(s)))
+            /*
+             *  Transformation of actions from the model
+             */
+            if (!state.localActions.empty) {
+                // Check for different actions for building only the relevant structure
+                for (action : state.localActions) {
+                    if (action instanceof EntryAction) {
+                        hasEntry = true
+                    }
+                    if (action instanceof DuringAction) {
+                        hasDuring = true
+                    }
+                    if (action instanceof ExitAction) {
+                        hasExit = true
+                    }
+                    if (action instanceof SuspendAction) {
+                        hasSuspend = true
                     }
                 }
-                // Loop -> (Trap -> state||...) | pause for handling the structure of the SCChart
-                val regLoop = esterel.createLoop
-                regSeq.list.add(regLoop)
-                while (regSeq.list.length < 2) {
-                    val nothing = esterel.createNothing
-                    regSeq.list.add(nothing)
+
+                /* 
+                 * Block for the transformation of the during actions 
+                 */
+                val duringPar = esterel.createParallel
+                if (hasDuring) {
+                    val duringBlock = esterel.createBlock
+                    val duringSeq = esterel.createSequence
+                    duringBlock.statement = duringSeq
+                    duringPar.list.add(duringBlock)
+
+                    /*
+                     * TODO: place the "present deferred" block only 
+                     * if there is a deferred incoming transition
+                     */
+                    if (gotDeferredIncoming) {
+                    }
+                    val deferredDuring = esterel.createPresent
+                    duringSeq.list.add(deferredDuring)
+                    val defDuringBody = esterel.createPresentEventBody
+                    deferredDuring.body = defDuringBody
+                    defDuringBody.event = esterel.createPresentEvent => [
+                        expression = createExpression(deferredSignal)
+                    ]
+                    val defDuringElse = esterel.createElsePart
+                    deferredDuring.elsePart = defDuringElse
+                    val duringImmSeq = esterel.createSequence
+                    defDuringElse.statement = duringImmSeq
+
+                    val duringLoop = esterel.createLoop
+                    duringSeq.list.add(duringLoop)
+                    val loopBody = esterel.createLoopBody
+                    duringLoop.body = loopBody
+                    duringLoop.end1 = esterel.createEndLoop
+                    val seq = esterel.createSequence
+                    loopBody.statement = seq
+                    seq.list.add(esterel.createPause)
+
+                    for (action : state.localActions) {
+                        if (action instanceof DuringAction) {
+                            if (action.immediate) {
+
+                                if (action.trigger == null) {
+                                    for (eff : action.effects) {
+                                        duringImmSeq.list.add(transformEffect(eff as Assignment))
+                                        seq.list.add(transformEffect(eff as Assignment))
+                                    }
+                                } else {
+                                    val immIf = esterel.createIfTest
+                                    duringImmSeq.list.add(immIf)
+                                    immIf.expr = transformExp(action.trigger)
+                                    immIf.thenPart = esterel.createThenPart => [
+                                        statement = esterel.createSequence => [
+                                            for (eff : action.effects) {
+                                                list.add(transformEffect(eff as Assignment))
+                                            }
+                                            while (list.size < 2) {
+                                                list.add(esterel.createNothing)
+                                            }
+                                        ]
+                                    ]
+                                    val immIf2 = esterel.createIfTest
+                                    seq.list.add(immIf2)
+                                    immIf2.expr = transformExp(action.trigger)
+                                    immIf2.thenPart = esterel.createThenPart => [
+                                        statement = esterel.createSequence => [
+                                            for (eff : action.effects) {
+                                                list.add(transformEffect(eff as Assignment))
+                                            }
+                                            while (list.size < 2) {
+                                                list.add(esterel.createNothing)
+                                            }
+                                        ]
+                                    ]
+                                }
+                            } else {
+                                if (action.trigger == null) {
+                                    for (eff : action.effects) {
+                                        seq.list.add(transformEffect(eff as Assignment))
+                                    }
+                                } else {
+                                    val immIf = esterel.createIfTest
+                                    seq.list.add(immIf)
+                                    immIf.expr = transformExp(action.trigger)
+                                    immIf.thenPart = esterel.createThenPart => [
+                                        statement = esterel.createSequence => [
+                                            for (eff : action.effects) {
+                                                list.add(transformEffect(eff as Assignment))
+                                            }
+                                            while (list.size < 2) {
+                                                list.add(esterel.createNothing)
+                                            }
+                                        ]
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                    while (duringImmSeq.list.size < 2) {
+                        duringImmSeq.list.add(esterel.createNothing)
+                    }
                 }
-                regLoop.end1 = esterel.createEndLoop
-                regLoop.body = esterel.createLoopBody
-                val loopParBlock = esterel.createParallel
-                regLoop.body.statement = loopParBlock
-                // Trap -> State || ... || State for handling cyclic SCChart structure
-                val regTrap = esterel.createTrap
-                loopParBlock.list.add(regTrap)
-                loopParBlock.list.add(esterel.createPause)
-                val regTrapDecls = esterel.createTrapDeclList
-                regTrap.trapDeclList = regTrapDecls
-                val regTrapDecl = esterel.createTrapDecl
-                regTrapDecl.name = "trap" + reg.hashCode.toString
-                regTrapDecls.trapDecls.add(regTrapDecl)
 
-                val stateParBlock = esterel.createParallel
-                regTrap.statement = stateParBlock
+                /*
+                 * Block for the Entry actions
+                 */
+                val defEntry = esterel.createPresent
+                if (hasEntry) {
+                    val defEntryBody = esterel.createPresentEventBody
+                    defEntry.body = defEntryBody
+                    defEntryBody.event = esterel.createPresentEvent => [
+                        expression = createExpression(deferredSignal)
+                    ]
+                    val defEntryElse = esterel.createElsePart
+                    defEntry.elsePart = defEntryElse
+                    val entryImmSeq = esterel.createSequence
+                    defEntryElse.statement = entryImmSeq
 
+                    for (action : state.localActions) {
+                        if (action instanceof EntryAction) {
+                            if (action.trigger == null) {
+                                for (eff : action.effects) {
+                                    entryImmSeq.list.add(transformEffect(eff as Assignment))
+                                }
+                            } else {
+                                val immIf = esterel.createIfTest
+                                entryImmSeq.list.add(immIf)
+                                immIf.expr = transformExp(action.trigger)
+                                immIf.thenPart = esterel.createThenPart => [
+                                    statement = esterel.createSequence => [
+                                        for (eff : action.effects) {
+                                            list.add(transformEffect(eff as Assignment))
+                                        }
+                                        while (list.size < 2) {
+                                            list.add(esterel.createNothing)
+                                        }
+                                    ]
+                                ]
+                            }
+                        }
+
+                    }
+                    while (entryImmSeq.list.size < 2) {
+                        entryImmSeq.list.add(esterel.createNothing)
+                    }
+                }
+
+                /*
+                 * Block for the Exit actions
+                 */
+                val exitBlock = esterel.createBlock
+                if (hasExit) {
+                    val exitSeq = esterel.createSequence
+                    exitBlock.statement = exitSeq
+                    for (action : state.localActions) {
+                        if (action instanceof ExitAction) {
+                            if (action.trigger == null) {
+                                for (eff : action.effects) {
+                                    exitSeq.list.add(transformEffect(eff as Assignment))
+                                }
+                            } else {
+                                val immIf = esterel.createIfTest
+                                exitSeq.list.add(immIf)
+                                immIf.expr = transformExp(action.trigger)
+                                immIf.thenPart = esterel.createThenPart => [
+                                    statement = esterel.createSequence => [
+                                        for (eff : action.effects) {
+                                            list.add(transformEffect(eff as Assignment))
+                                        }
+                                        while (list.size < 2) {
+                                            list.add(esterel.createNothing)
+                                        }
+                                    ]
+                                ]
+                            }
+                        }
+
+                    }
+                    while (exitSeq.list.size < 2) {
+                        exitSeq.list.add(esterel.createNothing)
+                    }
+                }
+                /*
+                 * Block for the Suspend actions
+                 */
+                var Block blockOut
+                var Block blockIn
+                if (hasSuspend) {
+
+                    val suspendBlock = esterel.createBlock
+                    blockOut = suspendBlock
+                    blockIn = blockOut
+                    for (action : state.localActions) {
+                        if (action instanceof SuspendAction) {
+                            // Signal zum Auslösen des Suspend Statements
+                            val suspendSignal = kExpression.createISignal => [
+                                name = "suspend" + action.hashCode.toString
+//                                channelDescr = esterel.createChannelDescription => [
+//                                    type = kExpression.createTypeIdentifier => [
+//                                        type = ValueType::PURE
+//                                    ]
+//                                ]
+                            ]
+                            localSignal.signal.add(suspendSignal)
+                            val susPar = esterel.createParallel
+                            if (action.weak) {
+                                val weakSus = esterel.createWeakSuspend
+                                blockIn.statement = susPar
+                                susPar.list.add(weakSus)
+
+                                // Parallele Region zum Setzen des Suspend Signals
+                                val susLoop = esterel.createLoop
+                                susPar.list.add(susLoop)
+                                susLoop.body = esterel.createLoopBody
+                                susLoop.end1 = esterel.createEndLoop
+
+                                val susSeq = esterel.createSequence
+                                susLoop.body.statement = susSeq
+
+                                val susIf = esterel.createIfTest
+                                susSeq.list.add(susIf)
+                                susIf.expr = transformExp(action.trigger)
+                                susIf.thenPart = esterel.createThenPart => [
+                                    statement = createEmit(suspendSignal)
+                                ]
+                                susSeq.list.add(esterel.createPause)
+
+                                // Suspend Region
+                                val susBody = esterel.createBlock
+                                weakSus.delay = esterel.createDelayExpr => [
+                                    isImmediate = action.immediate
+                                    event = esterel.createDelayEvent => [
+                                        expr = kExpression.createValuedObjectReference => [
+                                            valuedObject = suspendSignal
+                                        ]
+                                    ]
+                                ]
+                                blockIn = susBody
+                                weakSus.statement = blockIn
+                            } else {
+                                val sus = esterel.createSuspend
+                                blockIn.statement = susPar
+                                susPar.list.add(sus)
+
+                                // Parallele Region zum Setzen des Suspend Signals
+                                val susLoop = esterel.createLoop
+                                susPar.list.add(susLoop)
+                                susLoop.body = esterel.createLoopBody
+                                susLoop.end1 = esterel.createEndLoop
+
+                                val susSeq = esterel.createSequence
+                                susLoop.body.statement = susSeq
+
+                                val susIf = esterel.createIfTest
+                                susSeq.list.add(susIf)
+                                susIf.expr = transformExp(action.trigger)
+                                susIf.thenPart = esterel.createThenPart => [
+                                    statement = createEmit(suspendSignal)
+                                ]
+                                susSeq.list.add(esterel.createPause)
+
+                                // Suspend Region
+                                val susBody = esterel.createBlock
+                                sus.delay = esterel.createDelayExpr => [
+                                    isImmediate = action.immediate
+                                    event = esterel.createDelayEvent => [
+                                        expr = kExpression.createValuedObjectReference => [
+                                            valuedObject = suspendSignal
+                                        ]
+                                    ]
+                                ]
+                                blockIn = susBody
+                                sus.statement = blockIn
+                            }
+                        }
+                    }
+                }
+
+                /*
+                 * Zusammensetzen der einzelnen Action-Elemente, um unnötige Esterel-Strukturen
+                 * zu umgehen
+                 */
+                if (hasDuring) {
+                    val duringBlock = esterel.createBlock
+                    duringPar.list.add(inBody)
+                    duringBlock.statement = duringPar
+                    inBody = duringBlock
+                }
+                if (hasEntry && hasExit) {
+                    val actionBlock = esterel.createBlock
+                    val actionSeq = esterel.createSequence
+                    actionBlock.statement = actionSeq
+                    actionSeq.list.add(defEntry)
+                    actionSeq.list.add(inBody)
+                    actionSeq.list.add(exitBlock)
+                    inBody = actionBlock
+                } else if (hasEntry) {
+                    val actionBlock = esterel.createBlock
+                    val actionSeq = esterel.createSequence
+                    actionBlock.statement = actionSeq
+                    actionSeq.list.add(defEntry)
+                    actionSeq.list.add(inBody)
+                    inBody = actionBlock
+                } else if (hasExit) {
+                    val actionBlock = esterel.createBlock
+                    val actionSeq = esterel.createSequence
+                    actionBlock.statement = actionSeq
+                    actionSeq.list.add(inBody)
+                    actionSeq.list.add(exitBlock)
+                    inBody = actionBlock
+                }
+                if (hasSuspend) {
+                    blockIn.statement = inBody
+                    inBody = blockOut
+                }
+
+            }
+            bodyTransitionParBlock.list.add(inBody)
+            // check whether the state is a superstate or only has local actions
+            var superState = false
+            for (reg : state.regions) {
                 for (s : state.eAllContents.filter(State).toList) {
                     if (s.parentRegion.equals(reg)) {
-                        stateParBlock.list.add(transformState(s, regTrapDecl))
+                        superState = true
                     }
                 }
             }
 
+            if (!superState) {
+                bodyBlock.statement = createControllEmit(doneSignal, "true")
+            } else {
+                val bodyParBlock = esterel.createParallel
+                bodyBlock.statement = bodyParBlock
+
+                // Transformation of the single regions
+                for (reg : state.regions) {
+                    // boolean valued signals for each region to handle the termination
+                    val regSignal = kExpression.createISignal => [
+                        name = "region" + reg.hashCode.toString
+                        channelDescr = esterel.createChannelDescription => [
+                            type = kExpression.createTypeIdentifier => [
+                                type = ValueType::BOOL
+                            ]
+                        ]
+                    ]
+                    localSignal.signal.add(regSignal)
+                    regionSignalMap.put(reg, regSignal)
+                    locRegSignals.add(regSignal)
+
+                    // var State initState
+                    val seqBlock = esterel.createBlock
+                    val regSeq = esterel.createSequence
+                    seqBlock.statement = regSeq
+                    bodyParBlock.list.add(seqBlock)
+                    // Emit of a Signal for entering the initial state
+                    for (s : state.eAllContents.filter(State).toList) {
+                        if (s.initial && s.parentRegion.equals(reg)) {
+                            regSeq.list.add(createEmit(stateSignalMap.get(s)))
+                        }
+                    }
+                    // Loop -> (Trap -> state||...) | pause for handling the structure of the SCChart
+                    val regLoop = esterel.createLoop
+                    regSeq.list.add(regLoop)
+                    while (regSeq.list.length < 2) {
+                        val nothing = esterel.createNothing
+                        regSeq.list.add(nothing)
+                    }
+                    regLoop.end1 = esterel.createEndLoop
+                    regLoop.body = esterel.createLoopBody
+                    val loopParBlock = esterel.createParallel
+                    regLoop.body.statement = loopParBlock
+                    // Trap -> State || ... || State for handling cyclic SCChart structure
+                    val regTrap = esterel.createTrap
+                    loopParBlock.list.add(regTrap)
+                    loopParBlock.list.add(esterel.createPause)
+                    val regTrapDecls = esterel.createTrapDeclList
+                    regTrap.trapDeclList = regTrapDecls
+                    val regTrapDecl = esterel.createTrapDecl
+                    regTrapDecl.name = "trap" + reg.hashCode.toString
+                    regTrapDecls.trapDecls.add(regTrapDecl)
+
+                    val stateParBlock = esterel.createParallel
+                    regTrap.statement = stateParBlock
+
+                    for (s : state.eAllContents.filter(State).toList) {
+                        if (s.parentRegion.equals(reg)) {
+                            stateParBlock.list.add(transformState(s, regTrapDecl))
+                        }
+                    }
+                }
+                while (bodyParBlock.list.size < 2) {
+                    bodyParBlock.list.add(esterel.createNothing)
+                }
+            }
+
             // extra parallel region to handle the termination of all regions
-            val controllLoop = esterel.createLoop
-            bodyTransitionParBlock.list.add(controllLoop)
-            controllLoop.body = esterel.createLoopBody
-            controllLoop.end1 = esterel.createEndLoop
+            if (superState) {
+                val controllLoop = esterel.createLoop
+                bodyTransitionParBlock.list.add(controllLoop)
+                controllLoop.body = esterel.createLoopBody
+                controllLoop.end1 = esterel.createEndLoop
 
-            val controllSeq = esterel.createSequence
-            controllLoop.body.statement = controllSeq
+                val controllSeq = esterel.createSequence
+                controllLoop.body.statement = controllSeq
 
-            val controllIf = esterel.createIfTest
-            controllSeq.list.add(controllIf)
-            controllIf.expr = createExp(locRegSignals)
-            controllIf.thenPart = esterel.createThenPart => [
-                statement = createControllEmit(doneSignal, "true")
-            ]
-            controllIf.elsePart = esterel.createElsePart => [
-                statement = createControllEmit(doneSignal, "false")
-            ]
-            controllSeq.list.add(esterel.createPause)
+                val controllIf = esterel.createIfTest
+                controllSeq.list.add(controllIf)
+                controllIf.expr = createExp(locRegSignals)
+                controllIf.thenPart = esterel.createThenPart => [
+                    statement = createControllEmit(doneSignal, "true")
+                ]
+                controllIf.elsePart = esterel.createElsePart => [
+                    statement = createControllEmit(doneSignal, "false")
+                ]
+                controllSeq.list.add(esterel.createPause)
+            }
 
         }
 
@@ -493,29 +903,41 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
             val conSeq = esterel.createSequence
             controllBlock.statement = conSeq
             bodyTransitionParBlock.list.add(controllBlock)
-            val defTest = esterel.createPresent
-            conSeq.list.add(defTest)
-            conSeq.list.add(esterel.createNothing)
-            val defTestBody = esterel.createPresentEventBody
-            defTest.body = defTestBody
-            defTestBody.event = esterel.createPresentEvent => [
-                expression = createExpression(deferredSignal)
-            ]
-            val defTestElse = esterel.createElsePart
-            defTest.elsePart = defTestElse
-
-            // Transformation of the immediate transitions
+            var Sequence sequence
             val immTrans = esterel.createSequence
-            defTestElse.statement = immTrans
+            if (gotDeferredIncoming) {
+                val defTest = esterel.createPresent
+                conSeq.list.add(defTest)
+                val defTestBody = esterel.createPresentEventBody
+                defTest.body = defTestBody
+                defTestBody.event = esterel.createPresentEvent => [
+                    expression = createExpression(deferredSignal)
+                ]
+                val defTestElse = esterel.createElsePart
+                defTest.elsePart = defTestElse
+
+                // Transformation of the immediate transitions
+                defTestElse.statement = immTrans
+                sequence = immTrans
+            } else {
+                sequence = conSeq
+            }
+
             for (trans : state.outgoingTransitions) {
                 /*
                  * Abort transitions don't need the done flag to trigger
                  */
                 if (trans.immediate) {
                     val transIf = esterel.createIfTest
-                    immTrans.list.add(transIf)
+                    sequence.list.add(transIf)
                     if (!trans.type.equals(TransitionType::TERMINATION) && !state.regions.empty) {
-                        transIf.expr = transformExp(trans.trigger)
+                        if (trans.trigger != null) {
+                            transIf.expr = transformExp(trans.trigger)
+                        } else {
+                            transIf.expr = esterel.createConstantExpression => [
+                                value = Boolean.TRUE.toString
+                            ]
+                        }
                         val thenSeq = esterel.createSequence
                         transIf.thenPart = esterel.createThenPart => [
                             statement = thenSeq
@@ -530,6 +952,9 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
                             thenSeq.list.add(createControllEmit(regionSignalMap.get(state.parentRegion), "false"))
                         }
                         thenSeq.list.add(createControllEmit(doneSignal, "false"))
+                        if (trans.deferred) {
+                            thenSeq.list.add(createEmit(deferredSignal))
+                        }
                         thenSeq.list.add(createEmit(abortSignalMap.get(trans)))
                         thenSeq.list.add(esterel.createHalt)
                     } else {
@@ -548,6 +973,9 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
                             thenSeq.list.add(createControllEmit(regionSignalMap.get(state.parentRegion), "false"))
                         }
                         thenSeq.list.add(createControllEmit(doneSignal, "false"))
+                        if (trans.deferred) {
+                            thenSeq.list.add(createEmit(deferredSignal))
+                        }
                         thenSeq.list.add(esterel.createExit => [
                             trap = bodyTrapDecl
                         ])
@@ -563,8 +991,7 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
             val transLoop = esterel.createLoop
             conSeq.list.add(transLoop)
             while (conSeq.list.length < 2) {
-                val sta = esterel.createNothing
-                conSeq.list.add(sta)
+                conSeq.list.add(esterel.createNothing)
             }
             transLoop.end1 = esterel.createEndLoop
             transLoop.body = esterel.createLoopBody
@@ -578,7 +1005,13 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
                 val transIf = esterel.createIfTest
                 transSeq.list.add(transIf)
                 if (!trans.type.equals(TransitionType::TERMINATION) && !state.regions.empty) {
-                    transIf.expr = transformExp(trans.trigger)
+                    if (trans.trigger != null) {
+                        transIf.expr = transformExp(trans.trigger)
+                    } else {
+                        transIf.expr = esterel.createConstantExpression => [
+                            value = Boolean.TRUE.toString
+                        ]
+                    }
                     val thenSeq = esterel.createSequence
                     transIf.thenPart = esterel.createThenPart => [
                         statement = thenSeq
@@ -593,6 +1026,9 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
                         thenSeq.list.add(createControllEmit(regionSignalMap.get(state.parentRegion), "false"))
                     }
                     thenSeq.list.add(createControllEmit(doneSignal, "false"))
+                    if (trans.deferred) {
+                        thenSeq.list.add(createEmit(deferredSignal))
+                    }
                     thenSeq.list.add(createEmit(abortSignalMap.get(trans)))
                     thenSeq.list.add(esterel.createHalt)
 
@@ -612,6 +1048,9 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
                         thenSeq.list.add(createControllEmit(regionSignalMap.get(state.parentRegion), "false"))
                     }
                     thenSeq.list.add(createControllEmit(doneSignal, "false"))
+                    if (trans.deferred) {
+                        thenSeq.list.add(createEmit(deferredSignal))
+                    }
                     thenSeq.list.add(esterel.createExit => [
                         trap = bodyTrapDecl
                     ])
@@ -625,6 +1064,10 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
         } else {
             bodyTransitionParBlock.list.add(esterel.createHalt)
         }
+        while (bodyTransitionParBlock.list.length < 2) {
+            bodyTransitionParBlock.list.add(esterel.createNothing)
+        }
+
         // check if state was instantaneous
         val instanceTest = esterel.createPresent
         val instanceTestBody = esterel.createPresentEventBody
@@ -642,293 +1085,6 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
         stateTest
     }
 
-//    public def Statement transformState2(State state, boolean deferred, TrapDecl outTrap) {
-//
-//        val regSignalList = new LinkedList<ISignal>()
-//
-//        val programCodeBlock = esterel.createBlock
-//        val progSeq = esterel.createSequence
-//
-//        // create local declarations --------------------------------- nach oben verschieben ----------------------
-//        var decls = state.eAllContents.filter(Declaration).toList
-//        if (!decls.empty) {
-//            val localSignals = esterel.createLocalSignalDecl
-//            val localSignal = esterel.createLocalSignal
-//            localSignals.signalList = localSignal
-//
-//            for (decl : state.declarations) {
-//                for (valObj : decl.valuedObjects) {
-//                    val declSignal = kExpression.createISignal => [
-//                        name = valObj.name
-//                        channelDescr = esterel.createChannelDescription => [
-//                            type = kExpression.createTypeIdentifier => [
-//                                type = ValueType::getByName(decl.type.getName)
-//                            ]
-//                        ]
-//                    ]
-//                    localSignal.signal.add(declSignal)
-//                }
-//            }
-//            localSignals.statement = progSeq // mit den IfTests verbinden ---------------------------------
-//            programCodeBlock.statement = localSignals
-//        } else {
-//            programCodeBlock.statement = progSeq
-//        }
-//
-//        // val stateSignal = esterel.crea
-//        val seq = esterel.createSequence
-//
-//        // create IfTest for handling the structure of the SCChart
-//        val stateTest = esterel.createPresent
-//        val stateTestBody = esterel.createPresentEventBody
-//        stateTest.body = stateTestBody
-//        stateTestBody.event = esterel.createPresentEvent => [
-//            expression = createExpression(stateSignalMap.get(state))
-//        ]
-//        val thenTest = esterel.createThenPart
-//        thenTest.statement = seq
-//        stateTestBody.thenPart = thenTest
-//        progSeq.list.add(stateTest)
-//
-//        // progSeq.list.add(esterel.createPause)
-//        progSeq.list.add(esterel.createNothing)
-//
-//        val regions = state.regions
-//        val transitions = state.outgoingTransitions
-//
-//        if (regions.empty) {
-//
-//            // -------------------------------------------- Transition für Superstates anfertigen-----------------------------
-//            if (transitions.size > 0) {
-//
-//                val awaitBlock = esterel.createAwait
-//                seq.list.add(awaitBlock)
-//                val awaitBody = esterel.createAwaitCase
-//                awaitBlock.body = awaitBody
-//                var awaitCases = awaitBody.cases
-//                awaitBody.end = "end"
-//                for (transition : transitions) {
-//                    var awaitCase = esterel.createAbortCaseSingle
-//                    awaitCases.add(awaitCase)
-//                    awaitCase.delay = esterel.createDelayExpr => [
-//                        event = esterel.createDelayEvent => [
-//                            if (transition.trigger != null) {
-//                                tick = "tick"
-//                            } else {
-//                                expr
-//                            }
-//                        ]
-//                        isImmediate = transition.immediate
-//                    ]
-//                    awaitCase.statement = esterel.createSequence => [
-//                        for (effect : transition.effects) {
-//                            list.add(transformEffect(effect as Assignment))
-//                        }
-//                        list.add(createControllEmit(stateSignalMap.get(transition.sourceState), "false"))
-//                        list.add(createControllEmit(stateSignalMap.get(transition.targetState), "true"))
-//                        if (!transition.sourceState.final && transition.targetState.final) {
-//                            list.add(createControllEmit(regionSignalMap.get(state.parentRegion), "true"))
-//                        } else if (transition.sourceState.final && !transition.targetState.final) {
-//                            list.add(createControllEmit(regionSignalMap.get(state.parentRegion), "false"))
-//                        }
-//                    ]
-//                }
-//            } else if (transitions.size == 0 && !state.final) {
-//                seq.list.add(esterel.createHalt)
-//            } else {
-//                seq.list.add(esterel.createNothing)
-//            }
-//        } else {
-//
-//            // Liste der Signale, die zum handeln der Regionen und der aborts benötigt werden
-//            val regSignalDecl = esterel.createLocalSignalDecl
-//            val regSignals = esterel.createLocalSignal
-//            regSignalDecl.signalList = regSignals
-//            seq.list.add(regSignalDecl)
-//
-//            // Trap zum handeln der Normaltermination			
-//            val trap = esterel.createTrap
-//            val trapDecls = esterel.createTrapDeclList
-//            trap.trapDeclList = trapDecls
-//            val trapDecl = esterel.createTrapDecl
-//            trapDecls.trapDecls.add(trapDecl)
-//            trapDecl.name = "trap" + state.hashCode.toString
-//
-//            regSignalDecl.statement = trap
-//
-//            val outTransitions = state.outgoingTransitions
-//
-//            // Statement zum Verschachteln von Aborts
-//            var Block out = esterel.createBlock
-//            var Block in
-//
-//            val parblock = esterel.createParallel
-//            val controllParBlock = esterel.createParallel
-//            controllParBlock.list.add(out)
-//
-//            for (trans : outTransitions) {
-//
-//                // signals zum Handeln von verschachtelten Aborts
-//                val abortSignal = kExpression.createISignal => [
-//                    name = "abort" + trans.hashCode.toString
-//                    channelDescr = esterel.createChannelDescription => [
-//                        type = kExpression.createTypeIdentifier => [
-//                            type = ValueType::BOOL
-//                        ]
-//                    ]
-//                ]
-//                regSignals.signal.add(abortSignal)
-//
-//                in = esterel.createBlock
-//
-//                // Abort-Statements geschachtelt nach der Reihenfolge der Transitionen im State
-//                if (trans.type.equals(TransitionType::STRONGABORT)) {
-//                    val abort = esterel.createAbort
-//                    abort.body = esterel.createAbortInstance => [
-//                        delay = esterel.createDelayExpr => [
-//                            isImmediate = trans.immediate
-//                            event = esterel.createDelayEvent
-//                            // tick = "tick"
-//                            event.expr = createExp(abortSignal)
-//                        ]
-//                    ]
-//                    abort.statement = in
-//                    in = out
-//
-//                } else if (trans.type.equals(TransitionType::WEAKABORT)) {
-//                    val abort = esterel.createWeakAbort
-//                    abort.body = esterel.createAbortInstance => [
-//                        delay = esterel.createDelayExpr => [
-//                            isImmediate = trans.immediate
-//                            event = esterel.createDelayEvent
-//                            // tick = "tick"
-//                            event.expr = createExp(abortSignal)
-//                        ]
-//                    ]
-//                    abort.statement = in
-//                    in = out
-//                }
-//
-//            }
-//
-//            out.statement = parblock
-//
-//            // Erzeugen paralleler Statements für jede Region
-//            trap.statement = controllParBlock // ------------------------aborts nicht vergessen-----------------------------
-//            for (reg : regions) {
-//
-//                // signals zum prüfen, ob die jeweilige Region im final state ist
-//                val regSignal = kExpression.createISignal => [
-//                    name = "r" + reg.hashCode.toString
-//                    channelDescr = esterel.createChannelDescription => [
-//                        type = kExpression.createTypeIdentifier => [
-//                            type = ValueType::BOOL
-//                        ]
-//                    ]
-//                ]
-//                regionSignalMap.put(reg, regSignal)
-//                regSignals.signal.add(regSignal)
-//                regSignalList.add(regSignal)
-//
-//                var State initState
-//                val stateSeq = esterel.createSequence
-//                for (sta : state.eAllContents.filter(State).toList) {
-//                    if (sta.initial && sta.parentRegion.equals(reg)) {
-//                        initState = sta
-//                    }
-//                    if (sta.parentRegion.equals(reg)) {
-//                        stateSeq.list.add(transformState(sta, false))
-//                    }
-//                }
-//                stateSeq.list.add(esterel.createPause)
-//
-//                // Loop für das Handling möglicher Zyklen in der Region und für die Terminierung
-//                val loop = esterel.createLoop
-//                loop.end1 = esterel.createEndLoop
-//                loop.body = esterel.createLoopBody
-//                val regSeq = esterel.createSequence
-//
-//                loop.body.statement = regSeq
-//                val regBlock = stateSeq
-//                val initEmit = createControllEmit(stateSignalMap.get(initState), "true")
-//                regSeq.list.add(initEmit)
-//                regSeq.list.add(loop)
-//                loop.body.statement = regBlock
-//                parblock.list.add(regSeq)
-//
-//            }
-//
-//            // Erzeugen eines weiteren parallelen Statements für Termination handling
-//            val controllLoop = esterel.createLoop
-//            controllLoop.end1 = esterel.createEndLoop
-//            val loopSeq = esterel.createSequence
-//            controllLoop.body = esterel.createLoopBody => [
-//                statement = loopSeq
-//            ]
-//            val controllIf = esterel.createIfTest
-//            controllIf.expr = createExp(regSignalList)
-//            controllIf.thenPart = esterel.createThenPart => [
-//                statement = esterel.createExit => [
-//                    trap = trapDecl
-//                ]
-//            ]
-//            loopSeq.list.add(controllIf)
-//            loopSeq.list.add(esterel.createPause)
-//            parblock.list.add(controllLoop)
-//
-//            if (transitions.size > 0) {
-//
-//                val awaitBlock = esterel.createAwait
-//                controllParBlock.list.add(awaitBlock)
-//                val awaitBody = esterel.createAwaitCase
-//                awaitBlock.body = awaitBody
-//                var awaitCases = awaitBody.cases
-//                awaitBody.end = "end"
-//                for (transition : transitions) {
-//                    var awaitCase = esterel.createAbortCaseSingle
-//                    awaitCases.add(awaitCase)
-//                    awaitCase.delay = esterel.createDelayExpr => [
-//                        event = esterel.createDelayEvent => [
-//                            if (transition.trigger != null) {
-//                                tick = "tick"
-//                            } else {
-//                                expr
-//                            }
-//                        ]
-//                        isImmediate = transition.immediate
-//                    ]
-//                    awaitCase.statement = esterel.createSequence => [
-//                        for (effect : transition.effects) {
-//                            list.add(transformEffect(effect as Assignment))
-//                        }
-//                        list.add(createControllEmit(stateSignalMap.get(transition.sourceState), "false"))
-//                        list.add(createControllEmit(stateSignalMap.get(transition.targetState), "true"))
-//                        if (!transition.sourceState.final && transition.targetState.final) {
-//                            list.add(createControllEmit(regionSignalMap.get(state.parentRegion), "true"))
-//                        } else if (transition.sourceState.final && !transition.targetState.final) {
-//                            list.add(createControllEmit(regionSignalMap.get(state.parentRegion), "false"))
-//                        }
-//                    ]
-//                }
-//            } else if (transitions.size == 0 && !state.final) {
-//                seq.list.add(esterel.createHalt)
-//                controllParBlock.list.add(esterel.createNothing)
-//
-//            } else {
-//                seq.list.add(esterel.createNothing)
-//                controllParBlock.list.add(esterel.createNothing)
-//            }
-//
-//        }
-//
-//        // Help function
-//        while (seq.list.length < 2) {
-//            val sta = esterel.createNothing
-//            seq.list.add(sta)
-//        }
-//        programCodeBlock
-//
-//    }
     def Emit createEmit(ISignal sig) {
         val emit = esterel.createEmit => [signal = sig]
         emit
@@ -983,25 +1139,25 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
         expression
     }
 
-    def dispatch ConstantExpression transformExp(de.cau.cs.kieler.core.kexpressions.BoolValue exp) {
+    def dispatch ConstantExpression transformExp(BoolValue exp) {
         esterel.createConstantExpression => [
             value = Boolean.toString(exp.value)
         ]
     }
 
-    def dispatch ConstantExpression transformExp(de.cau.cs.kieler.core.kexpressions.IntValue exp) {
+    def dispatch ConstantExpression transformExp(IntValue exp) {
         esterel.createConstantExpression => [
             value = Integer.toString(exp.value)
         ]
     }
 
-    def dispatch ConstantExpression transformExp(de.cau.cs.kieler.core.kexpressions.FloatValue exp) {
+    def dispatch ConstantExpression transformExp(FloatValue exp) {
         esterel.createConstantExpression => [
             value = Float.toString(exp.value)
         ]
     }
 
-    def dispatch OperatorExpression transformExp(de.cau.cs.kieler.core.kexpressions.ValuedObjectReference exp) {
+    def dispatch OperatorExpression transformExp(ValuedObjectReference exp) {
         return kExpression.createOperatorExpression => [
             operator = OperatorType::VAL
             subExpressions += kExpression.createValuedObjectReference => [
@@ -1053,9 +1209,12 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
         ]
     }
 
-    def dispatch Expression transformTrigger(de.cau.cs.kieler.core.kexpressions.ValuedObjectReference exp) {
-        return kExpression.createValuedObjectReference => [
-            valuedObject = allSignals.findFirst[name == exp.valuedObject.name]
+    def dispatch Expression transformTrigger(ValuedObjectReference exp) {
+        kExpression.createOperatorExpression => [
+            operator = OperatorType::VAL
+            subExpressions += kExpression.createValuedObjectReference => [
+                valuedObject = allSignals.findFirst[name == exp.valuedObject.name]
+            ]
         ]
     }
 
