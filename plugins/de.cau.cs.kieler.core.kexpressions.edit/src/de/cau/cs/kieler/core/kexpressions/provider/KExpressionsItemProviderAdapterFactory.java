@@ -375,6 +375,29 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
 	}
 
     /**
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.Call} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CallItemProvider callItemProvider;
+
+				/**
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.Call}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCallAdapter() {
+		if (callItemProvider == null) {
+			callItemProvider = new CallItemProvider(this);
+		}
+
+		return callItemProvider;
+	}
+
+				/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -483,9 +506,10 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
 		if (operatorExpressionItemProvider != null) operatorExpressionItemProvider.dispose();
 		if (textExpressionItemProvider != null) textExpressionItemProvider.dispose();
 		if (declarationItemProvider != null) declarationItemProvider.dispose();
-		if (functionCallItemProvider != null) functionCallItemProvider.dispose();
 		if (parameterItemProvider != null) parameterItemProvider.dispose();
 		if (stringValueItemProvider != null) stringValueItemProvider.dispose();
+		if (callItemProvider != null) callItemProvider.dispose();
+		if (functionCallItemProvider != null) functionCallItemProvider.dispose();
 	}
 
 }

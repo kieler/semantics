@@ -247,6 +247,116 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
 	}
 
+	public class DeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DeclarationWOSemicolon");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cConstAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cConstConstKeyword_1_0 = (Keyword)cConstAssignment_1.eContents().get(0);
+		private final Assignment cInputAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cInputInputKeyword_2_0 = (Keyword)cInputAssignment_2.eContents().get(0);
+		private final Assignment cOutputAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cOutputOutputKeyword_3_0 = (Keyword)cOutputAssignment_3.eContents().get(0);
+		private final Assignment cStaticAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cStaticStaticKeyword_4_0 = (Keyword)cStaticAssignment_4.eContents().get(0);
+		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
+		private final Group cGroup_5_0 = (Group)cAlternatives_5.eContents().get(0);
+		private final Assignment cSignalAssignment_5_0_0 = (Assignment)cGroup_5_0.eContents().get(0);
+		private final Keyword cSignalSignalKeyword_5_0_0_0 = (Keyword)cSignalAssignment_5_0_0.eContents().get(0);
+		private final Assignment cTypeAssignment_5_0_1 = (Assignment)cGroup_5_0.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_5_0_1_0 = (RuleCall)cTypeAssignment_5_0_1.eContents().get(0);
+		private final Assignment cSignalAssignment_5_1 = (Assignment)cAlternatives_5.eContents().get(1);
+		private final Keyword cSignalSignalKeyword_5_1_0 = (Keyword)cSignalAssignment_5_1.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_6_0 = (RuleCall)cValuedObjectsAssignment_6.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cCommaKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_7_1_0 = (RuleCall)cValuedObjectsAssignment_7_1.eContents().get(0);
+		
+		//DeclarationWOSemicolon returns kexpressions::Declaration:
+		//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
+		//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*;
+		@Override public ParserRule getRule() { return rule; }
+
+		//annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
+		//type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*
+		public Group getGroup() { return cGroup; }
+
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+
+		//const?="const"?
+		public Assignment getConstAssignment_1() { return cConstAssignment_1; }
+
+		//"const"
+		public Keyword getConstConstKeyword_1_0() { return cConstConstKeyword_1_0; }
+
+		//input?="input"?
+		public Assignment getInputAssignment_2() { return cInputAssignment_2; }
+
+		//"input"
+		public Keyword getInputInputKeyword_2_0() { return cInputInputKeyword_2_0; }
+
+		//output?="output"?
+		public Assignment getOutputAssignment_3() { return cOutputAssignment_3; }
+
+		//"output"
+		public Keyword getOutputOutputKeyword_3_0() { return cOutputOutputKeyword_3_0; }
+
+		//static?="static"?
+		public Assignment getStaticAssignment_4() { return cStaticAssignment_4; }
+
+		//"static"
+		public Keyword getStaticStaticKeyword_4_0() { return cStaticStaticKeyword_4_0; }
+
+		//signal?="signal"? type=ValueType | signal?="signal"
+		public Alternatives getAlternatives_5() { return cAlternatives_5; }
+
+		//signal?="signal"? type=ValueType
+		public Group getGroup_5_0() { return cGroup_5_0; }
+
+		//signal?="signal"?
+		public Assignment getSignalAssignment_5_0_0() { return cSignalAssignment_5_0_0; }
+
+		//"signal"
+		public Keyword getSignalSignalKeyword_5_0_0_0() { return cSignalSignalKeyword_5_0_0_0; }
+
+		//type=ValueType
+		public Assignment getTypeAssignment_5_0_1() { return cTypeAssignment_5_0_1; }
+
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_5_0_1_0() { return cTypeValueTypeEnumRuleCall_5_0_1_0; }
+
+		//signal?="signal"
+		public Assignment getSignalAssignment_5_1() { return cSignalAssignment_5_1; }
+
+		//"signal"
+		public Keyword getSignalSignalKeyword_5_1_0() { return cSignalSignalKeyword_5_1_0; }
+
+		//valuedObjects+=ValuedObject
+		public Assignment getValuedObjectsAssignment_6() { return cValuedObjectsAssignment_6; }
+
+		//ValuedObject
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_6_0() { return cValuedObjectsValuedObjectParserRuleCall_6_0; }
+
+		//("," valuedObjects+=ValuedObject)*
+		public Group getGroup_7() { return cGroup_7; }
+
+		//","
+		public Keyword getCommaKeyword_7_0() { return cCommaKeyword_7_0; }
+
+		//valuedObjects+=ValuedObject
+		public Assignment getValuedObjectsAssignment_7_1() { return cValuedObjectsAssignment_7_1; }
+
+		//ValuedObject
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_7_1_0() { return cValuedObjectsValuedObjectParserRuleCall_7_1_0; }
+	}
+
 	public class ValuedObjectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedObject");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -328,6 +438,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	private final TestEntityElements pTestEntity;
 	private final AnnotatedExpressionElements pAnnotatedExpression;
 	private final DeclarationElements pDeclaration;
+	private final DeclarationWOSemicolonElements pDeclarationWOSemicolon;
 	private final ValuedObjectElements pValuedObject;
 	
 	private final Grammar grammar;
@@ -343,6 +454,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		this.pTestEntity = new TestEntityElements();
 		this.pAnnotatedExpression = new AnnotatedExpressionElements();
 		this.pDeclaration = new DeclarationElements();
+		this.pDeclarationWOSemicolon = new DeclarationWOSemicolonElements();
 		this.pValuedObject = new ValuedObjectElements();
 	}
 	
@@ -437,6 +549,17 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getDeclarationRule() {
 		return getDeclarationAccess().getRule();
+	}
+
+	//DeclarationWOSemicolon returns kexpressions::Declaration:
+	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
+	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*;
+	public DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
+		return pDeclarationWOSemicolon;
+	}
+	
+	public ParserRule getDeclarationWOSemicolonRule() {
+		return getDeclarationWOSemicolonAccess().getRule();
 	}
 
 	//// Valued Object Rule

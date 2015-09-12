@@ -1,4 +1,4 @@
-grammar de.cau.cs.kieler.sccharts.text3.Sct3 with de.cau.cs.kieler.sccharts.text.sct.Sct
+grammar de.cau.cs.kieler.sccharts.text3.Sct3 with de.cau.cs.kieler.sccharts.text.actions.Actions
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://kieler.cs.cau.de/annotations" as annotations
@@ -10,61 +10,82 @@ import "http://kieler.cs.cau.de/sccharts/0.1.0" as sccharts
 
 // ---------------------------------------------------------------------------------------------------
 
-Root returns sccharts::State:
-    SCChart
-;
+SCCharts returns sccharts::SCCharts:
+    rootStates += RootState*;
 
-// ---------------------------------------------------------------------------------------------------
+
+RootState returns sccharts::State:
+    (annotations += Annotation)*
+    'scchart' id=ID label=STRING?
+  	
+  	(('is' expression = Expression)
+  	|
+    ('{'
+    	(declarations+=DeclarationWOSemicolon | localActions+=LocalAction)*
+        ((regions+=SingleDataflowRegion|regions+=SingleControlflowRegion)(regions += Region)*)?
+    '}'));
+    
+
+State returns sccharts::State:
+    (annotations += Annotation)*
+    initial?= 'initial'? final?='final'? type=StateType? 
+    'state' id=ID label=STRING?
+  
+  	(('is' expression = Expression)
+  	|
+    ('{'
+    	(declarations+=DeclarationWOSemicolon | localActions+=LocalAction)*
+        ((regions+=SingleDataflowRegion|regions+=SingleControlflowRegion)(regions += Region)*)?
+    '}'))?
+     // The semicolon is mandatory for backtracking!
+    (outgoingTransitions+=Transition)*;
+    
+
+Transition returns sccharts::Transition:
+    (annotations += Annotation)*
+    (type=TransitionType) 
+    targetState=[sccharts::State|ID] 
+	immediate?='immediate'? 
+	deferred?='deferred'? 
+	history=HistoryType?
+	(('if' (delay=INT? trigger=BoolExpression)? ('then' effects+=Effect (';'effects+=Effect)*)?)
+    |
+	('if' label=STRING))?;
+
 
 SingleControlflowRegion returns sccharts::ControlflowRegion:
 	{sccharts::ControlflowRegion}
-    (
-      (annotations += Annotation)*
-      'region' (id=ID)? (label=STRING)? ':'
-      (declarations+=Declaration)*
-     )?
+    ((annotations += Annotation)*
+    	'region' (id=ID)? (label=STRING)? ':'
+    	(declarations+=DeclarationWOSemicolon)*
+    )?
     (states+=State)*;
-    
 
-// ---------------------------------------------------------------------------------------------------
 
 SingleDataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
-    (
-      (annotations += Annotation)*
-      'dataflow' (id=ID)? (label=STRING)? ':'
-      (declarations+=Declaration)*
-     )
-    (
-        (equations += Equation) 
-        |
-        (nodes += Node) // alt: + (nodes+=Node)+
-    )*
-;
+    ((annotations += Annotation)*
+    	'dataflow' (id=ID)? (label=STRING)? ':'
+    	(declarations+=DeclarationWOSemicolon)*
+    )
+    ((equations += Equation) | (nodes += Node))*;
 
-// ---------------------------------------------------------------------------------------------------
 
 ControlflowRegion returns sccharts::ControlflowRegion:
 	{sccharts::ControlflowRegion}
     (annotations += Annotation)*
     'region' (id=ID)? (label=STRING)? ':'
-      (declarations+=Declaration)*
+    (declarations+=DeclarationWOSemicolon)*
     (states+=State)+;
 
-
-// ---------------------------------------------------------------------------------------------------
 
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
     (annotations += Annotation)*
     'dataflow' (id=ID)? (label=STRING)? ':'
-    (declarations+=Declaration)*
-    (
-        (equations += Equation) 
-        |
-        (nodes+=Node) // alt: + (nodes+=Node)+
-    )*
-;
+    (declarations+=DeclarationWOSemicolon)*
+    ((equations += Equation) | (nodes+=Node))*;
+
 
 Equation returns sccharts::Equation:
     {sccharts::Equation}
@@ -72,114 +93,58 @@ Equation returns sccharts::Equation:
         (valuedObject = [kexpressions::ValuedObject]) '=' (expression = Expression) ';'
         |
         (valuedObject = [kexpressions::ValuedObject]) '=' (node = [sccharts::Node|ID]) '.' (expression = ValuedObjectReference) ';'
-    )
-;
+    );
 
-
-// ---------------------------------------------------------------------------------------------------
-
-SCChart returns sccharts::State:
-    (annotations += Annotation)*
-    ('scchart') (id=ID) (label=STRING)?
-  
-    (
-      ('references' referencedScope = [sccharts::State|ID]
-        ('bind' bindings += Binding (',' bindings += Binding)*)?
-       )
-     | 
-      ('{'
-            (declarations+=Declaration |
-             localActions+=LocalAction)*
-            (
-				(regions+=SingleDataflowRegion|regions+=SingleControlflowRegion)(regions+=Region)*
-             )?
-          '}') 
-     )?
-;
 
 Region returns sccharts::Region:
-	ControlflowRegion | DataflowRegion	
-;
-
-// ---------------------------------------------------------------------------------------------------
-
-State returns sccharts::State:
-    (annotations += Annotation)*
-    (
-      ((initial?='initial') (final?='final')?)
-     |
-      ((final?='final') (initial?='initial')?)
-     )?
-  
-    (type=StateType)? ('state') (id=ID) (label=STRING)?
-  
-    (
-      ('references' referencedScope = [sccharts::State|ID]
-        ('bind' bindings += Binding (',' bindings += Binding)*)?
-       )
-     | 
-      ('{'
-            (declarations+=Declaration | localActions+=LocalAction)*
-		    (regions+=SingleDataflowRegion|regions+=SingleControlflowRegion)(regions+=Region)*
-      '}') 
-      )?
-     // The semicolon is mandatory for backtracking!
-    (outgoingTransitions+=Transition)* ';';
+	ControlflowRegion | DataflowRegion;
 
 
 Node returns sccharts::Node:
-    ReferenceNode | CallNode | DefineNode
-;
+    ReferenceNode | CallNode | DefineNode;
+    
 
 CallNode returns sccharts::CallNode:
     {sccharts::CallNode}
     (id=ID) '=' callReference = [sccharts::DefineNode|ID]
     '(' (parameters+=ValuedObjectReference)? (',' parameters+=ValuedObjectReference)* ')'
-    ';'
-;
+    ';';
+    
 
 DefineNode returns sccharts::DefineNode:
     {sccharts::DefineNode}
-    'node' (id=ID) '(' (inputs+=Declaration)* ')'
-    'returns' '(' (outputs+=Declaration)* ')' '{'
+    'node' (id=ID) '(' (inputs+=DeclarationWOSemicolon)* ')'
+    'returns' '(' (outputs+=DeclarationWOSemicolon)* ')' '{'
     (
         ((valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';')*
         | // keep that? yes, but do not allow to mix them
         (states+=State)*
     )
-    '}'
-;
+    '}';
+    
 
 ReferenceNode returns sccharts::ReferenceNode:
     {sccharts::ReferenceNode}
     (id=ID) (label=STRING)? '=' 'ref' referencedScope = [sccharts::State|ID]
     '(' (parameters+=ValuedObjectReference)? (',' parameters+=ValuedObjectReference)* ')'
-    ';'
-;
+    ';';
     
-// ---------------------------------------------------------------------------------------------------
-
+    
 LocalAction returns sccharts::LocalAction:
-    EntryAction | DuringAction | ExitAction | SuspendAction | IterateAction
-;    
+    EntryAction | DuringAction | ExitAction | SuspendAction | IterateAction;    
     
-// ---------------------------------------------------------------------------------------------------
 
-Transition returns sccharts::Transition:
-    (annotations += Annotation)*
-    (type=TransitionType) 
-    targetState=[sccharts::State|ID] 
-//	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
-	( (immediate?='immediate')? (deferred?='deferred')? (history=HistoryType)?  (
-	 (
-	   ((('with' (delay=INT)? trigger=BoolExpression)|'with')? (('/'|'do') effects+=Effect (';'effects+=Effect)*)? )
-	  |
-	   ( 'with' label=STRING )
-	  )
-	 )?)? 	
-	;
 
-// ---------------------------------------------------------------------------------------------------
+
+
+ScopeReference returns sccharts::ScopeReference:
+    scope=[sccharts::Scope|ID];
+
+ScopeCall returns sccharts::ScopeCall:
+    '[' scope=[sccharts::Scope|ID]
+    	(('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
+    ']';
+
 
 Binding returns sccharts::Binding:
     (annotations+=Annotation)*
@@ -188,23 +153,13 @@ Binding returns sccharts::Binding:
 	actual = [kexpressions::ValuedObject|ID]
 ;
 
-// ---------------------------------------------------------------------------------------------------
-
-
-
-
-// Valued Object Reference Rule
-// References a valued object with arbitrary (including none) indices part.
-// Example: A, B
-ValuedObjectReference returns ValuedObjectReference:
-    valuedObject=[ValuedObject|ID] ('[' indices+=Expression ']')*;
-
-// Function Call Rule
-// Calls to functions are indicated by angle brackets. They may include a parameter list. 
-FunctionCall returns FunctionCall:
-    '<' functionName=ExtendedID 
-        (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
-    '>';
+AtomicExpression returns kexpressions::Expression:
+    BoolValue
+    | ValuedObjectTestExpression 
+    | '(' BoolExpression ')'
+    | FunctionCall
+    | ScopeCall
+    | TextExpression;
 
 
 
@@ -212,6 +167,6 @@ enum StateType returns sccharts::StateType:
 	NORMAL = 'normal' | CONNECTOR = 'connector' | REFERENCE = 'reference' | TEXTUAL = 'textual';
 
 enum TransitionType returns sccharts::TransitionType:
-	WEAKABORT = 'go to' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
+	WEAKABORT = 'goto' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
 	
 	

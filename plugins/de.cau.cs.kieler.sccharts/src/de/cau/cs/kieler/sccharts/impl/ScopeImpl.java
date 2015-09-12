@@ -17,6 +17,7 @@ import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -50,6 +51,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getReferencedScope <em>Referenced Scope</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBindings <em>Bindings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getDeclarations <em>Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -144,6 +146,16 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     protected EList<Declaration> declarations;
 
     /**
+	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExpression()
+	 * @generated
+	 * @ordered
+	 */
+	protected Expression expression;
+
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -280,6 +292,49 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 
     /**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Expression getExpression() {
+		return expression;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
+		Expression oldExpression = expression;
+		expression = newExpression;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__EXPRESSION, oldExpression, newExpression);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setExpression(Expression newExpression) {
+		if (newExpression != expression) {
+			NotificationChain msgs = null;
+			if (expression != null)
+				msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__EXPRESSION, null, msgs);
+			if (newExpression != null)
+				msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__EXPRESSION, null, msgs);
+			msgs = basicSetExpression(newExpression, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__EXPRESSION, newExpression, newExpression));
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -292,6 +347,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 				return ((InternalEList<?>)getBindings()).basicRemove(otherEnd, msgs);
 			case SCChartsPackage.SCOPE__DECLARATIONS:
 				return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
+			case SCChartsPackage.SCOPE__EXPRESSION:
+				return basicSetExpression(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -317,6 +374,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 				return getBindings();
 			case SCChartsPackage.SCOPE__DECLARATIONS:
 				return getDeclarations();
+			case SCChartsPackage.SCOPE__EXPRESSION:
+				return getExpression();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -351,6 +410,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 				getDeclarations().clear();
 				getDeclarations().addAll((Collection<? extends Declaration>)newValue);
 				return;
+			case SCChartsPackage.SCOPE__EXPRESSION:
+				setExpression((Expression)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -381,6 +443,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 			case SCChartsPackage.SCOPE__DECLARATIONS:
 				getDeclarations().clear();
 				return;
+			case SCChartsPackage.SCOPE__EXPRESSION:
+				setExpression((Expression)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -405,6 +470,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 				return bindings != null && !bindings.isEmpty();
 			case SCChartsPackage.SCOPE__DECLARATIONS:
 				return declarations != null && !declarations.isEmpty();
+			case SCChartsPackage.SCOPE__EXPRESSION:
+				return expression != null;
 		}
 		return super.eIsSet(featureID);
 	}

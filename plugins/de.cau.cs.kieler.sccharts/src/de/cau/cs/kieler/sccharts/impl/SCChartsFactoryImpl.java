@@ -92,8 +92,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
 			case SCChartsPackage.EXIT_ACTION: return createExitAction();
 			case SCChartsPackage.SUSPEND_ACTION: return createSuspendAction();
 			case SCChartsPackage.ITERATE_ACTION: return createIterateAction();
-			case SCChartsPackage.SCOPE_REFERENCE: return createScopeReference();
 			case SCChartsPackage.SC_CHARTS: return createSCCharts();
+			case SCChartsPackage.SCOPE_REFERENCE: return createScopeReference();
+			case SCChartsPackage.SCOPE_CALL: return createScopeCall();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -319,6 +320,16 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
 	public ScopeReference createScopeReference() {
 		ScopeReferenceImpl scopeReference = new ScopeReferenceImpl();
 		return scopeReference;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ScopeCall createScopeCall() {
+		ScopeCallImpl scopeCall = new ScopeCallImpl();
+		return scopeCall;
 	}
 
 				/**

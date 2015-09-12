@@ -17,6 +17,7 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -51,6 +52,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getReferencedScope <em>Referenced Scope</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBindings <em>Bindings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getDeclarations <em>Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -191,5 +193,31 @@ public interface Scope extends Annotatable {
 	 * @generated
 	 */
     EList<Declaration> getDeclarations();
+
+				/**
+	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Expression</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Expression</em>' containment reference.
+	 * @see #setExpression(Expression)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Expression()
+	 * @model containment="true"
+	 * @generated
+	 */
+	Expression getExpression();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Scope#getExpression <em>Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Expression</em>' containment reference.
+	 * @see #getExpression()
+	 * @generated
+	 */
+	void setExpression(Expression value);
 
 } // Scope

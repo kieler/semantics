@@ -217,12 +217,17 @@ public class OperatorExpressionItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(KExpressionsPackage.Literals.OPERATOR_EXPRESSION__SUB_EXPRESSIONS,
-				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+				 KExpressionsFactory.eINSTANCE.createStringValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(KExpressionsPackage.Literals.OPERATOR_EXPRESSION__SUB_EXPRESSIONS,
-				 KExpressionsFactory.eINSTANCE.createStringValue()));
+				 KExpressionsFactory.eINSTANCE.createCall()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KExpressionsPackage.Literals.OPERATOR_EXPRESSION__SUB_EXPRESSIONS,
+				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
 	}
 
 }

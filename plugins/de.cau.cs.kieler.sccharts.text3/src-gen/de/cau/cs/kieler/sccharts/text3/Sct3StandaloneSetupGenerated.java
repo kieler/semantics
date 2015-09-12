@@ -18,7 +18,7 @@ public class Sct3StandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup.doSetup();
+		de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

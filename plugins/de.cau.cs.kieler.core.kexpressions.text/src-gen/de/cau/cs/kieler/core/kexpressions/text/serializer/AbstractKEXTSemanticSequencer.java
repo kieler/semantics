@@ -125,8 +125,15 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 				sequence_BoolValue(context, (BoolValue) semanticObject); 
 				return; 
 			case KExpressionsPackage.DECLARATION:
-				sequence_Declaration(context, (Declaration) semanticObject); 
-				return; 
+				if(context == grammarAccess.getDeclarationWOSemicolonRule()) {
+					sequence_DeclarationWOSemicolon(context, (Declaration) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getDeclarationRule()) {
+					sequence_Declaration(context, (Declaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
 				sequence_FloatValue(context, (FloatValue) semanticObject); 
 				return; 
@@ -209,6 +216,24 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	 *     (annotations+=Annotation* expression=Expression)
 	 */
 	protected void sequence_AnnotatedExpression(EObject context, AnnotatedExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         const?='const'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         static?='static'? 
+	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
+	 *     )
+	 */
+	protected void sequence_DeclarationWOSemicolon(EObject context, Declaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

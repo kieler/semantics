@@ -45,22 +45,28 @@ import de.cau.cs.kieler.sccharts.Equation;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.IterateAction;
 import de.cau.cs.kieler.sccharts.ReferenceNode;
+import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
+import de.cau.cs.kieler.sccharts.ScopeCall;
+import de.cau.cs.kieler.sccharts.ScopeReference;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.Transition;
-import de.cau.cs.kieler.sccharts.text.sct.serializer.SctSemanticSequencer;
+import de.cau.cs.kieler.sccharts.text.actions.serializer.ActionsSemanticSequencer;
 import de.cau.cs.kieler.sccharts.text3.services.Sct3GrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
 import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
 import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
+import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEObjectProvider;
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
-public abstract class AbstractSct3SemanticSequencer extends SctSemanticSequencer {
+public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSequencer {
 
 	@Inject
 	private Sct3GrammarAccess grammarAccess;
@@ -140,8 +146,15 @@ public abstract class AbstractSct3SemanticSequencer extends SctSemanticSequencer
 				sequence_BoolValue(context, (BoolValue) semanticObject); 
 				return; 
 			case KExpressionsPackage.DECLARATION:
-				sequence_Declaration(context, (Declaration) semanticObject); 
-				return; 
+				if(context == grammarAccess.getDeclarationWOSemicolonRule()) {
+					sequence_DeclarationWOSemicolon(context, (Declaration) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getDeclarationRule()) {
+					sequence_Declaration(context, (Declaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
 				sequence_FloatValue(context, (FloatValue) semanticObject); 
 				return; 
@@ -177,6 +190,7 @@ public abstract class AbstractSct3SemanticSequencer extends SctSemanticSequencer
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
@@ -265,10 +279,18 @@ public abstract class AbstractSct3SemanticSequencer extends SctSemanticSequencer
 			case SCChartsPackage.REFERENCE_NODE:
 				sequence_ReferenceNode(context, (ReferenceNode) semanticObject); 
 				return; 
+			case SCChartsPackage.SC_CHARTS:
+				sequence_SCCharts(context, (SCCharts) semanticObject); 
+				return; 
+			case SCChartsPackage.SCOPE_CALL:
+				sequence_ScopeCall(context, (ScopeCall) semanticObject); 
+				return; 
+			case SCChartsPackage.SCOPE_REFERENCE:
+				sequence_ScopeReference(context, (ScopeReference) semanticObject); 
+				return; 
 			case SCChartsPackage.STATE:
-				if(context == grammarAccess.getRootRule() ||
-				   context == grammarAccess.getSCChartRule()) {
-					sequence_SCChart(context, (State) semanticObject); 
+				if(context == grammarAccess.getRootStateRule()) {
+					sequence_RootState(context, (State) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getStateRule()) {
@@ -286,4 +308,183 @@ public abstract class AbstractSct3SemanticSequencer extends SctSemanticSequencer
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
 	
+	/**
+	 * Constraint:
+	 *     (annotations+=Annotation* formal=[ValuedObject|ID] actual=[ValuedObject|ID])
+	 */
+	protected void sequence_Binding(EObject context, Binding semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (id=ID callReference=[DefineNode|ID] parameters+=ValuedObjectReference? parameters+=ValuedObjectReference*)
+	 */
+	protected void sequence_CallNode(EObject context, CallNode semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon* states+=State+)
+	 */
+	protected void sequence_ControlflowRegion(EObject context, ControlflowRegion semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon* (equations+=Equation | nodes+=Node)*)
+	 */
+	protected void sequence_DataflowRegion(EObject context, DataflowRegion semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         id=ID 
+	 *         inputs+=DeclarationWOSemicolon* 
+	 *         outputs+=DeclarationWOSemicolon* 
+	 *         ((valuedObjects+=[ValuedObject|ID] expressions+=Expression)* | states+=State*)
+	 *     )
+	 */
+	protected void sequence_DefineNode(EObject context, DefineNode semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     ((valuedObject=[ValuedObject|ID] expression=Expression) | (valuedObject=[ValuedObject|ID] node=[Node|ID] expression=ValuedObjectReference))
+	 */
+	protected void sequence_Equation(EObject context, Equation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (id=ID label=STRING? referencedScope=[State|ID] parameters+=ValuedObjectReference? parameters+=ValuedObjectReference*)
+	 */
+	protected void sequence_ReferenceNode(EObject context, ReferenceNode semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         id=ID 
+	 *         label=STRING? 
+	 *         (
+	 *             expression=Expression | 
+	 *             (
+	 *                 (declarations+=DeclarationWOSemicolon | localActions+=LocalAction)* 
+	 *                 ((regions+=SingleDataflowRegion | regions+=SingleControlflowRegion) regions+=Region*)?
+	 *             )
+	 *         )
+	 *     )
+	 */
+	protected void sequence_RootState(EObject context, State semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     rootStates+=RootState*
+	 */
+	protected void sequence_SCCharts(EObject context, SCCharts semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (scope=[Scope|ID] (parameters+=Parameter parameters+=Parameter*)?)
+	 */
+	protected void sequence_ScopeCall(EObject context, ScopeCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     scope=[Scope|ID]
+	 */
+	protected void sequence_ScopeReference(EObject context, ScopeReference semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.SCOPE_REFERENCE__SCOPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.SCOPE_REFERENCE__SCOPE));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getScopeReferenceAccess().getScopeScopeIDTerminalRuleCall_0_1(), semanticObject.getScope());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     ((annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon*)? states+=State*)
+	 */
+	protected void sequence_SingleControlflowRegion(EObject context, ControlflowRegion semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon* (equations+=Equation | nodes+=Node)*)
+	 */
+	protected void sequence_SingleDataflowRegion(EObject context, DataflowRegion semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         initial?='initial'? 
+	 *         final?='final'? 
+	 *         type=StateType? 
+	 *         id=ID 
+	 *         label=STRING? 
+	 *         (
+	 *             expression=Expression | 
+	 *             (
+	 *                 (declarations+=DeclarationWOSemicolon | localActions+=LocalAction)* 
+	 *                 ((regions+=SingleDataflowRegion | regions+=SingleControlflowRegion) regions+=Region*)?
+	 *             )
+	 *         )? 
+	 *         outgoingTransitions+=Transition*
+	 *     )
+	 */
+	protected void sequence_State(EObject context, State semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         type=TransitionType 
+	 *         targetState=[State|ID] 
+	 *         immediate?='immediate'? 
+	 *         deferred?='deferred'? 
+	 *         history=HistoryType? 
+	 *         (((delay=INT? trigger=BoolExpression)? (effects+=Effect effects+=Effect*)?) | label=STRING)?
+	 *     )
+	 */
+	protected void sequence_Transition(EObject context, Transition semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
 }

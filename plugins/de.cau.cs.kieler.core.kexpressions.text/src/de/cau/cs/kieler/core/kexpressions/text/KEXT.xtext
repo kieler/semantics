@@ -70,6 +70,15 @@ Declaration returns kexpressions::Declaration:
     (static?='static')?
     (((signal?='signal')? type = ValueType) | (signal?='signal')) 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
+    
+DeclarationWOSemicolon returns kexpressions::Declaration:
+    (annotations+=Annotation)*
+	(const?='const')?
+    (input?='input')? 
+    (output?='output')?
+    (static?='static')?
+    (((signal?='signal')? type = ValueType) | (signal?='signal')) 
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ;    
 
 // Valued Object Rule
 // A valued object is identified by its name. Then, a part for its cardinalities and an initial 

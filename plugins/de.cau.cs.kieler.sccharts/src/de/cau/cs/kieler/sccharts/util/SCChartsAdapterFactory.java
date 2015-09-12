@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
+import de.cau.cs.kieler.core.kexpressions.Call;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.sccharts.*;
 
@@ -165,12 +166,16 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 				return createIterateActionAdapter();
 			}
 			@Override
+			public Adapter caseSCCharts(SCCharts object) {
+				return createSCChartsAdapter();
+			}
+			@Override
 			public Adapter caseScopeReference(ScopeReference object) {
 				return createScopeReferenceAdapter();
 			}
 			@Override
-			public Adapter caseSCCharts(SCCharts object) {
-				return createSCChartsAdapter();
+			public Adapter caseScopeCall(ScopeCall object) {
+				return createScopeCallAdapter();
 			}
 			@Override
 			public Adapter caseAnnotatable(Annotatable object) {
@@ -179,6 +184,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseExpression(Expression object) {
 				return createExpressionAdapter();
+			}
+			@Override
+			public Adapter caseCall(Call object) {
+				return createCallAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -481,6 +490,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 				/**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.ScopeCall <em>Scope Call</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.sccharts.ScopeCall
+	 * @generated
+	 */
+	public Adapter createScopeCallAdapter() {
+		return null;
+	}
+
+				/**
 	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.SCCharts <em>SC Charts</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -519,6 +542,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createExpressionAdapter() {
+		return null;
+	}
+
+				/**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Call <em>Call</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.core.kexpressions.Call
+	 * @generated
+	 */
+	public Adapter createCallAdapter() {
 		return null;
 	}
 

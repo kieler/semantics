@@ -202,6 +202,15 @@ public interface SCChartsFactory extends EFactory {
 	ScopeReference createScopeReference();
 
 				/**
+	 * Returns a new object of class '<em>Scope Call</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Scope Call</em>'.
+	 * @generated
+	 */
+	ScopeCall createScopeCall();
+
+				/**
 	 * Returns a new object of class '<em>SC Charts</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

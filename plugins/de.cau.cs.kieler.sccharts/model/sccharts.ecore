@@ -171,6 +171,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Parsable" instanceClassName="java.lang.String">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -228,11 +230,14 @@
       </eAnnotations>
     </eLiterals>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ScopeReference" eSuperTypes="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="scope" lowerBound="1" eType="#//Scope"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SCCharts">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rootStates" upperBound="-1"
         eType="#//State" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopeReference" eSuperTypes="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scope" lowerBound="1" eType="#//Scope"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopeCall" eSuperTypes="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Call">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scope" lowerBound="1" eType="#//Scope"/>
   </eClassifiers>
 </ecore:EPackage>

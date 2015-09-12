@@ -132,8 +132,15 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 				sequence_BoolValue(context, (BoolValue) semanticObject); 
 				return; 
 			case KExpressionsPackage.DECLARATION:
-				sequence_Declaration(context, (Declaration) semanticObject); 
-				return; 
+				if(context == grammarAccess.getDeclarationWOSemicolonRule()) {
+					sequence_DeclarationWOSemicolon(context, (Declaration) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getDeclarationRule()) {
+					sequence_Declaration(context, (Declaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
 				sequence_FloatValue(context, (FloatValue) semanticObject); 
 				return; 

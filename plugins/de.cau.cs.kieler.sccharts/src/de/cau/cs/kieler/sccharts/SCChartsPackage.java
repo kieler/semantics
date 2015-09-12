@@ -225,13 +225,22 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCOPE__EXPRESSION = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+
+				/**
 	 * The number of structural features of the '<em>Scope</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.StateImpl <em>State</em>}' class.
@@ -307,6 +316,15 @@ public interface SCChartsPackage extends EPackage {
     int STATE__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE__EXPRESSION = SCOPE__EXPRESSION;
+
+				/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -452,6 +470,15 @@ public interface SCChartsPackage extends EPackage {
     int REGION__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REGION__EXPRESSION = SCOPE__EXPRESSION;
+
+				/**
 	 * The feature id for the '<em><b>Parent State</b></em>' container reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -543,6 +570,15 @@ public interface SCChartsPackage extends EPackage {
     int CONTROLFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
 
     /**
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROLFLOW_REGION__EXPRESSION = REGION__EXPRESSION;
+
+				/**
 	 * The feature id for the '<em><b>Parent State</b></em>' container reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -643,6 +679,15 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
 
     /**
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATAFLOW_REGION__EXPRESSION = REGION__EXPRESSION;
+
+				/**
 	 * The feature id for the '<em><b>Parent State</b></em>' container reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1617,25 +1662,17 @@ public interface SCChartsPackage extends EPackage {
 	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScopeReference()
 	 * @generated
 	 */
-	int SCOPE_REFERENCE = 19;
+	int SCOPE_REFERENCE = 20;
 
 				/**
-	 * The feature id for the '<em><b>Scope</b></em>' reference.
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.sccharts.impl.ScopeCallImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScopeCall()
 	 * @generated
-	 * @ordered
 	 */
-	int SCOPE_REFERENCE__SCOPE = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 0;
-
-				/**
-	 * The number of structural features of the '<em>Scope Reference</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCOPE_REFERENCE_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 1;
+	int SCOPE_CALL = 21;
 
 				/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SCChartsImpl <em>SC Charts</em>}' class.
@@ -1645,7 +1682,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSCCharts()
 	 * @generated
 	 */
-	int SC_CHARTS = 20;
+	int SC_CHARTS = 19;
 
 				/**
 	 * The feature id for the '<em><b>Root States</b></em>' containment reference list.
@@ -1666,6 +1703,51 @@ public interface SCChartsPackage extends EPackage {
 	int SC_CHARTS_FEATURE_COUNT = 1;
 
 				/**
+	 * The feature id for the '<em><b>Scope</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCOPE_REFERENCE__SCOPE = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 0;
+
+				/**
+	 * The number of structural features of the '<em>Scope Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCOPE_REFERENCE_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 1;
+
+				/**
+	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCOPE_CALL__PARAMETERS = KExpressionsPackage.CALL__PARAMETERS;
+
+				/**
+	 * The feature id for the '<em><b>Scope</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCOPE_CALL__SCOPE = KExpressionsPackage.CALL_FEATURE_COUNT + 0;
+
+				/**
+	 * The number of structural features of the '<em>Scope Call</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCOPE_CALL_FEATURE_COUNT = KExpressionsPackage.CALL_FEATURE_COUNT + 1;
+
+				/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1673,7 +1755,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
 	 * @generated
 	 */
-    int STATE_TYPE = 21;
+    int STATE_TYPE = 22;
 
     /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
@@ -1683,7 +1765,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
 	 * @generated
 	 */
-    int TRANSITION_TYPE = 22;
+    int TRANSITION_TYPE = 23;
 
     /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -1693,7 +1775,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
 	 * @generated
 	 */
-    int HISTORY_TYPE = 23;
+    int HISTORY_TYPE = 24;
 
     /**
 	 * The meta object id for the '<em>Parsable</em>' data type.
@@ -1703,7 +1785,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
 	 * @generated
 	 */
-    int PARSABLE = 24;
+    int PARSABLE = 25;
 
 
     /**
@@ -2321,6 +2403,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getScope_Declarations();
 
     /**
+	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Scope#getExpression <em>Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Expression</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Scope#getExpression()
+	 * @see #getScope()
+	 * @generated
+	 */
+	EReference getScope_Expression();
+
+				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.LocalAction <em>Local Action</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2411,6 +2504,27 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getScopeReference_Scope();
+
+				/**
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ScopeCall <em>Scope Call</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Scope Call</em>'.
+	 * @see de.cau.cs.kieler.sccharts.ScopeCall
+	 * @generated
+	 */
+	EClass getScopeCall();
+
+				/**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.ScopeCall#getScope <em>Scope</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Scope</em>'.
+	 * @see de.cau.cs.kieler.sccharts.ScopeCall#getScope()
+	 * @see #getScopeCall()
+	 * @generated
+	 */
+	EReference getScopeCall_Scope();
 
 				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.SCCharts <em>SC Charts</em>}'.
@@ -2979,6 +3093,14 @@ public interface SCChartsPackage extends EPackage {
         EReference SCOPE__DECLARATIONS = eINSTANCE.getScope_Declarations();
 
         /**
+		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SCOPE__EXPRESSION = eINSTANCE.getScope_Expression();
+
+								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3063,6 +3185,24 @@ public interface SCChartsPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SCOPE_REFERENCE__SCOPE = eINSTANCE.getScopeReference_Scope();
+
+								/**
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.sccharts.impl.ScopeCallImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScopeCall()
+		 * @generated
+		 */
+		EClass SCOPE_CALL = eINSTANCE.getScopeCall();
+
+								/**
+		 * The meta object literal for the '<em><b>Scope</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SCOPE_CALL__SCOPE = eINSTANCE.getScopeCall_Scope();
 
 								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.SCChartsImpl <em>SC Charts</em>}' class.

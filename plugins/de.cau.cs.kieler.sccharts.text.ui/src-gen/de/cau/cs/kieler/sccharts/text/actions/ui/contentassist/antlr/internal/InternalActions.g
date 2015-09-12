@@ -181,6 +181,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleValuedObject
 entryRuleValuedObject 
 :
@@ -1964,6 +1966,7 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+
 rule__Effect__Alternatives
     @init {
 		int stackSize = keepStackSize();
@@ -3583,6 +3586,9 @@ rule__Declaration__Group_7__1__Impl
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+
 
 
 
@@ -10067,6 +10073,16 @@ rule__Declaration__ValuedObjectsAssignment_7_1
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+
+
+
+
+
+
+
+
 
 rule__ValuedObject__NameAssignment_0
     @init {

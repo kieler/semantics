@@ -569,6 +569,8 @@ ruleDeclaration returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRuleValuedObject
 entryRuleValuedObject returns [EObject current=null] 
 	:

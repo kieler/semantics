@@ -25,7 +25,7 @@ public class Sct3Parser extends org.eclipse.xtext.parser.antlr.AbstractAntlrPars
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "Root";
+		return "SCCharts";
 	}
 	
 	public Sct3GrammarAccess getGrammarAccess() {

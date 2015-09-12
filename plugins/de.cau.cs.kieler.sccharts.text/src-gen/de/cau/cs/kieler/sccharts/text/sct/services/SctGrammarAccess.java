@@ -1254,11 +1254,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Assignment cTypeAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
-		private final RuleCall cTypeTransitionTypeLegacyEnumRuleCall_1_0_0 = (RuleCall)cTypeAssignment_1_0.eContents().get(0);
-		private final Assignment cTypeAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
-		private final RuleCall cTypeTransitionTypeEnumRuleCall_1_1_0 = (RuleCall)cTypeAssignment_1_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTypeTransitionTypeEnumRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
 		private final Assignment cTargetStateAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final CrossReference cTargetStateStateCrossReference_2_0 = (CrossReference)cTargetStateAssignment_2.eContents().get(0);
 		private final RuleCall cTargetStateStateIDTerminalRuleCall_2_0_1 = (RuleCall)cTargetStateStateCrossReference_2_0.eContents().get(1);
@@ -1297,14 +1294,14 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//// ---------------------------------------------------------------------------------------------------
 		// Transition
 		//returns sccharts::Transition:
-		//	annotations+=Annotation* (type=TransitionTypeLegacy | type=TransitionType) targetState=[sccharts::State]
+		//	annotations+=Annotation* type=TransitionType targetState=[sccharts::State]
 		//	//	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
 		// (immediate?="immediate"?
 		//	deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression | "with")? (("/" | "do")
 		//	effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* (type=TransitionTypeLegacy | type=TransitionType) targetState=[sccharts::State]
+		//annotations+=Annotation* type=TransitionType targetState=[sccharts::State]
 		////	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
 		// (immediate?="immediate"?
 		//deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression | "with")? (("/" | "do")
@@ -1317,20 +1314,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//type=TransitionTypeLegacy | type=TransitionType
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
-
-		//type=TransitionTypeLegacy
-		public Assignment getTypeAssignment_1_0() { return cTypeAssignment_1_0; }
-
-		//TransitionTypeLegacy
-		public RuleCall getTypeTransitionTypeLegacyEnumRuleCall_1_0_0() { return cTypeTransitionTypeLegacyEnumRuleCall_1_0_0; }
-
 		//type=TransitionType
-		public Assignment getTypeAssignment_1_1() { return cTypeAssignment_1_1; }
+		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
 
 		//TransitionType
-		public RuleCall getTypeTransitionTypeEnumRuleCall_1_1_0() { return cTypeTransitionTypeEnumRuleCall_1_1_0; }
+		public RuleCall getTypeTransitionTypeEnumRuleCall_1_0() { return cTypeTransitionTypeEnumRuleCall_1_0; }
 
 		//targetState=[sccharts::State]
 		public Assignment getTargetStateAssignment_2() { return cTargetStateAssignment_2; }
@@ -1538,49 +1526,13 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "TransitionType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cWEAKABORTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cWEAKABORTGotoKeyword_0_0 = (Keyword)cWEAKABORTEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cSTRONGABORTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cSTRONGABORTAbortToKeyword_1_0 = (Keyword)cSTRONGABORTEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cTERMINATIONEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cTERMINATIONJoinToKeyword_2_0 = (Keyword)cTERMINATIONEnumLiteralDeclaration_2.eContents().get(0);
-		
-		//enum TransitionType returns sccharts::TransitionType:
-		//	WEAKABORT="goto" | STRONGABORT="abort to" | TERMINATION="join to";
-		public EnumRule getRule() { return rule; }
-
-		//WEAKABORT="goto" | STRONGABORT="abort to" | TERMINATION="join to"
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//WEAKABORT="goto"
-		public EnumLiteralDeclaration getWEAKABORTEnumLiteralDeclaration_0() { return cWEAKABORTEnumLiteralDeclaration_0; }
-
-		//"goto"
-		public Keyword getWEAKABORTGotoKeyword_0_0() { return cWEAKABORTGotoKeyword_0_0; }
-
-		//STRONGABORT="abort to"
-		public EnumLiteralDeclaration getSTRONGABORTEnumLiteralDeclaration_1() { return cSTRONGABORTEnumLiteralDeclaration_1; }
-
-		//"abort to"
-		public Keyword getSTRONGABORTAbortToKeyword_1_0() { return cSTRONGABORTAbortToKeyword_1_0; }
-
-		//TERMINATION="join to"
-		public EnumLiteralDeclaration getTERMINATIONEnumLiteralDeclaration_2() { return cTERMINATIONEnumLiteralDeclaration_2; }
-
-		//"join to"
-		public Keyword getTERMINATIONJoinToKeyword_2_0() { return cTERMINATIONJoinToKeyword_2_0; }
-	}
-
-	public class TransitionTypeLegacyElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "TransitionTypeLegacy");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cWEAKABORTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
 		private final Keyword cWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_0_0 = (Keyword)cWEAKABORTEnumLiteralDeclaration_0.eContents().get(0);
 		private final EnumLiteralDeclaration cSTRONGABORTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
 		private final Keyword cSTRONGABORTOKeyword_1_0 = (Keyword)cSTRONGABORTEnumLiteralDeclaration_1.eContents().get(0);
 		private final EnumLiteralDeclaration cTERMINATIONEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
 		private final Keyword cTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0 = (Keyword)cTERMINATIONEnumLiteralDeclaration_2.eContents().get(0);
 		
-		//enum TransitionTypeLegacy returns sccharts::TransitionType:
+		//enum TransitionType returns sccharts::TransitionType:
 		//	WEAKABORT="-->" | STRONGABORT="o->" | TERMINATION=">->";
 		public EnumRule getRule() { return rule; }
 
@@ -1624,7 +1576,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	private final BindingElements pBinding;
 	private final StateTypeElements unknownRuleStateType;
 	private final TransitionTypeElements unknownRuleTransitionType;
-	private final TransitionTypeLegacyElements unknownRuleTransitionTypeLegacy;
 	
 	private final Grammar grammar;
 
@@ -1653,7 +1604,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		this.pBinding = new BindingElements();
 		this.unknownRuleStateType = new StateTypeElements();
 		this.unknownRuleTransitionType = new TransitionTypeElements();
-		this.unknownRuleTransitionTypeLegacy = new TransitionTypeLegacyElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1882,7 +1832,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------------------------------------------------------------------------------------------
 	// Transition
 	//returns sccharts::Transition:
-	//	annotations+=Annotation* (type=TransitionTypeLegacy | type=TransitionType) targetState=[sccharts::State]
+	//	annotations+=Annotation* type=TransitionType targetState=[sccharts::State]
 	//	//	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
 	// (immediate?="immediate"?
 	//	deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression | "with")? (("/" | "do")
@@ -1920,23 +1870,13 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum TransitionType returns sccharts::TransitionType:
-	//	WEAKABORT="goto" | STRONGABORT="abort to" | TERMINATION="join to";
+	//	WEAKABORT="-->" | STRONGABORT="o->" | TERMINATION=">->";
 	public TransitionTypeElements getTransitionTypeAccess() {
 		return unknownRuleTransitionType;
 	}
 	
 	public EnumRule getTransitionTypeRule() {
 		return getTransitionTypeAccess().getRule();
-	}
-
-	//enum TransitionTypeLegacy returns sccharts::TransitionType:
-	//	WEAKABORT="-->" | STRONGABORT="o->" | TERMINATION=">->";
-	public TransitionTypeLegacyElements getTransitionTypeLegacyAccess() {
-		return unknownRuleTransitionTypeLegacy;
-	}
-	
-	public EnumRule getTransitionTypeLegacyRule() {
-		return getTransitionTypeLegacyAccess().getRule();
 	}
 
 	////// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
@@ -2090,6 +2030,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getDeclarationRule() {
 		return getDeclarationAccess().getRule();
+	}
+
+	//DeclarationWOSemicolon returns kexpressions::Declaration:
+	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
+	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*;
+	public KEXTGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
+		return gaActions.getDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getDeclarationWOSemicolonRule() {
+		return getDeclarationWOSemicolonAccess().getRule();
 	}
 
 	//// Valued Object Rule

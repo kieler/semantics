@@ -39,6 +39,7 @@ import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
+import de.cau.cs.kieler.sccharts.ScopeCall;
 import de.cau.cs.kieler.sccharts.ScopeReference;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.StateType;
@@ -208,6 +209,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 	 * @generated
 	 */
 	private EClass scopeReferenceEClass = null;
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass scopeCallEClass = null;
 
 				/**
 	 * <!-- begin-user-doc -->
@@ -823,6 +831,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
     /**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getScope_Expression() {
+		return (EReference)scopeEClass.getEStructuralFeatures().get(6);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -900,6 +917,24 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 	 */
 	public EReference getScopeReference_Scope() {
 		return (EReference)scopeReferenceEClass.getEStructuralFeatures().get(0);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getScopeCall() {
+		return scopeCallEClass;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getScopeCall_Scope() {
+		return (EReference)scopeCallEClass.getEStructuralFeatures().get(0);
 	}
 
 				/**
@@ -1053,6 +1088,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 		createEReference(scopeEClass, SCOPE__REFERENCED_SCOPE);
 		createEReference(scopeEClass, SCOPE__BINDINGS);
 		createEReference(scopeEClass, SCOPE__DECLARATIONS);
+		createEReference(scopeEClass, SCOPE__EXPRESSION);
 
 		localActionEClass = createEClass(LOCAL_ACTION);
 
@@ -1067,11 +1103,14 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
 		iterateActionEClass = createEClass(ITERATE_ACTION);
 
+		scChartsEClass = createEClass(SC_CHARTS);
+		createEReference(scChartsEClass, SC_CHARTS__ROOT_STATES);
+
 		scopeReferenceEClass = createEClass(SCOPE_REFERENCE);
 		createEReference(scopeReferenceEClass, SCOPE_REFERENCE__SCOPE);
 
-		scChartsEClass = createEClass(SC_CHARTS);
-		createEReference(scChartsEClass, SC_CHARTS__ROOT_STATES);
+		scopeCallEClass = createEClass(SCOPE_CALL);
+		createEReference(scopeCallEClass, SCOPE_CALL__SCOPE);
 
 		// Create enums
 		stateTypeEEnum = createEEnum(STATE_TYPE);
@@ -1134,6 +1173,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 		suspendActionEClass.getESuperTypes().add(this.getLocalAction());
 		iterateActionEClass.getESuperTypes().add(this.getLocalAction());
 		scopeReferenceEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
+		scopeCallEClass.getESuperTypes().add(theKExpressionsPackage.getCall());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1205,6 +1245,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 		initEReference(getScope_ReferencedScope(), this.getScope(), null, "referencedScope", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScope_Bindings(), this.getBinding(), null, "bindings", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScope_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getScope_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(localActionEClass, LocalAction.class, "LocalAction", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1219,11 +1260,14 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
 		initEClass(iterateActionEClass, IterateAction.class, "IterateAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+		initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSCCharts_RootStates(), this.getState(), null, "rootStates", null, 0, -1, SCCharts.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(scopeReferenceEClass, ScopeReference.class, "ScopeReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getScopeReference_Scope(), this.getScope(), null, "scope", null, 1, 1, ScopeReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getSCCharts_RootStates(), this.getState(), null, "rootStates", null, 0, -1, SCCharts.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(scopeCallEClass, ScopeCall.class, "ScopeCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getScopeCall_Scope(), this.getScope(), null, "scope", null, 1, 1, ScopeCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(stateTypeEEnum, StateType.class, "StateType");

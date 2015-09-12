@@ -208,12 +208,17 @@ public class ValuedObjectReferenceItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__INDICES,
-				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+				 KExpressionsFactory.eINSTANCE.createStringValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__INDICES,
-				 KExpressionsFactory.eINSTANCE.createStringValue()));
+				 KExpressionsFactory.eINSTANCE.createCall()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__INDICES,
+				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
 	}
 
 }

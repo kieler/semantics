@@ -243,12 +243,17 @@ public class ParameterItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(KExpressionsPackage.Literals.PARAMETER__EXPRESSION,
-				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+				 KExpressionsFactory.eINSTANCE.createStringValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(KExpressionsPackage.Literals.PARAMETER__EXPRESSION,
-				 KExpressionsFactory.eINSTANCE.createStringValue()));
+				 KExpressionsFactory.eINSTANCE.createCall()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KExpressionsPackage.Literals.PARAMETER__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
 	}
 
     /**
