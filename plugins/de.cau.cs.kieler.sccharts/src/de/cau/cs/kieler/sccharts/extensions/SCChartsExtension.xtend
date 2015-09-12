@@ -998,17 +998,27 @@ class SCChartsExtension {
 
     //=========  VALUED OBJECT  =========
     // Creates a new ValuedObject in a scope.
-    def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
-        val valuedObject = createValuedObject(valuedObjectName)
-        scope.valuedObjects.add(valuedObject)
-        valuedObject
+//    def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
+//        val valuedObject = createValuedObject(valuedObjectName)
+//        scope.valuedObjects.add(valuedObject)
+//        valuedObject
+//    }
+    
+    def ValuedObject createValuedObject(Scope scope, String valuedObjectName, Declaration declaration) {
+    	val valuedObject = createValuedObject(valuedObjectName);
+    	declaration.valuedObjects += valuedObject
+	  	if (!scope.declarations.contains(declaration)) {
+    		scope.declarations += declaration
+    	}
+    	valuedObject
     }
+    
 
     //===========  VARIABLES  ===========
     // Creates a new variable ValuedObject in a Scope.
-    def ValuedObject createVariable(Scope scope, String variableName) {
-        scope.createValuedObject(variableName)
-    }
+//    def ValuedObject createVariable(Scope scope, String variableName) {
+//        scope.createValuedObject(variableName)
+//    }
 
     //============  SIGNALS  ============
     // Creates a new variable ValuedObject in a Scope.

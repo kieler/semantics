@@ -144,7 +144,7 @@ class KExpressionsValuedObjectExtensions {
     
 
 
-    def private Declaration getDeclarationOrCreate(ValuedObject valuedObject) {
+    def public Declaration getDeclarationOrCreate(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration) {
             valuedObject.eContainer as Declaration
         } else {

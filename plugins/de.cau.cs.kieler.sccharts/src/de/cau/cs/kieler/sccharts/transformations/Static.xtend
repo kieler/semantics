@@ -15,13 +15,14 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Static Transformation.
@@ -56,8 +57,6 @@ class Static extends AbstractExpansionTransformation implements Traceable {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsExtension
 
     @Inject
     extension SCChartsExtension
@@ -85,13 +84,11 @@ class Static extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void transformStatic(State state, State targetRootState) {
-        val staticValuedObjects = state.valuedObjects.filter[isStatic].toList
-        for (staticValuedObject : staticValuedObjects.immutableCopy) {
-            staticValuedObject.setName(
-                state.getHierarchicalName(GENERATED_PREFIX) + GENERATED_PREFIX + staticValuedObject.name)
-            state.getRootState.valuedObjects.add(staticValuedObject)
-            staticValuedObject.setStatic(false)
-        }
+    	val staticDeclarations = state.declarations.filter[ isStatic ]
+    	for (staticDeclaration : staticDeclarations.toList) {
+    		staticDeclaration.static = false
+    		targetRootState.declarations += staticDeclaration
+    	}
     }
 
 }

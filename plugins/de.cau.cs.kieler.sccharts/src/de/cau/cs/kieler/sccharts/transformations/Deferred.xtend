@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.EntryAction
@@ -27,6 +26,10 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Deferred Transformation.
@@ -62,7 +65,16 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions
 
     @Inject
     extension SCChartsExtension
@@ -103,7 +115,7 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
             }
             // Add a new deferVariable to the outer state, set it initially to FALSE and
             // add a during action in the state to reset it to FALSE
-            val deferVariable = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "deferred").setTypeBool.
+            val deferVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "deferred", createBoolDeclaration).
                 uniqueName
             deferVariable.setInitialValue(FALSE)
             val resetDeferSignalAction = state.createDuringAction

@@ -17,7 +17,6 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -30,6 +29,9 @@ import java.util.ArrayList
 import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts History Transformation.
@@ -65,8 +67,14 @@ class History extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
-
+    extension KExpressionsCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions    
+    
     @Inject
     extension SCChartsExtension
 
@@ -112,7 +120,7 @@ class History extends AbstractExpansionTransformation implements Traceable {
                 var counter = 0
 
                 // FIXME: stateEnum should be static
-                val stateEnum = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + state.id).setTypeInt.
+                val stateEnum = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + state.id, createIntDeclaration).
                     uniqueName
                 stateEnumsAll.add(stateEnum)
                 if (!regions.contains(region)) {
@@ -125,7 +133,7 @@ class History extends AbstractExpansionTransformation implements Traceable {
 
                 for (subState : subStates) {
                     val transition = initialState.createImmediateTransitionTo(subState)
-                    transition.setTrigger(stateEnum.reference.isEqual(counter.createIntValue))
+                    transition.setTrigger(stateEnum.reference.createEQExpression(counter.createIntValue))
                     subState.createEntryAction.addEffect(stateEnum.assign(counter.createIntValue))
                     if (subState == originalInitialState) {
                         initialValue = counter

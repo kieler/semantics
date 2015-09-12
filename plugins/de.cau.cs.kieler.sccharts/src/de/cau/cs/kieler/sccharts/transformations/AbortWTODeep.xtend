@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sccharts.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -24,6 +23,10 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Abort WTO Transformation. This may require an advanced SCG compiler that can handle depth join.
@@ -71,7 +74,16 @@ class AbortWTODeep extends AbstractExpansionTransformation {
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension
@@ -142,14 +154,14 @@ class AbortWTODeep extends AbstractExpansionTransformation {
                 for (transition : outgoingTransitions) {
 
                     // Create a new _transitionTrigger valuedObject
-                    val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
-                        GENERATED_PREFIX + "trig").setTypeBool.uniqueName
+                    val transitionTriggerVariable = state.parentRegion.parentState.createValuedObject(
+                        GENERATED_PREFIX + "trig", createBoolDeclaration).uniqueName
                     state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                     if (transition.typeStrongAbort) {
-                        strongAbortTrigger = strongAbortTrigger.or2(transitionTriggerVariable.reference)
+                        strongAbortTrigger = strongAbortTrigger.or(transitionTriggerVariable.reference)
                     } else if (transition.typeWeakAbort) {
-                        weakAbortTrigger = weakAbortTrigger.or2(transitionTriggerVariable.reference)
+                        weakAbortTrigger = weakAbortTrigger.or(transitionTriggerVariable.reference)
                     }
                 }
 
@@ -167,7 +179,7 @@ class AbortWTODeep extends AbstractExpansionTransformation {
                         val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueName
                         mainState.regions.add(region)
                         val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueName
-                        val termVariable = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
+                        val termVariable = state.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).uniqueName
                         mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeTermination
                         if (terminationTrigger != null) {
                             terminationTrigger = terminationTrigger.and(termVariable.reference)
