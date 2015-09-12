@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sccharts.transformations
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -28,6 +27,10 @@ import java.util.ArrayList
 import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts ComplexFinalState Transformation.
@@ -63,8 +66,17 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
 
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions   
+    
     @Inject
     extension SCChartsExtension
 
@@ -119,13 +131,13 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
 
         if (!complexFinalStates.nullOrEmpty) {
 
-            var abortFlag = state.createVariable(GENERATED_PREFIX + "abort").setTypeBool.uniqueName
+            var abortFlag = state.createValuedObject(GENERATED_PREFIX + "abort", createBoolDeclaration).uniqueName
             abortFlag.setInitialValue(FALSE)
 
             var ArrayList<ValuedObject> termVariables = new ArrayList
 
             for (region : state.regions.filter(ControlflowRegion)) {
-                val termVariable = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
+                val termVariable = state.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).uniqueName
                 termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {
                     termVariable.setInitialValue(TRUE)
@@ -151,7 +163,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
                 createImmediateTransitionTo(watcherRegion.createFinalState(GENERATED_PREFIX + "Aborted"))
             watcherTransition.addEffect(abortFlag.assign(TRUE))
             for (termVariable : termVariables) {
-                watcherTransition.setTrigger(watcherTransition.trigger.and2(termVariable.reference))
+                watcherTransition.setTrigger(watcherTransition.trigger.and(termVariable.reference))
             }
 
             //Add additional final state

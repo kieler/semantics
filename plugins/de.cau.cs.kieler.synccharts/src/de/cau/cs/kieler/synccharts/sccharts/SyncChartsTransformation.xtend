@@ -245,7 +245,7 @@ class SyncChartsTransformation {
         state.setFinal(syncState.isFinal)
         
         for (syncSignal : syncState.signals) {
-            val signal = state.createSignal(syncSignal.name)
+            val signal = createValuedObject(syncSignal.name)
             val signalDeclaration = createDeclaration => [
                 signal = true
                 input = syncSignal.isInput
