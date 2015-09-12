@@ -228,11 +228,11 @@
       </eAnnotations>
     </eLiterals>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StateCollection" eSuperTypes="#//Scope">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
-        eType="#//State" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ScopeReference" eSuperTypes="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="scope" lowerBound="1" eType="#//Scope"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SCCharts">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rootStates" upperBound="-1"
+        eType="#//State" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

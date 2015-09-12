@@ -59,176 +59,176 @@ package de.cau.cs.kieler.sccharts;
  */
 public interface Transition extends Action {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * Returns the value of the '<em><b>Priority</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Priority</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Priority</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Priority</em>' attribute.
-     * @see #setPriority(int)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Priority()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Priority</em>' attribute.
+	 * @see #setPriority(int)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Priority()
+	 * @model
+	 * @generated
+	 */
     int getPriority();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getPriority <em>Priority</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getPriority <em>Priority</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Priority</em>' attribute.
-     * @see #getPriority()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Priority</em>' attribute.
+	 * @see #getPriority()
+	 * @generated
+	 */
     void setPriority(int value);
 
     /**
-     * Returns the value of the '<em><b>Type</b></em>' attribute.
-     * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.TransitionType}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Type</b></em>' attribute.
+	 * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.TransitionType}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Type</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Type</em>' attribute.
-     * @see de.cau.cs.kieler.sccharts.TransitionType
-     * @see #setType(TransitionType)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Type()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Type</em>' attribute.
+	 * @see de.cau.cs.kieler.sccharts.TransitionType
+	 * @see #setType(TransitionType)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Type()
+	 * @model required="true"
+	 * @generated
+	 */
     TransitionType getType();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getType <em>Type</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getType <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Type</em>' attribute.
-     * @see de.cau.cs.kieler.sccharts.TransitionType
-     * @see #getType()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Type</em>' attribute.
+	 * @see de.cau.cs.kieler.sccharts.TransitionType
+	 * @see #getType()
+	 * @generated
+	 */
     void setType(TransitionType value);
 
     /**
-     * Returns the value of the '<em><b>Deferred</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Deferred</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Deferred</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Deferred</em>' attribute.
-     * @see #setDeferred(boolean)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Deferred()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Deferred</em>' attribute.
+	 * @see #setDeferred(boolean)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Deferred()
+	 * @model
+	 * @generated
+	 */
     boolean isDeferred();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Deferred</em>' attribute.
-     * @see #isDeferred()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Deferred</em>' attribute.
+	 * @see #isDeferred()
+	 * @generated
+	 */
     void setDeferred(boolean value);
 
     /**
-     * Returns the value of the '<em><b>History</b></em>' attribute.
-     * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.HistoryType}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>History</b></em>' attribute.
+	 * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.HistoryType}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>History</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>History</em>' attribute.
-     * @see de.cau.cs.kieler.sccharts.HistoryType
-     * @see #setHistory(HistoryType)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_History()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>History</em>' attribute.
+	 * @see de.cau.cs.kieler.sccharts.HistoryType
+	 * @see #setHistory(HistoryType)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_History()
+	 * @model
+	 * @generated
+	 */
     HistoryType getHistory();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getHistory <em>History</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getHistory <em>History</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>History</em>' attribute.
-     * @see de.cau.cs.kieler.sccharts.HistoryType
-     * @see #getHistory()
-     * @generated
-     */
+	 * @param value the new value of the '<em>History</em>' attribute.
+	 * @see de.cau.cs.kieler.sccharts.HistoryType
+	 * @see #getHistory()
+	 * @generated
+	 */
     void setHistory(HistoryType value);
 
     /**
-     * Returns the value of the '<em><b>Target State</b></em>' reference.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getIncomingTransitions <em>Incoming Transitions</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Target State</b></em>' reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getIncomingTransitions <em>Incoming Transitions</em>}'.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Target State</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Target State</em>' reference.
-     * @see #setTargetState(State)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_TargetState()
-     * @see de.cau.cs.kieler.sccharts.State#getIncomingTransitions
-     * @model opposite="incomingTransitions" required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Target State</em>' reference.
+	 * @see #setTargetState(State)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_TargetState()
+	 * @see de.cau.cs.kieler.sccharts.State#getIncomingTransitions
+	 * @model opposite="incomingTransitions" required="true"
+	 * @generated
+	 */
     State getTargetState();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Target State</em>' reference.
-     * @see #getTargetState()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Target State</em>' reference.
+	 * @see #getTargetState()
+	 * @generated
+	 */
     void setTargetState(State value);
 
     /**
-     * Returns the value of the '<em><b>Source State</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Source State</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Source State</em>' container reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Source State</em>' container reference.
-     * @see #setSourceState(State)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_SourceState()
-     * @see de.cau.cs.kieler.sccharts.State#getOutgoingTransitions
-     * @model opposite="outgoingTransitions" required="true" transient="false"
-     * @generated
-     */
+	 * @return the value of the '<em>Source State</em>' container reference.
+	 * @see #setSourceState(State)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_SourceState()
+	 * @see de.cau.cs.kieler.sccharts.State#getOutgoingTransitions
+	 * @model opposite="outgoingTransitions" required="true" transient="false"
+	 * @generated
+	 */
     State getSourceState();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getSourceState <em>Source State</em>}' container reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getSourceState <em>Source State</em>}' container reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Source State</em>' container reference.
-     * @see #getSourceState()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Source State</em>' container reference.
+	 * @see #getSourceState()
+	 * @generated
+	 */
     void setSourceState(State value);
 
 } // Transition

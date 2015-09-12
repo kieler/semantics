@@ -50,36 +50,36 @@ package de.cau.cs.kieler.sccharts;
  */
 public interface SuspendAction extends LocalAction {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * Returns the value of the '<em><b>Weak</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Weak</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Weak</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Weak</em>' attribute.
-     * @see #setWeak(boolean)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getSuspendAction_Weak()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Weak</em>' attribute.
+	 * @see #setWeak(boolean)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getSuspendAction_Weak()
+	 * @model
+	 * @generated
+	 */
     boolean isWeak();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.SuspendAction#isWeak <em>Weak</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.SuspendAction#isWeak <em>Weak</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Weak</em>' attribute.
-     * @see #isWeak()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Weak</em>' attribute.
+	 * @see #isWeak()
+	 * @generated
+	 */
     void setWeak(boolean value);
 
 } // SuspendAction
