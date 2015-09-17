@@ -433,12 +433,12 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                      * (but has been maybe created when copying transitions from DefineNodes)
                      */
                     newRegion.states.forEach[ s|
-                        s.incomingTransitions.forEach[
+                        s.incomingTransitions.immutableCopy.forEach[
                             if (it.sourceState == null || it.targetState == null) {
                                 it.remove
                             }
                         ]
-                        s.outgoingTransitions.forEach[
+                        s.outgoingTransitions.immutableCopy.forEach[
                             if (it.sourceState == null || it.targetState == null) {
                                 it.remove
                             }
