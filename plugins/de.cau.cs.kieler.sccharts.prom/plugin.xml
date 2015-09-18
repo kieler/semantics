@@ -24,7 +24,7 @@
             hasPages="true"
             icon="icons/foerde-logo-16.png"
             id="de.cau.cs.kieler.sccharts.prom.projectwizard"
-            name="SCT Project"
+            name="SCCharts Project"
             project="true">
          <description>
             Create a new SCCharts project.
