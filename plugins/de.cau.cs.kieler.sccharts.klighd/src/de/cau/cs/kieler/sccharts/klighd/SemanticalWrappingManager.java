@@ -13,9 +13,12 @@
  */
 package de.cau.cs.kieler.sccharts.klighd;
 
+import org.eclipse.swt.graphics.FontData;
+
 import de.cau.cs.kieler.core.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
 import de.cau.cs.kieler.klighd.labels.SoftWrappingLabelManager;
+import de.cau.cs.kieler.klighd.microlayout.PlacementUtil;
 
 /**
  * Modifies the size of labels by truncating them once the target width is reached. This label
@@ -26,31 +29,34 @@ import de.cau.cs.kieler.klighd.labels.SoftWrappingLabelManager;
  */
 public final class SemanticalWrappingManager extends AbstractKlighdLabelManager {
 
-    public SemanticalWrappingManager(final boolean initiallyActive) {
-        super(initiallyActive);
-
-    }
-
     /**
      * {@inheritDoc}
      */
     @Override
     public String resizeLabel(KLabel label, double targetWidth) {
-        SoftWrappingLabelManager labelManager = new SoftWrappingLabelManager();
+        SoftWrappingLabelManager softWrappingLabelManager = new SoftWrappingLabelManager();
+        softWrappingLabelManager.setTargetWidth(targetWidth);
         String[] triggerEffect = label.getText().split("/");
+        String[] words = label.getText().split(" ");
         String newText = label.getText();
 
+        final FontData font = PlacementUtil.fontDataFor(label);
+
+         double biggestWordSize = softWrappingLabelManager.getSizeOfBiggestWord(font,words);
+         biggestWordSize=Math.max(biggestWordSize,targetWidth / 2.0);
+
         if (triggerEffect.length == 1) {
-            newText = labelManager.resizeLabel(label, targetWidth);
+            newText = softWrappingLabelManager.resizeLabel(label, targetWidth);
 
         } else if (triggerEffect.length == 2) {
+            
             // shorten trigger
-            label.setText(triggerEffect[0]);
-            String firstHalf = labelManager.resizeLabel(label, targetWidth / 2.0);
-            double size = labelManager.getBiggestWordSize();
+            label.setText(triggerEffect[0].trim());
+            String firstHalf = softWrappingLabelManager.resizeLabel(label, biggestWordSize);
+            
             // shorten effect
-            label.setText(triggerEffect[1]);
-            String secondHalf = labelManager.resizeLabel(label, size);
+            label.setText(triggerEffect[1].trim());
+            String secondHalf = softWrappingLabelManager.resizeLabel(label, biggestWordSize);
             newText = firstHalf + " /\n" + secondHalf;
         }
         return newText;

@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.klighd
 
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.core.annotations.Annotation
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
@@ -39,24 +40,30 @@ import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
+import de.cau.cs.kieler.kiml.labels.LabelManagementOptions
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
+import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager
+import de.cau.cs.kieler.klighd.labels.TruncatingLabelManager
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.sccharts.DuringAction
-import de.cau.cs.kieler.sccharts.EntryAction
-import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
 import de.cau.cs.kieler.sccharts.s.DataDependency
 import de.cau.cs.kieler.sccharts.s.DependencyGraph
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
@@ -69,18 +76,7 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
-import de.cau.cs.kieler.sccharts.LocalAction
-import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
-import de.cau.cs.kieler.klighd.DisplayedActionData
-import de.cau.cs.kieler.kiml.labels.LabelManagementOptions
-import de.cau.cs.kieler.klighd.labels.TruncatingLabelManager
-import de.cau.cs.kieler.klighd.actions.ManageLabelsAction
+import de.cau.cs.kieler.klighd.labels.ListLabelManager
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -97,14 +93,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     private static val Injector i = ActionsStandaloneSetup::doSetup();
     private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
-    
+
     // a global diagram option "@BlackWhite"
     private boolean globalBWOption = false;
     private final String GLOBALBWOPTION = "BlackWhite";
 
     // -------------------------------------------------------------------------
     // We need some extensions 
-    @Inject 
+    @Inject
     extension KNodeExtensions
 
     @Inject
@@ -133,7 +129,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     @Inject
     extension KExpressionsExtension
-    
+
     @Inject
     extension SCChartsSerializeExtension
 
@@ -142,7 +138,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     // CORE TRANSFORMATIONS
     private static val SynthesisOption PAPER_BW = SynthesisOption::createCheckOption("Black/White (Paper)",
         false);
-        
+
     private static val SynthesisOption SHOW_SIGNAL_DECLARATIONS = SynthesisOption::createCheckOption("Declarations",
         true);
 
@@ -151,7 +147,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     private static val SynthesisOption SHOW_LABELS = SynthesisOption::createCheckOption("Transition labels",
         true);
-    
+
     private static val SynthesisOption SHOW_DEPENDENCIES = SynthesisOption::createCheckOption(
         "Dependencies && optimized priorities", false);
 
@@ -160,37 +156,46 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     private static val SynthesisOption SHOW_REFERENCEEXPANSION = SynthesisOption::createCheckOption(
         "Reference Expansion", true);
-        
-    private static val SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption::createCheckOption(
-        "Adaptive Zoom", false);        
+
+    private static val SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption::createCheckOption("Adaptive Zoom", false);
 
     DependencyGraph dependencyGraph = null
 
     private static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadow", true);
 
+private static val SynthesisOption SHORTEN_LABELS_LEVELS = SynthesisOption::createRangeOption("Shorten Labels", 0, 8,
+        1, 8)
+    private static val SynthesisOption TARGET_WIDTH_LEVELS = SynthesisOption::createRangeOption("Shortening Width", 0, 200, 2,
+        200)
+
+    /**
+     * Synthesis option specifying whether to install a label shortening strategy or not.
+     */
+    private static val SynthesisOption FOCUS_CONTEXT = SynthesisOption::createCheckOption("Meta Focus", false)
+
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW);
+            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW, SHORTEN_LABELS_LEVELS, TARGET_WIDTH_LEVELS,
+            FOCUS_CONTEXT);
     }
 
     override public getDisplayedLayoutOptions() {
         return newLinkedList(
             //new Pair<IProperty<?>, List<?>>(LayoutOptions::ALGORITHM, emptyList), //not supported by klighd
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name])
-            ,new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name]),
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
         );
     }
-    
-    // -------------------------------------------------------------------------
-    // Displayed actions
-    
-    private static val DisplayedActionData MANAGE_LABELS_ACTION = DisplayedActionData.create(
-        ManageLabelsAction.ID, "Manage Labels");
-    
-    override public getDisplayedActions() {
-        return newLinkedList(MANAGE_LABELS_ACTION)
-    }
 
+    // -------------------------------------------------------------------------
+    //    // Displayed actions
+    //    
+    //    private static val DisplayedActionData MANAGE_LABELS_ACTION = DisplayedActionData.create(
+    //        ManageLabelsAction.ID, "Manage Labels");
+    //    
+    //    override public getDisplayedActions() {
+    //        return newLinkedList(MANAGE_LABELS_ACTION)
+    //    }
     // -------------------------------------------------------------------------
     // Some color and pattern constants
     private static val float TRANSITION_DASH_BLACK = 7;
@@ -214,80 +219,76 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() => [it.red = 60; it.green = 60; it.blue = 60];
 
     private static val String ANNOTATION_LABELBREAK = "break"
-    
+
     private var regionCounter = 0
 
     // -------------------------------------------------------------------------
     // The Main entry transform function   
     override transform(Scope model) {
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, true);
-        
-//        var transformed = model;
 
+        //        var transformed = model;
         // Visualization of compiled SCCharts with kico.klighd not here
         //        val transformations = KiCoSelectionView.getSelectedTransformations(KiCoSelectionView.activeEditorID);
         //        // ---------
         //        // Just one final compiler call of KielerCompiler
         //        transformed = KielerCompiler.compile(transformations, transformed, KiCoSelectionView.advancedMode) as Region
         //        // ---------
-//        return transformed.translate();
-		
+        //        return transformed.translate();
         val timestamp = System.currentTimeMillis
         System.out.println("Started SCCharts synthesis...")
-        
-		val rootState = (model as State);
-		
-		
-		// Search for global diagram options
-		for (de.cau.cs.kieler.core.annotations.Annotation a : rootState.annotations) {
-		    if (a.name.equals(GLOBALBWOPTION)) {
-		        globalBWOption = true;
-		    }
-		}
-		
-		
+
+        val rootState = (model as State);
+
+        // Search for global diagram options
+        for (Annotation a : rootState.annotations) {
+            if (a.name.equals(GLOBALBWOPTION)) {
+                globalBWOption = true;
+            }
+        }
+
         if (model instanceof Region) {
             val region = (model as Region).translate(false)
             var time = (System.currentTimeMillis - timestamp) as float
-            System.out.println("SCCharts synthesis (regions) finished (time elapsed: "+(time / 1000)+"s).")
+            System.out.println("SCCharts synthesis (regions) finished (time elapsed: " + (time / 1000) + "s).")
             return region
         }
-        
-        
-		
-		
+
         val rootNode = createNode() => [
-              // ATTENTION: DO NOT use graphiz on outermost root node, this will result in suspicious layout bugs!!!
-//            addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot") 
+            // ATTENTION: DO NOT use graphiz on outermost root node, this will result in suspicious layout bugs!!!
+            //            addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot") 
             addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
-            addLayoutParam(LabelManagementOptions::LABEL_MANAGER,
-                 new TransitionLabelManager(false))
+            
+            //Label shortening
+            addLabelManager(node)
+            
             children += rootState.translate
-        ] 
+        ]
         var time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("SCCharts synthesis finished (time elapsed: "+(time / 1000)+"s).")
-        
+        System.out.println("SCCharts synthesis finished (time elapsed: " + (time / 1000) + "s).")
+
         return rootNode
     }
 
     // -------------------------------------------------------------------------
     // Transform a region
     public def KNode translate(Region r, boolean loadLazy) {
-    	regionCounter = regionCounter + 1
-    	if (regionCounter % 100 == 0) System.out.print("r")
-    	if (regionCounter % 2000 == 0) System.out.println("")
+        regionCounter = regionCounter + 1
+        if(regionCounter % 100 == 0) System.out.print("r")
+        if(regionCounter % 2000 == 0) System.out.println("")
         val regionNode = r.createNode() => [ node |
-//            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot")
+            //            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot")
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
             node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
-            node.addLayoutParam(LayoutOptions::LABEL_SPACING, 50F)
+            node.addLayoutParam(LayoutOptions::LABEL_SPACING, 10F)
             node.setLayoutOption(LayoutOptions::SPACING, 40f);
-            node.addLayoutParam(LabelManagementOptions::LABEL_MANAGER,
-                new TransitionLabelManager(false));
+            
+            addLabelManager(node)
+            
             if (loadLazy) {
-                node.setLayoutOption(KlighdProperties::EXPAND, false);       
-                     
+                node.setLayoutOption(KlighdProperties::EXPAND, false);
+
             } else {
                 for (s : r.states) {
                     node.children += s.translate;
@@ -296,16 +297,18 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             var regionLabelVar = r.label
             if (r.^for != null) {
                 scopeProvider.parent = r.parentState;
+
                 //val forCopy = r.^for.copy
                 val forCopy = r.^for.valuedObject.copy
+
                 //forCopy.annotations.clear // do not serialize copied annotations
-                var String forLabel = "[" + r.^for.valuedObject.name + "=" +  r.^for.from + ".." + r.^for.to + "]"//serializer.serialize(forCopy)
+                var String forLabel = "[" + r.^for.valuedObject.name + "=" + r.^for.from + ".." + r.^for.to + "]" //serializer.serialize(forCopy)
                 regionLabelVar = regionLabelVar + " " + forLabel
             }
             val regionLabel = regionLabelVar
-//            if (r.eContainer == null) {
-//                return;
-//            }
+            //            if (r.eContainer == null) {
+            //                return;
+            //            }
             node.addRectangle() => [
                 it.setAsExpandedView;
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
@@ -314,7 +317,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[-]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
-                    if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
+                    if(USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
                     it.foreground = "dimGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -322,7 +325,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     it.suppressSelectability
                 ];
                 if (r.empty || !r.label.nullOrEmpty) {
-//                if (!r.allContainedStates.nullOrEmpty) {
+
+                    //                if (!r.allContainedStates.nullOrEmpty) {
                     it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                 }
             ];
@@ -334,7 +338,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[+]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
-                    if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
+                    if(USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
                     it.foreground = "dimGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -350,12 +354,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
             ]
         ]
-        
+
         if (loadLazy) {
             regionNode.suppressSelectability
         }
         regionNode.putToLookUpWith(r)
-        
+
         return regionNode
     }
 
@@ -374,23 +378,23 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         return returnValue
     }
 
-//    // Return the action name entry.
-//    def dispatch String getActionName(EntryAction action) {
-//        "entry"
-//    }
-//
-//    // Return the action name during.
-//    def dispatch String getActionName(DuringAction action) {
-//        "during"
-//    }
-//
-//    // Return the action name exit.
-//    def dispatch String getActionName(ExitAction action) {
-//        "exit"
-//    }
-
+    //    // Return the action name entry.
+    //    def dispatch String getActionName(EntryAction action) {
+    //        "entry"
+    //    }
+    //
+    //    // Return the action name during.
+    //    def dispatch String getActionName(DuringAction action) {
+    //        "during"
+    //    }
+    //
+    //    // Return the action name exit.
+    //    def dispatch String getActionName(ExitAction action) {
+    //        "exit"
+    //    }
     // Return the action name exit.
     def dispatch String getActionName(LocalAction action) {
+
         // will be serialized automatically from grammar (iff not suspend action!)
         return ""
     }
@@ -398,9 +402,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     // Return the action name suspend.
     def dispatch String getActionName(SuspendAction action) {
         if (!(action as SuspendAction).weak) {
-        "suspend "
+            "suspend "
         } else {
-        "weak suspend "
+            "weak suspend "
         }
     }
 
@@ -411,7 +415,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         return (text == "scchart") || (text == "entry") || (text == "during") || (text == "suspend") || (text == "weak") ||
             (text == "exit") || (text == "signal") || (text == "int") || (text == "bool") ||
             (text == "float") || (text == "unsigned") || (text == "immediate") || (text == "input") ||
-            (text == "output") || (text == "pre") || (text == "val") || (text == "combine") || (text == "static") || 
+            (text == "output") || (text == "pre") || (text == "val") || (text == "combine") || (text == "static") ||
             (text == "const") || (text == "extern")
     }
 
@@ -422,7 +426,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     // Print the highlighted text into a parent and link it to a lookup EObject.
     def KRectangle printHighlightedText(KRectangle parent, String text, EObject lookup) {
-        if (USE_ADAPTIVEZOOM.booleanValue) parent.lowerVisibilityScaleBound = 0.5f;
+        if(USE_ADAPTIVEZOOM.booleanValue) parent.lowerVisibilityScaleBound = 0.5f;
         var remainingText = text
         var split = ""
         val words = text.getWords
@@ -432,32 +436,37 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             split = remainingText.substring(0, index)
             remainingText = remainingText.substring(index + word.length, remainingText.length)
             parent.addText(split + word) => [
-                if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
+                if(USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                 if (word.keyword) {
                     it.setForeground(KEYWORD.copy)
                     if (PAPER_BW.booleanValue || globalBWOption) {
-                        it.setForeground("black".color)    
+                        it.setForeground("black".color)
                     }
                     it.setFontBold(true)
+                }else{
+                    if (FOCUS_CONTEXT.booleanValue) {
+                        it.addSingleClickAction("de.cau.cs.kieler.klighd.actions.MetaFocusAction")
+                    }
+                 
                 }
                 it.putToLookUpWith(lookup)
-                it.setGridPlacementData()
+                it.setGridPlacementData()                             
             ]
         }
         val remainingText2 = remainingText
         if (remainingText2.length > 0) {
             parent.addText(remainingText2) => [
-                if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
+                if(USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                 if (remainingText2.keyword) {
                     it.setForeground(KEYWORD.copy)
                     if (PAPER_BW.booleanValue || globalBWOption) {
-                        it.setForeground("black".color)    
+                        it.setForeground("black".color)
                     }
                     it.setFontBold(true)
                 }
                 it.putToLookUpWith(lookup)
                 it.setGridPlacementData()
-            ]
+                                ]
         }
         parent
     }
@@ -472,7 +481,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 dependencyGraph = s.getRootState.getDependencyGraph
             }
         }
-        
+
         val valuedObjectCache = s.getAllValuedObjects
 
         return s.createNode().putToLookUpWith(s) => [ node |
@@ -484,14 +493,16 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 node.setParent(node.parent)
             }
             val connector = s.type == StateType::CONNECTOR;
-            val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations(valuedObjectCache) && !s.referencedState) 17 else 8;
+            val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations(valuedObjectCache) &&
+                    !s.referencedState) 17 else 8;
             var lineWidth = if(s.isInitial) 3 else 1;
             if (PAPER_BW.booleanValue || globalBWOption) {
                 lineWidth = lineWidth + 1;
             }
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
             figure.lineWidth = lineWidth;
-            figure.foreground = if(s.isInitial || s.isFinal || PAPER_BW.booleanValue || globalBWOption) "black".color else "gray".color
+            figure.foreground = if(s.isInitial || s.isFinal || PAPER_BW.booleanValue || globalBWOption) "black".color else "gray".
+                color
             if (!(PAPER_BW.booleanValue || globalBWOption) && SHOW_SHADOW.booleanValue && !connector) {
                 figure.shadow = "black".color;
                 figure.shadow.XOffset = 4;
@@ -514,7 +525,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 ]
             else if (s.isFinal)
                 figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
-                    if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.30f;
+                    if(USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.30f;
                     // re-configure the outer rounded rectangle
                     val offset = figure.lineWidthValue + if(s.isInitial) 1 else 2;
                     figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
@@ -522,14 +533,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     // configure the inner one
                     //                    it.background = "white".color;
                     it.styleRef = figure;
-                    if (s.referencedState) 
+                    if (s.referencedState)
                         it.background.alpha = 0
                     else {
                         if (!(PAPER_BW.booleanValue || globalBWOption)) {
                             it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                         }
                     }
-                    it.shadow = null
+                    //TODO this should be working //it.shadow = null
                     it.lineWidth = if(s.isInitial) 1 else 1;
                     it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset,
                         0);
@@ -576,7 +587,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
                             //priority = priority + ", " + dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).get(0).getPriority
                             }
-                        } 
+                        }
                         priority = priority + ""
                     }
 
@@ -603,9 +614,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 val priorityToShow = priority
                 val prioritySpace = if(priorityToShow.length > 0) "  " else " "
                 if (s.hasRegionsOrDeclarations(valuedObjectCache) || s.referencedState) {
-                    
-                    if (s.hasNoRegionsWithStates) 
-                        if (USE_ADAPTIVEZOOM.booleanValue) figure.lowerVisibilityScaleBound = 0.075f;
+
+                    if (s.hasNoRegionsWithStates)
+                        if(USE_ADAPTIVEZOOM.booleanValue) figure.lowerVisibilityScaleBound = 0.075f;
+
                     // Get a smaller window-title-bare if this a macro state 
                     if (!s.label.empty)
                         it.addRectangle => [
@@ -615,12 +627,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             it.setFontBold(true);
                             it.setGridPlacementData().from(LEFT, 0, 0, TOP, 8f, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                             var text = s.label
-                            if (s.referencedState) 
+                            if (s.referencedState)
                                 text = text + ' @ ' + (s.referencedScope as State).label
                             val ktext = it.addText("   " + text + prioritySpace + " ").putToLookUpWith(s) => [
                                 it.fontSize = 11;
-                                if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.49f;
-                               ];
+                                if(USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.49f;
+                            ];
                             if (priorityToShow.length > 0) {
                                 val estimatedWidth = PlacementUtil.estimateTextSize(ktext).width
                                 it.addText(priorityToShow) => [
@@ -637,10 +649,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             }
                         ];
                 } else {
-                    if (USE_ADAPTIVEZOOM.booleanValue) figure.lowerVisibilityScaleBound = 0.20f;
+                    if(USE_ADAPTIVEZOOM.booleanValue) figure.lowerVisibilityScaleBound = 0.20f;
+
                     // For simple states we want a larger area 
                     val ktext = it.addText(" " + s.label + prioritySpace).putToLookUpWith(s) => [
-                        if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
+                        if(USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
                         it.fontSize = 11;
                         it.setFontBold(true);
                         if (PAPER_BW.booleanValue || globalBWOption) {
@@ -669,7 +682,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         it.addRectangle => [
                             it.invisible = true;
                             it.addRectangle => [
-                                it.invisible = true;
+                                  it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
                                     0);
                                 scopeProvider.parent = s;
@@ -732,12 +745,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         it.addRectangle => [
                             it.invisible = true;
                             it.addRectangle => [
-                                if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
+                                if(USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
                                     0);
-                                var text = action.serialize as String//serializer.serialize(action.copy);
-                                text = action.actionName +  text
+                                var text = action.serialize as String //serializer.serialize(action.copy);
+                                text = action.actionName + text
                                 text = text.replace("'", "")
                                 if (text.length > 1 && text.substring(text.length - 1, text.length).equals(";")) {
                                     text = text.substring(0, text.length - 1)
@@ -747,19 +760,20 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         //it.addRectangle().invisible = true;
                         ];
                     }
-// FIXME: What is bodyText used for?
-//                    for (bodyText : s.bodyText) {
-//                        it.addRectangle => [
-//                            it.invisible = true;
-//                            val text = bodyText.text;
-//                            it.addText(text) => [
-//                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0,
-//                                    0);
-//                                it.putToLookUpWith(bodyText);
-//                            ]
-//                            it.addRectangle().invisible = true;
-//                        ];
-//                    }
+
+                // FIXME: What is bodyText used for?
+                    //                    for (bodyText : s.bodyText) {
+                //                        it.addRectangle => [
+                //                            it.invisible = true;
+                //                            val text = bodyText.text;
+                //                            it.addText(text) => [
+                //                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0,
+                //                                    0);
+                //                                it.putToLookUpWith(bodyText);
+                //                            ]
+                //                            it.addRectangle().invisible = true;
+                //                        ];
+                //                    }
                 }
                 if (s.hasRegionsOrDeclarations(valuedObjectCache) || s.referencedState) {
                     it.addChildArea().setGridPlacementData() => [
@@ -772,14 +786,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             if (!s.hasNoRegionsWithStates) {
                 for (r : s.regions)
                     node.children += r.translate(false);
-            } 
+            }
             if (s.isReferencedState) {
                 if (!(PAPER_BW.booleanValue || globalBWOption)) {
                     figure.setBackgroundGradient("#fefef0".color, "#e0b0099".color, 90.0f);
                 } else {
                     figure.setBackground("#fefef0".color)
                 }
-            } 
+            }
             if (s.referencedState && SHOW_REFERENCEEXPANSION.booleanValue) {
                 for (r : (s.referencedScope as State).regions) {
                     val synthesis = delegate.get();
@@ -791,7 +805,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 t.translateTransition();
         ]
     }
-    
+
     @Inject
     Provider<DelegateSCChartsDiagramSynthesis> delegate;
 
@@ -802,7 +816,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             edge.source = t.sourceState.node;
             edge.target = t.targetState.node;
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            if (USE_ADAPTIVEZOOM.booleanValue) edge.lowerVisibilityScaleBound = 0.11f;
+            if(USE_ADAPTIVEZOOM.booleanValue) edge.lowerVisibilityScaleBound = 0.11f;
             edge.addSpline(2) => [
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
                 if (t.isImmediate2) {
@@ -845,8 +859,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 tCopy.setImmediate(false)
                 tCopy.annotations.clear // do not serialize copied annotations
                 var label = tCopy.serialize as String
-//                 label = label + tCopy.trigger.serialize as String//serializer.serialize(tCopy)
 
+                //                 label = label + tCopy.trigger.serialize as String//serializer.serialize(tCopy)
                 label = label.replace("'", "")
 
                 // break labels if they are annotated
@@ -868,8 +882,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         KlighdConstants::DEFAULT_FONT_NAME
                     ) => [
                         it.setLayoutOption(LayoutOptions.FONT_SIZE, 13);
-                        if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
+                        if(USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                         it.KRendering.setFontBold(true)
+                        
                     ]
                 }
             }
@@ -952,9 +967,67 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             ]
         ];
     }
+    
+    def addLabelManager(KNode kgraph) {
+        var labelManager = null as AbstractKlighdLabelManager;
+
+        // Evaluate the label shortening property
+        switch SHORTEN_LABELS_LEVELS.intValue {
+            case 0: {
+                //Filter all
+                labelManager = new FilterLabelsBesidesTransNumberManager()
+                kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
+            }
+            case 1: {
+                //Truncate Label
+                labelManager = new TruncatingLabelManager();
+                labelManager.setTargetWidth(TARGET_WIDTH_LEVELS.intValue);
+                kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
+            }
+            case 2: {
+
+                //semantical wrap the label
+                labelManager = new SemanticalWrappingManager()
+                labelManager.setTargetWidth(TARGET_WIDTH_LEVELS.intValue);
+                kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
+            }
+            case 3: {
+
+                //Truncate all operators
+                labelManager = new TruncatingOperatorsLabelManager();
+                labelManager.setTargetWidth(TARGET_WIDTH_LEVELS.intValue);
+                kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
+            }
+            case 4: {
+
+                //Truncate only signals
+                labelManager = new TruncateOnlySignalsLabelManager();
+                labelManager.setTargetWidth(TARGET_WIDTH_LEVELS.intValue);
+                kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
+            }
+            case 5: {
+
+                //Truncate all HostCode arguments
+                labelManager = new TruncateHostCodeArguments();
+                labelManager.setTargetWidth(TARGET_WIDTH_LEVELS.intValue);
+                kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
+            }
+            case 6: {
+
+                //Truncate all HostCode arguments
+                labelManager = new ListLabelManager(false, new TruncatingOperatorsLabelManager(),
+                    new TruncateHostCodeArguments(), new SemanticalWrappingManager());
+                labelManager.setTargetWidth(TARGET_WIDTH_LEVELS.intValue);
+                kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
+            }
+            case 7: {
+                //original Text
+            //}
+            }
+        }
+    }
 
 // -------------------------------------------------------------------------
-
 }
 
 @ViewSynthesisShared

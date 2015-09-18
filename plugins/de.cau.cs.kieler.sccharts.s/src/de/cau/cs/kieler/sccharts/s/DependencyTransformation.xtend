@@ -324,12 +324,12 @@ class DependencyTransformation {
     //-------------------------------------------------------------------------
     // Get a list of states sorted by their priority with highest priority first.
     def public List<DependencyNode> getPioritySortedStates(List<DependencyNode> dependencyNodes) {
-        dependencyNodes.sort(e1, e2|comparePriorities(e1, e2));
+        dependencyNodes.sortWith(e1, e2|comparePriorities(e1, e2));
     }
 
     // Get a list of states sorted by their order with highest order first.
     def public List<DependencyNode> getOrderSortedStates(List<DependencyNode> dependencyNodes) {
-        dependencyNodes.sort(e1, e2|compareOrdersRespectingRoot(e1, e2));
+        dependencyNodes.sortWith(e1, e2|compareOrdersRespectingRoot(e1, e2));
     }
 
     // Compare two priorities.

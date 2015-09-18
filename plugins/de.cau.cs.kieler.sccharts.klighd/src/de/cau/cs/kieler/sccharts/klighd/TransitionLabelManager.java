@@ -44,9 +44,7 @@ public final class TransitionLabelManager extends AbstractKlighdLabelManager {
      * @param labelManager
      *            {@link AbstractKlighdLabelManager} to shorten label of the transition
      */
-    public TransitionLabelManager(final boolean initiallyActive,
-            final AbstractKlighdLabelManager labelManager) {
-        super(initiallyActive);
+    public TransitionLabelManager(final AbstractKlighdLabelManager labelManager) {
         this.labelManagerTrigger = labelManager;
         this.labelManagerEffect = labelManager;
 
@@ -64,10 +62,8 @@ public final class TransitionLabelManager extends AbstractKlighdLabelManager {
      * @param labelManagerEffect
      *            {@link AbstractKlighdLabelManager} to shorten label of the effect
      */
-    public TransitionLabelManager(final boolean initiallyActive,
-            final AbstractKlighdLabelManager labelManagerTrigger,
+    public TransitionLabelManager(final AbstractKlighdLabelManager labelManagerTrigger,
             final AbstractKlighdLabelManager labelManagerEffect) {
-        super(initiallyActive);
         this.labelManagerTrigger = labelManagerTrigger;
         this.labelManagerEffect = labelManagerEffect;
     }
@@ -84,18 +80,18 @@ public final class TransitionLabelManager extends AbstractKlighdLabelManager {
         String newText = label.getText();
 
         if (triggerEffect.length == 1) {
-            //there is no Trigger or effect
+            // there is no Trigger or effect
             if (!label.getText().startsWith("/")) {
                 newText = labelManagerTrigger.resizeLabel(label, targetWidth);
             } else {
                 newText = labelManagerEffect.resizeLabel(label, targetWidth);
             }
         } else if (triggerEffect.length == 2) {
-            //shorten trigger
+            // shorten trigger
             label.setText(triggerEffect[0]);
             String firstHalf = labelManagerTrigger.resizeLabel(label, targetWidth / 2.0);
-            
-            //shorten effect
+
+            // shorten effect
             label.setText(triggerEffect[1]);
             String secondHalf = labelManagerEffect.resizeLabel(label, targetWidth / 2.0);
             newText = firstHalf + " / " + secondHalf;

@@ -25,11 +25,6 @@ import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
  */
 public class TruncatingOperatorsLabelManager extends AbstractKlighdLabelManager {
 
-    public TruncatingOperatorsLabelManager(final boolean initiallyActive) {
-        super(initiallyActive);
-
-    }
-
     private final static String[] OPERATORS = { "~", "!", "*", "/", "%", "+", "-", "<<", ">>",
             ">>>", "<", ">", "<=", ">=", "==", "!=", "&", "^", "|", "&&", "||", "?", "=", "+=",
             "-=", "*=", "/=", "%=", "&=", "^=", "|=", "<<=", ">>=", ">>>=", ";" };
@@ -42,14 +37,17 @@ public class TruncatingOperatorsLabelManager extends AbstractKlighdLabelManager 
         LinkedList<String> deleteEntriesList = new LinkedList<String>();
         String resultText = label.getText();
 
-        //delete all operators
+        // delete all operators
         for (String entry : OPERATORS) {
-            resultText= resultText.replace(entry, "");            
+            resultText = resultText.replace(entry, "");
         }
 
-        //delete true, false and all numbers
+        // delete true, false and all numbers
         LinkedList<String> textList =
                 new LinkedList<String>(Arrays.asList(resultText.trim().split(" ")));
+
+        // filter numbers
+        boolean deleteAlsoNext = false;
         for (String textPart : textList) {
 
             try {
@@ -61,20 +59,47 @@ public class TruncatingOperatorsLabelManager extends AbstractKlighdLabelManager 
                 }
             }
 
+            // if (textPart.contains("(")) {
+            // deleteEntriesList.add(textPart);
+            // deleteAlsoNext = true;
+            // } else if (textPart.contains(")")) {
+            // deleteEntriesList.add(textPart);
+            // deleteAlsoNext = false;
+            // }
+            // if (deleteAlsoNext) {
+            // deleteEntriesList.add(textPart);
+            // }
+
         }
         for (String entry : deleteEntriesList) {
             while (textList.remove(entry)) {
             }
         }
-        
-        //retransform the list to string and add commata
+
+        // retransform the list to string and add commata
         resultText = "";
+        boolean hostCode = false;
         for (String textPart : textList) {
+            if (textPart.contains("(")) {
+                hostCode = true;
+            } else if (textPart.contains(")")) {
+                hostCode = false;
+            }
+
             if (!(textPart.equals("") || resultText.contains(textPart))) {
-                resultText += (textPart.contains(":")) ? textPart + " " : textPart.trim() + ", ";
+                // no empty textpart and no doubled textParts are added
+                if ((textPart.contains(":")) || hostCode) {
+                    resultText += textPart + " ";
+                } else {
+
+                    resultText += textPart.trim() + ", ";
+                }
             }
         }
-        resultText = resultText.substring(0, resultText.length() - 2);
+        if (!textList.isEmpty() && !textList.get(0).equals("")) {
+            // remove last comma
+            resultText = resultText.substring(0, resultText.length() - 2);
+        }
         return resultText;
     }
 }
