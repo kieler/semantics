@@ -27,6 +27,8 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import java.util.Iterator
+import java.util.List
+import de.cau.cs.kieler.core.kexpressions.Declaration
 
 /**
  * @author ssm
@@ -311,5 +313,46 @@ class KExpressionsSerializeExtensions {
     def dispatch CharSequence serialize(Void x) {
     }
 
+
+   def Pair<List<String>, List<String>> serializeComponents(Declaration declaration) {
+        val keywords = newLinkedList;
+        val content = newLinkedList;
+
+        //Modifiers
+        if (declaration.isExtern) {
+            keywords += "extern";
+        }
+        if (declaration.isStatic) {
+            keywords += "static ";
+        }
+        if (declaration.isConst) {
+            keywords += "const";
+        }
+        if (declaration.isInput) {
+            keywords += "input";
+        }
+        if (declaration.isOutput) {
+            keywords += "output"
+        }
+        if (declaration.isSignal) {
+            keywords += "signal";
+        }
+
+        //Type
+        keywords += declaration.type.serialize as String
+
+        //Content
+        for (valuedObject : declaration.valuedObjects) {
+            content += valuedObject.serialize + ",";
+        }
+        // Remove last comma
+        if (!content.empty) {
+            content.removeLast;
+            content += declaration.valuedObjects.last.serialize as String;
+        }
+
+        return new Pair(keywords, content);
+    }
+    
   
 }

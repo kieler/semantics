@@ -10,10 +10,11 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd
+package de.cau.cs.kieler.sccharts.klighd.deprecated
 
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.core.annotations.Annotation
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.Declaration
@@ -53,21 +54,24 @@ import de.cau.cs.kieler.kiml.options.NodeLabelPlacement
 import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortLabelPlacement
 import de.cau.cs.kieler.kiml.options.PortSide
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.CallNode
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.DefineNode
+import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Node
 import de.cau.cs.kieler.sccharts.ReferenceNode
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
@@ -76,6 +80,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
+import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.s.DataDependency
 import de.cau.cs.kieler.sccharts.s.DependencyGraph
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
@@ -272,7 +277,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 		
 		
 		// Search for global diagram options
-		for (de.cau.cs.kieler.core.annotations.Annotation a : rootState.annotations) {
+		for (Annotation a : rootState.annotations) {
 		    if (a.name.equals(GLOBALBWOPTION)) {
 		        globalBWOption = true;
 		    }
@@ -377,7 +382,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     if (loadLazy) {
-                        it.addDoubleClickAction(SCChartsReferenceExpandAction.ID);
+                        it.addDoubleClickAction(ReferenceExpandAction.ID);
                     } else {
                         it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                     }
