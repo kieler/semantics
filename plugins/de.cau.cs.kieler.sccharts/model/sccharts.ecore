@@ -230,7 +230,7 @@
       </eAnnotations>
     </eLiterals>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SCCharts">
+  <eClassifiers xsi:type="ecore:EClass" name="SCCharts" eSuperTypes="#//Scope">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rootStates" upperBound="-1"
         eType="#//State" containment="true"/>
   </eClassifiers>
