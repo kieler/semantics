@@ -27,6 +27,8 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -139,6 +141,38 @@ class SCGCoreExtensions {
             scg.basicBlocks.forEach[ list += schedulingBlocks ]
         ]
     }
+    
+    /**
+     * Retrieves the scheduling block with the given guard.
+     * 
+     * @param guard
+     *          the guard
+     * @return Returns the scheduling block.
+     */            
+//    def List<Node> getScheduleNodes(Schedule schedule) {
+//        val nodeList = <Node> newLinkedList
+//        schedule.scheduledBlocks.forEach[ nodeList += it.schedulingBlock.nodes ]
+//        nodeList
+//    }
+    
+    def SchedulingBlock getSchedulingBlock(Iterable<BasicBlock> basicBlocks, ValuedObject valuedObject) {
+        for(bb : basicBlocks) {
+            for(sb : bb.schedulingBlocks) {
+                if (sb.guard.valuedObject == valuedObject) {
+                    return sb
+                }
+            }
+        }
+        return null
+    }    
+    
+    def SchedulingBlock getSchedulingBlock(Iterable<BasicBlock> basicBlocks, Guard guard) {
+        basicBlocks.getSchedulingBlock(guard.valuedObject)
+    }
+    
+    def SchedulingBlock getSchedulingBlock(SCGraph scg, Guard guard) {
+        scg.basicBlocks.getSchedulingBlock(guard)
+    }    
     
 
     // -------------------------------------------------------------------------
