@@ -363,6 +363,7 @@ class TimingAnnotationProvider {
             }
         }      
         }
+         if (i == 13) {i = (i + 1)};
          appendFWCETAndLWCETRequest(i.toString(), "exit", returnList, stringBuilder);
          // add request for WCET path
          stringBuilder.append("\nWCP entry exit")
@@ -397,16 +398,16 @@ class TimingAnnotationProvider {
             var timingRequestResult1 = new TimingRequestResult();
             var timingRequestResult2 = new TimingRequestResult();
             stringBuilder.append("\n");
-            stringBuilder.append("FWCET " + startPoint + " " + endPoint + "\nLWCET " + startPoint 
-                + " " + endPoint);
+            stringBuilder.append("FWCET " + startPoint + " " + endPoint);
+            //    + "\nLWCET " + startPoint + " " + endPoint);
             timingRequestResult1.setRequestType(RequestType.FWCET);
             timingRequestResult1.setStartPoint(startPoint);
             timingRequestResult1.setEndPoint(endPoint);
             resultList.add(timingRequestResult1);
-            timingRequestResult2.setRequestType(RequestType.LWCET);
-            timingRequestResult2.setStartPoint(startPoint.toString());
-            timingRequestResult2.setEndPoint(endPoint.toString());
-            resultList.add(timingRequestResult2);
+            //timingRequestResult2.setRequestType(RequestType.LWCET);
+            //timingRequestResult2.setStartPoint(startPoint.toString());
+            //timingRequestResult2.setEndPoint(endPoint.toString());
+            //resultList.add(timingRequestResult2);
     }
     
 }

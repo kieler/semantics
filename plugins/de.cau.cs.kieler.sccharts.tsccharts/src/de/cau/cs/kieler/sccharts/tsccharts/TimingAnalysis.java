@@ -47,8 +47,10 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kgraph.KNode;
@@ -102,7 +104,7 @@ public class TimingAnalysis extends Job {
     private static HashMap<Pair<String, String>, Set<String>> debugTracingHistory =
             new HashMap<Pair<String, String>, Set<String>>();
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     public static final boolean DEBUG_VERBOSE = false;
 
     private String pluginId = "de.cau.cs.kieler.sccharts.tsccharts";
@@ -222,10 +224,11 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
+        
         final KRenderingFactory renderingFactory = KRenderingFactory.eINSTANCE;
         KielerCompilerContext context =
                 new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID
-                        + ",*T_ABORT,*T_scg.basicblock.sc", scchart);
+                        + ",*T_ABORT,*T_scg.basicblock.sc,*T_NOSIMULATIONVISUALIZATION", scchart);
         context.setProperty(Tracing.ACTIVE_TRACING, true);
         context.setAdvancedSelect(true);
         CompilationResult compilationResult = KielerCompiler.compile(context);
@@ -350,8 +353,8 @@ public class TimingAnalysis extends Job {
         }
 
         String code = compilationResult.getString();
-        // Debug, might be removed
-        System.out.print(code);
+//        // Debug, might be removed
+//        System.out.print(code);
 
         // Step 5: Send C code to timing analyzer
 
@@ -371,9 +374,14 @@ public class TimingAnalysis extends Job {
         // Write the generated code to file
         String codeTargetFile = uri.replace(".sct", ".c");
         String codeTargetFilePath = codeTargetFile.replace("file:", "");
+        // Workaround for DATE:
+        String codeInt = code.replace("char", "int");
+        code = codeInt;
+        // Workaround end
+        
         fileWriter.writeToFile(code, codeTargetFilePath);
 
-        // get assumptions
+        // Prepare assumptions
         String assumptionFile = uri.replace(".sct", ".asu");
         String assumptionFilePath = assumptionFile.replace("file:", "");
         StringBuilder stringBuilder = new StringBuilder();
@@ -383,15 +391,31 @@ public class TimingAnalysis extends Job {
             return new Status(IStatus.ERROR, pluginId, "An associated assumption file for this model "
                     + "could not be found.");
         }
+        // Get the inputs for which we want to have globalvar assumptions
+        // Note that at the moment we will generate globalvar assumptions automatically only for boolean
+        // inputs, others have to be specified in the .asu file
+        EList<Declaration> declarationList = scchart.getDeclarations();
+        Iterator<Declaration> declarationListIterator = declarationList.iterator();
+        while (declarationListIterator.hasNext()) {
+            Declaration currentDeclaration = declarationListIterator.next();
+            if (currentDeclaration.isInput()) {
+                if (currentDeclaration.getType().equals(ValueType.BOOL)) {
+                    stringBuilder.append("\nGlobalVar "
+                            + currentDeclaration.getValuedObjects().get(0).getName()
+                            + " 0..1");
+                }
+            }
+        }
+        
         // just debug, may be removed
-        System.out.println(stringBuilder.toString());
+       System.out.println(stringBuilder.toString());
 
         // write timing requests appended to the assumptionString
         LinkedList<TimingRequestResult> resultList =
                 timingAnnotationProvider.writeTimingRequests(highestInsertedTPPNumber,
                         stringBuilder);
-        // just debug, may be removed
-        System.out.println(stringBuilder.toString());
+//        // just debug, may be removed
+//        System.out.println(stringBuilder.toString());
 
         // .ta file string complete, write it to file
         String requestFile = uri.replace(".sct", ".ta");

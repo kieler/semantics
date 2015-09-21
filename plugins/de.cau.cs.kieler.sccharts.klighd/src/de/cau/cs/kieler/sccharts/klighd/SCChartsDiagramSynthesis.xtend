@@ -247,8 +247,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     private static val int MINIMALNODEWIDTH = 40
     private static val int MINIMALNODEHEIGHT = 40
     private var regionCounter = 0
-    private static val int PORTFONTSIZE = 10
-    private static val int LABELFONTSIZE = 10
+    private static val int PORTFONTSIZE = 18
+    private static val int LABELFONTSIZE = 18
     // color for signals (same as state header color, but not used/implemented)    
     private static val KColor SIGNAL_COLOR = RENDERING_FACTORY.createKColor() => [
         it.red = 255; it.green = 231; it.blue = 214;
@@ -360,8 +360,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 it.lineWidth = 1;
                 it.addText("[-]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
                     if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
-                    it.foreground = "dimGray".color
-                    it.fontSize = 10
+                    it.foreground = "black".color
+                    it.fontSize = 19
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                     it.suppressSelectability
@@ -381,8 +381,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 it.lineWidth = 1;
                 it.addText("[+]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
                     if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
-                    it.foreground = "dimGray".color
-                    it.fontSize = 10
+                    it.foreground = "black".color
+                    it.fontSize = 18
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     if (loadLazy) {
                         it.addDoubleClickAction(SCChartsReferenceExpandAction.ID);
@@ -493,6 +493,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
                 it.putToLookUpWith(lookup)
                 it.setGridPlacementData()
+                it.fontSize = 18
             ]
         }
         val remainingText2 = remainingText
@@ -508,6 +509,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
                 it.putToLookUpWith(lookup)
                 it.setGridPlacementData()
+                it.fontSize = 18
             ]
         }
         parent
@@ -669,13 +671,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             if (s.referencedState) 
                                 text = text + ' @ ' + (s.referencedScope as State).label
                             val ktext = it.addText("   " + text + prioritySpace + " ").putToLookUpWith(s) => [
-                                it.fontSize = 11;
+                                it.fontSize = 16;
                                 if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.49f;
                                ];
                             if (priorityToShow.length > 0) {
                                 val estimatedWidth = PlacementUtil.estimateTextSize(ktext).width
                                 it.addText(priorityToShow) => [
-                                    it.fontSize = 9;
+                                    it.fontSize = 14;
                                     it.setFontBold(true);
                                     if (SHOW_DEPENDENCIES.booleanValue) {
                                         it.setForeground("blue".color)
@@ -692,7 +694,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     // For simple states we want a larger area 
                     val ktext = it.addText(" " + s.label + prioritySpace).putToLookUpWith(s) => [
                         if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
-                        it.fontSize = 11;
+                        it.fontSize = 14;
                         it.setFontBold(true);
                         if (PAPER_BW.booleanValue || globalBWOption) {
                             it.setGridPlacementData().from(LEFT, 10, 0, TOP, 9f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
@@ -703,7 +705,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     if (priorityToShow.length > 0) {
                         val estimatedWidth = PlacementUtil.estimateTextSize(ktext).width
                         it.addText(priorityToShow) => [
-                            it.fontSize = 9;
+                            it.fontSize = 14;
                             it.setFontBold(true);
                             if (SHOW_DEPENDENCIES.booleanValue) {
                                 it.setForeground("blue".color)
@@ -923,10 +925,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 if (!label.nullOrEmpty) {
                     t.createLabel(edge).putToLookUpWith(t).configureCenterEdgeLabel(
                         " " + label,
-                        11,
+                        18,
                         KlighdConstants::DEFAULT_FONT_NAME
                     ) => [
-                        it.setLayoutOption(LayoutOptions.FONT_SIZE, 13);
+                        it.setLayoutOption(LayoutOptions.FONT_SIZE, 16);
                         if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                         it.KRendering.setFontBold(true)
                     ]
@@ -1071,7 +1073,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 it.lineWidth = 1
                 it.addText("[-]" + if(regionLabel.nullOrEmpty) "" else " " + regionLabel) => [
                     it.foreground = "dimGray".color
-                    it.fontSize = 10
+                    it.fontSize = 14
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
@@ -1088,7 +1090,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 it.lineWidth = 1
                 it.addText("[+]" + if(regionLabel.nullOrEmpty) "" else " " + regionLabel) => [
                     it.foreground = "dimGray".color
-                    it.fontSize = 10
+                    it.fontSize = 14
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
@@ -1727,8 +1729,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             it.foreground = "black".color
             it.lineWidth = 1
             it.addText("[-] " + label) => [
-                it.foreground = "dimGray".color
-                it.fontSize = 10
+                it.foreground = "black".color
+                it.fontSize = 18
                 it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                 it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             ]
@@ -1744,8 +1746,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             it.invisible = false
             it.lineWidth = 1
             it.addText("[+] " + label) => [
-                it.foreground = "dimGray".color
-                it.fontSize = 10
+                it.foreground = "black".color
+                it.fontSize = 18
                 it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                 it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             ];
