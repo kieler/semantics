@@ -97,6 +97,8 @@ import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeHumanReadableExtensions
+import de.cau.cs.kieler.scg.extensions.SCGSerializeHumanReadableExtensions
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -121,7 +123,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     ]
     private static val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(
         typeof(SCGKExpressionsScopeProvider));
-    private static val ISerializer serializer = guiceInjector.getInstance(typeof(ISerializer));
+//    private static val ISerializer serializer = guiceInjector.getInstance(typeof(ISerializer));
 
     // -------------------------------------------------------------------------
     // -- Extensions 
@@ -180,6 +182,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     /** Inject analysis extensions. */
     @Inject
     extension SCGDeclarationExtensions
+    
+    @Inject
+    extension SCGSerializeHumanReadableExtensions
 
     // -------------------------------------------------------------------------
     // -- KlighD Options
@@ -630,38 +635,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 putToLookUpWith(assignment)
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
-                // Serialize the assignment
-                // Additionally, remove unnecessary parenthesis and add spacing in line breaks.
-                if (assignment.valuedObject != null && assignment.assignment != null) {
-                    var assignmentText = serializer.serialize(assignment.assignment.copy) //.removeParenthesis
-                    var valuedObjectName = assignment.valuedObject.name
-                    if (!assignment.indices.nullOrEmpty) {
-                        valuedObjectName = valuedObjectName + serializer.serializeIndices(assignment.indices)
-                    }
-                    // added by cmot (9.3.14)
-                    if (assignment.assignment instanceof TextExpression) {
-                        assignmentText = assignment.assignment.getTextExpressionString
-                    }
-                    var assignmentStr = valuedObjectName + " = " + assignmentText
+                var assignmentStr = serializeHR(assignment) as String
                         
-                    if (assignmentStr.contains("&") && assignmentStr.indexOf("&") != assignmentStr.lastIndexOf("&")) {
-//                        assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
-//                        assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
-                    }
-                    it.addText(assignmentStr).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
-                        if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
-                    ]
-                } else if (assignment.assignment instanceof TextExpression) {
-                    // added by cmot (9.3.14)
-                    it.addText(assignment.assignment.getTextExpressionString).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
-                        if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
-                    ]
-                } else if (assignment.assignment instanceof FunctionCall) {
-                    var assignmentText = serializer.serialize(assignment.assignment.copy) //.removeParenthesis
-                    it.addText(assignmentText).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
-                        if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);    
-                    ]
-                }
+                it.addText(assignmentStr).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
+                    if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                ]
             ]
             // Add ports for control-flow and dependency routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
@@ -744,7 +722,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (conditional.condition != null)
                     node.KContainerRendering.addText(
 //                        serializer.serialize(conditional.condition.copy.fix).removeParenthesis).setAreaPlacementData.
-                        serializer.serialize(conditional.condition.copy)).setAreaPlacementData.
+                        (serializeHR(conditional.condition) as String)).setAreaPlacementData.
                         from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0).putToLookUpWith(conditional) => [
                             if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
@@ -1358,7 +1336,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         expText = "<dead>"
                     } else {
                         val exp = guard.expression.copy
-                    	expText = serializer.serialize(exp)	
+                    	expText = serializeHR(exp) as String
                     }
 //                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
 					bbName = bbName + "\n" + expText                	
@@ -1384,7 +1362,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
 	                    var expText = "<null>"
 	                    if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
-        	            	expText = serializer.serialize(schedulingBlock.guard.expression.copy)
+        	            	expText = serializeHR(schedulingBlock.guard.expression) as String
     	            	}	
 //        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
 						sbName = sbName + "\n" + expText       
