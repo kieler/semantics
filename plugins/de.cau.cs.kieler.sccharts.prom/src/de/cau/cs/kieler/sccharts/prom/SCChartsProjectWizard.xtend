@@ -16,6 +16,9 @@ package de.cau.cs.kieler.sccharts.prom
 import de.cau.cs.kieler.prom.projectwizard.PromProjectWizard
 
 /**
+ * Implementation of a project wizard that creates a project via environments
+ * and initializes it with an SCT file. 
+ * 
  * @author aas
  */
 class SCChartsProjectWizard extends PromProjectWizard {
@@ -26,5 +29,4 @@ class SCChartsProjectWizard extends PromProjectWizard {
         modelFileExtension = ".sct"
         modelFileInitialContentURL = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/resources/default.sct"
     }
-    
 }

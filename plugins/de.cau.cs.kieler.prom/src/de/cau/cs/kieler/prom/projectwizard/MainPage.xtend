@@ -166,7 +166,6 @@ class MainPage extends WizardPage {
             return env.relatedProjectWizardClass
         } else {
             return ""
-
         }
     }
 

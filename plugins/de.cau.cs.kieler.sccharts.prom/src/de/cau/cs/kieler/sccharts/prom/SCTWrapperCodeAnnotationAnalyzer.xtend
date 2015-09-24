@@ -26,6 +26,8 @@ import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
 
 /**
+ * An analyzer for wrapper code annotations in SCT files.
+ * 
  * @author aas
  */
 class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer{

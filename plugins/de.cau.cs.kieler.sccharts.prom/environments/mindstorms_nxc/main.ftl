@@ -1,6 +1,6 @@
 #include "${model_name}.nxc"
 
-// Init Annotations
+// Init annotations
 ${inits}
 
 /**
@@ -9,20 +9,19 @@ ${inits}
  */
 task main() {
 
-    // Init SCChart
+    // Init model file
     reset();
     
     // Tick loop
     while(!ButtonPressed(BTNEXIT, false)){
     
-        // Update input annotations
+        // Update input snippets
 ${inputs}
         
-        // Tick
+        // Reaction of model
         tick();
 
-        // Update output annotations
+        // Update output snippets
 ${outputs}
-
     }
 }

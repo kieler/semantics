@@ -18,6 +18,8 @@ import de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
 import org.eclipse.emf.ecore.EObject
 
 /**
+ * An analyzer for wrapper code annotations in Esterel files.
+ * 
  * @author aas
  */
 class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer{

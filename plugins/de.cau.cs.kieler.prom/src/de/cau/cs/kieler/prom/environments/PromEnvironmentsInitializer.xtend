@@ -30,7 +30,7 @@ import org.eclipse.jface.preference.IPreferenceStore
 class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implements IEnvironmentsInitializer{
 
     /**
-     * The extension point id of prom environment initializers. 
+     * The extension point id of Prom environment initializers. 
      */
     private static val INITIALIZER_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.environmentInitializer"
 

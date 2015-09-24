@@ -1,3 +1,19 @@
+<#-- Clock -->
+<#macro Clock millis>
+    <@init>
+        long ${varname}Counter = 0;
+    </@>
+    <@input>
+        // Clock
+        ${varname} = false;
+        if ( ${varname}Counter + ${millis} < CurrentTick() ){
+            ${varname}Counter= CurrentTick();
+            ${varname} = true;
+        }
+    </@>
+</#macro>
+
+
 <#-- LightSensor -->
 <#macro LightSensor port getPerCentValue='true'>
     <@init>
@@ -19,22 +35,6 @@
     <@output>
         // Floodlight ${port}
         SetSensorLight(${port}, ${varname});
-    </@>
-</#macro>
-
-
-<#-- Clock -->
-<#macro Clock millis>
-    <@init>
-        long ${varname}Counter = 0;
-    </@>
-    <@input>
-        // Clock
-        ${varname} = false;
-        if ( ${varname}Counter + ${millis} < CurrentTick() ){
-            ${varname}Counter= CurrentTick();
-            ${varname} = true;
-        }
     </@>
 </#macro>
 

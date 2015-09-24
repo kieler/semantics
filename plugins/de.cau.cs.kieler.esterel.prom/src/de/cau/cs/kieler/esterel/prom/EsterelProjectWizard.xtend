@@ -17,6 +17,9 @@ import de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage
 import de.cau.cs.kieler.prom.projectwizard.PromProjectWizard
 
 /**
+ * Implementation of a project wizard that creates a project via environments
+ * and initializes it with an Esterel file. 
+ * 
  * @author aas
  */
 class EsterelProjectWizard extends PromProjectWizard {

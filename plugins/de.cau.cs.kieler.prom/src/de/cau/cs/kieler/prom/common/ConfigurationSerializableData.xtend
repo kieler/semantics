@@ -31,7 +31,7 @@ import org.eclipse.jface.preference.IPreferenceStore
 abstract class ConfigurationSerializableData {
 
     /**
-     * Returns an unique identifier which must not contain a comma.
+     * Returns a unique identifier which must not contain a comma.
      * The identifier is used to store and load the data object.<br>
      * 
      * The check for uniqueness and that there is no comma in it
@@ -232,8 +232,8 @@ abstract class ConfigurationSerializableData {
     }
     
     /**
-     * Constructs unique name for a field of this object
-     * by concatenating identifiers of this class, object and field.
+     * Constructs a unique name for a field of this object
+     * by concatenating identifiers for this class, object and field.
      * 
      * @return unique identifier for a field of this data object. 
      */

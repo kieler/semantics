@@ -19,6 +19,8 @@ import de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 
 /**
+ * Returns a list with default environments ready to use.
+ * 
  * @author aas
  */
 class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
@@ -64,8 +66,26 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         
         env.mainFile = "main.ftl"
         env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxc/main.ftl"
+       
+        // Arduino
+        env = new EnvironmentData("Arduino")
+        datas += env
         
+        env.targetLanguage = "s.c"
+        env.targetFileExtension = ".ino"
+        env.targetTemplate = ""
+        
+        env.wrapperCodeTemplate = '''${«LaunchConfiguration.MAIN_FILE_PATH_VARIABLE»}'''
+        env.wrapperCodeSnippetsDirectory = "snippets/arduino"
+        env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/snippets"
+        
+        env.commands.add(new CommandData("Compile & Deploy", '''arduino --upload ${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}'''))
+        
+        env.relatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
+        
+        env.mainFile = "arduino_main/arduino_main.ftl"
+        env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/arduino_main.ftl"
+
         return datas
     }
-    
 }

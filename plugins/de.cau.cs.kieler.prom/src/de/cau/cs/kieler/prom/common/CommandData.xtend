@@ -162,7 +162,7 @@ class CommandData extends ConfigurationSerializableData {
 
     /**
      * Saves a list with command data objects to the given launch configuration.
-     * All other command data objects in the launch configuration is overwritten.
+     * All other command data objects in the launch configuration are overwritten.
      * 
      * @param configuration The launch configuration where the data objects should be saved
      * @param datas A list with the data objects that should be saved

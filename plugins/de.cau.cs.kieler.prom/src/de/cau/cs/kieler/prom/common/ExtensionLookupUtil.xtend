@@ -53,7 +53,7 @@ class ExtensionLookupUtil {
     
     /**
      * Searches for newWizards and initializes the wizard with the fully qulified class name.
-     * Before the returned wizard is opened its init(...) method should be called.
+     * Before the returned wizard is opened, its init(...) method should be called.
      * 
      * @param fullyQualifiedClassName The fully qualified class name of an implementation of a newWizard.
      * @return The wizard implemented by the fully qualified class name<br />
@@ -88,7 +88,7 @@ class ExtensionLookupUtil {
     /**
      * Searches for extension point configurations of newWizards.
      * 
-     * @param onlyProjectWizards Specifies if only project wizards should be included in the search, or not.
+     * @param onlyProjectWizards Specifies if file wizards should be excluded in the search.
      * @return a list with all configurations that contribute to the 'org.eclipse.ui.newWizards' extension point.
      */
     static def ArrayList<IConfigurationElement> getWizardConfigurationElements(boolean onlyProjectWizards) {

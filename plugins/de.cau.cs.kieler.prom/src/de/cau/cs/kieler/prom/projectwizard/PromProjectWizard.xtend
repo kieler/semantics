@@ -17,7 +17,6 @@ import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.UIUtil
-import de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.io.File
 import java.io.InputStream
@@ -45,10 +44,9 @@ import org.eclipse.xtext.util.StringInputStream
 
 /**
  * Wizard implementation wich creates a project
- * and optionally initializes a model file and a main file by using enviroments.
- * Shows a main page to set the environment and snippets to be imported.
+ * and optionally initializes it by using enviroments.
+ * Shows a main page to set the environment and with which files the new project should be initialized.
  * Then the related project wizard of the environment is run.
- * Afterwards there are pages to create a new model file and main file in the newly created project.
  * 
  * @author aas
  */
@@ -107,7 +105,7 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
     
     /**
      * Dummy page to have the next button available.
-     * But this page is never reached.
+     * Anyhow, this page is never reached.
      */
     protected var DummyPage secondPage
 
@@ -401,8 +399,8 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
                         val entry = e.nextElement
                         val fileUrl = FileLocator.toFileURL(entry)
 
-                        // Get path from file relative to template path.
-                        // The file must contain the template path because it is a file in this directory.
+                        // Calculate the relative path of the file
+                        // in the target snippet directory.
                         val i = fileUrl.toString.indexOf(snippetDir) + snippetDir.length
                         var relativePath = fileUrl.toString.substring(i)
                         if (relativePath.startsWith("/"))
@@ -529,6 +527,5 @@ class PromProjectWizard extends Wizard implements IWorkbenchWizard {
             val comp = UIUtil.createComposite(parent, 1)
             control = comp
         }
-        
     }
 }

@@ -191,7 +191,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         tabFolder.setLayout(new GridLayout())
         val gd = new GridData(GridData.FILL_BOTH)
         // Without this height hint the tab folder sets its height to the sum of the heights of all pages.
-        // This is to much. A better value would be correct the maximum of the heights of all pages.
+        // This is to much. A better value would be the maximum of the heights of all pages.
         gd.heightHint = 300
         tabFolder.setLayoutData(gd)
         

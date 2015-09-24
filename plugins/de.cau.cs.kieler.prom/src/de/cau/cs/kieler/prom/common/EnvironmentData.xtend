@@ -32,7 +32,7 @@ class EnvironmentData extends ConfigurationSerializableData {
      * Key for the attribute which holds a comma separated string of environment names.
      */
     private static val ENVIRONMENT_IDENTIFIERS_ATTR = "environments"
-     
+    
     /**
      * Key for the attributes which holds the shell commands.
      */
@@ -47,7 +47,7 @@ class EnvironmentData extends ConfigurationSerializableData {
     // Fields
     /**
      * The unique name of the environment.
-     * It is used to unambiguously store this environment's data in a preference store. 
+     * It is used to unambiguously store this environment's data. 
      */
     @Accessors
     protected String name = ""
@@ -60,7 +60,7 @@ class EnvironmentData extends ConfigurationSerializableData {
     
     /**
      * A project relative path to the default main file.
-     * When creating a new project, this value is used to initialize the main file creation page. 
+     * When creating a new project, this value is used to initialize the main file. 
      */
     @Accessors
     protected String mainFile = ""
