@@ -14,7 +14,9 @@
 package de.cau.cs.kieler.kico.klighd.view;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -55,6 +57,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
@@ -84,6 +89,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  * @kieler.rating 2015-06-22 proposed yellow
  *
  */
+@SuppressWarnings("restriction")
 public final class ModelView extends DiagramViewPart {
 
     // -- CONSTANTS --
@@ -111,7 +117,12 @@ public final class ModelView extends DiagramViewPart {
     /** The icon for saving current model. */
     private static final ImageDescriptor ICON_SAVE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "org.eclipse.ui", "icons/full/etool16/save_edit.gif");
-
+    
+    // -- Instance list --
+    
+    /** List of all open ModelViews. */
+    private static List<ModelView> modelViews = new ArrayList<ModelView>(6);
+    
     // -- ATTRIBUTES --
 
     /** Secondary ID of this view. Indicates a non primary view */
@@ -167,6 +178,28 @@ public final class ModelView extends DiagramViewPart {
     /** The menu and controller handling the selection of available synthesis. */
     private final SynthesisSelectionMenu synthesisSelection = new SynthesisSelectionMenu(this);
 
+    
+    // -- Static ModelView Access
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the list of {@link ModelView} currently displaying the content of the given editor.
+     * 
+     * @param editor
+     *            the editor to filter for
+     * @return List of {@link ModelView}s associated with editor
+     */
+    public List<ModelView> getModelViews(final IEditorPart editor) {
+        if (editor != null) {
+            return Lists.newArrayList(Iterables.filter(modelViews, new Predicate<ModelView>() {
+                public boolean apply(ModelView view) {
+                    return editor.equals(view.getEditor());
+                }
+            }));
+        }
+        return Collections.emptyList();
+    }
+    
     // -- Constructor and Initialization
     // -------------------------------------------------------------------------
 
@@ -175,6 +208,9 @@ public final class ModelView extends DiagramViewPart {
      */
     public ModelView() {
         super();
+        
+        // Add this view to the active modelviews
+        modelViews.add(this);
 
         // Refresh Button
         actionRefresh =
@@ -378,6 +414,7 @@ public final class ModelView extends DiagramViewPart {
     @Override
     public void dispose() {
         super.dispose();
+        modelViews.remove(this);
         for (AbstractModelUpdateController controller : controllers) {
             controller.onDispose();
         }
