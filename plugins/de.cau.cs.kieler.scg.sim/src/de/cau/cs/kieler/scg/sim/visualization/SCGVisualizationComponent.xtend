@@ -36,7 +36,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.core.util.Maybe
-import de.cau.cs.kieler.kico.klighd.view.ModelViewManager
+import de.cau.cs.kieler.kico.klighd.view.ModelView
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.LightDiagramServices
@@ -91,7 +91,7 @@ class SCGVisualizationComponent extends JSONObjectDataComponent {
             return;
         }
 
-        val viewParts = ModelViewManager.getInstance().getModelViews(diagramEditor)
+        val viewParts = ModelView.getModelViews(diagramEditor)
         if (viewParts.empty) {
             throw new KiemInitializationException(
                     "Model visualization not shown, cannot visualize simulation.", true, null);
