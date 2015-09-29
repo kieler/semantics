@@ -38,15 +38,15 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
     /*
      * Checks if within one declaration block variable names are unique
      */
-    @Check
-    public void checkUniqueNamesInProgram(SCLProgram program) {
-        if (hasDuplicateDeclaration(program.getDeclarations())) {
-            for (Declaration decl : program.getDeclarations()) {
-                error("Duplicate variable declaration", decl, null, -1);
-            }
-        }
-
-    }
+//    @Check
+//    public void checkUniqueNamesInProgram(SCLProgram program) {
+//        if (hasDuplicateDeclaration(program.getDeclarations())) {
+//            for (Declaration decl : program.getDeclarations()) {
+//                error("Duplicate variable declaration", decl, null, -1);
+//            }
+//        }
+//
+//    }
 
     @Check
     public void checkUniqueNamesInScope(StatementScope sScope) {

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -97,6 +97,7 @@ import de.cau.cs.kieler.klay.layered.properties.InternalProperties
 import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.ControlDependency
+import de.cau.cs.kieler.scg.features.SCGFeatures
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -483,7 +484,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             
             //Suasage folding on/off
-            if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
+            if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
                 node.addLayoutParam(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH);
                 node.addLayoutParam(Properties::SAUSAGE_FOLDING, true);
             }
@@ -584,7 +585,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                 }
                                 
                                     addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
-                                        it.foreground = REGIONLABEL.copy;
+                                        it.KRendering.foreground = REGIONLABEL.copy;
                                         if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
                                     ]
                                     
@@ -1312,26 +1313,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val portName = SCGPORTID_HIERARCHYPORTS + ne.hashCode.toString + nodeGrouping.toString +
                 ne.source.hashCode.toString + kContainer.hashCode.toString
 
-            //            System.out.println("Creating helper port: " + portName)
+//                        System.out.println("Creating helper port: " + portName)
             val hPort = kContainer.addHelperPort(portName)
             val origSource = ne.source
             val origSourcePort = ne.sourcePort
             ne.source = kContainer
             ne.sourcePort = hPort
-            ne.semanticObject.createNewEdge() => [
-                it.source = origSource
-                it.sourcePort = origSourcePort
-                it.target = kContainer
-                it.targetPort = kContainer.getPort(portName)
-                it.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-                if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
-                it.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
-                    it.lineStyle = ne.KRendering.lineStyleValue
-                    it.foreground = ne.KRendering.foreground
-                ]
-                it.labels.addAll(ne.labels)
+            val newEdge = ne.semanticObject.createNewEdge()
+            newEdge.source = origSource
+            newEdge.sourcePort = origSourcePort
+            newEdge.target = kContainer
+            newEdge.targetPort = kContainer.getPort(portName)
+            newEdge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+            if (USE_ADAPTIVEZOOM.booleanValue) newEdge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
+            newEdge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
+                it.lineStyle = ne.KRendering.lineStyleValue
+                it.foreground = ne.KRendering.foreground
             ]
-
+            newEdge.labels.addAll(ne.labels)
         }
         kContainer
     }
@@ -1358,12 +1357,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 var bbName = basicBlock.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
                 
                 if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-                	val expText = serializer.serialize(basicBlock.schedulingBlocks.head.guard.expression.copy.fix)	
+                    val guard = basicBlock.schedulingBlocks.head.guard
+                    var String expText
+                    if (guard.dead) {
+                        expText = "<dead>"
+                    } else {
+                        val exp = guard.expression.copy.fix
+                    	expText = serializer.serialize(exp)	
+                    }
 //                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
 					bbName = bbName + "\n" + expText                	
                 }
                 
-                bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER.copy
+                bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = BASICBLOCKBORDER.copy
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
                 for (schedulingBlock : basicBlock.schedulingBlocks) {
@@ -1389,7 +1395,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 						sbName = sbName + "\n" + expText       
 					}
             	    
-                	sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
+                	sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = SCHEDULINGBLOCKBORDER.copy
                 	
                     if (basicBlock.deadBlock) {
                         sbContainer.getData(typeof(KRoundedRectangle)) => [
@@ -1480,12 +1486,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
         for (n : PIL_Nodes) {
             val nextFlows = n.allNext
+            var hasFlows = false
             for (flow : nextFlows) {
                 if (PIL_Nodes.contains(flow.target)) {
                     flow.colorControlFlow(PROBLEM_COLOR.copy)
                     flow.thickenControlFlow(PROBLEM_WIDTH)
+                    hasFlows = true
                 } 
             }
+            
+            if (!hasFlows) {
+                val nextDeps = n.eContents.filter(DataDependency).filter[ concurrent == true && confluent == false].toList
+                for (flow : nextDeps) {
+                    if (PIL_Nodes.contains(flow.target)) {
+                        flow.colorDependency(PROBLEM_COLOR.copy)
+                        flow.thickenDependency(PROBLEM_WIDTH)
+                    } 
+                }
+            }            
         }
     }
 

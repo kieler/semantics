@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2011 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -572,7 +572,7 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
             generatedSCFiles.add(scOutputString);
             scExecution.setDebug(debugConsole);
             scExecution.setScl(scl);
-            scExecution.compile(generatedSCFiles, modelName);
+            scExecution.compile(generatedSCFiles, modelName, scOutputString);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);

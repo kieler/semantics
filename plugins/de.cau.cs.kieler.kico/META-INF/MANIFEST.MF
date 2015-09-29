@@ -4,13 +4,13 @@ Bundle-Name: KIELER Compiler
 Bundle-SymbolicName: de.cau.cs.kieler.kico;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kico.KiCoPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext,
  org.eclipse.ui;resolution:=optional,
  de.cau.cs.kieler.core,
  de.cau.cs.kieler.core.annotations
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kico,
  de.cau.cs.kieler.kico.features,

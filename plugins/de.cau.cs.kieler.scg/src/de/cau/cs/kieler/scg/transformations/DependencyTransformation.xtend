@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -326,7 +326,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         
         // Filter all other assignments.
         assignments.forEach[ node |
-            if (node != assignment) {
+            if (node != assignment && node.valuedObject == assignment.valuedObject) {
                 var DataDependency dependency = null
                 // If they write to the same variable...
                 if (node.isSameScalar(assignment)) {

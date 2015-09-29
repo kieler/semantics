@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2012 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -21,6 +21,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -656,5 +658,25 @@ public final class KiemUtil {
         }
         return directory.delete();
     }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the stack trace of an exception as a string.
+     * 
+     * @param t
+     *            the t
+     * @return the error stack trace
+     */
+    public static String getStackTraceString(Throwable t) {
+        if (t == null) {
+            return "";
+        }
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        t.printStackTrace(pw);
+        return sw.toString(); // stack trace as a string
+    }
+
 
 }

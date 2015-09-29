@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -42,6 +42,7 @@ import java.util.HashMap
 import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -87,6 +88,9 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
+    
+    @Inject
+    extension SCGCoreExtensions
     
     @Inject
     extension SCGControlFlowExtensions
@@ -147,7 +151,28 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         if (!(scg.nodes.head instanceof Entry)) throw new UnsupportedSCGException("The basic block analysis expects an entry node as first node!")
         
         val basicBlockCache = <BasicBlock> newLinkedList
-        scg.createBasicBlocks(scg.nodes.head, 0, basicBlockCache)
+        var index = 0
+        for(node : scg.nodes) {
+            if (!processedNodes.contains(node)) {
+                index = scg.createBasicBlocks(node, index, basicBlockCache)
+            }
+        }
+        /** Remove the dead block flag if the block is a go block or if it has at least one predecessor
+         *  that is not dead. In the case of join blocks, all predecessors have to be active.
+         */
+        for(bb : basicBlockCache) {
+            if (bb.goBlock) {
+                bb.deadBlock = false
+            } else {
+                if (bb.synchronizerBlock) {
+                    bb.deadBlock = bb.predecessors.map[basicBlock].filter[deadBlock].size > 0
+                } else if (bb.depthBlock) {
+                    bb.deadBlock = basicBlockCache.getSchedulingBlock(bb.preGuard).basicBlock.deadBlock
+                } else {
+                    bb.deadBlock = bb.predecessors.map[basicBlock].filter[!deadBlock].size == 0
+                }
+            }
+        }
         scg.basicBlocks += basicBlockCache
         
         //KITT
@@ -328,7 +353,11 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
             	 * Therefore, check the next block for these properties.
             	 */
             	// Retrieve the target of the next control flow.
-                val next = node.eAllContents?.filter(typeof(ControlFlow))?.head?.target
+                var next = node.eContents.filter(typeof(ControlFlow))?.head?.target
+                // if the node has already been processed, skip it.
+                if (processedNodes.contains(next) && next.incoming.filter(typeof(ControlFlow)).size < 2) {
+                    next = null
+                }
                 if (next instanceof Join || next == null) {
                 	/**
                 	 * If the next node would be a join node, we would exit the thread border. 
@@ -386,11 +415,8 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         if (predecessorBlocks != null && predecessorBlocks.size == 0 && nodeList.head instanceof Entry) {
         	basicBlock.goBlock = true
         }
-        
-        /** If the block has no predecessors but is also not the entry block, it is a dead block. */
-        if (!basicBlock.goBlock && predecessorBlocks.size == 0 && nodeList.head.allPrevious.size == 0) {
-            basicBlock.deadBlock = true
-        }
+        /** Initially, mark all blocks as dead. */
+        basicBlock.deadBlock = true
         
         /**  
          *If the basic block starts with a depth node, there should only be one predecessor.
@@ -406,11 +432,6 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         /** If the block begins with a join node, mark the block as synchronizer block. */
         if (nodeList.head instanceof Join) { 
             basicBlock.synchronizerBlock = true
-            for (predecessor : predecessorBlocks) {
-                if (predecessor.deadBlock) {
-                    basicBlock.deadBlock = true
-                }
-            }
         }
         if (nodeList.head instanceof Entry) { 
             basicBlock.entryBlock = true

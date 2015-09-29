@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -47,9 +47,9 @@ class Initialization extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.allStates.toList
-        for (state : allStates) {
-            val valuedObjects = state.valuedObjects.filter[initialValue != null]
+        val allScopes = model.allScopes.toList
+        for (scope : allScopes) {
+            val valuedObjects = scope.valuedObjects.filter[initialValue != null]
             if (!valuedObjects.nullOrEmpty) {
                 return true
             }

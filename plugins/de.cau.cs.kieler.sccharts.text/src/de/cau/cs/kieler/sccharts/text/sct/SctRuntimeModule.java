@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  *
  * Copyright 2010 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  *
@@ -63,6 +63,10 @@ public class SctRuntimeModule extends de.cau.cs.kieler.sccharts.text.sct.Abstrac
     public Class<? extends org.eclipse.xtext.formatting.IIndentationInformation> bindIIndentationInformation() {
         return de.cau.cs.kieler.sccharts.text.sct.formatting.SctIndentionInformation.class;
     }
+    
+    @org.eclipse.xtext.service.SingletonBinding(eager=true) public Class<? extends de.cau.cs.kieler.sccharts.text.sct.validation.SctJavaValidator> bindSctJavaValidator() {
+        return de.cau.cs.kieler.sccharts.text.sct.validation.SctValidator.class;
+}    
 
     /**
      * Method registers the non-lazy linking Linker since the default

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2010 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -147,10 +147,10 @@ public final class CEC {
     // -------------------------------------------------------------------------
 
     /** The Constant INIT_TIME. */
-    private static final int INIT_TIME = 10000;
+    private static final int INIT_TIME = 1200000;
 
     /** The Constant TIMEOUT. */
-    private static final int TIMEOUT = 200;
+    private static final int TIMEOUT = 500;
 
     /** The Constant STEP_TIME. */
     private static final int STEP_TIME = 50;
@@ -463,8 +463,9 @@ public final class CEC {
         InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, expandedOutputStream);
         InputStream dismantle = CEC.runDISMANTLE(expandmodule);
         InputStream astgrc = CEC.runASTGRC(dismantle);
-        InputStream grcopt = CEC.runGRCOPT(astgrc);
-        InputStream grcpdg = CEC.runGRCPDG(grcopt);
+        //InputStream grcopt = CEC.runGRCOPT(astgrc);
+        //InputStream grcpdg = CEC.runGRCPDG(grcopt);
+        InputStream grcpdg = CEC.runGRCPDG(astgrc);
         InputStream pdgccfg = CEC.runPDGCCFG(grcpdg);
         InputStream eec = CEC.runEEC(pdgccfg);
         InputStream scfgc = CEC.runSCFGC(eec);

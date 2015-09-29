@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -17,6 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.DataflowRegion
 
 /**
  * SCCharts Reference Feature.
@@ -47,6 +48,9 @@ class Reference extends Feature {
         val allStates = model.allStates.toList
         for (state : allStates) {
             if (state.isReferencedState) {
+                return true
+            }
+            if (!state.regions.filter(typeof(DataflowRegion)).empty) {
                 return true
             }
         }

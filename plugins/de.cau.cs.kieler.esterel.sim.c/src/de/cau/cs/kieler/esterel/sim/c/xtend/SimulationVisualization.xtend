@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -46,6 +46,10 @@ import de.cau.cs.kieler.esterel.esterel.Sequence
 import de.cau.cs.kieler.esterel.esterel.StatementContainer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.esterel.features.EsterelFeature
+import com.google.common.collect.Sets
+import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
 
 /**
  * This class handles the<BR>
@@ -55,8 +59,33 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2014-11-26 proposed cmot
  * @kieler.rating 2014-11-26 proposed yellow
  */
-class SimulationVisualization {
+class SimulationVisualization extends AbstractExpansionTransformation {
+    
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return EsterelTransformation::SIMULATIONVISUALIZATION_ID
+    }
 
+    override getName() {
+        return EsterelTransformation::SIMULATIONVISUALIZATION_NAME
+    }
+
+    override getExpandsFeatureId() {
+        return EsterelFeature::SIMULATIONVISUALIZATION_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(EsterelFeature::BASIC_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet()
+    }
+    
+    //-------------------------------------------------------------------------
+    
     @Inject
     extension KExpressionsExtension
 
@@ -72,12 +101,8 @@ class SimulationVisualization {
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
     
-    def Program transformNoVisualization(Program model) {
-        // The default does nothing
-        model
-    }
 
-    def Program transformVisualization(Program program) {
+    def Program transform(Program program) {
         // The default does nothing
         
         // TODO: enable visualization

@@ -2,6 +2,9 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
+import de.cau.cs.kieler.core.annotations.Annotation;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -15,4 +18,5 @@ package de.cau.cs.kieler.scl.scl;
  */
 public interface Thread extends StatementSequence
 {
+
 } // Thread

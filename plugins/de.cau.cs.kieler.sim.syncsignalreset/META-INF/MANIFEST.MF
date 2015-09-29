@@ -4,11 +4,11 @@ Bundle-Name: KIELER Synchronous Singal Resetter Data Component
 Bundle-SymbolicName: de.cau.cs.kieler.sim.syncsignalreset;singleton:=true
 Bundle-Version: 0.1.2.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.syncsignalreset.SyncSignalResetPlugin
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,
  org.json,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.signals
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: de.cau.cs.kieler.sim.kiem

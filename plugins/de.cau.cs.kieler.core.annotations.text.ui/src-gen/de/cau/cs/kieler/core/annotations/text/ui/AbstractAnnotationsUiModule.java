@@ -4,14 +4,13 @@
  */
 package de.cau.cs.kieler.core.annotations.text.ui;
 
-import org.eclipse.xtext.ui.DefaultUiModule;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Manual modifications go to {de.cau.cs.kieler.core.annotations.text.ui.AnnotationsUiModule}
  */
 @SuppressWarnings("all")
-public abstract class AbstractAnnotationsUiModule extends DefaultUiModule {
+public abstract class AbstractAnnotationsUiModule extends org.eclipse.xtext.ui.DefaultUiModule {
 	
 	public AbstractAnnotationsUiModule(AbstractUIPlugin plugin) {
 		super(plugin);

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2011 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -117,19 +117,36 @@ public class CExecution extends AbstractExecution {
 //            compile += " " + bundleLocation + "cycle.h ";
 //        }
 
-        compile += " "
-                // + outPath
-                // + "sim.c "
-                // + outPath
-                // + "sim_data.c "
-                // + outPath
-                // + "misc.c "
-//                + bundleLocation + "sc.c " + bundleLocation + "cJSON.c " + " -I " + bundleLocation
-                + " " + "-o " + this.getOutputPath() + getExecutableName()
-                // -m32 = 32 bit compatibility mode to prevent compiler errors on
-                // 64bit machines/architectures.
-                // + " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
-                + " -lm  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+        if (Benchmark.isWindows()) {
+            compile += " "
+                    // + outPath
+                    // + "sim.c "
+                    // + outPath
+                    // + "sim_data.c "
+                    // + outPath
+                    // + "misc.c "
+//                    + bundleLocation + "sc.c " + bundleLocation + "cJSON.c " + " -I " + bundleLocation
+                    + " " + "-o " + this.getOutputPath() + getExecutableName()
+                    // -m32 = 32 bit compatibility mode to prevent compiler errors on
+                    // 64bit machines/architectures.
+                    // + " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+                    + " -O2 -lm  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+        } else {
+            compile += " "
+                    // + outPath
+                    // + "sim.c "
+                    // + outPath
+                    // + "sim_data.c "
+                    // + outPath
+                    // + "misc.c "
+//                    + bundleLocation + "sc.c " + bundleLocation + "cJSON.c " + " -I " + bundleLocation
+                    + " " + "-o " + this.getOutputPath() + getExecutableName()
+                    // -m32 = 32 bit compatibility mode to prevent compiler errors on
+                    // 64bit machines/architectures.
+                    // + " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+                    + " -lrt -O2 -lm  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+            
+        }
 
 
         // -D_SC_SUPPRESS_ERROR_DETECT

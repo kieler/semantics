@@ -7,7 +7,7 @@
  http://www.informatik.uni-kiel.de/rtsys/kieler/
  
  Copyright 2009 by
- + Christian-Albrechts-University of Kiel
+ + Kiel University
    + Department of Computer Science
      + Real-Time and Embedded Systems Group
  
@@ -90,9 +90,6 @@
         </expansionTransformationClass>
         <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Signal">
-        </expansionTransformationClass>
-        <expansionTransformationClass
-              class="de.cau.cs.kieler.sccharts.transformations.SimulationVisualization">
         </expansionTransformationClass>
         <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.NoSimulationVisualization">

@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -53,6 +53,9 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.features.SCLFeatures
 import java.util.Set
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /** 
  * SCL to SCG Transformation 
@@ -64,11 +67,20 @@ import com.google.common.collect.Sets
 // This class contains all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
 class SCLToSCGTransformation extends AbstractProductionTransformation {
 
+    private static val String ANNOTATION_HOSTCODE = "hostcode"
+    private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
+
     @Inject
-    extension SCGControlFlowExtensions
+    extension SCGControlFlowExtensions 
+    
+    @Inject
+    extension SCGThreadExtensions    
 
     @Inject
     extension KExpressionsExtension
+
+    @Inject
+    extension AnnotationsExtensions
     
     @Inject
     extension SCLExtensions
@@ -159,6 +171,17 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
         scl.eAllContents.filter(Goto).forEach[transform(scg, gotoFlows.get(it))]
 
         scg.removeSuperflousConditionals
+        
+        val hostcodeAnnotations = scl.annotations.filter(typeof(StringAnnotation)).filter[ name == ANNOTATION_HOSTCODE ] 
+        hostcodeAnnotations.forEach [
+            scg.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+        ]   
+        
+        val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
+        for (entry : threadPathTypes.keySet) {
+            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE))
+                entry.addAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+        }             
 
         scg
     }
@@ -283,14 +306,15 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
                 scg.nodes += it
                 it.fork = fork
             ]
-            parallel.threads.forEach [
+            parallel.threads.forEach [ thread |
                 val forkFlow = fork.createControlFlow
-                val threadEntry = ScgFactory::eINSTANCE.createEntry.createNodeList(it) => [
+                val threadEntry = ScgFactory::eINSTANCE.createEntry.createNodeList(thread) => [
                     scg.nodes += it
                     it.controlFlowTarget(forkFlow.toList)
+                    thread.copyAnnotations(it) 
                 ]
-                val continuation = it.statements.transform(scg, threadEntry.createControlFlow.toList)
-                ScgFactory::eINSTANCE.createExit.createNodeList(it) => [
+                val continuation = thread.statements.transform(scg, threadEntry.createControlFlow.toList)
+                ScgFactory::eINSTANCE.createExit.createNodeList(thread) => [
                     (it as Exit).entry = threadEntry as Entry
                     scg.nodes += it
                     it.controlFlowTarget(continuation.controlFlows)

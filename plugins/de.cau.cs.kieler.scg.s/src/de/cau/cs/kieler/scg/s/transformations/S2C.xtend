@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -61,7 +61,7 @@ class S2C extends AbstractProductionTransformation {
         var String cProgram = transform2.transform(program as Program).toString();
 
         cProgram = SimpleCBeautifier.beautify(cProgram, "   ");
-
+        
         return cProgram
     }
 

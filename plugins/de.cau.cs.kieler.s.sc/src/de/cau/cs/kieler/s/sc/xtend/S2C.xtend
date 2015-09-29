@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -106,7 +106,7 @@ class S2C {
     /*                                                                           */
     /* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
     /* Copyright 2014 by                                                         */
-    /* + Christian-Albrechts-University of Kiel                                  */
+    /* + Kiel University                                  */
     /*   + Department of Computer Science                                        */
     /*     + Real-Time and Embedded Systems Group                                */
     /*                                                                           */
@@ -197,12 +197,12 @@ class S2C {
  		ENDIF»«ENDFOR»«ENDFOR»'''
    }
    
-   
+    
 
 
    def dispatch expand(ValueType valueType) {
        if (valueType == ValueType::BOOL) {
-           return '''int'''
+           return '''char'''
        }
        else if (valueType != ValueType::HOST) {
            return '''«valueType»'''

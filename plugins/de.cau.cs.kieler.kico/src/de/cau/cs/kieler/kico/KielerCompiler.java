@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -223,6 +223,16 @@ public class KielerCompiler {
         // out the right transformations based on the selection.
         List<Transformation> compilationTransformations = context.getTransformationChain(true);
 
+        System.out.print("\nKiCo Compilation:\n [");
+        for (Transformation transformation : compilationTransformations) {
+            System.out.print(transformation.getId());
+            if (transformation != compilationTransformations.get(compilationTransformations.size()-1)) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+
+        
         // The progress monitor is optional and may be null!
         IProgressMonitor monitor = context.getProgressMonitor();
 

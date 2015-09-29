@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -30,11 +30,11 @@ class Esterel extends Feature {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return EsterelFeatures::BASIC_ID
+        return EsterelFeature::BASIC_ID
     }
 
     override getName() {
-        return EsterelFeatures::BASIC_NAME
+        return EsterelFeature::BASIC_NAME
     }
 
     //-------------------------------------------------------------------------

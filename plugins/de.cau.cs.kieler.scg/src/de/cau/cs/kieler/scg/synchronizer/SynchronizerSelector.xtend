@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -43,6 +43,7 @@ class SynchronizerSelector {
     extension AnnotationsExtensions 
     
     protected static val ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"    
+    protected static val ANNOTATION_IGNORETHREAD = "ignore"
     public static val ANNOTATION_SELECTEDSYNCHRONIZER = "synchronizer"
 
     protected val List<Class<? extends AbstractSynchronizer>> SYNCHRONIZER_LIST = <Class<? extends AbstractSynchronizer>> newArrayList(
@@ -66,7 +67,8 @@ class SynchronizerSelector {
     }
     
     public def AbstractSynchronizer chooseSynchronizer(Join join) {
-        val threadPathTypes = join.getEntryNodes.map[ getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE) ].map[ fromString2 ].toList
+        val threadPathTypes = join.getEntryNodes.filter[ !hasAnnotation(ANNOTATION_IGNORETHREAD) ].
+        map[ getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE) ].map[ fromString2 ].toList
         for(synchronizer : synchronizerInstances) {
             if (synchronizer.isSynchronizable(threadPathTypes)) {
                 return synchronizer

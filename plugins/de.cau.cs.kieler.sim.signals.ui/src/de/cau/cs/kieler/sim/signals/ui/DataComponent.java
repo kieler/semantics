@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2012 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -244,7 +244,9 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                             isSignal = true;
                             signalValue = JSONSignalValues.getSignalValue((JSONObject) obj);
                             obj = signalValue;
-                            
+                        }
+                        
+                        if (!isSignal) {
                             if (obj instanceof Double) {
                                 isPresent = (Double)obj != 0;
                             } else if (obj instanceof Integer) {

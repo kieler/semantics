@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -95,7 +95,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
 
 
     //TODO Fix this shitty logging stuff
-    static final boolean DEBUG = false;
+    static final boolean DEBUG = true;
 
     def static void debug(String debugText) {
         debug(debugText, true);
@@ -256,7 +256,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
             Guice.createInjector().getInstance(typeof(CopyPropagation))    
 // FIXME: temporary disabled
 // needs further efficiency improvements and bug-fixing in conditional nodes       
-//        copyPropagation.optimize(scg)         
+        copyPropagation.optimize(scg)         
         
         scg     	
     }

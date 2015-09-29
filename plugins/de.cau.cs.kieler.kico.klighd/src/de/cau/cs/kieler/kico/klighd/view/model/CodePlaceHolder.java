@@ -1,10 +1,10 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * Copyright 2015 by
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 

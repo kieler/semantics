@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
@@ -34,7 +34,7 @@ import de.cau.cs.kieler.sccharts.State;
  */
 public final class ControlflowRegionIterator {
 
-    public static Function<State, Iterator<ControlflowRegion>> GET_REGIONS =
+    public static Function<State, Iterator<ControlflowRegion>> GET_CONTROLFLOWREGIONS =
             new Function<State, Iterator<ControlflowRegion>>() {
         /**
          * {@inheritDoc}
@@ -45,7 +45,7 @@ public final class ControlflowRegionIterator {
         }
     };
     
-    public static Iterator<Region> sccAllRegions(ControlflowRegion r) {
+    public static Iterator<Region> sccAllControlflowRegions(ControlflowRegion r) {
         return new AbstractTreeIterator<Region>((Region) r, true) {
 
             private static final long serialVersionUID = -4364507280963568556L;
@@ -53,13 +53,13 @@ public final class ControlflowRegionIterator {
             @Override
             protected Iterator<? extends ControlflowRegion> getChildren(Object object) {
                 final Iterator<State> states = ((ControlflowRegion) object).getStates().iterator();
-                return concat(transform(states, GET_REGIONS));
+                return concat(transform(states, GET_CONTROLFLOWREGIONS));
             }
 
         };
     };
     
-    public static Iterator<Region> sccAllContainedRegions(Region r) {
+    public static Iterator<Region> sccAllContainedControlflowRegions(Region r) {
         return new AbstractTreeIterator<Region>((Region) r, false) {
 
             private static final long serialVersionUID = -4364507280963568556L;
@@ -67,7 +67,7 @@ public final class ControlflowRegionIterator {
             @Override
             protected Iterator<? extends ControlflowRegion> getChildren(Object object) {
                 final Iterator<State> states = ((ControlflowRegion) object).getStates().iterator();
-                return concat(transform(states, GET_REGIONS));
+                return concat(transform(states, GET_CONTROLFLOWREGIONS));
             }
 
         };
@@ -85,12 +85,12 @@ public final class ControlflowRegionIterator {
 //        }));
 //    };
     
-    public static Iterator<Region> sccAllRegions(Scope s) {
+    public static Iterator<Region> sccAllControlflowRegions(Scope s) {
         if (s instanceof State) {
-           return sccAllRegions((State) s);
+           return sccAllControlflowRegions((State) s);
 
         } else if (s instanceof Region) {
-           return sccAllRegions((Region) s);
+           return sccAllControlflowRegions((Region) s);
         }
         else {
             throw new IllegalArgumentException("Scope type not supported.");

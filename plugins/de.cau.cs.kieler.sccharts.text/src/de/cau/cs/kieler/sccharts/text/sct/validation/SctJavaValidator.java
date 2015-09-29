@@ -4,7 +4,7 @@
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  *
  * Copyright 2010 by
- * + Christian-Albrechts-University of Kiel
+ * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  *
@@ -30,10 +30,8 @@ import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.model.validation.CustomEValidator;
-import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
-import de.cau.cs.kieler.sccharts.TransitionType;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 
 /**
@@ -43,6 +41,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
  * @kieler.design 2014-01-20 proposed 
  * @kieler.rating 2014-01-20 proposed yellow
  */
+// Don't add new checks to this class. Use the xtend file instead!
 public class SctJavaValidator extends AbstractSctJavaValidator implements
         CustomEValidator {
 
@@ -83,9 +82,8 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      *
      * @param region the region
      */
-// FIXME: dataflow
 //    @Check
-//    public void checkInitialState(final de.cau.cs.kieler.sccharts.Region region) {
+//    public void checkInitialState(final de.cau.cs.kieler.sccharts.ControlflowRegion region) {
 //        // Do not consider the root region == SCChart
 //        if (region.getParentState() != null) {
 //            // check if parent state has declared any REAL region not only a
