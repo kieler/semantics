@@ -189,7 +189,7 @@ public final class ModelView extends DiagramViewPart {
      *            the editor to filter for
      * @return List of {@link ModelView}s associated with editor
      */
-    public List<ModelView> getModelViews(final IEditorPart editor) {
+    public static List<ModelView> getModelViews(final IEditorPart editor) {
         if (editor != null) {
             return Lists.newArrayList(Iterables.filter(modelViews, new Predicate<ModelView>() {
                 public boolean apply(ModelView view) {
