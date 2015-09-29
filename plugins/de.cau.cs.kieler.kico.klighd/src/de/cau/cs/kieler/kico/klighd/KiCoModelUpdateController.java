@@ -376,16 +376,16 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
      * {@inheritDoc}
      */
     @Override
-    public void onEditorSaved(IEditorPart editor) {
-        update(ChangeEvent.SAVED);
+    public void onActivate(IEditorPart editor) {
+        update(ChangeEvent.ACTIVE_EDITOR);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void onEditorChanged(IEditorPart editor) {
-        update(ChangeEvent.ACTIVE_EDITOR);
+    public void onEditorSaved(IEditorPart editor) {
+        update(ChangeEvent.SAVED);
     }
 
     /**
@@ -608,7 +608,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
             do_update_diagram |= compileModel && selection == null && selection_changed;
 
             if (do_update_diagram) {
-                setUpdateModel(null);
+                setUpdateModel(model);
                 setUpdateProperties(properties);
                 modelView.updateModel();
             }

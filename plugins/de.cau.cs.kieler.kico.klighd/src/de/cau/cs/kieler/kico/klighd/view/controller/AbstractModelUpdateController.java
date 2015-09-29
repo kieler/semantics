@@ -39,7 +39,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 public abstract class AbstractModelUpdateController {
 
     /** Indicated if this controller is active and should update the ModelView. */
-    private boolean active = false;
+    private IEditorPart editor;
     /** The related ModelView. */
     protected final ModelView modelView;
     /** The current model. */
@@ -105,14 +105,46 @@ public abstract class AbstractModelUpdateController {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the active state of this controller.
+     * Activates this controller for the given {@link IEditorPart}.
      * 
-     * @param active
-     *            state
+     * @param editor
+     *            the associated editor
      */
-    public final void setActive(boolean active) {
-        this.active = active;
+    public final void activate(IEditorPart editor) {
+        if (editor != null) {
+            this.editor = editor;
+            onActivate(editor);
+        } else {
+            throw new NullPointerException("Cannot activate UpdateController without editor");
+        }
     }
+
+    /**
+     * Deactivates this controller.
+     */
+    public final void deactivate() {
+        onDeactivate();
+        this.editor = null;
+    }
+
+    /**
+     * Invoked when the controller is activated for as specific {@link IEditorPart}. A controller
+     * will not be activated twice without a deactivation in between.
+     * <p>
+     * Usually the controller should read the model form the new editor.
+     * 
+     * @param editor
+     *            new editor
+     */
+    abstract public void onActivate(IEditorPart editor);
+
+    /**
+     * Invoked when the controller is deactivated. This method may be invoked multiple times without
+     * activation in between.
+     * <p>
+     * Usually the controller should stop listening to the editor and free all related resources.
+     */
+    abstract public void onDeactivate();
 
     /**
      * Returns is this controller is currently active and can update die ModelView.
@@ -120,7 +152,7 @@ public abstract class AbstractModelUpdateController {
      * @return active state
      */
     public final boolean isActive() {
-        return active;
+        return editor != null;
     }
 
     // -- Update
@@ -157,8 +189,7 @@ public abstract class AbstractModelUpdateController {
     }
 
     /**
-     * The synthesis properties to use when displaying the model.
-     * Returns never null.
+     * The synthesis properties to use when displaying the model. Returns never null.
      * 
      * @return the properties
      */
@@ -178,29 +209,9 @@ public abstract class AbstractModelUpdateController {
     public ILayoutConfig getLayoutConfig() {
         return null;
     }
-    
+
     // -- Events
     // -------------------------------------------------------------------------
-
-    /**
-     * Invoked when the related editor is saved.
-     * <p>
-     * Normally the controller should read the new model form the editor.
-     * 
-     * @param editor
-     *            saved editor
-     */
-    abstract public void onEditorSaved(IEditorPart editor);
-
-    /**
-     * Invoked when the related editor changed.
-     * <p>
-     * Normally the controller should read the model form the new editor.
-     * 
-     * @param editor
-     *            new editor
-     */
-    abstract public void onEditorChanged(IEditorPart editor);
 
     /**
      * Invoked when the ModelView finished updating the displayed diagram.
@@ -260,12 +271,12 @@ public abstract class AbstractModelUpdateController {
     // -------------------------------------------------------------------------
 
     /**
-     * Returns the related editor of the ModelView.
+     * Returns the related editor.
      * 
-     * @return The related editor or null
+     * @return The related editor or null if this controller is not active
      */
     public IEditorPart getEditor() {
-        return modelView.getEditor();
+        return editor;
     }
 
 }

@@ -101,7 +101,7 @@ public final class ModelView extends DiagramViewPart {
     public static final String ID = "de.cau.cs.kieler.kico.klighd.modelview";
 
     /** Default view title. **/
-    private static final String VIEW_TITLE = "KIELER Model View";
+    static final String VIEW_TITLE = "KIELER Model View";
 
     // -- GUI (Model) texts --
 
@@ -131,8 +131,11 @@ public final class ModelView extends DiagramViewPart {
     /** Secondary ID of this view. Indicates a non primary view */
     private String secondaryID;
 
+    /** The editor listener. */
+    private final ModelViewEditorListener editorListener;
+
     /** Active related editor. */
-    private IEditorPart activeEditor;
+    private IEditorPart editor;
 
     /** Stores saved selection of synthesis options according to their model type. */
     private final HashMap<ISynthesis, HashMap<SynthesisOption, Object>> recentSynthesisOptions =
@@ -141,8 +144,8 @@ public final class ModelView extends DiagramViewPart {
     /** Current model display as diagram. */
     private Object currentModel = null;
 
-    /** The currently active controller performing model updates. */
-    private AbstractModelUpdateController activeController = null;
+    /** The responsible controller performing model updates. */
+    private AbstractModelUpdateController controller = null;
 
     /** The until now instantiated controllers. */
     private final List<AbstractModelUpdateController> controllers =
@@ -223,13 +226,16 @@ public final class ModelView extends DiagramViewPart {
         // Add this view to the active modelviews
         modelViews.add(this);
 
+        // Create and register editor listener
+        editorListener = new ModelViewEditorListener(this);
+
         // Refresh Button
         actionRefresh = new Action("Refresh diagram",
                 KlighdPlugin.getImageDescriptor("icons/full/elcl16/refresh.gif")) {
 
             @Override
             public void run() {
-                notifyEditorSaved();
+                updateModel();
             }
         };
         actionRefresh.setId("actionRefresh");
@@ -281,27 +287,27 @@ public final class ModelView extends DiagramViewPart {
         actionResetOptions.setId(ACTION_ID_RESET_LAYOUT_OPTIONS);
 
         // Sync Menu Item
-        actionSyncEditor = new Action("Synchronize with Editor", IAction.AS_CHECK_BOX) {
+        actionSyncEditor = new Action("Synchronize with editor content", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
                 synchronizeEditor = isChecked();
                 updateViewTitle();
-                if (synchronizeEditor) {
-                    if (activeEditor == null) {
-                        notifyEditorChanged();
+                if (controller != null) {
+                    if (synchronizeEditor) {
+                        controller.activate(getEditor());
                     } else {
-                        notifyEditorSaved();
+                        controller.deactivate();
                     }
                 }
             }
         };
         actionSyncEditor.setId("actionSyncEditor");
         actionSyncEditor.setToolTipText(
-                "If Synchronize is disabled, this view will no longer update its status when editor changes.");
+                "If Synchronize is disabled, this view will no longer update its status when editor content changes.");
         actionSyncEditor.setChecked(synchronizeEditor);
 
         // Diagram PlaceHolder Menu Item
-        actionDiagramPlaceholder = new Action("Model visualization", IAction.AS_CHECK_BOX) {
+        actionDiagramPlaceholder = new Action("Visualization Model", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
                 showDiagramPlaceholder = isChecked();
@@ -348,9 +354,8 @@ public final class ModelView extends DiagramViewPart {
 
         updateViewTitle();
         // Some events may occur before this and need to be triggered again (e.g. setEditor)
-        if (activeController == null && activeEditor != null) {
+        if (controller == null && editor != null) {
             updateController();
-            notifyEditorChanged();
         } else {
             addContributions();
         }
@@ -456,9 +461,9 @@ public final class ModelView extends DiagramViewPart {
             title.append('>');
         }
 
-        if (activeEditor != null) {
+        if (editor != null) {
             title.append('[');
-            title.append(activeEditor.getTitle());
+            title.append(editor.getTitle());
             title.append(']');
         }
 
@@ -494,7 +499,7 @@ public final class ModelView extends DiagramViewPart {
                 for (AbstractModelUpdateController modelUpdateController : controllers) {
                     newModelView.controllers.add(modelUpdateController.clone(newModelView));
                 }
-                newModelView.setEditor(activeEditor);
+                newModelView.setEditor(editor);
             }
         } catch (PartInitException e) {
             StatusManager.getManager().handle(new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
@@ -519,9 +524,9 @@ public final class ModelView extends DiagramViewPart {
 
                 memento.putBoolean("showDiagramPlaceholder", showDiagramPlaceholder);
 
-                if (activeEditor != null && !isPrimaryView()) {
+                if (editor != null && !isPrimaryView()) {
                     IPersistableElement editorPersistable =
-                            activeEditor.getEditorInput().getPersistable();
+                            editor.getEditorInput().getPersistable();
                     if (editorPersistable != null) {
                         memento.putString("activeEditorFactory", editorPersistable.getFactoryId());
                         editorPersistable.saveState(memento.createChild("activeEditorInput"));
@@ -705,19 +710,23 @@ public final class ModelView extends DiagramViewPart {
      * @param editor
      *            editor or null to unset
      */
-    private void setEditor(IEditorPart editor) {
-        if (editor != null) {
-            if (activeEditor != editor) {
+    void setEditor(IEditorPart newEditor) {
+        if (newEditor != null) {
+            if (editor != newEditor) {
                 // set as active editor
-                activeEditor = editor;
+                editor = newEditor;
+
+                // Reset synchronization
+                synchronizeEditor = true;
+                actionSyncEditor.setChecked(true);
+
                 updateViewTitle();
                 updateController();
-                notifyEditorChanged();
             }
         } else {
-            activeEditor = null;
+            editor = null;
             updateViewTitle();
-            notifyEditorChanged();
+            updateController();
         }
     }
 
@@ -727,73 +736,66 @@ public final class ModelView extends DiagramViewPart {
      * @return the editor
      */
     public IEditorPart getEditor() {
-        return activeEditor;
+        return editor;
     }
 
     // -- Controller
     // -------------------------------------------------------------------------
 
     /**
-     * Activates the correct controller for according to the current editor.
+     * Sets the correct responsible controller for the current editor.
      */
     private void updateController() {
-        if (activeEditor != null && toolBarManager != null && menuManager != null) {
+        // Deactivate active editor
+        if (controller != null) {
+            controller.deactivate();
+            controller = null;
+            // remove contributions
+            toolBarManager.removeAll();
+            menuManager.removeAll();
+            addContributions();
+        }
+
+        // Find new controller
+        if (editor != null && toolBarManager != null && menuManager != null) {
             String responsibleControllerID =
-                    ModelUpdateControllerFactory.getHandlingControllerID(activeEditor);
+                    ModelUpdateControllerFactory.getHandlingControllerID(editor);
             if (responsibleControllerID != null) {
-                if (activeController == null
-                        || !responsibleControllerID.equals(activeController.getID())) {
-                    if (activeController != null) {
-                        activeController.setActive(false);
-                    }
 
-                    // search for responsible controller in list
-                    AbstractModelUpdateController alreadyInstaciatedController = null;
-                    for (AbstractModelUpdateController controller : controllers) {
-                        if (controller.getID().equals(responsibleControllerID)) {
-                            alreadyInstaciatedController = controller;
-                            break;
-                        }
+                // search for responsible controller in instance list
+                AbstractModelUpdateController alreadyInstaciatedController = null;
+                for (AbstractModelUpdateController controller : controllers) {
+                    if (controller.getID().equals(responsibleControllerID)) {
+                        alreadyInstaciatedController = controller;
+                        break;
                     }
-                    // create controller
-                    if (alreadyInstaciatedController != null) {
-                        activeController = alreadyInstaciatedController;
-                    } else {
-                        activeController = ModelUpdateControllerFactory
-                                .getNewInstance(responsibleControllerID, this);
-                        controllers.add(activeController);
-                    }
-
-                    // update contributions
-                    toolBarManager.removeAll();
-                    menuManager.removeAll();
-                    addContributions();
-                    activeController.addContributions(toolBarManager, menuManager);
-                    toolBarManager.update(false);
-                    menuManager.updateAll(false);
-                    // activate
-                    activeController.setActive(true);
                 }
+                // create controller if necessary
+                if (alreadyInstaciatedController != null) {
+                    controller = alreadyInstaciatedController;
+                } else {
+                    controller = ModelUpdateControllerFactory
+                            .getNewInstance(responsibleControllerID, this);
+                    controllers.add(controller);
+                }
+
+                // Update controller specific contributions
+                controller.addContributions(toolBarManager, menuManager);
             }
         }
-    }
 
-    /**
-     * Notifies the controller about the save event in the editor.
-     */
-    void notifyEditorSaved() {
-        if (activeController != null && synchronizeEditor) {
-            activeController.onEditorSaved(activeEditor);
-        }
-    }
+        // Update toolbar and menu
+        toolBarManager.update(false);
+        menuManager.updateAll(false);
 
-    /**
-     * Notifies the controller about changed editor.
-     */
-    void notifyEditorChanged() {
-        if (activeController != null && synchronizeEditor) {
-            activeController.onEditorChanged(activeEditor);
+        // Activate new controller
+        if (controller != null) {
+            controller.activate(editor);
+        } else {
+            setModel(null);
+            updateDiagram();
         }
+
     }
 
     // -- Model
@@ -846,13 +848,13 @@ public final class ModelView extends DiagramViewPart {
      * Saves the current model into a file with saveAs dialog.
      */
     private void saveCurrentModel() {
-        if (currentModel != null && activeController != null) {
+        if (currentModel != null && controller != null) {
             // Get workspace
             IWorkspace workspace = ResourcesPlugin.getWorkspace();
             IWorkspaceRoot root = workspace.getRoot();
 
             // get filename with correct extension
-            String filename = activeController.getResourceName(activeEditor, currentModel);
+            String filename = controller.getResourceName(editor, currentModel);
 
             SaveAsDialog saveAsDialog = new SaveAsDialog(getSite().getShell());
 
@@ -903,7 +905,7 @@ public final class ModelView extends DiagramViewPart {
                     if (currentModel instanceof ISaveableModel) {
                         ((ISaveableModel) currentModel).save(file, uri);
                     } else {
-                        activeController.saveModel(currentModel, file, uri);
+                        controller.saveModel(currentModel, file, uri);
                     }
                 } catch (Exception e) {
                     StatusManager.getManager().handle(new Status(IStatus.ERROR,
@@ -921,8 +923,8 @@ public final class ModelView extends DiagramViewPart {
      */
     @Override
     public ILayoutConfig getLayoutConfig() {
-        if (activeController != null) {
-            ILayoutConfig layoutConfig = activeController.getLayoutConfig();
+        if (controller != null) {
+            ILayoutConfig layoutConfig = controller.getLayoutConfig();
             if (layoutConfig != null) {
                 return layoutConfig;
             }
@@ -934,9 +936,8 @@ public final class ModelView extends DiagramViewPart {
      * Updates the diagram with the same properties as before.
      */
     public void updateModel() {
-        if (activeController != null) {
-            updateDiagram(activeController.getUpdateModel(),
-                    activeController.getUpdateProperties());
+        if (controller != null) {
+            updateDiagram(controller.getUpdateModel(), controller.getUpdateProperties());
         }
     }
 
@@ -961,8 +962,8 @@ public final class ModelView extends DiagramViewPart {
      */
     private void updateDiagram(Object model, final KlighdSynthesisProperties properties) {
         String editorTitle = null;
-        if (activeEditor != null) {
-            editorTitle = activeEditor.getTitle();
+        if (editor != null) {
+            editorTitle = editor.getTitle();
         }
         // Adjust model
         if (model == null) {
@@ -986,7 +987,7 @@ public final class ModelView extends DiagramViewPart {
 
             @Override
             public IStatus runInUIThread(IProgressMonitor monitor) {
-                doUpdateDiagram(displayModel, properties, activeController, activeEditor, false);
+                doUpdateDiagram(displayModel, properties, controller, editor, false);
                 return Status.OK_STATUS;
             }
         }.schedule();

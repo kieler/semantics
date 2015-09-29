@@ -41,11 +41,15 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  * @kieler.rating 2015-06-29 proposed yellow
  *
  */
-public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateController {
+public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateController
+        implements EditorSafeListener.SafeEventListener {
 
     /** Controller ID. */
     private static final String ID =
             "de.cau.cs.kieler.kico.klighd.view.DefaultEcoreXtextModelUpdateController";
+
+    /** The safe listener for the editor */
+    private final EditorSafeListener safeListener;
 
     /**
      * Default Constructor.
@@ -55,6 +59,7 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
      */
     public DefaultEcoreXtextModelUpdateController(ModelView modelView) {
         super(modelView);
+        safeListener = new EditorSafeListener(this);
     }
 
     /**
@@ -84,15 +89,26 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
      * {@inheritDoc}
      */
     @Override
-    public void onEditorSaved(IEditorPart editor) {
+    public void onActivate(IEditorPart editor) {
         setUpdateModel(readModel(editor));
+        // Add Listener
+        safeListener.add(editor);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void onEditorChanged(IEditorPart editor) {
+    public void onDeactivate() {
+        // Remove Listener
+        safeListener.remove(getEditor());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onEditorSaved(IEditorPart editor) {
         setUpdateModel(readModel(editor));
     }
 
@@ -122,7 +138,8 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
      * {@inheritDoc}
      */
     @Override
-    public void onDiagramUpdate(Object model, KlighdSynthesisProperties properties, IViewer viewer) {
+    public void onDiagramUpdate(Object model, KlighdSynthesisProperties properties,
+            IViewer viewer) {
     }
 
     /**
@@ -131,7 +148,7 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
     @Override
     public void reset() {
     }
-    
+
     /**
      * {@inheritDoc}
      */
