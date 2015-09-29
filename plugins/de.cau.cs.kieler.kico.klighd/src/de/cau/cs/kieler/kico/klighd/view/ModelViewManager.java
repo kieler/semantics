@@ -36,6 +36,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
+import de.cau.cs.kieler.kico.klighd.view.controller.ModelUpdateControllerFactory;
 
 /**
  * Observes the workspace and manages handles updating the ModelViews on part change events.

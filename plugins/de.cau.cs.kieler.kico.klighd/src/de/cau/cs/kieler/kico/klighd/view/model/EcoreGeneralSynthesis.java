@@ -16,8 +16,8 @@ package de.cau.cs.kieler.kico.klighd.view.model;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.IEditorPart;
 
-import de.cau.cs.kieler.kico.klighd.view.ISelectableGeneralSynthesis;
-import de.cau.cs.kieler.kico.klighd.view.SynthesisSelectionMenu;
+import de.cau.cs.kieler.kico.klighd.view.menu.ISelectableGeneralSynthesis;
+import de.cau.cs.kieler.kico.klighd.view.menu.SynthesisSelectionMenu;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.view;
+package de.cau.cs.kieler.kico.klighd.view.controller;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
@@ -20,6 +20,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
 
+import de.cau.cs.kieler.kico.klighd.view.ModelView;
 import de.cau.cs.kieler.kiml.config.ILayoutConfig;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
@@ -40,7 +41,11 @@ public abstract class AbstractModelUpdateController {
     /** Indicated if this controller is active and should update the ModelView. */
     private boolean active = false;
     /** The related ModelView. */
-    private final ModelView modelView;
+    protected final ModelView modelView;
+    /** The current model. */
+    private Object model;
+    /** The current properties. */
+    private KlighdSynthesisProperties properties;
 
     /**
      * Default Constructor.
@@ -105,7 +110,7 @@ public abstract class AbstractModelUpdateController {
      * @param active
      *            state
      */
-    final void setActive(boolean active) {
+    public final void setActive(boolean active) {
         this.active = active;
     }
 
@@ -122,30 +127,46 @@ public abstract class AbstractModelUpdateController {
     // -------------------------------------------------------------------------
 
     /**
-     * Updates the model and diagram of the model view.
+     * Sets the model this controller should return as updated model. Null to unset.
      * 
      * @param model
-     *            model to display
-     * @param properties
-     *            configuration
+     *            the model to set or null
      */
-    protected final void updateModel(Object model, KlighdSynthesisProperties properties) {
-        if (active) {
-            modelView.setModel(model);
-            modelView.updateDiagram(properties);
-        }
+    protected void setUpdateModel(Object model) {
+        this.model = model;
     }
 
     /**
-     * Updates the model and diagram of the model view.
+     * The updated model.
      * 
-     * @param model
-     *            model to display
+     * @return the model or null if no model available
      */
-    protected final void updateModel(Object model) {
-        if (active) {
-            modelView.setModel(model);
-            modelView.updateDiagram();
+    public final Object getUpdateModel() {
+        return model;
+    }
+
+    /**
+     * Sets the properties which this controller should use to show the updated model. Null to
+     * unset.
+     * 
+     * @param properties
+     *            the properties to set or null
+     */
+    protected void setUpdateProperties(KlighdSynthesisProperties properties) {
+        this.properties = properties;
+    }
+
+    /**
+     * The synthesis properties to use when displaying the model.
+     * Returns never null.
+     * 
+     * @return the properties
+     */
+    public final KlighdSynthesisProperties getUpdateProperties() {
+        if (properties != null) {
+            return properties;
+        } else {
+            return new KlighdSynthesisProperties();
         }
     }
 
@@ -157,7 +178,7 @@ public abstract class AbstractModelUpdateController {
     public ILayoutConfig getLayoutConfig() {
         return null;
     }
-
+    
     // -- Events
     // -------------------------------------------------------------------------
 
@@ -245,15 +266,6 @@ public abstract class AbstractModelUpdateController {
      */
     public IEditorPart getEditor() {
         return modelView.getEditor();
-    }
-
-    /**
-     * Returns the ModelView of this controller.
-     * 
-     * @return The related ModelView
-     */
-    public final ModelView getModelView() {
-        return modelView;
     }
 
 }

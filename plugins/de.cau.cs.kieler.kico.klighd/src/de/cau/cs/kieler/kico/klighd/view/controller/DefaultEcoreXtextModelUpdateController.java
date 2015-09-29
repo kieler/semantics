@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.view;
+package de.cau.cs.kieler.kico.klighd.view.controller;
 
 import java.util.List;
 
@@ -29,6 +29,7 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
+import de.cau.cs.kieler.kico.klighd.view.ModelView;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
@@ -84,7 +85,7 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
      */
     @Override
     public void onEditorSaved(IEditorPart editor) {
-        updateModel(readModel(editor));
+        setUpdateModel(readModel(editor));
     }
 
     /**
@@ -92,7 +93,7 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
      */
     @Override
     public void onEditorChanged(IEditorPart editor) {
-        updateModel(readModel(editor));
+        setUpdateModel(readModel(editor));
     }
 
     /**

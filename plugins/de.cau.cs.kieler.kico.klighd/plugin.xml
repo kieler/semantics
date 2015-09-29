@@ -28,7 +28,7 @@
             allowMultiple="true"
             category="de.cau.cs.kieler.sim"
             class="de.cau.cs.kieler.kico.klighd.view.ModelView"
-            icon="icons/ModelView.gif"
+            icon="icons/model_view.gif"
             id="de.cau.cs.kieler.kico.klighd.modelview"
             name="KIELER Model View"
             restorable="true">
@@ -53,7 +53,7 @@
    <extension
          point="de.cau.cs.kieler.kico.klighd.controller">
       <controller
-            class="de.cau.cs.kieler.kico.klighd.view.DefaultEcoreXtextModelUpdateController"
+            class="de.cau.cs.kieler.kico.klighd.view.controller.DefaultEcoreXtextModelUpdateController"
             id="de.cau.cs.kieler.kico.klighd.view.DefaultEcoreXtextModelUpdateController">
       </controller>
       <controller

@@ -54,9 +54,9 @@ import de.cau.cs.kieler.kico.internal.ResourceExtension;
 import de.cau.cs.kieler.kico.klighd.internal.AsynchronousCompilation;
 import de.cau.cs.kieler.kico.klighd.internal.CompilerSelectionStore;
 import de.cau.cs.kieler.kico.klighd.internal.ModelChain;
-import de.cau.cs.kieler.kico.klighd.view.AbstractModelUpdateController;
-import de.cau.cs.kieler.kico.klighd.view.DefaultEcoreXtextModelUpdateController;
 import de.cau.cs.kieler.kico.klighd.view.ModelView;
+import de.cau.cs.kieler.kico.klighd.view.controller.AbstractModelUpdateController;
+import de.cau.cs.kieler.kico.klighd.view.controller.DefaultEcoreXtextModelUpdateController;
 import de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
 import de.cau.cs.kieler.kico.klighd.view.model.ISaveableModel;
@@ -111,16 +111,16 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
     // -- Icons --
     /** The icon for toggling side-by-side display mode button. */
     private static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.klighd", "icons/Compile.png");
+            "de.cau.cs.kieler.kico.klighd", "icons/compile.png");
     /** The icon for fork view button. */
     private static final ImageDescriptor ICON_SIDE_BY_SIDE = AbstractUIPlugin
-            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/SideBySide.png");
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/side_by_side.png");
     /** The icon for toggling chain display mode button. */
     private static final ImageDescriptor ICON_CHAIN = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.klighd", "icons/Chain.png");
+            "de.cau.cs.kieler.kico.klighd", "icons/chain.png");
     /** The icon for pin selection button. */
     private static final ImageDescriptor ICON_PIN = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.klighd", "icons/Pin.png");
+            "de.cau.cs.kieler.kico.klighd", "icons/pin.png");
 
     /** The icon for closing windows. */
     private static final ImageDescriptor ICON_CLOSE = AbstractUIPlugin.imageDescriptorFromPlugin(
@@ -463,7 +463,9 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
 
             // check if source model is read correctly
             if (sourceModel == null) {
-                updateModel(null, properties);
+                setUpdateModel(null);
+                setUpdateProperties(properties);
+                modelView.updateModel();
                 return;
             }
 
@@ -606,7 +608,9 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
             do_update_diagram |= compileModel && selection == null && selection_changed;
 
             if (do_update_diagram) {
-                updateModel(model, properties);
+                setUpdateModel(null);
+                setUpdateProperties(properties);
+                modelView.updateModel();
             }
         } else {
             // drop any existing compilation
@@ -615,7 +619,9 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
                 currentCompilation = null;
             }
             currentCompilationResult = null;
-            updateModel(null);
+            setUpdateModel(null);
+            setUpdateProperties(null);
+            modelView.updateModel();
         }
     }
 
@@ -636,7 +642,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
      */
     @Override
     public ILayoutConfig getLayoutConfig() {
-        ViewContext viewContext = getModelView().getViewContext();
+        ViewContext viewContext = modelView.getViewContext();
         // Assure that model chain is always layouted left to right
         if (viewContext.getInputModel() instanceof ModelChain) {
             return new CompoundLayoutConfig(Lists.newArrayList(new VolatileLayoutConfig(
@@ -655,7 +661,7 @@ public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateContr
      */
     private void publishCurrentModelInformation(final Object model,
             final CompilationResult compilationResult) {
-        if (getModelView().isPrimaryView()) {
+        if (modelView.isPrimaryView()) {
             boolean is_placeholder =
                     model instanceof ErrorModel || model instanceof MessageModel
                             || model instanceof CodePlaceHolder;

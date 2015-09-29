@@ -74,7 +74,7 @@ public class ErrorModel extends MessageModel {
      *            the stacktrace
      */
     public ErrorModel(String message, String reason, String stacktrace) {
-        super(message, reason, "de.cau.cs.kieler.kico.klighd", "icons/ErrorSign.png", 250);
+        super(message, reason, "de.cau.cs.kieler.kico.klighd", "icons/error_sign.png", 250);
         // reason
         String reasonToSet = "Unkown";
         if (reason == null) {

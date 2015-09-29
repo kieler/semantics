@@ -65,6 +65,9 @@ import com.google.common.collect.Maps;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
+import de.cau.cs.kieler.kico.klighd.view.controller.AbstractModelUpdateController;
+import de.cau.cs.kieler.kico.klighd.view.controller.ModelUpdateControllerFactory;
+import de.cau.cs.kieler.kico.klighd.view.menu.SynthesisSelectionMenu;
 import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
 import de.cau.cs.kieler.kico.klighd.view.model.ISaveableModel;
 import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
@@ -100,7 +103,7 @@ public final class ModelView extends DiagramViewPart {
     /** Default view title. **/
     private static final String VIEW_TITLE = "KIELER Model View";
 
-    // -- GUI texts --
+    // -- GUI (Model) texts --
 
     private static final String NO_MODEL_PRIMARY = "No model in active editor";
     private static final String NO_MODEL_SECONDARY = "No model in related editor";
@@ -111,18 +114,18 @@ public final class ModelView extends DiagramViewPart {
     // -- Icons --
 
     /** The icon for forking a view. */
-    private static final ImageDescriptor ICON_FORK = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.klighd", "icons/Fork.png");
+    private static final ImageDescriptor ICON_FORK = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/fork.png");
 
     /** The icon for saving current model. */
-    private static final ImageDescriptor ICON_SAVE = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "org.eclipse.ui", "icons/full/etool16/save_edit.gif");
-    
+    private static final ImageDescriptor ICON_SAVE = AbstractUIPlugin
+            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/etool16/save_edit.gif");
+
     // -- Instance list --
-    
+
     /** List of all open ModelViews. */
     private static List<ModelView> modelViews = new ArrayList<ModelView>(6);
-    
+
     // -- ATTRIBUTES --
 
     /** Secondary ID of this view. Indicates a non primary view */
@@ -178,7 +181,6 @@ public final class ModelView extends DiagramViewPart {
     /** The menu and controller handling the selection of available synthesis. */
     private final SynthesisSelectionMenu synthesisSelection = new SynthesisSelectionMenu(this);
 
-    
     // -- Static ModelView Access
     // -------------------------------------------------------------------------
 
@@ -199,7 +201,16 @@ public final class ModelView extends DiagramViewPart {
         }
         return Collections.emptyList();
     }
-    
+
+    /**
+     * Returns the list of all {@link ModelView}s.
+     * 
+     * @return List of all {@link ModelView}s
+     */
+    public static List<ModelView> getAllModelViews() {
+        return Lists.newArrayList(modelViews);
+    }
+
     // -- Constructor and Initialization
     // -------------------------------------------------------------------------
 
@@ -208,20 +219,19 @@ public final class ModelView extends DiagramViewPart {
      */
     public ModelView() {
         super();
-        
+
         // Add this view to the active modelviews
         modelViews.add(this);
 
         // Refresh Button
-        actionRefresh =
-                new Action("Refresh diagram",
-                        KlighdPlugin.getImageDescriptor("icons/full/elcl16/refresh.gif")) {
+        actionRefresh = new Action("Refresh diagram",
+                KlighdPlugin.getImageDescriptor("icons/full/elcl16/refresh.gif")) {
 
-                    @Override
-                    public void run() {
-                        notifyEditorSaved();
-                    }
-                };
+            @Override
+            public void run() {
+                notifyEditorSaved();
+            }
+        };
         actionRefresh.setId("actionRefresh");
 
         // Automatic Layout Button
@@ -232,8 +242,8 @@ public final class ModelView extends DiagramViewPart {
             }
         };
         actionLayout.setId("actionLayout");
-        actionLayout.setImageDescriptor(KimlUiPlugin
-                .getImageDescriptor("icons/menu16/kieler-arrange.gif"));
+        actionLayout.setImageDescriptor(
+                KimlUiPlugin.getImageDescriptor("icons/menu16/kieler-arrange.gif"));
 
         // Fork Button
         actionFork = new Action("Fork this view", IAction.AS_PUSH_BUTTON) {
@@ -286,8 +296,8 @@ public final class ModelView extends DiagramViewPart {
             }
         };
         actionSyncEditor.setId("actionSyncEditor");
-        actionSyncEditor
-                .setToolTipText("If Synchronize is disabled, this view will no longer update its status when editor changes.");
+        actionSyncEditor.setToolTipText(
+                "If Synchronize is disabled, this view will no longer update its status when editor changes.");
         actionSyncEditor.setChecked(synchronizeEditor);
 
         // Diagram PlaceHolder Menu Item
@@ -299,8 +309,8 @@ public final class ModelView extends DiagramViewPart {
             }
         };
         actionDiagramPlaceholder.setId("actionDiagramPlaceholder");
-        actionDiagramPlaceholder
-                .setToolTipText("If visualization is deactiveted, all diagrams will be replaced by a placeholder diagram.");
+        actionDiagramPlaceholder.setToolTipText(
+                "If visualization is deactiveted, all diagrams will be replaced by a placeholder diagram.");
         actionDiagramPlaceholder.setChecked(showDiagramPlaceholder);
     }
 
@@ -462,13 +472,9 @@ public final class ModelView extends DiagramViewPart {
     private void forkView() {
         try {
             // Create new View
-            IViewPart newViewPart =
-                    PlatformUI
-                            .getWorkbench()
-                            .getActiveWorkbenchWindow()
-                            .getActivePage()
-                            .showView(ID, Long.toString(System.currentTimeMillis()),
-                                    IWorkbenchPage.VIEW_ACTIVATE);
+            IViewPart newViewPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                    .getActivePage().showView(ID, Long.toString(System.currentTimeMillis()),
+                            IWorkbenchPage.VIEW_ACTIVATE);
             // Configure child view
             if (newViewPart instanceof ModelView) {
                 ModelView newModelView = (ModelView) newViewPart;
@@ -491,9 +497,8 @@ public final class ModelView extends DiagramViewPart {
                 newModelView.setEditor(activeEditor);
             }
         } catch (PartInitException e) {
-            StatusManager.getManager().handle(
-                    new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(),
-                            e.getCause()), StatusManager.SHOW);
+            StatusManager.getManager().handle(new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
+                    e.getMessage(), e.getCause()), StatusManager.SHOW);
         }
     }
 
@@ -528,9 +533,8 @@ public final class ModelView extends DiagramViewPart {
                         memento.createChild("recentSynthesisOptions");
                 for (Entry<ISynthesis, HashMap<SynthesisOption, Object>> entry : recentSynthesisOptions
                         .entrySet()) {
-                    IMemento synthesisMemento =
-                            recentSynthesisOptionsMemento.createChild(KlighdDataManager
-                                    .getInstance().getSynthesisID(entry.getKey()));
+                    IMemento synthesisMemento = recentSynthesisOptionsMemento.createChild(
+                            KlighdDataManager.getInstance().getSynthesisID(entry.getKey()));
                     for (Entry<SynthesisOption, Object> optionEntry : entry.getValue().entrySet()) {
                         SynthesisOption option = optionEntry.getKey();
                         Object value = optionEntry.getValue();
@@ -559,9 +563,8 @@ public final class ModelView extends DiagramViewPart {
                 }
             }
         } catch (Exception e) {
-            StatusManager.getManager().handle(
-                    new Status(IStatus.WARNING, KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(),
-                            e.getCause()), StatusManager.LOG);
+            StatusManager.getManager().handle(new Status(IStatus.WARNING,
+                    KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(), e.getCause()), StatusManager.LOG);
         }
     }
 
@@ -612,13 +615,12 @@ public final class ModelView extends DiagramViewPart {
             IMemento synthesisOptionsMemento = memento.getChild("recentSynthesisOptions");
             if (synthesisOptionsMemento != null) {
                 for (IMemento synthesisOptionMemento : synthesisOptionsMemento.getChildren()) {
-                    ISynthesis synthesis =
-                            KlighdDataManager.getInstance().getDiagramSynthesisById(
-                                    synthesisOptionMemento.getType());
+                    ISynthesis synthesis = KlighdDataManager.getInstance()
+                            .getDiagramSynthesisById(synthesisOptionMemento.getType());
                     if (synthesis != null) {
                         HashMap<Integer, SynthesisOption> optionMap =
-                                new HashMap<Integer, SynthesisOption>(synthesis
-                                        .getDisplayedSynthesisOptions().size());
+                                new HashMap<Integer, SynthesisOption>(
+                                        synthesis.getDisplayedSynthesisOptions().size());
                         for (SynthesisOption synthesisOption : synthesis
                                 .getDisplayedSynthesisOptions()) {
                             optionMap.put(synthesisOption.getName().hashCode(), synthesisOption);
@@ -656,9 +658,8 @@ public final class ModelView extends DiagramViewPart {
             IMemento controllersMemento = memento.getChild("controllers");
             if (controllersMemento != null) {
                 for (IMemento controllerMemento : controllersMemento.getChildren()) {
-                    AbstractModelUpdateController controller =
-                            ModelUpdateControllerFactory.getNewInstance(
-                                    controllerMemento.getType(), this);
+                    AbstractModelUpdateController controller = ModelUpdateControllerFactory
+                            .getNewInstance(controllerMemento.getType(), this);
                     if (controller != null) {
                         controller.loadState(controllerMemento);
                         controllers.add(controller);
@@ -666,9 +667,8 @@ public final class ModelView extends DiagramViewPart {
                 }
             }
         } catch (Exception e) {
-            StatusManager.getManager().handle(
-                    new Status(IStatus.WARNING, KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(),
-                            e.getCause()), StatusManager.LOG);
+            StatusManager.getManager().handle(new Status(IStatus.WARNING,
+                    KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(), e.getCause()), StatusManager.LOG);
         }
     }
 
@@ -705,7 +705,7 @@ public final class ModelView extends DiagramViewPart {
      * @param editor
      *            editor or null to unset
      */
-    void setEditor(IEditorPart editor) {
+    private void setEditor(IEditorPart editor) {
         if (editor != null) {
             if (activeEditor != editor) {
                 // set as active editor
@@ -759,9 +759,8 @@ public final class ModelView extends DiagramViewPart {
                     if (alreadyInstaciatedController != null) {
                         activeController = alreadyInstaciatedController;
                     } else {
-                        activeController =
-                                ModelUpdateControllerFactory.getNewInstance(
-                                        responsibleControllerID, this);
+                        activeController = ModelUpdateControllerFactory
+                                .getNewInstance(responsibleControllerID, this);
                         controllers.add(activeController);
                     }
 
@@ -892,9 +891,8 @@ public final class ModelView extends DiagramViewPart {
                     try {
                         file.refreshLocal(IResource.DEPTH_INFINITE, null);
                     } catch (CoreException e) {
-                        StatusManager.getManager().handle(
-                                new Status(IStatus.WARNING, KiCoKLighDPlugin.PLUGIN_ID,
-                                        e.getMessage(), e), StatusManager.LOG);
+                        StatusManager.getManager().handle(new Status(IStatus.WARNING,
+                                KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.LOG);
                     }
                 }
 
@@ -908,9 +906,8 @@ public final class ModelView extends DiagramViewPart {
                         activeController.saveModel(currentModel, file, uri);
                     }
                 } catch (Exception e) {
-                    StatusManager.getManager()
-                            .handle(new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
-                                    e.getMessage(), e), StatusManager.SHOW);
+                    StatusManager.getManager().handle(new Status(IStatus.ERROR,
+                            KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW);
                 }
             }
         }
@@ -936,26 +933,22 @@ public final class ModelView extends DiagramViewPart {
     /**
      * Updates the diagram with the same properties as before.
      */
-    void updateDiagram() {
+    public void updateModel() {
+        if (activeController != null) {
+            updateDiagram(activeController.getUpdateModel(),
+                    activeController.getUpdateProperties());
+        }
+    }
+
+    /**
+     * Updates the diagram with the same properties as before.
+     */
+    public void updateDiagram() {
         KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
             properties.copyProperties(this.getViewContext());
         }
-        updateDiagram(properties);
-    }
-
-    /**
-     * Updates the diagram with the given properties.
-     * 
-     * @param properties
-     *            the properties
-     */
-    void updateDiagram(KlighdSynthesisProperties properties) {
-        if (properties == null) {
-            updateDiagram();
-        } else {
-            updateDiagram(currentModel, properties);
-        }
+        updateDiagram(currentModel, properties);
     }
 
     /**
@@ -979,9 +972,8 @@ public final class ModelView extends DiagramViewPart {
                 model = new MessageModel(NO_MODEL_SECONDARY);
             }
         } else if (showDiagramPlaceholder) {
-            model =
-                    new MessageModel(MODEL_PLACEHOLDER_PREFIX + editorTitle,
-                            MODEL_PLACEHOLDER_MESSGAE);
+            model = new MessageModel(MODEL_PLACEHOLDER_PREFIX + editorTitle,
+                    MODEL_PLACEHOLDER_MESSGAE);
         }
         final Object displayModel = model;
 
@@ -1043,7 +1035,8 @@ public final class ModelView extends DiagramViewPart {
             // In case model was specially prepared take the return instance
             model = synthesisModelPair.getSecond();
             // Maybe adjust type change flag
-            if (vc != null && vc.getInputModel() != null && vc.getInputModel() == model.getClass()) {
+            if (vc != null && vc.getInputModel() != null
+                    && vc.getInputModel() == model.getClass()) {
                 modelTypeChanged = false;
             }
 
@@ -1080,9 +1073,8 @@ public final class ModelView extends DiagramViewPart {
                 resetLayoutConfig(false);
             } else {
                 // update case (keeps options and sidebar)
-                success =
-                        LightDiagramServices
-                                .updateDiagram(this.getViewer().getViewContext(), model);
+                success = LightDiagramServices.updateDiagram(this.getViewer().getViewContext(),
+                        model);
             }
 
             // check if update was successful
@@ -1111,12 +1103,12 @@ public final class ModelView extends DiagramViewPart {
             }
         } catch (Exception e) {
             if (!isErrorModel) {
-                doUpdateDiagram(new ErrorModel(UPDATE_DIAGRAM_EXCEPTION, e), properties,
-                        controller, editor, true);
+                doUpdateDiagram(new ErrorModel(UPDATE_DIAGRAM_EXCEPTION, e), properties, controller,
+                        editor, true);
             } else {
-                StatusManager.getManager().handle(
-                        new Status(IStatus.WARNING, KiCoKLighDPlugin.PLUGIN_ID,
-                                e.getLocalizedMessage(), e), StatusManager.SHOW);
+                StatusManager.getManager().handle(new Status(IStatus.WARNING,
+                        KiCoKLighDPlugin.PLUGIN_ID, e.getLocalizedMessage(), e),
+                        StatusManager.SHOW);
             }
 
         }
