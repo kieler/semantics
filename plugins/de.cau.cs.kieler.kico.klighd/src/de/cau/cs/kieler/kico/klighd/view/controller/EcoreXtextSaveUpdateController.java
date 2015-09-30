@@ -13,13 +13,9 @@
  */
 package de.cau.cs.kieler.kico.klighd.view.controller;
 
-import java.util.List;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -27,9 +23,9 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
-import de.cau.cs.kieler.core.model.util.ModelUtil;
-import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
 import de.cau.cs.kieler.kico.klighd.view.ModelView;
+import de.cau.cs.kieler.kico.klighd.view.util.EditorUtil;
+import de.cau.cs.kieler.kico.klighd.view.util.ModelUtil;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
@@ -41,15 +37,15 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  * @kieler.rating 2015-06-29 proposed yellow
  *
  */
-public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateController
-        implements EditorSafeListener.SafeEventListener {
+public class EcoreXtextSaveUpdateController extends AbstractModelUpdateController
+        implements EditorSafeAdapter.EditorSafeListener {
 
     /** Controller ID. */
     private static final String ID =
-            "de.cau.cs.kieler.kico.klighd.view.DefaultEcoreXtextModelUpdateController";
+            "de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController";
 
     /** The safe listener for the editor */
-    private final EditorSafeListener safeListener;
+    private final EditorSafeAdapter safeAdapter;
 
     /**
      * Default Constructor.
@@ -57,9 +53,9 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
      * @param modelView
      *            the ModelView this controller is associated with
      */
-    public DefaultEcoreXtextModelUpdateController(ModelView modelView) {
+    public EcoreXtextSaveUpdateController(ModelView modelView) {
         super(modelView);
-        safeListener = new EditorSafeListener(this);
+        safeAdapter = new EditorSafeAdapter(this);
     }
 
     /**
@@ -82,7 +78,7 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
      */
     @Override
     public AbstractModelUpdateController clone(ModelView modelView) {
-        return new DefaultEcoreXtextModelUpdateController(modelView);
+        return new EcoreXtextSaveUpdateController(modelView);
     }
 
     /**
@@ -91,8 +87,7 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
     @Override
     public void onActivate(IEditorPart editor) {
         setUpdateModel(readModel(editor));
-        // Add Listener
-        safeListener.add(editor);
+        safeAdapter.activate(editor);
     }
 
     /**
@@ -100,8 +95,7 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
      */
     @Override
     public void onDeactivate() {
-        // Remove Listener
-        safeListener.remove(getEditor());
+        safeAdapter.deactivate();;
     }
 
     /**
@@ -110,6 +104,7 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
     @Override
     public void onEditorSaved(IEditorPart editor) {
         setUpdateModel(readModel(editor));
+        modelView.updateModel();
     }
 
     /**
@@ -183,15 +178,9 @@ public class DefaultEcoreXtextModelUpdateController extends AbstractModelUpdateC
     protected static EObject readModel(final IEditorPart editor) {
         EObject model = null;
         if (editor instanceof XtextEditor) { // Get model from XTextEditor
-            return XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editor, true);
+            return EditorUtil.getModelFromXtextEditor((XtextEditor) editor, true);
         } else if (editor instanceof IEditingDomainProvider) { // Get model from EMF TreeEditor
-            IEditingDomainProvider provider = (IEditingDomainProvider) editor;
-
-            List<Resource> resources = provider.getEditingDomain().getResourceSet().getResources();
-
-            if (!resources.isEmpty() && !resources.get(0).getContents().isEmpty()) {
-                model = EcoreUtil.getRootContainer(resources.get(0).getContents().get(0));
-            }
+            return EditorUtil.getModelFromEMFEditor((IEditingDomainProvider) editor);
         }
         return model;
     }

@@ -132,7 +132,7 @@ public final class ModelView extends DiagramViewPart {
     private String secondaryID;
 
     /** The editor listener. */
-    private final ModelViewEditorListener editorListener;
+    private final ModelViewEditorAdapter editorListener;
 
     /** Active related editor. */
     private IEditorPart editor;
@@ -227,7 +227,7 @@ public final class ModelView extends DiagramViewPart {
         modelViews.add(this);
 
         // Create and register editor listener
-        editorListener = new ModelViewEditorListener(this);
+        editorListener = new ModelViewEditorAdapter(this);
 
         // Refresh Button
         actionRefresh = new Action("Refresh diagram",

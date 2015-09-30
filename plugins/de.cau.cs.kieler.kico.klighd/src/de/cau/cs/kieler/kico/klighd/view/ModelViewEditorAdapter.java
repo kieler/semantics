@@ -22,7 +22,7 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.UIJob;
 
-import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
+import de.cau.cs.kieler.kico.klighd.view.util.GlobalPartAdapter;
 
 /**
  * Listens to the workspace and manages the editor for the associated {@link ModelView}.
@@ -32,7 +32,7 @@ import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
  * @kieler.rating 2015-09-29 proposed yellow
  * 
  */
-class ModelViewEditorListener extends GlobalPartAdapter {
+class ModelViewEditorAdapter extends GlobalPartAdapter {
 
     private static final String INIT_JOB_NAME = "Initializing " + ModelView.VIEW_TITLE;
     private final ModelView modelView;
@@ -43,7 +43,7 @@ class ModelViewEditorListener extends GlobalPartAdapter {
      * @param modelView
      *            The associated ModelView
      */
-    public ModelViewEditorListener(ModelView modelView) {
+    public ModelViewEditorAdapter(ModelView modelView) {
         super(null, false);
         this.modelView = modelView;
     }

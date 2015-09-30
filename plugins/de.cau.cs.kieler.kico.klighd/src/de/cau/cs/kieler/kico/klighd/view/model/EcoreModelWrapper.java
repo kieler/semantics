@@ -16,9 +16,8 @@ package de.cau.cs.kieler.kico.klighd.view.model;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.util.StringInputStream;
 
-import de.cau.cs.kieler.core.model.util.ModelUtil;
+import de.cau.cs.kieler.kico.klighd.view.util.ModelUtil;
 
 /**
  * This class wraps a Ecore model to allow usage of the {@link EcoreModelSythesis}.

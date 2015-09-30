@@ -23,9 +23,9 @@ import de.cau.cs.kieler.kico.klighd.view.ModelView;
  * @author als
  *
  */
-public class EditorSafeListener implements IPropertyListener {
+public class EditorSafeAdapter implements IPropertyListener {
 
-    public interface SafeEventListener {
+    public interface EditorSafeListener {
         /**
          * The event handler for the editor save event.
          * 
@@ -35,12 +35,13 @@ public class EditorSafeListener implements IPropertyListener {
         public void onEditorSaved(IEditorPart editor);
     }
 
-    private SafeEventListener listener;
+    private EditorSafeListener listener;
+    private IEditorPart editor;
 
     /**
      * 
      */
-    public EditorSafeListener(SafeEventListener listener) {
+    public EditorSafeAdapter(EditorSafeListener listener) {
         this.listener = listener;
     }
 
@@ -49,21 +50,24 @@ public class EditorSafeListener implements IPropertyListener {
      */
     @Override
     public void propertyChanged(Object source, int propId) {
+        if (editor != null) {
         IEditorPart editor = (IEditorPart) source;
         if (propId == IWorkbenchPartConstants.PROP_DIRTY && !editor.isDirty()) {
             // dirty flag changed and editor is not dirty -> saved
             // Notify all related model views
             listener.onEditorSaved(editor);
         }
+        }
     }
 
-    public void add(IEditorPart editor) {
+    public void activate(IEditorPart editor) {
         if (editor != null) {
+            this.editor = editor;
             editor.addPropertyListener(this);
         }
     }
 
-    public void remove(IEditorPart editor) {
+    public void deactivate() {
         if (editor != null) {
             editor.removePropertyListener(this);
         }

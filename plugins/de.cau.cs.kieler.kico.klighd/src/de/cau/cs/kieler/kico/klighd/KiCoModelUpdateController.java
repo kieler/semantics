@@ -56,7 +56,7 @@ import de.cau.cs.kieler.kico.klighd.internal.CompilerSelectionStore;
 import de.cau.cs.kieler.kico.klighd.internal.ModelChain;
 import de.cau.cs.kieler.kico.klighd.view.ModelView;
 import de.cau.cs.kieler.kico.klighd.view.controller.AbstractModelUpdateController;
-import de.cau.cs.kieler.kico.klighd.view.controller.DefaultEcoreXtextModelUpdateController;
+import de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController;
 import de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
 import de.cau.cs.kieler.kico.klighd.view.model.ISaveableModel;
@@ -83,7 +83,7 @@ import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination;
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class KiCoModelUpdateController extends DefaultEcoreXtextModelUpdateController {
+public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     /**
      * Events that can cause an update of displayed model

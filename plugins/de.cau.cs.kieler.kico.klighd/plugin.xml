@@ -35,11 +35,6 @@
       </view>
    </extension>
    <extension
-         point="org.eclipse.ui.startup">
-      <startup
-            class="de.cau.cs.kieler.kico.klighd.view.ModelViewManager"></startup>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
             class="de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction"
@@ -53,12 +48,16 @@
    <extension
          point="de.cau.cs.kieler.kico.klighd.controller">
       <controller
-            class="de.cau.cs.kieler.kico.klighd.view.controller.DefaultEcoreXtextModelUpdateController"
-            id="de.cau.cs.kieler.kico.klighd.view.DefaultEcoreXtextModelUpdateController">
+            class="de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController"
+            id="de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController">
       </controller>
       <controller
             class="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
             id="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController">
+      </controller>
+      <controller
+            class="de.cau.cs.kieler.kico.klighd.view.controller.XtextChangeUpdateController"
+            id="de.cau.cs.kieler.kico.klighd.view.controller.XtextChangeUpdateController">
       </controller>
       <generalSynthesis
             class="de.cau.cs.kieler.kico.klighd.internal.XtextSerializationGeneralSynthesis">
