@@ -16,7 +16,6 @@ package de.cau.cs.kieler.kico.klighd.view;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -39,6 +38,8 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
@@ -81,6 +82,7 @@ import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.internal.ISynthesis;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
+import de.cau.cs.kieler.klighd.viewers.ContextViewer;
 
 /**
  * 
@@ -93,7 +95,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  *
  */
 @SuppressWarnings("restriction")
-public final class ModelView extends DiagramViewPart {
+public final class ModelView extends DiagramViewPart implements ISelectionChangedListener {
 
     // -- CONSTANTS --
 
@@ -131,9 +133,6 @@ public final class ModelView extends DiagramViewPart {
     /** Secondary ID of this view. Indicates a non primary view */
     private String secondaryID;
 
-    /** The editor listener. */
-    private final ModelViewEditorAdapter editorListener;
-
     /** Active related editor. */
     private IEditorPart editor;
 
@@ -167,16 +166,15 @@ public final class ModelView extends DiagramViewPart {
 
     /** The action for resetting layout options. */
     private final Action actionResetOptions;
-
     /** The action for toggling editor synchronization. */
     private final Action actionSyncEditor;
-    /** Indicates if this view updates always to the state current state of the editor. */
-    private boolean synchronizeEditor = true;
-
+    private final boolean actionSyncEditor_DEFAULT_STATE = true;
+    /** The action for toggling selection highlighting in the editor. */
+    private final Action actionSelectionHighlighting;
+    private final boolean actionSelectionHighlighting_DEFAULT_STATE = true;
     /** The action for toggling display of diagram placeholder. */
     private final Action actionDiagramPlaceholder;
-    /** Indicates if this view shall display a place holder. */
-    private boolean showDiagramPlaceholder = false;
+    private final boolean actionDiagramPlaceholder_DEFAULT_STATE = false;
 
     /** The menu and controller handling the selection of available synthesis. */
     private final SynthesisSelectionMenu synthesisSelection = new SynthesisSelectionMenu(this);
@@ -224,7 +222,7 @@ public final class ModelView extends DiagramViewPart {
         modelViews.add(this);
 
         // Create and register editor listener
-        editorListener = new ModelViewEditorAdapter(this);
+        new ModelViewEditorAdapter(this);
 
         // Refresh Button
         actionRefresh = new Action("Refresh diagram",
@@ -287,10 +285,9 @@ public final class ModelView extends DiagramViewPart {
         actionSyncEditor = new Action("Synchronize with editor content", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
-                synchronizeEditor = isChecked();
                 updateViewTitle();
                 if (controller != null) {
-                    if (synchronizeEditor) {
+                    if (isChecked()) {
                         controller.activate(getEditor());
                     } else {
                         controller.deactivate();
@@ -301,20 +298,38 @@ public final class ModelView extends DiagramViewPart {
         actionSyncEditor.setId("actionSyncEditor");
         actionSyncEditor.setToolTipText(
                 "If Synchronize is disabled, this view will no longer update its status when editor content changes.");
-        actionSyncEditor.setChecked(synchronizeEditor);
+        actionSyncEditor.setChecked(actionSyncEditor_DEFAULT_STATE);
+
+        // Selection Highlighting Item
+        actionSelectionHighlighting =
+                new Action("Highlight Selection in Editor", IAction.AS_CHECK_BOX) {
+                    @Override
+                    public void run() {
+                        if (isChecked()) {
+                            ((ContextViewer) getViewer())
+                                    .addSelectionChangedListener(ModelView.this);
+                        } else {
+                            ((ContextViewer) getViewer())
+                                    .removeSelectionChangedListener(ModelView.this);
+                        }
+                    }
+                };
+        actionSelectionHighlighting.setId("actionSelectionHighlighting");
+        actionSelectionHighlighting.setToolTipText(
+                "When enables the selected elemnts in the diagram will be selected in the editor aswell.");
+        actionSelectionHighlighting.setChecked(actionSelectionHighlighting_DEFAULT_STATE);
 
         // Diagram PlaceHolder Menu Item
         actionDiagramPlaceholder = new Action("Visualization Model", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
-                showDiagramPlaceholder = isChecked();
                 updateDiagram();
             }
         };
         actionDiagramPlaceholder.setId("actionDiagramPlaceholder");
         actionDiagramPlaceholder.setToolTipText(
                 "If visualization is deactiveted, all diagrams will be replaced by a placeholder diagram.");
-        actionDiagramPlaceholder.setChecked(showDiagramPlaceholder);
+        actionDiagramPlaceholder.setChecked(actionDiagramPlaceholder_DEFAULT_STATE);
     }
 
     /**
@@ -356,6 +371,9 @@ public final class ModelView extends DiagramViewPart {
         } else {
             addContributions();
         }
+
+        // Register selection listener
+        ((ContextViewer) getViewer()).addSelectionChangedListener(this);
     }
 
     /**
@@ -393,6 +411,7 @@ public final class ModelView extends DiagramViewPart {
 
         menuManager.add(actionResetOptions);
         menuManager.add(actionSyncEditor);
+        menuManager.add(actionSelectionHighlighting);
         menuManager.add(actionDiagramPlaceholder);
         menuManager.add(synthesisSelection);
         menuManager.add(new Separator());
@@ -441,7 +460,7 @@ public final class ModelView extends DiagramViewPart {
         if (!isPrimaryView()) {
             modifiers.add("secondary");
         }
-        if (!synchronizeEditor) {
+        if (!actionSyncEditor.isChecked()) {
             modifiers.add("async");
         }
 
@@ -481,10 +500,12 @@ public final class ModelView extends DiagramViewPart {
             if (newViewPart instanceof ModelView) {
                 ModelView newModelView = (ModelView) newViewPart;
                 // Menu
-                newModelView.synchronizeEditor = synchronizeEditor;
-                newModelView.actionSyncEditor.setChecked(synchronizeEditor);
-                newModelView.showDiagramPlaceholder = showDiagramPlaceholder;
-                newModelView.actionDiagramPlaceholder.setChecked(showDiagramPlaceholder);
+                newModelView.actionSyncEditor.setChecked(actionSyncEditor.isChecked());
+                newModelView.actionSelectionHighlighting
+                        .setChecked(actionSelectionHighlighting.isChecked());
+                newModelView.actionSelectionHighlighting.run();
+                newModelView.actionDiagramPlaceholder
+                        .setChecked(actionDiagramPlaceholder.isChecked());
                 // State
                 newModelView.lastSaveDirectory = lastSaveDirectory;
                 newModelView.synthesisSelection.copy(synthesisSelection);
@@ -519,7 +540,11 @@ public final class ModelView extends DiagramViewPart {
                 // Saving synchronizeEditor makes no sense because view would start empty if not
                 // synchronized
 
-                memento.putBoolean("showDiagramPlaceholder", showDiagramPlaceholder);
+                memento.putBoolean("actionSelectionHighlighting",
+                        actionSelectionHighlighting.isChecked());
+
+                memento.putBoolean("actionDiagramPlaceholder",
+                        actionDiagramPlaceholder.isChecked());
 
                 if (editor != null && !isPrimaryView()) {
                     IPersistableElement editorPersistable =
@@ -583,11 +608,19 @@ public final class ModelView extends DiagramViewPart {
                 lastSaveDirectory = Path.fromPortableString(lastSaveDirectoryValue);
             }
 
-            Boolean showDiagramPlaceholderValue = memento.getBoolean("showDiagramPlaceholder");
-            if (showDiagramPlaceholderValue != null) {
-                showDiagramPlaceholder = showDiagramPlaceholderValue;
+            Boolean actionDiagramPlaceholderValue = memento.getBoolean("actionDiagramPlaceholder");
+            if (actionDiagramPlaceholderValue != null) {
                 if (actionDiagramPlaceholder != null) {
-                    actionDiagramPlaceholder.setChecked(showDiagramPlaceholder);
+                    actionDiagramPlaceholder.setChecked(actionDiagramPlaceholderValue);
+                }
+            }
+
+            Boolean actionSelectionHighlightingValue =
+                    memento.getBoolean("actionSelectionHighlighting");
+            if (actionSelectionHighlightingValue != null) {
+                if (actionSelectionHighlighting != null) {
+                    actionSelectionHighlighting.setChecked(actionSelectionHighlightingValue);
+                    actionSelectionHighlighting.run();
                 }
             }
 
@@ -678,10 +711,10 @@ public final class ModelView extends DiagramViewPart {
      * Resets all configurations to default.
      */
     private void reset() {
-        synchronizeEditor = true;
-        actionSyncEditor.setChecked(synchronizeEditor);
-        showDiagramPlaceholder = false;
-        actionDiagramPlaceholder.setChecked(showDiagramPlaceholder);
+        actionSyncEditor.setChecked(actionSyncEditor_DEFAULT_STATE);
+        actionSelectionHighlighting.setChecked(actionSelectionHighlighting_DEFAULT_STATE);
+        actionSelectionHighlighting.run();
+        actionDiagramPlaceholder.setChecked(actionDiagramPlaceholder_DEFAULT_STATE);
         synthesisSelection.clear();
         recentSynthesisOptions.clear();
         lastSaveDirectory = null;
@@ -714,7 +747,6 @@ public final class ModelView extends DiagramViewPart {
                 editor = newEditor;
 
                 // Reset synchronization
-                synchronizeEditor = true;
                 actionSyncEditor.setChecked(true);
 
                 updateViewTitle();
@@ -963,7 +995,7 @@ public final class ModelView extends DiagramViewPart {
         }
         // Update SynthesisSelection
         synthesisSelection.update(model);
-        
+
         // Adjust model
         if (model == null) {
             if (isPrimaryView()) {
@@ -971,7 +1003,7 @@ public final class ModelView extends DiagramViewPart {
             } else {
                 model = new MessageModel(NO_MODEL_SECONDARY);
             }
-        } else if (showDiagramPlaceholder) {
+        } else if (actionDiagramPlaceholder.isChecked()) {
             model = new MessageModel(MODEL_PLACEHOLDER_PREFIX + editorTitle,
                     MODEL_PLACEHOLDER_MESSGAE);
         }
@@ -1021,7 +1053,7 @@ public final class ModelView extends DiagramViewPart {
             }
             // In case model was specially prepared take the return instance
             model = synthesisModelPair.getSecond();
-            
+
             // Indicated if the model type changed according to the current model
             boolean modelTypeChanged = false;
             ViewContext vc = null;
@@ -1039,7 +1071,7 @@ public final class ModelView extends DiagramViewPart {
                     modelTypeChanged = true;
                 }
             }
-            
+
             // Set properties
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     KlighdDataManager.getInstance().getSynthesisID(synthesis));
@@ -1097,7 +1129,6 @@ public final class ModelView extends DiagramViewPart {
             if (editor != null && !isErrorModel) {
                 this.getViewer().getViewContext().setSourceWorkbenchPart(editor);
             }
-
             // Notify the controller about the successful update
             if (controller != null) {
                 controller.onDiagramUpdate(model, properties, this.getViewer());
@@ -1112,6 +1143,19 @@ public final class ModelView extends DiagramViewPart {
                         StatusManager.SHOW);
             }
 
+        }
+    }
+
+    // -- Selection Handling
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void selectionChanged(SelectionChangedEvent event) {
+        if (controller != null) {
+            controller.selectionChanged(event);
         }
     }
 }

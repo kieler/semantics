@@ -28,12 +28,13 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
  * @kieler.design 2015-09-30 proposed
  * @kieler.rating 2015-09-30 proposed yellow
  */
-public class ModelUtil {
+public final class ModelUtil {
     /**
      * SINGLETON
      */
-    private ModelUtil(){
+    private ModelUtil() {
     }
+
     /**
      * Save a models to the given URI.
      * 

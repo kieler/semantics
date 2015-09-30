@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
 import org.eclipse.xtext.resource.XtextResource;
@@ -26,6 +27,7 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import de.cau.cs.kieler.kico.klighd.view.ModelView;
 import de.cau.cs.kieler.kico.klighd.view.util.EditorUtil;
 import de.cau.cs.kieler.kico.klighd.view.util.ModelUtil;
+import de.cau.cs.kieler.kico.klighd.view.util.XtextSelectionHighlighter;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
@@ -133,6 +135,14 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void selectionChanged(SelectionChangedEvent event) {
+        XtextSelectionHighlighter.highlightSelection((XtextEditor) getEditor(), event.getSelection());
+    }
+    
     /**
      * {@inheritDoc}
      */

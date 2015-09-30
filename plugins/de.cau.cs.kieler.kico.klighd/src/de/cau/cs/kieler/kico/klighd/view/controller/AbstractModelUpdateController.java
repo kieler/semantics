@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
 
@@ -36,7 +37,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  * @kieler.rating 2015-06-29 proposed yellow
  *
  */
-public abstract class AbstractModelUpdateController {
+public abstract class AbstractModelUpdateController implements ISelectionChangedListener {
 
     /** Indicated if this controller is active and should update the ModelView. */
     private IEditorPart editor;
