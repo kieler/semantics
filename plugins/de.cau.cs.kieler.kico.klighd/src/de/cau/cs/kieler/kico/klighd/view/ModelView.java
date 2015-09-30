@@ -141,9 +141,6 @@ public final class ModelView extends DiagramViewPart {
     private final HashMap<ISynthesis, HashMap<SynthesisOption, Object>> recentSynthesisOptions =
             Maps.newHashMap();
 
-    /** Current model display as diagram. */
-    private Object currentModel = null;
-
     /** The responsible controller performing model updates. */
     private AbstractModelUpdateController controller = null;
 
@@ -235,7 +232,7 @@ public final class ModelView extends DiagramViewPart {
 
             @Override
             public void run() {
-                updateModel();
+                updateDiagram();
             }
         };
         actionRefresh.setId("actionRefresh");
@@ -792,7 +789,7 @@ public final class ModelView extends DiagramViewPart {
         if (controller != null) {
             controller.activate(editor);
         } else {
-            setModel(null);
+            // Since no controller is active no model message will be displayed
             updateDiagram();
         }
 
@@ -801,18 +798,18 @@ public final class ModelView extends DiagramViewPart {
     // -- Model
     // -------------------------------------------------------------------------
 
-    /**
-     * Sets the current model and updates relates configuration.
-     * <p>
-     * This should normally followed by a {@link updateDiagram} call}
-     * 
-     * @param model
-     *            new model to set
-     */
-    void setModel(Object model) {
-        currentModel = model;
-        synthesisSelection.update(model);
-    }
+    // /**
+    // * Sets the current model and updates relates configuration.
+    // * <p>
+    // * This should normally followed by a {@link updateDiagram} call}
+    // *
+    // * @param model
+    // * new model to set
+    // */
+    // void setModel(Object model) {
+    // currentModel = model;
+    // synthesisSelection.update(model);
+    // }
 
     /**
      * Stores the current synthesis options configured in the {@link ViewContext}.
@@ -848,13 +845,17 @@ public final class ModelView extends DiagramViewPart {
      * Saves the current model into a file with saveAs dialog.
      */
     private void saveCurrentModel() {
-        if (currentModel != null && controller != null) {
+        Object model = null;
+        if (controller != null) {
+            model = controller.getModel();
+        }
+        if (model != null && controller != null) {
             // Get workspace
             IWorkspace workspace = ResourcesPlugin.getWorkspace();
             IWorkspaceRoot root = workspace.getRoot();
 
             // get filename with correct extension
-            String filename = controller.getResourceName(editor, currentModel);
+            String filename = controller.getResourceName(editor, model);
 
             SaveAsDialog saveAsDialog = new SaveAsDialog(getSite().getShell());
 
@@ -902,10 +903,10 @@ public final class ModelView extends DiagramViewPart {
                 try {
                     // if model is a saveable model of the ModelView handle directly otherwise
                     // redirect save operation to controller
-                    if (currentModel instanceof ISaveableModel) {
-                        ((ISaveableModel) currentModel).save(file, uri);
+                    if (model instanceof ISaveableModel) {
+                        ((ISaveableModel) model).save(file, uri);
                     } else {
-                        controller.saveModel(currentModel, file, uri);
+                        controller.saveModel(model, file, uri);
                     }
                 } catch (Exception e) {
                     StatusManager.getManager().handle(new Status(IStatus.ERROR,
@@ -933,23 +934,18 @@ public final class ModelView extends DiagramViewPart {
     }
 
     /**
-     * Updates the diagram with the same properties as before.
-     */
-    public void updateModel() {
-        if (controller != null) {
-            updateDiagram(controller.getUpdateModel(), controller.getUpdateProperties());
-        }
-    }
-
-    /**
-     * Updates the diagram with the same properties as before.
+     * Updates the diagram.
      */
     public void updateDiagram() {
-        KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
-        if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
-            properties.copyProperties(this.getViewContext());
+        if (controller != null) {
+            updateDiagram(controller.getModel(), controller.getProperties());
+        } else {
+            KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
+            if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
+                properties.copyProperties(this.getViewContext());
+            }
+            updateDiagram(null, properties);
         }
-        updateDiagram(currentModel, properties);
     }
 
     /**
@@ -965,6 +961,9 @@ public final class ModelView extends DiagramViewPart {
         if (editor != null) {
             editorTitle = editor.getTitle();
         }
+        // Update SynthesisSelection
+        synthesisSelection.update(model);
+        
         // Adjust model
         if (model == null) {
             if (isPrimaryView()) {
@@ -1013,19 +1012,6 @@ public final class ModelView extends DiagramViewPart {
     private void doUpdateDiagram(Object model, KlighdSynthesisProperties properties,
             AbstractModelUpdateController controller, IEditorPart editor, boolean isErrorModel) {
         try {
-            // Indicated if the model type changed according to the current model
-            boolean modelTypeChanged = false;
-            ViewContext vc = null;
-            if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
-                // if viewer or context does not exist always init view
-                modelTypeChanged = true;
-            } else {
-                vc = this.getViewer().getViewContext();
-                if (vc.getInputModel() == null || vc.getInputModel() != model.getClass()) {
-                    modelTypeChanged = true;
-                }
-            }
-
             // Get correct synthesis
             Pair<ISynthesis, Object> synthesisModelPair =
                     synthesisSelection.getSynthesis(model, editor, properties);
@@ -1035,18 +1021,31 @@ public final class ModelView extends DiagramViewPart {
             }
             // In case model was specially prepared take the return instance
             model = synthesisModelPair.getSecond();
-            // Maybe adjust type change flag
-            if (vc != null && vc.getInputModel() != null
-                    && vc.getInputModel() == model.getClass()) {
-                modelTypeChanged = false;
+            
+            // Indicated if the model type changed according to the current model
+            boolean modelTypeChanged = false;
+            ViewContext vc = null;
+            if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
+                // if viewer or context does not exist always init view
+                modelTypeChanged = true;
+            } else {
+                vc = this.getViewer().getViewContext();
+                if (vc.getInputModel() == null
+                        || vc.getInputModel().getClass() != model.getClass()) {
+                    modelTypeChanged = true;
+                }
+                if (vc.getDiagramSynthesis() != synthesis) {
+                    // In case the synthesis changed the sidebar should be updated
+                    modelTypeChanged = true;
+                }
             }
-
+            
             // Set properties
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     KlighdDataManager.getInstance().getSynthesisID(synthesis));
             properties.setProperty(ModelViewProperties.EDITOR_PART, editor);
 
-            // Update diagram
+            // -Update diagram-
 
             // Success flag indicating a successful synthesis and diagram update
             boolean success = false;
@@ -1080,7 +1079,8 @@ public final class ModelView extends DiagramViewPart {
 
             // check if update was successful
             KNode currentDiagram = this.getViewer().getViewContext().getViewModel();
-            if (!success || currentDiagram == null || currentDiagram.getChildren().isEmpty()) {
+            if (!success || currentDiagram == null
+                    || (currentDiagram.getChildren().isEmpty() && !(model instanceof KNode))) {
                 // If update was not successfulk try default synthesis of fail if already in
                 // fallback mode.
                 if (properties.getProperty(ModelViewProperties.USE_FALLBACK_SYSTHESIS)) {

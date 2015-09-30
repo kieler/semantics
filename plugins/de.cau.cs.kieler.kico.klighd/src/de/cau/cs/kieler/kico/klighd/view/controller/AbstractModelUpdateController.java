@@ -159,13 +159,28 @@ public abstract class AbstractModelUpdateController {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the model this controller should return as updated model. Null to unset.
+     * Perform an update of the {@link ModelView} with the update model and properties.
      * 
      * @param model
-     *            the model to set or null
+     *            the model may be null to show no model
+     * @param properties
+     *            the properties for the synthesis of the model, may be to use standard
+     *            configuration
      */
-    protected void setUpdateModel(Object model) {
+    protected final void updateModel(Object model, KlighdSynthesisProperties properties) {
         this.model = model;
+        this.properties = properties;
+        modelView.updateDiagram();
+    }
+
+    /**
+     * @see updateModel(Object model, KlighdSynthesisProperties properties)
+     * 
+     * @param model
+     *            the model may be null to show no model
+     */
+    protected final void updateModel(Object model) {
+        updateModel(model, properties);
     }
 
     /**
@@ -173,19 +188,8 @@ public abstract class AbstractModelUpdateController {
      * 
      * @return the model or null if no model available
      */
-    public final Object getUpdateModel() {
+    public final Object getModel() {
         return model;
-    }
-
-    /**
-     * Sets the properties which this controller should use to show the updated model. Null to
-     * unset.
-     * 
-     * @param properties
-     *            the properties to set or null
-     */
-    protected void setUpdateProperties(KlighdSynthesisProperties properties) {
-        this.properties = properties;
     }
 
     /**
@@ -193,7 +197,7 @@ public abstract class AbstractModelUpdateController {
      * 
      * @return the properties
      */
-    public final KlighdSynthesisProperties getUpdateProperties() {
+    public final KlighdSynthesisProperties getProperties() {
         if (properties != null) {
             return properties;
         } else {

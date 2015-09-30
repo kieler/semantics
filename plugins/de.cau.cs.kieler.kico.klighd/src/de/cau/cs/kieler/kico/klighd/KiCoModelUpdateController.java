@@ -463,9 +463,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
             // check if source model is read correctly
             if (sourceModel == null) {
-                setUpdateModel(null);
-                setUpdateProperties(properties);
-                modelView.updateModel();
+                updateModel(null, properties);
                 return;
             }
 
@@ -608,9 +606,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             do_update_diagram |= compileModel && selection == null && selection_changed;
 
             if (do_update_diagram) {
-                setUpdateModel(model);
-                setUpdateProperties(properties);
-                modelView.updateModel();
+                updateModel(model, properties);
             }
         } else {
             // drop any existing compilation
@@ -619,9 +615,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 currentCompilation = null;
             }
             currentCompilationResult = null;
-            setUpdateModel(null);
-            setUpdateProperties(null);
-            modelView.updateModel();
+            updateModel(null, null);
         }
     }
 

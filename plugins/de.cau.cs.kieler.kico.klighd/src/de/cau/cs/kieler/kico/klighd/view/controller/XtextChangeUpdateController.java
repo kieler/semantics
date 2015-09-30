@@ -87,7 +87,7 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
     @Override
     public void onActivate(IEditorPart editor) {
         if (editor instanceof XtextEditor) {
-            setUpdateModel(EditorUtil.getModelFromXtextEditor((XtextEditor) editor, true));
+            updateModel(EditorUtil.getModelFromXtextEditor((XtextEditor) editor, true));
             changeAdapter.activate((XtextEditor) editor);
         } else {
             throw new IllegalArgumentException(XtextChangeUpdateController.class.getName()
@@ -108,8 +108,7 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      */
     @Override
     public void onChanged(XtextEditor editor, XtextResource resource) {
-        setUpdateModel(EditorUtil.getModelFromXtextEditor(editor, true));
-        modelView.updateModel();
+        updateModel(EditorUtil.getModelFromXtextEditor(editor, true));
     }
 
     /**

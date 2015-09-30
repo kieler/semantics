@@ -86,7 +86,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      */
     @Override
     public void onActivate(IEditorPart editor) {
-        setUpdateModel(readModel(editor));
+        updateModel(readModel(editor));
         safeAdapter.activate(editor);
     }
 
@@ -103,8 +103,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      */
     @Override
     public void onEditorSaved(IEditorPart editor) {
-        setUpdateModel(readModel(editor));
-        modelView.updateModel();
+        updateModel(readModel(editor));
     }
 
     /**
