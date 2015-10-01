@@ -378,6 +378,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     @Override
     public void onActivate(IEditorPart editor) {
         update(ChangeEvent.ACTIVE_EDITOR);
+        // Don't call super to prevent model update but activate adapter
+        saveAdapter.activate(editor);
     }
 
     /**

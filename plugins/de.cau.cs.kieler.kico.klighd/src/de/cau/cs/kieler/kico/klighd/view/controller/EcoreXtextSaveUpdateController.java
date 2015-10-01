@@ -41,14 +41,14 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  *
  */
 public class EcoreXtextSaveUpdateController extends AbstractModelUpdateController
-        implements EditorSafeAdapter.EditorSafeListener {
+        implements EditorSaveAdapter.EditorSafeListener {
 
     /** Controller ID. */
     private static final String ID =
             "de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController";
 
-    /** The safe adapter for the editor. */
-    private final EditorSafeAdapter safeAdapter;
+    /** The save adapter for the editor. */
+    protected final EditorSaveAdapter saveAdapter;
 
     /**
      * Default Constructor.
@@ -58,7 +58,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      */
     public EcoreXtextSaveUpdateController(ModelView modelView) {
         super(modelView);
-        safeAdapter = new EditorSafeAdapter(this);
+        saveAdapter = new EditorSaveAdapter(this);
     }
 
     /**
@@ -90,7 +90,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
     @Override
     public void onActivate(IEditorPart editor) {
         updateModel(readModel(editor));
-        safeAdapter.activate(editor);
+        saveAdapter.activate(editor);
     }
 
     /**
@@ -98,7 +98,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      */
     @Override
     public void onDeactivate() {
-        safeAdapter.deactivate();
+        saveAdapter.deactivate();
     }
 
     /**

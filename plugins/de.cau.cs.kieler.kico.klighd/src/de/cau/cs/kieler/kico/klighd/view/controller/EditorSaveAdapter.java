@@ -25,10 +25,10 @@ import org.eclipse.ui.IWorkbenchPartConstants;
  * @kieler.rating 2015-09-29 proposed yellow
  *
  */
-public class EditorSafeAdapter implements IPropertyListener {
+public class EditorSaveAdapter implements IPropertyListener {
 
     /**
-     * The listener interface for notifications of the {@link EditorSafeAdapter}.
+     * The listener interface for notifications of the {@link EditorSaveAdapter}.
      * 
      * @author als
      */
@@ -51,7 +51,7 @@ public class EditorSafeAdapter implements IPropertyListener {
      * Creates an adapter for the given listener. The adapter must be activated on an editor to
      * start fire events.
      */
-    public EditorSafeAdapter(EditorSafeListener listener) {
+    public EditorSaveAdapter(EditorSafeListener listener) {
         this.listener = listener;
     }
 
