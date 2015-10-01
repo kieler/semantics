@@ -44,6 +44,10 @@
             class="de.cau.cs.kieler.kico.klighd.view.model.action.OpenCodeInEditorAction"
             id="de.cau.cs.kieler.kico.klighd.view.model.action.OpenCodeInEditorAction">
       </action>
+      <action
+            class="de.cau.cs.kieler.kico.klighd.view.model.action.EcoreModelExpandDetailsAction"
+            id="de.cau.cs.kieler.kico.klighd.view.model.action.EcoreModelExpandDetailsAction">
+      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.klighd.controller">
