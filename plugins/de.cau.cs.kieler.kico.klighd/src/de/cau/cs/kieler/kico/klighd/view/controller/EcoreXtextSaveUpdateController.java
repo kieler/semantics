@@ -32,7 +32,8 @@ import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**
- * Simple controller for XText and Ecore model editors.
+ * Simple controller for XText and Ecore model editors which performs a diagram update when the
+ * model is saved.
  * 
  * @author als
  * @kieler.design 2015-06-29 proposed
@@ -46,7 +47,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
     private static final String ID =
             "de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController";
 
-    /** The safe listener for the editor */
+    /** The safe adapter for the editor. */
     private final EditorSafeAdapter safeAdapter;
 
     /**
@@ -97,15 +98,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      */
     @Override
     public void onDeactivate() {
-        safeAdapter.deactivate();;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onEditorSaved(IEditorPart editor) {
-        updateModel(readModel(editor));
+        safeAdapter.deactivate();
     }
 
     /**
@@ -136,10 +129,11 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
     @Override
     public void selectionChanged(SelectionChangedEvent event) {
         if (getEditor() instanceof XtextEditor) {
-            XtextSelectionHighlighter.highlightSelection((XtextEditor) getEditor(), event.getSelection());
+            XtextSelectionHighlighter.highlightSelection((XtextEditor) getEditor(),
+                    event.getSelection());
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -174,6 +168,17 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      */
     @Override
     public void onDispose() {
+    }
+    
+    // -- Save Listener
+    // -------------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onEditorSaved(IEditorPart editor) {
+        updateModel(readModel(editor));
     }
 
     // -- Utility

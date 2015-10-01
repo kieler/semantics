@@ -42,7 +42,7 @@ import de.cau.cs.kieler.kico.klighd.view.menu.SynthesisSelectionMenu;
  */
 public class ModelUpdateControllerFactory {
 
-    // -- CONSTANTS --
+    // -- Extension Point CONSTANTS --
     /** Identifier of the extension point for controllers. */
     public static final String EXTP_ID_CONTROLLER = "de.cau.cs.kieler.kico.klighd.controller";
 
@@ -72,15 +72,8 @@ public class ModelUpdateControllerFactory {
 
     // -- SINGLETON --
 
-    /** the singleton instance. */
+    /** The singleton instance. */
     private static ModelUpdateControllerFactory instance;
-
-    /**
-     * A private constructor to prevent instantiation.
-     */
-    private ModelUpdateControllerFactory() {
-        // do nothing
-    }
 
     /**
      * Creates the singleton and initializes it with the data from the extension point.
@@ -92,11 +85,8 @@ public class ModelUpdateControllerFactory {
             instance.loadControllerExtension();
             instance.loadEditorExtension();
         } catch (final Exception e) {
-            StatusManager
-                    .getManager()
-                    .handle(new Status(
-                            IStatus.ERROR,
-                            KiCoKLighDPlugin.PLUGIN_ID,
+            StatusManager.getManager()
+                    .handle(new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
                             ModelUpdateControllerFactory.class.getName()
                                     + ": Unexptected failure while loading registered controllers.",
                             e));
@@ -112,8 +102,16 @@ public class ModelUpdateControllerFactory {
         return instance;
     }
 
+    /**
+     * A private constructor to prevent instantiation.
+     */
+    private ModelUpdateControllerFactory() {
+    }
+
     // -- ATTRIBUES --
-    /** The mapping of IDs to the corresponding classes of {@link AbstractModelUpdateController} . */
+    /**
+     * The mapping of IDs to the corresponding classes of {@link AbstractModelUpdateController} .
+     */
     private final HashMap<String, Class<? extends AbstractModelUpdateController>> idControllerMapping =
             new HashMap<String, Class<? extends AbstractModelUpdateController>>();
     /** The mapping of editor-IDs to the corresponding controller IDs. */
@@ -135,16 +133,16 @@ public class ModelUpdateControllerFactory {
                 // initialize controller class from the extension point
                 try {
                     Class<? extends AbstractModelUpdateController> controllerClass =
-                            (Class<? extends AbstractModelUpdateController>) Class.forName(element
-                                    .getAttribute(ATTRIBUTE_CLASS));
+                            (Class<? extends AbstractModelUpdateController>) Class
+                                    .forName(element.getAttribute(ATTRIBUTE_CLASS));
                     String id = element.getAttribute(ATTRIBUTE_ID);
                     if (id == null || controllerClass == null) {
                         throw new NullPointerException("Cannot retrive id or class");
                     }
                     idControllerMapping.put(id, controllerClass);
                 } catch (final Exception exception) {
-                    StatusManager.getManager().handle(
-                            new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
+                    StatusManager.getManager()
+                            .handle(new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
                                     this.getClass().getName()
                                             + ": Error while parsing controller extension point",
                                     exception));
@@ -152,15 +150,14 @@ public class ModelUpdateControllerFactory {
             } else if (ELEMENT_SYNTHESIS.equals(element.getName())) {
                 // initialize general synthesis class from the extension point
                 try {
-                    ISelectableGeneralSynthesis synthesis =
-                            (ISelectableGeneralSynthesis) element
-                                    .createExecutableExtension(ATTRIBUTE_CLASS);
+                    ISelectableGeneralSynthesis synthesis = (ISelectableGeneralSynthesis) element
+                            .createExecutableExtension(ATTRIBUTE_CLASS);
                     SynthesisSelectionMenu.addGeneralSynthesis(synthesis.getID(), synthesis);
                 } catch (final Exception exception) {
-                    StatusManager.getManager().handle(
-                            new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID, this.getClass()
-                                    .getName()
-                                    + ": Error while parsing general synthesis extension point",
+                    StatusManager.getManager()
+                            .handle(new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
+                                    this.getClass().getName()
+                                            + ": Error while parsing general synthesis extension point",
                                     exception));
                 }
             }
@@ -169,7 +166,7 @@ public class ModelUpdateControllerFactory {
 
     /**
      * Loads the registered editor association from the extension point and builds up the
-     * {@link #controllerClasses}.
+     * {@link #editorControllerMapping}.
      */
     private void loadEditorExtension() {
         final IConfigurationElement[] extensions =
@@ -189,15 +186,16 @@ public class ModelUpdateControllerFactory {
                     } else {
                         // Log error if controller id is not registered
                         StatusManager.getManager().handle(
-                                new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID, this
-                                        .getClass().getName()
-                                        + ": Given controller id ["
-                                        + controller + "] is not registered"), StatusManager.LOG);
+                                new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
+                                        this.getClass().getName() + ": Given controller id ["
+                                                + controller + "] is not registered"),
+                                StatusManager.LOG);
                     }
                 } catch (final Exception exception) {
-                    StatusManager.getManager().handle(
-                            new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID, this.getClass()
-                                    .getName() + ": Error while parsing editor extension point",
+                    StatusManager.getManager()
+                            .handle(new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
+                                    this.getClass().getName()
+                                            + ": Error while parsing editor extension point",
                                     exception));
                 }
             }
@@ -232,8 +230,8 @@ public class ModelUpdateControllerFactory {
      */
     public static String getHandlingControllerID(IEditorPart editor) {
         if (editor != null) {
-            return ModelUpdateControllerFactory.getInstance().editorControllerMapping.get(editor
-                    .getEditorSite().getId());
+            return ModelUpdateControllerFactory.getInstance().editorControllerMapping
+                    .get(editor.getEditorSite().getId());
         }
         return null;
     }
@@ -260,7 +258,8 @@ public class ModelUpdateControllerFactory {
                     StatusManager.getManager().handle(
                             new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
                                     ModelUpdateControllerFactory.class.getName()
-                                            + ": Cannot instanciate controller", e),
+                                            + ": Cannot instanciate controller",
+                                    e),
                             StatusManager.LOG);
                 }
             }

@@ -18,7 +18,7 @@ import org.eclipse.ui.IEditorPart;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**
- * An interface for a general synthesis to provide alternative diagram visualization selectable in
+ * An interface for a general syntheses to provide alternative diagram visualization selectable in
  * the {@link SynthesisSelectionMenu}.
  * 
  * @author als
@@ -52,7 +52,8 @@ public interface ISelectableGeneralSynthesis {
     public boolean isApplicable(Object model);
 
     /**
-     * Prepares the given model to be compatible to this synthesis.
+     * Prepares the given model to be compatible to this synthesis. If no preparation is need the
+     * input model should be returned.
      * 
      * @param model
      *            the model

@@ -56,7 +56,7 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      * @param modelView
      *            the ModelView this controller is associated with
      */
-    public AbstractModelUpdateController(ModelView modelView) {
+    public AbstractModelUpdateController(final ModelView modelView) {
         this.modelView = modelView;
     }
 
@@ -67,7 +67,7 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      * 
      * @return the ID
      */
-    abstract public String getID();
+    public abstract String getID();
 
     // -- Initialization
     // -------------------------------------------------------------------------
@@ -79,12 +79,12 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      *            modelView to associate the new controller with
      * @return the new controller instance
      */
-    abstract public AbstractModelUpdateController clone(ModelView modelView);
+    public abstract AbstractModelUpdateController clone(ModelView modelView);
 
     /**
      * Resets all properties to default values.
      */
-    abstract public void reset();
+    public abstract void reset();
 
     /**
      * Saves configuration into a memento.
@@ -92,7 +92,7 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      * @param memento
      *            configuration store
      */
-    abstract public void saveState(IMemento memento);
+    public abstract void saveState(IMemento memento);
 
     /**
      * Loads saved configuration form a memento.
@@ -100,7 +100,7 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      * @param memento
      *            saved configuration
      */
-    abstract public void loadState(IMemento memento);
+    public abstract void loadState(IMemento memento);
 
     // -- Activation
     // -------------------------------------------------------------------------
@@ -132,12 +132,13 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      * Invoked when the controller is activated for as specific {@link IEditorPart}. A controller
      * will not be activated twice without a deactivation in between.
      * <p>
-     * Usually the controller should read the model form the new editor.
+     * Usually the controller should read the model form the new editor and update the
+     * {@link ModelView}.
      * 
      * @param editor
      *            new editor
      */
-    abstract public void onActivate(IEditorPart editor);
+    public abstract void onActivate(IEditorPart editor);
 
     /**
      * Invoked when the controller is deactivated. This method may be invoked multiple times without
@@ -145,7 +146,7 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      * <p>
      * Usually the controller should stop listening to the editor and free all related resources.
      */
-    abstract public void onDeactivate();
+    public abstract void onDeactivate();
 
     /**
      * Returns is this controller is currently active and can update die ModelView.
@@ -226,13 +227,13 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      * @param properties
      *            used properties
      */
-    abstract public void onDiagramUpdate(Object model, KlighdSynthesisProperties properties,
+    public abstract void onDiagramUpdate(Object model, KlighdSynthesisProperties properties,
             IViewer viewer);
 
     /**
-     * Invoked when the ModelView of this controller is disposed.
+     * Invoked when the related ModelView is disposed.
      */
-    abstract public void onDispose();
+    public abstract void onDispose();
 
     // -- Model
     // -------------------------------------------------------------------------
@@ -248,7 +249,7 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      *            location of the file
      * @throws Exception
      */
-    abstract public void saveModel(Object model, IFile file, URI uri) throws Exception;
+    public abstract void saveModel(Object model, IFile file, URI uri) throws Exception;
 
     /**
      * Returns the name of the file or resource including a proper file extension of the model.
@@ -259,20 +260,20 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      *            the model
      * @return String not null.
      */
-    abstract public String getResourceName(IEditorPart editor, Object model);
+    public abstract String getResourceName(IEditorPart editor, Object model);
 
     // -- View
     // -------------------------------------------------------------------------
 
     /**
-     * Added the controller related actions to the menu and toolbar.
+     * Adds the controller related actions to the menu and toolbar.
      * 
      * @param toolBar
      * @param menu
      */
-    abstract public void addContributions(IToolBarManager toolBar, IMenuManager menu);
+    public abstract void addContributions(IToolBarManager toolBar, IMenuManager menu);
 
-    // -- ModelView Getter
+    // -- Getter
     // -------------------------------------------------------------------------
 
     /**

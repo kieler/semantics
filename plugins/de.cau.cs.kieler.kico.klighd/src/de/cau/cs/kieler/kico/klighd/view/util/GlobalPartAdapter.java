@@ -73,7 +73,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
      * @param initialNotifications
      *            if true this listen will initially inform about past events
      */
-    public GlobalPartAdapter(final IPartListener2 theDelegateListener, boolean initialNotifications) {
+    public GlobalPartAdapter(final IPartListener2 theDelegateListener, final boolean initialNotifications) {
         this.delegateListener = theDelegateListener;
         this.initialNotifications = initialNotifications;
 
@@ -242,6 +242,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
     /**
      * {@inheritDoc}
      */
+    @Override
     public void partActivated(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
             delegateListener.partActivated(partRef);
@@ -251,6 +252,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
     /**
      * {@inheritDoc}
      */
+    @Override
     public void partBroughtToTop(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
             delegateListener.partBroughtToTop(partRef);
@@ -260,6 +262,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
     /**
      * {@inheritDoc}
      */
+    @Override
     public void partClosed(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
             delegateListener.partClosed(partRef);
@@ -269,6 +272,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
     /**
      * {@inheritDoc}
      */
+    @Override
     public void partDeactivated(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
             delegateListener.partDeactivated(partRef);
@@ -278,6 +282,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
     /**
      * {@inheritDoc}
      */
+    @Override
     public void partOpened(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
             delegateListener.partOpened(partRef);
@@ -287,6 +292,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
     /**
      * {@inheritDoc}
      */
+    @Override
     public void partHidden(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
             delegateListener.partHidden(partRef);
@@ -296,6 +302,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
     /**
      * {@inheritDoc}
      */
+    @Override
     public void partVisible(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
             delegateListener.partVisible(partRef);
@@ -305,6 +312,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
     /**
      * {@inheritDoc}
      */
+    @Override
     public void partInputChanged(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
             delegateListener.partInputChanged(partRef);

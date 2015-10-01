@@ -33,23 +33,41 @@ import com.google.common.collect.Iterators;
 import de.cau.cs.kieler.klighd.KlighdTreeSelection;
 
 /**
+ * This class contains utility methods for highlighting selection in Xtext editors.
+ * 
  * @author als
  * @kieler.design 2015-01-01 proposed
  * @kieler.rating 2015-01-01 proposed yellow
  */
 public final class XtextSelectionHighlighter {
     /**
-     * SINGLETON
+     * Prevent instantiation.
      */
     private XtextSelectionHighlighter() {
     }
 
-    public static void highlightSelection(XtextEditor editor, ISelection selection) {
+    /**
+     * Highlights the selection in the given editor.
+     * 
+     * @param editor
+     *            the editor
+     * @param selection
+     *            the selection
+     */
+    public static void highlightSelection(final XtextEditor editor, ISelection selection) {
         if (selection instanceof KlighdTreeSelection) {
             highlightSelection(editor, (KlighdTreeSelection) selection);
         }
     }
 
+    /**
+     * Highlights the selection in the given editor.
+     * 
+     * @param editor
+     *            the editor
+     * @param selection
+     *            the selection
+     */
     public static void highlightSelection(final XtextEditor editor,
             final KlighdTreeSelection selection) {
         if (selection != null) {

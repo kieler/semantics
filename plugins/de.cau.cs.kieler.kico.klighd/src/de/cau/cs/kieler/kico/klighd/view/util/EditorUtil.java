@@ -31,6 +31,8 @@ import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 /**
+ * This class contains utility methods for access to editor content.
+ * 
  * @author als
  * @kieler.design 2015-09-30 proposed
  * @kieler.rating 2015-09-30 proposed yellow
@@ -39,13 +41,13 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 public final class EditorUtil {
 
     /**
-     * SINGLETON
+     * Prevent instantiation.
      */
     private EditorUtil() {
     }
 
     /**
-     * Get the model from a given xtext editor.
+     * Get the model from a given Xtext editor.
      * 
      * @param xtextEditor
      *            the Xtext editor
@@ -98,7 +100,7 @@ public final class EditorUtil {
      *            the EMF tree editor
      * @return the EObject of the root part of the model
      */
-    public static EObject getModelFromEMFEditor(IEditingDomainProvider editor) {
+    public static EObject getModelFromEMFEditor(final IEditingDomainProvider editor) {
         List<Resource> resources = editor.getEditingDomain().getResourceSet().getResources();
 
         if (!resources.isEmpty() && !resources.get(0).getContents().isEmpty()) {

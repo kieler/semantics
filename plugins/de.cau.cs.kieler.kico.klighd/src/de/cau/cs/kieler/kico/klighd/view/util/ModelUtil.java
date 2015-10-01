@@ -14,15 +14,15 @@ package de.cau.cs.kieler.kico.klighd.view.util;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 /**
- * Utility function for models.
+ * This class contains utility methods for handling emf models.
  * 
  * @author als
  * @kieler.design 2015-09-30 proposed
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
  */
 public final class ModelUtil {
     /**
-     * SINGLETON
+     * Prevent instantiation.
      */
     private ModelUtil() {
     }
@@ -38,15 +38,14 @@ public final class ModelUtil {
     /**
      * Save a models to the given URI.
      * 
-     * @param models
+     * @param model
      *            the models to store in the new file
      * @param uri
      *            the target file URI
      * @throws IOException
      *             if an error occurs while saving
      */
-    public static void saveModel(final EObject model, final org.eclipse.emf.common.util.URI uri)
-            throws IOException {
+    public static void saveModel(final EObject model, final URI uri) throws IOException {
         // Create a resource set.
         ResourceSet resourceSet = new ResourceSetImpl();
         // Create a resource for this file.

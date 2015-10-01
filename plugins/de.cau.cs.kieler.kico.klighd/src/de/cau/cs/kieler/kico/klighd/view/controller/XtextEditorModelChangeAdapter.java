@@ -28,37 +28,51 @@ import org.eclipse.xtext.ui.util.ResourceUtil;
 import de.cau.cs.kieler.core.WrappedException;
 
 /**
+ * An adapter to listen for the change event of an xtext editor.
+ * 
  * @author als
+ * @kieler.design 2015-09-29 proposed
+ * @kieler.rating 2015-09-29 proposed yellow
  *
  */
-public class XtextChangeAdapter implements IXtextModelListener {
+public class XtextEditorModelChangeAdapter implements IXtextModelListener {
 
+    /**
+     * The listener interface for notifications of the {@link XtextEditorModelChangeAdapter}.
+     * 
+     * @author als
+     */
     public interface XtextChangeListener {
         /**
-         * The event handler for the editor save event.
+         * The event handler for the editor change event.
          * 
          * @param editor
-         *            the saved editor
-         */
-        /**
-         * 
-         * @param editor
+         *            the editor of the changed model
          * @param resource
+         *            the models resource
          */
-        public void onChanged(XtextEditor editor, XtextResource resource);
+        public void onModelChanged(XtextEditor editor, XtextResource resource);
     }
 
+    /** The listener to be notified by this adapter */
     private XtextChangeListener listener;
-
+    /** The current editor this adapter is listening to */
     private XtextEditor editor;
 
     /**
-     * 
+     * Creates an adapter for the given listener. The adapter must be activated on an editor to
+     * start fire events.
      */
-    public XtextChangeAdapter(XtextChangeListener listener) {
+    public XtextEditorModelChangeAdapter(XtextChangeListener listener) {
         this.listener = listener;
     }
 
+    /**
+     * Starts listening on the given editor.
+     *
+     * @param editor
+     *            the editor
+     */
     public void activate(XtextEditor editor) {
         if (editor != null) {
             this.editor = editor;
@@ -66,6 +80,9 @@ public class XtextChangeAdapter implements IXtextModelListener {
         }
     }
 
+    /**
+     * Stops the listening on the current editor.
+     */
     public void deactivate() {
         if (editor != null) {
             editor.getDocument().removeModelListener(this);
@@ -78,10 +95,17 @@ public class XtextChangeAdapter implements IXtextModelListener {
     @Override
     public void modelChanged(XtextResource resource) {
         if (!hasErrors(resource) && editor != null) {
-            listener.onChanged(editor, resource);
+            listener.onModelChanged(editor, resource);
         }
     }
 
+    /**
+     * Checks the given resource for error markers.
+     * 
+     * @param resource
+     *            the resource
+     * @return true if any errors are present otherwise false
+     */
     private boolean hasErrors(final XtextResource resource) {
         IFile underlyingFile = ResourceUtil.getUnderlyingFile(resource);
 

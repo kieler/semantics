@@ -20,13 +20,12 @@ import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IStorageEditorInput;
 
 /**
- * Editor Input which can handle Strings as editor input without a file in as resource. If content
+ * Editor Input which can handle Strings as editor input without a file as resource. If content
  * should be persisted 'Save as' option should be used.
  * 
  * @author als
@@ -46,7 +45,7 @@ public class StringBasedEditorInput implements IStorageEditorInput {
         private String resourceExtension;
 
         /**
-         * Standard Constructor
+         * Standard Constructor.
          * 
          * @param content
          *            string content

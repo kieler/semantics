@@ -26,8 +26,6 @@ import org.eclipse.ui.IMemento;
 
 import com.google.common.collect.Iterables;
 
-import de.cau.cs.kieler.core.properties.IProperty;
-import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.klighd.view.ModelView;
 import de.cau.cs.kieler.kico.klighd.view.ModelViewProperties;
@@ -41,6 +39,9 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 /**
  * This sub-menu handles different available synthesis for models including general syntheses
  * implementing {@link ISelectableGeneralSynthesis}.
+ * <p>
+ * {@link ISelectableGeneralSynthesis} are defined in extension point evaluated by
+ * {@link ModelUpdateControllerFactory}
  * 
  * @author als
  * @kieler.design 2015-06-22 proposed
@@ -98,7 +99,8 @@ public class SynthesisSelectionMenu extends MenuManager {
      * @param generalSynthesis
      *            the general synthesis
      */
-    public static void addGeneralSynthesis(String id, ISelectableGeneralSynthesis generalSynthesis) {
+    public static void addGeneralSynthesis(String id,
+            ISelectableGeneralSynthesis generalSynthesis) {
         if (id != null && !id.isEmpty() && generalSynthesis != null) {
             selectableGeneralSyntheses.put(id, generalSynthesis);
         } else {
@@ -167,9 +169,8 @@ public class SynthesisSelectionMenu extends MenuManager {
                 removeAll();
 
                 HashMap<String, Action> actionMap = new HashMap<String, Action>();
-                ISynthesis[] availableSynthesis =
-                        Iterables.toArray(kdm.getAvailableSyntheses(newModelClass),
-                                ISynthesis.class);
+                ISynthesis[] availableSynthesis = Iterables
+                        .toArray(kdm.getAvailableSyntheses(newModelClass), ISynthesis.class);
 
                 // Add model specific synthesis
                 for (ISynthesis synthesis : availableSynthesis) {
@@ -190,8 +191,8 @@ public class SynthesisSelectionMenu extends MenuManager {
                     if (selectedID != null) {
                         actionMap.get(selections.get(newModelClassName)).setChecked(true);
                     } else if (availableSynthesis.length > 0) {
-                        String id =
-                                kdm.getSynthesisID(availableSynthesis[availableSynthesis.length - 1]);
+                        String id = kdm
+                                .getSynthesisID(availableSynthesis[availableSynthesis.length - 1]);
                         actionMap.get(id).setChecked(true);
                         selections.put(newModelClassName, id);
                     } else if (model instanceof EObject) {
@@ -216,7 +217,7 @@ public class SynthesisSelectionMenu extends MenuManager {
      * @param className
      *            the class name this item chooses for
      * @param id
-     *            the synthsis id to set
+     *            the synthesis id to set
      * @return the created action
      */
     private Action createAction(final String className, final String id) {
@@ -263,9 +264,8 @@ public class SynthesisSelectionMenu extends MenuManager {
         if (model != null) {
             if (properties.getProperty(ModelViewProperties.USE_FALLBACK_SYSTHESIS)) {
                 // In this case the first synthesis failed
-                String synthesisID =
-                        properties
-                                .getProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS);
+                String synthesisID = properties
+                        .getProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS);
 
                 if ((synthesisID == null || !synthesisID.equals(fallbackSynthesis.getSynthesisID()))
                         && fallbackSynthesis.isApplicable(model)) {
@@ -285,8 +285,8 @@ public class SynthesisSelectionMenu extends MenuManager {
                                 kdm.getDiagramSynthesisById(generalSynthesis.getSynthesisID()),
                                 generalSynthesis.prepare(model, editor, properties));
                     } else {
-                        return new Pair<ISynthesis, Object>(
-                                kdm.getDiagramSynthesisById(selectedID), model);
+                        return new Pair<ISynthesis, Object>(kdm.getDiagramSynthesisById(selectedID),
+                                model);
                     }
                 } else {
                     // In case of no selection take first available synthesis

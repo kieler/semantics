@@ -32,7 +32,7 @@ import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**
- * Simple controller for XText editors.
+ * Simple controller for XText editors which performs a diagram update when the model is changed.
  * 
  * @author als
  * @kieler.design 2015-09-30 proposed
@@ -40,14 +40,14 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  *
  */
 public class XtextChangeUpdateController extends AbstractModelUpdateController
-        implements XtextChangeAdapter.XtextChangeListener {
+        implements XtextEditorModelChangeAdapter.XtextChangeListener {
 
     /** Controller ID. */
     private static final String ID =
             "de.cau.cs.kieler.kico.klighd.view.controller.XtextChangeUpdateController";
 
-    /** The safe listener for the editor */
-    private final XtextChangeAdapter changeAdapter;
+    /** The safe listener for the editor. */
+    private final XtextEditorModelChangeAdapter changeAdapter;
 
     /**
      * Default Constructor.
@@ -57,7 +57,7 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      */
     public XtextChangeUpdateController(ModelView modelView) {
         super(modelView);
-        changeAdapter = new XtextChangeAdapter(this);
+        changeAdapter = new XtextEditorModelChangeAdapter(this);
     }
 
     /**
@@ -109,14 +109,6 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      * {@inheritDoc}
      */
     @Override
-    public void onChanged(XtextEditor editor, XtextResource resource) {
-        updateModel(EditorUtil.getModelFromXtextEditor(editor, true));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void saveModel(Object model, IFile file, URI uri) throws Exception {
         if (model instanceof EObject) {
             ModelUtil.saveModel((EObject) model, uri);
@@ -140,9 +132,10 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      */
     @Override
     public void selectionChanged(SelectionChangedEvent event) {
-        XtextSelectionHighlighter.highlightSelection((XtextEditor) getEditor(), event.getSelection());
+        XtextSelectionHighlighter.highlightSelection((XtextEditor) getEditor(),
+                event.getSelection());
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -177,6 +170,17 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      */
     @Override
     public void onDispose() {
+    }
+
+    // -- Model change Listener
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onModelChanged(XtextEditor editor, XtextResource resource) {
+        updateModel(EditorUtil.getModelFromXtextEditor(editor, true));
     }
 
 }

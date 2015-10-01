@@ -35,11 +35,10 @@ public final class ModelViewProperties {
     }
 
     /** The editor part associated with model view */
-    public static final IProperty<IEditorPart> EDITOR_PART = new Property<IEditorPart>(
-            "de.cau.cs.kieler.kico.klighd.view.editor", null);
-    
+    public static final IProperty<IEditorPart> EDITOR_PART =
+            new Property<IEditorPart>("de.cau.cs.kieler.kico.klighd.view.editor", null);
 
     /** Property to indicate the use of a fallback synthesis. */
-    public static final IProperty<Boolean> USE_FALLBACK_SYSTHESIS = new Property<Boolean>(
-            "de.cau.cs.kieler.kico.klighd.view.synthesis.fallback", false);
+    public static final IProperty<Boolean> USE_FALLBACK_SYSTHESIS =
+            new Property<Boolean>("de.cau.cs.kieler.kico.klighd.view.synthesis.fallback", false);
 }

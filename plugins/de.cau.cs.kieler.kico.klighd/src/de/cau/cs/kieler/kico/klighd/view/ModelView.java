@@ -126,7 +126,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     // -- Instance list --
 
     /** List of all open ModelViews. */
-    private static List<ModelView> modelViews = new ArrayList<ModelView>(6);
+    private static List<ModelView> modelViews = new ArrayList<ModelView>();
 
     // -- ATTRIBUTES --
 
@@ -148,6 +148,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             new ArrayList<AbstractModelUpdateController>();
 
     // -- Toolbar --
+    /** The toolbar manager */
     private IToolBarManager toolBarManager;
 
     /** The action for reloading displayed model. */
@@ -162,6 +163,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     private final Action actionFork;
 
     // -- Menu --
+    /** The menu manger */
     private IMenuManager menuManager;
 
     /** The action for resetting layout options. */
@@ -192,6 +194,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     public static List<ModelView> getModelViews(final IEditorPart editor) {
         if (editor != null) {
             return Lists.newArrayList(Iterables.filter(modelViews, new Predicate<ModelView>() {
+                @Override
                 public boolean apply(ModelView view) {
                     return editor.equals(view.getEditor());
                 }
@@ -218,7 +221,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     public ModelView() {
         super();
 
-        // Add this view to the active modelviews
+        // Add this view to the active list of ModelViews
         modelViews.add(this);
 
         // Create and register editor listener
@@ -261,7 +264,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
         actionSave = new Action("Save displayed main model", IAction.AS_PUSH_BUTTON) {
             @Override
             public void run() {
-                saveCurrentModel();
+                saveModel();
             }
         };
         actionSave.setId("actionSave");
@@ -708,7 +711,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     }
 
     /**
-     * Resets all configurations to default.
+     * Resets all configurations to default values.
      */
     private void reset() {
         actionSyncEditor.setChecked(actionSyncEditor_DEFAULT_STATE);
@@ -754,6 +757,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             }
         } else {
             editor = null;
+
             updateViewTitle();
             updateController();
         }
@@ -772,7 +776,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the correct responsible controller for the current editor.
+     * Sets the responsible controller for the current editor.
      */
     private void updateController() {
         // Deactivate active editor
@@ -830,19 +834,6 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     // -- Model
     // -------------------------------------------------------------------------
 
-    // /**
-    // * Sets the current model and updates relates configuration.
-    // * <p>
-    // * This should normally followed by a {@link updateDiagram} call}
-    // *
-    // * @param model
-    // * new model to set
-    // */
-    // void setModel(Object model) {
-    // currentModel = model;
-    // synthesisSelection.update(model);
-    // }
-
     /**
      * Stores the current synthesis options configured in the {@link ViewContext}.
      */
@@ -870,13 +861,26 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
         }
     }
 
+    // -- Selection Handling
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void selectionChanged(SelectionChangedEvent event) {
+        if (controller != null) {
+            controller.selectionChanged(event);
+        }
+    }
+
     // -- Save model
     // -------------------------------------------------------------------------
 
     /**
      * Saves the current model into a file with saveAs dialog.
      */
-    private void saveCurrentModel() {
+    private void saveModel() {
         Object model = null;
         if (controller != null) {
             model = controller.getModel();
@@ -988,7 +992,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * @param properties
      *            the properties
      */
-    private void updateDiagram(Object model, final KlighdSynthesisProperties properties) {
+    private void updateDiagram(final Object model, final KlighdSynthesisProperties properties) {
         String editorTitle = null;
         if (editor != null) {
             editorTitle = editor.getTitle();
@@ -997,17 +1001,18 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
         synthesisSelection.update(model);
 
         // Adjust model
+        Object displayModel = model;
         if (model == null) {
             if (isPrimaryView()) {
-                model = new MessageModel(NO_MODEL_PRIMARY);
+                displayModel = new MessageModel(NO_MODEL_PRIMARY);
             } else {
-                model = new MessageModel(NO_MODEL_SECONDARY);
+                displayModel = new MessageModel(NO_MODEL_SECONDARY);
             }
         } else if (actionDiagramPlaceholder.isChecked()) {
-            model = new MessageModel(MODEL_PLACEHOLDER_PREFIX + editorTitle,
+            displayModel = new MessageModel(MODEL_PLACEHOLDER_PREFIX + editorTitle,
                     MODEL_PLACEHOLDER_MESSGAE);
         }
-        final Object displayModel = model;
+        final Object finalDisplayModel = displayModel;
 
         // Start update job
         String jobName = "Updating ModelView";
@@ -1018,7 +1023,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
 
             @Override
             public IStatus runInUIThread(IProgressMonitor monitor) {
-                doUpdateDiagram(displayModel, properties, controller, editor, false);
+                doUpdateDiagram(finalDisplayModel, properties, controller, editor, false);
                 return Status.OK_STATUS;
             }
         }.schedule();
@@ -1029,7 +1034,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * <p>
      * This method is intended to run in a separate UIJob.
      * 
-     * @param model
+     * @param displayModel
      *            model to display
      * @param properties
      *            properties for configuration
@@ -1041,8 +1046,9 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      *            true indicates an re-invocation of update to show an error model concerning an
      *            error occurred in the actual update.
      */
-    private void doUpdateDiagram(Object model, KlighdSynthesisProperties properties,
-            AbstractModelUpdateController controller, IEditorPart editor, boolean isErrorModel) {
+    private void doUpdateDiagram(final Object model, final KlighdSynthesisProperties properties,
+            final AbstractModelUpdateController controller, final IEditorPart editor,
+            final boolean isErrorModel) {
         try {
             // Get correct synthesis
             Pair<ISynthesis, Object> synthesisModelPair =
@@ -1051,10 +1057,10 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             if (synthesis == null) {
                 throw new NullPointerException("No synthesis available");
             }
-            // In case model was specially prepared take the return instance
-            model = synthesisModelPair.getSecond();
+            // Some special synthesis need model preparation, so this is the actual model to diplay
+            Object displayModel = synthesisModelPair.getSecond();
 
-            // Indicated if the model type changed according to the current model
+            // Indicated if the model type changed against the current model
             boolean modelTypeChanged = false;
             ViewContext vc = null;
             if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
@@ -1063,7 +1069,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             } else {
                 vc = this.getViewer().getViewContext();
                 if (vc.getInputModel() == null
-                        || vc.getInputModel().getClass() != model.getClass()) {
+                        || vc.getInputModel().getClass() != displayModel.getClass()) {
                     modelTypeChanged = true;
                 }
                 if (vc.getDiagramSynthesis() != synthesis) {
@@ -1077,7 +1083,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                     KlighdDataManager.getInstance().getSynthesisID(synthesis));
             properties.setProperty(ModelViewProperties.EDITOR_PART, editor);
 
-            // -Update diagram-
+            // --Update diagram--
 
             // Success flag indicating a successful synthesis and diagram update
             boolean success = false;
@@ -1092,46 +1098,46 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                 if (synthesis != null && recentSynthesisOptions.containsKey(synthesis)) {
                     properties
                             .configureSynthesisOptionValues(recentSynthesisOptions.get(synthesis));
-                } else {
+                } else { // TODO not necessary ?
                     // Configure with empty map to reset possible configuration
                     properties
                             .configureSynthesisOptionValues(new HashMap<SynthesisOption, Object>());
                 }
 
                 // the (re)initialization case
-                initialize(model, null, properties);
+                initialize(displayModel, null, properties);
                 success = true;
                 // reset layout to resolve KISEMA-905
                 resetLayoutConfig(false);
             } else {
                 // update case (keeps options and sidebar)
                 success = LightDiagramServices.updateDiagram(this.getViewer().getViewContext(),
-                        model);
+                        displayModel);
             }
 
             // check if update was successful
             KNode currentDiagram = this.getViewer().getViewContext().getViewModel();
-            if (!success || currentDiagram == null
-                    || (currentDiagram.getChildren().isEmpty() && !(model instanceof KNode))) {
-                // If update was not successfulk try default synthesis of fail if already in
+            if (!success || currentDiagram == null || (currentDiagram.getChildren().isEmpty()
+                    && !(displayModel instanceof KNode))) {
+                // If update was not successful try default synthesis or fail if already in
                 // fallback mode.
                 if (properties.getProperty(ModelViewProperties.USE_FALLBACK_SYSTHESIS)) {
                     throw new NullPointerException(
                             "Diagram is null or empty. Inernal KLighD error.");
                 } else {
                     properties.setProperty(ModelViewProperties.USE_FALLBACK_SYSTHESIS, true);
-                    updateDiagram(model, properties);
+                    updateDiagram(displayModel, properties);
                     return;
                 }
             }
 
-            // enable synchronous selection between diagram and editor
+            // register editor
             if (editor != null && !isErrorModel) {
                 this.getViewer().getViewContext().setSourceWorkbenchPart(editor);
             }
             // Notify the controller about the successful update
             if (controller != null) {
-                controller.onDiagramUpdate(model, properties, this.getViewer());
+                controller.onDiagramUpdate(displayModel, properties, this.getViewer());
             }
         } catch (Exception e) {
             if (!isErrorModel) {
@@ -1143,19 +1149,6 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                         StatusManager.SHOW);
             }
 
-        }
-    }
-
-    // -- Selection Handling
-    // -------------------------------------------------------------------------
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void selectionChanged(SelectionChangedEvent event) {
-        if (controller != null) {
-            controller.selectionChanged(event);
         }
     }
 }

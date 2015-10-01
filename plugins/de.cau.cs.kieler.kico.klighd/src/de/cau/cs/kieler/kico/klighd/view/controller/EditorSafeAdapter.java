@@ -17,14 +17,21 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPartConstants;
 
-import de.cau.cs.kieler.kico.klighd.view.ModelView;
-
 /**
+ * An adapter to listen for the save event of an editor.
+ * 
  * @author als
+ * @kieler.design 2015-09-29 proposed
+ * @kieler.rating 2015-09-29 proposed yellow
  *
  */
 public class EditorSafeAdapter implements IPropertyListener {
 
+    /**
+     * The listener interface for notifications of the {@link EditorSafeAdapter}.
+     * 
+     * @author als
+     */
     public interface EditorSafeListener {
         /**
          * The event handler for the editor save event.
@@ -35,11 +42,14 @@ public class EditorSafeAdapter implements IPropertyListener {
         public void onEditorSaved(IEditorPart editor);
     }
 
+    /** The listener to be notified by this adapter */
     private EditorSafeListener listener;
+    /** The current editor this adapter is listening to */
     private IEditorPart editor;
 
     /**
-     * 
+     * Creates an adapter for the given listener. The adapter must be activated on an editor to
+     * start fire events.
      */
     public EditorSafeAdapter(EditorSafeListener listener) {
         this.listener = listener;
@@ -51,22 +61,33 @@ public class EditorSafeAdapter implements IPropertyListener {
     @Override
     public void propertyChanged(Object source, int propId) {
         if (editor != null) {
-        IEditorPart editor = (IEditorPart) source;
-        if (propId == IWorkbenchPartConstants.PROP_DIRTY && !editor.isDirty()) {
-            // dirty flag changed and editor is not dirty -> saved
-            // Notify all related model views
-            listener.onEditorSaved(editor);
-        }
+            IEditorPart editor = (IEditorPart) source;
+            if (propId == IWorkbenchPartConstants.PROP_DIRTY && !editor.isDirty()) {
+                // dirty flag changed and editor is not dirty -> saved
+                listener.onEditorSaved(editor);
+            }
         }
     }
 
+    /**
+     * Starts listening on the given editor.
+     *
+     * @param editor
+     *            the editor
+     */
     public void activate(IEditorPart editor) {
         if (editor != null) {
+            if (this.editor != null) {
+                this.editor.removePropertyListener(this);
+            }
             this.editor = editor;
             editor.addPropertyListener(this);
         }
     }
 
+    /**
+     * Stops the listening on the current editor.
+     */
     public void deactivate() {
         if (editor != null) {
             editor.removePropertyListener(this);
