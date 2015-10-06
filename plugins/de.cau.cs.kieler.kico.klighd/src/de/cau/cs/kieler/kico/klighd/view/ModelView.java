@@ -16,8 +16,11 @@ package de.cau.cs.kieler.kico.klighd.view;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -62,6 +65,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.util.Pair;
@@ -137,8 +141,11 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     private IEditorPart editor;
 
     /** Stores saved selection of synthesis options according to their model type. */
-    private final HashMap<ISynthesis, HashMap<SynthesisOption, Object>> recentSynthesisOptions =
-            Maps.newHashMap();
+    private final Map<SynthesisOption, Object> recentSynthesisOptions =
+            Collections.synchronizedMap(Maps.newHashMap());
+
+    /** Stores syntheses used by model. */
+    private final Set<ISynthesis> usedSyntheses = Collections.synchronizedSet(Sets.newHashSet());
 
     /** The responsible controller performing model updates. */
     private AbstractModelUpdateController controller = null;
@@ -148,7 +155,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             new ArrayList<AbstractModelUpdateController>();
 
     // -- Toolbar --
-    /** The toolbar manager */
+    /** The toolbar manager. */
     private IToolBarManager toolBarManager;
 
     /** The action for reloading displayed model. */
@@ -163,7 +170,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     private final Action actionFork;
 
     // -- Menu --
-    /** The menu manger */
+    /** The menu manger. */
     private IMenuManager menuManager;
 
     /** The action for resetting layout options. */
@@ -195,7 +202,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
         if (editor != null) {
             return Lists.newArrayList(Iterables.filter(modelViews, new Predicate<ModelView>() {
                 @Override
-                public boolean apply(ModelView view) {
+                public boolean apply(final ModelView view) {
                     return editor.equals(view.getEditor());
                 }
             }));
@@ -339,7 +346,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * {@inheritDoc}
      */
     @Override
-    public void init(IViewSite site) throws PartInitException {
+    public void init(final IViewSite site) throws PartInitException {
         super.init(site);
         initID(site);
     }
@@ -348,7 +355,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * {@inheritDoc}
      */
     @Override
-    public void init(IViewSite site, IMemento memento) throws PartInitException {
+    public void init(final IViewSite site, final IMemento memento) throws PartInitException {
         super.init(site, memento);
         initID(site);
         if (memento != null) {
@@ -396,7 +403,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * @param site
      *            the view site
      */
-    private void initID(IViewSite site) {
+    private void initID(final IViewSite site) {
         // If secondary id is set in site save secondary id in variable
         if (site.getSecondaryId() != null) {
             secondaryID = site.getSecondaryId();
@@ -449,8 +456,8 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     public void dispose() {
         super.dispose();
         modelViews.remove(this);
-        for (AbstractModelUpdateController controller : controllers) {
-            controller.onDispose();
+        for (AbstractModelUpdateController c : controllers) {
+            c.onDispose();
         }
     }
 
@@ -458,7 +465,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * Sets view part title according to current editor and configuration.
      */
     private void updateViewTitle() {
-        ArrayList<String> modifiers = new ArrayList<String>(5);
+        ArrayList<String> modifiers = new ArrayList<String>();
 
         if (!isPrimaryView()) {
             modifiers.add("secondary");
@@ -512,11 +519,8 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                 // State
                 newModelView.lastSaveDirectory = lastSaveDirectory;
                 newModelView.synthesisSelection.copy(synthesisSelection);
-                for (Entry<ISynthesis, HashMap<SynthesisOption, Object>> entry : recentSynthesisOptions
-                        .entrySet()) {
-                    newModelView.recentSynthesisOptions.put(entry.getKey(),
-                            (HashMap<SynthesisOption, Object>) entry.getValue().clone());
-                }
+                newModelView.recentSynthesisOptions.putAll(recentSynthesisOptions);
+                newModelView.usedSyntheses.addAll(usedSyntheses);
                 for (AbstractModelUpdateController modelUpdateController : controllers) {
                     newModelView.controllers.add(modelUpdateController.clone(newModelView));
                 }
@@ -561,14 +565,25 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                 storeCurrentSynthesisOptions();
                 IMemento recentSynthesisOptionsMemento =
                         memento.createChild("recentSynthesisOptions");
-                for (Entry<ISynthesis, HashMap<SynthesisOption, Object>> entry : recentSynthesisOptions
+                HashMap<ISynthesis, IMemento> synthesesMementos =
+                        new HashMap<ISynthesis, IMemento>(usedSyntheses.size());
+                for (ISynthesis synthesis : usedSyntheses) {
+                    synthesesMementos.put(synthesis, recentSynthesisOptionsMemento.createChild(
+                            KlighdDataManager.getInstance().getSynthesisID(synthesis)));
+                }
+                for (Entry<SynthesisOption, Object> optionEntry : recentSynthesisOptions
                         .entrySet()) {
-                    IMemento synthesisMemento = recentSynthesisOptionsMemento.createChild(
-                            KlighdDataManager.getInstance().getSynthesisID(entry.getKey()));
-                    for (Entry<SynthesisOption, Object> optionEntry : entry.getValue().entrySet()) {
-                        SynthesisOption option = optionEntry.getKey();
-                        Object value = optionEntry.getValue();
-                        String id = Integer.toString(option.getName().hashCode());
+                    SynthesisOption option = optionEntry.getKey();
+                    Object value = optionEntry.getValue();
+                    String id = Integer.toString(option.getName().hashCode());
+                    IMemento synthesisMemento = null;
+                    for (ISynthesis synthesis : usedSyntheses) {
+                        if (synthesis.getDisplayedSynthesisOptions().contains(option)) {
+                            synthesisMemento = synthesesMementos.get(synthesis);
+                            break;
+                        }
+                    }
+                    if (synthesisMemento != null) {
                         try {
                             if (value instanceof Boolean) {
                                 synthesisMemento.putBoolean("b" + id, (Boolean) value);
@@ -580,7 +595,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                                 synthesisMemento.putString("s" + id, (String) value);
                             }
                         } catch (Exception e) {
-                            // Do nothing, just fail
+                            // Do nothing, just skip
                         }
                     }
                 }
@@ -588,8 +603,8 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                 synthesisSelection.saveState(memento.createChild("synthesisSelection"));
 
                 IMemento controllersMemento = memento.createChild("controllers");
-                for (AbstractModelUpdateController controller : controllers) {
-                    controller.saveState(controllersMemento.createChild(controller.getID()));
+                for (AbstractModelUpdateController c : controllers) {
+                    c.saveState(controllersMemento.createChild(c.getID()));
                 }
             }
         } catch (Exception e) {
@@ -604,7 +619,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * @param memento
      *            saved configuration
      */
-    private void loadState(IMemento memento) {
+    private void loadState(final IMemento memento) {
         try {
             String lastSaveDirectoryValue = memento.getString("lastSaveDirectory");
             if (lastSaveDirectoryValue != null) {
@@ -656,6 +671,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                     ISynthesis synthesis = KlighdDataManager.getInstance()
                             .getDiagramSynthesisById(synthesisOptionMemento.getType());
                     if (synthesis != null) {
+                        usedSyntheses.add(synthesis);
                         HashMap<Integer, SynthesisOption> optionMap =
                                 new HashMap<Integer, SynthesisOption>(
                                         synthesis.getDisplayedSynthesisOptions().size());
@@ -663,8 +679,6 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                                 .getDisplayedSynthesisOptions()) {
                             optionMap.put(synthesisOption.getName().hashCode(), synthesisOption);
                         }
-                        HashMap<SynthesisOption, Object> values =
-                                new HashMap<SynthesisOption, Object>();
                         for (String key : synthesisOptionMemento.getAttributeKeys()) {
                             SynthesisOption option = optionMap.get(key.substring(1).hashCode());
                             if (option != null) {
@@ -679,11 +693,10 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                                     value = synthesisOptionMemento.getString(key);
                                 }
                                 if (value != null) {
-                                    values.put(option, value);
+                                    recentSynthesisOptions.put(option, value);
                                 }
                             }
                         }
-                        recentSynthesisOptions.put(synthesis, values);
                     }
                 }
             }
@@ -720,6 +733,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
         actionDiagramPlaceholder.setChecked(actionDiagramPlaceholder_DEFAULT_STATE);
         synthesisSelection.clear();
         recentSynthesisOptions.clear();
+        usedSyntheses.clear();
         lastSaveDirectory = null;
         for (AbstractModelUpdateController controller : controllers) {
             controller.reset();
@@ -797,9 +811,9 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
 
                 // search for responsible controller in instance list
                 AbstractModelUpdateController alreadyInstaciatedController = null;
-                for (AbstractModelUpdateController controller : controllers) {
-                    if (controller.getID().equals(responsibleControllerID)) {
-                        alreadyInstaciatedController = controller;
+                for (AbstractModelUpdateController controllerCandidate : controllers) {
+                    if (controllerCandidate.getID().equals(responsibleControllerID)) {
+                        alreadyInstaciatedController = controllerCandidate;
                         break;
                     }
                 }
@@ -840,23 +854,19 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     private synchronized void storeCurrentSynthesisOptions() {
         if (this.getViewer() != null && this.getViewer().getViewContext() != null) {
             ViewContext viewContext = this.getViewer().getViewContext();
-            ISynthesis usedSynthesis = viewContext.getDiagramSynthesis();
-            if (usedSynthesis != null) {
-                List<SynthesisOption> options = viewContext.getDisplayedSynthesisOptions();
-                if (!options.isEmpty()) {
-                    HashMap<SynthesisOption, Object> optionsMap;
-                    if (recentSynthesisOptions.containsKey(usedSynthesis)) {
-                        optionsMap = recentSynthesisOptions.get(usedSynthesis);
-                    } else {
-                        optionsMap = Maps.newHashMap();
-                        recentSynthesisOptions.put(usedSynthesis, optionsMap);
-                    }
-                    for (SynthesisOption option : options) {
-                        if (usedSynthesis.getDisplayedSynthesisOptions().contains(option)) {
-                            optionsMap.put(option, viewContext.getOptionValue(option));
-                        }
-                    }
-                }
+            HashSet<SynthesisOption> allUsedSyntheisOptions = new HashSet<SynthesisOption>();
+
+            usedSyntheses.add(viewContext.getDiagramSynthesis());
+            allUsedSyntheisOptions
+                    .addAll(viewContext.getDiagramSynthesis().getDisplayedSynthesisOptions());
+            for (ViewContext childVC : viewContext.getChildViewContexts(true)) {
+                usedSyntheses.add(childVC.getDiagramSynthesis());
+                allUsedSyntheisOptions
+                        .addAll(childVC.getDiagramSynthesis().getDisplayedSynthesisOptions());
+            }
+
+            for (SynthesisOption option : allUsedSyntheisOptions) {
+                recentSynthesisOptions.put(option, viewContext.getOptionValue(option));
             }
         }
     }
@@ -977,7 +987,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             updateDiagram(controller.getModel(), controller.getProperties());
         } else {
             KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
-            if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
+            if (this.getViewer() != null && this.getViewer().getViewContext() != null) {
                 properties.copyProperties(this.getViewContext());
             }
             updateDiagram(null, properties);
@@ -1038,21 +1048,21 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      *            model to display
      * @param properties
      *            properties for configuration
-     * @param controller
+     * @param usedController
      *            the controller related to this update
-     * @param editor
+     * @param sourceEditor
      *            the editor related to the model
      * @param isErrorModel
      *            true indicates an re-invocation of update to show an error model concerning an
      *            error occurred in the actual update.
      */
     private void doUpdateDiagram(final Object model, final KlighdSynthesisProperties properties,
-            final AbstractModelUpdateController controller, final IEditorPart editor,
+            final AbstractModelUpdateController usedController, final IEditorPart sourceEditor,
             final boolean isErrorModel) {
         try {
             // Get correct synthesis
             Pair<ISynthesis, Object> synthesisModelPair =
-                    synthesisSelection.getSynthesis(model, editor, properties);
+                    synthesisSelection.getSynthesis(model, sourceEditor, properties);
             ISynthesis synthesis = synthesisModelPair.getFirst();
             if (synthesis == null) {
                 throw new NullPointerException("No synthesis available");
@@ -1060,28 +1070,32 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             // Some special synthesis need model preparation, so this is the actual model to diplay
             Object displayModel = synthesisModelPair.getSecond();
 
-            // Indicated if the model type changed against the current model
-            boolean modelTypeChanged = false;
-            ViewContext vc = null;
-            if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
-                // if viewer or context does not exist always init view
-                modelTypeChanged = true;
-            } else {
-                vc = this.getViewer().getViewContext();
-                if (vc.getInputModel() == null
-                        || vc.getInputModel().getClass() != displayModel.getClass()) {
-                    modelTypeChanged = true;
-                }
-                if (vc.getDiagramSynthesis() != synthesis) {
-                    // In case the synthesis changed the sidebar should be updated
-                    modelTypeChanged = true;
-                }
-            }
-
             // Set properties
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     KlighdDataManager.getInstance().getSynthesisID(synthesis));
             properties.setProperty(ModelViewProperties.EDITOR_PART, editor);
+            // Save previous synthesis options to restore later
+            storeCurrentSynthesisOptions();
+            // configure options
+            properties.configureSynthesisOptionValues(recentSynthesisOptions);
+
+            // Indicated if the model type changed against the current model
+            boolean modelTypeChanged = false;
+            ViewContext viewContext = null;
+            if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
+                // if viewer or context does not exist always init view
+                modelTypeChanged = true;
+            } else {
+                viewContext = this.getViewer().getViewContext();
+                if (viewContext.getInputModel() == null
+                        || viewContext.getInputModel().getClass() != displayModel.getClass()) {
+                    modelTypeChanged = true;
+                }
+                if (viewContext.getDiagramSynthesis() != synthesis) {
+                    // In case the synthesis changed the sidebar should be updated
+                    modelTypeChanged = true;
+                }
+            }
 
             // --Update diagram--
 
@@ -1091,32 +1105,36 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             // If the type changed the view must be reinitialized to provide a correct ViewContext
             // otherwise the ViewContext can be simply updated
             if (modelTypeChanged) {
-                // save previous synthesis options to restore later
-                storeCurrentSynthesisOptions();
-
-                // get saved options to restore
-                if (synthesis != null && recentSynthesisOptions.containsKey(synthesis)) {
-                    properties
-                            .configureSynthesisOptionValues(recentSynthesisOptions.get(synthesis));
-                } else { // TODO not necessary ?
-                    // Configure with empty map to reset possible configuration
-                    properties
-                            .configureSynthesisOptionValues(new HashMap<SynthesisOption, Object>());
-                }
-
                 // the (re)initialization case
                 initialize(displayModel, null, properties);
+                // get newly create ViewContext
+                viewContext = this.getViewer().getViewContext();
                 success = true;
                 // reset layout to resolve KISEMA-905
                 resetLayoutConfig(false);
             } else {
+                boolean hadChildContexts = !viewContext.getChildViewContexts(false).isEmpty();
+
+                // Configure present view context
+                viewContext.copyProperties(properties);
+                // Register editor
+                if (sourceEditor != null) {
+                    viewContext.setSourceWorkbenchPart(sourceEditor);
+                }
+
                 // update case (keeps options and sidebar)
                 success = LightDiagramServices.updateDiagram(this.getViewer().getViewContext(),
-                        displayModel);
+                        displayModel, properties);
+
+                // Update side if the synthesis option changed due to child syntheses
+                if (success && (!viewContext.getChildViewContexts(false).isEmpty()
+                        || hadChildContexts)) {
+                    this.updateOptions(true);
+                }
             }
 
-            // check if update was successful
-            KNode currentDiagram = this.getViewer().getViewContext().getViewModel();
+            // check if update really was successful
+            KNode currentDiagram = viewContext.getViewModel();
             if (!success || currentDiagram == null || (currentDiagram.getChildren().isEmpty()
                     && !(displayModel instanceof KNode))) {
                 // If update was not successful try default synthesis or fail if already in
@@ -1131,18 +1149,14 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                 }
             }
 
-            // register editor
-            if (editor != null && !isErrorModel) {
-                this.getViewer().getViewContext().setSourceWorkbenchPart(editor);
-            }
             // Notify the controller about the successful update
-            if (controller != null) {
-                controller.onDiagramUpdate(displayModel, properties, this.getViewer());
+            if (usedController != null) {
+                usedController.onDiagramUpdate(displayModel, properties, this.getViewer());
             }
         } catch (Exception e) {
             if (!isErrorModel) {
-                doUpdateDiagram(new ErrorModel(UPDATE_DIAGRAM_EXCEPTION, e), properties, controller,
-                        editor, true);
+                doUpdateDiagram(new ErrorModel(UPDATE_DIAGRAM_EXCEPTION, e), properties,
+                        usedController, sourceEditor, true);
             } else {
                 StatusManager.getManager().handle(new Status(IStatus.WARNING,
                         KiCoKLighDPlugin.PLUGIN_ID, e.getLocalizedMessage(), e),

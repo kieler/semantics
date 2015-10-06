@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2015 by
@@ -28,8 +28,7 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.klighd.view.ModelView
 import de.cau.cs.kieler.kico.klighd.view.ModelViewProperties
-import de.cau.cs.kieler.kico.klighd.view.model.EcoreModelSynthesis
-import de.cau.cs.kieler.kico.klighd.view.model.EcoreModelWrapper
+import de.cau.cs.kieler.kico.klighd.view.model.MessageModel
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption
@@ -46,7 +45,6 @@ import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kico.klighd.view.model.MessageModel
 
 /**
  * Diagram synthesis for a ModelChain.
@@ -194,10 +192,14 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
                     properties.getProperty(ModelViewProperties.EDITOR_PART), properties);
                 properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     KlighdDataManager.instance.getSynthesisID(synthesisModelPair.first));
-                subDiagramNode = LightDiagramServices::translateModel(synthesisModelPair.second, usedContext,
-                    properties);
+                val subDiagramViewContext = LightDiagramServices::translateModel2(synthesisModelPair.second,
+                    usedContext, properties);
+                usedContext.addChildViewContext(subDiagramViewContext)
+                subDiagramNode = subDiagramViewContext.viewModel;
             } else {
-                subDiagramNode = LightDiagramServices::translateModel(model, usedContext, properties);
+                val subDiagramViewContext = LightDiagramServices::translateModel2(model, usedContext, properties);
+                usedContext.addChildViewContext(subDiagramViewContext)
+                subDiagramNode = subDiagramViewContext.viewModel;
             }
         } catch (Exception e) {
             // fallthrou

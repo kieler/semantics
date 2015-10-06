@@ -34,7 +34,7 @@ public final class ModelViewProperties {
     private ModelViewProperties() {
     }
 
-    /** The editor part associated with model view */
+    /** The editor part associated with model view. */
     public static final IProperty<IEditorPart> EDITOR_PART =
             new Property<IEditorPart>("de.cau.cs.kieler.kico.klighd.view.editor", null);
 
