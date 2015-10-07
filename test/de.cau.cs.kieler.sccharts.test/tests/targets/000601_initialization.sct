@@ -1,0 +1,6 @@
+scchart initialization {
+  bool b;
+  entry / b = false;
+
+  initial state A;
+}

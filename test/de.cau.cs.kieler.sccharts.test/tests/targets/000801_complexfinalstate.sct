@@ -1,0 +1,24 @@
+scchart complexfinalstate {
+  input bool I;
+
+  initial final state A {
+    bool _abort = false;
+    bool _term = false;
+
+    initial state A1
+    --> A2 / _term = true;
+
+    state A2
+    --> A1 immediate with I / _term = false
+    --> _Final immediate with _abort;
+
+    final state _Final;
+
+    region _Watch:
+
+    initial state _Watch
+    --> _Aborted immediate with _term / _abort = true;
+
+    final state _Aborted;
+  };
+}

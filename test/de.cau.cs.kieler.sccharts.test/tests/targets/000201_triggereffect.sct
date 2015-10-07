@@ -1,0 +1,12 @@
+scchart triggereffect {
+  input bool I;
+  output bool O;
+
+  initial state A
+  --> _S with I;
+
+  final state B;
+
+  state _S
+  --> B immediate / O = false;
+}

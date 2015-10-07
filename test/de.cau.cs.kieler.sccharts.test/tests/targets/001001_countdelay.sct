@@ -1,0 +1,15 @@
+scchart countdelay {
+  input bool I;
+  output bool O;
+  int _counter;
+  during / O = false;
+  during I / _counter = 1 + _counter;
+  
+  initial state A {
+    entry / _counter = 0;
+  }
+  --> B with _counter == 5;
+  
+  state B
+  --> A immediate with / O = O | true;  
+}

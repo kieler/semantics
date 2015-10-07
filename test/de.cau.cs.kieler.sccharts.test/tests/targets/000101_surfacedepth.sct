@@ -1,0 +1,12 @@
+scchart surfacedepth {
+  input bool I;
+
+  final state B;
+
+  initial state A
+  --> _Depth;
+
+  state _Depth
+  --> B immediate with I
+  --> A immediate;
+}

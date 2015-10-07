@@ -1,0 +1,13 @@
+scchart ^suspend {
+  input bool I;
+  output bool O;
+  during / O = false;
+
+  initial state A {
+    bool _enabled = true;
+    during / _enabled = !I;
+
+    initial state A1
+    --> A1 with _enabled / O = O | true;
+  };
+}

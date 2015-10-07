@@ -1,0 +1,4 @@
+scchart ^dummy {
+
+  initial state A;
+}

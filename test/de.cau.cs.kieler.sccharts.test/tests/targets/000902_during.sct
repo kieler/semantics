@@ -1,0 +1,11 @@
+scchart ^during {
+  output bool O;
+
+  initial state A {
+
+    region _During:
+
+    initial state _I
+    --> _I / O = false;
+  };
+}

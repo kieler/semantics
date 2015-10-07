@@ -1,0 +1,24 @@
+scchart abort{
+  input bool I;
+  bool _trig;
+
+  initial state A {
+    entry / _trig = false;
+
+    initial state A1
+    --> A1
+    --> _Aborted immediate with _trig;
+
+    final state _Aborted;
+
+    region _Ctrl:
+
+    initial state _Run
+    --> _Done with I / _trig = true;
+
+    final state _Done;
+  }
+  >-> B immediate;
+
+  final state B;
+}
