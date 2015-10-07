@@ -60,12 +60,6 @@ class EcoreModelSynthesis extends AbstractDiagramSynthesis<EcoreModelWrapper> {
     extension KEdgeExtensions
 
     @Inject
-    extension KPortExtensions
-
-    @Inject
-    extension KLabelExtensions
-
-    @Inject
     extension KRenderingExtensions
 
     @Inject

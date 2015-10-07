@@ -39,7 +39,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.xtext.util.StringInputStream;
 
 import com.google.common.collect.Lists;
 
@@ -49,7 +48,6 @@ import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KielerCompilerException;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
-import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.internal.ResourceExtension;
 import de.cau.cs.kieler.kico.klighd.internal.AsynchronousCompilation;
 import de.cau.cs.kieler.kico.klighd.internal.CompilerSelectionStore;
@@ -86,7 +84,7 @@ import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination;
 public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     /**
-     * Events that can cause an update of displayed model
+     * Events that can cause an update of displayed model.
      * 
      * @author als
      * 
@@ -96,10 +94,10 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     }
 
     // -- CONSTANTS --
-    /** Controller ID */
+    /** Controller ID. */
     private static final String ID = "de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController";
 
-    /** Path to notify Simulation component */
+    /** Path to notify Simulation component. */
     private static final IPath modelViewPath = new Path(ModelView.ID);
 
     /**
@@ -110,21 +108,21 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     // -- Icons --
     /** The icon for toggling side-by-side display mode button. */
-    private static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.klighd", "icons/compile.png");
+    private static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/compile.png");
     /** The icon for fork view button. */
     private static final ImageDescriptor ICON_SIDE_BY_SIDE = AbstractUIPlugin
             .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/side_by_side.png");
     /** The icon for toggling chain display mode button. */
-    private static final ImageDescriptor ICON_CHAIN = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.klighd", "icons/chain.png");
+    private static final ImageDescriptor ICON_CHAIN = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/chain.png");
     /** The icon for pin selection button. */
-    private static final ImageDescriptor ICON_PIN = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.klighd", "icons/pin.png");
+    private static final ImageDescriptor ICON_PIN = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/pin.png");
 
     /** The icon for closing windows. */
-    private static final ImageDescriptor ICON_CLOSE = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "org.eclipse.ui", "icons/full/elcl16/remove.gif");
+    private static final ImageDescriptor ICON_CLOSE = AbstractUIPlugin
+            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/remove.gif");
 
     // -- Toolbar --
     /** The action for toggling side-by-side display mode. */
@@ -141,7 +139,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     private Action actionPinToggle;
     /** String currently saved transformations. */
     private Pair<KielerCompilerSelection, Boolean> selection = null;
-    /** Map with pinned transformations */
+    /** Map with pinned transformations. */
     private WeakHashMap<IEditorPart, Pair<KielerCompilerSelection, Boolean>> pinnedTransformations =
             new WeakHashMap<IEditorPart, Pair<KielerCompilerSelection, Boolean>>();
 
@@ -158,15 +156,15 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     // -- Model --
 
-    /** Model extracted from editor */
+    /** Model extracted from editor. */
     private EObject sourceModel;
 
-    /** Current compilation running in background */
+    /** Current compilation running in background. */
     private AsynchronousCompilation currentCompilation = null;
 
     /**
      * Current compilation result associated with current model or null if current model was not
-     * compiled
+     * compiled.
      */
     private CompilationResult currentCompilationResult = null;
 
@@ -186,7 +184,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * @param modelView
      *            the ModelView this controller is associated with
      */
-    public KiCoModelUpdateController(ModelView modelView) {
+    public KiCoModelUpdateController(final ModelView modelView) {
         super(modelView);
         CompilerSelectionStore.register(this);
 
@@ -255,8 +253,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             }
         };
         actionTracingChainToggle.setText("Display Transformation Chain");
-        actionTracingChainToggle
-                .setToolTipText("Enable tranformation chain view in displaySideBySide display mode");
+        actionTracingChainToggle.setToolTipText(
+                "Enable tranformation chain view in displaySideBySide display mode");
         // actionTracingChainToggle.setImageDescriptor(ICON_CHAIN);
         actionTracingChainToggle.setChecked(displayTracingChain);
     }
@@ -285,7 +283,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     @Override
-    public AbstractModelUpdateController clone(ModelView modelView) {
+    public AbstractModelUpdateController clone(final ModelView modelView) {
         KiCoModelUpdateController newController = new KiCoModelUpdateController(modelView);
         // TODO copy attributes
         return newController;
@@ -303,7 +301,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     @Override
-    public void saveState(IMemento memento) {
+    public void saveState(final IMemento memento) {
         // TODO Auto-generated method stub
     }
 
@@ -311,7 +309,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     @Override
-    public void loadState(IMemento memento) {
+    public void loadState(final IMemento memento) {
         // TODO Auto-generated method stub
     }
 
@@ -321,7 +319,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     /**
      * {@inheritDoc}
      */
-    public void addContributions(IToolBarManager toolBar, IMenuManager menu) {
+    public void addContributions(final IToolBarManager toolBar, final IMenuManager menu) {
         toolBar.add(actionCompileToggle);
         toolBar.add(actionPinToggle);
         toolBar.add(actionSideBySideToggle);
@@ -336,16 +334,17 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     @Override
-    public void saveModel(Object model, IFile file, URI uri) throws Exception {
+    public void saveModel(final Object model, final IFile file, final URI uri) throws Exception {
+        Object saveModel = model;
         // decompose chain
         if (model instanceof ModelChain) {
-            model = ((ModelChain) model).getSelectedModel();
+            saveModel = ((ModelChain) model).getSelectedModel();
         }
         // save
-        if (model instanceof ISaveableModel) {
-            ((ISaveableModel) model).save(file, uri);
+        if (saveModel instanceof ISaveableModel) {
+            ((ISaveableModel) saveModel).save(file, uri);
         } else {
-            super.saveModel(model, file, uri);
+            super.saveModel(saveModel, file, uri);
         }
     }
 
@@ -353,7 +352,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     @Override
-    public String getResourceName(IEditorPart editor, Object model) {
+    public String getResourceName(final IEditorPart editor, final Object model) {
         if (editor != null && model != null) {
             String filename = editor.getTitle();
             if (filename.contains(".")) {
@@ -376,7 +375,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     @Override
-    public void onActivate(IEditorPart editor) {
+    public void onActivate(final IEditorPart editor) {
         update(ChangeEvent.ACTIVE_EDITOR);
         // Don't call super to prevent model update but activate adapter
         saveAdapter.activate(editor);
@@ -386,7 +385,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     @Override
-    public void onEditorSaved(IEditorPart editor) {
+    public void onEditorSaved(final IEditorPart editor) {
         update(ChangeEvent.SAVED);
     }
 
@@ -394,7 +393,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     @Override
-    public void onDiagramUpdate(Object model, KlighdSynthesisProperties properties, IViewer viewer) {
+    public void onDiagramUpdate(final Object model, final KlighdSynthesisProperties properties,
+            final IViewer viewer) {
         // dispose warning message composite if necessary
         if (warningMessageContainer != null) {
             if (!warningMessageContainer.isDisposed()) {
@@ -421,9 +421,9 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     /**
      * Updates the model caused by changeEvent.
      * 
-     * @param change
+     * @param change the type of change
      */
-    public void update(ChangeEvent change) {
+    public void update(final ChangeEvent change) {
         update(change, null);
     }
 
@@ -435,7 +435,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * @param compilation
      *            the finished {@link AsynchronousCompilation} or null
      */
-    public synchronized void update(ChangeEvent change, AsynchronousCompilation compilation) {
+    public synchronized void update(final ChangeEvent change,
+            final AsynchronousCompilation compilation) {
         IEditorPart editor = getEditor();
         if (editor != null) {
             // determine event flags
@@ -530,9 +531,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     }
 
                     // create compilation job
-                    currentCompilation =
-                            new AsynchronousCompilation(this, (EObject) sourceModel,
-                                    editor.getTitle(), selection, doTracing);
+                    currentCompilation = new AsynchronousCompilation(this, (EObject) sourceModel,
+                            editor.getTitle(), selection, doTracing);
                     currentCompilationResult = null;
                     model = currentCompilation.getModel();
                     // start
@@ -556,7 +556,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                         }
                     }
 
-                    if (showProgress) {// if not the fast case
+                    if (showProgress) { // if not the fast case
                         currentCompilation.setUpdateModelView(true);
                     } else { // directly take result and suppress additional update
                         model = currentCompilation.getModel();
@@ -568,7 +568,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     model = currentCompilation.getModel();
                     currentCompilationResult = currentCompilation.getCompilationResult();
                     currentCompilation = null;
-                } else {// In case this is not the most recent compilation
+                } else { // In case this is not the most recent compilation
                     return;
                 }
             } else if (!is_selection_update || selection_changed) {
@@ -589,9 +589,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             // composite model in given display mode
             if (displaySideBySide) {
                 if (displayTracingChain && currentCompilationResult != null) {
-                    model =
-                            new ModelChain(sourceModel, currentCompilationResult,
-                                    editor.getTitle(), selection.getFirst());
+                    model = new ModelChain(sourceModel, currentCompilationResult, editor.getTitle(),
+                            selection.getFirst());
                 } else {
                     model = new ModelChain(sourceModel, model);
                 }
@@ -626,7 +625,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     /**
      * Updates checked and enabled state of transformation pin toggle button according to current
-     * transformation
+     * transformation.
      */
     private void updatePinToggleButton() {
         actionPinToggle.setEnabled(selection != null);
@@ -638,13 +637,13 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     @Override
     public ILayoutConfig getLayoutConfig() {
-        ViewContext viewContext = modelView.getViewContext();
+        ViewContext viewContext = getModelView().getViewContext();
         // Assure that model chain is always layouted left to right
         if (viewContext.getInputModel() instanceof ModelChain) {
-            return new CompoundLayoutConfig(Lists.newArrayList(new VolatileLayoutConfig(
-                    KlighdConstants.SIDE_BAR_LAYOUT_CONFIG_PRIORITY + 1).setValue(
-                    LayoutOptions.DIRECTION, viewContext.getViewModel(),
-                    LayoutContext.DIAGRAM_PART, Direction.RIGHT)));
+            return new CompoundLayoutConfig(Lists.newArrayList(
+                    new VolatileLayoutConfig(KlighdConstants.SIDE_BAR_LAYOUT_CONFIG_PRIORITY + 1)
+                            .setValue(LayoutOptions.DIRECTION, viewContext.getViewModel(),
+                                    LayoutContext.DIAGRAM_PART, Direction.RIGHT)));
         } else {
             return super.getLayoutConfig();
         }
@@ -657,10 +656,9 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     private void publishCurrentModelInformation(final Object model,
             final CompilationResult compilationResult) {
-        if (modelView.isPrimaryView()) {
-            boolean is_placeholder =
-                    model instanceof ErrorModel || model instanceof MessageModel
-                            || model instanceof CodePlaceHolder;
+        if (getModelView().isPrimaryView()) {
+            boolean is_placeholder = model instanceof ErrorModel || model instanceof MessageModel
+                    || model instanceof CodePlaceHolder;
             boolean is_chain = model instanceof ModelChain;
             // Inform KIEM about current model
             if (compilationResult != null) {
@@ -684,12 +682,12 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     // -------------------------------------------------------------------------
 
     /**
-     * Shows warning text in klighd canvas
+     * Shows warning text in klighd canvas.
      * 
      * @param viewer
      * @param allWarnings
      */
-    private void addWarningComposite(IViewer viewer, String allWarnings) {
+    private void addWarningComposite(final IViewer viewer, final String allWarnings) {
         final Composite canvas = (Composite) viewer.getControl();
         warningMessageContainer = new Composite(canvas, SWT.NONE);
 
@@ -724,7 +722,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         // cleanup on dispose
         warningMessageContainer.addDisposeListener(new DisposeListener() {
 
-            public void widgetDisposed(DisposeEvent e) {
+            public void widgetDisposed(final DisposeEvent e) {
                 orange.dispose();
                 closeImage.dispose();
             }

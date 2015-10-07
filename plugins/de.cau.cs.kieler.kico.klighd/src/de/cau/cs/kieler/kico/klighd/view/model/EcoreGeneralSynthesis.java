@@ -51,7 +51,7 @@ public class EcoreGeneralSynthesis implements ISelectableGeneralSynthesis {
      * {@inheritDoc}
      */
     @Override
-    public boolean isApplicable(Object model) {
+    public boolean isApplicable(final Object model) {
         return model instanceof EObject;
     }
 
@@ -59,7 +59,8 @@ public class EcoreGeneralSynthesis implements ISelectableGeneralSynthesis {
      * {@inheritDoc}
      */
     @Override
-    public Object prepare(Object model, IEditorPart editor, KlighdSynthesisProperties properties) {
+    public Object prepare(final Object model, final IEditorPart editor,
+            final KlighdSynthesisProperties properties) {
         return new EcoreModelWrapper((EObject) model);
     }
 

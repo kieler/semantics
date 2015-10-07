@@ -31,13 +31,14 @@ import de.cau.cs.kieler.klighd.IAction;
  */
 public class ShowExceptionAction implements IAction {
 
-    /** Action ID. */
-    public final static String ID = "de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction";
+    /** The action ID. */
+    public static final String ID =
+            "de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction";
 
     /**
      * {@inheritDoc}
      */
-    public ActionResult execute(ActionContext context) {
+    public ActionResult execute(final ActionContext context) {
         Object inputModel = context.getViewContext().getInputModel();
         ErrorModel errorModel = null;
 
@@ -55,13 +56,11 @@ public class ShowExceptionAction implements IAction {
         if (errorModel != null) {
             // if exception present show in error dialog
             if (errorModel.getStackTrace() != null) {
-                final Status status =
-                        new Status(IStatus.INFO, ID, errorModel.getMessage(), new Exception(
-                                errorModel.getStackTrace()));
-                ErrorDialog errorDialog =
-                        new ErrorDialog(context.getViewContext().getDiagramWorkbenchPart()
-                                .getSite().getShell(), errorModel.getMessage(),
-                                errorModel.getMessage(), status, IStatus.INFO);
+                final Status status = new Status(IStatus.INFO, ID, errorModel.getMessage(),
+                        new Exception(errorModel.getStackTrace()));
+                ErrorDialog errorDialog = new ErrorDialog(
+                        context.getViewContext().getDiagramWorkbenchPart().getSite().getShell(),
+                        errorModel.getMessage(), errorModel.getMessage(), status, IStatus.INFO);
                 errorDialog.setBlockOnOpen(false);
                 errorDialog.create();
                 errorDialog.open();

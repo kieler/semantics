@@ -37,12 +37,13 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  * @kieler.rating 2015-06-29 proposed yellow
  *
  */
+// CHECKSTYLEOFF HiddenField
 public abstract class AbstractModelUpdateController implements ISelectionChangedListener {
 
     /** Indicated if this controller is active and should update the ModelView. */
     private IEditorPart editor;
     /** The related ModelView. */
-    protected final ModelView modelView;
+    private final ModelView modelView;
     /** The current model. */
     private Object model;
     /** The current properties. */
@@ -111,7 +112,7 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      * @param editor
      *            the associated editor
      */
-    public final void activate(IEditorPart editor) {
+    public final void activate(final IEditorPart editor) {
         if (editor != null) {
             this.editor = editor;
             onActivate(editor);
@@ -169,7 +170,8 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      *            the properties for the synthesis of the model, may be to use standard
      *            configuration
      */
-    protected final void updateModel(Object model, KlighdSynthesisProperties properties) {
+    protected final void updateModel(final Object model,
+            final KlighdSynthesisProperties properties) {
         this.model = model;
         this.properties = properties;
         modelView.updateDiagram();
@@ -181,7 +183,7 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      * @param model
      *            the model may be null to show no model
      */
-    protected final void updateModel(Object model) {
+    protected final void updateModel(final Object model) {
         updateModel(model, properties);
     }
 
@@ -226,6 +228,8 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      *            displayed model
      * @param properties
      *            used properties
+     * @param viewer
+     *            the related viewer
      */
     public abstract void onDiagramUpdate(Object model, KlighdSynthesisProperties properties,
             IViewer viewer);
@@ -248,6 +252,7 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      * @param uri
      *            location of the file
      * @throws Exception
+     *             any exception caused by failed saving
      */
     public abstract void saveModel(Object model, IFile file, URI uri) throws Exception;
 
@@ -269,7 +274,9 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      * Adds the controller related actions to the menu and toolbar.
      * 
      * @param toolBar
+     *            the Toolbar
      * @param menu
+     *            the Menu
      */
     public abstract void addContributions(IToolBarManager toolBar, IMenuManager menu);
 
@@ -283,6 +290,15 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      */
     public IEditorPart getEditor() {
         return editor;
+    }
+
+    /**
+     * Returns the {@link ModelView} of this controller.
+     * 
+     * @return The related {@link ModelView}
+     */
+    public ModelView getModelView() {
+        return modelView;
     }
 
 }

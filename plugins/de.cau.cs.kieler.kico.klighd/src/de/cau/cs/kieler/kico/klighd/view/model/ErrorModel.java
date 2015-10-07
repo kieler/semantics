@@ -45,10 +45,10 @@ import de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction;
 public class ErrorModel extends MessageModel {
 
     /** Synthesis Extension. */
-    private static final KContainerRenderingExtensions KCRE = Guice.createInjector().getInstance(
-            KContainerRenderingExtensions.class);
-    private static final KRenderingExtensions KRE = Guice.createInjector().getInstance(
-            KRenderingExtensions.class);
+    private static final KContainerRenderingExtensions KCRE =
+            Guice.createInjector().getInstance(KContainerRenderingExtensions.class);
+    private static final KRenderingExtensions KRE =
+            Guice.createInjector().getInstance(KRenderingExtensions.class);
 
     /** The error stack trace. */
     protected final String stacktrace;
@@ -59,7 +59,7 @@ public class ErrorModel extends MessageModel {
      * @param message
      *            error message
      */
-    public ErrorModel(String message) {
+    public ErrorModel(final String message) {
         this(message, "Unkown", null);
     }
 
@@ -73,7 +73,7 @@ public class ErrorModel extends MessageModel {
      * @param stacktrace
      *            the stacktrace
      */
-    public ErrorModel(String message, String reason, String stacktrace) {
+    public ErrorModel(final String message, final String reason, final String stacktrace) {
         super(message, reason, "de.cau.cs.kieler.kico.klighd", "icons/error_sign.png", 250);
         // reason
         String reasonToSet = "Unkown";
@@ -115,7 +115,7 @@ public class ErrorModel extends MessageModel {
      *            error message
      * @param exception
      */
-    public ErrorModel(String message, Exception exception) {
+    public ErrorModel(final String message, final Exception exception) {
         this(message, exception.getMessage(), getStackTraceString(exception));
     }
 
@@ -129,7 +129,7 @@ public class ErrorModel extends MessageModel {
      *            Exception
      * @return StackTrace as String
      */
-    private final static String getStackTraceString(Exception exception) {
+    private final static String getStackTraceString(final Exception exception) {
         StringWriter traceReader = new StringWriter();
         exception.printStackTrace(new PrintWriter(traceReader));
         return traceReader.toString();
@@ -139,7 +139,7 @@ public class ErrorModel extends MessageModel {
     // -------------------------------------------------------------------------
 
     @Override
-    public void customizeMessageSynthesis(KContainerRendering parent) {
+    public void customizeMessageSynthesis(final KContainerRendering parent) {
         // red title
         KRE.setForeground(parent.getChildren().get(0), Colors.RED);
         // link to exception if available
@@ -162,7 +162,7 @@ public class ErrorModel extends MessageModel {
      * {@inheritDoc}
      */
     @Override
-    public void save(IFile file, URI uri) throws Exception {
+    public void save(final IFile file, final URI uri) throws Exception {
         StringBuilder text = new StringBuilder();
         String newline = System.getProperty("line.separator");
         if (title != null) {

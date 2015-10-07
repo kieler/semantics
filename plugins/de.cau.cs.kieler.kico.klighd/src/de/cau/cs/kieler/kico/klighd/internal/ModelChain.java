@@ -15,7 +15,6 @@ package de.cau.cs.kieler.kico.klighd.internal;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.ListIterator;
 
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.IntermediateResult;
@@ -36,10 +35,10 @@ public class ModelChain {
     /** The list (chain) of models. */
     private final LinkedList<Object> models = new LinkedList<Object>();
 
-    /** The transition labels between models */
+    /** The transition labels between models. */
     private final LinkedList<String> tranformations = new LinkedList<String>();
 
-    /** A map of models in the chain and a flag indicating if this model is collapsed or not */
+    /** A map of models in the chain and a flag indicating if this model is collapsed or not. */
     private final HashMap<Object, Boolean> collapse = new HashMap<Object, Boolean>();
 
     /**
@@ -73,15 +72,17 @@ public class ModelChain {
     /**
      * Creates a model chain from the given compilation result containing all intermediate models.
      * 
+     * @param sourceModel
+     *            the source model
      * @param compilationResult
      *            the compilation result
      * @param modelName
      *            the name of the source model
-     * @param transformations
+     * @param selection
      *            the selected transformations
      */
-    public ModelChain(Object sourceModel, final CompilationResult compilationResult,
-            final String modelName, KielerCompilerSelection selection) {
+    public ModelChain(final Object sourceModel, final CompilationResult compilationResult,
+            final String modelName, final KielerCompilerSelection selection) {
         models.add(sourceModel);
         collapse.put(sourceModel, false);
         for (IntermediateResult ir : compilationResult.getTransformationIntermediateResults()) {
@@ -94,7 +95,7 @@ public class ModelChain {
             if (!models.contains(model)) {
                 tranformations.add(ir.getId());
                 models.add(model);
-                collapse.put(model, false);// true
+                collapse.put(model, false); // true
             }
         }
         collapse.put(models.getLast(), false);
@@ -102,7 +103,7 @@ public class ModelChain {
     }
 
     /**
-     * Returns the selected model in this chain
+     * Returns the selected model in this chain.
      * 
      * @return selected model
      */

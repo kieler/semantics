@@ -49,7 +49,7 @@ public class MessageModel implements ISaveableModel {
      * @param message
      *            The message
      */
-    public MessageModel(String message) {
+    public MessageModel(final String message) {
         this(null, message, null, null, 0);
     }
 
@@ -60,7 +60,7 @@ public class MessageModel implements ISaveableModel {
      * @param message
      *            The message
      */
-    public MessageModel(String title, String message) {
+    public MessageModel(final String title, final String message) {
         this(title, message, null, null, 0);
     }
 
@@ -78,22 +78,15 @@ public class MessageModel implements ISaveableModel {
      * @param iconSize
      *            The minimal icon size
      */
-    public MessageModel(String title, String message, String iconPlugin, String iconPath,
-            int iconSize) {
+    public MessageModel(final String title, final String message, final String iconPlugin,
+            final String iconPath, final int iconSize) {
         // Set or nullify title
         this.title = title != null && title.isEmpty() ? null : title;
         // Set or nullify message
         this.message = message != null && message.isEmpty() ? null : message;
         // Set or nullify icon
-        iconPath = iconPath != null && iconPath.isEmpty() ? null : iconPath;
-        iconPlugin = iconPlugin != null && iconPlugin.isEmpty() ? null : iconPlugin;
-        if (iconPath != null && iconPlugin != null) {
-            this.iconPath = iconPath;
-            this.iconPlugin = iconPlugin;
-        } else {
-            this.iconPath = null;
-            this.iconPlugin = null;
-        }
+        this.iconPath = iconPath == null || iconPath.isEmpty() ? null : iconPath;
+        this.iconPlugin = iconPlugin == null || iconPlugin.isEmpty() ? null : iconPlugin;
         this.iconSize = iconSize;
     }
 
@@ -106,7 +99,7 @@ public class MessageModel implements ISaveableModel {
      * @param parent
      *            the parent element in the KGraph
      */
-    public void customizeMessageSynthesis(KContainerRendering parent) {
+    public void customizeMessageSynthesis(final KContainerRendering parent) {
         // do nothing
     }
 
@@ -117,7 +110,7 @@ public class MessageModel implements ISaveableModel {
      * {@inheritDoc}
      */
     @Override
-    public void save(IFile file, URI uri) throws Exception {
+    public void save(final IFile file, final URI uri) throws Exception {
         StringBuilder text = new StringBuilder();
         String newline = System.getProperty("line.separator");
         if (title != null) {

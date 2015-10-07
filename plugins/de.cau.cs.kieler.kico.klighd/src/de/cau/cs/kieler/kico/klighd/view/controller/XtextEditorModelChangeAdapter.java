@@ -51,32 +51,35 @@ public class XtextEditorModelChangeAdapter implements IXtextModelListener {
          * @param resource
          *            the models resource
          */
-        public void onModelChanged(XtextEditor editor, XtextResource resource);
+        public void onModelChanged(final XtextEditor editor, final XtextResource resource);
     }
 
-    /** The listener to be notified by this adapter */
+    /** The listener to be notified by this adapter. */
     private XtextChangeListener listener;
-    /** The current editor this adapter is listening to */
+    /** The current editor this adapter is listening to. */
     private XtextEditor editor;
 
     /**
      * Creates an adapter for the given listener. The adapter must be activated on an editor to
      * start fire events.
+     * 
+     * @param listener
+     *            the listener listening for events of this adapter
      */
-    public XtextEditorModelChangeAdapter(XtextChangeListener listener) {
+    public XtextEditorModelChangeAdapter(final XtextChangeListener listener) {
         this.listener = listener;
     }
 
     /**
      * Starts listening on the given editor.
      *
-     * @param editor
+     * @param newEditor
      *            the editor
      */
-    public void activate(XtextEditor editor) {
-        if (editor != null) {
-            this.editor = editor;
-            editor.getDocument().addModelListener(this);
+    public void activate(final XtextEditor newEditor) {
+        if (newEditor != null) {
+            this.editor = newEditor;
+            newEditor.getDocument().addModelListener(this);
         }
     }
 
@@ -93,7 +96,7 @@ public class XtextEditorModelChangeAdapter implements IXtextModelListener {
      * {@inheritDoc}
      */
     @Override
-    public void modelChanged(XtextResource resource) {
+    public void modelChanged(final XtextResource resource) {
         if (!hasErrors(resource) && editor != null) {
             listener.onModelChanged(editor, resource);
         }

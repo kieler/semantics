@@ -14,13 +14,8 @@
 package de.cau.cs.kieler.kico.klighd.view.model
 
 import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import javax.inject.Inject
@@ -41,25 +36,10 @@ class MessageModelSynthesis extends AbstractDiagramSynthesis<MessageModel> {
     extension KNodeExtensions
 
     @Inject
-    extension KEdgeExtensions
-
-    @Inject
-    extension KPortExtensions
-
-    @Inject
-    extension KLabelExtensions
-
-    @Inject
     extension KRenderingExtensions
 
     @Inject
     extension KContainerRenderingExtensions
-
-    @Inject
-    extension KPolylineExtensions
-
-    @Inject
-    extension KColorExtensions
     
     // -------------------------------------------------------------------------
     // Constants

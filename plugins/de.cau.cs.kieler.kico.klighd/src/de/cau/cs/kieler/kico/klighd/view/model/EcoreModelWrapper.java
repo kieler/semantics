@@ -41,7 +41,7 @@ public class EcoreModelWrapper implements ISaveableModel {
      * @param model
      *            the actual model
      */
-    public EcoreModelWrapper(EObject model) {
+    public EcoreModelWrapper(final EObject model) {
         this.model = model;
     }
 
@@ -52,13 +52,13 @@ public class EcoreModelWrapper implements ISaveableModel {
      * {@inheritDoc}
      */
     @Override
-    public void save(IFile file, URI uri) throws Exception {
+    public void save(final IFile file, final URI uri) throws Exception {
         ModelUtil.saveModel(model, uri);
     }
 
     // -- Getters
     // -------------------------------------------------------------------------
-    
+
     /**
      * @return the model
      */

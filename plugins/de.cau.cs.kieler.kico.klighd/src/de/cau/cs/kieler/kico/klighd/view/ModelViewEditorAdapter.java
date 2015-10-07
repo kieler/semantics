@@ -43,7 +43,7 @@ class ModelViewEditorAdapter extends GlobalPartAdapter {
      * @param modelView
      *            The associated ModelView
      */
-    public ModelViewEditorAdapter(ModelView modelView) {
+    ModelViewEditorAdapter(final ModelView modelView) {
         super(null, false);
         this.modelView = modelView;
     }
@@ -52,7 +52,7 @@ class ModelViewEditorAdapter extends GlobalPartAdapter {
      * {@inheritDoc}
      */
     @Override
-    public void partOpened(IWorkbenchPartReference partRef) {
+    public void partOpened(final IWorkbenchPartReference partRef) {
         IWorkbenchPart part = partRef.getPart(false);
         // Initialize primary view with current active editor
         if (part != null && part == modelView) {
@@ -61,7 +61,7 @@ class ModelViewEditorAdapter extends GlobalPartAdapter {
                 new UIJob(INIT_JOB_NAME) {
 
                     @Override
-                    public IStatus runInUIThread(IProgressMonitor monitor) {
+                    public IStatus runInUIThread(final IProgressMonitor monitor) {
                         modelView.setEditor(modelView.getSite().getPage().getActiveEditor());
                         return Status.OK_STATUS;
                     }
@@ -74,7 +74,7 @@ class ModelViewEditorAdapter extends GlobalPartAdapter {
      * {@inheritDoc}
      */
     @Override
-    public void partClosed(IWorkbenchPartReference partRef) {
+    public void partClosed(final IWorkbenchPartReference partRef) {
         final IWorkbenchPart part = partRef.getPart(false);
         // If part is editor of the model view
         if (part != null && part == modelView.getEditor()) {

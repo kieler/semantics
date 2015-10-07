@@ -38,7 +38,7 @@ public class XtextSerializationModel extends CodePlaceHolder {
      * @param title
      *            The title of the model
      */
-    public XtextSerializationModel(EObject model, String title) {
+    public XtextSerializationModel(final EObject model, final String title) {
         super(title, "Cannot serialize model");
         // Adding file extension
         ResourceExtension resourceExtension = KiCoPlugin.getInstance().getResourceExtension(model);

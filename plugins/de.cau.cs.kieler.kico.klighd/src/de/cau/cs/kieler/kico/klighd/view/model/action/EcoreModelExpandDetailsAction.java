@@ -27,6 +27,7 @@ import de.cau.cs.kieler.klighd.util.ModelingUtil;
  * @kieler.rating 2015-01-01 proposed yellow
  */
 public class EcoreModelExpandDetailsAction implements IAction {
+    /** The action id. */
     public static final String ID =
             "de.cau.cs.kieler.kico.klighd.view.model.action.EcoreModelExpandDetailsAction";
 
@@ -34,7 +35,7 @@ public class EcoreModelExpandDetailsAction implements IAction {
      * {@inheritDoc}
      */
     @Override
-    public ActionResult execute(ActionContext context) {
+    public ActionResult execute(final ActionContext context) {
         if (context.getKNode() != null) {
             Iterator<KNode> nodeIter =
                     ModelingUtil.eAllContentsOfType(context.getKNode(), KNode.class);

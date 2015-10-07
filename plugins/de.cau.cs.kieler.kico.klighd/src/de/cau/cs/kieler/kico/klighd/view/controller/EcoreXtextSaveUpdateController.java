@@ -56,7 +56,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      * @param modelView
      *            the ModelView this controller is associated with
      */
-    public EcoreXtextSaveUpdateController(ModelView modelView) {
+    public EcoreXtextSaveUpdateController(final ModelView modelView) {
         super(modelView);
         saveAdapter = new EditorSaveAdapter(this);
     }
@@ -73,14 +73,14 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      * {@inheritDoc}
      */
     @Override
-    public void addContributions(IToolBarManager toolBar, IMenuManager menu) {
+    public void addContributions(final IToolBarManager toolBar, final IMenuManager menu) {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public AbstractModelUpdateController clone(ModelView modelView) {
+    public AbstractModelUpdateController clone(final ModelView modelView) {
         return new EcoreXtextSaveUpdateController(modelView);
     }
 
@@ -88,7 +88,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      * {@inheritDoc}
      */
     @Override
-    public void onActivate(IEditorPart editor) {
+    public void onActivate(final IEditorPart editor) {
         updateModel(readModel(editor));
         saveAdapter.activate(editor);
     }
@@ -105,7 +105,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      * {@inheritDoc}
      */
     @Override
-    public void saveModel(Object model, IFile file, URI uri) throws Exception {
+    public void saveModel(final Object model, final IFile file, final URI uri) throws Exception {
         if (model instanceof EObject) {
             ModelUtil.saveModel((EObject) model, uri);
         }
@@ -115,7 +115,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      * {@inheritDoc}
      */
     @Override
-    public String getResourceName(IEditorPart editor, Object model) {
+    public String getResourceName(final IEditorPart editor, final Object model) {
         if (editor != null && model != null) {
             return editor.getTitle();
         } else {
@@ -127,7 +127,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      * {@inheritDoc}
      */
     @Override
-    public void selectionChanged(SelectionChangedEvent event) {
+    public void selectionChanged(final SelectionChangedEvent event) {
         if (getEditor() instanceof XtextEditor) {
             XtextSelectionHighlighter.highlightSelection((XtextEditor) getEditor(),
                     event.getSelection());
@@ -138,8 +138,8 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      * {@inheritDoc}
      */
     @Override
-    public void onDiagramUpdate(Object model, KlighdSynthesisProperties properties,
-            IViewer viewer) {
+    public void onDiagramUpdate(final Object model, final KlighdSynthesisProperties properties,
+            final IViewer viewer) {
     }
 
     /**
@@ -153,14 +153,14 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      * {@inheritDoc}
      */
     @Override
-    public void saveState(IMemento memento) {
+    public void saveState(final IMemento memento) {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void loadState(IMemento memento) {
+    public void loadState(final IMemento memento) {
     }
 
     /**
@@ -169,15 +169,15 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
     @Override
     public void onDispose() {
     }
-    
+
     // -- Save Listener
     // -------------------------------------------------------------------------
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void onEditorSaved(IEditorPart editor) {
+    public void onEditorSaved(final IEditorPart editor) {
         updateModel(readModel(editor));
     }
 

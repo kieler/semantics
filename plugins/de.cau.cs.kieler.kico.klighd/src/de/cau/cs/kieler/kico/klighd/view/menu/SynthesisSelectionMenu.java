@@ -48,6 +48,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  * @kieler.rating 2015-06-22 proposed yellow
  *
  */
+@SuppressWarnings("restriction")
 public class SynthesisSelectionMenu extends MenuManager {
 
     /**
@@ -55,16 +56,16 @@ public class SynthesisSelectionMenu extends MenuManager {
      * <p>
      * The initialization of this map is done by {@link ModelUpdateControllerFactory}
      */
-    private static final HashMap<String, ISelectableGeneralSynthesis> selectableGeneralSyntheses =
+    private static final HashMap<String, ISelectableGeneralSynthesis> SELECTABLE_GENERAL_SYNTHESES =
             new HashMap<String, ISelectableGeneralSynthesis>();
 
     /** The general fallback synthesis. */
-    private static final EcoreGeneralSynthesis fallbackSynthesis = new EcoreGeneralSynthesis();
+    private static final EcoreGeneralSynthesis FALLBACK_SYNTHESIS = new EcoreGeneralSynthesis();
 
     /**
      * Map of all selections made until now.
      * <p>
-     * The model classes are saved as classname because this menu should be saved in a memento.
+     * The model classes are saved as class name because this menu should be saved in a memento.
      */
     private final HashMap<String, String> selections = new HashMap<String, String>();
 
@@ -83,7 +84,7 @@ public class SynthesisSelectionMenu extends MenuManager {
      * @param modelView
      *            The parent model view of this menu.
      */
-    public SynthesisSelectionMenu(ModelView modelView) {
+    public SynthesisSelectionMenu(final ModelView modelView) {
         this.modelView = modelView;
         this.setMenuText("Synthesis");
     }
@@ -99,10 +100,10 @@ public class SynthesisSelectionMenu extends MenuManager {
      * @param generalSynthesis
      *            the general synthesis
      */
-    public static void addGeneralSynthesis(String id,
-            ISelectableGeneralSynthesis generalSynthesis) {
+    public static void addGeneralSynthesis(final String id,
+            final ISelectableGeneralSynthesis generalSynthesis) {
         if (id != null && !id.isEmpty() && generalSynthesis != null) {
-            selectableGeneralSyntheses.put(id, generalSynthesis);
+            SELECTABLE_GENERAL_SYNTHESES.put(id, generalSynthesis);
         } else {
             throw new IllegalArgumentException("Any argument is null or emptystring");
         }
@@ -117,7 +118,7 @@ public class SynthesisSelectionMenu extends MenuManager {
      * @param source
      *            the {@link SynthesisSelectionMenu} to copy from
      */
-    public void copy(SynthesisSelectionMenu source) {
+    public void copy(final SynthesisSelectionMenu source) {
         selections.putAll(source.selections);
     }
 
@@ -132,8 +133,9 @@ public class SynthesisSelectionMenu extends MenuManager {
      * Saves the current state into a memento.
      * 
      * @param memento
+     *            the memento
      */
-    public void saveState(IMemento memento) {
+    public void saveState(final IMemento memento) {
         for (Entry<String, String> entry : selections.entrySet()) {
             memento.putString(entry.getKey(), entry.getValue());
         }
@@ -143,8 +145,9 @@ public class SynthesisSelectionMenu extends MenuManager {
      * Loads saved state form a memento.
      * 
      * @param memento
+     *            the memento
      */
-    public void loadState(IMemento memento) {
+    public void loadState(final IMemento memento) {
         for (String key : memento.getAttributeKeys()) {
             selections.put(key, memento.getString(key));
         }
@@ -159,7 +162,7 @@ public class SynthesisSelectionMenu extends MenuManager {
      * @param model
      *            The model
      */
-    public void update(Object model) {
+    public void update(final Object model) {
         if (model != null) {
             KlighdDataManager kdm = KlighdDataManager.getInstance();
             Class<? extends Object> newModelClass = model.getClass();
@@ -179,7 +182,7 @@ public class SynthesisSelectionMenu extends MenuManager {
                 }
 
                 // Add general EObject synthesis
-                for (ISelectableGeneralSynthesis data : selectableGeneralSyntheses.values()) {
+                for (ISelectableGeneralSynthesis data : SELECTABLE_GENERAL_SYNTHESES.values()) {
                     if (data.isApplicable(model)) {
                         actionMap.put(data.getID(), createAction(newModelClassName, data.getID()));
                     }
@@ -253,13 +256,15 @@ public class SynthesisSelectionMenu extends MenuManager {
      * 
      * @param model
      *            the model
+     * @param editor
+     *            the source editor
      * @param properties
      *            current configuration
      * @return A pair of the synthesis and the prepared model. Returns (null, model) is no synthesis
      *         is found.
      */
-    public Pair<ISynthesis, Object> getSynthesis(Object model, IEditorPart editor,
-            KlighdSynthesisProperties properties) {
+    public Pair<ISynthesis, Object> getSynthesis(final Object model, final IEditorPart editor,
+            final KlighdSynthesisProperties properties) {
         KlighdDataManager kdm = KlighdDataManager.getInstance();
         if (model != null) {
             if (properties.getProperty(ModelViewProperties.USE_FALLBACK_SYSTHESIS)) {
@@ -267,19 +272,20 @@ public class SynthesisSelectionMenu extends MenuManager {
                 String synthesisID = properties
                         .getProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS);
 
-                if ((synthesisID == null || !synthesisID.equals(fallbackSynthesis.getSynthesisID()))
-                        && fallbackSynthesis.isApplicable(model)) {
+                if ((synthesisID == null
+                        || !synthesisID.equals(FALLBACK_SYNTHESIS.getSynthesisID()))
+                        && FALLBACK_SYNTHESIS.isApplicable(model)) {
                     return new Pair<ISynthesis, Object>(
-                            kdm.getDiagramSynthesisById(fallbackSynthesis.getSynthesisID()),
-                            fallbackSynthesis.prepare(model, editor, properties));
+                            kdm.getDiagramSynthesisById(FALLBACK_SYNTHESIS.getSynthesisID()),
+                            FALLBACK_SYNTHESIS.prepare(model, editor, properties));
                 }
             } else {
                 String selectedID = selections.get(model.getClass().getCanonicalName());
                 if (selectedID != null) {
                     // Return selected synthesis
-                    if (selectableGeneralSyntheses.containsKey(selectedID)) {
+                    if (SELECTABLE_GENERAL_SYNTHESES.containsKey(selectedID)) {
                         ISelectableGeneralSynthesis generalSynthesis =
-                                selectableGeneralSyntheses.get(selectedID);
+                                SELECTABLE_GENERAL_SYNTHESES.get(selectedID);
                         // Prepare only if special synthesis is selected
                         return new Pair<ISynthesis, Object>(
                                 kdm.getDiagramSynthesisById(generalSynthesis.getSynthesisID()),

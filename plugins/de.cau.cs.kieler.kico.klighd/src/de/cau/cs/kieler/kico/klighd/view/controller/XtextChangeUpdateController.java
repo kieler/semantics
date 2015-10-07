@@ -55,7 +55,7 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      * @param modelView
      *            the ModelView this controller is associated with
      */
-    public XtextChangeUpdateController(ModelView modelView) {
+    public XtextChangeUpdateController(final ModelView modelView) {
         super(modelView);
         changeAdapter = new XtextEditorModelChangeAdapter(this);
     }
@@ -72,14 +72,14 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      * {@inheritDoc}
      */
     @Override
-    public void addContributions(IToolBarManager toolBar, IMenuManager menu) {
+    public void addContributions(final IToolBarManager toolBar, final IMenuManager menu) {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public AbstractModelUpdateController clone(ModelView modelView) {
+    public AbstractModelUpdateController clone(final ModelView modelView) {
         return new XtextChangeUpdateController(modelView);
     }
 
@@ -87,7 +87,7 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      * {@inheritDoc}
      */
     @Override
-    public void onActivate(IEditorPart editor) {
+    public void onActivate(final IEditorPart editor) {
         if (editor instanceof XtextEditor) {
             updateModel(EditorUtil.getModelFromXtextEditor((XtextEditor) editor, true));
             changeAdapter.activate((XtextEditor) editor);
@@ -109,7 +109,7 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      * {@inheritDoc}
      */
     @Override
-    public void saveModel(Object model, IFile file, URI uri) throws Exception {
+    public void saveModel(final Object model, final IFile file, final URI uri) throws Exception {
         if (model instanceof EObject) {
             ModelUtil.saveModel((EObject) model, uri);
         }
@@ -119,7 +119,7 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      * {@inheritDoc}
      */
     @Override
-    public String getResourceName(IEditorPart editor, Object model) {
+    public String getResourceName(final IEditorPart editor, final Object model) {
         if (editor != null && model != null) {
             return editor.getTitle();
         } else {
@@ -131,7 +131,7 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      * {@inheritDoc}
      */
     @Override
-    public void selectionChanged(SelectionChangedEvent event) {
+    public void selectionChanged(final SelectionChangedEvent event) {
         XtextSelectionHighlighter.highlightSelection((XtextEditor) getEditor(),
                 event.getSelection());
     }
@@ -140,8 +140,8 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      * {@inheritDoc}
      */
     @Override
-    public void onDiagramUpdate(Object model, KlighdSynthesisProperties properties,
-            IViewer viewer) {
+    public void onDiagramUpdate(final Object model, final KlighdSynthesisProperties properties,
+            final IViewer viewer) {
     }
 
     /**
@@ -155,14 +155,14 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      * {@inheritDoc}
      */
     @Override
-    public void saveState(IMemento memento) {
+    public void saveState(final IMemento memento) {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void loadState(IMemento memento) {
+    public void loadState(final IMemento memento) {
     }
 
     /**
@@ -179,7 +179,7 @@ public class XtextChangeUpdateController extends AbstractModelUpdateController
      * {@inheritDoc}
      */
     @Override
-    public void onModelChanged(XtextEditor editor, XtextResource resource) {
+    public void onModelChanged(final XtextEditor editor, final XtextResource resource) {
         updateModel(EditorUtil.getModelFromXtextEditor(editor, true));
     }
 

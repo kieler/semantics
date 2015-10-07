@@ -43,22 +43,10 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
     extension KNodeExtensions
 
     @Inject
-    extension KEdgeExtensions
-
-    @Inject
-    extension KPortExtensions
-
-    @Inject
-    extension KLabelExtensions
-
-    @Inject
     extension KRenderingExtensions
 
     @Inject
     extension KContainerRenderingExtensions
-
-    @Inject
-    extension KPolylineExtensions
 
     @Inject
     extension KColorExtensions

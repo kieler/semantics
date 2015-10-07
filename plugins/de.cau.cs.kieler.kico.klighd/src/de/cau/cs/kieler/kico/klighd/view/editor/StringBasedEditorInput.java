@@ -35,9 +35,14 @@ import org.eclipse.ui.IStorageEditorInput;
  */
 public class StringBasedEditorInput implements IStorageEditorInput {
 
+    /**
+     * String based Storage.
+     * 
+     * @author als
+     */
     class StringStorage implements IStorage {
         /** String content. */
-        protected String content;
+        private String content;
         /** Read only flag. */
         private boolean readOnly;
 
@@ -52,7 +57,8 @@ public class StringBasedEditorInput implements IStorageEditorInput {
          * @param readonly
          *            if editing should be enabled before saving
          */
-        public StringStorage(String content, boolean readOnly, String resourceExtension) {
+        StringStorage(final String content, final boolean readOnly,
+                final String resourceExtension) {
             super();
             this.content = content;
             this.readOnly = readOnly;
@@ -71,7 +77,6 @@ public class StringBasedEditorInput implements IStorageEditorInput {
          */
         public IPath getFullPath() {
             String num = (this.hashCode() + "").replace("-", "");
-            // URI uri = URI.createURI("dummy:/inmemory." + num + "." + resourceExtension);
             IPath path = new Path("dummy:/inmemory/" + num + "." + resourceExtension);
             return path;
         }
@@ -79,7 +84,7 @@ public class StringBasedEditorInput implements IStorageEditorInput {
         /**
          * {@inheritDoc}
          */
-        public Object getAdapter(Class adapter) {
+        public Object getAdapter(final Class adapter) {
             return null;
         }
 
@@ -100,11 +105,22 @@ public class StringBasedEditorInput implements IStorageEditorInput {
         /**
          * {@inheritDoc}
          */
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (obj instanceof StringStorage) {
                 return ((StringStorage) obj).content.equals(content);
             }
             return false;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public int hashCode() {
+            if (content != null) {
+                return content.hashCode();
+            } else {
+                return super.hashCode();
+            }
         }
     }
 
@@ -126,9 +142,11 @@ public class StringBasedEditorInput implements IStorageEditorInput {
      *            content
      * @param readonly
      *            if editing should be enabled before saving
+     * @param resourceExtension
+     *            the resource extension of the file
      */
-    public StringBasedEditorInput(String name, String tooltip, String content, boolean readonly,
-            String resourceExtension) {
+    public StringBasedEditorInput(final String name, final String tooltip, final String content,
+            final boolean readonly, final String resourceExtension) {
         this.name = name == null ? "Anonymous" : name;
         this.tooltip = tooltip == null ? "" : tooltip;
         this.storage = new StringStorage(content, readonly, resourceExtension);
@@ -179,18 +197,24 @@ public class StringBasedEditorInput implements IStorageEditorInput {
     /**
      * {@inheritDoc}
      */
-    public Object getAdapter(Class adapter) {
+    public Object getAdapter(final Class adapter) {
         return null;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj instanceof StringBasedEditorInput) {
             return ((StringBasedEditorInput) obj).storage.equals(storage);
         }
         return false;
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

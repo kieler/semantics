@@ -42,16 +42,19 @@ public class EditorSaveAdapter implements IPropertyListener {
         public void onEditorSaved(IEditorPart editor);
     }
 
-    /** The listener to be notified by this adapter */
+    /** The listener to be notified by this adapter. */
     private EditorSafeListener listener;
-    /** The current editor this adapter is listening to */
+    /** The current editor this adapter is listening to. */
     private IEditorPart editor;
 
     /**
      * Creates an adapter for the given listener. The adapter must be activated on an editor to
      * start fire events.
+     * 
+     * @param listener
+     *            the listener listening for events of this adapter
      */
-    public EditorSaveAdapter(EditorSafeListener listener) {
+    public EditorSaveAdapter(final EditorSafeListener listener) {
         this.listener = listener;
     }
 
@@ -59,12 +62,12 @@ public class EditorSaveAdapter implements IPropertyListener {
      * {@inheritDoc}
      */
     @Override
-    public void propertyChanged(Object source, int propId) {
+    public void propertyChanged(final Object source, final int propId) {
         if (editor != null) {
-            IEditorPart editor = (IEditorPart) source;
-            if (propId == IWorkbenchPartConstants.PROP_DIRTY && !editor.isDirty()) {
+            IEditorPart sourceEditor = (IEditorPart) source;
+            if (propId == IWorkbenchPartConstants.PROP_DIRTY && !sourceEditor.isDirty()) {
                 // dirty flag changed and editor is not dirty -> saved
-                listener.onEditorSaved(editor);
+                listener.onEditorSaved(sourceEditor);
             }
         }
     }
@@ -72,16 +75,16 @@ public class EditorSaveAdapter implements IPropertyListener {
     /**
      * Starts listening on the given editor.
      *
-     * @param editor
+     * @param newEditor
      *            the editor
      */
-    public void activate(IEditorPart editor) {
-        if (editor != null) {
+    public void activate(final IEditorPart newEditor) {
+        if (newEditor != null) {
             if (this.editor != null) {
                 this.editor.removePropertyListener(this);
             }
-            this.editor = editor;
-            editor.addPropertyListener(this);
+            this.editor = newEditor;
+            newEditor.addPropertyListener(this);
         }
     }
 

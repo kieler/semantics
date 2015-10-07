@@ -63,9 +63,6 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
     extension KEdgeExtensions
 
     @Inject
-    extension KPortExtensions
-
-    @Inject
     extension KLabelExtensions
 
     @Inject

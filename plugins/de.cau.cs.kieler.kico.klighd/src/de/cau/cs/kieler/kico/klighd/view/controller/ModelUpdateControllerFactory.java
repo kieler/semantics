@@ -40,7 +40,7 @@ import de.cau.cs.kieler.kico.klighd.view.menu.SynthesisSelectionMenu;
  * @kieler.rating 2015-06-22 proposed yellow
  *
  */
-public class ModelUpdateControllerFactory {
+public final class ModelUpdateControllerFactory {
 
     // -- Extension Point CONSTANTS --
     /** Identifier of the extension point for controllers. */
@@ -213,7 +213,7 @@ public class ModelUpdateControllerFactory {
      *            The EditorPart
      * @return true if controller is associated otherwise false
      */
-    public static boolean isHandledEditor(IEditorPart editor) {
+    public static boolean isHandledEditor(final IEditorPart editor) {
         if (editor != null) {
             return ModelUpdateControllerFactory.getInstance().editorControllerMapping
                     .containsKey(editor.getEditorSite().getId());
@@ -228,7 +228,7 @@ public class ModelUpdateControllerFactory {
      *            The EditorPart
      * @return the controller id or null if no controller is associated
      */
-    public static String getHandlingControllerID(IEditorPart editor) {
+    public static String getHandlingControllerID(final IEditorPart editor) {
         if (editor != null) {
             return ModelUpdateControllerFactory.getInstance().editorControllerMapping
                     .get(editor.getEditorSite().getId());
@@ -245,8 +245,8 @@ public class ModelUpdateControllerFactory {
      *            The ModelView
      * @return The new instance of null if the controller does not exist
      */
-    public static AbstractModelUpdateController getNewInstance(String controllerID,
-            ModelView modelView) {
+    public static AbstractModelUpdateController getNewInstance(final String controllerID,
+            final ModelView modelView) {
         if (controllerID != null && modelView != null) {
             ModelUpdateControllerFactory mucm = ModelUpdateControllerFactory.getInstance();
             Class<? extends AbstractModelUpdateController> clazz =

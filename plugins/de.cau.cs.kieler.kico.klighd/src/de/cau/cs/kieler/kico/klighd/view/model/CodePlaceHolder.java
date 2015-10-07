@@ -28,7 +28,7 @@ import org.eclipse.xtext.util.StringInputStream;
 public class CodePlaceHolder implements ISaveableModel {
 
     /** The default editor. */
-    private final static String DEFAULT_EDITOR = "org.eclipse.ui.DefaultTextEditor";
+    private static final String DEFAULT_EDITOR = "org.eclipse.ui.DefaultTextEditor";
 
     /** Content. */
     protected String code;
@@ -50,7 +50,7 @@ public class CodePlaceHolder implements ISaveableModel {
      * @param code
      *            The content
      */
-    public CodePlaceHolder(String name, String code) {
+    public CodePlaceHolder(final String name, final String code) {
         this(name, code, null, "txt");
     }
 
@@ -66,7 +66,8 @@ public class CodePlaceHolder implements ISaveableModel {
      * @param resourceExtension
      *            The file/resource extension for the code type
      */
-    public CodePlaceHolder(String name, String code, String editorID, String resourceExtension) {
+    public CodePlaceHolder(final String name, final String code, final String editorID,
+            final String resourceExtension) {
         super();
         this.name = name;
         this.code = code;
@@ -81,7 +82,7 @@ public class CodePlaceHolder implements ISaveableModel {
      * {@inheritDoc}
      */
     @Override
-    public void save(IFile file, URI uri) throws Exception {
+    public void save(final IFile file, final URI uri) throws Exception {
         // save to text file (create it if necessary)
         if (!file.exists()) {
             file.create(new StringInputStream(getCode()), 0, null);

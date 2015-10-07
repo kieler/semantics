@@ -54,7 +54,7 @@ public final class XtextSelectionHighlighter {
      * @param selection
      *            the selection
      */
-    public static void highlightSelection(final XtextEditor editor, ISelection selection) {
+    public static void highlightSelection(final XtextEditor editor, final ISelection selection) {
         if (selection instanceof KlighdTreeSelection) {
             highlightSelection(editor, (KlighdTreeSelection) selection);
         }
@@ -112,7 +112,6 @@ public final class XtextSelectionHighlighter {
                             // Maybe bring on top (this may disturb primary view when triggered
                             // in a secondary)
                             // editor.getSite().getPage().bringToTop(editor);
-
                         }
                     }
                 });

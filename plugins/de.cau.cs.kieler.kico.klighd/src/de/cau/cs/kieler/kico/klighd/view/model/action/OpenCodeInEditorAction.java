@@ -32,14 +32,14 @@ import de.cau.cs.kieler.klighd.IAction;
  */
 public class OpenCodeInEditorAction implements IAction {
 
-    /** Action ID. */
-    public final static String ID =
+    /** The action ID. */
+    public static final String ID =
             "de.cau.cs.kieler.kico.klighd.view.model.action.OpenCodeInEditorAction";
 
     /**
      * {@inheritDoc}
      */
-    public ActionResult execute(ActionContext context) {
+    public ActionResult execute(final ActionContext context) {
         Object inputModel = context.getViewContext().getInputModel();
 
         // get placeholder model
@@ -56,16 +56,14 @@ public class OpenCodeInEditorAction implements IAction {
         // open editor
         if (codeModel != null) {
             // get window for opening editor
-            IWorkbenchWindow window =
-                    context.getViewContext().getDiagramWorkbenchPart().getSite()
-                            .getWorkbenchWindow();
+            IWorkbenchWindow window = context.getViewContext().getDiagramWorkbenchPart().getSite()
+                    .getWorkbenchWindow();
 
             // Create editor input based on string.
             // Currently it is better to set this read only because if normal save is used instead
             // of save as saving has no effect
-            IStorageEditorInput input =
-                    new StringBasedEditorInput(codeModel.getName(), "Generated Code",
-                            codeModel.getCode(), true, codeModel.getResourceExtension());
+            IStorageEditorInput input = new StringBasedEditorInput(codeModel.getName(),
+                    "Generated Code", codeModel.getCode(), true, codeModel.getResourceExtension());
 
             // open editor
             IWorkbenchPage page = window.getActivePage();

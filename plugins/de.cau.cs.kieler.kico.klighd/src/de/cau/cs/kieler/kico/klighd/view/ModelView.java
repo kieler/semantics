@@ -177,13 +177,13 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     private final Action actionResetOptions;
     /** The action for toggling editor synchronization. */
     private final Action actionSyncEditor;
-    private final boolean actionSyncEditor_DEFAULT_STATE = true;
+    private static final boolean actionSyncEditor_DEFAULT_STATE = true;
     /** The action for toggling selection highlighting in the editor. */
     private final Action actionSelectionHighlighting;
-    private final boolean actionSelectionHighlighting_DEFAULT_STATE = true;
+    private static final boolean actionSelectionHighlighting_DEFAULT_STATE = true;
     /** The action for toggling display of diagram placeholder. */
     private final Action actionDiagramPlaceholder;
-    private final boolean actionDiagramPlaceholder_DEFAULT_STATE = false;
+    private static final boolean actionDiagramPlaceholder_DEFAULT_STATE = false;
 
     /** The menu and controller handling the selection of available synthesis. */
     private final SynthesisSelectionMenu synthesisSelection = new SynthesisSelectionMenu(this);
@@ -536,7 +536,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * {@inheritDoc}
      */
     @Override
-    public void saveState(IMemento memento) {
+    public void saveState(final IMemento memento) {
         try {
             super.saveState(memento);
             if (memento != null) {
@@ -709,11 +709,11 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             IMemento controllersMemento = memento.getChild("controllers");
             if (controllersMemento != null) {
                 for (IMemento controllerMemento : controllersMemento.getChildren()) {
-                    AbstractModelUpdateController controller = ModelUpdateControllerFactory
+                    AbstractModelUpdateController newController = ModelUpdateControllerFactory
                             .getNewInstance(controllerMemento.getType(), this);
-                    if (controller != null) {
-                        controller.loadState(controllerMemento);
-                        controllers.add(controller);
+                    if (newController != null) {
+                        newController.loadState(controllerMemento);
+                        controllers.add(newController);
                     }
                 }
             }
@@ -735,8 +735,8 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
         recentSynthesisOptions.clear();
         usedSyntheses.clear();
         lastSaveDirectory = null;
-        for (AbstractModelUpdateController controller : controllers) {
-            controller.reset();
+        for (AbstractModelUpdateController c : controllers) {
+            c.reset();
         }
         updateViewTitle();
     }
@@ -757,7 +757,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * @param editor
      *            editor or null to unset
      */
-    void setEditor(IEditorPart newEditor) {
+    void setEditor(final IEditorPart newEditor) {
         if (newEditor != null) {
             if (editor != newEditor) {
                 // set as active editor
@@ -878,7 +878,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * {@inheritDoc}
      */
     @Override
-    public void selectionChanged(SelectionChangedEvent event) {
+    public void selectionChanged(final SelectionChangedEvent event) {
         if (controller != null) {
             controller.selectionChanged(event);
         }
@@ -1032,7 +1032,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
         new UIJob(jobName) {
 
             @Override
-            public IStatus runInUIThread(IProgressMonitor monitor) {
+            public IStatus runInUIThread(final IProgressMonitor monitor) {
                 doUpdateDiagram(finalDisplayModel, properties, controller, editor, false);
                 return Status.OK_STATUS;
             }

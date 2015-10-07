@@ -52,7 +52,7 @@ public class XtextSerializationGeneralSynthesis implements ISelectableGeneralSyn
      * {@inheritDoc}
      */
     @Override
-    public boolean isApplicable(Object model) {
+    public boolean isApplicable(final Object model) {
         return model instanceof EObject;
     }
 
@@ -60,7 +60,8 @@ public class XtextSerializationGeneralSynthesis implements ISelectableGeneralSyn
      * {@inheritDoc}
      */
     @Override
-    public Object prepare(Object model, IEditorPart editor, KlighdSynthesisProperties properties) {
+    public Object prepare(final Object model, final IEditorPart editor,
+            final KlighdSynthesisProperties properties) {
         return new XtextSerializationModel((EObject) model, editor.getTitle());
     }
 
