@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import com.google.common.collect.Lists;
 
@@ -59,6 +60,7 @@ import de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
 import de.cau.cs.kieler.kico.klighd.view.model.ISaveableModel;
 import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
+import de.cau.cs.kieler.kico.klighd.view.util.ModelUtil;
 import de.cau.cs.kieler.kiml.config.CompoundLayoutConfig;
 import de.cau.cs.kieler.kiml.config.ILayoutConfig;
 import de.cau.cs.kieler.kiml.config.LayoutContext;
@@ -158,6 +160,9 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     /** Model extracted from editor. */
     private EObject sourceModel;
+
+    /** Indicates if the source model has error markers. */
+    private boolean sourceModelHasErrorMarkers = false;
 
     /** Current compilation running in background. */
     private AsynchronousCompilation currentCompilation = null;
@@ -421,7 +426,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     /**
      * Updates the model caused by changeEvent.
      * 
-     * @param change the type of change
+     * @param change
+     *            the type of change
      */
     public void update(final ChangeEvent change) {
         update(change, null);
@@ -455,6 +461,9 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             // Get model if necessary
             if (do_get_model) {
                 sourceModel = readModel(editor);
+                if (sourceModel != null) {
+                    sourceModelHasErrorMarkers = ModelUtil.hasErrorMarkers(sourceModel.eResource());
+                }
             }
 
             // Create properties with default values

@@ -13,13 +13,23 @@
 package de.cau.cs.kieler.kico.klighd.view.util;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.ui.util.ResourceUtil;
+
+import de.cau.cs.kieler.core.WrappedException;
 
 /**
  * This class contains utility methods for handling emf models.
@@ -54,5 +64,42 @@ public final class ModelUtil {
         resource.getContents().add(model);
         // Save the contents of the resource to the file system.
         resource.save(Collections.EMPTY_MAP);
+    }
+
+    /**
+     * Checks the given resource for error markers.
+     * 
+     * @param resource
+     *            the resource
+     * @return true if any errors are present otherwise false
+     */
+    public static boolean hasErrorMarkers(final Resource resource) {
+        if (resource instanceof XtextResource) {
+            XtextResource xResource = (XtextResource) resource;
+            IFile underlyingFile = ResourceUtil.getUnderlyingFile(xResource);
+
+            if (underlyingFile == null) {
+                // this happens in case models being part of installed bundles (e.g. Xtend files)
+                // are opened; it doesn't make sense to attach any markers to them
+                return false;
+            }
+
+            try {
+                /* examine the files error markers, whether one of is created by this mechanisms */
+                List<IMarker> currentMarkers = Arrays.asList(underlyingFile
+                        .findMarkers(IMarker.PROBLEM, false, IResource.DEPTH_INFINITE));
+
+                /* if model is correct... */
+                if (xResource.getErrors().isEmpty() && currentMarkers.isEmpty()) {
+                    return false;
+                }
+            } catch (CoreException e) {
+                /* in this case something went heavily wrong */
+                throw new WrappedException(e);
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 }

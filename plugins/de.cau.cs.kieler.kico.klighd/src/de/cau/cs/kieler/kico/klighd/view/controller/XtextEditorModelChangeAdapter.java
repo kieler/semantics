@@ -26,6 +26,8 @@ import org.eclipse.xtext.ui.editor.model.IXtextModelListener;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 
 import de.cau.cs.kieler.core.WrappedException;
+import de.cau.cs.kieler.kico.klighd.view.util.EditorUtil;
+import de.cau.cs.kieler.kico.klighd.view.util.ModelUtil;
 
 /**
  * An adapter to listen for the change event of an xtext editor.
@@ -97,42 +99,8 @@ public class XtextEditorModelChangeAdapter implements IXtextModelListener {
      */
     @Override
     public void modelChanged(final XtextResource resource) {
-        if (!hasErrors(resource) && editor != null) {
+        if (ModelUtil.hasErrorMarkers(resource) && editor != null) {
             listener.onModelChanged(editor, resource);
         }
     }
-
-    /**
-     * Checks the given resource for error markers.
-     * 
-     * @param resource
-     *            the resource
-     * @return true if any errors are present otherwise false
-     */
-    private boolean hasErrors(final XtextResource resource) {
-        IFile underlyingFile = ResourceUtil.getUnderlyingFile(resource);
-
-        if (underlyingFile == null) {
-            // this happens in case models being part of installed bundles (e.g. Xtend files)
-            // are opened; it doesn't make sense to attach any markers to them
-            return false;
-        }
-
-        try {
-            /* examine the files error markers, whether one of is created by this mechanisms */
-            List<IMarker> currentMarkers = Arrays.asList(
-                    underlyingFile.findMarkers(IMarker.PROBLEM, false, IResource.DEPTH_INFINITE));
-
-            /* if model is correct... */
-            if (resource.getErrors().isEmpty() && currentMarkers.isEmpty()) {
-                return false;
-            }
-        } catch (CoreException e) {
-            /* in this case something went heavily wrong */
-            throw new WrappedException(e);
-        }
-
-        return true;
-    }
-
 }
