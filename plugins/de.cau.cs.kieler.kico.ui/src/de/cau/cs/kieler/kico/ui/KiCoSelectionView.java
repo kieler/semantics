@@ -1273,7 +1273,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         KielerCompilerSelection selection = getSelectionModel(id).getContext().getSelection();
         selectionEventManger.fireSelectionChangeEvent(id,
                 selection == null || selection.equals(null) ? null
-                        : new Pair<KielerCompilerSelection, Boolean>(selection, advancedMode));
+                        : new Pair<KielerCompilerSelection, Boolean>(selection.clone(), advancedMode));
     }
 
     // -------------------------------------------------------------------------
