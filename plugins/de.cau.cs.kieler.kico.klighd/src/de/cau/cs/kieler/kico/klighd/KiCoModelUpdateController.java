@@ -410,11 +410,16 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         // show warnings composite
         CompilationResult compilationResult =
                 properties.getProperty(KiCoProperties.COMPILATION_RESULT);
+        StringBuilder warnings = new StringBuilder();
+        if (sourceModelHasErrorMarkers) {
+            warnings.append("- The source model contains error markers.\n");
+        }
         if (compilationResult != null && !compilationResult.getPostponedWarnings().isEmpty()) {
-            StringBuilder warnings = new StringBuilder();
             for (KielerCompilerException warning : compilationResult.getPostponedWarnings()) {
-                warnings.append(warning.getMessage()).append("\n");
+                warnings.append("- ").append(warning.getMessage()).append("\n");
             }
+        }
+        if (warnings.length() > 0) {
             warnings.setLength(warnings.length() - 1);
             addWarningComposite(viewer, warnings.toString());
         }
