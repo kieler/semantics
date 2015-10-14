@@ -11,11 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.view.model;
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.xtext.util.StringInputStream;
+package de.cau.cs.kieler.kico.klighd.internal.model;
 
 /**
  * Placeholder for a huge text or code.
@@ -25,7 +21,7 @@ import org.eclipse.xtext.util.StringInputStream;
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class CodePlaceHolder implements ISaveableModel {
+public class CodePlaceHolder {
 
     /** The default editor. */
     private static final String DEFAULT_EDITOR = "org.eclipse.ui.DefaultTextEditor";
@@ -82,13 +78,8 @@ public class CodePlaceHolder implements ISaveableModel {
      * {@inheritDoc}
      */
     @Override
-    public void save(final IFile file, final URI uri) throws Exception {
-        // save to text file (create it if necessary)
-        if (!file.exists()) {
-            file.create(new StringInputStream(getCode()), 0, null);
-        } else {
-            file.setContents(new StringInputStream(getCode()), 0, null);
-        }
+    public String toString() {
+        return getCode();
     }
 
     // -- Getters

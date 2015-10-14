@@ -27,7 +27,7 @@ import de.cau.cs.kieler.core.krendering.KContainerRendering;
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class MessageModel implements ISaveableModel {
+public class MessageModel {
 
     /** The title. */
     protected String title;
@@ -110,9 +110,10 @@ public class MessageModel implements ISaveableModel {
      * {@inheritDoc}
      */
     @Override
-    public void save(final IFile file, final URI uri) throws Exception {
+    public String toString() {
         StringBuilder text = new StringBuilder();
         String newline = System.getProperty("line.separator");
+        
         if (title != null) {
             text.append(title);
             text.append(newline);
@@ -120,12 +121,8 @@ public class MessageModel implements ISaveableModel {
         if (message != null) {
             text.append(message);
         }
-        // save to text file (create it if necessary)
-        if (!file.exists()) {
-            file.create(new StringInputStream(text.toString()), 0, null);
-        } else {
-            file.setContents(new StringInputStream(text.toString()), 0, null);
-        }
+        
+        return text.toString();
     }
 
     // -- Getters

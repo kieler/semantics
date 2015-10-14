@@ -16,14 +16,22 @@ package de.cau.cs.kieler.kico.klighd;
 import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -38,8 +46,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
+import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.xtext.util.StringInputStream;
 
 import com.google.common.collect.Lists;
 
@@ -52,15 +62,15 @@ import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.kico.internal.ResourceExtension;
 import de.cau.cs.kieler.kico.klighd.internal.AsynchronousCompilation;
 import de.cau.cs.kieler.kico.klighd.internal.CompilerSelectionStore;
-import de.cau.cs.kieler.kico.klighd.internal.ModelChain;
+import de.cau.cs.kieler.kico.klighd.internal.ModelUtil;
+import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder;
+import de.cau.cs.kieler.kico.klighd.internal.model.ModelChain;
 import de.cau.cs.kieler.kico.klighd.view.ModelView;
 import de.cau.cs.kieler.kico.klighd.view.controller.AbstractModelUpdateController;
 import de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController;
-import de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
-import de.cau.cs.kieler.kico.klighd.view.model.ISaveableModel;
 import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
-import de.cau.cs.kieler.kico.klighd.view.util.ModelUtil;
+import de.cau.cs.kieler.kico.klighd.view.util.EditorUtil;
 import de.cau.cs.kieler.kiml.config.CompoundLayoutConfig;
 import de.cau.cs.kieler.kiml.config.ILayoutConfig;
 import de.cau.cs.kieler.kiml.config.LayoutContext;
@@ -108,7 +118,15 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     private static final int ASYNC_DELAY = 500;
 
+    // -- GUI (Model) texts --
+
+    private static final String MODEL_PLACEHOLDER_PREFIX = "Model Placeholder: ";
+    private static final String MODEL_PLACEHOLDER_MESSGAE = "Model visualization is deactivated";
+
     // -- Icons --
+    /** The icon for saving current model. */
+    private static final ImageDescriptor ICON_SAVE = AbstractUIPlugin
+            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/etool16/save_edit.gif");
     /** The icon for toggling side-by-side display mode button. */
     private static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin
             .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/compile.png");
@@ -127,6 +145,11 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/remove.gif");
 
     // -- Toolbar --
+    /** The action for saving currently displayed model. */
+    private final Action actionSave;
+    /** The last directory used for saving a model. */
+    private IPath lastSaveDirectory = null;
+
     /** The action for toggling side-by-side display mode. */
     private Action actionSideBySideToggle;
     /** Flag if side-by-side display mode is active. */
@@ -146,6 +169,14 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             new WeakHashMap<IEditorPart, Pair<KielerCompilerSelection, Boolean>>();
 
     // -- Menu --
+    /** The action for toggling editor synchronization. */
+    private final Action actionSyncEditor;
+    private static final boolean actionSyncEditor_DEFAULT_STATE = true;
+
+    /** The action for toggling display of diagram placeholder. */
+    private final Action actionDiagramPlaceholder;
+    private static final boolean actionDiagramPlaceholder_DEFAULT_STATE = false;
+
     /** The action for toggling tracing. */
     private Action actionTracingToggle;
     /** Flag if tracing is activated. */
@@ -193,6 +224,17 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         super(modelView);
         CompilerSelectionStore.register(this);
 
+        // Save Button
+        actionSave = new Action("Save displayed main model", IAction.AS_PUSH_BUTTON) {
+            @Override
+            public void run() {
+                saveModel();
+            }
+        };
+        actionSave.setId("actionSave");
+        actionSave.setToolTipText("Save displayed main model");
+        actionSave.setImageDescriptor(ICON_SAVE);
+
         // Compile button
         actionCompileToggle = new Action("Show compiled model", IAction.AS_CHECK_BOX) {
             @Override
@@ -237,6 +279,32 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         actionSideBySideToggle.setToolTipText("Activate side-by-side display mode");
         actionSideBySideToggle.setImageDescriptor(ICON_SIDE_BY_SIDE);
         actionSideBySideToggle.setChecked(displaySideBySide);
+
+        // Sync Menu Item
+        actionSyncEditor = new Action("Synchronize with editor content", IAction.AS_CHECK_BOX) {
+            @Override
+            public void run() {
+                if (isChecked()) {
+                    update(ChangeEvent.ACTIVE_EDITOR);
+                }
+            }
+        };
+        actionSyncEditor.setId("actionSyncEditor");
+        actionSyncEditor.setToolTipText(
+                "If Synchronize is disabled, this view will no longer update its status when editor content changes.");
+        actionSyncEditor.setChecked(actionSyncEditor_DEFAULT_STATE);
+
+        // Diagram PlaceHolder Menu Item
+        actionDiagramPlaceholder = new Action("Visualization Model", IAction.AS_CHECK_BOX) {
+            @Override
+            public void run() {
+                update(ChangeEvent.ACTIVE_EDITOR);
+            }
+        };
+        actionDiagramPlaceholder.setId("actionDiagramPlaceholder");
+        actionDiagramPlaceholder.setToolTipText(
+                "If visualization is deactiveted, all diagrams will be replaced by a placeholder diagram.");
+        actionDiagramPlaceholder.setChecked(actionDiagramPlaceholder_DEFAULT_STATE);
 
         // Tracing item
         actionTracingToggle = new Action("Tracing", IAction.AS_CHECK_BOX) {
@@ -290,6 +358,9 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     @Override
     public AbstractModelUpdateController clone(final ModelView modelView) {
         KiCoModelUpdateController newController = new KiCoModelUpdateController(modelView);
+        newController.actionSyncEditor.setChecked(actionSyncEditor.isChecked());
+        newController.actionDiagramPlaceholder.setChecked(actionDiagramPlaceholder.isChecked());
+        newController.lastSaveDirectory = lastSaveDirectory;
         // TODO copy attributes
         return newController;
     }
@@ -299,6 +370,9 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     @Override
     public void reset() {
+        actionSyncEditor.setChecked(actionSyncEditor_DEFAULT_STATE);
+        actionDiagramPlaceholder.setChecked(actionDiagramPlaceholder_DEFAULT_STATE);
+        lastSaveDirectory = null;
         // TODO reset attributes
     }
 
@@ -307,7 +381,11 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     @Override
     public void saveState(final IMemento memento) {
-        // TODO Auto-generated method stub
+        if (lastSaveDirectory != null) {
+            memento.putString("lastSaveDirectory", lastSaveDirectory.toPortableString());
+        }
+
+        memento.putBoolean("actionDiagramPlaceholder", actionDiagramPlaceholder.isChecked());
     }
 
     /**
@@ -315,7 +393,17 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     @Override
     public void loadState(final IMemento memento) {
-        // TODO Auto-generated method stub
+        String lastSaveDirectoryValue = memento.getString("lastSaveDirectory");
+        if (lastSaveDirectoryValue != null) {
+            lastSaveDirectory = Path.fromPortableString(lastSaveDirectoryValue);
+        }
+
+        Boolean actionDiagramPlaceholderValue = memento.getBoolean("actionDiagramPlaceholder");
+        if (actionDiagramPlaceholderValue != null) {
+            if (actionDiagramPlaceholder != null) {
+                actionDiagramPlaceholder.setChecked(actionDiagramPlaceholderValue);
+            }
+        }
     }
 
     // -- View
@@ -325,9 +413,15 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     public void addContributions(final IToolBarManager toolBar, final IMenuManager menu) {
+        toolBar.add(new Separator());
+        toolBar.add(actionSave);
         toolBar.add(actionCompileToggle);
         toolBar.add(actionPinToggle);
         toolBar.add(actionSideBySideToggle);
+
+        menu.add(new Separator());
+        menu.add(actionSyncEditor);
+        menu.add(actionDiagramPlaceholder);
         menu.add(actionTracingToggle);
         menu.add(actionTracingChainToggle);
     }
@@ -335,28 +429,90 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     // -- Saving Model
     // -------------------------------------------------------------------------
 
+    // -- Save model
+    // -------------------------------------------------------------------------
+
     /**
-     * {@inheritDoc}
+     * Saves the current model into a file with saveAs dialog.
      */
-    @Override
-    public void saveModel(final Object model, final IFile file, final URI uri) throws Exception {
-        Object saveModel = model;
-        // decompose chain
-        if (model instanceof ModelChain) {
-            saveModel = ((ModelChain) model).getSelectedModel();
-        }
-        // save
-        if (saveModel instanceof ISaveableModel) {
-            ((ISaveableModel) saveModel).save(file, uri);
-        } else {
-            super.saveModel(saveModel, file, uri);
+    private void saveModel() {
+        if (getModel() != null) {
+            Object model = getModel();
+            // Get workspace
+            IWorkspace workspace = ResourcesPlugin.getWorkspace();
+            IWorkspaceRoot root = workspace.getRoot();
+
+            // get filename with correct extension
+            String filename = getResourceName(getEditor(), model);
+
+            SaveAsDialog saveAsDialog = new SaveAsDialog(getModelView().getSite().getShell());
+
+            // Configure dialog
+            if (lastSaveDirectory != null) {
+                IPath path = lastSaveDirectory;
+                // add new filename
+                path = path.append(filename);
+                try {
+                    saveAsDialog.setOriginalFile(root.getFile(path));
+                } catch (Exception e) {
+                    // In case of any path error
+                    saveAsDialog.setOriginalName(filename);
+                }
+            } else {
+                saveAsDialog.setOriginalName(filename);
+            }
+
+            saveAsDialog.setTitle("Save Model");
+            saveAsDialog.setBlockOnOpen(true);
+
+            // open and get result
+            saveAsDialog.open();
+            IPath path = saveAsDialog.getResult();
+
+            // save
+            if (path != null && !path.isEmpty()) {
+                IFile file = root.getFile(path);
+                URI uri = URI.createPlatformResourceURI(path.toString(), false);
+
+                // remove filename to just store the path
+                lastSaveDirectory = file.getFullPath().removeLastSegments(1);
+
+                // refresh workspace to prevent out of sync with file-system
+                if (file.exists()) {
+                    try {
+                        file.refreshLocal(IResource.DEPTH_INFINITE, null);
+                    } catch (CoreException e) {
+                        StatusManager.getManager().handle(new Status(IStatus.WARNING,
+                                KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.LOG);
+                    }
+                }
+
+                // perform saving
+                try {
+                    Object saveModel = model;
+                    // decompose chain
+                    if (model instanceof ModelChain) {
+                        saveModel = ((ModelChain) model).getSelectedModel();
+                    }
+                    // save
+                    if (saveModel instanceof EObject) {
+                        ModelUtil.saveModel((EObject) saveModel, uri);
+                    } else {
+                        // save to text file (create it if necessary)
+                        if (!file.exists()) {
+                            file.create(new StringInputStream(saveModel.toString()), 0, null);
+                        } else {
+                            file.setContents(new StringInputStream(saveModel.toString()), 0, null);
+                        }
+                    }
+                } catch (Exception e) {
+                    StatusManager.getManager().handle(new Status(IStatus.ERROR,
+                            KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW);
+                }
+            }
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getResourceName(final IEditorPart editor, final Object model) {
         if (editor != null && model != null) {
             String filename = editor.getTitle();
@@ -398,8 +554,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     @Override
-    public void onDiagramUpdate(final Object model, final KlighdSynthesisProperties properties,
-            final IViewer viewer) {
+    public void onDiagramUpdate(final Object model, final KlighdSynthesisProperties properties) {
         // dispose warning message composite if necessary
         if (warningMessageContainer != null) {
             if (!warningMessageContainer.isDisposed()) {
@@ -421,7 +576,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         }
         if (warnings.length() > 0) {
             warnings.setLength(warnings.length() - 1);
-            addWarningComposite(viewer, warnings.toString());
+            addWarningComposite(getModelView().getViewer(), warnings.toString());
         }
     }
 
@@ -466,8 +621,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             // Get model if necessary
             if (do_get_model) {
                 sourceModel = readModel(editor);
-                if (sourceModel != null) {
-                    sourceModelHasErrorMarkers = ModelUtil.hasErrorMarkers(sourceModel.eResource());
+                if (sourceModel != null && sourceModel.eResource() != null) {
+                    sourceModelHasErrorMarkers = !sourceModel.eResource().getErrors().isEmpty();
                 }
             }
 
@@ -482,6 +637,9 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             if (sourceModel == null) {
                 updateModel(null, properties);
                 return;
+            } else if (actionDiagramPlaceholder.isChecked()) {
+                updateModel(new MessageModel(MODEL_PLACEHOLDER_PREFIX + editor.getTitle(),
+                        MODEL_PLACEHOLDER_MESSGAE), properties);
             }
 
             // Create model to passed to update
@@ -670,7 +828,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     private void publishCurrentModelInformation(final Object model,
             final CompilationResult compilationResult) {
-        if (getModelView().isPrimaryView()) {
+        if (getModelView().isLinkedWithActiveEditor()) {
             boolean is_placeholder = model instanceof ErrorModel || model instanceof MessageModel
                     || model instanceof CodePlaceHolder;
             boolean is_chain = model instanceof ModelChain;

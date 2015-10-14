@@ -22,24 +22,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -56,7 +46,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -68,13 +57,11 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
 import de.cau.cs.kieler.kico.klighd.view.controller.AbstractModelUpdateController;
 import de.cau.cs.kieler.kico.klighd.view.controller.ModelUpdateControllerFactory;
 import de.cau.cs.kieler.kico.klighd.view.menu.SynthesisSelectionMenu;
 import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
-import de.cau.cs.kieler.kico.klighd.view.model.ISaveableModel;
 import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
 import de.cau.cs.kieler.kiml.config.ILayoutConfig;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
@@ -107,25 +94,31 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     public static final String ID = "de.cau.cs.kieler.kico.klighd.modelview";
 
     /** Default view title. **/
-    static final String VIEW_TITLE = "KIELER Model View";
+    public static final String VIEW_TITLE = "Diagram";
+    /** UI job prefix. **/
+    private static final String UPDATE_JOB_PREFIX = "Updating ";
 
     // -- GUI (Model) texts --
 
-    private static final String NO_MODEL_PRIMARY = "No model in active editor";
-    private static final String NO_MODEL_SECONDARY = "No model in related editor";
-    private static final String MODEL_PLACEHOLDER_PREFIX = "Model Placeholder: ";
-    private static final String MODEL_PLACEHOLDER_MESSGAE = "Model visualization is deactivated";
+    private static final String NO_MODEL = "No model in related editor";
+    private static final String NO_MODEL_LINKED = "No model in active editor";
     private static final String UPDATE_DIAGRAM_EXCEPTION = "Displaying diagram failed!";
+    private static final String NO_SYNTHESIS = "No Synthesis available!";
+    private static final String DIAGRAM_IS_NULL = "Diagram is null or empty. Inernal KLighD error.";
 
     // -- Icons --
-
+    /** The icon for refreshing view content. */
+    private static final ImageDescriptor REFRESH_ICON =
+            KlighdPlugin.getImageDescriptor("icons/full/elcl16/refresh.gif");
+    /** The icon for layout view content. */
+    private static final ImageDescriptor ARRANGE_ICON =
+            KimlUiPlugin.getImageDescriptor("icons/menu16/kieler-arrange.gif");
+    /** The icon for linking the view with the current editor. */
+    private static final ImageDescriptor LINK_ICON = AbstractUIPlugin
+            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/synced.gif");
     /** The icon for forking a view. */
-    private static final ImageDescriptor ICON_FORK = AbstractUIPlugin
-            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/fork.png");
-
-    /** The icon for saving current model. */
-    private static final ImageDescriptor ICON_SAVE = AbstractUIPlugin
-            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/etool16/save_edit.gif");
+    private static final ImageDescriptor FORK_ICON = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kico.klighd", "icons/full/etool16/fork.png");
 
     // -- Instance list --
 
@@ -134,8 +127,8 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
 
     // -- ATTRIBUTES --
 
-    /** Secondary ID of this view. Indicates a non primary view */
-    private String secondaryID;
+    /** The views root composite. */
+    private Composite viewComposite;
 
     /** Active related editor. */
     private IEditorPart editor;
@@ -154,6 +147,8 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     private final List<AbstractModelUpdateController> controllers =
             new ArrayList<AbstractModelUpdateController>();
 
+    private final ModelViewEditorAdapter editorAdapter;
+
     // -- Toolbar --
     /** The toolbar manager. */
     private IToolBarManager toolBarManager;
@@ -162,12 +157,10 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     private final Action actionRefresh;
     /** The action for performing. */
     private final Action actionLayout;
-    /** The action for saving currently displayed model. */
-    private final Action actionSave;
-    /** The last directory used for saving a model. */
-    private IPath lastSaveDirectory = null;
     /** The action for forking view. */
     private final Action actionFork;
+    /** The action for linking with the active editor. */
+    private final Action linkAction;
 
     // -- Menu --
     /** The menu manger. */
@@ -175,15 +168,9 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
 
     /** The action for resetting layout options. */
     private final Action actionResetOptions;
-    /** The action for toggling editor synchronization. */
-    private final Action actionSyncEditor;
-    private static final boolean actionSyncEditor_DEFAULT_STATE = true;
     /** The action for toggling selection highlighting in the editor. */
     private final Action actionSelectionHighlighting;
-    private static final boolean actionSelectionHighlighting_DEFAULT_STATE = true;
-    /** The action for toggling display of diagram placeholder. */
-    private final Action actionDiagramPlaceholder;
-    private static final boolean actionDiagramPlaceholder_DEFAULT_STATE = false;
+    private static final boolean SELECTION_HIGHLIGHTING_ACTION_DEFAULT_STATE = true;
 
     /** The menu and controller handling the selection of available synthesis. */
     private final SynthesisSelectionMenu synthesisSelection = new SynthesisSelectionMenu(this);
@@ -231,30 +218,34 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
         // Add this view to the active list of ModelViews
         modelViews.add(this);
 
-        // Create and register editor listener
-        new ModelViewEditorAdapter(this);
+        // Create editor adapter
+        editorAdapter = new ModelViewEditorAdapter(this);
 
         // Refresh Button
-        actionRefresh = new Action("Refresh diagram",
-                KlighdPlugin.getImageDescriptor("icons/full/elcl16/refresh.gif")) {
+        actionRefresh = new Action("Refresh diagram", IAction.AS_PUSH_BUTTON) {
 
             @Override
             public void run() {
-                updateDiagram();
+                if (!isLinkedWithActiveEditor() && controller != null && editor != null) {
+                    controller.activate(editor);
+                    controller.deactivate();
+                } else {
+                    updateDiagram();                    
+                }
             }
         };
         actionRefresh.setId("actionRefresh");
+        actionRefresh.setImageDescriptor(REFRESH_ICON);
 
         // Automatic Layout Button
-        actionLayout = new Action("Arrange", IAction.AS_PUSH_BUTTON) {
+        actionLayout = new Action("Arrange diagram", IAction.AS_PUSH_BUTTON) {
             @Override
             public void run() {
                 LightDiagramServices.layoutDiagram(ModelView.this);
             }
         };
         actionLayout.setId("actionLayout");
-        actionLayout.setImageDescriptor(
-                KimlUiPlugin.getImageDescriptor("icons/menu16/kieler-arrange.gif"));
+        actionLayout.setImageDescriptor(ARRANGE_ICON);
 
         // Fork Button
         actionFork = new Action("Fork this view", IAction.AS_PUSH_BUTTON) {
@@ -265,81 +256,61 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
         };
         actionFork.setId("actionFork");
         actionFork.setToolTipText("Fork this view");
-        actionFork.setImageDescriptor(ICON_FORK);
+        actionFork.setImageDescriptor(FORK_ICON);
 
-        // Save Button
-        actionSave = new Action("Save displayed main model", IAction.AS_PUSH_BUTTON) {
+        // Link Button
+        linkAction = new Action("Link with editor", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
-                saveModel();
+                if (isChecked()) {
+                    IEditorPart newEditor = getViewSite().getPage().getActiveEditor();
+                    if (newEditor != null && newEditor != editor) {
+                        setEditor(newEditor);
+                    } else if (controller != null) {
+                        controller.activate(editor);
+                    }
+                } else if (controller != null) {
+                    controller.deactivate();
+                }
             }
         };
-        actionSave.setId("actionSave");
-        actionSave.setToolTipText("Save displayed main model");
-        actionSave.setImageDescriptor(ICON_SAVE);
+        linkAction.setId("linkAction");
+        linkAction.setToolTipText("Link with editor");
+        linkAction.setImageDescriptor(LINK_ICON);
+        linkAction.setChecked(true);
 
         // -- MENU --
 
         // Reset Layout Options Item
-        actionResetOptions = new Action("Reset Configuration") {
+        actionResetOptions = new Action("Reset this View") {
             @Override
             public void run() {
                 resetLayoutConfig();
                 reset();
+                updateDiagram();
             }
         };
         actionResetOptions.setId("actionResetOptions");
         actionResetOptions.setId(ACTION_ID_RESET_LAYOUT_OPTIONS);
 
-        // Sync Menu Item
-        actionSyncEditor = new Action("Synchronize with editor content", IAction.AS_CHECK_BOX) {
+        // Selection Highlighting Item
+        actionSelectionHighlighting = new Action("Synchronize Selection", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
-                updateViewTitle();
-                if (controller != null) {
+                if (getViewer() != null) {
                     if (isChecked()) {
-                        controller.activate(getEditor());
+                        ((ContextViewer) getViewer()).addSelectionChangedListener(ModelView.this);
                     } else {
-                        controller.deactivate();
+                        ((ContextViewer) getViewer())
+                                .removeSelectionChangedListener(ModelView.this);
                     }
                 }
             }
         };
-        actionSyncEditor.setId("actionSyncEditor");
-        actionSyncEditor.setToolTipText(
-                "If Synchronize is disabled, this view will no longer update its status when editor content changes.");
-        actionSyncEditor.setChecked(actionSyncEditor_DEFAULT_STATE);
-
-        // Selection Highlighting Item
-        actionSelectionHighlighting =
-                new Action("Highlight Selection in Editor", IAction.AS_CHECK_BOX) {
-                    @Override
-                    public void run() {
-                        if (isChecked()) {
-                            ((ContextViewer) getViewer())
-                                    .addSelectionChangedListener(ModelView.this);
-                        } else {
-                            ((ContextViewer) getViewer())
-                                    .removeSelectionChangedListener(ModelView.this);
-                        }
-                    }
-                };
         actionSelectionHighlighting.setId("actionSelectionHighlighting");
         actionSelectionHighlighting.setToolTipText(
-                "When enables the selected elemnts in the diagram will be selected in the editor aswell.");
-        actionSelectionHighlighting.setChecked(actionSelectionHighlighting_DEFAULT_STATE);
-
-        // Diagram PlaceHolder Menu Item
-        actionDiagramPlaceholder = new Action("Visualization Model", IAction.AS_CHECK_BOX) {
-            @Override
-            public void run() {
-                updateDiagram();
-            }
-        };
-        actionDiagramPlaceholder.setId("actionDiagramPlaceholder");
-        actionDiagramPlaceholder.setToolTipText(
-                "If visualization is deactiveted, all diagrams will be replaced by a placeholder diagram.");
-        actionDiagramPlaceholder.setChecked(actionDiagramPlaceholder_DEFAULT_STATE);
+                "When enabled the diagram selection will be synchronized with the editor selection.");
+        actionSelectionHighlighting.setChecked(SELECTION_HIGHLIGHTING_ACTION_DEFAULT_STATE);
     }
 
     /**
@@ -348,7 +319,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     @Override
     public void init(final IViewSite site) throws PartInitException {
         super.init(site);
-        initID(site);
+        editorAdapter.activate();
     }
 
     /**
@@ -357,10 +328,10 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     @Override
     public void init(final IViewSite site, final IMemento memento) throws PartInitException {
         super.init(site, memento);
-        initID(site);
         if (memento != null) {
             loadState(memento);
         }
+        editorAdapter.activate();
     }
 
     /**
@@ -369,16 +340,17 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     @Override
     public void createPartControl(final Composite parent) {
         super.createPartControl(parent);
+        viewComposite = parent;
 
         IActionBars bars = getViewSite().getActionBars();
         toolBarManager = bars.getToolBarManager();
         menuManager = bars.getMenuManager();
 
-        updateViewTitle();
         // Some events may occur before this and need to be triggered again (e.g. setEditor)
         if (controller == null && editor != null) {
+            addContributions();
             updateController();
-        } else {
+        } else if (editor == null) {
             addContributions();
         }
 
@@ -398,55 +370,17 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     // -------------------------------------------------------------------------
 
     /**
-     * Initializes the ID and determines if this view is the primary view.
-     * 
-     * @param site
-     *            the view site
-     */
-    private void initID(final IViewSite site) {
-        // If secondary id is set in site save secondary id in variable
-        if (site.getSecondaryId() != null) {
-            secondaryID = site.getSecondaryId();
-        }
-    }
-
-    /**
      * Adds the menu and toolbar contributions.
      */
     private void addContributions() {
         toolBarManager.add(actionRefresh);
         toolBarManager.add(actionLayout);
-        toolBarManager.add(actionSave);
         toolBarManager.add(actionFork);
+        toolBarManager.add(linkAction);
 
         menuManager.add(actionResetOptions);
-        menuManager.add(actionSyncEditor);
         menuManager.add(actionSelectionHighlighting);
-        menuManager.add(actionDiagramPlaceholder);
         menuManager.add(synthesisSelection);
-        menuManager.add(new Separator());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getPartId() {
-        if (isPrimaryView()) {
-            return ID;
-        } else {
-            return ID + "." + secondaryID;
-        }
-    }
-
-    /**
-     * The primary view should listen on the active editor while secondary views stick to their
-     * editor.
-     * 
-     * @return true if this view is primary
-     */
-    public boolean isPrimaryView() {
-        return secondaryID == null;
     }
 
     /**
@@ -456,45 +390,10 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     public void dispose() {
         super.dispose();
         modelViews.remove(this);
+        editorAdapter.deactivate();
         for (AbstractModelUpdateController c : controllers) {
             c.onDispose();
         }
-    }
-
-    /**
-     * Sets view part title according to current editor and configuration.
-     */
-    private void updateViewTitle() {
-        ArrayList<String> modifiers = new ArrayList<String>();
-
-        if (!isPrimaryView()) {
-            modifiers.add("secondary");
-        }
-        if (!actionSyncEditor.isChecked()) {
-            modifiers.add("async");
-        }
-
-        StringBuffer title = new StringBuffer(VIEW_TITLE);
-
-        if (!modifiers.isEmpty()) {
-            title.append('<');
-            for (int i = 0; i < modifiers.size(); i++) {
-                title.append(modifiers.get(i));
-                if (i < modifiers.size() - 1) {
-                    title.append(',');
-                }
-            }
-            title.append('>');
-        }
-
-        if (editor != null) {
-            title.append('[');
-            title.append(editor.getTitle());
-            title.append(']');
-        }
-
-        // Apply
-        setPartName(title.toString());
     }
 
     /**
@@ -510,14 +409,12 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             if (newViewPart instanceof ModelView) {
                 ModelView newModelView = (ModelView) newViewPart;
                 // Menu
-                newModelView.actionSyncEditor.setChecked(actionSyncEditor.isChecked());
+                newModelView.linkAction.setChecked(false);
                 newModelView.actionSelectionHighlighting
                         .setChecked(actionSelectionHighlighting.isChecked());
                 newModelView.actionSelectionHighlighting.run();
-                newModelView.actionDiagramPlaceholder
-                        .setChecked(actionDiagramPlaceholder.isChecked());
                 // State
-                newModelView.lastSaveDirectory = lastSaveDirectory;
+                storeCurrentSynthesisOptions();
                 newModelView.synthesisSelection.copy(synthesisSelection);
                 newModelView.recentSynthesisOptions.putAll(recentSynthesisOptions);
                 newModelView.usedSyntheses.addAll(usedSyntheses);
@@ -540,20 +437,13 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
         try {
             super.saveState(memento);
             if (memento != null) {
-                if (lastSaveDirectory != null) {
-                    memento.putString("lastSaveDirectory", lastSaveDirectory.toPortableString());
-                }
 
-                // Saving synchronizeEditor makes no sense because view would start empty if not
-                // synchronized
+                memento.putBoolean("isLinkedWithActiveEditor", isLinkedWithActiveEditor());
 
                 memento.putBoolean("actionSelectionHighlighting",
                         actionSelectionHighlighting.isChecked());
 
-                memento.putBoolean("actionDiagramPlaceholder",
-                        actionDiagramPlaceholder.isChecked());
-
-                if (editor != null && !isPrimaryView()) {
+                if (editor != null && !isLinkedWithActiveEditor()) {
                     IPersistableElement editorPersistable =
                             editor.getEditorInput().getPersistable();
                     if (editorPersistable != null) {
@@ -621,15 +511,10 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      */
     private void loadState(final IMemento memento) {
         try {
-            String lastSaveDirectoryValue = memento.getString("lastSaveDirectory");
-            if (lastSaveDirectoryValue != null) {
-                lastSaveDirectory = Path.fromPortableString(lastSaveDirectoryValue);
-            }
-
-            Boolean actionDiagramPlaceholderValue = memento.getBoolean("actionDiagramPlaceholder");
-            if (actionDiagramPlaceholderValue != null) {
-                if (actionDiagramPlaceholder != null) {
-                    actionDiagramPlaceholder.setChecked(actionDiagramPlaceholderValue);
+            Boolean linkWithEditorValue = memento.getBoolean("isLinkedWithActiveEditor");
+            if (linkWithEditorValue != null) {
+                if (linkAction != null) {
+                    linkAction.setChecked(linkWithEditorValue);
                 }
             }
 
@@ -680,7 +565,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                             optionMap.put(synthesisOption.getName().hashCode(), synthesisOption);
                         }
                         for (String key : synthesisOptionMemento.getAttributeKeys()) {
-                            SynthesisOption option = optionMap.get(key.substring(1).hashCode());
+                            SynthesisOption option = optionMap.get(Integer.parseInt(key.substring(1)));
                             if (option != null) {
                                 Object value = null;
                                 if (key.startsWith("b")) {
@@ -718,8 +603,9 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                 }
             }
         } catch (Exception e) {
-            StatusManager.getManager().handle(new Status(IStatus.WARNING,
-                    KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(), e.getCause()), StatusManager.LOG);
+            StatusManager.getManager().handle(
+                    new Status(IStatus.WARNING, KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(), e),
+                    StatusManager.LOG);
         }
     }
 
@@ -727,18 +613,21 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * Resets all configurations to default values.
      */
     private void reset() {
-        actionSyncEditor.setChecked(actionSyncEditor_DEFAULT_STATE);
-        actionSelectionHighlighting.setChecked(actionSelectionHighlighting_DEFAULT_STATE);
+        actionSelectionHighlighting.setChecked(SELECTION_HIGHLIGHTING_ACTION_DEFAULT_STATE);
         actionSelectionHighlighting.run();
-        actionDiagramPlaceholder.setChecked(actionDiagramPlaceholder_DEFAULT_STATE);
         synthesisSelection.clear();
+        if (getViewer() != null && getViewContext() != null) {
+            ViewContext vc = getViewContext();
+            for (SynthesisOption option : recentSynthesisOptions.keySet()) {
+                vc.configureOption(option, option.getInitialValue());
+            }
+            updateOptions(false);
+        }
         recentSynthesisOptions.clear();
         usedSyntheses.clear();
-        lastSaveDirectory = null;
         for (AbstractModelUpdateController c : controllers) {
             c.reset();
         }
-        updateViewTitle();
     }
 
     /**
@@ -763,16 +652,11 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
                 // set as active editor
                 editor = newEditor;
 
-                // Reset synchronization
-                actionSyncEditor.setChecked(true);
-
-                updateViewTitle();
                 updateController();
             }
         } else {
             editor = null;
 
-            updateViewTitle();
             updateController();
         }
     }
@@ -786,6 +670,15 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
         return editor;
     }
 
+    /**
+     * Returns if this view is linked with the active editor.
+     * 
+     * @return true if linked
+     */
+    public boolean isLinkedWithActiveEditor() {
+        return linkAction != null && linkAction.isChecked();
+    }
+
     // -- Controller
     // -------------------------------------------------------------------------
 
@@ -793,56 +686,64 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * Sets the responsible controller for the current editor.
      */
     private void updateController() {
-        // Deactivate active editor
-        if (controller != null) {
-            controller.deactivate();
-            controller = null;
-            // remove contributions
-            toolBarManager.removeAll();
-            menuManager.removeAll();
-            addContributions();
-        }
+        // If view is initialized
+        if (toolBarManager != null && menuManager != null) {
 
-        // Find new controller
-        if (editor != null && toolBarManager != null && menuManager != null) {
-            String responsibleControllerID =
-                    ModelUpdateControllerFactory.getHandlingControllerID(editor);
-            if (responsibleControllerID != null) {
+            // Deactivate active editor
+            if (controller != null) {
+                controller.deactivate();
+                controller = null;
+                // remove contributions
+                toolBarManager.removeAll();
+                menuManager.removeAll();                
+                addContributions();
+            }
 
-                // search for responsible controller in instance list
-                AbstractModelUpdateController alreadyInstaciatedController = null;
-                for (AbstractModelUpdateController controllerCandidate : controllers) {
-                    if (controllerCandidate.getID().equals(responsibleControllerID)) {
-                        alreadyInstaciatedController = controllerCandidate;
-                        break;
+            // Find new controller
+            if (editor != null) {
+                String responsibleControllerID =
+                        ModelUpdateControllerFactory.getHandlingControllerID(editor);
+                if (responsibleControllerID != null) {
+
+                    // search for responsible controller in instance list
+                    AbstractModelUpdateController alreadyInstaciatedController = null;
+                    for (AbstractModelUpdateController controllerCandidate : controllers) {
+                        if (controllerCandidate.getID().equals(responsibleControllerID)) {
+                            alreadyInstaciatedController = controllerCandidate;
+                            break;
+                        }
                     }
-                }
-                // create controller if necessary
-                if (alreadyInstaciatedController != null) {
-                    controller = alreadyInstaciatedController;
-                } else {
-                    controller = ModelUpdateControllerFactory
-                            .getNewInstance(responsibleControllerID, this);
-                    controllers.add(controller);
-                }
+                    // create controller if necessary
+                    if (alreadyInstaciatedController != null) {
+                        controller = alreadyInstaciatedController;
+                    } else {
+                        controller = ModelUpdateControllerFactory
+                                .getNewInstance(responsibleControllerID, this);
+                        controllers.add(controller);
+                    }
 
-                // Update controller specific contributions
-                controller.addContributions(toolBarManager, menuManager);
+                    // Update controller specific contributions
+                    controller.addContributions(toolBarManager, menuManager);
+                }
+            }
+
+            // Update toolbar and menu
+            toolBarManager.update(false);
+            menuManager.updateAll(false);
+            // Update ActionBars important for correct toolbar layout
+            getViewSite().getActionBars().updateActionBars();
+
+            // Activate new controller
+            if (controller != null) {
+                controller.activate(editor);
+                if (!isLinkedWithActiveEditor()) {
+                    controller.deactivate();
+                }
+            } else {
+                // Since no controller is active no model message will be displayed
+                updateDiagram();
             }
         }
-
-        // Update toolbar and menu
-        toolBarManager.update(false);
-        menuManager.updateAll(false);
-
-        // Activate new controller
-        if (controller != null) {
-            controller.activate(editor);
-        } else {
-            // Since no controller is active no model message will be displayed
-            updateDiagram();
-        }
-
     }
 
     // -- Model
@@ -881,84 +782,6 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
     public void selectionChanged(final SelectionChangedEvent event) {
         if (controller != null) {
             controller.selectionChanged(event);
-        }
-    }
-
-    // -- Save model
-    // -------------------------------------------------------------------------
-
-    /**
-     * Saves the current model into a file with saveAs dialog.
-     */
-    private void saveModel() {
-        Object model = null;
-        if (controller != null) {
-            model = controller.getModel();
-        }
-        if (model != null && controller != null) {
-            // Get workspace
-            IWorkspace workspace = ResourcesPlugin.getWorkspace();
-            IWorkspaceRoot root = workspace.getRoot();
-
-            // get filename with correct extension
-            String filename = controller.getResourceName(editor, model);
-
-            SaveAsDialog saveAsDialog = new SaveAsDialog(getSite().getShell());
-
-            // Configure dialog
-            if (lastSaveDirectory != null) {
-                IPath path = lastSaveDirectory;
-                // add new filename
-                path = path.append(filename);
-                try {
-                    saveAsDialog.setOriginalFile(root.getFile(path));
-                } catch (Exception e) {
-                    // In case of any path error
-                    saveAsDialog.setOriginalName(filename);
-                }
-            } else {
-                saveAsDialog.setOriginalName(filename);
-            }
-
-            saveAsDialog.setTitle("Save Model");
-            saveAsDialog.setBlockOnOpen(true);
-
-            // open and get result
-            saveAsDialog.open();
-            IPath path = saveAsDialog.getResult();
-
-            // save
-            if (path != null && !path.isEmpty()) {
-                IFile file = root.getFile(path);
-                URI uri = URI.createPlatformResourceURI(path.toString(), false);
-
-                // remove filename to just store the path
-                lastSaveDirectory = file.getFullPath().removeLastSegments(1);
-
-                // refresh workspace to prevent out of sync with file-system
-                if (file.exists()) {
-                    try {
-                        file.refreshLocal(IResource.DEPTH_INFINITE, null);
-                    } catch (CoreException e) {
-                        StatusManager.getManager().handle(new Status(IStatus.WARNING,
-                                KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.LOG);
-                    }
-                }
-
-                // perform saving
-                try {
-                    // if model is a saveable model of the ModelView handle directly otherwise
-                    // redirect save operation to controller
-                    if (model instanceof ISaveableModel) {
-                        ((ISaveableModel) model).save(file, uri);
-                    } else {
-                        controller.saveModel(model, file, uri);
-                    }
-                } catch (Exception e) {
-                    StatusManager.getManager().handle(new Status(IStatus.ERROR,
-                            KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW);
-                }
-            }
         }
     }
 
@@ -1003,33 +826,22 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      *            the properties
      */
     private void updateDiagram(final Object model, final KlighdSynthesisProperties properties) {
-        String editorTitle = null;
-        if (editor != null) {
-            editorTitle = editor.getTitle();
-        }
         // Update SynthesisSelection
         synthesisSelection.update(model);
 
         // Adjust model
         Object displayModel = model;
         if (model == null) {
-            if (isPrimaryView()) {
-                displayModel = new MessageModel(NO_MODEL_PRIMARY);
+            if (isLinkedWithActiveEditor()) {
+                displayModel = new MessageModel(NO_MODEL_LINKED);
             } else {
-                displayModel = new MessageModel(NO_MODEL_SECONDARY);
+                displayModel = new MessageModel(NO_MODEL);
             }
-        } else if (actionDiagramPlaceholder.isChecked()) {
-            displayModel = new MessageModel(MODEL_PLACEHOLDER_PREFIX + editorTitle,
-                    MODEL_PLACEHOLDER_MESSGAE);
         }
         final Object finalDisplayModel = displayModel;
 
         // Start update job
-        String jobName = "Updating ModelView";
-        if (editorTitle != null) {
-            jobName += " [" + editorTitle + "]";
-        }
-        new UIJob(jobName) {
+        new UIJob(UPDATE_JOB_PREFIX + getTitle()) {
 
             @Override
             public IStatus runInUIThread(final IProgressMonitor monitor) {
@@ -1044,7 +856,7 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
      * <p>
      * This method is intended to run in a separate UIJob.
      * 
-     * @param displayModel
+     * @param model
      *            model to display
      * @param properties
      *            properties for configuration
@@ -1061,21 +873,18 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             final boolean isErrorModel) {
         try {
             // Get correct synthesis
-            Pair<ISynthesis, Object> synthesisModelPair =
-                    synthesisSelection.getSynthesis(model, sourceEditor, properties);
-            ISynthesis synthesis = synthesisModelPair.getFirst();
-            if (synthesis == null) {
-                throw new NullPointerException("No synthesis available");
+            String synthesisID = synthesisSelection.getSynthesis(model);
+            if (synthesisID == null) {
+                throw new NullPointerException(NO_SYNTHESIS);
             }
-            // Some special synthesis need model preparation, so this is the actual model to diplay
-            Object displayModel = synthesisModelPair.getSecond();
 
             // Set properties
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-                    KlighdDataManager.getInstance().getSynthesisID(synthesis));
-            properties.setProperty(ModelViewProperties.EDITOR_PART, editor);
+                    synthesisID);
+
             // Save previous synthesis options to restore later
             storeCurrentSynthesisOptions();
+
             // configure options
             properties.configureSynthesisOptionValues(recentSynthesisOptions);
 
@@ -1088,10 +897,11 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             } else {
                 viewContext = this.getViewer().getViewContext();
                 if (viewContext.getInputModel() == null
-                        || viewContext.getInputModel().getClass() != displayModel.getClass()) {
+                        || viewContext.getInputModel().getClass() != model.getClass()) {
                     modelTypeChanged = true;
                 }
-                if (viewContext.getDiagramSynthesis() != synthesis) {
+                if (!KlighdDataManager.getInstance()
+                        .getSynthesisID(viewContext.getDiagramSynthesis()).equals(synthesisID)) {
                     // In case the synthesis changed the sidebar should be updated
                     modelTypeChanged = true;
                 }
@@ -1105,11 +915,22 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
             // If the type changed the view must be reinitialized to provide a correct ViewContext
             // otherwise the ViewContext can be simply updated
             if (modelTypeChanged) {
+
                 // the (re)initialization case
-                initialize(displayModel, null, properties);
+                initialize(model, null, properties);
+                success = true;
+
+                // Update selection highlighting listener
+                actionSelectionHighlighting.run();
+
                 // get newly create ViewContext
                 viewContext = this.getViewer().getViewContext();
-                success = true;
+
+                // Register editor
+                if (editor != null) {
+                    viewContext.setSourceWorkbenchPart(editor);
+                }
+
                 // reset layout to resolve KISEMA-905
                 resetLayoutConfig(false);
             } else {
@@ -1117,14 +938,15 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
 
                 // Configure present view context
                 viewContext.copyProperties(properties);
+
                 // Register editor
-                if (sourceEditor != null) {
-                    viewContext.setSourceWorkbenchPart(sourceEditor);
+                if (editor != null) {
+                    viewContext.setSourceWorkbenchPart(editor);
                 }
 
                 // update case (keeps options and sidebar)
                 success = LightDiagramServices.updateDiagram(this.getViewer().getViewContext(),
-                        displayModel, properties);
+                        model, properties);
 
                 // Update side if the synthesis option changed due to child syntheses
                 if (success && (!viewContext.getChildViewContexts(false).isEmpty()
@@ -1135,23 +957,16 @@ public final class ModelView extends DiagramViewPart implements ISelectionChange
 
             // check if update really was successful
             KNode currentDiagram = viewContext.getViewModel();
-            if (!success || currentDiagram == null || (currentDiagram.getChildren().isEmpty()
-                    && !(displayModel instanceof KNode))) {
-                // If update was not successful try default synthesis or fail if already in
-                // fallback mode.
-                if (properties.getProperty(ModelViewProperties.USE_FALLBACK_SYSTHESIS)) {
-                    throw new NullPointerException(
-                            "Diagram is null or empty. Inernal KLighD error.");
-                } else {
-                    properties.setProperty(ModelViewProperties.USE_FALLBACK_SYSTHESIS, true);
-                    updateDiagram(displayModel, properties);
-                    return;
-                }
+            if (!success || currentDiagram == null
+                    || (currentDiagram.getChildren().isEmpty() && !(model instanceof KNode))) {
+                throw new NullPointerException(DIAGRAM_IS_NULL);
+            } else {
+                viewComposite.layout();
             }
 
             // Notify the controller about the successful update
-            if (usedController != null) {
-                usedController.onDiagramUpdate(displayModel, properties, this.getViewer());
+            if (controller != null) {
+                controller.onDiagramUpdate(model, properties);
             }
         } catch (Exception e) {
             if (!isErrorModel) {

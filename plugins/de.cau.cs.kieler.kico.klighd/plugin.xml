@@ -6,12 +6,16 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.internal.ModelChainSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.internal.ModelChainSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.internal.model.ModelChainSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.internal.model.ModelChainSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolderSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolderSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolderSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolderSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.internal.model.XtextSerializationSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.internal.model.XtextSerializationSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.view.model.MessageModelSynthesis"
@@ -28,7 +32,7 @@
             allowMultiple="true"
             category="de.cau.cs.kieler.sim"
             class="de.cau.cs.kieler.kico.klighd.view.ModelView"
-            icon="icons/model_view.gif"
+            icon="icons/full/etool16/diagrams_view.gif"
             id="de.cau.cs.kieler.kico.klighd.modelview"
             name="KIELER Model View"
             restorable="true">
@@ -37,12 +41,12 @@
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
-            class="de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction"
-            id="de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction">
+            class="de.cau.cs.kieler.kico.klighd.internal.model.action.OpenCodeInEditorAction"
+            id="de.cau.cs.kieler.kico.klighd.internal.model.action.OpenCodeInEditorAction">
       </action>
       <action
-            class="de.cau.cs.kieler.kico.klighd.view.model.action.OpenCodeInEditorAction"
-            id="de.cau.cs.kieler.kico.klighd.view.model.action.OpenCodeInEditorAction">
+            class="de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction"
+            id="de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction">
       </action>
       <action
             class="de.cau.cs.kieler.kico.klighd.view.model.action.EcoreModelExpandDetailsAction"
@@ -52,23 +56,16 @@
    <extension
          point="de.cau.cs.kieler.kico.klighd.controller">
       <controller
-            class="de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController"
-            id="de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController">
-      </controller>
-      <controller
             class="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
             id="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController">
+      </controller>
+      <controller
+            class="de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController"
+            id="de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController">
       </controller>
       <controller
             class="de.cau.cs.kieler.kico.klighd.view.controller.XtextChangeUpdateController"
             id="de.cau.cs.kieler.kico.klighd.view.controller.XtextChangeUpdateController">
       </controller>
-      <generalSynthesis
-            class="de.cau.cs.kieler.kico.klighd.internal.XtextSerializationGeneralSynthesis">
-      </generalSynthesis>
-      <generalSynthesis
-            class="de.cau.cs.kieler.kico.klighd.view.model.EcoreGeneralSynthesis">
-      </generalSynthesis>
    </extension>
-
 </plugin>

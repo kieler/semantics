@@ -24,9 +24,9 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
+import de.cau.cs.kieler.kico.klighd.internal.ModelUtil;
 import de.cau.cs.kieler.kico.klighd.view.ModelView;
 import de.cau.cs.kieler.kico.klighd.view.util.EditorUtil;
-import de.cau.cs.kieler.kico.klighd.view.util.ModelUtil;
 import de.cau.cs.kieler.kico.klighd.view.util.XtextSelectionHighlighter;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
@@ -105,28 +105,6 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      * {@inheritDoc}
      */
     @Override
-    public void saveModel(final Object model, final IFile file, final URI uri) throws Exception {
-        if (model instanceof EObject) {
-            ModelUtil.saveModel((EObject) model, uri);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getResourceName(final IEditorPart editor, final Object model) {
-        if (editor != null && model != null) {
-            return editor.getTitle();
-        } else {
-            return "";
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void selectionChanged(final SelectionChangedEvent event) {
         if (getEditor() instanceof XtextEditor) {
             XtextSelectionHighlighter.highlightSelection((XtextEditor) getEditor(),
@@ -138,8 +116,7 @@ public class EcoreXtextSaveUpdateController extends AbstractModelUpdateControlle
      * {@inheritDoc}
      */
     @Override
-    public void onDiagramUpdate(final Object model, final KlighdSynthesisProperties properties,
-            final IViewer viewer) {
+    public void onDiagramUpdate(final Object model, final KlighdSynthesisProperties properties) {
     }
 
     /**

@@ -51,7 +51,7 @@ import de.cau.cs.kieler.klay.layered.properties.FixedAlignment
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-class EcoreModelSynthesis extends AbstractDiagramSynthesis<EcoreModelWrapper> {
+class EcoreModelSynthesis extends AbstractDiagramSynthesis<EObject> {
 
     @Inject
     extension KNodeExtensions
@@ -93,9 +93,8 @@ class EcoreModelSynthesis extends AbstractDiagramSynthesis<EcoreModelWrapper> {
 
     // -------------------------------------------------------------------------
     // Synthesis
-    override KNode transform(EcoreModelWrapper wrapper) {
-        val model = wrapper.model;
-        val rootNode = createNode(wrapper);
+    override KNode transform(EObject model) {
+        val rootNode = createNode();
         
         rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
         rootNode.setLayoutOption(Properties::FIXED_ALIGNMENT, FixedAlignment.BALANCED);

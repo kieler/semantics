@@ -28,7 +28,7 @@ import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
 import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController;
 import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController.ChangeEvent;
-import de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolder;
+import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
 import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
 import de.cau.cs.kieler.kitt.tracing.Tracing;

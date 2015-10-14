@@ -74,7 +74,7 @@ public class ErrorModel extends MessageModel {
      *            the stacktrace
      */
     public ErrorModel(final String message, final String reason, final String stacktrace) {
-        super(message, reason, "de.cau.cs.kieler.kico.klighd", "icons/error_sign.png", 250);
+        super(message, reason, "de.cau.cs.kieler.kico.klighd", "icons/full/model/error_sign.png", 250);
         // reason
         String reasonToSet = "Unkown";
         if (reason == null) {
@@ -155,16 +155,17 @@ public class ErrorModel extends MessageModel {
         }
     }
 
-    // -- Save
+    // -- toString
     // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void save(final IFile file, final URI uri) throws Exception {
+    public String toString() {
         StringBuilder text = new StringBuilder();
         String newline = System.getProperty("line.separator");
+        
         if (title != null) {
             text.append(title);
             text.append(newline);
@@ -176,12 +177,8 @@ public class ErrorModel extends MessageModel {
         if (stacktrace != null) {
             text.append(stacktrace);
         }
-        // save to text file (create it if necessary)
-        if (!file.exists()) {
-            file.create(new StringInputStream(text.toString()), 0, null);
-        } else {
-            file.setContents(new StringInputStream(text.toString()), 0, null);
-        }
+        
+        return text.toString();
     }
 
     // -- Getters

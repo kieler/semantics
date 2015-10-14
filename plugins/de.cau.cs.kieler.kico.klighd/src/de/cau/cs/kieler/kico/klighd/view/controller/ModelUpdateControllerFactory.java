@@ -24,8 +24,6 @@ import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
 import de.cau.cs.kieler.kico.klighd.view.ModelView;
-import de.cau.cs.kieler.kico.klighd.view.menu.ISelectableGeneralSynthesis;
-import de.cau.cs.kieler.kico.klighd.view.menu.SynthesisSelectionMenu;
 
 /**
  * Manages the different {@link AbstractModelUpdateController} instances for the {@link ModelView}
@@ -51,9 +49,6 @@ public final class ModelUpdateControllerFactory {
 
     /** Name of the 'controller' element. */
     private static final String ELEMENT_CONTROLLER = "controller";
-
-    /** Name of the 'generalSynthesis' element. */
-    private static final String ELEMENT_SYNTHESIS = "generalSynthesis";
 
     /** Name of the 'editor' element. */
     private static final String ELEMENT_EDITOR = "editor";
@@ -145,19 +140,6 @@ public final class ModelUpdateControllerFactory {
                             .handle(new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
                                     this.getClass().getName()
                                             + ": Error while parsing controller extension point",
-                                    exception));
-                }
-            } else if (ELEMENT_SYNTHESIS.equals(element.getName())) {
-                // initialize general synthesis class from the extension point
-                try {
-                    ISelectableGeneralSynthesis synthesis = (ISelectableGeneralSynthesis) element
-                            .createExecutableExtension(ATTRIBUTE_CLASS);
-                    SynthesisSelectionMenu.addGeneralSynthesis(synthesis.getID(), synthesis);
-                } catch (final Exception exception) {
-                    StatusManager.getManager()
-                            .handle(new Status(IStatus.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
-                                    this.getClass().getName()
-                                            + ": Error while parsing general synthesis extension point",
                                     exception));
                 }
             }

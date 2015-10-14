@@ -228,44 +228,13 @@ public abstract class AbstractModelUpdateController implements ISelectionChanged
      *            displayed model
      * @param properties
      *            used properties
-     * @param viewer
-     *            the related viewer
      */
-    public abstract void onDiagramUpdate(Object model, KlighdSynthesisProperties properties,
-            IViewer viewer);
+    public abstract void onDiagramUpdate(Object model, KlighdSynthesisProperties properties);
 
     /**
      * Invoked when the related ModelView is disposed.
      */
     public abstract void onDispose();
-
-    // -- Model
-    // -------------------------------------------------------------------------
-
-    /**
-     * Saves the given model into given file.
-     * 
-     * @param model
-     *            model to save
-     * @param file
-     *            target file
-     * @param uri
-     *            location of the file
-     * @throws Exception
-     *             any exception caused by failed saving
-     */
-    public abstract void saveModel(Object model, IFile file, URI uri) throws Exception;
-
-    /**
-     * Returns the name of the file or resource including a proper file extension of the model.
-     * 
-     * @param editor
-     *            the editor this model is related to
-     * @param model
-     *            the model
-     * @return String not null.
-     */
-    public abstract String getResourceName(IEditorPart editor, Object model);
 
     // -- View
     // -------------------------------------------------------------------------

@@ -76,14 +76,7 @@ public final class XtextSelectionHighlighter {
             // The element to highlight
             final EObject element = Iterators.getNext(it, null);
 
-            if (element == null || !(element.eResource() instanceof XtextResource)) {
-                PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-                    public void run() {
-                        // reset selection
-                        editor.getInternalSourceViewer().setSelectedRange(0, 0);
-                    }
-                });
-            } else {
+            if (element != null && (element.eResource() instanceof XtextResource)) {
                 // determine the workbench resource path of 'element's definition document
                 // the boolean param 'true' forces the URI to properly convert space in file/folder
                 // names

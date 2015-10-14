@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.internal
+package de.cau.cs.kieler.kico.klighd.internal.model
 
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.Colors
@@ -27,7 +27,6 @@ import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.klighd.view.ModelView
-import de.cau.cs.kieler.kico.klighd.view.ModelViewProperties
 import de.cau.cs.kieler.kico.klighd.view.model.MessageModel
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
@@ -90,7 +89,7 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
         );
     }
 
-    public static val String ID = "de.cau.cs.kieler.kico.klighd.internal.ModelChainSynthesis";
+    public static val String ID = "de.cau.cs.kieler.kico.klighd.internal.model.ModelChainSynthesis";
     private static val KColor BG_COLOR = RENDERING_FACTORY.createKColor() => [red = 255; green = 202; blue = 119];
     private static val KColor SHADOW_COLOR = RENDERING_FACTORY.createKColor() => [it.color = Colors.BLACK];
 
@@ -184,13 +183,9 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
             val viewpart = usedContext.diagramWorkbenchPart;
             if (viewpart instanceof ModelView) {
-                val synthesisSelection = (viewpart as ModelView).synthesisSelectionMenu;
-                val synthesisModelPair = synthesisSelection.getSynthesis(model,
-                    properties.getProperty(ModelViewProperties.EDITOR_PART), properties);
-                properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-                    KlighdDataManager.instance.getSynthesisID(synthesisModelPair.first));
-                val subDiagramViewContext = LightDiagramServices::translateModel2(synthesisModelPair.second,
-                    usedContext, properties);
+                val synthesisID = (viewpart as ModelView).synthesisSelectionMenu.getSynthesis(model);
+                properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, synthesisID);
+                val subDiagramViewContext = LightDiagramServices::translateModel2(model, usedContext, properties);
                 usedContext.addChildViewContext(subDiagramViewContext)
                 subDiagramNode = subDiagramViewContext.viewModel;
             } else {

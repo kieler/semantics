@@ -26,8 +26,8 @@ import org.eclipse.xtext.ui.editor.model.IXtextModelListener;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 
 import de.cau.cs.kieler.core.WrappedException;
+import de.cau.cs.kieler.kico.klighd.internal.ModelUtil;
 import de.cau.cs.kieler.kico.klighd.view.util.EditorUtil;
-import de.cau.cs.kieler.kico.klighd.view.util.ModelUtil;
 
 /**
  * An adapter to listen for the change event of an xtext editor.
@@ -99,7 +99,7 @@ public class XtextEditorModelChangeAdapter implements IXtextModelListener {
      */
     @Override
     public void modelChanged(final XtextResource resource) {
-        if (ModelUtil.hasErrorMarkers(resource) && editor != null) {
+        if (!EditorUtil.hasErrorMarkers(resource) && editor != null) {
             listener.onModelChanged(editor, resource);
         }
     }

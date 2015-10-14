@@ -11,18 +11,14 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.view.model
+package de.cau.cs.kieler.kico.klighd.internal.model
 
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.kico.klighd.view.model.action.OpenCodeInEditorAction
+import de.cau.cs.kieler.kico.klighd.internal.model.action.OpenCodeInEditorAction
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import javax.inject.Inject
@@ -54,7 +50,7 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
     // -------------------------------------------------------------------------
     // Constants
     
-    public static val String ID = "de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolderSynthesis";
+    public static val String ID = "de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolderSynthesis";
     static val int maxPreviewLines = 50;
 
     // -------------------------------------------------------------------------

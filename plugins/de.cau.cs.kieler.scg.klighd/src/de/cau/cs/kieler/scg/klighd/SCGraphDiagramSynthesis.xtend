@@ -189,22 +189,27 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -------------------------------------------------------------------------
     // -- KlighD Options
     // -------------------------------------------------------------------------
+    
+    
+    private static val SynthesisOption C1 = SynthesisOption::createCategory("C1", true);
+    private static val SynthesisOption C11 = SynthesisOption::createCategory("C11", false).setCategory(C1);
+    private static val SynthesisOption C2 = SynthesisOption::createCategory("C2");
     /** Show caption */
     private static val SynthesisOption SHOW_CAPTION = SynthesisOption::createCheckOption("Captions", true);
 
     /** Show dependencies */
-    private static val SynthesisOption SHOW_DEPENDENCIES = SynthesisOption::createCheckOption("Dependencies", true);
+    private static val SynthesisOption SHOW_DEPENDENCIES = SynthesisOption::createCheckOption("Dependencies", true).setCategory(C1);
 
     /** Layout dependencies */
-    private static val SynthesisOption LAYOUT_DEPENDENCIES = SynthesisOption::createCheckOption("Dependencies", false);
+    private static val SynthesisOption LAYOUT_DEPENDENCIES = SynthesisOption::createCheckOption("Dependencies", false).setCategory(C1);
 
     /** Show non concurrent dependencies */
     private static val SynthesisOption SHOW_NONCONCURRENT = SynthesisOption::createCheckOption(
-        "Non-concurrent dependencies", false);
+        "Non-concurrent dependencies", false).setCategory(C2);
 
     /** Show confluent dependencies */
     private static val SynthesisOption SHOW_CONFLUENT = SynthesisOption::createCheckOption("Confluent dependencies",
-        false);
+        false).setCategory(C11);
 
     /** Show basic blocks */
     private static val SynthesisOption SHOW_BASICBLOCKS = SynthesisOption::createCheckOption("Basic Blocks", false);
@@ -280,6 +285,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      */
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(
+            C1,
+            C11,
             SynthesisOption::createSeparator("Visibility"),
             SHOW_CAPTION,
             SHOW_HIERARCHY,

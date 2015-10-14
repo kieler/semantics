@@ -116,4 +116,38 @@ public final class EditorUtil {
         }
         return null;
     }
+    
+
+    /**
+     * Checks the given resource for error markers.
+     * 
+     * @param resource
+     *            the resource
+     * @return true if any errors are present otherwise false
+     */
+    public static boolean hasErrorMarkers(final XtextResource resource) {
+        XtextResource xResource = (XtextResource) resource;
+        IFile underlyingFile = ResourceUtil.getUnderlyingFile(xResource);
+
+        if (underlyingFile == null) {
+            // this happens in case models being part of installed bundles (e.g. Xtend files)
+            // are opened; it doesn't make sense to attach any markers to them
+            return false;
+        }
+
+        try {
+            /* examine the files error markers, whether one of is created by this mechanisms */
+            List<IMarker> currentMarkers = Arrays.asList(
+                    underlyingFile.findMarkers(IMarker.PROBLEM, false, IResource.DEPTH_INFINITE));
+
+            /* if model is correct... */
+            if (xResource.getErrors().isEmpty() && currentMarkers.isEmpty()) {
+                return false;
+            }
+        } catch (CoreException e) {
+            /* in this case something went heavily wrong */
+            throw new WrappedException(e);
+        }
+        return true;
+    }
 }

@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 
-import de.cau.cs.kieler.kico.klighd.internal.ModelChain;
+import de.cau.cs.kieler.kico.klighd.internal.model.ModelChain;
 import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
 import de.cau.cs.kieler.klighd.IAction;
 

@@ -17,12 +17,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.UIJob;
-
-import de.cau.cs.kieler.kico.klighd.view.util.GlobalPartAdapter;
 
 /**
  * Listens to the workspace and manages the editor for the associated {@link ModelView}.
@@ -32,20 +32,38 @@ import de.cau.cs.kieler.kico.klighd.view.util.GlobalPartAdapter;
  * @kieler.rating 2015-09-29 proposed yellow
  * 
  */
-class ModelViewEditorAdapter extends GlobalPartAdapter {
+class ModelViewEditorAdapter implements IPartListener2 {
 
-    private static final String INIT_JOB_NAME = "Initializing " + ModelView.VIEW_TITLE;
+    private static final String INIT_JOB_NAME = "Initializing " + ModelView.VIEW_TITLE + " View";
+    /** The related model view. */
     private final ModelView modelView;
 
     /**
      * Create a new listener handling events for the given {@link ModelView}.
+     * <p>
+     *
+     * The model view must be already created because the adapter will register itself immediately
+     * on the views page.
      * 
      * @param modelView
      *            The associated ModelView
      */
     ModelViewEditorAdapter(final ModelView modelView) {
-        super(null, false);
         this.modelView = modelView;
+    }
+    
+    /**
+     * Activated this adapter.
+     */
+    public void activate() {
+        modelView.getSite().getPage().addPartListener(this);
+    }
+    
+    /**
+     * Deactivated this adapter.
+     */
+    public void deactivate() {
+        modelView.getSite().getPage().removePartListener(this);
     }
 
     /**
@@ -56,7 +74,7 @@ class ModelViewEditorAdapter extends GlobalPartAdapter {
         IWorkbenchPart part = partRef.getPart(false);
         // Initialize primary view with current active editor
         if (part != null && part == modelView) {
-            if (modelView.isPrimaryView()) {
+            if (modelView.isLinkedWithActiveEditor()) {
                 // update to active editor (delayed to prevent klighd init errors)
                 new UIJob(INIT_JOB_NAME) {
 
@@ -75,21 +93,6 @@ class ModelViewEditorAdapter extends GlobalPartAdapter {
      */
     @Override
     public void partClosed(final IWorkbenchPartReference partRef) {
-        final IWorkbenchPart part = partRef.getPart(false);
-        // If part is editor of the model view
-        if (part != null && part == modelView.getEditor()) {
-            modelView.setEditor(null);
-            if (!modelView.isPrimaryView()) {
-                // Close ModelView only if eclipse is not shutting down
-                // because open model views should be restored after restart
-                if (!PlatformUI.getWorkbench().isClosing()) {
-                    // Close view
-                    modelView.getSite().getPage().hideView(modelView);
-                    // Stop listening
-                    this.unregister();
-                }
-            }
-        }
     }
 
     /**
@@ -98,8 +101,43 @@ class ModelViewEditorAdapter extends GlobalPartAdapter {
     @Override
     public void partActivated(final IWorkbenchPartReference partRef) {
         IWorkbenchPart part = partRef.getPart(false);
-        if (modelView.isPrimaryView() && part instanceof IEditorPart) {
+        if (modelView.isLinkedWithActiveEditor() && part instanceof IEditorPart) {
             modelView.setEditor((IEditorPart) part);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void partBroughtToTop(final IWorkbenchPartReference partRef) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void partDeactivated(final IWorkbenchPartReference partRef) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void partHidden(final IWorkbenchPartReference partRef) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void partVisible(final IWorkbenchPartReference partRef) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void partInputChanged(final IWorkbenchPartReference partRef) {
     }
 }

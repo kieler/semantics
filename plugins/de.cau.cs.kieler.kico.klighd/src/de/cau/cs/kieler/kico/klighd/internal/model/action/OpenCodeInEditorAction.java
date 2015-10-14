@@ -11,15 +11,15 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.view.model.action;
+package de.cau.cs.kieler.kico.klighd.internal.model.action;
 
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 
+import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.view.editor.StringBasedEditorInput;
-import de.cau.cs.kieler.kico.klighd.view.model.CodePlaceHolder;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
@@ -34,7 +34,7 @@ public class OpenCodeInEditorAction implements IAction {
 
     /** The action ID. */
     public static final String ID =
-            "de.cau.cs.kieler.kico.klighd.view.model.action.OpenCodeInEditorAction";
+            "de.cau.cs.kieler.kico.klighd.internal.model.action.OpenCodeInEditorAction";
 
     /**
      * {@inheritDoc}
