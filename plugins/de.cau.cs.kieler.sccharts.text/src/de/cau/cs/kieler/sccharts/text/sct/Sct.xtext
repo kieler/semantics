@@ -3,6 +3,7 @@ grammar de.cau.cs.kieler.sccharts.text.sct.Sct with de.cau.cs.kieler.sccharts.te
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
+import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 import "http://kieler.cs.cau.de/sccharts/0.1.0" as sccharts
 
 //generate sct "http://kieler.cs.cau.de/sccharts/textual/0.1.0"
@@ -19,7 +20,7 @@ SingleControlflowRegion returns sccharts::ControlflowRegion:
 	{sccharts::ControlflowRegion}
     (
       (annotations += Annotation)*
-      'region' (id=ID)? (label=STRING)? ('['for=For']')?  ':'
+      'region' (id=ID)? (label=STRING)? ':'
       (declarations+=Declaration)*
 //      (bodyText+=TextualCode)* 
      )?
@@ -32,7 +33,7 @@ SingleDataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
     (
       (annotations += Annotation)*
-      'dataflow' (id=ID)? (label=STRING)? ('['for=For']')?  ':'
+      'dataflow' (id=ID)? (label=STRING)? ':'
       (declarations+=Declaration)*
      )
     (
@@ -44,17 +45,10 @@ SingleDataflowRegion returns sccharts::DataflowRegion:
 
 // ---------------------------------------------------------------------------------------------------
 
-For returns sccharts::For:
-    {sccharts::For}
-    valuedObject=ValuedObject '=' from=INT '..' to=INT 
-;
-
-// ---------------------------------------------------------------------------------------------------
-
 ControlflowRegion returns sccharts::ControlflowRegion:
 	{sccharts::ControlflowRegion}
     (annotations += Annotation)*
-    'region' (id=ID)? (label=STRING)? ('['for=For']')? ':'
+    'region' (id=ID)? (label=STRING)? ':'
       (declarations+=Declaration)*
     (states+=State)+;
 
@@ -64,7 +58,7 @@ ControlflowRegion returns sccharts::ControlflowRegion:
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
     (annotations += Annotation)*
-    'dataflow' (id=ID)? (label=STRING)? ('['for=For']')? ':'
+    'dataflow' (id=ID)? (label=STRING)? ':'
     (declarations+=Declaration)*
     (
         (equations += Equation) 
@@ -203,59 +197,12 @@ Transition returns sccharts::Transition:
 
 // ---------------------------------------------------------------------------------------------------
 
-Declaration returns kexpressions::Declaration:
-    (annotations+=Annotation)*
-    (
-        ((extern?='extern')?
-        (static?='static')?
-	    (const?='const')?
-        (input?='input')?
-        (output?='output')?
-        (
-            ((signal?='signal')? type = ValueType)
-            |
-            (signal?='signal')
-        ))
-        |
-        ((extern?='extern')
-        (static?='static')?
-        (const?='const')?
-        (input?='input')?
-        (output?='output')?        
-        (signal?='signal')? 
-        (type = ValueType)?)
-    )
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'?
-;
-
-// ---------------------------------------------------------------------------------------------------
-
-ValuedObject returns kexpressions::ValuedObject:
-    name=ID
-    ('[' cardinalities+=INT ']')* 
-    ('=' initialValue=Expression)?
-    ( 'combine'
-      (combineOperator = CombineOperator)
-    )?
-;
-
-// ---------------------------------------------------------------------------------------------------
-
-TextualCode returns kexpressions::TextExpression:
-    text = HOSTCODE ';';
-
-// ---------------------------------------------------------------------------------------------------
-
 Binding returns sccharts::Binding:
     (annotations+=Annotation)*
 	formal = [kexpressions::ValuedObject|ID] 
 	'to' 
 	actual = [kexpressions::ValuedObject|ID]
 ;
-
-
-// ---------------------------------------------------------------------------------------------------
-
 
 // ---------------------------------------------------------------------------------------------------
 

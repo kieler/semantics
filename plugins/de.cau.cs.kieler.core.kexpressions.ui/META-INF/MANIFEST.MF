@@ -19,5 +19,9 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.core.kexpressions.ui,
  de.cau.cs.kieler.core.kexpressions.ui.contentassist,
  de.cau.cs.kieler.core.kexpressions.ui.contentassist.antlr,
+ de.cau.cs.kieler.core.kexpressions.ui.contentassist.antlr.internal,
+ de.cau.cs.kieler.core.kexpressions.ui.internal,
+ de.cau.cs.kieler.core.kexpressions.ui.labeling,
+ de.cau.cs.kieler.core.kexpressions.ui.outline,
  de.cau.cs.kieler.core.kexpressions.ui.quickfix
 Bundle-Activator: de.cau.cs.kieler.core.kexpressions.ui.internal.KExpressionsActivator

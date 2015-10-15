@@ -100,7 +100,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
      */
     private Object getValue(final Annotation annotation, final LayoutOptionData optionData) {
         if (annotation instanceof StringAnnotation) {
-            String value = ((StringAnnotation) annotation).getValue();
+            String value = ((StringAnnotation) annotation).getValues().get(0);
             if (optionData.equals(LayoutOptions.ALGORITHM)) {
                 LayoutMetaDataService dataService = LayoutMetaDataService.getInstance();
                 ILayoutMetaData layoutData = dataService.getAlgorithmDataBySuffix(value);
@@ -155,7 +155,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
     private void setValue(final Annotation annotation, final LayoutOptionData optionData,
             final Object value) {
         if (annotation instanceof StringAnnotation) {
-            ((StringAnnotation) annotation).setValue(value.toString());
+            ((StringAnnotation) annotation).getValues().add(value.toString());
         } else if (annotation instanceof IntAnnotation) {
             if (optionData.getType() == LayoutOptionData.Type.INT && value instanceof Integer) {
                 ((IntAnnotation) annotation).setValue((Integer) value);
@@ -188,7 +188,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
                 } else {
                     StringAnnotation newAnnot = AnnotationsFactory.eINSTANCE.createStringAnnotation();
                     newAnnot.setName(layoutOption.getId());
-                    newAnnot.setValue(value.toString());
+                    newAnnot.getValues().add(value.toString());
                     annotatable.getAnnotations().add(newAnnot);
                 }
             }

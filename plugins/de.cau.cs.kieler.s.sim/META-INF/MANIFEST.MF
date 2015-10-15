@@ -18,6 +18,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.signals,
  org.eclipse.ui.ide,
  com.google.inject;bundle-version="3.0.0",
+ de.cau.cs.kieler.core.kexpressions.keffects,
  de.cau.cs.kieler.core.annotations
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

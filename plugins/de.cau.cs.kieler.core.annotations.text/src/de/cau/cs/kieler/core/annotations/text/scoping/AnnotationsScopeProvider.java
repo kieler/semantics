@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.core.annotations.text.scoping;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 
 /**
@@ -24,5 +27,9 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
  * @author chsch
  */
 public class AnnotationsScopeProvider extends AbstractDeclarativeScopeProvider {
+    
+    public IScope getScope(EObject context, EReference reference) {
+        return super.getScope(context, reference);
+    }
 
 }

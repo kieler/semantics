@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.features
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
@@ -44,7 +44,7 @@ class Static extends Feature {
     extension SCChartsExtension
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {

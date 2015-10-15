@@ -4,6 +4,8 @@ package de.cau.cs.kieler.s.s.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+
 import de.cau.cs.kieler.s.s.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -109,6 +111,9 @@ public class SSwitch<T> extends Switch<T>
         Assignment assignment = (Assignment)theEObject;
         T result = caseAssignment(assignment);
         if (result == null) result = caseInstruction(assignment);
+        if (result == null) result = caseKEffects_Assignment(assignment);
+        if (result == null) result = caseEffect(assignment);
+        if (result == null) result = caseAnnotatable(assignment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -496,6 +501,38 @@ public class SSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAnnotatable(Annotatable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Effect</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Effect</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEffect(Effect object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseKEffects_Assignment(de.cau.cs.kieler.core.kexpressions.keffects.Assignment object)
   {
     return null;
   }

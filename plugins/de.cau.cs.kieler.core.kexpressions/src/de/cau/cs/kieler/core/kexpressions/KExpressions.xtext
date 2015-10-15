@@ -14,216 +14,354 @@
 grammar de.cau.cs.kieler.core.kexpressions.KExpressions with  de.cau.cs.kieler.core.annotations.text.Annotations
 
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" 
-
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
+/**
+ * @author ssm
+ * @kieler.design 2015-08-21 proposed 
+ * @kieler.rating 2015-08-21 proposed yellow
+ */
+ 
+// -------------------- //
+//  KExpressions Rules  // 
+// -------------------- //
+
+/* Expression rules are organized in a chain. They pass the actual instance to the next rule but may 
+ * consume tokens to create a specific expression element. Following this pattern, complex constructs
+ * can be created. This also implies an order of precedence.
+ *
+ * Expression
+ * + BooleanExpression
+ *   + LogicalOrExpression
+ *     + LogicalAndExpression
+ *       + BitwiseOrExpression
+ *         + BitwiseAndExpression
+ *           + CompareExpression
+ *             + NotOrValuedExpression
+ *               + ValuedExpression (see valued expression below)
+ *               + NotExpression *
+ *                 + AtomicExpression *
+ *                   + BoolValue
+ *                   + ValuedObjectTestExpression
+ *                     + ValuedObjectReference
+ *                   + FunctionCall
+ *                   + TextExpression
+ * + ValuedExpression
+ *   + AddExpression
+ *     + SubExpression
+ *       + MultExpression
+ *         + DivExpression
+ *           + ModExpression
+ *             + NegExpression *
+ *               + AtomicValuedExpression *
+ *                 + IntValue
+ *                 + FloatValue
+ *                 + StringValue
+ *                 + AtomicExpression
+ */
+
+// Root Rule
+// Always return an expression.
 Root returns ecore::EObject:
     Expression;
 
+// Expression Rule
+// An expression is either a boolean expression or a valued expression.
 Expression returns Expression:
      BoolExpression  
-     | ValuedExpression
-;
+     | ValuedExpression;
 
+// Boolean Expression Rule
+// Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
+// One could skip directly to the next rule.
 BoolExpression returns Expression:
-    OrAndExpression;
+    LogicalOrExpression;
 
-OrAndExpression returns Expression:
+// Logical Or Expression Rule
+// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
+// if necessary. The warning can be ignored since the operator will only override itself in this loop.
+LogicalOrExpression returns Expression:
+    LogicalAndExpression 
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+
+    )?;
+
+// Logical And Expression Rule
+// Directs to the 'bitwise or' rule and may create an operator expression for 'logical and' operations
+// if necessary. The warning can be ignored since the operator will only override itself in this loop.
+LogicalAndExpression returns Expression:
+    BitwiseOrExpression 
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)+
+    )?;
+
+// Bitwiese Or Expression Rule
+// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
+// if necessary. The warning can be ignored since the operator will only override itself in this loop.
+BitwiseOrExpression returns Expression:
+	BitwiseAndExpression 
+	({OperatorExpression.subExpressions+=current} 
+	    (operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression)+
+	)?;
+
+// Bitwise And Expression Rule
+// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
+// if necessary. The warning can be ignored since the operator will only override itself in this loop.
+BitwiseAndExpression returns Expression:
 	CompareOperation 
-	(
-		({OperatorExpression.subExpressions+=current} operator=(OrOperator|LogicalOrOperator) subExpressions+=CompareOperation)*
-		|	
-		({OperatorExpression.subExpressions+=current} operator=(AndOperator|LogicalAndOperator) subExpressions+=CompareOperation)*
-	)
-;
-	
-//OrExpression returns Expression:
-//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(OrOperator) subExpressions+=CompareOperation)*;
-////	{OperatorExpression} subExpressions += CompareOperation (/*{OperatorExpression.subExpressions+=current}*/ operator=(AndOperator|OrOperator) subExpressions+=CompareOperation)*;
-//
-//AndExpression returns Expression:
-//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(AndOperator) subExpressions+=CompareOperation)*;
+	({OperatorExpression.subExpressions+=current} 
+	    (operator=BitwiseAndOperator subExpressions+=CompareOperation)+
+	)?;
 
+// Compare Operation Rule
+// Directs to the 'not or valued expression' rule and may create an operator expression for compares. 
 // Example: 42 <= val(A)
 CompareOperation returns Expression:
-	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=NotOrValuedExpression)
-	| NotExpression
-;
+	NotOrValuedExpression 
+	({OperatorExpression.subExpressions+=current} 
+	    operator=CompareOperator subExpressions+=NotOrValuedExpression
+	)?;
 
-// order IS IMPORTANT
+// 'Not or Valued Expression' Rule
+// ORDER IS IMPORTANT!
 NotOrValuedExpression returns Expression:
 	ValuedExpression
-	| NotExpression
-;
+	| NotExpression;
 
-
-// Example: not A, not false, not (A or B)
-// at the latter we need the parents to indicate the right binding
+// Not Expression Rule
+// Example: !A, !false, !(A or B)
+// At the latter we need the parents to indicate the right binding.
+// A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
 NotExpression returns Expression:
 	{OperatorExpression} operator=NotOperator subExpressions+=(NotExpression)
-    | AtomicExpression
-;
+    | AtomicExpression;
   
-    
-// everything that evaluates to a primitive number value
+// Valued Expression Rule    
+// Everything that evaluates to a primitive number value.
+// Similar to the boolean rule this rule is there for overview reasons.
 ValuedExpression returns Expression:
 	AddExpression;
-
-
+	
+// Add Expression Rule
+// The rule directs the 'sub expression' rule and creates an operator expression for additions
+// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 // Example: 1 + 2
 AddExpression returns Expression:
-	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
+	SubExpression 
+	({OperatorExpression.subExpressions+=current} 
+	    (operator=AddOperator subExpressions+=SubExpression)+
+	)?;
 
-
-// Example: varA - ?B
+// Sub Expression Rule
+// The rule directs the 'mult expression' rule and creates an operator expression for subtractions
+// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+// Example: var(A) - i
 SubExpression returns Expression:
-	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
-//    ({OperatorExpression} subExpressions+=MultExpression (operator=SubOperator subExpressions+=MultExpression)+)
-//	| ({OperatorExpression} subExpressions+=MultExpression subExpressions+=NIntValue)
-//    | MultExpression;
+	MultExpression 
+	({OperatorExpression.subExpressions+=current} 
+	    (operator=SubOperator subExpressions+=MultExpression)+
+	)?;
 
-
+// Mult Expression Rule
+// The rule directs the 'div expression' rule and creates an operator expression for multiplications
+// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 // Example: 2 * 4
 MultExpression returns Expression:
-	DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*;
+	DivExpression 
+	({OperatorExpression.subExpressions+=current} 
+	    (operator=MultOperator subExpressions+=DivExpression)+
+	)?;
 
-
-// Example: (2 / 4)
-// note: division always has to have parentheses because the '/' sign is also used for trigger/effect delimiter
+// Div Expression Rule
+// The rule directs the 'mod expression' rule and creates an operator expression for divisions
+// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+// Example: 2 / 4
 DivExpression returns Expression:
-	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
+	ModExpression 
+	({OperatorExpression.subExpressions+=current} 
+	    (operator=DivOperator subExpressions+=ModExpression)+
+	)?;
 	
-
-// Example: varA mod ?B
+// Mod Expression Rule
+// The rule directs the 'neg expression' rule and creates an operator expression for modulo operations
+// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+// Example: i % j
 ModExpression returns Expression:
-	NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=AtomicValuedExpression)?;
+	NegExpression 
+	({OperatorExpression.subExpressions+=current} 
+	    (operator=ModOperator subExpressions+=AtomicValuedExpression)+
+	)?;
 
-
-// Example: -?A, -(?A + ?B)
-// at the latter we need the parents to indicate the right binding
+// Neg Expression Rule
+// The rule negates the actual instance or directs the atomic value expression rule if necessary. 
+// Example: -i, -2
 NegExpression returns Expression:
 	{OperatorExpression} operator=SubOperator subExpressions+=(NegExpression)
-    | AtomicValuedExpression
-;
-  
-    
+    | AtomicValuedExpression;
+
+// Atomic Expression Rule
+// An atomic expression is either a simple boolean value, a test expression, another boolean expression
+// encapsulated in braces, a function call or a text expression.
+// Basically, the rule chain may start over again at this point.     
 AtomicExpression returns Expression:
     BoolValue
     | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
     | FunctionCall
-    | TextExpression
-;
+    | TextExpression;
 
-
+// Atomic Valued Expression Rule
+// An atomic valued expression is either a simple int float or string literal, another valued expression
+// encapsulated in braces, or a atomic expression.
+// Basically, the rule chain may start over again at this point.     
 AtomicValuedExpression returns Expression:
     IntValue
     | FloatValue 
     | StringValue
     | '(' ValuedExpression ')'
-    | AtomicExpression 
-;
+    | AtomicExpression ;
 
-
-// Example: pre(pre(val(A))), pre(val(pre(A))), val(A), A varX
+// Valued Object Test Expression Rule
+// This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
+// valued object reference.
+// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 ValuedObjectTestExpression returns Expression:
 	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression')'
-	| ValuedObjectReference
-;
+	| ValuedObjectReference;
 
-// Example: A, varB
+// Valued Object Reference Rule
+// References a valued object with arbitrary (including none) indices part.
+// Example: A, B
 ValuedObjectReference returns ValuedObjectReference:
 	valuedObject=[ValuedObject|ID] ('[' indices+=Expression ']')*;
 
+// Function Call Rule
+// Calls to functions are indicated by angle brackets. They may include a parameter list. 
 FunctionCall returns FunctionCall:
-    '<' functionName=ExtendedID (('(' parameters += Parameter (',' parameters += Parameter)* ')')|'()')? '>'
-;
+    '<' functionName=ExtendedID 
+        (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
+    '>';
 
+// Parameter Rule
+// The parameter rule is used by the function call rule. Every expression may be a paramter.
+// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
+// Analogously, an prefixed exclamation mark marks the parameter as pure output.
 Parameter returns Parameter:
-    (callByReference ?= '&')?
-    expression = Expression
-;
-
+    ((pureOutput ?= '!')? callByReference ?= '&')?
+    expression = Expression;
+    
+// Text Expression Rule
+// The text expression rule returns a text expression. Most times text expressions are used for host code.
 // Example: 'printf(...)'
 TextExpression returns TextExpression:
 	text=HOSTCODE;
 
+// Int Value Rule
 IntValue returns IntValue:
 	value=INT;
 
+// Float Value Rule
 FloatValue returns FloatValue:
 	value=FLOAT;
 
+// Bool Value Rule
 BoolValue returns BoolValue:
 	value=BOOLEAN;
 	
+// String Value Rule	
 StringValue returns StringValue:
     value=STRING;
 
-
-// data type rule allowing any kind of value to be accepted,
-// e.g. as initialValues of valuedObjects
-// used in Kits.xtext 
+// Any Type Rule
+// Data type rule allowing any kind of value to be accepted,
+// e.g. as initialValues of valued objects used in Kits.xtext. 
 AnyType returns ecore::EString:
     BOOLEAN | INT | FLOAT | ID | STRING;
 
+// -------------------- //
+//  KExpressions Enums  // 
+// -------------------- //
 
+// Compare Operator Enum 
 enum CompareOperator returns OperatorType:
-	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 
+// Pre Operator Enum
 enum PreOperator returns OperatorType:
     PRE="pre";
 
-enum OrOperator returns OperatorType:
-	OR="|";
+// Bitewise Or Operator Enum
+enum BitwiseOrOperator returns OperatorType:
+	BITWISE_OR="|";
 
-enum AndOperator returns OperatorType:
-	AND="&";
+// Bitwise And Operator Enum
+enum BitwiseAndOperator returns OperatorType:
+	BITWISE_AND="&";
 
+// Not Operator Enum
 enum NotOperator returns OperatorType:
 	NOT="!";
 
+// Add Operator Enum
 enum AddOperator returns OperatorType:
 	ADD="+";
 	
+// Sub Operator Enum
 enum SubOperator returns OperatorType:
 	SUB="-";
 	
+// Mult Operator Enum
 enum MultOperator returns OperatorType:	
 	MULT="*";
 
+// Mod Operator Enum
 enum ModOperator returns OperatorType:	
 	MOD="%";
 
+// Div Operator Enum
 enum DivOperator returns OperatorType:	
 	DIV="/";
 
+// Val Operator Enum
 enum ValOperator returns OperatorType:
 	VAL="val";
 
+// Logical Or Operator Enum
 enum LogicalOrOperator returns OperatorType:
-	OR="||";
+	LOGICAL_OR="||";
 
+// Logical And Operator Enum
 enum LogicalAndOperator returns OperatorType:
-	AND="&&";
+	LOGICAL_AND="&&";
+	
+// Postfix Operator Enum
+enum PostfixAdd returns OperatorType:
+    POSTFIX_ADD="++";
 
-/*
-   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
-*/
+// Postfix Operator Enum
+enum PostfixSub returns OperatorType:
+    POSTFIX_SUB="--";
+
+// Value Type Enum
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 
 	INT="int" | FLOAT="float" |
 	STRING="string" | HOST="host";
 	
+// Host Type Enum
 enum HostType returns ValueType:
     HOST="host";
 
+// Combine Operator Enum
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	MIN="min" | OR="|" | AND="&" | HOST="host";
 
+// ------------------------ //
+//  KExpressions Terminals  // 
+// ------------------------ //
 
-// custom terminal rule allowing to save transition label string as they are
+// Hostcode Terminals
+// Custom terminal rule allowing to save transition label string as they are
 terminal HOSTCODE returns ecore::EString: 
 	"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"'") )* "'";
-	

@@ -19,17 +19,21 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.ValueType
 
 /**
  * SCCharts Signal Transformation.
@@ -65,7 +69,16 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension
@@ -113,7 +126,8 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
 
             // If this is a valued signal we need a second signal for the value
             if (isValuedSignal) {
-                val valueVariable = state.createVariable(signal.name + variableValueExtension)
+            	val valueDeclaration = createDeclaration => [ type = signal.getType ]
+                val valueVariable = state.createValuedObject(signal.name + variableValueExtension, valueDeclaration)
 
                 // Copy type and input/output attributes from the original signal
                 valueVariable.applyAttributes(signal)
@@ -142,7 +156,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                     for (OperatorExpression signalTest : allSignalValTests.immutableCopy) {
 
                         // Put a trim-able Operator here
-                        signalTest.setOperator(OperatorType::AND)
+                        signalTest.setOperator(OperatorType::LOGICAL_AND)
 
                         // Replace in valuedObjectReference
                         (signalTest.subExpressions.get(0) as ValuedObjectReference).setValuedObject(valueVariable)
@@ -150,14 +164,14 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                     //signalTest.add(TRUE)
                     }
                     if (action.trigger != null) {
-                        action.setTrigger(action.trigger.trim)
+                        action.setTrigger(action.trigger)
                     }
                 }
             }
 
             // Change signal to variable
-            presentVariable.setIsNotSignal
-            presentVariable.setTypeBool
+            presentVariable.declaration.signal = false
+            presentVariable.declaration.type = ValueType::BOOL
 
             // Reset initial value and combine operator because we want to reset
             // the signal manually in every

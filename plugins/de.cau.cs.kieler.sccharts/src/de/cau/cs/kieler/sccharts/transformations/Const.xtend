@@ -21,7 +21,6 @@ import de.cau.cs.kieler.core.kexpressions.DoubleValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
@@ -29,6 +28,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Const Transformation.
@@ -67,7 +67,7 @@ class Const extends AbstractExpansionTransformation implements Traceable {
     extension AnnotationsExtensions
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
 
     @Inject
     extension SCChartsExtension
@@ -92,9 +92,7 @@ class Const extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void transformConst(State state) {
-        val constObjects = state.valuedObjects.filter [
-            isConst && initialValue != null
-        ].toList
+        val constObjects = state.valuedObjects.filter[ isConst && initialValue != null ]
 
         for (const : constObjects.toList.immutableCopy) {
             val replacement = const.initialValue
@@ -117,7 +115,7 @@ class Const extends AbstractExpansionTransformation implements Traceable {
                     text = text.replaceAll(const.name, replacementString)
                 ]
             }
-            const.delete
+            const.deleteAndCleanup
         }
 
     }

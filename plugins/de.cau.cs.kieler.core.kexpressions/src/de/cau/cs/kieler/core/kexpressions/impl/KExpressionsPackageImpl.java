@@ -500,14 +500,14 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
 				/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDeclaration_HostType() {
+    public EAttribute getDeclaration_HostType() {
 		return (EAttribute)declarationEClass.getEStructuralFeatures().get(9);
 	}
 
-				/**
+                /**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -557,8 +557,17 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
 	 * @generated
 	 */
+    public EAttribute getParameter_PureOutput() {
+		return (EAttribute)parameterEClass.getEStructuralFeatures().get(1);
+	}
+
+    /**
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 */
     public EReference getParameter_Expression() {
-		return (EReference)parameterEClass.getEStructuralFeatures().get(1);
+		return (EReference)parameterEClass.getEStructuralFeatures().get(2);
 	}
 
     /**
@@ -682,6 +691,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
 		parameterEClass = createEClass(PARAMETER);
 		createEAttribute(parameterEClass, PARAMETER__CALL_BY_REFERENCE);
+		createEAttribute(parameterEClass, PARAMETER__PURE_OUTPUT);
 		createEReference(parameterEClass, PARAMETER__EXPRESSION);
 
 		stringValueEClass = createEClass(STRING_VALUE);
@@ -785,6 +795,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
 		initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameter_CallByReference(), ecorePackage.getEBoolean(), "callByReference", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParameter_PureOutput(), ecorePackage.getEBoolean(), "pureOutput", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getParameter_Expression(), this.getExpression(), null, "expression", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(stringValueEClass, StringValue.class, "StringValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -811,13 +822,17 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 		addEEnumLiteral(operatorTypeEEnum, OperatorType.VAL);
 		addEEnumLiteral(operatorTypeEEnum, OperatorType.PRE);
 		addEEnumLiteral(operatorTypeEEnum, OperatorType.NE);
-		addEEnumLiteral(operatorTypeEEnum, OperatorType.AND);
-		addEEnumLiteral(operatorTypeEEnum, OperatorType.OR);
+		addEEnumLiteral(operatorTypeEEnum, OperatorType.LOGICAL_AND);
+		addEEnumLiteral(operatorTypeEEnum, OperatorType.LOGICAL_OR);
 		addEEnumLiteral(operatorTypeEEnum, OperatorType.ADD);
 		addEEnumLiteral(operatorTypeEEnum, OperatorType.SUB);
 		addEEnumLiteral(operatorTypeEEnum, OperatorType.MULT);
 		addEEnumLiteral(operatorTypeEEnum, OperatorType.DIV);
 		addEEnumLiteral(operatorTypeEEnum, OperatorType.MOD);
+		addEEnumLiteral(operatorTypeEEnum, OperatorType.BITWISE_OR);
+		addEEnumLiteral(operatorTypeEEnum, OperatorType.BITWISE_AND);
+		addEEnumLiteral(operatorTypeEEnum, OperatorType.POSTFIX_ADD);
+		addEEnumLiteral(operatorTypeEEnum, OperatorType.POSTFIX_SUB);
 
 		initEEnum(valueTypeEEnum, ValueType.class, "ValueType");
 		addEEnumLiteral(valueTypeEEnum, ValueType.PURE);

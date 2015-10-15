@@ -5,33 +5,40 @@ import de.cau.cs.kieler.core.annotations.Annotation
 import de.cau.cs.kieler.core.annotations.Annotatable
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.annotations.CommentAnnotation
+import java.util.List
 
+/**
+ * Annotations extensions
+ * 
+ * @author ssm
+ */
 class AnnotationsExtensions {
 	
-	def public Annotation getStringAnnotation(Annotatable annotatable, String name) {
+	def public Annotation getAnnotation(Annotatable annotatable, String name) {
 		annotatable.annotations.filter[ it.name == name ]?.head
 	} 
 
-    def public Iterable<Annotation> getStringAnnotations(Annotatable annotatable, String name) {
+    def public Iterable<Annotation> getAnnotations(Annotatable annotatable, String name) {
         annotatable.annotations.filter[ it.name == name ]
     } 
 	
 	def public String getStringAnnotationValue(Annotatable annotatable, String name) {
-		val anno = annotatable.getStringAnnotation(name)
-		if (anno != null) 
-			(anno as StringAnnotation).value
+		val annotation = annotatable.getAnnotation(name)
+		if (annotation != null) 
+			(annotation as StringAnnotation).values.head
 		else
 			""
 	}
 
-	def public Annotatable addAnnotation(Annotatable source, String name, String value) {
+	def public Annotatable createStringAnnotation(Annotatable source, String name, String value) {
 		source => [ annotations += name.createStringAnnotation(value) ]
 	}
 	
 	def public Annotation createStringAnnotation(String name, String value) {
 		AnnotationsFactory::eINSTANCE.createStringAnnotation => [
 			it.name = name
-			it.value = value
+			it.values += value
 		]
 	}
 		
@@ -44,6 +51,14 @@ class AnnotationsExtensions {
 	
 	
 	def public boolean hasAnnotation(Annotatable annotatable, String name) {
-		!annotatable.annotations.nullOrEmpty && annotatable.annotations.filter[ it.name == name].size > 0
+		!annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter[ it.name == name].empty
+	}
+	
+	def public boolean hasCommentAnnotation(Annotatable annotatable) {
+	   !annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter(typeof(CommentAnnotation)).empty    
+	}
+	
+	def public List<CommentAnnotation> getCommentAnnotations(Annotatable annotatable) {
+	    annotatable.annotations.filter(typeof(CommentAnnotation)).toList
 	}
 }

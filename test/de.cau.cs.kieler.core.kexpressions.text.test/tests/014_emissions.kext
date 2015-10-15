@@ -1,0 +1,17 @@
+/* KEXT Test File for emissions
+ * 
+ * @author ssm
+ * @date 2015-06-10
+ */
+signal A;
+signal int I;
+signal int C combine +;
+
+@check "emission.emit"
+A
+
+@check "emission.emit.value"
+I(5)
+
+@check "emission.emit.value.combine"
+C(4)

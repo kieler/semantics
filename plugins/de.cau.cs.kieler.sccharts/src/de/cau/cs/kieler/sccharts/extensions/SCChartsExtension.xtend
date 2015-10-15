@@ -21,14 +21,19 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
+import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.sccharts.Binding
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
-import de.cau.cs.kieler.sccharts.Effect
-import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.IterateAction
@@ -38,7 +43,6 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.SuspendAction
-import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import java.util.ArrayList
@@ -50,6 +54,11 @@ import org.eclipse.emf.ecore.EObject
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsReplacementExtensions
+
+//import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
 import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -65,7 +74,13 @@ import de.cau.cs.kieler.sccharts.Equation
 class SCChartsExtension {
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
+
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+
+    @Inject
+    extension KExpressionsReplacementExtensions
 
     // This prefix is used for namings of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -117,8 +132,7 @@ class SCChartsExtension {
     // Get the single normal termination Transition. Return null if there is 
     // no outgoing normal termination Transition.
     def Transition getTerminationTransitions(State state) {
-        val allTerminationTransitions = state.outgoingTransitions.filter(
-            e|e.type == TransitionType::TERMINATION);
+        val allTerminationTransitions = state.outgoingTransitions.filter[ type == TransitionType::TERMINATION ]
         if (allTerminationTransitions.size == 0) {
             return null;
         }
@@ -325,7 +339,7 @@ class SCChartsExtension {
     }
 
     def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
-        val state = (valuedObject.getEContainer as State);
+        val state = (valuedObject.eContainer as State);
         val rootState = state.getRootState
         var notFound = valuedObject.uniqueNameTest(rootState, newName)
         for (innerState : rootState.allContainedStatesList) {
@@ -877,13 +891,13 @@ class SCChartsExtension {
     //========== ASSIGNMENTS ============
     //Create a during action for a state.
     def Emission createEmission() {
-        val emission = SCChartsFactory::eINSTANCE.createEmission
+        val emission = KEffectsFactory::eINSTANCE.createEmission
         emission
     }
 
     // Create an Assignment.
     def Assignment assign(ValuedObject valuedObject) {
-        val assignment = SCChartsFactory::eINSTANCE.createAssignment()
+        val assignment = KEffectsFactory::eINSTANCE.createAssignment()
         assignment.setValuedObject(valuedObject)
         assignment
     }
@@ -925,15 +939,15 @@ class SCChartsExtension {
 
     //=========== EMISSIONS =============
     // Create a TextEffect.
-    def TextEffect createTextEffect(String text) {
-        val extEffect = SCChartsFactory::eINSTANCE.createTextEffect
+    def HostcodeEffect createHostcodeEffect(String text) {
+        val extEffect = KEffectsFactory::eINSTANCE.createHostcodeEffect
         extEffect.setText(text)
         extEffect
     }
 
     // Create an Emission.
     def Emission emit(ValuedObject valuedObject) {
-        val emission = SCChartsFactory::eINSTANCE.createEmission()
+        val emission = KEffectsFactory::eINSTANCE.createEmission()
         emission.setValuedObject(valuedObject)
         emission
     }
@@ -984,23 +998,34 @@ class SCChartsExtension {
 
     //=========  VALUED OBJECT  =========
     // Creates a new ValuedObject in a scope.
-    def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
-        val valuedObject = createValuedObject(valuedObjectName)
-        scope.valuedObjects.add(valuedObject)
-        valuedObject
+//    def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
+//        val valuedObject = createValuedObject(valuedObjectName)
+//        scope.valuedObjects.add(valuedObject)
+//        valuedObject
+//    }
+    
+    def ValuedObject createValuedObject(Scope scope, String valuedObjectName, Declaration declaration) {
+    	val valuedObject = createValuedObject(valuedObjectName);
+    	declaration.valuedObjects += valuedObject
+	  	if (!scope.declarations.contains(declaration)) {
+    		scope.declarations += declaration
+    	}
+    	valuedObject
     }
+    
 
     //===========  VARIABLES  ===========
     // Creates a new variable ValuedObject in a Scope.
-    def ValuedObject createVariable(Scope scope, String variableName) {
-        scope.createValuedObject(variableName)
-    }
+//    def ValuedObject createVariable(Scope scope, String variableName) {
+//        scope.createValuedObject(variableName)
+//    }
 
     //============  SIGNALS  ============
     // Creates a new variable ValuedObject in a Scope.
-    def ValuedObject createSignal(Scope scope, String variableName) {
-        scope.createValuedObject(variableName).setIsSignal
-    }
+// TODO: VERIFY: That's not the way it's meant to be.
+//    def ValuedObject createSignal(Scope scope, String variableName) {
+//        scope.createValuedObject(variableName).setIsSignal
+//    }
 
     //-------------------------------------------------------------------------
     //--                           N A M I N G S                             --
@@ -1147,31 +1172,20 @@ class SCChartsExtension {
         if (state == targetRootState) {
             return;
         }
-
-        // There are local valuedObjects, raise them
-        if (state.valuedObjects != null && state.valuedObjects.size > 0) {
-            val hierarchicalStateName = state.getHierarchicalName("LOCAL");
-
-            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
-                val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
-
-                // Possibly expose
+        
+        val declarations = state.declarations.toList
+        val hierarchicalStateName = state.getHierarchicalName("LOCAL");
+        for(declaration : declarations) {
+            targetRootState.declarations += declaration
+            if (expose) declaration.output = true
+            for(valuedObject : declaration.valuedObjects) {
                 if (expose) {
-                    localValuedObject.setIsOutput
-                }
-
-                // Relocate
-                targetRootState.valuedObjects.add(localValuedObject)
-
-                // Rename
-                if (expose) {
-                    localValuedObject.setName(newValuedObjectName)
+                    valuedObject.name = hierarchicalStateName + "_" + valuedObject.name
                 } else {
-                    localValuedObject.uniqueName
+                    valuedObject.uniqueName
                 }
-
             }
-        } // end if local valuedObjects present
+        }
 
     }
 

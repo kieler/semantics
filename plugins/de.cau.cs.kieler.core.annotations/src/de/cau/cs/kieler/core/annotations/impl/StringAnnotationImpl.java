@@ -16,11 +16,14 @@ package de.cau.cs.kieler.core.annotations.impl;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +32,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.annotations.impl.StringAnnotationImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.annotations.impl.StringAnnotationImpl#getValues <em>Values</em>}</li>
  * </ul>
  * </p>
  *
@@ -37,24 +40,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class StringAnnotationImpl extends AnnotationImpl implements StringAnnotation {
     /**
-     * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+     * The cached value of the '{@link #getValues() <em>Values</em>}' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getValue()
+     * @see #getValues()
      * @generated
      * @ordered
      */
-    protected static final String VALUE_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getValue()
-     * @generated
-     * @ordered
-     */
-    protected String value = VALUE_EDEFAULT;
+    protected EList<String> values;
 
     /**
      * <!-- begin-user-doc -->
@@ -80,20 +73,11 @@ public class StringAnnotationImpl extends AnnotationImpl implements StringAnnota
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getValue() {
-        return value;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setValue(String newValue) {
-        String oldValue = value;
-        value = newValue;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, AnnotationsPackage.STRING_ANNOTATION__VALUE, oldValue, value));
+    public EList<String> getValues() {
+        if (values == null) {
+            values = new EDataTypeUniqueEList<String>(String.class, this, AnnotationsPackage.STRING_ANNOTATION__VALUES);
+        }
+        return values;
     }
 
     /**
@@ -104,8 +88,8 @@ public class StringAnnotationImpl extends AnnotationImpl implements StringAnnota
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case AnnotationsPackage.STRING_ANNOTATION__VALUE:
-                return getValue();
+            case AnnotationsPackage.STRING_ANNOTATION__VALUES:
+                return getValues();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -115,11 +99,13 @@ public class StringAnnotationImpl extends AnnotationImpl implements StringAnnota
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case AnnotationsPackage.STRING_ANNOTATION__VALUE:
-                setValue((String)newValue);
+            case AnnotationsPackage.STRING_ANNOTATION__VALUES:
+                getValues().clear();
+                getValues().addAll((Collection<? extends String>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -133,8 +119,8 @@ public class StringAnnotationImpl extends AnnotationImpl implements StringAnnota
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case AnnotationsPackage.STRING_ANNOTATION__VALUE:
-                setValue(VALUE_EDEFAULT);
+            case AnnotationsPackage.STRING_ANNOTATION__VALUES:
+                getValues().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -148,8 +134,8 @@ public class StringAnnotationImpl extends AnnotationImpl implements StringAnnota
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case AnnotationsPackage.STRING_ANNOTATION__VALUE:
-                return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+            case AnnotationsPackage.STRING_ANNOTATION__VALUES:
+                return values != null && !values.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -164,8 +150,8 @@ public class StringAnnotationImpl extends AnnotationImpl implements StringAnnota
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (value: ");
-        result.append(value);
+        result.append(" (values: ");
+        result.append(values);
         result.append(')');
         return result.toString();
     }

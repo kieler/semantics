@@ -16,20 +16,20 @@ package de.cau.cs.kieler.esterel.scl.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.esterel.FunctionExpression
+import de.cau.cs.kieler.esterel.esterel.TrapExpression
 import de.cau.cs.kieler.esterel.kexpressions.BooleanValue
 import de.cau.cs.kieler.esterel.kexpressions.CombineOperator
 import de.cau.cs.kieler.esterel.kexpressions.ComplexExpression
 import de.cau.cs.kieler.esterel.kexpressions.Expression
+import de.cau.cs.kieler.esterel.kexpressions.FloatValue
 import de.cau.cs.kieler.esterel.kexpressions.IntValue
 import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 import javax.xml.transform.TransformerException
-import de.cau.cs.kieler.esterel.esterel.TrapExpression
-import de.cau.cs.kieler.esterel.kexpressions.FloatValue
 
 /**
  * Transforms Esterels KExpressions to core KExpressions. This is necessary as the Esterel meta-model
@@ -44,7 +44,7 @@ import de.cau.cs.kieler.esterel.kexpressions.FloatValue
 class TransformExpression {
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
 
     @Inject
     extension EsterelToSclExtensions

@@ -13,43 +13,41 @@
  */
 package de.cau.cs.kieler.esterel.sim.c.xtend
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.esterel.sim.c.EsterelCSimulationPlugin
-import de.cau.cs.kieler.esterel.esterel.Program
-import de.cau.cs.kieler.esterel.esterel.Statement
-import de.cau.cs.kieler.esterel.esterel.Module
-import de.cau.cs.kieler.esterel.esterel.EsterelFactory
-import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
+import com.google.common.collect.Sets
 import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Block
 import de.cau.cs.kieler.esterel.esterel.Do
 import de.cau.cs.kieler.esterel.esterel.Emit
+import de.cau.cs.kieler.esterel.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.esterel.EveryDo
 import de.cau.cs.kieler.esterel.esterel.Exit
 import de.cau.cs.kieler.esterel.esterel.Halt
 import de.cau.cs.kieler.esterel.esterel.IfTest
+import de.cau.cs.kieler.esterel.esterel.LocalSignalList
 import de.cau.cs.kieler.esterel.esterel.Loop
+import de.cau.cs.kieler.esterel.esterel.Module
+import de.cau.cs.kieler.esterel.esterel.ModuleBody
 import de.cau.cs.kieler.esterel.esterel.Nothing
+import de.cau.cs.kieler.esterel.esterel.Parallel
 import de.cau.cs.kieler.esterel.esterel.Pause
 import de.cau.cs.kieler.esterel.esterel.Present
+import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.Repeat
 import de.cau.cs.kieler.esterel.esterel.Run
+import de.cau.cs.kieler.esterel.esterel.Sequence
+import de.cau.cs.kieler.esterel.esterel.Statement
+import de.cau.cs.kieler.esterel.esterel.StatementContainer
 import de.cau.cs.kieler.esterel.esterel.Suspend
 import de.cau.cs.kieler.esterel.esterel.Sustain
-import de.cau.cs.kieler.esterel.esterel.Block
+import de.cau.cs.kieler.esterel.features.EsterelFeature
+import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.esterel.kexpressions.ValueType
-import de.cau.cs.kieler.esterel.esterel.LocalSignalList
-import de.cau.cs.kieler.esterel.esterel.ModuleBody
-import de.cau.cs.kieler.esterel.esterel.Parallel
-import de.cau.cs.kieler.esterel.esterel.Sequence
-import de.cau.cs.kieler.esterel.esterel.StatementContainer
+import de.cau.cs.kieler.esterel.sim.c.EsterelCSimulationPlugin
+import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.esterel.features.EsterelFeature
-import com.google.common.collect.Sets
-import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
 
 /**
  * This class handles the<BR>
@@ -86,12 +84,6 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     
     //-------------------------------------------------------------------------
     
-    @Inject
-    extension KExpressionsExtension
-
-//    @Inject
-//    extension Esterel
-
     //-------------------------------------------------------------------------
     //--         S I M U L A T I O N    V I S U A L I Z A T I O N            --
     //-------------------------------------------------------------------------

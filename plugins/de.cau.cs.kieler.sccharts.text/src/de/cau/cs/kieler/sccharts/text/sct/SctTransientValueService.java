@@ -246,7 +246,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
             if (AnnotationsPackage.eINSTANCE.getStringAnnotation().isInstance(
                     ((Annotatable) owner).getAnnotations().get(index))) {
                 StringAnnotation a = (StringAnnotation) ((Annotatable)  owner).getAnnotations().get(index);
-                return Strings.isEmpty(a.getName()) && Strings.isEmpty(a.getValue());
+                return Strings.isEmpty(a.getName()) && Strings.isEmpty(a.getValues().get(0));
             }
             if (((Annotatable) owner).getAnnotations().get(index).getClass().equals(AnnotationImpl.class)) {
                 /* I don't like that! Need a better way to filter Annotation objects and ignore subclass objects */

@@ -18,7 +18,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.State
@@ -50,7 +50,7 @@ class Pre extends Feature {
     extension SCChartsExtension
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {

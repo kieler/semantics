@@ -11,9 +11,8 @@ import org.eclipse.emf.ecore.EObject;
  *
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getInstruction()
- * @model
+ * @model interface="true" abstract="true"
  * @generated
  */
-public interface Instruction extends EObject
-{
+public interface Instruction extends EObject {
 } // Instruction

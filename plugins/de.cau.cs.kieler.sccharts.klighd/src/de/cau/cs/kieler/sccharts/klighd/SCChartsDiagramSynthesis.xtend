@@ -24,7 +24,6 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KPort
@@ -90,7 +89,7 @@ import org.eclipse.xtext.serializer.ISerializer
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtensions
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
@@ -98,6 +97,7 @@ import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -152,7 +152,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     extension DependencyTransformation
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
     
     @Inject
     extension SCChartsSerializeExtension
@@ -330,14 +330,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
             }
             var regionLabelVar = r.label
-            if (r.^for != null) {
-                scopeProvider.parent = r.parentState;
-                //val forCopy = r.^for.copy
-                val forCopy = r.^for.valuedObject.copy
-                //forCopy.annotations.clear // do not serialize copied annotations
-                var String forLabel = "[" + r.^for.valuedObject.name + "=" +  r.^for.from + ".." + r.^for.to + "]"//serializer.serialize(forCopy)
-                regionLabelVar = regionLabelVar + " " + forLabel
-            }
+//            if (r.^for != null) {
+//                scopeProvider.parent = r.parentState;
+//                //val forCopy = r.^for.copy
+//                val forCopy = r.^for.valuedObject.copy
+//                //forCopy.annotations.clear // do not serialize copied annotations
+//                var String forLabel = "[" + r.^for.valuedObject.name + "=" +  r.^for.from + ".." + r.^for.to + "]"//serializer.serialize(forCopy)
+//                regionLabelVar = regionLabelVar + " " + forLabel
+//            }
             val regionLabel = regionLabelVar
 //            if (r.eContainer == null) {
 //                return;
