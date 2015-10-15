@@ -243,13 +243,13 @@ class SCChartsExtension {
         state.parentRegion == null
     }
 
-    def State getRootState(State state) {
+    def dispatch State getRootState(State state) {
         if(state.parentRegion == null) return state;
         state.parentRegion.rootState
     }
 
     // Return the root state.
-    def State getRootState(ControlflowRegion region) {
+    def dispatch State getRootState(ControlflowRegion region) {
 
         // There should exactly be one state in the root region
         region.parentState.getRootState
@@ -330,17 +330,17 @@ class SCChartsExtension {
     }
 
     def private boolean uniqueNameTest(ValuedObject valuedObject, State state, String newName) {
-        if (state == null) { //seems wrong!! --> || state.valuedObjects.nullOrEmpty) {
+        if (state == null) { 
             return true
         }
-        val notFoundOtherValuedObjectInState = state.valuedObjects.filter[it != valuedObject && name == newName].size ==
-            0
+        
+        val notFoundOtherValuedObjectInState = state.valuedObjects.filter[it != valuedObject && name == newName].size == 0
         return notFoundOtherValuedObjectInState
     }
 
     def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
-        val state = (valuedObject.eContainer as State);
-        val rootState = state.getRootState
+        val scope = (valuedObject.eContainer.eContainer as Scope);
+        val rootState = scope.rootState
         var notFound = valuedObject.uniqueNameTest(rootState, newName)
         for (innerState : rootState.allContainedStatesList) {
             if (notFound && !valuedObject.uniqueNameTest(innerState, newName)) {
