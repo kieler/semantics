@@ -1,0 +1,11 @@
+scchart EntryTest {
+  	input bool I;
+	output bool O;
+	
+    initial state A{
+      entry I / O = false;
+    }
+    >-> F with !I;
+    
+    final state F;    
+}

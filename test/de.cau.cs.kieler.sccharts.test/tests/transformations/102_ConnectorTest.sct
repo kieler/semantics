@@ -1,0 +1,19 @@
+scchart ConnectorTest {
+  input bool I;
+  input output bool O;
+  
+  initial state A
+  --> C with I / O = true
+  --> B;
+  
+  state B
+  --> C immediate with !I / O = false;
+  
+  connector state C
+  --> F1 with I / O = true
+  --> F2 with !O / O = true;
+   
+  final state F1;
+  final state F2;
+}
+ 

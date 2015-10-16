@@ -1,0 +1,17 @@
+scchart ExitTest {
+  output bool O;
+
+  initial state A {
+
+    state _Depth
+    --> _Done immediate / O = false;
+
+    final state _Done;
+
+    initial state A0
+    --> _Depth;
+  }
+  >-> F;
+
+  final state F;
+}

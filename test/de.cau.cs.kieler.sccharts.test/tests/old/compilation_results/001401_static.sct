@@ -1,0 +1,15 @@
+scchart ^static {
+  bool __A_O;
+
+  initial state A {
+
+    state _Depth
+    --> A2 immediate / __A_O = true;
+
+    initial state _Depth2
+    --> _Depth;
+
+    state A2
+    --> _Depth2;
+  };
+}

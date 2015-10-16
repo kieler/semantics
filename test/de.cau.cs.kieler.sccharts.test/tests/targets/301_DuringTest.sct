@@ -1,0 +1,48 @@
+scchart DuringTest {
+  input bool I;
+  output bool O;
+
+  initial state A {
+
+    final state _Depth;
+
+    initial state A0
+    --> _Depth;
+
+    region _During:
+
+    state _Depth
+    --> _I immediate / O = true;
+
+    initial state _I
+    --> _Depth;
+
+    region _During2:
+
+    initial state _Depth
+    --> _S immediate / O = true;
+
+    state _S
+    --> _Depth;
+
+    region _During3:
+
+    state _S
+    --> _I immediate / O = true;
+
+    initial state _I
+    --> _Depth;
+
+    state _Depth
+    --> _S immediate with I
+    --> _I immediate;
+
+    region _During4:
+
+    initial state _Depth
+    --> _S immediate / O = false;
+
+    state _S
+    --> _Depth;
+  };
+}

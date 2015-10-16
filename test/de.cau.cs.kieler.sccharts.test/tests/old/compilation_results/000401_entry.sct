@@ -1,0 +1,14 @@
+scchart ^entry {
+  output bool O;
+
+  initial state A {
+
+    final state _Depth;
+
+    initial state _Init
+    --> A1 immediate / O = false;
+
+    state A1
+    --> _Depth;
+  };
+}

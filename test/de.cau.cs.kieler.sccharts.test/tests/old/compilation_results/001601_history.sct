@@ -1,0 +1,56 @@
+scchart ^history {
+  input bool I;
+  output bool O;
+  bool _trig;
+
+  initial state A {
+
+    region _Entry:
+
+    state _Main {
+
+      initial state B1
+      --> _Aborted immediate with _trig
+      --> _Pause immediate;
+
+      state B2
+      --> _Aborted immediate with _trig
+      --> _Pause2 immediate;
+
+      final state _Aborted;
+
+      state _Depth
+      --> B2 immediate / O = true;
+
+      state _Depth2
+      --> B1 immediate / O = false;
+
+      state _Pause
+      --> _Depth;
+
+      state _Pause2
+      --> _Depth2;
+
+      region _Ctrl:
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate / _trig = true;
+
+      initial state _Run
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with I
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _Main immediate / _trig = false;
+
+    final state _Done;
+  }
+  >-> A immediate history;
+}

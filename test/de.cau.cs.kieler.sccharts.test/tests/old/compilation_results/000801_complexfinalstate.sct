@@ -1,0 +1,56 @@
+scchart complexfinalstate {
+  input bool I;
+
+  initial final state A {
+    bool _abort = false;
+    bool _term = false;
+
+    state A2
+    --> _S2 immediate with I
+    --> _S4 immediate;
+
+    final state _Final;
+
+    state _Depth
+    --> A2 immediate / _term = true;
+
+    state _S2
+    --> A1 immediate / _term = false;
+
+    initial state A1
+    --> _Depth;
+
+    state _S4
+    --> _Final immediate with _abort
+    --> _Pause2 immediate;
+
+    state _Pause2
+    --> _Depth2;
+
+    state _Depth2
+    --> _S2 immediate with I
+    --> _S6 immediate;
+
+    state _S6
+    --> _Final immediate with _abort
+    --> _Pause2 immediate;
+
+    region _Watch:
+
+    initial state _Watch
+    --> _S immediate with _term
+    --> _Pause immediate;
+
+    final state _Aborted;
+
+    state _S
+    --> _Aborted immediate / _abort = true;
+
+    state _Pause
+    --> _Depth;
+
+    state _Depth
+    --> _S immediate with _term
+    --> _Pause immediate;
+  };
+}

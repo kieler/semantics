@@ -1,0 +1,19 @@
+scchart ^connector {
+  input bool I;
+  output bool O;
+
+  state _Depth
+  --> _S immediate with I
+  --> _S5 immediate;
+
+  final state C;
+
+  state _S
+  --> C immediate / O = false;
+
+  initial state _Depth3
+  --> _Depth;
+
+  state _S5
+  --> _Depth3;
+}

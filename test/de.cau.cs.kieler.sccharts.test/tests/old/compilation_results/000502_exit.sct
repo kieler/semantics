@@ -1,0 +1,13 @@
+scchart ^exit {
+  output bool O;
+
+  initial state A {
+
+    region _Exit:
+
+    initial state _Init
+    --> _Done immediate / O = false;
+
+    final state _Done;
+  };
+}

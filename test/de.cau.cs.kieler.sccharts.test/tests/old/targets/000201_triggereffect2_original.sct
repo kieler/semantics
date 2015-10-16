@@ -1,9 +1,12 @@
 scchart triggereffect {
   input bool I;
-  @RoflCopter 5
   output bool O;
-  
+
   initial state A
-  --> B with I / O = false;
+  --> _S with I;
+
   final state B;
+
+  state _S
+  --> B immediate / O = false;
 }

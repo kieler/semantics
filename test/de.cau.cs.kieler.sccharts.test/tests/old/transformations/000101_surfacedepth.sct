@@ -3,5 +3,6 @@ scchart surfacedepth {
   
   initial state A
   --> A with I;
-  //final state B;
+  
+  final state B;
 }

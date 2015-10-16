@@ -1,0 +1,12 @@
+scchart ConnectorTest {
+  input bool I;
+
+  final state C;
+
+  initial state A
+  --> _Depth;
+
+  state _Depth
+  --> C immediate with I
+  --> A immediate;
+}

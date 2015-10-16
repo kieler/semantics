@@ -1,0 +1,16 @@
+scchart DuringTest {
+	input bool I;
+	output bool O;
+
+    initial state A{
+      during / O = true;
+      immediate during / O = true;   
+      during I / O = true;
+      immediate during / O = false;
+      
+      initial state A0
+      --> A1;
+      
+      final state A1;
+    };
+}

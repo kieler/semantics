@@ -1,0 +1,11 @@
+scchart ExitTest {
+    input bool I;
+    output bool O;
+	
+    initial state A{
+      exit I / O = false;
+    }
+    >-> F with I;
+    
+    final state F;    
+}

@@ -1,0 +1,11 @@
+scchart ConnectorTest {
+  input bool I;
+  
+  initial state A
+  --> C with I;
+  
+  connector state C
+  --> F;
+   
+  final state F;
+}
