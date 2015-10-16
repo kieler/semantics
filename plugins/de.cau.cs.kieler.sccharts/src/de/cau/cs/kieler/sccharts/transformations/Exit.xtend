@@ -184,6 +184,14 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                     connector = entryRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
                 }
                 val transition = firstState.createImmediateTransitionTo(connector)
+                
+                // In case the starting point of this transition has regions with final states,
+                // it is necessary to wait until these final states are reached.
+                // Thus a termination transition is needed in this case.  
+                if(firstState.hasInnerStatesOrControlflowRegions) { 
+                    transition.setTypeTermination
+                }
+                
                 for (effect : exitAction.effects) {
                     transition.addEffect(effect.copy)
                 }
