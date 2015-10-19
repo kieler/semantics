@@ -1,0 +1,19 @@
+scchart InitializationTest {
+
+  initial state A {
+    int x;
+    bool y;
+    float z;
+
+    state A0;
+
+    initial state _Init
+    --> _C immediate / x = 5;
+
+    state _C
+    --> _C2 immediate / y = true;
+
+    state _C2
+    --> A0 immediate / z = 1.1;
+  };
+}

@@ -1,0 +1,10 @@
+scchart InitializationTest {
+  
+  initial state A{
+    int x = 5;
+    bool y = true;
+    float z = 1.1;
+    
+    initial state A0;
+  };
+}

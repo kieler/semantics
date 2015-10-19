@@ -1,0 +1,15 @@
+scchart StaticVariables {
+  
+  initial state A {
+    static int x = 100;
+    
+    initial state A0;
+  }--> B / x = x + 1;
+  
+  state B {
+    static int x = -100;
+    
+    initial state B0;
+  }--> A / x = x - 1; 
+  
+}

@@ -1,0 +1,14 @@
+scchart ComplexFinalState {
+  input bool I;
+  
+  initial state A {
+    
+    initial state A0
+    --> A1;
+    
+    final state A1
+    --> A0 with I;
+  }>-> F;
+  
+  final state F;
+}

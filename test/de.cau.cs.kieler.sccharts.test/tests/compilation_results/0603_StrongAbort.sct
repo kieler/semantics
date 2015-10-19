@@ -1,0 +1,37 @@
+scchart StrongAbort {
+  input bool I;
+
+  initial state A {
+
+    initial state A0
+    --> _S2 immediate with I
+    --> _Pause immediate;
+
+    final state _S2;
+
+    state _Pause
+    --> _Depth;
+
+    state _Depth
+    --> _S2 immediate with I
+    --> _S2 immediate;
+
+    region _Ctrl:
+
+    initial state _Run
+    --> _Done immediate with I
+    --> _Pause immediate;
+
+    final state _Done;
+
+    state _Pause
+    --> _Depth;
+
+    state _Depth
+    --> _Done immediate with I
+    --> _Pause immediate;
+  }
+  >-> F immediate;
+
+  final state F;
+}

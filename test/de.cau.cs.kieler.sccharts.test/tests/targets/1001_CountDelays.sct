@@ -1,0 +1,87 @@
+scchart CountDelay {
+  input bool I;
+  int _counter;
+  bool _abort;
+  bool _term;
+  bool _term2;
+
+  region _Entry:
+
+  state _Main {
+
+    initial state A {
+
+      region _Entry:
+
+      initial state _Init
+      --> _Done immediate / _counter = 0;
+
+      final state _Done;
+    }
+    >-> _Exit;
+
+    final state F;
+
+    state _S
+    --> F immediate / _term = true;
+
+    state _Exit
+    --> _Depth;
+
+    state _Depth
+    --> _S immediate with _counter == 5
+    --> _Exit immediate;
+
+    region _During:
+
+    initial state _I
+    --> _Final immediate with _abort
+    --> _Pause immediate;
+
+    final state _Final;
+
+    state _S
+    --> _I immediate / _counter = 1 + _counter;
+
+    state _Pause
+    --> _Depth;
+
+    state _Depth
+    --> _S immediate with I
+    --> _S3 immediate;
+
+    state _S3
+    --> _Final immediate with _abort
+    --> _Pause immediate;
+
+    region _Watch:
+
+    initial state _Watch
+    --> _S immediate with _term & _term2
+    --> _Pause immediate;
+
+    final state _Aborted;
+
+    state _S
+    --> _Aborted immediate / _abort = true;
+
+    state _Pause
+    --> _Depth;
+
+    state _Depth
+    --> _S immediate with _term & _term2
+    --> _Pause immediate;
+  }
+  >-> _Done;
+
+  initial state _Init
+  --> _C immediate / _abort = false;
+
+  final state _Done;
+
+  state _C
+  --> _C2 immediate / _term = false;
+
+  state _C2
+  --> _Main immediate / _term2 = true;
+}

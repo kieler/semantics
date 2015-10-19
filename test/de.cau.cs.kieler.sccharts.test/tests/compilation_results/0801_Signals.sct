@@ -1,0 +1,92 @@
+scchart Signals {
+  bool S;
+  bool _abort;
+  bool _term;
+  bool _term2;
+  bool _term3;
+
+  region _Entry:
+
+  state _Main {
+
+    region R1:
+
+    final state B;
+
+    state _Depth
+    --> _S2 immediate / S = S | true;
+
+    state _S2
+    --> B immediate / _term = true;
+
+    initial state A
+    --> _Depth;
+
+    region R2:
+
+    final state D;
+
+    state _S
+    --> D immediate / _term2 = true;
+
+    initial state C
+    --> _Depth;
+
+    state _Depth
+    --> _S immediate with S
+    --> C immediate;
+
+    region _During:
+
+    state _S
+    --> _Final immediate with _abort
+    --> _Pause immediate;
+
+    final state _Final;
+
+    initial state _I
+    --> _S3 immediate / S = false;
+
+    state _S3
+    --> _S immediate / _term3 = true;
+
+    state _Depth
+    --> _I immediate / _term3 = false;
+
+    state _Pause
+    --> _Depth;
+
+    region _Watch:
+
+    initial state _Watch
+    --> _S immediate with _term & _term2 & _term3
+    --> _Pause immediate;
+
+    final state _Aborted;
+
+    state _S
+    --> _Aborted immediate / _abort = true;
+
+    state _Pause
+    --> _Depth;
+
+    state _Depth
+    --> _S immediate with _term & _term2 & _term3
+    --> _Pause immediate;
+  }
+  >-> _Done;
+
+  initial state _Init
+  --> _C immediate / _abort = false;
+
+  final state _Done;
+
+  state _C
+  --> _C2 immediate / _term = false;
+
+  state _C2
+  --> _C3 immediate / _term2 = false;
+
+  state _C3
+  --> _Main immediate / _term3 = false;
+}

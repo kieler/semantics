@@ -1,0 +1,4 @@
+scchart DefferedTransition {
+
+  initial state A;
+}

@@ -1,0 +1,109 @@
+scchart ComplexFinalSuperstate {
+  input bool I;
+  output bool O;
+
+  initial state A {
+    bool _abort;
+    bool _term;
+    bool _trig;
+    bool _trig2;
+
+    region _Entry:
+
+    state _Main {
+
+      state A1 {
+
+        region _Entry:
+
+        state _Main {
+
+          initial state A1_1
+          --> A1_2 immediate / O = true;
+
+          final state A1_2;
+
+          region _Ctrl:
+
+          initial state _Run
+          --> _S2 immediate with _abort
+          --> _Pause immediate;
+
+          final state _Done;
+
+          state _S
+          --> _Done immediate / _trig = true;
+
+          state _S2
+          --> _Done immediate / _trig2 = true;
+
+          state _Pause
+          --> _Depth;
+
+          state _Depth
+          --> _S immediate with I
+          --> _S4 immediate;
+
+          state _S4
+          --> _S2 immediate with _abort
+          --> _Pause immediate;
+        }
+        >-> _Done;
+
+        initial state _Init
+        --> _C immediate / _trig = false;
+
+        final state _Done;
+
+        state _C
+        --> _Main immediate / _trig2 = false;
+      }
+      >-> _C;
+
+      final state _S6;
+
+      state _C
+      --> _S2 immediate with _trig
+      --> _S6 immediate;
+
+      state _Depth
+      --> A1 immediate / _term = true;
+
+      state _S2
+      --> A0 immediate / _term = false;
+
+      initial state A0
+      --> _Depth;
+
+      region _Watch:
+
+      initial state _Watch
+      --> _S immediate with _term
+      --> _Pause immediate;
+
+      final state _Aborted;
+
+      state _S
+      --> _Aborted immediate / _abort = true;
+
+      state _Pause
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with _term
+      --> _Pause immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _C immediate / _abort = false;
+
+    final state _Done;
+
+    state _C
+    --> _Main immediate / _term = false;
+  }
+  >-> F;
+
+  final state F;
+}

@@ -1,0 +1,9 @@
+scchart CountDelay {
+  
+  input bool I;
+  
+  initial state A
+  --> F with 5 I;
+  
+  final state F;
+}

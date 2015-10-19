@@ -1,0 +1,10 @@
+scchart WeakSuspension {
+  weak suspend WS;
+  input bool I;
+  
+  initial state A
+  --> B with I;
+  
+  state B
+  --> A with !I;
+}
