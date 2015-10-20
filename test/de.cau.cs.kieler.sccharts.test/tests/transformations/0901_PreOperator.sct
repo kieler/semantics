@@ -3,9 +3,9 @@ scchart PreOperator {
   int x = 1;
   int y = 0;
   
-  initial state A0
-  --> A1 / x = x +1;
-  
-  state A1
-  --> A0 with / y = pre(x);
+  initial state A
+  --> B / x = x + 1;
+   
+  state B
+  --> A with / y = pre(x);
 }
