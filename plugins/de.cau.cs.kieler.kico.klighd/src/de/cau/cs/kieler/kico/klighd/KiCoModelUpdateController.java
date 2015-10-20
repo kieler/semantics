@@ -213,14 +213,13 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     private Composite warningMessageContainer = null;
 
+    private IEditorPart recentEditor = null;
+
     // -- Constructor and Initialization
     // -------------------------------------------------------------------------
 
     /**
      * Default Constructor.
-     * 
-     * @param modelView
-     *            the ModelView this controller is associated with
      */
     public KiCoModelUpdateController() {
         CompilerSelectionStore.register(this);
@@ -252,12 +251,11 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         actionPinToggle = new Action("Pin selected transformations", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
-                IEditorPart activeEditor = getEditor();
-                if (activeEditor != null) {
+                if (recentEditor != null) {
                     if (isChecked()) {
-                        pinnedTransformations.put(activeEditor, selection);
+                        pinnedTransformations.put(recentEditor, selection);
                     } else {
-                        pinnedTransformations.remove(activeEditor);
+                        pinnedTransformations.remove(recentEditor);
                         // update model due to possible changed of transformation configuration
                         update(ChangeEvent.SELECTION);
                     }
@@ -296,10 +294,10 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         actionSyncEditor.setChecked(actionSyncEditor_DEFAULT_STATE);
 
         // Diagram PlaceHolder Menu Item
-        actionDiagramPlaceholder = new Action("Visualization Model", IAction.AS_CHECK_BOX) {
+        actionDiagramPlaceholder = new Action("Model Visualization", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
-                update(ChangeEvent.ACTIVE_EDITOR);
+                update(ChangeEvent.DISPLAY_MODE);
             }
         };
         actionDiagramPlaceholder.setId("actionDiagramPlaceholder");
@@ -446,7 +444,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             IWorkspaceRoot root = workspace.getRoot();
 
             // get filename with correct extension
-            String filename = getResourceName(getEditor(), model);
+            String filename = getResourceName(recentEditor, model);
 
             SaveAsDialog saveAsDialog = new SaveAsDialog(getDiagramView().getSite().getShell());
 
@@ -540,6 +538,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     @Override
     public void onActivate(final IEditorPart editor) {
+        recentEditor = editor;
         update(ChangeEvent.ACTIVE_EDITOR);
         // Don't call super to prevent model update but activate adapter
         saveAdapter.activate(editor);
@@ -570,11 +569,11 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 properties.getProperty(KiCoProperties.COMPILATION_RESULT);
         StringBuilder warnings = new StringBuilder();
         if (sourceModelHasErrorMarkers) {
-            warnings.append("- The source model contains error markers.\n");
+            warnings.append("The source model contains error markers.\n");
         }
         if (compilationResult != null && !compilationResult.getPostponedWarnings().isEmpty()) {
             for (KielerCompilerException warning : compilationResult.getPostponedWarnings()) {
-                warnings.append("- ").append(warning.getMessage()).append("\n");
+                warnings.append(warning.getMessage()).append("\n");
             }
         }
         if (warnings.length() > 0) {
@@ -606,24 +605,26 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     public synchronized void update(final ChangeEvent change,
             final AsynchronousCompilation compilation) {
-        IEditorPart editor = getEditor();
-        if (editor != null) {
-            // determine event flags
-            boolean is_active_editor_update = change == ChangeEvent.ACTIVE_EDITOR;
-            boolean is_save_update = change == ChangeEvent.SAVED;
-            boolean is_selection_update = change == ChangeEvent.SELECTION;
-            boolean is_display_mode_update = change == ChangeEvent.DISPLAY_MODE;
-            boolean is_compile_update =
-                    change == ChangeEvent.COMPILE || change == ChangeEvent.COMPILATION_FINISHED;
 
+        // determine event flags
+        boolean is_active_editor_update = change == ChangeEvent.ACTIVE_EDITOR;
+        boolean is_save_update = change == ChangeEvent.SAVED;
+        boolean is_selection_update = change == ChangeEvent.SELECTION;
+        boolean is_display_mode_update = change == ChangeEvent.DISPLAY_MODE;
+        boolean is_compile_update =
+                change == ChangeEvent.COMPILE || change == ChangeEvent.COMPILATION_FINISHED;
+
+        if (isActive() || (recentEditor != null
+                && (is_selection_update || is_display_mode_update || is_compile_update))) {
+            
             // Evaluate if source model should be read from source editor
             boolean do_get_model = false;
             do_get_model |= is_active_editor_update;
             do_get_model |= is_save_update;
-
+            
             // Get model if necessary
             if (do_get_model) {
-                sourceModel = readModel(editor);
+                sourceModel = readModel(recentEditor);
                 if (sourceModel != null && sourceModel.eResource() != null) {
                     Resource eResource = sourceModel.eResource();
                     sourceModelHasErrorMarkers = !eResource.getErrors().isEmpty();
@@ -652,7 +653,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 updateModel(null, properties);
                 return;
             } else if (actionDiagramPlaceholder.isChecked()) {
-                updateModel(new MessageModel(MODEL_PLACEHOLDER_PREFIX + editor.getTitle(),
+                updateModel(new MessageModel(MODEL_PLACEHOLDER_PREFIX + recentEditor.getTitle(),
                         MODEL_PLACEHOLDER_MESSGAE), properties);
             }
 
@@ -674,10 +675,10 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 // if there is a pinned transformation for active editor take pinned one else
                 // take selected ones
                 Pair<KielerCompilerSelection, Boolean> newSelection = null;
-                if (pinnedTransformations.containsKey(editor)) {
-                    newSelection = pinnedTransformations.get(editor);
+                if (pinnedTransformations.containsKey(recentEditor)) {
+                    newSelection = pinnedTransformations.get(recentEditor);
                 } else {
-                    newSelection = CompilerSelectionStore.getSelection(editor);
+                    newSelection = CompilerSelectionStore.getSelection(recentEditor);
                 }
                 // check if selection changed
                 if (newSelection != null) {
@@ -718,7 +719,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
                     // create compilation job
                     currentCompilation = new AsynchronousCompilation(this, (EObject) sourceModel,
-                            editor.getTitle(), selection, doTracing);
+                            recentEditor.getTitle(), selection, doTracing);
                     currentCompilationResult = null;
                     model = currentCompilation.getModel();
                     // start
@@ -775,8 +776,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             // composite model in given display mode
             if (displaySideBySide) {
                 if (displayTracingChain && currentCompilationResult != null) {
-                    model = new ModelChain(sourceModel, currentCompilationResult, editor.getTitle(),
-                            selection.getFirst());
+                    model = new ModelChain(sourceModel, currentCompilationResult,
+                            recentEditor.getTitle(), selection.getFirst());
                 } else {
                     model = new ModelChain(sourceModel, model);
                 }
@@ -815,7 +816,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     private void updatePinToggleButton() {
         actionPinToggle.setEnabled(selection != null);
-        actionPinToggle.setChecked(pinnedTransformations.containsKey(getEditor()));
+        actionPinToggle.setChecked(pinnedTransformations.containsKey(recentEditor));
     }
 
     /**
@@ -858,7 +859,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
                 }
             } else { // this case when model is not compiled
-                KIEMModelSelectionCombination.refreshKIEMActiveAndOpenedModels(getEditor());
+                KIEMModelSelectionCombination.refreshKIEMActiveAndOpenedModels(recentEditor);
                 KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
             }
         }
