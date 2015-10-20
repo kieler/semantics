@@ -22,21 +22,18 @@ import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
-import de.cau.cs.kieler.kico.klighd.view.ModelView
-import de.cau.cs.kieler.kico.klighd.view.model.MessageModel
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.klighd.KlighdDataManager
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.util.List
@@ -44,6 +41,7 @@ import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.ui.view.DiagramView
 
 /**
  * Diagram synthesis for a ModelChain.
@@ -182,8 +180,8 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
             val properties = new KlighdSynthesisProperties();
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
             val viewpart = usedContext.diagramWorkbenchPart;
-            if (viewpart instanceof ModelView) {
-                val synthesisID = (viewpart as ModelView).synthesisSelectionMenu.getSynthesis(model);
+            if (viewpart instanceof DiagramView) {
+                val synthesisID = (viewpart as DiagramView).synthesisSelectionMenu.getSynthesis(model);
                 properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, synthesisID);
                 val subDiagramViewContext = LightDiagramServices::translateModel2(model, usedContext, properties);
                 usedContext.addChildViewContext(subDiagramViewContext)

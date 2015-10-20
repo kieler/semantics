@@ -16,6 +16,7 @@ package de.cau.cs.kieler.kico.klighd;
 import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -27,6 +28,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
@@ -49,6 +51,7 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.xtext.ui.util.ResourceUtil;
 import org.eclipse.xtext.util.StringInputStream;
 
 import com.google.common.collect.Lists;
@@ -65,12 +68,6 @@ import de.cau.cs.kieler.kico.klighd.internal.CompilerSelectionStore;
 import de.cau.cs.kieler.kico.klighd.internal.ModelUtil;
 import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.internal.model.ModelChain;
-import de.cau.cs.kieler.kico.klighd.view.ModelView;
-import de.cau.cs.kieler.kico.klighd.view.controller.AbstractModelUpdateController;
-import de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController;
-import de.cau.cs.kieler.kico.klighd.view.model.ErrorModel;
-import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
-import de.cau.cs.kieler.kico.klighd.view.util.EditorUtil;
 import de.cau.cs.kieler.kiml.config.CompoundLayoutConfig;
 import de.cau.cs.kieler.kiml.config.ILayoutConfig;
 import de.cau.cs.kieler.kiml.config.LayoutContext;
@@ -80,7 +77,12 @@ import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.KlighdConstants;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.ui.view.DiagramView;
+import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController;
+import de.cau.cs.kieler.klighd.ui.view.model.ErrorModel;
+import de.cau.cs.kieler.klighd.ui.view.model.MessageModel;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
+import de.cau.cs.kieler.klighd.xtext.view.EcoreXtextSaveUpdateController;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination;
 import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination;
@@ -110,7 +112,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     private static final String ID = "de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController";
 
     /** Path to notify Simulation component. */
-    private static final IPath modelViewPath = new Path(ModelView.ID);
+    private static final IPath modelViewPath = new Path(DiagramView.ID);
 
     /**
      * Indicates how long this view should wait before starting REAL asynchronous compilation. This
@@ -220,8 +222,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * @param modelView
      *            the ModelView this controller is associated with
      */
-    public KiCoModelUpdateController(final ModelView modelView) {
-        super(modelView);
+    public KiCoModelUpdateController() {
         CompilerSelectionStore.register(this);
 
         // Save Button
@@ -356,13 +357,15 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     @Override
-    public AbstractModelUpdateController clone(final ModelView modelView) {
-        KiCoModelUpdateController newController = new KiCoModelUpdateController(modelView);
-        newController.actionSyncEditor.setChecked(actionSyncEditor.isChecked());
-        newController.actionDiagramPlaceholder.setChecked(actionDiagramPlaceholder.isChecked());
-        newController.lastSaveDirectory = lastSaveDirectory;
-        // TODO copy attributes
-        return newController;
+    public void copy(final AbstractViewUpdateController source) {
+        super.copy(source);
+        if (source instanceof KiCoModelUpdateController) {
+            KiCoModelUpdateController other = (KiCoModelUpdateController) source;
+            actionSyncEditor.setChecked(other.actionSyncEditor.isChecked());
+            actionDiagramPlaceholder.setChecked(other.actionDiagramPlaceholder.isChecked());
+            lastSaveDirectory = other.lastSaveDirectory;
+            // TODO copy attributes
+        }
     }
 
     /**
@@ -445,7 +448,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             // get filename with correct extension
             String filename = getResourceName(getEditor(), model);
 
-            SaveAsDialog saveAsDialog = new SaveAsDialog(getModelView().getSite().getShell());
+            SaveAsDialog saveAsDialog = new SaveAsDialog(getDiagramView().getSite().getShell());
 
             // Configure dialog
             if (lastSaveDirectory != null) {
@@ -576,7 +579,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         }
         if (warnings.length() > 0) {
             warnings.setLength(warnings.length() - 1);
-            addWarningComposite(getModelView().getViewer(), warnings.toString());
+            addWarningComposite(getDiagramView().getViewer(), warnings.toString());
         }
     }
 
@@ -622,7 +625,18 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             if (do_get_model) {
                 sourceModel = readModel(editor);
                 if (sourceModel != null && sourceModel.eResource() != null) {
-                    sourceModelHasErrorMarkers = !sourceModel.eResource().getErrors().isEmpty();
+                    Resource eResource = sourceModel.eResource();
+                    sourceModelHasErrorMarkers = !eResource.getErrors().isEmpty();
+                    IFile underlyingFile = ResourceUtil.getUnderlyingFile(eResource);
+                    try {
+                        if (underlyingFile != null) {
+                            sourceModelHasErrorMarkers |=
+                                    underlyingFile.findMarkers(IMarker.PROBLEM, false,
+                                            IResource.DEPTH_INFINITE).length > 0;
+                        }
+                    } catch (Exception e) {
+                        // do nothing
+                    }
                 }
             }
 
@@ -809,7 +823,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     @Override
     public ILayoutConfig getLayoutConfig() {
-        ViewContext viewContext = getModelView().getViewContext();
+        ViewContext viewContext = getDiagramView().getViewContext();
         // Assure that model chain is always layouted left to right
         if (viewContext.getInputModel() instanceof ModelChain) {
             return new CompoundLayoutConfig(Lists.newArrayList(
@@ -828,7 +842,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     private void publishCurrentModelInformation(final Object model,
             final CompilationResult compilationResult) {
-        if (getModelView().isLinkedWithActiveEditor()) {
+        if (getDiagramView().isLinkedWithActiveEditor()) {
             boolean is_placeholder = model instanceof ErrorModel || model instanceof MessageModel
                     || model instanceof CodePlaceHolder;
             boolean is_chain = model instanceof ModelChain;

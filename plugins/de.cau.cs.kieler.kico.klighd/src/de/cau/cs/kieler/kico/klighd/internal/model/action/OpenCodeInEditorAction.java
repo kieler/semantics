@@ -19,7 +19,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 
 import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder;
-import de.cau.cs.kieler.kico.klighd.view.editor.StringBasedEditorInput;
+import de.cau.cs.kieler.kico.klighd.internal.model.editor.StringBasedEditorInput;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**

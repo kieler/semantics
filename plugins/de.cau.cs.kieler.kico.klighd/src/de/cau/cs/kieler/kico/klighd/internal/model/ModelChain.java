@@ -19,7 +19,7 @@ import java.util.LinkedList;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.IntermediateResult;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
-import de.cau.cs.kieler.kico.klighd.view.model.MessageModel;
+import de.cau.cs.kieler.klighd.ui.view.model.MessageModel;
 
 /**
  * This is a Wrapper model for a list of models. Related to {@link ModelChainSynthesis}.

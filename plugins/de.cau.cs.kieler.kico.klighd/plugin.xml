@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="de.cau.cs.kieler.kico.klighd.controller" name="ModelView Update Controller" schema="schema/controller.exsd"/>
-   <extension-point id="de.cau.cs.kieler.kico.klighd.editor" name="ModelView Editor Controller Association" schema="schema/editor.exsd"/>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
@@ -17,26 +15,6 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.internal.model.XtextSerializationSynthesis"
             id="de.cau.cs.kieler.kico.klighd.internal.model.XtextSerializationSynthesis">
       </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.view.model.MessageModelSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.view.model.MessageModelSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.view.model.EcoreModelSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.view.model.EcoreModelSynthesis">
-      </diagramSynthesis>
-   </extension>
-   <extension
-         point="org.eclipse.ui.views">
-      <view
-            allowMultiple="true"
-            category="de.cau.cs.kieler.sim"
-            class="de.cau.cs.kieler.kico.klighd.view.ModelView"
-            icon="icons/full/etool16/diagrams_view.gif"
-            id="de.cau.cs.kieler.kico.klighd.modelview"
-            name="KIELER Model View"
-            restorable="true">
-      </view>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
@@ -44,28 +22,11 @@
             class="de.cau.cs.kieler.kico.klighd.internal.model.action.OpenCodeInEditorAction"
             id="de.cau.cs.kieler.kico.klighd.internal.model.action.OpenCodeInEditorAction">
       </action>
-      <action
-            class="de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction"
-            id="de.cau.cs.kieler.kico.klighd.view.model.action.ShowExceptionAction">
-      </action>
-      <action
-            class="de.cau.cs.kieler.kico.klighd.view.model.action.EcoreModelExpandDetailsAction"
-            id="de.cau.cs.kieler.kico.klighd.view.model.action.EcoreModelExpandDetailsAction">
-      </action>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kico.klighd.controller">
+         point="de.cau.cs.kieler.klighd.ui.view.controller">
       <controller
-            class="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
-            id="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController">
-      </controller>
-      <controller
-            class="de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController"
-            id="de.cau.cs.kieler.kico.klighd.view.controller.EcoreXtextSaveUpdateController">
-      </controller>
-      <controller
-            class="de.cau.cs.kieler.kico.klighd.view.controller.XtextChangeUpdateController"
-            id="de.cau.cs.kieler.kico.klighd.view.controller.XtextChangeUpdateController">
+            class="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController">
       </controller>
    </extension>
 </plugin>

@@ -21,9 +21,9 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.config,
  de.cau.cs.kieler.kitt.klighd,
- de.cau.cs.kieler.kitt
+ de.cau.cs.kieler.kitt,
+ de.cau.cs.kieler.klighd.xtext
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.kico.klighd,
- de.cau.cs.kieler.kico.klighd.view
+Export-Package: de.cau.cs.kieler.kico.klighd
 
