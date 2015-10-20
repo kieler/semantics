@@ -16,7 +16,11 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.kico;bundle-version="0.1.0",
  org.eclipse.emf.compare;bundle-version="3.2.0",
  org.eclipse.emf.compare.rcp,
- org.apache.commons.io;bundle-version="2.2.0"
+ org.apache.commons.io;bundle-version="2.2.0",
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.xtext.resource
+

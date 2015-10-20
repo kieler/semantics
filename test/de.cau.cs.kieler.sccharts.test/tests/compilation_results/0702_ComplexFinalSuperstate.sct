@@ -1,115 +1,34 @@
+
+@Transformation COMPLEXFINALSTATE
 scchart ComplexFinalSuperstate {
   input bool I;
   output bool O;
 
   initial state A {
-    bool _abort;
-    bool _term;
-    bool _trig;
+    bool _abort = false;
+    bool _term = false;
 
-    region _Entry:
+    initial state A0
+    --> A1 / _term = true;
 
-    state _Main {
+    state A1 {
 
-      state A1 {
+      initial state A1_1
+      --> A1_2 immediate / O = true;
 
-        region _Entry:
-
-        state _Main {
-
-          initial state A1_1
-          --> A1_2 immediate / O = true;
-
-          final state A1_2;
-
-          region _Ctrl:
-
-          initial state _Run
-          --> _Done immediate with _abort
-          --> _Pause immediate;
-
-          final state _Done;
-
-          state _S
-          --> _Done immediate / _trig = true;
-
-          state _Pause
-          --> _Depth;
-
-          state _Depth
-          --> _S immediate with I
-          --> _S3 immediate;
-
-          state _S3
-          --> _Done immediate with _abort
-          --> _Pause immediate;
-        }
-        >-> _Done;
-
-        initial state _Init
-        --> _Main immediate / _trig = false;
-
-        final state _Done;
-      }
-      >-> _C;
-
-      final state _Final;
-
-      state _C
-      --> _S2 immediate with I
-      --> _S4 immediate;
-
-      state _Depth
-      --> A1 immediate / _term = true;
-
-      state _S2
-      --> A0 immediate / _term = false;
-
-      initial state A0
-      --> _Depth;
-
-      state _S4
-      --> _Final immediate with _abort
-      --> _Pause2 immediate;
-
-      state _Pause2
-      --> _Depth2;
-
-      state _Depth2
-      --> _S2 immediate with I
-      --> _S6 immediate;
-
-      state _S6
-      --> _Final immediate with _abort
-      --> _Pause2 immediate;
-
-      region _Watch:
-
-      initial state _Watch
-      --> _S immediate with _term
-      --> _Pause immediate;
-
-      final state _Aborted;
-
-      state _S
-      --> _Aborted immediate / _abort = true;
-
-      state _Pause
-      --> _Depth;
-
-      state _Depth
-      --> _S immediate with _term
-      --> _Pause immediate;
+      final state A1_2;
     }
-    >-> _Done;
+    --> A0 with I / _term = false
+    --> _Final immediate with _abort;
 
-    initial state _Init
-    --> _C immediate / _abort = false;
+    final state _Final;
 
-    final state _Done;
+    region _Watch:
 
-    state _C
-    --> _Main immediate / _term = false;
+    initial state _Watch
+    --> _Aborted immediate with _term / _abort = true;
+
+    final state _Aborted;
   }
   >-> F;
 

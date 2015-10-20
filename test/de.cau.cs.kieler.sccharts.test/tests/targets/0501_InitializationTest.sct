@@ -1,19 +1,15 @@
+
+@Transformation INITIALIZATION
 scchart InitializationTest {
 
   initial state A {
     int x;
     bool y;
     float z;
+    entry / x = 5;
+    entry / y = true;
+    entry / z = 1.1;
 
-    state A0;
-
-    initial state _Init
-    --> _C immediate / x = 5;
-
-    state _C
-    --> _C2 immediate / y = true;
-
-    state _C2
-    --> A0 immediate / z = 1.1;
+    initial state A0;
   };
 }

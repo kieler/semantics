@@ -1,3 +1,4 @@
+@Transformation ABORT
 scchart WeakAbort {
   input bool I;
   

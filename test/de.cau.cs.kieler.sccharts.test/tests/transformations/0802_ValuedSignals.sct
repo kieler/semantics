@@ -1,3 +1,4 @@
+@Transformation SIGNAL
 scchart ValuedSignals {
   signal int x = 1;
   signal int y = 2;

@@ -1,3 +1,4 @@
+@Transformation COMPLEXFINALSTATE
 scchart ComplexFinalSuperstate {
   input bool I;
   output bool O;

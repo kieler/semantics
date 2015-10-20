@@ -1,3 +1,4 @@
+@Transformation HISTORY
 scchart HistoryTransition {
   input bool I;
   

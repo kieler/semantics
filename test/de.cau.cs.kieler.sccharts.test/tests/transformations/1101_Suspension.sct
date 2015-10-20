@@ -1,3 +1,4 @@
+@Transformation SUSPEND
 scchart Suspension {
   input bool I;
   suspend S; 

@@ -1,4 +1,5 @@
-scchart HistoryTransition {
+@Transformation HISTORY
+scchart DeepHistoryTransition {
   input bool I;
   output bool O;
   

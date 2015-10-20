@@ -1,0 +1,24 @@
+
+@Transformation ENTRY
+scchart EntryTest {
+  output bool O;
+
+  initial state A {
+
+    region _Entry:
+
+    initial state _Init
+    --> _C immediate / O = true;
+
+    final state _Done;
+
+    connector state _C
+    --> _Done immediate / O = false;
+  }
+  >-> _Exit;
+
+  final state F;
+
+  state _Exit
+  >-> F;
+}

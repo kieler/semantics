@@ -1,3 +1,4 @@
+@Transformation ABORT
 scchart ConditionalTermination {
   input bool I;
   

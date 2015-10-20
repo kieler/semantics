@@ -1,3 +1,4 @@
+@Transformation STATIC
 scchart StaticVariables {
   
   initial state A {

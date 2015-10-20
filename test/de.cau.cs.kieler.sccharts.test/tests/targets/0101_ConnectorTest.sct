@@ -1,12 +1,13 @@
+
+@Transformation CONNECTOR
 scchart ConnectorTest {
   input bool I;
 
-  final state C;
-
   initial state A
-  --> _Depth;
+  --> C with I;
 
-  state _Depth
-  --> C immediate with I
-  --> A immediate;
+  state C
+  --> F immediate;
+
+  final state F;
 }

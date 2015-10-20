@@ -1,67 +1,27 @@
+
+@Transformation COMPLEXFINALSTATE
 scchart ComplexFinalState {
   input bool I;
 
   initial state A {
-    bool _abort;
-    bool _term;
+    bool _abort = false;
+    bool _term = false;
 
-    region _Entry:
+    initial state A0
+    --> A1 / _term = true;
 
-    state _Main {
+    state A1
+    --> A0 with I / _term = false
+    --> _Final immediate with _abort;
 
-      state A1
-      --> _Final immediate with _abort
-      --> _Pause2 immediate;
+    final state _Final;
 
-      final state _Final;
+    region _Watch:
 
-      state _Depth
-      --> A1 immediate / _term = true;
+    initial state _Watch
+    --> _Aborted immediate with _term / _abort = true;
 
-      state _S2
-      --> A0 immediate / _term = false;
-
-      initial state A0
-      --> _Depth;
-
-      state _Pause2
-      --> _Depth2;
-
-      state _Depth2
-      --> _S2 immediate with I
-      --> _S5 immediate;
-
-      state _S5
-      --> _Final immediate with _abort
-      --> _Pause2 immediate;
-
-      region _Watch:
-
-      initial state _Watch
-      --> _S immediate with _term
-      --> _Pause immediate;
-
-      final state _Aborted;
-
-      state _S
-      --> _Aborted immediate / _abort = true;
-
-      state _Pause
-      --> _Depth;
-
-      state _Depth
-      --> _S immediate with _term
-      --> _Pause immediate;
-    }
-    >-> _Done;
-
-    initial state _Init
-    --> _C immediate / _abort = false;
-
-    final state _Done;
-
-    state _C
-    --> _Main immediate / _term = false;
+    final state _Aborted;
   }
   >-> F;
 

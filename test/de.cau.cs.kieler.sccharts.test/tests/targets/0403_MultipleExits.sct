@@ -1,3 +1,5 @@
+
+@Transformation EXIT
 scchart ExitTest {
   input bool I;
   output bool O;
@@ -9,17 +11,14 @@ scchart ExitTest {
     initial state _Init
     --> _C immediate / O = false;
 
-    final state _S4;
+    final state _Done;
 
-    state _C
+    connector state _C
     --> _C2 immediate / O = true;
 
-    state _C2
-    --> _S immediate with I
-    --> _S4 immediate;
-
-    state _S
-    --> _S4 immediate / O = !O;
+    connector state _C2
+    --> _Done immediate with I / O = !O
+    --> _Done immediate;
   }
   >-> F;
 

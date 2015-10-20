@@ -1,57 +1,31 @@
+
+@Transformation ABORT
 scchart ConditionalTermination {
   input bool I;
-  bool _trig;
 
   initial state A {
     bool _termRegion;
+    entry / _termRegion = false;
 
-    region _Entry:
+    region _Ctrl:
 
-    state _Main {
-
-      region _Ctrl:
-
-      initial state _Run
-      --> _S immediate with _termRegion & I
-      --> _Pause immediate;
-
-      final state _Done;
-
-      state _S
-      --> _Done immediate / _trig = true;
-
-      state _Pause
-      --> _Depth;
-
-      state _Depth
-      --> _S immediate with _termRegion & I
-      --> _Pause immediate;
-
-      region _Main:
-
-      initial state _Main2 {
-
-        final state _Depth;
-
-        initial state A0
-        --> _Depth;
-      }
-      >-> _S;
-
-      final state _Term;
-
-      state _S
-      --> _Term immediate / _termRegion = true;
-    }
-    >-> _Done;
-
-    initial state _Init
-    --> _C immediate / _trig = false;
+    initial state _Run
+    --> _Done immediate with _termRegion & I;
 
     final state _Done;
 
-    state _C
-    --> _Main immediate / _termRegion = false;
+    region _Main:
+
+    initial state _Main2 {
+
+      initial state A0
+      --> A1;
+
+      final state A1;
+    }
+    >-> _Term / _termRegion = true;
+
+    final state _Term;
   }
   >-> F immediate;
 

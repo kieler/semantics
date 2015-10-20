@@ -1,3 +1,4 @@
+@Transformation SIGNAL
 scchart Signals {
   signal S;
   

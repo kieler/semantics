@@ -1,31 +1,22 @@
+
+@Transformation ABORT
 scchart WeakAbort {
   input bool I;
 
   initial state A {
 
     initial state A0
-    --> _Depth immediate with I
-    --> _Pause immediate;
+    --> A1
+    --> A1 immediate with I;
 
-    final state _Depth;
-
-    state _Pause
-    --> _Depth;
+    final state A1;
 
     region _Ctrl:
 
     initial state _Run
-    --> _Done immediate with I
-    --> _Pause immediate;
+    --> _Done immediate with I;
 
     final state _Done;
-
-    state _Pause
-    --> _Depth;
-
-    state _Depth
-    --> _Done immediate with I
-    --> _Pause immediate;
   }
   >-> F immediate;
 

@@ -1,3 +1,4 @@
+@Transformation WEAKSUSPEND
 scchart WeakSuspension {
   weak suspend WS;
   input bool I;

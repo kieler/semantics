@@ -1,3 +1,4 @@
+@Transformation ABORT
 scchart StrongAbort {
   input bool I;
   

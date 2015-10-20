@@ -1,94 +1,18 @@
+
+@Transformation STATIC
 scchart StaticVariables {
-  bool _trig;
-  bool _trig2;
-  int __A_x;
-  int __B_x;
+  int __A_x = 100;
+  int __B_x = -200;
 
-  state A {
+  initial state A {
 
-    region _Entry:
-
-    state _Main {
-
-      initial state A0
-      --> _Aborted immediate with _trig
-      --> _Pause immediate;
-
-      final state _Aborted;
-
-      state _Pause
-      --> _Depth;
-
-      state _Depth
-      --> _Aborted immediate with _trig
-      --> _Pause immediate;
-
-      region _Ctrl:
-
-      final state _Done;
-
-      state _Depth
-      --> _Done immediate / _trig = true;
-
-      initial state _Run
-      --> _Depth;
-    }
-    >-> _Done;
-
-    initial state _Init
-    --> _Main immediate / _trig = false;
-
-    final state _Done;
+    initial state A0;
   }
-  >-> _S immediate;
+  --> B / __A_x = __A_x + 1;
 
   state B {
 
-    region _Entry:
-
-    state _Main {
-
-      initial state B0
-      --> _Aborted2 immediate with _trig2
-      --> _Pause immediate;
-
-      final state _Aborted2;
-
-      state _Pause
-      --> _Depth;
-
-      state _Depth
-      --> _Aborted2 immediate with _trig2
-      --> _Pause immediate;
-
-      region _Ctrl2:
-
-      final state _Done2;
-
-      state _Depth
-      --> _Done2 immediate / _trig2 = true;
-
-      initial state _Run2
-      --> _Depth;
-    }
-    >-> _Done;
-
-    initial state _Init
-    --> _Main immediate / _trig2 = false;
-
-    final state _Done;
+    initial state B0;
   }
-  >-> _S2 immediate;
-
-  initial state _Init
-  --> _C immediate / __A_x = 100;
-
-  state _C
-  --> A immediate / __B_x = -100;
-
-  state _S
-  --> B immediate / __A_x = __A_x + 1;
-
-  state _S2
-  --> A immediate / __B_x = __B_x - 1;
+  --> A / __B_x = __B_x - 1;
 }

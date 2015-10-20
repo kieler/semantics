@@ -1,3 +1,4 @@
+@Transformation COUNTDELAY
 scchart CountDelay {
   
   input bool I;
