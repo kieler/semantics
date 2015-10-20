@@ -61,7 +61,7 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
 import de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer
-import de.cau.cs.kieler.kico.klighd.view.ModelView
+import de.cau.cs.kieler.klighd.ui.view.DiagramView
 
 //import de.cau.cs.kieler.scg.guardCreation.GuardCreator
 
@@ -97,7 +97,7 @@ class SCGDataComponent extends JSONObjectDataComponent {
             return;
         }
 
-        val viewParts = ModelView.getModelViews(diagramEditor)
+        val viewParts = DiagramView.getDiagramViews(diagramEditor)
         if (viewParts.empty) {
             throw new KiemInitializationException(
                     "Model visualization not shown, cannot visualize simulation.", true, null);

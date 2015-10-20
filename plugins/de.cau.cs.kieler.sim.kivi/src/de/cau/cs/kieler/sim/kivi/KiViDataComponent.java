@@ -53,7 +53,7 @@ import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kico.klighd.view.ModelView;
+import de.cau.cs.kieler.klighd.ui.view.DiagramView;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
@@ -153,7 +153,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         }
         // String id = ((FileEditorInput) editorInput).getPath().toPortableString().replace(":",
         // "");
-        String id = ModelView.ID;
+        String id = DiagramView.ID;
 
         DiagramViewPart viewPart = DiagramViewManager.getInstance().getView(id);
         if (viewPart == null) {
