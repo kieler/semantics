@@ -14,7 +14,9 @@
 package de.cau.cs.kieler.sccharts.text.sct.validation
 
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.TransitionType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import org.eclipse.xtext.validation.Check
 
 /**
@@ -22,7 +24,9 @@ import org.eclipse.xtext.validation.Check
  *
  */
 class SctValidator extends SctJavaValidator {
-
+    
+    extension SCChartsExtension = sCChartExtension;
+    
     @Check
     public def void checkInitialState(ControlflowRegion region) {
         // Do not consider the root region == SCChart
@@ -68,8 +72,24 @@ class SctValidator extends SctJavaValidator {
     } 
     
     @Check
-    public def void checkConstInitializationInStates(de.cau.cs.kieler.sccharts.Scope scope) {
+    public def void checkConstInitializationInStates(Scope scope) {
         scope.declarations.forEach[ it.checkConstInitialization ]
-    }    
+    }   
+    
+    /**
+     * Checks if the given state has any strong abort transitions with lower priority than non-strong-abort transitions-
+     */
+    @Check
+    public def void checkLowPriorityStrongAbort(de.cau.cs.kieler.sccharts.State state) {
+        var onlyStrongAbortsBefore = true;
+        // Checking priority by order
+        for (transition : state.outgoingTransitions) {
+            if (onlyStrongAbortsBefore && transition.type != TransitionType.STRONGABORT) {
+                onlyStrongAbortsBefore = false;
+            } else if (!onlyStrongAbortsBefore && transition.type == TransitionType.STRONGABORT) {
+                error(STRONG_ABORT_WITH_LOW_PRIORITY, transition, null, -1);
+            }
+        }
+    } 
 
 }

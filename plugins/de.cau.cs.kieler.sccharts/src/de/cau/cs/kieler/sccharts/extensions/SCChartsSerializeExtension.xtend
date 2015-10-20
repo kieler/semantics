@@ -36,7 +36,15 @@ import de.cau.cs.kieler.sccharts.IterateAction
 class SCChartsSerializeExtension extends KExpressionsSerializeExtension {
     
     def dispatch CharSequence serialize(Assignment assignment) {
-        assignment.valuedObject.name + " = " + assignment.expression.serialize
+        if (assignment.indices.empty) {
+            assignment.valuedObject.name + " = " + assignment.expression.serialize
+        } else {
+            var vo = assignment.valuedObject.name
+            for (index : assignment.indices) {
+                vo = vo + "[" + index.serialize + "]"
+            }
+            vo + " = " + assignment.expression.serialize
+        }
     }
     
     def dispatch CharSequence serialize(Emission emission) {

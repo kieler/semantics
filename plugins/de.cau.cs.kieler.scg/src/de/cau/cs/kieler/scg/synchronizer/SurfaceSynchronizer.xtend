@@ -198,7 +198,8 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         // Build an empty expression for each exit node.
         for(exit:exitNodes){
             
-            if (!delayFound || threadPathTypes.get(exit) != ThreadPathType::INSTANTANEOUS) {
+            if ((!exit.entry.hasAnnotation(ANNOTATION_IGNORETHREAD)) &&
+                ((!delayFound || threadPathTypes.get(exit) != ThreadPathType::INSTANTANEOUS))) {
 	            
 	        	// Increment the exit node counter and retrieve the scheduling block of the exit node.
 	        	exitNodeCount = exitNodeCount + 1
@@ -413,7 +414,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         var synchronizable = true
         
         for(tpt : threadPathTypes) {
-            if (tpt == ThreadPathType::POTENTIAL_INSTANTANEOUS) synchronizable = false
+            if (tpt == ThreadPathType::POTENTIALLY_INSTANTANEOUS) synchronizable = false
         } 
         
         synchronizable

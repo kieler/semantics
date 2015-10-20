@@ -68,6 +68,7 @@ import org.eclipse.xtext.serializer.ISerializer
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Scope
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -230,18 +231,20 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         System.out.print("Beginning preparation of the SCG generation phase...");
         var timestamp = System.currentTimeMillis
 
+        val scopeList = rootState.eAllContents.filter(Scope).toList
+        val stateList = scopeList.filter(State).toList
+                
         // Fix termination transitions that have effects
-        var rootStateObjects = rootState.eAllContents.toList
         System.out.print(" ... ")
-        var state = rootState.fixTerminationWithEffects(rootStateObjects.filter(typeof(Transition)).toList)
+        var state = rootState.fixTerminationWithEffects(stateList.fold(newLinkedList)[first, second |
+            first += second.outgoingTransitions first])
 
         // Fix possible halt states
-        val stateList = rootStateObjects.filter(typeof(State)).toList
         state = state.fixPossibleHaltStates(stateList)
         System.out.print(" ... ")
 
         // Expose local variables
-        state = state.transformLocalValuedObjectCached(stateList, uniqueNameCache)
+        scopeList.transformLocalValuedObjectCached(state, uniqueNameCache)
         System.out.print(" ... ")
 
         // Clear mappings
@@ -346,7 +349,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         // SCG thread path types
         val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
         for (entry : threadPathTypes.keySet) {
-            entry.addAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+            if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE))
+                entry.addAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
         }
 
         scg

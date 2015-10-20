@@ -65,6 +65,8 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object";
     public static final String NO_CONST_LITERAL = "Const objects must be bound to literals";
     
+    public static final String STRONG_ABORT_WITH_LOW_PRIORITY = "Strong abort transition with lower priority than non-strong-abort transition";
+    
     public static final SCChartsExtension sCChartExtension = new SCChartsExtension();
 
     @Override
