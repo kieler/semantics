@@ -284,7 +284,10 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             @Override
             public void run() {
                 if (isChecked()) {
-                    update(ChangeEvent.ACTIVE_EDITOR);
+                    saveAdapter.activate(recentEditor);
+                    update(ChangeEvent.DISPLAY_MODE);
+                }else{
+                    saveAdapter.deactivate();
                 }
             }
         };
@@ -423,8 +426,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         menu.add(new Separator());
         menu.add(actionSyncEditor);
         menu.add(actionDiagramPlaceholder);
-        menu.add(actionTracingToggle);
         menu.add(actionTracingChainToggle);
+        menu.add(actionTracingToggle);
     }
 
     // -- Saving Model
@@ -542,6 +545,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         update(ChangeEvent.ACTIVE_EDITOR);
         // Don't call super to prevent model update but activate adapter
         saveAdapter.activate(editor);
+        actionSyncEditor.setChecked(true);
     }
 
     /**
