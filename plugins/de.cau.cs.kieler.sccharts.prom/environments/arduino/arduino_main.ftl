@@ -1,31 +1,22 @@
+// Declaration part of snippets
+${decls}
 
 void setup() {
+    // Initialization part of snippets 
 ${inits}
     
     // Init model file
-    reset();
-    
-    // Workaround for not using loop()
-    // to have all variables in one function scope.
-    while(true){
-        
-        // Input snippets
-${inputs}
-        
-        // Reaction of model
-        tick();
-        
-        // Output snippets
-${outputs}
-        
-        // Code that is normally run
-        // after the loop() function of an Arduino
-        if (serialEventRun) {
-            serialEventRun();
-        }
-    }
+    reset();  
 }
 
-// Not used.
 void loop() {
+
+    // Input part of snippets
+${inputs}
+        
+    // Reaction of model
+    tick();
+
+    // Output part of snippets
+${outputs}
 }

@@ -20,30 +20,6 @@ import javax.sound.midi.SysexMessage
 class FreeMarkerPlugin implements BundleActivator {
     static BundleContext context
 
-    // Maybe this should be loaded from a resource of this plug-in.
-    @Accessors
-    /**
-     * Macro definitions to use <@init>, <@input>, <@output> in wrapper code snippets.
-     */
-    public static val assignmentMacros = 
-"<#macro init>\n"+
-"   <#if phase=='init'>\n"+
-"       <#nested />\n"+
-"   </#if>\n"+
-"</#macro>\n\n"+
-
-"<#macro input>\n"+
-"   <#if phase=='input'>\n"+
-"       <#nested />\n"+
-"   </#if>\n"+
-"</#macro>\n\n"+
-
-"<#macro output>\n"+
-"   <#if phase=='output'>\n"+
-"       <#nested />\n"+
-"   </#if>\n"+
-"</#macro>"
-
     /**
      * The last created configuration.
      */

@@ -23,16 +23,15 @@ import java.io.FileWriter
 import java.io.StringWriter
 import java.util.ArrayList
 import java.util.HashMap
+import java.util.HashSet
 import java.util.List
 import org.apache.commons.io.FilenameUtils
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.freemarker.FreeMarkerPlugin
-
-import static org.freemarker.FreeMarkerPlugin.*
-import java.util.HashSet
 
 /**
  * This class generates wrapper code for models.
@@ -54,13 +53,22 @@ class WrapperCodeGenerator {
     private static var List<IWrapperCodeAnnotationAnalyzer> wrapperCodeAnnotationAnalyzers
 
 
-
     /**
      * A template variable which is replaced with the name of the last analyzed model.
      */
-    private static val MODEL_NAME_VARIABLE = "model_name"
-    
-    
+    private static val MODEL_NAME_VARIABLE = "model_name"    
+
+    private static val declarationPhase = new CodeGenerationPhase("declaration", true, [data | true], "decl")
+    private static val initializationPhase = new CodeGenerationPhase("initialization", true, [data | true], "init")
+    private static val inputPhase = new CodeGenerationPhase("input", false, [data | data.isInput])
+    private static val outputPhase = new CodeGenerationPhase("output", false, [data | data.isOutput])
+
+    public static var List<CodeGenerationPhase> codeGenerationPhases = #[declarationPhase, initializationPhase, inputPhase, outputPhase]
+
+    /**
+     * Macro definitions to use <@init>, <@input>, <@output> in wrapper code snippets.
+     */
+    public static var String macroDefinitions = null
 
     /**
      * The project of the launch configuration which started the generator.
@@ -122,9 +130,32 @@ class WrapperCodeGenerator {
         // we interpret it as a directory in the project.
         if (!snippetDirectoryLocation.isAbsolute)
             this.snippetDirectoryLocation = new File(project.location + File.separator + wrapperCodeSnippetDirectory)
+            
+        
     }
 
 
+
+    /**
+     * Initializes the macro definitions when they are not yet initialized.
+     * Afterwards they are returned.
+     * 
+     * @return the macro definitions of assignment macros such as <@input>
+     */
+    private def String getOrInitializeMacroDefinitions() {
+        // Initialize if not done yet
+        if(macroDefinitions == null){
+            macroDefinitions = ""
+            
+            for(phase : codeGenerationPhases ){
+                for(macro : phase.macros){
+                    macroDefinitions += macro.freeMarkerDefinition
+                    macroDefinitions += "\n"
+                }                
+            }
+        }
+        return macroDefinitions
+    }
 
     /**
      * Generates and saves the wrapper code for a list of files.
@@ -139,7 +170,7 @@ class WrapperCodeGenerator {
             val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
 
             // Debug output macro calls
-//            System.err.println(templateWithMacroCalls)
+            System.err.println(templateWithMacroCalls)
 
             processTemplateAndSaveOutput(templateWithMacroCalls)
         }
@@ -161,7 +192,7 @@ class WrapperCodeGenerator {
             getWrapperCodeAnnotationData(data, annotationDatas)
         }
 
-        // Create template macro calls from annotations
+        // Create macro calls from annotations
         val map = getMacroCalls(annotationDatas)
         map.put(MODEL_NAME_VARIABLE, modelName)
 
@@ -186,7 +217,7 @@ class WrapperCodeGenerator {
         FreeMarkerPlugin.newConfiguration(snippetDirectoryLocation.absolutePath)
 
         // Add implicit include of assignment macros such as <@init> and <@output>
-        FreeMarkerPlugin.stringTemplateLoader.putTemplate("assignmentMacros", FreeMarkerPlugin.assignmentMacros)
+        FreeMarkerPlugin.stringTemplateLoader.putTemplate("assignmentMacros", getOrInitializeMacroDefinitions() )
         FreeMarkerPlugin.configuration.addAutoInclude("assignmentMacros")
 
         // Add implicit include of snippet definitions
@@ -216,30 +247,49 @@ class WrapperCodeGenerator {
      */
     private def HashMap<String, String> getMacroCalls(WrapperCodeAnnotationData... annotationDatas) {
         val map = new HashMap<String, String>()
-
-        // The assignment macros such as <@init> and <@output> use the variable 'phase'
-        // to determine if their snippet should be inserted. 
-        var inits = "<#assign phase='init' />\n"
-        var inputs = "<#assign phase='input' />\n"
-        var outputs = "<#assign phase='output' />\n"
-        val alreadyInitialized = new HashSet<WrapperCodeAnnotationData>()
-        for (data : annotationDatas) {
-            // We initialize every annotation only once
-            // although the same annotation might be used twice: as input and output.
-            if (!alreadyInitialized.contains(data)) {
-                alreadyInitialized.add(data)
-                inits += getTemplateCodeForAnnotation(data);
-            }
-
-            if (data.isInput)
-                inputs += getTemplateCodeForAnnotation(data);
-
-            if (data.isOutput)
-                outputs += getTemplateCodeForAnnotation(data);
+println("A")
+        // The assignment macros such as <@init> and <@output> use a variable
+        // to determine if their snippet should be inserted.
+        for(phase : codeGenerationPhases) {
+            phase.macroCallsToInject = phase.freeMarkerAssignment+"\n"
         }
-        map.put("inits", inits)
-        map.put("outputs", outputs)
-        map.put("inputs", inputs)
+println("B")
+        // Keep track of the annotations that were already seen before in this collection
+        val doneAnnotations = new HashSet<WrapperCodeAnnotationData>()
+        var boolean isAnnotationDoneAlready
+        
+        // Add macro calls for annotations to the different phases 
+        for (data : annotationDatas) {
+            isAnnotationDoneAlready = true
+            if (!doneAnnotations.contains(data)) {
+                doneAnnotations.add(data)
+                isAnnotationDoneAlready = false
+            }
+            println("C")
+            for(phase : codeGenerationPhases) {
+                // We initialize every annotation only once
+                // although the same annotation might be used twice: as input and output.
+                if(!phase.isUsesAnnotationsOnce || (phase.isUsesAnnotationsOnce && !isAnnotationDoneAlready) ) {
+                    // Use input annotations on inputs only, and output annotations on outputs only
+                    println("D")
+                    if(phase.isApplicable(data)) {
+                        println("E")
+                        // The macro of this annotation should be called in this phase
+                        phase.macroCallsToInject += getTemplateCodeForAnnotation(data)
+                    }
+                }
+            }
+        }
+println("F")
+        // Send FreeMarker the text to replace the placeholder of each phase
+        for(phase : codeGenerationPhases) {
+            for(macro : phase.macros) {
+                // Calling the phase in the template is possible by
+                // using the name of the assignment macro with an 's' added
+                // (e.g. ${declarations} for <@declaration>)
+                map.put(macro.name+"s", phase.macroCallsToInject)
+            }
+        }
         return map
     }
 
@@ -389,5 +439,136 @@ class WrapperCodeGenerator {
                 System.err.println(ex.getMessage());
             }
         }
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    // New Class
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Class to define the phases for which wrapper code is used and thus to define which macro calls
+     * need to be injected in the template.
+     */
+    private static class CodeGenerationPhase {
+        
+        /**
+         * The unique name of this phase.
+         * Used to identify which phase is currently active in the template.
+         */
+        private var String name
+        
+        /**
+         * Defines if the same annotation may be used multiple times in this phase.
+         * (e.g. the same annotation should be initialized only once
+         * but may be used multiple times: as input and output) 
+         */
+        private boolean isUsesAnnotationsOnce
+        
+        /**
+         * Method to check if the snippet definition for a wrapper code annotation
+         * should be inserted in this phase.
+         * (e.g. the input phase is only relevant for annotations on an input variable) 
+         */
+        private (WrapperCodeAnnotationData) => boolean isApplicableFunction;
+        
+        /**
+         * The list of assignment macros that will insert its content as part of this phase.
+         * (e.g. <@init> as well as <@initialization> will insert its content as part of the initialization phase)
+         */
+        private val List<AssignmentMacro> macros = newArrayList();
+        
+        /**
+         * A variable to calculate the assignments and macros,
+         * which should be injected in this phase for the current wrapper code generation launch.
+         */
+        @Accessors
+        private var String macroCallsToInject
+        
+        /**
+         * Constructor.
+         * 
+         * @param name The unique name of the phase.
+         * @param isUsesAnnotationsOnce Defines whether the same annotation may be used multiple times in this phase
+         * @param  isApplicableFunction A function that takes a WrapperCodeAnnotationData
+         * and returns true iff the snippet definition for the annotation should be called as part of this phase.
+         * @param alternativeMacroNames A list of macro names that should be equiivalent to the macro with the same name as this phase. 
+         */
+        new(String name, boolean isUsesAnnotationsOnce, (WrapperCodeAnnotationData) => boolean isApplicableFunction, String... alternativeMacroNames) {
+            this.name = name
+            this.isUsesAnnotationsOnce = isUsesAnnotationsOnce
+            this.isApplicableFunction = isApplicableFunction
+            
+            // Create macros
+            this.macros += new AssignmentMacro(name, this)
+            for(alternativeMacroName : alternativeMacroNames) {
+                this.macros += new AssignmentMacro(alternativeMacroName, this)
+            }
+        }
+        
+        /**
+         * The FreeMarker assignment statement which will set this phase as active.
+         */
+        public def getFreeMarkerAssignment() '''
+            <#assign phase='«name»' />
+        '''
+        
+        /**
+         * Returns the list of assignment macros, which will insert its content as part of this phase.
+         * 
+         * @return the list of assignment macros for this phase.
+         */
+        public def getMacros(){
+            return macros
+        }
+        
+        /**
+         * Checks if the snippet definition for the annotation should be inserted as part of this phase.
+         * 
+         * @return true if the snippet definition for the annotation should be inserted as part of this phase.
+         */
+        public def boolean isApplicable(WrapperCodeAnnotationData data){
+            return isApplicableFunction.apply(data)
+        }
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    // New Class
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Class to define assignment macros that will insert their content as part of a given phase. 
+     */
+    private static class AssignmentMacro {
+        /**
+         * The name for the macro
+         */
+        private var String name;
+        
+        /**
+         * The phase in which the content of this macro should be used
+         */
+        private var CodeGenerationPhase phase;
+        
+        /**
+         * Constructor.
+         * 
+         * @param name The name
+         * @param phase The phase
+         */
+        new(String name, CodeGenerationPhase phase) {
+            this.name = name
+            this.phase = phase
+        }
+        
+        /**
+         * The definition of this assignment macro for the FreeMarker template engine.
+         * 
+         * @return the FreeMarker definition of this assignment macro
+         */
+        def getFreeMarkerDefinition() '''
+            <#macro «name»>
+                <#if phase=='«phase.name»'>
+                    <#nested />
+                    </#if>
+            </#macro>
+        '''
     }
 }

@@ -5,7 +5,7 @@
          @Delay 
          output int delay = 500; -->
 <#macro Delay>
-    <@init>
+    <@declaration>
         extern int ${varname};
     </@>
     <@output>
@@ -22,8 +22,10 @@
          @SerialRate
          output int serialRate = 9600; -->
 <#macro SerialRate>
-    <@init>
+    <@decl>
         extern int ${varname};
+    </@>
+    <@init>
         Serial.begin(${varname});
     </@>
 </#macro>
@@ -35,8 +37,10 @@
          @DigitalWrite 13
          output bool pinState = true; -->
 <#macro DigitalWrite port>
-    <@init>
+    <@declaration>
         extern char ${varname};
+    </@>
+    <@init>
         pinMode(${port}, OUTPUT);
     </@>
     <@output>
@@ -57,8 +61,10 @@
          @DigitalRead 10
          input bool pinState; -->
 <#macro DigitalRead port>
-    <@init>
+    <@declaration>
         extern char ${varname};
+    </@>
+    <@init>
         pinMode(${port}, INPUT);
     </@>
     <@input>
@@ -74,8 +80,10 @@
          @AnalogRead A1
          input int pinValue; -->
 <#macro AnalogRead port>
-    <@init>
+    <@declaration>
         extern int ${varname};
+    </@>
+    <@init>
         pinMode(${port}, INPUT);
     </@>
     <@input>
@@ -91,8 +99,10 @@
          @AnalogWrite A1
          output int pinValue = 512; -->
 <#macro AnalogWrite port>
-    <@init>
+    <@declaration>
         extern int ${varname};
+    </@>
+    <@init>
         pinMode(${port}, OUTPUT);
     </@>
     <@input>
