@@ -28,6 +28,7 @@ import java.io.PrintStream
 import java.util.Collections
 import java.util.List
 import org.apache.commons.io.FilenameUtils
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.compare.Diff
 import org.eclipse.emf.compare.DifferenceKind
@@ -39,11 +40,10 @@ import org.eclipse.emf.compare.diff.DiffBuilder
 import org.eclipse.emf.compare.diff.FeatureFilter
 import org.eclipse.emf.compare.match.DefaultComparisonFactory
 import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory
-import org.eclipse.emf.compare.match.DefaultMatchEngine
+import org.eclipse.emf.compare.match.eobject.ProximityEObjectMatcher
 import org.eclipse.emf.compare.match.impl.MatchEngineFactoryImpl
 import org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin
 import org.eclipse.emf.compare.scope.DefaultComparisonScope
-import org.eclipse.emf.compare.utils.UseIdentifiers
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
@@ -63,8 +63,9 @@ import org.junit.runner.RunWith
 @RunWith(typeof(ModelCollectionTestRunner))
 @BundleId("de.cau.cs.kieler.sccharts.test")
 @ModelPath("tests/transformations/")
-//@ModelFilter("0402_ExitActionAndTrigger.sct")
-@ModelFilter("1401_StaticVariables.sct")
+//@ModelFilter("0404_ExitActionAndRegions.sct")
+//@ModelFilter("1401_StaticVariables.sct")
+@ModelFilter("0702_ComplexFinalSuperstate.sct")
 class TransformationTests {
     
     static val TRANSFORMATION_ANNOTATION_NAME = "Transformation"
@@ -140,12 +141,18 @@ class TransformationTests {
             val targetURL = "platform:/plugin/de.cau.cs.kieler.sccharts.test/" + TARGET_FOLDER + modelFile
             resource = resourceSet.getResource(URI.createURI(targetURL), true)
             val targetModel = resource.getContents().get(0) as EObject
+            
             // Compare the two models
             // If differences occur they are said to be in the left model, which is the compiled
             // result.
             val scope = new DefaultComparisonScope(resultModel, targetModel, null)
             val comparison = comparator.compare(scope)
+            
+            // Print out all matches
+            printMatches(comparison.matches, 0, true)
+            
             val differences = comparison.getDifferences()
+            
             // Check results
             val int differencesSize = differences.size()
             if (differencesSize > 0) {
@@ -156,6 +163,15 @@ class TransformationTests {
 
         } else {
             throw new IllegalArgumentException("Model " + modelFile + " could not be cast to an SCChart.")
+        }
+    }
+
+    def private printMatches(EList<Match> matches, int level, boolean recursive) {
+        for(m : matches) {
+            println(Strings.repeat("\t",level) + m)
+            
+            if(recursive)
+                printMatches(m.submatches, level+1, recursive)
         }
     }
 
@@ -198,26 +214,17 @@ class TransformationTests {
     def private static EMFCompare createEMFComparator() {
         // Define ignored references and attributes
         
-        // There are SCT files which are identical in their serialized form
-        // but show differences in the references that are named here.
-        // Thus we just ignore them in the diff process.
-        val ignoredReferences = Lists.newArrayList(
-            AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS, SCChartsPackage.Literals.STATE__INCOMING_TRANSITIONS,
-            SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS, SCChartsPackage.Literals.TRANSITION__TARGET_STATE,
-            SCChartsPackage.Literals.ACTION__TRIGGER, SCChartsPackage.Literals.ASSIGNMENT__VALUED_OBJECT,
-            SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION, SCChartsPackage.Literals.ACTION__EFFECTS)
-            
-        // There are SCT files which are identical in their serialized form
+        // Annotations are references, which are irrelevant for the semantics of SCCharts
+        val ignoredReferences = Lists.newArrayList(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS)
+        
+        // There are SCT files, which are identical in their serialized form
         // but show differences in the attributes that are named here.
         // Thus we just ignore them in the diff process.
         val ignoredAttributes = Lists.newArrayList(SCChartsPackage.Literals.TRANSITION__PRIORITY, SCChartsPackage.Literals.SCOPE__LABEL)
         
-        // The order of states is irrelevant.
-        val unorderedReferences = Lists.newArrayList(SCChartsPackage.Literals.CONTROLFLOW_REGION__STATES)
-        
         // Create EMF Compare matching objects
         val comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory())
-        val matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER)
+        val matcher = new ProximityEObjectMatcher(new SCChartDistanceFunction());
         val matchEngineFactory = new MatchEngineFactoryImpl(matcher, comparisonFactory)
         matchEngineFactory.setRanking(20) // Actually use this factory
         val matchEngineRegistry = EMFCompareRCPPlugin.getDefault().getMatchEngineFactoryRegistry()
@@ -241,11 +248,9 @@ class TransformationTests {
                     }
 
                     override boolean checkForOrderingChanges(EStructuralFeature feature) {
-                        if (unorderedReferences.contains(feature)) {
-                            return false
-                        } else {
-                            return super.checkForOrderingChanges(feature)
-                        }
+                        // Elements in SCCharts are not ordered.
+                        // The order of transformations is determined by their priority.
+                        return false
                     }
                 }
             }
