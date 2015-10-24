@@ -158,7 +158,9 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
             for (complexFinalState : complexFinalStates) {
                 complexFinalState.setFinal(false)
                 val finalState = complexFinalState.parentRegion.retrieveFinalState(GENERATED_PREFIX + "Final")
-                complexFinalState.createImmediateTransitionTo(finalState).setTrigger(abortFlag.reference)
+                // Take care to set the lowest priority to the new abort transition because termination has
+                // the lowest priority of all transition types.
+                complexFinalState.createImmediateTransitionTo(finalState).setLowestPriority.setTrigger(abortFlag.reference)
             }
 
         }
