@@ -386,7 +386,7 @@
             preferred=""></editor>
    </extension>
    <extension
-         point="de.cau.cs.kieler.klighd.ui.view.editor">
+         point="de.cau.cs.kieler.klighd.view.editor">
       <editor
             controllerID="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
             editorID="de.cau.cs.kieler.sccharts.text.sct.Sct">

@@ -7,6 +7,8 @@ Bundle-Activator: de.cau.cs.kieler.sim.kivi.Activator
 Bundle-Vendor: Kiel University
 Require-Bundle: de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.klighd.ui,
+ de.cau.cs.kieler.klighd.view,
+ org.eclipse.ui,
  org.eclipse.ui.ide,
  de.cau.cs.kieler.kico.klighd,
  de.cau.cs.kieler.kico

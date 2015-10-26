@@ -5,24 +5,18 @@ Bundle-SymbolicName: de.cau.cs.kieler.kico.klighd;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin
 Bundle-Vendor: Kiel University
-Require-Bundle: org.eclipse.ui,
- org.eclipse.ui.ide,
+Require-Bundle: org.eclipse.ui.ide,
  org.eclipse.xtext.ui,
- org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib;bundle-version="2.3.0",
- javax.inject;bundle-version="1.0.0",
- com.google.guava,
  de.cau.cs.kieler.klighd.ui,
  de.cau.cs.kieler.core.krendering.extensions;bundle-version="0.4.0",
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.kico.ui,
- de.cau.cs.kieler.kiml.ui,
- de.cau.cs.kieler.klay.layered,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.config,
  de.cau.cs.kieler.kitt.klighd,
  de.cau.cs.kieler.kitt,
- de.cau.cs.kieler.klighd.xtext
+ de.cau.cs.kieler.klighd.view;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kico.klighd

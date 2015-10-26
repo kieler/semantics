@@ -24,7 +24,7 @@
       </action>
    </extension>
    <extension
-         point="de.cau.cs.kieler.klighd.ui.view.controller">
+         point="de.cau.cs.kieler.klighd.view.controller">
       <controller
             class="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController">
       </controller>
