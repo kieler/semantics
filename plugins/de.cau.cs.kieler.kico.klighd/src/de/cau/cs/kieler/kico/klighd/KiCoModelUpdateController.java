@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
+import java.util.Map.Entry;
 import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IFile;
@@ -77,12 +78,12 @@ import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.KlighdConstants;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.klighd.view.DiagramView;
 import de.cau.cs.kieler.klighd.view.controller.AbstractViewUpdateController;
+import de.cau.cs.kieler.klighd.view.controllers.EcoreXtextSaveUpdateController;
 import de.cau.cs.kieler.klighd.view.model.ErrorModel;
 import de.cau.cs.kieler.klighd.view.model.MessageModel;
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
-import de.cau.cs.kieler.klighd.view.controllers.EcoreXtextSaveUpdateController;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination;
 import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination;
@@ -127,43 +128,42 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     // -- Icons --
     /** The icon for saving current model. */
-    private static final ImageDescriptor ICON_SAVE = AbstractUIPlugin
+    private static final ImageDescriptor SAVE_ICON = AbstractUIPlugin
             .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/etool16/save_edit.gif");
-    /** The icon for toggling side-by-side display mode button. */
-    private static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin
-            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/compile.png");
-    /** The icon for fork view button. */
-    private static final ImageDescriptor ICON_SIDE_BY_SIDE = AbstractUIPlugin
-            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/side_by_side.png");
-    /** The icon for toggling chain display mode button. */
-    private static final ImageDescriptor ICON_CHAIN = AbstractUIPlugin
-            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/chain.png");
     /** The icon for pin selection button. */
-    private static final ImageDescriptor ICON_PIN = AbstractUIPlugin
-            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd", "icons/pin.png");
+    private static final ImageDescriptor PIN_ICON =
+            KiCoKlighdPlugin.getImageDescriptor("icons/full/etool16/pin.png");
+    /** The icon for toggling compile mode button. */
+    private static final ImageDescriptor COMPILE_ICON =
+            KiCoKlighdPlugin.getImageDescriptor("icons/full/etool16/compile.png");
+    /** The icon for fork view button. */
+    private static final ImageDescriptor SIDE_BY_SIDE_ICON =
+            KiCoKlighdPlugin.getImageDescriptor("icons/full/etool16/side_by_side.png");
+    /** The icon for toggling chain display mode button. */
+    private static final ImageDescriptor CHAIN_ICON =
+            KiCoKlighdPlugin.getImageDescriptor("icons/full/etool16/chain.png");
 
     /** The icon for closing windows. */
-    private static final ImageDescriptor ICON_CLOSE = AbstractUIPlugin
+    private static final ImageDescriptor CLOSE_ICON = AbstractUIPlugin
             .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/remove.gif");
 
     // -- Toolbar --
     /** The action for saving currently displayed model. */
-    private final Action actionSave;
+    private final Action saveAction;
     /** The last directory used for saving a model. */
     private IPath lastSaveDirectory = null;
 
     /** The action for toggling side-by-side display mode. */
-    private Action actionSideBySideToggle;
-    /** Flag if side-by-side display mode is active. */
-    private boolean displaySideBySide = false;
+    private Action sideBySideToggleAction;
+    private static final boolean SIDE_BY_SIDE_TOGGLE_ACTION_DEFAULT_STATE = false;
 
     /** The action for toggling compile. */
-    private Action actionCompileToggle;
-    /** Flag if compile mode is active. */
-    private boolean compileModel = true;
+    private Action compileToggleAction;
+    private static final boolean COMPILE_TOGGLE_ACTION_DEFAULT_STATE = true;
 
     /** The action for toggling compile. */
-    private Action actionPinToggle;
+    private Action pinToggleAction;
+    private static final boolean PIN_TOGGLE_ACTION_DEFAULT_STATE = false;
     /** String currently saved transformations. */
     private Pair<KielerCompilerSelection, Boolean> selection = null;
     /** Map with pinned transformations. */
@@ -172,22 +172,20 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     // -- Menu --
     /** The action for toggling editor synchronization. */
-    private final Action actionSyncEditor;
-    private static final boolean actionSyncEditor_DEFAULT_STATE = true;
+    private final Action syncEditorToggleAction;
+    private static final boolean SYNC_EDITOR_TOGGLE_ACTION_DEFAULT_STATE = true;
 
     /** The action for toggling display of diagram placeholder. */
-    private final Action actionDiagramPlaceholder;
-    private static final boolean actionDiagramPlaceholder_DEFAULT_STATE = false;
+    private final Action diagramPlaceholderToggleAction;
+    private static final boolean DIAGRAM_PLACEHOLDER_TOGGLE_ACTION_DEFAULT_STATE = false;
 
     /** The action for toggling tracing. */
-    private Action actionTracingToggle;
-    /** Flag if tracing is activated. */
-    private boolean doTracing = false;
+    private Action tracingToggleAction;
+    private static final boolean TRACING_TOGGLE_ACTION_DEFAULT_STATE = false;
 
     /** The action for toggling chain display mode. */
-    private Action actionTracingChainToggle;
-    /** Flag if chain display mode is active. */
-    private boolean displayTracingChain = false;
+    private Action tracingChainToggleAction;
+    private static final boolean TRACING_CHAIN_TOGGLE_ACTION_DEFAULT_STATE = false;
 
     // -- Model --
 
@@ -208,11 +206,10 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     // -- Visual --
 
-    /**
-     * Container for displaying waring messages.
-     */
+    /** Container for displaying waring messages. */
     private Composite warningMessageContainer = null;
 
+    /** The last editor synchronized with the view. */
     private IEditorPart recentEditor = null;
 
     // -- Constructor and Initialization
@@ -225,30 +222,30 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         CompilerSelectionStore.register(this);
 
         // Save Button
-        actionSave = new Action("Save displayed main model", IAction.AS_PUSH_BUTTON) {
+        saveAction = new Action("Save displayed main model", IAction.AS_PUSH_BUTTON) {
             @Override
             public void run() {
                 saveModel();
             }
         };
-        actionSave.setId("actionSave");
-        actionSave.setToolTipText("Save displayed main model");
-        actionSave.setImageDescriptor(ICON_SAVE);
+        saveAction.setId("saveAction");
+        saveAction.setToolTipText("Save displayed main model");
+        saveAction.setImageDescriptor(SAVE_ICON);
 
         // Compile button
-        actionCompileToggle = new Action("Show compiled model", IAction.AS_CHECK_BOX) {
+        compileToggleAction = new Action("Show compiled model", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
-                compileModel = actionCompileToggle.isChecked();
                 update(ChangeEvent.COMPILE);
             }
         };
-        actionCompileToggle.setToolTipText("Show compiled model");
-        actionCompileToggle.setImageDescriptor(ICON_COMPILE);
-        actionCompileToggle.setChecked(compileModel);
+        compileToggleAction.setId("compileToggleAction");
+        compileToggleAction.setToolTipText("Show compiled model");
+        compileToggleAction.setImageDescriptor(COMPILE_ICON);
+        compileToggleAction.setChecked(COMPILE_TOGGLE_ACTION_DEFAULT_STATE);
 
         // Pin button
-        actionPinToggle = new Action("Pin selected transformations", IAction.AS_CHECK_BOX) {
+        pinToggleAction = new Action("Pin selected transformations", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
                 if (recentEditor != null) {
@@ -262,76 +259,78 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 }
             }
         };
-        actionPinToggle.setToolTipText("Pin selected transformations");
-        actionPinToggle.setImageDescriptor(ICON_PIN);
-        actionPinToggle.setChecked(false);
+        pinToggleAction.setId("pinToggleAction");
+        pinToggleAction.setToolTipText("Pin selected transformations");
+        pinToggleAction.setImageDescriptor(PIN_ICON);
+        pinToggleAction.setChecked(PIN_TOGGLE_ACTION_DEFAULT_STATE);
 
         // Side-by-Side button
-        actionSideBySideToggle =
+        sideBySideToggleAction =
                 new Action("Activate side-by-side display mode", IAction.AS_CHECK_BOX) {
                     @Override
                     public void run() {
-                        displaySideBySide = isChecked();
                         update(ChangeEvent.DISPLAY_MODE);
                     }
                 };
-        actionSideBySideToggle.setToolTipText("Activate side-by-side display mode");
-        actionSideBySideToggle.setImageDescriptor(ICON_SIDE_BY_SIDE);
-        actionSideBySideToggle.setChecked(displaySideBySide);
+        sideBySideToggleAction.setId("sideBySideToggleAction");
+        sideBySideToggleAction.setToolTipText("Activate side-by-side display mode");
+        sideBySideToggleAction.setImageDescriptor(SIDE_BY_SIDE_ICON);
+        sideBySideToggleAction.setChecked(SIDE_BY_SIDE_TOGGLE_ACTION_DEFAULT_STATE);
 
         // Sync Menu Item
-        actionSyncEditor = new Action("Synchronize with editor content", IAction.AS_CHECK_BOX) {
-            @Override
-            public void run() {
-                if (isChecked()) {
-                    saveAdapter.activate(recentEditor);
-                    update(ChangeEvent.DISPLAY_MODE);
-                }else{
-                    saveAdapter.deactivate();
-                }
-            }
-        };
-        actionSyncEditor.setId("actionSyncEditor");
-        actionSyncEditor.setToolTipText(
+        syncEditorToggleAction =
+                new Action("Synchronize with editor content", IAction.AS_CHECK_BOX) {
+                    @Override
+                    public void run() {
+                        if (isChecked()) {
+                            saveAdapter.activate(recentEditor);
+                            update(ChangeEvent.DISPLAY_MODE);
+                        } else {
+                            saveAdapter.deactivate();
+                        }
+                    }
+                };
+        syncEditorToggleAction.setId("syncEditorToggleAction");
+        syncEditorToggleAction.setToolTipText(
                 "If Synchronize is disabled, this view will no longer update its status when editor content changes.");
-        actionSyncEditor.setChecked(actionSyncEditor_DEFAULT_STATE);
+        syncEditorToggleAction.setChecked(SYNC_EDITOR_TOGGLE_ACTION_DEFAULT_STATE);
 
         // Diagram PlaceHolder Menu Item
-        actionDiagramPlaceholder = new Action("Model Visualization", IAction.AS_CHECK_BOX) {
+        diagramPlaceholderToggleAction = new Action("Model Visualization", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
                 update(ChangeEvent.DISPLAY_MODE);
             }
         };
-        actionDiagramPlaceholder.setId("actionDiagramPlaceholder");
-        actionDiagramPlaceholder.setToolTipText(
+        diagramPlaceholderToggleAction.setId("diagramPlaceholderToggleAction");
+        diagramPlaceholderToggleAction.setToolTipText(
                 "If visualization is deactiveted, all diagrams will be replaced by a placeholder diagram.");
-        actionDiagramPlaceholder.setChecked(actionDiagramPlaceholder_DEFAULT_STATE);
+        diagramPlaceholderToggleAction.setChecked(DIAGRAM_PLACEHOLDER_TOGGLE_ACTION_DEFAULT_STATE);
 
         // Tracing item
-        actionTracingToggle = new Action("Tracing", IAction.AS_CHECK_BOX) {
+        tracingToggleAction = new Action("Tracing", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
-                doTracing = isChecked();
                 update(ChangeEvent.COMPILE);
             }
         };
-        actionTracingToggle.setChecked(doTracing);
-        actionTracingToggle
+        tracingToggleAction.setId("tracingToggleAction");
+        tracingToggleAction
                 .setToolTipText("Performes tracing during transformations if activated.");
+        tracingToggleAction.setChecked(TRACING_TOGGLE_ACTION_DEFAULT_STATE);
 
         // Tracing chain item
-        actionTracingChainToggle = new Action("", IAction.AS_CHECK_BOX) {
+        tracingChainToggleAction = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
-                displayTracingChain = isChecked();
                 update(ChangeEvent.DISPLAY_MODE);
             }
         };
-        actionTracingChainToggle.setText("Display Transformation Chain");
-        actionTracingChainToggle.setToolTipText(
+        tracingChainToggleAction.setId("tracingChainToggleAction");
+        tracingChainToggleAction.setText("Display Transformation Chain");
+        tracingChainToggleAction.setToolTipText(
                 "Enable tranformation chain view in displaySideBySide display mode");
         // actionTracingChainToggle.setImageDescriptor(ICON_CHAIN);
-        actionTracingChainToggle.setChecked(displayTracingChain);
+        tracingChainToggleAction.setChecked(TRACING_CHAIN_TOGGLE_ACTION_DEFAULT_STATE);
     }
 
     /**
@@ -362,10 +361,22 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         super.copy(source);
         if (source instanceof KiCoModelUpdateController) {
             KiCoModelUpdateController other = (KiCoModelUpdateController) source;
-            actionSyncEditor.setChecked(other.actionSyncEditor.isChecked());
-            actionDiagramPlaceholder.setChecked(other.actionDiagramPlaceholder.isChecked());
             lastSaveDirectory = other.lastSaveDirectory;
-            // TODO copy attributes
+            compileToggleAction.setChecked(other.compileToggleAction.isChecked());
+            pinToggleAction.setChecked(other.pinToggleAction.isChecked());
+            for (Entry<IEditorPart, Pair<KielerCompilerSelection, Boolean>> entry : other.pinnedTransformations
+                    .entrySet()) {
+                pinnedTransformations.put(entry.getKey(),
+                        new Pair<KielerCompilerSelection, Boolean>(
+                                entry.getValue().getFirst().clone(),
+                                entry.getValue().getSecond().booleanValue()));
+            }
+            syncEditorToggleAction.setChecked(other.syncEditorToggleAction.isChecked());
+            sideBySideToggleAction.setChecked(other.sideBySideToggleAction.isChecked());
+            diagramPlaceholderToggleAction
+                    .setChecked(other.diagramPlaceholderToggleAction.isChecked());
+            tracingToggleAction.setChecked(other.tracingToggleAction.isChecked());
+            tracingChainToggleAction.setChecked(other.tracingChainToggleAction.isChecked());
         }
     }
 
@@ -374,10 +385,16 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     @Override
     public void reset() {
-        actionSyncEditor.setChecked(actionSyncEditor_DEFAULT_STATE);
-        actionDiagramPlaceholder.setChecked(actionDiagramPlaceholder_DEFAULT_STATE);
         lastSaveDirectory = null;
-        // TODO reset attributes
+        compileToggleAction.setChecked(COMPILE_TOGGLE_ACTION_DEFAULT_STATE);
+        pinToggleAction.setChecked(PIN_TOGGLE_ACTION_DEFAULT_STATE);
+        selection = null;
+        pinnedTransformations.clear();
+        syncEditorToggleAction.setChecked(SYNC_EDITOR_TOGGLE_ACTION_DEFAULT_STATE);
+        sideBySideToggleAction.setChecked(SIDE_BY_SIDE_TOGGLE_ACTION_DEFAULT_STATE);
+        diagramPlaceholderToggleAction.setChecked(DIAGRAM_PLACEHOLDER_TOGGLE_ACTION_DEFAULT_STATE);
+        tracingToggleAction.setChecked(TRACING_TOGGLE_ACTION_DEFAULT_STATE);
+        tracingChainToggleAction.setChecked(TRACING_CHAIN_TOGGLE_ACTION_DEFAULT_STATE);
     }
 
     /**
@@ -388,8 +405,18 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         if (lastSaveDirectory != null) {
             memento.putString("lastSaveDirectory", lastSaveDirectory.toPortableString());
         }
+        
+        memento.putBoolean("compileToggleAction", compileToggleAction.isChecked());
+        
+        memento.putBoolean("sideBySideToggleAction", sideBySideToggleAction.isChecked());
 
-        memento.putBoolean("actionDiagramPlaceholder", actionDiagramPlaceholder.isChecked());
+        //TODO Save pinnedTransformations
+        
+        memento.putBoolean("diagramPlaceholderToggleAction", diagramPlaceholderToggleAction.isChecked());
+        
+        memento.putBoolean("tracingToggleAction", tracingToggleAction.isChecked());
+        
+        memento.putBoolean("tracingChainToggleAction", tracingChainToggleAction.isChecked());
     }
 
     /**
@@ -402,10 +429,40 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             lastSaveDirectory = Path.fromPortableString(lastSaveDirectoryValue);
         }
 
-        Boolean actionDiagramPlaceholderValue = memento.getBoolean("actionDiagramPlaceholder");
+        Boolean compileToggleActionValue = memento.getBoolean("compileToggleAction");
+        if (compileToggleActionValue != null) {
+            if (compileToggleAction != null) {
+                compileToggleAction.setChecked(compileToggleActionValue);
+            }
+        }
+        
+        Boolean sideBySideToggleActionValue = memento.getBoolean("sideBySideToggleAction");
+        if (sideBySideToggleActionValue != null) {
+            if (sideBySideToggleAction != null) {
+                sideBySideToggleAction.setChecked(sideBySideToggleActionValue);
+            }
+        }
+        
+        Boolean actionDiagramPlaceholderValue = memento.getBoolean("diagramPlaceholderToggleAction");
         if (actionDiagramPlaceholderValue != null) {
-            if (actionDiagramPlaceholder != null) {
-                actionDiagramPlaceholder.setChecked(actionDiagramPlaceholderValue);
+            if (diagramPlaceholderToggleAction != null) {
+                diagramPlaceholderToggleAction.setChecked(actionDiagramPlaceholderValue);
+            }
+        }
+        
+        //TODO Load pinnedTransformations
+                        
+        Boolean tracingToggleActionValue = memento.getBoolean("tracingToggleAction");
+        if (tracingToggleActionValue != null) {
+            if (tracingToggleAction != null) {
+                tracingToggleAction.setChecked(tracingToggleActionValue);
+            }
+        }
+        
+        Boolean tracingChainToggleActionValue = memento.getBoolean("tracingChainToggleAction");
+        if (tracingChainToggleActionValue != null) {
+            if (tracingChainToggleAction != null) {
+                tracingChainToggleAction.setChecked(tracingChainToggleActionValue);
             }
         }
     }
@@ -418,20 +475,17 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     public void addContributions(final IToolBarManager toolBar, final IMenuManager menu) {
         toolBar.add(new Separator());
-        toolBar.add(actionSave);
-        toolBar.add(actionCompileToggle);
-        toolBar.add(actionPinToggle);
-        toolBar.add(actionSideBySideToggle);
+        toolBar.add(saveAction);
+        toolBar.add(compileToggleAction);
+        toolBar.add(pinToggleAction);
+        toolBar.add(sideBySideToggleAction);
 
         menu.add(new Separator());
-        menu.add(actionSyncEditor);
-        menu.add(actionDiagramPlaceholder);
-        menu.add(actionTracingChainToggle);
-        menu.add(actionTracingToggle);
+        menu.add(syncEditorToggleAction);
+        menu.add(diagramPlaceholderToggleAction);
+        menu.add(tracingChainToggleAction);
+        menu.add(tracingToggleAction);
     }
-
-    // -- Saving Model
-    // -------------------------------------------------------------------------
 
     // -- Save model
     // -------------------------------------------------------------------------
@@ -487,7 +541,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                         file.refreshLocal(IResource.DEPTH_INFINITE, null);
                     } catch (CoreException e) {
                         StatusManager.getManager().handle(new Status(IStatus.WARNING,
-                                KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.LOG);
+                                KiCoKlighdPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.LOG);
                     }
                 }
 
@@ -511,12 +565,21 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     }
                 } catch (Exception e) {
                     StatusManager.getManager().handle(new Status(IStatus.ERROR,
-                            KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW);
+                            KiCoKlighdPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW);
                 }
             }
         }
     }
 
+    /**
+     * Returns the appropriate file extension for the given model.
+     * 
+     * @param editor
+     *            the source editor
+     * @param model
+     *            the model
+     * @return file extension or empty string if non exists.
+     */
     public String getResourceName(final IEditorPart editor, final Object model) {
         if (editor != null && model != null) {
             String filename = editor.getTitle();
@@ -545,7 +608,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         update(ChangeEvent.ACTIVE_EDITOR);
         // Don't call super to prevent model update but activate adapter
         saveAdapter.activate(editor);
-        actionSyncEditor.setChecked(true);
+        syncEditorToggleAction.setChecked(true);
     }
 
     /**
@@ -620,12 +683,12 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
         if (isActive() || (recentEditor != null
                 && (is_selection_update || is_display_mode_update || is_compile_update))) {
-            
+
             // Evaluate if source model should be read from source editor
             boolean do_get_model = false;
             do_get_model |= is_active_editor_update;
             do_get_model |= is_save_update;
-            
+
             // Get model if necessary
             if (do_get_model) {
                 sourceModel = readModel(recentEditor);
@@ -656,7 +719,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             if (sourceModel == null) {
                 updateModel(null, properties);
                 return;
-            } else if (actionDiagramPlaceholder.isChecked()) {
+            } else if (diagramPlaceholderToggleAction.isChecked()) {
                 updateModel(new MessageModel(MODEL_PLACEHOLDER_PREFIX + recentEditor.getTitle(),
                         MODEL_PLACEHOLDER_MESSGAE), properties);
             }
@@ -668,7 +731,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             boolean do_get_selection = false;
             do_get_selection |= is_selection_update;
             do_get_selection |= is_active_editor_update;
-            do_get_selection |= is_compile_update && compileModel;
+            do_get_selection |= is_compile_update && compileToggleAction.isChecked();
 
             // Indicates of the current transformation configuration differs from previous
             // configuration
@@ -709,7 +772,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             do_compile |= is_display_mode_update;
             // -- But only if:
             do_compile &= selection != null;
-            do_compile &= compileModel;
+            do_compile &= compileToggleAction.isChecked();
 
             // Compile if necessary
             if (do_compile) {
@@ -723,7 +786,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
                     // create compilation job
                     currentCompilation = new AsynchronousCompilation(this, (EObject) sourceModel,
-                            recentEditor.getTitle(), selection, doTracing);
+                            recentEditor.getTitle(), selection, tracingToggleAction.isChecked());
                     currentCompilationResult = null;
                     model = currentCompilation.getModel();
                     // start
@@ -748,7 +811,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     }
 
                     if (showProgress) { // if not the fast case
-                        currentCompilation.setUpdateModelView(true);
+                        currentCompilation.setNotifyWhenFinished(true);
                     } else { // directly take result and suppress additional update
                         model = currentCompilation.getModel();
                         currentCompilationResult = currentCompilation.getCompilationResult();
@@ -778,8 +841,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             }
 
             // composite model in given display mode
-            if (displaySideBySide) {
-                if (displayTracingChain && currentCompilationResult != null) {
+            if (sideBySideToggleAction.isChecked()) {
+                if (tracingChainToggleAction.isChecked() && currentCompilationResult != null) {
                     model = new ModelChain(sourceModel, currentCompilationResult,
                             recentEditor.getTitle(), selection.getFirst());
                 } else {
@@ -795,7 +858,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             // should compile but no transformations are selected
             do_update_diagram |= is_compile_update && selection != null;
             // compile and transformations changed to null
-            do_update_diagram |= compileModel && selection == null && selection_changed;
+            do_update_diagram |=
+                    compileToggleAction.isChecked() && selection == null && selection_changed;
 
             if (do_update_diagram) {
                 updateModel(model, properties);
@@ -819,8 +883,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * transformation.
      */
     private void updatePinToggleButton() {
-        actionPinToggle.setEnabled(selection != null);
-        actionPinToggle.setChecked(pinnedTransformations.containsKey(recentEditor));
+        pinToggleAction.setEnabled(selection != null);
+        pinToggleAction.setChecked(pinnedTransformations.containsKey(recentEditor));
     }
 
     /**
@@ -886,7 +950,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         warningMessageContainer.setBackground(orange);
 
         final Label close = new Label(warningMessageContainer, SWT.NONE);
-        final Image closeImage = ICON_CLOSE.createImage();
+        final Image closeImage = CLOSE_ICON.createImage();
         close.setBackground(orange);
         close.setImage(closeImage);
         // close.setBackground(orange);

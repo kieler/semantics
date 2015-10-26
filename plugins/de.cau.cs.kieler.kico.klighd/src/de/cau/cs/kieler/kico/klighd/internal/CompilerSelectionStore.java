@@ -43,12 +43,13 @@ public class CompilerSelectionStore implements KiCoSelectionChangeEventListerner
     private static final HashSet<KiCoModelUpdateController> listeners =
             new HashSet<KiCoModelUpdateController>();
     /** This class as listener for all necessary events. */
-    private static CompilerSelectionStore listener = null;
+    private static CompilerSelectionStore changeListener = null;
 
     /**
      * Returns the selection for the given editor.
      * 
      * @param editor
+     *            the source editor
      * @return selection pair or null if nothing selected
      */
     public static Pair<KielerCompilerSelection, Boolean> getSelection(final IEditorPart editor) {
@@ -59,11 +60,12 @@ public class CompilerSelectionStore implements KiCoSelectionChangeEventListerner
      * Adds the given Controller to the list of notified controllers.
      * 
      * @param controller
+     *            the update controller
      */
     public static void register(final KiCoModelUpdateController controller) {
-        if (listener == null) {
-            listener = new CompilerSelectionStore();
-            KiCoSelectionView.selectionEventManger.addSelectionChangeEventListener(listener);
+        if (changeListener == null) {
+            changeListener = new CompilerSelectionStore();
+            KiCoSelectionView.selectionEventManger.addSelectionChangeEventListener(changeListener);
         }
         listeners.add(controller);
     }
@@ -75,6 +77,7 @@ public class CompilerSelectionStore implements KiCoSelectionChangeEventListerner
      * Removes the given Controller from the list of notified controllers.
      * 
      * @param controller
+     *            the update controller
      */
     public static void unregister(final KiCoModelUpdateController controller) {
         listeners.remove(controller);

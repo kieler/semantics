@@ -13,23 +13,13 @@
 package de.cau.cs.kieler.kico.klighd.internal;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.ui.util.ResourceUtil;
-
-import de.cau.cs.kieler.core.WrappedException;
 
 /**
  * This class contains utility methods for handling emf models.

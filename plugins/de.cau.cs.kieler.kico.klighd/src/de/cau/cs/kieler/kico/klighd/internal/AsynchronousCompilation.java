@@ -25,7 +25,7 @@ import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
-import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
+import de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin;
 import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController;
 import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController.ChangeEvent;
 import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder;
@@ -44,7 +44,7 @@ import de.cau.cs.kieler.klighd.view.model.MessageModel;
 public class AsynchronousCompilation extends Job {
 
     /** ModelView which spawned this job. */
-    private final KiCoModelUpdateController modelView;
+    private final KiCoModelUpdateController viewController;
     /** Model to compile. */
     private final EObject sourceModel;
     /** Name of the source file. */
@@ -56,7 +56,7 @@ public class AsynchronousCompilation extends Job {
     /** Flag if additional progress information should be displayed. */
     private final boolean tracing;
     /** Flag if this job should update corresponding ModelView when finished compiling. */
-    private boolean updateModelView = false;
+    private boolean notifyWhenFinished = false;
     /** Model to display in ModeView depending on current compilation state. */
     private Object model;
     /** Compilation Result. */
@@ -68,17 +68,22 @@ public class AsynchronousCompilation extends Job {
      * Creates a Job which compiles given source model with transformation of given selection.
      * 
      * @param controller
+     *            the view update controller
      * @param sourceModel
+     *            the source model
      * @param sourceFile
+     *            the source file
      * @param selection
+     *            the selection
      * @param tracing
+     *            tracing flag
      */
     public AsynchronousCompilation(final KiCoModelUpdateController controller,
             final EObject sourceModel, final String sourceFile,
             final Pair<KielerCompilerSelection, Boolean> selection, final boolean tracing) {
         super("Compiling: " + sourceFile);
 
-        this.modelView = controller;
+        this.viewController = controller;
         this.sourceFile = sourceFile;
         // remove file extension
         if (sourceFile.contains(".")) {
@@ -122,8 +127,8 @@ public class AsynchronousCompilation extends Job {
             if (!result.getPostponedErrors().isEmpty()) {
                 model = new ErrorModel("Compilation Error!",
                         result.getPostponedErrors().get(0).getMessage(), result.getAllErrors());
-                updateModelView();
-                return new Status(Status.INFO, KiCoKLighDPlugin.PLUGIN_ID, result.getAllErrors());
+                updateView();
+                return new Status(Status.INFO, KiCoKlighdPlugin.PLUGIN_ID, result.getAllErrors());
             } else
                 if (result == null || (result.getEObject() == null && result.getString() == null)) {
                 throw new NullPointerException(
@@ -143,29 +148,29 @@ public class AsynchronousCompilation extends Job {
             }
 
             finishedCompilation = true;
-            updateModelView();
+            updateView();
         } catch (Exception e) { // error display
             if (monitor.isCanceled()) {
                 return Status.CANCEL_STATUS;
             }
             model = new ErrorModel("Compilation Error!", e);
-            updateModelView();
-            return new Status(Status.WARNING, KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(),
+            updateView();
+            return new Status(Status.WARNING, KiCoKlighdPlugin.PLUGIN_ID, e.getMessage(),
                     e.getCause());
         }
         return Status.OK_STATUS;
     }
 
     /**
-     * Updates ModelView if necessary.
+     * Updates view if necessary.
      */
-    private void updateModelView() {
-        if (updateModelView) {
+    private void updateView() {
+        if (notifyWhenFinished) {
             new UIJob("Updating ModelView [" + sourceFile + "]") {
 
                 @Override
                 public IStatus runInUIThread(final IProgressMonitor monitor) {
-                    modelView.update(ChangeEvent.COMPILATION_FINISHED,
+                    viewController.update(ChangeEvent.COMPILATION_FINISHED,
                             AsynchronousCompilation.this);
                     return Status.OK_STATUS;
                 }
@@ -202,11 +207,11 @@ public class AsynchronousCompilation extends Job {
     /**
      * Set if this job should update corresponding ModelView when compilation finished.
      * 
-     * @param doUpdate
+     * @param notify
      *            update flag
      */
-    public void setUpdateModelView(final boolean doUpdate) {
-        updateModelView = doUpdate;
+    public void setNotifyWhenFinished(final boolean notify) {
+        notifyWhenFinished = notify;
     }
 
     /**
@@ -215,7 +220,7 @@ public class AsynchronousCompilation extends Job {
     @Override
     protected void canceling() {
         model = new ErrorModel("Compilation aborted!");
-        updateModelView();
+        updateView();
     }
 
 }
