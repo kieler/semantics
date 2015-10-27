@@ -18,13 +18,14 @@ import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.KRectangle
 import de.cau.cs.kieler.core.krendering.KText
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import java.util.List
+
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
 
@@ -45,10 +46,10 @@ class ControlflowRegionStyles {
     extension KContainerRenderingExtensions
 
     @Inject
-    extension KColorExtensions
-
-    @Inject
     extension StateStyles
+    
+    @Inject
+    extension ColorStore
 
     /** This property is set on the expanded rendering and points to the container holding the declaration labels */
     public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
@@ -59,8 +60,8 @@ class ControlflowRegionStyles {
      */
     def KRectangle addRegionFigure(KNode node) {
         node.addRectangle() => [
-            background = "white".color;
-            foreground = "gray".color
+            background = REGION_BACKGROUND.color;
+            foreground = REGION_FOREGROND.color;
             lineWidth = 1;
             setSurroundingSpace(2, 0);
         ]
@@ -71,7 +72,7 @@ class ControlflowRegionStyles {
      */
     def KText addButton(KContainerRendering container, String text) {
         container.addText(text) => [
-            foreground = "dimGray".color;
+            foreground = REGION_BUTTON.color;
             fontSize = 10;
             val size = estimateTextSize;
             setPointPlacementData(LEFT, 3, 0, TOP, 1, 0, H_LEFT, V_TOP, 8, 8, size.width, size.height);

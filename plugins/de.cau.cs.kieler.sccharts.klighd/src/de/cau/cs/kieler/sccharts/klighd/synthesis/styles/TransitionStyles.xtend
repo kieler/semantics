@@ -16,23 +16,19 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis.styles
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KLabel
-import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.KDecoratorPlacementData
 import de.cau.cs.kieler.core.krendering.KPolyline
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.KSpline
 import de.cau.cs.kieler.core.krendering.LineStyle
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 
 /**
  * Styles for {@link Transition}.
@@ -62,14 +58,11 @@ class TransitionStyles {
     extension KPolylineExtensions
 
     @Inject
-    extension KColorExtensions
+    extension ColorStore
 
     private static val float TRANSITION_DASH_BLACK = 7;
     private static val float TRANSITION_DASH_WHITE = 3;
     private static val List<Float> TRANSITION_DASH_PATTERN = newArrayList(TRANSITION_DASH_BLACK, TRANSITION_DASH_WHITE);
-
-    private static val KRenderingFactory RENDERING_FACTORY = KRenderingFactory.eINSTANCE;
-    private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() => [it.red = 60; it.green = 60; it.blue = 60];
 
     /**
      * Adds a basic transition spline.
@@ -102,8 +95,8 @@ class TransitionStyles {
         edge.line.addEllipse() => [
             setDecoratorPlacementData(16, 16, -6, 1, false);
             lineWidth = 0;
-            foreground = DARKGRAY.copy;
-            background = DARKGRAY.copy;
+            foreground = TRANSITION_HISTORY.color;
+            background = TRANSITION_HISTORY.color;
             addPolyline => [
                 lineWidth = 2;
                 points += createKPosition(LEFT, 5, 0, TOP, 4, 0);
@@ -112,7 +105,7 @@ class TransitionStyles {
                 points += createKPosition(RIGHT, 5, 0, TOP, 0, 0.5f);
                 points += createKPosition(RIGHT, 5, 0, BOTTOM, 4, 0);
                 points += createKPosition(RIGHT, 5, 0, TOP, 4, 0);
-                foreground = "white".color;
+                foreground = TRANSITION_HISTORY_DECORATOR.color;
             ]
         ]
     }
@@ -128,8 +121,8 @@ class TransitionStyles {
         edge.line.addEllipse() => [
             setDecoratorPlacementData(16, 16, -6, 1, false);
             lineWidth = 0;
-            foreground = DARKGRAY.copy;
-            background = DARKGRAY.copy;
+            foreground = TRANSITION_HISTORY.color;
+            background = TRANSITION_HISTORY.color;
             addPolyline(1) => [
                 lineWidth = 2;
                 points += createKPosition(LEFT, 3, 0, TOP, 4, 0);
@@ -138,11 +131,11 @@ class TransitionStyles {
                 points += createKPosition(RIGHT, 7, 0, TOP, 0, 0.5f);
                 points += createKPosition(RIGHT, 7, 0, BOTTOM, 4, 0);
                 points += createKPosition(RIGHT, 7, 0, TOP, 4, 0);
-                foreground = "white".color;
+                foreground = TRANSITION_HISTORY_DECORATOR.color;
             ]
             addText("*") => [
                 setPointPlacementData(createKPosition(LEFT, 10, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
-                foreground = "white".color;
+                foreground = TRANSITION_HISTORY_DECORATOR.color;
             ]
         ]
     }
@@ -161,7 +154,7 @@ class TransitionStyles {
         }
         edge.line.addEllipse() => [
             lineWidth = 1;
-            background = "red".color; // PAPER_BW = gray
+            background = TRANSITION_DEFERRED_DECORATOR.color; // PAPER_BW = gray
             if (isAdditionalArrowHead) {
                 setDecoratorPlacementData(10, 10, -19, 1, false);
             } else {
@@ -185,7 +178,7 @@ class TransitionStyles {
         edge.line.addEllipse() => [
             setDecoratorPlacementData(10, 10, 4, 0, false);
             lineWidth = 1;
-            background = "red".color // PAPER_BW = gray
+            background = TRANSITION_ABORT_DECORATOR.color // PAPER_BW = gray
         ]
     }
     
@@ -197,7 +190,7 @@ class TransitionStyles {
         edge.line.drawTriangle() => [
             setDecoratorPlacementData(11, 11, 5, 0, true);
             lineWidth = 1;
-            background = "green".color // PAPER_BW = gray
+            background = TRANSITION_TERMINATION_DECORATOR.color // PAPER_BW = gray
         ]
     }
 
