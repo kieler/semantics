@@ -23,6 +23,12 @@ package de.cau.cs.kieler.sccharts.features;
  */
 public class SCChartsFeature {
     
+    public final static String EXTENDED_ID = "sccharts.extended";
+    public final static String EXTENDED_NAME = "Extended SCCharts";    
+
+    public final static String CORE_ID = "sccharts.core";
+    public final static String CORE_NAME = "Core SCCharts";    
+    
     public final static String REFERENCE_ID = "REFERENCE";
     public final static String REFERENCE_NAME = "Reference";
 

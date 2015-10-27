@@ -60,6 +60,7 @@ import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 /**
  * @author ssm
@@ -81,12 +82,20 @@ class CDTProcessor extends AbstractProductionTransformation {
     var Declaration globalDeclaration 
     
     override String getId() {
-        return "C2SCT";
+        return CTransformations::SCCHARTS_ID;
     }
     
-	override getProducedFeatureId() {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-	}
+    override getName() {
+        return CTransformations::SCCHARTS_ID
+    }
+    
+    override getProducedFeatureId() {
+        return SCChartsFeature::REFERENCE_ID
+    }
+
+    override getRequiredFeatureIds() {
+        return newHashSet(CFeatures::C_ID)
+    }
     
     
     override transform(EObject eObject, KielerCompilerContext context) {
@@ -185,12 +194,12 @@ class CDTProcessor extends AbstractProductionTransformation {
               ]  
         ]
         
-        val compound = function.children.filter(typeof(CASTCompoundStatement)).head
-        if (compound != null) {
-            compound.transformCompound(null, model) => [
-                initial = true
-            ]
-        }
+//TUE        val compound = function.children.filter(typeof(CASTCompoundStatement)).head
+//        if (compound != null) {
+//            compound.transformCompound(null, model) => [
+//                initial = true
+//            ]
+//        }
         
         if (!globalDeclaration.valuedObjects.empty) {
             model.declarations += globalDeclaration
@@ -206,7 +215,7 @@ class CDTProcessor extends AbstractProductionTransformation {
                 s.id = "_S" + trC
                 s.label = s.id
             
-                parentState.regions.filter(typeof(ControlflowRegion)).head.states += s
+//TUE                parentState.regions.filter(typeof(ControlflowRegion)).head.states += s
             ]
         } else {
             newState = state
@@ -293,7 +302,7 @@ class CDTProcessor extends AbstractProductionTransformation {
                     label = ""
                 ]
                 
-                state.parentRegion.states += s
+//TUE                state.parentRegion.states += s
             ]
             
             val falseState = scc.createState => [ s |
@@ -305,7 +314,7 @@ class CDTProcessor extends AbstractProductionTransformation {
                     label = ""
                 ]
                 
-                state.parentRegion.states += s
+//TUE                state.parentRegion.states += s
             ]            
 
             val connectorState = scc.createState => [ s |
@@ -318,7 +327,7 @@ class CDTProcessor extends AbstractProductionTransformation {
                     label = ""
                 ]
                 
-                state.parentRegion.states += s
+//TUE                state.parentRegion.states += s
             ]            
             
             val trueTrans = scc.createTransition => [

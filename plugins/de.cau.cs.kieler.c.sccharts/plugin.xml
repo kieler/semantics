@@ -35,20 +35,22 @@
       </menuContribution>
    </extension>
    <extension
-         point="org.eclipse.ui.commands">
-      <command
-            categoryId="de.cau.cs.kieler.c.commands.category"
-            id="de.cau.cs.kieler.c.sccharts.commands.TransformC "
-            name="TransformC">
-      </command>
+         point="de.cau.cs.kieler.kico.feature">
+      <featureClass
+            class="de.cau.cs.kieler.c.sccharts.CFeature">
+      </featureClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.ui.transformation">
+      <editor
+            editor="org.eclipse.cdt.ui.editor.CEditor"
+            features="C2">
+      </editor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
-      <transformationMethod
-            class="de.cau.cs.kieler.c.sccharts.CDTProcessor"
-            id="C2SCT"
-            method="transform"
-            name="C2SCT">
-      </transformationMethod>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.c.sccharts.CDTProcessor">
+      </productionTransformationClass>
    </extension>
 </plugin>

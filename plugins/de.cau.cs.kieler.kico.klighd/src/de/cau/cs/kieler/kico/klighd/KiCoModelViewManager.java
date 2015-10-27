@@ -43,6 +43,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.c.sccharts.CDTProcessor;
 import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
 import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
 import de.cau.cs.kieler.core.util.Pair;
@@ -367,9 +368,9 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
                 model = EcoreUtil.getRootContainer(resources.get(0).getContents().get(0));
             }
 // TODO: What to do with non ecore models?
-//        } else {
-//            CDTProcessor CDTProcessor = Guice.createInjector().getInstance(CDTProcessor.class);
-//            model = CDTProcessor.createFromEditor(editor);
+        } else {
+            CDTProcessor CDTProcessor = Guice.createInjector().getInstance(CDTProcessor.class);
+            model = CDTProcessor.createFromEditor(editor);
         }
         return model;
     }
