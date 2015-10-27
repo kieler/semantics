@@ -64,8 +64,8 @@ class StateStyles {
     public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.declarations", null);
 
-    val baseLineWidth = 1; // TODO PAPER BW +1
-
+    private var baseLineWidth = 1;
+    
     /**
      * Adds a connector figure.
      */
@@ -285,4 +285,11 @@ class StateStyles {
             setGridPlacementData().from(LEFT, 8, 0, TOP, -4, 0).to(RIGHT, 8, 0, BOTTOM, 6, 0);
         ]
     }
+    
+    /**
+     * Sets the base line width
+     */
+     def setBaseLineWidth(int width) {
+         baseLineWidth = width;
+     }
 }

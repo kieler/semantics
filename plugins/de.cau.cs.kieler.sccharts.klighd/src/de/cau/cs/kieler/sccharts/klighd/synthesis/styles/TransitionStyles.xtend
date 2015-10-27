@@ -154,7 +154,7 @@ class TransitionStyles {
         }
         edge.line.addEllipse() => [
             lineWidth = 1;
-            background = TRANSITION_DEFERRED_DECORATOR.color; // PAPER_BW = gray
+            background = TRANSITION_DEFERRED_DECORATOR.color;
             if (isAdditionalArrowHead) {
                 setDecoratorPlacementData(10, 10, -19, 1, false);
             } else {
@@ -178,7 +178,7 @@ class TransitionStyles {
         edge.line.addEllipse() => [
             setDecoratorPlacementData(10, 10, 4, 0, false);
             lineWidth = 1;
-            background = TRANSITION_ABORT_DECORATOR.color // PAPER_BW = gray
+            background = TRANSITION_ABORT_DECORATOR.color
         ]
     }
     
@@ -190,7 +190,7 @@ class TransitionStyles {
         edge.line.drawTriangle() => [
             setDecoratorPlacementData(11, 11, 5, 0, true);
             lineWidth = 1;
-            background = TRANSITION_TERMINATION_DECORATOR.color // PAPER_BW = gray
+            background = TRANSITION_TERMINATION_DECORATOR.color
         ]
     }
 

@@ -15,20 +15,21 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KColor
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
+import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore
+import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
+
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 
 /**
  * Applies paper color theme.
- * 
- * FIXME Unfinished
- * 
+ *  
  * @author als
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
@@ -39,25 +40,35 @@ class BlackWhiteModeHook extends SynthesisHook {
 
     @Inject
     extension KRenderingExtensions
+
+    @Inject
+    extension ColorStore
     
+    @Inject
+    extension StateStyles
+
     /** The related synthesis option */
     public static final SynthesisOption PAPER_BW = SynthesisOption.createCheckOption("Paper (Black/White)", false);
 
-    // TODO BW for background gradient
-    private static val KRenderingFactory RENDERING_FACTORY = KRenderingFactory.eINSTANCE;
-    private static val KColor SCCHARTSGRAY = RENDERING_FACTORY.createKColor() => [
-        it.red = 240;
-        it.green = 240;
-        it.blue = 240;
-    ];
-
-//  TODO Activate
-//    override getDisplayedSynthesisOptions() {
-//        return newLinkedList(PAPER_BW);
-//    }
+    override getDisplayedSynthesisOptions() {
+        return newLinkedList(PAPER_BW);
+    }
 
     override start(Scope scope, KNode root) {
-        // TODO change all colors to gray
+        if (PAPER_BW.booleanValue) {
+            configureColor(TRANSITION_DEFERRED_DECORATOR, Colors.GRAY);
+            configureColor(TRANSITION_ABORT_DECORATOR, Colors.GRAY);
+            configureColor(TRANSITION_TERMINATION_DECORATOR, Colors.GRAY);
+
+            configureColor(STATE_BACKGROUND_GRADIENT_1, Colors.GRAY_95);
+            configureColor(STATE_BACKGROUND_GRADIENT_2, Colors.GRAY_95);
+            configureColor(STATE_REFERENCED_BACKGROUND_GRADIENT_1, Colors.GRAY_97);
+            configureColor(STATE_REFERENCED_BACKGROUND_GRADIENT_2, Colors.GRAY_97);
+
+            configureColor(KEYWORD, Colors.DIM_GRAY);
+            
+            baseLineWidth = 2;
+        }
     }
 
     override postState(State state, KNode node) {

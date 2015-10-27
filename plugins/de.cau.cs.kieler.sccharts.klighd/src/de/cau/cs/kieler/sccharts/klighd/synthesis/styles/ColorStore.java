@@ -31,7 +31,7 @@ import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
 @ViewSynthesisShared
 public class ColorStore {
 
-    enum Color {
+    public enum Color {
         STATE_CONNECTOR(Colors.BLACK),
         STATE_FOREGROND(Colors.GRAY),
         STATE_INITIAL_FOREGROND(Colors.BLACK),
@@ -47,7 +47,7 @@ public class ColorStore {
         TRANSITION_HISTORY_DECORATOR(Colors.WHITE),
         TRANSITION_DEFERRED_DECORATOR(Colors.RED),
         TRANSITION_ABORT_DECORATOR(Colors.RED),
-        TRANSITION_TERMINATION_DECORATOR(Colors.RED),
+        TRANSITION_TERMINATION_DECORATOR(Colors.GREEN),
         
         REGION_FOREGROND(Colors.GRAY),
         REGION_BACKGROUND(Colors.WHITE),
