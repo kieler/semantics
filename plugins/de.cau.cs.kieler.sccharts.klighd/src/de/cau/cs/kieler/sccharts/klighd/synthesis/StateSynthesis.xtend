@@ -28,6 +28,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -88,6 +90,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
         if (state.isInitial) {
             node.setInitialStyle
+            if (USE_KLAY.booleanValue) {
+                node.setLayoutOption(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST);
+            }
         }
         if (state.isFinal) {
             node.setFinalStyle
