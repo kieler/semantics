@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Project Management for Esterel
+Bundle-SymbolicName: de.cau.cs.kieler.esterel.prom;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.esterel.prom.EsterelPromPlugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.ui.ide;bundle-version="3.10.2",
+ org.eclipse.debug.ui;bundle-version="3.10.2",
+ org.eclipse.xtend.lib,
+ org.eclipse.xtext;bundle-version="2.8.2",
+ com.google.guava;bundle-version="15.0.0",
+ de.cau.cs.kieler.sccharts.text;bundle-version="0.1.1",
+ de.cau.cs.kieler.prom,
+ de.cau.cs.kieler.esterel;bundle-version="0.3.3"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
