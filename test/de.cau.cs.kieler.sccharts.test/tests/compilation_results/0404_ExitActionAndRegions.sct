@@ -23,7 +23,7 @@ scchart ExitActionAndRegions {
 
       final state A1;
     }
-    --> _Done immediate / O = false;
+    >-> _Done immediate / O = false;
 
     final state _Done;
   }

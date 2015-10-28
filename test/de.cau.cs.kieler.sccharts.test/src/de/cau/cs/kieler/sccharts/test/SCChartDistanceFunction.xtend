@@ -20,22 +20,45 @@ import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /**
+ * EMFCompare object to calculate the distance of EObjects in two SCCharts.
+ * If the distance of two objects from model A and model B is small enough
+ * then the objects will be taken as the same. 
+ * 
  * @author aas
  */
 public class SCChartDistanceFunction extends EditionDistance {
+    
+    /**
+     * {@inheritDoc}
+     */
     override double distance(Comparison inProgress, EObject a, EObject b) {
-
+        var distance = 0;
+        
+        // Compare Transitions
         if (a instanceof Transition && b instanceof Transition) {
             val _a = a as Transition
             val _b = b as Transition
-
-            if (haveMatchingContainers(inProgress, a, b)) {
-                return Math.abs(_a.priority - _b.priority)
+            
+            // Transitions can only be taken as equal if they are part of matching states
+            // and have the same target. 
+            if (haveMatchingContainers(inProgress, a, b) && _a.targetState.id == _b.targetState.id) {
+                
+                // Another priority indicates strongly that the transisions are not the same
+                distance += Math.abs(_a.priority - _b.priority)*2
+                
+                // Differents in differed and immediate indicates different transitions 
+                if(_a.isDeferred != _b.isDeferred)
+                    distance += 1
+                if(_a.isImmediate != _b.isImmediate)
+                    distance += 1
+                
+                return distance
             } else {
                 return Double.MAX_VALUE
             }
         }
 
+        // Compare Assignments
         if (a instanceof Assignment && b instanceof Assignment ||
             a instanceof ValuedObjectReference && b instanceof ValuedObjectReference) {
             if (haveMatchingContainers(inProgress, a, b)) {

@@ -53,6 +53,17 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 
+
+// TODO: Remove debug output from KiCo (transformation chain, required time for compilation) -> silent mode?
+// TODO: (Bug KISEMA-995) KiCo needs to be deterministic. Otherwise some tests will fail because an alternative compilation result is compared with a prototype.
+
+// TODO: Models that do not compile:
+// (Bug KISEMA-1035, KISEMA-1037) 0802_ValuedSignals, 0803_ValuedSignalCombination, 1001_CountDelay
+// (Bug KISEMA-1034) 1501_ShallowHistoryTransition, 1502_DeepHistoryTransition,
+// (Bug KISEMA-1033) 1101_Suspension, 1301_WeakSuspension
+// (Bug KISEMA-1032) 0901_PreOperator
+// (Bug KISEMA-1031) 1401_StaticVariables, 0402_ExitActionAndTrigger
+
 /** 
  * Testing class that performs two tests -- both for every SCT model.
  * The first test compiles specific transformation features and compares the resulting output with prototypes for the transformation.
@@ -63,30 +74,52 @@ import org.junit.runner.RunWith
 @RunWith(typeof(ModelCollectionTestRunner))
 @BundleId("de.cau.cs.kieler.sccharts.test")
 @ModelPath("tests/transformations/")
-//@ModelFilter("0404_ExitActionAndRegions.sct")
-//@ModelFilter("1401_StaticVariables.sct")
-@ModelFilter("0702_ComplexFinalSuperstate.sct")
+//@ModelFilter("0402_ExitActionAndTrigger.sct")
 class TransformationTests {
-    
+
+    /** 
+     * The name of the annotation in SCT files,
+     * which defines the transformation that should be used to test the model.
+     */
     static val TRANSFORMATION_ANNOTATION_NAME = "Transformation"
-    
+
+    /**
+     * Project relative path to the folder in which the prototypes for test models are stored.
+     * The models in this directory are assumed to be a correct transformation of the input model.
+     */
     static val TARGET_FOLDER = "tests/targets/"
+
+    /**
+     * Project relative path the the directory in which the compiled output of test models will be saved.
+     * The models are saved to this folder only to have a human readable form of the compilation result.  
+     */
     static val COMPILATION_RESULT_FOLDER = "tests/compilation_results/"
-    
+
+    /**
+     * The EMFCompare object that can compare to SCCharts.  
+     */
     static val comparator = createEMFComparator()
 
+
+
+    /*******************************************************************************************
+     * Transformation test (Extended SCCharts)
+     */
+     
     /** 
      * This test method uses specific transformation features to compile a model.
      * The compilation transformation that is used is fetched from an annotation directly in the model file. 
      * The resulting output model is compared to a prototype for that transformation to check for correctness.
      * To identify a prototype it must have the same name as the input model and be saved in the target folder.
      * 
-     * @param modelThe EObject injected by the JUnit runner
-     * @param modelPathThe model file path injected by the JUnit runner
+     * @param model The EObject injected by the JUnit runner
+     * @param modelPath The model file path injected by the JUnit runner
      * @author aas
      */
     @Test
     def public void transformationResultAsExpected(EObject model, String modelPath) {
+        val isDebugLogging = false
+
         // Normalize path
         val modelPathNoEndSeparator = FilenameUtils.getFullPathNoEndSeparator(modelPath)
         val modelFile = FilenameUtils.getName(modelPathNoEndSeparator)
@@ -95,23 +128,25 @@ class TransformationTests {
 
             // Get required transformation from annotation in model
             var String targetTransformationName = null
-            for(ann : model.annotations) {
-                if(ann.name == TRANSFORMATION_ANNOTATION_NAME){
-                    switch(ann) {
-                        StringAnnotation : targetTransformationName = ann.value
-                        default : println(ann)
+            for (ann : model.annotations) {
+                if (ann.name == TRANSFORMATION_ANNOTATION_NAME) {
+                    switch (ann) {
+                        StringAnnotation: targetTransformationName = ann.value
+                        default: println(ann)
                     }
                 }
             }
-            if(targetTransformationName == null){
+            if (targetTransformationName == null) {
                 throw new IllegalArgumentException("Target transformation was not found in model file " + modelFile)
             }
-            
+
             // Compile via KiCo
             // Per default KiCo tries to compile for visualization such that we disable this manually.
-            // Without the explicit usage of *T_INITIALIZATION there is the error message
+           
+            // TODO: (Bug KISEMA-1036) Without the explicit usage of *T_INITIALIZATION there is the error message
             // '!MESSAGE Error building a graph: Feature 'INITIALIZATION' is selected but no (enabled) transformation handling this feature is found. Also no disabled transformation is found as a fallback. This is a serious error. Building compile graph aborted. Solutions: 1. Do not select this feature or 2. do not disabled transformations hat can handle this feature or 3. register another transformation that can handle this feature.' 
-            val context = new KielerCompilerContext("!T_SIMULATIONVISUALIZATION, *T_INITIALIZATION, T_"+targetTransformationName, model)
+            val context = new KielerCompilerContext(
+                "!T_SIMULATIONVISUALIZATION, T_" + targetTransformationName, model)
             context.setAdvancedSelect(true)
 
             // Run KiCo
@@ -123,10 +158,6 @@ class TransformationTests {
 
             // Serialize model to human readable text
             val resourceSet = new ResourceSetImpl()
-//            val injector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
-//            val resourceSet = injector.getInstance(typeof(XtextResourceSet));
-//            resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-            
             val targetURI = URI.createURI(COMPILATION_RESULT_FOLDER + modelFile)
             var resource = resourceSet.createResource(targetURI)
             resource.getContents().add(resultModel)
@@ -141,18 +172,20 @@ class TransformationTests {
             val targetURL = "platform:/plugin/de.cau.cs.kieler.sccharts.test/" + TARGET_FOLDER + modelFile
             resource = resourceSet.getResource(URI.createURI(targetURL), true)
             val targetModel = resource.getContents().get(0) as EObject
-            
+
             // Compare the two models
             // If differences occur they are said to be in the left model, which is the compiled
             // result.
             val scope = new DefaultComparisonScope(resultModel, targetModel, null)
             val comparison = comparator.compare(scope)
-            
+
             // Print out all matches
-            printMatches(comparison.matches, 0, true)
-            
+            if (isDebugLogging) {
+                printMatches(comparison.matches, 0, true)
+            }
+
             val differences = comparison.getDifferences()
-            
+
             // Check results
             val int differencesSize = differences.size()
             if (differencesSize > 0) {
@@ -166,23 +199,20 @@ class TransformationTests {
         }
     }
 
-    def private printMatches(EList<Match> matches, int level, boolean recursive) {
-        for(m : matches) {
-            println(Strings.repeat("\t",level) + m)
-            
-            if(recursive)
-                printMatches(m.submatches, level+1, recursive)
-        }
-    }
 
+
+    /*******************************************************************************************
+     * Code generation test (compile to Java)
+     */
+     
     /** 
      * Compiles SCT files to Java code and asserts that there are no errors during compilation.
-     * @param modelThe EObject injected by the JUnit runner
-     * @param modelPathThe model file path injected by the JUnit runner
+     * 
+     * @param model The EObject injected by the JUnit runner
+     * @param modelPath The model file path injected by the JUnit runner
      * @author aas
      */
-    // Ignore this test for the moment
-    // @Test
+     @Test
     def public void codeGenerationHasNoErrors(EObject model, String modelPath) {
         // Normalize path
         val modelPathNoEndSeparator = FilenameUtils.getFullPathNoEndSeparator(modelPath)
@@ -194,20 +224,29 @@ class TransformationTests {
             context.setAdvancedSelect(true)
             val result = KielerCompiler.compile(context)
 
-            // Check result
+            // Check that no error occured
             val errors = result.getAllErrors()
             if (!Strings.isNullOrEmpty(errors)) {
                 System.err.println("Compilation of file " + modelFile + " had errors: " + errors)
+                Assert.fail()
             }
-
-            Assert.assertTrue(!Strings.isNullOrEmpty(result.getString()))
+            
+            // Check that there actually is a compilation result
+            Assert.assertFalse(Strings.isNullOrEmpty(result.getString()))
         } else {
             throw new IllegalArgumentException("Model could not be cast to an SCChart.")
         }
     }
 
+
+
+    /*******************************************************************************************
+     * EMFCompare setup
+     */
+
     /** 
      * Creates an EMFCompare object to compare EObjects from SCT files.
+     * 
      * @return the object used to find differences in two SCT EObjects via EMF Compare.
      * @author aas
      */
@@ -215,20 +254,27 @@ class TransformationTests {
         // Define ignored references and attributes
         
         // Annotations are references, which are irrelevant for the semantics of SCCharts
-        val ignoredReferences = Lists.newArrayList(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS)
-        
+        // (State.incomingTransition can be ignored because it is already noted as change in State.outgoingTransition)
+        val ignoredReferences = Lists.newArrayList(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
+            SCChartsPackage.Literals.STATE__INCOMING_TRANSITIONS)
+
         // There are SCT files, which are identical in their serialized form
         // but show differences in the attributes that are named here.
         // Thus we just ignore them in the diff process.
-        val ignoredAttributes = Lists.newArrayList(SCChartsPackage.Literals.TRANSITION__PRIORITY, SCChartsPackage.Literals.SCOPE__LABEL)
-        
+        val ignoredAttributes = Lists.newArrayList(SCChartsPackage.Literals.TRANSITION__PRIORITY,
+            SCChartsPackage.Literals.SCOPE__LABEL)
+
         // Create EMF Compare matching objects
         val comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory())
         val matcher = new ProximityEObjectMatcher(new SCChartDistanceFunction());
         val matchEngineFactory = new MatchEngineFactoryImpl(matcher, comparisonFactory)
-        matchEngineFactory.setRanking(20) // Actually use this factory
+        matchEngineFactory.setRanking(20)
+        
+        // Actually use this factory
         val matchEngineRegistry = EMFCompareRCPPlugin.getDefault().getMatchEngineFactoryRegistry()
-        matchEngineRegistry.add(matchEngineFactory) // Create custom diff processor to ignore attributes
+        matchEngineRegistry.add(matchEngineFactory)
+        
+        // Create custom diff processor to ignore attributes
         val diffProcessor = new DiffBuilder() {
             override void attributeChange(Match match, EAttribute attribute, Object value, DifferenceKind kind,
                 DifferenceSource source) {
@@ -238,7 +284,7 @@ class TransformationTests {
 
             }
         }
-        
+
         // Create custom diff engine to ignore references
         val diffEngine = new DefaultDiffEngine(diffProcessor) {
             override protected FeatureFilter createFeatureFilter() {
@@ -249,23 +295,30 @@ class TransformationTests {
 
                     override boolean checkForOrderingChanges(EStructuralFeature feature) {
                         // Elements in SCCharts are not ordered.
-                        // The order of transformations is determined by their priority.
+                        // (The order of transformations is determined by their priority.)
                         return false
                     }
                 }
             }
         }
-        
+
         // Create comparator
         val comparator = EMFCompare.builder().setDiffEngine(diffEngine).
             setMatchEngineFactoryRegistry(matchEngineRegistry).build()
         return comparator
     }
 
+
+
+     /*******************************************************************************************
+     * Helper functions
+     */
+     
     /** 
-     * Prints differences from an EMF compare operation to the given output stream. Additionally
+     * Prints differences from an EMF compare operation to the given output stream. Additionally,
      * text can be provided to summarize the differences. The differences are indented whereas the
      * summary text is not.
+     * 
      * @param differences
      * @param stream
      * @param text
@@ -277,6 +330,24 @@ class TransformationTests {
 
         for (Diff d : differences) {
             stream.println(d)
+        }
+    }
+    
+    /** 
+     * Iterates over matches and submatches recursively and prints them to stdout.
+     * Thereby the indentation is increased in each recursion step, giving a tree like output.
+     * 
+     * @param differences
+     * @param stream
+     * @param text
+     * @author aas
+     */
+    def private void printMatches(EList<Match> matches, int level, boolean recursive) {
+        for (m : matches) {
+            println(Strings.repeat("  ", level) + m)
+
+            if (recursive)
+                printMatches(m.submatches, level + 1, recursive)
         }
     }
 }
