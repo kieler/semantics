@@ -162,7 +162,7 @@ class CDTProcessor extends AbstractProductionTransformation {
             
             root.declarations += returnDeclaration
             
-            scc.createRegion => [
+            scc.createControlflowRegion => [
                 id = "_main"
                 label = id
                 root.regions += it
@@ -194,12 +194,12 @@ class CDTProcessor extends AbstractProductionTransformation {
               ]  
         ]
         
-//TUE        val compound = function.children.filter(typeof(CASTCompoundStatement)).head
-//        if (compound != null) {
-//            compound.transformCompound(null, model) => [
-//                initial = true
-//            ]
-//        }
+        val compound = function.children.filter(typeof(CASTCompoundStatement)).head
+        if (compound != null) {
+            compound.transformCompound(null, model) => [
+                initial = true
+            ]
+        }
         
         if (!globalDeclaration.valuedObjects.empty) {
             model.declarations += globalDeclaration
@@ -215,7 +215,7 @@ class CDTProcessor extends AbstractProductionTransformation {
                 s.id = "_S" + trC
                 s.label = s.id
             
-//TUE                parentState.regions.filter(typeof(ControlflowRegion)).head.states += s
+                parentState.regions.filter(typeof(ControlflowRegion)).head.states += s
             ]
         } else {
             newState = state
@@ -231,7 +231,7 @@ class CDTProcessor extends AbstractProductionTransformation {
 //     org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer@60243ef3
 //      0        
         
-        stateF.regions += scc.createRegion => [
+        stateF.regions += scc.createControlflowRegion => [
             id = "_r" + trC
         ]
         stateF.regions += scc.createDataflowRegion => [
@@ -297,24 +297,24 @@ class CDTProcessor extends AbstractProductionTransformation {
                 s.id = state.id + trC + "T"
                 s.label = s.id
             
-                s.regions += scc.createRegion => [
+                s.regions += scc.createControlflowRegion => [
                     id = s.id + "_r"
                     label = ""
                 ]
                 
-//TUE                state.parentRegion.states += s
+                state.parentRegion.states += s
             ]
             
             val falseState = scc.createState => [ s |
                 s.id = state.id + trC + "F"
                 s.label = s.id
             
-                s.regions += scc.createRegion => [
+                s.regions += scc.createControlflowRegion => [
                     id = s.id + "_r"
                     label = ""
                 ]
                 
-//TUE                state.parentRegion.states += s
+                state.parentRegion.states += s
             ]            
 
             val connectorState = scc.createState => [ s |
@@ -322,12 +322,12 @@ class CDTProcessor extends AbstractProductionTransformation {
                 s.label = s.id
                 s.setTypeConnector
             
-                s.regions += scc.createRegion => [
+                s.regions += scc.createControlflowRegion => [
                     id = s.id + "_r"
                     label = ""
                 ]
                 
-//TUE                state.parentRegion.states += s
+                state.parentRegion.states += s
             ]            
             
             val trueTrans = scc.createTransition => [
