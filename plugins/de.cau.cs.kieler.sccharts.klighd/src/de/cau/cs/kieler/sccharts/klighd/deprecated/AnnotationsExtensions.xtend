@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd;
+package de.cau.cs.kieler.sccharts.klighd.deprecated;
 
 import de.cau.cs.kieler.core.annotations.Annotatable
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage
@@ -56,7 +56,7 @@ class AnnotationsExtensions {
                     case annotationsPackage.floatAnnotation:
                      (it as FloatAnnotation).value
                     case annotationsPackage.stringAnnotation:
-                     data.parseValue((it as StringAnnotation).values.head)
+                     data.parseValue((it as StringAnnotation).value)
                     default:
                      null
                 });
