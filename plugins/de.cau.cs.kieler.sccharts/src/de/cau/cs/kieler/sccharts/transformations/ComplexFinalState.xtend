@@ -94,10 +94,18 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
         //Find all possible complex final states
         val globalFinalStates = targetRootState.getAllStates.filter(e|e.isFinal)
 
+
+        // Code before: Entry actions within final states should be handled correctly by the entry action transformation
+        //         val globalComplexFinalStates = globalFinalStates.filter(
+        //            e|
+        //                ((!e.outgoingTransitions.nullOrEmpty && e.allContainedStates.size > 0)) || e.entryActions.size > 0 ||
+        //                    e.duringActions.size > 0 || e.exitActions.size > 0).toList
+
         val globalComplexFinalStates = globalFinalStates.filter(
             e|
-                ((!e.outgoingTransitions.nullOrEmpty && e.allContainedStates.size > 0)) || e.entryActions.size > 0 ||
+                ((!e.outgoingTransitions.nullOrEmpty && e.allContainedStates.size > 0))  ||
                     e.duringActions.size > 0 || e.exitActions.size > 0).toList
+
 
         // Traverse all states containing complex final states
         for (targetState : globalComplexFinalStates.map[it.parentRegion.parentState].toList) {
