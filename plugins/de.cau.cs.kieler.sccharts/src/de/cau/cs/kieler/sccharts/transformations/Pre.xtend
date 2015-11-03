@@ -86,7 +86,7 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach [ targetState |
+        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
             targetState.transformPre(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
