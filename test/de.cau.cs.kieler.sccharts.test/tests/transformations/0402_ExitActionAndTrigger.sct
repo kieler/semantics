@@ -4,7 +4,7 @@ scchart ExitActionAndTrigger {
     output bool O;
 	
     initial state A{
-      exit I / O = false;
+      exit !!I / O = false;
     }
     >-> F with I;
     
