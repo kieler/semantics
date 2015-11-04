@@ -1,18 +1,18 @@
 
 @Transformation STATIC
 scchart StaticVariables {
-  int __A_x = 100;
-  int __B_x = -100;
-
+  int StaticVariables_null_A___x = 100;
+  int StaticVariables_null_B___x = -100;
+ 
   initial state A {
 
     initial state A0;
   }
-  --> B / __A_x = __A_x + 1;
+  --> B / StaticVariables_null_A___x = StaticVariables_null_A___x + 1;
 
   state B {
 
     initial state B0;
   }
-  --> A / __B_x = __B_x - 1;
+  --> A / StaticVariables_null_B___x = StaticVariables_null_B___x - 1;
 }

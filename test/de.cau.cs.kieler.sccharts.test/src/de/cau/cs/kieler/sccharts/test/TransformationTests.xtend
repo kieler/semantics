@@ -59,7 +59,7 @@ import org.junit.runner.RunWith
 
 // TODO: Models that do not compile:
 // (Bug KISEMA-1033) 1101_Suspension, 1301_WeakSuspension
-// (Bug KISEMA-1031) 1401_StaticVariables
+// (Bug KISEMA-1031) 402_ExitActionAndTrigger
 
 /** 
  * Testing class that performs two tests -- both for every SCT model.
