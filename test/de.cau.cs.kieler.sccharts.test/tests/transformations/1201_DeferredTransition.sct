@@ -1,5 +1,5 @@
-@Transformation DEFFERED
-scchart DefferedTransition {
+@Transformation DEFERRED
+scchart DeferredTransition {
   input int x;
 
   initial state A
