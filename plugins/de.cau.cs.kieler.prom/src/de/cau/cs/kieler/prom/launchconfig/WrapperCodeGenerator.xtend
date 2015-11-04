@@ -254,11 +254,13 @@ class WrapperCodeGenerator {
         }
 
         // Keep track of the annotations that were already seen before in this collection
-        val doneAnnotations = new HashSet<WrapperCodeAnnotationData>()
+        val doneAnnotations = new ArrayList<WrapperCodeAnnotationData>()
         var boolean isAnnotationDoneAlready
         
-        // Add macro calls for annotations to the different phases 
+        // Add macro calls for annotations to the different phases
+        var WrapperCodeAnnotationData prev = null; 
         for (data : annotationDatas) {
+            
             isAnnotationDoneAlready = true
             if (!doneAnnotations.contains(data)) {
                 doneAnnotations.add(data)
@@ -276,6 +278,7 @@ class WrapperCodeGenerator {
                     }
                 }
             }
+            prev = data;
         }
 
         // Send FreeMarker the text to replace the placeholder of each phase

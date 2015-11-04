@@ -1,8 +1,10 @@
 <#-- Clock -->
 <#-- As input variable, sets a boolean variable to true after the given time (in milliseconds) has passed.
 
+     Note that the ResetClock macro directly depends on this implementation. 
+
      Example for SCCharts:
-         @Clock 1000 
+         @Wrapper Clock, "1000"
          input bool clock; -->
 <#macro Clock millis>
     <@init>
@@ -24,11 +26,13 @@
 
      If autoFalse is set to 'true', the reset variable is set to false automatically. 
 
+     Note that ResetClock directly depends on the implementation of the Clock annotation.
+
      Example for SCCharts:
-         @Clock 5000 
+         @Wrapper Clock, "5000" 
          input bool clockVariable;
          
-         @ResetClock clockVariable;
+         @Wrapper ResetClock, clockVariable;
          output bool resetClock; -->
 <#macro ResetClock clockVariable autoFalse = 'true'>
     <@output>
@@ -46,7 +50,7 @@
 <#-- As input variable, reads the value of the light sensor, that is attached to the given port.
 
      Example for SCCharts:
-         @LightSensor S3
+         @Wrapper LightSensor, S3
          input int light; -->
  <#macro LightSensor port getPerCentValue='true'>
     <@init>
@@ -66,7 +70,7 @@
 <#-- As input variable, reads the touch sensor, that is attached to the given port.
 
      Example for SCCharts:
-         @TouchSensor S3 
+         @Wrapper TouchSensor, S3 
          input bool isTouchSensorPressed; -->
 <#macro TouchSensor port>
     <@init>
@@ -84,7 +88,7 @@
      As output variable, turns the lamp on (true) or off (false).
      
      Example for SCCharts:
-         @Floodlight S3 
+         @Wrapper Floodlight, S3 
          output bool floodlight; -->
 <#macro Floodlight port>
     <@init>
@@ -104,7 +108,7 @@
 <#-- As input variable, sets a boolean to true, iff the motor on the given port is moving.
      
      Example for SCCharts:
-         @MotorIsMoving A 
+         @Wrapper MotorIsMoving, A
          input bool isMotorMoving; -->
 <#macro MotorIsMoving port>
     <@input>
@@ -117,9 +121,9 @@
 <#-- As input variable, reads the speed of the motor, that is attached to the given port.
      As output variable, sets the speed of the motor.
      Example for SCCharts:
-         @MotorSpeed A
-         @MotorSpeed B
-         input bool speed; -->
+         @Wrapper MotorSpeed, A
+         @Wrapper MotorSpeed, B
+         output int speed; -->
 <#macro MotorSpeed port>
     <@input>
         // Motor ${port}
@@ -146,8 +150,7 @@
             the value of the variable should be reset back to zero. 
      
      Example for SCCharts:
-         @MotorSpeed A
-         @MotorSpeed B
+         @Wrapper MotorRotation, A
          output int rotateToDegrees; -->
 <#macro MotorRotation port>
     <@input>
@@ -166,11 +169,11 @@
         blocks the running thread on the Mindstorms robot for the given time (in milliseconds).
      
      Example for SCCharts:
-         @Sleep 500
-         output bool blockThread; -->
-<#macro Sleep millis>
+         @Wrapper Sleep
+         output int sleepTime; -->
+<#macro Sleep>
     <@output>
-        // Sleep ${millis}
+        // Sleep
         if(scchart.${varname} > 0) {
             try {
                 Thread.sleep(scchart.${varname});

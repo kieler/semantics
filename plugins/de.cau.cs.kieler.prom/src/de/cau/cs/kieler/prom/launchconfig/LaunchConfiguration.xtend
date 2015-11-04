@@ -277,7 +277,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
             // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
             // TODO: (Bug KISEMA-1036) still requires *T_INITIALIZATION
-            val context = new KielerCompilerContext("!T_ESTERELSIMULATIONVISUALIZATION, !SIMULATIONVISUALIZATION, *T_INITIALIZATION, T_" + targetLanguage, model)
+            val context = new KielerCompilerContext("!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, *T_INITIALIZATION, T_" + targetLanguage, model)
             context.inplace = false
             context.advancedSelect = true
 

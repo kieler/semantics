@@ -81,7 +81,7 @@ class WrapperCodeAnnotationData {
     override boolean equals(Object obj){
         if(obj instanceof WrapperCodeAnnotationData){
             val o = obj as WrapperCodeAnnotationData
-            return o.name == name && o.arguments.equals(arguments)
+            return o.name.equals(name) && o.arguments.equals(arguments)
         }
         return false
     }
