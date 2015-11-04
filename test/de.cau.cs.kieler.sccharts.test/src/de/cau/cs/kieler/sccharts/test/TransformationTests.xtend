@@ -58,9 +58,8 @@ import org.junit.runner.RunWith
 // TODO: (Bug KISEMA-995) KiCo needs to be deterministic. Otherwise some tests will fail because an alternative compilation result is compared with a prototype.
 
 // TODO: Models that do not compile:
-// (Bug KISEMA-1035, KISEMA-1037) 0802_ValuedSignals, 0803_ValuedSignalCombination
 // (Bug KISEMA-1033) 1101_Suspension, 1301_WeakSuspension
-// (Bug KISEMA-1031) 1401_StaticVariables, 0402_ExitActionAndTrigger
+// (Bug KISEMA-1031) 1401_StaticVariables
 
 /** 
  * Testing class that performs two tests -- both for every SCT model.
