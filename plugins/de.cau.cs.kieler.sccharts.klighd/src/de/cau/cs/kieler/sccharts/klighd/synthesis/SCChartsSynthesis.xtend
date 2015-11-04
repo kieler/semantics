@@ -19,7 +19,6 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -27,8 +26,6 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks
-import de.cau.cs.kieler.sccharts.klighd.synthesis.util.SynthesisAnnotations
-import java.util.HashMap
 import java.util.LinkedHashSet
 import java.util.List
 import java.util.logging.Logger
