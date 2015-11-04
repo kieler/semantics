@@ -87,15 +87,24 @@ class Initialization extends AbstractExpansionTransformation implements Traceabl
     // Traverse all states and transform macro states that have actions to transform
     def void transformInitialization(Scope scope, State targetRootState) {
         val valuedObjects = scope.valuedObjects.filter[initialValue != null]
+        var addedIndex = 0; // This helps to preserve the initial order
 
         if (!valuedObjects.nullOrEmpty) {
             for (valuedObject : valuedObjects) {
                 setDefaultTrace(valuedObject, valuedObject.declaration)
+                
+                // Initialization combined with existing entry action: The order in which new, 
+                // additional initialization-entry actions are added matters for the semantics.
+                // Initializations before part of the declaration. Entry actions afterwards. 
+                // So the initialization-entry-actions should be ordered also before the other
+                // entry actions to keep the original order. 
                 if (scope instanceof State) {
-                    val entryAction = scope.createEntryAction
+                    val entryAction = scope.createEntryAction(addedIndex)
+                    addedIndex = addedIndex + 1
                     entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
                 } else {
-                    val entryAction = (scope.eContainer as State).createEntryAction
+                    val entryAction = (scope.eContainer as State).createEntryAction(addedIndex)
+                    addedIndex = addedIndex + 1
                     entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
                 }
                 valuedObject.setInitialValue(null)

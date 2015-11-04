@@ -808,7 +808,7 @@ class SCChartsExtension {
     }
 
     // Create a entry action for a state.
-    def EntryAction createEntryAction(State state) {
+    def EntryAction createEntryAction(State state) { 
         val action = SCChartsFactory::eINSTANCE.createEntryAction
         state.localActions.add(action);
         if (state.regions.isNullOrEmpty) { // Create implicit region if necessary
@@ -816,6 +816,16 @@ class SCChartsExtension {
         }
         action
     }
+    
+    // Create a entry action for a state at a certain index.
+    def EntryAction createEntryAction(State state, int index) {
+        val action = SCChartsFactory::eINSTANCE.createEntryAction
+        state.localActions.add(index, action);
+        if (state.regions.isNullOrEmpty) { // Create implicit region if necessary
+            state.createControlflowRegion("");
+        }
+        action
+    }    
 
     // Create an immediate entry action for a state.
     def EntryAction createImmediateEntryAction(State state) {
@@ -823,6 +833,13 @@ class SCChartsExtension {
         action.setImmediate(true);
         action
     }
+    
+    // Create an immediate entry action for a state at a certain index.
+    def EntryAction createImmediateEntryAction(State state, int index) {
+        val action = state.createEntryAction(index)
+        action.setImmediate(true);
+        action
+    }    
 
     // Create a exit action for a state.
     def ExitAction createExitAction(State state) {
