@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>Namespaces - FreeMarker Manual</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker Manual">
+<meta property="og:title" content="Namespaces">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/dgui_misc_namespace.html">
+<link rel="canoical" href="http://freemarker.org/docs/dgui_misc_namespace.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="http://schema.org/Article">
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigationHeader">Manual</a><div class="navigationHeader"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb"><li class="step-0" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="toc.html"><span itemprop="title">FreeMarker Manual</span></a></li><li class="step-1" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="dgui.html"><span itemprop="title">Template Author&#39;s Guide</span></a></li><li class="step-2" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="dgui_misc.html"><span itemprop="title">Miscellaneous</span></a></li><li class="step-3" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="dgui_misc_namespace.html"><span itemprop="title">Namespaces</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker Manual","Template Author\'s Guide","Miscellaneous","Namespaces"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="dgui_misc_var.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_misc_whitespace.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="dgui_misc_namespace" itemprop="name">Namespaces</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_22" data-menu-target="autoid_22">Creating a library</a></li><li><a class="page-menu-link" href="#autoid_23" data-menu-target="autoid_23">Writing the variables of imported namespaces</a></li><li><a class="page-menu-link" href="#autoid_24" data-menu-target="autoid_24">Namespaces and data-model</a></li><li><a class="page-menu-link" href="#autoid_25" data-menu-target="autoid_25">The life-cycle of namespaces</a></li><li><a class="page-menu-link" href="#autoid_26" data-menu-target="autoid_26">Writing libraries for other people</a></li></ul> </div><p>When you run FTL templates, you have a (possibly empty) set of
+        variables that you have created with <code class="inline-code">assign</code> and
+        <code class="inline-code">macro</code> directives, as can be seen from the <a href="dgui_misc_var.html">previous chapter</a>. A set of variables
+        like this is called a <strong>namespace</strong>. In
+        simple cases you use only one namespace, the so-called <strong>main namespace</strong>. You don&#39;t realize this, since
+        normally you use only this namespace.</p><p>But if you want to build reusable collection of macros,
+        functions and other variables -- usually referred as <strong>library</strong> by lingo -- the usage of multiple
+        namespaces becomes inevitable. Just consider if you have a big
+        collection of macros, that you use in several projects, or even you
+        want to share it with other people. It becomes impossible to be sure
+        that the library does not have a macro (or other variable) with the
+        same name as the name of a variable in the data-model, or with the
+        same name as a the name of a variable in another library used in the
+        template. In general, variables can clobber each other because of the
+        name clashes. So you should use a separate namespace for the variables
+        of each library.</p>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_22">Creating a library</h2>
+
+
+          <p>Let&#39;s create a simple library. Assume you commonly need the
+          variables <code class="inline-code">copyright</code> and <code class="inline-code">mail</code>
+          (before you ask, macros <em>are</em> variables):</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro copyright date&gt;
+  &lt;p&gt;Copyright (C) ${date} Julia Smith. All rights reserved.&lt;/p&gt;
+&lt;/#macro&gt;
+
+&lt;#assign mail = &quot;jsmith@acme.com&quot;&gt;</pre></div>
+
+          <p>Store the above in the file <code class="inline-code">lib/my_test.ftl</code>
+          (in the directory where you store the templates). Assume you want to
+          use this in <code class="inline-code">aWebPage.ftl</code>. If you use
+          <code class="inline-code">&lt;#include &quot;/lib/my_test.ftl&quot;&gt;</code> in the
+          <code class="inline-code">aWebPage.ftl</code>, then it will create the two
+          variables in the main namespace, and it is not good now, since you
+          want them to be in a namespace that is used exclusively by the ``My
+          Test Library&#39;&#39;. Instead of <code class="inline-code">include</code> you have to
+          use <a href="ref_directive_import.html#ref.directive.import"><code>import</code>
+          directive</a>. This directive is, at the first glance, similar to
+          <code class="inline-code">include</code>, but it will create an empty namespace
+          for <code class="inline-code">lib/my_test.ftl</code> and will execute that there.
+          <code class="inline-code">lib/my_test.ftl</code> will find itself in an clean new
+          world, where only the variables of data-model are present (since
+          they are visible from everywhere), and will create the two variables
+          in this new world. That&#39;s fine for now, but you want to access the
+          two variables from <code class="inline-code">aWebPage.ftl</code>, and that uses
+          the main namespace, so it can&#39;t see the variables of the other
+          namespace. The solution is that the <code class="inline-code">import</code>
+          directive not only creates the new namespace, but a new hash
+          variable in the namespace used by the caller of
+          <code class="inline-code">import</code> (the main namespace in this case), that
+          will act as a gate into the newly created namespace. So this is how
+          <code class="inline-code">aWebPage.ftl</code> will look like:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;/lib/my_test.ftl&quot; as <strong>my</strong>&gt; &lt;#-- the hash called &quot;my&quot; will be the &quot;gate&quot; --&gt;
+&lt;@<strong>my</strong>.copyright date=&quot;1999-2002&quot;/&gt;
+${<strong>my</strong>.mail}</pre></div>
+
+          <p>Note how it accesses the variables in the namespace created
+          for <code class="inline-code">/lib/my_test.ftl</code> using the newly created
+          namespace accessing hash, <code class="inline-code">my</code>. This will
+          print:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;p&gt;Copyright (C) 1999-2002 Julia Smith. All rights reserved.&lt;/p&gt;
+jsmith@acme.com</pre></div>
+
+          <p>If you would have a variable called <code class="inline-code">mail</code> or
+          <code class="inline-code">copyright</code> in the main namespace, that would not
+          cause any confusion, since the two templates use separated
+          namespaces. For example, modify the <code class="inline-code">copyright</code>
+          macro in <code class="inline-code">lib/my_test.ftl</code> to this:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro copyright date&gt;
+  &lt;p&gt;Copyright (C) ${date} Julia Smith. All rights reserved.
+  &lt;br&gt;Email: <strong>${mail}</strong>&lt;/p&gt;
+&lt;/#macro&gt;</pre></div>
+
+          <p>and then replace <code class="inline-code">aWebPage.ftl</code> with
+          this:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;/lib/my_test.ftl&quot; as my&gt;
+<strong>&lt;#assign mail=&quot;fred@acme.com&quot;&gt;</strong>
+&lt;@my.copyright date=&quot;1999-2002&quot;/&gt;
+${my.mail}
+${mail}</pre></div>
+
+          <p>and the output will be this:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;p&gt;Copyright (C) 1999-2002 Julia Smith. All rights reserved.
+  &lt;br&gt;Email: <strong>jsmith@acme.com</strong>&lt;/p&gt;
+jsmith@acme.com
+fred@acme.com</pre></div>
+
+          <p>This is like that because when you have called the
+          <code class="inline-code">copyright</code> macro, FreeMarker has temporarily
+          switch to the namespace that was created by the
+          <code class="inline-code">import</code> directive for
+          <code class="inline-code">/lib/my_test.ftl</code>. Thus, the
+          <code class="inline-code">copyright</code> macro always sees the
+          <code class="inline-code">mail</code> variable that exists there, and not the
+          other <code class="inline-code">mail</code> that exists in the main
+          namespace.</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_23">Writing the variables of imported namespaces</h2>
+
+
+          <p>Occasionally you may want to create or replace a variable in
+          an imported namespace. You can do this with the
+          <code class="inline-code">assign</code> directive, if you use its
+          <code class="inline-code">namespace</code> parameter. For example, this:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;/lib/my_test.ftl&quot; as my&gt;
+${my.mail}
+&lt;#assign mail=&quot;jsmith@other.com&quot; <strong>in my</strong>&gt;
+${my.mail}</pre></div>
+
+          <p>will output this:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">jsmith@acme.com
+jsmith@other.com</pre></div>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_24">Namespaces and data-model</h2>
+
+
+          <p>The variables of the data-model are visible from everywhere.
+          For example, if you have a variable called <code class="inline-code">user</code>
+          in the data-model, <code class="inline-code">lib/my_test.ftl</code> will access
+          that, exactly as <code class="inline-code">aWebPage.ftl</code> does:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#macro copyright date&gt;
+  &lt;p&gt;Copyright (C) ${date} <strong>${user}</strong>. All rights reserved.&lt;/p&gt;
+&lt;/#macro&gt;
+
+&lt;#assign mail = &quot;<strong>${user}</strong>@acme.com&quot;&gt;</pre></div>
+
+          <p>If <code class="inline-code">user</code> is ``Fred&#39;&#39;, then the usual
+          example:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;/lib/my_test.ftl&quot; as my&gt;
+&lt;@my.copyright date=&quot;1999-2002&quot;/&gt;
+${my.mail}</pre></div>
+
+          <p>will print this:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;p&gt;Copyright (C) 1999-2002 Fred. All rights reserved.&lt;/p&gt;
+Fred@acme.com</pre></div>
+
+          <p>Don&#39;t forget that the variables in the namespace (the
+          variables you create with <code class="inline-code">assign</code> or
+          <code class="inline-code">macro</code> directives) have precedence over the
+          variables of the data-model when you are in that namespace. Thus,
+          the contents of data-model does not interfere with the variables
+          created by the library.</p>
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>In some unusual applications you want to create variables in
+            the template those are visible from all namespaces, exactly like
+            the variables of the data-model. But you can&#39;t change the
+            data-model with templates. Still, it is possible to achieve
+            similar result with the <code class="inline-code">global</code> directive; read
+            the <a href="ref_directive_global.html#ref.directive.global">reference</a> for more
+            details.</p>
+            </div>
+
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_25">The life-cycle of namespaces</h2>
+
+
+          <p>A namespace is identified by the path that was used with the
+          <code class="inline-code">import</code> directive. If you try to
+          <code class="inline-code">import</code> with the same path for multiple times, it
+          will create the namespace and run the template specified by the path
+          for the very first invocation of <code class="inline-code">import</code> only. The
+          later <code class="inline-code">import</code>s with the same path will just create
+          a ``gate&#39;&#39; hash to the same namespace. For example, let this be the
+          <code class="inline-code">aWebPage.ftl</code>:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#import &quot;/lib/my_test.ftl&quot; as my&gt;
+&lt;#import &quot;/lib/my_test.ftl&quot; as foo&gt;
+&lt;#import &quot;/lib/my_test.ftl&quot; as bar&gt;
+${my.mail}, ${foo.mail}, ${bar.mail}
+&lt;#assign mail=&quot;jsmith@other.com&quot; in my&gt;
+${my.mail}, ${foo.mail}, ${bar.mail}</pre></div>
+
+          <p>The output will be:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-output">jsmith@acme.com, jsmith@acme.com, jsmith@acme.com
+jsmith@other.com, jsmith@other.com, jsmith@other.com</pre></div>
+
+          <p>since you see the same namespace through
+          <code class="inline-code">my</code>, <code class="inline-code">foo</code> and
+          <code class="inline-code">bar</code>.</p>
+
+          <p>Note that namespaces are not hierarchical, they exist
+          independently of each other. That is, if you
+          <code class="inline-code">import</code> namespace N2 while you are in name space
+          N1, N2 will not be inside N1. N1 just gets a hash by which it can
+          access N2. This is the same N2 namespace that you would access if,
+          say, you <code class="inline-code">import</code> N2 when you are in the main
+          namespace.</p>
+
+          <p>Each <a href="gloss.html#gloss.templateProcessingJob">template
+          processing job</a> has its own private set of namespaces. Each
+          template-processing job is a separated cosmos that exists only for
+          the short period of time while the given page is rendered, and then
+          it vanishes with all its populated namespaces. Thus, whenever we say
+          that ``<code class="inline-code">import</code> is called for the first time&#39;&#39; and
+          such, we are always talking in the context of a single template
+          processing job.</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_26">Writing libraries for other people</h2>
+
+
+          
+
+          <p>If you have written a good quality library that can be useful
+          for other people, you may want to make it available on the Internet
+          (like on <a href="http://freemarker.org/libraries.html">http://freemarker.org/libraries.html</a>).
+          To prevent clashes with the names of libraries used by other
+          authors, and to make it easy to write libraries that import other
+          published libraries, there is a de-facto standard that specifies the
+          format of library paths. The standard is that the library must be
+          available (importable) for templates and other libraries with a path
+          like this:</p>
+
+          <p><code class="inline-code">/lib/<em class="code-color">yourcompany.com</em>/<em class="code-color">your_library</em>.ftl</code></p>
+
+          <p>For example if you work for Example Inc. that owns the
+          www.example.com homepage, and you develop a widget library, then the
+          path of the FTL file to import should be:</p>
+
+          <p><code class="inline-code">/lib/example.com/widget.ftl</code></p>
+
+          <p>Note that the www is omitted. The part after the 3rd slash can
+          contain subdirectories such as:</p>
+
+          <p><code class="inline-code">/lib/example.com/commons/string.ftl</code></p>
+
+          <p>An important rule is that the path should not contain
+          upper-case letters. To separate words, use <code class="inline-code">_</code>, as
+          in <code class="inline-code">wml_form</code> (not
+          <code class="inline-code">wmlForm</code>).</p>
+
+          <p>Note that if you do not develop the library for a company or
+          organization, you should use the URL of the project homepage, such
+          as <code class="inline-code">/lib/example.sourceforge.net/example.ftl</code>, or
+          <code class="inline-code">/lib/geocities.com/jsmith/example.ftl</code>.</p>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="dgui_misc_var.html"><span>Previous</span></a><a class="paging-arrow next" href="dgui_misc_whitespace.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-07-05T14:47:00Z" title="Sunday, July 5, 2015 2:47:00 PM GMT">2015-07-05 14:47:00 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Person" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>
