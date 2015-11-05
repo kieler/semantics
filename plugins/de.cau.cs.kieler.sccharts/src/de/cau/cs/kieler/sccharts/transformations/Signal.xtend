@@ -30,6 +30,7 @@ import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts Signal Transformation.
@@ -140,14 +141,10 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                             e.operator == OperatorType::VAL && e.subExpressions.get(0) instanceof ValuedObjectReference &&
                                 (e.subExpressions.get(0) as ValuedObjectReference).valuedObject == signal).toList
                     for (OperatorExpression signalTest : allSignalValTests.immutableCopy) {
-
-                        // Put a trim-able Operator here
-                        signalTest.setOperator(OperatorType::AND)
-
-                        // Replace in valuedObjectReference
-                        (signalTest.subExpressions.get(0) as ValuedObjectReference).setValuedObject(valueVariable)
-
-                    //signalTest.add(TRUE)
+                        // Remove signal reference from operator and replace val-operator with reference
+                        val signalRef = signalTest.subExpressions.remove(0) as ValuedObjectReference;
+                        signalRef.setValuedObject(valueVariable);
+                        signalTest.replace(signalRef);
                     }
                     if (action.trigger != null) {
                         action.setTrigger(action.trigger.trim)
