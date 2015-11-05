@@ -54,15 +54,15 @@ class HideAnnotationHook extends SynthesisHook {
         false);
 
     override getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_HIDDEN_ELEMENTS)
+        return newLinkedList(SHOW_HIDDEN_ELEMENTS);
     }
 
-    override postState(State state, KNode node) {
+    override processState(State state, KNode node) {
         if (!SHOW_HIDDEN_ELEMENTS.booleanValue) {
             if (state.hasHideAnnotation) {
                 node.initiallyHide;
             } else if (!state.declarations.empty || !state.localActions.empty || !state.regions.empty) { // Remove content
-            // Remove hidden declarations
+                // Remove hidden declarations
                 val parent = node.contentContainer;
                 if (!state.declarations.empty) {
                     val declarationsContainer = parent?.getProperty(StateStyles.DECLARATIONS_CONTAINER);
@@ -111,8 +111,8 @@ class HideAnnotationHook extends SynthesisHook {
             }
         }
     }
-
-    override postRegion(Region region, KNode node) {
+    
+    override processRegion(Region region, KNode node) {
         if (!SHOW_HIDDEN_ELEMENTS.booleanValue && region instanceof ControlflowRegion && !region.declarations.empty) {
             // Remove hidden declarations
             val parent = node.regionExtendedContainer
@@ -132,10 +132,11 @@ class HideAnnotationHook extends SynthesisHook {
         }
     }
 
-    override postTransition(Transition transition, KEdge edge) {
+    override processTransition(Transition transition, KEdge edge) {
         if (!SHOW_HIDDEN_ELEMENTS.booleanValue) {
-            if (transition.hasHideAnnotation)
+            if (transition.hasHideAnnotation) {
                 edge.initiallyHide;
+            }
         }
     }
 

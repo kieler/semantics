@@ -69,7 +69,7 @@ class DeclarationsHook extends SynthesisActionHook {
         return newLinkedList(SHOW_DECLARATIONS)
     }
 
-    override postState(State state, KNode node) {
+    override processState(State state, KNode node) {
         if (!state.declarations.empty && !SHOW_DECLARATIONS.booleanValue) {
             val container = node.contentContainer;
             val declarations = container?.getProperty(StateStyles.DECLARATIONS_CONTAINER);
@@ -83,7 +83,7 @@ class DeclarationsHook extends SynthesisActionHook {
         }
     }
 
-    override postRegion(Region region, KNode node) {
+    override processRegion(Region region, KNode node) {
         if (region instanceof ControlflowRegion && !region.declarations.empty && !SHOW_DECLARATIONS.booleanValue) {
             val parent = node.regionExtendedContainer
             val declarations = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER);

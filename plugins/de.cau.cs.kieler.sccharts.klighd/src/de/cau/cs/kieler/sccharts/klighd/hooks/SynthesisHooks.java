@@ -15,8 +15,6 @@ package de.cau.cs.kieler.sccharts.klighd.hooks;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
@@ -25,10 +23,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import com.google.inject.Binding;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.Key;
 
 import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
@@ -178,32 +174,7 @@ public class SynthesisHooks {
     }
 
     /**
-     * Invokes the pre element procedures for all hooks.
-     * 
-     * @param type
-     *            the element type.
-     * @param element
-     *            the element
-     */
-    @SuppressWarnings("incomplete-switch")
-    public void invokePre(Type type, EObject element) {
-        for (SynthesisHook hook : hooks) {
-            switch (type) {
-            case STATE:
-                hook.preState((State) element);
-                break;
-            case TRANSITION:
-                hook.preTransition((Transition) element);
-                break;
-            case REGION:
-                hook.preRegion((Region) element);
-                break;
-            }
-        }
-    }
-
-    /**
-     * Invokes the post element procedures for all hooks.
+     * Invokes the hook procedures for the given element.
      * 
      * @param type
      *            the element type.
@@ -213,17 +184,17 @@ public class SynthesisHooks {
      *            the translated element
      */
     @SuppressWarnings("incomplete-switch")
-    public void invokePost(Type type, EObject element, KGraphElement result) {
+    public void invokeHooks(Type type, EObject element, KGraphElement result) {
         for (SynthesisHook hook : hooks) {
             switch (type) {
             case STATE:
-                hook.postState((State) element, (KNode) result);
+                hook.processState((State) element, (KNode) result);
                 break;
             case TRANSITION:
-                hook.postTransition((Transition) element, (KEdge) result);
+                hook.processTransition((Transition) element, (KEdge) result);
                 break;
             case REGION:
-                hook.postRegion((Region) element, (KNode) result);
+                hook.processRegion((Region) element, (KNode) result);
                 break;
             }
         }

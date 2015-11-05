@@ -46,7 +46,7 @@ class TransitionLabelHook extends SynthesisActionHook {
         return newLinkedList(SHOW_LABELS);
     }
 
-    override postTransition(Transition transition, KEdge edge) {
+    override processTransition(Transition transition, KEdge edge) {
         if (!SHOW_LABELS.booleanValue) {
             edge.eContents.filter(KLabel).forEach[initiallyHide]
         }

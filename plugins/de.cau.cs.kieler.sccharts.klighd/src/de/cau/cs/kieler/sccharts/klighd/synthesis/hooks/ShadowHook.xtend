@@ -43,7 +43,7 @@ class ShadowHook extends SynthesisHook {
         return newLinkedList(SHOW_SHADOW)
     }
 
-    override postState(State state, KNode node) {
+    override processState(State state, KNode node) {
         if (!SHOW_SHADOW.booleanValue) {
             val container = node.getKContainerRendering;
             container.styles.remove(container.shadow);

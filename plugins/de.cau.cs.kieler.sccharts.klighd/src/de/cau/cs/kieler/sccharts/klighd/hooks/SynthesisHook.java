@@ -77,15 +77,6 @@ public abstract class SynthesisHook {
     }
 
     /**
-     * Invoked before a {@link State} is translated.
-     * 
-     * @param state
-     *            the state
-     */
-    public void preState(State state) {
-    }
-
-    /**
      * Invoked after a {@link State} is translated.
      * 
      * @param state
@@ -93,16 +84,7 @@ public abstract class SynthesisHook {
      * @param node
      *            the translated state
      */
-    public void postState(State state, KNode node) {
-    }
-
-    /**
-     * Invoked before a {@link Transition} is translated.
-     * 
-     * @param transition
-     *            the transition
-     */
-    public void preTransition(Transition transition) {
+    public void processState(State state, KNode node) {
     }
 
     /**
@@ -113,16 +95,7 @@ public abstract class SynthesisHook {
      * @param edge
      *            the translated edge
      */
-    public void postTransition(Transition transition, KEdge edge) {
-    }
-
-    /**
-     * Invoked before a {@link Region} is translated.
-     * 
-     * @param region
-     *            the region
-     */
-    public void preRegion(Region region) {
+    public void processTransition(Transition transition, KEdge edge) {
     }
 
     /**
@@ -133,7 +106,7 @@ public abstract class SynthesisHook {
      * @param node
      *            the translated region
      */
-    public void postRegion(Region region, KNode node) {
+    public void processRegion(Region region, KNode node) {
     }
 
     // -------------------------------------------------------------------------

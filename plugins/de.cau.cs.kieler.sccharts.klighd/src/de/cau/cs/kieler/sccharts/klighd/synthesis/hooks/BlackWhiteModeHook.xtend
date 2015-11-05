@@ -71,7 +71,7 @@ class BlackWhiteModeHook extends SynthesisHook {
         }
     }
 
-    override postState(State state, KNode node) {
+    override processState(State state, KNode node) {
         if (PAPER_BW.booleanValue) {
             val container = node.getKContainerRendering;
             container.styles.remove(container.shadow);

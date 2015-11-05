@@ -54,7 +54,7 @@ class PrioritybasedCompilationHook extends SynthesisHook {
 
     private var dependencyGraph = null;
 
-    override postState(State state, KNode node) {
+    override processState(State state, KNode node) {
         if (SHOW_ORDER.booleanValue || SHOW_DEPENDENCIES.booleanValue) {
             if (dependencyGraph == null) {
 
