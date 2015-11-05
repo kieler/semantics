@@ -128,9 +128,15 @@ class SCChartsExtension {
     // Return the list of all contained States.
     def Iterator<State> getAllContainedStates(Scope scope) {
         scope.sccAllStates; //eAllContents().filter(typeof(State))
-
     //        scope.eAllContents().filter(typeof(State))
     }
+
+    // Return the list of all contained Regions.
+    def Iterator<ControlflowRegion> getAllContainedRegions(Scope scope) {
+        //TODO: sccAllRegions iterator
+        scope.eAllContents().filter(typeof(ControlflowRegion))
+    }
+
 
     // Returns a list of all contained States.
     def List<State> getAllContainedStatesList(State state) {
