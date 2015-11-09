@@ -64,6 +64,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     
     public static final String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object";
     public static final String NO_CONST_LITERAL = "Const objects must be bound to literals";
+    public static final String NO_DEFERRED_BEFORE_CONNECTOR = "Deferred transition cannot be used before a connector";
     
     public static final SCChartsExtension sCChartExtension = new SCChartsExtension();
 
@@ -338,5 +339,5 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
 			   }
 		   }
 	   }
-   }    
+   }
 }

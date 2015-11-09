@@ -186,7 +186,7 @@ public class Benchmark {
            
           executable = File.createTempFile(BENCHMARK_PREFIX, ".o");
           compile =
-                  compiler + " " + tickeMethodFilePath + " "
+                  compiler + " /" + tickeMethodFilePath + " "
                         //  + " -D_NO_EXTERN_DEFINITIONS -D_NO_FUNCTION_DEFINITIONS "
                           + BENCHMARK_COMPILER_OPTIONS + " " + executable;
 

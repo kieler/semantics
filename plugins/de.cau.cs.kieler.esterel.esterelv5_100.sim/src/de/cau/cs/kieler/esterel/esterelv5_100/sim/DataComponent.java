@@ -65,6 +65,13 @@ public class DataComponent extends EsterelSimulatorDataComponent {
 		String headerFileString = headerURI.toString();
 		headerFileString = headerFileString.replaceFirst(".simulation.strl",
 				".h");
+		/*
+		 * Since the Esterel v5_100 compiler processors produce files with different names,
+		 * for example "sscc_out.c", the header file must be written in a file with name
+		 * according to the produced C-file
+		 * The renaming is hard coded in the following and must be adapted if an alternative
+		 * compilation chain is chosen
+		 */
 		File headerFile = new File(outFile.getParent() + "/sscc_out.h");
 		File header = new File(headerFileString);
 		if (header.exists()) {
@@ -118,9 +125,21 @@ public class DataComponent extends EsterelSimulatorDataComponent {
 			strl.close();
 			return null;
 		}
+		
+		/* -----------------------------------------------------------------------------
+		 * -----------------------------------------------------------------------------
+		 * 
+		 * In the following are three different compilation chains.
+		 * Toggle the comment to switch the compilation chain 
+		 * 
+		 * -----------------------------------------------------------------------------
+		 * -----------------------------------------------------------------------------
+		 */
+		
 
-		// Generating C code with SCSSC and SSCC processors (default compilation
-		// chain)
+		/* Generating C code with SCSSC and SSCC processors using Sorted Circuit Code
+		 *(default compilation chain)
+		 */
 		// -----------------------------------------------------------------------------
 		System.out.println("Compile 7");
 		monitor.subTask("SCSSC");
@@ -141,8 +160,12 @@ public class DataComponent extends EsterelSimulatorDataComponent {
 		}
 		// -----------------------------------------------------------------------------
 
-		// // Generating C code without SCSSC and SCC processors
-		// //-----------------------------------------------------------------------------
+		
+		/*
+		 *  Generating C code without SCSSC and with SCC processors 
+		 *  using Unsorted Circuit Code
+		 */
+		//-----------------------------------------------------------------------------
 		// System.out.println("Compile 8");
 		// monitor.subTask("SCC");
 		// InputStream c = Esterelv5_100.runSCC(ssc);
@@ -151,11 +174,14 @@ public class DataComponent extends EsterelSimulatorDataComponent {
 		// strl.close();
 		// return null;
 		// }
-		// //-----------------------------------------------------------------------------
+		//-----------------------------------------------------------------------------
 
-		// // Generating C code with SCOC and OCC processors (only for small
-		// programs)
-		// //-----------------------------------------------------------------------------
+		
+		/* 
+		 * Generating C code with SCOC and OCC processors using the Automaton code
+		 * (only for small programs)
+		 */
+		//-----------------------------------------------------------------------------
 		// System.out.println("Compile 7");
 		// monitor.subTask("SCOC");
 		// InputStream oc = Esterelv5_100.runSCOC(sc);
@@ -174,6 +200,10 @@ public class DataComponent extends EsterelSimulatorDataComponent {
 		// }
 		// //-----------------------------------------------------------------------------
 
+		
+		/*
+		 * Code generation is used for all compilation chains
+		 */
 		System.out.println("Compile 9");
 		monitor.subTask("Generating C code");
 		java.net.URI uri = Esterelv5_100.runCODEGEN(c, outFile);

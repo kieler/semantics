@@ -16,10 +16,11 @@ package de.cau.cs.kieler.sccharts.text.sct.validation
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.TransitionType
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.sccharts.StateType
 
 /**
  * @author ssm
- *
+ * 
  */
 class SctValidator extends SctJavaValidator {
 
@@ -31,10 +32,9 @@ class SctValidator extends SctJavaValidator {
             // dummy region for entry/during/exit actions or suspends
             val parentState = region.getParentState
             var int foundInitial = 0;
-            if ((parentState.getLocalActions().size() > 0) && (parentState.getRegions().size() == 1)
-                    && parentState.getRegions().filter(typeof(ControlflowRegion)).head.getStates().size() == 0
-                    && (parentState.getRegions().head.getId() == null
-                        || parentState.getRegions().head.id.equals(""))) {
+            if ((parentState.getLocalActions().size() > 0) && (parentState.getRegions().size() == 1) &&
+                parentState.getRegions().filter(typeof(ControlflowRegion)).head.getStates().size() == 0 &&
+                (parentState.getRegions().head.getId() == null || parentState.getRegions().head.id.equals(""))) {
                 foundInitial = 1;
             }
             for (de.cau.cs.kieler.sccharts.State state : region.getStates()) {
@@ -49,27 +49,39 @@ class SctValidator extends SctJavaValidator {
             }
         }
     }
-    
+
     @Check
     public def void checkFinalStates(de.cau.cs.kieler.sccharts.State state) {
         // Only consider macro states
         if (state.getRegions().size() > 0) {
-            val foundTermination = !state.outgoingTransitions.filter[ type == TransitionType.TERMINATION ].empty
+            val foundTermination = !state.outgoingTransitions.filter[type == TransitionType.TERMINATION].empty
             if (foundTermination) {
                 // Now test for every region
                 for (region : state.regions.filter(ControlflowRegion)) {
-                    val foundFinal = !region.states.filter[ isFinal ].empty
+                    val foundFinal = !region.states.filter[isFinal].empty
                     if (!foundFinal) {
                         warning(REGION_NO_FINAL_STATE, region, null, -1);
                     }
                 }
             }
         }
-    } 
-    
+    }
+
     @Check
     public def void checkConstInitializationInStates(de.cau.cs.kieler.sccharts.Scope scope) {
-        scope.declarations.forEach[ it.checkConstInitialization ]
-    }    
+        scope.declarations.forEach[it.checkConstInitialization]
+    }
+
+    /**
+     * A deferred transition cannot be used before a connector state.
+     * 
+     * @param state the state
+     */
+    @Check
+    public def void checkDeferredBeforeConnector(de.cau.cs.kieler.sccharts.Transition transition) {
+        if (transition.isDeferred() && transition.getTargetState().getType().equals(StateType::CONNECTOR)) {
+            error(NO_DEFERRED_BEFORE_CONNECTOR, transition, null, -1);
+        }
+    }
 
 }
