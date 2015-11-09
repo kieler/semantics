@@ -38,11 +38,7 @@ import java.util.Iterator
 class KExpressionsSerializeExtensions {
 
    def dispatch CharSequence serialize(ValueType valueType) {
-        if (valueType == ValueType::BOOL) {
-            return 'bool'
-        } else {
-            return valueType.getName;
-        }
+        return valueType.literal;
     }
 
     def dispatch CharSequence serialize(TextExpression hostCodeString) {
