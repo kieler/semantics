@@ -1,0 +1,15 @@
+
+@Transformation INITIALIZATION
+scchart Initialization {
+
+  initial state A {
+    int x;
+    bool y;
+    float z;
+    entry / x = 5;
+    entry / y = true;
+    entry / z = 1.1;
+
+    initial state A0;
+  };
+}

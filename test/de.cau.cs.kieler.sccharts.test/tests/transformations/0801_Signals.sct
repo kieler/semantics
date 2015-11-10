@@ -1,0 +1,17 @@
+@Transformation SIGNAL
+scchart Signals {
+  signal S;
+  
+  region R1:
+  
+	  initial state A
+	  --> B / S;
+	  
+	  final state B;
+	  
+  region R2:
+  	initial state C
+  	--> D with S;
+  	
+  	final state D;
+}
