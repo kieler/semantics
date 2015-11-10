@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -33,9 +33,9 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExt
  */
 class Static extends AbstractExpansionTransformation implements Traceable {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
         return SCChartsTransformation::STATIC_ID
     }
@@ -56,17 +56,16 @@ class Static extends AbstractExpansionTransformation implements Traceable {
         return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
     }
 
-    //-------------------------------------------------------------------------
-
+    // -------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
-    //-------------------------------------------------------------------------
-    //--                          S T A T I C                                --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                          S T A T I C                                --
+    // -------------------------------------------------------------------------
     // In some local superstate M that has a declaration of a static variable x, move the
     // declaration of the variable to the root state of the SCChart and rename x respecting
     // a proper unique and qualified naming. Within the scope of x (within M) update all
@@ -84,11 +83,15 @@ class Static extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void transformStatic(State state, State targetRootState) {
-    	val staticDeclarations = state.declarations.filter[ isStatic ]
-    	for (staticDeclaration : staticDeclarations.toList) {
-    		staticDeclaration.static = false
-    		targetRootState.declarations += staticDeclaration
-    	}
+        val staticDeclarations = state.declarations.filter[isStatic]
+        for (staticDeclaration : staticDeclarations.toList) {
+            for (staticValuedObject : staticDeclaration.valuedObjects) {
+                staticValuedObject.setName(state.getHierarchicalName(GENERATED_PREFIX) + GENERATED_PREFIX +
+                    staticValuedObject.name)
+            }
+            staticDeclaration.static = false
+            targetRootState.declarations += staticDeclaration
+        }
     }
 
 }
