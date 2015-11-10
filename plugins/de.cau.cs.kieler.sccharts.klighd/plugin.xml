@@ -1,31 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="de.cau.cs.kieler.sccharts.klighd.hooks" name="Synthesis Hooks" schema="schema/hooks.exsd"/>
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
-      <styleModifier
-            class="de.cau.cs.kieler.sccharts.klighd.SCChartsRegionLineModifier"
-            id="de.cau.cs.kieler.sccharts.klighd.regionLineModifier">
-      </styleModifier>
       <action
-            class="de.cau.cs.kieler.sccharts.klighd.SCChartsReferenceExpandAction"
-            id="de.cau.cs.kieler.sccharts.klighd.SCChartsReferenceExpandAction">
+            class="de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction"
+            id="de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.TransitionLabelHook"
+            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.TransitionLabelHook">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.StateActionsHook"
+            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.StateActionsHook">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.DeclarationsHook"
+            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.DeclarationsHook">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGDependencyHook"
+            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGDependencyHook">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook"
+            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook">
       </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramSynthesis"
-            id="de.cau.cs.kieler.sccharts.klighd.diagramSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
+            id="de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.deprecated.ComparisonSynthesis"
+            id="de.cau.cs.kieler.sccharts.klighd.ComparisonSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.deprecated.SCChartsDiagramSynthesis"
+            id="de.cau.cs.kieler.sccharts.klighd.DeprecatedSCChartsSynthesis">
       </diagramSynthesis>
    </extension>
    <extension
          point="de.cau.cs.kieler.kiml.layoutConfigs">
-      <!-- option
-            class="de.cau.cs.kieler.sccharts.Region"
-            option="de.cau.cs.kieler.borderSpacing"
-            value="1.0">
-      </option -->
       <semanticConfig
             class="de.cau.cs.kieler.sccharts.Scope"
             config="de.cau.cs.kieler.sccharts.klighd.layout.HVLayoutConfig">
@@ -34,14 +54,33 @@
             class="de.cau.cs.kieler.sccharts.Scope"
             config="de.cau.cs.kieler.sccharts.klighd.layout.AnnotationsLayoutConfig">
       </semanticConfig>
-      <semanticConfig
-            class="de.cau.cs.kieler.sccharts.State"
-            config="de.cau.cs.kieler.sccharts.klighd.layout.StateLayoutConfig">
-      </semanticConfig>
-      <semanticConfig
-            class="de.cau.cs.kieler.sccharts.Region"
-            config="de.cau.cs.kieler.sccharts.klighd.layout.RegionLayoutConfig">
-      </semanticConfig>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sccharts.klighd.hooks">
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.TransitionLabelHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.DeclarationsHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.StateActionsHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.BlackWhiteModeHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.ShadowHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGDependencyHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.HideAnnotationHook">
+      </hook>
    </extension>
 
 </plugin>

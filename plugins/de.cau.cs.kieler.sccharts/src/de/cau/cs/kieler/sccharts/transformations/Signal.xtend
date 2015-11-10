@@ -17,8 +17,13 @@ import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
@@ -29,11 +34,7 @@ import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.ValueType
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * SCCharts Signal Transformation.
@@ -154,14 +155,10 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                             e.operator == OperatorType::VAL && e.subExpressions.get(0) instanceof ValuedObjectReference &&
                                 (e.subExpressions.get(0) as ValuedObjectReference).valuedObject == signal).toList
                     for (OperatorExpression signalTest : allSignalValTests.immutableCopy) {
-
-                        // Put a trim-able Operator here
-                        signalTest.setOperator(OperatorType::LOGICAL_AND)
-
-                        // Replace in valuedObjectReference
-                        (signalTest.subExpressions.get(0) as ValuedObjectReference).setValuedObject(valueVariable)
-
-                    //signalTest.add(TRUE)
+                        // Remove signal reference from operator and replace val-operator with reference
+                        val signalRef = signalTest.subExpressions.remove(0) as ValuedObjectReference;
+                        signalRef.setValuedObject(valueVariable);
+                        signalTest.replace(signalRef);
                     }
                     if (action.trigger != null) {
                         action.setTrigger(action.trigger)
