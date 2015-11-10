@@ -1082,11 +1082,11 @@ class SCChartsExtension {
         scope.getHierarchicalName(null)
     }
 
-    def String getHierarchicalName(Scope scope, String startSymbol) {
+    def String getHierarchicalName(Scope scope, String decendingName) {
         if (scope == null)
-            return startSymbol
+            return decendingName
         else
-            return (scope.eContainer as Scope).getHierarchicalName(scope.id+"_"+startSymbol)
+            return (scope.eContainer as Scope).getHierarchicalName(scope.id + "_" + decendingName)
     }
 
 
