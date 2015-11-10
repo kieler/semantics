@@ -1083,8 +1083,10 @@ class SCChartsExtension {
     }
 
     def String getHierarchicalName(Scope scope, String startSymbol) {
-        if (scope == null) return startSymbol
-        while (scope != null) return (scope.eContainer as Scope).getHierarchicalName(scope.id+"_")
+        if (scope == null)
+            return startSymbol
+        else
+            return (scope.eContainer as Scope).getHierarchicalName(scope.id+"_"+startSymbol)
     }
 
 
