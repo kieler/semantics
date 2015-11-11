@@ -134,6 +134,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
     
 
     def void transformComplexFinalState(State parentState, State rootState) {
+        parentState.setDefaultTrace
         var ArrayList<ValuedObject> termVariables = new ArrayList
 
         // Every such parent state gets an special abort flag that is used to trigger
@@ -188,6 +189,9 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
                     state.final = false;
                     val abortTransition = state.createImmediateTransitionTo(auxiliaryFinalState);
                     abortTransition.setLowestPriority.setTrigger(abortFlag.reference)
+                    
+                    auxiliaryFinalState.trace(state)
+                    abortTransition.trace(state) 
                 }
             }
         }
