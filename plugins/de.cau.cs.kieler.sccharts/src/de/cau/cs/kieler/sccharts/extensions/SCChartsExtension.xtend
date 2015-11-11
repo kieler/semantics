@@ -142,9 +142,15 @@ class SCChartsExtension {
     // Return the list of all contained States.
     def Iterator<State> getAllContainedStates(Scope scope) {
         scope.sccAllStates; //eAllContents().filter(typeof(State))
-
     //        scope.eAllContents().filter(typeof(State))
     }
+
+    // Return the list of all contained Regions.
+    def Iterator<ControlflowRegion> getAllContainedRegions(Scope scope) {
+        //TODO: sccAllRegions iterator
+        scope.eAllContents().filter(typeof(ControlflowRegion))
+    }
+
 
     // Returns a list of all contained States.
     def List<State> getAllContainedStatesList(State state) {
@@ -1105,9 +1111,11 @@ class SCChartsExtension {
         scope.getHierarchicalName(null)
     }
 
-    def String getHierarchicalName(Scope scope, String startSymbol) {
-        if (scope == null) return startSymbol
-        while (scope != null) return (scope.eContainer as Scope).getHierarchicalName(scope.id+"_")
+    def String getHierarchicalName(Scope scope, String decendingName) {
+        if (scope == null)
+            return decendingName
+        else
+            return (scope.eContainer as Scope).getHierarchicalName(scope.id + "_" + decendingName)
     }
 
 

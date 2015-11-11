@@ -38,7 +38,7 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
     public static final String VH_ANNOTATION = "VHLayout";
 
     /** the priority for this semantic layout configuration. */
-    public static final int PRIORITY = 15;
+    public static final int PRIORITY = 25;
 
     /**
      * {@inheritDoc}
