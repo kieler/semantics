@@ -41,7 +41,10 @@ class EnvironmentData extends ConfigurationSerializableData {
      * Key for the attribute which holds the user defined names of commands.
      */
     private static val String COMMAND_NAME_KEY = "command.name"
-    
+    /**
+     * Key for the attribute that defines if the command should be executed.
+     */
+    private static val String COMMAND_ENABLED = "command.enabled"
     
     
     // Fields
@@ -184,6 +187,7 @@ class EnvironmentData extends ConfigurationSerializableData {
         for(comm : commands){
             store.setValue(getStoreKey(COMMAND_KEY+i), comm.command)
             store.setValue(getStoreKey(COMMAND_NAME_KEY+i), comm.name)
+            store.setValue(getStoreKey(COMMAND_ENABLED+i), comm.enabled)
             i++
         }
         
@@ -192,6 +196,7 @@ class EnvironmentData extends ConfigurationSerializableData {
         while(store.getString(getStoreKey(COMMAND_KEY+i)) != ""){
             store.setValue(getStoreKey(COMMAND_KEY+i), "")
             store.setValue(getStoreKey(COMMAND_NAME_KEY+i), "")
+            store.setValue(getStoreKey(COMMAND_ENABLED+i), "")
             i++
         }
     }
@@ -227,12 +232,15 @@ class EnvironmentData extends ConfigurationSerializableData {
         // Non string attributes
         var commandName = ""
         var command = ""
+        var commandEnabled = false;
         var i = 0;
         do{
             commandName = store.getString(getStoreKey(COMMAND_NAME_KEY+i))
             command = store.getString(getStoreKey(COMMAND_KEY+i))
             if(commandName != "" || command != ""){
-                commands.add(new CommandData(commandName, command))
+                val c = new CommandData(commandName, command)
+                c.enabled = store.getString(getStoreKey(COMMAND_ENABLED+i))
+                commands.add(c)
             }
             i++
         }while(commandName != "" || command != "")
@@ -249,10 +257,6 @@ class EnvironmentData extends ConfigurationSerializableData {
         config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, wrapperCodeTemplate)
         config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, wrapperCodeSnippetsDirectory)
         
-        // Commands
-        for(command : commands)
-            command.enabled = String.valueOf(true)
-            
         CommandData.saveAllToConfiguration(config, commands)    
     }
 }
