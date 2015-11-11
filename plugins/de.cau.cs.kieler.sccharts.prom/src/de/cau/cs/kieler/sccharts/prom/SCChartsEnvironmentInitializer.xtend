@@ -42,18 +42,18 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         
         // Commands for Windows (these are active by default)
         env.commands.add(new CommandData("Compile on Windows",
-        '''nxjc.bat -cp "${nxj.home}/lib;src;«LaunchConfiguration.BUILD_DIRECTORY»" "${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}"''',
+        '''${nxj.home}/bin/nxjc.bat -cp "${nxj.home}/lib;src;«LaunchConfiguration.BUILD_DIRECTORY»" "${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}"''',
         true))
         env.commands.add(new CommandData("Deploy and Run on Windows",
-        '''nxj.bat -r -cp "${nxj.home}/lib;src;«LaunchConfiguration.BUILD_DIRECTORY»" -o "${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}.nxj" ${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}''',
+        '''${nxj.home}/bin/nxj.bat -r -cp "${nxj.home}/lib;src;«LaunchConfiguration.BUILD_DIRECTORY»" -o "${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}.nxj" ${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}''',
         true))
         
         // Commands for Linux
-        env.commands.add(new CommandData("Compile on Linux",
-        '''nxjc -cp "${nxj.home}/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" "${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}"''',
+        env.commands.add(new CommandData("Compile on Linux and Mac",
+        '''${nxj.home}/bin/nxjc -cp "${nxj.home}/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" "${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}"''',
         false))
-        env.commands.add(new CommandData("Deploy and Run on Linux",
-        '''nxj -r -cp "${nxj.home}/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" -o "${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}.nxj" ${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}''',
+        env.commands.add(new CommandData("Deploy and Run on Linux and Mac",
+        '''${nxj.home}/bin/nxj -r -cp "${nxj.home}/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" -o "${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}.nxj" ${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}''',
         false))
         
         env.relatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
