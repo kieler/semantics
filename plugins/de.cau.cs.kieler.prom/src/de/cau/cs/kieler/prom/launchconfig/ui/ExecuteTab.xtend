@@ -24,6 +24,9 @@ import org.eclipse.core.resources.IResource
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
+import org.eclipse.jface.viewers.CheckStateChangedEvent
+import org.eclipse.jface.viewers.CheckboxTableViewer
+import org.eclipse.jface.viewers.ICheckStateListener
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.viewers.SelectionChangedEvent
@@ -52,7 +55,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     /**
      * The control to show all commands and enable/disable them. 
      */
-    private TableViewer viewer
+    private CheckboxTableViewer viewer
     
     /**
      * The input field to set the user defined name of a command.
@@ -98,7 +101,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         val group = UIUtil.createGroup(parent, "Commands", 2)
         
         // Create viewer
-        viewer = UIUtil.createCommandTable(group, true)
+        viewer = UIUtil.createCommandTable(group, true) as CheckboxTableViewer      
         viewer.addSelectionChangedListener(new ISelectionChangedListener(){
             
             override selectionChanged(SelectionChangedEvent event) {
@@ -109,6 +112,15 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                     currentData = null
                     
                 updateControls(currentData)
+                
+                checkConsistency()
+                updateLaunchConfigurationDialog()
+            }
+        })
+        viewer.addCheckStateListener(new ICheckStateListener() {
+            override checkStateChanged(CheckStateChangedEvent event) {
+                checkConsistency()
+                updateLaunchConfigurationDialog()
             }
         })
         
