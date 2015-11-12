@@ -1,0 +1,11 @@
+@Transformation SUSPEND
+scchart Suspension {
+  input bool I;
+  suspend S; 
+  
+  initial state A
+  --> B with I;
+  
+  state B
+  --> A with !I;
+}

@@ -1,0 +1,34 @@
+
+@Transformation SIGNAL
+scchart ValuedSignals {
+  bool x;
+  bool y;
+  int x_val = 1 combine +;
+  int y_val = 2;
+  int x_val_tmp;
+  immediate during / x = false;
+  immediate during / y = false;
+  immediate during / x_val_tmp = 0;
+  immediate during x / x_val = x_val_tmp;
+
+  region R1:
+
+  initial state A
+  --> B / x_val_tmp += 3; x = x | true;
+
+  final state B;
+
+  region R2:
+
+  initial state C
+  --> D / x_val_tmp += 4; x = x | true;
+
+  final state D;
+
+  region R3:
+
+  initial state E
+  --> F with x / y_val = x_val; y = y | true;
+
+  final state F;
+}

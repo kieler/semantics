@@ -40,8 +40,21 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         env.wrapperCodeSnippetsDirectory = "snippets/mindstorms_nxj"
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/snippets"
         
-        env.commands.add(new CommandData("Compile", '''nxjc -cp "/opt/leJOS_0.9.1/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" "${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}"'''))
-        env.commands.add(new CommandData("Deploy and Run", '''nxj -r -cp "/opt/leJOS_0.9.1/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" -o "${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}.nxj" ${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}'''))
+        // Commands for Windows (these are active by default)
+        env.commands.add(new CommandData("Compile on Windows",
+        '''${nxj.home}/bin/nxjc.bat -cp "${nxj.home}/lib;src;«LaunchConfiguration.BUILD_DIRECTORY»" "${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}"''',
+        true))
+        env.commands.add(new CommandData("Deploy and Run on Windows",
+        '''${nxj.home}/bin/nxj.bat -r -cp "${nxj.home}/lib;src;«LaunchConfiguration.BUILD_DIRECTORY»" -o "${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}.nxj" ${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}''',
+        true))
+        
+        // Commands for Linux
+        env.commands.add(new CommandData("Compile on Linux and Mac",
+        '''${nxj.home}/bin/nxjc -cp "${nxj.home}/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" "${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}"''',
+        false))
+        env.commands.add(new CommandData("Deploy and Run on Linux and Mac",
+        '''${nxj.home}/bin/nxj -r -cp "${nxj.home}/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" -o "${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}.nxj" ${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}''',
+        false))
         
         env.relatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
         

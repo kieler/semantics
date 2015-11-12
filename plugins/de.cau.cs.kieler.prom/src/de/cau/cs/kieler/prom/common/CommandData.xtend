@@ -81,10 +81,21 @@ class CommandData extends ConfigurationSerializableData {
      * @param command The shell command to be executed
      */
     new(String name, String command) {
-        this.name = name
-        this.command = command
+        this(name, command, true)
     }
 
+    /**
+     * Creates a new instance of the class with the given name and command.
+     * 
+     * @param name The user defined name
+     * @param command The shell command to be executed
+     * @param enabled Defines if the command should actually be executed as part of a project launch
+     */
+    new(String name, String command, boolean enabled) {
+        this.name = name
+        this.command = command
+        this.enabled = enabled
+    }
 
     /**
      * Setter for enabled with a check that the value is either 'true' or 'false'.

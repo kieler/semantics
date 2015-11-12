@@ -480,9 +480,9 @@ class UIUtil {
     public static def TableViewer createCommandTable(Composite parent, boolean checkboxes) {
         // Create table
         val table = if (checkboxes)
-                new Table(parent, SWT.CHECK.bitwiseOr(SWT.BORDER))
+                new Table(parent, SWT.CHECK.bitwiseOr(SWT.BORDER).bitwiseOr(SWT.FULL_SELECTION))
             else
-                new Table(parent, SWT.BORDER)
+                new Table(parent, SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
         table.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -497,7 +497,10 @@ class UIUtil {
             checkViewer.addCheckStateListener(new ICheckStateListener() {
                 override checkStateChanged(CheckStateChangedEvent event) {
                     val comm = event.element as CommandData
-                    comm.enabled = !event.checked
+                    comm.enabled = !comm.isEnabled
+                    
+                    // On Windows and Mac, we have to refresh the content provider to make the change visible
+                    checkViewer.refresh();
                 }
             })
 

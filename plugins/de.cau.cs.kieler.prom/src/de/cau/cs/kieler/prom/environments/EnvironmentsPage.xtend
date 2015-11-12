@@ -472,7 +472,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         val group = UIUtil.createGroup(parent, "Commands", 2)
         
         // Create viewer
-        viewer = UIUtil.createCommandTable(group, false)
+        viewer = UIUtil.createCommandTable(group, true)
         viewer.addSelectionChangedListener(new ISelectionChangedListener(){
             
             override selectionChanged(SelectionChangedEvent event) {
