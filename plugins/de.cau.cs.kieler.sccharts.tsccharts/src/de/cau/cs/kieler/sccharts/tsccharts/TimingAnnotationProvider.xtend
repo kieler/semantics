@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2011 by
@@ -23,6 +23,8 @@ import java.io.IOException
 import java.util.LinkedList
 import java.util.List
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import java.util.StringTokenizer
+import de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis.TimingValueRepresentation
 
 /**
  * This class provides an SCChart with WCRT information by annotating all regions with two values: The
@@ -53,7 +55,6 @@ class TimingAnnotationProvider {
         }
         return macroChildren;
     }
-
 
 //    /**
 // * The Method annotates each region of a given State with a unique domainNumber. It also stores the 
@@ -107,8 +108,6 @@ class TimingAnnotationProvider {
 //        }
 //        return domainNumber + 1;
 //    }
-
-   
 //    /* Determines, whether the region contains states with regions (return true) 
 //         * or not (return false)
 //         */
@@ -124,19 +123,21 @@ class TimingAnnotationProvider {
 //        }
 //        return retValue;
 //    }
-
     /** Retrieves the timing information from the .ta.out file and stores them in a result 
-         * map under the according requests.
-         *  @param resultList 
-         *            A list of TimingRequestResults, where the values are to be (re)set. The ordering 
-         *            must correspond to the ordering of the timing requests that the specified file is 
-         *            an answer to, as the values will be stored in reading order.
-         *  @param uri
-         *            Determines the timing analysis response file to be read.
-         *  @return
-         *        returns 1 for file not found, 2 for IOExeption, 0 else.
-         */
-    def int getTimingInformation(LinkedList<TimingRequestResult> resultList, String uri) {
+     * map under the according requests.
+     *  @param resultList 
+     *            A list of TimingRequestResults, where the values are to be (re)set. The ordering 
+     *            must correspond to the ordering of the timing requests that the specified file is 
+     *            an answer to, as the values will be stored in reading order.
+     *  @param uri
+     *            Determines the timing analysis response file to be read.
+     *  @param rep
+     *            Specifies the way in which the timing values should be represented.
+     *  @return
+     *        returns 1 for file not found, 2 for IOExeption, 0 else.
+     */
+    def int getTimingInformation(LinkedList<TimingRequestResult> resultList, String uri, 
+        TimingValueRepresentation rep) {
         var int ret = 0;
         var BufferedReader br = null;
         try {
@@ -146,7 +147,6 @@ class TimingAnnotationProvider {
 
             // each line will be a new timing analysis result
             while ((line = br.readLine()) != null) {
-
                 // the result may consist of more than one element, comma-separated, store them in 
                 // list and write the list back to the corresponding timing request. This 
                 // correspondence is determined by the ordering.
@@ -154,7 +154,7 @@ class TimingAnnotationProvider {
                 val resultIterator = parts.iterator;
                 val results = new LinkedList<String>;
                 while (resultIterator.hasNext) {
-                    val nextNumber = resultIterator.next;
+                    val nextNumber = resultIterator.next;                
                     results.add(nextNumber);
                 }
                 resultList.get(lineNumber).setResult(results);
@@ -246,7 +246,6 @@ class TimingAnnotationProvider {
 //        }
 //        return timeValueTable;
 //    }
-
 //    /* Method retrieves the timing information from file and stores them in a Hashmap. The WCRT between 
 //     * annotations @T1 and @T2 will be stored with String key @T1. Method returns null, if no timing 
 //     * information file can be found
@@ -296,7 +295,6 @@ class TimingAnnotationProvider {
 //        }
 //        return retMap;
 //    }
-
     /**
      * Reads the assumptions for the interactive timing analysis timing request file from the 
      * assumptions file to a stringBuilder
@@ -314,13 +312,64 @@ class TimingAnnotationProvider {
             br = new BufferedReader(new FileReader(uri));
             var String line = null;
 
-            //var Integer lineNumber = 0;
+            // var Integer lineNumber = 0;
             while ((line = br.readLine()) != null) {
                 stringBuilder.append("\n");
                 stringBuilder.append(line);
             }
         } catch (FileNotFoundException e) {
             System.out.println("Assumptions file could not be found.");
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Generates stubs for called functions that are mentioned in the assumptions file.
+     * 
+     * @param uri
+     *     The location of the assumptions file
+     * @param stringBuilder
+     *     The StringBuilder to which the content of the assumptions file will be appended
+     * @return
+     *     Returns true, if assumptions file could be found, false else.
+     */
+    def boolean writeStubs(String uri, StringBuilder stringBuilder) {
+        var BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(uri));
+            // as the file is given, we will need a dummy variable for the method stubs
+            stringBuilder.append("\n\n/* Stub implementations of called functions for stand alone "
+            +"testing " + "of this file */\nint dummy;");
+            var String line = null;
+            // var Integer lineNumber = 0;
+            while ((line = br.readLine()) != null) {
+                // Retrieve the function name
+               var tokenizer = new StringTokenizer(line);
+                while (tokenizer.hasMoreTokens()) {
+                    var token = tokenizer.nextToken();
+                    if (token.equals("FunctionWCET") && tokenizer.hasMoreTokens()) {
+                        var nameToken = tokenizer.nextToken();
+                        stringBuilder.append("\nvoid __attribute__ ((noinline)) " + nameToken 
+                            +"(){dummy = 0;}")
+                    }
+                }
+                stringBuilder.append("\n");
+                stringBuilder.append("");
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("No timing assumptions file found - no function stubs generated.");
             e.printStackTrace();
             return false;
         } catch (IOException e) {
@@ -351,30 +400,37 @@ class TimingAnnotationProvider {
         val returnList = new LinkedList<TimingRequestResult>();
         var i = 0 as int
         stringBuilder.append("\n\n# Analysis Requests");
-        appendFWCETAndLWCETRequest("entry", 1.toString(), returnList, stringBuilder);
+        if (highestTPP > 0){
+             appendFWCETAndLWCETRequest("entry", 1.toString(), returnList, stringBuilder);
+        
         for (i = 1; i < highestTPP; i = i + 1) {
             // there is no TPP with the number 13 (as this has special meaning for prototype analysis 
             // tool)
-            if (!(i == 12) && !(i == 13)){
-              appendFWCETAndLWCETRequest(i.toString(), (i+1).toString(), returnList, stringBuilder);
-        } else {
-            if (i == 12) {
-            appendFWCETAndLWCETRequest(i.toString(), (i + 2).toString, returnList, stringBuilder);
+            if (!(i == 12) && !(i == 13)) {
+                appendFWCETAndLWCETRequest(i.toString(), (i + 1).toString(), returnList, stringBuilder);
+            } else {
+                if (i == 12) {
+                    appendFWCETAndLWCETRequest(i.toString(), (i + 2).toString, returnList, stringBuilder);
+                }
             }
-        }      
         }
-         if (i == 13) {i = (i + 1)};
-         appendFWCETAndLWCETRequest(i.toString(), "exit", returnList, stringBuilder);
-         // add request for WCET path
-         stringBuilder.append("\nWCP entry exit")
-         var timingRequestResult = new TimingRequestResult();
-         timingRequestResult.setRequestType(RequestType.WCP);
-         timingRequestResult.setStartPoint("entry");
-         timingRequestResult.setEndPoint("exit");
-         returnList.add(timingRequestResult);
+        if (i == 13) {
+            i = (i + 1)
+        };
+        appendFWCETAndLWCETRequest(i.toString(), "exit", returnList, stringBuilder);
+        } else {
+            appendFWCETAndLWCETRequest("entry", "exit", returnList, stringBuilder);
+        }
+        // add request for WCET path
+        stringBuilder.append("\nWCP entry exit")
+        var timingRequestResult = new TimingRequestResult();
+        timingRequestResult.setRequestType(RequestType.WCP);
+        timingRequestResult.setStartPoint("entry");
+        timingRequestResult.setEndPoint("exit");
+        returnList.add(timingRequestResult);
         return returnList;
     }
-    
+
     /**
      * Method adds FWCET and LWCET requests for a specific pair of Timing Program points 
      * (given as string representations of their TPP numbers) to a stringBuilder, which is part of 
@@ -393,21 +449,21 @@ class TimingAnnotationProvider {
      * @param stringBuilder
      *       The String Builder, to which the requests are appended.
      */
-    def appendFWCETAndLWCETRequest(String startPoint, String endPoint, 
-        LinkedList<TimingRequestResult> resultList, StringBuilder stringBuilder) {
-            var timingRequestResult1 = new TimingRequestResult();
-            var timingRequestResult2 = new TimingRequestResult();
-            stringBuilder.append("\n");
-            stringBuilder.append("FWCET " + startPoint + " " + endPoint);
-            //    + "\nLWCET " + startPoint + " " + endPoint);
-            timingRequestResult1.setRequestType(RequestType.FWCET);
-            timingRequestResult1.setStartPoint(startPoint);
-            timingRequestResult1.setEndPoint(endPoint);
-            resultList.add(timingRequestResult1);
-            //timingRequestResult2.setRequestType(RequestType.LWCET);
-            //timingRequestResult2.setStartPoint(startPoint.toString());
-            //timingRequestResult2.setEndPoint(endPoint.toString());
-            //resultList.add(timingRequestResult2);
+    def appendFWCETAndLWCETRequest(String startPoint, String endPoint, LinkedList<TimingRequestResult> resultList,
+        StringBuilder stringBuilder) {
+        var timingRequestResult1 = new TimingRequestResult();
+        var timingRequestResult2 = new TimingRequestResult();
+        stringBuilder.append("\n");
+        stringBuilder.append("FWCET " + startPoint + " " + endPoint);
+        // + "\nLWCET " + startPoint + " " + endPoint);
+        timingRequestResult1.setRequestType(RequestType.FWCET);
+        timingRequestResult1.setStartPoint(startPoint);
+        timingRequestResult1.setEndPoint(endPoint);
+        resultList.add(timingRequestResult1);
+    // timingRequestResult2.setRequestType(RequestType.LWCET);
+    // timingRequestResult2.setStartPoint(startPoint.toString());
+    // timingRequestResult2.setEndPoint(endPoint.toString());
+    // resultList.add(timingRequestResult2);
     }
-    
+
 }

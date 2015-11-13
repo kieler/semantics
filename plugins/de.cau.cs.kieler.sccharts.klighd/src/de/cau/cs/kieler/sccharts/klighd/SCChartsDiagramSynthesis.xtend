@@ -200,6 +200,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     private static val SynthesisOption SHOW_TIMING = SynthesisOption::createCheckOption(
         "Timing Analysis", false);
 
+    private static val SynthesisOption SHOW_TIMING_HIGHLIGHTING = SynthesisOption::createCheckOption(
+        "Hotspot Highlighting", false);
+        
+    private static val SynthesisOption SHOW_TIMING_REP = SynthesisOption::createChoiceOption(
+        "Timing Representation",
+        TimingAnalysis.TimingValueRepresentation.values,
+        TimingAnalysis.TimingValueRepresentation.CYCLES);
+        
     DependencyGraph dependencyGraph = null
 
     private static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadow", true);
@@ -209,7 +217,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW, SHOW_SCG_DEPENDENCIES, SHOW_SCG_LOOPS, SHOW_TIMING);
+            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW, SHOW_SCG_DEPENDENCIES, SHOW_SCG_LOOPS, 
+            SynthesisOption::createSeparator("Timing Analysis"), SHOW_TIMING, SHOW_TIMING_HIGHLIGHTING, SHOW_TIMING_REP);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -311,7 +320,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         }
         
         if(SHOW_TIMING.booleanValue){
-            TimingAnalysis.startAnalysis((model as State), rootNode, usedContext);
+            TimingAnalysis.startAnalysis((model as State), rootNode, usedContext,
+                SHOW_TIMING_HIGHLIGHTING.booleanValue, 
+                SHOW_TIMING_REP.objectValue as TimingAnalysis.TimingValueRepresentation
+            );
         }
         
 //        rootNode.eAdapters.remove(tracking)

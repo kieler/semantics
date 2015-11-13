@@ -13,8 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.tsccharts;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,6 +29,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -96,10 +102,33 @@ import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures;
 import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
 
 /**
- * @author als, ima
+ * @author ima, als
  *
  */
 public class TimingAnalysis extends Job {
+
+    private static int MEGAHERTZ = 200;
+
+    public enum TimingValueRepresentation {
+        PERCENT, CYCLES, MILLISECONDS;
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            switch (this) {
+            case PERCENT:
+                return "Percentage";
+            case CYCLES:
+                return "Cycles";
+            case MILLISECONDS:
+                return "Milliseconds";
+            default:
+                return "";
+            }
+        }
+    }
 
     private static HashMap<Pair<String, String>, Set<String>> debugTracingHistory =
             new HashMap<Pair<String, String>, Set<String>>();
@@ -120,7 +149,8 @@ public class TimingAnalysis extends Job {
     private static SCChartsExtension scchartsExtension = Guice.createInjector().getInstance(
             SCChartsExtension.class);
 
-    public static void startAnalysis(State rootState, KNode rootNode, ViewContext viewContext) {
+    public static void startAnalysis(State rootState, KNode rootNode, ViewContext viewContext,
+            boolean highlight, TimingValueRepresentation rep) {
         // It is normal that some nodes of the SCG will be mapped to null, because they belong to
         // the SCChart itself not to a Region of the SCChart (they cannot be attributed to the
         // outermost
@@ -180,8 +210,8 @@ public class TimingAnalysis extends Job {
         rectangle.getChildren().add(text);
         timingLabels.put(null, new WeakReference<KText>(text));
         // start analysis job
-        new TimingAnalysis(rootState, timingLabels, scchartDummyRegion, resource, regionRectangles)
-                .schedule();
+        new TimingAnalysis(rootState, timingLabels, scchartDummyRegion, resource, regionRectangles,
+                highlight, rep).schedule();
     }
 
     private State scchart;
@@ -190,17 +220,22 @@ public class TimingAnalysis extends Job {
     private Region scchartDummyRegion;
     private HashMultimap<Region, WeakReference<KRectangle>> regionRectangles;
     private ArrayList<Region> wcpRegions = new ArrayList<Region>();
+    private TimingValueRepresentation rep;
+    private boolean highlight;
 
     /**
      * @param name
      * @param rootState
      * @param scchartDummyRegion
      * @param regionRectangles
+     * @param highlight
+     * @param rep
      * @param rootNode
      */
     public TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels,
             Region scchartDummyRegion, Resource resource,
-            HashMultimap<Region, WeakReference<KRectangle>> regionRectangles) {
+            HashMultimap<Region, WeakReference<KRectangle>> regionRectangles, boolean highlight,
+            TimingValueRepresentation rep) {
         super("Timing Analysis");
         this.scchart = rootState;
         this.timingLabels = regionLabels;
@@ -208,6 +243,8 @@ public class TimingAnalysis extends Job {
         this.scchartDummyRegion = scchartDummyRegion;
         this.resource = resource;
         this.regionRectangles = regionRectangles;
+        this.highlight = highlight;
+        this.rep = rep;
     }
 
     /**
@@ -224,7 +261,7 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-        
+
         final KRenderingFactory renderingFactory = KRenderingFactory.eINSTANCE;
         KielerCompilerContext context =
                 new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID
@@ -353,8 +390,8 @@ public class TimingAnalysis extends Job {
         }
 
         String code = compilationResult.getString();
-//        // Debug, might be removed
-//        System.out.print(code);
+        // // Debug, might be removed
+        // System.out.print(code);
 
         // Step 5: Send C code to timing analyzer
 
@@ -363,9 +400,14 @@ public class TimingAnalysis extends Job {
             return Status.CANCEL_STATUS;
         }
         String uri = null;
+        String fileName = null;
+        String fileFolder = null;
         if (resource != null) {
             IFile file = ResourceUtil.getFile(resource);
             uri = file.getLocationURI().toString();
+            fileName = file.getName();
+            fileFolder = uri.replace("file:", "");
+            fileFolder = fileFolder.replace(fileName, "");
         } else {
             return new Status(IStatus.ERROR, pluginId,
                     "The resource for the given model could not be found.");
@@ -374,63 +416,116 @@ public class TimingAnalysis extends Job {
         // Write the generated code to file
         String codeTargetFile = uri.replace(".sct", ".c");
         String codeTargetFilePath = codeTargetFile.replace("file:", "");
-        // Workaround for DATE:
+        // Workaround for validation with David Broman's tool that does not handle chars:
         String codeInt = code.replace("char", "int");
         code = codeInt;
         // Workaround end
-        
-        fileWriter.writeToFile(code, codeTargetFilePath);
-
-        // Prepare assumptions
+        // Code additions to make the code stand-alone-executable
+        StringBuilder codeAdditionBuilder = new StringBuilder();
+        codeAdditionBuilder.append("\n\n/* Header file for Timing program points */"
+                + "\n#include \"../tpp.h\"");
         String assumptionFile = uri.replace(".sct", ".asu");
         String assumptionFilePath = assumptionFile.replace("file:", "");
-        StringBuilder stringBuilder = new StringBuilder();
-        boolean assumptionFileFound = 
-                timingAnnotationProvider.getAssumptions(assumptionFilePath, stringBuilder);
+        boolean assumptionFileFound =
+                timingAnnotationProvider.writeStubs(assumptionFilePath, codeAdditionBuilder);
         if (!assumptionFileFound) {
-            return new Status(IStatus.ERROR, pluginId, "An associated assumption file for this model "
-                    + "could not be found.");
+            System.out.println("There are no assumptions on called functions found.");
+        }
+        System.out.println(codeAdditionBuilder.toString());
+        String codeAdapted =
+                code.replace("***/\nint", "***/" + codeAdditionBuilder.toString() + "\nint");
+        code = codeAdapted;
+
+        fileWriter.writeToFile(code, codeTargetFilePath);
+
+        // Generate the timing request file with the assumptions
+        StringBuilder stringBuilder = new StringBuilder();
+        // In any case we will ask for the analysis of the tick function
+        stringBuilder.append("Function tick\nInitFunction reset\nState _GO");
+        // Declare the state variables (corresponding to the registers, this is about execution
+        // states)
+        StringTokenizer codeTokenizer = new StringTokenizer(code);
+        while (codeTokenizer.hasMoreTokens()) {
+            String currentToken = codeTokenizer.nextToken();
+            if (currentToken.startsWith("PRE")) {
+                currentToken = currentToken.replace(";", "");
+                stringBuilder.append("\nState " + currentToken);
+            }
+            if (currentToken.startsWith("reset")) {
+                break;
+            }
         }
         // Get the inputs for which we want to have globalvar assumptions
-        // Note that at the moment we will generate globalvar assumptions automatically only for boolean
+        // Note that at the moment we will generate globalvar assumptions automatically only for
+        // boolean
         // inputs, others have to be specified in the .asu file
+        // // First, add an assumption line for _GO, which will always be there, we treat it
+        // analogously to
+        // // environment inputs (as opposed to states)
+        // stringBuilder.append("\nGlobalVar _GO 0..1");
         EList<Declaration> declarationList = scchart.getDeclarations();
         Iterator<Declaration> declarationListIterator = declarationList.iterator();
         while (declarationListIterator.hasNext()) {
             Declaration currentDeclaration = declarationListIterator.next();
             if (currentDeclaration.isInput()) {
-                if (currentDeclaration.getType().equals(ValueType.BOOL)) {
+                ValueType type = currentDeclaration.getType();
+                if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
                     stringBuilder.append("\nGlobalVar "
-                            + currentDeclaration.getValuedObjects().get(0).getName()
-                            + " 0..1");
+                            + currentDeclaration.getValuedObjects().get(0).getName() + " 0..1");
                 }
             }
         }
-        
-        // just debug, may be removed
-       System.out.println(stringBuilder.toString());
-
+        // read (optional) additional assumptions and timing assumptions for called functions into
+        // the
+        // assumptions file
+        boolean assumptionFilePresent =
+                timingAnnotationProvider.getAssumptions(assumptionFilePath, stringBuilder);
+        if (!assumptionFilePresent) {
+            System.out
+                    .println("An associated assumption file for this model was not found. No timing "
+                            + "assumptions for called functions available.");
+        }
         // write timing requests appended to the assumptionString
         LinkedList<TimingRequestResult> resultList =
                 timingAnnotationProvider.writeTimingRequests(highestInsertedTPPNumber,
                         stringBuilder);
-//        // just debug, may be removed
-//        System.out.println(stringBuilder.toString());
-
         // .ta file string complete, write it to file
         String requestFile = uri.replace(".sct", ".ta");
         String requestFilePath = requestFile.replace("file:", "");
         fileWriter.writeToFile(stringBuilder.toString(), requestFilePath);
 
         Runtime rt = Runtime.getRuntime();
-        String command = "/Users/ima/shared/ptc/bin/ptc " + requestFilePath;
+        String taFileName = fileName.replace(".sct", ".ta");
+        String cFileName = fileName.replace(".sct", ".c");
+        String command =
+                "kta ta -compile " + fileFolder + cFileName
+                        + " -tafile " + fileFolder + taFileName;
+        // String command = "/Users/ima/shared/ptc/bin/ptc " + requestFilePath;
         try {
+            //System.out.println("Current value of PATH: \n" + System.getenv("PATH"));
             Process pr = rt.exec(command);
+            // get the timing analysis tool's console output
+            BufferedReader stdInput =
+                    new BufferedReader(new InputStreamReader(pr.getInputStream()));
+            BufferedReader stdError =
+                    new BufferedReader(new InputStreamReader(pr.getErrorStream()));
+            // read the output of the analysis tool
+            System.out.println("Output from the timing analysis tool:");
+            String s = null;
+            while ((s = stdInput.readLine()) != null) {
+                System.out.println(s);
+            }
+            // read error messages of the anylsis tool
+            System.out.println("Error output from the timing analysis tool:");
+            System.out.println("-----end of timing analysis tool output-------\n");
+            while ((s = stdError.readLine()) != null) {
+                System.out.println(s);
+            }
             // wait for the timing analysis tool to complete its job
             pr.waitFor();
         } catch (IOException e) {
             return new Status(IStatus.ERROR, pluginId,
-                    "The timing analysis tool could not be invoked.");
+                    "The timing analysis tool could not be invoked." + e.getMessage());
         } catch (InterruptedException e) {
             return new Status(IStatus.ERROR, pluginId,
                     "The timing analysis tool invokation was interrupted");
@@ -455,7 +550,7 @@ public class TimingAnalysis extends Job {
         String taPath = taFile.replace("file:", "");
 
         int timingInformationFetch =
-                timingAnnotationProvider.getTimingInformation(resultList, taPath);
+                timingAnnotationProvider.getTimingInformation(resultList, taPath, rep);
         if (timingInformationFetch == 1) {
             return new Status(IStatus.ERROR, pluginId, "The timing information file was not found");
         } else if (timingInformationFetch == 2) {
@@ -474,8 +569,8 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-        
-        if(DEBUG){
+
+        if (DEBUG) {
             debugTracing(nodeRegionMapping);
         }
 
@@ -483,51 +578,64 @@ public class TimingAnalysis extends Job {
         new UIJob("Inserting timing data") {
             @Override
             public IStatus runInUIThread(IProgressMonitor monitor) {
+
+                // get overallWCET
+                Integer overallWCET = 0;
+                String scchartTiming = timingResults.get(scchartDummyRegion);
+                String timingResultChart = timingResults.get(null);
+                if (scchartTiming != null) {
+                    Integer timingResultSum =
+                            Integer.parseInt(timingResultChart) + Integer.parseInt(scchartTiming);
+                    overallWCET = timingResultSum;
+                } else {
+                    overallWCET = Integer.parseInt(timingResultChart);
+                }
+
                 for (Region region : timingLabels.keySet()) {
+                    String timingResult = timingResults.get(region);
                     Set<WeakReference<KText>> labels = timingLabels.get(region);
                     for (WeakReference<KText> labelRef : labels) {
                         KText label = labelRef.get();
                         if (label != null) {
-                            String timingResult = timingResults.get(region);
+                            // String timingResult = timingResults.get(region);
                             // Special case: Timing for the whole SCChart
                             if (region == null) {
                                 // get the timing for elements not attributed to a concrete region
-                                String scchartTiming = timingResults.get(scchartDummyRegion);
+                                // String scchartTiming = timingResults.get(scchartDummyRegion);
                                 // add it to the timing for child regions
-                                if (scchartTiming != null) {
-                                    Integer timingResultSum =
-                                            Integer.parseInt(timingResult)
-                                                    + Integer.parseInt(scchartTiming);
-                                    timingResult = timingResultSum.toString();
-                                }
+                                // if (scchartTiming != null) {
+                                // Integer timingResultSum =
+                                // Integer.parseInt(timingResult)
+                                // + Integer.parseInt(scchartTiming);
+                                // overallWCET = timingResultSum;
+                                timingResult = overallWCET.toString();
                             }
+                        }
+                        // Adapt timing values, when representation is not in the default case
+                        if (rep != TimingValueRepresentation.CYCLES) {
+                            String newTimingResult =
+                                    adaptTimingRepresentation(rep, timingResult, overallWCET);
+                            label.setText(newTimingResult);
+                        } else {
                             label.setText(timingResult);
-                            // If the region belongs to the WCET path, enlarge numbers
-                            if (wcpRegions.contains(region)) {
-                                renderingExtensions.setFontSize(label, 18);
-                            }
+                        }
+                        // If the region belongs to the WCET path, enlarge numbers
+                        if (wcpRegions.contains(region)) {
+                            renderingExtensions.setFontSize(label, 18);
                         }
                     }
-                    // If the region belongs to the WCET path, set rectangle in red, thick lines
-                    if (wcpRegions.contains(region)) {
-                        Set<WeakReference<KRectangle>> rectangleRefs = regionRectangles.get(region);
-                        for (WeakReference<KRectangle> rectangleRef : rectangleRefs) {
-                            KRectangle regionRectangle = rectangleRef.get();
-                            KRectangle inner = KRenderingFactory.eINSTANCE.createKRectangle();
-                            regionRectangle.getChildren().add(0, inner);
-                            regionRectangle.getStyles().add(
-                                    renderingFactory.createKForeground().setColor(
-                                            Colors.RED));
-                            KBackground background = renderingFactory.createKBackground();
-                            background.setAlpha(30);
-//                            background.setTargetColor(Colors.RED);
-//                            background.setTargetAlpha(30);
-                            inner.getStyles().add(background.setColor(Colors.RED));
-                            final KLineWidth lwStyle =
-                                    KRenderingFactory.eINSTANCE.createKLineWidth();
-                            lwStyle.setLineWidth(3);
-                            regionRectangle.getStyles().add(lwStyle);
+                    // If the region belongs to the WCET path, highlight, if requested by user
+                    if (highlight && wcpRegions.contains(region)) {
+                        // determine how much percent of the overall WCET is attributed to this
+                        // region
+                        double percentage = 0.0;
+                        if (timingResultChart != null) {
+                            StringTokenizer resultTokenizer = new StringTokenizer(timingResult);
+                            Double timingvalue = Double.parseDouble(resultTokenizer.nextToken());
+                            double onePercent = overallWCET / 100.0;
+                            percentage = timingvalue / onePercent;
                         }
+                        highlightRegion(region, renderingFactory, percentage);
                     }
                 }
 
@@ -539,6 +647,95 @@ public class TimingAnalysis extends Job {
         System.out.println("Interactive Timing Analysis completed (elapsed time: " + elapsedTime
                 + " ms).");
         return Status.OK_STATUS;
+    }
+
+    /**
+     * The method adapts the timing representation, if it is not in the default case
+     * 
+     * @param rep
+     *            The timing representation chosen by the user
+     * @param timingResult
+     *            The timing Result, which has one of the formats "<number> / <number>" or <number>
+     * @param overallWCET
+     *            The overall WCET needed to calculate percentages
+     */
+    private String adaptTimingRepresentation(TimingValueRepresentation rep, String timingResult,
+            Integer overallWCET) {
+        String newTimingResult = "";
+        StringTokenizer StringTokenizer = new StringTokenizer(timingResult);
+        // If we represent in percentage, the overall timing value should stay untouched, in that
+        // case
+        // and only that case the String consists of only one number
+        if (StringTokenizer.countTokens() > 1) {
+            if (rep == TimingValueRepresentation.PERCENT) {
+                double onePercent = overallWCET / 100.00;
+                double FirstNumber = Double.parseDouble(StringTokenizer.nextToken());
+                // throw away the "/"
+                // TODO: Define delimiter set that renders this unnecessary
+                StringTokenizer.nextToken();
+                double SecondNumber = Double.parseDouble(StringTokenizer.nextToken());
+                FirstNumber /= onePercent;
+                SecondNumber /= onePercent;
+                newTimingResult =
+                        String.format("%.2f", FirstNumber) + " / "
+                                + String.format("%.2f", SecondNumber);
+            }
+        } else {
+            if (rep == TimingValueRepresentation.PERCENT) {
+                newTimingResult = "100";
+            }
+        }
+        if (rep == TimingValueRepresentation.MILLISECONDS) {
+            while (StringTokenizer.hasMoreTokens()) {
+                String token = StringTokenizer.nextToken();
+                if (!token.equals("/")) {
+                    double cycles = Double.parseDouble(token);
+                    double timeInMillisecs = (cycles / (MEGAHERTZ * 1000.0));
+                    newTimingResult += (String.format("%.5f", timeInMillisecs));
+                } else {
+                    newTimingResult += (" " + token + " ");
+                }
+            }
+        }
+        return newTimingResult;
+    };
+
+    /**
+     * The method highlightRegion adds red background color to the display of a region. In this the
+     * darkness of the red color increases with increased the higher the percentage of overall WCET
+     * that is attributed to this region.
+     * 
+     * @param region
+     *            The region to be highlighted.
+     * @param renderingFactory
+     *            A renderingFactory
+     * @param percentage
+     *            The percentage of the region's fractional WCET in relation to overall WCET
+     */
+    private void highlightRegion(Region region, KRenderingFactory renderingFactory,
+            double percentage) {
+        Set<WeakReference<KRectangle>> rectangleRefs = regionRectangles.get(region);
+        for (WeakReference<KRectangle> rectangleRef : rectangleRefs) {
+            KRectangle regionRectangle = rectangleRef.get();
+            KRectangle inner = KRenderingFactory.eINSTANCE.createKRectangle();
+            regionRectangle.getChildren().add(0, inner);
+            if (percentage > 50) {
+                regionRectangle.getStyles().add(
+                        renderingFactory.createKForeground().setColor(Colors.RED));
+            }
+            KBackground background = renderingFactory.createKBackground();
+            // in casting percentage, all percentages below zero will be set to 0, thus they will
+            // not
+            // be marked as hot spots
+            int alpha = (int) percentage;
+            background.setAlpha(alpha);
+            inner.getStyles().add(background.setColor(Colors.RED));
+            if (percentage > 50) {
+                final KLineWidth lwStyle = KRenderingFactory.eINSTANCE.createKLineWidth();
+                lwStyle.setLineWidth(3);
+                regionRectangle.getStyles().add(lwStyle);
+            }
+        }
     }
 
     /**
@@ -560,8 +757,7 @@ public class TimingAnalysis extends Job {
      * @param tppRegionMap
      *            A Mapping between Timing Program Points and Regions
      * @param rootState
-     * @return
-     *        Returns a list of the Regions that are on the WCET path
+     * @return Returns a list of the Regions that are on the WCET path
      */
     private ArrayList<Region> extractTimingLabels(RequestType requestType,
             LinkedList<TimingRequestResult> resultList,
@@ -613,8 +809,8 @@ public class TimingAnalysis extends Job {
             Region currentRegion = regionIterator.next();
             if (!(currentRegion == null)) {
                 // Possibly we have to mark this region as part of the WCET path (WCP)
-                regionLabelStringMap.put(currentRegion, flatValues.get(currentRegion)
-                        + " / " + deepValues.get(currentRegion));
+                regionLabelStringMap.put(currentRegion, flatValues.get(currentRegion) + " / "
+                        + deepValues.get(currentRegion));
             } else {
                 Integer WCRT = 0;
                 Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();
@@ -943,9 +1139,9 @@ public class TimingAnalysis extends Job {
         scg.getNodes().add(tpp);
         return tpp;
     }
-    
+
     // DEBUG METHODS
-    
+
     private void debugTracing(HashMap<Node, Region> nodeRegionMapping) {
         // get all regions
         Set<Region> regions = new HashSet<Region>(nodeRegionMapping.values());
@@ -956,8 +1152,10 @@ public class TimingAnalysis extends Job {
             String regionID = r == null ? "root" : r.getId();
             if (regionID == null) {
                 State parentState = r.getParentState();
-                regionID = parentState.getId() + parentState.getLabel() + parentState.getRegions().indexOf(r) + r.getLabel();
-            }else if(r != null) {
+                regionID =
+                        parentState.getId() + parentState.getLabel()
+                                + parentState.getRegions().indexOf(r) + r.getLabel();
+            } else if (r != null) {
                 regionID += r.getLabel();
             }
             Pair<String, String> pair =
