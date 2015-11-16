@@ -11,23 +11,22 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd;
+package de.cau.cs.kieler.sccharts.klighd.labels;
 
 import org.eclipse.swt.graphics.FontData;
 
 import de.cau.cs.kieler.core.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
+import de.cau.cs.kieler.klighd.labels.LabelManagementUtil;
 import de.cau.cs.kieler.klighd.labels.SoftWrappingLabelManager;
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil;
 
 /**
- * Modifies the size of labels by truncating them once the target width is reached. This label
- * manager knows that transition labels can consist of two parts: the trigger and the action. Both
- * are taken into consideration when shortening the label.
+ * Semantically wraps transition labels, taking the trigger and effect part into account separately.
  * 
  * @author cds
  */
-public final class SemanticalWrappingManager extends AbstractKlighdLabelManager {
+public final class SemanticalWrappingTransitionLabelManager extends AbstractKlighdLabelManager {
 
     /**
      * {@inheritDoc}
@@ -35,31 +34,31 @@ public final class SemanticalWrappingManager extends AbstractKlighdLabelManager 
     @Override
     public String resizeLabel(KLabel label, double targetWidth) {
         SoftWrappingLabelManager softWrappingLabelManager = new SoftWrappingLabelManager();
-        softWrappingLabelManager.setTargetWidth(targetWidth);
+        softWrappingLabelManager.fixTargetWidth(targetWidth);
+        
         String[] triggerEffect = label.getText().split("/");
         String[] words = label.getText().split(" ");
-        String newText = label.getText();
 
         final FontData font = PlacementUtil.fontDataFor(label);
 
-         double biggestWordSize = softWrappingLabelManager.getSizeOfBiggestWord(font,words);
-         biggestWordSize=Math.max(biggestWordSize,targetWidth / 2.0);
+        double biggestWordSize = LabelManagementUtil.getWidthOfBiggestWord(font, words);
+        biggestWordSize = Math.max(biggestWordSize, targetWidth / 2.0);
 
         if (triggerEffect.length == 1) {
-            newText = softWrappingLabelManager.resizeLabel(label, targetWidth);
-
+            return softWrappingLabelManager.resizeLabel(label, targetWidth);
         } else if (triggerEffect.length == 2) {
-            
-            // shorten trigger
+            // Shorten trigger
             label.setText(triggerEffect[0].trim());
             String firstHalf = softWrappingLabelManager.resizeLabel(label, biggestWordSize);
-            
-            // shorten effect
+
+            // Shorten effect
             label.setText(triggerEffect[1].trim());
             String secondHalf = softWrappingLabelManager.resizeLabel(label, biggestWordSize);
-            newText = firstHalf + " /\n" + secondHalf;
+            
+            return firstHalf + " /\n" + secondHalf;
         }
-        return newText;
+        
+        return null;
     }
 
 }

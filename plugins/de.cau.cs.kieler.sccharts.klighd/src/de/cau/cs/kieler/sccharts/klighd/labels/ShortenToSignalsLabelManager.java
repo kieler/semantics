@@ -11,23 +11,27 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd;
+package de.cau.cs.kieler.sccharts.klighd.labels;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import de.cau.cs.kieler.core.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
 
 /**
+ * Label manager that shortens transition labels to the list of signals they contain.
+ * 
  * @author ybl
- *
  */
-public class TruncatingOperatorsLabelManager extends AbstractKlighdLabelManager {
+public class ShortenToSignalsLabelManager extends AbstractKlighdLabelManager {
 
-    private final static String[] OPERATORS = { "~", "!", "*", "/", "%", "+", "-", "<<", ">>",
-            ">>>", "<", ">", "<=", ">=", "==", "!=", "&", "^", "|", "&&", "||", "?", "=", "+=",
-            "-=", "*=", "/=", "%=", "&=", "^=", "|=", "<<=", ">>=", ">>>=", ";" };
+    /** Operators used in transition labels. */
+    private final static List<String> OPERATORS = Arrays.asList(new String[] { "<<", ">>", ">>>",
+            "<=", ">=", "==", "!=", "&", "^", "|", "&&", "||", "?", "=", "+=", "-=", "*=", "/=",
+            "%=", "&=", "^=", "|=", "<<=", ">>=", ">>>=", ";", "~", "!", "*", "/", "%", "+", "-",
+            "<", ">" });
 
     /**
      * {@inheritDoc}
@@ -37,19 +41,16 @@ public class TruncatingOperatorsLabelManager extends AbstractKlighdLabelManager 
         LinkedList<String> deleteEntriesList = new LinkedList<String>();
         String resultText = label.getText();
 
-        // delete all operators
+        // Delete all operators
         for (String entry : OPERATORS) {
             resultText = resultText.replace(entry, "");
         }
 
-        // delete true, false and all numbers
-        LinkedList<String> textList =
-                new LinkedList<String>(Arrays.asList(resultText.trim().split(" ")));
-
-        // filter numbers
-        boolean deleteAlsoNext = false;
+        // Delete numbers
+        LinkedList<String> textList = new LinkedList<String>(
+                Arrays.asList(resultText.trim().split(" ")));
+        
         for (String textPart : textList) {
-
             try {
                 Integer.valueOf(textPart);
                 deleteEntriesList.add(textPart);
@@ -58,25 +59,14 @@ public class TruncatingOperatorsLabelManager extends AbstractKlighdLabelManager 
                     deleteEntriesList.add(textPart);
                 }
             }
-
-            // if (textPart.contains("(")) {
-            // deleteEntriesList.add(textPart);
-            // deleteAlsoNext = true;
-            // } else if (textPart.contains(")")) {
-            // deleteEntriesList.add(textPart);
-            // deleteAlsoNext = false;
-            // }
-            // if (deleteAlsoNext) {
-            // deleteEntriesList.add(textPart);
-            // }
-
         }
+        
         for (String entry : deleteEntriesList) {
             while (textList.remove(entry)) {
             }
         }
 
-        // retransform the list to string and add commata
+        // Retransform the list to string and add commata
         resultText = "";
         boolean hostCode = false;
         for (String textPart : textList) {
@@ -96,10 +86,12 @@ public class TruncatingOperatorsLabelManager extends AbstractKlighdLabelManager 
                 }
             }
         }
+        
         if (!textList.isEmpty() && !textList.get(0).equals("")) {
             // remove last comma
             resultText = resultText.substring(0, resultText.length() - 2);
         }
+        
         return resultText;
     }
 }

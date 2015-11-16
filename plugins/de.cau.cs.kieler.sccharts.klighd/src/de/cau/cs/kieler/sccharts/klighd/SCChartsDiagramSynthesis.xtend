@@ -49,6 +49,7 @@ import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager
+import de.cau.cs.kieler.klighd.labels.ListLabelManager
 import de.cau.cs.kieler.klighd.labels.TruncatingLabelManager
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
@@ -64,6 +65,11 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
+import de.cau.cs.kieler.sccharts.klighd.labels.HostCodeTransitionLabelManager
+import de.cau.cs.kieler.sccharts.klighd.labels.SemanticalWrappingTransitionLabelManager
+import de.cau.cs.kieler.sccharts.klighd.labels.ShortenToSignalsLabelManager
+import de.cau.cs.kieler.sccharts.klighd.labels.TransitionPriorityLabelManager
+import de.cau.cs.kieler.sccharts.klighd.labels.TruncateSignalsLabelManager
 import de.cau.cs.kieler.sccharts.s.DataDependency
 import de.cau.cs.kieler.sccharts.s.DependencyGraph
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
@@ -76,7 +82,6 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.labels.ListLabelManager
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -974,55 +979,49 @@ private static val SynthesisOption SHORTEN_LABELS_LEVELS = SynthesisOption::crea
         // Evaluate the label shortening property
         switch SHORTEN_LABELS_LEVELS.intValue {
             case 0: {
-                //Filter all
-                labelManager = new FilterLabelsBesidesTransNumberManager()
+                // Filter all
+                labelManager = new TransitionPriorityLabelManager()
                 kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
             }
             case 1: {
-                //Truncate Label
+                // Truncate Label
                 labelManager = new TruncatingLabelManager();
-                labelManager.setTargetWidth(TARGET_WIDTH_LEVELS.intValue);
+                labelManager.fixTargetWidth(TARGET_WIDTH_LEVELS.intValue);
                 kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
             }
             case 2: {
-
-                //semantical wrap the label
-                labelManager = new SemanticalWrappingManager()
-                labelManager.setTargetWidth(TARGET_WIDTH_LEVELS.intValue);
+                // Semantical wrap the label
+                labelManager = new SemanticalWrappingTransitionLabelManager()
+                labelManager.fixTargetWidth(TARGET_WIDTH_LEVELS.intValue);
                 kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
             }
             case 3: {
-
-                //Truncate all operators
-                labelManager = new TruncatingOperatorsLabelManager();
-                labelManager.setTargetWidth(TARGET_WIDTH_LEVELS.intValue);
+                // Truncate all operators
+                labelManager = new ShortenToSignalsLabelManager();
+                labelManager.fixTargetWidth(TARGET_WIDTH_LEVELS.intValue);
                 kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
             }
             case 4: {
-
-                //Truncate only signals
-                labelManager = new TruncateOnlySignalsLabelManager();
-                labelManager.setTargetWidth(TARGET_WIDTH_LEVELS.intValue);
+                // Truncate only signals
+                labelManager = new TruncateSignalsLabelManager();
+                labelManager.fixTargetWidth(TARGET_WIDTH_LEVELS.intValue);
                 kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
             }
             case 5: {
-
-                //Truncate all HostCode arguments
-                labelManager = new TruncateHostCodeArguments();
-                labelManager.setTargetWidth(TARGET_WIDTH_LEVELS.intValue);
+                // Truncate all HostCode arguments
+                labelManager = new HostCodeTransitionLabelManager();
+                labelManager.fixTargetWidth(TARGET_WIDTH_LEVELS.intValue);
                 kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
             }
             case 6: {
-
-                //Truncate all HostCode arguments
-                labelManager = new ListLabelManager(false, new TruncatingOperatorsLabelManager(),
-                    new TruncateHostCodeArguments(), new SemanticalWrappingManager());
-                labelManager.setTargetWidth(TARGET_WIDTH_LEVELS.intValue);
+                // Truncate all HostCode arguments
+                labelManager = new ListLabelManager(false, new ShortenToSignalsLabelManager(),
+                    new HostCodeTransitionLabelManager(), new SemanticalWrappingTransitionLabelManager());
+                labelManager.fixTargetWidth(TARGET_WIDTH_LEVELS.intValue);
                 kgraph.setLayoutOption(LabelManagementOptions.LABEL_MANAGER, labelManager)
             }
             case 7: {
-                //original Text
-            //}
+                // Original Text
             }
         }
     }

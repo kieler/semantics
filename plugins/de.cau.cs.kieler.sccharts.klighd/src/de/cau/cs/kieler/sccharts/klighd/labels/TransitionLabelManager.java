@@ -11,15 +11,14 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd;
+package de.cau.cs.kieler.sccharts.klighd.labels;
 
 import de.cau.cs.kieler.core.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
 
 /**
- * Modifies the size of labels by truncating them once the target width is reached. This label
- * manager knows that transition labels can consist of two parts: the trigger and the action. Both
- * are taken into consideration when shortening the label.
+ * A compound label manager that uses child label managers to resize the trigger and the effect part
+ * of a transition.
  * 
  * @author cds
  */
@@ -34,6 +33,7 @@ public final class TransitionLabelManager extends AbstractKlighdLabelManager {
      * {@link AbstractKlighdLabelManager} to handle the effect of the transition
      */
     private final AbstractKlighdLabelManager labelManagerEffect;
+    
 
     /**
      * Create a new instance that is either switched on or off initially. If it is switched off, the
@@ -57,27 +57,28 @@ public final class TransitionLabelManager extends AbstractKlighdLabelManager {
      * @param initiallyActive
      *            whether the label size modifier is switched on or not.
      * @param labelManagerTrigger
-     *            {@link AbstractKlighdLabelManager} to shorten label of the trigger
-     * 
+     *            {@link AbstractKlighdLabelManager} to shorten label of the trigger.
      * @param labelManagerEffect
-     *            {@link AbstractKlighdLabelManager} to shorten label of the effect
+     *            {@link AbstractKlighdLabelManager} to shorten label of the effect.
      */
     public TransitionLabelManager(final AbstractKlighdLabelManager labelManagerTrigger,
             final AbstractKlighdLabelManager labelManagerEffect) {
+        
         this.labelManagerTrigger = labelManagerTrigger;
         this.labelManagerEffect = labelManagerEffect;
     }
+    
 
-    // ////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////
     // Label Size Modification
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String resizeLabel(KLabel label, double targetWidth) {
+    public String resizeLabel(final KLabel label, final double targetWidth) {
         String[] triggerEffect = label.getText().split("/");
-        String newText = label.getText();
+        String newText = null;
 
         if (triggerEffect.length == 1) {
             // there is no Trigger or effect
@@ -94,8 +95,10 @@ public final class TransitionLabelManager extends AbstractKlighdLabelManager {
             // shorten effect
             label.setText(triggerEffect[1]);
             String secondHalf = labelManagerEffect.resizeLabel(label, targetWidth / 2.0);
+            
             newText = firstHalf + " / " + secondHalf;
         }
+        
         return newText;
     }
 

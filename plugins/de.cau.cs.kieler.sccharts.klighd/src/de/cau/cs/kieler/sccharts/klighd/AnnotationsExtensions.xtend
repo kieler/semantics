@@ -20,10 +20,8 @@ import de.cau.cs.kieler.core.annotations.FloatAnnotation
 import de.cau.cs.kieler.core.annotations.IntAnnotation
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.kgraph.KNode
-
 import de.cau.cs.kieler.kiml.LayoutMetaDataService
 import de.cau.cs.kieler.kiml.LayoutOptionData
-import de.cau.cs.kieler.kiml.LayoutOptionData$Type
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 
 /**
@@ -51,7 +49,7 @@ class AnnotationsExtensions {
                       (it as BooleanAnnotation).value
                     case annotationsPackage.intAnnotation: {
                       val value = (it as IntAnnotation).value;
-                      if (data.type == LayoutOptionData$Type::FLOAT) new Float(value) else value
+                      if (data.type == LayoutOptionData.Type::FLOAT) new Float(value) else value
                     }
                     case annotationsPackage.floatAnnotation:
                      (it as FloatAnnotation).value
