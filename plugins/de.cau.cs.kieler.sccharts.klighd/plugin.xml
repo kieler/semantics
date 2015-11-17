@@ -11,6 +11,10 @@
             class="de.cau.cs.kieler.sccharts.klighd.SCChartsReferenceExpandAction"
             id="de.cau.cs.kieler.sccharts.klighd.SCChartsReferenceExpandAction">
       </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.klighd.labels.MetaFocusAction"
+            id="de.cau.cs.kieler.sccharts.klighd.MetaFocusAction">
+      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">

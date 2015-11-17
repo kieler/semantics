@@ -82,6 +82,7 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.klighd.labels.MetaFocusAction
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -450,7 +451,7 @@ private static val SynthesisOption SHORTEN_LABELS_LEVELS = SynthesisOption::crea
                     it.setFontBold(true)
                 }else{
                     if (FOCUS_CONTEXT.booleanValue) {
-                        it.addSingleClickAction("de.cau.cs.kieler.klighd.actions.MetaFocusAction")
+                        it.addSingleClickAction(MetaFocusAction.ID)
                     }
                  
                 }
