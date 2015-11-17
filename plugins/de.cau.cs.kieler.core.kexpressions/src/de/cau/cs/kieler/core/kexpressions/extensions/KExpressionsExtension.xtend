@@ -758,6 +758,85 @@ class KExpressionsExtension {
         addExpression
     }
 
+
+    // Create an MULT Expression.
+    def OperatorExpression createMultExpression() {
+        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+        expression.setOperator(OperatorType::MULT)
+        expression
+    }
+
+    // Create an MULT Expression as a sub expression.
+    def OperatorExpression createMultExpression(OperatorExpression operatorExpression) {
+        val expression = createMultExpression()
+        operatorExpression.add(expression)
+        expression
+    }
+
+    // Create an MULT Expression and add expression as a sub expression.
+    def Expression mult(Expression expressionFirst, Expression expressionSecond) {
+        if (expressionFirst == null) {
+            return expressionSecond
+        }
+        val addExpression = createMultExpression()
+        addExpression.add(expressionFirst)
+        addExpression.add(expressionSecond)
+        addExpression
+    }
+
+
+    // Create an MAX Expression.
+    def OperatorExpression createMaxExpression() {
+        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+        expression.setOperator(OperatorType::ADD) // FIXME: change to MAX
+        expression
+    }
+
+    // Create an MAX Expression as a sub expression.
+    def OperatorExpression createMaxExpression(OperatorExpression operatorExpression) {
+        val expression = createMaxExpression()
+        operatorExpression.add(expression)
+        expression
+    }
+
+    // Create an MAX Expression and add expression as a sub expression.
+    def Expression max(Expression expressionFirst, Expression expressionSecond) {
+        if (expressionFirst == null) {
+            return expressionSecond
+        }
+        val addExpression = createMaxExpression()
+        addExpression.add(expressionFirst)
+        addExpression.add(expressionSecond)
+        addExpression
+    }
+
+
+    // Create an MIN Expression.
+    def OperatorExpression createMinExpression() {
+        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+        expression.setOperator(OperatorType::ADD) // FIXME: change to MIN
+        expression
+    }
+
+    // Create an MIN Expression as a sub expression.
+    def OperatorExpression createMinExpression(OperatorExpression operatorExpression) {
+        val expression = createMinExpression()
+        operatorExpression.add(expression)
+        expression
+    }
+
+    // Create an MIN Expression and add expression as a sub expression.
+    def Expression min(Expression expressionFirst, Expression expressionSecond) {
+        if (expressionFirst == null) {
+            return expressionSecond
+        }
+        val addExpression = createMinExpression()
+        addExpression.add(expressionFirst)
+        addExpression.add(expressionSecond)
+        addExpression
+    }
+
+
     // Create an SUB Expression.
     def OperatorExpression createSubExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
