@@ -18,6 +18,30 @@
       </perspective>
    </extension>
    <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.Modeling">
+         <view
+               id="org.eclipse.ui.console.ConsoleView"
+               minimized="false"
+               relationship="stack"
+               relative="de.cau.cs.kieler.kico.selection">
+         </view>
+         <actionSet
+               id="org.eclipse.debug.ui.launchActionSet">
+         </actionSet>Shortcut>
+         <viewShortcut
+               id="de.cau.cs.kieler.kico.klighd.view">
+         </viewShortcut>
+         <viewShortcut
+               id="de.cau.cs.kieler.kico.selection">
+         </viewShortcut>
+         <viewShortcut
+               id="org.eclipse.ui.navigator.ProjectExplorer">
+         </viewShortcut>
+      </perspectiveExtension>
+   </extension>
+   <extension
          point="org.eclipse.ui.navigator.navigatorContent">
       <commonWizard
             type="new"
