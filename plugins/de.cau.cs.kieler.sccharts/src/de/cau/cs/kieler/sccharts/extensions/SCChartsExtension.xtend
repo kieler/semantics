@@ -54,6 +54,7 @@ import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Equation
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
 
 /**
  * SCCharts Extensions.
@@ -959,6 +960,27 @@ class SCChartsExtension {
     def Assignment assignRelative(ValuedObject valuedObject, Expression newValue) {
         valuedObject.assign(valuedObject.reference.or(newValue))
     }
+    
+    // Creates a combine assignment if a combination function is given, otherwise
+    // it creates a normal (fallback) assignment
+    def Assignment assingCombined(ValuedObject valuedObject, Expression newValue) {
+        if (valuedObject.combineOperator == CombineOperator::AND) {
+            return valuedObject.assign(valuedObject.reference.and(newValue))
+        } else if (valuedObject.combineOperator == CombineOperator::OR) {
+            return valuedObject.assign(valuedObject.reference.or(newValue))
+        } else if (valuedObject.combineOperator == CombineOperator::ADD) {
+            return valuedObject.assign(valuedObject.reference.add(newValue))
+        } else if (valuedObject.combineOperator == CombineOperator::MULT) {
+            return valuedObject.assign(valuedObject.reference.mult(newValue))
+        } else if (valuedObject.combineOperator == CombineOperator::MAX) {
+            return valuedObject.assign(valuedObject.reference.max(newValue))
+        } else if (valuedObject.combineOperator == CombineOperator::MIN) {
+            return valuedObject.assign(valuedObject.reference.min(newValue))
+        }
+        // Fallback if no operator is defined
+        return valuedObject.assign(newValue)
+    }
+    
 
     // Create a valued Assignment and add it sequentially to an action's effects list. 
     def Assignment createAssignment(Action action, ValuedObject valuedObject, Expression newValue) {

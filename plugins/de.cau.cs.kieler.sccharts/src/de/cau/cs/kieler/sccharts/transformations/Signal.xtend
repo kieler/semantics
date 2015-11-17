@@ -31,6 +31,8 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
 
 /**
  * SCCharts Signal Transformation.
@@ -80,6 +82,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     // TODO: for inputs no during action!
     // TODO: relative writes!!
     private static val String variableValueExtension = GENERATED_PREFIX + "val";
+    private static val String variableCurrentValueExtension = GENERATED_PREFIX + "curval";
 
     // @requires: during actions
     // For all states do the following:
@@ -115,9 +118,21 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
             // If this is a valued signal we need a second signal for the value
             if (isValuedSignal) {
                 val valueVariable = state.createVariable(signal.name + variableValueExtension)
+                val currentValueVariable = state.createVariable(signal.name + variableCurrentValueExtension)
+                
+                // Add an immediate during action that updates the value (in case of an emission)
+                // to the current value
+                val updateDuringAction = state.createImmediateDuringAction
+                updateDuringAction.createAssignment(valueVariable, currentValueVariable.reference)
+                updateDuringAction.setTrigger(presentVariable.reference)
+                // Add an immediate during action that resets the current value
+                // in each tick to the neutral element of the type w.r.t. combination function
+                val resetDuringAction = state.createImmediateDuringAction
+                resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
+                resetDuringAction.setImmediate(true)
 
                 // Copy type and input/output attributes from the original signal
-                valueVariable.applyAttributes(signal)
+                currentValueVariable.applyAttributes(signal)
                 val allActions = state.eAllContents.filter(typeof(Action)).toList
                 for (Action action : allActions) {
 
@@ -126,8 +141,8 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                     for (Emission signalEmission : allSignalEmissions.immutableCopy) {
                         if (signalEmission.newValue != null) {
 
-                            // Assign the emitted valued
-                            val variableAssignment = valueVariable.assign(signalEmission.newValue)
+                            // Assign the emitted valued and combine!
+                            val variableAssignment = currentValueVariable.assingCombined(signalEmission.newValue)
 
                             // Put it in right order
                             val index = action.effects.indexOf(signalEmission);
@@ -202,5 +217,41 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
             }
         }
     }
+
+
+   // ------------------------------------
+   
+  // Gets the correct neutral element as an Expression 
+  def public neutralElement(ValuedObject signal) {
+        if (signal.type == ValueType::BOOL) {
+           if (signal.combineOperator == CombineOperator::OR) {
+               // OR
+               return FALSE;
+           }
+           // AND
+           return TRUE; 
+        }
+        if (signal.type == ValueType::INT) {
+           if (signal.combineOperator == CombineOperator::ADD) {
+               // ADD
+               return  createIntValue(0);
+           }
+           if (signal.combineOperator == CombineOperator::MAX) {
+               // MAX
+               return  createIntValue(Integer.MIN_VALUE);
+           }
+           if (signal.combineOperator == CombineOperator::MIN) {
+               // MIN
+               return  createIntValue(Integer.MAX_VALUE);
+           }
+           if (signal.combineOperator == CombineOperator::MULT) {
+               // MULT
+               return  createIntValue(1);
+           }
+           // UNDEFINED
+           return  createIntValue(0);
+        }
+  }
+
 
 }
