@@ -39,6 +39,9 @@
          <viewShortcut
                id="org.eclipse.ui.navigator.ProjectExplorer">
          </viewShortcut>
+         <newWizardShortcut
+               id="org.eclipse.ui.wizards.new.file">
+         </newWizardShortcut>
       </perspectiveExtension>
    </extension>
    <extension
