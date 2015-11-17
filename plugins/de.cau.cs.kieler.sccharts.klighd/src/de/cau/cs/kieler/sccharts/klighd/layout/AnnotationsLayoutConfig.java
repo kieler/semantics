@@ -39,7 +39,7 @@ import de.cau.cs.kieler.kiml.options.LayoutOptions;
 public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
 
     /** the priority for annotations layout configurations. */
-    public static final int PRIORITY = 20;
+    public static final int PRIORITY = 30;
 
     /**
      * {@inheritDoc}
