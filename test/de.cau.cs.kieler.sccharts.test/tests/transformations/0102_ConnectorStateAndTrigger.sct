@@ -13,8 +13,7 @@ scchart ConnectorState {
   connector state C
   --> F1 with I / O = true
   --> F2 with !O / O = true;
-   
+  
   final state F1;
   final state F2;
 }
- 

@@ -1,10 +1,11 @@
 @Transformation WEAKSUSPEND
 scchart WeakSuspension {
-  weak suspend WS;
+  input bool WS;
   input bool I;
+  weak suspend WS;
   
   initial state A
-  --> B with I;
+  --> B immediate with I;
   
   state B
   --> A with !I;

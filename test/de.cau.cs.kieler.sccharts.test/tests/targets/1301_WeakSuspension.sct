@@ -1,0 +1,26 @@
+
+@Transformation WEAKSUSPEND
+scchart WeakSuspension {
+  input bool WS;
+  input bool I;
+  bool _weakSuspend;
+  entry / _weakSuspend = false;
+  int _stateEnum;
+  during WS / _weakSuspend = true;
+
+  initial state A {
+    entry !_weakSuspend / _stateEnum = 0;
+  }
+  --> B immediate with I
+  --> _WS immediate with _weakSuspend;
+
+  state B {
+    entry !_weakSuspend / _stateEnum = 1;
+  }
+  --> A with !I
+  --> _WS immediate with _weakSuspend;
+
+  state _WS
+  --> A immediate deferred with _stateEnum == 0
+  --> B immediate deferred with _stateEnum == 1;
+}
