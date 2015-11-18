@@ -283,10 +283,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     @Override
                     public void run() {
                         if (isChecked()) {
-                            saveAdapter.activate(recentEditor);
-                            update(ChangeEvent.DISPLAY_MODE);
-                        } else {
-                            saveAdapter.deactivate();
+                            update(ChangeEvent.ACTIVE_EDITOR);
                         }
                     }
                 };
@@ -296,7 +293,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         syncEditorToggleAction.setChecked(SYNC_EDITOR_TOGGLE_ACTION_DEFAULT_STATE);
 
         // Diagram PlaceHolder Menu Item
-        diagramPlaceholderToggleAction = new Action("Model Visualization", IAction.AS_CHECK_BOX) {
+        diagramPlaceholderToggleAction = new Action("Diagram Placeholder", IAction.AS_CHECK_BOX) {
             @Override
             public void run() {
                 update(ChangeEvent.DISPLAY_MODE);
@@ -608,7 +605,6 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         update(ChangeEvent.ACTIVE_EDITOR);
         // Don't call super to prevent model update but activate adapter
         saveAdapter.activate(editor);
-        syncEditorToggleAction.setChecked(true);
     }
 
     /**
@@ -688,6 +684,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             boolean do_get_model = false;
             do_get_model |= is_active_editor_update;
             do_get_model |= is_save_update;
+            // Don't read input model when paused
+            do_get_model &= syncEditorToggleAction.isChecked();
 
             // Get model if necessary
             if (do_get_model) {
