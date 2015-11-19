@@ -50,6 +50,9 @@ class DeclarationsHook extends SynthesisActionHook {
     extension StateStyles
 
     @Inject
+    extension ControlflowRegionStyles
+    
+    @Inject
     extension SCChartsExtension
 
     @Inject
@@ -137,16 +140,7 @@ class DeclarationsHook extends SynthesisActionHook {
         }
         return ActionResult.createResult(true).dontAnimateLayout;
     }
-
-    /** 
-     * Retrieves the extended container for the region.
-     */
-    private def getRegionExtendedContainer(KNode node) {
-        return node.data.filter(KContainerRendering).filter [
-            getProperty(KlighdProperties.EXPANDED_RENDERING)
-        ].head;
-    }
-
+    
     /** 
      * Adds an invisible places holder to the given container in the specific position.
      */

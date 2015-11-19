@@ -9,8 +9,8 @@
             id="de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction">
       </action>
       <action
-            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.TransitionLabelHook"
-            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.TransitionLabelHook">
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook"
+            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook">
       </action>
       <action
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.StateActionsHook"
@@ -27,6 +27,10 @@
       <action
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook"
             id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook">
+      </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.klighd.layout.labels.LabelMetaFocusAction"
+            id="de.cau.cs.kieler.sccharts.klighd.layout.labels.LabelMetaFocusAction">
       </action>
    </extension>
    <extension
@@ -58,9 +62,6 @@
    <extension
          point="de.cau.cs.kieler.sccharts.klighd.hooks">
       <hook
-            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.TransitionLabelHook">
-      </hook>
-      <hook
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.DeclarationsHook">
       </hook>
       <hook
@@ -80,6 +81,9 @@
       </hook>
       <hook
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.HideAnnotationHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook">
       </hook>
    </extension>
 

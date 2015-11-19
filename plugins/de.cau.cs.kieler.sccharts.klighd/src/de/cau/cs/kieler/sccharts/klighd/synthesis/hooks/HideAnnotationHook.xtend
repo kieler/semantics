@@ -45,6 +45,9 @@ class HideAnnotationHook extends SynthesisHook {
 
     @Inject
     extension StateStyles
+    
+    @Inject
+    extension ControlflowRegionStyles
 
     /** Keyword for the hide annotation */
     public static final String HIDE_ANNOTATION_KEYWORD = "hide";
@@ -147,12 +150,4 @@ class HideAnnotationHook extends SynthesisHook {
         ].empty;
     }
 
-    /** 
-     * Retrieves the extended container for the region.
-     */
-    private def getRegionExtendedContainer(KNode node) {
-        return node.data.filter(KContainerRendering).filter [
-            getProperty(KlighdProperties.EXPANDED_RENDERING)
-        ].head;
-    }
 }

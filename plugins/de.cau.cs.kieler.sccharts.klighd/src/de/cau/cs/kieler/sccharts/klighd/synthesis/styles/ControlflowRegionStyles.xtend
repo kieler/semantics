@@ -28,6 +28,7 @@ import java.util.List
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * Styles for {@link ControlflowRegion}.
@@ -119,5 +120,14 @@ class ControlflowRegionStyles {
      */
     def KRectangle addDeclarationLabel(KContainerRendering container, Pair<List<String>, List<String>> components) {
         container.getProperty(DECLARATIONS_CONTAINER)?.addKeywordLabel(components);
+    }
+    
+    /** 
+     * Retrieves the extended container for the region.
+     */
+    def getRegionExtendedContainer(KNode node) {
+        return node.data.filter(KContainerRendering).filter [
+            getProperty(KlighdProperties.EXPANDED_RENDERING)
+        ].head;
     }
 }
