@@ -86,9 +86,13 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
+        // FIXME: getAllStates will return (at least!) the root state twice! fix this!
+        // Woraround now: convert to a set
+        for (targetState : targetRootState.getAllStates.toSet.immutableCopy) {
+            //System.out.println("STATE: " + targetState + ", " + targetState.id)
             targetState.transformPre(targetRootState);
-        ]
+        }
+
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 
@@ -96,25 +100,27 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
     def void transformPre(State state, State targetRootState) {
 
         // Filter all valuedObjects and retrieve those that are referenced
-        val allActions = state.eAllContents.filter(typeof(Action));
+        val allActions = state.eAllContents.filter(typeof(Action)).toList;
+
         val allPreValuedObjects = state.valuedObjects.filter(
             valuedObject|
                 allActions.filter(
                     action|
                         action.getPreExpression(valuedObject).hasNext ||
-                            action.getPreValExpression(valuedObject).hasNext).hasNext);
+                            action.getPreValExpression(valuedObject).hasNext).size > 0).toList;
+                            
 
-        for (preValuedObject : ImmutableList::copyOf(allPreValuedObjects)) {
+        for (preValuedObject : allPreValuedObjects.immutableCopy) {
             preValuedObject.setDefaultTrace
             val newPre = state.createValuedObject(GENERATED_PREFIX + "pre" + GENERATED_PREFIX + preValuedObject.name).
                 uniqueNameCached(nameCache)
             newPre.applyAttributes(preValuedObject)
-            val newAux = state.createValuedObject(GENERATED_PREFIX + "aux" + GENERATED_PREFIX + preValuedObject.name).
+            val newAux = state.createValuedObject(GENERATED_PREFIX + "cur" + GENERATED_PREFIX + preValuedObject.name).
                 uniqueNameCached(nameCache)
             newAux.applyAttributes(preValuedObject)
 
             val preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
-            val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache).setFinal
+            val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
             val preWait = preRegion.createFinalState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
 
             //            val preDone = preRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
@@ -129,9 +135,14 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
             //            val transInitDone = preInit.createTransitionTo(preDone)
             // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
             // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
-            while (allActions.hasNext) {
-                val action = allActions.next
+
+            for (action : allActions) {
                 val preExpressions = action.getPreExpression(preValuedObject);
+                
+                System.out.println("action: " + action.toString)
+                System.out.println("preExpressions: " + preExpressions.toString)
+                
+                
                 val preValExpressions = action.getPreValExpression(preValuedObject);
 
                 while (preExpressions.hasNext) {
@@ -139,12 +150,10 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                     val container = preExpression.eContainer;
 
                     if (container instanceof OperatorExpression) {
-
                         // If nested PRE or PRE inside another complex expression
                         (container as OperatorExpression).subExpressions.remove(preExpression);
                         (container as OperatorExpression).add(newPre.reference);
                     } else if (container instanceof Action) {
-
                         // If PRE directly a trigger
                         (container as Action).setTrigger(newPre.reference)
                     }
