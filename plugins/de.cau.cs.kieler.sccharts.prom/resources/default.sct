@@ -1,0 +1,4 @@
+scchart ${name} {
+
+    initial state init;
+}

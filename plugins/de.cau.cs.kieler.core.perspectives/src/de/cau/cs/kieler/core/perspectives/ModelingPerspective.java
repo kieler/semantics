@@ -20,6 +20,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 /**
  * A Perspective for the modeling SCCharts with KIELER. It shows the project explorer, the textual
  * editor and the graphical representation as well as KiCo for compiling.
+ * Other views and UI elements are added using the org.eclipse.ui.perspectiveExtensions extension point.
  * 
  * @author nbw
  * 
@@ -30,11 +31,6 @@ public class ModelingPerspective implements IPerspectiveFactory {
 
     /** {@inheritDoc} */
     public void createInitialLayout(final IPageLayout layout) {
-
-        /* Add shortcuts to the New-Dialog to relevant wizards. */
-        // layout.addNewWizardShortcut(PerspectiveHelper.WIZ_PROJECT);
-        layout.addNewWizardShortcut(PerspectiveHelper.WIZ_FILE);
-
         // Bottom Row - Left: Project Explorer, Right: KICO
         // Top Row - Left: Editor, Right: KLighD
         String editor = layout.getEditorArea();
@@ -52,10 +48,5 @@ public class ModelingPerspective implements IPerspectiveFactory {
 
         // Activate editor
         layout.setEditorAreaVisible(true);
-
-        /* Add relevant views as shortcuts into the View menu. */
-        layout.addShowViewShortcut(PerspectiveHelper.VIEW_KICO);
-        layout.addShowViewShortcut(PerspectiveHelper.VIEW_KLIGHD);
-        layout.addShowViewShortcut(IPageLayout.ID_PROJECT_EXPLORER);
     }
 }

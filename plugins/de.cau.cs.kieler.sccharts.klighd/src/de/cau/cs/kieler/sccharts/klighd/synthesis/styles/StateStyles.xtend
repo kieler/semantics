@@ -16,19 +16,19 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis.styles
 import com.google.common.base.Joiner
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.KRectangle
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle
 import de.cau.cs.kieler.core.krendering.KText
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.sccharts.State
 import java.util.List
+
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -52,8 +52,8 @@ class StateStyles {
     extension KContainerRenderingExtensions
 
     @Inject
-    extension KColorExtensions
-
+    extension ColorStore
+    
     /** This property is set a rendering and indicates the content container */
     public static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.content", false);
@@ -64,30 +64,16 @@ class StateStyles {
     public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.declarations", null);
 
-    val baseLineWidth = 1; // TODO PAPER BW +1
-    private static val KRenderingFactory RENDERING_FACTORY = KRenderingFactory.eINSTANCE;
-
-    private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor() => [
-        it.red = 248;
-        it.green = 249;
-        it.blue = 253
-    ];
-    private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor() => [
-        it.red = 205;
-        it.green = 220;
-        it.blue = 243
-    ];
-
-    private static val KColor KEYWORD = RENDERING_FACTORY.createKColor() => [it.red = 115; it.green = 0; it.blue = 65];
-
+    private var baseLineWidth = 1;
+    
     /**
      * Adds a connector figure.
      */
     def KRoundedRectangle addConnectorFigure(KNode node) {
         node.setNodeSize(7, 7);
         node.addRoundedRectangle(7, 7, baseLineWidth) => [
-            background = "black".color;
-            foreground = "black".color; // white/alpha ???
+            background = STATE_CONNECTOR.color;
+            foreground = STATE_CONNECTOR.color; // white/alpha ???
             // lineWidth = baseLineWidth + 2; ????
         ]
     }
@@ -100,8 +86,8 @@ class StateStyles {
         node.addRoundedRectangle(17, 17, baseLineWidth) => [
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
-            setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
-            foreground = "gray".color;
+            setBackgroundGradient(STATE_BACKGROUND_GRADIENT_1.color, STATE_BACKGROUND_GRADIENT_2.color, 90);
+            foreground = STATE_FOREGROND.color;
         ]
     }
 
@@ -113,8 +99,8 @@ class StateStyles {
         node.addRoundedRectangle(8, 8, baseLineWidth) => [
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
-            setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
-            foreground = "gray".color;
+            setBackgroundGradient(STATE_BACKGROUND_GRADIENT_1.color, STATE_BACKGROUND_GRADIENT_2.color, 90);
+            foreground = STATE_FOREGROND.color;
             setGridPlacement(1);
         ]
     }
@@ -125,7 +111,7 @@ class StateStyles {
     def setInitialStyle(KNode node) {
         node.getKContainerRendering => [
             lineWidth = baseLineWidth + 2;
-            foreground = "black".color;
+            foreground = STATE_INITIAL_FOREGROND.color;
         ]
     }
 
@@ -143,8 +129,8 @@ class StateStyles {
             setCornerSize(offset + cornerWidth, offset + cornerHeight);
             // Update minimal node size according to new corner radius (corner radius x 2)
             node.setMinimalNodeSize(cornerWidth * 2, cornerHeight * 2);
-            background = "white".color;
-            foreground = "black".color;
+            background = STATE_FINAL_FOREGROND_BACKGROUND.color;
+            foreground = STATE_FIANL_FOREGROND.color;
             // Add grid placement to correctly use offsets
             setGridPlacement(1);
             children += inner
@@ -152,7 +138,7 @@ class StateStyles {
         inner => [
             // styleRef = outer; //Why ? overrides other styles
             lineWidth = baseLineWidth;
-            foreground = "black".color;
+            foreground = STATE_FIANL_FOREGROND.color;
             // WHY ?
             // if (s.referencedState)
             // it.background.alpha = 0
@@ -166,7 +152,7 @@ class StateStyles {
      */
     def setReferencedStyle(KNode node) {
         return node.contentContainer => [
-            setBackgroundGradient("#fefef0".color, "#e0b0099".color, 90.0f);
+            setBackgroundGradient(STATE_REFERENCED_BACKGROUND_GRADIENT_1.color, STATE_REFERENCED_BACKGROUND_GRADIENT_2.color, 90.0f);
         ]
     }
 
@@ -174,7 +160,7 @@ class StateStyles {
      * Add a shadow to an existing figure.
      */
     def setShadowStyle(KNode node) {
-        node.getKContainerRendering.setShadow("black".color, 4, 4);
+        node.getKContainerRendering.setShadow(STATE_SHADOW.color, 4, 4);
     }
 
     /**
@@ -227,7 +213,7 @@ class StateStyles {
                 setGridPlacement(2);
                 val joiner = Joiner.on(" ");
                 addText(joiner.join(components.key) + " ") => [
-                    foreground = KEYWORD.copy;
+                    foreground = KEYWORD.color;
                     fontBold = true;
                 ]
                 addText(joiner.join(components.value));
@@ -299,4 +285,11 @@ class StateStyles {
             setGridPlacementData().from(LEFT, 8, 0, TOP, -4, 0).to(RIGHT, 8, 0, BOTTOM, 6, 0);
         ]
     }
+    
+    /**
+     * Sets the base line width
+     */
+     def setBaseLineWidth(int width) {
+         baseLineWidth = width;
+     }
 }

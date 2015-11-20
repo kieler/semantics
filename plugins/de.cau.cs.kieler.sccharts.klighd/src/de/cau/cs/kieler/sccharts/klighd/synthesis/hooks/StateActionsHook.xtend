@@ -59,7 +59,7 @@ class StateActionsHook extends SynthesisActionHook {
         return newLinkedList(SHOW_STATE_ACTIONS);
     }
 
-    override postState(State state, KNode node) {
+    override processState(State state, KNode node) {
         if (!state.declarations.empty && !SHOW_STATE_ACTIONS.booleanValue) {
             val container = node.contentContainer;
             val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER);

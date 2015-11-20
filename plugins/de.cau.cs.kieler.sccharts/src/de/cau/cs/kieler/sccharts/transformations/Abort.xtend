@@ -124,7 +124,9 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
         //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
-        if ((state.hasInnerStatesOrControlflowRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
+        // Code before: Entry & Exit actions should be handled correctly afterwards, during actions should be handled before!
+        //    if ((state.hasInnerStatesOrControlflowRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
+        if ((state.hasInnerStatesOrControlflowRegions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
             state.outgoingTransitions.setDefaultTrace;
             val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
 

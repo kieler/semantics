@@ -91,7 +91,7 @@ class History extends AbstractExpansionTransformation implements Traceable {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach [ targetState |
+        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
             targetState.transformHistory(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
@@ -101,7 +101,6 @@ class History extends AbstractExpansionTransformation implements Traceable {
     // (incoming) history transitions.    
     def void transformHistory(State state, State targetRootState) {
         val historyTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[isHistory])
-        val deepHistoryTransitions = historyTransitions.filter[!isDeepHistory]
         val nonHistoryTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[!isHistory])
         historyTransitions.setDefaultTrace
 
@@ -112,7 +111,7 @@ class History extends AbstractExpansionTransformation implements Traceable {
 
             val regions = state.regions.filter(ControlflowRegion).toList
             var regionsDeep = state.regions.filter(ControlflowRegion).toList as List<ControlflowRegion>
-            if (!deepHistoryTransitions.nullOrEmpty) {
+            if (historyTransitions.findFirst[isDeepHistory] != null) { // if state has any deep history transition
                 regionsDeep = state.allContainedControlflowRegions
             }
 

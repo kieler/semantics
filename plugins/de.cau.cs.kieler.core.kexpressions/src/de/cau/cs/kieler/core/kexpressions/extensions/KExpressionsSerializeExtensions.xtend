@@ -40,11 +40,7 @@ import de.cau.cs.kieler.core.kexpressions.Declaration
 class KExpressionsSerializeExtensions {
 
    def dispatch CharSequence serialize(ValueType valueType) {
-        if (valueType == ValueType::BOOL) {
-            return 'bool'
-        } else {
-            return valueType.getName;
-        }
+        return valueType.literal;
     }
 
     def dispatch CharSequence serialize(TextExpression hostCodeString) {

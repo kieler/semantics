@@ -17,11 +17,14 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
+import de.cau.cs.kieler.core.kgraph.KGraphFactory;
+import de.cau.cs.kieler.core.kgraph.KGraphPackage;
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
@@ -37,8 +40,9 @@ import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks.Type;
  * 
  */
 @ViewSynthesisShared
-public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> implements
-        GeneralSynthesisOptions {
+@SuppressWarnings("unchecked")
+public abstract class SubSynthesis<I extends EObject, O extends KGraphElement>
+        implements GeneralSynthesisOptions {
 
     @Inject
     private SynthesisHooks hooks;
@@ -48,14 +52,12 @@ public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> i
 
     /** The input type this synthesis handles */
     private final Type hookType;
-
     @Inject
-    @SuppressWarnings("unchecked")
     public SubSynthesis() {
+        java.lang.reflect.Type[] generics =
+                ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments();
         // Get hook type from input generic type
-        this.hookType =
-                SynthesisHooks.getType((Class<I>) ((ParameterizedType) getClass()
-                        .getGenericSuperclass()).getActualTypeArguments()[0]);
+        this.hookType = SynthesisHooks.getType((Class<? extends EObject>) generics[0]);
     }
 
     /**
@@ -66,10 +68,8 @@ public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> i
      * @return the transformed diagram element.
      */
     public final O transform(I element) {
-        hooks.invokePre(hookType, element);
         O result = performTranformation(element);
-        hooks.invokePost(hookType, element, result);
-
+        hooks.invokeHooks(hookType, element, result);
         return result;
     }
 

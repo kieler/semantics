@@ -13,96 +13,64 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.function.Predicate;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.xtext.CrossReference;
-import org.eclipse.xtext.GrammarUtil;
-import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
-import org.eclipse.xtext.linking.ILinkingService;
-import org.eclipse.xtext.linking.impl.AbstractCleaningLinker;
-import org.eclipse.xtext.nodemodel.ICompositeNode;
-import org.eclipse.xtext.nodemodel.INode;
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
-
-import com.google.inject.Inject;
-
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
-import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.SCChartsPackage;
-import de.cau.cs.kieler.sccharts.Transition;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.diagnostics.IDiagnosticProducer;
+import org.eclipse.xtext.linking.impl.Linker;
 
 /**
- * A customized Xtext linker linking textual syncchart models.
- * It doesn't create proxies but setups cross references and their EOpposites immediately.
+ * A customized Xtext linker linking textual SCCharts models.
  *
- * @author chsch
+ * @author als
  */
 
-public class SctLinker extends AbstractCleaningLinker {
+public class SctLinker extends Linker {
 
-    @Inject
-    private ILinkingService linkingService;
+    @Override
+    protected boolean isClearAllReferencesRequired(Resource resource) {
+        return false;
+    }
 
-//    @Inject
-//    private LinkingHelper linkingHelper;
+    @Override
+    public void ensureLinked(EObject obj, IDiagnosticProducer producer) {
+        super.ensureLinked(obj, producer);
+        for (EReference ref : obj.eClass().getEReferences()) {
+            checkUncontainedOpposites(obj, ref);
+        }
+    }
 
-    protected void doLinkModel(EObject model, IDiagnosticConsumer diagnosticsConsumer) {
+    /**
+     * Finds and removes elements in eOpposite references which are no longer contained in the
+     * model.
+     * 
+     * @param obj
+     * @param ref
+     */
+    private void checkUncontainedOpposites(EObject obj, EReference ref) {
+        EReference oppRef = ref.getEOpposite();
+        if (oppRef != null) {
+            if (ref.isMany()) {
+                EList<EObject> refObjs = (EList<EObject>) obj.eGet(ref);
+                if (refObjs != null) {
+                    // Remove non-contained opposites
+                    refObjs.removeIf(new Predicate<EObject>() {
 
-        Iterator<EObject> it = model.eAllContents();
-        List<EObject> linkedObjects = null;
-
-        /* iterate on all semantic elements of the sccharts model */
-        for (EObject obj = null; it.hasNext();) {
-            obj = it.next();
-
-            /* restrict to elements with cross references */
-            if (SCChartsPackage.eINSTANCE.getScope().isInstance(obj)
-                    || SCChartsPackage.eINSTANCE.getTransition().isInstance(obj)
-                    || KEffectsPackage.eINSTANCE.getEmission().isInstance(obj)
-                    || KEffectsPackage.eINSTANCE.getAssignment().isInstance(obj)
-                    || KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(obj)) {
-
-                /* reveal the dedicated parse tree element */
-                final ICompositeNode node = NodeModelUtils.getNode(obj);
-
-                /* iterate on the parse tree element's children */
-                for (INode childNode : node.getChildren()) {
-
-                    /* process cross references only */
-                    if (childNode.getGrammarElement() instanceof CrossReference) {
-
-                        /* reveal the related EReference to current parse tree reference */
-                        EReference eRef = GrammarUtil.getReference(
-                                (CrossReference) childNode.getGrammarElement(), obj.eClass());
-
-                        /*
-                         * ask the linking service (with hooked scope provider) for the addressed
-                         * semantic element; list is empty or singleton
-                         */
-                        linkedObjects = this.linkingService.getLinkedObjects(obj, eRef, childNode);
-
-                        /* if list is not empty setup cross reference */
-                        if (linkedObjects.size() != 0) {
-                            obj.eSet(eRef, linkedObjects.get(0));
-							// } else {
-							// String s = this.linkingHelper
-                            //         .getCrossRefNodeAsString(childNode, true);
-							// System.out.println(s + " unlinked");
+                        @Override
+                        public boolean test(EObject t) {
+                            return t.eContainer() == null;
                         }
-                    }
+                    });
                 }
-
-                if (SCChartsPackage.eINSTANCE.getState().isInstance(obj)) {
-                    State state = (State) obj;
-                    for (Transition t : new ArrayList<Transition>(state.getIncomingTransitions())) {
-                        if (t.eContainer() == null) {
-                            state.getIncomingTransitions().remove(t);
-                        }
+            } else {
+                EObject refObj = (EObject) obj.eGet(ref);
+                if (refObj != null) {
+                    // Remove non-contained opposites
+                    if (refObj.eContainer() == null) {
+                        obj.eSet(ref, null);
                     }
                 }
             }

@@ -42,11 +42,15 @@ class ComparisonSynthesis extends AbstractDiagramSynthesis<Scope> {
         val properties = new KlighdSynthesisProperties();
         properties.copyProperties(usedContext);
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.klighd.DeprecatedSCChartsSynthesis");
-        rootNode.children += LightDiagramServices::translateModel(root, usedContext, properties).children;
+        val vc1 = LightDiagramServices::translateModel2(root, usedContext, properties);
+        //usedContext.addChildViewContext(vc1);
+        rootNode.children += vc1.viewModel.children;
 
         //NEW
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis");
-        rootNode.children += LightDiagramServices::translateModel(root, usedContext, properties).children;
+        val vc2 = LightDiagramServices::translateModel2(root, usedContext, properties);
+        //usedContext.addChildViewContext(vc2);
+        rootNode.children += vc2.viewModel.children;
         
         return rootNode;
     }

@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- * 
+ *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -13,31 +13,27 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.Action
 import com.google.common.base.Joiner
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.IterateAction
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
-import org.eclipse.emf.common.util.EList
 
 /**
- * @author ssm als
- * 
+ * @author ssm
+ *
  * @kieler.design 2014-09-04 proposed ssm
  * @kieler.rating 2014-09-04 proposed yellow
  */
 class SCChartsSerializeExtension extends KEffectsSerializeExtensions {
     
-   
     def dispatch CharSequence serialize(Transition transition) {
         val label = new StringBuilder();
 
@@ -87,6 +83,67 @@ class SCChartsSerializeExtension extends KEffectsSerializeExtensions {
         if (!action.effects.empty) {
             content += "/"
             content += action.effects.serialize as String
+        }
+
+        return new Pair(keywords, content);
+    }
+    
+    def dispatch CharSequence serialize(Declaration declaration) {
+        val joiner = Joiner.on(" ");
+        val parts = declaration.serializeComponents
+        return joiner.join(parts.key) + joiner.join(parts.value);
+    }
+    
+    override Pair<List<String>, List<String>> serializeComponents(Declaration declaration) {
+        val keywords = newLinkedList;
+        val content = newLinkedList;
+
+        //Modifiers
+        if (declaration.isExtern) {
+            keywords += "extern";
+        }
+        if (declaration.isStatic) {
+            keywords += "static ";
+        }
+        if (declaration.isConst) {
+            keywords += "const";
+        }
+        if (declaration.isVolatile) {
+            keywords += "volatile";
+        }
+        if (declaration.isInput) {
+            keywords += "input";
+        }
+        if (declaration.isOutput) {
+            keywords += "output"
+        }
+        if (declaration.isSignal) {
+            keywords += "signal";
+        }
+
+        //Type
+        val type = declaration.type;
+        if (type == ValueType.PURE) {
+            // Nothing - indicated by signal keyword
+        } else if (type == ValueType.HOST) {
+            keywords += declaration.hostType
+        } else {
+            keywords += type.serialize as String
+        } 
+
+        //Content
+        val voIter = declaration.valuedObjects.iterator;
+        while (voIter.hasNext) {
+            val vo = voIter.next;
+            val text = new StringBuilder(vo.serialize);
+            if (vo.initialValue != null) {
+                text.append(" = ");
+                text.append(vo.initialValue.serialize);
+            }
+            if (voIter.hasNext) {
+                text.append(",");
+            }
+            content += text.toString;
         }
 
         return new Pair(keywords, content);

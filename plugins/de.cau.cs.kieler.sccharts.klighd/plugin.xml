@@ -9,8 +9,8 @@
             id="de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction">
       </action>
       <action
-            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.TransitionLabelHook"
-            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.TransitionLabelHook">
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook"
+            id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook">
       </action>
       <action
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.StateActionsHook"
@@ -28,16 +28,20 @@
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook"
             id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook">
       </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.klighd.layout.labels.LabelMetaFocusAction"
+            id="de.cau.cs.kieler.sccharts.klighd.layout.labels.LabelMetaFocusAction">
+      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.deprecated.ComparisonSynthesis"
-            id="de.cau.cs.kieler.sccharts.klighd.ComparisonSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
             id="de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.deprecated.ComparisonSynthesis"
+            id="de.cau.cs.kieler.sccharts.klighd.ComparisonSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.deprecated.SCChartsDiagramSynthesis"
@@ -58,9 +62,6 @@
    <extension
          point="de.cau.cs.kieler.sccharts.klighd.hooks">
       <hook
-            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.TransitionLabelHook">
-      </hook>
-      <hook
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.DeclarationsHook">
       </hook>
       <hook
@@ -77,6 +78,12 @@
       </hook>
       <hook
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGDependencyHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.HideAnnotationHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook">
       </hook>
    </extension>
 

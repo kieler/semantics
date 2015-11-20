@@ -43,6 +43,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
     @Inject 
     extension KNodeExtensions
     
+    @Inject
+    extension SynthesisAnnotations
+    
     // -------------------------------------------------------------------------
     // SubSyntheses
     @Inject
@@ -56,7 +59,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
       
     @Inject
     TransitionSynthesis transitionSynthesis
-    
+        
     // -------------------------------------------------------------------------
     // Hooks
     @Inject
@@ -98,14 +101,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
         val rootNode = createNode();
         
         // Configure synthesis options via annotation
-        // TODO Check avaliable synthesis option and activate, requires id in options
-//                for (Annotation a : root.annotations) {
-//                    if (a.name.equals(GLOBALBWOPTION)) {
-//                        globalBWOption = true;
-//                    }
-//                }
-
+        root.getAllAnnotations(SCChartsDiagramProperties::SYNTHESIS_OPTIONS_ANNOTATION).forEach[processSynthesisOptionAnnotation];
         
+        //START
         hooks.invokeStart(root, rootNode);
 
         if (root instanceof State) {

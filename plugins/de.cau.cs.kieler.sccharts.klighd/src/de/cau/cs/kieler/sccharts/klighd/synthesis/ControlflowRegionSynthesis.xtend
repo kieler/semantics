@@ -31,6 +31,9 @@ import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.kiml.options.Alignment
+import de.cau.cs.kieler.klay.layered.properties.FixedAlignment
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -65,6 +68,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
             node.setLayoutOption(LayoutOptions::SPACING, 3f);
             node.setLayoutOption(LayoutOptions::BORDER_SPACING, 8f);
+            node.setLayoutOption(Properties::FIXED_ALIGNMENT, FixedAlignment::BALANCED);
         } else {
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
             node.setLayoutOption(LayoutOptions::SPACING, 40f);
