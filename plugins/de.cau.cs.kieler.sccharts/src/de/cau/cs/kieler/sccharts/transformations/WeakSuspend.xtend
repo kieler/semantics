@@ -25,6 +25,11 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import java.util.ArrayList
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.HistoryType
+import java.util.List
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -83,7 +88,74 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 
+
     def void transformWeakSuspend(State state, State targetRootState) {
+        val weakSuspends = state.suspendActions.filter[weak].toList
+        weakSuspends.setDefaultTrace
+        
+        if (!weakSuspends.nullOrEmpty) {
+            val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "weakSuspend").setTypeBool.uniqueName
+            weakSuspendFlag.setInitialValue(FALSE)
+
+            for (weakSuspend : weakSuspends.immutableCopy) {
+                weakSuspend.setDefaultTrace
+                val duringAction = state.createDuringAction
+                duringAction.setImmediate(weakSuspend.immediate)
+                //duringAction.setTrigger(weakSuspend.trigger.copy)
+                //duringAction.addEffect(weakSuspendFlag.assign(TRUE))
+                duringAction.addEffect(weakSuspendFlag.assign(weakSuspend.trigger.copy))
+                state.localActions.remove(weakSuspend)
+            }
+
+            weakSuspends.setDefaultTrace
+            for (region : state.allContainedControlflowRegions.immutableCopy) {
+                val subStates = region.states.immutableCopy
+                val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
+                val stateEnum = state.createVariable(GENERATED_PREFIX + "stateEnum").setTypeInt.uniqueName
+                var counter = 0
+                
+                // Auxiliary initial state for re-entry
+                val initState = region.createState(GENERATED_PREFIX + "Init").uniqueName
+                initState.setInitial(true)
+                val initWSTransition = initState.createTransitionTo(wsState).setImmediate
+                initWSTransition.setTrigger(weakSuspendFlag.reference) 
+
+                for (subState : subStates) {
+                    val reEnterTransition = wsState.createImmediateTransitionTo(subState)
+                    reEnterTransition.setTrigger(stateEnum.reference.isEqual(counter.createIntValue))
+                    
+                    // Only set deferred flag if the target state is not hierarchical. 
+                    // In the hierarchical state we want to re-enter the according correct
+                    // (old) state.
+                    //if (subState.isHierarchical) {
+                        reEnterTransition.setDeferred(true)
+                    //}
+                    
+                    val entryAction = subState.createEntryAction
+                    entryAction.addEffect(stateEnum.assign(counter.createIntValue))
+                    entryAction.setTrigger(not(weakSuspendFlag.reference))
+                    counter = counter + 1
+        
+                    // Only if not a final state            
+                    if (!subState.final) {
+                        val weakSuspendTransition = subState.createImmediateTransitionTo(wsState)
+                        weakSuspendTransition.setTrigger(weakSuspendFlag.reference)
+                    }
+                    
+                    // Modify the original initial state
+                    if (subState.initial) {
+                        subState.setInitial(false)
+                        initState.createTransitionTo(subState).setImmediate
+                    }
+                    
+                }
+            }
+        }
+    }
+
+
+
+    def void transformWeakSuspendOld(State state, State targetRootState) {
 
         val weakSuspends = state.suspendActions.filter[weak].toList
         weakSuspends.setDefaultTrace
@@ -96,8 +168,9 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                 weakSuspend.setDefaultTrace
                 val duringAction = state.createDuringAction
                 duringAction.setImmediate(weakSuspend.immediate)
-                duringAction.setTrigger(weakSuspend.trigger.copy)
-                duringAction.addEffect(weakSuspendFlag.assign(TRUE))
+                //duringAction.setTrigger(weakSuspend.trigger.copy)
+                //duringAction.addEffect(weakSuspendFlag.assign(TRUE))
+                duringAction.addEffect(weakSuspendFlag.assign(weakSuspend.trigger.copy))
                 state.localActions.remove(weakSuspend)
             }
 

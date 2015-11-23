@@ -27,6 +27,7 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts Deferred Transformation.
@@ -119,16 +120,30 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
             // Prevent any immediate internal behavior of the state and any immediate outgoing
             // transition in case deferVariable is set to TRUE, i.e., the state was entered
             // by a deferred transition
-            val allInternalImmediateActions = state.allContainedActions.filter(
-                e|e.immediate || e instanceof EntryAction).toList
-            for (action : allInternalImmediateActions) {
-                val deferTest = not(deferVariable.reference)
-                if (action.trigger != null) {
-                    action.setTrigger(deferTest.and(action.trigger))
-                } else {
-                    action.setTrigger(deferTest)
+            //            val allInternalImmediateActions = state.allContainedActions.filter(
+            //                  e|e.immediate || e instanceof EntryAction).toList
+            //            for (action : allInternalImmediateActions) {
+            //                val deferTest = not(deferVariable.reference)
+            //                if (action.trigger != null) {
+            //                    action.setTrigger(deferTest.and(action.trigger))
+            //                } else {
+            //                    action.setTrigger(deferTest)
+            //                 }
+            //            }
+            
+            // Only do this for outgoing immediate transitions!
+            for (transition : state.outgoingTransitions) {
+                if (transition.immediate) {
+                    if (transition.trigger == null) {
+                        val deferTest = not(deferVariable.reference)
+                        transition.setTrigger(deferTest)
+                    } else {
+                        val deferTest = not(deferVariable.reference)
+                        transition.setTrigger(deferTest.and(transition.trigger.copy))
+                    }
                 }
             }
+            
         }
     }
 
