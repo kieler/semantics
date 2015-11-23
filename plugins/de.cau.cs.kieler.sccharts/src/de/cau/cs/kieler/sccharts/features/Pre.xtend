@@ -56,13 +56,13 @@ class Pre extends Feature {
     def isContained(State model) {
         val allStates = model.allStates.toList
         for (state : allStates) {
-            val allActions = state.eAllContents.filter(typeof(Action))
+            val allActions = state.eAllContents.filter(typeof(Action)).toList
             val allPreValuedObjects = state.valuedObjects.filter(
                 valuedObject|
                     allActions.filter(
                         action|
                             action.getPreExpression(valuedObject).hasNext ||
-                                action.getPreValExpression(valuedObject).hasNext).hasNext)
+                                action.getPreValExpression(valuedObject).hasNext).size > 0)
 
             if (allPreValuedObjects.size > 0) {
                 return true

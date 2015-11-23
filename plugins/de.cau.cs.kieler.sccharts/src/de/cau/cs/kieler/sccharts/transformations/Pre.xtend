@@ -102,6 +102,10 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         // Filter all valuedObjects and retrieve those that are referenced
         val allActions = state.eAllContents.filter(typeof(Action)).toList;
 
+
+                System.out.println("allActions: " + allActions.size)
+
+
         val allPreValuedObjects = state.valuedObjects.filter(
             valuedObject|
                 allActions.filter(
@@ -109,6 +113,8 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                         action.getPreExpression(valuedObject).hasNext ||
                             action.getPreValExpression(valuedObject).hasNext).size > 0).toList;
                             
+                System.out.println("allPreValuedObjects: " + allPreValuedObjects.size)
+
 
         for (preValuedObject : allPreValuedObjects.immutableCopy) {
             preValuedObject.setDefaultTrace
@@ -135,6 +141,9 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
             //            val transInitDone = preInit.createTransitionTo(preDone)
             // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
             // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
+
+
+                System.out.println("allActions: " + allActions.size)
 
             for (action : allActions) {
                 val preExpressions = action.getPreExpression(preValuedObject);
