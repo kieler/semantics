@@ -22,7 +22,6 @@ import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelPath
 import java.io.PrintStream
 import java.util.Collections
@@ -53,13 +52,15 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 // TODO: Remove debug output from KiCo (transformation chain, required time for compilation) -> silent mode?
 // TODO: (Bug KISEMA-995) KiCo needs to be deterministic. Otherwise some tests will fail because an alternative compilation result is compared with a prototype.
 
 // TODO: Models that do not compile:
-// (Bug KISEMA-1033) 1101_Suspension, 1301_WeakSuspension
+// (Bug KISEMA-987) 1301_WeakSuspension
 // (Bug KISEMA-1031) 402_ExitActionAndTrigger
+
+// TODO: Models that compile wrong
+// (Bug KISEMA-1037) 0803_ValuedSignalCombination.sct
 
 /** 
  * Testing class that performs two tests -- both for every SCT model.
@@ -70,17 +71,16 @@ import org.junit.runner.RunWith
  */
 @RunWith(typeof(ModelCollectionTestRunner))
 @BundleId("de.cau.cs.kieler.sccharts.test")
-@ModelPath("tests/transformations/")
-//@ModelFilter("1001_CountDelays.sct")
-//@ModelFilter("tmp.sct")
+@ModelPath("tests/inputs/**")
+//@ModelFilter("ExitActionAndTrigger.sct")
 class TransformationTests {
 
-    /** 
-     * The name of the annotation in SCT files,
-     * which defines the transformation that should be used to test the model.
+    /**
+     * Project relative path to the input models of the tests.
+     * This has to be the same path as in the @ModelPath annotation, but without the marker for recursive search '**'.
      */
-    static val TRANSFORMATION_ANNOTATION_NAME = "Transformation"
-
+    public static val INPUT_MODELS_FOLDER = "tests/inputs/"
+    
     /**
      * Project relative path to the folder in which the prototypes for test models are stored.
      * The models in this directory are assumed to be a correct transformation of the input model.
@@ -93,11 +93,16 @@ class TransformationTests {
      */
     static val COMPILATION_RESULT_FOLDER = "tests/compilation_results/"
 
+    /** 
+     * The name of the annotation in SCT files,
+     * which defines the transformation that should be used to test the model.
+     */
+    static val TRANSFORMATION_ANNOTATION_NAME = "Transformation"
+
     /**
      * The EMFCompare object that can compare to SCCharts.  
      */
     static val comparator = createEMFComparator()
-
 
 
     /*******************************************************************************************
@@ -119,8 +124,11 @@ class TransformationTests {
         val isDebugLogging = false
 
         // Normalize path
-        val modelPathNoEndSeparator = FilenameUtils.getFullPathNoEndSeparator(modelPath)
-        val modelFile = FilenameUtils.getName(modelPathNoEndSeparator)
+        val relativePath = stripSlashes(modelPath)
+        val modelFile = FilenameUtils.getName(relativePath)
+        // Calc prototype file for test and compilation result for test
+        val targetFile = relativePath.replaceFirst(TransformationTests.INPUT_MODELS_FOLDER, TransformationTests.TARGET_FOLDER)
+        val compilationResultFile = relativePath.replaceFirst(TransformationTests.INPUT_MODELS_FOLDER, COMPILATION_RESULT_FOLDER)
         if (model instanceof State) {
             println("------------------ SCT:" + modelFile)
 
@@ -156,7 +164,7 @@ class TransformationTests {
 
             // Serialize model to human readable text
             val resourceSet = new ResourceSetImpl()
-            val targetURI = URI.createURI(COMPILATION_RESULT_FOLDER + modelFile)
+            val targetURI = URI.createURI(compilationResultFile)
             var resource = resourceSet.createResource(targetURI)
             resource.getContents().add(resultModel)
             try {
@@ -167,7 +175,7 @@ class TransformationTests {
             }
 
             // Load expected target model
-            val targetURL = "platform:/plugin/de.cau.cs.kieler.sccharts.test/" + TARGET_FOLDER + modelFile
+            val targetURL = "platform:/plugin/de.cau.cs.kieler.sccharts.test/" + targetFile
             resource = resourceSet.getResource(URI.createURI(targetURL), true)
             val targetModel = resource.getContents().get(0) as EObject
 
@@ -213,8 +221,8 @@ class TransformationTests {
 //     @Test
     def public void codeGenerationHasNoErrors(EObject model, String modelPath) {
         // Normalize path
-        val modelPathNoEndSeparator = FilenameUtils.getFullPathNoEndSeparator(modelPath)
-        val modelFile = FilenameUtils.getName(modelPathNoEndSeparator)
+        val relativePath = stripSlashes(modelPath)
+        val modelFile = FilenameUtils.getName(relativePath)
 
         if (model instanceof State) {
             // Compile with KiCo
@@ -348,4 +356,18 @@ class TransformationTests {
                 printMatches(m.submatches, level + 1, recursive)
         }
     }
+    
+    /**
+     * Removes a slash at the beginning and end of a path.
+     * @return the input path withouth a starting and ending slash.  
+     */
+    def private String stripSlashes(String path) {
+        // The input path has the form '/the/folder/file.extension/'
+        // The output path has the form 'the/folder/file.extension'
+        val pathNoEndSeparator = FilenameUtils.getFullPathNoEndSeparator(path)
+        if(pathNoEndSeparator.startsWith("/"))
+            return pathNoEndSeparator.substring(1)
+        else
+            return pathNoEndSeparator 
+    } 
 }

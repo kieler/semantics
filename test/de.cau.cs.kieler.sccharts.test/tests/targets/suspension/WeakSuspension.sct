@@ -3,10 +3,9 @@
 scchart WeakSuspension {
   input bool WS;
   input bool I;
-  bool _weakSuspend;
-  entry / _weakSuspend = false;
+  bool _weakSuspend = false;
   int _stateEnum;
-  during WS / _weakSuspend = true;
+  during / _weakSuspend = WS;
 
   initial state A {
     entry !_weakSuspend / _stateEnum = 0;
