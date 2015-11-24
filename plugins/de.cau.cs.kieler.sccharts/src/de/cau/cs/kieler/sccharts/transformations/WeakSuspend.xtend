@@ -136,13 +136,6 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
                     reEnterTransition.setTrigger(stateBookmark.reference.isEqual(counter.createIntValue))
                     
-                    // Only set deferred flag if the target state is not hierarchical. 
-                    // In the hierarchical state we want to re-enter the according correct
-                    // (old) state.
-                    //if (subState.isHierarchical) {
-                        reEnterTransition.setDeferred(true)
-                    //}
-                    
                     val entryAction = subState.createEntryAction
                     entryAction.addEffect(stateBookmark.assign(counter.createIntValue))
                     entryAction.setTrigger(not(weakSuspendFlag.reference))
@@ -159,7 +152,6 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                         subState.setInitial(false)
                         initState.createTransitionTo(subState).setImmediate
                     }
-                    
                 }
             }
         }
