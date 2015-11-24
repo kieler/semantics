@@ -116,14 +116,13 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                 stateBookmark.setInitialValue(createIntValue(0))
                 var counter = 0
                 val lastWishDone = state.createVariable(GENERATED_PREFIX + "lastWishDone").setTypeBool.uniqueName
-                // Initially the lastWhish was NOT executed
-                lastWishDone.setInitialValue(FALSE)
 
+                // In each tick reset the lastWish to FALSE
                 val resetLastWishDoneduringAction = state.createDuringAction
                 resetLastWishDoneduringAction.setImmediate(true)
                 resetLastWishDoneduringAction.addAssignment(lastWishDone.assign(FALSE))
                 
-                // wsState sets lastWhishDone to true
+                // wsState sets lastWishDone to true
                 val wsStateEntryAction = wsState.createEntryAction
                 wsStateEntryAction.addAssignment(lastWishDone.assignRelative(TRUE))
                 
