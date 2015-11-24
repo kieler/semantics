@@ -55,6 +55,17 @@ public abstract class SynthesisHook {
     }
 
     /**
+     * Returns the priority of this hook. The priority defines the order of invocation between
+     * hooks. A higher value results in a earlier invocation. The recommended priority interval is
+     * [0, 100].
+     * 
+     * @return the priority value
+     */
+    public int getPriority() {
+        return 0;
+    }
+
+    /**
      * Invoked before the translation of the model starts.
      * 
      * @param scope
