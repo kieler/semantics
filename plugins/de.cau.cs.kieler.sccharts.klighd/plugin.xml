@@ -85,6 +85,9 @@
       <hook
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook">
       </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SynthesisAnnotationHook">
+      </hook>
    </extension>
 
 </plugin>

@@ -43,9 +43,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
     @Inject 
     extension KNodeExtensions
     
-    @Inject
-    extension SynthesisAnnotations
-    
     // -------------------------------------------------------------------------
     // SubSyntheses
     @Inject
@@ -99,10 +96,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
         val startTime = System.currentTimeMillis;
         
         val rootNode = createNode();
-        
-        // Configure synthesis options via annotation
-        root.getAllAnnotations(SCChartsDiagramProperties::SYNTHESIS_OPTIONS_ANNOTATION).forEach[processSynthesisOptionAnnotation];
-        
+                
         //START
         hooks.invokeStart(root, rootNode);
 
