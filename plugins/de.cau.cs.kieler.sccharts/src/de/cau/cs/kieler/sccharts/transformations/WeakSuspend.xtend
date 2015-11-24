@@ -94,7 +94,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
         weakSuspends.setDefaultTrace
         
         if (!weakSuspends.nullOrEmpty) {
-            val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "weakSuspend").setTypeBool.uniqueName
+            val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "wsFlag").setTypeBool.uniqueName
             weakSuspendFlag.setInitialValue(FALSE)
 
             for (weakSuspend : weakSuspends.immutableCopy) {
@@ -111,18 +111,31 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
             for (region : state.allContainedControlflowRegions.immutableCopy) {
                 val subStates = region.states.immutableCopy
                 val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
-                val stateEnum = state.createVariable(GENERATED_PREFIX + "stateEnum").setTypeInt.uniqueName
+                val stateBookmark = state.createVariable(GENERATED_PREFIX  + region.parentState.id).setTypeInt.uniqueName
+                // Set the initial value to the (original) initial state
+                stateBookmark.setInitialValue(createIntValue(0))
                 var counter = 0
+                val lastWishDone = state.createVariable(GENERATED_PREFIX + "lastWishDone").setTypeBool.uniqueName
+                // Initially the lastWhish was NOT executed
+                lastWishDone.setInitialValue(FALSE)
+
+                val resetLastWishDoneduringAction = state.createDuringAction
+                resetLastWishDoneduringAction.setImmediate(true)
+                resetLastWishDoneduringAction.addAssignment(lastWishDone.assign(FALSE))
+                
+                // wsState sets lastWhishDone to true
+                val wsStateEntryAction = wsState.createEntryAction
+                wsStateEntryAction.addAssignment(lastWishDone.assignRelative(TRUE))
                 
                 // Auxiliary initial state for re-entry
                 val initState = region.createState(GENERATED_PREFIX + "Init").uniqueName
                 initState.setInitial(true)
                 val initWSTransition = initState.createTransitionTo(wsState).setImmediate
-                initWSTransition.setTrigger(weakSuspendFlag.reference) 
+                initWSTransition.setTrigger(weakSuspendFlag.reference.and(lastWishDone.reference)) 
 
                 for (subState : subStates) {
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
-                    reEnterTransition.setTrigger(stateEnum.reference.isEqual(counter.createIntValue))
+                    reEnterTransition.setTrigger(stateBookmark.reference.isEqual(counter.createIntValue))
                     
                     // Only set deferred flag if the target state is not hierarchical. 
                     // In the hierarchical state we want to re-enter the according correct
@@ -132,7 +145,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                     //}
                     
                     val entryAction = subState.createEntryAction
-                    entryAction.addEffect(stateEnum.assign(counter.createIntValue))
+                    entryAction.addEffect(stateBookmark.assign(counter.createIntValue))
                     entryAction.setTrigger(not(weakSuspendFlag.reference))
                     counter = counter + 1
         
@@ -178,15 +191,15 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
             for (region : state.allContainedControlflowRegions.immutableCopy) {
                 val subStates = region.states.immutableCopy
                 val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
-                val stateEnum = state.createVariable(GENERATED_PREFIX + "stateEnum").setTypeInt.uniqueName
-                var counter = 0
+                val stateBookmark = state.createVariable(GENERATED_PREFIX  + state.id).setTypeInt.uniqueName
+                var counter = 0 
 
                 for (subState : subStates) {
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
-                    reEnterTransition.setTrigger(stateEnum.reference.isEqual(counter.createIntValue))
+                    reEnterTransition.setTrigger(stateBookmark.reference.isEqual(counter.createIntValue))
                     reEnterTransition.setDeferred(true)
                     val entryAction = subState.createEntryAction
-                    entryAction.addEffect(stateEnum.assign(counter.createIntValue))
+                    entryAction.addEffect(stateBookmark.assign(counter.createIntValue))
                     entryAction.setTrigger(not(weakSuspendFlag.reference))
                     counter = counter + 1
                     val weakSuspendTransition = subState.createImmediateTransitionTo(wsState)
