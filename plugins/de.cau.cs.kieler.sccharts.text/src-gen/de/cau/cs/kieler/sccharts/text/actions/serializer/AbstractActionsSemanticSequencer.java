@@ -10,7 +10,6 @@ import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
 import de.cau.cs.kieler.core.annotations.CommentAnnotation;
 import de.cau.cs.kieler.core.annotations.FloatAnnotation;
-import de.cau.cs.kieler.core.annotations.ImportAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
@@ -72,9 +71,6 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 				return; 
 			case AnnotationsPackage.FLOAT_ANNOTATION:
 				sequence_KeyFloatValueAnnotation(context, (FloatAnnotation) semanticObject); 
-				return; 
-			case AnnotationsPackage.IMPORT_ANNOTATION:
-				sequence_ImportAnnotation(context, (ImportAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.INT_ANNOTATION:
 				sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 

@@ -18,11 +18,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.WeakAbortEndAltImpl#getEnd <em>End</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.WeakAbortEndAltImpl#getEndA <em>End A</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

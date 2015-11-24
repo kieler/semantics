@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exec#getTask <em>Task</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exec#getBody <em>Body</em>}</li>
@@ -20,7 +21,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exec#getExecCaseList <em>Exec Case List</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exec#getOptEnd <em>Opt End</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExec()
  * @model

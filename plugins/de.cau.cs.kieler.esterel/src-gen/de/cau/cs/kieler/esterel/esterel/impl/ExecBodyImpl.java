@@ -29,11 +29,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecBodyImpl#getVars <em>Vars</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecBodyImpl#getKexpressions <em>Kexpressions</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

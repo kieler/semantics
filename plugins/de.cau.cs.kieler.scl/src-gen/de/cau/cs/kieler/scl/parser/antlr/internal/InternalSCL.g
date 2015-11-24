@@ -3901,11 +3901,11 @@ ruleAnnotation returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_1()); 
     }
-    this_KeyStringValueAnnotation_1=ruleKeyStringValueAnnotation
+    this_KeyBooleanValueAnnotation_1=ruleKeyBooleanValueAnnotation
     { 
-        $current = $this_KeyStringValueAnnotation_1.current; 
+        $current = $this_KeyBooleanValueAnnotation_1.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -3914,11 +3914,11 @@ ruleAnnotation returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2()); 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2()); 
     }
-    this_TypedKeyStringValueAnnotation_2=ruleTypedKeyStringValueAnnotation
+    this_KeyStringValueAnnotation_2=ruleKeyStringValueAnnotation
     { 
-        $current = $this_TypedKeyStringValueAnnotation_2.current; 
+        $current = $this_KeyStringValueAnnotation_2.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -3927,11 +3927,11 @@ ruleAnnotation returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_3()); 
+        newCompositeNode(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); 
     }
-    this_KeyBooleanValueAnnotation_3=ruleKeyBooleanValueAnnotation
+    this_TypedKeyStringValueAnnotation_3=ruleTypedKeyStringValueAnnotation
     { 
-        $current = $this_KeyBooleanValueAnnotation_3.current; 
+        $current = $this_TypedKeyStringValueAnnotation_3.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -4323,9 +4323,9 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_5_0()); 
+	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0()); 
 	    }
-		lv_values_5_0=ruleEString		{
+		lv_values_5_0=ruleEStringBoolean		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
 	        }
@@ -4333,7 +4333,7 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_5_0, 
-        		"EString");
+        		"EStringBoolean");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4345,9 +4345,9 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_6_1_0()); 
+	        newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0()); 
 	    }
-		lv_values_7_0=ruleEString		{
+		lv_values_7_0=ruleEStringBoolean		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
 	        }
@@ -4355,7 +4355,7 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_7_0, 
-        		"EString");
+        		"EStringBoolean");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4742,8 +4742,6 @@ ruleKeyFloatValueAnnotation returns [EObject current=null]
 
 
 
-
-
 // Entry rule entryRuleEString
 entryRuleEString returns [String current=null] 
 	:
@@ -4776,6 +4774,54 @@ ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()
 
     { 
         afterParserOrEnumRuleCall();
+    }
+)
+    ;
+
+
+
+
+
+// Entry rule entryRuleEStringBoolean
+entryRuleEStringBoolean returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getEStringBooleanRule()); } 
+	 iv_ruleEStringBoolean=ruleEStringBoolean 
+	 { $current=$iv_ruleEStringBoolean.current.getText(); }  
+	 EOF 
+;
+
+// Rule EStringBoolean
+ruleEStringBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(    this_STRING_0=RULE_STRING    {
+		$current.merge(this_STRING_0);
+    }
+
+    { 
+    newLeafNode(this_STRING_0, grammarAccess.getEStringBooleanAccess().getSTRINGTerminalRuleCall_0()); 
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getEStringBooleanAccess().getExtendedIDParserRuleCall_1()); 
+    }
+    this_ExtendedID_1=ruleExtendedID    {
+		$current.merge(this_ExtendedID_1);
+    }
+
+    { 
+        afterParserOrEnumRuleCall();
+    }
+
+    |    this_BOOLEAN_2=RULE_BOOLEAN    {
+		$current.merge(this_BOOLEAN_2);
+    }
+
+    { 
+    newLeafNode(this_BOOLEAN_2, grammarAccess.getEStringBooleanAccess().getBOOLEANTerminalRuleCall_2()); 
     }
 )
     ;

@@ -61,6 +61,7 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedAnnotationAccess().getAlternatives(), "rule__ValuedAnnotation__Alternatives");
 					put(grammarAccess.getRestrictedAnnotationAccess().getAlternatives(), "rule__RestrictedAnnotation__Alternatives");
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
+					put(grammarAccess.getEStringBooleanAccess().getAlternatives(), "rule__EStringBoolean__Alternatives");
 					put(grammarAccess.getAssignOperatorAccess().getAlternatives(), "rule__AssignOperator__Alternatives");
 					put(grammarAccess.getPostfixOperatorAccess().getAlternatives(), "rule__PostfixOperator__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
@@ -167,7 +168,6 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getKeyBooleanValueAnnotationAccess().getGroup(), "rule__KeyBooleanValueAnnotation__Group__0");
 					put(grammarAccess.getKeyIntValueAnnotationAccess().getGroup(), "rule__KeyIntValueAnnotation__Group__0");
 					put(grammarAccess.getKeyFloatValueAnnotationAccess().getGroup(), "rule__KeyFloatValueAnnotation__Group__0");
-					put(grammarAccess.getImportAnnotationAccess().getGroup(), "rule__ImportAnnotation__Group__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup(), "rule__ExtendedID__Group__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup_1(), "rule__ExtendedID__Group_1__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup_2(), "rule__ExtendedID__Group_2__0");
@@ -305,7 +305,6 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getKeyIntValueAnnotationAccess().getValueAssignment_2(), "rule__KeyIntValueAnnotation__ValueAssignment_2");
 					put(grammarAccess.getKeyFloatValueAnnotationAccess().getNameAssignment_1(), "rule__KeyFloatValueAnnotation__NameAssignment_1");
 					put(grammarAccess.getKeyFloatValueAnnotationAccess().getValueAssignment_2(), "rule__KeyFloatValueAnnotation__ValueAssignment_2");
-					put(grammarAccess.getImportAnnotationAccess().getImportURIAssignment_1(), "rule__ImportAnnotation__ImportURIAssignment_1");
 				}
 			};
 		}

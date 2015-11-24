@@ -63,8 +63,6 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
     protected void customConfigureFormatting(final FormattingConfig c,
             final AnnotationsGrammarAccess f) {
 
-        c.setLinewrap().after(f.getImportAnnotationRule());
-
         c.setLinewrap().before(f.getCOMMENT_ANNOTATIONRule());
         c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
         c.setLinewrap().before(f.getTagAnnotationRule());

@@ -79,8 +79,7 @@ CommentAnnotation returns CommentAnnotation:
 // e.g.: @HVlayout
 TagAnnotation returns Annotation:
     '@' name=ExtendedID;
-
-
+    
 // KeyStringValueAnnotation
 // e.g.: @layouter dot
 // You may separate different values via comma.   
@@ -91,7 +90,7 @@ KeyStringValueAnnotation returns StringAnnotation:
 // TypedKeyStringValueAnnotation
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-    '@' name=ExtendedID '[' type=ExtendedID ']' values += EString (',' values += EString)*;
+    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringBoolean (',' values += EStringBoolean)*;
 
 
 // QuotedKeyStringValueAnnotation
@@ -107,12 +106,10 @@ QuotedKeyStringValueAnnotation returns StringAnnotation:
 QuotedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
     '@' name=ExtendedID '[' type=ExtendedID ']' values += STRING (',' values += STRING)*;
 
-
 // KeyBooleanValueAnnotation    
 // e.g.: @visible true;
 KeyBooleanValueAnnotation returns BooleanAnnotation:
-    '@' name=ExtendedID value=BOOLEAN;
-
+    '@' name=ExtendedID value=BOOLEAN;   
 
 // KeyIntValueAnnotation
 // e.g.: @minSpace 10;    
@@ -131,6 +128,9 @@ KeyFloatValueAnnotation returns FloatAnnotation:
 // For quoteless strings the ExtendedID rule is used.
 EString returns ecore::EString:
     STRING | ExtendedID;
+
+EStringBoolean returns ecore::EString:
+    STRING | ExtendedID | BOOLEAN;
 
 
 // ExtendedID
