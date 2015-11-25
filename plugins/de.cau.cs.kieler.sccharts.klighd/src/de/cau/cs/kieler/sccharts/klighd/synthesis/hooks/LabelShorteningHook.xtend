@@ -59,7 +59,7 @@ class LabelShorteningHook extends SynthesisActionHook {
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook";
     /** The synthesis option to generally hide/show labels */
-    public static final SynthesisOption SHOW_LABELS = SynthesisOption.createCheckOption("Transition labels", true).
+    public static final SynthesisOption HIDE_LABELS = SynthesisOption.createCheckOption("Hide Transition Labels", false).
         setUpdateAction(LabelShorteningHook.ID); // Register this action as updater
     /** The synthesis option to shorten labels */
     private static val SynthesisOption SHORTEN_LABEL_STRATEGY = SynthesisOption::
@@ -79,7 +79,7 @@ class LabelShorteningHook extends SynthesisActionHook {
     }
 
     override processTransition(Transition transition, KEdge edge) {
-        if (!SHOW_LABELS.booleanValue) {
+        if (HIDE_LABELS.booleanValue) {
             edge.eContents.filter(KLabel).forEach[initiallyHide]
         }
     }
@@ -109,10 +109,10 @@ class LabelShorteningHook extends SynthesisActionHook {
     override executeAction(KNode rootNode) {
         val viewer = usedContext.viewer
 
-        if (SHOW_LABELS.booleanValue) {
-            rootNode.eAllContentsOfType(KNode, KEdge, KLabel).filter(KLabel).forEach[viewer.show(it)]
-        } else {
+        if (HIDE_LABELS.booleanValue) {
             rootNode.eAllContentsOfType(KNode, KEdge, KLabel).filter(KLabel).forEach[viewer.hide(it)]
+        } else {
+            rootNode.eAllContentsOfType(KNode, KEdge, KLabel).filter(KLabel).forEach[viewer.show(it)]
         }
         rootNode.configureLabelManagement();
 
