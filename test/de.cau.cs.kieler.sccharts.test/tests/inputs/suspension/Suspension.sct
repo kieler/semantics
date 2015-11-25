@@ -1,6 +1,7 @@
 @Transformation SUSPEND
 scchart Suspension {
   input bool I;
+  input bool S;
   suspend S; 
   
   initial state A

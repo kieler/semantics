@@ -11,14 +11,14 @@ scchart ValuedSignals {
   region R1:
 
   initial state A
-  --> B / x_val = 3; x = x | true;
+  --> B / x_val = 3; x = x || true;
 
   final state B;
 
   region R2:
 
   initial state C
-  --> D with x / y_val = x_val; y = y | true;
+  --> D with x / y_val = x_val; y = y || true;
 
   final state D;
 }

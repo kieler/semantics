@@ -10,20 +10,20 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.klighd.synthesis
+package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
-import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.Annotation
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 import java.util.HashMap
 import java.util.List
 import java.util.Map.Entry
 
 import static extension java.lang.Character.*
-import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
 
 /**
  * Helper class for annotation based functionality.
@@ -32,16 +32,33 @@ import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
  * @kieler.design 2015-11-4 proposed
  * @kieler.rating 2015-11-4 proposed yellow
  */
-class SynthesisAnnotations {
+class SynthesisAnnotationHook extends SynthesisHook {
 
-    @Inject
-    SCChartsSynthesis synthesis;
+    // Annotation Keyword
+    /** The annotation keyword for setting synthesis options */
+    public static final String SYNTHESIS_OPTIONS_ANNOTATION = "synthesis";
 
+    /** Strings accepted as true as option value */
+    public static final List<String> POSITIVE_BOOLEAN_VALUES = newImmutableList("true", "on", "checked");
+
+    /** Strings accepted as false as option value */
+    public static final List<String> NEGATIVE_BOOLEAN_VALUES = newImmutableList("false", "off", "unchecked");
+
+    /** Mapping synthesis options by their accessible name */
     val nameOptionMap = new HashMap<String, SynthesisOption>();
+
+    override getPriority() {
+        return 100;
+    }
+
+    override start(Scope source, KNode node) {
+        initializeNameOptionMap();
+        // Configure synthesis options via annotation
+        source.getAllAnnotations(SYNTHESIS_OPTIONS_ANNOTATION).forEach[processSynthesisOptionAnnotation];
+    }
 
     /** Processes an annotation a sets the specified synthesis option */
     def processSynthesisOptionAnnotation(Annotation annotation) {
-        initializeNameOptionMap();
         val name = switch (annotation) {
             TypedStringAnnotation: annotation.type.accessableName
             StringAnnotation: annotation.values.head.accessableName
@@ -63,7 +80,7 @@ class SynthesisAnnotations {
     private def initializeNameOptionMap() {
         if (nameOptionMap.empty) {
             val options = newHashSet();
-            options.addAll(synthesis.displayedSynthesisOptions);
+            options.addAll(usedContext.displayedSynthesisOptions);
             for (SynthesisOption option : options) {
                 val name = option.accessableName;
                 if (!name.nullOrEmpty) {
@@ -80,7 +97,7 @@ class SynthesisAnnotations {
         }
         return option.name.accessableName;
     }
-    
+
     /** Converts a String into a non-whitespace lower case variant */
     private def accessableName(String text) {
         if (text.nullOrEmpty) {
@@ -104,11 +121,11 @@ class SynthesisAnnotations {
     private def setOption(SynthesisOption option, String value) {
         switch (option) {
             case option.isCheckOption:
-                synthesis.usedContext.configureOption(option, value.parseBoolean)
+                usedContext.configureOption(option, value.parseBoolean)
             case option.isChoiceOption: {
                 val newValue = value.parseObject(option.values);
                 if (newValue != null) {
-                    synthesis.usedContext.configureOption(option, newValue)
+                    usedContext.configureOption(option, newValue)
                 }
             }
         }
@@ -117,8 +134,8 @@ class SynthesisAnnotations {
     /** Parses a boolean value from the value string */
     private def parseBoolean(String value) {
         switch (value) {
-            case SCChartsDiagramProperties::POSITIVE_BOOLEAN_VALUES.contains(value): return true
-            case SCChartsDiagramProperties::NEGATIVE_BOOLEAN_VALUES.contains(value): return false
+            case POSITIVE_BOOLEAN_VALUES.contains(value): return true
+            case NEGATIVE_BOOLEAN_VALUES.contains(value): return false
             case value.chars.allMatch[isDigit]: return Integer.parseInt(value) != 0
             default: return !value.nullOrEmpty
         }

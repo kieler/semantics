@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalKExpressionsLexer extends Lexer {
     public static final int T__50=50;
-    public static final int RULE_BOOLEAN=9;
+    public static final int RULE_BOOLEAN=5;
     public static final int T__19=19;
     public static final int T__59=59;
     public static final int T__16=16;
@@ -28,12 +28,12 @@ public class InternalKExpressionsLexer extends Lexer {
     public static final int T__53=53;
     public static final int T__54=54;
     public static final int T__60=60;
-    public static final int RULE_ID=5;
+    public static final int RULE_ID=6;
     public static final int T__26=26;
-    public static final int RULE_HOSTCODE=8;
+    public static final int RULE_HOSTCODE=9;
     public static final int T__27=27;
     public static final int T__28=28;
-    public static final int RULE_INT=6;
+    public static final int RULE_INT=7;
     public static final int T__29=29;
     public static final int T__22=22;
     public static final int RULE_ML_COMMENT=11;
@@ -63,7 +63,7 @@ public class InternalKExpressionsLexer extends Lexer {
     public static final int T__49=49;
     public static final int T__44=44;
     public static final int T__45=45;
-    public static final int RULE_FLOAT=7;
+    public static final int RULE_FLOAT=8;
     public static final int T__46=46;
     public static final int T__47=47;
     public static final int T__40=40;
@@ -1016,11 +1016,11 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8809:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8809:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8865:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8865:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
             match('\''); 
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8809:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8865:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop1:
             do {
                 int alt1=3;
@@ -1036,7 +1036,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8809:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8865:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1052,7 +1052,7 @@ public class InternalKExpressionsLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8809:64: ~ ( ( '\\\\' | '\\'' ) )
+            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8865:64: ~ ( ( '\\\\' | '\\'' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1089,12 +1089,12 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8811:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8811:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8867:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8867:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8811:33: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8867:33: ( options {greedy=false; } : . )*
             loop2:
             do {
                 int alt2=2;
@@ -1119,7 +1119,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8811:61: .
+            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8867:61: .
             	    {
             	    matchAny(); 
 
@@ -1149,8 +1149,8 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8813:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8813:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8869:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8869:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -1163,7 +1163,7 @@ public class InternalKExpressionsLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8813:31: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8869:31: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -1188,7 +1188,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8813:59: .
+            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8869:59: .
             	    {
             	    matchAny(); 
 
@@ -1216,8 +1216,8 @@ public class InternalKExpressionsLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8815:22: ( '0' .. '9' )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8815:24: '0' .. '9'
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8871:22: ( '0' .. '9' )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8871:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -1234,10 +1234,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8817:10: ( ( RULE_NUMBER )+ )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8817:12: ( RULE_NUMBER )+
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8873:10: ( ( RULE_NUMBER )+ )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8873:12: ( RULE_NUMBER )+
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8817:12: ( RULE_NUMBER )+
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8873:12: ( RULE_NUMBER )+
             int cnt4=0;
             loop4:
             do {
@@ -1251,7 +1251,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8817:12: RULE_NUMBER
+            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8873:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -1283,17 +1283,17 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             int alt12=2;
             alt12 = dfa12.predict(input);
             switch (alt12) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:15: ( RULE_NUMBER )+
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:15: ( RULE_NUMBER )+
                     int cnt5=0;
                     loop5:
                     do {
@@ -1307,7 +1307,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:15: RULE_NUMBER
+                    	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1324,7 +1324,7 @@ public class InternalKExpressionsLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:32: ( RULE_NUMBER )*
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:32: ( RULE_NUMBER )*
                     loop6:
                     do {
                         int alt6=2;
@@ -1337,7 +1337,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:32: RULE_NUMBER
+                    	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1349,7 +1349,7 @@ public class InternalKExpressionsLexer extends Lexer {
                         }
                     } while (true);
 
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -1358,7 +1358,7 @@ public class InternalKExpressionsLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -1369,7 +1369,7 @@ public class InternalKExpressionsLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:56: ( '+' | '-' )?
+                            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:56: ( '+' | '-' )?
                             int alt7=2;
                             int LA7_0 = input.LA(1);
 
@@ -1395,7 +1395,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                             }
 
-                            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:67: ( RULE_NUMBER )+
+                            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:67: ( RULE_NUMBER )+
                             int cnt8=0;
                             loop8:
                             do {
@@ -1409,7 +1409,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                                 switch (alt8) {
                             	case 1 :
-                            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:67: RULE_NUMBER
+                            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -1431,7 +1431,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:82: ( 'f' )?
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:82: ( 'f' )?
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
@@ -1440,7 +1440,7 @@ public class InternalKExpressionsLexer extends Lexer {
                     }
                     switch (alt10) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:82: 'f'
+                            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:82: 'f'
                             {
                             match('f'); 
 
@@ -1453,9 +1453,9 @@ public class InternalKExpressionsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:87: ( RULE_NUMBER )+ 'f'
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:87: ( RULE_NUMBER )+
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:87: ( RULE_NUMBER )+
                     int cnt11=0;
                     loop11:
                     do {
@@ -1469,7 +1469,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                         switch (alt11) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8819:87: RULE_NUMBER
+                    	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8875:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1508,10 +1508,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8821:14: ( ( 'true' | 'false' ) )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8821:16: ( 'true' | 'false' )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8877:14: ( ( 'true' | 'false' ) )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8877:16: ( 'true' | 'false' )
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8821:16: ( 'true' | 'false' )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8877:16: ( 'true' | 'false' )
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -1529,7 +1529,7 @@ public class InternalKExpressionsLexer extends Lexer {
             }
             switch (alt13) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8821:17: 'true'
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8877:17: 'true'
                     {
                     match("true"); 
 
@@ -1537,7 +1537,7 @@ public class InternalKExpressionsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8821:24: 'false'
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8877:24: 'false'
                     {
                     match("false"); 
 
@@ -1563,11 +1563,11 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8823:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8823:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8879:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8879:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8823:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8879:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
             loop14:
             do {
                 int alt14=3;
@@ -1583,7 +1583,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                 switch (alt14) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8823:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8879:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1599,7 +1599,7 @@ public class InternalKExpressionsLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8823:61: ~ ( ( '\\\\' | '\"' ) )
+            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8879:61: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1636,10 +1636,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8825:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8825:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8881:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8881:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8825:11: ( '^' )?
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8881:11: ( '^' )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -1648,7 +1648,7 @@ public class InternalKExpressionsLexer extends Lexer {
             }
             switch (alt15) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8825:11: '^'
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8881:11: '^'
                     {
                     match('^'); 
 
@@ -1666,7 +1666,7 @@ public class InternalKExpressionsLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8825:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8881:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop16:
             do {
                 int alt16=2;
@@ -1715,12 +1715,12 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8827:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8827:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8883:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8883:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8827:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8883:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop17:
             do {
                 int alt17=2;
@@ -1733,7 +1733,7 @@ public class InternalKExpressionsLexer extends Lexer {
 
                 switch (alt17) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8827:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8883:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1753,7 +1753,7 @@ public class InternalKExpressionsLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8827:40: ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8883:40: ( ( '\\r' )? '\\n' )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -1762,9 +1762,9 @@ public class InternalKExpressionsLexer extends Lexer {
             }
             switch (alt19) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8827:41: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8883:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8827:41: ( '\\r' )?
+                    // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8883:41: ( '\\r' )?
                     int alt18=2;
                     int LA18_0 = input.LA(1);
 
@@ -1773,7 +1773,7 @@ public class InternalKExpressionsLexer extends Lexer {
                     }
                     switch (alt18) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8827:41: '\\r'
+                            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8883:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1805,10 +1805,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8829:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8829:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8885:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8885:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8829:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8885:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt20=0;
             loop20:
             do {
@@ -1862,8 +1862,8 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8831:16: ( . )
-            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8831:18: .
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8887:16: ( . )
+            // ../de.cau.cs.kieler.esterel.kexpressions.ui/src-gen/de/cau/cs/kieler/esterel/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8887:18: .
             {
             matchAny(); 
 
@@ -2331,7 +2331,7 @@ public class InternalKExpressionsLexer extends Lexer {
             this.transition = DFA12_transition;
         }
         public String getDescription() {
-            return "8819:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
+            return "8875:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
         }
     }
     static final String DFA21_eotS =

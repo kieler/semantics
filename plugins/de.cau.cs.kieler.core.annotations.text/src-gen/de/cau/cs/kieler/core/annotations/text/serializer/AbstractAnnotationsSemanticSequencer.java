@@ -151,7 +151,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (name=ExtendedID type=ExtendedID values+=EString values+=EString*)
+	 *     (name=ExtendedID type=ExtendedID values+=EStringBoolean values+=EStringBoolean*)
 	 */
 	protected void sequence_TypedKeyStringValueAnnotation(EObject context, TypedStringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -43,7 +43,6 @@ import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.Suite;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
-import org.junit.runners.model.RunnerBuilder;
 import org.junit.runners.model.Statement;
 import org.junit.runners.model.TestClass;
 
@@ -553,24 +552,34 @@ public class ModelCollectionTestRunner extends Suite {
             final org.eclipse.emf.ecore.resource.ResourceSet set, final Iterable<URL> urls) {
         return Iterables.concat(Iterables.transform(urls, new Function<URL, Iterable<?>>() {
             public Iterable<?> apply(final URL url) {
-                try {
-                    final Resource r = set.getResource(URI.createURI(url.toString()), true);
-                    return r.getContents();
-                } catch (WrappedException w) {
-                    // if the resource load fails (e.g. as no valid ResourceFactory has been
-                    //  registered) return the empty list
-                    String message = "ModelCollectionTestRunner: Loading model resource "
-                            + url.toString() + " of " + bundleId
-                            + " failed with the following exception:"
-                            + System.getProperty("line.separator");
-                    Platform.getLog(Platform.getBundle(bundleId)).log(
-                            new Status(IStatus.ERROR, bundleId, message, w));
+                if(isDirectory(url)) {
                     return Collections.emptyList();
+                } else {
+                    try {
+                    
+                        final Resource r = set.getResource(URI.createURI(url.toString()), true);
+                        return r.getContents();
+                    } catch (WrappedException w) {
+                        // if the resource load fails (e.g. as no valid ResourceFactory has been
+                        //  registered) return the empty list
+                        String message = "ModelCollectionTestRunner: Loading model resource "
+                                + url.toString() + " of " + bundleId
+                                + " failed with the following exception:"
+                                + System.getProperty("line.separator");
+                        Platform.getLog(Platform.getBundle(bundleId)).log(
+                                new Status(IStatus.ERROR, bundleId, message, w));
+                        return Collections.emptyList();
+                    }
                 }
             }
         }));
     }
 
+    private boolean isDirectory(URL url){
+        // An url from bundle.findEntries ends with a slash iff it is a directory path
+        return url.toString().endsWith("/");
+    }
+        
     // --------------------------------------------------------------------
 
     /**

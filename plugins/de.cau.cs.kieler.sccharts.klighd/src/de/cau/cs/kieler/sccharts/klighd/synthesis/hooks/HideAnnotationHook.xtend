@@ -146,7 +146,7 @@ class HideAnnotationHook extends SynthesisHook {
     /** Checks if the given eleemtent has the hide annotation */
     private def hasHideAnnotation(Annotatable annotatable) {
         return !annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter [
-            it.name.toLowerCase == HIDE_ANNOTATION_KEYWORD // Case insensitive!
+            it.name?.toLowerCase == HIDE_ANNOTATION_KEYWORD // Case insensitive!
         ].empty;
     }
 

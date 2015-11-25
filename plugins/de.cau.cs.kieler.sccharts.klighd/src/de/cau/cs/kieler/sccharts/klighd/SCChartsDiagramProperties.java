@@ -13,13 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.klighd;
 
-import java.util.Collections;
-
-import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-
-import com.google.common.collect.Collections2;
-import com.google.common.collect.ImmutableList;
-
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter;
@@ -45,15 +38,4 @@ public final class SCChartsDiagramProperties {
             new Property<SourceModelTrackingAdapter>("de.cau.cs.kieler.sccharts.klighd.tracker",
                     null);
 
-    // Annotation Keywords
-    /** The annotation keyword for setting synthesis options */
-    public static final String SYNTHESIS_OPTIONS_ANNOTATION = "sidebar";
-
-    /** Strings accepted as true as option value */
-    public static final ImmutableList<String> POSITIVE_BOOLEAN_VALUES =
-            (ImmutableList<String>) CollectionLiterals.newImmutableList("true", "on", "checked");
-    
-    /** Strings accepted as false as option value */
-    public static final ImmutableList<String> NEGATIVE_BOOLEAN_VALUES =
-            (ImmutableList<String>) CollectionLiterals.newImmutableList("false", "off", "unchecked");
 }

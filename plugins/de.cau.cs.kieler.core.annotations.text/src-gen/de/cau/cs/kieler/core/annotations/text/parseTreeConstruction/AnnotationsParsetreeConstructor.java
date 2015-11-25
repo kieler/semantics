@@ -1318,11 +1318,11 @@ protected class KeyStringValueAnnotation_ValuesAssignment_3_1 extends Assignment
  *  // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
  * 
  * TypedKeyStringValueAnnotation returns TypedStringAnnotation:
- * 	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EString ("," values+=EString)*;
+ * 	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*;
  *
  **/
 
-// "@" name=ExtendedID "[" type=ExtendedID "]" values+=EString ("," values+=EString)*
+// "@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*
 protected class TypedKeyStringValueAnnotation_Group extends GroupToken {
 	
 	public TypedKeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1485,7 +1485,7 @@ protected class TypedKeyStringValueAnnotation_RightSquareBracketKeyword_4 extend
 
 }
 
-// values+=EString
+// values+=EStringBoolean
 protected class TypedKeyStringValueAnnotation_ValuesAssignment_5 extends AssignmentToken  {
 	
 	public TypedKeyStringValueAnnotation_ValuesAssignment_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1509,9 +1509,9 @@ protected class TypedKeyStringValueAnnotation_ValuesAssignment_5 extends Assignm
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("values",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("values");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_5_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0(), value, null)) {
 			type = AssignmentType.DATATYPE_RULE_CALL;
-			element = grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_5_0();
+			element = grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0();
 			return obj;
 		}
 		return null;
@@ -1519,7 +1519,7 @@ protected class TypedKeyStringValueAnnotation_ValuesAssignment_5 extends Assignm
 
 }
 
-// ("," values+=EString)*
+// ("," values+=EStringBoolean)*
 protected class TypedKeyStringValueAnnotation_Group_6 extends GroupToken {
 	
 	public TypedKeyStringValueAnnotation_Group_6(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1564,7 +1564,7 @@ protected class TypedKeyStringValueAnnotation_CommaKeyword_6_0 extends KeywordTo
 
 }
 
-// values+=EString
+// values+=EStringBoolean
 protected class TypedKeyStringValueAnnotation_ValuesAssignment_6_1 extends AssignmentToken  {
 	
 	public TypedKeyStringValueAnnotation_ValuesAssignment_6_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1588,9 +1588,9 @@ protected class TypedKeyStringValueAnnotation_ValuesAssignment_6_1 extends Assig
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("values",false)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("values");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_6_1_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0(), value, null)) {
 			type = AssignmentType.DATATYPE_RULE_CALL;
-			element = grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_6_1_0();
+			element = grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0();
 			return obj;
 		}
 		return null;
@@ -2503,6 +2503,7 @@ protected class KeyFloatValueAnnotation_ValueAssignment_2 extends AssignmentToke
 
 
 /************ end Rule KeyFloatValueAnnotation ****************/
+
 
 
 

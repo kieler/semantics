@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.klighd.hooks;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
@@ -68,6 +69,16 @@ public class SynthesisHooks {
 
     /** The list of hooks classes registered in the extension point */
     private final static ArrayList<Class<? extends SynthesisHook>> registeredHooks;
+    
+    /** Priority order */
+    private final static Comparator<SynthesisHook> decendingHookPriority = new Comparator<SynthesisHook>() {
+
+        @Override
+        public int compare(SynthesisHook hook1, SynthesisHook hook2) {
+            return hook2.getPriority() - hook1.getPriority();
+        }
+        
+    };
 
     /**
      * Initializes this class with the data from the extension point.
@@ -134,6 +145,7 @@ public class SynthesisHooks {
         for (Class<? extends SynthesisHook> hookClass : registeredHooks) {
             hooks.add(injector.getInstance(hookClass));
         }
+        hooks.sort(decendingHookPriority);
     }
 
     /**
