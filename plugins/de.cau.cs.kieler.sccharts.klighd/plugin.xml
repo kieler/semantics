@@ -49,17 +49,6 @@
       </diagramSynthesis>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kiml.layoutConfigs">
-      <semanticConfig
-            class="de.cau.cs.kieler.sccharts.Scope"
-            config="de.cau.cs.kieler.sccharts.klighd.layout.HVLayoutConfig">
-      </semanticConfig>
-      <semanticConfig
-            class="de.cau.cs.kieler.sccharts.Scope"
-            config="de.cau.cs.kieler.sccharts.klighd.layout.AnnotationsLayoutConfig">
-      </semanticConfig>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.sccharts.klighd.hooks">
       <hook
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.DeclarationsHook">
@@ -87,6 +76,9 @@
       </hook>
       <hook
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SynthesisAnnotationHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LayoutAnnotationHook">
       </hook>
    </extension>
 
