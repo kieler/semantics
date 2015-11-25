@@ -38,8 +38,8 @@ import org.eclipse.jface.wizard.Wizard
 import org.eclipse.jface.wizard.WizardDialog
 import org.eclipse.jface.wizard.WizardPage
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
-import org.eclipse.ui.IWorkbenchWizard
 import org.eclipse.xtext.util.StringInputStream
 
 /**
@@ -50,7 +50,7 @@ import org.eclipse.xtext.util.StringInputStream
  * 
  * @author aas
  */
-class PromProjectWizard extends Wizard implements IWorkbenchWizard {
+class PromProjectWizard extends Wizard implements INewWizard {
 
     /**
      * The workbench set in the init(...) method.

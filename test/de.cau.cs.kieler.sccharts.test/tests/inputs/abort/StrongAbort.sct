@@ -8,7 +8,7 @@ scchart StrongAbort {
     --> A1;
     
     final state A1;
-  }o-> F immediate with I;
+  }o-> F with I;
     
   final state F;
 }
