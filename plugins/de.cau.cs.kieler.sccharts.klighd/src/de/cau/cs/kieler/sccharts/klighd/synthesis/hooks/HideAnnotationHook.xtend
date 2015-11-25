@@ -73,7 +73,7 @@ class HideAnnotationHook extends SynthesisHook {
                         for (declaration : state.declarations) {
                             if (declaration.hasHideAnnotation) {
                                 val declarationLabel = declarationsContainer.children.findFirst [
-                                    getProperty(KlighdInternalProperties.MODEL_ELEMEMT) == declaration
+                                    isAssociatedWith(declaration)
                                 ];
                                 if (declarationLabel != null) {
                                     declarationsContainer.children.remove(declarationLabel);
@@ -89,7 +89,7 @@ class HideAnnotationHook extends SynthesisHook {
                         for (action : state.localActions) {
                             if (action.hasHideAnnotation) {
                                 val actionLabel = actionsContainer.children.findFirst [
-                                    getProperty(KlighdInternalProperties.MODEL_ELEMEMT) == action
+                                    isAssociatedWith(action)
                                 ];
                                 if (actionLabel != null) {
                                     actionsContainer.children.remove(actionLabel);
@@ -103,7 +103,7 @@ class HideAnnotationHook extends SynthesisHook {
                     for (region : state.regions) {
                         if (region.hasHideAnnotation) {
                             val regionNode = node.children.findFirst [
-                                getData(KLayoutData).getProperty(KlighdInternalProperties.MODEL_ELEMEMT) == region
+                                isAssociatedWith(region)
                             ];
                             if (regionNode != null) {
                                 regionNode.parent = null;
@@ -124,7 +124,7 @@ class HideAnnotationHook extends SynthesisHook {
                 for (declaration : region.declarations) {
                     if (declaration.hasHideAnnotation) {
                         val declarationLabel = declarationsContainer.children.findFirst [
-                            getProperty(KlighdInternalProperties.MODEL_ELEMEMT) == declaration
+                            isAssociatedWith(declaration)
                         ];
                         if (declarationLabel != null) {
                             declarationsContainer.children.remove(declarationLabel);

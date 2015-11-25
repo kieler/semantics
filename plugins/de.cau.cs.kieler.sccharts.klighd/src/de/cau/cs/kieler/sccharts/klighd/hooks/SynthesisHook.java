@@ -21,9 +21,14 @@ import org.eclipse.emf.ecore.EObject;
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.core.kgraph.KEdge;
+import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.core.krendering.KRendering;
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
@@ -120,6 +125,45 @@ public abstract class SynthesisHook {
     public void processRegion(Region region, KNode node) {
     }
 
+    // -------------------------------------------------------------------------
+    // Utility Methods
+    
+    /**
+     * Returns true if the given diagram element is associated with the given source model object.
+     * 
+     * @param element
+     *            the diagram element
+     * @param object
+     *            the source model object
+     * @return
+     * @return true if associated, false otherwise
+     */
+    public boolean isAssociatedWith(final KGraphElement element, final Object object) {
+        if (element != null) {
+            KLayoutData layoutData = element.getData(KLayoutData.class);
+            if (layoutData != null) {
+                return layoutData.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) == object;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the given diagram element is associated with the given source model object.
+     * 
+     * @param rendering
+     *            the rendering element
+     * @param object
+     *            the source model object
+     * @return true if associated, false otherwise
+     */
+    public boolean isAssociatedWith(final KRendering rendering, final Object object) {
+        if (rendering != null) {
+            return rendering.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) == object;
+        }
+        return false;
+    }
+    
     // -------------------------------------------------------------------------
     // Delegate from AbstractDiagramSynthesis
 

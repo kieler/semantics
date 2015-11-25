@@ -26,7 +26,7 @@ import java.util.Map.Entry
 import static extension java.lang.Character.*
 
 /**
- * Helper class for annotation based functionality.
+ * Evaluates synthesis option annotations in the model.
  * 
  * @author als
  * @kieler.design 2015-11-4 proposed
