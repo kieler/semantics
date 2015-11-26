@@ -35,16 +35,13 @@ import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 import de.cau.cs.kieler.sccharts.Binding;
-import de.cau.cs.kieler.sccharts.CallNode;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
-import de.cau.cs.kieler.sccharts.DefineNode;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.Equation;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.IterateAction;
-import de.cau.cs.kieler.sccharts.ReferenceNode;
 import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.ScopeCall;
@@ -233,9 +230,6 @@ public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSeque
 			case SCChartsPackage.BINDING:
 				sequence_Binding(context, (Binding) semanticObject); 
 				return; 
-			case SCChartsPackage.CALL_NODE:
-				sequence_CallNode(context, (CallNode) semanticObject); 
-				return; 
 			case SCChartsPackage.CONTROLFLOW_REGION:
 				if(context == grammarAccess.getControlflowRegionRule() ||
 				   context == grammarAccess.getRegionRule()) {
@@ -258,9 +252,6 @@ public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSeque
 					return; 
 				}
 				else break;
-			case SCChartsPackage.DEFINE_NODE:
-				sequence_DefineNode(context, (DefineNode) semanticObject); 
-				return; 
 			case SCChartsPackage.DURING_ACTION:
 				sequence_DuringAction(context, (DuringAction) semanticObject); 
 				return; 
@@ -275,9 +266,6 @@ public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSeque
 				return; 
 			case SCChartsPackage.ITERATE_ACTION:
 				sequence_IterateAction(context, (IterateAction) semanticObject); 
-				return; 
-			case SCChartsPackage.REFERENCE_NODE:
-				sequence_ReferenceNode(context, (ReferenceNode) semanticObject); 
 				return; 
 			case SCChartsPackage.SC_CHARTS:
 				sequence_SCCharts(context, (SCCharts) semanticObject); 
@@ -319,15 +307,6 @@ public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSeque
 	
 	/**
 	 * Constraint:
-	 *     (id=ID callReference=[DefineNode|ID] parameters+=ValuedObjectReference? parameters+=ValuedObjectReference*)
-	 */
-	protected void sequence_CallNode(EObject context, CallNode semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
 	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon* states+=State+)
 	 */
 	protected void sequence_ControlflowRegion(EObject context, ControlflowRegion semanticObject) {
@@ -337,23 +316,9 @@ public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSeque
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon* (equations+=Equation | nodes+=Node)*)
+	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon* equations+=Equation*)
 	 */
 	protected void sequence_DataflowRegion(EObject context, DataflowRegion semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (
-	 *         id=ID 
-	 *         inputs+=DeclarationWOSemicolon* 
-	 *         outputs+=DeclarationWOSemicolon* 
-	 *         ((valuedObjects+=[ValuedObject|ID] expressions+=Expression)* | states+=State*)
-	 *     )
-	 */
-	protected void sequence_DefineNode(EObject context, DefineNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -363,15 +328,6 @@ public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSeque
 	 *     ((valuedObject=[ValuedObject|ID] expression=Expression) | (valuedObject=[ValuedObject|ID] node=[Node|ID] expression=ValuedObjectReference))
 	 */
 	protected void sequence_Equation(EObject context, Equation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (id=ID label=STRING? referencedScope=[State|ID] parameters+=ValuedObjectReference? parameters+=ValuedObjectReference*)
-	 */
-	protected void sequence_ReferenceNode(EObject context, ReferenceNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -441,7 +397,7 @@ public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSeque
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon* (equations+=Equation | nodes+=Node)*)
+	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon* equations+=Equation*)
 	 */
 	protected void sequence_SingleDataflowRegion(EObject context, DataflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
