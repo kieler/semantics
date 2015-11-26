@@ -68,7 +68,11 @@ SingleDataflowRegion returns sccharts::DataflowRegion:
     	'dataflow' (id=ID)? (label=STRING)? ':'
     	(declarations+=DeclarationWOSemicolon)*
     )
-    ((equations += Equation) | (nodes += Node))*;
+    (equations += Equation)*;
+
+
+Region returns sccharts::Region:
+    ControlflowRegion | DataflowRegion;
 
 
 ControlflowRegion returns sccharts::ControlflowRegion:
@@ -84,7 +88,7 @@ DataflowRegion returns sccharts::DataflowRegion:
     (annotations += Annotation)*
     'dataflow' (id=ID)? (label=STRING)? ':'
     (declarations+=DeclarationWOSemicolon)*
-    ((equations += Equation) | (nodes+=Node))*;
+    (equations += Equation)*;
 
 
 Equation returns sccharts::Equation:
@@ -96,38 +100,9 @@ Equation returns sccharts::Equation:
     );
 
 
-Region returns sccharts::Region:
-	ControlflowRegion | DataflowRegion;
 
 
-Node returns sccharts::Node:
-    ReferenceNode | CallNode | DefineNode;
-    
 
-CallNode returns sccharts::CallNode:
-    {sccharts::CallNode}
-    (id=ID) '=' callReference = [sccharts::DefineNode|ID]
-    '(' (parameters+=ValuedObjectReference)? (',' parameters+=ValuedObjectReference)* ')'
-    ';';
-    
-
-DefineNode returns sccharts::DefineNode:
-    {sccharts::DefineNode}
-    'node' (id=ID) '(' (inputs+=DeclarationWOSemicolon)* ')'
-    'returns' '(' (outputs+=DeclarationWOSemicolon)* ')' '{'
-    (
-        ((valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';')*
-        | // keep that? yes, but do not allow to mix them
-        (states+=State)*
-    )
-    '}';
-    
-
-ReferenceNode returns sccharts::ReferenceNode:
-    {sccharts::ReferenceNode}
-    (id=ID) (label=STRING)? '=' 'ref' referencedScope = [sccharts::State|ID]
-    '(' (parameters+=ValuedObjectReference)? (',' parameters+=ValuedObjectReference)* ')'
-    ';';
     
     
 LocalAction returns sccharts::LocalAction:
@@ -167,6 +142,37 @@ enum StateType returns sccharts::StateType:
 	NORMAL = 'normal' | CONNECTOR = 'connector' | REFERENCE = 'reference' | TEXTUAL = 'textual';
 
 enum TransitionType returns sccharts::TransitionType:
-	WEAKABORT = 'goto' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
+	WEAKABORT = '--' | STRONGABORT = '-- abort' | TERMINATION = '-- join';
+	
+	
+	
+//Node returns sccharts::Node:
+//    ReferenceNode | CallNode | DefineNode;
+//    
+//
+////CallNode returns sccharts::CallNode:
+////    {sccharts::CallNode}
+////    (id=ID) '=' callReference = [sccharts::DefineNode|ID]
+////    '(' (parameters+=ValuedObjectReference)? (',' parameters+=ValuedObjectReference)* ')'
+////    ';';
+////    
+////
+////DefineNode returns sccharts::DefineNode:
+////    {sccharts::DefineNode}
+////    'node' (id=ID) '(' (inputs+=DeclarationWOSemicolon)* ')'
+////    'returns' '(' (outputs+=DeclarationWOSemicolon)* ')' '{'
+////    (
+////        ((valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';')*
+////        | // keep that? yes, but do not allow to mix them
+////        (states+=State)*
+////    )
+////    '}';
+////    
+////
+////ReferenceNode returns sccharts::ReferenceNode:
+////    {sccharts::ReferenceNode}
+////    (id=ID) (label=STRING)? '=' 'ref' referencedScope = [sccharts::State|ID]
+////    '(' (parameters+=ValuedObjectReference)? (',' parameters+=ValuedObjectReference)* ')'
+////    ';';	
 	
 	
