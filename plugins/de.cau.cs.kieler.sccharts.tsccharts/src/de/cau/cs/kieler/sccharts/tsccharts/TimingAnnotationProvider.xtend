@@ -454,7 +454,7 @@ class TimingAnnotationProvider {
         var timingRequestResult1 = new TimingRequestResult();
         var timingRequestResult2 = new TimingRequestResult();
         stringBuilder.append("\n");
-        stringBuilder.append("FWCET " + startPoint + " " + endPoint);
+        stringBuilder.append("LWCET " + startPoint + " " + endPoint);
         // + "\nLWCET " + startPoint + " " + endPoint);
         timingRequestResult1.setRequestType(RequestType.FWCET);
         timingRequestResult1.setStartPoint(startPoint);

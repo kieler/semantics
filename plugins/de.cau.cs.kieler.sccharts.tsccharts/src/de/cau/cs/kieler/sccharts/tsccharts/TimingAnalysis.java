@@ -108,6 +108,7 @@ import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
 public class TimingAnalysis extends Job {
 
     private static int MEGAHERTZ = 200;
+    private static boolean FRACTIONAL = true;
 
     public enum TimingValueRepresentation {
         PERCENT, CYCLES, MILLISECONDS;
@@ -635,7 +636,7 @@ public class TimingAnalysis extends Job {
                             double onePercent = overallWCET / 100.0;
                             percentage = timingvalue / onePercent;
                         }
-                        highlightRegion(region, renderingFactory, percentage);
+                        highlightRegion(region, renderingFactory, percentage, timingLabels.get(region));
                     }
                 }
 
@@ -711,9 +712,11 @@ public class TimingAnalysis extends Job {
      *            A renderingFactory
      * @param percentage
      *            The percentage of the region's fractional WCET in relation to overall WCET
+     * @param labels
+     *            The set with the timing labels of the regions of the model 
      */
     private void highlightRegion(Region region, KRenderingFactory renderingFactory,
-            double percentage) {
+            double percentage, Set<WeakReference<KText>> labels) {
         Set<WeakReference<KRectangle>> rectangleRefs = regionRectangles.get(region);
         for (WeakReference<KRectangle> rectangleRef : rectangleRefs) {
             KRectangle regionRectangle = rectangleRef.get();
@@ -734,6 +737,11 @@ public class TimingAnalysis extends Job {
                 final KLineWidth lwStyle = KRenderingFactory.eINSTANCE.createKLineWidth();
                 lwStyle.setLineWidth(3);
                 regionRectangle.getStyles().add(lwStyle);
+                // the red numbers on red ground will not be readable well, so change them to black
+                for (WeakReference<KText> labelRef : labels) {
+                    KText label = labelRef.get();
+                    renderingExtensions.setForegroundColor(label, 0, 0, 0);
+                }
             }
         }
     }
