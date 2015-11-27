@@ -88,15 +88,29 @@ DataflowRegion returns sccharts::DataflowRegion:
     (annotations += Annotation)*
     'dataflow' (id=ID)? (label=STRING)? ':'
     (declarations+=DeclarationWOSemicolon)*
-    (equations += Equation)*;
+    (
+        (equations += Equation)
+        |
+        (scopeDeclarations += ScopeDeclaration)
+    )*
+;
+
+
+ScopeDeclaration returns sccharts::ScopeDeclaration:
+    {sccharts::ScopeDeclaration}
+    (annotations+=Annotation)*
+    scopeObjects += ScopeObject* 
+;
+
+ScopeObject returns sccharts::ScopeObject:
+    name=ID 'is' scope= [sccharts::Scope|ID]
+;
 
 
 Equation returns sccharts::Equation:
     {sccharts::Equation}
     (
         (valuedObject = [kexpressions::ValuedObject]) '=' (expression = Expression) ';'
-        |
-        (valuedObject = [kexpressions::ValuedObject]) '=' (node = [sccharts::Node|ID]) '.' (expression = ValuedObjectReference) ';'
     );
 
 
@@ -118,7 +132,9 @@ ScopeReference returns sccharts::ScopeReference:
 ScopeCall returns sccharts::ScopeCall:
     '[' scope=[sccharts::Scope|ID]
     	(('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
-    ']';
+    ']'
+    ('.' valuedObject = [kexpressions::ValuedObject])
+;
 
 
 Binding returns sccharts::Binding:

@@ -346,7 +346,7 @@ enum PostfixSub returns OperatorType:
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 
 	INT="int" | FLOAT="float" |
-	STRING="string" | HOST="host";
+	STRING="string" | HOST="host" | SCOPE="scope";
 	
 // Host Type Enum
 enum HostType returns ValueType:

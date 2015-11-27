@@ -173,6 +173,7 @@
     </eLiterals>
     <eLiterals name="DOUBLE" value="5" literal="double"/>
     <eLiterals name="STRING" value="6" literal="string"/>
+    <eLiterals name="SCOPE" value="8" literal="scope"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObjectReference" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
