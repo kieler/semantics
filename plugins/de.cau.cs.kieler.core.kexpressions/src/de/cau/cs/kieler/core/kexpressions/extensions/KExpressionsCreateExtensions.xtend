@@ -166,6 +166,48 @@ class KExpressionsCreateExtensions {
         ]
     }    
     
+    // Create an MULT Expression.
+    def OperatorExpression createMultExpression() {
+        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+        expression.setOperator(OperatorType::MULT)
+        expression
+    }
+
+    // Create an MULT Expression as a sub expression.
+    def OperatorExpression createMultExpression(OperatorExpression operatorExpression) {
+        createMultExpression() => [
+            operatorExpression.subExpressions += it
+        ]
+    }
+    
+    // Create an MAX Expression.
+    def OperatorExpression createMaxExpression() {
+        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+        expression.setOperator(OperatorType::ADD) // FIXME: change to MAX
+        expression
+    }
+
+    // Create an MAX Expression as a sub expression.
+    def OperatorExpression createMaxExpression(OperatorExpression operatorExpression) {
+        createMaxExpression() => [
+            operatorExpression.subExpressions += it
+        ]
+    }
+    
+    // Create an MIN Expression.
+    def OperatorExpression createMinExpression() {
+        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+        expression.setOperator(OperatorType::ADD) // FIXME: change to MIN
+        expression
+    }
+
+    // Create an MIN Expression as a sub expression.
+    def OperatorExpression createMinExpression(OperatorExpression operatorExpression) {
+        createMinExpression() => [
+            operatorExpression.subExpressions += it
+        ]
+    }
+    
     
     // Create an int value.
     def IntValue createIntValue(int value) {

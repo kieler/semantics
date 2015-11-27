@@ -72,7 +72,10 @@ public class KiCoSelectionDiagramModel {
             }
         }
         for (Transformation transformation : transformations) {
-            if (visibleFeatureOrTransformationIds.contains(transformation.getId())) {
+            // Fixed displayed alternative transformations by also searching for T_ID
+            // This indicates that this notation bad
+            if (visibleFeatureOrTransformationIds.contains(transformation.getId())
+                    || visibleFeatureOrTransformationIds.contains("T_" + transformation.getId())) {
                 visibleTransformations.add(transformation);
             }
         }

@@ -13,11 +13,15 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
@@ -28,11 +32,6 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.core.kexpressions.keffects.Emission
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Pre Transformation.
@@ -98,9 +97,13 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
+        // FIXME: getAllStates will return (at least!) the root state twice! fix this!
+        // Woraround now: convert to a set
+        for (targetState : targetRootState.getAllStates.toSet.immutableCopy) {
+            //System.out.println("STATE: " + targetState + ", " + targetState.id)
             targetState.transformPre(targetRootState);
-        ]
+        }
+
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 
@@ -108,26 +111,26 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
     def void transformPre(State state, State targetRootState) {
 
         // Filter all valuedObjects and retrieve those that are referenced
-        val allActions = state.eAllContents.filter(typeof(Action));
+        val allActions = state.eAllContents.filter(typeof(Action)).toList;
         val allPreValuedObjects = state.valuedObjects.filter(
             valuedObject|
                 allActions.filter(
                     action|
                         action.getPreExpression(valuedObject).hasNext ||
-                            action.getPreValExpression(valuedObject).hasNext).hasNext);
-
-        for (preValuedObject : ImmutableList::copyOf(allPreValuedObjects)) {
+                            action.getPreValExpression(valuedObject).hasNext).size > 0).toList;
+        
+		for (preValuedObject : allPreValuedObjects.immutableCopy) {
             preValuedObject.setDefaultTrace
             val newPreDeclaration = createDeclaration => [ type = preValuedObject.getType ]
             val newPre = state.createValuedObject(GENERATED_PREFIX + "pre" + GENERATED_PREFIX + preValuedObject.name,
             	newPreDeclaration).uniqueNameCached(nameCache)
             newPre.applyAttributes(preValuedObject)
-            val newAux = state.createValuedObject(GENERATED_PREFIX + "aux" + GENERATED_PREFIX + preValuedObject.name,
+            val newAux = state.createValuedObject(GENERATED_PREFIX + "cur" + GENERATED_PREFIX + preValuedObject.name,
             	newPreDeclaration).uniqueNameCached(nameCache)
             newAux.applyAttributes(preValuedObject)
 
             val preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
-            val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache).setFinal
+            val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
             val preWait = preRegion.createFinalState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
 
             //            val preDone = preRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
@@ -142,8 +145,7 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
             //            val transInitDone = preInit.createTransitionTo(preDone)
             // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
             // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
-            while (allActions.hasNext) {
-                val action = allActions.next
+            for (action : allActions) {
                 val preExpressions = action.getPreExpression(preValuedObject);
                 val preValExpressions = action.getPreValExpression(preValuedObject);
 
