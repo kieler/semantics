@@ -51,16 +51,17 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter
 
 // TODO: Remove debug output from KiCo (transformation chain, required time for compilation) -> silent mode?
 // TODO: (Bug KISEMA-995) KiCo needs to be deterministic. Otherwise some tests will fail because an alternative compilation result is compared with a prototype.
 
-// TODO: Models that do not compile:
-// (Bug KISEMA-987) 1301_WeakSuspension
-// (Bug KISEMA-1031) 402_ExitActionAndTrigger
+// TODO: Models that compile wrong:
+// (Bug KISEMA-987) WeakSuspension
+// (Bug KISEMA-1044) Pre
 
-// TODO: Models that compile wrong
-// (Bug KISEMA-1037) 0803_ValuedSignalCombination.sct
+// TODO: Models that do not compile or throw errors when saved:
+// (Bug KISEMA-1031) ExitActionAndTrigger
 
 /** 
  * Testing class that performs two tests -- both for every SCT model.
@@ -72,7 +73,7 @@ import org.junit.runner.RunWith
 @RunWith(typeof(ModelCollectionTestRunner))
 @BundleId("de.cau.cs.kieler.sccharts.test")
 @ModelPath("tests/inputs/**")
-//@ModelFilter("ExitActionAndTrigger.sct")
+@ModelFilter("CrossReference.sct")
 class TransformationTests {
 
     /**
@@ -99,6 +100,12 @@ class TransformationTests {
      */
     static val TRANSFORMATION_ANNOTATION_NAME = "Transformation"
 
+    /**
+     * The name of the annotation in SCT files,
+     * which indicates that the model should not compile because it is not schedulable.
+     */
+    static val NOT_SCHEDULABLE_ANNOTATION_NAME = "NotSchedulable"
+    
     /**
      * The EMFCompare object that can compare to SCCharts.  
      */
@@ -144,6 +151,9 @@ class TransformationTests {
             }
             if (targetTransformationName == null) {
                 throw new IllegalArgumentException("Target transformation was not found in model file " + modelFile)
+            } else if(targetTransformationName == "NONE") {
+                // Ignore this test model
+                return;
             }
 
             // Compile via KiCo
@@ -161,6 +171,8 @@ class TransformationTests {
             if (resultModel == null) {
                 throw new IllegalArgumentException("KIELER Compiler was not able to compile input model " + modelFile)
             }
+            
+            System.err.println(result.allWarnings)
 
             // Serialize model to human readable text
             val resourceSet = new ResourceSetImpl()
@@ -218,7 +230,7 @@ class TransformationTests {
      * @param modelPath The model file path injected by the JUnit runner
      * @author aas
      */
-//     @Test
+     @Test
     def public void codeGenerationHasNoErrors(EObject model, String modelPath) {
         // Normalize path
         val relativePath = stripSlashes(modelPath)
@@ -245,6 +257,46 @@ class TransformationTests {
     }
 
 
+
+    /*******************************************************************************************
+     *  Test schedulability (compile to Java)
+     */
+     
+    /** 
+     * Tries to compile models that are not ASC schedulable and asserts that errors occur.
+     * 
+     * @param model The EObject injected by the JUnit runner
+     * @param modelPath The model file path injected by the JUnit runner
+     * @author aas
+     */
+    @Test
+    def public void onlySchedulableModelsDoCompile(EObject model, String modelPath) {
+        // Normalize path
+        val relativePath = stripSlashes(modelPath)
+        val modelFile = FilenameUtils.getName(relativePath)
+
+        if (model instanceof State) {
+            for (ann : model.annotations) {
+                // Only test models that are not schedulable
+                if (ann.name == NOT_SCHEDULABLE_ANNOTATION_NAME) {                    
+                    // Compile with KiCo
+                    val context = new KielerCompilerContext("!T_SIMULATIONVISUALIZATION, T_s.java", model)
+                    context.setAdvancedSelect(true)
+                    val result = KielerCompiler.compile(context)
+                    
+                    // Check that error occured
+                    if (Strings.isNullOrEmpty(result.allErrors) && Strings.isNullOrEmpty(result.allWarnings) && !Strings.isNullOrEmpty(result.string)) {
+                        System.err.println("File " + modelFile + " is wrongfully recognized as ASC schedulable")
+                        Assert.fail()
+                    }   
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("Model could not be cast to an SCChart.")
+        }
+    }
+    
+    
 
     /*******************************************************************************************
      * EMFCompare setup

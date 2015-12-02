@@ -1,6 +1,0 @@
-// Edge case from Semantic Meeting 2015-11-17
-// TODO: Implementation is WIP.
-// This target file can be updated after the transformation works correctly. 
-scchart ComplexFinalSuperstateAndAbort {
-  initial state dummy;
-}

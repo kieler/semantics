@@ -1,9 +1,8 @@
 // Edge case from Semantic Meeting 2015-11-17
-@Transformation COMPLEXFINALSTATE
-scchart ComplexFinalSuperstateAndAbort {
+@Transformation ABORT
+scchart AbortAndComplexFinalSuperstate {
   input signal count;
   input signal restart;
-  output signal trigger;
   
   initial state Counting {
     
@@ -21,6 +20,6 @@ scchart ComplexFinalSuperstateAndAbort {
   --> Counting with restart
   >-> Done;
   
-  final state Done
+  state Done
   --> Counting with restart;
 }

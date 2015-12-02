@@ -3,9 +3,9 @@
 scchart ValuedSignals {
   bool x;
   bool y;
-  pure x_val;
+  int x_val;
   int x_curval = 1 combine +;
-  pure y_val;
+  int y_val;
   int y_curval = 2;
   immediate during x / x_val = x_curval;
   immediate during / x_curval = 0;
@@ -17,21 +17,21 @@ scchart ValuedSignals {
   region R1:
 
   initial state A
-  --> B / x_curval = x_curval + 3; x = x | true;
+  --> B / x_curval = x_curval + 3; x = x || true;
 
   final state B;
 
   region R2:
 
   initial state C
-  --> D / x_curval = x_curval + 4; x = x | true;
+  --> D / x_curval = x_curval + 4; x = x || true;
 
   final state D;
 
   region R3:
 
   initial state E
-  --> F with x / y_curval = x_val; y = y | true;
+  --> F with x / y_curval = x_val; y = y || true;
 
   final state F;
 }
