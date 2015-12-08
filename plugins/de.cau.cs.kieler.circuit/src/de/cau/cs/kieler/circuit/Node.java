@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.circuit.Node#getInputPorts <em>Input Ports</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Node#getOutputPorts <em>Output Ports</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Node#getNodeID <em>Node ID</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,5 +56,31 @@ public interface Node extends NamedObject {
 	 * @generated
 	 */
 	EList<Port> getOutputPorts();
+
+	/**
+	 * Returns the value of the '<em><b>Node ID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Node ID</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Node ID</em>' attribute.
+	 * @see #setNodeID(String)
+	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getNode_NodeID()
+	 * @model
+	 * @generated
+	 */
+	String getNodeID();
+
+	/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Node#getNodeID <em>Node ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Node ID</em>' attribute.
+	 * @see #getNodeID()
+	 * @generated
+	 */
+	void setNodeID(String value);
 
 } // Node

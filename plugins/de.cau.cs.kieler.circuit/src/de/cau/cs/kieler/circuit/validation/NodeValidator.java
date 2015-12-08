@@ -19,4 +19,6 @@ public interface NodeValidator {
 
 	boolean validateInputPorts(EList<Port> value);
 	boolean validateOutputPorts(EList<Port> value);
+
+	boolean validateNodeID(String value);
 }

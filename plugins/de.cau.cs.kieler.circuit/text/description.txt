@@ -23,6 +23,7 @@ Package circuit <http://kieler.cs.cau.de/circuit>
   Class Node -> NamedObject
     Reference inputPorts : Port<<0..*>>
     Reference outputPorts : Port<<0..*>>
+    Attribute nodeID : EString
 
   Class Linkable
     Reference incomingLinks : Link<<0..*>>

@@ -441,13 +441,22 @@ public interface CircuitPackage extends EPackage {
 	int NODE__OUTPUT_PORTS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Node ID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__NODE_ID = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Node</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
+	int NODE_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
 
 	/**
 	 * The operation id for the '<em>Get Annotation</em>' operation.
@@ -781,6 +790,17 @@ public interface CircuitPackage extends EPackage {
 	EReference getNode_OutputPorts();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Node#getNodeID <em>Node ID</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Node ID</em>'.
+	 * @see de.cau.cs.kieler.circuit.Node#getNodeID()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EAttribute getNode_NodeID();
+
+	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Linkable <em>Linkable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -967,6 +987,14 @@ public interface CircuitPackage extends EPackage {
 		 * @generated
 		 */
 		EReference NODE__OUTPUT_PORTS = eINSTANCE.getNode_OutputPorts();
+
+		/**
+		 * The meta object literal for the '<em><b>Node ID</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NODE__NODE_ID = eINSTANCE.getNode_NodeID();
 
 		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.LinkableImpl <em>Linkable</em>}' class.

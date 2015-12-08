@@ -18,6 +18,8 @@ import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
  * This is the item provider adapter for a {@link de.cau.cs.kieler.circuit.Node} object.
@@ -49,6 +51,7 @@ public class NodeItemProvider extends NamedObjectItemProvider {
 
 			addInputPortsPropertyDescriptor(object);
 			addOutputPortsPropertyDescriptor(object);
+			addNodeIDPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -98,6 +101,28 @@ public class NodeItemProvider extends NamedObjectItemProvider {
 	}
 
 	/**
+	 * This adds a property descriptor for the Node ID feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNodeIDPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Node_nodeID_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Node_nodeID_feature", "_UI_Node_type"),
+				 CircuitPackage.Literals.NODE__NODE_ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns Node.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -133,6 +158,12 @@ public class NodeItemProvider extends NamedObjectItemProvider {
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(Node.class)) {
+			case CircuitPackage.NODE__NODE_ID:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+		}
 		super.notifyChanged(notification);
 	}
 
