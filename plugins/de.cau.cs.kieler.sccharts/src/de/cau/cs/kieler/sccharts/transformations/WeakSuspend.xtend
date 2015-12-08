@@ -34,6 +34,8 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtension
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtensionOLD
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -43,6 +45,34 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExt
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
+
+    // HOTFIX DUE TO MODIFICATIONS IN SCCHARTSEXTENSION. THE FOLLOWING CODE SHOULD BE MOVED
+    // BACK TO SCCHARTSEXTENSION
+    
+    def getValuedObjects(Scope scope) {
+        <ValuedObject>newLinkedList => [ ll |
+            scope.declarations.forEach[d|d.valuedObjects.forEach[ll += it]]
+        ]
+    }
+    
+    // Creates a new ValuedObject in a scope.
+    def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
+        val valuedObject = createValuedObject(valuedObjectName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
+    }
+    
+    //===========  VARIABLES  ===========
+    // Creates a new variable ValuedObject in a Scope.
+    def ValuedObject createVariable(Scope scope, String variableName) {
+        scope.createValuedObject(variableName)
+    }
+
+    //============  SIGNALS  ============
+    // Creates a new variable ValuedObject in a Scope.
+    def ValuedObject createSignal(Scope scope, String variableName) {
+        scope.createValuedObject(variableName).setIsSignal
+    }
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -70,16 +100,16 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsCreateExtensions
+    extension KExpressionsExtensionOLD
 
-    @Inject
-    extension KExpressionsComplexCreateExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions    
-    
-    @Inject
-    extension KExpressionsValuedObjectExtensions   
+//    @Inject
+//    extension KExpressionsComplexCreateExtensions
+//    
+//    @Inject
+//    extension KExpressionsDeclarationExtensions    
+//    
+//    @Inject
+//    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension
