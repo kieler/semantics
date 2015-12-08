@@ -34,6 +34,11 @@ import javax.swing.plaf.SliderUI;
  * @author sna
  */
 public final class EsterelExec {
+    
+    /** The file of the generated C code.
+     * The file name depends on the code producing processor (sscc, scc or occ).
+     */
+    public static final String GENERATED_C_CODE_FILE = "sscc_out.c";
 
     /**
      * Hidden constructor to avoid instantiation.
@@ -67,27 +72,21 @@ public final class EsterelExec {
         }
         stdin.close();
 
-        // File c;
-        // try {
-        // c = new File(new URI("file:/home/sna/sscc_out.c"));
-        // while (!c.exists()) {}
-        // FileReader file = new FileReader(c);
-        // int t;
-        // BufferedReader br = new BufferedReader(file);
-        // while ((t = br.read()) != (-1)) {
-        // output.write(t);
-        // }
-        // //c.delete();
-        // } catch (URISyntaxException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
-        //
-        // System.out.println(output.toString());
-        File c = new File("sscc_out.c");
+        /* 
+         * !!!!! BAD CODE !!!!!
+         * Since the processor which produces the C code does not provide return value correctly
+         * the generated C code must be read from the produced file.
+         * The file with the generated C code is located in the working directory.
+         */
+        File c = new File(GENERATED_C_CODE_FILE);
         while (!c.exists()) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // silently ignore
+            }
         }
-        FileInputStream code = new FileInputStream("sscc_out.c");
+        FileInputStream code = new FileInputStream(GENERATED_C_CODE_FILE);
         c.delete();
 
         return code;
