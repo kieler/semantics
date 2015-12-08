@@ -21,6 +21,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateEx
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
@@ -162,6 +163,14 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
 
                         // If PRE directly a trigger
                         (container as Action).setTrigger(newPre.reference)
+                    } else if (container instanceof Assignment) {
+
+                        // If PRE directly a assigned value
+                        (container as Assignment).expression = newPre.reference
+                    } else if (container instanceof Emission) {
+
+                        // If PRE directly a emitted value
+                        (container as Emission).newValue = newPre.reference
                     }
                 }
 

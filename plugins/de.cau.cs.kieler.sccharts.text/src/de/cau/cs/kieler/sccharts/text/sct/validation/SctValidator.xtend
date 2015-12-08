@@ -56,12 +56,17 @@ class SctValidator extends SctJavaValidator {
     
     @Check
     public def void checkFinalStates(de.cau.cs.kieler.sccharts.State state) {
-        // Only consider macro states
-        if (state.getRegions().size() > 0) {
-            val foundTermination = !state.outgoingTransitions.filter[ type == TransitionType.TERMINATION ].empty
-            if (foundTermination) {
-                // Now test for every region
-                for (region : state.regions.filter(ControlflowRegion)) {
+        // Check if state has termination transition
+        val foundTermination = !state.outgoingTransitions.filter[ type == TransitionType.TERMINATION ].empty
+        if (foundTermination) {
+            // Ensure inner behaviour
+            val regions = state.regions.filter(ControlflowRegion)
+            if(regions.isEmpty) {
+                warning(NO_REGION, state, null, -1);
+            }
+            // Now test for every region
+            if (state.localActions.nullOrEmpty) {
+                for (region : regions) {
                     val foundFinal = !region.states.filter[ isFinal ].empty
                     if (!foundFinal) {
                         warning(REGION_NO_FINAL_STATE, region, null, -1);
@@ -69,7 +74,7 @@ class SctValidator extends SctJavaValidator {
                 }
             }
         }
-    } 
+    }
     
     @Check
     public def void checkConstInitializationInStates(Scope scope) {

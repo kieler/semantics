@@ -60,7 +60,8 @@ class LabelShorteningHook extends SynthesisActionHook {
 
     override start(Scope scope, KNode node) {
         // activate label focusing
-        usedContext.viewer.contextViewer.addSelectionChangedListener(labelFocusSelectionListener);
+        // FIXME this does not work for nested (side-by-side) synthesis because view is null
+        usedContext.viewer?.contextViewer?.addSelectionChangedListener(labelFocusSelectionListener);
         // configure
         node.configureLabelManagement();
     }
