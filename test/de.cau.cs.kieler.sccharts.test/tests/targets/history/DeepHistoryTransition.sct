@@ -1,0 +1,49 @@
+
+@Transformation HISTORY
+scchart DeepHistoryTransition {
+  input bool I;
+  output bool O;
+  int _B = 0;
+  int _B2 = 0;
+
+  initial state A
+  --> B;
+
+  state B {
+
+    state B0 {
+      entry / _B = 0;
+
+      state B00 {
+        entry / _B2 = 0;
+      }
+      --> B01;
+
+      state B01 {
+        entry / _B2 = 1;
+      }
+      --> B00;
+
+      initial state _Init
+      --> B00 immediate with _B2 == 0
+      --> B01 immediate with _B2 == 1;
+    }
+    --> B1 with I;
+
+    state B1 {
+      entry / _B = 1;
+    }
+    --> B2;
+
+    state B2 {
+      entry / _B = 2;
+    }
+    --> B0;
+
+    initial state _Init
+    --> B0 immediate with _B == 0
+    --> B2 immediate with _B == 2
+    --> B1 immediate with _B == 1;
+  }
+  --> A with O;
+}

@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
@@ -25,11 +24,13 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Initialization Transformation.
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
@@ -60,7 +61,7 @@ class Initialization extends AbstractExpansionTransformation implements Traceabl
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions    
 
     @Inject
     extension SCChartsExtension
@@ -77,21 +78,35 @@ class Initialization extends AbstractExpansionTransformation implements Traceabl
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllStates.immutableCopy) {
-            targetState.transformInitialization(targetRootState);
+        for (scope : targetRootState.getAllScopes.immutableCopy) {
+            scope.transformInitialization(targetRootState);
         }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
-    def void transformInitialization(State state, State targetRootState) {
-        val valuedObjects = state.valuedObjects.filter[initialValue != null]
+    def void transformInitialization(Scope scope, State targetRootState) {
+        val valuedObjects = scope.valuedObjects.filter[initialValue != null]
+        var addedIndex = 0; // This helps to preserve the initial order
 
         if (!valuedObjects.nullOrEmpty) {
             for (valuedObject : valuedObjects) {
                 setDefaultTrace(valuedObject, valuedObject.declaration)
-                val entryAction = state.createEntryAction
-                entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
+                
+                // Initialization combined with existing entry action: The order in which new, 
+                // additional initialization-entry actions are added matters for the semantics.
+                // Initializations before part of the declaration. Entry actions afterwards. 
+                // So the initialization-entry-actions should be ordered also before the other
+                // entry actions to keep the original order. 
+                if (scope instanceof State) {
+                    val entryAction = scope.createEntryAction(addedIndex)
+                    addedIndex = addedIndex + 1
+                    entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
+                } else {
+                    val entryAction = (scope.eContainer as State).createEntryAction(addedIndex)
+                    addedIndex = addedIndex + 1
+                    entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
+                }
                 valuedObject.setInitialValue(null)
             }
         }

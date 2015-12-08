@@ -11,11 +11,11 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.AbortCase#getCases <em>Cases</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.AbortCase#getOptEnd <em>Opt End</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getAbortCase()
  * @model

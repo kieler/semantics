@@ -1,0 +1,25 @@
+// Edge case from Semantic Meeting 2015-11-17
+@Transformation ABORT
+scchart AbortAndComplexFinalSuperstate {
+  input signal count;
+  input signal restart;
+  
+  initial state Counting {
+    
+    initial state Cnt3
+    --> Cnt2;
+    
+    state Cnt2
+    --> Cnt1;
+    
+    state Cnt1
+    --> Cnt0;
+    
+    final state Cnt0;
+  }
+  --> Counting with restart
+  >-> Done;
+  
+  state Done
+  --> Counting with restart;
+}

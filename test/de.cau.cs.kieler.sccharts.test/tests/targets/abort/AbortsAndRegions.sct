@@ -1,0 +1,90 @@
+
+@Transformation ABORT
+scchart AbortsAndRegions {
+  input int I;
+  output int O;
+  bool _trig;
+  bool _trig2;
+
+  initial state M {
+    bool _termRegion;
+    bool _termRegion2;
+    entry / _trig = false;
+    entry / _trig2 = false;
+    entry / _termRegion = false;
+    entry / _termRegion2 = false;
+
+    region _Ctrl:
+
+    initial state _Run
+    --> _Done with I == 0 / _trig = true
+    --> _Done immediate with (_termRegion && _termRegion2) && I == 5
+    --> _Done with (_termRegion && _termRegion2) && I == 4
+    --> _Done immediate with I == 3
+    --> _Done with I == 2 / _trig2 = true
+    --> _Done immediate with I == 1;
+
+    final state _Done;
+
+    region _Main:
+
+    initial state _Main2 {
+
+      region A:
+
+      initial state A1
+      --> A2
+      --> A3 immediate with ((_trig || I == 1) || _trig2) || I == 3;
+
+      state A2
+      --> A3 immediate
+      --> A3 immediate with ((_trig || I == 1) || _trig2) || I == 3;
+
+      final state A3;
+    }
+    >-> _Term / _termRegion = true;
+
+    final state _Term;
+
+    region _Main3:
+
+    initial state _Main4 {
+
+      region B:
+
+      initial state B1
+      --> B2 immediate
+      --> B3 immediate with ((_trig || I == 1) || _trig2) || I == 3;
+
+      state B2
+      --> B3
+      --> B3 immediate with ((_trig || I == 1) || _trig2) || I == 3;
+
+      final state B3;
+    }
+    >-> _Term2 / _termRegion2 = true;
+
+    final state _Term2;
+  }
+  >-> _C;
+
+  state S1;
+
+  state S2;
+
+  state W1;
+
+  state W2;
+
+  state T1;
+
+  state T2;
+
+  connector state _C
+  --> S1 with I == 0 / O = 0
+  --> S2 immediate with I == 1 / O = 1
+  --> W1 with I == 2 / O = 2
+  --> W2 immediate with I == 3 / O = 3
+  --> T1 with I == 4 / O = 4
+  --> T2 immediate with I == 5 / O = 5;
+}

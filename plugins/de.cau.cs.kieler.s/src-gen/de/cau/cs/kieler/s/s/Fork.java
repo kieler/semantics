@@ -10,11 +10,11 @@ package de.cau.cs.kieler.s.s;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.Fork#getContinuation <em>Continuation</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Fork#getPriority <em>Priority</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.s.s.SPackage#getFork()
  * @model

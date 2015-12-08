@@ -13,11 +13,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenPart <em>Then Part</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getElsIf()
  * @model

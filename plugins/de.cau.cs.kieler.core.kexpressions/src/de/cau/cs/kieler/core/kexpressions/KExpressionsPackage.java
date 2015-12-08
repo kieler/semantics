@@ -453,13 +453,13 @@ public interface KExpressionsPackage extends EPackage {
 				/**
 	 * The feature id for the '<em><b>Host Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DECLARATION__HOST_TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
+    int DECLARATION__HOST_TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
 
-				/**
+                /**
 	 * The number of structural features of the '<em>Declaration</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -525,13 +525,22 @@ public interface KExpressionsPackage extends EPackage {
     int PARAMETER__CALL_BY_REFERENCE = 0;
 
     /**
+	 * The feature id for the '<em><b>Pure Output</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int PARAMETER__PURE_OUTPUT = 1;
+
+    /**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int PARAMETER__EXPRESSION = 1;
+    int PARAMETER__EXPRESSION = 2;
 
     /**
 	 * The number of structural features of the '<em>Parameter</em>' class.
@@ -540,7 +549,7 @@ public interface KExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int PARAMETER_FEATURE_COUNT = 2;
+    int PARAMETER_FEATURE_COUNT = 3;
 
     /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.StringValueImpl <em>String Value</em>}' class.
@@ -935,15 +944,15 @@ public interface KExpressionsPackage extends EPackage {
 				/**
 	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Declaration#getHostType <em>Host Type</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Host Type</em>'.
 	 * @see de.cau.cs.kieler.core.kexpressions.Declaration#getHostType()
 	 * @see #getDeclaration()
 	 * @generated
 	 */
-	EAttribute getDeclaration_HostType();
+    EAttribute getDeclaration_HostType();
 
-				/**
+                /**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.FunctionCall <em>Function Call</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -995,6 +1004,17 @@ public interface KExpressionsPackage extends EPackage {
 	 * @generated
 	 */
     EAttribute getParameter_CallByReference();
+
+    /**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Parameter#isPureOutput <em>Pure Output</em>}'.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Pure Output</em>'.
+	 * @see de.cau.cs.kieler.core.kexpressions.Parameter#isPureOutput()
+	 * @see #getParameter()
+	 * @generated
+	 */
+    EAttribute getParameter_PureOutput();
 
     /**
 	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.kexpressions.Parameter#getExpression <em>Expression</em>}'.
@@ -1351,12 +1371,12 @@ public interface KExpressionsPackage extends EPackage {
 								/**
 		 * The meta object literal for the '<em><b>Host Type</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DECLARATION__HOST_TYPE = eINSTANCE.getDeclaration_HostType();
+        EAttribute DECLARATION__HOST_TYPE = eINSTANCE.getDeclaration_HostType();
 
-								/**
+                                /**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl <em>Function Call</em>}' class.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1399,6 +1419,14 @@ public interface KExpressionsPackage extends EPackage {
 		 * @generated
 		 */
         EAttribute PARAMETER__CALL_BY_REFERENCE = eINSTANCE.getParameter_CallByReference();
+
+        /**
+		 * The meta object literal for the '<em><b>Pure Output</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+		 * @generated
+		 */
+        EAttribute PARAMETER__PURE_OUTPUT = eINSTANCE.getParameter_PureOutput();
 
         /**
 		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.

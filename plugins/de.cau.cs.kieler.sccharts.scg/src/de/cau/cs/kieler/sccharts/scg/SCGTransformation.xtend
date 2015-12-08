@@ -29,14 +29,10 @@ import de.cau.cs.kieler.core.kexpressions.StringValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.sccharts.Effect
-import de.cau.cs.kieler.sccharts.FunctionCallEffect
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
@@ -68,6 +64,14 @@ import org.eclipse.xtext.serializer.ISerializer
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect
+import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.Scope
+
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -99,7 +103,13 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+    
+    @Inject 
+    extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions
 
     @Inject
     extension AnnotationsExtensions
@@ -230,18 +240,20 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         System.out.print("Beginning preparation of the SCG generation phase...");
         var timestamp = System.currentTimeMillis
 
+        val scopeList = rootState.eAllContents.filter(Scope).toList
+        val stateList = scopeList.filter(State).toList
+                
         // Fix termination transitions that have effects
-        var rootStateObjects = rootState.eAllContents.toList
         System.out.print(" ... ")
-        var state = rootState.fixTerminationWithEffects(rootStateObjects.filter(typeof(Transition)).toList)
+        var state = rootState.fixTerminationWithEffects(stateList.fold(newLinkedList)[first, second |
+            first += second.outgoingTransitions first])
 
         // Fix possible halt states
-        val stateList = rootStateObjects.filter(typeof(State)).toList
         state = state.fixPossibleHaltStates(stateList)
         System.out.print(" ... ")
 
         // Expose local variables
-        state = state.transformLocalValuedObjectCached(stateList, uniqueNameCache)
+        scopeList.transformLocalValuedObjectCached(state, uniqueNameCache)
         System.out.print(" ... ")
 
         // Clear mappings
@@ -273,9 +285,9 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             sCGraph.declarations += newDeclaration
         }
 
-        val hostcodeAnnotations = state.getStringAnnotations(ANNOTATION_HOSTCODE)
+        val hostcodeAnnotations = state.getAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach [
-            sCGraph.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+            sCGraph.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
 
         // Include top most level of hierarchy 
@@ -347,7 +359,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
         for (entry : threadPathTypes.keySet) {
             if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE))
-                entry.addAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+                entry.createStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
         }
 
         scg
@@ -554,10 +566,10 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
             val effect = transition.effects.get(0) as Effect
-            if (effect instanceof de.cau.cs.kieler.sccharts.Assignment) {
+            if (effect instanceof de.cau.cs.kieler.core.kexpressions.keffects.Assignment) {
 
                 // For hostcode e.g. there is no need for a valued object - it is allowed to be null
-                val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
+                val sCChartAssignment = (effect as de.cau.cs.kieler.core.kexpressions.keffects.Assignment)
                 if (sCChartAssignment.valuedObject != null) {
                     assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
                 }
@@ -569,8 +581,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                         assignment.indices += it.convertToSCGExpression.trace(transition, effect)
                     ]
                 }
-            } else if (effect instanceof TextEffect) {
-                assignment.setAssignment((effect as TextEffect).convertToSCGExpression.trace(transition, effect))
+            } else if (effect instanceof HostcodeEffect) {
+                assignment.setAssignment((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof FunctionCallEffect) {
                 assignment.setAssignment((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
             }
@@ -784,7 +796,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // Apply conversion to textual host code 
     def dispatch Expression convertToSCGExpression(TextExpression expression) {
         val textExpression = createTextExpression.trace(expression)
-        textExpression.setText(new String(expression.text).removeEnclosingQuotes)
+        textExpression.setText(expression.text)
         textExpression
     }
 

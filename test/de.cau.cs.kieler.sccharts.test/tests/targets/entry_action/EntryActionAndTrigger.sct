@@ -1,0 +1,23 @@
+
+@Transformation ENTRY
+scchart EntryActionAndTrigger {
+  input bool I;
+  output bool O;
+
+  initial state A {
+
+    region _Entry:
+
+    initial state _Init
+    --> _Done immediate with I / O = false
+    --> _Done immediate;
+
+    final state _Done;
+  }
+  >-> _Exit;
+
+  final state F;
+
+  state _Exit
+  --> F with !I;
+}

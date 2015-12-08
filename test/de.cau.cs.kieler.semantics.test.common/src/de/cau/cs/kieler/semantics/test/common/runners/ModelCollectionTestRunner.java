@@ -91,9 +91,11 @@ import com.google.common.collect.Lists;
  * <p><i>Note furthermore, that the values of the provided model paths may end with <samp>\/**</samp> or
  * <samp>\/**\/</samp> in order to instruct the model gathering to descent into sub folders.</i></p>
  * 
- * <p>The test classes may have a constructor with zero or one argument(s) of type {@link Object} or
- * {@link EObject} in order to inject the model into the test. The same holds for the test methods
- * (annotated with <samp>@Test</samp>). Hence, if a test method does not require any parameter the
+ * <p>The test classes may have a constructor with zero to two argument(s) to inject the model into the test.
+ * The first argument is for the model object (of type {@link Object} or {@link EObject}).
+ * The second argument is for the model path (of type {@link String}).
+ * The same holds for the test methods (annotated with <samp>@Test</samp>).
+ * Hence, if a test method does not require any parameter the
  * test class must provide a one argument constructor in order to get the models to be tested
  * injected into the test class object.</p>
  * 
@@ -154,7 +156,8 @@ import com.google.common.collect.Lists;
  *     }
  * 
  *     <samp>@Test</samp>
- *     public void test(EObject model) {
+ *     public void test(EObject model, String modelName) {
+ *         System.out.println(modelName);
  *         System.out.println(((KNode) model).getData().get(0));
  *     }
  * }
@@ -182,7 +185,7 @@ import com.google.common.collect.Lists;
  * }
  * </pre>
  * 
- * @author chsch
+ * @author chsch ssm
  * @kieler.design proposed by chsch
  * @kieler.rating proposed yellow by chsch
  * 
@@ -282,17 +285,46 @@ public class ModelCollectionTestRunner extends Suite {
 
 
     /**
+     * A modifiable list of the runners / children of this {@link Suite}.
+     * 
+     * Since JUnit 4.12 the runners field in {@link Suite} is changed to an unmodifiable list in the constructor.
+     * As workaround, the modifiable instance is preserve manually in this field and returned in {@link getChildren}.
+     * 
+     * @author aas
+     */
+    private final List<Runner> modifiableRunners;
+    
+    @Override
+    /**
+     * Returns a modifiable list of objects that define the children of this Runner.
+     * 
+     * Since JUnit 4.12 the runners field in {@link Suite} is changed to an unmodifiable list in the constructor.
+     * As workaround, the modifiable instance is preserve manually and returned in this method.
+     * 
+     * @author aas
+     */
+    protected List<Runner> getChildren() {
+        return modifiableRunners;
+    }
+    
+    /**
      * Constructor.
      * 
      * @param clazz the tests class
      * @throws Throwable if something unexpeced happens
      */
     public ModelCollectionTestRunner(final Class<?> clazz) throws Throwable {
+        // Call the constructor with an empty list.
+        // The list is turned to an unmodifiable list in the base constructor.
         super(clazz, Lists.<Runner>newLinkedList());
-
+        
+        // Create modifiable list to add test runners to.
+        // This is a workaround because the runners field in Suite is not modifiable anymore (since JUnit 4.12)
+        modifiableRunners= Lists.<Runner>newLinkedList();
+        
         // try to obtain the test models by means of a method annotated with 'Models'
         List<?> models = Lists.newLinkedList(getModelsByModelsMethod());
-
+        
         // if no models are found they are most probably provided by the path-based method hooks 
         //  so try to obtain them the 2nd way
         if (models.isEmpty()) {
@@ -312,8 +344,13 @@ public class ModelCollectionTestRunner extends Suite {
                     + "provided paths are correct and contain model files.");
         }
 
-        // for each of the revealed model objects determine a name (the fragmentURI in case of
-        //  EObjects) and create a related child test runner
+        runTestRunnerForModelCollection(models);
+    }
+    
+    protected void runTestRunnerForModelCollection(final List<?> models) throws Throwable {
+
+        // For each of the revealed model objects determine a name (the fragmentURI in case of
+        // EObjects) and create a related child test runner
         
         for (Object o : models) {
             String modelName = o.toString();
@@ -321,9 +358,14 @@ public class ModelCollectionTestRunner extends Suite {
                 URI uri = EcoreUtil.getURI((EObject) o);
                 modelName = uri.path() + uri.fragment();
             }
-            this.getChildren().add(
-                    new SingleModelTestRunner(getTestClass().getJavaClass(), o, modelName));
+            runTestRunnerForModel(o, modelName);
         }
+    }
+    
+    protected void runTestRunnerForModel(Object object, String modelName) throws Throwable {
+        this.getChildren().add(
+                new SingleModelTestRunner(getTestClass().getJavaClass(), object, modelName));
+        
     }
 
     // --------------------------------------------------------------------
@@ -510,24 +552,34 @@ public class ModelCollectionTestRunner extends Suite {
             final org.eclipse.emf.ecore.resource.ResourceSet set, final Iterable<URL> urls) {
         return Iterables.concat(Iterables.transform(urls, new Function<URL, Iterable<?>>() {
             public Iterable<?> apply(final URL url) {
-                try {
-                    final Resource r = set.getResource(URI.createURI(url.toString()), true);
-                    return r.getContents();
-                } catch (WrappedException w) {
-                    // if the resource load fails (e.g. as no valid ResourceFactory has been
-                    //  registered) return the empty list
-                    String message = "ModelCollectionTestRunner: Loading model resource "
-                            + url.toString() + " of " + bundleId
-                            + " failed with the following exception:"
-                            + System.getProperty("line.separator");
-                    Platform.getLog(Platform.getBundle(bundleId)).log(
-                            new Status(IStatus.ERROR, bundleId, message, w));
+                if(isDirectory(url)) {
                     return Collections.emptyList();
+                } else {
+                    try {
+                    
+                        final Resource r = set.getResource(URI.createURI(url.toString()), true);
+                        return r.getContents();
+                    } catch (WrappedException w) {
+                        // if the resource load fails (e.g. as no valid ResourceFactory has been
+                        //  registered) return the empty list
+                        String message = "ModelCollectionTestRunner: Loading model resource "
+                                + url.toString() + " of " + bundleId
+                                + " failed with the following exception:"
+                                + System.getProperty("line.separator");
+                        Platform.getLog(Platform.getBundle(bundleId)).log(
+                                new Status(IStatus.ERROR, bundleId, message, w));
+                        return Collections.emptyList();
+                    }
                 }
             }
         }));
     }
 
+    private boolean isDirectory(URL url){
+        // An url from bundle.findEntries ends with a slash iff it is a directory path
+        return url.toString().endsWith("/");
+    }
+        
     // --------------------------------------------------------------------
 
     /**
@@ -581,8 +633,8 @@ public class ModelCollectionTestRunner extends Suite {
      */
     protected class SingleModelTestRunner extends BlockJUnit4ClassRunner {
 
-        private Object model = null;
-        private String modelName = null;
+        protected Object model = null;
+        protected String modelName = null;
 
         /**
          * Constructor.
@@ -641,15 +693,22 @@ public class ModelCollectionTestRunner extends Suite {
                     testMethod.validatePublicVoid(false, errors);
                     Method method = testMethod.getMethod();
                     final Class<?>[] methodParams = method.getParameterTypes();
-                boolean methodOK = (methodParams.length > 1 || (methodParams.length == 1
-                        && (methodParams[0].equals(Object.class)
-                                || EObject.class.isAssignableFrom(methodParams[0]))));
-                if (!methodOK) {
-                    errors.add(new Exception("Method " + testMethod.getMethod().getName()
-                            + " should have at most one parameter of type Object or (a sub type of)"
-                            + " EObject."));
-                }
                     
+                boolean hasNoArguments = (methodParams.length == 0);
+                boolean hasModelArgument = (methodParams.length >= 1
+                        && (methodParams[0].equals(Object.class) || EObject.class.isAssignableFrom(methodParams[0])));
+                boolean hasModelAndStringArgument = hasModelArgument
+                        && (methodParams.length >= 2 && methodParams[1].equals(String.class));
+                boolean isMethodOK = hasNoArguments
+                        || (hasModelArgument && methodParams.length == 1)
+                        || (hasModelAndStringArgument && methodParams.length == 2);
+                
+                if (!isMethodOK) {
+                    errors.add(new Exception("Method " + testMethod.getMethod().getName()
+                            + " should have at most two parameters"
+                            + " of which the first must be the model file (an Object or subclass of EObject)"
+                            + " and the second must be the model file name (a String)."));
+                }
             }
         }
 
@@ -742,7 +801,8 @@ public class ModelCollectionTestRunner extends Suite {
          */
         protected Statement methodInvoker(final FrameworkMethod method,
                 final Object testClassInstance) {
-            return new InvokeMethodOnModel(method, testClassInstance, this.model);
+            Class<?>[] methodParams = method.getMethod().getParameterTypes();
+            return new InvokeMethodOnModel(method, testClassInstance, this.model, this.modelName);
         }
         
         // --------------------------------------------------------------------
@@ -787,24 +847,32 @@ public class ModelCollectionTestRunner extends Suite {
      * 
      * @author chsch
      */
-    private static class InvokeMethodOnModel extends Statement {
+    protected static class InvokeMethodOnModel extends Statement {
 
         private FrameworkMethod method = null;
         private Object testClassInstance = null;
         private Object model = null;
+        private String modelName = null;
         
         public InvokeMethodOnModel(final FrameworkMethod theMethod, final Object theTestClassInstance,
-                final Object theModel) {
+                final Object theModel, String theModelName) {
             this.method = theMethod;
             this.testClassInstance = theTestClassInstance;
             
             final Class<?>[] methodParams = theMethod.getMethod().getParameterTypes();
-            if (methodParams.length == 1
-                    && (methodParams[0].equals(Object.class) || (methodParams[0]
-                            .isAssignableFrom(theModel.getClass())))) {
+            if (methodParams.length > 0
+                    && (methodParams[0].equals(Object.class)
+                            || (methodParams[0].isAssignableFrom(theModel.getClass())))) {
+                
                 this.model = theModel;
+                if (methodParams.length > 1
+                        && (methodParams[1].equals(String.class))) {
+                
+                    this.modelName = theModelName;
+                }
             } else {
                 this.model = null;
+                this.modelName = null;
             }
         }
         
@@ -816,7 +884,11 @@ public class ModelCollectionTestRunner extends Suite {
             if (model == null) {
                 method.invokeExplosively(testClassInstance);
             } else {
-                method.invokeExplosively(testClassInstance, this.model);
+                if (modelName == null){
+                    method.invokeExplosively(testClassInstance, this.model);
+                } else {
+                    method.invokeExplosively(testClassInstance, this.model, this.modelName);
+                }
             }
         }
     }

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>Charset issues - FreeMarker Manual</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker Manual">
+<meta property="og:title" content="Charset issues">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/pgui_misc_charset.html">
+<link rel="canoical" href="http://freemarker.org/docs/pgui_misc_charset.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="http://schema.org/Article">
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigationHeader">Manual</a><div class="navigationHeader"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb"><li class="step-0" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="toc.html"><span itemprop="title">FreeMarker Manual</span></a></li><li class="step-1" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="pgui.html"><span itemprop="title">Programmer&#39;s Guide</span></a></li><li class="step-2" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="pgui_misc.html"><span itemprop="title">Miscellaneous</span></a></li><li class="step-3" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="pgui_misc_charset.html"><span itemprop="title">Charset issues</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker Manual","Programmer\'s Guide","Miscellaneous","Charset issues"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="pgui_misc_var.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_misc_multithreading.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="pgui_misc_charset" itemprop="name">Charset issues</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_44" data-menu-target="autoid_44">The charset of the input</a></li><li><a class="page-menu-link" href="#autoid_45" data-menu-target="autoid_45">The charset of the output</a></li></ul> </div><p>FreeMarker, as most Java applications, works with &quot;<a href="gloss.html#gloss.unicode">UNICODE</a> text&quot; (UTF-16). Nonetheless,
+        there are situations when it must deal with <a href="gloss.html#gloss.charset">charsets</a>, because it has to exchange
+        data with the outer world that may uses various other charsets.</p>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_44">The charset of the input</h2>
+
+
+          <p>When FreeMarker has to load a template file (or an unparsed
+          text file), then it must know the charset of the file, since files
+          are just raw byte sequences. You can use the
+          <code class="inline-code">encoding</code> <a href="pgui_config_settings.html">setting</a> to specify the
+          charset. This setting takes effect only when FreeMarker loads a
+          template (parsed or unparsed) with the
+          <code class="inline-code">getTemplate</code> method of
+          <code class="inline-code">Configuration</code>. Note that the <a href="ref_directive_include.html#ref.directive.include"><code>include</code>
+          directive</a> uses this method internally, so the value of the
+          <code class="inline-code">encoding</code> setting is significant for an already
+          loaded template if the template contains <code class="inline-code">include</code>
+          directive call.</p>
+
+          <p>The getter and setter method of the
+          <code class="inline-code">encoding</code> setting is special in the first
+          (configuration) layer. The getter method guesses the return value
+          based on a <code class="inline-code">Locale</code> passed as parameter; it looks
+          up the encoding in a table that maps locales to encodings (called
+          encoding map), and if the locale was not found there, it returns the
+          default encoding. You can fill the encoding map with the
+          <code class="inline-code">setEncoding(Locale locale, String encoding)</code>
+          method of the configuration; the encoding map is initially empty.
+          The default encoding is initially the value of the
+          <code class="inline-code">file.encoding</code> system property, but you always
+          should set a default default with the
+          <code class="inline-code">setDefaultEncoding</code> method, rather than relying on
+          that. For new projects, a popular default encoding is
+          <code class="inline-code">utf-8</code>.</p>
+
+          <p>You can give the charset directly by overriding the
+          <code class="inline-code">encoding</code> setting in the template layer or runtime
+          environment layer (When you specify an encoding as the parameter of
+          <code class="inline-code">getTemplate</code> method, you override the
+          <code class="inline-code">encoding</code> setting in the template layer.). If you
+          don&#39;t override it, the effective value will be what the
+          <code class="inline-code">configuration.getEncoding(Locale)</code> method returns
+          for the effective value of the <code class="inline-code">locale</code>
+          setting.</p>
+
+          <p>Also, instead of relying on this charset guessing mechanism,
+          you can specify the charset of the template in the template file
+          itself, with the <a href="ref_directive_ftl.html#ref.directive.ftl"><a href="ref_directive_ftl.html#ref.directive.ftl"><code>ftl</code></a>
+          directive</a>, like <code class="inline-code">&lt;#ftl
+          encoding=&quot;utf-8&quot;&gt;</code>.</p>
+
+          <p>Note that the charset of the template is independent from the
+          charset of the output that the tempalte generates (unless the
+          enclosing software deliberately sets the output charset to the same
+          as the template charset).</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_45">The charset of the output</h2>
+
+
+            <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+            <p>The <code class="inline-code">output_encoding</code> setting/variable and
+            the <a href="ref_builtins_string.html#ref_builtin_url"><code>url</code>
+            built-in</a> is available since FreeMarker 2.3.1. It doesn&#39;t
+            exist in 2.3.</p>
+            </div>
+
+
+          <p>In principle FreeMarker does not deal with the charset
+          of the output, since it writes the output to a
+          <code class="inline-code">java.io.Writer</code>. Since the
+          <code class="inline-code">Writer</code> is made by the software that encapsulates
+          FreeMarker (such as a Web application framework), the output charset
+          is controlled by the encapsulating software. Still, FreeMarker has a
+          setting called <code class="inline-code">output_encoding</code> (starting from
+          FreeMarker version 2.3.1). The enclosing software should set this
+          setting (to the charset that the <code class="inline-code">Writer</code> uses), to
+          inform FreeMarker what charset is used for the output (otherwise
+          FreeMarker can&#39;t find it out). Some features, such as the <a href="ref_builtins_string.html#ref_builtin_url"><code>url</code> built-in</a>,
+          and the <a href="ref_specvar.html"><code>output_encoding</code> special
+          variable</a> utilize this information. Thus, if the enclosing
+          software doesn&#39;t set this setting then FreeMarker features that need
+          to know the output charset can&#39;t be used.</p>
+
+          <p>If you write software that will use FreeMarker, you may wonder
+          what output charset should you choose. Of course it depends on the
+          consumer of the FreeMarker output, but if the consumer is flexible
+          regarding this question, then the common practice is either using
+          the charset of the template file for the output, or using UTF-8.
+          Using UTF-8 is usually a better practice, because arbitrary text may
+          comes from the data-model, which then possibly contains characters
+          that couldn&#39;t be encoded with the charset of the template.</p>
+
+          <p>FreeMarker settings can be set for each individual template
+          processing if you use
+          <code class="inline-code">Template.createProcessingEnvironment(<em class="code-color">...</em>)</code>
+          plus
+          <code class="inline-code">Environment.process(<em class="code-color">...</em>)</code>
+          instead of
+          <code class="inline-code">Template.process(<em class="code-color">...</em>)</code>.
+          Thus, you can set the <code class="inline-code">output_encoding</code> setting for
+          each template execution independently:</p>
+
+          
+
+<div class="code-wrapper"><pre class="code-block code-unspecified">Writer w = new OutputStreamWriter(out, outputCharset);
+Environment env = template.createProcessingEnvironment(dataModel, w);
+env.setOutputEncoding(outputCharset);
+env.process();</pre></div>
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="pgui_misc_var.html"><span>Previous</span></a><a class="paging-arrow next" href="pgui_misc_multithreading.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-07-05T14:47:00Z" title="Sunday, July 5, 2015 2:47:00 PM GMT">2015-07-05 14:47:00 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Person" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

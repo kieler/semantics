@@ -83,7 +83,7 @@ class SynchronizerSelector {
     }   
     
     public def AbstractSynchronizer annotate(AbstractSynchronizer synchronizer, Join join) {
-        join.addAnnotation(ANNOTATION_SELECTEDSYNCHRONIZER, synchronizer.getId)
+        join.createStringAnnotation(ANNOTATION_SELECTEDSYNCHRONIZER, synchronizer.getId)
         synchronizer
     } 
     

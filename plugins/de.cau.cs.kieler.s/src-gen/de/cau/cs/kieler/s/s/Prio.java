@@ -10,11 +10,11 @@ package de.cau.cs.kieler.s.s;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.Prio#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Prio#getContinuation <em>Continuation</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.s.s.SPackage#getPrio()
  * @model

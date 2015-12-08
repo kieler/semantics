@@ -34,454 +34,430 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  */
 public class SclItemProviderAdapterFactory extends SclAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
     /**
-	 * This keeps track of the root adapter factory that delegates to this adapter factory.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the root adapter factory that delegates to this adapter factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ComposedAdapterFactory parentAdapterFactory;
 
     /**
-	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
-	 * <!-- begin-user-doc -->
+     * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
     /**
-	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
-	 * <!-- begin-user-doc -->
+     * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
     /**
-	 * This constructs an instance.
-	 * <!-- begin-user-doc -->
+     * This constructs an instance.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SclItemProviderAdapterFactory() {
-		supportedTypes.add(IEditingDomainItemProvider.class);
-		supportedTypes.add(IStructuredItemContentProvider.class);
-		supportedTypes.add(ITreeItemContentProvider.class);
-		supportedTypes.add(IItemLabelProvider.class);
-		supportedTypes.add(IItemPropertySource.class);
-	}
+        supportedTypes.add(IEditingDomainItemProvider.class);
+        supportedTypes.add(IStructuredItemContentProvider.class);
+        supportedTypes.add(ITreeItemContentProvider.class);
+        supportedTypes.add(IItemLabelProvider.class);
+        supportedTypes.add(IItemPropertySource.class);
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.SCLProgram} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.SCLProgram} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected SCLProgramItemProvider sclProgramItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.SCLProgram}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.SCLProgram}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createSCLProgramAdapter() {
-		if (sclProgramItemProvider == null) {
-			sclProgramItemProvider = new SCLProgramItemProvider(this);
-		}
+        if (sclProgramItemProvider == null) {
+            sclProgramItemProvider = new SCLProgramItemProvider(this);
+        }
 
-		return sclProgramItemProvider;
-	}
+        return sclProgramItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Statement} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Statement} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected StatementItemProvider statementItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Statement}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Statement}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createStatementAdapter() {
-		if (statementItemProvider == null) {
-			statementItemProvider = new StatementItemProvider(this);
-		}
+        if (statementItemProvider == null) {
+            statementItemProvider = new StatementItemProvider(this);
+        }
 
-		return statementItemProvider;
-	}
+        return statementItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.EmptyStatement} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.EmptyStatement} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected EmptyStatementItemProvider emptyStatementItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.EmptyStatement}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.EmptyStatement}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createEmptyStatementAdapter() {
-		if (emptyStatementItemProvider == null) {
-			emptyStatementItemProvider = new EmptyStatementItemProvider(this);
-		}
+        if (emptyStatementItemProvider == null) {
+            emptyStatementItemProvider = new EmptyStatementItemProvider(this);
+        }
 
-		return emptyStatementItemProvider;
-	}
+        return emptyStatementItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.InstructionStatement} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.InstructionStatement} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected InstructionStatementItemProvider instructionStatementItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.InstructionStatement}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.InstructionStatement}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createInstructionStatementAdapter() {
-		if (instructionStatementItemProvider == null) {
-			instructionStatementItemProvider = new InstructionStatementItemProvider(this);
-		}
+        if (instructionStatementItemProvider == null) {
+            instructionStatementItemProvider = new InstructionStatementItemProvider(this);
+        }
 
-		return instructionStatementItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Instruction} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected InstructionItemProvider instructionItemProvider;
+        return instructionStatementItemProvider;
+    }
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Instruction}.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Assignment} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createInstructionAdapter() {
-		if (instructionItemProvider == null) {
-			instructionItemProvider = new InstructionItemProvider(this);
-		}
-
-		return instructionItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Assignment} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected AssignmentItemProvider assignmentItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Assignment}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Assignment}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createAssignmentAdapter() {
-		if (assignmentItemProvider == null) {
-			assignmentItemProvider = new AssignmentItemProvider(this);
-		}
+        if (assignmentItemProvider == null) {
+            assignmentItemProvider = new AssignmentItemProvider(this);
+        }
 
-		return assignmentItemProvider;
-	}
+        return assignmentItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Conditional} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Conditional} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ConditionalItemProvider conditionalItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Conditional}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Conditional}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createConditionalAdapter() {
-		if (conditionalItemProvider == null) {
-			conditionalItemProvider = new ConditionalItemProvider(this);
-		}
+        if (conditionalItemProvider == null) {
+            conditionalItemProvider = new ConditionalItemProvider(this);
+        }
 
-		return conditionalItemProvider;
-	}
+        return conditionalItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Goto} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Goto} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected GotoItemProvider gotoItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Goto}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Goto}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createGotoAdapter() {
-		if (gotoItemProvider == null) {
-			gotoItemProvider = new GotoItemProvider(this);
-		}
+        if (gotoItemProvider == null) {
+            gotoItemProvider = new GotoItemProvider(this);
+        }
 
-		return gotoItemProvider;
-	}
+        return gotoItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.StatementSequence} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.StatementSequence} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected StatementSequenceItemProvider statementSequenceItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.StatementSequence}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.StatementSequence}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createStatementSequenceAdapter() {
-		if (statementSequenceItemProvider == null) {
-			statementSequenceItemProvider = new StatementSequenceItemProvider(this);
-		}
+        if (statementSequenceItemProvider == null) {
+            statementSequenceItemProvider = new StatementSequenceItemProvider(this);
+        }
 
-		return statementSequenceItemProvider;
-	}
+        return statementSequenceItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Thread} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Thread} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ThreadItemProvider threadItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Thread}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Thread}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createThreadAdapter() {
-		if (threadItemProvider == null) {
-			threadItemProvider = new ThreadItemProvider(this);
-		}
+        if (threadItemProvider == null) {
+            threadItemProvider = new ThreadItemProvider(this);
+        }
 
-		return threadItemProvider;
-	}
+        return threadItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Parallel} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Parallel} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ParallelItemProvider parallelItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Parallel}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Parallel}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createParallelAdapter() {
-		if (parallelItemProvider == null) {
-			parallelItemProvider = new ParallelItemProvider(this);
-		}
+        if (parallelItemProvider == null) {
+            parallelItemProvider = new ParallelItemProvider(this);
+        }
 
-		return parallelItemProvider;
-	}
+        return parallelItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Pause} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Pause} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected PauseItemProvider pauseItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Pause}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Pause}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createPauseAdapter() {
-		if (pauseItemProvider == null) {
-			pauseItemProvider = new PauseItemProvider(this);
-		}
+        if (pauseItemProvider == null) {
+            pauseItemProvider = new PauseItemProvider(this);
+        }
 
-		return pauseItemProvider;
-	}
+        return pauseItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.StatementScope} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.StatementScope} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected StatementScopeItemProvider statementScopeItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.StatementScope}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.StatementScope}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createStatementScopeAdapter() {
-		if (statementScopeItemProvider == null) {
-			statementScopeItemProvider = new StatementScopeItemProvider(this);
-		}
+        if (statementScopeItemProvider == null) {
+            statementScopeItemProvider = new StatementScopeItemProvider(this);
+        }
 
-		return statementScopeItemProvider;
-	}
+        return statementScopeItemProvider;
+    }
 
     /**
-	 * This returns the root adapter factory that contains this factory.
-	 * <!-- begin-user-doc -->
+     * This returns the root adapter factory that contains this factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ComposeableAdapterFactory getRootAdapterFactory() {
-		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
-	}
+        return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
+    }
 
     /**
-	 * This sets the composed adapter factory that contains this factory.
-	 * <!-- begin-user-doc -->
+     * This sets the composed adapter factory that contains this factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
-		this.parentAdapterFactory = parentAdapterFactory;
-	}
+        this.parentAdapterFactory = parentAdapterFactory;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean isFactoryForType(Object type) {
-		return supportedTypes.contains(type) || super.isFactoryForType(type);
-	}
+        return supportedTypes.contains(type) || super.isFactoryForType(type);
+    }
 
     /**
-	 * This implementation substitutes the factory itself as the key for the adapter.
-	 * <!-- begin-user-doc -->
+     * This implementation substitutes the factory itself as the key for the adapter.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter adapt(Notifier notifier, Object type) {
-		return super.adapt(notifier, this);
-	}
+        return super.adapt(notifier, this);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type)) {
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
-				return adapter;
-			}
-		}
+        if (isFactoryForType(type)) {
+            Object adapter = super.adapt(object, type);
+            if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
+                return adapter;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
     /**
-	 * This adds a listener.
-	 * <!-- begin-user-doc -->
+     * This adds a listener.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void addListener(INotifyChangedListener notifyChangedListener) {
-		changeNotifier.addListener(notifyChangedListener);
-	}
+        changeNotifier.addListener(notifyChangedListener);
+    }
 
     /**
-	 * This removes a listener.
-	 * <!-- begin-user-doc -->
+     * This removes a listener.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void removeListener(INotifyChangedListener notifyChangedListener) {
-		changeNotifier.removeListener(notifyChangedListener);
-	}
+        changeNotifier.removeListener(notifyChangedListener);
+    }
 
     /**
-	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
-	 * <!-- begin-user-doc -->
+     * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void fireNotifyChanged(Notification notification) {
-		changeNotifier.fireNotifyChanged(notification);
+        changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null) {
-			parentAdapterFactory.fireNotifyChanged(notification);
-		}
-	}
+        if (parentAdapterFactory != null) {
+            parentAdapterFactory.fireNotifyChanged(notification);
+        }
+    }
 
     /**
-	 * This disposes all of the item providers created by this factory. 
-	 * <!-- begin-user-doc -->
+     * This disposes all of the item providers created by this factory. 
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void dispose() {
-		if (sclProgramItemProvider != null) sclProgramItemProvider.dispose();
-		if (statementItemProvider != null) statementItemProvider.dispose();
-		if (emptyStatementItemProvider != null) emptyStatementItemProvider.dispose();
-		if (instructionStatementItemProvider != null) instructionStatementItemProvider.dispose();
-		if (instructionItemProvider != null) instructionItemProvider.dispose();
-		if (assignmentItemProvider != null) assignmentItemProvider.dispose();
-		if (conditionalItemProvider != null) conditionalItemProvider.dispose();
-		if (gotoItemProvider != null) gotoItemProvider.dispose();
-		if (statementSequenceItemProvider != null) statementSequenceItemProvider.dispose();
-		if (threadItemProvider != null) threadItemProvider.dispose();
-		if (parallelItemProvider != null) parallelItemProvider.dispose();
-		if (pauseItemProvider != null) pauseItemProvider.dispose();
-		if (statementScopeItemProvider != null) statementScopeItemProvider.dispose();
-	}
+        if (sclProgramItemProvider != null) sclProgramItemProvider.dispose();
+        if (statementItemProvider != null) statementItemProvider.dispose();
+        if (emptyStatementItemProvider != null) emptyStatementItemProvider.dispose();
+        if (instructionStatementItemProvider != null) instructionStatementItemProvider.dispose();
+        if (assignmentItemProvider != null) assignmentItemProvider.dispose();
+        if (conditionalItemProvider != null) conditionalItemProvider.dispose();
+        if (gotoItemProvider != null) gotoItemProvider.dispose();
+        if (statementSequenceItemProvider != null) statementSequenceItemProvider.dispose();
+        if (threadItemProvider != null) threadItemProvider.dispose();
+        if (parallelItemProvider != null) parallelItemProvider.dispose();
+        if (pauseItemProvider != null) pauseItemProvider.dispose();
+        if (statementScopeItemProvider != null) statementScopeItemProvider.dispose();
+    }
 
 }

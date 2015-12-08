@@ -13,10 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import org.eclipse.emf.common.util.EList;
-
 import de.cau.cs.kieler.core.annotations.Annotatable;
+
 import de.cau.cs.kieler.core.kexpressions.Expression;
+
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -58,131 +61,131 @@ import de.cau.cs.kieler.core.kexpressions.Expression;
  */
 public interface Action extends Annotatable {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-	 * Returns the value of the '<em><b>Effects</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.sccharts.Effect}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Effects</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.keffects.Effect}.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Effects</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Effects</em>' containment reference list.
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Effects()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Effects</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Effects()
+     * @model containment="true"
+     * @generated
+     */
     EList<Effect> getEffects();
 
     /**
-	 * Returns the value of the '<em><b>Trigger</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Trigger</b></em>' containment reference.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Trigger</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Trigger</em>' containment reference.
-	 * @see #setTrigger(Expression)
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Trigger()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Trigger</em>' containment reference.
+     * @see #setTrigger(Expression)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Trigger()
+     * @model containment="true"
+     * @generated
+     */
     Expression getTrigger();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#getTrigger <em>Trigger</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#getTrigger <em>Trigger</em>}' containment reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Trigger</em>' containment reference.
-	 * @see #getTrigger()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Trigger</em>' containment reference.
+     * @see #getTrigger()
+     * @generated
+     */
     void setTrigger(Expression value);
 
     /**
-	 * Returns the value of the '<em><b>Delay</b></em>' attribute.
-	 * The default value is <code>"1"</code>.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Delay</b></em>' attribute.
+     * The default value is <code>"1"</code>.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Delay</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Delay</em>' attribute.
-	 * @see #setDelay(int)
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Delay()
-	 * @model default="1"
-	 * @generated
-	 */
+     * @return the value of the '<em>Delay</em>' attribute.
+     * @see #setDelay(int)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Delay()
+     * @model default="1"
+     * @generated
+     */
     int getDelay();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#getDelay <em>Delay</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#getDelay <em>Delay</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Delay</em>' attribute.
-	 * @see #getDelay()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Delay</em>' attribute.
+     * @see #getDelay()
+     * @generated
+     */
     void setDelay(int value);
 
     /**
-	 * Returns the value of the '<em><b>Immediate</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Immediate</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-	 * @return the value of the '<em>Immediate</em>' attribute.
-	 * @see #setImmediate(boolean)
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Immediate()
-	 * @model
-	 * @generated
-	 */
-    boolean isImmediate();
-
-    /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}' attribute.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Immediate</em>' attribute.
-	 * @see #isImmediate()
-	 * @generated
-	 */
-    void setImmediate(boolean value);
-
-    /**
-	 * Returns the value of the '<em><b>Label</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Label</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Label</em>' attribute.
-	 * @see #setLabel(String)
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Label()
-	 * @model unique="false" ordered="false"
-	 * @generated
-	 */
+     * @return the value of the '<em>Label</em>' attribute.
+     * @see #setLabel(String)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Label()
+     * @model unique="false" ordered="false"
+     * @generated
+     */
     String getLabel();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#getLabel <em>Label</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#getLabel <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Label</em>' attribute.
-	 * @see #getLabel()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Label</em>' attribute.
+     * @see #getLabel()
+     * @generated
+     */
     void setLabel(String value);
+
+    /**
+     * Returns the value of the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Immediate</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Immediate</em>' attribute.
+     * @see #setImmediate(boolean)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Immediate()
+     * @model
+     * @generated
+     */
+    boolean isImmediate();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Immediate</em>' attribute.
+     * @see #isImmediate()
+     * @generated
+     */
+    void setImmediate(boolean value);
 
 } // Action

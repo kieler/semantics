@@ -13,12 +13,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getNewName <em>New Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getNewValue <em>New Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getOldName <em>Old Name</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getConstantRenaming()
  * @model

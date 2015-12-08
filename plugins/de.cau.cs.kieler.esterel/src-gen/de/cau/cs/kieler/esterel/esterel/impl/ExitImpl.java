@@ -22,11 +22,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExitImpl#getTrap <em>Trap</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExitImpl#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -19,7 +19,6 @@ import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
@@ -46,8 +45,8 @@ import java.util.List
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.optimizer.CopyPropagation
-import com.google.inject.Guice
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -101,7 +100,10 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
     extension SCGDeclarationExtensions
          
     @Inject 
-    extension KExpressionsExtension	
+    extension KExpressionsDeclarationExtensions	
+
+    @Inject 
+    extension KExpressionsValuedObjectExtensions 
     
     @Inject
     extension AnnotationsExtensions
@@ -176,9 +178,9 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
         scg.setDefaultTrace
         newSCG.trace(scg)
         
-        val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
+        val hostcodeAnnotations = scg.getAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
-            newSCG.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+            newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
         schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
         
@@ -339,7 +341,7 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
                     nodeCache.add(conditionalAssignment)
     				nextControlFlow = ScgFactory::eINSTANCE.createControlFlow.trace(assignment)
     				conditionalAssignment.next = nextControlFlow
-    				conditionalAssignment.addAnnotation(ANNOTATION_CONDITIONALASSIGNMENT, sBlock.guard.valuedObject.name)
+    				conditionalAssignment.createStringAnnotation(ANNOTATION_CONDITIONALASSIGNMENT, sBlock.guard.valuedObject.name)
     			}
     			nextControlFlows.add(nextControlFlow)
     			

@@ -66,6 +66,8 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String NO_CONST_LITERAL = "Const objects must be bound to literals";
     public static final String NO_DEFERRED_BEFORE_CONNECTOR = "Deferred transition cannot be used before a connector";
     
+    public static final String STRONG_ABORT_WITH_LOW_PRIORITY = "Strong abort transition with lower priority than non-strong-abort transition";
+    
     public static final SCChartsExtension sCChartExtension = new SCChartsExtension();
 
     @Override
@@ -156,7 +158,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      * @param state the state
      */
     @Check
-    public void checkNoBooleanEmissions(final de.cau.cs.kieler.sccharts.Emission emission) {
+    public void checkNoBooleanEmissions(final de.cau.cs.kieler.core.kexpressions.keffects.Emission emission) {
         if (emission.getValuedObject() != null && emission.getValuedObject().eContainer() != null && emission.getValuedObject().eContainer() instanceof Declaration) {
             Declaration declaration = (Declaration) emission.getValuedObject().eContainer();
             if (!declaration.isSignal()) {
@@ -173,7 +175,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      * @param state the state
      */
     @Check
-    public void checkNoBooleanEmissions(final de.cau.cs.kieler.sccharts.Assignment assignment) {
+    public void checkNoBooleanEmissions(final de.cau.cs.kieler.core.kexpressions.keffects.Assignment assignment) {
         if (assignment.getValuedObject() != null && assignment.getValuedObject().eContainer() != null && assignment.getValuedObject().eContainer() instanceof Declaration) {
             Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();
             if (declaration.isSignal()) {
@@ -308,7 +310,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      * @param state the state
      */
     @Check
-    public void checkAssignmentToConst(final de.cau.cs.kieler.sccharts.Assignment assignment) {
+    public void checkAssignmentToConst(final de.cau.cs.kieler.core.kexpressions.keffects.Assignment assignment) {
     	if (assignment.getValuedObject() != null) {
     		Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();	
     		if (declaration.isConst()) {

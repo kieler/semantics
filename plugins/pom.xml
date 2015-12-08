@@ -26,12 +26,17 @@
     <module>de.cau.cs.kieler.core.kexpressions.edit</module>
     <module>de.cau.cs.kieler.core.kexpressions.ui</module>
     <module>de.cau.cs.kieler.core.model</module>
-    <module>de.cau.cs.kieler.core.perspectives</module>
+    <module>de.cau.cs.kieler.core.perspectives</module>	
     <module>de.cau.cs.kieler.core.product</module>
     <module>de.cau.cs.kieler.esterel</module>
     <module>de.cau.cs.kieler.esterel.kexpressions</module>
     <module>de.cau.cs.kieler.esterel.kexpressions.edit</module>
     <module>de.cau.cs.kieler.esterel.kexpressions.ui</module>
+    <module>de.cau.cs.kieler.core.kexpressions.keffects</module>
+    <module>de.cau.cs.kieler.core.kexpressions.keffects.edit</module>
+    <module>de.cau.cs.kieler.core.kexpressions.keffects.ui</module>
+    <module>de.cau.cs.kieler.core.kexpressions.text</module>
+    <module>de.cau.cs.kieler.core.kexpressions.text.ui</module>
     <module>de.cau.cs.kieler.esterel.cec</module>
     <module>de.cau.cs.kieler.esterel.cec.linux.x86</module>
     <module>de.cau.cs.kieler.esterel.cec.linux.x86_64</module>
@@ -39,7 +44,6 @@
     <module>de.cau.cs.kieler.esterel.cec.macosx.x86_64</module>
     <module>de.cau.cs.kieler.esterel.cec.sim</module>
     <module>de.cau.cs.kieler.esterel.sim</module>
-    <module>de.cau.cs.kieler.esterel.sim.kivi</module>
     <module>de.cau.cs.kieler.esterel.cec.win32.x86</module>
     <module>de.cau.cs.kieler.esterel.examples</module>
     <module>de.cau.cs.kieler.esterel.ui</module>
@@ -104,3 +108,4 @@
   </modules>
 
 </project>
+

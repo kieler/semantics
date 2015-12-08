@@ -84,7 +84,7 @@ public enum AnnotationType {
         case STRING:
         case TYPED_STRING:
             if (value instanceof String) {
-                ((StringAnnotation) annotation).setValue((String) value);
+                ((StringAnnotation) annotation).getValues().set(0, (String) value);
             }
             break;
         case INT:

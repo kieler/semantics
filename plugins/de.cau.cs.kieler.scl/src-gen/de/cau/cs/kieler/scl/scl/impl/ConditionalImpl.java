@@ -2,16 +2,12 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.annotations.Annotation;
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
-import de.cau.cs.kieler.scl.scl.StatementSequence;
 
 import java.util.Collection;
 
@@ -35,8 +31,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getAnnotations <em>Annotations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getStatements <em>Statements</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getElseStatements <em>Else Statements</em>}</li>
@@ -45,121 +39,71 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ConditionalImpl extends InstructionImpl implements Conditional
-{
-  /**
-     * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getAnnotations()
-     * @generated
-     * @ordered
-     */
-    protected EList<Annotation> annotations;
-
-/**
-     * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-     * @see #getStatements()
-     * @generated
-     * @ordered
-     */
-  protected EList<Statement> statements;
-
-  /**
+public class ConditionalImpl extends StatementSequenceImpl implements Conditional {
+    /**
      * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getExpression()
      * @generated
      * @ordered
      */
-  protected Expression expression;
+    protected Expression expression;
 
-  /**
+    /**
      * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getDeclarations()
      * @generated
      * @ordered
      */
-  protected EList<Declaration> declarations;
+    protected EList<Declaration> declarations;
 
-  /**
+    /**
      * The cached value of the '{@link #getElseStatements() <em>Else Statements</em>}' containment reference list.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getElseStatements()
      * @generated
      * @ordered
      */
-  protected EList<Statement> elseStatements;
+    protected EList<Statement> elseStatements;
 
-  /**
-     * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-     * @generated
-     */
-  protected ConditionalImpl()
-  {
-        super();
-    }
-
-  /**
-     * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-     * @generated
-     */
-  @Override
-  protected EClass eStaticClass()
-  {
-        return SclPackage.Literals.CONDITIONAL;
-    }
-
-  /**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Annotation> getAnnotations() {
-        if (annotations == null) {
-            annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SclPackage.CONDITIONAL__ANNOTATIONS);
-        }
-        return annotations;
+    protected ConditionalImpl() {
+        super();
     }
 
-/**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EList<Statement> getStatements()
-  {
-        if (statements == null) {
-            statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.CONDITIONAL__STATEMENTS);
-        }
-        return statements;
+    @Override
+    protected EClass eStaticClass() {
+        return SclPackage.Literals.CONDITIONAL;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public Expression getExpression()
-  {
+    public Expression getExpression() {
         return expression;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
-  {
+    public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
         Expression oldExpression = expression;
         expression = newExpression;
         if (eNotificationRequired()) {
@@ -169,13 +113,12 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return msgs;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public void setExpression(Expression newExpression)
-  {
+    public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;
             if (expression != null)
@@ -189,78 +132,38 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
             eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.CONDITIONAL__EXPRESSION, newExpression, newExpression));
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EList<Declaration> getDeclarations()
-  {
+    public EList<Declaration> getDeclarations() {
         if (declarations == null) {
             declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SclPackage.CONDITIONAL__DECLARATIONS);
         }
         return declarations;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EList<Statement> getElseStatements()
-  {
+    public EList<Statement> getElseStatements() {
         if (elseStatements == null) {
             elseStatements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.CONDITIONAL__ELSE_STATEMENTS);
         }
         return elseStatements;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public Annotation getAnnotation(String name) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
-    }
-
-/**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Annotation> getAllAnnotations(String name) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
-    }
-
-/**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void removeAllAnnotations(String name) {
-        // TODO: implement this method
-        // Ensure that you remove @generated or mark it @generated NOT
-        throw new UnsupportedOperationException();
-    }
-
-/**
-     * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-     * @generated
-     */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SclPackage.CONDITIONAL__ANNOTATIONS:
-                return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
-            case SclPackage.CONDITIONAL__STATEMENTS:
-                return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
             case SclPackage.CONDITIONAL__EXPRESSION:
                 return basicSetExpression(null, msgs);
             case SclPackage.CONDITIONAL__DECLARATIONS:
@@ -271,19 +174,14 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SclPackage.CONDITIONAL__ANNOTATIONS:
-                return getAnnotations();
-            case SclPackage.CONDITIONAL__STATEMENTS:
-                return getStatements();
             case SclPackage.CONDITIONAL__EXPRESSION:
                 return getExpression();
             case SclPackage.CONDITIONAL__DECLARATIONS:
@@ -294,24 +192,15 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return super.eGet(featureID, resolve, coreType);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SclPackage.CONDITIONAL__ANNOTATIONS:
-                getAnnotations().clear();
-                getAnnotations().addAll((Collection<? extends Annotation>)newValue);
-                return;
-            case SclPackage.CONDITIONAL__STATEMENTS:
-                getStatements().clear();
-                getStatements().addAll((Collection<? extends Statement>)newValue);
-                return;
             case SclPackage.CONDITIONAL__EXPRESSION:
                 setExpression((Expression)newValue);
                 return;
@@ -327,21 +216,14 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         super.eSet(featureID, newValue);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public void eUnset(int featureID)
-  {
+    @Override
+    public void eUnset(int featureID) {
         switch (featureID) {
-            case SclPackage.CONDITIONAL__ANNOTATIONS:
-                getAnnotations().clear();
-                return;
-            case SclPackage.CONDITIONAL__STATEMENTS:
-                getStatements().clear();
-                return;
             case SclPackage.CONDITIONAL__EXPRESSION:
                 setExpression((Expression)null);
                 return;
@@ -355,19 +237,14 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         super.eUnset(featureID);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
+    @Override
+    public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SclPackage.CONDITIONAL__ANNOTATIONS:
-                return annotations != null && !annotations.isEmpty();
-            case SclPackage.CONDITIONAL__STATEMENTS:
-                return statements != null && !statements.isEmpty();
             case SclPackage.CONDITIONAL__EXPRESSION:
                 return expression != null;
             case SclPackage.CONDITIONAL__DECLARATIONS:
@@ -376,52 +253,6 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
                 return elseStatements != null && !elseStatements.isEmpty();
         }
         return super.eIsSet(featureID);
-    }
-
-  /**
-     * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-     * @generated
-     */
-  @Override
-  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-  {
-        if (baseClass == Annotatable.class) {
-            switch (derivedFeatureID) {
-                case SclPackage.CONDITIONAL__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-                default: return -1;
-            }
-        }
-        if (baseClass == StatementSequence.class) {
-            switch (derivedFeatureID) {
-                case SclPackage.CONDITIONAL__STATEMENTS: return SclPackage.STATEMENT_SEQUENCE__STATEMENTS;
-                default: return -1;
-            }
-        }
-        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-    }
-
-  /**
-     * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-     * @generated
-     */
-  @Override
-  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-  {
-        if (baseClass == Annotatable.class) {
-            switch (baseFeatureID) {
-                case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return SclPackage.CONDITIONAL__ANNOTATIONS;
-                default: return -1;
-            }
-        }
-        if (baseClass == StatementSequence.class) {
-            switch (baseFeatureID) {
-                case SclPackage.STATEMENT_SEQUENCE__STATEMENTS: return SclPackage.CONDITIONAL__STATEMENTS;
-                default: return -1;
-            }
-        }
-        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
 } //ConditionalImpl

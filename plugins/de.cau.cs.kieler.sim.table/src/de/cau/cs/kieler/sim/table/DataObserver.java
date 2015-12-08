@@ -190,29 +190,29 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
      * This method brings the Table view to the front.
      */
     public void bringToFront() {
-        broughtToFront = false;
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                // bring TABLE view to the front (lazy loading)
-                try {
-                    IWorkbenchWindow window = TablePlugin.getDefault().getWorkbench()
-                            .getActiveWorkbenchWindow();
-                    IViewPart vP = window.getActivePage().showView(TABLEVIEWID);
-                    vP.setFocus();
-                    // set done flag
-                    broughtToFront = true;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        while (!broughtToFront) {
-            try {
-                Thread.sleep(BRING_TO_FRONT_DELAY);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+//        broughtToFront = false;
+//        Display.getDefault().syncExec(new Runnable() {
+//            public void run() {
+//                // bring TABLE view to the front (lazy loading)
+//                try {
+//                    IWorkbenchWindow window = TablePlugin.getDefault().getWorkbench()
+//                            .getActiveWorkbenchWindow();
+//                    IViewPart vP = window.getActivePage().showView(TABLEVIEWID);
+//                    vP.setFocus();
+//                    // set done flag
+//                    broughtToFront = true;
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        while (!broughtToFront) {
+//            try {
+//                Thread.sleep(BRING_TO_FRONT_DELAY);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     // -------------------------------------------------------------------------

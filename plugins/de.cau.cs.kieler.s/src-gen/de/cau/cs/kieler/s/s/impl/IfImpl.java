@@ -30,12 +30,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.IfImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.IfImpl#getContinuation <em>Continuation</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.IfImpl#getInstructions <em>Instructions</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

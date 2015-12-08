@@ -42,6 +42,7 @@ import java.util.HashMap
 import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -87,6 +88,9 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
+    
+    @Inject
+    extension SCGCoreExtensions
     
     @Inject
     extension SCGControlFlowExtensions
@@ -153,6 +157,22 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
                 index = scg.createBasicBlocks(node, index, basicBlockCache)
             }
         }
+        /** Remove the dead block flag if the block is a go block or if it has at least one predecessor
+         *  that is not dead. In the case of join blocks, all predecessors have to be active.
+         */
+        for(bb : basicBlockCache) {
+            if (bb.goBlock) {
+                bb.deadBlock = false
+            } else {
+                if (bb.synchronizerBlock) {
+                    bb.deadBlock = bb.predecessors.map[basicBlock].filter[deadBlock].size > 0
+                } else if (bb.depthBlock) {
+                    bb.deadBlock = basicBlockCache.getSchedulingBlock(bb.preGuard).basicBlock.deadBlock
+                } else {
+                    bb.deadBlock = bb.predecessors.map[basicBlock].filter[!deadBlock].size == 0
+                }
+            }
+        }
         scg.basicBlocks += basicBlockCache
         
         //KITT
@@ -169,7 +189,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
             }
         }
 
-        scg.addAnnotation(SCGFeatures.BASICBLOCK_ID, SCGFeatures.BASICBLOCK_NAME)
+        scg.createStringAnnotation(SCGFeatures.BASICBLOCK_ID, SCGFeatures.BASICBLOCK_NAME)
         
         val time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).")    
@@ -395,13 +415,8 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         if (predecessorBlocks != null && predecessorBlocks.size == 0 && nodeList.head instanceof Entry) {
         	basicBlock.goBlock = true
         }
-        
-        /** If the block has no predecessors but is also not the entry block, it is a dead block. */
-        if (!basicBlock.goBlock && predecessorBlocks.size == 0 
-//            && (nodeList.head.allPrevious.size == 0)
-        ) {
-            basicBlock.deadBlock = true
-        }
+        /** Initially, mark all blocks as dead. */
+        basicBlock.deadBlock = true
         
         /**  
          *If the basic block starts with a depth node, there should only be one predecessor.
@@ -417,11 +432,6 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         /** If the block begins with a join node, mark the block as synchronizer block. */
         if (nodeList.head instanceof Join) { 
             basicBlock.synchronizerBlock = true
-            for (predecessor : predecessorBlocks) {
-                if (predecessor.deadBlock) {
-                    basicBlock.deadBlock = true
-                }
-            }
         }
         if (nodeList.head instanceof Entry) { 
             basicBlock.entryBlock = true

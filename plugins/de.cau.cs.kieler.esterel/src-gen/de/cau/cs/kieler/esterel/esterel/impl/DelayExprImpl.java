@@ -23,12 +23,12 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl#getEvent <em>Event</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayExprImpl#isIsImmediate <em>Is Immediate</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

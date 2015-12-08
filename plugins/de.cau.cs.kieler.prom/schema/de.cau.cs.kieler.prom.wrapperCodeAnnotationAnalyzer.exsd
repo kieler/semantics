@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="de.cau.cs.kieler.prom" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="de.cau.cs.kieler.prom" id="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer" name="Wrapper Code Annotation Analyzer"/>
+      </appinfo>
+      <documentation>
+         This extension point is used to add implementations which analyze an EObject and return the defined wrapper code annotations.
+
+The analysis is done when starting a launch configuration for KiCo compilation.
+The wrapper code annotation data is then used to generate wrapper code for the model as part of the launch process.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="analyzer"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="analyzer">
+      <annotation>
+         <documentation>
+            Add an implementation of a class that searches for wrapper code annotations in an EObject.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A fully qualified name of the java class implementing de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         0.10.0
+      </documentation>
+   </annotation>
+
+
+
+
+
+</schema>

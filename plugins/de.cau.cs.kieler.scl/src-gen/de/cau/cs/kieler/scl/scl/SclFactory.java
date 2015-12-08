@@ -12,140 +12,130 @@ import org.eclipse.emf.ecore.EFactory;
  * @see de.cau.cs.kieler.scl.scl.SclPackage
  * @generated
  */
-public interface SclFactory extends EFactory
-{
-  /**
+public interface SclFactory extends EFactory {
+    /**
      * The singleton instance of the factory.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  SclFactory eINSTANCE = de.cau.cs.kieler.scl.scl.impl.SclFactoryImpl.init();
+    SclFactory eINSTANCE = de.cau.cs.kieler.scl.scl.impl.SclFactoryImpl.init();
 
-  /**
+    /**
      * Returns a new object of class '<em>SCL Program</em>'.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return a new object of class '<em>SCL Program</em>'.
      * @generated
      */
-  SCLProgram createSCLProgram();
+    SCLProgram createSCLProgram();
 
-  /**
+    /**
      * Returns a new object of class '<em>Statement</em>'.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return a new object of class '<em>Statement</em>'.
      * @generated
      */
-  Statement createStatement();
+    Statement createStatement();
 
-  /**
+    /**
      * Returns a new object of class '<em>Empty Statement</em>'.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return a new object of class '<em>Empty Statement</em>'.
      * @generated
      */
-  EmptyStatement createEmptyStatement();
+    EmptyStatement createEmptyStatement();
 
-  /**
+    /**
      * Returns a new object of class '<em>Instruction Statement</em>'.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return a new object of class '<em>Instruction Statement</em>'.
      * @generated
      */
-  InstructionStatement createInstructionStatement();
+    InstructionStatement createInstructionStatement();
 
-  /**
-     * Returns a new object of class '<em>Instruction</em>'.
-     * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-     * @return a new object of class '<em>Instruction</em>'.
-     * @generated
-     */
-  Instruction createInstruction();
-
-  /**
+    /**
      * Returns a new object of class '<em>Assignment</em>'.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return a new object of class '<em>Assignment</em>'.
      * @generated
      */
-  Assignment createAssignment();
+    Assignment createAssignment();
 
-  /**
+    /**
      * Returns a new object of class '<em>Conditional</em>'.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return a new object of class '<em>Conditional</em>'.
      * @generated
      */
-  Conditional createConditional();
+    Conditional createConditional();
 
-  /**
+    /**
      * Returns a new object of class '<em>Goto</em>'.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return a new object of class '<em>Goto</em>'.
      * @generated
      */
-  Goto createGoto();
+    Goto createGoto();
 
-  /**
+    /**
      * Returns a new object of class '<em>Statement Sequence</em>'.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return a new object of class '<em>Statement Sequence</em>'.
      * @generated
      */
-  StatementSequence createStatementSequence();
+    StatementSequence createStatementSequence();
 
-  /**
+    /**
      * Returns a new object of class '<em>Thread</em>'.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return a new object of class '<em>Thread</em>'.
      * @generated
      */
-  Thread createThread();
+    Thread createThread();
 
-  /**
+    /**
      * Returns a new object of class '<em>Parallel</em>'.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return a new object of class '<em>Parallel</em>'.
      * @generated
      */
-  Parallel createParallel();
+    Parallel createParallel();
 
-  /**
+    /**
      * Returns a new object of class '<em>Pause</em>'.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return a new object of class '<em>Pause</em>'.
      * @generated
      */
-  Pause createPause();
+    Pause createPause();
 
-  /**
+    /**
      * Returns a new object of class '<em>Statement Scope</em>'.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return a new object of class '<em>Statement Scope</em>'.
      * @generated
      */
-  StatementScope createStatementScope();
+    StatementScope createStatementScope();
 
-  /**
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return the package supported by this factory.
      * @generated
      */
-  SclPackage getSclPackage();
+    SclPackage getSclPackage();
 
 } //SclFactory

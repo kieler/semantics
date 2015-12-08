@@ -15,12 +15,13 @@ package de.cau.cs.kieler.scg.guardCreation
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -44,11 +45,11 @@ import org.eclipse.emf.ecore.EObject
 abstract class AbstractGuardCreator extends AbstractProductionTransformation {
         
     @Inject
-    extension KExpressionsExtension
-        
-    @Inject
-    extension SCGDeclarationExtensions        
+    extension KExpressionsDeclarationExtensions
     
+    @Inject
+    extension KExpressionsValuedObjectExtensions    
+        
     // -------------------------------------------------------------------------
     // -- Constants 
     // -------------------------------------------------------------------------
@@ -80,7 +81,9 @@ abstract class AbstractGuardCreator extends AbstractProductionTransformation {
          
         // Create a new signal using the kexpression factory for the GO signal.
         // Don't forget to add it to the SCG.
-        scg.createValuedObject(GOGUARDNAME).setTypeBool
+        createValuedObject(GOGUARDNAME) => [
+            scg.declarations += createBoolDeclaration.attach(it)    
+        ]
     }	
 	
 }

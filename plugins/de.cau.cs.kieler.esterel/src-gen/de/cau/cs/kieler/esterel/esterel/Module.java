@@ -11,13 +11,13 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getInterface <em>Interface</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getBody <em>Body</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getEnd <em>End</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModule()
  * @model

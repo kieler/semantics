@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.features
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
@@ -41,15 +41,15 @@ class Initialization extends Feature {
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
     @Inject
     extension SCChartsExtension
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.allStates.toList
-        for (state : allStates) {
-            val valuedObjects = state.valuedObjects.filter[initialValue != null]
+        val allScopes = model.allScopes.toList
+        for (scope : allScopes) {
+            val valuedObjects = scope.valuedObjects.filter[initialValue != null]
             if (!valuedObjects.nullOrEmpty) {
                 return true
             }

@@ -27,56 +27,51 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class InstructionStatementImpl extends StatementImpl implements InstructionStatement
-{
-  /**
+public class InstructionStatementImpl extends StatementImpl implements InstructionStatement {
+    /**
      * The cached value of the '{@link #getInstruction() <em>Instruction</em>}' containment reference.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getInstruction()
      * @generated
      * @ordered
      */
-  protected Instruction instruction;
+    protected Instruction instruction;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  protected InstructionStatementImpl()
-  {
+    protected InstructionStatementImpl() {
         super();
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  protected EClass eStaticClass()
-  {
+    @Override
+    protected EClass eStaticClass() {
         return SclPackage.Literals.INSTRUCTION_STATEMENT;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public Instruction getInstruction()
-  {
+    public Instruction getInstruction() {
         return instruction;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public NotificationChain basicSetInstruction(Instruction newInstruction, NotificationChain msgs)
-  {
+    public NotificationChain basicSetInstruction(Instruction newInstruction, NotificationChain msgs) {
         Instruction oldInstruction = instruction;
         instruction = newInstruction;
         if (eNotificationRequired()) {
@@ -86,13 +81,12 @@ public class InstructionStatementImpl extends StatementImpl implements Instructi
         return msgs;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public void setInstruction(Instruction newInstruction)
-  {
+    public void setInstruction(Instruction newInstruction) {
         if (newInstruction != instruction) {
             NotificationChain msgs = null;
             if (instruction != null)
@@ -106,14 +100,13 @@ public class InstructionStatementImpl extends StatementImpl implements Instructi
             eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION, newInstruction, newInstruction));
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION:
                 return basicSetInstruction(null, msgs);
@@ -121,14 +114,13 @@ public class InstructionStatementImpl extends StatementImpl implements Instructi
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION:
                 return getInstruction();
@@ -136,14 +128,13 @@ public class InstructionStatementImpl extends StatementImpl implements Instructi
         return super.eGet(featureID, resolve, coreType);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
+    @Override
+    public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION:
                 setInstruction((Instruction)newValue);
@@ -152,14 +143,13 @@ public class InstructionStatementImpl extends StatementImpl implements Instructi
         super.eSet(featureID, newValue);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public void eUnset(int featureID)
-  {
+    @Override
+    public void eUnset(int featureID) {
         switch (featureID) {
             case SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION:
                 setInstruction((Instruction)null);
@@ -168,14 +158,13 @@ public class InstructionStatementImpl extends StatementImpl implements Instructi
         super.eUnset(featureID);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
+    @Override
+    public boolean eIsSet(int featureID) {
         switch (featureID) {
             case SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION:
                 return instruction != null;

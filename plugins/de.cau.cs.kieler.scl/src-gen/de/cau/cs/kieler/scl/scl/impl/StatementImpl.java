@@ -34,60 +34,55 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class StatementImpl extends MinimalEObjectImpl.Container implements Statement
-{
-  /**
+public class StatementImpl extends MinimalEObjectImpl.Container implements Statement {
+    /**
      * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getAnnotations()
      * @generated
      * @ordered
      */
-  protected EList<Annotation> annotations;
+    protected EList<Annotation> annotations;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  protected StatementImpl()
-  {
+    protected StatementImpl() {
         super();
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  protected EClass eStaticClass()
-  {
+    @Override
+    protected EClass eStaticClass() {
         return SclPackage.Literals.STATEMENT;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EList<Annotation> getAnnotations()
-  {
+    public EList<Annotation> getAnnotations() {
         if (annotations == null) {
             annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SclPackage.STATEMENT__ANNOTATIONS);
         }
         return annotations;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SclPackage.STATEMENT__ANNOTATIONS:
                 return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
@@ -95,14 +90,13 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case SclPackage.STATEMENT__ANNOTATIONS:
                 return getAnnotations();
@@ -110,15 +104,14 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
         return super.eGet(featureID, resolve, coreType);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case SclPackage.STATEMENT__ANNOTATIONS:
                 getAnnotations().clear();
@@ -128,14 +121,13 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
         super.eSet(featureID, newValue);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public void eUnset(int featureID)
-  {
+    @Override
+    public void eUnset(int featureID) {
         switch (featureID) {
             case SclPackage.STATEMENT__ANNOTATIONS:
                 getAnnotations().clear();
@@ -144,14 +136,13 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
         super.eUnset(featureID);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
+    @Override
+    public boolean eIsSet(int featureID) {
         switch (featureID) {
             case SclPackage.STATEMENT__ANNOTATIONS:
                 return annotations != null && !annotations.isEmpty();

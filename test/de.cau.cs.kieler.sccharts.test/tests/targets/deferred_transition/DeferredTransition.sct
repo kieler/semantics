@@ -1,0 +1,19 @@
+
+@Transformation DEFERRED
+scchart DeferredTransition {
+  input int x;
+  bool _deferred = false;
+
+  initial state A
+  --> B with x == 1 / _deferred = true
+  --> B with x == 2;
+
+  state B {
+    during / _deferred = false;
+  }
+  --> C immediate with !_deferred && x == 5
+  --> C;
+
+  state C
+  --> A immediate;
+}

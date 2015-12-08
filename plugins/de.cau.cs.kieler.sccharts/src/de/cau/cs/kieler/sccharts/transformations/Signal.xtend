@@ -17,19 +17,26 @@ import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
 
 /**
  * SCCharts Signal Transformation.
@@ -65,7 +72,16 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension
@@ -79,6 +95,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     // TODO: for inputs no during action!
     // TODO: relative writes!!
     private static val String variableValueExtension = GENERATED_PREFIX + "val";
+    private static val String variableCurrentValueExtension = GENERATED_PREFIX + "curval";
 
     // @requires: during actions
     // For all states do the following:
@@ -113,10 +130,24 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
 
             // If this is a valued signal we need a second signal for the value
             if (isValuedSignal) {
-                val valueVariable = state.createVariable(signal.name + variableValueExtension)
+            	val valueDeclaration = createDeclaration => [ type = signal.getType ]
+                val valueVariable = state.createValuedObject(signal.name + variableValueExtension, valueDeclaration)
+            	val currentValueDeclaration = createDeclaration => [ type = signal.getType ]
+                val currentValueVariable = state.createValuedObject(signal.name + variableCurrentValueExtension, currentValueDeclaration)
+                
+                // Add an immediate during action that updates the value (in case of an emission)
+                // to the current value
+                val updateDuringAction = state.createImmediateDuringAction
+                updateDuringAction.createAssignment(valueVariable, currentValueVariable.reference)
+                updateDuringAction.setTrigger(presentVariable.reference)
+                // Add an immediate during action that resets the current value
+                // in each tick to the neutral element of the type w.r.t. combination function
+                val resetDuringAction = state.createImmediateDuringAction
+                resetDuringAction.createAssignment(currentValueVariable, signal.neutralElement)
+                resetDuringAction.setImmediate(true)
 
                 // Copy type and input/output attributes from the original signal
-                valueVariable.applyAttributes(signal)
+                currentValueVariable.applyAttributes(signal)
                 val allActions = state.eAllContents.filter(typeof(Action)).toList
                 for (Action action : allActions) {
 
@@ -125,8 +156,8 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                     for (Emission signalEmission : allSignalEmissions.immutableCopy) {
                         if (signalEmission.newValue != null) {
 
-                            // Assign the emitted valued
-                            val variableAssignment = valueVariable.assign(signalEmission.newValue)
+                            // Assign the emitted valued and combine!
+                            val variableAssignment = currentValueVariable.assingCombined(signalEmission.newValue)
 
                             // Put it in right order
                             val index = action.effects.indexOf(signalEmission);
@@ -140,24 +171,20 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                             e.operator == OperatorType::VAL && e.subExpressions.get(0) instanceof ValuedObjectReference &&
                                 (e.subExpressions.get(0) as ValuedObjectReference).valuedObject == signal).toList
                     for (OperatorExpression signalTest : allSignalValTests.immutableCopy) {
-
-                        // Put a trim-able Operator here
-                        signalTest.setOperator(OperatorType::AND)
-
-                        // Replace in valuedObjectReference
-                        (signalTest.subExpressions.get(0) as ValuedObjectReference).setValuedObject(valueVariable)
-
-                    //signalTest.add(TRUE)
+                        // Remove signal reference from operator and replace val-operator with reference
+                        val signalRef = signalTest.subExpressions.remove(0) as ValuedObjectReference;
+                        signalRef.setValuedObject(valueVariable);
+                        signalTest.replace(signalRef);
                     }
                     if (action.trigger != null) {
-                        action.setTrigger(action.trigger.trim)
+                        action.setTrigger(action.trigger)
                     }
                 }
             }
 
             // Change signal to variable
-            presentVariable.setIsNotSignal
-            presentVariable.setTypeBool
+            presentVariable.declaration.signal = false
+            presentVariable.declaration.type = ValueType::BOOL
 
             // Reset initial value and combine operator because we want to reset
             // the signal manually in every
@@ -205,5 +232,41 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
             }
         }
     }
+
+
+   // ------------------------------------
+   
+  // Gets the correct neutral element as an Expression 
+  def public neutralElement(ValuedObject signal) {
+        if (signal.type == ValueType::BOOL) {
+           if (signal.combineOperator == CombineOperator::OR) {
+               // OR
+               return FALSE;
+           }
+           // AND
+           return TRUE; 
+        }
+        if (signal.type == ValueType::INT) {
+           if (signal.combineOperator == CombineOperator::ADD) {
+               // ADD
+               return  createIntValue(0);
+           }
+           if (signal.combineOperator == CombineOperator::MAX) {
+               // MAX
+               return  createIntValue(Integer.MIN_VALUE);
+           }
+           if (signal.combineOperator == CombineOperator::MIN) {
+               // MIN
+               return  createIntValue(Integer.MAX_VALUE);
+           }
+           if (signal.combineOperator == CombineOperator::MULT) {
+               // MULT
+               return  createIntValue(1);
+           }
+           // UNDEFINED
+           return  createIntValue(0);
+        }
+  }
+
 
 }
