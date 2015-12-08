@@ -65,10 +65,12 @@ class SctValidator extends SctJavaValidator {
                 warning(NO_REGION, state, null, -1);
             }
             // Now test for every region
-            for (region : regions) {
-                val foundFinal = !region.states.filter[ isFinal ].empty
-                if (!foundFinal) {
-                    warning(REGION_NO_FINAL_STATE, region, null, -1);
+            if (state.localActions.nullOrEmpty) {
+                for (region : regions) {
+                    val foundFinal = !region.states.filter[ isFinal ].empty
+                    if (!foundFinal) {
+                        warning(REGION_NO_FINAL_STATE, region, null, -1);
+                    }
                 }
             }
         }
