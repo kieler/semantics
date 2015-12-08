@@ -168,11 +168,11 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 for (transition : outgoingTransitions) {
                     transition.setDefaultTrace;
                     if (transition.typeStrongAbort) {
-                        strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy)
+                        strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
                         strongImmediateTrigger = strongImmediateTrigger || transition.immediate2
                     } else if (transition.typeWeakAbort) {
                         if (transition.immediate2) {
-                            weakAbortTrigger = weakAbortTrigger.or(transition.trigger.copy)
+                            weakAbortTrigger = weakAbortTrigger.or(transition.trigger.copy).trace(transition)
                         } else {
                             // In case of a delayed weak abort, we need to take care of the delay in
                             // the watcher region and create an auxiliarv variable
@@ -181,7 +181,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                                 GENERATED_PREFIX + "trig", createBoolDeclaration).uniqueNameCached(nameCache)
                             state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
                             transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
-                            weakAbortTrigger = weakAbortTrigger.or(transitionTriggerVariable.reference)
+                            weakAbortTrigger = weakAbortTrigger.or(transitionTriggerVariable.reference).trace(transition)
                         }
                     }
                 }
