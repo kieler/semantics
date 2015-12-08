@@ -180,5 +180,17 @@
          </resource>
       </example>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.Modeling">
+         <newWizardShortcut
+               id="de.cau.cs.kieler.sccharts.prom.projectwizard">
+         </newWizardShortcut>
+         <newWizardShortcut
+               id="de.cau.cs.kieler.sccharts.prom.filewizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
 
 </plugin>

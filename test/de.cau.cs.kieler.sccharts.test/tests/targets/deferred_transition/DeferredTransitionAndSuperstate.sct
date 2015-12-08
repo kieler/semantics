@@ -1,0 +1,27 @@
+
+@Transformation DEFERRED
+scchart DeferredTransitionAndSuperstate {
+  input int x;
+  bool _deferred = false;
+
+  initial state A
+  --> B with x == 1 / _deferred = true
+  --> B with x == 2;
+
+  state B {
+    during / _deferred = false;
+
+    initial state B0
+    --> B2
+    --> B1 immediate with x == 3;
+
+    state B1
+    --> B2 immediate with x == 4;
+
+    state B2;
+  }
+  --> C immediate with !_deferred && x == 5;
+
+  state C
+  --> B;
+}

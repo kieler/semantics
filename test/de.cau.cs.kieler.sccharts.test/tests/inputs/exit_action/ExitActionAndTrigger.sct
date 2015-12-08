@@ -6,7 +6,7 @@ scchart ExitActionAndTrigger {
     initial state A{
       exit !!I / O = false;
     }
-    >-> F with I;
+    --> F with I;
     
     final state F;    
 }

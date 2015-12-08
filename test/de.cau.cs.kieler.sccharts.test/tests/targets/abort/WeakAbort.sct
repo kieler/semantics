@@ -2,19 +2,21 @@
 @Transformation ABORT
 scchart WeakAbort {
   input bool I;
+  bool _trig;
 
   initial state A {
+    entry / _trig = false;
 
     initial state A0
     --> A1
-    --> A1 immediate with I;
+    --> A1 immediate with _trig;
 
     final state A1;
 
     region _Ctrl:
 
     initial state _Run
-    --> _Done immediate with I;
+    --> _Done with I / _trig = true;
 
     final state _Done;
   }

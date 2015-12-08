@@ -19,5 +19,5 @@ scchart EntryActionAndTrigger {
   final state F;
 
   state _Exit
-  >-> F with !I;
+  --> F with !I;
 }

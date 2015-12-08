@@ -13,18 +13,19 @@
  */
 package de.cau.cs.kieler.sccharts.prom
 
+import de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.wizard.Wizard
+import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
-import org.eclipse.ui.IWorkbenchWizard
 
 /**
  * Implementation of a newWizard which contains a page to create an sct file. 
  * 
  * @author aas
  */
-class SCChartsFileWizard extends Wizard implements IWorkbenchWizard {
-    
+class SCChartsFileWizard extends Wizard implements INewWizard {
+
     /**
      * The workbench from the init(...) method.
      */
@@ -38,13 +39,13 @@ class SCChartsFileWizard extends Wizard implements IWorkbenchWizard {
     /**
      * Page to create an sct file.
      */
-    private de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage sctPage
+    private AdvancedNewFileCreationPage sctPage
     
     /**
      * Instantiates and adds the sct file creation page to this wizard.
      */
     override addPages(){
-        sctPage = new de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage("SCChart Text File", selection, false);
+        sctPage = new AdvancedNewFileCreationPage("SCChart Text File", selection, false);
         sctPage.initialContentsURL = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/resources/default.sct"
         sctPage.fileName = "NewModel.sct"
         sctPage.fileExtension = "sct"

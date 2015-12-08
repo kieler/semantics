@@ -1,6 +1,7 @@
 // The weak suspend is WIP.
 // This target file has to be updated after the transformation works correctly.
+
 @Transformation WEAKSUSPEND
-scchart WeakSuspension {
-  initial state dummy;
+scchart WeakSuspensionAndHierarchy {
+    initial state dummy;
 }

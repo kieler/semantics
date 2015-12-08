@@ -1,5 +1,5 @@
 @Transformation ABORT
-scchart ConditionalTermination {
+scchart StrongAbort {
   input bool I;
   
   initial state A {
@@ -8,7 +8,7 @@ scchart ConditionalTermination {
     --> A1;
     
     final state A1;
-  }>-> F with I;
-  
+  }o-> F immediate with I;
+    
   final state F;
 }

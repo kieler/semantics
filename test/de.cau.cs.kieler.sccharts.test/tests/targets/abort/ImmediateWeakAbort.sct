@@ -1,20 +1,20 @@
 
 @Transformation ABORT
-scchart StrongAbort {
+scchart WeakAbort {
   input bool I;
 
   initial state A {
 
     initial state A0
-    --> A1 with I
-    --> A1;
+    --> A1
+    --> A1 immediate with I;
 
     final state A1;
 
     region _Ctrl:
 
     initial state _Run
-    --> _Done with I;
+    --> _Done immediate with I;
 
     final state _Done;
   }
