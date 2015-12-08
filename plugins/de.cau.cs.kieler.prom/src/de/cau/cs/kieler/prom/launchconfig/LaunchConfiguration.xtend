@@ -13,9 +13,11 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
+import com.google.common.base.Strings
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.prom.common.CommandData
+import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.ModelImporter
 import freemarker.template.Configuration
@@ -42,10 +44,11 @@ import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.jface.viewers.StructuredSelection
+import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
-import com.google.common.base.Strings
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -88,6 +91,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val ATTR_WRAPPER_CODE_TEMPLATE = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.template"
     public static val ATTR_WRAPPER_CODE_SNIPPETS = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.snippets"
 
+    public static val ATTR_ASSOCIATED_LAUNCH_SHORTCUT = "de.cau.cs.kieler.prom.launchconfig.main.associated.launch.shortcut"
+
     // Variable names
     public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
 
@@ -119,6 +124,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     private String wrapperCodeSnippetDirectory
 
     private List<CommandData> commands
+    private String associatedLaunchShortcut
 
     private String targetLanguageFileExtension
 
@@ -168,6 +174,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             compileJob.join()
             wrapperCodeJob.join()
 
+            // Run associated launch config
+            runAssociatedLauchShortcut()
+
             // Execute commands only if the other jobs succeded  
             if (compileJob.result.code == IStatus.OK && wrapperCodeJob.result.code == IStatus.OK) {
                 getExecuteCommandsJob().schedule()
@@ -176,6 +185,32 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             consoleStream.println("Project of launch configuration '" + configuration.name +
                 "' does not exist.\n");
         }
+    }
+
+    private def void runAssociatedLauchShortcut() {
+        // Nothing to do
+        System.err.println(associatedLaunchShortcut)
+        if(Strings.isNullOrEmpty(mainFile) || Strings.isNullOrEmpty(associatedLaunchShortcut)) {
+            return;
+        }
+        
+        // Start associated launch shortcut on compiled main file
+        val compiledMainPath = new Path(computeTargetPath(mainFile, true))
+        val compiledMainFile = project.getFile(compiledMainPath)
+        val selection = new StructuredSelection(compiledMainFile)
+        val shortcut = ExtensionLookupUtil.getLaunchShortcut(associatedLaunchShortcut);
+        
+        if(shortcut == null) {
+            throw new Exception("The associated launch shortcut "+associatedLaunchShortcut+
+                                " for the launch configuration '"+configuration.name +"' could not be instantiated.")
+        }
+        
+        // There is an "invalid thread access" exception if this asyncExec is not used.
+        Display.getDefault().asyncExec(new Runnable() {
+           override run() {
+              shortcut.launch(selection, mode)
+           }
+       })
     }
 
     /**
@@ -391,6 +426,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         // Load shell commands
         commands = CommandData.loadAllFromConfiguration(configuration)
+        
+        // Load associated launch shortcut
+        associatedLaunchShortcut = configuration.getAttribute(ATTR_ASSOCIATED_LAUNCH_SHORTCUT, "")
     }
 
     /**

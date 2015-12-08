@@ -226,8 +226,9 @@ abstract class ConfigurationSerializableData {
         // Load string fields
         val classObject = this.class
         for(f : classObject.declaredFields){
-            if (f.type == String && !Modifier.isStatic(f.modifiers))
-                f.set(this, store.getString(getStoreKey(f.name)))
+            if (f.type == String && !Modifier.isStatic(f.modifiers)){
+                f.set(this, store.getString(getStoreKey(f.name)))                
+            }
         }
     }
     

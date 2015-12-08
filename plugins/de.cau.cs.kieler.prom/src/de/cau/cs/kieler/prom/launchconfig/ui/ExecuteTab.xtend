@@ -43,6 +43,13 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
+import org.eclipse.jface.viewers.ComboViewer
+import org.eclipse.jface.viewers.ArrayContentProvider
+import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
+import org.eclipse.jface.viewers.LabelProvider
+import org.eclipse.core.runtime.IConfigurationElement
+import com.google.common.collect.Lists
+import org.eclipse.core.internal.registry.ConfigurationElement
 
 /** 
  * The tab with the controls to set shell commands which will be executed
@@ -68,6 +75,11 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     private Text command
     
     /**
+     * Combobox with all available launch shortcuts.
+     */
+    private var ComboViewer launchShortcuts
+    
+    /**
      * The currently selected command data or null if there is nothing selected.
      */
     private CommandData currentData
@@ -90,6 +102,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
         createTableComponent(comp)
         createNameComponent(comp)
         createCommandComponent(comp)
+        createAssociatedLaunchShortcutComponent(comp)
     }
 
     /**
@@ -235,6 +248,49 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     }
 
     /**
+     * Creates the combo viewer with configuration elements that define launch shortcuts.
+     * 
+     * @param parent The parent composite
+     */
+    private def void createAssociatedLaunchShortcutComponent(Composite parent){
+        val group = UIUtil.createGroup(parent, "Associated Launch Shortcut", 2)
+        
+        val combo = new ComboViewer(group, SWT.DEFAULT)
+        launchShortcuts = combo
+        launchShortcuts.combo.toolTipText = "Launch shortcut that is started after the KiCo Compilation"
+        
+        // Fill combo
+        combo.contentProvider = ArrayContentProvider.instance
+        
+        val ArrayList<Object> input = new ArrayList<Object>()
+        input.add(StructuredSelection.EMPTY)
+        input.addAll(ExtensionLookupUtil.getLaunchShortcutConfigurationElements())
+        combo.input = input
+        
+        // Select first element as default 
+        combo.selection = new StructuredSelection(StructuredSelection.EMPTY)
+
+        // Create label provider
+        combo.labelProvider = new LabelProvider() {
+            override String getText(Object element) {
+                if(element != null && element instanceof IConfigurationElement)
+                    return (element as IConfigurationElement).getAttribute("label")
+                else
+                    return ""
+            }
+        }
+        
+        // Selection event
+        combo.addSelectionChangedListener(new ISelectionChangedListener {
+
+            override selectionChanged(SelectionChangedEvent event) {
+                checkConsistency()
+                updateLaunchConfigurationDialog()
+            }
+        })        
+    }
+    
+    /**
      * {@inheritDoc}
      */
     override activated(ILaunchConfigurationWorkingCopy workingCopy) {
@@ -259,6 +315,17 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     override void initializeFrom(ILaunchConfiguration configuration) {
         viewer.input = CommandData.loadAllFromConfiguration(configuration)
         
+        // Select associated launch shortcut in combo viewer
+        val launchShortcutClass = configuration.getAttribute(LaunchConfiguration.ATTR_ASSOCIATED_LAUNCH_SHORTCUT, "")
+        launchShortcuts.selection = new StructuredSelection(StructuredSelection.EMPTY)
+        for(o : launchShortcuts.input as ArrayList<Object>){
+            if(o instanceof IConfigurationElement){
+                if(o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME) == launchShortcutClass) {
+                    launchShortcuts.selection = new StructuredSelection(o)
+                }
+            }
+        }
+        
         updateEnabled()
     }
  
@@ -267,6 +334,15 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
      */
     override void performApply(ILaunchConfigurationWorkingCopy configuration) {
         CommandData.saveAllToConfiguration(configuration, viewer.input as List<CommandData>)
+        
+        // Set associated launch shortcut
+        val selection = (launchShortcuts.selection as StructuredSelection).firstElement
+        val shortcutClassName = if(selection != null && selection instanceof IConfigurationElement)
+                                    (selection as IConfigurationElement).getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME)
+                                else
+                                    ""
+        configuration.setAttribute(LaunchConfiguration.ATTR_ASSOCIATED_LAUNCH_SHORTCUT, shortcutClassName)
+        System.err.println(shortcutClassName)
     }
 
     /** 
