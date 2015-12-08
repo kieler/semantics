@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.klighd.layout.labels;
+package de.cau.cs.kieler.sccharts.klighd.synthesis.labels;
 
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
 import de.cau.cs.kieler.klighd.labels.IdentLabelManager;

@@ -28,10 +28,6 @@
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook"
             id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook">
       </action>
-      <action
-            class="de.cau.cs.kieler.sccharts.klighd.layout.labels.LabelMetaFocusAction"
-            id="de.cau.cs.kieler.sccharts.klighd.layout.labels.LabelMetaFocusAction">
-      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">

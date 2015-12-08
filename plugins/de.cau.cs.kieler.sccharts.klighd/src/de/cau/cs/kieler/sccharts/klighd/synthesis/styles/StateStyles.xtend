@@ -196,28 +196,25 @@ class StateStyles {
      * The first part will be highlighted as keywords.
      */
     def KRectangle addDeclarationLabel(KNode node, Pair<List<String>, List<String>> components) {
-        node.declarationsContainer.addKeywordLabel(components);
+        return node.declarationsContainer.addKeywordLabel(components);
     }
 
     /**
      * Creates a text with highlighted keywords.
      */
     package def addKeywordLabel(KContainerRendering container, Pair<List<String>, List<String>> components) {
-        container.addRectangle() => [
-            // This additional rectangle allows left align in grid placement
-            invisible = true
-            addRectangle() => [
-                invisible = true;
-                // Add left alignment
-                setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
-                setGridPlacement(2);
-                val joiner = Joiner.on(" ");
-                addText(joiner.join(components.key) + " ") => [
-                    foreground = KEYWORD.color;
-                    fontBold = true;
-                ]
-                addText(joiner.join(components.value));
+        // The additional rectangle allows left align in grid placement
+        return container.addRectangle().setInvisible(true).addRectangle() => [
+            invisible = true;
+            // Add left alignment
+            setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+            setGridPlacement(2);
+            val joiner = Joiner.on(" ");
+            addText(joiner.join(components.key) + " ") => [
+                foreground = KEYWORD.color;
+                fontBold = true;
             ]
+            addText(joiner.join(components.value));
         ]
     }
 
