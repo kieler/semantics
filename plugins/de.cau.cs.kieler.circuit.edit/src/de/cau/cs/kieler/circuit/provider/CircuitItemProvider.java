@@ -256,7 +256,7 @@ public class CircuitItemProvider extends NamedObjectItemProvider {
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return Circuit2EditPlugin.INSTANCE;
+		return CircuitEditPlugin.INSTANCE;
 	}
 
 }

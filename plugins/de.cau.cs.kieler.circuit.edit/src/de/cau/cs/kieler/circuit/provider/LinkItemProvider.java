@@ -156,7 +156,7 @@ public class LinkItemProvider extends NamedObjectItemProvider {
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return Circuit2EditPlugin.INSTANCE;
+		return CircuitEditPlugin.INSTANCE;
 	}
 
 }
