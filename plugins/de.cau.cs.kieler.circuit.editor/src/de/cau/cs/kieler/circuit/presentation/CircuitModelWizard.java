@@ -71,9 +71,7 @@ import org.eclipse.ui.part.ISetSelectionTarget;
 
 import de.cau.cs.kieler.circuit.CircuitFactory;
 import de.cau.cs.kieler.circuit.CircuitPackage;
-import de.cau.cs.kieler.circuit.provider.CircuitEditPlugin;
-
-
+import de.cau.cs.kieler.circuit.provider.Circuit2EditPlugin;
 import org.eclipse.core.runtime.Path;
 
 import org.eclipse.jface.viewers.ISelection;
@@ -99,7 +97,7 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 	 * @generated
 	 */
 	public static final List<String> FILE_EXTENSIONS =
-		Collections.unmodifiableList(Arrays.asList(CircuitEditorPlugin.INSTANCE.getString("_UI_CircuitEditorFilenameExtensions").split("\\s*,\\s*")));
+		Collections.unmodifiableList(Arrays.asList(Circuit2EditorPlugin.INSTANCE.getString("_UI_CircuitEditorFilenameExtensions").split("\\s*,\\s*")));
 
 	/**
 	 * A formatted list of supported file extensions, suitable for display.
@@ -108,7 +106,7 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 	 * @generated
 	 */
 	public static final String FORMATTED_FILE_EXTENSIONS =
-		CircuitEditorPlugin.INSTANCE.getString("_UI_CircuitEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
+		Circuit2EditorPlugin.INSTANCE.getString("_UI_CircuitEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
 
 	/**
 	 * This caches an instance of the model package.
@@ -175,8 +173,8 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.workbench = workbench;
 		this.selection = selection;
-		setWindowTitle(CircuitEditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
-		setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(CircuitEditorPlugin.INSTANCE.getImage("full/wizban/NewCircuit")));
+		setWindowTitle(Circuit2EditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
+		setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(Circuit2EditorPlugin.INSTANCE.getImage("full/wizban/NewCircuit")));
 	}
 
 	/**
@@ -259,7 +257,7 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 							resource.save(options);
 						}
 						catch (Exception exception) {
-							CircuitEditorPlugin.INSTANCE.log(exception);
+							Circuit2EditorPlugin.INSTANCE.log(exception);
 						}
 						finally {
 							progressMonitor.done();
@@ -292,14 +290,14 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 					 workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());					 	 
 			}
 			catch (PartInitException exception) {
-				MessageDialog.openError(workbenchWindow.getShell(), CircuitEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+				MessageDialog.openError(workbenchWindow.getShell(), Circuit2EditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
 				return false;
 			}
 
 			return true;
 		}
 		catch (Exception exception) {
-			CircuitEditorPlugin.INSTANCE.log(exception);
+			Circuit2EditorPlugin.INSTANCE.log(exception);
 			return false;
 		}
 	}
@@ -333,7 +331,7 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 				String extension = new Path(getFileName()).getFileExtension();
 				if (extension == null || !FILE_EXTENSIONS.contains(extension)) {
 					String key = FILE_EXTENSIONS.size() > 1 ? "_WARN_FilenameExtensions" : "_WARN_FilenameExtension";
-					setErrorMessage(CircuitEditorPlugin.INSTANCE.getString(key, new Object [] { FORMATTED_FILE_EXTENSIONS }));
+					setErrorMessage(Circuit2EditorPlugin.INSTANCE.getString(key, new Object [] { FORMATTED_FILE_EXTENSIONS }));
 					return false;
 				}
 				return true;
@@ -410,7 +408,7 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 
 			Label containerLabel = new Label(composite, SWT.LEFT);
 			{
-				containerLabel.setText(CircuitEditorPlugin.INSTANCE.getString("_UI_ModelObject"));
+				containerLabel.setText(Circuit2EditorPlugin.INSTANCE.getString("_UI_ModelObject"));
 
 				GridData data = new GridData();
 				data.horizontalAlignment = GridData.FILL;
@@ -436,7 +434,7 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 
 			Label encodingLabel = new Label(composite, SWT.LEFT);
 			{
-				encodingLabel.setText(CircuitEditorPlugin.INSTANCE.getString("_UI_XMLEncoding"));
+				encodingLabel.setText(Circuit2EditorPlugin.INSTANCE.getString("_UI_XMLEncoding"));
 
 				GridData data = new GridData();
 				data.horizontalAlignment = GridData.FILL;
@@ -535,10 +533,10 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 		 */
 		protected String getLabel(String typeName) {
 			try {
-				return CircuitEditPlugin.INSTANCE.getString("_UI_" + typeName + "_type");
+				return Circuit2EditPlugin.INSTANCE.getString("_UI_" + typeName + "_type");
 			}
 			catch(MissingResourceException mre) {
-				CircuitEditorPlugin.INSTANCE.log(mre);
+				Circuit2EditorPlugin.INSTANCE.log(mre);
 			}
 			return typeName;
 		}
@@ -551,7 +549,7 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 		protected Collection<String> getEncodings() {
 			if (encodings == null) {
 				encodings = new ArrayList<String>();
-				for (StringTokenizer stringTokenizer = new StringTokenizer(CircuitEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens(); ) {
+				for (StringTokenizer stringTokenizer = new StringTokenizer(Circuit2EditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens(); ) {
 					encodings.add(stringTokenizer.nextToken());
 				}
 			}
@@ -570,9 +568,9 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 		// Create a page, set the title, and the initial model file name.
 		//
 		newFileCreationPage = new CircuitModelWizardNewFileCreationPage("Whatever", selection);
-		newFileCreationPage.setTitle(CircuitEditorPlugin.INSTANCE.getString("_UI_CircuitModelWizard_label"));
-		newFileCreationPage.setDescription(CircuitEditorPlugin.INSTANCE.getString("_UI_CircuitModelWizard_description"));
-		newFileCreationPage.setFileName(CircuitEditorPlugin.INSTANCE.getString("_UI_CircuitEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
+		newFileCreationPage.setTitle(Circuit2EditorPlugin.INSTANCE.getString("_UI_CircuitModelWizard_label"));
+		newFileCreationPage.setDescription(Circuit2EditorPlugin.INSTANCE.getString("_UI_CircuitModelWizard_description"));
+		newFileCreationPage.setFileName(Circuit2EditorPlugin.INSTANCE.getString("_UI_CircuitEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
 		addPage(newFileCreationPage);
 
 		// Try and get the resource selection to determine a current directory for the file dialog.
@@ -598,7 +596,7 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 
 					// Make up a unique new name here.
 					//
-					String defaultModelBaseFilename = CircuitEditorPlugin.INSTANCE.getString("_UI_CircuitEditorFilenameDefaultBase");
+					String defaultModelBaseFilename = Circuit2EditorPlugin.INSTANCE.getString("_UI_CircuitEditorFilenameDefaultBase");
 					String defaultModelFilenameExtension = FILE_EXTENSIONS.get(0);
 					String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension;
 					for (int i = 1; ((IContainer)selectedResource).findMember(modelFilename) != null; ++i) {
@@ -609,8 +607,8 @@ public class CircuitModelWizard extends Wizard implements INewWizard {
 			}
 		}
 		initialObjectCreationPage = new CircuitModelWizardInitialObjectCreationPage("Whatever2");
-		initialObjectCreationPage.setTitle(CircuitEditorPlugin.INSTANCE.getString("_UI_CircuitModelWizard_label"));
-		initialObjectCreationPage.setDescription(CircuitEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
+		initialObjectCreationPage.setTitle(Circuit2EditorPlugin.INSTANCE.getString("_UI_CircuitModelWizard_label"));
+		initialObjectCreationPage.setDescription(Circuit2EditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
 		addPage(initialObjectCreationPage);
 	}
 

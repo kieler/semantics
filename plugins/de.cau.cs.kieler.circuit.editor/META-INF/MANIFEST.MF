@@ -4,7 +4,7 @@ Bundle-Name: %pluginName
 Bundle-SymbolicName: de.cau.cs.kieler.circuit.editor;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
-Bundle-Activator: de.cau.cs.kieler.circuit.presentation.CircuitEditorPlugin$Implementation
+Bundle-Activator: de.cau.cs.kieler.circuit.presentation.Circuit2EditorPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

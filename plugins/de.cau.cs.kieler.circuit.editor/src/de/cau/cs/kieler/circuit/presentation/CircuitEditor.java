@@ -532,7 +532,7 @@ public class CircuitEditor
 					}
 				}
 				catch (CoreException exception) {
-					CircuitEditorPlugin.INSTANCE.log(exception);
+					Circuit2EditorPlugin.INSTANCE.log(exception);
 				}
 			}
 		};
@@ -648,7 +648,7 @@ public class CircuitEditor
 					showTabs();
 				}
 				catch (PartInitException exception) {
-					CircuitEditorPlugin.INSTANCE.log(exception);
+					Circuit2EditorPlugin.INSTANCE.log(exception);
 				}
 			}
 
@@ -659,7 +659,7 @@ public class CircuitEditor
 						markerHelper.createMarkers(diagnostic);
 					}
 					catch (CoreException exception) {
-						CircuitEditorPlugin.INSTANCE.log(exception);
+						Circuit2EditorPlugin.INSTANCE.log(exception);
 					}
 				}
 			}
@@ -1525,7 +1525,7 @@ public class CircuitEditor
 		catch (Exception exception) {
 			// Something went wrong that shouldn't.
 			//
-			CircuitEditorPlugin.INSTANCE.log(exception);
+			Circuit2EditorPlugin.INSTANCE.log(exception);
 		}
 		updateProblemIndication = true;
 		updateProblemIndication();
@@ -1729,7 +1729,7 @@ public class CircuitEditor
 	 * @generated
 	 */
 	private static String getString(String key) {
-		return CircuitEditorPlugin.INSTANCE.getString(key);
+		return Circuit2EditorPlugin.INSTANCE.getString(key);
 	}
 
 	/**
@@ -1739,7 +1739,7 @@ public class CircuitEditor
 	 * @generated
 	 */
 	private static String getString(String key, Object s1) {
-		return CircuitEditorPlugin.INSTANCE.getString(key, new Object [] { s1 });
+		return Circuit2EditorPlugin.INSTANCE.getString(key, new Object [] { s1 });
 	}
 
 	/**

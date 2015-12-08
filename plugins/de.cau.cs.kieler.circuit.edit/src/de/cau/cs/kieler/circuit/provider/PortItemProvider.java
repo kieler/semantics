@@ -187,7 +187,7 @@ public class PortItemProvider extends NamedObjectItemProvider {
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return CircuitEditPlugin.INSTANCE;
+		return Circuit2EditPlugin.INSTANCE;
 	}
 
 }

@@ -187,7 +187,7 @@ public class LinkableItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return CircuitEditPlugin.INSTANCE;
+		return Circuit2EditPlugin.INSTANCE;
 	}
 
 }
