@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2012 by
+ * Copyright 2015 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -18,6 +18,7 @@ import org.osgi.framework.BundleContext;
 
 
 /**
+ * The activator class controls the plug-in life cycle.
  * 
  * @author sna
  *
@@ -30,15 +31,11 @@ public class Esterelv5_100SimPlugin extends Plugin {
     /** The shared instance of this plugin. */
     private static Esterelv5_100SimPlugin plugin;
 
-    // -----------------------------------------------------------------------------
-
     /**
      * The constructor.
      */
     public Esterelv5_100SimPlugin() {
     }
-
-    // -----------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -49,8 +46,6 @@ public class Esterelv5_100SimPlugin extends Plugin {
         plugin = this;
     }
 
-    // -----------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */
@@ -60,8 +55,6 @@ public class Esterelv5_100SimPlugin extends Plugin {
         super.stop(context);
     }
 
-    // -----------------------------------------------------------------------------
-
     /**
      * Returns the shared instance.
      * 
@@ -70,6 +63,4 @@ public class Esterelv5_100SimPlugin extends Plugin {
     public static Esterelv5_100SimPlugin getDefault() {
         return plugin;
     }
-
-    // -----------------------------------------------------------------------------
 }
