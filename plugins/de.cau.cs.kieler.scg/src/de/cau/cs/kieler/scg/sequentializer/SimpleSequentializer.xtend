@@ -24,7 +24,6 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
@@ -50,6 +49,9 @@ import java.util.List
 import java.util.Set
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -105,8 +107,14 @@ class SimpleSequentializer extends AbstractSequentializer {
     extension SCGDeclarationExtensions
          
     @Inject 
-    extension KExpressionsExtension	
+    extension KExpressionsDeclarationExtensions	
     
+    @Inject 
+    extension KExpressionsValuedObjectExtensions     
+    
+    @Inject 
+    extension KExpressionsCreateExtensions 
+
     @Inject
     extension AnnotationsExtensions
 
@@ -168,9 +176,9 @@ class SimpleSequentializer extends AbstractSequentializer {
         	annotations += createStringAnnotation(ANNOTATION_SEQUENTIALIZED, "")
         	label = scg.label
         ]
-        val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
+        val hostcodeAnnotations = scg.getAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
-            newSCG.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+            newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]        
         schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
 		val predecessorList = <Predecessor> newArrayList
@@ -327,41 +335,42 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected def Assignment addGuardExpression(Assignment assignment, GuardExpression guardExpression, 
         List<ControlFlow> nextControlFlows, SCGraph scg, List<Node> nodeCache
     ) {
+// FIXME: repair createValuedObject changes 
         // Create empty expressions if present.
-        guardExpression.emptyExpressions.forEach[ emptyExpression |
-            var i = 0
-            while(scg.findValuedObjectByName(emptyExpression.valuedObject.name + "_" + i)!=null) {
-                i = i + 1
-            }
-            val newValuedObject = scg.createValuedObject(emptyExpression.valuedObject.name + "_" + i).setTypeBool
-            emptyExpression.valuedObject.addToValuedObjectMapping(newValuedObject)
-                                    
-            ScgFactory::eINSTANCE.createAssignment => [ emptyExpressionAssignment |
-                emptyExpressionAssignment.valuedObject = emptyExpression.valuedObject.getValuedObjectCopy
-                emptyExpressionAssignment.assignment = emptyExpression.expression.copySCGExpression
-                nodeCache.add(emptyExpressionAssignment)
-                nextControlFlows.forEach[ target = emptyExpressionAssignment ]
-                nextControlFlows.clear 
-                emptyExpressionAssignment.next = ScgFactory::eINSTANCE.createControlFlow             
-                nextControlFlows.add(emptyExpressionAssignment.next)
-            ]
-        ]
-        
-        // Create additional expressions if present.
-        guardExpression.additionalExpressions.forEach[ additionalExpression |
-            val newValuedObject = scg.createValuedObject(additionalExpression.valuedObject.name).setTypeBool
-            additionalExpression.valuedObject.addToValuedObjectMapping(newValuedObject)
-                                    
-            ScgFactory::eINSTANCE.createAssignment => [ additionalExpressionAssignment |
-                additionalExpressionAssignment.valuedObject = additionalExpression.valuedObject.getValuedObjectCopy
-                additionalExpressionAssignment.assignment = additionalExpression.expression.copySCGExpression
-                nodeCache.add(additionalExpressionAssignment)
-                nextControlFlows.forEach[ target = additionalExpressionAssignment ]
-                nextControlFlows.clear 
-                additionalExpressionAssignment.next = ScgFactory::eINSTANCE.createControlFlow             
-                nextControlFlows.add(additionalExpressionAssignment.next)
-            ]
-        ]        
+//        guardExpression.emptyExpressions.forEach[ emptyExpression |
+//            var i = 0
+//            while(scg.findValuedObjectByName(emptyExpression.valuedObject.name + "_" + i)!=null) {
+//                i = i + 1
+//            }
+//            val newValuedObject = scg.createValuedObject(emptyExpression.valuedObject.name + "_" + i).setTypeBool
+//            emptyExpression.valuedObject.addToValuedObjectMapping(newValuedObject)
+//                                    
+//            ScgFactory::eINSTANCE.createAssignment => [ emptyExpressionAssignment |
+//                emptyExpressionAssignment.valuedObject = emptyExpression.valuedObject.getValuedObjectCopy
+//                emptyExpressionAssignment.assignment = emptyExpression.expression.copySCGExpression
+//                nodeCache.add(emptyExpressionAssignment)
+//                nextControlFlows.forEach[ target = emptyExpressionAssignment ]
+//                nextControlFlows.clear 
+//                emptyExpressionAssignment.next = ScgFactory::eINSTANCE.createControlFlow             
+//                nextControlFlows.add(emptyExpressionAssignment.next)
+//            ]
+//        ]
+//        
+//        // Create additional expressions if present.
+//        guardExpression.additionalExpressions.forEach[ additionalExpression |
+//            val newValuedObject = scg.createValuedObject(additionalExpression.valuedObject.name).setTypeBool
+//            additionalExpression.valuedObject.addToValuedObjectMapping(newValuedObject)
+//                                    
+//            ScgFactory::eINSTANCE.createAssignment => [ additionalExpressionAssignment |
+//                additionalExpressionAssignment.valuedObject = additionalExpression.valuedObject.getValuedObjectCopy
+//                additionalExpressionAssignment.assignment = additionalExpression.expression.copySCGExpression
+//                nodeCache.add(additionalExpressionAssignment)
+//                nextControlFlows.forEach[ target = additionalExpressionAssignment ]
+//                nextControlFlows.clear 
+//                additionalExpressionAssignment.next = ScgFactory::eINSTANCE.createControlFlow             
+//                nextControlFlows.add(additionalExpressionAssignment.next)
+//            ]
+//        ]        
         // Then, copy the expression of the guard to the newly created assignment.
         assignment.assignment = guardExpression.expression.copySCGExpression    
         assignment
@@ -570,7 +579,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         if (relevantPredecessors.size>1) {
             // Create OR operator expression via kexpressions factory.
             val expr = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            expr.setOperator(OperatorType::OR)
+            expr.setOperator(OperatorType::LOGICAL_OR)
                     
             // For each predecessor add its expression to the sub expressions list of the operator expression.
             relevantPredecessors.forEach[ 
@@ -642,7 +651,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         // the condition of the conditional and return the expression.
         else if (predecessor.branchType == BranchType::TRUEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            expression.setOperator(OperatorType::AND)
+            expression.setOperator(OperatorType::LOGICAL_AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
             expression.subExpressions += predecessor.conditional.condition.copy
             
@@ -654,13 +663,13 @@ class SimpleSequentializer extends AbstractSequentializer {
             } 
             predecessorTwinMark.add(schedulingBlock)
             
-            return expression.fix
+            return expression
         }
         // If we are in the true branch of the predecessor, combine the predecessor guard reference with
         // the negated condition of the conditional and return the expression.
         else if (predecessor.branchType == BranchType::ELSEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            expression.setOperator(OperatorType::AND)
+            expression.setOperator(OperatorType::LOGICAL_AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
             expression.subExpressions += predecessor.conditional.condition.copy.negate
 
@@ -672,7 +681,7 @@ class SimpleSequentializer extends AbstractSequentializer {
             } 
             predecessorTwinMark.add(schedulingBlock)
 
-            return expression.fix
+            return expression
         }
             
         throw new UnsupportedSCGException("Cannot create predecessor expression without predecessor block type information.")

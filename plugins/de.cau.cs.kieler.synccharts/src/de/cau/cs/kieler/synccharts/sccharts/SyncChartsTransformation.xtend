@@ -20,7 +20,12 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
+import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
 import de.cau.cs.kieler.esterel.kexpressions.BooleanValue
 import de.cau.cs.kieler.esterel.kexpressions.FloatValue
 import de.cau.cs.kieler.esterel.kexpressions.IntValue
@@ -29,17 +34,15 @@ import de.cau.cs.kieler.esterel.kexpressions.TextExpression
 import de.cau.cs.kieler.esterel.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.Effect
-import de.cau.cs.kieler.sccharts.Emission
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
 import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import de.cau.cs.kieler.synccharts.State
+import de.cau.cs.kieler.synccharts.TextEffect
 import de.cau.cs.kieler.synccharts.TransitionType
-import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 /** 
  * Transforming SyncCharts into SCCharts.
@@ -51,7 +54,13 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 class SyncChartsTransformation { 
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
+
+    @Inject
+    extension KExpressionsDeclarationExtensions
+
+    @Inject
+    extension KExpressionsCreateExtensions
 
     @Inject
     extension SCChartsExtension
@@ -236,33 +245,38 @@ class SyncChartsTransformation {
         state.setFinal(syncState.isFinal)
         
         for (syncSignal : syncState.signals) {
-            val signal = state.createSignal(syncSignal.name)
+            val signal = createValuedObject(syncSignal.name)
+            val signalDeclaration = createDeclaration => [
+                signal = true
+                input = syncSignal.isInput
+                output = syncSignal.isOutput
+                attach(signal)
+                state.declarations += it
+            ]
             signal.map(syncSignal)
-            signal.setInput(syncSignal.isInput)
-            signal.setOutput(syncSignal.isOutput)
             if (syncSignal.type == ValueType::INT) {
-                signal.setTypeInt
+                signalDeclaration.type = de.cau.cs.kieler.core.kexpressions.ValueType::INT
                 if (!syncSignal.initialValue.nullOrEmpty) {
                     val initial = Integer.parseInt(syncSignal.initialValue.replace("\"", ""))
                     signal.setInitialValue(initial.createIntValue)
                 }
             }
             else if (syncSignal.type == ValueType::BOOL) {
-                signal.setTypeBool
+                signalDeclaration.type = de.cau.cs.kieler.core.kexpressions.ValueType::BOOL
                 if (!syncSignal.initialValue.nullOrEmpty) {
                     val initial = Boolean.parseBoolean(syncSignal.initialValue.replace("\"", ""))
                     signal.setInitialValue(initial.createBoolValue)
                 }
             }
             else if (syncSignal.type == ValueType::DOUBLE) {
-                signal.setTypeDouble
+                signalDeclaration.type = de.cau.cs.kieler.core.kexpressions.ValueType::DOUBLE
                 if (!syncSignal.initialValue.nullOrEmpty) {
                     val initial = Float.parseFloat(syncSignal.initialValue.replace("\"", ""))
                     signal.setInitialValue(initial.createFloatValue)
                 }
             }
             else if (syncSignal.type == ValueType::FLOAT) {
-                signal.setTypeFloat
+                signalDeclaration.type = de.cau.cs.kieler.core.kexpressions.ValueType::FLOAT
                 if (!syncSignal.initialValue.nullOrEmpty) {
                     val initial = Float.parseFloat(syncSignal.initialValue.replace("\"", ""))
                     signal.setInitialValue(initial.createFloatValue)
@@ -304,9 +318,9 @@ class SyncChartsTransformation {
       }
    }           
 
-   def dispatch TextEffect transformEffect(de.cau.cs.kieler.synccharts.TextEffect textEffect) {
+   def dispatch HostcodeEffect transformEffect(TextEffect textEffect) {
       val text = textEffect.code
-      text.createTextEffect
+      text.createHostcodeEffect
    }
 
    def dispatch Effect transformEffect(de.cau.cs.kieler.synccharts.Effect effect) {
@@ -330,7 +344,7 @@ class SyncChartsTransformation {
             return OperatorType::ADD
         }
         else if (operatorType == de.cau.cs.kieler.esterel.kexpressions.OperatorType::AND) {
-            return OperatorType::AND
+            return OperatorType::LOGICAL_AND
         }
         else if (operatorType == de.cau.cs.kieler.esterel.kexpressions.OperatorType::DIV) {
             return OperatorType::DIV
@@ -363,7 +377,7 @@ class SyncChartsTransformation {
             return OperatorType::NOT
         }
         else if (operatorType == de.cau.cs.kieler.esterel.kexpressions.OperatorType::OR) {
-            return OperatorType::OR
+            return OperatorType::LOGICAL_OR
         }
         else if (operatorType == de.cau.cs.kieler.esterel.kexpressions.OperatorType::PRE) {
             return OperatorType::PRE

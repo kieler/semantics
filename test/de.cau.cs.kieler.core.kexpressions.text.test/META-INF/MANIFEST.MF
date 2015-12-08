@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KExpressions KEXT Test
+Bundle-SymbolicName: de.cau.cs.kieler.core.kexpressions.text.test
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Christian-Albrechts-Univeristät zu Kiel
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: de.cau.cs.kieler.core.kexpressions,
+ com.google.inject;bundle-version="3.0.0",
+ org.junit;bundle-version="4.8.2",
+ org.eclipse.xtext,
+ de.cau.cs.kieler.core,
+ de.cau.cs.kieler.core.annotations,
+ de.cau.cs.kieler.core.kexpressions.text,
+ de.cau.cs.kieler.semantics.test.common,
+ org.eclipse.core.runtime;bundle-version="3.10.0",
+ de.cau.cs.kieler.core.kexpressions.keffects,
+ org.apache.commons.io;bundle-version="2.0.1",
+ org.eclipse.core.resources

@@ -11,11 +11,11 @@ import de.cau.cs.kieler.esterel.kexpressions.ISignal;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.RelationImplication#getFirst <em>First</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.RelationImplication#getSecond <em>Second</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRelationImplication()
  * @model

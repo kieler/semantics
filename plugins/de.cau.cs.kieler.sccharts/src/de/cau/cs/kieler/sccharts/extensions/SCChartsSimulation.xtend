@@ -16,7 +16,9 @@
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.SCChartsPlugin
 import de.cau.cs.kieler.sccharts.State
@@ -34,8 +36,11 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 class SCChartsSimulation { 
 
     @Inject
-    extension KExpressionsExtension
-    
+    extension KExpressionsDeclarationExtensions
+
+    @Inject
+    extension KExpressionsValuedObjectExtensions
+        
     //-------------------------------------------------------------------------
     //--         S I M U L A T I O N    V I S U A L I Z A T I O N            --
     //-------------------------------------------------------------------------
@@ -118,22 +123,22 @@ class SCChartsSimulation {
      def void transformTransition(Transition transition, State targetRootState, String UID) {
           // auxiliary valuedObject
           val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-          val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
+          val auxiliaryEmission = KEffectsFactory::eINSTANCE.createEmission();
           
           // Setup the auxiliaryValuedObject as an OUTPUT to the module
           auxiliaryValuedObject.setName(UID);
-          auxiliaryValuedObject.setSignal(true);
-          auxiliaryValuedObject.setInput(false);
-          auxiliaryValuedObject.setOutput(true);
-          auxiliaryValuedObject.setType(ValueType::PURE);
+          createDeclaration(ValueType::PURE) => [
+              signal = true
+              input = false
+              output = true
+              attach(auxiliaryValuedObject)
+              targetRootState.declarations += it
+          ]
           // Set the auxliiaryValuedObject for emission 
           auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
           
           // Add emission of auxiliary ValuedObject to tansition
           transition.effects.add(auxiliaryEmission);
-
-          // Add auxiliaryValuedObject to first (and only) root region state SyncCharts main interface
-          targetRootState.valuedObjects.add(auxiliaryValuedObject);
      }
 
     
@@ -154,23 +159,23 @@ class SCChartsSimulation {
           
                // Setup the auxiliaryValuedObject as an OUTPUT to the module
                auxiliaryValuedObject.setName(UID);
-               auxiliaryValuedObject.setSignal(true);
-               auxiliaryValuedObject.setInput(false);
-               auxiliaryValuedObject.setOutput(true);
-               auxiliaryValuedObject.setType(ValueType::PURE);
+               createDeclaration(ValueType::PURE) => [
+                   signal = true
+                   input = false
+                   output = true
+                   attach(auxiliaryValuedObject)
+                   targetRootState.declarations += it
+               ]
 
                // Add emission of auxiliary ValuedObject as an immediate during action for this state
                val immediateDuringAction = SCChartsFactory::eINSTANCE.createDuringAction();
                immediateDuringAction.setImmediate(true);
-               val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
+               val auxiliaryEmission = KEffectsFactory::eINSTANCE.createEmission();
                    auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
                immediateDuringAction.effects.add(auxiliaryEmission);
                
                // Add during action to state
                state.localActions.add(immediateDuringAction);
-
-               // Add auxiliaryValuedObject to first (and only) root region state SyncCharts main interface
-               targetRootState.valuedObjects.add(auxiliaryValuedObject);
           }
           
      }     

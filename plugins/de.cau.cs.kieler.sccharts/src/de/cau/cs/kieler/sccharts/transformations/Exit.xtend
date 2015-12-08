@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sccharts.transformations
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -27,6 +26,9 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Exit Transformation.
@@ -61,8 +63,15 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
     }
 
     //-------------------------------------------------------------------------
+
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions    
 
     @Inject
     extension SCChartsExtension
@@ -147,7 +156,7 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                 val region = firstState.parentRegion
                 var ValuedObject memory
                 if (stateOutgoingTransitions > 1) {
-                    memory = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "exit").setTypeInt.
+                    memory = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "exit", createIntDeclaration).
                         uniqueName
                 }
                 val middleState = region.createState(GENERATED_PREFIX + "Memorize").setTypeConnector
@@ -157,7 +166,7 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                 for (transition : state.outgoingTransitions.immutableCopy) {
                     val exitTransition = exitOptionState.createImmediateTransitionTo(transition.targetState)
                     if (stateOutgoingTransitions > 1) {
-                        exitTransition.setTrigger(memory.reference.isEqual(counter.createIntValue))
+                        exitTransition.setTrigger(memory.reference.createEQExpression(counter.createIntValue))
                     }
                     for (effect : transition.effects.immutableCopy) {
                         exitTransition.effects.add(effect)

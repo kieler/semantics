@@ -1,0 +1,18 @@
+@Transformation NONE
+@NotSchedulable
+scchart Chart {
+  
+  initial state A
+  --> B immediate;
+  
+  state B
+  --> C immediate;
+  
+  state C {
+    
+    initial state C0
+    --> C1 immediate;
+    
+    final state C1;
+  }--> A immediate;
+}

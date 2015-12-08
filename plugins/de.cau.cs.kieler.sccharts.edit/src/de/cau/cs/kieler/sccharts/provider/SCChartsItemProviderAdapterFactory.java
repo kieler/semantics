@@ -45,700 +45,557 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  */
 public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-	 * This keeps track of the root adapter factory that delegates to this adapter factory.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the root adapter factory that delegates to this adapter factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ComposedAdapterFactory parentAdapterFactory;
 
     /**
-	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
-	 * <!-- begin-user-doc -->
+     * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
     /**
-	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
-	 * <!-- begin-user-doc -->
+     * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
     /**
-	 * This constructs an instance.
-	 * <!-- begin-user-doc -->
+     * This constructs an instance.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SCChartsItemProviderAdapterFactory() {
-		supportedTypes.add(IEditingDomainItemProvider.class);
-		supportedTypes.add(IStructuredItemContentProvider.class);
-		supportedTypes.add(ITreeItemContentProvider.class);
-		supportedTypes.add(IItemLabelProvider.class);
-		supportedTypes.add(IItemPropertySource.class);
-	}
+        supportedTypes.add(IEditingDomainItemProvider.class);
+        supportedTypes.add(IStructuredItemContentProvider.class);
+        supportedTypes.add(ITreeItemContentProvider.class);
+        supportedTypes.add(IItemLabelProvider.class);
+        supportedTypes.add(IItemPropertySource.class);
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Action} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Action} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ActionItemProvider actionItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Action}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Action}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createActionAdapter() {
-		if (actionItemProvider == null) {
-			actionItemProvider = new ActionItemProvider(this);
-		}
+        if (actionItemProvider == null) {
+            actionItemProvider = new ActionItemProvider(this);
+        }
 
-		return actionItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Assignment} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected AssignmentItemProvider assignmentItemProvider;
+        return actionItemProvider;
+    }
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Assignment}.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.State} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createAssignmentAdapter() {
-		if (assignmentItemProvider == null) {
-			assignmentItemProvider = new AssignmentItemProvider(this);
-		}
-
-		return assignmentItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Emission} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected EmissionItemProvider emissionItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Emission}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createEmissionAdapter() {
-		if (emissionItemProvider == null) {
-			emissionItemProvider = new EmissionItemProvider(this);
-		}
-
-		return emissionItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Region} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected RegionItemProvider regionItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Region}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createRegionAdapter() {
-		if (regionItemProvider == null) {
-			regionItemProvider = new RegionItemProvider(this);
-		}
-
-		return regionItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.ControlflowRegion} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ControlflowRegionItemProvider controlflowRegionItemProvider;
-
-				/**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.ControlflowRegion}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createControlflowRegionAdapter() {
-		if (controlflowRegionItemProvider == null) {
-			controlflowRegionItemProvider = new ControlflowRegionItemProvider(this);
-		}
-
-		return controlflowRegionItemProvider;
-	}
-
-				/**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DataflowRegion} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected DataflowRegionItemProvider dataflowRegionItemProvider;
-
-				/**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.DataflowRegion}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createDataflowRegionAdapter() {
-		if (dataflowRegionItemProvider == null) {
-			dataflowRegionItemProvider = new DataflowRegionItemProvider(this);
-		}
-
-		return dataflowRegionItemProvider;
-	}
-
-				/**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Node} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected NodeItemProvider nodeItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Node}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createNodeAdapter() {
-		if (nodeItemProvider == null) {
-			nodeItemProvider = new NodeItemProvider(this);
-		}
-
-		return nodeItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.ReferenceNode} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected ReferenceNodeItemProvider referenceNodeItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.ReferenceNode}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createReferenceNodeAdapter() {
-		if (referenceNodeItemProvider == null) {
-			referenceNodeItemProvider = new ReferenceNodeItemProvider(this);
-		}
-
-		return referenceNodeItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.CallNode} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected CallNodeItemProvider callNodeItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.CallNode}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createCallNodeAdapter() {
-		if (callNodeItemProvider == null) {
-			callNodeItemProvider = new CallNodeItemProvider(this);
-		}
-
-		return callNodeItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DefineNode} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected DefineNodeItemProvider defineNodeItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.DefineNode}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createDefineNodeAdapter() {
-		if (defineNodeItemProvider == null) {
-			defineNodeItemProvider = new DefineNodeItemProvider(this);
-		}
-
-		return defineNodeItemProvider;
-	}
-
-/**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Equation} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected EquationItemProvider equationItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Equation}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createEquationAdapter() {
-		if (equationItemProvider == null) {
-			equationItemProvider = new EquationItemProvider(this);
-		}
-
-		return equationItemProvider;
-	}
-
-    //    /**
-//     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DataflowFeature} instances.
-//     * <!-- begin-user-doc -->
-//     * <!-- end-user-doc -->
-//     * @generated
-//     */
-//    protected DataflowFeatureItemProvider dataflowFeatureItemProvider;
-//
-//    /**
-//     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.DataflowFeature}.
-//     * <!-- begin-user-doc -->
-//     * <!-- end-user-doc -->
-//     * @generated
-//     */
-//    @Override
-//    public Adapter createDataflowFeatureAdapter() {
-//        if (dataflowFeatureItemProvider == null) {
-//            dataflowFeatureItemProvider = new DataflowFeatureItemProvider(this);
-//        }
-//
-//        return dataflowFeatureItemProvider;
-//    }
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Binding} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected BindingItemProvider bindingItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Binding}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createBindingAdapter() {
-		if (bindingItemProvider == null) {
-			bindingItemProvider = new BindingItemProvider(this);
-		}
-
-		return bindingItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.State} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected StateItemProvider stateItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.State}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.State}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createStateAdapter() {
-		if (stateItemProvider == null) {
-			stateItemProvider = new StateItemProvider(this);
-		}
+        if (stateItemProvider == null) {
+            stateItemProvider = new StateItemProvider(this);
+        }
 
-		return stateItemProvider;
-	}
+        return stateItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Transition} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Region} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
+    protected RegionItemProvider regionItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Region}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createRegionAdapter() {
+        if (regionItemProvider == null) {
+            regionItemProvider = new RegionItemProvider(this);
+        }
+
+        return regionItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.ControlflowRegion} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ControlflowRegionItemProvider controlflowRegionItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.ControlflowRegion}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createControlflowRegionAdapter() {
+        if (controlflowRegionItemProvider == null) {
+            controlflowRegionItemProvider = new ControlflowRegionItemProvider(this);
+        }
+
+        return controlflowRegionItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DataflowRegion} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected DataflowRegionItemProvider dataflowRegionItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.DataflowRegion}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createDataflowRegionAdapter() {
+        if (dataflowRegionItemProvider == null) {
+            dataflowRegionItemProvider = new DataflowRegionItemProvider(this);
+        }
+
+        return dataflowRegionItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Node} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected NodeItemProvider nodeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Node}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createNodeAdapter() {
+        if (nodeItemProvider == null) {
+            nodeItemProvider = new NodeItemProvider(this);
+        }
+
+        return nodeItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.ReferenceNode} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ReferenceNodeItemProvider referenceNodeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.ReferenceNode}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createReferenceNodeAdapter() {
+        if (referenceNodeItemProvider == null) {
+            referenceNodeItemProvider = new ReferenceNodeItemProvider(this);
+        }
+
+        return referenceNodeItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.CallNode} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected CallNodeItemProvider callNodeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.CallNode}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createCallNodeAdapter() {
+        if (callNodeItemProvider == null) {
+            callNodeItemProvider = new CallNodeItemProvider(this);
+        }
+
+        return callNodeItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DefineNode} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected DefineNodeItemProvider defineNodeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.DefineNode}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createDefineNodeAdapter() {
+        if (defineNodeItemProvider == null) {
+            defineNodeItemProvider = new DefineNodeItemProvider(this);
+        }
+
+        return defineNodeItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Equation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected EquationItemProvider equationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Equation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createEquationAdapter() {
+        if (equationItemProvider == null) {
+            equationItemProvider = new EquationItemProvider(this);
+        }
+
+        return equationItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Binding} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected BindingItemProvider bindingItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Binding}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createBindingAdapter() {
+        if (bindingItemProvider == null) {
+            bindingItemProvider = new BindingItemProvider(this);
+        }
+
+        return bindingItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Transition} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     protected TransitionItemProvider transitionItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Transition}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Transition}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createTransitionAdapter() {
-		if (transitionItemProvider == null) {
-			transitionItemProvider = new TransitionItemProvider(this);
-		}
+        if (transitionItemProvider == null) {
+            transitionItemProvider = new TransitionItemProvider(this);
+        }
 
-		return transitionItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.TextEffect} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected TextEffectItemProvider textEffectItemProvider;
+        return transitionItemProvider;
+    }
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.TextEffect}.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.EntryAction} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createTextEffectAdapter() {
-		if (textEffectItemProvider == null) {
-			textEffectItemProvider = new TextEffectItemProvider(this);
-		}
-
-		return textEffectItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.FunctionCallEffect} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected FunctionCallEffectItemProvider functionCallEffectItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.FunctionCallEffect}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createFunctionCallEffectAdapter() {
-		if (functionCallEffectItemProvider == null) {
-			functionCallEffectItemProvider = new FunctionCallEffectItemProvider(this);
-		}
-
-		return functionCallEffectItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.EntryAction} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected EntryActionItemProvider entryActionItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.EntryAction}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.EntryAction}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createEntryActionAdapter() {
-		if (entryActionItemProvider == null) {
-			entryActionItemProvider = new EntryActionItemProvider(this);
-		}
+        if (entryActionItemProvider == null) {
+            entryActionItemProvider = new EntryActionItemProvider(this);
+        }
 
-		return entryActionItemProvider;
-	}
+        return entryActionItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DuringAction} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DuringAction} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected DuringActionItemProvider duringActionItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.DuringAction}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.DuringAction}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createDuringActionAdapter() {
-		if (duringActionItemProvider == null) {
-			duringActionItemProvider = new DuringActionItemProvider(this);
-		}
+        if (duringActionItemProvider == null) {
+            duringActionItemProvider = new DuringActionItemProvider(this);
+        }
 
-		return duringActionItemProvider;
-	}
+        return duringActionItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.ExitAction} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.ExitAction} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ExitActionItemProvider exitActionItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.ExitAction}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.ExitAction}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createExitActionAdapter() {
-		if (exitActionItemProvider == null) {
-			exitActionItemProvider = new ExitActionItemProvider(this);
-		}
+        if (exitActionItemProvider == null) {
+            exitActionItemProvider = new ExitActionItemProvider(this);
+        }
 
-		return exitActionItemProvider;
-	}
+        return exitActionItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.SuspendAction} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.SuspendAction} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected SuspendActionItemProvider suspendActionItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.SuspendAction}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.SuspendAction}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createSuspendActionAdapter() {
-		if (suspendActionItemProvider == null) {
-			suspendActionItemProvider = new SuspendActionItemProvider(this);
-		}
+        if (suspendActionItemProvider == null) {
+            suspendActionItemProvider = new SuspendActionItemProvider(this);
+        }
 
-		return suspendActionItemProvider;
-	}
+        return suspendActionItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.IterateAction} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.IterateAction} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected IterateActionItemProvider iterateActionItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.IterateAction}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.IterateAction}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createIterateActionAdapter() {
-		if (iterateActionItemProvider == null) {
-			iterateActionItemProvider = new IterateActionItemProvider(this);
-		}
+        if (iterateActionItemProvider == null) {
+            iterateActionItemProvider = new IterateActionItemProvider(this);
+        }
 
-		return iterateActionItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.For} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected ForItemProvider forItemProvider;
+        return iterateActionItemProvider;
+    }
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.For}.
-	 * <!-- begin-user-doc -->
+     * This returns the root adapter factory that contains this factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createForAdapter() {
-		if (forItemProvider == null) {
-			forItemProvider = new ForItemProvider(this);
-		}
-
-		return forItemProvider;
-	}
-
-    /**
-	 * This returns the root adapter factory that contains this factory.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ComposeableAdapterFactory getRootAdapterFactory() {
-		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
-	}
+        return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
+    }
 
     /**
-	 * This sets the composed adapter factory that contains this factory.
-	 * <!-- begin-user-doc -->
+     * This sets the composed adapter factory that contains this factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
-		this.parentAdapterFactory = parentAdapterFactory;
-	}
+        this.parentAdapterFactory = parentAdapterFactory;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean isFactoryForType(Object type) {
-		return supportedTypes.contains(type) || super.isFactoryForType(type);
-	}
+        return supportedTypes.contains(type) || super.isFactoryForType(type);
+    }
 
     /**
-	 * This implementation substitutes the factory itself as the key for the adapter.
-	 * <!-- begin-user-doc -->
+     * This implementation substitutes the factory itself as the key for the adapter.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter adapt(Notifier notifier, Object type) {
-		return super.adapt(notifier, this);
-	}
+        return super.adapt(notifier, this);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type)) {
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
-				return adapter;
-			}
-		}
+        if (isFactoryForType(type)) {
+            Object adapter = super.adapt(object, type);
+            if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
+                return adapter;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
     /**
-	 * This adds a listener.
-	 * <!-- begin-user-doc -->
+     * This adds a listener.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void addListener(INotifyChangedListener notifyChangedListener) {
-		changeNotifier.addListener(notifyChangedListener);
-	}
+        changeNotifier.addListener(notifyChangedListener);
+    }
 
     /**
-	 * This removes a listener.
-	 * <!-- begin-user-doc -->
+     * This removes a listener.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void removeListener(INotifyChangedListener notifyChangedListener) {
-		changeNotifier.removeListener(notifyChangedListener);
-	}
+        changeNotifier.removeListener(notifyChangedListener);
+    }
 
     /**
-	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
-	 * <!-- begin-user-doc -->
+     * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void fireNotifyChanged(Notification notification) {
-		changeNotifier.fireNotifyChanged(notification);
+        changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null) {
-			parentAdapterFactory.fireNotifyChanged(notification);
-		}
-	}
+        if (parentAdapterFactory != null) {
+            parentAdapterFactory.fireNotifyChanged(notification);
+        }
+    }
 
     /**
-	 * This disposes all of the item providers created by this factory. 
-	 * <!-- begin-user-doc -->
+     * This disposes all of the item providers created by this factory. 
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void dispose() {
-		if (actionItemProvider != null) actionItemProvider.dispose();
-		if (assignmentItemProvider != null) assignmentItemProvider.dispose();
-		if (emissionItemProvider != null) emissionItemProvider.dispose();
-		if (stateItemProvider != null) stateItemProvider.dispose();
-		if (regionItemProvider != null) regionItemProvider.dispose();
-		if (controlflowRegionItemProvider != null) controlflowRegionItemProvider.dispose();
-		if (dataflowRegionItemProvider != null) dataflowRegionItemProvider.dispose();
-		if (nodeItemProvider != null) nodeItemProvider.dispose();
-		if (referenceNodeItemProvider != null) referenceNodeItemProvider.dispose();
-		if (callNodeItemProvider != null) callNodeItemProvider.dispose();
-		if (defineNodeItemProvider != null) defineNodeItemProvider.dispose();
-		if (equationItemProvider != null) equationItemProvider.dispose();
-		if (bindingItemProvider != null) bindingItemProvider.dispose();
-		if (transitionItemProvider != null) transitionItemProvider.dispose();
-		if (textEffectItemProvider != null) textEffectItemProvider.dispose();
-		if (functionCallEffectItemProvider != null) functionCallEffectItemProvider.dispose();
-		if (entryActionItemProvider != null) entryActionItemProvider.dispose();
-		if (duringActionItemProvider != null) duringActionItemProvider.dispose();
-		if (exitActionItemProvider != null) exitActionItemProvider.dispose();
-		if (suspendActionItemProvider != null) suspendActionItemProvider.dispose();
-		if (iterateActionItemProvider != null) iterateActionItemProvider.dispose();
-		if (forItemProvider != null) forItemProvider.dispose();
-	}
+        if (actionItemProvider != null) actionItemProvider.dispose();
+        if (stateItemProvider != null) stateItemProvider.dispose();
+        if (regionItemProvider != null) regionItemProvider.dispose();
+        if (controlflowRegionItemProvider != null) controlflowRegionItemProvider.dispose();
+        if (dataflowRegionItemProvider != null) dataflowRegionItemProvider.dispose();
+        if (nodeItemProvider != null) nodeItemProvider.dispose();
+        if (referenceNodeItemProvider != null) referenceNodeItemProvider.dispose();
+        if (callNodeItemProvider != null) callNodeItemProvider.dispose();
+        if (defineNodeItemProvider != null) defineNodeItemProvider.dispose();
+        if (equationItemProvider != null) equationItemProvider.dispose();
+        if (bindingItemProvider != null) bindingItemProvider.dispose();
+        if (transitionItemProvider != null) transitionItemProvider.dispose();
+        if (entryActionItemProvider != null) entryActionItemProvider.dispose();
+        if (duringActionItemProvider != null) duringActionItemProvider.dispose();
+        if (exitActionItemProvider != null) exitActionItemProvider.dispose();
+        if (suspendActionItemProvider != null) suspendActionItemProvider.dispose();
+        if (iterateActionItemProvider != null) iterateActionItemProvider.dispose();
+    }
 
 }

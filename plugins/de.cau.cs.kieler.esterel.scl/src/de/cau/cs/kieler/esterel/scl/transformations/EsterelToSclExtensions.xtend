@@ -21,7 +21,6 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.AwaitCase
 import de.cau.cs.kieler.esterel.esterel.Block
@@ -54,6 +53,9 @@ import de.cau.cs.kieler.scl.scl.StatementSequence
 import java.util.LinkedList
 import javax.xml.transform.TransformerException
 import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 
 /**
  * Collection of methods and shortcuts to ease the Esterel to SCL transformation. Besides methds to
@@ -66,7 +68,13 @@ import org.eclipse.emf.common.util.EList
 class EsterelToSclExtensions {
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions
+    
+    @Inject
+    extension KExpressionsCreateExtensions
 
     @Inject
     extension EsterelToSclTransformation
@@ -650,7 +658,7 @@ class EsterelToSclExtensions {
      */
     def createAnd(Expression arg1, Expression arg2) {
         KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::AND
+            operator = OperatorType::LOGICAL_AND
             subExpressions.add(arg1)
             subExpressions.add(arg2)
         ]
@@ -664,7 +672,7 @@ class EsterelToSclExtensions {
      */
     def createOr(Expression arg1, Expression arg2) {
         KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::OR
+            operator = OperatorType::LOGICAL_OR
             subExpressions.add(arg1)
             subExpressions.add(arg2)
         ]

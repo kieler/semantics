@@ -17,7 +17,6 @@ import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -30,6 +29,10 @@ import java.util.HashMap
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Abort Transformation.
@@ -67,7 +70,16 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension
@@ -156,20 +168,20 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 for (transition : outgoingTransitions) {
                     transition.setDefaultTrace;
                     if (transition.typeStrongAbort) {
-                        strongAbortTrigger = strongAbortTrigger.or2(transition.trigger.copy)
+                        strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy)
                         strongImmediateTrigger = strongImmediateTrigger || transition.immediate2
                     } else if (transition.typeWeakAbort) {
                         if (transition.immediate2) {
-                            weakAbortTrigger = weakAbortTrigger.or2(transition.trigger.copy)
+                            weakAbortTrigger = weakAbortTrigger.or(transition.trigger.copy)
                         } else {
                             // In case of a delayed weak abort, we need to take care of the delay in
                             // the watcher region and create an auxiliarv variable
                             // Create a new _transitionTrigger valuedObject
-                            val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
-                                GENERATED_PREFIX + "trig").setTypeBool.uniqueNameCached(nameCache)
+                            val transitionTriggerVariable = state.parentRegion.parentState.createValuedObject(
+                                GENERATED_PREFIX + "trig", createBoolDeclaration).uniqueNameCached(nameCache)
                             state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
                             transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
-                            weakAbortTrigger = weakAbortTrigger.or2(transitionTriggerVariable.reference)
+                            weakAbortTrigger = weakAbortTrigger.or(transitionTriggerVariable.reference)
                         }
                     }
                 }
@@ -187,7 +199,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                         mainState.regions.add(region)
                         val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").
                             uniqueNameCached(nameCache)
-                        val termVariable = state.createVariable(GENERATED_PREFIX + "termRegion").setTypeBool.
+                        val termVariable = state.createValuedObject(GENERATED_PREFIX + "termRegion", createBoolDeclaration).
                             uniqueNameCached(nameCache)
                         mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeTermination
                         if (terminationTrigger != null) {

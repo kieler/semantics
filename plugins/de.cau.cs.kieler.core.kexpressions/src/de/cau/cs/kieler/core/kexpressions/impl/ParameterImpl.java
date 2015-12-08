@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ParameterImpl#isCallByReference <em>Call By Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ParameterImpl#isPureOutput <em>Pure Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ParameterImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
@@ -49,6 +50,26 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 	 * @ordered
 	 */
     protected boolean callByReference = CALL_BY_REFERENCE_EDEFAULT;
+
+    /**
+	 * The default value of the '{@link #isPureOutput() <em>Pure Output</em>}' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @see #isPureOutput()
+	 * @generated
+	 * @ordered
+	 */
+    protected static final boolean PURE_OUTPUT_EDEFAULT = false;
+
+    /**
+	 * The cached value of the '{@link #isPureOutput() <em>Pure Output</em>}' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @see #isPureOutput()
+	 * @generated
+	 * @ordered
+	 */
+    protected boolean pureOutput = PURE_OUTPUT_EDEFAULT;
 
     /**
 	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -98,6 +119,27 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		callByReference = newCallByReference;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.PARAMETER__CALL_BY_REFERENCE, oldCallByReference, callByReference));
+	}
+
+    /**
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 */
+    public boolean isPureOutput() {
+		return pureOutput;
+	}
+
+    /**
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 */
+    public void setPureOutput(boolean newPureOutput) {
+		boolean oldPureOutput = pureOutput;
+		pureOutput = newPureOutput;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.PARAMETER__PURE_OUTPUT, oldPureOutput, pureOutput));
 	}
 
     /**
@@ -167,6 +209,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		switch (featureID) {
 			case KExpressionsPackage.PARAMETER__CALL_BY_REFERENCE:
 				return isCallByReference();
+			case KExpressionsPackage.PARAMETER__PURE_OUTPUT:
+				return isPureOutput();
 			case KExpressionsPackage.PARAMETER__EXPRESSION:
 				return getExpression();
 		}
@@ -183,6 +227,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		switch (featureID) {
 			case KExpressionsPackage.PARAMETER__CALL_BY_REFERENCE:
 				setCallByReference((Boolean)newValue);
+				return;
+			case KExpressionsPackage.PARAMETER__PURE_OUTPUT:
+				setPureOutput((Boolean)newValue);
 				return;
 			case KExpressionsPackage.PARAMETER__EXPRESSION:
 				setExpression((Expression)newValue);
@@ -202,6 +249,9 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 			case KExpressionsPackage.PARAMETER__CALL_BY_REFERENCE:
 				setCallByReference(CALL_BY_REFERENCE_EDEFAULT);
 				return;
+			case KExpressionsPackage.PARAMETER__PURE_OUTPUT:
+				setPureOutput(PURE_OUTPUT_EDEFAULT);
+				return;
 			case KExpressionsPackage.PARAMETER__EXPRESSION:
 				setExpression((Expression)null);
 				return;
@@ -219,6 +269,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		switch (featureID) {
 			case KExpressionsPackage.PARAMETER__CALL_BY_REFERENCE:
 				return callByReference != CALL_BY_REFERENCE_EDEFAULT;
+			case KExpressionsPackage.PARAMETER__PURE_OUTPUT:
+				return pureOutput != PURE_OUTPUT_EDEFAULT;
 			case KExpressionsPackage.PARAMETER__EXPRESSION:
 				return expression != null;
 		}
@@ -237,6 +289,8 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (callByReference: ");
 		result.append(callByReference);
+		result.append(", pureOutput: ");
+		result.append(pureOutput);
 		result.append(')');
 		return result.toString();
 	}

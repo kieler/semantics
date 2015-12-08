@@ -17,16 +17,16 @@ public class SctSyntacticSequencer extends AbstractSctSyntacticSequencer {
     @Inject
     SctGrammarAccess sga;
     
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void emit_Declaration_SemicolonKeyword_4_q(EObject semanticObject,
-            ISynNavigable transition, List<INode> nodes) {
-        super.emit_Declaration_SemicolonKeyword_4_q(semanticObject, transition, nodes);
-        
-        acceptUnassignedKeyword(sga.getDeclarationAccess().getSemicolonKeyword_4(), ";", null);
-    }
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @Override
+//    protected void emit_Declaration_SemicolonKeyword_4_q(EObject semanticObject,
+//            ISynNavigable transition, List<INode> nodes) {
+//        super.emit_Declaration_SemicolonKeyword_4_q(semanticObject, transition, nodes);
+//        
+//        acceptUnassignedKeyword(sga.getDeclarationAccess().getSemicolonKeyword_4(), ";", null);
+//    }
     
     @Inject
     ActionsGrammarAccess aga;

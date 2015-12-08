@@ -15,13 +15,13 @@ package de.cau.cs.kieler.scg.optimizer
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.SCGraph
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.common.collect.ImmutableList
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * @author ssm
@@ -31,7 +31,7 @@ import com.google.common.collect.ImmutableList
 class UnreferencedGuardElimination extends AbstractOptimizer {
     
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
     
     private static val GUARDNAME = "guard" 
     
@@ -53,7 +53,7 @@ class UnreferencedGuardElimination extends AbstractOptimizer {
             val incoming = ImmutableList::copyOf(ra.incoming.filter(typeof(ControlFlow)))
             incoming.forEach[ target = ra.next.target ]
             
-            scg.removeValuedObject(ra.valuedObject)
+            ra.valuedObject.deleteAndCleanup
             ra.next.target.incoming -= ra.next
             ra.remove
         ]

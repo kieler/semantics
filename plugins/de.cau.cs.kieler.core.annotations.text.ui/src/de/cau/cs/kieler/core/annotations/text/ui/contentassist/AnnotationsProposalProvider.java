@@ -358,35 +358,35 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
     }
 
     @Override
-    public void completeCommentAnnotation_Value(final EObject model, final Assignment assignment,
+    public void completeCommentAnnotation_Values(final EObject model, final Assignment assignment,
             final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
 
         /* call implementation of superclass */
-        super.completeCommentAnnotation_Value(model, assignment, context, acceptor);
+        super.completeCommentAnnotation_Values(model, assignment, context, acceptor);
 
         /* call modified completion */
         valueProposal(context, acceptor);
     }
 
     @Override
-    public void completeKeyStringValueAnnotation_Value(final EObject model,
+    public void completeKeyStringValueAnnotation_Values(final EObject model,
             final Assignment assignment, final ContentAssistContext context,
             final ICompletionProposalAcceptor acceptor) {
 
         /* call implementation of superclass */
-        super.completeKeyStringValueAnnotation_Value(model, assignment, context, acceptor);
+        super.completeKeyStringValueAnnotation_Values(model, assignment, context, acceptor);
 
         /* call modified completion */
         valueProposal(context, acceptor);
     }
 
     @Override
-    public void completeTypedKeyStringValueAnnotation_Value(final EObject model,
+    public void completeTypedKeyStringValueAnnotation_Values(final EObject model,
             final Assignment assignment, final ContentAssistContext context,
             final ICompletionProposalAcceptor acceptor) {
 
         /* call implementation of superclass */
-        super.completeTypedKeyStringValueAnnotation_Value(model, assignment, context, acceptor);
+        super.completeTypedKeyStringValueAnnotation_Values(model, assignment, context, acceptor);
 
         /* call modified completion */
         valueProposal(context, acceptor);

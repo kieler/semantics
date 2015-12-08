@@ -13,16 +13,18 @@
  */
 package de.cau.cs.kieler.sccharts.transformations
 
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
@@ -65,7 +67,16 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension
@@ -101,28 +112,21 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
 
         // Filter all valuedObjects and retrieve those that are referenced
         val allActions = state.eAllContents.filter(typeof(Action)).toList;
-
-
-                System.out.println("allActions: " + allActions.size)
-
-
         val allPreValuedObjects = state.valuedObjects.filter(
             valuedObject|
                 allActions.filter(
                     action|
                         action.getPreExpression(valuedObject).hasNext ||
                             action.getPreValExpression(valuedObject).hasNext).size > 0).toList;
-                            
-                System.out.println("allPreValuedObjects: " + allPreValuedObjects.size)
-
-
-        for (preValuedObject : allPreValuedObjects.immutableCopy) {
+        
+		for (preValuedObject : allPreValuedObjects.immutableCopy) {
             preValuedObject.setDefaultTrace
-            val newPre = state.createValuedObject(GENERATED_PREFIX + "pre" + GENERATED_PREFIX + preValuedObject.name).
-                uniqueNameCached(nameCache)
+            val newPreDeclaration = createDeclaration => [ type = preValuedObject.getType ]
+            val newPre = state.createValuedObject(GENERATED_PREFIX + "pre" + GENERATED_PREFIX + preValuedObject.name,
+            	newPreDeclaration).uniqueNameCached(nameCache)
             newPre.applyAttributes(preValuedObject)
-            val newAux = state.createValuedObject(GENERATED_PREFIX + "cur" + GENERATED_PREFIX + preValuedObject.name).
-                uniqueNameCached(nameCache)
+            val newAux = state.createValuedObject(GENERATED_PREFIX + "cur" + GENERATED_PREFIX + preValuedObject.name,
+            	newPreDeclaration).uniqueNameCached(nameCache)
             newAux.applyAttributes(preValuedObject)
 
             val preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
@@ -141,17 +145,8 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
             //            val transInitDone = preInit.createTransitionTo(preDone)
             // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
             // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
-
-
-                System.out.println("allActions: " + allActions.size)
-
             for (action : allActions) {
                 val preExpressions = action.getPreExpression(preValuedObject);
-                
-                System.out.println("action: " + action.toString)
-                System.out.println("preExpressions: " + preExpressions.toString)
-                
-                
                 val preValExpressions = action.getPreValExpression(preValuedObject);
 
                 while (preExpressions.hasNext) {
@@ -159,10 +154,12 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                     val container = preExpression.eContainer;
 
                     if (container instanceof OperatorExpression) {
+
                         // If nested PRE or PRE inside another complex expression
                         (container as OperatorExpression).subExpressions.remove(preExpression);
                         (container as OperatorExpression).add(newPre.reference);
                     } else if (container instanceof Action) {
+
                         // If PRE directly a trigger
                         (container as Action).setTrigger(newPre.reference)
                     }

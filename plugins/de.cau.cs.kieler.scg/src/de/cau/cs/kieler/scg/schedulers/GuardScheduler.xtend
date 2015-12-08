@@ -19,7 +19,6 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.kitt.tracing.Traceable
@@ -85,7 +84,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 
 
     //TODO Fix this shitty logging stuff
-    static final boolean DEBUG = false;
+    static final boolean DEBUG = true;
 
     def static void debug(String debugText) {
         debug(debugText, true);
@@ -111,9 +110,6 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
     extension SCGCacheExtensions
 
     @Inject
-    extension KExpressionsExtension
-
-    @Inject
     extension AnnotationsExtensions
 
     // -------------------------------------------------------------------------
@@ -127,6 +123,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
     protected val guardVOCache = <ValuedObject, Guard>newHashMap
 
     protected val placedVOs = <ValuedObject>newHashSet
+    protected val placedSBs = <SchedulingBlock>newHashSet
 
     // -------------------------------------------------------------------------
     // -- Scheduler 
@@ -162,6 +159,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
             topologicalSortVisited.add(schedulingBlock)
 
             val VOR = <ValuedObject>newArrayList
+            val SBs = <SchedulingBlock>newArrayList
             val lastVOs = <ValuedObject>newArrayList
             val addGuardBeforeScheduledBlock = <Guard>newHashSet
 
@@ -201,6 +199,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                             //			                    }
                             //			                } else {
                             VOR += sb.guard.valuedObject
+                            SBs += sb
 
                         //  			                }
                         }
@@ -239,6 +238,12 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                     }
                 }
             }
+            
+            for(sb : SBs) {
+                if (!placedSBs.contains(sb)) {
+                    sb.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, indent + "  ")
+                }
+            }
 
             var placeable = true
             for (ref : VOR) {
@@ -252,6 +257,12 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                     placeable = false
 
                 //					}
+                }
+            }
+            for(sb : SBs) {
+                if (!placedSBs.contains(sb)) {
+                    debug(indent + sb.label + " not placed!")
+                    placeable = false
                 }
             }
 
@@ -294,6 +305,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 
                 schedule += scheduleBlock
                 placedVOs += schedulingBlock.guard.valuedObject
+                placedSBs += schedulingBlock
                 remainingSchedulingBlocks -= schedulingBlock
             }
 
@@ -379,6 +391,8 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 //            if (!g.schedulingBlockLink.basicBlock.deadBlock)
                 guardVOCache.put(g.valuedObject, g)
         ]
+        
+        placedSBs.clear;
 
         val scedList = <ScheduleBlock>newLinkedList
         var schedulable = scg.createSchedule(scedList, schedulingConstraints, context)
@@ -398,7 +412,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
             scg.schedules.add(schedule)
         }
         
-        scg.addAnnotation(SCGFeatures.SCHEDULING_ID, SCGFeatures.SCHEDULING_NAME);
+        scg.createStringAnnotation(SCGFeatures.SCHEDULING_ID, SCGFeatures.SCHEDULING_NAME);
         scg
     }
 

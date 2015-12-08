@@ -109,7 +109,7 @@ public class KiCoAsynchronousCompilation extends Job {
                 context.setProperty(Tracing.ACTIVE_TRACING, true);
             }
             // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo selection view
-            context.setCreateDummyResource(false);
+            context.setCreateDummyResource(true);
             result = KielerCompiler.compile(context);
 
             if (monitor.isCanceled()) {

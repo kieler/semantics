@@ -1,0 +1,19 @@
+@Transformation HISTORY
+scchart HistoryTransition {
+  input bool I;
+  
+  initial state A
+  --> B shallow history;
+  
+  state B {
+    
+    initial state B0
+    --> B1;
+    
+    state B1
+    --> B2;
+    
+    state B2
+    --> B0;
+  }--> A with I;
+}

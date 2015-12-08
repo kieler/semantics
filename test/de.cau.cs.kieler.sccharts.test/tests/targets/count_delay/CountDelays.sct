@@ -1,0 +1,14 @@
+
+@Transformation COUNTDELAY
+scchart CountDelay {
+  input bool I;
+  int _counter;
+  during I / _counter = 1 + _counter;
+
+  initial state A {
+    entry / _counter = 0;
+  }
+  --> F with _counter == 5;
+
+  final state F;
+}

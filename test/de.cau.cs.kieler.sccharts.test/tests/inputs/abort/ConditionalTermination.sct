@@ -1,0 +1,14 @@
+@Transformation ABORT
+scchart ConditionalTermination {
+  input bool I;
+  
+  initial state A {
+    
+    initial state A0
+    --> A1;
+    
+    final state A1;
+  }>-> F with I;
+  
+  final state F;
+}

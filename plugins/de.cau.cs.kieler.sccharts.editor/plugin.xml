@@ -43,6 +43,7 @@ null
             contributorClass="de.cau.cs.kieler.sccharts.presentation.SCChartsActionBarContributor">
       </editor>
    </extension>
+
    <extension
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor

@@ -6,6 +6,8 @@ import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -34,100 +36,99 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * <!-- end-user-doc -->
  * @generated
  */
-public class SclPackageImpl extends EPackageImpl implements SclPackage
-{
-  /**
+public class SclPackageImpl extends EPackageImpl implements SclPackage {
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass sclProgramEClass = null;
+    private EClass sclProgramEClass = null;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass statementEClass = null;
+    private EClass statementEClass = null;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass emptyStatementEClass = null;
+    private EClass emptyStatementEClass = null;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass instructionStatementEClass = null;
+    private EClass instructionStatementEClass = null;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass instructionEClass = null;
+    private EClass instructionEClass = null;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass assignmentEClass = null;
+    private EClass assignmentEClass = null;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass conditionalEClass = null;
+    private EClass conditionalEClass = null;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass gotoEClass = null;
+    private EClass gotoEClass = null;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass statementSequenceEClass = null;
+    private EClass statementSequenceEClass = null;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass threadEClass = null;
+    private EClass threadEClass = null;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass parallelEClass = null;
+    private EClass parallelEClass = null;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass pauseEClass = null;
+    private EClass pauseEClass = null;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private EClass statementScopeEClass = null;
+    private EClass statementScopeEClass = null;
 
-  /**
+    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -136,38 +137,36 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
      * initialization of the package, or returns the registered package,
      * if one already exists.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.ecore.EPackage.Registry
      * @see de.cau.cs.kieler.scl.scl.SclPackage#eNS_URI
      * @see #init()
      * @generated
      */
-  private SclPackageImpl()
-  {
+    private SclPackageImpl() {
         super(eNS_URI, SclFactory.eINSTANCE);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private static boolean isInited = false;
+    private static boolean isInited = false;
 
-  /**
+    /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
      * 
      * <p>This method is used to initialize {@link SclPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #eNS_URI
      * @see #createPackageContents()
      * @see #initializePackageContents()
      * @generated
      */
-  public static SclPackage init()
-  {
+    public static SclPackage init() {
         if (isInited) return (SclPackage)EPackage.Registry.INSTANCE.getEPackage(SclPackage.eNS_URI);
 
         // Obtain or create and register package
@@ -176,7 +175,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
         isInited = true;
 
         // Initialize simple dependencies
-        KExpressionsPackage.eINSTANCE.eClass();
+        KEffectsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theSclPackage.createPackageContents();
@@ -193,302 +192,255 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
         return theSclPackage;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EClass getSCLProgram()
-  {
+    public EClass getSCLProgram() {
         return sclProgramEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EAttribute getSCLProgram_Name()
-  {
+    public EAttribute getSCLProgram_Name() {
         return (EAttribute)sclProgramEClass.getEStructuralFeatures().get(0);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EReference getSCLProgram_Declarations()
-  {
+    public EReference getSCLProgram_Declarations() {
         return (EReference)sclProgramEClass.getEStructuralFeatures().get(1);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EClass getStatement()
-  {
+    public EClass getStatement() {
         return statementEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EReference getStatement_Annotations()
-  {
+    public EReference getStatement_Annotations() {
         return (EReference)statementEClass.getEStructuralFeatures().get(0);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EClass getEmptyStatement()
-  {
+    public EClass getEmptyStatement() {
         return emptyStatementEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EAttribute getEmptyStatement_Label()
-  {
+    public EAttribute getEmptyStatement_Label() {
         return (EAttribute)emptyStatementEClass.getEStructuralFeatures().get(0);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EClass getInstructionStatement()
-  {
+    public EClass getInstructionStatement() {
         return instructionStatementEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EReference getInstructionStatement_Instruction()
-  {
+    public EReference getInstructionStatement_Instruction() {
         return (EReference)instructionStatementEClass.getEStructuralFeatures().get(0);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EClass getInstruction()
-  {
+    public EClass getInstruction() {
         return instructionEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EClass getAssignment()
-  {
+    public EClass getAssignment() {
         return assignmentEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EReference getAssignment_ValuedObject()
-  {
-        return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
-    }
-
-  /**
-     * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-     * @generated
-     */
-  public EReference getAssignment_Expression()
-  {
-        return (EReference)assignmentEClass.getEStructuralFeatures().get(1);
-    }
-
-  /**
-     * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-     * @generated
-     */
-  public EClass getConditional()
-  {
+    public EClass getConditional() {
         return conditionalEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EReference getConditional_Expression()
-  {
+    public EReference getConditional_Expression() {
         return (EReference)conditionalEClass.getEStructuralFeatures().get(0);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EReference getConditional_Declarations()
-  {
+    public EReference getConditional_Declarations() {
         return (EReference)conditionalEClass.getEStructuralFeatures().get(1);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EReference getConditional_ElseStatements()
-  {
+    public EReference getConditional_ElseStatements() {
         return (EReference)conditionalEClass.getEStructuralFeatures().get(2);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EClass getGoto()
-  {
+    public EClass getGoto() {
         return gotoEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EAttribute getGoto_TargetLabel()
-  {
+    public EAttribute getGoto_TargetLabel() {
         return (EAttribute)gotoEClass.getEStructuralFeatures().get(0);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EClass getStatementSequence()
-  {
+    public EClass getStatementSequence() {
         return statementSequenceEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EReference getStatementSequence_Statements()
-  {
+    public EReference getStatementSequence_Statements() {
         return (EReference)statementSequenceEClass.getEStructuralFeatures().get(0);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EClass getThread()
-  {
+    public EClass getThread() {
         return threadEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EClass getParallel()
-  {
+    public EClass getParallel() {
         return parallelEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EReference getParallel_Threads()
-  {
+    public EReference getParallel_Threads() {
         return (EReference)parallelEClass.getEStructuralFeatures().get(0);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EClass getPause()
-  {
+    public EClass getPause() {
         return pauseEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EClass getStatementScope()
-  {
+    public EClass getStatementScope() {
         return statementScopeEClass;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public EReference getStatementScope_Declarations()
-  {
+    public EReference getStatementScope_Declarations() {
         return (EReference)statementScopeEClass.getEStructuralFeatures().get(0);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public SclFactory getSclFactory()
-  {
+    public SclFactory getSclFactory() {
         return (SclFactory)getEFactoryInstance();
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private boolean isCreated = false;
+    private boolean isCreated = false;
 
-  /**
+    /**
      * Creates the meta-model objects for the package.  This method is
      * guarded to have no affect on any invocation but its first.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public void createPackageContents()
-  {
+    public void createPackageContents() {
         if (isCreated) return;
         isCreated = true;
 
@@ -509,8 +461,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
         instructionEClass = createEClass(INSTRUCTION);
 
         assignmentEClass = createEClass(ASSIGNMENT);
-        createEReference(assignmentEClass, ASSIGNMENT__VALUED_OBJECT);
-        createEReference(assignmentEClass, ASSIGNMENT__EXPRESSION);
 
         conditionalEClass = createEClass(CONDITIONAL);
         createEReference(conditionalEClass, CONDITIONAL__EXPRESSION);
@@ -534,22 +484,21 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
         createEReference(statementScopeEClass, STATEMENT_SCOPE__DECLARATIONS);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  private boolean isInitialized = false;
+    private boolean isInitialized = false;
 
-  /**
+    /**
      * Complete the initialization of the package and its meta-model.  This
      * method is guarded to have no affect on any invocation but its first.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public void initializePackageContents()
-  {
+    public void initializePackageContents() {
         if (isInitialized) return;
         isInitialized = true;
 
@@ -561,6 +510,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
         // Obtain other dependent packages
         KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
         AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
+        KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
 
         // Create type parameters
 
@@ -570,16 +520,17 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
         sclProgramEClass.getESuperTypes().add(this.getStatementSequence());
         emptyStatementEClass.getESuperTypes().add(this.getStatement());
         instructionStatementEClass.getESuperTypes().add(this.getStatement());
+        assignmentEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
         assignmentEClass.getESuperTypes().add(this.getInstruction());
-        conditionalEClass.getESuperTypes().add(this.getInstruction());
         conditionalEClass.getESuperTypes().add(this.getStatementSequence());
+        conditionalEClass.getESuperTypes().add(this.getInstruction());
         gotoEClass.getESuperTypes().add(this.getInstruction());
         statementSequenceEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         threadEClass.getESuperTypes().add(this.getStatementSequence());
         parallelEClass.getESuperTypes().add(this.getInstruction());
         pauseEClass.getESuperTypes().add(this.getInstruction());
-        statementScopeEClass.getESuperTypes().add(this.getInstruction());
         statementScopeEClass.getESuperTypes().add(this.getStatementSequence());
+        statementScopeEClass.getESuperTypes().add(this.getInstruction());
 
         // Initialize classes and features; add operations and parameters
         initEClass(sclProgramEClass, SCLProgram.class, "SCLProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -595,11 +546,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
         initEClass(instructionStatementEClass, InstructionStatement.class, "InstructionStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getInstructionStatement_Instruction(), this.getInstruction(), null, "instruction", null, 0, 1, InstructionStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(instructionEClass, Instruction.class, "Instruction", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getAssignment_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getAssignment_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getConditional_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

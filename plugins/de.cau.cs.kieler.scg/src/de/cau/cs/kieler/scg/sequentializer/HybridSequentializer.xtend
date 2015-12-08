@@ -15,7 +15,6 @@ package de.cau.cs.kieler.scg.sequentializer
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Schedule
@@ -23,6 +22,7 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
 import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -77,7 +77,7 @@ class HybridSequentializer extends SimpleSequentializer {
     // -------------------------------------------------------------------------
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
 
 
     // -------------------------------------------------------------------------
@@ -99,9 +99,9 @@ class HybridSequentializer extends SimpleSequentializer {
 //		val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, null, null)
 
 		// Add additional valued objects to the SCG and use the guard expression of the synchronizer as it is.
-        for (valuedObject : joinData.valuedObjects) {
-            scg.addValuedObject(valuedObject.setTypeBool)
-        }
+//        for (valuedObject : joinData.valuedObjects) {
+//            scg.addValuedObject(valuedObject.setTypeBool)
+//        }
 		
 		joinData.threadMapping.keySet.forEach[
 		    this.threadMapping.put(it, joinData.threadMapping.get(it))

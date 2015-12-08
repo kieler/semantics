@@ -1,0 +1,21 @@
+@Transformation COMPLEXFINALSTATE
+scchart ComplexFinalSuperstate {
+  input bool I;
+  output bool O;
+  
+  initial state A {
+    
+    initial state A0
+    --> A1;
+    
+    final state A1{
+      initial state A1_1
+      --> A1_2 immediate / O = true;
+       
+      final state A1_2;
+    }--> A0 with I;
+    
+  }>-> F;
+  
+  final state F;
+}

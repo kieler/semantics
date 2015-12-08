@@ -24,7 +24,8 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.esterel.esterel.AbortCase
 import de.cau.cs.kieler.esterel.esterel.AbortInstance
@@ -59,18 +60,21 @@ import de.cau.cs.kieler.esterel.esterel.PresentEventBody
 import de.cau.cs.kieler.esterel.esterel.ProcCall
 import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.Repeat
+import de.cau.cs.kieler.esterel.esterel.Reset
 import de.cau.cs.kieler.esterel.esterel.Run
 import de.cau.cs.kieler.esterel.esterel.Sequence
 import de.cau.cs.kieler.esterel.esterel.SignalRenaming
 import de.cau.cs.kieler.esterel.esterel.Suspend
 import de.cau.cs.kieler.esterel.esterel.Sustain
 import de.cau.cs.kieler.esterel.esterel.Trap
+import de.cau.cs.kieler.esterel.esterel.UnEmit
 import de.cau.cs.kieler.esterel.esterel.WeakAbort
 import de.cau.cs.kieler.esterel.esterel.WeakAbortInstance
+import de.cau.cs.kieler.esterel.features.EsterelFeature
 import de.cau.cs.kieler.esterel.kexpressions.ISignal
 import de.cau.cs.kieler.esterel.kexpressions.IVariable
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
@@ -86,16 +90,13 @@ import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.scl.Thread
 import java.util.HashMap
 import java.util.LinkedList
+import java.util.Set
 import java.util.Stack
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
-import java.util.Set
-import java.util.HashSet
-import de.cau.cs.kieler.esterel.esterel.UnEmit
-import de.cau.cs.kieler.esterel.esterel.Reset
-import de.cau.cs.kieler.esterel.features.EsterelFeature
-import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
@@ -116,7 +117,16 @@ import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
 class EsterelToSclTransformation extends AbstractProductionTransformation implements Traceable {
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions
+    
+    @Inject
+    extension KExpressionsCreateExtensions
+    
+    @Inject
+    extension KExpressionsComplexCreateExtensions
 
     @Inject
     extension EsterelToSclExtensions
@@ -1023,11 +1033,12 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             // Valued signal
             if (localSignal.channelDescr != null) {
                 val sclSignalVariable_val = createValuedObject(localSignal.name + "_val") => [
-                    if (localSignal.type.getName() == "PURE" && localSignal.channelDescr.type.typeID != null) {
-                        type = ValueType::HOST
-                    } else {
-                        type = ValueType::getByName(localSignal.channelDescr.type.type.getName())
-                    }
+// TODO: VERIFY: This should be superfluous since the type is set in the declaration object.
+//                    if (localSignal.type.getName() == "PURE" && localSignal.channelDescr.type.typeID != null) {
+//                        type = ValueType::HOST
+//                    } else {
+//                        type = ValueType::getByName(localSignal.channelDescr.type.type.getName())
+//                    }
                     // Combine Operator
                     if (localSignal.channelDescr.expression != null) {
                         initialValue = localSignal.channelDescr.expression.transformExp(
@@ -1474,7 +1485,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         // Expression to check whether the delay expression is true and the counter holds the required value
         // (if a and c > i then...)
         val countExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::AND
+            operator = OperatorType::LOGICAL_AND
             subExpressions += suspend.delay.event.expr.transformExpression
             subExpressions += KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                 operator = OperatorType::GT
@@ -1564,7 +1575,8 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                     ]
                 } else {
                     singleExit_val = createFreshVar(statementScope, it.name + "_val", ValueType.getByName(it.channelDescr.type.type.getName()))
-                    singleExit_val.type = ValueType.getByName(it.channelDescr.type.type.getName())
+// TODO: VERIFY: This should be superfluous since the type is set in the declaration object.
+//                    singleExit_val.type = ValueType.getByName(it.channelDescr.type.type.getName())
                 }
                 valuedExitVariables.put(it, singleExit_val)
             }
@@ -1581,7 +1593,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         // If several traps are declared, check if one of them was triggered
         else {
             exitExpressionVar = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-                operator = OperatorType::OR
+                operator = OperatorType::LOGICAL_OR
                 for (^var : exitVariables) {
                     subExpressions += ^var.createValuedObjectReference
                 }

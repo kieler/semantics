@@ -1,0 +1,17 @@
+@Transformation SIGNAL
+scchart ValuedSignals {
+  signal int x = 1;
+  signal int y = 2;
+  
+  region R1:
+	  initial state A
+	  --> B / x(3);
+	  
+	  final state B;
+	  
+  region R2:
+  	initial state C
+  	--> D with x / y(val(x));
+  	 
+  	final state D;
+}

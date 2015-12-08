@@ -1,0 +1,12 @@
+scchart Model {
+    
+    @Clock 500
+    input bool clock;
+    
+    @Floodlight S3
+    output bool floodlight;
+    
+    initial state init{
+      during clock / floodlight = !floodlight;
+    };
+}

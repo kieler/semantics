@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.esterel.esterel.ConstantDecls
 import de.cau.cs.kieler.esterel.esterel.ModuleInterface
 import de.cau.cs.kieler.esterel.esterel.SensorDecl
@@ -29,6 +28,8 @@ import de.cau.cs.kieler.scl.scl.SCLProgram
 import java.util.LinkedList
 import java.util.HashMap
 import de.cau.cs.kieler.esterel.kexpressions.CombineOperator
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * This class contains a methods to transform an Esterel modules interface to KExpressions declarations
@@ -40,7 +41,10 @@ import de.cau.cs.kieler.esterel.kexpressions.CombineOperator
 class EsterelDeclarationsTransformation {
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions
 
     @Inject
     extension EsterelToSclExtensions
