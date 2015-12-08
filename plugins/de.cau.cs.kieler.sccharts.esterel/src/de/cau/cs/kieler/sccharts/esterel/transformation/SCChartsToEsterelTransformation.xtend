@@ -33,8 +33,7 @@ import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
 import de.cau.cs.kieler.esterel.kexpressions.OperatorType
 import de.cau.cs.kieler.esterel.kexpressions.ValueType
-import de.cau.cs.kieler.sccharts.Assignment
-//import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
@@ -51,12 +50,10 @@ import org.eclipse.emf.ecore.EObject
 import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.esterel.Sequence
 import de.cau.cs.kieler.sccharts.StateType
-import de.cau.cs.kieler.sccharts.Emission
-//import de.cau.cs.kieler.core.kexpressions.keffects.Emission
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import java.util.List
-import de.cau.cs.kieler.sccharts.Effect
-//import de.cau.cs.kieler.core.kexpressions.keffects.Effect
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect
 
 /**
  * The class responsible for the transformation of SCCharts models to Esterel programs
@@ -221,7 +218,7 @@ class SCChartsToEsterelTransformation extends AbstractModelTransformation {
         }
         // signal "deferred" for check if the taken transition is deferred
         deferredSignal = kExpression.createISignal => [
-            name = "deferred"
+            name = "deferred" + root.hashCode.toString
         ]
         localSignal.signal.add(deferredSignal)
 
