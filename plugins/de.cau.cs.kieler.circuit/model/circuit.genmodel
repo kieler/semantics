@@ -4,7 +4,7 @@
     modelName="Circuit" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
     usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations"
-    operationReflection="true" importOrganizing="true">
+    importOrganizing="true">
   <foreignModel>circuit.ecore</foreignModel>
   <genPackages prefix="Circuit" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       ecorePackage="circuit.ecore#/">

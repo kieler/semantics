@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EReference;
  * <ul>
  *   <li>each class,</li>
  *   <li>each feature of each class,</li>
- *   <li>each operation of each class,</li>
  *   <li>each enum,</li>
  *   <li>and each data type</li>
  * </ul>
@@ -168,42 +167,6 @@ public interface CircuitPackage extends EPackage {
 	int CIRCUIT_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 8;
 
 	/**
-	 * The operation id for the '<em>Get Annotation</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT___GET_ANNOTATION__STRING = AnnotationsPackage.NAMED_OBJECT___GET_ANNOTATION__STRING;
-
-	/**
-	 * The operation id for the '<em>Get All Annotations</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT___GET_ALL_ANNOTATIONS__STRING = AnnotationsPackage.NAMED_OBJECT___GET_ALL_ANNOTATIONS__STRING;
-
-	/**
-	 * The operation id for the '<em>Remove All Annotations</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT___REMOVE_ALL_ANNOTATIONS__STRING = AnnotationsPackage.NAMED_OBJECT___REMOVE_ALL_ANNOTATIONS__STRING;
-
-	/**
-	 * The number of operations of the '<em>Circuit</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT_OPERATION_COUNT = AnnotationsPackage.NAMED_OBJECT_OPERATION_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.LinkImpl <em>Link</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -257,42 +220,6 @@ public interface CircuitPackage extends EPackage {
 	 * @ordered
 	 */
 	int LINK_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
-
-	/**
-	 * The operation id for the '<em>Get Annotation</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK___GET_ANNOTATION__STRING = AnnotationsPackage.NAMED_OBJECT___GET_ANNOTATION__STRING;
-
-	/**
-	 * The operation id for the '<em>Get All Annotations</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK___GET_ALL_ANNOTATIONS__STRING = AnnotationsPackage.NAMED_OBJECT___GET_ALL_ANNOTATIONS__STRING;
-
-	/**
-	 * The operation id for the '<em>Remove All Annotations</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK___REMOVE_ALL_ANNOTATIONS__STRING = AnnotationsPackage.NAMED_OBJECT___REMOVE_ALL_ANNOTATIONS__STRING;
-
-	/**
-	 * The number of operations of the '<em>Link</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK_OPERATION_COUNT = AnnotationsPackage.NAMED_OBJECT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.PortImpl <em>Port</em>}' class.
@@ -359,42 +286,6 @@ public interface CircuitPackage extends EPackage {
 	int PORT_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
 
 	/**
-	 * The operation id for the '<em>Get Annotation</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT___GET_ANNOTATION__STRING = AnnotationsPackage.NAMED_OBJECT___GET_ANNOTATION__STRING;
-
-	/**
-	 * The operation id for the '<em>Get All Annotations</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT___GET_ALL_ANNOTATIONS__STRING = AnnotationsPackage.NAMED_OBJECT___GET_ALL_ANNOTATIONS__STRING;
-
-	/**
-	 * The operation id for the '<em>Remove All Annotations</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT___REMOVE_ALL_ANNOTATIONS__STRING = AnnotationsPackage.NAMED_OBJECT___REMOVE_ALL_ANNOTATIONS__STRING;
-
-	/**
-	 * The number of operations of the '<em>Port</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT_OPERATION_COUNT = AnnotationsPackage.NAMED_OBJECT_OPERATION_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.NodeImpl <em>Node</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -459,42 +350,6 @@ public interface CircuitPackage extends EPackage {
 	int NODE_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
 
 	/**
-	 * The operation id for the '<em>Get Annotation</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE___GET_ANNOTATION__STRING = AnnotationsPackage.NAMED_OBJECT___GET_ANNOTATION__STRING;
-
-	/**
-	 * The operation id for the '<em>Get All Annotations</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE___GET_ALL_ANNOTATIONS__STRING = AnnotationsPackage.NAMED_OBJECT___GET_ALL_ANNOTATIONS__STRING;
-
-	/**
-	 * The operation id for the '<em>Remove All Annotations</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE___REMOVE_ALL_ANNOTATIONS__STRING = AnnotationsPackage.NAMED_OBJECT___REMOVE_ALL_ANNOTATIONS__STRING;
-
-	/**
-	 * The number of operations of the '<em>Node</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_OPERATION_COUNT = AnnotationsPackage.NAMED_OBJECT_OPERATION_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.LinkableImpl <em>Linkable</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -539,15 +394,6 @@ public interface CircuitPackage extends EPackage {
 	 * @ordered
 	 */
 	int LINKABLE_FEATURE_COUNT = 3;
-
-	/**
-	 * The number of operations of the '<em>Linkable</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINKABLE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.RelationImpl <em>Relation</em>}' class.
@@ -612,42 +458,6 @@ public interface CircuitPackage extends EPackage {
 	 * @ordered
 	 */
 	int RELATION_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
-
-	/**
-	 * The operation id for the '<em>Get Annotation</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RELATION___GET_ANNOTATION__STRING = AnnotationsPackage.NAMED_OBJECT___GET_ANNOTATION__STRING;
-
-	/**
-	 * The operation id for the '<em>Get All Annotations</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RELATION___GET_ALL_ANNOTATIONS__STRING = AnnotationsPackage.NAMED_OBJECT___GET_ALL_ANNOTATIONS__STRING;
-
-	/**
-	 * The operation id for the '<em>Remove All Annotations</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RELATION___REMOVE_ALL_ANNOTATIONS__STRING = AnnotationsPackage.NAMED_OBJECT___REMOVE_ALL_ANNOTATIONS__STRING;
-
-	/**
-	 * The number of operations of the '<em>Relation</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RELATION_OPERATION_COUNT = AnnotationsPackage.NAMED_OBJECT_OPERATION_COUNT + 0;
 
 
 	/**
@@ -868,7 +678,6 @@ public interface CircuitPackage extends EPackage {
 	 * <ul>
 	 *   <li>each class,</li>
 	 *   <li>each feature of each class,</li>
-	 *   <li>each operation of each class,</li>
 	 *   <li>each enum,</li>
 	 *   <li>and each data type</li>
 	 * </ul>
