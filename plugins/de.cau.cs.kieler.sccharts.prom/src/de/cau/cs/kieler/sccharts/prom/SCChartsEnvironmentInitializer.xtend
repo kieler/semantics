@@ -33,6 +33,9 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         // Mindstorms NXJ
         datas += getMindstormsNXJDefaultEnvironment()
         
+        // Mindstorms EV3
+        datas += getMindstormsEV3DefaultEnvironment()
+        
         // Mindstorms NXC
         datas += getMindstormsNXCDefaultEnvironment()
        
@@ -60,6 +63,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         env.wrapperCodeSnippetsDirectory = "snippets/mindstorms_nxj"
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/snippets"
         
+        /*
         // Commands for Windows (these are active by default)
         // On Windows the file to be executed is a batch script (.bat extension) and the separator for the classpath is a secmicolon.
         env.commands.add(new CommandData("Compile on Windows",
@@ -77,11 +81,38 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         env.commands.add(new CommandData("Deploy and Run on Linux and Mac",
         '''${nxj.home}/bin/nxj -r -cp "${nxj.home}/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" -o "${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}.nxj" ${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}''',
         linuxCommandsEnabled))
+        */
+        env.associatedLaunchShortcut = "org.lejos.nxt.ldt.launch.LaunchNXTShortcut"
         
         env.relatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
         
         env.mainFile = "src/Main.ftl"
         env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/Main.ftl"
+        
+        return env
+    } 
+    
+    /**
+     * Creates the default environment for Mindstorms EV3 running leJOS.
+     * @return  The default environment for Mindstorms EV3 running leJOS.
+     */
+    private static def EnvironmentData getMindstormsEV3DefaultEnvironment(){
+        var env = new EnvironmentData("Mindstorms EV3")
+        
+        env.targetLanguage = "s.java"
+        env.targetFileExtension = ".java"
+        env.targetTemplate = ""
+        
+        env.wrapperCodeTemplate = '''${«LaunchConfiguration.MAIN_FILE_PATH_VARIABLE»}'''
+        env.wrapperCodeSnippetsDirectory = "snippets/mindstorms_ev3"
+        env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/snippets"
+        
+        env.associatedLaunchShortcut = "org.lejos.ev3.ldt.launch.LaunchEV3Shortcut"
+        
+        env.relatedProjectWizardClass = "org.lejos.ev3.ldt.wizard.NewEV3Project"
+        
+        env.mainFile = "src/Main.ftl"
+        env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/Main.ftl"
         
         return env
     } 

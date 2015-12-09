@@ -126,7 +126,14 @@ class EnvironmentData extends ConfigurationSerializableData {
     @Accessors
     protected List<CommandData> commands = newArrayList()
 
-
+    /**
+     * The class name of an implementation of the associated launch shortcut for this environment.
+     */
+    @Accessors
+    protected String associatedLaunchShortcut = ""
+    
+    
+    
     
     /**
      * Creates a new instance of the class.
@@ -232,7 +239,6 @@ class EnvironmentData extends ConfigurationSerializableData {
         // Non string attributes
         var commandName = ""
         var command = ""
-        var commandEnabled = false;
         var i = 0;
         do{
             commandName = store.getString(getStoreKey(COMMAND_NAME_KEY+i))
@@ -256,6 +262,7 @@ class EnvironmentData extends ConfigurationSerializableData {
         config.setAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, targetTemplate)
         config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, wrapperCodeTemplate)
         config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, wrapperCodeSnippetsDirectory)
+        config.setAttribute(LaunchConfiguration.ATTR_ASSOCIATED_LAUNCH_SHORTCUT, associatedLaunchShortcut)
         
         CommandData.saveAllToConfiguration(config, commands)    
     }
