@@ -174,11 +174,14 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             compileJob.join()
             wrapperCodeJob.join()
 
-            // Run associated launch config
-            runAssociatedLauchShortcut()
+            
 
-            // Execute commands only if the other jobs succeded  
+            // Proceed only if the other jobs succeded  
             if (compileJob.result.code == IStatus.OK && wrapperCodeJob.result.code == IStatus.OK) {
+                // Run associated launch shortcut
+                runAssociatedLauchShortcut()
+                
+                // Execute command list 
                 getExecuteCommandsJob().schedule()
             }
         } else {

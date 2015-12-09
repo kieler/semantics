@@ -274,6 +274,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         val input = ExtensionLookupUtil.getWizardConfigurationElements(true)
         combo.input = input
 
+//        Debug log, which wizards are currently installed 
+//        for (e : ExtensionLookupUtil.getWizardConfigurationElements(true)){
+//            System.err.println(e.getAttribute("class"))
+//        }
+        
         // Select first element as default 
         if (input != null && input.size > 0) {
             combo.selection = new StructuredSelection(input.get(0))
@@ -584,6 +589,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         input.addAll(ExtensionLookupUtil.getLaunchShortcutConfigurationElements())
         combo.input = input
         
+        //Debug log, which launch shortcuts are currently installed 
+//        for (e : ExtensionLookupUtil.getLaunchShortcutConfigurationElements()){
+//            System.err.println(e.getAttribute("class"))
+//        }
+
         // Select first element as default 
         combo.selection = new StructuredSelection(StructuredSelection.EMPTY)
 
