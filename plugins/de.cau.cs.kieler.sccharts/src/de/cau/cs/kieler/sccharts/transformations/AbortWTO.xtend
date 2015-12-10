@@ -76,8 +76,8 @@ class AbortWTO extends AbstractExpansionTransformation {
     @Inject
     extension KExpressionsDeclarationExtensions    
     
-    @Inject
-    extension KExpressionsValuedObjectExtensions   
+//    @Inject
+//    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension

@@ -69,8 +69,9 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     }
 
     // -------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsValuedObjectExtensions
+
+//    @Inject
+//    extension KExpressionsValuedObjectExtensions
 
     @Inject
     extension KExpressionsCreateExtensions
@@ -132,7 +133,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                 // to the current value
                 val updateDuringAction = state.createImmediateDuringAction
                 updateDuringAction.createAssignment(valueVariable, currentValueVariable.reference)
-                updateDuringAction.setTrigger(presentVariable.reference)
+                updateDuringAction.setTrigger(presentVariable.reference) 
                 // Add an immediate during action that resets the current value
                 // in each tick to the neutral element of the type w.r.t. combination function
                 val resetDuringAction = state.createImmediateDuringAction
@@ -140,7 +141,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                 resetDuringAction.setImmediate(true)
 
                 // Copy type and input/output attributes from the original signal
-                currentValueVariable.applyAttributes(signal)
+                currentValueVariable.copyAttributes(signal)
                 val allActions = state.eAllContents.filter(typeof(Action)).toList
                 for (Action action : allActions) {
 

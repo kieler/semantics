@@ -79,8 +79,8 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
     @Inject
     extension KExpressionsDeclarationExtensions    
     
-    @Inject
-    extension KExpressionsValuedObjectExtensions   
+//    @Inject
+//    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsTransformationExtension

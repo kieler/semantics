@@ -25,6 +25,8 @@ import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.StringValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /**
  * SCCharts Transformation Extensions. Extension in order to improve readability of SCCharts extended
@@ -95,72 +97,101 @@ class SCChartsTransformationExtension {
     }
 
 //    // ========= ATTRIBUTE GETTER =========
-//    // Return whether the ValuedObject is an input.
-//    def public boolean getInput(ValuedObject valuedObject) {
-//        valuedObject.declaration.input
-//    }
-//
-//    // Return whether the ValuedObject is an input.
-//    def public boolean isInput(ValuedObject valuedObject) {
-//        valuedObject.getInput()
-//    }
-//
-//    // Return whether the ValuedObject is an output.
-//    def public boolean getOutput(ValuedObject valuedObject) {
-//        valuedObject.declaration.output
-//    }
-//
-//    // Return whether the ValuedObject is an output.
-//    def public boolean isOutput(ValuedObject valuedObject) {
-//        valuedObject.getOutput()
-//    }
-//
-//    // Return whether the ValuedObject is static.
-//    def public boolean getStatic(ValuedObject valuedObject) {
-//        valuedObject.declaration.static
-//    }
-//
-//    // Return whether the ValuedObject is static.
-//    def public boolean isStatic(ValuedObject valuedObject) {
-//        valuedObject.getStatic()
-//    }
-//
-//    // Return whether the ValuedObject is a const.
-//    def public boolean getConst(ValuedObject valuedObject) {
-//        valuedObject.declaration.const
-//    }
-//
-//    // Return whether the ValuedObject is a const.
-//    def public boolean isConst(ValuedObject valuedObject) {
-//        valuedObject.getConst()
-//    }
-//
-//    // Return whether the ValuedObject is a const.
-//    def public boolean getExtern(ValuedObject valuedObject) {
-//        valuedObject.declaration.extern
-//    }
-//
-//    // Return whether the ValuedObject is a const.
-//    def public boolean isExtern(ValuedObject valuedObject) {
-//        valuedObject.getExtern()
-//    }
-//
-//    // Return whether the ValuedObject is an array.
-//    def public boolean isArray(ValuedObject valuedObject) {
-//        !valuedObject.cardinalities.nullOrEmpty
-//    }
-//
-//    // Return whether the ValuedObject is a signal.
-//    def public boolean getSignal(ValuedObject valuedObject) {
-//        valuedObject.declaration.signal
-//    }
-//
-//    // Return whether the ValuedObject is a signal.
-//    def public boolean isSignal(ValuedObject valuedObject) {
-//        valuedObject.getSignal()
-//    }
+
+    def public ValueType getType(ValuedObject valuedObject) {
+        valuedObject.declaration.type
+    }
+
+    // Create a ValuedObjectReference to a valuedObject
+    def ValuedObjectReference reference(ValuedObject valuedObject) {
+        KExpressionsFactory::eINSTANCE.createValuedObjectReference() => [
+            setValuedObject(valuedObject)
+        ]
+    }    
+
+    // Return whether the ValuedObject is an input.
+    def public boolean getInput(ValuedObject valuedObject) {
+        valuedObject.declaration.input
+    }
+
+    // Return whether the ValuedObject is an input.
+    def public boolean isInput(ValuedObject valuedObject) {
+        valuedObject.getInput()
+    }
+
+    // Return whether the ValuedObject is an output.
+    def public boolean getOutput(ValuedObject valuedObject) {
+        valuedObject.declaration.output
+    }
+
+    // Return whether the ValuedObject is an output.
+    def public boolean isOutput(ValuedObject valuedObject) {
+        valuedObject.getOutput()
+    }
+
+    // Return whether the ValuedObject is static.
+    def public boolean getStatic(ValuedObject valuedObject) {
+        valuedObject.declaration.static
+    }
+
+    // Return whether the ValuedObject is static.
+    def public boolean isStatic(ValuedObject valuedObject) {
+        valuedObject.getStatic()
+    }
+
+    // Return whether the ValuedObject is a const.
+    def public boolean getConst(ValuedObject valuedObject) {
+        valuedObject.declaration.const
+    }
+
+    // Return whether the ValuedObject is a const.
+    def public boolean isConst(ValuedObject valuedObject) {
+        valuedObject.getConst()
+    }
+
+    // Return whether the ValuedObject is a const.
+    def public boolean getExtern(ValuedObject valuedObject) {
+        valuedObject.declaration.extern
+    }
+
+    // Return whether the ValuedObject is a const.
+    def public boolean isExtern(ValuedObject valuedObject) {
+        valuedObject.getExtern()
+    }
+
+    // Return whether the ValuedObject is an array.
+    def public boolean isArray(ValuedObject valuedObject) {
+        !valuedObject.cardinalities.nullOrEmpty
+    }
+
+    // Return whether the ValuedObject is a signal.
+    def public boolean getSignal(ValuedObject valuedObject) {
+        valuedObject.declaration.signal
+    }
+
+    // Return whether the ValuedObject is a signal.
+    def public boolean isSignal(ValuedObject valuedObject) {
+        valuedObject.getSignal()
+    }
 
     // ========= ATTRIBUTE SETTER =========
+    
+    def ValuedObject copyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
+        if (valuedObjectWithAttributes.initialValue != null) {
+            valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
+        }
+        if (valuedObjectWithAttributes.combineOperator != null) {
+            valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
+        }
+        if (!valuedObjectWithAttributes.cardinalities.nullOrEmpty) {
+            for (card : valuedObjectWithAttributes.cardinalities) {
+                valuedObject.cardinalities.add(card);
+            }
+        }        
+        valuedObject
+    }
+    
+    
     // Set the type of a ValuedObject. 
     def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
         val uniqueDeclaration = valuedObject.uniqueDeclaration
