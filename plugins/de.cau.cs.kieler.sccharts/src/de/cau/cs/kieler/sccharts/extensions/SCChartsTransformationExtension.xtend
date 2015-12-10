@@ -378,11 +378,15 @@ class SCChartsTransformationExtension {
         KExpressionsFactory::eINSTANCE.createDeclaration
     }
 
-    // Creates a new Declaration on the basis of an existing declaration. The new declaration has
-    // the same attributes than the existing one but will not contain their ValuedObjects.
+    // Creates a new Declaration on the basis of an existing declaration if existing. The new declaration
+    // has the same attributes than the existing one but will not contain their ValuedObjects.
+    // If the exitsingDeclaration is null then createDeclaration(Declaration existingDeclaration) behaves
+    // as createDeclaration().
     def public Declaration createDeclaration(Declaration existingDeclaration) {
         val newDeclaration = createDeclaration()
-        newDeclaration.copyAttributes(existingDeclaration)
+        if (existingDeclaration != null) {
+           newDeclaration.copyAttributes(existingDeclaration)
+        } 
         newDeclaration
     }
     
@@ -416,19 +420,19 @@ class SCChartsTransformationExtension {
     // Helper method for Setter-Wrapper. It returns the direct Declaration of a ValuedObject
     // if there are no other ValuedObjects in this group. Otherwise it creates and returns
     // a new Declaration and removes the ValuedObject from the old one, adding it to the 
-    // new one.
+    // new one. If there is no existing declaration the valuedObject resides in then a new
+    // declaration is created and it is added to the new declaration.
     def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
         val declaration = valuedObject.declaration
-        if (declaration._containsOnly(valuedObject)) {
+        if (declaration != null && declaration._containsOnly(valuedObject)) {
             // We don't have to care about other valuedObjects
             return declaration
         } else {
             // Make a new Declaration
             val newDeclaration = createDeclaration(declaration)
-            // Remove the valuedObject from the old group and add it to the new group
-            declaration._removeValuedObject(valuedObject)
-            if (declaration.valuedObjects.size == 0) {
-                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
+            if (declaration != null) {
+                // Remove the valuedObject from the old group and add it to the new group
+                declaration._removeValuedObject(valuedObject)
             }
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
