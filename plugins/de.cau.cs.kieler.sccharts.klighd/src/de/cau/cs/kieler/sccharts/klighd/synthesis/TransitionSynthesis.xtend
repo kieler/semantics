@@ -58,6 +58,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         val edge = transition.createEdge().associateWith(transition);
 
         edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+        edge.setLayoutOption(LayoutOptions::LABEL_SPACING, 3.0f);
         
         // Connect with states
         edge.source = transition.sourceState.node;

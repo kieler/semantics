@@ -19,6 +19,8 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.klay.layered.properties.EdgeLabelSideSelection
+import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -69,7 +71,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
     // -------------------------------------------------------------------------
     // Sidebar Options
 
-    override public getDisplayedSynthesisOptions() {
+    override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();
         // Add general options
         options.addAll(GeneralSynthesisOptions.USE_KLAY);//USE_ADAPTIVEZOOM
@@ -83,13 +85,13 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
         return options.toList;
     }
 
-    override public getDisplayedLayoutOptions() {
+    override getDisplayedLayoutOptions() {
         return newLinkedList(
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name])
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, #[Direction::RIGHT, Direction::DOWN]) //Direction::UNDEFINED,
             ,new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
         );
     }
-        
+           
     // -------------------------------------------------------------------------
     // The main entry transform function   
     override transform(Scope root) {
@@ -99,6 +101,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
                 
         //START
         hooks.invokeStart(root, rootNode);
+        
+        rootNode.setLayoutOption(Properties::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
 
         if (root instanceof State) {
             rootNode.children += stateSynthesis.transform(root);
