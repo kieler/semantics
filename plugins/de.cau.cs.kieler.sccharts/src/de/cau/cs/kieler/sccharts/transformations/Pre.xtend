@@ -162,8 +162,8 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                     if (container instanceof OperatorExpression) {
 
                         // If nested PRE or PRE inside another complex expression
+                        (container as OperatorExpression).subExpressions.add(newPre.reference);
                         (container as OperatorExpression).subExpressions.remove(preExpression);
-                        (container as OperatorExpression).add(newPre.reference);
                     } else if (container instanceof Action) {
 
                         // If PRE directly a trigger
