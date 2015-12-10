@@ -19,8 +19,6 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.klay.layered.properties.EdgeLabelSideSelection
-import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -101,8 +99,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
                 
         //START
         hooks.invokeStart(root, rootNode);
-        
-        rootNode.setLayoutOption(Properties::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
 
         if (root instanceof State) {
             rootNode.children += stateSynthesis.transform(root);
