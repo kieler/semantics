@@ -420,20 +420,21 @@ class SCChartsTransformationExtension {
     // Helper method for Setter-Wrapper. It returns the direct Declaration of a ValuedObject
     // if there are no other ValuedObjects in this group. Otherwise it creates and returns
     // a new Declaration and removes the ValuedObject from the old one, adding it to the 
-    // new one. If there is no existing declaration the valuedObject resides in then a new
-    // declaration is created and it is added to the new declaration.
+    // new one. 
+    // Attention: The declaration of the valuedObject MUST NOT BE NULL.
     def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
         val declaration = valuedObject.declaration
-        if (declaration != null && declaration._containsOnly(valuedObject)) {
+        if (declaration == null) {
+            // ERROR CASE
+        }
+        if (declaration._containsOnly(valuedObject)) {
             // We don't have to care about other valuedObjects
             return declaration
         } else {
             // Make a new Declaration
             val newDeclaration = createDeclaration(declaration)
-            if (declaration != null) {
-                // Remove the valuedObject from the old group and add it to the new group
-                declaration._removeValuedObject(valuedObject)
-            }
+            // Remove the valuedObject from the old group and add it to the new group
+            declaration._removeValuedObject(valuedObject)
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
         }
@@ -454,6 +455,15 @@ class SCChartsTransformationExtension {
     // Add a ValuedObject.
     // The visibility of this method is 'package' to allow the ValuedObjectList to add a ValuedObject.
     def Declaration _addValuedObject(Declaration declaration, ValuedObject valuedObject) {
+        declaration.valuedObjects.add(valuedObject)
+        declaration
+    }
+
+    // Add a ValuedObject.
+    // The visibility of this method is 'package' to allow the ValuedObjectList to add a ValuedObject.
+    def Declaration _addValuedObject(Scope scope, ValuedObject valuedObject) {
+        val declaration = createDeclaration()
+        scope.declarations.add(declaration)
         declaration.valuedObjects.add(valuedObject)
         declaration
     }
