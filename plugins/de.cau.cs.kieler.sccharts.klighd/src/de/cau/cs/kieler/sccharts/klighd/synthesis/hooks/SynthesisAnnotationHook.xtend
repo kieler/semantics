@@ -36,7 +36,7 @@ class SynthesisAnnotationHook extends SynthesisHook {
 
     // Annotation Keyword
     /** The annotation keyword for setting synthesis options */
-    public static final String SYNTHESIS_OPTIONS_ANNOTATION = "synthesis";
+    public static final String SYNTHESIS_OPTIONS_ANNOTATION = "diagram";
 
     /** Strings accepted as true as option value */
     public static final List<String> POSITIVE_BOOLEAN_VALUES = newImmutableList("true", "on", "checked");
