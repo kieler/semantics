@@ -20,6 +20,11 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.Scope
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.StringValue
+import de.cau.cs.kieler.core.kexpressions.TextExpression
 
 /**
  * SCCharts Transformation Extensions. Extension in order to improve readability of SCCharts extended
@@ -89,71 +94,71 @@ class SCChartsTransformationExtension {
         valuedObject
     }
 
-    // ========= ATTRIBUTE GETTER =========
-    // Return whether the ValuedObject is an input.
-    def public boolean getInput(ValuedObject valuedObject) {
-        valuedObject.declaration.input
-    }
-
-    // Return whether the ValuedObject is an input.
-    def public boolean isInput(ValuedObject valuedObject) {
-        valuedObject.getInput()
-    }
-
-    // Return whether the ValuedObject is an output.
-    def public boolean getOutput(ValuedObject valuedObject) {
-        valuedObject.declaration.output
-    }
-
-    // Return whether the ValuedObject is an output.
-    def public boolean isOutput(ValuedObject valuedObject) {
-        valuedObject.getOutput()
-    }
-
-    // Return whether the ValuedObject is static.
-    def public boolean getStatic(ValuedObject valuedObject) {
-        valuedObject.declaration.static
-    }
-
-    // Return whether the ValuedObject is static.
-    def public boolean isStatic(ValuedObject valuedObject) {
-        valuedObject.getStatic()
-    }
-
-    // Return whether the ValuedObject is a const.
-    def public boolean getConst(ValuedObject valuedObject) {
-        valuedObject.declaration.const
-    }
-
-    // Return whether the ValuedObject is a const.
-    def public boolean isConst(ValuedObject valuedObject) {
-        valuedObject.getConst()
-    }
-
-    // Return whether the ValuedObject is a const.
-    def public boolean getExtern(ValuedObject valuedObject) {
-        valuedObject.declaration.extern
-    }
-
-    // Return whether the ValuedObject is a const.
-    def public boolean isExtern(ValuedObject valuedObject) {
-        valuedObject.getExtern()
-    }
-
-    // Return whether the ValuedObject is an array.
-    def public boolean isArray(ValuedObject valuedObject) {
-        !valuedObject.cardinalities.nullOrEmpty
-    }
-
-    // Return whether the ValuedObject is a signal.
-    def public boolean getSignal(ValuedObject valuedObject) {
-        valuedObject.declaration.signal
-    }
-
-    // Return whether the ValuedObject is a signal.
-    def public boolean isSignal(ValuedObject valuedObject) {
-        valuedObject.getSignal()
-    }
+//    // ========= ATTRIBUTE GETTER =========
+//    // Return whether the ValuedObject is an input.
+//    def public boolean getInput(ValuedObject valuedObject) {
+//        valuedObject.declaration.input
+//    }
+//
+//    // Return whether the ValuedObject is an input.
+//    def public boolean isInput(ValuedObject valuedObject) {
+//        valuedObject.getInput()
+//    }
+//
+//    // Return whether the ValuedObject is an output.
+//    def public boolean getOutput(ValuedObject valuedObject) {
+//        valuedObject.declaration.output
+//    }
+//
+//    // Return whether the ValuedObject is an output.
+//    def public boolean isOutput(ValuedObject valuedObject) {
+//        valuedObject.getOutput()
+//    }
+//
+//    // Return whether the ValuedObject is static.
+//    def public boolean getStatic(ValuedObject valuedObject) {
+//        valuedObject.declaration.static
+//    }
+//
+//    // Return whether the ValuedObject is static.
+//    def public boolean isStatic(ValuedObject valuedObject) {
+//        valuedObject.getStatic()
+//    }
+//
+//    // Return whether the ValuedObject is a const.
+//    def public boolean getConst(ValuedObject valuedObject) {
+//        valuedObject.declaration.const
+//    }
+//
+//    // Return whether the ValuedObject is a const.
+//    def public boolean isConst(ValuedObject valuedObject) {
+//        valuedObject.getConst()
+//    }
+//
+//    // Return whether the ValuedObject is a const.
+//    def public boolean getExtern(ValuedObject valuedObject) {
+//        valuedObject.declaration.extern
+//    }
+//
+//    // Return whether the ValuedObject is a const.
+//    def public boolean isExtern(ValuedObject valuedObject) {
+//        valuedObject.getExtern()
+//    }
+//
+//    // Return whether the ValuedObject is an array.
+//    def public boolean isArray(ValuedObject valuedObject) {
+//        !valuedObject.cardinalities.nullOrEmpty
+//    }
+//
+//    // Return whether the ValuedObject is a signal.
+//    def public boolean getSignal(ValuedObject valuedObject) {
+//        valuedObject.declaration.signal
+//    }
+//
+//    // Return whether the ValuedObject is a signal.
+//    def public boolean isSignal(ValuedObject valuedObject) {
+//        valuedObject.getSignal()
+//    }
 
     // ========= ATTRIBUTE SETTER =========
     // Set the type of a ValuedObject. 
@@ -256,7 +261,8 @@ class SCChartsTransformationExtension {
 
     // Set the ValuedObject to be a signal.
     def ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
-        valuedObject.setSignal(isSignal)
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setSignal(isSignal)
         valuedObject
     }
 
@@ -417,7 +423,62 @@ class SCChartsTransformationExtension {
         declaration
     }
     
+
+
+    // -------------------------------------------------------------------------
+    // --                       K E X P R E S S I O N S                       --
+    // -------------------------------------------------------------------------
+    
+    // NOW PART OF KExpressionsCreateExtensions
+    // @Inject
+    // extension KExpressionsCreateExtensions
+    
+    
+    //===========  VALUES  ===========
+//    // Create a TRUE value.
+//    def public BoolValue TRUE() {
+//        createBoolValue(true)
+//    }
+//
+//    // Create a FALSE value.
+//    def public BoolValue FALSE() {
+//        createBoolValue(false)
+//    }
+
+//    // Create an int value.
+//    def IntValue createIntValue(int value) {
+//        val expression = KExpressionsFactory::eINSTANCE.createIntValue()
+//        expression.setValue(value)
+//        expression
+//    }
+//
+//    // Create a float value.
+//    def FloatValue createFloatValue(float value) {
+//        val expression = KExpressionsFactory::eINSTANCE.createFloatValue()
+//        expression.setValue(value)
+//        expression
+//    }
+//
+//    // Create a boolean value.
+//    def BoolValue createBoolValue(boolean value) {
+//        val expression = KExpressionsFactory::eINSTANCE.createBoolValue()
+//        expression.setValue(value)
+//        expression
+//    }
+//
+//    // Create a string value
+//    def StringValue createStringValue(String value) {
+//        val expression = KExpressionsFactory::eINSTANCE.createStringValue()
+//        expression.setValue(value)
+//        expression
+//    }
+//
+//    // Create an empty text expression.
+//    def TextExpression createTextExpression() {
+//        val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
+//        expression
+//    }
     
     // ------------------------------------------------------------------------
-
+    
 }
