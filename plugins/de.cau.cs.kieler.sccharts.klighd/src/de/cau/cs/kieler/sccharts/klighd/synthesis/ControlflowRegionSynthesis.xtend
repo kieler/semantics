@@ -22,6 +22,9 @@ import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.klay.layered.properties.EdgeLabelSideSelection
+import de.cau.cs.kieler.klay.layered.properties.FixedAlignment
+import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -31,9 +34,6 @@ import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.kiml.options.Alignment
-import de.cau.cs.kieler.klay.layered.properties.FixedAlignment
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -74,8 +74,9 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             node.setLayoutOption(LayoutOptions::SPACING, 40f);
         }
         node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+        node.addLayoutParam(Properties::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
         node.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
-
+        
         node.setLayoutOption(KlighdProperties::EXPAND, true);
 
         if (!region.states.empty) {
