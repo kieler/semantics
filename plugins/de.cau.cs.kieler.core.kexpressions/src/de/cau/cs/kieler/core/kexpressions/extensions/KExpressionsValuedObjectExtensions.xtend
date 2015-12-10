@@ -23,6 +23,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.Expression
+import com.google.common.collect.ImmutableList
 
 /**
  * @author ssm
@@ -52,10 +53,10 @@ class KExpressionsValuedObjectExtensions {
         valuedObject.declaration.type
     }
     
-    def public List<ValuedObject> getValuedObjects(EObject eObject) {
-        <ValuedObject> newArrayList => [ list |
+    def public ImmutableList<ValuedObject> getValuedObjects(EObject eObject) {
+        ImmutableList.copyOf(<ValuedObject> newArrayList => [ list |
             eObject.eContents.filter(typeof(Declaration)).forEach[ list += valuedObjects ]
-        ]
+        ])
     }  
     
     def public ValuedObject removeValuedObjectFrom(ValuedObject valuedObject, Declaration declaration) {
