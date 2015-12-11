@@ -408,7 +408,7 @@ litigation.
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
+         unpack="true"/>
 
    <plugin
          id="de.cau.cs.kieler.s"
@@ -597,7 +597,7 @@ litigation.
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>         
+         unpack="true"/>         
 
    <plugin
          id="de.cau.cs.kieler.sccharts.s"
