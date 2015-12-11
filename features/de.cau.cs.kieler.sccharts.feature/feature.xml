@@ -257,6 +257,41 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.core.kexpressions.keffects"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.kexpressions.keffects.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.kexpressions.keffects.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.kexpressions.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.kexpressions.text.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="de.cau.cs.kieler.core.kexpressions.ui"
          download-size="0"
          install-size="0"
