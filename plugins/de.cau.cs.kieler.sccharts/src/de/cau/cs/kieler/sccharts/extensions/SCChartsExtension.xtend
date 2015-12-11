@@ -338,6 +338,7 @@ class SCChartsExtension {
 
     def private boolean uniqueNameTest(ValuedObject valuedObject, State state, String newName) {
         if (state == null) { 
+            // is unique
             return true
         }
         
@@ -346,6 +347,10 @@ class SCChartsExtension {
     }
 
     def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
+        if (valuedObject.eContainer == null) {
+            // is unique
+            return true
+        }
         val scope = (valuedObject.eContainer.eContainer as Scope);
         val rootState = scope.rootState
         var notFound = valuedObject.uniqueNameTest(rootState, newName)
@@ -436,7 +441,10 @@ class SCChartsExtension {
     }
 
     def ValuedObject uniqueName(ValuedObject valuedObject) {
-        val originalId = valuedObject.name
+        var originalId = valuedObject.name
+        if (originalId == null) {
+            originalId = "NULL"
+        }
         var String newName = valuedObject.uniqueNameHelper(originalId)
         if (newName != originalId) {
             valuedObject.setName(newName)
