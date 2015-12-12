@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+   <diagramSynthesis
+         class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.circuit.klighd.CircuitDiagramSynthesis"
+         id="de.cau.cs.kieler.circuit.klighd.CircuitDiagramSynthesis">
+   </diagramSynthesis>
+   </extension>
+<extension
+      point="org.eclipse.ui.commands">
+   <category
+         description="Circuit diagrams"
+         id="de.cau.cs.kieler.circuit.klighd.CircuitDiagrams"
+         name="CircuitDiagrams">
+   </category>
+   <command
+         categoryId="de.cau.cs.kieler.circuit.klighd.CircuitDiagrams"
+         defaultHandler="de.cau.cs.kieler.circuit.klighd.OpenDiagramHandler"
+         description="Primitive helper command that opens KLighD-based Circuit diagrams."
+         id="de.cau.cs.kieler.circuit.klighd.openCircuitDiagram"
+         name="Open Circuit diagram">
+   </command>
+</extension>
+
+<extension
+      point="org.eclipse.ui.menus">
+   <menuContribution
+         locationURI="popup:org.eclipse.ui.popup.any?before=additions">
+      <command
+            commandId="de.cau.cs.kieler.circuit.klighd.openCircuitDiagram"
+            label="Open Circuit diagram"
+            style="push">
+         <visibleWhen
+               checkEnabled="false">
+            <or>
+               <and>
+                  <with
+                        variable="activeEditor">
+                     <instanceof
+                           value="org.eclipse.xtext.ui.editor.XtextEditor">
+                     </instanceof>
+                  </with>
+                  <with
+                        variable="activeEditorInput">
+                     <adapt type="org.eclipse.core.resources.IResource">
+                         <test
+                               forcePluginActivation="false"
+                               property="org.eclipse.core.resources.extension"
+                               value="circuit">
+                         </test>
+                     </adapt>
+                  </with>
+               </and>
+               <iterate ifEmpty="false" operator="or">
+                  <or>
+                     <instanceof
+                         value="de.cau.cs.kieler.circuit.Circuit">
+                     </instanceof>
+                     <adapt type="org.eclipse.core.resources.IResource">
+                         <test
+                               forcePluginActivation="false"
+                               property="org.eclipse.core.resources.extension"
+                               value="circuit">
+                         </test>
+                     </adapt>
+                  </or>
+               </iterate>
+            </or>
+         </visibleWhen>
+      </command>
+   </menuContribution>
+</extension>
+
+</plugin>
