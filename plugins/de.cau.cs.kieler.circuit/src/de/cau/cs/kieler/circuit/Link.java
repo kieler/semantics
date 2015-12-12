@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.circuit;
 
-import de.cau.cs.kieler.core.annotations.NamedObject;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,6 +14,7 @@ import de.cau.cs.kieler.core.annotations.NamedObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.circuit.Link#getSource <em>Source</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Link#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -21,7 +22,7 @@ import de.cau.cs.kieler.core.annotations.NamedObject;
  * @model
  * @generated
  */
-public interface Link extends NamedObject {
+public interface Link extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Source</b></em>' reference.
 	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Linkable#getOutgoingLinks <em>Outgoing Links</em>}'.
@@ -77,5 +78,31 @@ public interface Link extends NamedObject {
 	 * @generated
 	 */
 	void setTarget(Linkable value);
+
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getLink_Name()
+	 * @model
+	 * @generated
+	 */
+	String getName();
+
+	/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Link#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
+	void setName(String value);
 
 } // Link

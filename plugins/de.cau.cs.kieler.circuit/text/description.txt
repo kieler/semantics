@@ -7,27 +7,29 @@ This can be disabled with -vmargs -Dorg.eclipse.emf.examples.generator.validator
 
 Package circuit <http://kieler.cs.cau.de/circuit>
 
-  Class Circuit -> NamedObject, Linkable
+  Class Circuit -> Linkable
     Reference circuits : Circuit<<0..*>>
     Reference links : Link<<0..*>>
     Reference nodes : Node<<0..*>>
     Reference ports : Port<<0..*>>
     Reference relations : Relation<<0..*>>
 
-  Class Link -> NamedObject
+  Class Link
     Reference source : Linkable
     Reference target : Linkable
+    Attribute name : EString
 
-  Class Port -> NamedObject, Linkable
+  Class Port -> Linkable
 
-  Class Node -> NamedObject
+  Class Node
     Reference inputPorts : Port<<0..*>>
     Reference outputPorts : Port<<0..*>>
     Attribute nodeID : EString
+    Attribute name : EString
 
   Class Linkable
     Reference incomingLinks : Link<<0..*>>
     Reference outgoingLinks : Link<<0..*>>
     Attribute id : EString
 
-  Class Relation -> NamedObject, Linkable
+  Class Relation -> Linkable

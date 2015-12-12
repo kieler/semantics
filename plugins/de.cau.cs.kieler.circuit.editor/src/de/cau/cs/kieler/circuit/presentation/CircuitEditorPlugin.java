@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.circuit.presentation;
 
-import de.cau.cs.kieler.core.annotations.provider.AnnotationsEditPlugin;
-
 import org.eclipse.emf.common.EMFPlugin;
 
 import org.eclipse.emf.common.ui.EclipseUIPlugin;
@@ -42,7 +40,6 @@ public final class CircuitEditorPlugin extends EMFPlugin {
 	public CircuitEditorPlugin() {
 		super
 			(new ResourceLocator [] {
-				AnnotationsEditPlugin.INSTANCE,
 			});
 	}
 

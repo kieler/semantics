@@ -3,10 +3,6 @@
 package de.cau.cs.kieler.circuit.util;
 
 import de.cau.cs.kieler.circuit.*;
-
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.annotations.NamedObject;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -93,14 +89,6 @@ public class CircuitAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseRelation(Relation object) {
 				return createRelationAdapter();
-			}
-			@Override
-			public Adapter caseAnnotatable(Annotatable object) {
-				return createAnnotatableAdapter();
-			}
-			@Override
-			public Adapter caseNamedObject(NamedObject object) {
-				return createNamedObjectAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -203,34 +191,6 @@ public class CircuitAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createRelationAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.Annotatable
-	 * @generated
-	 */
-	public Adapter createAnnotatableAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.NamedObject <em>Named Object</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.NamedObject
-	 * @generated
-	 */
-	public Adapter createNamedObjectAdapter() {
 		return null;
 	}
 

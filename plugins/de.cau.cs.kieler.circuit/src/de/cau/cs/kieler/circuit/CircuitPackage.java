@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.circuit;
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -68,105 +66,6 @@ public interface CircuitPackage extends EPackage {
 	int CIRCUIT = 0;
 
 	/**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__ANNOTATIONS = AnnotationsPackage.NAMED_OBJECT__ANNOTATIONS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__NAME = AnnotationsPackage.NAMED_OBJECT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__INCOMING_LINKS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__OUTGOING_LINKS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__ID = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Circuits</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__CIRCUITS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Links</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__LINKS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__NODES = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 5;
-
-	/**
-	 * The feature id for the '<em><b>Ports</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__PORTS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 6;
-
-	/**
-	 * The feature id for the '<em><b>Relations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__RELATIONS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 7;
-
-	/**
-	 * The number of structural features of the '<em>Circuit</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 8;
-
-	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.LinkImpl <em>Link</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -175,51 +74,6 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 */
 	int LINK = 1;
-
-	/**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK__ANNOTATIONS = AnnotationsPackage.NAMED_OBJECT__ANNOTATIONS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK__NAME = AnnotationsPackage.NAMED_OBJECT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Source</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK__SOURCE = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Target</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK__TARGET = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Link</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINK_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.PortImpl <em>Port</em>}' class.
@@ -232,60 +86,6 @@ public interface CircuitPackage extends EPackage {
 	int PORT = 2;
 
 	/**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT__ANNOTATIONS = AnnotationsPackage.NAMED_OBJECT__ANNOTATIONS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT__NAME = AnnotationsPackage.NAMED_OBJECT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT__INCOMING_LINKS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT__OUTGOING_LINKS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT__ID = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>Port</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
-
-	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.NodeImpl <em>Node</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -294,60 +94,6 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 */
 	int NODE = 3;
-
-	/**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE__ANNOTATIONS = AnnotationsPackage.NAMED_OBJECT__ANNOTATIONS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE__NAME = AnnotationsPackage.NAMED_OBJECT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Input Ports</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE__INPUT_PORTS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Output Ports</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE__OUTPUT_PORTS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Node ID</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE__NODE_ID = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>Node</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NODE_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.LinkableImpl <em>Linkable</em>}' class.
@@ -396,6 +142,249 @@ public interface CircuitPackage extends EPackage {
 	int LINKABLE_FEATURE_COUNT = 3;
 
 	/**
+	 * The number of operations of the '<em>Linkable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINKABLE_OPERATION_COUNT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CIRCUIT__INCOMING_LINKS = LINKABLE__INCOMING_LINKS;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CIRCUIT__OUTGOING_LINKS = LINKABLE__OUTGOING_LINKS;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CIRCUIT__ID = LINKABLE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Circuits</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CIRCUIT__CIRCUITS = LINKABLE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Links</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CIRCUIT__LINKS = LINKABLE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CIRCUIT__NODES = LINKABLE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Ports</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CIRCUIT__PORTS = LINKABLE_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Relations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CIRCUIT__RELATIONS = LINKABLE_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of structural features of the '<em>Circuit</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CIRCUIT_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 5;
+
+	/**
+	 * The number of operations of the '<em>Circuit</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CIRCUIT_OPERATION_COUNT = LINKABLE_OPERATION_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK__SOURCE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK__TARGET = 1;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK__NAME = 2;
+
+	/**
+	 * The number of structural features of the '<em>Link</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Link</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LINK_OPERATION_COUNT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PORT__INCOMING_LINKS = LINKABLE__INCOMING_LINKS;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PORT__OUTGOING_LINKS = LINKABLE__OUTGOING_LINKS;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PORT__ID = LINKABLE__ID;
+
+	/**
+	 * The number of structural features of the '<em>Port</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PORT_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Port</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PORT_OPERATION_COUNT = LINKABLE_OPERATION_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Input Ports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__INPUT_PORTS = 0;
+
+	/**
+	 * The feature id for the '<em><b>Output Ports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__OUTPUT_PORTS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Node ID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__NODE_ID = 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__NAME = 3;
+
+	/**
+	 * The number of structural features of the '<em>Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_FEATURE_COUNT = 4;
+
+	/**
+	 * The number of operations of the '<em>Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.RelationImpl <em>Relation</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -406,31 +395,13 @@ public interface CircuitPackage extends EPackage {
 	int RELATION = 5;
 
 	/**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RELATION__ANNOTATIONS = AnnotationsPackage.NAMED_OBJECT__ANNOTATIONS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RELATION__NAME = AnnotationsPackage.NAMED_OBJECT__NAME;
-
-	/**
 	 * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RELATION__INCOMING_LINKS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 0;
+	int RELATION__INCOMING_LINKS = LINKABLE__INCOMING_LINKS;
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
@@ -439,7 +410,7 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RELATION__OUTGOING_LINKS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 1;
+	int RELATION__OUTGOING_LINKS = LINKABLE__OUTGOING_LINKS;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -448,7 +419,7 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RELATION__ID = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
+	int RELATION__ID = LINKABLE__ID;
 
 	/**
 	 * The number of structural features of the '<em>Relation</em>' class.
@@ -457,7 +428,17 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RELATION_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
+	int RELATION_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 0;
+
+
+	/**
+	 * The number of operations of the '<em>Relation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RELATION_OPERATION_COUNT = LINKABLE_OPERATION_COUNT + 0;
 
 
 	/**
@@ -558,6 +539,17 @@ public interface CircuitPackage extends EPackage {
 	EReference getLink_Target();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Link#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see de.cau.cs.kieler.circuit.Link#getName()
+	 * @see #getLink()
+	 * @generated
+	 */
+	EAttribute getLink_Name();
+
+	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Port <em>Port</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -609,6 +601,17 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getNode_NodeID();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Node#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see de.cau.cs.kieler.circuit.Node#getName()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EAttribute getNode_Name();
 
 	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Linkable <em>Linkable</em>}'.
@@ -762,6 +765,14 @@ public interface CircuitPackage extends EPackage {
 		EReference LINK__TARGET = eINSTANCE.getLink_Target();
 
 		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LINK__NAME = eINSTANCE.getLink_Name();
+
+		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.PortImpl <em>Port</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -804,6 +815,14 @@ public interface CircuitPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NODE__NODE_ID = eINSTANCE.getNode_NodeID();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NODE__NAME = eINSTANCE.getNode_Name();
 
 		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.LinkableImpl <em>Linkable</em>}' class.

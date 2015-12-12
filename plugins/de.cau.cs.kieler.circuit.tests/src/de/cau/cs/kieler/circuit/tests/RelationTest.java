@@ -4,9 +4,6 @@ package de.cau.cs.kieler.circuit.tests;
 
 import de.cau.cs.kieler.circuit.CircuitFactory;
 import de.cau.cs.kieler.circuit.Relation;
-
-import junit.framework.TestCase;
-
 import junit.textui.TestRunner;
 
 /**
@@ -15,15 +12,7 @@ import junit.textui.TestRunner;
  * <!-- end-user-doc -->
  * @generated
  */
-public class RelationTest extends TestCase {
-
-	/**
-	 * The fixture for this Relation test case.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected Relation fixture = null;
+public class RelationTest extends LinkableTest {
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -45,23 +34,14 @@ public class RelationTest extends TestCase {
 	}
 
 	/**
-	 * Sets the fixture for this Relation test case.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void setFixture(Relation fixture) {
-		this.fixture = fixture;
-	}
-
-	/**
 	 * Returns the fixture for this Relation test case.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected Relation getFixture() {
-		return fixture;
+		return (Relation)fixture;
 	}
 
 	/**

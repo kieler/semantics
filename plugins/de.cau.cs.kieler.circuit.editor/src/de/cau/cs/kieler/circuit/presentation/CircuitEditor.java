@@ -155,9 +155,6 @@ import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 
 import de.cau.cs.kieler.circuit.provider.CircuitItemProviderAdapterFactory;
-
-import de.cau.cs.kieler.core.annotations.provider.AnnotationsItemProviderAdapterFactory;
-
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 
@@ -704,7 +701,6 @@ public class CircuitEditor
 
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new CircuitItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new AnnotationsItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
 		// Create the command stack that will notify this editor as commands are executed.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="circuit" nsURI="http://kieler.cs.cau.de/circuit" nsPrefix="circuit">
-  <eClassifiers xsi:type="ecore:EClass" name="Circuit" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//NamedObject #//Linkable">
+  <eClassifiers xsi:type="ecore:EClass" name="Circuit" eSuperTypes="#//Linkable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="circuits" upperBound="-1"
         eType="#//Circuit" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="links" upperBound="-1"
@@ -13,19 +13,21 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="relations" upperBound="-1"
         eType="#//Relation" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Link" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//NamedObject">
+  <eClassifiers xsi:type="ecore:EClass" name="Link">
     <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//Linkable"
         eOpposite="#//Linkable/outgoingLinks"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//Linkable"
         eOpposite="#//Linkable/incomingLinks"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Port" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//NamedObject #//Linkable"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//NamedObject">
+  <eClassifiers xsi:type="ecore:EClass" name="Port" eSuperTypes="#//Linkable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="inputPorts" upperBound="-1"
         eType="#//Port"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outputPorts" upperBound="-1"
         eType="#//Port"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nodeID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Linkable" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomingLinks" upperBound="-1"
@@ -35,5 +37,5 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral=""/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Relation" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//NamedObject #//Linkable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Relation" eSuperTypes="#//Linkable"/>
 </ecore:EPackage>

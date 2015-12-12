@@ -4,9 +4,6 @@ package de.cau.cs.kieler.circuit.tests;
 
 import de.cau.cs.kieler.circuit.Circuit;
 import de.cau.cs.kieler.circuit.CircuitFactory;
-
-import junit.framework.TestCase;
-
 import junit.textui.TestRunner;
 
 /**
@@ -15,15 +12,7 @@ import junit.textui.TestRunner;
  * <!-- end-user-doc -->
  * @generated
  */
-public class CircuitTest extends TestCase {
-
-	/**
-	 * The fixture for this Circuit test case.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected Circuit fixture = null;
+public class CircuitTest extends LinkableTest {
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -45,23 +34,14 @@ public class CircuitTest extends TestCase {
 	}
 
 	/**
-	 * Sets the fixture for this Circuit test case.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void setFixture(Circuit fixture) {
-		this.fixture = fixture;
-	}
-
-	/**
 	 * Returns the fixture for this Circuit test case.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected Circuit getFixture() {
-		return fixture;
+		return (Circuit)fixture;
 	}
 
 	/**

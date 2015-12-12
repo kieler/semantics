@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.circuit;
 
-import de.cau.cs.kieler.core.annotations.NamedObject;
-
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -26,7 +24,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Circuit extends NamedObject, Linkable {
+public interface Circuit extends Linkable {
 	/**
 	 * Returns the value of the '<em><b>Circuits</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Circuit}.

@@ -5,9 +5,6 @@ package de.cau.cs.kieler.circuit.impl;
 import de.cau.cs.kieler.circuit.CircuitPackage;
 import de.cau.cs.kieler.circuit.Node;
 import de.cau.cs.kieler.circuit.Port;
-
-import de.cau.cs.kieler.core.annotations.impl.NamedObjectImpl;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -18,6 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
@@ -30,12 +28,13 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.circuit.impl.NodeImpl#getInputPorts <em>Input Ports</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.NodeImpl#getOutputPorts <em>Output Ports</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.NodeImpl#getNodeID <em>Node ID</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.NodeImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class NodeImpl extends NamedObjectImpl implements Node {
+public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 	/**
 	 * The cached value of the '{@link #getInputPorts() <em>Input Ports</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -75,6 +74,26 @@ public class NodeImpl extends NamedObjectImpl implements Node {
 	 * @ordered
 	 */
 	protected String nodeID = NODE_ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -145,6 +164,27 @@ public class NodeImpl extends NamedObjectImpl implements Node {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.NODE__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -154,6 +194,8 @@ public class NodeImpl extends NamedObjectImpl implements Node {
 				return getOutputPorts();
 			case CircuitPackage.NODE__NODE_ID:
 				return getNodeID();
+			case CircuitPackage.NODE__NAME:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -178,6 +220,9 @@ public class NodeImpl extends NamedObjectImpl implements Node {
 			case CircuitPackage.NODE__NODE_ID:
 				setNodeID((String)newValue);
 				return;
+			case CircuitPackage.NODE__NAME:
+				setName((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -199,6 +244,9 @@ public class NodeImpl extends NamedObjectImpl implements Node {
 			case CircuitPackage.NODE__NODE_ID:
 				setNodeID(NODE_ID_EDEFAULT);
 				return;
+			case CircuitPackage.NODE__NAME:
+				setName(NAME_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -217,6 +265,8 @@ public class NodeImpl extends NamedObjectImpl implements Node {
 				return outputPorts != null && !outputPorts.isEmpty();
 			case CircuitPackage.NODE__NODE_ID:
 				return NODE_ID_EDEFAULT == null ? nodeID != null : !NODE_ID_EDEFAULT.equals(nodeID);
+			case CircuitPackage.NODE__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -233,6 +283,8 @@ public class NodeImpl extends NamedObjectImpl implements Node {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (nodeID: ");
 		result.append(nodeID);
+		result.append(", name: ");
+		result.append(name);
 		result.append(')');
 		return result.toString();
 	}

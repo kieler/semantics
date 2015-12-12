@@ -5,9 +5,6 @@ package de.cau.cs.kieler.circuit.impl;
 import de.cau.cs.kieler.circuit.CircuitPackage;
 import de.cau.cs.kieler.circuit.Link;
 import de.cau.cs.kieler.circuit.Linkable;
-
-import de.cau.cs.kieler.core.annotations.impl.NamedObjectImpl;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -15,6 +12,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,12 +23,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getSource <em>Source</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class LinkImpl extends NamedObjectImpl implements Link {
+public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	/**
 	 * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -50,6 +49,26 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 	 * @ordered
 	 */
 	protected Linkable target;
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -195,6 +214,27 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -240,6 +280,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 			case CircuitPackage.LINK__TARGET:
 				if (resolve) return getTarget();
 				return basicGetTarget();
+			case CircuitPackage.LINK__NAME:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -257,6 +299,9 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 				return;
 			case CircuitPackage.LINK__TARGET:
 				setTarget((Linkable)newValue);
+				return;
+			case CircuitPackage.LINK__NAME:
+				setName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -276,6 +321,9 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 			case CircuitPackage.LINK__TARGET:
 				setTarget((Linkable)null);
 				return;
+			case CircuitPackage.LINK__NAME:
+				setName(NAME_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -292,8 +340,26 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 				return source != null;
 			case CircuitPackage.LINK__TARGET:
 				return target != null;
+			case CircuitPackage.LINK__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (name: ");
+		result.append(name);
+		result.append(')');
+		return result.toString();
 	}
 
 } //LinkImpl

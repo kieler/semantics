@@ -3,10 +3,6 @@
 package de.cau.cs.kieler.circuit.util;
 
 import de.cau.cs.kieler.circuit.*;
-
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.annotations.NamedObject;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -72,34 +68,26 @@ public class CircuitSwitch<T> extends Switch<T> {
 			case CircuitPackage.CIRCUIT: {
 				Circuit circuit = (Circuit)theEObject;
 				T result = caseCircuit(circuit);
-				if (result == null) result = caseNamedObject(circuit);
 				if (result == null) result = caseLinkable(circuit);
-				if (result == null) result = caseAnnotatable(circuit);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case CircuitPackage.LINK: {
 				Link link = (Link)theEObject;
 				T result = caseLink(link);
-				if (result == null) result = caseNamedObject(link);
-				if (result == null) result = caseAnnotatable(link);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case CircuitPackage.PORT: {
 				Port port = (Port)theEObject;
 				T result = casePort(port);
-				if (result == null) result = caseNamedObject(port);
 				if (result == null) result = caseLinkable(port);
-				if (result == null) result = caseAnnotatable(port);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case CircuitPackage.NODE: {
 				Node node = (Node)theEObject;
 				T result = caseNode(node);
-				if (result == null) result = caseNamedObject(node);
-				if (result == null) result = caseAnnotatable(node);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -112,9 +100,7 @@ public class CircuitSwitch<T> extends Switch<T> {
 			case CircuitPackage.RELATION: {
 				Relation relation = (Relation)theEObject;
 				T result = caseRelation(relation);
-				if (result == null) result = caseNamedObject(relation);
 				if (result == null) result = caseLinkable(relation);
-				if (result == null) result = caseAnnotatable(relation);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -209,36 +195,6 @@ public class CircuitSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseRelation(Relation object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Annotatable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseAnnotatable(Annotatable object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Named Object</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Named Object</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseNamedObject(NamedObject object) {
 		return null;
 	}
 

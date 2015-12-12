@@ -10,9 +10,6 @@ import de.cau.cs.kieler.circuit.Linkable;
 import de.cau.cs.kieler.circuit.Node;
 import de.cau.cs.kieler.circuit.Port;
 import de.cau.cs.kieler.circuit.Relation;
-
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -115,9 +112,6 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 
 		isInited = true;
 
-		// Initialize simple dependencies
-		AnnotationsPackage.eINSTANCE.eClass();
-
 		// Create package meta-data objects
 		theCircuitPackage.createPackageContents();
 
@@ -219,6 +213,15 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getLink_Name() {
+		return (EAttribute)linkEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPort() {
 		return portEClass;
 	}
@@ -257,6 +260,15 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 */
 	public EAttribute getNode_NodeID() {
 		return (EAttribute)nodeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNode_Name() {
+		return (EAttribute)nodeEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -342,6 +354,7 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 		linkEClass = createEClass(LINK);
 		createEReference(linkEClass, LINK__SOURCE);
 		createEReference(linkEClass, LINK__TARGET);
+		createEAttribute(linkEClass, LINK__NAME);
 
 		portEClass = createEClass(PORT);
 
@@ -349,6 +362,7 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 		createEReference(nodeEClass, NODE__INPUT_PORTS);
 		createEReference(nodeEClass, NODE__OUTPUT_PORTS);
 		createEAttribute(nodeEClass, NODE__NODE_ID);
+		createEAttribute(nodeEClass, NODE__NAME);
 
 		linkableEClass = createEClass(LINKABLE);
 		createEReference(linkableEClass, LINKABLE__INCOMING_LINKS);
@@ -381,24 +395,16 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
 
-		// Obtain other dependent packages
-		AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
-
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		circuitEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
 		circuitEClass.getESuperTypes().add(this.getLinkable());
-		linkEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
-		portEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
 		portEClass.getESuperTypes().add(this.getLinkable());
-		nodeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
-		relationEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
 		relationEClass.getESuperTypes().add(this.getLinkable());
 
-		// Initialize classes and features; add operations and parameters
+		// Initialize classes, features, and operations; add parameters
 		initEClass(circuitEClass, Circuit.class, "Circuit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCircuit_Circuits(), this.getCircuit(), null, "circuits", null, 0, -1, Circuit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCircuit_Links(), this.getLink(), null, "links", null, 0, -1, Circuit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -409,6 +415,7 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 		initEClass(linkEClass, Link.class, "Link", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getLink_Source(), this.getLinkable(), this.getLinkable_OutgoingLinks(), "source", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getLink_Target(), this.getLinkable(), this.getLinkable_IncomingLinks(), "target", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLink_Name(), ecorePackage.getEString(), "name", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(portEClass, Port.class, "Port", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -416,6 +423,7 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 		initEReference(getNode_InputPorts(), this.getPort(), null, "inputPorts", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNode_OutputPorts(), this.getPort(), null, "outputPorts", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNode_NodeID(), ecorePackage.getEString(), "nodeID", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(linkableEClass, Linkable.class, "Linkable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getLinkable_IncomingLinks(), this.getLink(), this.getLink_Target(), "incomingLinks", null, 0, -1, Linkable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
