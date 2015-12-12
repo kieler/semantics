@@ -13,7 +13,7 @@ import de.cau.cs.kieler.core.annotations.NamedObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.circuit.Link#getSource <em>Source</em>}</li>
- *   <li>{@link de.cau.cs.kieler.circuit.Link#getTarger <em>Targer</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}</li>
  * </ul>
  * </p>
  *
@@ -51,31 +51,31 @@ public interface Link extends NamedObject {
 	void setSource(Linkable value);
 
 	/**
-	 * Returns the value of the '<em><b>Targer</b></em>' reference.
+	 * Returns the value of the '<em><b>Target</b></em>' reference.
 	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Linkable#getIncomingLinks <em>Incoming Links</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Targer</em>' reference isn't clear,
+	 * If the meaning of the '<em>Target</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Targer</em>' reference.
-	 * @see #setTarger(Linkable)
-	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getLink_Targer()
+	 * @return the value of the '<em>Target</em>' reference.
+	 * @see #setTarget(Linkable)
+	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getLink_Target()
 	 * @see de.cau.cs.kieler.circuit.Linkable#getIncomingLinks
 	 * @model opposite="incomingLinks"
 	 * @generated
 	 */
-	Linkable getTarger();
+	Linkable getTarget();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Link#getTarger <em>Targer</em>}' reference.
+	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Targer</em>' reference.
-	 * @see #getTarger()
+	 * @param value the new value of the '<em>Target</em>' reference.
+	 * @see #getTarget()
 	 * @generated
 	 */
-	void setTarger(Linkable value);
+	void setTarget(Linkable value);
 
 } // Link

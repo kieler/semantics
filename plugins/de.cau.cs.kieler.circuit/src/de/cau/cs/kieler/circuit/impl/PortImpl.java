@@ -106,7 +106,7 @@ public class PortImpl extends NamedObjectImpl implements Port {
 	 */
 	public EList<Link> getIncomingLinks() {
 		if (incomingLinks == null) {
-			incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, CircuitPackage.PORT__INCOMING_LINKS, CircuitPackage.LINK__TARGER);
+			incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, CircuitPackage.PORT__INCOMING_LINKS, CircuitPackage.LINK__TARGET);
 		}
 		return incomingLinks;
 	}

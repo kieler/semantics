@@ -106,7 +106,7 @@ public class RelationImpl extends NamedObjectImpl implements Relation {
 	 */
 	public EList<Link> getIncomingLinks() {
 		if (incomingLinks == null) {
-			incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, CircuitPackage.RELATION__INCOMING_LINKS, CircuitPackage.LINK__TARGER);
+			incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, CircuitPackage.RELATION__INCOMING_LINKS, CircuitPackage.LINK__TARGET);
 		}
 		return incomingLinks;
 	}

@@ -16,7 +16,7 @@ Package circuit <http://kieler.cs.cau.de/circuit>
 
   Class Link -> NamedObject
     Reference source : Linkable
-    Reference targer : Linkable
+    Reference target : Linkable
 
   Class Port -> NamedObject, Linkable
 

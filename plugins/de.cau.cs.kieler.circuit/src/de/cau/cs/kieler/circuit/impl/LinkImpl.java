@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getSource <em>Source</em>}</li>
- *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getTarger <em>Targer</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getTarget <em>Target</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,14 +42,14 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 	protected Linkable source;
 
 	/**
-	 * The cached value of the '{@link #getTarger() <em>Targer</em>}' reference.
+	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTarger()
+	 * @see #getTarget()
 	 * @generated
 	 * @ordered
 	 */
-	protected Linkable targer;
+	protected Linkable target;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -135,16 +135,16 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Linkable getTarger() {
-		if (targer != null && targer.eIsProxy()) {
-			InternalEObject oldTarger = (InternalEObject)targer;
-			targer = (Linkable)eResolveProxy(oldTarger);
-			if (targer != oldTarger) {
+	public Linkable getTarget() {
+		if (target != null && target.eIsProxy()) {
+			InternalEObject oldTarget = (InternalEObject)target;
+			target = (Linkable)eResolveProxy(oldTarget);
+			if (target != oldTarget) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CircuitPackage.LINK__TARGER, oldTarger, targer));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CircuitPackage.LINK__TARGET, oldTarget, target));
 			}
 		}
-		return targer;
+		return target;
 	}
 
 	/**
@@ -152,8 +152,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Linkable basicGetTarger() {
-		return targer;
+	public Linkable basicGetTarget() {
+		return target;
 	}
 
 	/**
@@ -161,11 +161,11 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetTarger(Linkable newTarger, NotificationChain msgs) {
-		Linkable oldTarger = targer;
-		targer = newTarger;
+	public NotificationChain basicSetTarget(Linkable newTarget, NotificationChain msgs) {
+		Linkable oldTarget = target;
+		target = newTarget;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__TARGER, oldTarger, newTarger);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__TARGET, oldTarget, newTarget);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -176,18 +176,18 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTarger(Linkable newTarger) {
-		if (newTarger != targer) {
+	public void setTarget(Linkable newTarget) {
+		if (newTarget != target) {
 			NotificationChain msgs = null;
-			if (targer != null)
-				msgs = ((InternalEObject)targer).eInverseRemove(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
-			if (newTarger != null)
-				msgs = ((InternalEObject)newTarger).eInverseAdd(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
-			msgs = basicSetTarger(newTarger, msgs);
+			if (target != null)
+				msgs = ((InternalEObject)target).eInverseRemove(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
+			if (newTarget != null)
+				msgs = ((InternalEObject)newTarget).eInverseAdd(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
+			msgs = basicSetTarget(newTarget, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__TARGER, newTarger, newTarger));
+			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__TARGET, newTarget, newTarget));
 	}
 
 	/**
@@ -202,10 +202,10 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 				if (source != null)
 					msgs = ((InternalEObject)source).eInverseRemove(this, CircuitPackage.LINKABLE__OUTGOING_LINKS, Linkable.class, msgs);
 				return basicSetSource((Linkable)otherEnd, msgs);
-			case CircuitPackage.LINK__TARGER:
-				if (targer != null)
-					msgs = ((InternalEObject)targer).eInverseRemove(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
-				return basicSetTarger((Linkable)otherEnd, msgs);
+			case CircuitPackage.LINK__TARGET:
+				if (target != null)
+					msgs = ((InternalEObject)target).eInverseRemove(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
+				return basicSetTarget((Linkable)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -220,8 +220,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 		switch (featureID) {
 			case CircuitPackage.LINK__SOURCE:
 				return basicSetSource(null, msgs);
-			case CircuitPackage.LINK__TARGER:
-				return basicSetTarger(null, msgs);
+			case CircuitPackage.LINK__TARGET:
+				return basicSetTarget(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -237,9 +237,9 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 			case CircuitPackage.LINK__SOURCE:
 				if (resolve) return getSource();
 				return basicGetSource();
-			case CircuitPackage.LINK__TARGER:
-				if (resolve) return getTarger();
-				return basicGetTarger();
+			case CircuitPackage.LINK__TARGET:
+				if (resolve) return getTarget();
+				return basicGetTarget();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -255,8 +255,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 			case CircuitPackage.LINK__SOURCE:
 				setSource((Linkable)newValue);
 				return;
-			case CircuitPackage.LINK__TARGER:
-				setTarger((Linkable)newValue);
+			case CircuitPackage.LINK__TARGET:
+				setTarget((Linkable)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -273,8 +273,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 			case CircuitPackage.LINK__SOURCE:
 				setSource((Linkable)null);
 				return;
-			case CircuitPackage.LINK__TARGER:
-				setTarger((Linkable)null);
+			case CircuitPackage.LINK__TARGET:
+				setTarget((Linkable)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -290,8 +290,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 		switch (featureID) {
 			case CircuitPackage.LINK__SOURCE:
 				return source != null;
-			case CircuitPackage.LINK__TARGER:
-				return targer != null;
+			case CircuitPackage.LINK__TARGET:
+				return target != null;
 		}
 		return super.eIsSet(featureID);
 	}

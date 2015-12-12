@@ -48,7 +48,7 @@ public class LinkItemProvider extends NamedObjectItemProvider {
 			super.getPropertyDescriptors(object);
 
 			addSourcePropertyDescriptor(object);
-			addTargerPropertyDescriptor(object);
+			addTargetPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -76,19 +76,19 @@ public class LinkItemProvider extends NamedObjectItemProvider {
 	}
 
 	/**
-	 * This adds a property descriptor for the Targer feature.
+	 * This adds a property descriptor for the Target feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addTargerPropertyDescriptor(Object object) {
+	protected void addTargetPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Link_targer_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Link_targer_feature", "_UI_Link_type"),
-				 CircuitPackage.Literals.LINK__TARGER,
+				 getString("_UI_Link_target_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Link_target_feature", "_UI_Link_type"),
+				 CircuitPackage.Literals.LINK__TARGET,
 				 true,
 				 false,
 				 true,

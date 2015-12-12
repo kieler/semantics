@@ -28,7 +28,7 @@ public interface Linkable extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Incoming Links</b></em>' reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Link}.
-	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Link#getTarger <em>Targer</em>}'.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Incoming Links</em>' reference list isn't clear,
@@ -37,8 +37,8 @@ public interface Linkable extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Incoming Links</em>' reference list.
 	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getLinkable_IncomingLinks()
-	 * @see de.cau.cs.kieler.circuit.Link#getTarger
-	 * @model opposite="targer"
+	 * @see de.cau.cs.kieler.circuit.Link#getTarget
+	 * @model opposite="target"
 	 * @generated
 	 */
 	EList<Link> getIncomingLinks();

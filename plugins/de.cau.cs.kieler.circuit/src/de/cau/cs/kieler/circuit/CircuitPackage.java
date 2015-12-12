@@ -204,13 +204,13 @@ public interface CircuitPackage extends EPackage {
 	int LINK__SOURCE = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Targer</b></em>' reference.
+	 * The feature id for the '<em><b>Target</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LINK__TARGER = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 1;
+	int LINK__TARGET = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Link</em>' class.
@@ -547,15 +547,15 @@ public interface CircuitPackage extends EPackage {
 	EReference getLink_Source();
 
 	/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.circuit.Link#getTarger <em>Targer</em>}'.
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Targer</em>'.
-	 * @see de.cau.cs.kieler.circuit.Link#getTarger()
+	 * @return the meta object for the reference '<em>Target</em>'.
+	 * @see de.cau.cs.kieler.circuit.Link#getTarget()
 	 * @see #getLink()
 	 * @generated
 	 */
-	EReference getLink_Targer();
+	EReference getLink_Target();
 
 	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Port <em>Port</em>}'.
@@ -754,12 +754,12 @@ public interface CircuitPackage extends EPackage {
 		EReference LINK__SOURCE = eINSTANCE.getLink_Source();
 
 		/**
-		 * The meta object literal for the '<em><b>Targer</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference LINK__TARGER = eINSTANCE.getLink_Targer();
+		EReference LINK__TARGET = eINSTANCE.getLink_Target();
 
 		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.PortImpl <em>Port</em>}' class.

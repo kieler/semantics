@@ -16,5 +16,7 @@ public interface LinkValidator {
 	boolean validate();
 
 	boolean validateSource(Linkable value);
+	boolean validateTarget(Linkable value);
+
 	boolean validateTarger(Linkable value);
 }
