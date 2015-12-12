@@ -68,7 +68,6 @@ public class CircuitSwitch<T> extends Switch<T> {
 			case CircuitPackage.CIRCUIT: {
 				Circuit circuit = (Circuit)theEObject;
 				T result = caseCircuit(circuit);
-				if (result == null) result = caseLinkable(circuit);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -81,26 +80,12 @@ public class CircuitSwitch<T> extends Switch<T> {
 			case CircuitPackage.PORT: {
 				Port port = (Port)theEObject;
 				T result = casePort(port);
-				if (result == null) result = caseLinkable(port);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case CircuitPackage.NODE: {
 				Node node = (Node)theEObject;
 				T result = caseNode(node);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CircuitPackage.LINKABLE: {
-				Linkable linkable = (Linkable)theEObject;
-				T result = caseLinkable(linkable);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case CircuitPackage.RELATION: {
-				Relation relation = (Relation)theEObject;
-				T result = caseRelation(relation);
-				if (result == null) result = caseLinkable(relation);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -165,36 +150,6 @@ public class CircuitSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNode(Node object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Linkable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Linkable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseLinkable(Linkable object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Relation</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Relation</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseRelation(Relation object) {
 		return null;
 	}
 

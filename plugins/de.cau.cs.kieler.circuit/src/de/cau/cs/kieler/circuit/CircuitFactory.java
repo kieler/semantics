@@ -58,15 +58,6 @@ public interface CircuitFactory extends EFactory {
 	Node createNode();
 
 	/**
-	 * Returns a new object of class '<em>Relation</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Relation</em>'.
-	 * @generated
-	 */
-	Relation createRelation();
-
-	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

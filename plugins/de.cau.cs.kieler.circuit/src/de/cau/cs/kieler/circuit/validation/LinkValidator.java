@@ -5,6 +5,7 @@
 package de.cau.cs.kieler.circuit.validation;
 
 import de.cau.cs.kieler.circuit.Linkable;
+import de.cau.cs.kieler.circuit.Port;
 
 /**
  * A sample validator interface for {@link de.cau.cs.kieler.circuit.Link}.
@@ -14,6 +15,10 @@ import de.cau.cs.kieler.circuit.Linkable;
  */
 public interface LinkValidator {
 	boolean validate();
+
+	boolean validateSource(Port value);
+
+	boolean validateTarget(Port value);
 
 	boolean validateSource(Linkable value);
 	boolean validateTarget(Linkable value);

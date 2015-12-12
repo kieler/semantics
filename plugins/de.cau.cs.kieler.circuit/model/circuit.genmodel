@@ -12,25 +12,23 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference circuit.ecore#//Circuit/links"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference circuit.ecore#//Circuit/nodes"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference circuit.ecore#//Circuit/ports"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference circuit.ecore#//Circuit/relations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute circuit.ecore#//Circuit/name"/>
     </genClasses>
     <genClasses ecoreClass="circuit.ecore#//Link">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference circuit.ecore#//Link/source"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference circuit.ecore#//Link/target"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute circuit.ecore#//Link/name"/>
     </genClasses>
-    <genClasses ecoreClass="circuit.ecore#//Port"/>
+    <genClasses ecoreClass="circuit.ecore#//Port">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference circuit.ecore#//Port/incomingLinks"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference circuit.ecore#//Port/outgoingLinks"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference circuit.ecore#//Port/node"/>
+    </genClasses>
     <genClasses ecoreClass="circuit.ecore#//Node">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference circuit.ecore#//Node/inputPorts"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference circuit.ecore#//Node/outputPorts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference circuit.ecore#//Node/inputPorts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference circuit.ecore#//Node/outputPorts"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute circuit.ecore#//Node/nodeID"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute circuit.ecore#//Node/name"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="circuit.ecore#//Linkable">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference circuit.ecore#//Linkable/incomingLinks"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference circuit.ecore#//Linkable/outgoingLinks"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute circuit.ecore#//Linkable/id"/>
-    </genClasses>
-    <genClasses ecoreClass="circuit.ecore#//Relation"/>
   </genPackages>
 </genmodel:GenModel>

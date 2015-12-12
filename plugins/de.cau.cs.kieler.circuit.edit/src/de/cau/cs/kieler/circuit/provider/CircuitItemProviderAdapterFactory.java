@@ -164,29 +164,6 @@ public class CircuitItemProviderAdapterFactory extends CircuitAdapterFactory imp
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.circuit.Relation} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected RelationItemProvider relationItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.circuit.Relation}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createRelationAdapter() {
-		if (relationItemProvider == null) {
-			relationItemProvider = new RelationItemProvider(this);
-		}
-
-		return relationItemProvider;
-	}
-
-	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -289,7 +266,6 @@ public class CircuitItemProviderAdapterFactory extends CircuitAdapterFactory imp
 		if (linkItemProvider != null) linkItemProvider.dispose();
 		if (portItemProvider != null) portItemProvider.dispose();
 		if (nodeItemProvider != null) nodeItemProvider.dispose();
-		if (relationItemProvider != null) relationItemProvider.dispose();
 	}
 
 }

@@ -9,14 +9,17 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +39,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 	/**
-	 * The cached value of the '{@link #getInputPorts() <em>Input Ports</em>}' reference list.
+	 * The cached value of the '{@link #getInputPorts() <em>Input Ports</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getInputPorts()
@@ -46,7 +49,7 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 	protected EList<Port> inputPorts;
 
 	/**
-	 * The cached value of the '{@link #getOutputPorts() <em>Output Ports</em>}' reference list.
+	 * The cached value of the '{@link #getOutputPorts() <em>Output Ports</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getOutputPorts()
@@ -121,7 +124,7 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 	 */
 	public EList<Port> getInputPorts() {
 		if (inputPorts == null) {
-			inputPorts = new EObjectResolvingEList<Port>(Port.class, this, CircuitPackage.NODE__INPUT_PORTS);
+			inputPorts = new EObjectContainmentEList<Port>(Port.class, this, CircuitPackage.NODE__INPUT_PORTS);
 		}
 		return inputPorts;
 	}
@@ -133,7 +136,7 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 	 */
 	public EList<Port> getOutputPorts() {
 		if (outputPorts == null) {
-			outputPorts = new EObjectResolvingEList<Port>(Port.class, this, CircuitPackage.NODE__OUTPUT_PORTS);
+			outputPorts = new EObjectContainmentEList<Port>(Port.class, this, CircuitPackage.NODE__OUTPUT_PORTS);
 		}
 		return outputPorts;
 	}
@@ -178,6 +181,22 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
 		name = newName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.NODE__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case CircuitPackage.NODE__INPUT_PORTS:
+				return ((InternalEList<?>)getInputPorts()).basicRemove(otherEnd, msgs);
+			case CircuitPackage.NODE__OUTPUT_PORTS:
+				return ((InternalEList<?>)getOutputPorts()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**

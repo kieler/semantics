@@ -4,7 +4,7 @@ package de.cau.cs.kieler.circuit.impl;
 
 import de.cau.cs.kieler.circuit.CircuitPackage;
 import de.cau.cs.kieler.circuit.Link;
-import de.cau.cs.kieler.circuit.Linkable;
+import de.cau.cs.kieler.circuit.Port;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -38,7 +38,7 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * @generated
 	 * @ordered
 	 */
-	protected Linkable source;
+	protected Port source;
 
 	/**
 	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
@@ -48,7 +48,7 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * @generated
 	 * @ordered
 	 */
-	protected Linkable target;
+	protected Port target;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -94,10 +94,10 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Linkable getSource() {
+	public Port getSource() {
 		if (source != null && source.eIsProxy()) {
 			InternalEObject oldSource = (InternalEObject)source;
-			source = (Linkable)eResolveProxy(oldSource);
+			source = (Port)eResolveProxy(oldSource);
 			if (source != oldSource) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CircuitPackage.LINK__SOURCE, oldSource, source));
@@ -111,7 +111,7 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Linkable basicGetSource() {
+	public Port basicGetSource() {
 		return source;
 	}
 
@@ -120,8 +120,8 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetSource(Linkable newSource, NotificationChain msgs) {
-		Linkable oldSource = source;
+	public NotificationChain basicSetSource(Port newSource, NotificationChain msgs) {
+		Port oldSource = source;
 		source = newSource;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__SOURCE, oldSource, newSource);
@@ -135,13 +135,13 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setSource(Linkable newSource) {
+	public void setSource(Port newSource) {
 		if (newSource != source) {
 			NotificationChain msgs = null;
 			if (source != null)
-				msgs = ((InternalEObject)source).eInverseRemove(this, CircuitPackage.LINKABLE__OUTGOING_LINKS, Linkable.class, msgs);
+				msgs = ((InternalEObject)source).eInverseRemove(this, CircuitPackage.PORT__OUTGOING_LINKS, Port.class, msgs);
 			if (newSource != null)
-				msgs = ((InternalEObject)newSource).eInverseAdd(this, CircuitPackage.LINKABLE__OUTGOING_LINKS, Linkable.class, msgs);
+				msgs = ((InternalEObject)newSource).eInverseAdd(this, CircuitPackage.PORT__OUTGOING_LINKS, Port.class, msgs);
 			msgs = basicSetSource(newSource, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -154,10 +154,10 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Linkable getTarget() {
+	public Port getTarget() {
 		if (target != null && target.eIsProxy()) {
 			InternalEObject oldTarget = (InternalEObject)target;
-			target = (Linkable)eResolveProxy(oldTarget);
+			target = (Port)eResolveProxy(oldTarget);
 			if (target != oldTarget) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CircuitPackage.LINK__TARGET, oldTarget, target));
@@ -171,7 +171,7 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Linkable basicGetTarget() {
+	public Port basicGetTarget() {
 		return target;
 	}
 
@@ -180,8 +180,8 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetTarget(Linkable newTarget, NotificationChain msgs) {
-		Linkable oldTarget = target;
+	public NotificationChain basicSetTarget(Port newTarget, NotificationChain msgs) {
+		Port oldTarget = target;
 		target = newTarget;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__TARGET, oldTarget, newTarget);
@@ -195,13 +195,13 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTarget(Linkable newTarget) {
+	public void setTarget(Port newTarget) {
 		if (newTarget != target) {
 			NotificationChain msgs = null;
 			if (target != null)
-				msgs = ((InternalEObject)target).eInverseRemove(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
+				msgs = ((InternalEObject)target).eInverseRemove(this, CircuitPackage.PORT__INCOMING_LINKS, Port.class, msgs);
 			if (newTarget != null)
-				msgs = ((InternalEObject)newTarget).eInverseAdd(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
+				msgs = ((InternalEObject)newTarget).eInverseAdd(this, CircuitPackage.PORT__INCOMING_LINKS, Port.class, msgs);
 			msgs = basicSetTarget(newTarget, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -240,12 +240,12 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 		switch (featureID) {
 			case CircuitPackage.LINK__SOURCE:
 				if (source != null)
-					msgs = ((InternalEObject)source).eInverseRemove(this, CircuitPackage.LINKABLE__OUTGOING_LINKS, Linkable.class, msgs);
-				return basicSetSource((Linkable)otherEnd, msgs);
+					msgs = ((InternalEObject)source).eInverseRemove(this, CircuitPackage.PORT__OUTGOING_LINKS, Port.class, msgs);
+				return basicSetSource((Port)otherEnd, msgs);
 			case CircuitPackage.LINK__TARGET:
 				if (target != null)
-					msgs = ((InternalEObject)target).eInverseRemove(this, CircuitPackage.LINKABLE__INCOMING_LINKS, Linkable.class, msgs);
-				return basicSetTarget((Linkable)otherEnd, msgs);
+					msgs = ((InternalEObject)target).eInverseRemove(this, CircuitPackage.PORT__INCOMING_LINKS, Port.class, msgs);
+				return basicSetTarget((Port)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -295,10 +295,10 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case CircuitPackage.LINK__SOURCE:
-				setSource((Linkable)newValue);
+				setSource((Port)newValue);
 				return;
 			case CircuitPackage.LINK__TARGET:
-				setTarget((Linkable)newValue);
+				setTarget((Port)newValue);
 				return;
 			case CircuitPackage.LINK__NAME:
 				setName((String)newValue);
@@ -316,10 +316,10 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case CircuitPackage.LINK__SOURCE:
-				setSource((Linkable)null);
+				setSource((Port)null);
 				return;
 			case CircuitPackage.LINK__TARGET:
-				setTarget((Linkable)null);
+				setTarget((Port)null);
 				return;
 			case CircuitPackage.LINK__NAME:
 				setName(NAME_EDEFAULT);

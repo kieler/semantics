@@ -83,14 +83,6 @@ public class CircuitAdapterFactory extends AdapterFactoryImpl {
 				return createNodeAdapter();
 			}
 			@Override
-			public Adapter caseLinkable(Linkable object) {
-				return createLinkableAdapter();
-			}
-			@Override
-			public Adapter caseRelation(Relation object) {
-				return createRelationAdapter();
-			}
-			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -163,34 +155,6 @@ public class CircuitAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNodeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.circuit.Linkable <em>Linkable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.circuit.Linkable
-	 * @generated
-	 */
-	public Adapter createLinkableAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.circuit.Relation <em>Relation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.circuit.Relation
-	 * @generated
-	 */
-	public Adapter createRelationAdapter() {
 		return null;
 	}
 

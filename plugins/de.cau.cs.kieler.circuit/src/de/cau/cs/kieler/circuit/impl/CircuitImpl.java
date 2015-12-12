@@ -7,14 +7,16 @@ import de.cau.cs.kieler.circuit.CircuitPackage;
 import de.cau.cs.kieler.circuit.Link;
 import de.cau.cs.kieler.circuit.Node;
 import de.cau.cs.kieler.circuit.Port;
-import de.cau.cs.kieler.circuit.Relation;
 import java.util.Collection;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -29,13 +31,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getLinks <em>Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getPorts <em>Ports</em>}</li>
- *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getRelations <em>Relations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class CircuitImpl extends LinkableImpl implements Circuit {
+public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit {
 	/**
 	 * The cached value of the '{@link #getCircuits() <em>Circuits</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -77,14 +79,24 @@ public class CircuitImpl extends LinkableImpl implements Circuit {
 	protected EList<Port> ports;
 
 	/**
-	 * The cached value of the '{@link #getRelations() <em>Relations</em>}' containment reference list.
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getRelations()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Relation> relations;
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -158,11 +170,20 @@ public class CircuitImpl extends LinkableImpl implements Circuit {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Relation> getRelations() {
-		if (relations == null) {
-			relations = new EObjectContainmentEList<Relation>(Relation.class, this, CircuitPackage.CIRCUIT__RELATIONS);
-		}
-		return relations;
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.CIRCUIT__NAME, oldName, name));
 	}
 
 	/**
@@ -181,8 +202,6 @@ public class CircuitImpl extends LinkableImpl implements Circuit {
 				return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
 			case CircuitPackage.CIRCUIT__PORTS:
 				return ((InternalEList<?>)getPorts()).basicRemove(otherEnd, msgs);
-			case CircuitPackage.CIRCUIT__RELATIONS:
-				return ((InternalEList<?>)getRelations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -203,8 +222,8 @@ public class CircuitImpl extends LinkableImpl implements Circuit {
 				return getNodes();
 			case CircuitPackage.CIRCUIT__PORTS:
 				return getPorts();
-			case CircuitPackage.CIRCUIT__RELATIONS:
-				return getRelations();
+			case CircuitPackage.CIRCUIT__NAME:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -234,9 +253,8 @@ public class CircuitImpl extends LinkableImpl implements Circuit {
 				getPorts().clear();
 				getPorts().addAll((Collection<? extends Port>)newValue);
 				return;
-			case CircuitPackage.CIRCUIT__RELATIONS:
-				getRelations().clear();
-				getRelations().addAll((Collection<? extends Relation>)newValue);
+			case CircuitPackage.CIRCUIT__NAME:
+				setName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -262,8 +280,8 @@ public class CircuitImpl extends LinkableImpl implements Circuit {
 			case CircuitPackage.CIRCUIT__PORTS:
 				getPorts().clear();
 				return;
-			case CircuitPackage.CIRCUIT__RELATIONS:
-				getRelations().clear();
+			case CircuitPackage.CIRCUIT__NAME:
+				setName(NAME_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -285,10 +303,26 @@ public class CircuitImpl extends LinkableImpl implements Circuit {
 				return nodes != null && !nodes.isEmpty();
 			case CircuitPackage.CIRCUIT__PORTS:
 				return ports != null && !ports.isEmpty();
-			case CircuitPackage.CIRCUIT__RELATIONS:
-				return relations != null && !relations.isEmpty();
+			case CircuitPackage.CIRCUIT__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (name: ");
+		result.append(name);
+		result.append(')');
+		return result.toString();
 	}
 
 } //CircuitImpl

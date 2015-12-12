@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Node extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Input Ports</b></em>' reference list.
+	 * Returns the value of the '<em><b>Input Ports</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Port}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -34,15 +34,15 @@ public interface Node extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Input Ports</em>' reference list.
+	 * @return the value of the '<em>Input Ports</em>' containment reference list.
 	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getNode_InputPorts()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<Port> getInputPorts();
 
 	/**
-	 * Returns the value of the '<em><b>Output Ports</b></em>' reference list.
+	 * Returns the value of the '<em><b>Output Ports</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Port}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -50,9 +50,9 @@ public interface Node extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Output Ports</em>' reference list.
+	 * @return the value of the '<em>Output Ports</em>' containment reference list.
 	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getNode_OutputPorts()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<Port> getOutputPorts();

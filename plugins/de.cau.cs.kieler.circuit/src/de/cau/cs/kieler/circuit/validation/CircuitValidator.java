@@ -25,5 +25,7 @@ public interface CircuitValidator {
 	boolean validateLinks(EList<Link> value);
 	boolean validateNodes(EList<Node> value);
 	boolean validatePorts(EList<Port> value);
+	boolean validateName(String value);
+
 	boolean validateRelations(EList<Relation> value);
 }

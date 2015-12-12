@@ -11,8 +11,17 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -21,7 +30,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class CircuitItemProvider extends LinkableItemProvider {
+public class CircuitItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -43,8 +52,31 @@ public class CircuitItemProvider extends LinkableItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Circuit_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Circuit_name_feature", "_UI_Circuit_type"),
+				 CircuitPackage.Literals.CIRCUIT__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -63,7 +95,6 @@ public class CircuitItemProvider extends LinkableItemProvider {
 			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__LINKS);
 			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__NODES);
 			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__PORTS);
-			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__RELATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -100,7 +131,7 @@ public class CircuitItemProvider extends LinkableItemProvider {
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Circuit)object).getId();
+		String label = ((Circuit)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Circuit_type") :
 			getString("_UI_Circuit_type") + " " + label;
@@ -119,11 +150,13 @@ public class CircuitItemProvider extends LinkableItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Circuit.class)) {
+			case CircuitPackage.CIRCUIT__NAME:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 			case CircuitPackage.CIRCUIT__CIRCUITS:
 			case CircuitPackage.CIRCUIT__LINKS:
 			case CircuitPackage.CIRCUIT__NODES:
 			case CircuitPackage.CIRCUIT__PORTS:
-			case CircuitPackage.CIRCUIT__RELATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -160,11 +193,17 @@ public class CircuitItemProvider extends LinkableItemProvider {
 			(createChildParameter
 				(CircuitPackage.Literals.CIRCUIT__PORTS,
 				 CircuitFactory.eINSTANCE.createPort()));
+	}
 
-		newChildDescriptors.add
-			(createChildParameter
-				(CircuitPackage.Literals.CIRCUIT__RELATIONS,
-				 CircuitFactory.eINSTANCE.createRelation()));
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return CircuitEditPlugin.INSTANCE;
 	}
 
 }

@@ -96,95 +96,13 @@ public interface CircuitPackage extends EPackage {
 	int NODE = 3;
 
 	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.LinkableImpl <em>Linkable</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.circuit.impl.LinkableImpl
-	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getLinkable()
-	 * @generated
-	 */
-	int LINKABLE = 4;
-
-	/**
-	 * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINKABLE__INCOMING_LINKS = 0;
-
-	/**
-	 * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINKABLE__OUTGOING_LINKS = 1;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINKABLE__ID = 2;
-
-	/**
-	 * The number of structural features of the '<em>Linkable</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINKABLE_FEATURE_COUNT = 3;
-
-	/**
-	 * The number of operations of the '<em>Linkable</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINKABLE_OPERATION_COUNT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__INCOMING_LINKS = LINKABLE__INCOMING_LINKS;
-
-	/**
-	 * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__OUTGOING_LINKS = LINKABLE__OUTGOING_LINKS;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CIRCUIT__ID = LINKABLE__ID;
-
-	/**
 	 * The feature id for the '<em><b>Circuits</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CIRCUIT__CIRCUITS = LINKABLE_FEATURE_COUNT + 0;
+	int CIRCUIT__CIRCUITS = 0;
 
 	/**
 	 * The feature id for the '<em><b>Links</b></em>' containment reference list.
@@ -193,7 +111,7 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CIRCUIT__LINKS = LINKABLE_FEATURE_COUNT + 1;
+	int CIRCUIT__LINKS = 1;
 
 	/**
 	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
@@ -202,7 +120,7 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CIRCUIT__NODES = LINKABLE_FEATURE_COUNT + 2;
+	int CIRCUIT__NODES = 2;
 
 	/**
 	 * The feature id for the '<em><b>Ports</b></em>' containment reference list.
@@ -211,16 +129,16 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CIRCUIT__PORTS = LINKABLE_FEATURE_COUNT + 3;
+	int CIRCUIT__PORTS = 3;
 
 	/**
-	 * The feature id for the '<em><b>Relations</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CIRCUIT__RELATIONS = LINKABLE_FEATURE_COUNT + 4;
+	int CIRCUIT__NAME = 4;
 
 	/**
 	 * The number of structural features of the '<em>Circuit</em>' class.
@@ -229,7 +147,7 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CIRCUIT_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 5;
+	int CIRCUIT_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Circuit</em>' class.
@@ -238,7 +156,7 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CIRCUIT_OPERATION_COUNT = LINKABLE_OPERATION_COUNT + 0;
+	int CIRCUIT_OPERATION_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' reference.
@@ -292,7 +210,7 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PORT__INCOMING_LINKS = LINKABLE__INCOMING_LINKS;
+	int PORT__INCOMING_LINKS = 0;
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
@@ -301,16 +219,16 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PORT__OUTGOING_LINKS = LINKABLE__OUTGOING_LINKS;
+	int PORT__OUTGOING_LINKS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Node</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PORT__ID = LINKABLE__ID;
+	int PORT__NODE = 2;
 
 	/**
 	 * The number of structural features of the '<em>Port</em>' class.
@@ -319,7 +237,7 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PORT_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 0;
+	int PORT_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Port</em>' class.
@@ -328,10 +246,10 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PORT_OPERATION_COUNT = LINKABLE_OPERATION_COUNT + 0;
+	int PORT_OPERATION_COUNT = 0;
 
 	/**
-	 * The feature id for the '<em><b>Input Ports</b></em>' reference list.
+	 * The feature id for the '<em><b>Input Ports</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -340,7 +258,7 @@ public interface CircuitPackage extends EPackage {
 	int NODE__INPUT_PORTS = 0;
 
 	/**
-	 * The feature id for the '<em><b>Output Ports</b></em>' reference list.
+	 * The feature id for the '<em><b>Output Ports</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -383,63 +301,6 @@ public interface CircuitPackage extends EPackage {
 	 * @ordered
 	 */
 	int NODE_OPERATION_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.RelationImpl <em>Relation</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.circuit.impl.RelationImpl
-	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getRelation()
-	 * @generated
-	 */
-	int RELATION = 5;
-
-	/**
-	 * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RELATION__INCOMING_LINKS = LINKABLE__INCOMING_LINKS;
-
-	/**
-	 * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RELATION__OUTGOING_LINKS = LINKABLE__OUTGOING_LINKS;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RELATION__ID = LINKABLE__ID;
-
-	/**
-	 * The number of structural features of the '<em>Relation</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RELATION_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 0;
-
-
-	/**
-	 * The number of operations of the '<em>Relation</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RELATION_OPERATION_COUNT = LINKABLE_OPERATION_COUNT + 0;
-
 
 	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Circuit <em>Circuit</em>}'.
@@ -496,15 +357,15 @@ public interface CircuitPackage extends EPackage {
 	EReference getCircuit_Ports();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.circuit.Circuit#getRelations <em>Relations</em>}'.
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Circuit#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Relations</em>'.
-	 * @see de.cau.cs.kieler.circuit.Circuit#getRelations()
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see de.cau.cs.kieler.circuit.Circuit#getName()
 	 * @see #getCircuit()
 	 * @generated
 	 */
-	EReference getCircuit_Relations();
+	EAttribute getCircuit_Name();
 
 	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Link <em>Link</em>}'.
@@ -560,6 +421,39 @@ public interface CircuitPackage extends EPackage {
 	EClass getPort();
 
 	/**
+	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.circuit.Port#getIncomingLinks <em>Incoming Links</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Incoming Links</em>'.
+	 * @see de.cau.cs.kieler.circuit.Port#getIncomingLinks()
+	 * @see #getPort()
+	 * @generated
+	 */
+	EReference getPort_IncomingLinks();
+
+	/**
+	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.circuit.Port#getOutgoingLinks <em>Outgoing Links</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Outgoing Links</em>'.
+	 * @see de.cau.cs.kieler.circuit.Port#getOutgoingLinks()
+	 * @see #getPort()
+	 * @generated
+	 */
+	EReference getPort_OutgoingLinks();
+
+	/**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.circuit.Port#getNode <em>Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Node</em>'.
+	 * @see de.cau.cs.kieler.circuit.Port#getNode()
+	 * @see #getPort()
+	 * @generated
+	 */
+	EReference getPort_Node();
+
+	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Node <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -570,10 +464,10 @@ public interface CircuitPackage extends EPackage {
 	EClass getNode();
 
 	/**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.circuit.Node#getInputPorts <em>Input Ports</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.circuit.Node#getInputPorts <em>Input Ports</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Input Ports</em>'.
+	 * @return the meta object for the containment reference list '<em>Input Ports</em>'.
 	 * @see de.cau.cs.kieler.circuit.Node#getInputPorts()
 	 * @see #getNode()
 	 * @generated
@@ -581,10 +475,10 @@ public interface CircuitPackage extends EPackage {
 	EReference getNode_InputPorts();
 
 	/**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.circuit.Node#getOutputPorts <em>Output Ports</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.circuit.Node#getOutputPorts <em>Output Ports</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Output Ports</em>'.
+	 * @return the meta object for the containment reference list '<em>Output Ports</em>'.
 	 * @see de.cau.cs.kieler.circuit.Node#getOutputPorts()
 	 * @see #getNode()
 	 * @generated
@@ -612,59 +506,6 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getNode_Name();
-
-	/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Linkable <em>Linkable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Linkable</em>'.
-	 * @see de.cau.cs.kieler.circuit.Linkable
-	 * @generated
-	 */
-	EClass getLinkable();
-
-	/**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.circuit.Linkable#getIncomingLinks <em>Incoming Links</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Incoming Links</em>'.
-	 * @see de.cau.cs.kieler.circuit.Linkable#getIncomingLinks()
-	 * @see #getLinkable()
-	 * @generated
-	 */
-	EReference getLinkable_IncomingLinks();
-
-	/**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.circuit.Linkable#getOutgoingLinks <em>Outgoing Links</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Outgoing Links</em>'.
-	 * @see de.cau.cs.kieler.circuit.Linkable#getOutgoingLinks()
-	 * @see #getLinkable()
-	 * @generated
-	 */
-	EReference getLinkable_OutgoingLinks();
-
-	/**
-	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Linkable#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see de.cau.cs.kieler.circuit.Linkable#getId()
-	 * @see #getLinkable()
-	 * @generated
-	 */
-	EAttribute getLinkable_Id();
-
-	/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Relation <em>Relation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Relation</em>'.
-	 * @see de.cau.cs.kieler.circuit.Relation
-	 * @generated
-	 */
-	EClass getRelation();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -731,12 +572,12 @@ public interface CircuitPackage extends EPackage {
 		EReference CIRCUIT__PORTS = eINSTANCE.getCircuit_Ports();
 
 		/**
-		 * The meta object literal for the '<em><b>Relations</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CIRCUIT__RELATIONS = eINSTANCE.getCircuit_Relations();
+		EAttribute CIRCUIT__NAME = eINSTANCE.getCircuit_Name();
 
 		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.LinkImpl <em>Link</em>}' class.
@@ -783,6 +624,30 @@ public interface CircuitPackage extends EPackage {
 		EClass PORT = eINSTANCE.getPort();
 
 		/**
+		 * The meta object literal for the '<em><b>Incoming Links</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PORT__INCOMING_LINKS = eINSTANCE.getPort_IncomingLinks();
+
+		/**
+		 * The meta object literal for the '<em><b>Outgoing Links</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PORT__OUTGOING_LINKS = eINSTANCE.getPort_OutgoingLinks();
+
+		/**
+		 * The meta object literal for the '<em><b>Node</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PORT__NODE = eINSTANCE.getPort_Node();
+
+		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.NodeImpl <em>Node</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -793,7 +658,7 @@ public interface CircuitPackage extends EPackage {
 		EClass NODE = eINSTANCE.getNode();
 
 		/**
-		 * The meta object literal for the '<em><b>Input Ports</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Input Ports</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -801,7 +666,7 @@ public interface CircuitPackage extends EPackage {
 		EReference NODE__INPUT_PORTS = eINSTANCE.getNode_InputPorts();
 
 		/**
-		 * The meta object literal for the '<em><b>Output Ports</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Output Ports</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -823,50 +688,6 @@ public interface CircuitPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NODE__NAME = eINSTANCE.getNode_Name();
-
-		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.LinkableImpl <em>Linkable</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.circuit.impl.LinkableImpl
-		 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getLinkable()
-		 * @generated
-		 */
-		EClass LINKABLE = eINSTANCE.getLinkable();
-
-		/**
-		 * The meta object literal for the '<em><b>Incoming Links</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference LINKABLE__INCOMING_LINKS = eINSTANCE.getLinkable_IncomingLinks();
-
-		/**
-		 * The meta object literal for the '<em><b>Outgoing Links</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference LINKABLE__OUTGOING_LINKS = eINSTANCE.getLinkable_OutgoingLinks();
-
-		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute LINKABLE__ID = eINSTANCE.getLinkable_Id();
-
-		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.RelationImpl <em>Relation</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.circuit.impl.RelationImpl
-		 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getRelation()
-		 * @generated
-		 */
-		EClass RELATION = eINSTANCE.getRelation();
 
 	}
 

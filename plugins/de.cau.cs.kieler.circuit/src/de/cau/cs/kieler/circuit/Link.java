@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface Link extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Source</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Linkable#getOutgoingLinks <em>Outgoing Links</em>}'.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Port#getOutgoingLinks <em>Outgoing Links</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Source</em>' reference isn't clear,
@@ -33,13 +33,13 @@ public interface Link extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Source</em>' reference.
-	 * @see #setSource(Linkable)
+	 * @see #setSource(Port)
 	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getLink_Source()
-	 * @see de.cau.cs.kieler.circuit.Linkable#getOutgoingLinks
+	 * @see de.cau.cs.kieler.circuit.Port#getOutgoingLinks
 	 * @model opposite="outgoingLinks"
 	 * @generated
 	 */
-	Linkable getSource();
+	Port getSource();
 
 	/**
 	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Link#getSource <em>Source</em>}' reference.
@@ -49,11 +49,11 @@ public interface Link extends EObject {
 	 * @see #getSource()
 	 * @generated
 	 */
-	void setSource(Linkable value);
+	void setSource(Port value);
 
 	/**
 	 * Returns the value of the '<em><b>Target</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Linkable#getIncomingLinks <em>Incoming Links</em>}'.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Port#getIncomingLinks <em>Incoming Links</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Target</em>' reference isn't clear,
@@ -61,13 +61,13 @@ public interface Link extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target</em>' reference.
-	 * @see #setTarget(Linkable)
+	 * @see #setTarget(Port)
 	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getLink_Target()
-	 * @see de.cau.cs.kieler.circuit.Linkable#getIncomingLinks
+	 * @see de.cau.cs.kieler.circuit.Port#getIncomingLinks
 	 * @model opposite="incomingLinks"
 	 * @generated
 	 */
-	Linkable getTarget();
+	Port getTarget();
 
 	/**
 	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}' reference.
@@ -77,7 +77,7 @@ public interface Link extends EObject {
 	 * @see #getTarget()
 	 * @generated
 	 */
-	void setTarget(Linkable value);
+	void setTarget(Port value);
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

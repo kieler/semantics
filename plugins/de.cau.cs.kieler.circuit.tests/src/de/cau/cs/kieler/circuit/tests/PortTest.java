@@ -4,6 +4,7 @@ package de.cau.cs.kieler.circuit.tests;
 
 import de.cau.cs.kieler.circuit.CircuitFactory;
 import de.cau.cs.kieler.circuit.Port;
+import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
 /**
@@ -12,7 +13,15 @@ import junit.textui.TestRunner;
  * <!-- end-user-doc -->
  * @generated
  */
-public class PortTest extends LinkableTest {
+public class PortTest extends TestCase {
+
+	/**
+	 * The fixture for this Port test case.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected Port fixture = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -34,6 +43,16 @@ public class PortTest extends LinkableTest {
 	}
 
 	/**
+	 * Sets the fixture for this Port test case.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void setFixture(Port fixture) {
+		this.fixture = fixture;
+	}
+
+	/**
 	 * Returns the fixture for this Port test case.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -41,7 +60,7 @@ public class PortTest extends LinkableTest {
 	 */
 	@Override
 	protected Port getFixture() {
-		return (Port)fixture;
+		return fixture;
 	}
 
 	/**
