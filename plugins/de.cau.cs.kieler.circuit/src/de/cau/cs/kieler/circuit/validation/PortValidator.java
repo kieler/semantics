@@ -4,8 +4,8 @@
  */
 package de.cau.cs.kieler.circuit.validation;
 
+import de.cau.cs.kieler.circuit.Circuit;
 import de.cau.cs.kieler.circuit.Link;
-import de.cau.cs.kieler.circuit.Node;
 import de.cau.cs.kieler.circuit.PortType;
 
 import org.eclipse.emf.common.util.EList;
@@ -21,7 +21,7 @@ public interface PortValidator {
 
 	boolean validateIncomingLinks(EList<Link> value);
 	boolean validateOutgoingLinks(EList<Link> value);
-	boolean validateNode(Node value);
 	boolean validateName(String value);
 	boolean validateType(PortType value);
+	boolean validateParent(Circuit value);
 }

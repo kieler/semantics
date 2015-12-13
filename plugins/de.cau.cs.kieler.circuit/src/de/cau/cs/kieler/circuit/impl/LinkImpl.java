@@ -2,18 +2,27 @@
  */
 package de.cau.cs.kieler.circuit.impl;
 
+import de.cau.cs.kieler.circuit.Circuit;
 import de.cau.cs.kieler.circuit.CircuitPackage;
 import de.cau.cs.kieler.circuit.Link;
 import de.cau.cs.kieler.circuit.Port;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,6 +34,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getSource <em>Source</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,14 +52,14 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	protected Port source;
 
 	/**
-	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
+	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getTarget()
 	 * @generated
 	 * @ordered
 	 */
-	protected Port target;
+	protected EList<Port> target;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -155,59 +165,11 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Port getTarget() {
-		if (target != null && target.eIsProxy()) {
-			InternalEObject oldTarget = (InternalEObject)target;
-			target = (Port)eResolveProxy(oldTarget);
-			if (target != oldTarget) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CircuitPackage.LINK__TARGET, oldTarget, target));
-			}
+	public EList<Port> getTarget() {
+		if (target == null) {
+			target = new EObjectWithInverseResolvingEList.ManyInverse<Port>(Port.class, this, CircuitPackage.LINK__TARGET, CircuitPackage.PORT__INCOMING_LINKS);
 		}
 		return target;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Port basicGetTarget() {
-		return target;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetTarget(Port newTarget, NotificationChain msgs) {
-		Port oldTarget = target;
-		target = newTarget;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__TARGET, oldTarget, newTarget);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTarget(Port newTarget) {
-		if (newTarget != target) {
-			NotificationChain msgs = null;
-			if (target != null)
-				msgs = ((InternalEObject)target).eInverseRemove(this, CircuitPackage.PORT__INCOMING_LINKS, Port.class, msgs);
-			if (newTarget != null)
-				msgs = ((InternalEObject)newTarget).eInverseAdd(this, CircuitPackage.PORT__INCOMING_LINKS, Port.class, msgs);
-			msgs = basicSetTarget(newTarget, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__TARGET, newTarget, newTarget));
 	}
 
 	/**
@@ -236,6 +198,48 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Circuit getParent() {
+		if (eContainerFeatureID() != CircuitPackage.LINK__PARENT) return null;
+		return (Circuit)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetParent(Circuit newParent, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newParent, CircuitPackage.LINK__PARENT, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParent(Circuit newParent) {
+		if (newParent != eInternalContainer() || (eContainerFeatureID() != CircuitPackage.LINK__PARENT && newParent != null)) {
+			if (EcoreUtil.isAncestor(this, newParent))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newParent != null)
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, CircuitPackage.CIRCUIT__INNER_LINKS, Circuit.class, msgs);
+			msgs = basicSetParent(newParent, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__PARENT, newParent, newParent));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -244,9 +248,11 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 					msgs = ((InternalEObject)source).eInverseRemove(this, CircuitPackage.PORT__OUTGOING_LINKS, Port.class, msgs);
 				return basicSetSource((Port)otherEnd, msgs);
 			case CircuitPackage.LINK__TARGET:
-				if (target != null)
-					msgs = ((InternalEObject)target).eInverseRemove(this, CircuitPackage.PORT__INCOMING_LINKS, Port.class, msgs);
-				return basicSetTarget((Port)otherEnd, msgs);
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getTarget()).basicAdd(otherEnd, msgs);
+			case CircuitPackage.LINK__PARENT:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetParent((Circuit)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -262,9 +268,25 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 			case CircuitPackage.LINK__SOURCE:
 				return basicSetSource(null, msgs);
 			case CircuitPackage.LINK__TARGET:
-				return basicSetTarget(null, msgs);
+				return ((InternalEList<?>)getTarget()).basicRemove(otherEnd, msgs);
+			case CircuitPackage.LINK__PARENT:
+				return basicSetParent(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case CircuitPackage.LINK__PARENT:
+				return eInternalContainer().eInverseRemove(this, CircuitPackage.CIRCUIT__INNER_LINKS, Circuit.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
 
 	/**
@@ -279,10 +301,11 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 				if (resolve) return getSource();
 				return basicGetSource();
 			case CircuitPackage.LINK__TARGET:
-				if (resolve) return getTarget();
-				return basicGetTarget();
+				return getTarget();
 			case CircuitPackage.LINK__NAME:
 				return getName();
+			case CircuitPackage.LINK__PARENT:
+				return getParent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -292,6 +315,7 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -299,10 +323,14 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 				setSource((Port)newValue);
 				return;
 			case CircuitPackage.LINK__TARGET:
-				setTarget((Port)newValue);
+				getTarget().clear();
+				getTarget().addAll((Collection<? extends Port>)newValue);
 				return;
 			case CircuitPackage.LINK__NAME:
 				setName((String)newValue);
+				return;
+			case CircuitPackage.LINK__PARENT:
+				setParent((Circuit)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -320,10 +348,13 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 				setSource((Port)null);
 				return;
 			case CircuitPackage.LINK__TARGET:
-				setTarget((Port)null);
+				getTarget().clear();
 				return;
 			case CircuitPackage.LINK__NAME:
 				setName(NAME_EDEFAULT);
+				return;
+			case CircuitPackage.LINK__PARENT:
+				setParent((Circuit)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -340,9 +371,11 @@ public class LinkImpl extends MinimalEObjectImpl.Container implements Link {
 			case CircuitPackage.LINK__SOURCE:
 				return source != null;
 			case CircuitPackage.LINK__TARGET:
-				return target != null;
+				return target != null && !target.isEmpty();
 			case CircuitPackage.LINK__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case CircuitPackage.LINK__PARENT:
+				return getParent() != null;
 		}
 		return super.eIsSet(featureID);
 	}

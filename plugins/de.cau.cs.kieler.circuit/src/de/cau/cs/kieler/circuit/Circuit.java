@@ -14,11 +14,12 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.circuit.Circuit#getCircuits <em>Circuits</em>}</li>
- *   <li>{@link de.cau.cs.kieler.circuit.Circuit#getLinks <em>Links</em>}</li>
- *   <li>{@link de.cau.cs.kieler.circuit.Circuit#getNodes <em>Nodes</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Circuit#getInnerCircuits <em>Inner Circuits</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Circuit#getInnerLinks <em>Inner Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Circuit#getPorts <em>Ports</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Circuit#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Circuit#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Circuit#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,56 +29,45 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Circuit extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Circuits</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Inner Circuits</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Circuit}.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Circuit#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Circuits</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Inner Circuits</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Circuits</em>' containment reference list.
-	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getCircuit_Circuits()
-	 * @model containment="true"
+	 * @return the value of the '<em>Inner Circuits</em>' containment reference list.
+	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getCircuit_InnerCircuits()
+	 * @see de.cau.cs.kieler.circuit.Circuit#getParent
+	 * @model opposite="parent" containment="true"
 	 * @generated
 	 */
-	EList<Circuit> getCircuits();
+	EList<Circuit> getInnerCircuits();
 
 	/**
-	 * Returns the value of the '<em><b>Links</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Inner Links</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Link}.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Link#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Links</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Inner Links</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Links</em>' containment reference list.
-	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getCircuit_Links()
-	 * @model containment="true"
+	 * @return the value of the '<em>Inner Links</em>' containment reference list.
+	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getCircuit_InnerLinks()
+	 * @see de.cau.cs.kieler.circuit.Link#getParent
+	 * @model opposite="parent" containment="true"
 	 * @generated
 	 */
-	EList<Link> getLinks();
-
-	/**
-	 * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Node}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Nodes</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Nodes</em>' containment reference list.
-	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getCircuit_Nodes()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<Node> getNodes();
+	EList<Link> getInnerLinks();
 
 	/**
 	 * Returns the value of the '<em><b>Ports</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Port}.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Port#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Ports</em>' containment reference list isn't clear,
@@ -86,7 +76,8 @@ public interface Circuit extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Ports</em>' containment reference list.
 	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getCircuit_Ports()
-	 * @model containment="true"
+	 * @see de.cau.cs.kieler.circuit.Port#getParent
+	 * @model opposite="parent" containment="true"
 	 * @generated
 	 */
 	EList<Port> getPorts();
@@ -116,5 +107,59 @@ public interface Circuit extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Type</em>' attribute.
+	 * @see #setType(String)
+	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getCircuit_Type()
+	 * @model
+	 * @generated
+	 */
+	String getType();
+
+	/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Circuit#getType <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Type</em>' attribute.
+	 * @see #getType()
+	 * @generated
+	 */
+	void setType(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Parent</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Circuit#getInnerCircuits <em>Inner Circuits</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parent</em>' container reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parent</em>' container reference.
+	 * @see #setParent(Circuit)
+	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getCircuit_Parent()
+	 * @see de.cau.cs.kieler.circuit.Circuit#getInnerCircuits
+	 * @model opposite="innerCircuits" required="true" transient="false"
+	 * @generated
+	 */
+	Circuit getParent();
+
+	/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Circuit#getParent <em>Parent</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Parent</em>' container reference.
+	 * @see #getParent()
+	 * @generated
+	 */
+	void setParent(Circuit value);
 
 } // Circuit

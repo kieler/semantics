@@ -5,7 +5,6 @@ package de.cau.cs.kieler.circuit.impl;
 import de.cau.cs.kieler.circuit.Circuit;
 import de.cau.cs.kieler.circuit.CircuitPackage;
 import de.cau.cs.kieler.circuit.Link;
-import de.cau.cs.kieler.circuit.Node;
 import de.cau.cs.kieler.circuit.Port;
 
 import java.util.Collection;
@@ -21,7 +20,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -31,11 +31,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getCircuits <em>Circuits</em>}</li>
- *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getLinks <em>Links</em>}</li>
- *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getNodes <em>Nodes</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getInnerCircuits <em>Inner Circuits</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getInnerLinks <em>Inner Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getPorts <em>Ports</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.CircuitImpl#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
  *
@@ -43,34 +44,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit {
 	/**
-	 * The cached value of the '{@link #getCircuits() <em>Circuits</em>}' containment reference list.
+	 * The cached value of the '{@link #getInnerCircuits() <em>Inner Circuits</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getCircuits()
+	 * @see #getInnerCircuits()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Circuit> circuits;
+	protected EList<Circuit> innerCircuits;
 
 	/**
-	 * The cached value of the '{@link #getLinks() <em>Links</em>}' containment reference list.
+	 * The cached value of the '{@link #getInnerLinks() <em>Inner Links</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLinks()
+	 * @see #getInnerLinks()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Link> links;
-
-	/**
-	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getNodes()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Node> nodes;
+	protected EList<Link> innerLinks;
 
 	/**
 	 * The cached value of the '{@link #getPorts() <em>Ports</em>}' containment reference list.
@@ -103,6 +94,26 @@ public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit
 	protected String name = NAME_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String type = TYPE_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -126,11 +137,11 @@ public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Circuit> getCircuits() {
-		if (circuits == null) {
-			circuits = new EObjectContainmentEList<Circuit>(Circuit.class, this, CircuitPackage.CIRCUIT__CIRCUITS);
+	public EList<Circuit> getInnerCircuits() {
+		if (innerCircuits == null) {
+			innerCircuits = new EObjectContainmentWithInverseEList<Circuit>(Circuit.class, this, CircuitPackage.CIRCUIT__INNER_CIRCUITS, CircuitPackage.CIRCUIT__PARENT);
 		}
-		return circuits;
+		return innerCircuits;
 	}
 
 	/**
@@ -138,23 +149,11 @@ public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Link> getLinks() {
-		if (links == null) {
-			links = new EObjectContainmentEList<Link>(Link.class, this, CircuitPackage.CIRCUIT__LINKS);
+	public EList<Link> getInnerLinks() {
+		if (innerLinks == null) {
+			innerLinks = new EObjectContainmentWithInverseEList<Link>(Link.class, this, CircuitPackage.CIRCUIT__INNER_LINKS, CircuitPackage.LINK__PARENT);
 		}
-		return links;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Node> getNodes() {
-		if (nodes == null) {
-			nodes = new EObjectContainmentEList<Node>(Node.class, this, CircuitPackage.CIRCUIT__NODES);
-		}
-		return nodes;
+		return innerLinks;
 	}
 
 	/**
@@ -164,7 +163,7 @@ public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit
 	 */
 	public EList<Port> getPorts() {
 		if (ports == null) {
-			ports = new EObjectContainmentEList<Port>(Port.class, this, CircuitPackage.CIRCUIT__PORTS);
+			ports = new EObjectContainmentWithInverseEList<Port>(Port.class, this, CircuitPackage.CIRCUIT__PORTS, CircuitPackage.PORT__PARENT);
 		}
 		return ports;
 	}
@@ -195,17 +194,102 @@ public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setType(String newType) {
+		String oldType = type;
+		type = newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.CIRCUIT__TYPE, oldType, type));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Circuit getParent() {
+		if (eContainerFeatureID() != CircuitPackage.CIRCUIT__PARENT) return null;
+		return (Circuit)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetParent(Circuit newParent, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newParent, CircuitPackage.CIRCUIT__PARENT, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParent(Circuit newParent) {
+		if (newParent != eInternalContainer() || (eContainerFeatureID() != CircuitPackage.CIRCUIT__PARENT && newParent != null)) {
+			if (EcoreUtil.isAncestor(this, newParent))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newParent != null)
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, CircuitPackage.CIRCUIT__INNER_CIRCUITS, Circuit.class, msgs);
+			msgs = basicSetParent(newParent, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.CIRCUIT__PARENT, newParent, newParent));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case CircuitPackage.CIRCUIT__INNER_CIRCUITS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getInnerCircuits()).basicAdd(otherEnd, msgs);
+			case CircuitPackage.CIRCUIT__INNER_LINKS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getInnerLinks()).basicAdd(otherEnd, msgs);
+			case CircuitPackage.CIRCUIT__PORTS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getPorts()).basicAdd(otherEnd, msgs);
+			case CircuitPackage.CIRCUIT__PARENT:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetParent((Circuit)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CircuitPackage.CIRCUIT__CIRCUITS:
-				return ((InternalEList<?>)getCircuits()).basicRemove(otherEnd, msgs);
-			case CircuitPackage.CIRCUIT__LINKS:
-				return ((InternalEList<?>)getLinks()).basicRemove(otherEnd, msgs);
-			case CircuitPackage.CIRCUIT__NODES:
-				return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
+			case CircuitPackage.CIRCUIT__INNER_CIRCUITS:
+				return ((InternalEList<?>)getInnerCircuits()).basicRemove(otherEnd, msgs);
+			case CircuitPackage.CIRCUIT__INNER_LINKS:
+				return ((InternalEList<?>)getInnerLinks()).basicRemove(otherEnd, msgs);
 			case CircuitPackage.CIRCUIT__PORTS:
 				return ((InternalEList<?>)getPorts()).basicRemove(otherEnd, msgs);
+			case CircuitPackage.CIRCUIT__PARENT:
+				return basicSetParent(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -216,18 +300,34 @@ public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case CircuitPackage.CIRCUIT__PARENT:
+				return eInternalContainer().eInverseRemove(this, CircuitPackage.CIRCUIT__INNER_CIRCUITS, Circuit.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CircuitPackage.CIRCUIT__CIRCUITS:
-				return getCircuits();
-			case CircuitPackage.CIRCUIT__LINKS:
-				return getLinks();
-			case CircuitPackage.CIRCUIT__NODES:
-				return getNodes();
+			case CircuitPackage.CIRCUIT__INNER_CIRCUITS:
+				return getInnerCircuits();
+			case CircuitPackage.CIRCUIT__INNER_LINKS:
+				return getInnerLinks();
 			case CircuitPackage.CIRCUIT__PORTS:
 				return getPorts();
 			case CircuitPackage.CIRCUIT__NAME:
 				return getName();
+			case CircuitPackage.CIRCUIT__TYPE:
+				return getType();
+			case CircuitPackage.CIRCUIT__PARENT:
+				return getParent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -241,17 +341,13 @@ public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CircuitPackage.CIRCUIT__CIRCUITS:
-				getCircuits().clear();
-				getCircuits().addAll((Collection<? extends Circuit>)newValue);
+			case CircuitPackage.CIRCUIT__INNER_CIRCUITS:
+				getInnerCircuits().clear();
+				getInnerCircuits().addAll((Collection<? extends Circuit>)newValue);
 				return;
-			case CircuitPackage.CIRCUIT__LINKS:
-				getLinks().clear();
-				getLinks().addAll((Collection<? extends Link>)newValue);
-				return;
-			case CircuitPackage.CIRCUIT__NODES:
-				getNodes().clear();
-				getNodes().addAll((Collection<? extends Node>)newValue);
+			case CircuitPackage.CIRCUIT__INNER_LINKS:
+				getInnerLinks().clear();
+				getInnerLinks().addAll((Collection<? extends Link>)newValue);
 				return;
 			case CircuitPackage.CIRCUIT__PORTS:
 				getPorts().clear();
@@ -259,6 +355,12 @@ public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit
 				return;
 			case CircuitPackage.CIRCUIT__NAME:
 				setName((String)newValue);
+				return;
+			case CircuitPackage.CIRCUIT__TYPE:
+				setType((String)newValue);
+				return;
+			case CircuitPackage.CIRCUIT__PARENT:
+				setParent((Circuit)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -272,20 +374,23 @@ public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CircuitPackage.CIRCUIT__CIRCUITS:
-				getCircuits().clear();
+			case CircuitPackage.CIRCUIT__INNER_CIRCUITS:
+				getInnerCircuits().clear();
 				return;
-			case CircuitPackage.CIRCUIT__LINKS:
-				getLinks().clear();
-				return;
-			case CircuitPackage.CIRCUIT__NODES:
-				getNodes().clear();
+			case CircuitPackage.CIRCUIT__INNER_LINKS:
+				getInnerLinks().clear();
 				return;
 			case CircuitPackage.CIRCUIT__PORTS:
 				getPorts().clear();
 				return;
 			case CircuitPackage.CIRCUIT__NAME:
 				setName(NAME_EDEFAULT);
+				return;
+			case CircuitPackage.CIRCUIT__TYPE:
+				setType(TYPE_EDEFAULT);
+				return;
+			case CircuitPackage.CIRCUIT__PARENT:
+				setParent((Circuit)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -299,16 +404,18 @@ public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CircuitPackage.CIRCUIT__CIRCUITS:
-				return circuits != null && !circuits.isEmpty();
-			case CircuitPackage.CIRCUIT__LINKS:
-				return links != null && !links.isEmpty();
-			case CircuitPackage.CIRCUIT__NODES:
-				return nodes != null && !nodes.isEmpty();
+			case CircuitPackage.CIRCUIT__INNER_CIRCUITS:
+				return innerCircuits != null && !innerCircuits.isEmpty();
+			case CircuitPackage.CIRCUIT__INNER_LINKS:
+				return innerLinks != null && !innerLinks.isEmpty();
 			case CircuitPackage.CIRCUIT__PORTS:
 				return ports != null && !ports.isEmpty();
 			case CircuitPackage.CIRCUIT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case CircuitPackage.CIRCUIT__TYPE:
+				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+			case CircuitPackage.CIRCUIT__PARENT:
+				return getParent() != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -325,6 +432,8 @@ public class CircuitImpl extends MinimalEObjectImpl.Container implements Circuit
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
+		result.append(", type: ");
+		result.append(type);
 		result.append(')');
 		return result.toString();
 	}

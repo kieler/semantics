@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.circuit;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -15,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.circuit.Link#getSource <em>Source</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Link#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Link#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
  *
@@ -52,32 +55,22 @@ public interface Link extends EObject {
 	void setSource(Port value);
 
 	/**
-	 * Returns the value of the '<em><b>Target</b></em>' reference.
+	 * Returns the value of the '<em><b>Target</b></em>' reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Port}.
 	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Port#getIncomingLinks <em>Incoming Links</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Target</em>' reference isn't clear,
+	 * If the meaning of the '<em>Target</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Target</em>' reference.
-	 * @see #setTarget(Port)
+	 * @return the value of the '<em>Target</em>' reference list.
 	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getLink_Target()
 	 * @see de.cau.cs.kieler.circuit.Port#getIncomingLinks
 	 * @model opposite="incomingLinks"
 	 * @generated
 	 */
-	Port getTarget();
-
-	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Target</em>' reference.
-	 * @see #getTarget()
-	 * @generated
-	 */
-	void setTarget(Port value);
+	EList<Port> getTarget();
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
@@ -104,5 +97,33 @@ public interface Link extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Parent</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Circuit#getInnerLinks <em>Inner Links</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parent</em>' container reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parent</em>' container reference.
+	 * @see #setParent(Circuit)
+	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getLink_Parent()
+	 * @see de.cau.cs.kieler.circuit.Circuit#getInnerLinks
+	 * @model opposite="innerLinks" required="true" transient="false"
+	 * @generated
+	 */
+	Circuit getParent();
+
+	/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Link#getParent <em>Parent</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Parent</em>' container reference.
+	 * @see #getParent()
+	 * @generated
+	 */
+	void setParent(Circuit value);
 
 } // Link

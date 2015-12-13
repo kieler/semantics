@@ -60,7 +60,6 @@ public class CircuitFactoryImpl extends EFactoryImpl implements CircuitFactory {
 			case CircuitPackage.CIRCUIT: return createCircuit();
 			case CircuitPackage.LINK: return createLink();
 			case CircuitPackage.PORT: return createPort();
-			case CircuitPackage.NODE: return createNode();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -124,16 +123,6 @@ public class CircuitFactoryImpl extends EFactoryImpl implements CircuitFactory {
 	public Port createPort() {
 		PortImpl port = new PortImpl();
 		return port;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Node createNode() {
-		NodeImpl node = new NodeImpl();
-		return node;
 	}
 
 	/**

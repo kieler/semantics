@@ -6,7 +6,6 @@ import de.cau.cs.kieler.circuit.Circuit;
 import de.cau.cs.kieler.circuit.CircuitFactory;
 import de.cau.cs.kieler.circuit.CircuitPackage;
 import de.cau.cs.kieler.circuit.Link;
-import de.cau.cs.kieler.circuit.Node;
 import de.cau.cs.kieler.circuit.Port;
 import de.cau.cs.kieler.circuit.PortType;
 
@@ -45,13 +44,6 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * @generated
 	 */
 	private EClass portEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass nodeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -135,7 +127,7 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCircuit_Circuits() {
+	public EReference getCircuit_InnerCircuits() {
 		return (EReference)circuitEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -144,7 +136,7 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCircuit_Links() {
+	public EReference getCircuit_InnerLinks() {
 		return (EReference)circuitEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -153,7 +145,7 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCircuit_Nodes() {
+	public EReference getCircuit_Ports() {
 		return (EReference)circuitEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -162,8 +154,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCircuit_Ports() {
-		return (EReference)circuitEClass.getEStructuralFeatures().get(3);
+	public EAttribute getCircuit_Name() {
+		return (EAttribute)circuitEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -171,8 +163,17 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getCircuit_Name() {
+	public EAttribute getCircuit_Type() {
 		return (EAttribute)circuitEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCircuit_Parent() {
+		return (EReference)circuitEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -216,6 +217,15 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getLink_Parent() {
+		return (EReference)linkEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPort() {
 		return portEClass;
 	}
@@ -243,17 +253,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPort_Node() {
-		return (EReference)portEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getPort_Name() {
-		return (EAttribute)portEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)portEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -262,7 +263,7 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * @generated
 	 */
 	public EAttribute getPort_Type() {
-		return (EAttribute)portEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)portEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -270,35 +271,8 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getNode() {
-		return nodeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNode_Ports() {
-		return (EReference)nodeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNode_NodeID() {
-		return (EAttribute)nodeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNode_Name() {
-		return (EAttribute)nodeEClass.getEStructuralFeatures().get(2);
+	public EReference getPort_Parent() {
+		return (EReference)portEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -339,28 +313,25 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 
 		// Create classes and their features
 		circuitEClass = createEClass(CIRCUIT);
-		createEReference(circuitEClass, CIRCUIT__CIRCUITS);
-		createEReference(circuitEClass, CIRCUIT__LINKS);
-		createEReference(circuitEClass, CIRCUIT__NODES);
+		createEReference(circuitEClass, CIRCUIT__INNER_CIRCUITS);
+		createEReference(circuitEClass, CIRCUIT__INNER_LINKS);
 		createEReference(circuitEClass, CIRCUIT__PORTS);
 		createEAttribute(circuitEClass, CIRCUIT__NAME);
+		createEAttribute(circuitEClass, CIRCUIT__TYPE);
+		createEReference(circuitEClass, CIRCUIT__PARENT);
 
 		linkEClass = createEClass(LINK);
 		createEReference(linkEClass, LINK__SOURCE);
 		createEReference(linkEClass, LINK__TARGET);
 		createEAttribute(linkEClass, LINK__NAME);
+		createEReference(linkEClass, LINK__PARENT);
 
 		portEClass = createEClass(PORT);
 		createEReference(portEClass, PORT__INCOMING_LINKS);
 		createEReference(portEClass, PORT__OUTGOING_LINKS);
-		createEReference(portEClass, PORT__NODE);
 		createEAttribute(portEClass, PORT__NAME);
 		createEAttribute(portEClass, PORT__TYPE);
-
-		nodeEClass = createEClass(NODE);
-		createEReference(nodeEClass, NODE__PORTS);
-		createEAttribute(nodeEClass, NODE__NODE_ID);
-		createEAttribute(nodeEClass, NODE__NAME);
+		createEReference(portEClass, PORT__PARENT);
 
 		// Create enums
 		portTypeEEnum = createEEnum(PORT_TYPE);
@@ -397,28 +368,25 @@ public class CircuitPackageImpl extends EPackageImpl implements CircuitPackage {
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(circuitEClass, Circuit.class, "Circuit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCircuit_Circuits(), this.getCircuit(), null, "circuits", null, 0, -1, Circuit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCircuit_Links(), this.getLink(), null, "links", null, 0, -1, Circuit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCircuit_Nodes(), this.getNode(), null, "nodes", null, 0, -1, Circuit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCircuit_Ports(), this.getPort(), null, "ports", null, 0, -1, Circuit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCircuit_InnerCircuits(), this.getCircuit(), this.getCircuit_Parent(), "innerCircuits", null, 0, -1, Circuit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCircuit_InnerLinks(), this.getLink(), this.getLink_Parent(), "innerLinks", null, 0, -1, Circuit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCircuit_Ports(), this.getPort(), this.getPort_Parent(), "ports", null, 0, -1, Circuit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCircuit_Name(), ecorePackage.getEString(), "name", null, 0, 1, Circuit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCircuit_Type(), ecorePackage.getEString(), "type", null, 0, 1, Circuit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCircuit_Parent(), this.getCircuit(), this.getCircuit_InnerCircuits(), "parent", null, 1, 1, Circuit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(linkEClass, Link.class, "Link", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getLink_Source(), this.getPort(), this.getPort_OutgoingLinks(), "source", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getLink_Target(), this.getPort(), this.getPort_IncomingLinks(), "target", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getLink_Target(), this.getPort(), this.getPort_IncomingLinks(), "target", null, 0, -1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getLink_Name(), ecorePackage.getEString(), "name", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getLink_Parent(), this.getCircuit(), this.getCircuit_InnerLinks(), "parent", null, 1, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(portEClass, Port.class, "Port", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getPort_IncomingLinks(), this.getLink(), this.getLink_Target(), "incomingLinks", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPort_OutgoingLinks(), this.getLink(), this.getLink_Source(), "outgoingLinks", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getPort_Node(), this.getNode(), this.getNode_Ports(), "node", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPort_Name(), ecorePackage.getEString(), "name", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPort_Type(), this.getPortType(), "type", null, 1, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(nodeEClass, Node.class, "Node", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getNode_Ports(), this.getPort(), this.getPort_Node(), "ports", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getNode_NodeID(), ecorePackage.getEString(), "nodeID", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPort_Parent(), this.getCircuit(), this.getCircuit_Ports(), "parent", null, 1, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(portTypeEEnum, PortType.class, "PortType");

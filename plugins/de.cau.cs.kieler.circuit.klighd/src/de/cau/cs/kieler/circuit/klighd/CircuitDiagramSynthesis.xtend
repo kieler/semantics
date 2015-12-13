@@ -44,6 +44,8 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Circuit> {
 		val root = model.createNode().associateWith(model);
 
 		model.nodes.forEach[n|root.children += transformNodes(n)]
+		model.ports.forEach[p|root.children += transformPorts(p)]
+		
 
 		return root;
 	}
@@ -57,31 +59,39 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Circuit> {
 		circNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 			EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 
-		val inputList = node.inputPorts;
-		val outputList = node.outputPorts;
+		
 
-		for (port : inputList) {
+		for (port : node.ports) {
 			circNode.ports += port.createPort => [
 				it.setPortSize(5, 5);
 				it.addLayoutParam(LayoutOptions::OFFSET, 0.0f);
-				it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST);
+				if(port.type.equals("IN")){
+					it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST)
+					}
+				if(port.type.equals("OUT")){
+					it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::WEST)
+				}
+				if(port.type.equals("SELECT")){
+					it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH)
+				}
 			]
 		}
-		for (port : outputList) {
-			circNode.ports += port.createPort => [
-				it.setPortSize(5, 5);
-				it.addLayoutParam(LayoutOptions::OFFSET, 0.0f);
-				it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::WEST);
-			]
-		}
+		
 		return circNode;
 	}
 	
 	
-	private def KPort transformPorts(Port port){
-		val circPort = port.createPort.associateWith(port);
-		
-	}
+//	private def KPort transformPorts(Port port){
+//		val circPort = port.createPort.associateWith(port)
+//		val kNode = port.getNode().createNode().associateWith(port.getNode())
+//		
+//		if (port.type.equals("IN")) {kNode.}
+//		
+//		
+//		
+//		return circPort
+//		
+//	}
 	
 	private def KEdge transformLinks(Link link) {
 
@@ -91,7 +101,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Circuit> {
 		val labelText = link.source.name;
 		label.configureCenterEdgeLabel(labelText, KlighdConstants.DEFAULT_FONT_SIZE, KlighdConstants.DEFAULT_FONT_NAME);
 
-		//circLink.targetPort = ;
+		circLink.targetPort.setNode() = transformNodes(link.target.getNode());
 
 		
 	

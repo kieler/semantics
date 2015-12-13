@@ -6,7 +6,6 @@ package de.cau.cs.kieler.circuit.validation;
 
 import de.cau.cs.kieler.circuit.Circuit;
 import de.cau.cs.kieler.circuit.Link;
-import de.cau.cs.kieler.circuit.Node;
 import de.cau.cs.kieler.circuit.Port;
 
 import org.eclipse.emf.common.util.EList;
@@ -20,9 +19,10 @@ import org.eclipse.emf.common.util.EList;
 public interface CircuitValidator {
 	boolean validate();
 
-	boolean validateCircuits(EList<Circuit> value);
-	boolean validateLinks(EList<Link> value);
-	boolean validateNodes(EList<Node> value);
+	boolean validateInnerCircuits(EList<Circuit> value);
+	boolean validateInnerLinks(EList<Link> value);
 	boolean validatePorts(EList<Port> value);
 	boolean validateName(String value);
+	boolean validateType(String value);
+	boolean validateParent(Circuit value);
 }

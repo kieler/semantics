@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.circuit.Port#getIncomingLinks <em>Incoming Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Port#getOutgoingLinks <em>Outgoing Links</em>}</li>
- *   <li>{@link de.cau.cs.kieler.circuit.Port#getNode <em>Node</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Port#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Port#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Port#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,34 +62,6 @@ public interface Port extends EObject {
 	 * @generated
 	 */
 	EList<Link> getOutgoingLinks();
-
-	/**
-	 * Returns the value of the '<em><b>Node</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Node#getPorts <em>Ports</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Node</em>' container reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Node</em>' container reference.
-	 * @see #setNode(Node)
-	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getPort_Node()
-	 * @see de.cau.cs.kieler.circuit.Node#getPorts
-	 * @model opposite="ports" transient="false"
-	 * @generated
-	 */
-	Node getNode();
-
-	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Port#getNode <em>Node</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Node</em>' container reference.
-	 * @see #getNode()
-	 * @generated
-	 */
-	void setNode(Node value);
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
@@ -145,5 +117,33 @@ public interface Port extends EObject {
 	 * @generated
 	 */
 	void setType(PortType value);
+
+	/**
+	 * Returns the value of the '<em><b>Parent</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Circuit#getPorts <em>Ports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parent</em>' container reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parent</em>' container reference.
+	 * @see #setParent(Circuit)
+	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getPort_Parent()
+	 * @see de.cau.cs.kieler.circuit.Circuit#getPorts
+	 * @model opposite="ports" required="true" transient="false"
+	 * @generated
+	 */
+	Circuit getParent();
+
+	/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Port#getParent <em>Parent</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Parent</em>' container reference.
+	 * @see #getParent()
+	 * @generated
+	 */
+	void setParent(Circuit value);
 
 } // Port

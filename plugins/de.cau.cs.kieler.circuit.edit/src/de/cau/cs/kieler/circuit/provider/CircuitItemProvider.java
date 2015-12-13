@@ -64,6 +64,7 @@ public class CircuitItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
+			addTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -91,6 +92,28 @@ public class CircuitItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Type feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Circuit_type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Circuit_type_feature", "_UI_Circuit_type"),
+				 CircuitPackage.Literals.CIRCUIT__TYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -102,9 +125,8 @@ public class CircuitItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__CIRCUITS);
-			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__LINKS);
-			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__NODES);
+			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__INNER_CIRCUITS);
+			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__INNER_LINKS);
 			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__PORTS);
 		}
 		return childrenFeatures;
@@ -162,11 +184,11 @@ public class CircuitItemProvider
 
 		switch (notification.getFeatureID(Circuit.class)) {
 			case CircuitPackage.CIRCUIT__NAME:
+			case CircuitPackage.CIRCUIT__TYPE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case CircuitPackage.CIRCUIT__CIRCUITS:
-			case CircuitPackage.CIRCUIT__LINKS:
-			case CircuitPackage.CIRCUIT__NODES:
+			case CircuitPackage.CIRCUIT__INNER_CIRCUITS:
+			case CircuitPackage.CIRCUIT__INNER_LINKS:
 			case CircuitPackage.CIRCUIT__PORTS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -187,18 +209,13 @@ public class CircuitItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(CircuitPackage.Literals.CIRCUIT__CIRCUITS,
+				(CircuitPackage.Literals.CIRCUIT__INNER_CIRCUITS,
 				 CircuitFactory.eINSTANCE.createCircuit()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(CircuitPackage.Literals.CIRCUIT__LINKS,
+				(CircuitPackage.Literals.CIRCUIT__INNER_LINKS,
 				 CircuitFactory.eINSTANCE.createLink()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(CircuitPackage.Literals.CIRCUIT__NODES,
-				 CircuitFactory.eINSTANCE.createNode()));
 
 		newChildDescriptors.add
 			(createChildParameter

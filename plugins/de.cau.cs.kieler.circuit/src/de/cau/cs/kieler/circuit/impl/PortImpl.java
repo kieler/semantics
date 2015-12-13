@@ -2,9 +2,9 @@
  */
 package de.cau.cs.kieler.circuit.impl;
 
+import de.cau.cs.kieler.circuit.Circuit;
 import de.cau.cs.kieler.circuit.CircuitPackage;
 import de.cau.cs.kieler.circuit.Link;
-import de.cau.cs.kieler.circuit.Node;
 import de.cau.cs.kieler.circuit.Port;
 import de.cau.cs.kieler.circuit.PortType;
 
@@ -34,9 +34,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.PortImpl#getIncomingLinks <em>Incoming Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.PortImpl#getOutgoingLinks <em>Outgoing Links</em>}</li>
- *   <li>{@link de.cau.cs.kieler.circuit.impl.PortImpl#getNode <em>Node</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.PortImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.PortImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.PortImpl#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
  *
@@ -129,7 +129,7 @@ public class PortImpl extends MinimalEObjectImpl.Container implements Port {
 	 */
 	public EList<Link> getIncomingLinks() {
 		if (incomingLinks == null) {
-			incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, CircuitPackage.PORT__INCOMING_LINKS, CircuitPackage.LINK__TARGET);
+			incomingLinks = new EObjectWithInverseResolvingEList.ManyInverse<Link>(Link.class, this, CircuitPackage.PORT__INCOMING_LINKS, CircuitPackage.LINK__TARGET);
 		}
 		return incomingLinks;
 	}
@@ -144,47 +144,6 @@ public class PortImpl extends MinimalEObjectImpl.Container implements Port {
 			outgoingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, CircuitPackage.PORT__OUTGOING_LINKS, CircuitPackage.LINK__SOURCE);
 		}
 		return outgoingLinks;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Node getNode() {
-		if (eContainerFeatureID() != CircuitPackage.PORT__NODE) return null;
-		return (Node)eInternalContainer();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetNode(Node newNode, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newNode, CircuitPackage.PORT__NODE, msgs);
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setNode(Node newNode) {
-		if (newNode != eInternalContainer() || (eContainerFeatureID() != CircuitPackage.PORT__NODE && newNode != null)) {
-			if (EcoreUtil.isAncestor(this, newNode))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newNode != null)
-				msgs = ((InternalEObject)newNode).eInverseAdd(this, CircuitPackage.NODE__PORTS, Node.class, msgs);
-			msgs = basicSetNode(newNode, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.PORT__NODE, newNode, newNode));
 	}
 
 	/**
@@ -234,6 +193,47 @@ public class PortImpl extends MinimalEObjectImpl.Container implements Port {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Circuit getParent() {
+		if (eContainerFeatureID() != CircuitPackage.PORT__PARENT) return null;
+		return (Circuit)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetParent(Circuit newParent, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newParent, CircuitPackage.PORT__PARENT, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParent(Circuit newParent) {
+		if (newParent != eInternalContainer() || (eContainerFeatureID() != CircuitPackage.PORT__PARENT && newParent != null)) {
+			if (EcoreUtil.isAncestor(this, newParent))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newParent != null)
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, CircuitPackage.CIRCUIT__PORTS, Circuit.class, msgs);
+			msgs = basicSetParent(newParent, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.PORT__PARENT, newParent, newParent));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -242,10 +242,10 @@ public class PortImpl extends MinimalEObjectImpl.Container implements Port {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
 			case CircuitPackage.PORT__OUTGOING_LINKS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoingLinks()).basicAdd(otherEnd, msgs);
-			case CircuitPackage.PORT__NODE:
+			case CircuitPackage.PORT__PARENT:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetNode((Node)otherEnd, msgs);
+				return basicSetParent((Circuit)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -262,8 +262,8 @@ public class PortImpl extends MinimalEObjectImpl.Container implements Port {
 				return ((InternalEList<?>)getIncomingLinks()).basicRemove(otherEnd, msgs);
 			case CircuitPackage.PORT__OUTGOING_LINKS:
 				return ((InternalEList<?>)getOutgoingLinks()).basicRemove(otherEnd, msgs);
-			case CircuitPackage.PORT__NODE:
-				return basicSetNode(null, msgs);
+			case CircuitPackage.PORT__PARENT:
+				return basicSetParent(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -276,8 +276,8 @@ public class PortImpl extends MinimalEObjectImpl.Container implements Port {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case CircuitPackage.PORT__NODE:
-				return eInternalContainer().eInverseRemove(this, CircuitPackage.NODE__PORTS, Node.class, msgs);
+			case CircuitPackage.PORT__PARENT:
+				return eInternalContainer().eInverseRemove(this, CircuitPackage.CIRCUIT__PORTS, Circuit.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -294,12 +294,12 @@ public class PortImpl extends MinimalEObjectImpl.Container implements Port {
 				return getIncomingLinks();
 			case CircuitPackage.PORT__OUTGOING_LINKS:
 				return getOutgoingLinks();
-			case CircuitPackage.PORT__NODE:
-				return getNode();
 			case CircuitPackage.PORT__NAME:
 				return getName();
 			case CircuitPackage.PORT__TYPE:
 				return getType();
+			case CircuitPackage.PORT__PARENT:
+				return getParent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -321,14 +321,14 @@ public class PortImpl extends MinimalEObjectImpl.Container implements Port {
 				getOutgoingLinks().clear();
 				getOutgoingLinks().addAll((Collection<? extends Link>)newValue);
 				return;
-			case CircuitPackage.PORT__NODE:
-				setNode((Node)newValue);
-				return;
 			case CircuitPackage.PORT__NAME:
 				setName((String)newValue);
 				return;
 			case CircuitPackage.PORT__TYPE:
 				setType((PortType)newValue);
+				return;
+			case CircuitPackage.PORT__PARENT:
+				setParent((Circuit)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -348,14 +348,14 @@ public class PortImpl extends MinimalEObjectImpl.Container implements Port {
 			case CircuitPackage.PORT__OUTGOING_LINKS:
 				getOutgoingLinks().clear();
 				return;
-			case CircuitPackage.PORT__NODE:
-				setNode((Node)null);
-				return;
 			case CircuitPackage.PORT__NAME:
 				setName(NAME_EDEFAULT);
 				return;
 			case CircuitPackage.PORT__TYPE:
 				setType(TYPE_EDEFAULT);
+				return;
+			case CircuitPackage.PORT__PARENT:
+				setParent((Circuit)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -373,12 +373,12 @@ public class PortImpl extends MinimalEObjectImpl.Container implements Port {
 				return incomingLinks != null && !incomingLinks.isEmpty();
 			case CircuitPackage.PORT__OUTGOING_LINKS:
 				return outgoingLinks != null && !outgoingLinks.isEmpty();
-			case CircuitPackage.PORT__NODE:
-				return getNode() != null;
 			case CircuitPackage.PORT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case CircuitPackage.PORT__TYPE:
 				return type != TYPE_EDEFAULT;
+			case CircuitPackage.PORT__PARENT:
+				return getParent() != null;
 		}
 		return super.eIsSet(featureID);
 	}

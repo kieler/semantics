@@ -8,28 +8,25 @@ This can be disabled with -vmargs -Dorg.eclipse.emf.examples.generator.validator
 Package circuit <http://kieler.cs.cau.de/circuit>
 
   Class Circuit
-    Reference circuits : Circuit<<0..*>>
-    Reference links : Link<<0..*>>
-    Reference nodes : Node<<0..*>>
+    Reference innerCircuits : Circuit<<0..*>>
+    Reference innerLinks : Link<<0..*>>
     Reference ports : Port<<0..*>>
     Attribute name : EString
+    Attribute type : EString
+    Reference parent : Circuit<<1..1>>
 
   Class Link
     Reference source : Port
-    Reference target : Port
+    Reference target : Port<<0..*>>
     Attribute name : EString
+    Reference parent : Circuit<<1..1>>
 
   Class Port
     Reference incomingLinks : Link<<0..*>>
     Reference outgoingLinks : Link<<0..*>>
-    Reference node : Node
     Attribute name : EString
     Attribute type : PortType<<1..1>>
-
-  Class Node
-    Reference ports : Port<<0..*>>
-    Attribute nodeID : EString
-    Attribute name : EString
+    Reference parent : Circuit<<1..1>>
 
   Enum PortType
     Literal IN = 0

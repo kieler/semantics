@@ -141,29 +141,6 @@ public class CircuitItemProviderAdapterFactory extends CircuitAdapterFactory imp
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.circuit.Node} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NodeItemProvider nodeItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.circuit.Node}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNodeAdapter() {
-		if (nodeItemProvider == null) {
-			nodeItemProvider = new NodeItemProvider(this);
-		}
-
-		return nodeItemProvider;
-	}
-
-	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -265,7 +242,6 @@ public class CircuitItemProviderAdapterFactory extends CircuitAdapterFactory imp
 		if (circuitItemProvider != null) circuitItemProvider.dispose();
 		if (linkItemProvider != null) linkItemProvider.dispose();
 		if (portItemProvider != null) portItemProvider.dispose();
-		if (nodeItemProvider != null) nodeItemProvider.dispose();
 	}
 
 }
