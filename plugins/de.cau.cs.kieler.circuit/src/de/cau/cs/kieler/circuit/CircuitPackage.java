@@ -4,6 +4,7 @@ package de.cau.cs.kieler.circuit;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -14,6 +15,7 @@ import org.eclipse.emf.ecore.EReference;
  * <ul>
  *   <li>each class,</li>
  *   <li>each feature of each class,</li>
+ *   <li>each operation of each class,</li>
  *   <li>each enum,</li>
  *   <li>and each data type</li>
  * </ul>
@@ -64,36 +66,6 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 */
 	int CIRCUIT = 0;
-
-	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.LinkImpl <em>Link</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.circuit.impl.LinkImpl
-	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getLink()
-	 * @generated
-	 */
-	int LINK = 1;
-
-	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.PortImpl <em>Port</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.circuit.impl.PortImpl
-	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getPort()
-	 * @generated
-	 */
-	int PORT = 2;
-
-	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.NodeImpl <em>Node</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.circuit.impl.NodeImpl
-	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getNode()
-	 * @generated
-	 */
-	int NODE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Circuits</b></em>' containment reference list.
@@ -159,6 +131,16 @@ public interface CircuitPackage extends EPackage {
 	int CIRCUIT_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.LinkImpl <em>Link</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.circuit.impl.LinkImpl
+	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getLink()
+	 * @generated
+	 */
+	int LINK = 1;
+
+	/**
 	 * The feature id for the '<em><b>Source</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -204,6 +186,16 @@ public interface CircuitPackage extends EPackage {
 	int LINK_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.PortImpl <em>Port</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.circuit.impl.PortImpl
+	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getPort()
+	 * @generated
+	 */
+	int PORT = 2;
+
+	/**
 	 * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -222,7 +214,7 @@ public interface CircuitPackage extends EPackage {
 	int PORT__OUTGOING_LINKS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Node</b></em>' reference.
+	 * The feature id for the '<em><b>Node</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -231,13 +223,31 @@ public interface CircuitPackage extends EPackage {
 	int PORT__NODE = 2;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PORT__NAME = 3;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PORT__TYPE = 4;
+
+	/**
 	 * The number of structural features of the '<em>Port</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PORT_FEATURE_COUNT = 3;
+	int PORT_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Port</em>' class.
@@ -249,22 +259,23 @@ public interface CircuitPackage extends EPackage {
 	int PORT_OPERATION_COUNT = 0;
 
 	/**
-	 * The feature id for the '<em><b>Input Ports</b></em>' containment reference list.
+	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.NodeImpl <em>Node</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.circuit.impl.NodeImpl
+	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getNode()
 	 * @generated
-	 * @ordered
 	 */
-	int NODE__INPUT_PORTS = 0;
+	int NODE = 3;
 
 	/**
-	 * The feature id for the '<em><b>Output Ports</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Ports</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__OUTPUT_PORTS = 1;
+	int NODE__PORTS = 0;
 
 	/**
 	 * The feature id for the '<em><b>Node ID</b></em>' attribute.
@@ -273,7 +284,7 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__NODE_ID = 2;
+	int NODE__NODE_ID = 1;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -282,7 +293,7 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE__NAME = 3;
+	int NODE__NAME = 2;
 
 	/**
 	 * The number of structural features of the '<em>Node</em>' class.
@@ -291,7 +302,7 @@ public interface CircuitPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_FEATURE_COUNT = 4;
+	int NODE_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Node</em>' class.
@@ -301,6 +312,17 @@ public interface CircuitPackage extends EPackage {
 	 * @ordered
 	 */
 	int NODE_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.PortType <em>Port Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.circuit.PortType
+	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getPortType()
+	 * @generated
+	 */
+	int PORT_TYPE = 4;
+
 
 	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Circuit <em>Circuit</em>}'.
@@ -443,15 +465,37 @@ public interface CircuitPackage extends EPackage {
 	EReference getPort_OutgoingLinks();
 
 	/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.circuit.Port#getNode <em>Node</em>}'.
+	 * Returns the meta object for the container reference '{@link de.cau.cs.kieler.circuit.Port#getNode <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Node</em>'.
+	 * @return the meta object for the container reference '<em>Node</em>'.
 	 * @see de.cau.cs.kieler.circuit.Port#getNode()
 	 * @see #getPort()
 	 * @generated
 	 */
 	EReference getPort_Node();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Port#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see de.cau.cs.kieler.circuit.Port#getName()
+	 * @see #getPort()
+	 * @generated
+	 */
+	EAttribute getPort_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Port#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see de.cau.cs.kieler.circuit.Port#getType()
+	 * @see #getPort()
+	 * @generated
+	 */
+	EAttribute getPort_Type();
 
 	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Node <em>Node</em>}'.
@@ -464,26 +508,15 @@ public interface CircuitPackage extends EPackage {
 	EClass getNode();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.circuit.Node#getInputPorts <em>Input Ports</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.circuit.Node#getPorts <em>Ports</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Input Ports</em>'.
-	 * @see de.cau.cs.kieler.circuit.Node#getInputPorts()
+	 * @return the meta object for the containment reference list '<em>Ports</em>'.
+	 * @see de.cau.cs.kieler.circuit.Node#getPorts()
 	 * @see #getNode()
 	 * @generated
 	 */
-	EReference getNode_InputPorts();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.circuit.Node#getOutputPorts <em>Output Ports</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Output Ports</em>'.
-	 * @see de.cau.cs.kieler.circuit.Node#getOutputPorts()
-	 * @see #getNode()
-	 * @generated
-	 */
-	EReference getNode_OutputPorts();
+	EReference getNode_Ports();
 
 	/**
 	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Node#getNodeID <em>Node ID</em>}'.
@@ -508,6 +541,16 @@ public interface CircuitPackage extends EPackage {
 	EAttribute getNode_Name();
 
 	/**
+	 * Returns the meta object for enum '{@link de.cau.cs.kieler.circuit.PortType <em>Port Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Port Type</em>'.
+	 * @see de.cau.cs.kieler.circuit.PortType
+	 * @generated
+	 */
+	EEnum getPortType();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -522,6 +565,7 @@ public interface CircuitPackage extends EPackage {
 	 * <ul>
 	 *   <li>each class,</li>
 	 *   <li>each feature of each class,</li>
+	 *   <li>each operation of each class,</li>
 	 *   <li>each enum,</li>
 	 *   <li>and each data type</li>
 	 * </ul>
@@ -640,12 +684,28 @@ public interface CircuitPackage extends EPackage {
 		EReference PORT__OUTGOING_LINKS = eINSTANCE.getPort_OutgoingLinks();
 
 		/**
-		 * The meta object literal for the '<em><b>Node</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Node</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference PORT__NODE = eINSTANCE.getPort_Node();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PORT__NAME = eINSTANCE.getPort_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PORT__TYPE = eINSTANCE.getPort_Type();
 
 		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.NodeImpl <em>Node</em>}' class.
@@ -658,20 +718,12 @@ public interface CircuitPackage extends EPackage {
 		EClass NODE = eINSTANCE.getNode();
 
 		/**
-		 * The meta object literal for the '<em><b>Input Ports</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Ports</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference NODE__INPUT_PORTS = eINSTANCE.getNode_InputPorts();
-
-		/**
-		 * The meta object literal for the '<em><b>Output Ports</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference NODE__OUTPUT_PORTS = eINSTANCE.getNode_OutputPorts();
+		EReference NODE__PORTS = eINSTANCE.getNode_Ports();
 
 		/**
 		 * The meta object literal for the '<em><b>Node ID</b></em>' attribute feature.
@@ -688,6 +740,16 @@ public interface CircuitPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NODE__NAME = eINSTANCE.getNode_Name();
+
+		/**
+		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.PortType <em>Port Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.circuit.PortType
+		 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getPortType()
+		 * @generated
+		 */
+		EEnum PORT_TYPE = eINSTANCE.getPortType();
 
 	}
 

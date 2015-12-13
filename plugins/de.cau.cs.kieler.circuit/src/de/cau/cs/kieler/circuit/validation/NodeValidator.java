@@ -17,9 +17,7 @@ import org.eclipse.emf.common.util.EList;
 public interface NodeValidator {
 	boolean validate();
 
-	boolean validateInputPorts(EList<Port> value);
-	boolean validateOutputPorts(EList<Port> value);
+	boolean validatePorts(EList<Port> value);
 	boolean validateNodeID(String value);
-
 	boolean validateName(String value);
 }

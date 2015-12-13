@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kiml.options.SizeConstraint
 import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.kiml.util.KimlUtil
+import de.cau.cs.kieler.core.kgraph.KPort
 
 class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Circuit> {
 
@@ -75,18 +76,24 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Circuit> {
 		}
 		return circNode;
 	}
-
+	
+	
+	private def KPort transformPorts(Port port){
+		val circPort = port.createPort.associateWith(port);
+		
+	}
+	
 	private def KEdge transformLinks(Link link) {
 
 		val circLink = link.createEdge.associateWith(link)
 		val label = KimlUtil.createInitializedLabel(circLink);
 		// val labelText = link.name;
-		val labelText = link.source.id;
+		val labelText = link.source.name;
 		label.configureCenterEdgeLabel(labelText, KlighdConstants.DEFAULT_FONT_SIZE, KlighdConstants.DEFAULT_FONT_NAME);
 
 		//circLink.targetPort = ;
 
-		//////////MAYBE a Porttransformation would be better... :D 
+		
 	
 	
 		return circLink

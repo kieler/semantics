@@ -4,7 +4,9 @@ package de.cau.cs.kieler.circuit.tests;
 
 import de.cau.cs.kieler.circuit.CircuitFactory;
 import de.cau.cs.kieler.circuit.Port;
+
 import junit.framework.TestCase;
+
 import junit.textui.TestRunner;
 
 /**
@@ -58,7 +60,6 @@ public class PortTest extends TestCase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
 	protected Port getFixture() {
 		return fixture;
 	}

@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.circuit.util;
 
 import de.cau.cs.kieler.circuit.*;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 

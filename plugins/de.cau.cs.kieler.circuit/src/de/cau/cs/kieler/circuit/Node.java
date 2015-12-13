@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.circuit;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -13,8 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.circuit.Node#getInputPorts <em>Input Ports</em>}</li>
- *   <li>{@link de.cau.cs.kieler.circuit.Node#getOutputPorts <em>Output Ports</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Node#getPorts <em>Ports</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Node#getNodeID <em>Node ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Node#getName <em>Name</em>}</li>
  * </ul>
@@ -26,36 +26,22 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Node extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Input Ports</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Ports</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Port}.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Port#getNode <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Input Ports</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Ports</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Input Ports</em>' containment reference list.
-	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getNode_InputPorts()
-	 * @model containment="true"
+	 * @return the value of the '<em>Ports</em>' containment reference list.
+	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getNode_Ports()
+	 * @see de.cau.cs.kieler.circuit.Port#getNode
+	 * @model opposite="node" containment="true"
 	 * @generated
 	 */
-	EList<Port> getInputPorts();
-
-	/**
-	 * Returns the value of the '<em><b>Output Ports</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Port}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Output Ports</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Output Ports</em>' containment reference list.
-	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getNode_OutputPorts()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<Port> getOutputPorts();
+	EList<Port> getPorts();
 
 	/**
 	 * Returns the value of the '<em><b>Node ID</b></em>' attribute.

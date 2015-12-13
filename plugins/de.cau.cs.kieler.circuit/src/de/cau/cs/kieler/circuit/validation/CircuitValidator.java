@@ -8,7 +8,6 @@ import de.cau.cs.kieler.circuit.Circuit;
 import de.cau.cs.kieler.circuit.Link;
 import de.cau.cs.kieler.circuit.Node;
 import de.cau.cs.kieler.circuit.Port;
-import de.cau.cs.kieler.circuit.Relation;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -26,6 +25,4 @@ public interface CircuitValidator {
 	boolean validateNodes(EList<Node> value);
 	boolean validatePorts(EList<Port> value);
 	boolean validateName(String value);
-
-	boolean validateRelations(EList<Relation> value);
 }

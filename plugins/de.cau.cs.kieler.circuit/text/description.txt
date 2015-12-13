@@ -22,10 +22,16 @@ Package circuit <http://kieler.cs.cau.de/circuit>
   Class Port
     Reference incomingLinks : Link<<0..*>>
     Reference outgoingLinks : Link<<0..*>>
-    Reference node : Node<<1..1>>
+    Reference node : Node
+    Attribute name : EString
+    Attribute type : PortType<<1..1>>
 
   Class Node
-    Reference inputPorts : Port<<0..*>>
-    Reference outputPorts : Port<<0..*>>
+    Reference ports : Port<<0..*>>
     Attribute nodeID : EString
     Attribute name : EString
+
+  Enum PortType
+    Literal IN = 0
+    Literal OUT = 1
+    Literal SELECT = 2

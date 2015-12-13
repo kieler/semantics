@@ -6,6 +6,7 @@ package de.cau.cs.kieler.circuit.provider;
 import de.cau.cs.kieler.circuit.CircuitFactory;
 import de.cau.cs.kieler.circuit.CircuitPackage;
 import de.cau.cs.kieler.circuit.Node;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -32,7 +34,14 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class NodeItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+public class NodeItemProvider 
+	extends ItemProviderAdapter
+	implements
+		IEditingDomainItemProvider,
+		IStructuredItemContentProvider,
+		ITreeItemContentProvider,
+		IItemLabelProvider,
+		IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -116,8 +125,7 @@ public class NodeItemProvider extends ItemProviderAdapter implements IEditingDom
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(CircuitPackage.Literals.NODE__INPUT_PORTS);
-			childrenFeatures.add(CircuitPackage.Literals.NODE__OUTPUT_PORTS);
+			childrenFeatures.add(CircuitPackage.Literals.NODE__PORTS);
 		}
 		return childrenFeatures;
 	}
@@ -177,8 +185,7 @@ public class NodeItemProvider extends ItemProviderAdapter implements IEditingDom
 			case CircuitPackage.NODE__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case CircuitPackage.NODE__INPUT_PORTS:
-			case CircuitPackage.NODE__OUTPUT_PORTS:
+			case CircuitPackage.NODE__PORTS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -198,36 +205,8 @@ public class NodeItemProvider extends ItemProviderAdapter implements IEditingDom
 
 		newChildDescriptors.add
 			(createChildParameter
-				(CircuitPackage.Literals.NODE__INPUT_PORTS,
+				(CircuitPackage.Literals.NODE__PORTS,
 				 CircuitFactory.eINSTANCE.createPort()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(CircuitPackage.Literals.NODE__OUTPUT_PORTS,
-				 CircuitFactory.eINSTANCE.createPort()));
-	}
-
-	/**
-	 * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
-		Object childFeature = feature;
-		Object childObject = child;
-
-		boolean qualify =
-			childFeature == CircuitPackage.Literals.NODE__INPUT_PORTS ||
-			childFeature == CircuitPackage.Literals.NODE__OUTPUT_PORTS;
-
-		if (qualify) {
-			return getString
-				("_UI_CreateChild_text2",
-				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
-		}
-		return super.getCreateChildText(owner, feature, child, selection);
 	}
 
 	/**
