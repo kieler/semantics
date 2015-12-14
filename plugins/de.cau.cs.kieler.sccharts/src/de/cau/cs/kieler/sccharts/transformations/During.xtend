@@ -28,6 +28,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 
 /**
  * SCCharts During Transformation.
@@ -69,12 +70,14 @@ class During extends AbstractExpansionTransformation implements Traceable {
     @Inject
     extension KExpressionsDeclarationExtensions
 
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
+//    @Inject
+//    extension KExpressionsValuedObjectExtensions
     
     @Inject
     extension SCChartsExtension
+
+    @Inject
+    extension SCChartsTransformationExtension
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -129,6 +132,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
 
         }
     }
+    
 
     // Traverse all simple states or super states w/o outgoing terminations that have actions to 
     // transform
@@ -165,6 +169,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
         }
     }
 
+
     // Traverse all super states with outgoing terminations that have actions to transform. 
     // This default implementation will create / use a complex final state
     def void transformDuringComplexFinalStates(State state, State targetRootRegion) {
@@ -172,7 +177,9 @@ class During extends AbstractExpansionTransformation implements Traceable {
         // Create the body of the dummy state - containing the during action
         // For every during action: Create a region
         for (duringAction : state.duringActions.immutableCopy) {
+            // Tracing
             duringAction.setDefaultTrace;
+            
             val immediateDuringAction = duringAction.isImmediate
             val region = state.createControlflowRegion(GENERATED_PREFIX + "During").uniqueName
             val initialState = region.createInitialState(GENERATED_PREFIX + "I")
@@ -207,45 +214,8 @@ class During extends AbstractExpansionTransformation implements Traceable {
             // After transforming during actions, erase them
             state.localActions.remove(duringAction)
         }
-
-    //            // Create the body of the dummy state - containing the during action
-    //            // For every during action: Create a region
-    //            for (duringAction : state.duringActions.immutableCopy) {
-    //                duringAction.setDefaultTrace;
-    //                val immediateDuringAction = duringAction.isImmediate
-    //                val region = state.createRegion(GENERATED_PREFIX + "During").uniqueName
-    //                val initialState = region.createInitialState(GENERATED_PREFIX + "I")
-    //                val finalState = region.createFinalState(GENERATED_PREFIX + "F");
-    //                val transition1 = initialState.createTransitionTo(finalState)
-    //                transition1.setDelay(duringAction.delay);
-    //                transition1.setImmediate(true);
-    //                val transition2 = finalState.createTransitionTo(initialState)
-    //                transition2.setImmediate(false);
-    //                if (immediateDuringAction) {
-    //                    // In case of immediate during action, copy the trigger and effect
-    //                    if (duringAction.trigger != null) {
-    //                        transition1.setTrigger(duringAction.trigger.copy);
-    //                        // if the during action has a trigger we need a second immediate 
-    //                        // default path to the final state!
-    //                        val transition1b = initialState.createTransitionTo(finalState);  
-    //                        transition1b.setImmediate(true);
-    //                    }
-    //                    
-    //                    for (action : duringAction.effects) {
-    //                        transition1.addEffect(action.copy);
-    //                    }
-    //                } else {
-    //                   // non immediate during 
-    //                    transition2.setTrigger(duringAction.trigger.copy);
-    //                    for (action : duringAction.effects) {
-    //                        transition2.addEffect(action.copy);
-    //                    }
-    //                }
-    //
-    //                // After transforming during actions, erase them
-    //                state.localActions.remove(duringAction)
-    //            }
     }
+    
 
     // Traverse all super states with outgoing terminations that have actions to transform. 
     // This alternative implementation will create a main region to detect termination
@@ -258,7 +228,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
         // In case the during action is immediate, the looping transition is non-immediate.
         // In case the during action is non-immediate, the looping transition is immediate.
         if (state.duringActions != null && state.duringActions.size > 0) {
-            val term = state.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).uniqueName
+            val term = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
             term.setInitialValue(FALSE)
 
             val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
@@ -305,4 +275,6 @@ class During extends AbstractExpansionTransformation implements Traceable {
         }
     }
 
+    // ------------------------------------------------------------------------
+    
 }

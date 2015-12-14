@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtensionOLD;
+import de.cau.cs.kieler.sccharts.Scope;
 
 /**
  * ValuedObjectList is a specific list. If you add ValuedObjects to this list their TypeGroup will
@@ -49,8 +50,8 @@ public class ValuedObjectList extends ArrayList<ValuedObject> {
     public boolean add(ValuedObject valuedObject) {
         boolean returnValue = super.add(valuedObject);
         // Also create a typeGroup
-        if (container != null && container instanceof Declaration) {
-            sCChartsTransformationExtension._addValuedObject((Declaration)container, valuedObject);      
+        if (container != null && container instanceof Scope) {
+            sCChartsTransformationExtension._addValuedObject((Scope)container, valuedObject);      
         }
         return returnValue;
     }

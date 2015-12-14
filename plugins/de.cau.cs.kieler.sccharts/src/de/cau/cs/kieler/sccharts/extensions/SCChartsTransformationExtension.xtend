@@ -20,6 +20,13 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.Scope
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.StringValue
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /**
  * SCCharts Transformation Extensions. Extension in order to improve readability of SCCharts extended
@@ -89,7 +96,19 @@ class SCChartsTransformationExtension {
         valuedObject
     }
 
-    // ========= ATTRIBUTE GETTER =========
+//    // ========= ATTRIBUTE GETTER =========
+
+    def public ValueType getType(ValuedObject valuedObject) {
+        valuedObject.declaration.type
+    }
+
+    // Create a ValuedObjectReference to a valuedObject
+    def ValuedObjectReference reference(ValuedObject valuedObject) {
+        KExpressionsFactory::eINSTANCE.createValuedObjectReference() => [
+            setValuedObject(valuedObject)
+        ]
+    }    
+
     // Return whether the ValuedObject is an input.
     def public boolean getInput(ValuedObject valuedObject) {
         valuedObject.declaration.input
@@ -156,6 +175,23 @@ class SCChartsTransformationExtension {
     }
 
     // ========= ATTRIBUTE SETTER =========
+    
+    def ValuedObject copyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
+        if (valuedObjectWithAttributes.initialValue != null) {
+            valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
+        }
+        if (valuedObjectWithAttributes.combineOperator != null) {
+            valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
+        }
+        if (!valuedObjectWithAttributes.cardinalities.nullOrEmpty) {
+            for (card : valuedObjectWithAttributes.cardinalities) {
+                valuedObject.cardinalities.add(card);
+            }
+        }        
+        valuedObject
+    }
+    
+    
     // Set the type of a ValuedObject. 
     def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
         val uniqueDeclaration = valuedObject.uniqueDeclaration
@@ -256,7 +292,8 @@ class SCChartsTransformationExtension {
 
     // Set the ValuedObject to be a signal.
     def ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
-        valuedObject.setSignal(isSignal)
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setSignal(isSignal)
         valuedObject
     }
 
@@ -341,11 +378,15 @@ class SCChartsTransformationExtension {
         KExpressionsFactory::eINSTANCE.createDeclaration
     }
 
-    // Creates a new Declaration on the basis of an existing declaration. The new declaration has
-    // the same attributes than the existing one but will not contain their ValuedObjects.
+    // Creates a new Declaration on the basis of an existing declaration if existing. The new declaration
+    // has the same attributes than the existing one but will not contain their ValuedObjects.
+    // If the exitsingDeclaration is null then createDeclaration(Declaration existingDeclaration) behaves
+    // as createDeclaration().
     def public Declaration createDeclaration(Declaration existingDeclaration) {
         val newDeclaration = createDeclaration()
-        newDeclaration.copyAttributes(existingDeclaration)
+        if (existingDeclaration != null) {
+           newDeclaration.copyAttributes(existingDeclaration)
+        } 
         newDeclaration
     }
     
@@ -379,9 +420,13 @@ class SCChartsTransformationExtension {
     // Helper method for Setter-Wrapper. It returns the direct Declaration of a ValuedObject
     // if there are no other ValuedObjects in this group. Otherwise it creates and returns
     // a new Declaration and removes the ValuedObject from the old one, adding it to the 
-    // new one.
+    // new one. 
+    // Attention: The declaration of the valuedObject MUST NOT BE NULL.
     def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
         val declaration = valuedObject.declaration
+        if (declaration == null) {
+            // ERROR CASE
+        }
         if (declaration._containsOnly(valuedObject)) {
             // We don't have to care about other valuedObjects
             return declaration
@@ -390,9 +435,6 @@ class SCChartsTransformationExtension {
             val newDeclaration = createDeclaration(declaration)
             // Remove the valuedObject from the old group and add it to the new group
             declaration._removeValuedObject(valuedObject)
-            if (declaration.valuedObjects.size == 0) {
-                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
-            }
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
         }
@@ -416,8 +458,72 @@ class SCChartsTransformationExtension {
         declaration.valuedObjects.add(valuedObject)
         declaration
     }
+
+    // Add a ValuedObject.
+    // The visibility of this method is 'package' to allow the ValuedObjectList to add a ValuedObject.
+    def Declaration _addValuedObject(Scope scope, ValuedObject valuedObject) {
+        val declaration = createDeclaration()
+        scope.declarations.add(declaration)
+        declaration.valuedObjects.add(valuedObject)
+        declaration
+    }
     
+
+
+    // -------------------------------------------------------------------------
+    // --                       K E X P R E S S I O N S                       --
+    // -------------------------------------------------------------------------
+    
+    // NOW PART OF KExpressionsCreateExtensions
+    // @Inject
+    // extension KExpressionsCreateExtensions
+    
+    
+    //===========  VALUES  ===========
+//    // Create a TRUE value.
+//    def public BoolValue TRUE() {
+//        createBoolValue(true)
+//    }
+//
+//    // Create a FALSE value.
+//    def public BoolValue FALSE() {
+//        createBoolValue(false)
+//    }
+
+//    // Create an int value.
+//    def IntValue createIntValue(int value) {
+//        val expression = KExpressionsFactory::eINSTANCE.createIntValue()
+//        expression.setValue(value)
+//        expression
+//    }
+//
+//    // Create a float value.
+//    def FloatValue createFloatValue(float value) {
+//        val expression = KExpressionsFactory::eINSTANCE.createFloatValue()
+//        expression.setValue(value)
+//        expression
+//    }
+//
+//    // Create a boolean value.
+//    def BoolValue createBoolValue(boolean value) {
+//        val expression = KExpressionsFactory::eINSTANCE.createBoolValue()
+//        expression.setValue(value)
+//        expression
+//    }
+//
+//    // Create a string value
+//    def StringValue createStringValue(String value) {
+//        val expression = KExpressionsFactory::eINSTANCE.createStringValue()
+//        expression.setValue(value)
+//        expression
+//    }
+//
+//    // Create an empty text expression.
+//    def TextExpression createTextExpression() {
+//        val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
+//        expression
+//    }
     
     // ------------------------------------------------------------------------
-
+    
 }

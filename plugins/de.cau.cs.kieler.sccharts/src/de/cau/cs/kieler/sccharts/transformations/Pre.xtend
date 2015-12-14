@@ -33,6 +33,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 
 /**
  * SCCharts Pre Transformation.
@@ -76,11 +77,14 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
     @Inject
     extension KExpressionsDeclarationExtensions    
     
-    @Inject
-    extension KExpressionsValuedObjectExtensions   
+//    @Inject
+//    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension
+
+    @Inject
+    extension SCChartsTransformationExtension
 
     @Inject
     extension de.cau.cs.kieler.sccharts.features.Pre
@@ -121,14 +125,15 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                             action.getPreValExpression(valuedObject).hasNext).size > 0).toList;
         
 		for (preValuedObject : allPreValuedObjects.immutableCopy) {
+		    // Tracing
             preValuedObject.setDefaultTrace
-            val newPreDeclaration = createDeclaration => [ type = preValuedObject.getType ]
-            val newPre = state.createValuedObject(GENERATED_PREFIX + "pre" + GENERATED_PREFIX + preValuedObject.name,
-            	newPreDeclaration).uniqueNameCached(nameCache)
-            newPre.applyAttributes(preValuedObject)
-            val newAux = state.createValuedObject(GENERATED_PREFIX + "cur" + GENERATED_PREFIX + preValuedObject.name,
-            	newPreDeclaration).uniqueNameCached(nameCache)
-            newAux.applyAttributes(preValuedObject)
+            
+            val newPre = state.createVariable(GENERATED_PREFIX + "pre" + GENERATED_PREFIX 
+                + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
+            newPre.copyAttributes(preValuedObject)
+            val newAux = state.createVariable(GENERATED_PREFIX + "cur" + GENERATED_PREFIX 
+                + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
+            newAux.copyAttributes(preValuedObject)
 
             val preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
             val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
@@ -157,8 +162,8 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                     if (container instanceof OperatorExpression) {
 
                         // If nested PRE or PRE inside another complex expression
+                        (container as OperatorExpression).subExpressions.add(newPre.reference);
                         (container as OperatorExpression).subExpressions.remove(preExpression);
-                        (container as OperatorExpression).add(newPre.reference);
                     } else if (container instanceof Action) {
 
                         // If PRE directly a trigger

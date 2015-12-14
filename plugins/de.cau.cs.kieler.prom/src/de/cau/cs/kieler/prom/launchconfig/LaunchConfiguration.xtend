@@ -49,6 +49,7 @@ import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
+import org.eclipse.core.resources.IResource
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -174,8 +175,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             compileJob.join()
             wrapperCodeJob.join()
 
-            
-
             // Proceed only if the other jobs succeded  
             if (compileJob.result.code == IStatus.OK && wrapperCodeJob.result.code == IStatus.OK) {
                 // Run associated launch shortcut
@@ -184,6 +183,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 // Execute command list 
                 getExecuteCommandsJob().schedule()
             }
+            
+            // Refresh output directory for files
+            project.getFolder(BUILD_DIRECTORY).refreshLocal(IResource.DEPTH_INFINITE, monitor)
         } else {
             consoleStream.println("Project of launch configuration '" + configuration.name +
                 "' does not exist.\n");
@@ -192,7 +194,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     private def void runAssociatedLauchShortcut() {
         // Nothing to do
-        System.err.println(associatedLaunchShortcut)
         if(Strings.isNullOrEmpty(mainFile) || Strings.isNullOrEmpty(associatedLaunchShortcut)) {
             return;
         }
@@ -323,10 +324,12 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             val result = KielerCompiler.compile(context)
 
             // Flush compilation result to target
-            if (result.string != null && result.string != "") {
+            if (Strings.isNullOrEmpty(result.allErrors) && Strings.isNullOrEmpty(result.allWarnings) && !Strings.isNullOrEmpty(result.string) ) {
                 saveCompilationResult(result.string, computeTargetPath(data.projectRelativePath, false))
             } else {
-                var errorMessage = "Compilation of '" + data.name + "' failed:\n\n" + result.allErrors
+                var errorMessage = "Compilation of '" + data.name + "' failed:\n\n" +
+                                   Strings.nullToEmpty(result.allErrors) + "\n" +
+                                   Strings.nullToEmpty(result.allWarnings)
 
                 throw new Exception(errorMessage)
             }
