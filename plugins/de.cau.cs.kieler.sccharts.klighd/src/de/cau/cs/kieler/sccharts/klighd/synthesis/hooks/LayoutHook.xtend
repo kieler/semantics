@@ -31,12 +31,13 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
- * Evaluates layout option annotations in the model.
+ * Sets the default layout on the diagram and evaluates layout option annotations in the model.
  * 
  * @author als
  * @kieler.design 2015-11-24 proposed
@@ -44,11 +45,11 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
  * 
  */
 @ViewSynthesisShared
-class LayoutAnnotationHook extends SynthesisHook {
+class LayoutHook extends SynthesisHook {
 
     /** This property is set if any element should override HV or VH layout annotation effects */
-    private static final IProperty<Boolean> BLOCK_HV_LAYOUT_ANNOTATION = new Property<Boolean>(
-        "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.layoutannotation.override", false)
+    private static final IProperty<Boolean> BLOCK_ALTERNATIN_LAYOUT = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.layout.override", false)
 
     /** Service class for accessing layout options by name */
     private static final LayoutMetaDataService LAYOUT_OPTIONS_SERVICE = LayoutMetaDataService.getInstance();
@@ -66,21 +67,46 @@ class LayoutAnnotationHook extends SynthesisHook {
     @Inject
     extension AnnotationsExtensions
 
+    @Inject
+    extension SCChartsExtension
+
+    /** The depth of map of the sccharts scopes in the model */
+    private val depthMap = <Scope, Integer>newHashMap
+
+    override start(Scope scope, KNode node) {
+        depthMap.put(scope, if(scope instanceof State) 0 else -1)
+        scope.allScopes.filter[it != scope].forEach [
+            val parentDepth = depthMap.get(it.eContainer) ?: 0
+            // Increase depth only after regions because state have no layouted children
+            val depth = if(it instanceof State) parentDepth + 1 else parentDepth
+            depthMap.put(it, depth)
+        ]
+    }
+
     override processState(State state, KNode node) {
-        node.setLayoutOptions(state)
-        node.setAlternatingLayout(state)
+        // No default layout direction for states because of the box layout
+        // HV/VH Layout via annotation
+        node.processAlternatingLayoutAnnotation(state)
+        // Layout options
+        node.processLayoutOptionAnnotations(state)
     }
 
     override processRegion(Region region, KNode node) {
-        node.setLayoutOptions(region)
-        node.setAlternatingLayout(region)
+        // Default layout direction for controlflow region
+        if (region instanceof ControlflowRegion) {
+            node.setDepthDirection(region, true, 0)
+        }
+        // HV/VH Layout via annotation
+        node.processAlternatingLayoutAnnotation(region)
+        // Layout options
+        node.processLayoutOptionAnnotations(region)
     }
 
     override processTransition(Transition transition, KEdge edge) {
-        edge.setLayoutOptions(transition)
+        edge.processLayoutOptionAnnotations(transition)
     }
 
-    private def setLayoutOptions(KGraphElement element, Annotatable annotatable) {
+    private def processLayoutOptionAnnotations(KGraphElement element, Annotatable annotatable) {
         for (annotation : annotatable.getTypedAnnotations(LAYOUT_OPTIONS_ANNOTATION)) {
             val data = LAYOUT_OPTIONS_SERVICE.getOptionDataBySuffix(annotation.type ?: "")
             val value = data?.parseValue(annotation.values?.head ?: "".toLowerCase)
@@ -89,39 +115,31 @@ class LayoutAnnotationHook extends SynthesisHook {
             if (data != null && value != null) {
                 element.setLayoutOption(data.id, value)
                 if (data.id == LayoutOptions.DIRECTION.id && element instanceof KNode) {
-                    element.setLayoutOption(LayoutAnnotationHook.BLOCK_HV_LAYOUT_ANNOTATION, true);
+                    element.setLayoutOption(BLOCK_ALTERNATIN_LAYOUT, true);
                 }
             }
         }
     }
 
-    private def setAlternatingLayout(KNode node, Scope scope) {
+    private def processAlternatingLayoutAnnotation(KNode node, Scope scope) {
         val annotation = scope.annotations.findLast[isAlternatingLayoutAnnotation]
         if (annotation != null) {
-            val isHV = annotation.name.equals(HV_ANNOTATION)
-            val workingset = newLinkedHashMap(new Pair(scope, new Pair(node, 0)))
+            val isHV = annotation.name.equalsIgnoreCase(HV_ANNOTATION)
+            val offset = depthMap.get(scope)
+            val workingset = newLinkedHashMap(new Pair(scope, node))
             while (!workingset.empty) {
-                val key = workingset.keySet.head
-                val elementDepthPair = workingset.remove(key)
-                val element = elementDepthPair.key
-                val depth = elementDepthPair.value
+                val subScope = workingset.keySet.head
+                val subNode = workingset.remove(subScope)
 
-                // Set alternating layout
-                if (key instanceof ControlflowRegion && !element.blockHVLayout) {
-                    if (Boolean.logicalXor(isHV,(depth % 2 == 0))) {
-                        element.setLayoutOption(LayoutOptions.DIRECTION, Direction.DOWN)
-                    } else {
-                        element.setLayoutOption(LayoutOptions.DIRECTION, Direction.RIGHT)
-                    }
+                if (subScope instanceof ControlflowRegion) {
+                    subNode.setDepthDirection(subScope, isHV, offset)
                 }
 
-                // Increase depth only after regions because state have no layouted children
-                val subDepth = if(key instanceof State) depth else depth + 1
                 // Add child elements to processing queue
-                for (subScope : key.eContents.filter(Scope)) {
-                    val subElement = element.children.findFirst[isAssociatedWith(subScope)];
-                    if (subElement != null && !subScope.annotations.exists[isAlternatingLayoutAnnotation]) {
-                        workingset.put(subScope, new Pair(subElement, subDepth))
+                for (nextScope : subScope.eContents.filter(Scope)) {
+                    val nextElement = subNode.children.findFirst[isAssociatedWith(nextScope)];
+                    if (nextElement != null && !nextScope.annotations.exists[isAlternatingLayoutAnnotation]) {
+                        workingset.put(nextScope, nextElement)
                     }
                 }
             }
@@ -132,16 +150,26 @@ class LayoutAnnotationHook extends SynthesisHook {
         if (annotation.name.nullOrEmpty) {
             return false
         } else {
-            return annotation.name.equals(HV_ANNOTATION) || annotation.name.equals(VH_ANNOTATION)
+            return annotation.name.equalsIgnoreCase(HV_ANNOTATION) || annotation.name.equalsIgnoreCase(VH_ANNOTATION)
         }
     }
 
-    private def blockHVLayout(KNode node) {
+    private def isBlockingAlternatingLayout(KNode node) {
         val data = node.getData(KLayoutData)
         if (data != null) {
-            return data.getProperty(BLOCK_HV_LAYOUT_ANNOTATION);
+            return data.getProperty(BLOCK_ALTERNATIN_LAYOUT);
         }
-        return BLOCK_HV_LAYOUT_ANNOTATION.^default;
+        return BLOCK_ALTERNATIN_LAYOUT.^default;
     }
 
+    private def setDepthDirection(KNode node, Scope scope, boolean isHV, int depthOffset) {
+        if (!node.isBlockingAlternatingLayout) {
+            val depth = (depthMap.get(scope) ?: 0) - depthOffset
+            if (Boolean.logicalXor(isHV,(depth % 2 == 0))) {
+                node.setLayoutOption(LayoutOptions.DIRECTION, Direction.DOWN)
+            } else {
+                node.setLayoutOption(LayoutOptions.DIRECTION, Direction.RIGHT)
+            }
+        }
+    }
 }

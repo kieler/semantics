@@ -74,7 +74,7 @@
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SynthesisAnnotationHook">
       </hook>
       <hook
-            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LayoutAnnotationHook">
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LayoutHook">
       </hook>
    </extension>
    <extension

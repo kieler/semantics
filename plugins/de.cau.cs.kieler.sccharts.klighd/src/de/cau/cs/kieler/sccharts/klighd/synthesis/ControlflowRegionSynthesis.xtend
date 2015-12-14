@@ -75,7 +75,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         }
         node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         node.addLayoutParam(Properties::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
-        node.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
+        // Direction is set by the {@link LayoutHook}
         
         node.setLayoutOption(KlighdProperties::EXPAND, true);
 
