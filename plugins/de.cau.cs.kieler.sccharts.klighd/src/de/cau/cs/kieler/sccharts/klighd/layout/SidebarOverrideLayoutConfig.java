@@ -58,8 +58,9 @@ public class SidebarOverrideLayoutConfig extends KGraphPropertyLayoutConfig {
                 final Direction sidebarDirection =
                         (Direction) ((ILayoutConfigProvider) workbenchPart).getLayoutConfig()
                                 .getOptionValue(optionData, context);
-                if (context.getProperty(LayoutContext.GLOBAL)) {
-                    // In this case the sidebar is requesting the initial value
+                if (context.getProperty(LayoutContext.GRAPH_ELEM) == null) {
+                    // In this case the sidebar is requesting the initial value because no layout
+                    // graph is given
                     return Direction.UNDEFINED;
                 } else if (sidebarDirection == null || sidebarDirection == Direction.UNDEFINED) {
                     // In this case the sidebar option should be overridden by diagram configs
@@ -76,6 +77,7 @@ public class SidebarOverrideLayoutConfig extends KGraphPropertyLayoutConfig {
             if (part instanceof KNode) {
                 KLayoutData data = ((KNode) part).getData(KLayoutData.class);
                 if (data != null) {
+                    // Check special override property
                     return data.getProperty(FIXED_SPACING);
                 }
             }
@@ -91,6 +93,8 @@ public class SidebarOverrideLayoutConfig extends KGraphPropertyLayoutConfig {
             final ViewContext viewContext =
                     ((IDiagramWorkbenchPart) workbenchPart).getViewContext();
             if (viewContext != null && viewContext.getInputModel() instanceof Scope) {
+                // Activate this layout config only if a diagram view with scchart is given as
+                // source
                 return CollectionLiterals.newLinkedList(LayoutOptions.DIRECTION,
                         LayoutOptions.SPACING);
             }
