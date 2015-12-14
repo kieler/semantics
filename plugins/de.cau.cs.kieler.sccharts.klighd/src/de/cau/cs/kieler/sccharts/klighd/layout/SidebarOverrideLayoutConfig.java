@@ -8,8 +8,10 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.properties.IProperty;
+import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
 import de.cau.cs.kieler.kiml.config.LayoutContext;
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
 import de.cau.cs.kieler.kiml.options.Direction;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.service.EclipseLayoutConfig;
@@ -23,11 +25,13 @@ import de.cau.cs.kieler.klighd.internal.macrolayout.KGraphPropertyLayoutConfig;
  * friendly behavior.
  * 
  * @author als
- * @kieler.design 2015-01-01 proposed
- * @kieler.rating 2015-01-01 proposed yellow
+ * @kieler.design 2015-12-14 proposed
+ * @kieler.rating 2015-12-14 proposed yellow
  */
 @SuppressWarnings("restriction")
-public class SidebarDirectionLayoutConfig extends KGraphPropertyLayoutConfig {
+public class SidebarOverrideLayoutConfig extends KGraphPropertyLayoutConfig {
+    
+    public static final IProperty<Float> FIXED_SPACING = new Property<Float>("de.cau.cs.kieler.sccharts.klighd.layout.fixedspacing", null);
 
     @Override
     public int getPriority() {
@@ -63,13 +67,22 @@ public class SidebarDirectionLayoutConfig extends KGraphPropertyLayoutConfig {
                 }
             }
         }
+        if (LayoutOptions.SPACING.getId().equals(optionData.getId())) {
+            Object part = context.getProperty(LayoutContext.DIAGRAM_PART);
+            if (part instanceof KNode) {
+                KLayoutData data = ((KNode) part).getData(KLayoutData.class);
+                if (data != null) {
+                    return data.getProperty(FIXED_SPACING);
+                }
+            }
+        }
         return null;
     }
 
     @Override
     public Collection<IProperty<?>> getAffectedOptions(LayoutContext context) {
         if (context.getProperty(LayoutContext.DIAGRAM_PART) instanceof KNode) {
-            return CollectionLiterals.newLinkedList(LayoutOptions.DIRECTION);
+            return CollectionLiterals.newLinkedList(LayoutOptions.DIRECTION, LayoutOptions.SPACING);
         } else {
             return Collections.emptyList();
         }

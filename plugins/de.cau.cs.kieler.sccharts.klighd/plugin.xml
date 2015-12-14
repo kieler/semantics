@@ -80,7 +80,7 @@
    <extension
          point="de.cau.cs.kieler.kiml.layoutConfigs">
       <customConfig
-            class="de.cau.cs.kieler.sccharts.klighd.layout.SidebarDirectionLayoutConfig"
+            class="de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig"
             default="true">
       </customConfig>
    </extension>
