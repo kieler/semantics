@@ -15,9 +15,12 @@ import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
 import de.cau.cs.kieler.kiml.options.Direction;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.service.EclipseLayoutConfig;
+import de.cau.cs.kieler.klighd.IDiagramWorkbenchPart;
 import de.cau.cs.kieler.klighd.KlighdConstants;
+import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.internal.ILayoutConfigProvider;
 import de.cau.cs.kieler.klighd.internal.macrolayout.KGraphPropertyLayoutConfig;
+import de.cau.cs.kieler.sccharts.Scope;
 
 /**
  * 
@@ -30,8 +33,9 @@ import de.cau.cs.kieler.klighd.internal.macrolayout.KGraphPropertyLayoutConfig;
  */
 @SuppressWarnings("restriction")
 public class SidebarOverrideLayoutConfig extends KGraphPropertyLayoutConfig {
-    
-    public static final IProperty<Float> FIXED_SPACING = new Property<Float>("de.cau.cs.kieler.sccharts.klighd.layout.fixedspacing", null);
+
+    public static final IProperty<Float> FIXED_SPACING =
+            new Property<Float>("de.cau.cs.kieler.sccharts.klighd.layout.fixedspacing", null);
 
     @Override
     public int getPriority() {
@@ -81,11 +85,17 @@ public class SidebarOverrideLayoutConfig extends KGraphPropertyLayoutConfig {
 
     @Override
     public Collection<IProperty<?>> getAffectedOptions(LayoutContext context) {
-        if (context.getProperty(LayoutContext.DIAGRAM_PART) instanceof KNode) {
-            return CollectionLiterals.newLinkedList(LayoutOptions.DIRECTION, LayoutOptions.SPACING);
-        } else {
-            return Collections.emptyList();
+        final IWorkbenchPart workbenchPart =
+                context.getProperty(EclipseLayoutConfig.WORKBENCH_PART);
+        if (workbenchPart instanceof IDiagramWorkbenchPart) {
+            final ViewContext viewContext =
+                    ((IDiagramWorkbenchPart) workbenchPart).getViewContext();
+            if (viewContext != null && viewContext.getInputModel() instanceof Scope) {
+                return CollectionLiterals.newLinkedList(LayoutOptions.DIRECTION,
+                        LayoutOptions.SPACING);
+            }
         }
+        return Collections.emptyList();
     }
 
 }
