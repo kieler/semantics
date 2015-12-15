@@ -32,8 +32,8 @@ import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.scg.Surface
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -64,7 +64,7 @@ import de.cau.cs.kieler.scg.Surface
  * @extends AbstractSCGSynchronizer
  */
 
-class SurfaceSynchronizer extends AbstractSynchronizer {
+class DepthSynchronizer extends AbstractSynchronizer {
 
     static final boolean DEBUG = false;
 
@@ -107,7 +107,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
     protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
 
-    public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.surface"
+    public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.depth"
 
     // -------------------------------------------------------------------------
     // -- Synchronizer
@@ -200,7 +200,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	            data.predecessors.add(exitSB)
 	            
 	            // Now, retrieve all surfaces of the actual thread.
-	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
+	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Depth)).toList
 	            
 	            // If there are surface, build an empty expression.
 	            if (threadSurfaces.size>0) {
