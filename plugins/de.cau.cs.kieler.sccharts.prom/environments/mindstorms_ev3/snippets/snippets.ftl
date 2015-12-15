@@ -67,6 +67,45 @@
     </@>
 </#macro>
 
+<#-- Button -->
+<#-- As input variable, sets the variable to true, iff the corresponding button on the Mindstorms brick is down.
+     The buttons are ENTER, LEFT, RIGHT, UP, DOWN.
+
+     Example for SCCharts:
+         @Wrapper Button, ENTER 
+         input bool isEnterDown; -->
+<#macro Button buttonId>
+    <@input>
+        // Button
+        scchart.${varname} = Button.${buttonId}.isDown();
+    </@>
+</#macro>
+
+<#-- RCXLamp -->
+<#-- As output variable, turns an RCX lamp on (variable is true) or off (variable is false).
+     RCX lamps can be connected to the ports A, B, C and D.
+
+     Example for SCCharts:
+         @Wrapper RCXLamp, A 
+         output bool lamp; -->
+<#macro RCXLamp port>
+    <@init>
+        <#if !((initializedMotors![])?seq_contains(port))>
+        <#assign initializedMotors = (initializedMotors![]) + [port]>
+        RegulatedMotor motor${port} = new EV3LargeRegulatedMotor(MotorPort.${port});
+        </#if>
+        // Provide base power for RCX lamp
+        motor${port}.setSpeed(720);
+    </@>
+    <@output>
+        // RCX lamp ${port}
+        if(scchart.${varname})
+            motor${port}.forward();
+        else
+            motor${port}.flt();
+    </@>
+</#macro>
+
 <#-- TouchSensor -->
 <#-- As input variable, reads the touch sensor, that is attached to the given port.
 
@@ -142,11 +181,15 @@
 <#-- MotorSpeed -->
 <#-- As input variable, reads the speed of the motor, that is attached to the given port.
      As output variable, sets the speed of the motor.
+     
+     If the speed is zero and brake is true, the motor will stop nearly immediately.
+     If brake is false, the motor will only lose all power, setting it to roll / float.
+     
      Example for SCCharts:
          @Wrapper MotorSpeed, A
          @Wrapper MotorSpeed, B
          output int speed; -->
-<#macro MotorSpeed port>
+<#macro MotorSpeed port brake='true'>
     <@init>
         <#if !((initializedMotors![])?seq_contains(port))>
         <#assign initializedMotors = (initializedMotors![]) + [port]>
@@ -161,7 +204,11 @@
         // Motor ${port}
         motor${port}.setSpeed(scchart.${varname} > 0 ? scchart.${varname} : -scchart.${varname});
         if(scchart.${varname} == 0)
+            <#if brake='true'>
             motor${port}.stop();
+            <#else>
+            motor${port}.flt();
+            </#if>
         else if(scchart.${varname} > 0)
             motor${port}.forward();
         else if(scchart.${varname} < 0)

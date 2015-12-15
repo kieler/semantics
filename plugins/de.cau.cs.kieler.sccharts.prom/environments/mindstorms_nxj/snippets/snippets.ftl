@@ -66,6 +66,41 @@
     </@>
 </#macro>
 
+<#-- Button -->
+<#-- As input variable, sets the variable to true, iff the corresponding button on the Mindstorms brick is down.
+     The buttons are ENTER, LEFT, RIGHT.
+
+     Example for SCCharts:
+         @Wrapper Button, ENTER 
+         input bool isEnterDown; -->
+<#macro Button buttonId>
+    <@input>
+        // Button
+        scchart.${varname} = Button.${buttonId}.isDown();
+    </@>
+</#macro>
+
+<#-- RCXLamp -->
+<#-- As output variable, turns an RCX lamp on (variable is true) or off (variable is false).
+     RCX lamps can be connected to the ports A, B, C and D.
+
+     Example for SCCharts:
+         @Wrapper RCXLamp, A 
+         output bool lamp; -->
+<#macro RCXLamp port>
+    <@init>
+        // Provide base power for RCX lamp
+        Motor.${port}.setSpeed(720);
+    </@>
+    <@output>
+        // RCX lamp ${port}
+        if(scchart.${varname})
+            Motor.${port}.forward();
+        else
+            Motor.${port}.flt();
+    </@>
+</#macro>
+
 <#-- TouchSensor -->
 <#-- As input variable, reads the touch sensor, that is attached to the given port.
 
@@ -120,11 +155,14 @@
 <#-- MotorSpeed -->
 <#-- As input variable, reads the speed of the motor, that is attached to the given port.
      As output variable, sets the speed of the motor.
+     If the speed is zero and brake is true, the motor will stop nearly immediately.
+     If brake is false, the motor will only lose all power, setting it to roll / float.
+     
      Example for SCCharts:
          @Wrapper MotorSpeed, A
          @Wrapper MotorSpeed, B
          output int speed; -->
-<#macro MotorSpeed port>
+<#macro MotorSpeed port brake='true'>
     <@input>
         // Motor ${port}
         scchart.${varname} = Motor.${port}.getSpeed();
@@ -133,7 +171,11 @@
         // Motor ${port}
         Motor.${port}.setSpeed(scchart.${varname} > 0 ? scchart.${varname} : -scchart.${varname});
         if(scchart.${varname} == 0)
+            <#if brake='true'>
             Motor.${port}.stop();
+            <#else>
+            Motor.${port}.flt();
+            </#if>
         else if(scchart.${varname} > 0)
             Motor.${port}.forward();
         else if(scchart.${varname} < 0)
