@@ -187,9 +187,8 @@
 <#-- As input variable, reads the motor rotation in degrees.
      As output variable, commands the motor, that is attached to the given port,
             to rotate the variable's value in degrees.
-        This is done only if the variable's value is unequal zero.
-        Thus, after the Mindstorms motor has received the target rotation,
-            the value of the variable should be reset back to zero. 
+        This is done only if the variable's value is unequal zero
+        and afterwards the variable is set back to zero.
      
      Example for SCCharts:
          @Wrapper MotorRotation, A
@@ -201,8 +200,10 @@
     </@>
     <@output>
         // Motor ${port}
-        if(scchart.${varname} != 0)
+        if(scchart.${varname} != 0){
             Motor.${port}.rotate(scchart.${varname}, true);
+            scchart.${varname} = 0;
+        }
     </@>
 </#macro>
 

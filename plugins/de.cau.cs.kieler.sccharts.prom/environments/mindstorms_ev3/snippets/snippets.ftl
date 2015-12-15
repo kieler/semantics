@@ -90,19 +90,20 @@
          output bool lamp; -->
 <#macro RCXLamp port>
     <@init>
-        <#if !((initializedMotors![])?seq_contains(port))>
-        <#assign initializedMotors = (initializedMotors![]) + [port]>
-        RegulatedMotor motor${port} = new EV3LargeRegulatedMotor(MotorPort.${port});
+        <#if !((initializedRCXMotors![])?seq_contains(port))>
+        <#assign initializedRCXMotors = (initializedRCXMotors![]) + [port]>
+        RCXMotor rcxMotor${port} = new RCXMotor(MotorPort.${port});
         </#if>
         // Provide base power for RCX lamp
-        motor${port}.setSpeed(720);
+        rcxMotor${port}.setPower(100);
+        rcxMotor${port}.flt();
     </@>
     <@output>
         // RCX lamp ${port}
         if(scchart.${varname})
-            motor${port}.forward();
+            rcxMotor${port}.forward();
         else
-            motor${port}.flt();
+            rcxMotor${port}.flt();
     </@>
 </#macro>
 
@@ -220,9 +221,8 @@
 <#-- As input variable, reads the motor rotation in degrees.
      As output variable, commands the motor, that is attached to the given port,
             to rotate the variable's value in degrees.
-        This is done only if the variable's value is unequal zero.
-        Thus, after the Mindstorms motor has received the target rotation,
-            the value of the variable should be reset back to zero. 
+        This is done only if the variable's value is unequal zero
+        and afterwards the variable is set back to zero.
      
      Example for SCCharts:
          @Wrapper MotorRotation, A
@@ -240,8 +240,10 @@
     </@>
     <@output>
         // Motor ${port}
-        if(scchart.${varname} != 0)
+        if(scchart.${varname} != 0){
             motor${port}.rotate(scchart.${varname}, true);
+            scchart.${varname} = 0;
+        }
     </@>
 </#macro>
 
