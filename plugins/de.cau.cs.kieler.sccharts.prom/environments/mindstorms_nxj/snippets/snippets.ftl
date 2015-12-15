@@ -89,15 +89,17 @@
          output bool lamp; -->
 <#macro RCXLamp port>
     <@init>
+        RCXMotor rcxMotor${port} = new RCXMotor(MotorPort.${port});
         // Provide base power for RCX lamp
-        Motor.${port}.setSpeed(720);
+        rcxMotor${port}.setPower(100);
+        rcxMotor${port}.flt();
     </@>
     <@output>
         // RCX lamp ${port}
         if(scchart.${varname})
-            Motor.${port}.forward();
+            rcxMotor${port}.forward();
         else
-            Motor.${port}.flt();
+            rcxMotor${port}.flt();
     </@>
 </#macro>
 
