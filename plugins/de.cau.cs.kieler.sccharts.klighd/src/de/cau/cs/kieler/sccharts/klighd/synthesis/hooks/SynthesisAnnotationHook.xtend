@@ -45,8 +45,10 @@ class SynthesisAnnotationHook extends SynthesisHook {
     public static final List<String> NEGATIVE_BOOLEAN_VALUES = newImmutableList("false", "off", "unchecked");
 
     /** Mapping synthesis options by their accessible name */
-    val nameOptionMap = new HashMap<String, SynthesisOption>();
-
+    val nameOptionMap = <String, SynthesisOption>newHashMap;
+    /** The previous values of the options set by annotation */
+    val restoreOptionMap = <SynthesisOption, Object>newHashMap;
+    
     override getPriority() {
         return 100;
     }
@@ -55,6 +57,13 @@ class SynthesisAnnotationHook extends SynthesisHook {
         initializeNameOptionMap();
         // Configure synthesis options via annotation
         source.getAllAnnotations(SYNTHESIS_OPTIONS_ANNOTATION).forEach[processSynthesisOptionAnnotation];
+    }
+    
+    override finish(Scope source, KNode node) {
+        // restore previous values
+        for (optionValuePair : restoreOptionMap.entrySet) {
+            usedContext.configureOption(optionValuePair.key, optionValuePair.value)
+        }
     }
 
     /** Processes an annotation a sets the specified synthesis option */
@@ -70,7 +79,9 @@ class SynthesisAnnotationHook extends SynthesisHook {
         if (!name.nullOrEmpty && !value.nullOrEmpty) {
             for (Entry<String, SynthesisOption> entry : nameOptionMap.entrySet) {
                 if (entry.key.startsWith(name)) {
-                    setOption(entry.value, value);
+                    val option = entry.value
+                    restoreOptionMap.put(option, usedContext.getOptionValue(option))
+                    setOption(option , value);
                 }
             }
         }
