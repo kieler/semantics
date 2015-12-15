@@ -30,6 +30,7 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
+import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -69,6 +70,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
         node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
         node.setLayoutOption(LayoutOptions::SPACING, 1f);
+        node.setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
         node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
         //pre-evaluate type

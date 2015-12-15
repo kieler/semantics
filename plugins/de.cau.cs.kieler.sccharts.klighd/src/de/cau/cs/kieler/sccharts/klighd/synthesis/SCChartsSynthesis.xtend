@@ -85,7 +85,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
 
     override getDisplayedLayoutOptions() {
         return newLinkedList(
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, #[Direction::RIGHT, Direction::DOWN]) //Direction::UNDEFINED,
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, #[Direction::UNDEFINED, Direction::RIGHT, Direction::DOWN])
             ,new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
         );
     }
