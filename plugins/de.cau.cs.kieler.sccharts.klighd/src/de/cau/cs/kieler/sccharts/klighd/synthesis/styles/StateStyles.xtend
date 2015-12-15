@@ -203,18 +203,21 @@ class StateStyles {
      * Creates a text with highlighted keywords.
      */
     package def addKeywordLabel(KContainerRendering container, Pair<List<String>, List<String>> components) {
-        // The additional rectangle allows left align in grid placement
-        return container.addRectangle().setInvisible(true).addRectangle() => [
-            invisible = true;
-            // Add left alignment
-            setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
-            setGridPlacement(2);
-            val joiner = Joiner.on(" ");
-            addText(joiner.join(components.key) + " ") => [
-                foreground = KEYWORD.color;
-                fontBold = true;
+        return container.addRectangle() => [
+            // This additional rectangle allows left align in grid placement
+            invisible = true
+            addRectangle() => [
+                invisible = true;
+                // Add left alignment
+                setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                setGridPlacement(2);
+                val joiner = Joiner.on(" ");
+                addText(joiner.join(components.key) + " ") => [
+                    foreground = KEYWORD.color;
+                    fontBold = true;
+                ]
+                addText(joiner.join(components.value));
             ]
-            addText(joiner.join(components.value));
         ]
     }
 

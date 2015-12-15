@@ -15,22 +15,23 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.krendering.KRendering
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
+import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
+import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
-import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -126,7 +127,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.addDeclarationLabel(declaration.serializeComponents) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                     associateWith(declaration);
-                    children.forEach[associateWith(declaration)];
+                    eAllContents.filter(KRendering).forEach[associateWith(declaration)];
                 ]
             }
 
@@ -140,7 +141,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.addActionLabel(action.serializeComponents) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                     associateWith(action);
-                    children.forEach[associateWith(action)];
+                    eAllContents.filter(KRendering).forEach[associateWith(action)];
                 ]
             }
 

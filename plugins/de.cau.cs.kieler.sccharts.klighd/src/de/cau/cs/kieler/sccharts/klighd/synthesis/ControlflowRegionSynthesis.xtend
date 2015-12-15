@@ -15,10 +15,10 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.krendering.KRendering
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
@@ -95,7 +95,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                         addDeclarationLabel(declaration.serializeComponents) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                             associateWith(declaration);
-                            children.forEach[associateWith(declaration)];
+                            eAllContents.filter(typeof(KRendering)).forEach[associateWith(declaration)];
                         ]
                     }
                 }
