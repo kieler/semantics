@@ -46,6 +46,36 @@
     </@>
 </#macro>
 
+<#-- Button -->
+<#-- As input variable, sets the variable to true, iff the corresponding button on the Mindstorms brick is down.
+     The buttons are ENTER, LEFT, RIGHT.
+
+     Example for SCCharts:
+         @Wrapper Button, ENTER 
+         input bool isEnterDown; -->
+<#macro Button buttonId>
+    <@input>
+        // Button
+        scchart.${varname} = Button.${buttonId}.isDown();
+    </@>
+</#macro>
+
+<#-- TouchSensor -->
+<#-- As input variable, reads the touch sensor, that is attached to the given port.
+
+     Example for SCCharts:
+         @Wrapper TouchSensor, S3 
+         input bool isTouchSensorPressed; -->
+<#macro TouchSensor port>
+    <@init>
+        TouchSensor touchSensor${port} = new TouchSensor(SensorPort.${port});
+    </@>
+    <@input>
+        // Touch
+        scchart.${varname} = touchSensor${port}.isPressed();
+    </@>
+</#macro>
+
 <#-- LightSensor -->
 <#-- As input variable, reads the value of the light sensor, that is attached to the given port.
 
@@ -63,59 +93,6 @@
         <#else>
         scchart.${varname} = lightSensor${port}.getLightValue();
         </#if>
-    </@>
-</#macro>
-
-<#-- Button -->
-<#-- As input variable, sets the variable to true, iff the corresponding button on the Mindstorms brick is down.
-     The buttons are ENTER, LEFT, RIGHT.
-
-     Example for SCCharts:
-         @Wrapper Button, ENTER 
-         input bool isEnterDown; -->
-<#macro Button buttonId>
-    <@input>
-        // Button
-        scchart.${varname} = Button.${buttonId}.isDown();
-    </@>
-</#macro>
-
-<#-- RCXLamp -->
-<#-- As output variable, turns an RCX lamp on (variable is true) or off (variable is false).
-     RCX lamps can be connected to the ports A, B, C and D.
-
-     Example for SCCharts:
-         @Wrapper RCXLamp, A 
-         output bool lamp; -->
-<#macro RCXLamp port>
-    <@init>
-        RCXMotor rcxMotor${port} = new RCXMotor(MotorPort.${port});
-        // Provide base power for RCX lamp
-        rcxMotor${port}.setPower(100);
-        rcxMotor${port}.flt();
-    </@>
-    <@output>
-        // RCX lamp ${port}
-        if(scchart.${varname})
-            rcxMotor${port}.forward();
-        else
-            rcxMotor${port}.flt();
-    </@>
-</#macro>
-
-<#-- TouchSensor -->
-<#-- As input variable, reads the touch sensor, that is attached to the given port.
-
-     Example for SCCharts:
-         @Wrapper TouchSensor, S3 
-         input bool isTouchSensorPressed; -->
-<#macro TouchSensor port>
-    <@init>
-        TouchSensor touchSensor${port} = new TouchSensor(SensorPort.${port});
-    </@>
-    <@input>
-        // Touch
-        scchart.${varname} = touchSensor${port}.isPressed();
     </@>
 </#macro>
 
@@ -141,16 +118,26 @@
     </@>
 </#macro>
 
-<#-- MotorIsMoving -->
-<#-- As input variable, sets a boolean to true, iff the motor on the given port is moving.
-     
+<#-- RCXLamp -->
+<#-- As output variable, turns an RCX lamp on (variable is true) or off (variable is false).
+     RCX lamps can be connected to the ports A, B, C and D.
+
      Example for SCCharts:
-         @Wrapper MotorIsMoving, A
-         input bool isMotorMoving; -->
-<#macro MotorIsMoving port>
-    <@input>
-        // Motor ${port}
-        scchart.${varname} = Motor.${port}.isMoving();
+         @Wrapper RCXLamp, A 
+         output bool lamp; -->
+<#macro RCXLamp port>
+    <@init>
+        RCXMotor rcxMotor${port} = new RCXMotor(MotorPort.${port});
+        // Provide base power for RCX lamp
+        rcxMotor${port}.setPower(100);
+        rcxMotor${port}.flt();
+    </@>
+    <@output>
+        // RCX lamp ${port}
+        if(scchart.${varname})
+            rcxMotor${port}.forward();
+        else
+            rcxMotor${port}.flt();
     </@>
 </#macro>
 
@@ -182,6 +169,19 @@
             Motor.${port}.forward();
         else if(scchart.${varname} < 0)
             Motor.${port}.backward();
+    </@>
+</#macro>
+
+<#-- MotorIsMoving -->
+<#-- As input variable, sets a boolean to true, iff the motor on the given port is moving.
+     
+     Example for SCCharts:
+         @Wrapper MotorIsMoving, A
+         input bool isMotorMoving; -->
+<#macro MotorIsMoving port>
+    <@input>
+        // Motor ${port}
+        scchart.${varname} = Motor.${port}.isMoving();
     </@>
 </#macro>
 

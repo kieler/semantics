@@ -46,27 +46,6 @@
     </@>
 </#macro>
 
-<#-- LightSensor -->
-<#-- As input variable, reads the value of the light sensor, that is attached to the given port.
-
-     Example for SCCharts:
-         @Wrapper LightSensor, S3
-         input float light; -->
- <#macro LightSensor port>
-    <@init>
-        <#if !((initializedLights![])?seq_contains(port))>
-        <#assign initializedLights = (initializedLights![]) + [port]>
-        EV3ColorSensor lightSensor${port} = new EV3ColorSensor(SensorPort.${port});
-        </#if>
-        float lightSensor${port}Samples[] = new float[lightSensor${port}.sampleSize()];
-    </@>
-    <@input>
-        // Light
-        lightSensor${port}.getMode("Ambient").fetchSample(lightSensor${port}Samples, 0);
-        scchart.${varname} = lightSensor${port}Samples[0];
-    </@>
-</#macro>
-
 <#-- Button -->
 <#-- As input variable, sets the variable to true, iff the corresponding button on the Mindstorms brick is down.
      The buttons are ENTER, LEFT, RIGHT, UP, DOWN.
@@ -78,32 +57,6 @@
     <@input>
         // Button
         scchart.${varname} = Button.${buttonId}.isDown();
-    </@>
-</#macro>
-
-<#-- RCXLamp -->
-<#-- As output variable, turns an RCX lamp on (variable is true) or off (variable is false).
-     RCX lamps can be connected to the ports A, B, C and D.
-
-     Example for SCCharts:
-         @Wrapper RCXLamp, A 
-         output bool lamp; -->
-<#macro RCXLamp port>
-    <@init>
-        <#if !((initializedRCXMotors![])?seq_contains(port))>
-        <#assign initializedRCXMotors = (initializedRCXMotors![]) + [port]>
-        RCXMotor rcxMotor${port} = new RCXMotor(MotorPort.${port});
-        </#if>
-        // Provide base power for RCX lamp
-        rcxMotor${port}.setPower(100);
-        rcxMotor${port}.flt();
-    </@>
-    <@output>
-        // RCX lamp ${port}
-        if(scchart.${varname})
-            rcxMotor${port}.forward();
-        else
-            rcxMotor${port}.flt();
     </@>
 </#macro>
 
@@ -125,6 +78,24 @@
     </@>
 </#macro>
 
+<#-- LightSensor -->
+<#-- As input variable, reads the value of the light sensor, that is attached to the given port.
+
+     Example for SCCharts:
+         @Wrapper LightSensor, S3
+         input float light; -->
+ <#macro LightSensor port>
+    <@init>
+        <@InitLightSensor port />
+        float lightSensor${port}Samples[] = new float[lightSensor${port}.sampleSize()];
+    </@>
+    <@input>
+        // Light
+        lightSensor${port}.getMode("Ambient").fetchSample(lightSensor${port}Samples, 0);
+        scchart.${varname} = lightSensor${port}Samples[0];
+    </@>
+</#macro>
+
 <#-- Floodlight -->
 <#-- The Floodlight is the red lamp of a light sensor, that can be turned on and off.
      As input variable, reads the Floodlight state (on or off), that is attached to the given port.
@@ -137,10 +108,7 @@
          output bool floodlight; -->
 <#macro Floodlight port>
     <@init>
-        <#if !((initializedLights![])?seq_contains(port))>
-        <#assign initializedLights = (initializedLights![]) + [port]>
-        EV3ColorSensor lightSensor${port} = new EV3ColorSensor(SensorPort.${port});
-        </#if>
+        <@InitLightSensor port />
     </@>
     <@input>
         // Floodlight ${port}
@@ -160,22 +128,26 @@
     </@>
 </#macro>
 
-<#-- MotorIsMoving -->
-<#-- As input variable, sets a boolean to true, iff the motor on the given port is moving.
-     
+<#-- RCXLamp -->
+<#-- As output variable, turns an RCX lamp on (variable is true) or off (variable is false).
+     RCX lamps can be connected to the ports A, B, C and D.
+
      Example for SCCharts:
-         @Wrapper MotorIsMoving, A
-         input bool isMotorMoving; -->
-<#macro MotorIsMoving port>
+         @Wrapper RCXLamp, A 
+         output bool lamp; -->
+<#macro RCXLamp port>
     <@init>
-        <#if !((initializedMotors![])?seq_contains(port))>
-        <#assign initializedMotors = (initializedMotors![]) + [port]>
-        RegulatedMotor motor${port} = new EV3LargeRegulatedMotor(MotorPort.${port});
-        </#if>
+        <@InitRCXMotor port />
+        // Provide base power for RCX lamp
+        rcxMotor${port}.setPower(100);
+        rcxMotor${port}.flt();
     </@>
-    <@input>
-        // Motor ${port}
-        scchart.${varname} = motor${port}.isMoving();
+    <@output>
+        // RCX lamp ${port}
+        if(scchart.${varname})
+            rcxMotor${port}.forward();
+        else
+            rcxMotor${port}.flt();
     </@>
 </#macro>
 
@@ -192,10 +164,7 @@
          output int speed; -->
 <#macro MotorSpeed port brake='true'>
     <@init>
-        <#if !((initializedMotors![])?seq_contains(port))>
-        <#assign initializedMotors = (initializedMotors![]) + [port]>
-        RegulatedMotor motor${port} = new EV3LargeRegulatedMotor(MotorPort.${port});
-        </#if>
+        <@InitMotor port />
     </@>
     <@input>
         // Motor ${port}
@@ -217,10 +186,26 @@
     </@>
 </#macro>
 
+<#-- MotorIsMoving -->
+<#-- As input variable, sets a boolean to true, iff the motor on the given port is moving.
+     
+     Example for SCCharts:
+         @Wrapper MotorIsMoving, A
+         input bool isMotorMoving; -->
+<#macro MotorIsMoving port>
+    <@init>
+        <@InitMotor port />
+    </@>
+    <@input>
+        // Motor ${port}
+        scchart.${varname} = motor${port}.isMoving();
+    </@>
+</#macro>
+
 <#-- MotorRotation -->
 <#-- As input variable, reads the motor rotation in degrees.
      As output variable, commands the motor, that is attached to the given port,
-            to rotate the variable's value in degrees.
+        to rotate the variable's value in degrees.
         This is done only if the variable's value is unequal zero
         and afterwards the variable is set back to zero.
      
@@ -229,10 +214,7 @@
          output int rotateToDegrees; -->
 <#macro MotorRotation port>
     <@init>
-        <#if !((initializedMotors![])?seq_contains(port))>
-        <#assign initializedMotors = (initializedMotors![]) + [port]>
-        RegulatedMotor motor${port} = new EV3LargeRegulatedMotor(MotorPort.${port});
-        </#if>
+        <@InitMotor port />
     </@>
     <@input>
         // Motor ${port}
@@ -263,4 +245,31 @@
             } catch (InterruptedException e) { }
         }
     </@>
+</#macro>
+
+<#-- Auxiliary macro to initialize a motor if it is not yet initialized.
+     This macro is not meant to be used in a model file. -->
+<#macro InitMotor port>
+        <#if !((initializedMotors![])?seq_contains(port))>
+        <#assign initializedMotors = (initializedMotors![]) + [port]>
+        RegulatedMotor motor${port} = new EV3LargeRegulatedMotor(MotorPort.${port});
+        </#if>
+</#macro>
+
+<#-- Auxiliary macro to initialize an RCX motor if it is not yet initialized.
+     This macro is not meant to be used in a model file. -->
+<#macro InitRCXMotor port>
+        <#if !((initializedRCXMotors![])?seq_contains(port))>
+        <#assign initializedRCXMotors = (initializedRCXMotors![]) + [port]>
+        RCXMotor rcxMotor${port} = new RCXMotor(MotorPort.${port});
+        </#if>
+</#macro>
+
+<#-- Auxiliary macro to initialize a light sensor if it is not yet initialized.
+     This macro is not meant to be used in a model file. -->
+<#macro InitLightSensor port>
+        <#if !((initializedLights![])?seq_contains(port))>
+        <#assign initializedLights = (initializedLights![]) + [port]>
+        EV3ColorSensor lightSensor${port} = new EV3ColorSensor(SensorPort.${port});
+        </#if>
 </#macro>
