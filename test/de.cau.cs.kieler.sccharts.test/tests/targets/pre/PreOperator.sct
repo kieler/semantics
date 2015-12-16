@@ -3,7 +3,8 @@
 scchart PreOperator {
   int x = 1;
   int y = 0;
-  int _pre_x = 1, _cur_x = 1;
+  int _pre_x = 1;
+  int _cur_x = 1;
 
   initial state A
   --> B / x = x + 1;

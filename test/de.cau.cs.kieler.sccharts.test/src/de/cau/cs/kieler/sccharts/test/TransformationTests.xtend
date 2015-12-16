@@ -56,9 +56,8 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
 // TODO: Remove debug output from KiCo (transformation chain, required time for compilation) -> silent mode?
 // TODO: (Bug KISEMA-995) KiCo needs to be deterministic. Otherwise some tests will fail because an alternative compilation result is compared with a prototype.
 
-// TODO: Models that compile wrong:
+// TODO: Models that compile wrongly:
 // (Bug KISEMA-987) WeakSuspension
-// (Bug KISEMA-1044) Pre
 
 // TODO: Models that do not compile or throw errors when saved:
 // (Bug KISEMA-1031) ExitActionAndTrigger
@@ -73,14 +72,14 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
 @RunWith(typeof(ModelCollectionTestRunner))
 @BundleId("de.cau.cs.kieler.sccharts.test")
 @ModelPath("tests/inputs/**")
-@ModelFilter("CrossReference.sct")
+//@ModelFilter("CrossReference.sct")
 class TransformationTests {
 
     /**
      * Project relative path to the input models of the tests.
      * This has to be the same path as in the @ModelPath annotation, but without the marker for recursive search '**'.
      */
-    public static val INPUT_MODELS_FOLDER = "tests/inputs/"
+    static val INPUT_MODELS_FOLDER = "tests/inputs/"
     
     /**
      * Project relative path to the folder in which the prototypes for test models are stored.
@@ -100,12 +99,6 @@ class TransformationTests {
      */
     static val TRANSFORMATION_ANNOTATION_NAME = "Transformation"
 
-    /**
-     * The name of the annotation in SCT files,
-     * which indicates that the model should not compile because it is not schedulable.
-     */
-    static val NOT_SCHEDULABLE_ANNOTATION_NAME = "NotSchedulable"
-    
     /**
      * The EMFCompare object that can compare to SCCharts.  
      */
@@ -128,10 +121,10 @@ class TransformationTests {
      */
     @Test
     def public void transformationResultAsExpected(EObject model, String modelPath) {
-        val isDebugLogging = false
+        val isDebug = false
 
         // Normalize path
-        val relativePath = stripSlashes(modelPath)
+        val relativePath = Util.stripSlashes(modelPath)
         val modelFile = FilenameUtils.getName(relativePath)
         // Calc prototype file for test and compilation result for test
         val targetFile = relativePath.replaceFirst(TransformationTests.INPUT_MODELS_FOLDER, TransformationTests.TARGET_FOLDER)
@@ -149,6 +142,9 @@ class TransformationTests {
                     }
                 }
             }
+            
+            // Check that the transformation is defined and
+            // skip tests on files without transformation.
             if (targetTransformationName == null) {
                 throw new IllegalArgumentException("Target transformation was not found in model file " + modelFile)
             } else if(targetTransformationName == "NONE") {
@@ -171,8 +167,6 @@ class TransformationTests {
             if (resultModel == null) {
                 throw new IllegalArgumentException("KIELER Compiler was not able to compile input model " + modelFile)
             }
-            
-            System.err.println(result.allWarnings)
 
             // Serialize model to human readable text
             val resourceSet = new ResourceSetImpl()
@@ -198,7 +192,7 @@ class TransformationTests {
             val comparison = comparator.compare(scope)
 
             // Print out all matches
-            if (isDebugLogging) {
+            if (isDebug) {
                 printMatches(comparison.matches, 0, true)
             }
 
@@ -216,87 +210,6 @@ class TransformationTests {
             throw new IllegalArgumentException("Model " + modelFile + " could not be cast to an SCChart.")
         }
     }
-
-
-
-    /*******************************************************************************************
-     * Code generation test (compile to Java)
-     */
-     
-    /** 
-     * Compiles SCT files to Java code and asserts that there are no errors during compilation.
-     * 
-     * @param model The EObject injected by the JUnit runner
-     * @param modelPath The model file path injected by the JUnit runner
-     * @author aas
-     */
-     @Test
-    def public void codeGenerationHasNoErrors(EObject model, String modelPath) {
-        // Normalize path
-        val relativePath = stripSlashes(modelPath)
-        val modelFile = FilenameUtils.getName(relativePath)
-
-        if (model instanceof State) {
-            // Compile with KiCo
-            val context = new KielerCompilerContext("!T_SIMULATIONVISUALIZATION, T_s.java", model)
-            context.setAdvancedSelect(true)
-            val result = KielerCompiler.compile(context)
-
-            // Check that no error occured
-            val errors = result.getAllErrors()
-            if (!Strings.isNullOrEmpty(errors)) {
-                System.err.println("Compilation of file " + modelFile + " had errors: " + errors)
-                Assert.fail()
-            }
-            
-            // Check that there actually is a compilation result
-            Assert.assertFalse(Strings.isNullOrEmpty(result.getString()))
-        } else {
-            throw new IllegalArgumentException("Model could not be cast to an SCChart.")
-        }
-    }
-
-
-
-    /*******************************************************************************************
-     *  Test schedulability (compile to Java)
-     */
-     
-    /** 
-     * Tries to compile models that are not ASC schedulable and asserts that errors occur.
-     * 
-     * @param model The EObject injected by the JUnit runner
-     * @param modelPath The model file path injected by the JUnit runner
-     * @author aas
-     */
-    @Test
-    def public void onlySchedulableModelsDoCompile(EObject model, String modelPath) {
-        // Normalize path
-        val relativePath = stripSlashes(modelPath)
-        val modelFile = FilenameUtils.getName(relativePath)
-
-        if (model instanceof State) {
-            for (ann : model.annotations) {
-                // Only test models that are not schedulable
-                if (ann.name == NOT_SCHEDULABLE_ANNOTATION_NAME) {                    
-                    // Compile with KiCo
-                    val context = new KielerCompilerContext("!T_SIMULATIONVISUALIZATION, T_s.java", model)
-                    context.setAdvancedSelect(true)
-                    val result = KielerCompiler.compile(context)
-                    
-                    // Check that error occured
-                    if (Strings.isNullOrEmpty(result.allErrors) && Strings.isNullOrEmpty(result.allWarnings) && !Strings.isNullOrEmpty(result.string)) {
-                        System.err.println("File " + modelFile + " is wrongfully recognized as ASC schedulable")
-                        Assert.fail()
-                    }   
-                }
-            }
-        } else {
-            throw new IllegalArgumentException("Model could not be cast to an SCChart.")
-        }
-    }
-    
-    
 
     /*******************************************************************************************
      * EMFCompare setup
@@ -408,18 +321,4 @@ class TransformationTests {
                 printMatches(m.submatches, level + 1, recursive)
         }
     }
-    
-    /**
-     * Removes a slash at the beginning and end of a path.
-     * @return the input path withouth a starting and ending slash.  
-     */
-    def private String stripSlashes(String path) {
-        // The input path has the form '/the/folder/file.extension/'
-        // The output path has the form 'the/folder/file.extension'
-        val pathNoEndSeparator = FilenameUtils.getFullPathNoEndSeparator(path)
-        if(pathNoEndSeparator.startsWith("/"))
-            return pathNoEndSeparator.substring(1)
-        else
-            return pathNoEndSeparator 
-    } 
 }

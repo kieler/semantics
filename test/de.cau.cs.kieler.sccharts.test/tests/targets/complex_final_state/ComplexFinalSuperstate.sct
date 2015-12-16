@@ -1,7 +1,8 @@
 
 @Transformation COMPLEXFINALSTATE
 scchart ComplexFinalSuperstate {
-  input bool I;
+  input bool I1;
+  input bool I2;
   output bool O;
 
   initial state A {
@@ -9,16 +10,16 @@ scchart ComplexFinalSuperstate {
     bool _term = false;
 
     initial state A0
-    --> A1 / _term = true;
+    --> A1 with I1 / _term = true;
 
     state A1 {
 
       initial state A1_1
-      --> A1_2 immediate / O = true;
+      --> A1_2 / O = true;
 
       final state A1_2;
     }
-    --> A0 with I / _term = false
+    --> A0 with I2 / _term = false
     --> _Final immediate with _abort;
 
     final state _Final;

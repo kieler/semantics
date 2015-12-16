@@ -3,10 +3,10 @@
 scchart ValuedSignals {
   bool x;
   bool y;
-  int x_val;
-  int x_curval = 1;
-  int y_val;
-  int y_curval = 2;
+  pure x_val;
+  pure x_curval = 1;
+  pure y_val;
+  pure y_curval = 2;
   immediate during x / x_val = x_curval;
   immediate during / x_curval = 0;
   immediate during / x = false;

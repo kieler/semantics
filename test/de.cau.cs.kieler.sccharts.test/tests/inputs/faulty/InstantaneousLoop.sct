@@ -1,5 +1,5 @@
 @Transformation NONE
-@NotSchedulable
+@HasError
 scchart Chart {
   
   initial state A
