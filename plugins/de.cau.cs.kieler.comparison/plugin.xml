@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="de.cau.cs.kieler.comparison.compiler" name="Comparison Compiler" schema="schema/de.cau.cs.kieler.comparison.compiler.exsd"/>
+   <extension-point id="de.cau.cs.kieler.comparison.inputgenerator" name="Comparison InputGenerator" schema="schema/de.cau.cs.kieler.comparison.inputgenerator.exsd"/>
+   <extension-point id="de.cau.cs.kieler.comparison.testcase" name="Comparison Testcase" schema="schema/de.cau.cs.kieler.comparison.testcase.exsd"/>
+
+</plugin>

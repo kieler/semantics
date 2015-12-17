@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Comparison
+Bundle-SymbolicName: de.cau.cs.kieler.comparison;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.comparison.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.comparison.core;uses:="de.cau.cs.kieler.comparison.interfaces",
+ de.cau.cs.kieler.comparison.datahandler,
+ de.cau.cs.kieler.comparison.exchanges
+Import-Package: com.google.inject;version="1.3.0",
+ org.json

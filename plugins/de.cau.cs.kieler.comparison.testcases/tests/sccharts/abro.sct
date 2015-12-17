@@ -1,0 +1,21 @@
+scchart ABRO {
+  input bool A, B, R;
+  output bool O;
+  region Main:
+  initial state ABO "ABthenO" {
+    entry / O = false;
+    initial state WaitAandB {
+      region HandleA:
+      initial state wA
+      --> dA with A;
+      final state dA;
+      region HandleB:
+      initial state wB
+      --> dB with B;
+      final state dB;
+    }
+    >-> done with / O = true;
+    final state done;
+  }
+  o-> ABO with R;
+}

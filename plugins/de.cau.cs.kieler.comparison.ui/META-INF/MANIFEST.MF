@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ui
+Bundle-SymbolicName: de.cau.cs.kieler.comparison.ui;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.comparison.ui.Activator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.comparison.ui.views
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Import-Package: de.cau.cs.kieler.comparison.core,
+ de.cau.cs.kieler.comparison.datahandler,
+ de.cau.cs.kieler.comparison.exchanges,
+ org.eclipse.core.resources

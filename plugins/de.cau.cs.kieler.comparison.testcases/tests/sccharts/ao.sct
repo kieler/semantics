@@ -1,0 +1,10 @@
+scchart AO {
+  
+  input bool I;
+  output bool O = false;
+  
+  initial state A
+  --> B with I / O = true;
+  
+  final state B;
+}

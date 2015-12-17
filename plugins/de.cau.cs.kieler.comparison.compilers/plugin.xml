@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.comparison.compiler">
+      <compilerClass
+            class="de.cau.cs.kieler.comparison.compilers.kico.KiCoSCCharts2C">
+      </compilerClass>
+      <compilerClass
+            class="de.cau.cs.kieler.comparison.compilers.kico.KiCoSCCharts2Java">
+      </compilerClass>
+      <compilerClass
+            class="de.cau.cs.kieler.comparison.compilers.kico.KiCoSCCharts2Executable">
+      </compilerClass>
+      <compilerClass
+            class="de.cau.cs.kieler.comparison.compilers.kico.KiCoEsterel2C">
+      </compilerClass>
+      <compilerClass
+            class="de.cau.cs.kieler.comparison.compilers.kico.KiCoEsterel2Executable">
+      </compilerClass>
+      <compilerClass
+            class="de.cau.cs.kieler.comparison.compilers.cec.CEC2C">
+      </compilerClass>
+   </extension>
+
+</plugin>
