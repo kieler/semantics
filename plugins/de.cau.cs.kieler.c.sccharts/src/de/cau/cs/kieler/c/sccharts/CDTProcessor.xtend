@@ -13,53 +13,51 @@
  */
 package de.cau.cs.kieler.c.sccharts
 
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-import org.eclipse.cdt.core.dom.ast.IASTNode
-import org.eclipse.cdt.core.model.ITranslationUnit
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDefinition
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTProblem
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.sccharts.State
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDeclarator
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTParameterDeclaration
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTCompoundStatement
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import com.google.inject.Inject
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarationStatement
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclaration
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTIfStatement
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression
-import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTReturnStatement
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import org.eclipse.cdt.core.dom.ast.IASTExpression
 import de.cau.cs.kieler.core.kexpressions.Declaration
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTExpressionStatement
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.TransitionType
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import org.eclipse.cdt.core.model.CoreModel
-import org.eclipse.core.resources.IResource
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.cdt.internal.ui.editor.CEditor
-import org.eclipse.ui.IEditorPart
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTForStatement
-import de.cau.cs.kieler.sccharts.Assignment
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTUnaryExpression
-import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.TransitionType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression
+import org.eclipse.cdt.core.dom.ast.IASTExpression
+import org.eclipse.cdt.core.dom.ast.IASTNode
+import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
+import org.eclipse.cdt.core.model.ITranslationUnit
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTCompoundStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarationStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTExpressionStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTForStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDeclarator
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDefinition
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTIfStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTParameterDeclaration
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTProblem
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTReturnStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclaration
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTUnaryExpression
+import org.eclipse.cdt.internal.ui.editor.CEditor
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.ui.IEditorPart
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * @author ssm
@@ -68,7 +66,11 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 class CDTProcessor extends AbstractProductionTransformation {
     
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+
+    @Inject
+    extension KExpressionsValuedObjectExtensions
+
     
     @Inject
     extension SCChartsExtension
@@ -569,7 +571,7 @@ class CDTProcessor extends AbstractProductionTransformation {
     }
     
     def Assignment createAssignment(CASTUnaryExpression unary) {
-    	val assignment = scc.createAssignment
+    	val assignment = kef.createAssignment
     	
     	val VOR = (unary.operand as CASTIdExpression).createVOReference
     	assignment.valuedObject = VOR.valuedObject
@@ -614,6 +616,10 @@ class CDTProcessor extends AbstractProductionTransformation {
     
     private def kex() {
         KExpressionsFactory::eINSTANCE
+    }
+    
+    private def kef() {
+    	KEffectsFactory::eINSTANCE
     }
     
     private def ControlflowRegion getControlflowRegion(State state) {

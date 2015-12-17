@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sccharts.sim.c.xtend
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.sim.c.SCChartsSimCPlugin
@@ -24,6 +23,8 @@ import de.cau.cs.kieler.sccharts.transformations.SCChartsTransformation
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 
 /**
  * This class handles the<BR>
@@ -62,10 +63,13 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     //-------------------------------------------------------------------------
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
 
     @Inject
     extension SCChartsExtension
+
+    @Inject
+    extension SCChartsTransformationExtension
 
     //-------------------------------------------------------------------------
     //--         S I M U L A T I O N    V I S U A L I Z A T I O N            --

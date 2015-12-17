@@ -16,10 +16,14 @@ package de.cau.cs.kieler.sccharts.transformations
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
@@ -27,7 +31,6 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.ArrayList
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.sccharts.Region
 
 /**
  * SCCharts ComplexFinalState Transformation.
@@ -63,8 +66,17 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
 
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions   
+    
     @Inject
     extension SCChartsExtension
 
@@ -122,16 +134,17 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
     
 
     def void transformComplexFinalState(State parentState, State rootState) {
+        parentState.setDefaultTrace
         var ArrayList<ValuedObject> termVariables = new ArrayList
 
         // Every such parent state gets an special abort flag that is used to trigger
         // the abortion of the old complex final states to new auxiliary real (not complex) final states!
-        var abortFlag = parentState.createVariable(GENERATED_PREFIX + "abort").setTypeBool.uniqueName
+        var abortFlag = parentState.createValuedObject(GENERATED_PREFIX + "abort", createBoolDeclaration).uniqueName
         abortFlag.setInitialValue(FALSE)
 
         // For every region in such a parent state, we need to track if it finishes
         for (region : parentState.regions.filter(ControlflowRegion)) {
-                val termVariable = parentState.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
+                val termVariable = parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).uniqueName
                 termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {
                     termVariable.setInitialValue(TRUE)
@@ -157,7 +170,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
                 createImmediateTransitionTo(watcherRegion.createFinalState(GENERATED_PREFIX + "Aborted"))
         watcherTransition.addEffect(abortFlag.assign(TRUE))
         for (termVariable : termVariables) {
-                watcherTransition.setTrigger(watcherTransition.trigger.and2(termVariable.reference))
+                watcherTransition.setTrigger(watcherTransition.trigger.and(termVariable.reference))
         }
 
 
@@ -176,6 +189,9 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
                     state.final = false;
                     val abortTransition = state.createImmediateTransitionTo(auxiliaryFinalState);
                     abortTransition.setLowestPriority.setTrigger(abortFlag.reference)
+                    
+                    auxiliaryFinalState.trace(state)
+                    abortTransition.trace(state) 
                 }
             }
         }

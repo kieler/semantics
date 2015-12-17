@@ -220,24 +220,24 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
 				/**
 	 * The default value of the '{@link #getHostType() <em>Host Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
 	 * @see #getHostType()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String HOST_TYPE_EDEFAULT = null;
+    protected static final String HOST_TYPE_EDEFAULT = null;
 
-				/**
+                /**
 	 * The cached value of the '{@link #getHostType() <em>Host Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
 	 * @see #getHostType()
 	 * @generated
 	 * @ordered
 	 */
-	protected String hostType = HOST_TYPE_EDEFAULT;
+    protected String hostType = HOST_TYPE_EDEFAULT;
 
-				/**
+                /**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -438,26 +438,26 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
 
 				/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getHostType() {
+    public String getHostType() {
 		return hostType;
 	}
 
-				/**
+                /**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setHostType(String newHostType) {
+    public void setHostType(String newHostType) {
 		String oldHostType = hostType;
 		hostType = newHostType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.DECLARATION__HOST_TYPE, oldHostType, hostType));
 	}
 
-				/**
+                /**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated

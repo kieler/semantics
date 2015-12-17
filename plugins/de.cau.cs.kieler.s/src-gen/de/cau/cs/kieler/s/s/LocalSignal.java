@@ -11,10 +11,10 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.LocalSignal#getSignal <em>Signal</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.s.s.SPackage#getLocalSignal()
  * @model

@@ -25,7 +25,8 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.s.s.Await
@@ -43,7 +44,6 @@ import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
-import de.cau.cs.kieler.s.extensions.SExtension
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -58,7 +58,7 @@ class S2SCC {
     public static String includeHeader;
     
     @Inject
-    extension KExpressionsExtension    
+    extension KExpressionsValuedObjectExtensions    
 
     @Inject
     extension SExtension    
@@ -556,7 +556,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
 
    // Expand a ASSIGNMENT instruction.
    def dispatch CharSequence expand(Assignment assignment) {
-       '''«assignment.variable.expand » = «assignment.expression.expand»;'''
+       '''«assignment.valuedObject.expand » = «assignment.expression.expand»;'''
    }   
       
    // Expand a PAUSE instruction.
@@ -741,16 +741,27 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
             «subexpression.expand»
         «ENDFOR»)
     «ENDIF»
-    «IF expression.operator  == OperatorType::AND»
+    «IF expression.operator  == OperatorType::LOGICAL_AND»
         («FOR subexpression : expression.subExpressions SEPARATOR " && "»
             «subexpression.expand»
         «ENDFOR»)
     «ENDIF»
-    «IF expression.operator  == OperatorType::OR»
+    «IF expression.operator  == OperatorType::LOGICAL_OR»
         («FOR subexpression : expression.subExpressions SEPARATOR " || "»
             «subexpression.expand»
         «ENDFOR»)
     «ENDIF»
+    «IF expression.operator  == OperatorType::BITWISE_AND»
+        («FOR subexpression : expression.subExpressions SEPARATOR " & "»
+            «subexpression.expand»
+        «ENDFOR»)
+    «ENDIF»
+    «IF expression.operator  == OperatorType::BITWISE_OR»
+        («FOR subexpression : expression.subExpressions SEPARATOR " | "»
+            «subexpression.expand»
+        «ENDFOR»)
+    «ENDIF»
+
     «IF expression.operator  == OperatorType::ADD»
         («FOR subexpression : expression.subExpressions SEPARATOR " + "»
             «subexpression.expand»

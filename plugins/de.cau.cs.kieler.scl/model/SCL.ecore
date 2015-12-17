@@ -19,13 +19,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="instruction" eType="#//Instruction"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Instruction"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Instruction">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Instruction #//StatementSequence">
+  <eClassifiers xsi:type="ecore:EClass" name="Instruction" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="../../de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Assignment #//Instruction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//StatementSequence #//Instruction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
@@ -47,7 +43,7 @@
         eType="#//Thread" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pause" eSuperTypes="#//Instruction"/>
-  <eClassifiers xsi:type="ecore:EClass" name="StatementScope" eSuperTypes="#//Instruction #//StatementSequence">
+  <eClassifiers xsi:type="ecore:EClass" name="StatementScope" eSuperTypes="#//StatementSequence #//Instruction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>

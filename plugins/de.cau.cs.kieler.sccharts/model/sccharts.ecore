@@ -6,7 +6,8 @@
       <details key="documentation" value="An Action represents some effect that is executed under some&#xA;certain condition. The condition or sometimes called guard is&#xA;the trigger which simply is any boolean {@link Expression} over&#xA;{@link Signal}s or {@link Variable}s. Note that Actions may also be used&#xA;in contexts, where no trigger or resp. effects are allowed. E.g.&#xA;a suspensionTrigger has no effect.&#xA;&lt;p>&#xA;The effects of an Action are either {@link Assignment}, {@link Emission} or escaping&#xA;to an {@link TextEffect}.&#xA;&lt;p>&#xA;An Action has a String label that represents the trigger and the effects&#xA;list in a textual representation. The user of the &#xA;model is required to synchronize the label with the actual&#xA;trigger and effects objects. For the sccharts graphical editor&#xA;this is done by using an Xtext grammar/parser."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="effects" upperBound="-1"
-        eType="#//Effect" containment="true"/>
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Effect"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
@@ -14,33 +15,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" ordered="false"
         unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="immediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Effect">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="An Assignment assigns a new value to a {@link Variable}.&#xA;It carries a reference to a Variable and an {@link Expression} &#xA;that represents the new value for that Variable."/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="indices" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Effect" abstract="true">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="An Effect is something executed by an {@link Action}.&#xA;"/>
-    </eAnnotations>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Emission" eSuperTypes="#//Effect">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="An Emission represents setting an {@link Signal}&#xA;from &quot;absent&quot; to &quot;present&quot; in a tick.&#xA;An Emission has a reference to the Signal&#xA;that it emits.&#xA;For valued Signals, an Emission may carry an&#xA;{@link Expression} that represents the new&#xA;value for that signal."/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="#//Scope">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -197,19 +171,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="for" eType="#//For" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Parsable" instanceClassName="java.lang.String">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Parsable is a String that represents model information&#xA;that can be parsed by some external parser. It is used to&#xA;technically distinguish simple Strings from information&#xA;that will be post processed by a parser and hence does not&#xA;carry semantical information in its own.&#xA;"/>
     </eAnnotations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TextEffect" eSuperTypes="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TextExpression #//Effect">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="An TextEffect is a {@link TextualCode} that allows to&#xA;escape to some textual host code in an effect. This&#xA;can be any arbitrary String."/>
-    </eAnnotations>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FunctionCallEffect" eSuperTypes="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//FunctionCall #//Effect"/>
   <eClassifiers xsi:type="ecore:EClass" name="LocalAction" abstract="true" eSuperTypes="#//Action">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Action represents some effect that is executed under some&#xA;certain condition. The condition or sometimes called guard is&#xA;the trigger which simply is any boolean {@link Expression} over&#xA;{@link Signal}s or {@link Variable}s. Note that Actions may also be used&#xA;in contexts, where no trigger or resp. effects are allowed. E.g.&#xA;a suspensionTrigger has no effect.&#xA;&lt;p>&#xA;The effects of an Action are either {@link Assignment}, {@link Emission} or escaping&#xA;to an {@link TextEffect}.&#xA;&lt;p>&#xA;An Action has a String label that represents the trigger and the effects&#xA;list in a textual representation. The user of the &#xA;model is required to synchronize the label with the actual&#xA;trigger and effects objects. For the sccharts graphical editor&#xA;this is done by using an Xtext grammar/parser."/>
@@ -260,13 +227,5 @@
         <details key="documentation" value="A NORMALTERMINATION will leave a State whenever all contained&#xA;Regions are in final States. A normal termination may not define a guard trigger."/>
       </eAnnotations>
     </eLiterals>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="For">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="loopVariable" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="from" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="to" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
-        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

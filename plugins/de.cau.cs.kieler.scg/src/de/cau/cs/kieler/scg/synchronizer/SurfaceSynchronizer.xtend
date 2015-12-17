@@ -19,29 +19,21 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Predecessor
-import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.sequentializer.EmptyExpression
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import java.util.Map
-import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import java.util.List
-import de.cau.cs.kieler.scg.BasicBlock
-import java.util.Set
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
-import de.cau.cs.kieler.scg.Depth
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.scg.Surface
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -95,7 +87,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     // -------------------------------------------------------------------------
     
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
     
     @Inject
     extension SCGCoreExtensions
@@ -110,7 +102,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     extension AnnotationsExtensions
     
     @Inject
-    extension KExpressionsSerializeExtension
+    extension KEffectsSerializeExtensions
    
     protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
     protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
@@ -156,7 +148,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 		// At first this simple scheduler assumes that the fork node spawns more than one thread.
 		// Hence, we create an or-operator expression. 
         val terminationExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => 
-        	[ setOperator(OperatorType::OR) ]
+        	[ setOperator(OperatorType::LOGICAL_OR) ]
         
 		data.createEmptyExpressions(terminationExpression)
 		data.createGuardExpression(terminationExpression)
@@ -208,7 +200,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	            data.predecessors.add(exitSB)
 	            
 	            // Now, retrieve all surfaces of the actual thread.
-	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Depth)).toList
+	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
 	            
 	            // If there are surface, build an empty expression.
 	            if (threadSurfaces.size>0) {
@@ -241,7 +233,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	            	// Add an or-operatr expression if there are more than one surfaces.
 	            	if (threadSurfaces.size>1) {
 		            	val subExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-	    	        	subExpression.setOperator(OperatorType::OR)
+	    	        	subExpression.setOperator(OperatorType::LOGICAL_OR)
 	//        	    	threadSurfaces.forEach[subExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
 	                    threadSurfaces.forEach[subExpression.subExpressions.add(it.getCachedSchedulingBlock.guard.valuedObject.reference)]
 		            	expression.subExpressions.add(subExpression)
@@ -283,14 +275,14 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 		if (data.guardExpression.emptyExpressions.size > 0) {
     		// Create a new and-operator expression.
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            expression.setOperator(OperatorType::AND)
+            expression.setOperator(OperatorType::LOGICAL_AND)
         
             // Create thread expressions (or-operator expressions) for each thread. 
             // They include the empty expression - the thread already finished in previous ticks - 
             // and the threadExitObject - the thread just finished in this tick.
             data.guardExpression.emptyExpressions.forEach[
         	   val threadExpr = KExpressionsFactory::eINSTANCE.createOperatorExpression
-        	   threadExpr.setOperator(OperatorType::OR)
+        	   threadExpr.setOperator(OperatorType::LOGICAL_OR)
         	   threadExpr.subExpressions.add(it.valuedObject.reference)
         	   threadExpr.subExpressions.add(it.threadExitObject.reference)
         	   expression.subExpressions.add(threadExpr)
@@ -336,7 +328,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
                         emptyExp.valuedObject.name = empty.valuedObject.name + "_fix"
                         data.valuedObjects.add(emptyExp.valuedObject)
                         val subExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-                        subExpression.setOperator(OperatorType::OR)
+                        subExpression.setOperator(OperatorType::LOGICAL_OR)
                         var gd = OPERATOREXPRESSION_DEPTHLIMIT/2
                         while (gd < depth-1) {
                             subExpression.subExpressions += opExp.subExpressions.get(OPERATOREXPRESSION_DEPTHLIMIT/2)
@@ -357,7 +349,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         /** Basically, do the same thing for the synchronizer expression. */
         var ok = false
         if (data.guardExpression.expression instanceof OperatorExpression &&
-            (data.guardExpression.expression as OperatorExpression).operator == OperatorType::AND
+            (data.guardExpression.expression as OperatorExpression).operator == OperatorType::LOGICAL_AND
         ) {
             val sExp = data.guardExpression.expression as OperatorExpression
             var fixcnt = 0
@@ -368,7 +360,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
                 eExp.valuedObject.name = data.guard.valuedObject.name + "_fix" + fixcnt
                 data.valuedObjects.add(eExp.valuedObject)
                 val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
-                subExp.setOperator(OperatorType::AND)
+                subExp.setOperator(OperatorType::LOGICAL_AND)
                 var gd = OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER/2
                 while (gd > 0) {
                     subExp.subExpressions += sExp.subExpressions.get(0)
@@ -389,7 +381,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
                     eExp.valuedObject.name = data.guard.valuedObject.name + "_fix" + fixcnt
             	    data.valuedObjects.add(eExp.valuedObject)
         	        val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
-    	            subExp.setOperator(OperatorType::OR)
+    	            subExp.setOperator(OperatorType::LOGICAL_OR)
 	                var gd = OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER/2
                 	while (gd > 0) {
                     	subExp.subExpressions += tExp.subExpressions.get(0)

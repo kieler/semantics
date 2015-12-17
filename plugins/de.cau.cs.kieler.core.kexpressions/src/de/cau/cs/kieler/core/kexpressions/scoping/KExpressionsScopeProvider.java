@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.core.kexpressions.scoping;
 
-import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
+import de.cau.cs.kieler.core.annotations.text.scoping.AnnotationsScopeProvider;
 
 /**
  * This class contains custom scoping description.
@@ -12,6 +12,6 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
  * on how and when to use it 
  *
  */
-public class KExpressionsScopeProvider extends AbstractDeclarativeScopeProvider {
+public class KExpressionsScopeProvider extends AnnotationsScopeProvider {
 
 }

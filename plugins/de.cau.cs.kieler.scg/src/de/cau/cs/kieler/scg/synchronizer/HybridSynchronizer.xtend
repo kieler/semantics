@@ -14,22 +14,17 @@
 package de.cau.cs.kieler.scg.synchronizer
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
-import de.cau.cs.kieler.scg.Predecessor
-import java.util.Map
-import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SchedulingBlock
-import java.util.List
-import de.cau.cs.kieler.scg.BasicBlock
-import java.util.Set
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -73,7 +68,13 @@ class HybridSynchronizer extends AbstractSynchronizer {
     extension SCGControlFlowExtensions
         
     @Inject
-    extension KExpressionsExtension	
+    extension KExpressionsValuedObjectExtensions	
+
+    @Inject
+    extension KExpressionsCreateExtensions  
+    
+    @Inject
+    extension KExpressionsComplexCreateExtensions 
 	
     // -------------------------------------------------------------------------
     // -- Constants
@@ -108,7 +109,7 @@ class HybridSynchronizer extends AbstractSynchronizer {
         data.addAdditionalAssignment(joinSB, forkVar, FALSE)
 		data.guardExpression.expression = forkVar.reference
 		
-		val exitExpression = createOrExpression
+		val exitExpression = createLogicalOrExpression
 		// Create a new list for all exit nodes of the threads of the fork-join-combination...
         val exitNodes = <Exit> newLinkedList
         // ... and fill the list with the exit nodes of all threads.

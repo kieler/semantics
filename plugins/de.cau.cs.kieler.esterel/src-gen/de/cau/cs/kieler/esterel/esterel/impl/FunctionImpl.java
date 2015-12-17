@@ -28,12 +28,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.FunctionImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.FunctionImpl#getIdList <em>Id List</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.FunctionImpl#getType <em>Type</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

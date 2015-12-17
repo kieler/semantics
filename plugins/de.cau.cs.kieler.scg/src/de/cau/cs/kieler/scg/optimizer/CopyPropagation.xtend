@@ -15,7 +15,6 @@ package de.cau.cs.kieler.scg.optimizer
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.SCGraph
@@ -50,8 +49,6 @@ class CopyPropagation extends AbstractOptimizer {
         }
     }    
     
-    @Inject
-    extension KExpressionsExtension
     
     private static val GUARDPREFIX = "g" 
     private static val CONDPREFIX = "_cond"

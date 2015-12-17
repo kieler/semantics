@@ -15,7 +15,6 @@ package de.cau.cs.kieler.scg.transformations
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
@@ -53,9 +52,6 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
     
     @Inject
     extension SCGThreadExtensions
-    
-    @Inject
-    extension KExpressionsExtension
     
     @Inject
     extension AnnotationsExtensions    
@@ -113,7 +109,7 @@ class SCPDGTransformation extends AbstractProductionTransformation implements Tr
     	programEntry = (scg.nodes.head as Entry)
         programEntry.transformSCPDG(cfs, scg, context)
         
-        scg.addAnnotation(SCGFeatures.SCPDG_ID, SCGFeatures.SCPDG_NAME)   
+        scg.createStringAnnotation(SCGFeatures.SCPDG_ID, SCGFeatures.SCPDG_NAME)   
 
         scg
     }

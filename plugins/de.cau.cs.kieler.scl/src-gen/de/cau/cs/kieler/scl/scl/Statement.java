@@ -24,22 +24,21 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Statement extends EObject
-{
-  /**
+public interface Statement extends EObject {
+    /**
      * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.core.annotations.Annotation}.
      * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
      * @return the value of the '<em>Annotations</em>' containment reference list.
      * @see de.cau.cs.kieler.scl.scl.SclPackage#getStatement_Annotations()
      * @model containment="true"
      * @generated
      */
-  EList<Annotation> getAnnotations();
+    EList<Annotation> getAnnotations();
 
 } // Statement

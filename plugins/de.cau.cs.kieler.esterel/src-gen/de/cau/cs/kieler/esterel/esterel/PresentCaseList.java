@@ -11,10 +11,10 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCaseList#getCases <em>Cases</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCaseList()
  * @model

@@ -28,7 +28,7 @@ import org.eclipse.xtext.nodemodel.INode;
  * dedicated to the COMMENT_ANNOTATION terminal and the EString data type,
  * defined in the Annotations grammar.
  * 
- * @author chsch
+ * @author chsch ssm
  */
 public class AnnotationsValueConverter extends DefaultTerminalConverters {
 

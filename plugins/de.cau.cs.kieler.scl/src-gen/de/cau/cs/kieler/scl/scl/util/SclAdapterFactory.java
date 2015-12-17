@@ -3,6 +3,9 @@
 package de.cau.cs.kieler.scl.scl.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
+
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -32,40 +35,37 @@ import org.eclipse.emf.ecore.EObject;
  * @see de.cau.cs.kieler.scl.scl.SclPackage
  * @generated
  */
-public class SclAdapterFactory extends AdapterFactoryImpl
-{
-  /**
+public class SclAdapterFactory extends AdapterFactoryImpl {
+    /**
      * The cached model package.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  protected static SclPackage modelPackage;
+    protected static SclPackage modelPackage;
 
-  /**
+    /**
      * Creates an instance of the adapter factory.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public SclAdapterFactory()
-  {
+    public SclAdapterFactory() {
         if (modelPackage == null) {
             modelPackage = SclPackage.eINSTANCE;
         }
     }
 
-  /**
+    /**
      * Returns whether this factory is applicable for the type of the object.
      * <!-- begin-user-doc -->
-   * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
-   * <!-- end-user-doc -->
+     * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
+     * <!-- end-user-doc -->
      * @return whether this factory is applicable for the type of the object.
      * @generated
      */
-  @Override
-  public boolean isFactoryForType(Object object)
-  {
+    @Override
+    public boolean isFactoryForType(Object object) {
         if (object == modelPackage) {
             return true;
         }
@@ -75,14 +75,14 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return false;
     }
 
-  /**
+    /**
      * The switch that delegates to the <code>createXXX</code> methods.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  protected SclSwitch<Adapter> modelSwitch =
-    new SclSwitch<Adapter>() {
+    protected SclSwitch<Adapter> modelSwitch =
+        new SclSwitch<Adapter>() {
             @Override
             public Adapter caseSCLProgram(SCLProgram object) {
                 return createSCLProgramAdapter();
@@ -140,222 +140,216 @@ public class SclAdapterFactory extends AdapterFactoryImpl
                 return createAnnotatableAdapter();
             }
             @Override
+            public Adapter caseEffect(Effect object) {
+                return createEffectAdapter();
+            }
+            @Override
+            public Adapter caseKEffects_Assignment(de.cau.cs.kieler.core.kexpressions.keffects.Assignment object) {
+                return createKEffects_AssignmentAdapter();
+            }
+            @Override
             public Adapter defaultCase(EObject object) {
                 return createEObjectAdapter();
             }
         };
 
-  /**
+    /**
      * Creates an adapter for the <code>target</code>.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @param target the object to adapt.
      * @return the adapter for the <code>target</code>.
      * @generated
      */
-  @Override
-  public Adapter createAdapter(Notifier target)
-  {
+    @Override
+    public Adapter createAdapter(Notifier target) {
         return modelSwitch.doSwitch((EObject)target);
     }
 
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.SCLProgram <em>SCL Program</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.SCLProgram
      * @generated
      */
-  public Adapter createSCLProgramAdapter()
-  {
+    public Adapter createSCLProgramAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Statement <em>Statement</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.Statement
      * @generated
      */
-  public Adapter createStatementAdapter()
-  {
+    public Adapter createStatementAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.EmptyStatement <em>Empty Statement</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.EmptyStatement
      * @generated
      */
-  public Adapter createEmptyStatementAdapter()
-  {
+    public Adapter createEmptyStatementAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.InstructionStatement <em>Instruction Statement</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.InstructionStatement
      * @generated
      */
-  public Adapter createInstructionStatementAdapter()
-  {
+    public Adapter createInstructionStatementAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Instruction <em>Instruction</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.Instruction
      * @generated
      */
-  public Adapter createInstructionAdapter()
-  {
+    public Adapter createInstructionAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Assignment <em>Assignment</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.Assignment
      * @generated
      */
-  public Adapter createAssignmentAdapter()
-  {
+    public Adapter createAssignmentAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Conditional <em>Conditional</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.Conditional
      * @generated
      */
-  public Adapter createConditionalAdapter()
-  {
+    public Adapter createConditionalAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Goto <em>Goto</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.Goto
      * @generated
      */
-  public Adapter createGotoAdapter()
-  {
+    public Adapter createGotoAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.StatementSequence <em>Statement Sequence</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.StatementSequence
      * @generated
      */
-  public Adapter createStatementSequenceAdapter()
-  {
+    public Adapter createStatementSequenceAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Thread <em>Thread</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.Thread
      * @generated
      */
-  public Adapter createThreadAdapter()
-  {
+    public Adapter createThreadAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Parallel <em>Parallel</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.Parallel
      * @generated
      */
-  public Adapter createParallelAdapter()
-  {
+    public Adapter createParallelAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Pause <em>Pause</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.Pause
      * @generated
      */
-  public Adapter createPauseAdapter()
-  {
+    public Adapter createPauseAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.StatementScope <em>Statement Scope</em>}'.
      * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @see de.cau.cs.kieler.scl.scl.StatementScope
      * @generated
      */
-  public Adapter createStatementScopeAdapter()
-  {
+    public Adapter createStatementScopeAdapter() {
         return null;
     }
 
-  /**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -369,16 +363,43 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return null;
     }
 
-/**
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.keffects.Effect <em>Effect</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.Effect
+     * @generated
+     */
+    public Adapter createEffectAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.keffects.Assignment <em>Assignment</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+     * @generated
+     */
+    public Adapter createKEffects_AssignmentAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for the default case.
      * <!-- begin-user-doc -->
-   * This default implementation returns null.
-   * <!-- end-user-doc -->
+     * This default implementation returns null.
+     * <!-- end-user-doc -->
      * @return the new adapter.
      * @generated
      */
-  public Adapter createEObjectAdapter()
-  {
+    public Adapter createEObjectAdapter() {
         return null;
     }
 

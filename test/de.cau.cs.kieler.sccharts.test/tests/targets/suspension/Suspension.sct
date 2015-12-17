@@ -1,0 +1,14 @@
+
+@Transformation SUSPEND
+scchart Suspension {
+  input bool I;
+  input bool S;
+  bool _enabled = true;
+  during / _enabled = !S;
+
+  initial state A
+  --> B with I && _enabled;
+
+  state B
+  --> A with !I && _enabled;
+}

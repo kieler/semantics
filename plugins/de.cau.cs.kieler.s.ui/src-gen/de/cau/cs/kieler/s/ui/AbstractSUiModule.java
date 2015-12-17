@@ -4,14 +4,13 @@
  */
 package de.cau.cs.kieler.s.ui;
 
-import org.eclipse.xtext.ui.DefaultUiModule;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Manual modifications go to {de.cau.cs.kieler.s.ui.SUiModule}
  */
 @SuppressWarnings("all")
-public abstract class AbstractSUiModule extends DefaultUiModule {
+public abstract class AbstractSUiModule extends org.eclipse.xtext.ui.DefaultUiModule {
 	
 	public AbstractSUiModule(AbstractUIPlugin plugin) {
 		super(plugin);

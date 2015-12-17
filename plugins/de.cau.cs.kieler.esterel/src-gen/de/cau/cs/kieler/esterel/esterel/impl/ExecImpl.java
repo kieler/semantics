@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getTask <em>Task</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getBody <em>Body</em>}</li>
@@ -38,7 +39,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getExecCaseList <em>Exec Case List</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

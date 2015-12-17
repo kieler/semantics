@@ -1,0 +1,26 @@
+
+@Transformation EXIT
+scchart ExitActionAndTrigger {
+  input bool I;
+  output bool O;
+
+  initial state A {
+
+    region _Exit:
+
+    initial state _Init
+    --> _Memorize with I;
+
+    final state _Done;
+
+    connector state _Memorize
+    --> _Done immediate with !!I / O = false
+    --> _Done immediate;
+  }
+  >-> _ExitOption immediate;
+
+  final state F;
+
+  connector state _ExitOption
+  --> F immediate;
+}

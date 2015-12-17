@@ -13,16 +13,12 @@
  */
  package de.cau.cs.kieler.esterel.sim.c.xtend
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.esterel.kexpressions.Input
-//import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
-import de.cau.cs.kieler.esterel.kexpressions.Output
 import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.esterel.kexpressions.Output
 import de.cau.cs.kieler.esterel.kexpressions.Signal
+import de.cau.cs.kieler.esterel.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.kexpressions.impl.InputImpl
 import de.cau.cs.kieler.esterel.kexpressions.impl.OutputImpl
-import de.cau.cs.kieler.esterel.kexpressions.ValueType
 
 /**
  * Transformation from Esterel Program to wrapper code for the simulation.
@@ -32,9 +28,6 @@ import de.cau.cs.kieler.esterel.kexpressions.ValueType
  * @kieler.rating 2014-11-26 proposed yellow
  */
 class CSimulationEsterel { 
-
-    @Inject
-    extension KExpressionsExtension    
 
     // General method to create the c simulation interface.
 	def transform (Program model, String bufferSize) {

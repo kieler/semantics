@@ -237,7 +237,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
                     .isInstance(((Annotatable) owner).getAnnotations().get(index))) {
                 StringAnnotation a =
                         (StringAnnotation) ((Annotatable) owner).getAnnotations().get(index);
-                return Strings.isEmpty(a.getName()) && Strings.isEmpty(a.getValue());
+                return Strings.isEmpty(a.getName()) && Strings.isEmpty(a.getValues().get(0));
             }
             if (((Annotatable) owner).getAnnotations().get(index).getClass()
                     .equals(AnnotationImpl.class)) {

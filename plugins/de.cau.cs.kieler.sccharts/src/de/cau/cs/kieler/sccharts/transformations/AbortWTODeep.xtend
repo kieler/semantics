@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sccharts.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -24,6 +23,11 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 
 /**
  * SCCharts Abort WTO Transformation. This may require an advanced SCG compiler that can handle depth join.
@@ -71,10 +75,23 @@ class AbortWTODeep extends AbstractExpansionTransformation {
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
+    
+//    @Inject
+//    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension
+    
+    @Inject
+    extension SCChartsTransformationExtension
+    
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -147,9 +164,9 @@ class AbortWTODeep extends AbstractExpansionTransformation {
                     state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                     if (transition.typeStrongAbort) {
-                        strongAbortTrigger = strongAbortTrigger.or2(transitionTriggerVariable.reference)
+                        strongAbortTrigger = strongAbortTrigger.or(transitionTriggerVariable.reference)
                     } else if (transition.typeWeakAbort) {
-                        weakAbortTrigger = weakAbortTrigger.or2(transitionTriggerVariable.reference)
+                        weakAbortTrigger = weakAbortTrigger.or(transitionTriggerVariable.reference)
                     }
                 }
 
