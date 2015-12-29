@@ -72,26 +72,26 @@ public class CircuitItemProviderAdapterFactory extends CircuitAdapterFactory imp
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.circuit.Circuit} instances.
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.circuit.Actor} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected CircuitItemProvider circuitItemProvider;
+	protected ActorItemProvider actorItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.circuit.Circuit}.
+	 * This creates an adapter for a {@link de.cau.cs.kieler.circuit.Actor}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createCircuitAdapter() {
-		if (circuitItemProvider == null) {
-			circuitItemProvider = new CircuitItemProvider(this);
+	public Adapter createActorAdapter() {
+		if (actorItemProvider == null) {
+			actorItemProvider = new ActorItemProvider(this);
 		}
 
-		return circuitItemProvider;
+		return actorItemProvider;
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class CircuitItemProviderAdapterFactory extends CircuitAdapterFactory imp
 	 * @generated
 	 */
 	public void dispose() {
-		if (circuitItemProvider != null) circuitItemProvider.dispose();
+		if (actorItemProvider != null) actorItemProvider.dispose();
 		if (linkItemProvider != null) linkItemProvider.dispose();
 		if (portItemProvider != null) portItemProvider.dispose();
 	}

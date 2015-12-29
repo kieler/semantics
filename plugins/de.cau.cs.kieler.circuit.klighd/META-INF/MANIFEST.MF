@@ -24,6 +24,7 @@ Require-Bundle: javax.inject,
  org.eclipse.ui.views.log,
  org.eclipse.core.resources,
  org.eclipse.emf,
- org.eclipse.xtext.ui;resolution:=optional
+ org.eclipse.xtext.ui;resolution:=optional,
+ de.cau.cs.kieler.core.kgraph
 Import-Package: de.cau.cs.kieler.circuit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

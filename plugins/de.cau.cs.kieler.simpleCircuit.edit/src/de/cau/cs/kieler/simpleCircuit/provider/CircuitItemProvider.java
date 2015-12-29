@@ -1,11 +1,11 @@
 /**
  */
-package de.cau.cs.kieler.circuit.provider;
+package de.cau.cs.kieler.simpleCircuit.provider;
 
 
-import de.cau.cs.kieler.circuit.Circuit;
-import de.cau.cs.kieler.circuit.CircuitFactory;
-import de.cau.cs.kieler.circuit.CircuitPackage;
+import de.cau.cs.kieler.simpleCircuit.Circuit;
+import de.cau.cs.kieler.simpleCircuit.SimpleCircuitFactory;
+import de.cau.cs.kieler.simpleCircuit.SimpleCircuitPackage;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +29,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.circuit.Circuit} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.simpleCircuit.Circuit} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -82,7 +82,7 @@ public class CircuitItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Circuit_name_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Circuit_name_feature", "_UI_Circuit_type"),
-				 CircuitPackage.Literals.CIRCUIT__NAME,
+				 SimpleCircuitPackage.Literals.CIRCUIT__NAME,
 				 true,
 				 false,
 				 false,
@@ -104,7 +104,7 @@ public class CircuitItemProvider
 				 getResourceLocator(),
 				 getString("_UI_Circuit_type_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Circuit_type_feature", "_UI_Circuit_type"),
-				 CircuitPackage.Literals.CIRCUIT__TYPE,
+				 SimpleCircuitPackage.Literals.CIRCUIT__TYPE,
 				 true,
 				 false,
 				 false,
@@ -125,9 +125,9 @@ public class CircuitItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__INNER_CIRCUITS);
-			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__INNER_LINKS);
-			childrenFeatures.add(CircuitPackage.Literals.CIRCUIT__PORTS);
+			childrenFeatures.add(SimpleCircuitPackage.Literals.CIRCUIT__INNER_CIRCUITS);
+			childrenFeatures.add(SimpleCircuitPackage.Literals.CIRCUIT__INNER_LINKS);
+			childrenFeatures.add(SimpleCircuitPackage.Literals.CIRCUIT__PORTS);
 		}
 		return childrenFeatures;
 	}
@@ -183,13 +183,13 @@ public class CircuitItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Circuit.class)) {
-			case CircuitPackage.CIRCUIT__NAME:
-			case CircuitPackage.CIRCUIT__TYPE:
+			case SimpleCircuitPackage.CIRCUIT__NAME:
+			case SimpleCircuitPackage.CIRCUIT__TYPE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case CircuitPackage.CIRCUIT__INNER_CIRCUITS:
-			case CircuitPackage.CIRCUIT__INNER_LINKS:
-			case CircuitPackage.CIRCUIT__PORTS:
+			case SimpleCircuitPackage.CIRCUIT__INNER_CIRCUITS:
+			case SimpleCircuitPackage.CIRCUIT__INNER_LINKS:
+			case SimpleCircuitPackage.CIRCUIT__PORTS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -209,18 +209,18 @@ public class CircuitItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(CircuitPackage.Literals.CIRCUIT__INNER_CIRCUITS,
-				 CircuitFactory.eINSTANCE.createCircuit()));
+				(SimpleCircuitPackage.Literals.CIRCUIT__INNER_CIRCUITS,
+				 SimpleCircuitFactory.eINSTANCE.createCircuit()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(CircuitPackage.Literals.CIRCUIT__INNER_LINKS,
-				 CircuitFactory.eINSTANCE.createLink()));
+				(SimpleCircuitPackage.Literals.CIRCUIT__INNER_LINKS,
+				 SimpleCircuitFactory.eINSTANCE.createLink()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(CircuitPackage.Literals.CIRCUIT__PORTS,
-				 CircuitFactory.eINSTANCE.createPort()));
+				(SimpleCircuitPackage.Literals.CIRCUIT__PORTS,
+				 SimpleCircuitFactory.eINSTANCE.createPort()));
 	}
 
 	/**
@@ -231,7 +231,7 @@ public class CircuitItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return CircuitEditPlugin.INSTANCE;
+		return SimpleCircuitEditPlugin.INSTANCE;
 	}
 
 }

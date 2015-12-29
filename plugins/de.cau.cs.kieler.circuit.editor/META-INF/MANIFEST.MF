@@ -14,5 +14,6 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.circuit.edit;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.eclipse.emf.edit.ui;visibility:=reexport,
- org.eclipse.ui.ide;visibility:=reexport
+ org.eclipse.ui.ide;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations.edit;visibility:=reexport
 Bundle-ActivationPolicy: lazy

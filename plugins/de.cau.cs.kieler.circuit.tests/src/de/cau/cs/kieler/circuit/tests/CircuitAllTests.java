@@ -31,6 +31,7 @@ public class CircuitAllTests extends TestSuite {
 	 */
 	public static Test suite() {
 		TestSuite suite = new CircuitAllTests("Circuit Tests");
+		suite.addTest(CircuitTests.suite());
 		return suite;
 	}
 

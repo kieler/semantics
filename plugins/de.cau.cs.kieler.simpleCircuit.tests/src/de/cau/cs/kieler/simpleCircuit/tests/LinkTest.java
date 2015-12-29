@@ -1,9 +1,9 @@
 /**
  */
-package de.cau.cs.kieler.circuit.tests;
+package de.cau.cs.kieler.simpleCircuit.tests;
 
-import de.cau.cs.kieler.circuit.Circuit;
-import de.cau.cs.kieler.circuit.CircuitFactory;
+import de.cau.cs.kieler.simpleCircuit.Link;
+import de.cau.cs.kieler.simpleCircuit.SimpleCircuitFactory;
 
 import junit.framework.TestCase;
 
@@ -11,19 +11,19 @@ import junit.textui.TestRunner;
 
 /**
  * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Circuit</b></em>'.
+ * A test case for the model object '<em><b>Link</b></em>'.
  * <!-- end-user-doc -->
  * @generated
  */
-public class CircuitTest extends TestCase {
+public class LinkTest extends TestCase {
 
 	/**
-	 * The fixture for this Circuit test case.
+	 * The fixture for this Link test case.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected Circuit fixture = null;
+	protected Link fixture = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -31,36 +31,36 @@ public class CircuitTest extends TestCase {
 	 * @generated
 	 */
 	public static void main(String[] args) {
-		TestRunner.run(CircuitTest.class);
+		TestRunner.run(LinkTest.class);
 	}
 
 	/**
-	 * Constructs a new Circuit test case with the given name.
+	 * Constructs a new Link test case with the given name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CircuitTest(String name) {
+	public LinkTest(String name) {
 		super(name);
 	}
 
 	/**
-	 * Sets the fixture for this Circuit test case.
+	 * Sets the fixture for this Link test case.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void setFixture(Circuit fixture) {
+	protected void setFixture(Link fixture) {
 		this.fixture = fixture;
 	}
 
 	/**
-	 * Returns the fixture for this Circuit test case.
+	 * Returns the fixture for this Link test case.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected Circuit getFixture() {
+	protected Link getFixture() {
 		return fixture;
 	}
 
@@ -72,7 +72,7 @@ public class CircuitTest extends TestCase {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		setFixture(CircuitFactory.eINSTANCE.createCircuit());
+		setFixture(SimpleCircuitFactory.eINSTANCE.createLink());
 	}
 
 	/**
@@ -86,4 +86,4 @@ public class CircuitTest extends TestCase {
 		setFixture(null);
 	}
 
-} //CircuitTest
+} //LinkTest

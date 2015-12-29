@@ -119,7 +119,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
         logger.info(
             "SCCharts synthesis transformed model " + (root.label ?: root.id) + " in " +
                 ((System.currentTimeMillis - startTime) as float / 1000) + "s.");
-
+		
         return rootNode;
     }
 

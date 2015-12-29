@@ -162,4 +162,5 @@ public interface Circuit extends EObject {
 	 */
 	void setParent(Circuit value);
 
+
 } // Circuit

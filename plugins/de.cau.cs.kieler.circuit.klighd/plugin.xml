@@ -4,23 +4,23 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
    <diagramSynthesis
-         class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.circuit.klighd.CircuitDiagramSynthesis"
-         id="de.cau.cs.kieler.circuit.klighd.CircuitDiagramSynthesis">
+         class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.circuit.klighd.ActorDiagramSynthesis"
+         id="de.cau.cs.kieler.circuit.klighd.ActorDiagramSynthesis">
    </diagramSynthesis>
    </extension>
 <extension
       point="org.eclipse.ui.commands">
    <category
-         description="Circuit diagrams"
-         id="de.cau.cs.kieler.circuit.klighd.CircuitDiagrams"
-         name="CircuitDiagrams">
+         description="Actor diagrams"
+         id="de.cau.cs.kieler.circuit.klighd.ActorDiagrams"
+         name="ActorDiagrams">
    </category>
    <command
-         categoryId="de.cau.cs.kieler.circuit.klighd.CircuitDiagrams"
+         categoryId="de.cau.cs.kieler.circuit.klighd.ActorDiagrams"
          defaultHandler="de.cau.cs.kieler.circuit.klighd.OpenDiagramHandler"
-         description="Primitive helper command that opens KLighD-based Circuit diagrams."
-         id="de.cau.cs.kieler.circuit.klighd.openCircuitDiagram"
-         name="Open Circuit diagram">
+         description="Primitive helper command that opens KLighD-based Actor diagrams."
+         id="de.cau.cs.kieler.circuit.klighd.openActorDiagram"
+         name="Open Actor diagram">
    </command>
 </extension>
 
@@ -29,8 +29,8 @@
    <menuContribution
          locationURI="popup:org.eclipse.ui.popup.any?before=additions">
       <command
-            commandId="de.cau.cs.kieler.circuit.klighd.openCircuitDiagram"
-            label="Open Circuit diagram"
+            commandId="de.cau.cs.kieler.circuit.klighd.openActorDiagram"
+            label="Open Actor diagram"
             style="push">
          <visibleWhen
                checkEnabled="false">
@@ -56,7 +56,7 @@
                <iterate ifEmpty="false" operator="or">
                   <or>
                      <instanceof
-                         value="de.cau.cs.kieler.circuit.Circuit">
+                         value="de.cau.cs.kieler.circuit.Actor">
                      </instanceof>
                      <adapt type="org.eclipse.core.resources.IResource">
                          <test

@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.circuit.tests;
 
-import de.cau.cs.kieler.circuit.Circuit;
+import de.cau.cs.kieler.circuit.Actor;
 import de.cau.cs.kieler.circuit.CircuitFactory;
 import de.cau.cs.kieler.circuit.CircuitPackage;
 
@@ -60,7 +60,7 @@ public class CircuitExample {
 			System.out.println("Enter a list of file paths or URIs that have content like this:");
 			try {
 				Resource resource = resourceSet.createResource(URI.createURI("http:///My.circuit"));
-				Circuit root = CircuitFactory.eINSTANCE.createCircuit();
+				Actor root = CircuitFactory.eINSTANCE.createActor();
 				resource.getContents().add(root);
 				resource.save(System.out, null);
 			}

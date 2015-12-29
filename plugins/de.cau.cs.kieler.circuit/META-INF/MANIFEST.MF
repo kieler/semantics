@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: de.cau.cs.kieler.circuit;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.simpleCircuit;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
@@ -9,7 +9,10 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.circuit,
  de.cau.cs.kieler.circuit.impl,
- de.cau.cs.kieler.circuit.util
+ de.cau.cs.kieler.circuit.util,
+ de.cau.cs.kieler.simpleCircuit,
+ de.cau.cs.kieler.simpleCircuit.impl,
+ de.cau.cs.kieler.simpleCircuit.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  de.cau.cs.kieler.core.annotations;visibility:=reexport

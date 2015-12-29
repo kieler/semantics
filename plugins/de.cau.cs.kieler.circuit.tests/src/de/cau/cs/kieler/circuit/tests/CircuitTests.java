@@ -31,6 +31,9 @@ public class CircuitTests extends TestSuite {
 	 */
 	public static Test suite() {
 		TestSuite suite = new CircuitTests("circuit Tests");
+		suite.addTestSuite(ActorTest.class);
+		suite.addTestSuite(LinkTest.class);
+		suite.addTestSuite(PortTest.class);
 		return suite;
 	}
 

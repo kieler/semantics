@@ -11,7 +11,15 @@
       <package
             uri="http://kieler.cs.cau.de/circuit"
             class="de.cau.cs.kieler.circuit.CircuitPackage"
-            genModel="model/circuit.genmodel"/>
+            genModel="model/simpleCircuit.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated simpleCircuit -->
+      <package
+            uri="http://kieler.cs.cau.de/simpleCircuit"
+            class="de.cau.cs.kieler.simpleCircuit.SimpleCircuitPackage"
+            genModel="model/simpleCircuit.genmodel"/>
    </extension>
 
 </plugin>

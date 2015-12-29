@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.simpleCircuit/src" modelPluginID="de.cau.cs.kieler.simpleCircuit"
+    modelName="SimpleCircuit" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    importOrganizing="true">
+  <foreignModel>simpleCircuit.ecore</foreignModel>
+  <genPackages prefix="SimpleCircuit" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
+      ecorePackage="simpleCircuit.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="simpleCircuit.ecore#//PortType">
+      <genEnumLiterals ecoreEnumLiteral="simpleCircuit.ecore#//PortType/IN"/>
+      <genEnumLiterals ecoreEnumLiteral="simpleCircuit.ecore#//PortType/OUT"/>
+      <genEnumLiterals ecoreEnumLiteral="simpleCircuit.ecore#//PortType/SELECT"/>
+    </genEnums>
+    <genClasses ecoreClass="simpleCircuit.ecore#//Circuit">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simpleCircuit.ecore#//Circuit/innerCircuits"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simpleCircuit.ecore#//Circuit/innerLinks"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simpleCircuit.ecore#//Circuit/ports"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simpleCircuit.ecore#//Circuit/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simpleCircuit.ecore#//Circuit/type"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference simpleCircuit.ecore#//Circuit/parent"/>
+    </genClasses>
+    <genClasses ecoreClass="simpleCircuit.ecore#//Link">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference simpleCircuit.ecore#//Link/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference simpleCircuit.ecore#//Link/target"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simpleCircuit.ecore#//Link/name"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference simpleCircuit.ecore#//Link/parent"/>
+    </genClasses>
+    <genClasses ecoreClass="simpleCircuit.ecore#//Port">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference simpleCircuit.ecore#//Port/incomingLinks"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference simpleCircuit.ecore#//Port/outgoingLinks"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simpleCircuit.ecore#//Port/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simpleCircuit.ecore#//Port/type"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference simpleCircuit.ecore#//Port/parent"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

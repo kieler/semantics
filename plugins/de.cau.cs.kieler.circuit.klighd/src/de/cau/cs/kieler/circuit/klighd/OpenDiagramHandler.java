@@ -39,7 +39,7 @@ public class OpenDiagramHandler extends AbstractHandler {
             // because of the visibility expressions in the plugin.xml guarding the menu contributions
             //  we can conclude to have a selection stemming from an XtextEditor; thus...
             IDiagramWorkbenchPart diagramPart = DiagramViewManager.createView(
-                    "de.cau.cs.kieler.circuit.klighd.CircuitDiagram", "Circuit Diagram",
+                    "de.cau.cs.kieler.circuit.klighd.ActorDiagram", "Actor Diagram",
                     XtextEditorUtil.getXtextModelAccessProxy(activeEditor));
         
             
@@ -80,7 +80,7 @@ public class OpenDiagramHandler extends AbstractHandler {
             }
 
             DiagramViewManager.createView(
-                    "de.cau.cs.kieler.circuit.klighd.CircuitDiagram", "Circuit Diagram", model);
+                    "de.cau.cs.kieler.circuit.klighd.ActorDiagram", "Actor Diagram", model);
         } else {
             MessageDialog.openInformation(HandlerUtil.getActiveShell(event), "Unsupported element",
                     "KLighD diagram synthesis is unsupported for the current selection "
