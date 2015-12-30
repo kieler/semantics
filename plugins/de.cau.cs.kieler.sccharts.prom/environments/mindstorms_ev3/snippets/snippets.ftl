@@ -76,6 +76,10 @@
         touchSensor${port}.getTouchMode().fetchSample(touchSensor${port}Samples, 0);
         scchart.${varname} = touchSensor${port}Samples[0] > 0;
     </@>
+    <@release>
+        // Touch ${port}
+        touchSensor${port}.close();
+    </@>
 </#macro>
 
 <#-- LightSensor -->
@@ -93,6 +97,10 @@
         // Light
         lightSensor${port}.getMode("Ambient").fetchSample(lightSensor${port}Samples, 0);
         scchart.${varname} = lightSensor${port}Samples[0];
+    </@>
+    <@release>
+        // Light ${port}
+        lightSensor${port}.close();
     </@>
 </#macro>
 
@@ -126,6 +134,10 @@
             }
         }
     </@>
+    <@release>
+        // Floodlight ${port}
+        lightSensor${port}.close();
+    </@>
 </#macro>
 
 <#-- RCXLamp -->
@@ -148,6 +160,10 @@
             rcxMotor${port}.forward();
         else
             rcxMotor${port}.flt();
+    </@>
+    <@release>
+        // RCX Motor for RCX lamp
+        rcxMotor${port}.close();
     </@>
 </#macro>
 
@@ -172,7 +188,7 @@
     </@>
     <@output>
         // Motor ${port}
-        motor${port}.setSpeed(scchart.${varname} > 0 ? scchart.${varname} : -scchart.${varname});
+        motor${port}.setSpeed(Math.abs(scchart.${varname}));
         if(scchart.${varname} == 0)
             <#if brake='true'>
             motor${port}.stop();
@@ -183,6 +199,10 @@
             motor${port}.forward();
         else if(scchart.${varname} < 0)
             motor${port}.backward();
+    </@>
+    <@release>
+        // Motor ${port}
+        motor${port}.close();
     </@>
 </#macro>
 
@@ -226,6 +246,10 @@
             motor${port}.rotate(scchart.${varname}, true);
             scchart.${varname} = 0;
         }
+    </@>
+    <@release>
+        // Motor ${port}
+        motor${port}.close();
     </@>
 </#macro>
 

@@ -158,7 +158,7 @@
     </@>
     <@output>
         // Motor ${port}
-        Motor.${port}.setSpeed(scchart.${varname} > 0 ? scchart.${varname} : -scchart.${varname});
+        Motor.${port}.setSpeed(Math.abs(scchart.${varname}));
         if(scchart.${varname} == 0)
             <#if brake='true'>
             Motor.${port}.stop();

@@ -50,6 +50,10 @@ import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
 import org.eclipse.core.resources.IResource
+import org.eclipse.debug.internal.ui.views.console.ProcessConsole
+import org.eclipse.ui.PlatformUI
+import org.eclipse.ui.console.IConsoleConstants
+import org.eclipse.ui.console.IConsoleView
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -134,7 +138,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     private Job wrapperCodeJob;
 
     // Message console
-    private static val CONSOLE_NAME = "Project Launch"
+    private static val CONSOLE_NAME = "KiCo Compilation"
     private MessageConsole console;
     private MessageConsoleStream consoleStream;
 
@@ -149,11 +153,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         this.monitor = monitor
 
         // Init console for errors and messages
-        if (console == null || consoleStream == null) {
-            console = findConsole(CONSOLE_NAME)
-            consoleStream = console.newMessageStream()
-        }
-        console.clearConsole()
+        clearConsole()
 
         // Get data from config.
         loadSettingsFromConfiguration()
@@ -187,7 +187,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             // Refresh output directory for files
             project.getFolder(BUILD_DIRECTORY).refreshLocal(IResource.DEPTH_INFINITE, monitor)
         } else {
-            consoleStream.println("Project of launch configuration '" + configuration.name +
+            writeToConsole("Project of launch configuration '" + configuration.name +
                 "' does not exist.\n");
         }
     }
@@ -238,7 +238,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     }
                 } catch (Exception e) {
                     // Remove this try-catch to notify the user with a popup window.
-                    consoleStream.println(e.message + "\n")
+                    writeToConsole(e.message + "\n")
                     return Status.CANCEL_STATUS
                 }
 
@@ -269,7 +269,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     generator.generateWrapperCode(files)
 
                 } catch (Exception e) {
-                    consoleStream.println(e.message + "\n")
+                    writeToConsole(e.message + "\n")
                     return Status.CANCEL_STATUS
                 }
 
@@ -295,7 +295,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     executor.execute(commands)
                     return Status.OK_STATUS
                 } catch (Exception e) {
-                    consoleStream.println(e.message + "\n")
+                    writeToConsole(e.message + "\n")
                     return Status.CANCEL_STATUS
                 }
             }
@@ -520,17 +520,44 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @param name The name of a message console to be found or created
      * @return The found or newly created message console
      */
-    private def MessageConsole findConsole(String name) {
-        val plugin = ConsolePlugin.getDefault();
-        val conMan = plugin.getConsoleManager();
-        val existing = conMan.getConsoles();
-        for (var i = 0; i < existing.length; i++)
-            if (name.equals(existing.get(i).getName()))
-                return existing.get(i) as MessageConsole;
+    private def MessageConsole findOrCreateConsole(String name) {
+        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
+        val existingConsoles = consoleManager.getConsoles();
+        for (var i = 0; i < existingConsoles.length; i++)
+            if (name.equals(existingConsoles.get(i).getName()))
+                return existingConsoles.get(i) as MessageConsole;
 
         // No console found, so create a new one.
         val myConsole = new MessageConsole(name, null);
-        conMan.addConsoles(#[myConsole]);
+        consoleManager.addConsoles(#[myConsole]);
         return myConsole;
+    }
+    
+    private def void writeToConsole(String message){
+        // If there is nothing to write, we are done immediately.
+        if(Strings.isNullOrEmpty(message))
+            return;
+        
+        // Ensure the console exists.
+        initializeConsole()
+        
+        // Print message
+        consoleStream.println(message)
+        
+        // Bring console to front
+        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
+        consoleManager.showConsoleView(console)
+    }
+    
+    private def void clearConsole() {
+        initializeConsole()
+        console.clearConsole()
+    }
+    
+    private def void initializeConsole() {
+        if (console == null || consoleStream == null) {
+            console = findOrCreateConsole(CONSOLE_NAME)
+            consoleStream = console.newMessageStream()
+        }
     }
 }

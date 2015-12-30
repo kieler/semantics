@@ -31,5 +31,8 @@ ${inputs}
 ${outputs}
 
         }
+        
+        // Free resources
+${releases}
     }
 }
