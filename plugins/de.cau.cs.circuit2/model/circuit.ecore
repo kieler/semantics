@@ -14,7 +14,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
         eType="#//Linkable" eOpposite="#//Linkable/outgoingLinks"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
-        upperBound="-1" eType="#//Linkable" eOpposite="#//Linkable/incomingLinks"/>
+        eType="#//Linkable" eOpposite="#//Linkable/incomingLinks"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Port" eSuperTypes="#//Linkable ../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//NamedObject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

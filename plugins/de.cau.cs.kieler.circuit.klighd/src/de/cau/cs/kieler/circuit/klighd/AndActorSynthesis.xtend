@@ -7,7 +7,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.KlighdConstants
 
-class AndActorSynthesis implements IDrawableActor {
+class AndActorSynthesis implements IDrawableActor  {
 	@Inject
     extension KNodeExtensions
 	@Inject extension KLabelExtensions
@@ -20,7 +20,7 @@ class AndActorSynthesis implements IDrawableActor {
 		val KNode andNode = createNode();
 		
 		andNode.setNodeSize(40, 40);
-		andNode.addInsideBottomCenteredNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE,
+		andNode.addInsideBottomCenteredNodeLabel("&", KlighdConstants.DEFAULT_FONT_SIZE,
 				KlighdConstants.DEFAULT_FONT_NAME);
 
 		

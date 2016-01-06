@@ -186,7 +186,7 @@ public interface CircuitPackage extends EPackage {
 	int LINK__SOURCE = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Target</b></em>' reference list.
+	 * The feature id for the '<em><b>Target</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -381,10 +381,10 @@ public interface CircuitPackage extends EPackage {
 	EReference getLink_Source();
 
 	/**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}'.
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Target</em>'.
+	 * @return the meta object for the reference '<em>Target</em>'.
 	 * @see de.cau.cs.kieler.circuit.Link#getTarget()
 	 * @see #getLink()
 	 * @generated
@@ -527,7 +527,7 @@ public interface CircuitPackage extends EPackage {
 		EReference LINK__SOURCE = eINSTANCE.getLink_Source();
 
 		/**
-		 * The meta object literal for the '<em><b>Target</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

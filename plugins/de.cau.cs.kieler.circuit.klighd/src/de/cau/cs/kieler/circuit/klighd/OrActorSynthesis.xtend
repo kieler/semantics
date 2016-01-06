@@ -7,21 +7,24 @@ import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.KlighdConstants
 
-class OrActorSynthesis implements IDrawableActor {
-	@Inject extension KLabelExtensions
+class OrActorSynthesis implements IDrawableActor  {
 	@Inject
     extension KNodeExtensions
-	
+	@Inject extension KLabelExtensions
+    
+    
+    
+    
 	
 	override draw(Actor actor) {
-		val KNode orNode = createNode();
+		val KNode andNode = createNode();
 		
-		orNode.setNodeSize(40, 40);
-		orNode.addInsideBottomCenteredNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE,
+		andNode.setNodeSize(40, 40);
+		andNode.addInsideBottomCenteredNodeLabel("||", KlighdConstants.DEFAULT_FONT_SIZE,
 				KlighdConstants.DEFAULT_FONT_NAME);
+
 		
-		
-		return orNode;
-		}
+		return andNode;
+	}
 	
 }

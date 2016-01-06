@@ -4,7 +4,6 @@ package de.cau.cs.kieler.circuit;
 
 import de.cau.cs.kieler.core.annotations.NamedObject;
 
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -53,8 +52,7 @@ public interface Link extends NamedObject {
 	void setSource(Linkable value);
 
 	/**
-	 * Returns the value of the '<em><b>Target</b></em>' reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Linkable}.
+	 * Returns the value of the '<em><b>Target</b></em>' reference.
 	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Linkable#getIncomingLinks <em>Incoming Links</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -62,12 +60,25 @@ public interface Link extends NamedObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Target</em>' reference list.
+	 * @return the value of the '<em>Target</em>' reference.
+	 * @see #setTarget(Linkable)
 	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getLink_Target()
 	 * @see de.cau.cs.kieler.circuit.Linkable#getIncomingLinks
 	 * @model opposite="incomingLinks" required="true"
 	 * @generated
 	 */
-	EList<Linkable> getTarget();
+	Linkable getTarget();
+
+	/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Target</em>' reference.
+	 * @see #getTarget()
+	 * @generated
+	 */
+	void setTarget(Linkable value);
+
+	
 
 } // Link

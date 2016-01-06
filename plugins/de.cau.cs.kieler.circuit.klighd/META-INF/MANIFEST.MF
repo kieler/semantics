@@ -25,6 +25,7 @@ Require-Bundle: javax.inject,
  org.eclipse.core.resources,
  org.eclipse.emf,
  org.eclipse.xtext.ui;resolution:=optional,
- de.cau.cs.kieler.core.kgraph
-Import-Package: de.cau.cs.kieler.circuit
+ de.cau.cs.kieler.core.kgraph,
+ de.cau.cs.kieler.core.annotations,
+ de.cau.cs.kieler.circuit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

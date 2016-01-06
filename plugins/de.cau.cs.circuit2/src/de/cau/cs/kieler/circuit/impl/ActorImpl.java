@@ -153,7 +153,7 @@ public class ActorImpl extends NamedObjectImpl implements Actor {
 	 */
 	public EList<Link> getIncomingLinks() {
 		if (incomingLinks == null) {
-			incomingLinks = new EObjectWithInverseResolvingEList.ManyInverse<Link>(Link.class, this, CircuitPackage.ACTOR__INCOMING_LINKS, CircuitPackage.LINK__TARGET);
+			incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, CircuitPackage.ACTOR__INCOMING_LINKS, CircuitPackage.LINK__TARGET);
 		}
 		return incomingLinks;
 	}

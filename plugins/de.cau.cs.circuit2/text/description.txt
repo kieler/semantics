@@ -15,7 +15,7 @@ Package circuit <http://kieler.cs.cau.de/circuit>
 
   Class Link -> NamedObject
     Reference source : Linkable<<1..1>>
-    Reference target : Linkable<<1..*>>
+    Reference target : Linkable<<1..1>>
 
   Class Port -> Linkable, NamedObject
     Attribute type : EString<<1..1>>

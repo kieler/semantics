@@ -1,15 +1,12 @@
 package de.cau.cs.kieler.circuit.klighd
 
 import de.cau.cs.kieler.circuit.Actor
-import de.cau.cs.kieler.circuit.Link
-import de.cau.cs.kieler.core.kgraph.KEdge
+import de.cau.cs.kieler.circuit.Port
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.LineJoin
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
@@ -18,113 +15,175 @@ import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortSide
-import de.cau.cs.kieler.kiml.options.SizeConstraint
-import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import java.util.EnumSet
 import javax.inject.Inject
+import de.cau.cs.kieler.circuit.Link
 
-class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
+class ActorDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
-	@Inject
-	ActorSynthesis actorSynthesis
+	@Inject ActorSynthesis actorSynthesis
 
 	@Inject extension KNodeExtensions
 	@Inject extension KEdgeExtensions
 	@Inject extension KPortExtensions
-	@Inject extension KLabelExtensions
 	@Inject extension KRenderingExtensions
-	@Inject extension KContainerRenderingExtensions
 	@Inject extension KPolylineExtensions
 	@Inject extension KColorExtensions
 	extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
 	override KNode transform(Actor model) {
-		val rootNode = createNode().associateWith(model);
+		val root = createNode().associateWith(model);
 
-		// Set layout parameter        
-		rootNode.addLayoutParam(LayoutOptions::SPACING, 20f);
-		rootNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-		rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+		// transformActor(model, root);
+		model.transformActor(root);
 
-		model.transformActor(rootNode)
-
-		val links = model.eAllContents.filter(typeof(Link)).toIterable.toList;
-		for (link : links) {
-			link.createLink(rootNode);
-		}
-
-//        //checks if actor is a simple gate or a frame for other actors
-//        val atomicActor = model.innerActors.empty;
-//        
-//        //if it is a frame: just create one, if not: create the special actor
-//        if(!atomicActor){
-//        	model.transformSimpleFrame(rootNode);
-//        } else {
-//        	rootNode.children += actorSynthesis.transform(model);
-//        }
-		return rootNode;
+//		val links = model.eAllContents.filter(typeof(Link)).toIterable.toList;
+//		for (link : links) {
+//			link.transformLink(root);
+//		}
+		return root;
 	}
 
-
-
+	// create a KNode for an Actor
 	def void transformActor(Actor actor, KNode parent) {
-		val KNode actorNode = createNode().associateWith(actor)
-		// parent.children += actorNode;
 
-		val atomicActor = actor.innerActors.empty;
+		// from tutorials of klighD snythesis to be sure actors already exist when links are created
+		// private def create actorNode : actor.createNode() transformActor(Actor actor, KNode parent) {
+		// actorNode.associateWith(actor);
+		// draw actors and attach it to parent
+		val actorNode = actorSynthesis.transform(actor) // actor.createNode().associateWith(actor)
+		parent.children += actorNode
 
-		// if it is an atomic actor (like a gate) draw this special actor
-		if (atomicActor) {
-			parent.children += actorSynthesis.transform(actor);
-		} else { // if it is a simple Frame just draw it
-			parent.children += actorNode;
-			actorNode.addRoundedRectangle(4, 4, 2);
+		// check if actor is a gate or an inner circuit
+		val Boolean atomicActor = actor.innerActors.empty
 
-			// dont know why actor.getName is not working.. nevertheless type works as well at this point..
-			actorNode.addInsideBottomLeftNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE,
-				KlighdConstants.DEFAULT_FONT_NAME);
-			actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
-				EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-		}
-		// transform child actors and use this actor as parent
-		actor.innerActors.forEach [
-			it.transformActor(actorNode); 
-		]
-		
-		actorNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-		
+		// rendering for edges and ports of actor
+		actorNode.setLayoutOption(LayoutOptions.EDGE_ROUTING, EdgeRouting.ORTHOGONAL);
+		actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
+
+		// add ports to actor
 		for (port : actor.ports) {
-            actorNode.ports += port.createPort=>[
-                
-                it.setPortSize(5,2);
-                it.setLayoutOption(LayoutOptions.OFFSET, if (atomicActor) 0f else -3f);
-                it.addRectangle.setBackground("black".color).lineJoin=LineJoin.JOIN_ROUND;
-//                if (!port.name.equals("In") && !port.name.equals("Out")) {
-//                    it.createLabel.configureInsidePortLabel(port.name, 8, "Arial");
-//                }
-                if (port.type.startsWith("In")) {it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::WEST)}
-                if (port.type.startsWith("Out")) {it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::EAST)}
-                if (port.type.startsWith("Sel")) {it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::SOUTH)}
-             
-            ]
-        }
+			actorNode.ports += port.createPort => [
 
-	}
-	
-		def void createLink(Link link, KNode node) {
-		//val KEdge circLink = link.createEdge().associateWith(link);
-		
-		link.target.forEach[ target |
-			val KEdge edge = link.createEdge().associateWith(link);
-			if(target instanceof Actor){
-				edge.target = link.target.getNode()
-			} else {
-				edge.targetPort = link.target.getPort()
-				edge.target = link.target.getNode()
-			}
-			
+				it.setPortSize(5, 2);
+				it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+
+				if (port.type.startsWith("In")) {
+					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+				} else if (port.type.startsWith("Out")) {
+					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
+				} else if (port.type.startsWith("Sel")) {
+					it.setPortSize(2, 5);
+					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.SOUTH)
+				}
+
+				it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+
+			]
+		}
+
+		// create all the inner actors 
+		actor.innerActors.forEach [
+			it.transformActor(actorNode);
 		]
+		
+		for (link : actor.innerLinks) {
+			actorNode.allEdges += link.createEdge => [
+				switch (link.source) {
+					Actor:
+						it.source = link.source.node
+					Port: {
+						it.source = link.source.eContainer.node;
+						it.sourcePort = link.source.port
+					}
+				}
+
+				switch (link.target) {
+					Actor:
+						it.target = link.target.node
+					Port: {
+						it.target = link.target.eContainer.node;
+						it.targetPort = link.target.port
+					}
+				}
+				it.addRoundedBendsPolyline(3).addJunctionPointDecorator;
+				
+			]
+		}
+////		draw the edges for each link
+//		actor.innerLinks.forEach [ link |
+//			createEdge().associateWith(link) => [
+//				switch (link.source) {
+//					Actor:
+//						it.source = link.source.node
+//					Port: {
+//						it.source = link.source.eContainer.node;
+//						it.sourcePort = link.source.port
+//					}
+//				}
+//
+//				switch (link.target) {
+//					Actor:
+//						it.target = link.target.node
+//					Port: {
+//						it.target = link.target.eContainer.node;
+//						it.targetPort = link.target.port
+//					}
+//				}
+//				it.addRoundedBendsPolyline(3).addJunctionPointDecorator;
+//
+//			]
+//
+//		]
+	// actor.ports.forEach [ port |
+//			port.outgoingLinks.forEach [ link |
+//				val edge = link.createEdge().associateWith(link)
+//				edge.addPolyline(2).addHeadArrowDecorator();
+//
+//				switch (link.source) {
+//					Actor:
+//						edge.source = link.source.node
+//					Port: {
+//						edge.source = link.source.eContainer.node;
+//						edge.sourcePort = link.source.port
+//					}
+//				}
+//
+//				switch (link.target) {
+//					Actor:
+//						edge.target = link.target.node
+//					Port: {
+//						edge.target = link.target.eContainer.node;
+//						edge.targetPort = link.target.port
+//					}
+//				}it.addRoundedBendsPolyline(3).addJunctionPointDecorator;
+//			]
+//		]
+/////////////////////////////////////////////################################################
+//}
+//	def void transformLink(Link link, KNode parent) {
+//
+//		val edge = link.createEdge().associateWith(link)
+//
+//		switch (link.source) {
+//			Actor:
+//				edge.source = link.source.node
+//			Port: {
+//				edge.source = link.source.eContainer.node;
+//				edge.sourcePort = link.source.port
+//			}
+//		}
+//
+//		switch (link.target) {
+//			Actor:
+//				edge.target = link.target.node
+//			Port: {
+//				edge.target = link.target.eContainer.node;
+//				edge.targetPort = link.target.port
+//			}
+//		}
+/////////////////////////////////////////////################################################
 	}
 
 }
+

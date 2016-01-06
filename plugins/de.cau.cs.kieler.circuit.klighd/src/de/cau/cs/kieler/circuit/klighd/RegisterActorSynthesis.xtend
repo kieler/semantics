@@ -7,20 +7,24 @@ import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.KlighdConstants
 
-class RegisterActorSynthesis implements IDrawableActor {
-	@Inject extension KLabelExtensions
+class RegisterActorSynthesis implements IDrawableActor  {
 	@Inject
     extension KNodeExtensions
+	@Inject extension KLabelExtensions
+    
+    
+    
+    
 	
 	override draw(Actor actor) {
-		val KNode regNode = createNode();
+		val KNode andNode = createNode();
 		
-		regNode.setNodeSize(40, 40);
-		regNode.addInsideBottomCenteredNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE,
+		andNode.setNodeSize(40, 40);
+		andNode.addInsideBottomCenteredNodeLabel("R", KlighdConstants.DEFAULT_FONT_SIZE,
 				KlighdConstants.DEFAULT_FONT_NAME);
+
 		
-		
-		return regNode;
+		return andNode;
 	}
 	
 }
