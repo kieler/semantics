@@ -31,8 +31,9 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject
 	RegisterActorSynthesis registerActorSynthesis
 
-//	@Inject
-//	LinkSynthesis linkSynthesis
+	@Inject
+	LinkSynthesis linkSynthesis
+	
 	@Inject extension KNodeExtensions
 	@Inject extension KLabelExtensions
 	@Inject extension KRenderingExtensions
@@ -71,6 +72,12 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 			actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 				EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 		}
+		
+//		// Transform all outgoing transitions
+//        for (link : actor.outgoingLinks) {
+//            actorNode.outgoingEdges += linkSynthesis.transformLink(link);
+//        }
+		
 		return actorNode;
 
 	}

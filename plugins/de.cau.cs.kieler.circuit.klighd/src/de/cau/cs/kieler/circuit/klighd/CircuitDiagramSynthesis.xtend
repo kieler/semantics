@@ -1,7 +1,6 @@
 package de.cau.cs.kieler.circuit.klighd
 
 import de.cau.cs.kieler.circuit.Actor
-import de.cau.cs.kieler.circuit.Port
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.LineJoin
@@ -17,7 +16,7 @@ import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import javax.inject.Inject
-import de.cau.cs.kieler.circuit.Link
+import de.cau.cs.kieler.circuit.Port
 
 class ActorDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
@@ -63,7 +62,8 @@ class ActorDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 		// add ports to actor
 		for (port : actor.ports) {
-			actorNode.ports += port.createPort => [
+			val kPort = port.createPort().associateWith(port)
+			actorNode.ports += kPort => [
 
 				it.setPortSize(5, 2);
 				it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
@@ -86,33 +86,10 @@ class ActorDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 		actor.innerActors.forEach [
 			it.transformActor(actorNode);
 		]
-		
-		for (link : actor.innerLinks) {
-			actorNode.allEdges += link.createEdge => [
-				switch (link.source) {
-					Actor:
-						it.source = link.source.node
-					Port: {
-						it.source = link.source.eContainer.node;
-						it.sourcePort = link.source.port
-					}
-				}
 
-				switch (link.target) {
-					Actor:
-						it.target = link.target.node
-					Port: {
-						it.target = link.target.eContainer.node;
-						it.targetPort = link.target.port
-					}
-				}
-				it.addRoundedBendsPolyline(3).addJunctionPointDecorator;
-				
-			]
-		}
-////		draw the edges for each link
-//		actor.innerLinks.forEach [ link |
-//			createEdge().associateWith(link) => [
+//		// create links
+//		for (link : actor.innerLinks) {
+//			actorNode.outgoingEdges += link.createEdge => [
 //				switch (link.source) {
 //					Actor:
 //						it.source = link.source.node
@@ -133,9 +110,34 @@ class ActorDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 //				it.addRoundedBendsPolyline(3).addJunctionPointDecorator;
 //
 //			]
-//
-//		]
-	// actor.ports.forEach [ port |
+//		}
+//	}
+//		draw the edges for each link
+		actor.innerLinks.forEach [ link |
+			createEdge().associateWith(link) => [
+				switch (link.source) {
+					Actor:
+						it.source = link.source.node
+					Port: {
+						it.source = link.source.eContainer.node;
+						it.sourcePort = link.source.port
+					}
+				}
+
+				switch (link.target) {
+					Actor:
+						it.target = link.target.node
+					Port: {
+						it.target = link.target.eContainer.node;
+						it.targetPort = link.target.port
+					}
+				}
+				it.addRoundedBendsPolyline(3).addJunctionPointDecorator;
+
+			]
+
+		]
+// actor.ports.forEach [ port |
 //			port.outgoingLinks.forEach [ link |
 //				val edge = link.createEdge().associateWith(link)
 //				edge.addPolyline(2).addHeadArrowDecorator();
@@ -183,7 +185,7 @@ class ActorDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 //			}
 //		}
 /////////////////////////////////////////////################################################
-	}
+}
 
 }
 
