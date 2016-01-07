@@ -176,13 +176,16 @@ class SCG2S extends AbstractProductionTransformation {
         if(processedNodes.get(assignment) != null) return;
         processedNodes.put(assignment, true)
 
-        if (assignment.valuedObject != null && assignment.assignment != null) {
+        if (assignment.valuedObject != null) {
             val sAssignment = SFactory::eINSTANCE.createAssignment.trace(assignment)
+            sAssignment.operator = assignment.operator
             sAssignment.valuedObject = valuedObjectMapping.get(assignment.valuedObject)
 // TODO: VERIFY removal of fixHostCode            
-//            val expression = assignment.assignment.copyExpression.fixHostCode            
-            val expression = assignment.assignment.copyExpression
-            sAssignment.expression = expression
+//            val expression = assignment.assignment.copyExpression.fixHostCode     
+            if (assignment.assignment != null) {       
+                val expression = assignment.assignment.copyExpression
+                sAssignment.expression = expression
+            }
             for (index : assignment.indices) {
                 sAssignment.indices += index.copyExpression
             }
