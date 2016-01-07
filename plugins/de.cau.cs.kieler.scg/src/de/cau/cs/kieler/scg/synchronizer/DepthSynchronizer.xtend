@@ -34,6 +34,7 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.scg.Fork
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -402,12 +403,14 @@ class DepthSynchronizer extends AbstractSynchronizer {
         return SYNCHRONIZER_ID
     }
     
-    override isSynchronizable(Iterable<ThreadPathType> threadPathTypes) {
+    override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
         var synchronizable = true
         
-        for(tpt : threadPathTypes) {
-            if (tpt == ThreadPathType::POTENTIALLY_INSTANTANEOUS) synchronizable = false
-        } 
+        if (instantaneousFeedback) {
+            for(tpt : threadPathTypes) {
+                if (tpt == ThreadPathType::POTENTIALLY_INSTANTANEOUS) synchronizable = false
+            } 
+        }
         
         synchronizable
     }
