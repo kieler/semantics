@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
@@ -72,7 +73,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
     override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();
         // Add general options
-        options.addAll(GeneralSynthesisOptions.USE_KLAY);//USE_ADAPTIVEZOOM
+        options.addAll(USE_KLAY);//USE_ADAPTIVEZOOM
         // Add options of subsyntheses
         options.addAll(stateSynthesis.displayedSynthesisOptions);
         options.addAll(transitionSynthesis.displayedSynthesisOptions);
@@ -99,6 +100,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
                 
         //START
         hooks.invokeStart(root, rootNode);
+        
+        // If dot is used draw edges first to prevent overlapping with states when layout is bad
+        usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue);
 
         if (root instanceof State) {
             rootNode.children += stateSynthesis.transform(root);
