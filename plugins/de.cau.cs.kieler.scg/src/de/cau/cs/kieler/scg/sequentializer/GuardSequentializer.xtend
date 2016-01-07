@@ -359,6 +359,7 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
     	ScgFactory::eINSTANCE.createAssignment => [
     	    it.trace(assignment)
             it.assignment = assignment.assignment.copySCGExpression
+            it.operator = assignment.operator
             it.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL;
             for(index : assignment.indices) {	
                 indices += index.copySCGExpression
