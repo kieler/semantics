@@ -20,6 +20,7 @@ import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.KRectangle
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle
 import de.cau.cs.kieler.core.krendering.KText
+import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
@@ -40,6 +41,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
+@ViewSynthesisShared
 class StateStyles {
 
     @Inject
@@ -73,8 +75,7 @@ class StateStyles {
         node.setNodeSize(7, 7);
         node.addRoundedRectangle(7, 7, baseLineWidth) => [
             background = STATE_CONNECTOR.color;
-            foreground = STATE_CONNECTOR.color; // white/alpha ???
-            // lineWidth = baseLineWidth + 2; ????
+            foreground = STATE_CONNECTOR.color;
         ]
     }
 
@@ -136,12 +137,8 @@ class StateStyles {
             children += inner
         ]
         inner => [
-            // styleRef = outer; //Why ? overrides other styles
             lineWidth = baseLineWidth;
             foreground = STATE_FIANL_FOREGROND.color;
-            // WHY ?
-            // if (s.referencedState)
-            // it.background.alpha = 0
             // Add surrounding space (white border)
             setGridPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
         ]
