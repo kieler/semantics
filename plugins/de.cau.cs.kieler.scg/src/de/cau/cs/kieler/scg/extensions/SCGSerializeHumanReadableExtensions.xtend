@@ -3,9 +3,11 @@ package de.cau.cs.kieler.scg.extensions
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeHumanReadableExtensions
 import de.cau.cs.kieler.scg.Assignment
 import java.util.List
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * @author ssm
@@ -14,11 +16,17 @@ import java.util.List
  * @kieler.rating 2015-09-17 proposed yellow
  *
  */
-class SCGSerializeHumanReadableExtensions extends KExpressionsSerializeHumanReadableExtensions {	
+class SCGSerializeHumanReadableExtensions extends KEffectsSerializeExtensions {	
+    
+    @Inject
+    extension KEffectsExtensions
 
     dispatch def CharSequence serialize(Assignment assignment) {
-        if (assignment.valuedObject != null && assignment.assignment != null) {
-            var assignmentText = serialize(assignment.assignment)
+        if (assignment.valuedObject != null) {
+            var CharSequence assignmentText = ""
+            if (assignment.assignment != null && !assignment.operator.isPostfixOperator) {
+                assignmentText = serialize(assignment.assignment)
+            }
             var valuedObjectName = assignment.valuedObject.name
             if (!assignment.indices.nullOrEmpty) {
                 valuedObjectName = valuedObjectName + serializeIndices(assignment.indices)
@@ -26,7 +34,7 @@ class SCGSerializeHumanReadableExtensions extends KExpressionsSerializeHumanRead
             if (assignment.assignment instanceof TextExpression) {
                 assignmentText = (assignment.assignment as TextExpression).text
             }
-            var assignmentStr = valuedObjectName + " = " + assignmentText
+            var assignmentStr = valuedObjectName + assignment.operator.serializeAssignOperator + assignmentText
             assignmentStr
         } else if (assignment.assignment instanceof TextExpression) {
             (assignment.assignment as TextExpression).text
@@ -36,8 +44,11 @@ class SCGSerializeHumanReadableExtensions extends KExpressionsSerializeHumanRead
     }
     
     dispatch def CharSequence serializeHR(Assignment assignment) {
-        if (assignment.valuedObject != null && assignment.assignment != null) {
-            var assignmentText = serializeHR(assignment.assignment)
+        if (assignment.valuedObject != null) {
+            var CharSequence assignmentText = ""
+            if (assignment.assignment != null && !assignment.operator.isPostfixOperator) {
+                assignmentText = serializeHR(assignment.assignment)
+            }
             var valuedObjectName = assignment.valuedObject.name
             if (!assignment.indices.nullOrEmpty) {
                 valuedObjectName = valuedObjectName + serializeHRIndices(assignment.indices)
@@ -45,7 +56,7 @@ class SCGSerializeHumanReadableExtensions extends KExpressionsSerializeHumanRead
             if (assignment.assignment instanceof TextExpression) {
                 assignmentText = (assignment.assignment as TextExpression).text
             }
-            var assignmentStr = valuedObjectName + " = " + assignmentText
+            var assignmentStr = valuedObjectName + assignment.operator.serializeAssignOperator + assignmentText
             assignmentStr
         } else if (assignment.assignment instanceof TextExpression) {
             (assignment.assignment as TextExpression).text

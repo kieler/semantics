@@ -34,6 +34,29 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
  */
 class KEffectsSerializeExtensions extends KExpressionsSerializeHumanReadableExtensions {
     
+    public def CharSequence serializeAssignOperator(AssignOperator operator) {
+        if (operator == AssignOperator::ASSIGNADD) {
+            return " += " 
+        } else 
+        if (operator == AssignOperator::ASSIGNSUB) {
+            return " -= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNMUL) {
+            return " *= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNDIV) {
+            return " /= " 
+        } else 
+        if (operator == AssignOperator::POSTFIXADD) {
+            return "++"
+        } else 
+        if (operator == AssignOperator::POSTFIXSUB) {
+            return "--"
+        }
+        
+        return " = "          
+    }
+    
     public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionString) {
         var res = assignment.valuedObject.name
         if (!assignment.indices.nullOrEmpty) {
@@ -42,31 +65,7 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHumanReadableExte
             }
         }
         
-        if (assignment.operator == AssignOperator::ASSIGN) {
-            res = res + " = " 
-        } else 
-        if (assignment.operator == AssignOperator::ASSIGNADD) {
-            res = res + " += " 
-        } else 
-        if (assignment.operator == AssignOperator::ASSIGNSUB) {
-            res = res + " -= " 
-        } else 
-        if (assignment.operator == AssignOperator::ASSIGNMUL) {
-            res = res + " *= " 
-        } else 
-        if (assignment.operator == AssignOperator::ASSIGNDIV) {
-            res = res + " /= " 
-        } else 
-        if (assignment.operator == AssignOperator::POSTFIXADD) {
-            res = res + "++"
-            return res; 
-        } else 
-        if (assignment.operator == AssignOperator::POSTFIXSUB) {
-            res = res + "--"
-            return res; 
-        }  
-        
-        return res + expressionString
+        return res + assignment.operator.serializeAssignOperator + expressionString
     }
     
     def dispatch CharSequence serialize(Assignment assignment) {
