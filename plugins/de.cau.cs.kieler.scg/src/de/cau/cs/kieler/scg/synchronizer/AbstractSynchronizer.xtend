@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
+import de.cau.cs.kieler.scg.Fork
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -98,7 +99,7 @@ abstract class AbstractSynchronizer {
      */
     protected abstract def void build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg);
     
-    public abstract def boolean isSynchronizable(Iterable<ThreadPathType> threadPathTypes);
+    public abstract def boolean isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback);
     
 //    public abstract def Set<Predecessor> getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
 //    	List<AbstractKielerCompilerAncillaryData> ancillaryData);
@@ -129,7 +130,8 @@ abstract class AbstractSynchronizer {
     
     public def boolean isSynchronizable(Join join) {
         val threadPathTypes = join.getEntryNodes.map[ getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE) ].map[ fromString2 ]
-        isSynchronizable(threadPathTypes)
+        // TODO: Use actual instantaneous feedback!
+        isSynchronizable(join.fork, threadPathTypes, false)
     }
    
     protected def getCachedSchedulingBlock(Node node) {

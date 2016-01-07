@@ -36,6 +36,7 @@ import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.scg.Fork
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -121,7 +122,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         return SYNCHRONIZER_ID
     }
     
-    override isSynchronizable(Iterable<ThreadPathType> threadPathTypes) {
+    override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
         var synchronizable = false
 
 		if ((!threadPathTypes.filter[ it == ThreadPathType::DELAYED ].empty) &&
@@ -160,7 +161,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         data.createGuardExpression(terminationExpression)
         data.guardExpression.expression = join.graph.fixSchizophrenicExpression(data.guardExpression.expression, pilData) 
         
-        data.fixEmptyExpressions.fixSynchronizerExpression
+//        data.fixEmptyExpressions.fixSynchronizerExpression
         
 		guard.expression = data.guardExpression.expression
 		for(emptyExp : data.guardExpression.emptyExpressions) {
