@@ -91,7 +91,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         // Add Label
         val label = new StringBuilder();
         if (transition.label.nullOrEmpty) {
-            label.append(transition.serialize);
+            label.append(transition.serializeHR);
             // TODO Beautify hostcode ?
             // Pattern.compile("'").matcher(label).replaceAll("");
         } else {

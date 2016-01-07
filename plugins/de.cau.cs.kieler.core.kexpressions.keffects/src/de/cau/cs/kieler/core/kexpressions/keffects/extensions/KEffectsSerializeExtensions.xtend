@@ -57,7 +57,7 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHumanReadableExte
         return " = "          
     }
     
-    public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionString) {
+    public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
         var res = assignment.valuedObject.name
         if (!assignment.indices.nullOrEmpty) {
             for(index : assignment.indices) {
@@ -65,7 +65,12 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHumanReadableExte
             }
         }
         
-        return res + assignment.operator.serializeAssignOperator + expressionString
+        res = res + assignment.operator.serializeAssignOperator
+        if (expressionStr != null) {
+            res = res + expressionStr
+        }
+        
+        return res
     }
     
     def dispatch CharSequence serialize(Assignment assignment) {
@@ -96,6 +101,18 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHumanReadableExte
         }
         return ""
     }
+    
+    def dispatch CharSequence serializeHR_(EList<Effect> effects) {
+        if (!effects.empty) {
+            var String label = "" 
+            for(effect : effects) {
+                label = label + effect.serializeHR as String + "; "
+            }
+            label = label.substring(0, label.length - 2)
+            return label
+        }
+        return ""
+    }    
     
     def dispatch CharSequence serializeHR(Assignment assignment) {
         if (assignment.expression == null) {

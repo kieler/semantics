@@ -51,6 +51,24 @@ class SCChartsSerializeExtension extends KEffectsSerializeExtensions {
 
         return label.toString;
     }
+    
+    def dispatch CharSequence serializeHR(Transition transition) {
+        val label = new StringBuilder();
+
+        if (transition.trigger != null) {
+            if (transition.delay > 1) {
+                label.append(transition.delay.toString).append(" ");
+            }
+            label.append(transition.trigger.serializeHR);
+        }
+
+        if (!transition.effects.empty) {
+            label.append(" / ")
+            label.append(transition.effects.serializeHR_);
+        }
+
+        return label.toString;
+    }    
 
     def dispatch CharSequence serialize(Action action) {
         val joiner = Joiner.on(" ");
