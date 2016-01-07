@@ -108,9 +108,6 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
     @Inject
     extension AnnotationsExtensions
 
-    @Inject
-    extension SynchronizerSelector
-    
     // -------------------------------------------------------------------------
     // -- Globals
     // -------------------------------------------------------------------------
@@ -161,8 +158,6 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
         val timestamp = System.currentTimeMillis
         compilerContext = context
         
-        val pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.criticalNodes.toSet
-          
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
          * preserve all previous (node) data.
