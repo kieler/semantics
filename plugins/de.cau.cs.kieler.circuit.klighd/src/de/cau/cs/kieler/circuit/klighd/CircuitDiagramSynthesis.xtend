@@ -18,7 +18,7 @@ import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import javax.inject.Inject
 import de.cau.cs.kieler.circuit.Port
 
-class ActorDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
+class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 	@Inject ActorSynthesis actorSynthesis
 
