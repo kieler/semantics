@@ -260,6 +260,9 @@ class S2Java {
        if (valueType == ValueType::BOOL) {
            return '''boolean'''
        }
+       else if (valueType == ValueType::STRING) {
+           return '''String'''
+       }
        else {
            return '''«valueType»'''
        }
