@@ -155,7 +155,7 @@ class S2SJ {
  *                                                                           *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/                           *
  * Copyright 2013 by                                                         *
- * + Kiel University                                  *
+ * + Kiel University                                                         *
  *   + Department of Computer Science                                        *
  *     + Real-Time and Embedded Systems Group                                *
  *                                                                           *
