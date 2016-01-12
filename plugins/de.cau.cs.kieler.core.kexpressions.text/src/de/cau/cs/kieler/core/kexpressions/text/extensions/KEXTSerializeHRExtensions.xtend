@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text.extensions
 
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity
 import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 
 /**
  * @author ssm
@@ -23,7 +23,7 @@ import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression
  * @kieler.design 2015-06-09 proposed ssm
  * @kieler.rating 2015-06-09 proposed yellow
  */
-class KEXTSerializeExtensions extends KEffectsSerializeExtensions {
+class KEXTSerializeExtensions extends KEffectsSerializeHRExtensions {
     
     def dispatch CharSequence serialize(TestEntity entity) {
         if (entity.effect != null) {

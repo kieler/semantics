@@ -23,7 +23,7 @@ import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
@@ -49,7 +49,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     extension SCChartsExtension
 
     @Inject
-    extension SCChartsSerializeExtension
+    extension SCChartsSerializeHRExtension
 
     @Inject
     extension TransitionStyles
@@ -92,8 +92,6 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         val label = new StringBuilder();
         if (transition.label.nullOrEmpty) {
             label.append(transition.serializeHR);
-            // TODO Beautify hostcode ?
-            // Pattern.compile("'").matcher(label).replaceAll("");
         } else {
             label.append(transition.label);
         }
