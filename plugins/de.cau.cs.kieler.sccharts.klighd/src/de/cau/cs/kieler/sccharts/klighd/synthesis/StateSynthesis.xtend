@@ -27,7 +27,7 @@ import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 
@@ -51,7 +51,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     extension SCChartsExtension
 
     @Inject
-    extension SCChartsSerializeExtension
+    extension SCChartsSerializeHRExtension
 
     @Inject
     extension TransitionSynthesis
@@ -124,7 +124,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
             // Add declarations
             for (declaration : state.declarations) {
-                node.addDeclarationLabel(declaration.serializeComponents) => [
+                node.addDeclarationLabel(declaration.serializeComponents(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                     associateWith(declaration);
                     eAllContents.filter(KRendering).forEach[associateWith(declaration)];
@@ -133,12 +133,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
             // Add actions
             for (action : state.localActions) {
-                // TODO Maybe improve string representation
-//                text = text.replace("'", "")
-//                if (text.length > 1 && text.substring(text.length - 1, text.length).equals(";")) {
-//                    text = text.substring(0, text.length - 1)
-//                }
-                node.addActionLabel(action.serializeComponents) => [
+                node.addActionLabel(action.serializeComponents(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                     associateWith(action);
                     eAllContents.filter(KRendering).forEach[associateWith(action)];

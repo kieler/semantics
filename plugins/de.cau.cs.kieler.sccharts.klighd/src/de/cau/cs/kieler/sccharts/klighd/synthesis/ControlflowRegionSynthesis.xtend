@@ -29,7 +29,7 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 
@@ -53,7 +53,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     extension KRenderingExtensions
 
     @Inject
-    extension SCChartsSerializeExtension
+    extension SCChartsSerializeHRExtension
 
     @Inject
     extension StateSynthesis
@@ -92,7 +92,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     addStatesAndDeclarationsArea();
                     // Add declarations
                     for (declaration : region.declarations) {
-                        addDeclarationLabel(declaration.serializeComponents) => [
+                        addDeclarationLabel(declaration.serializeComponents(true)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                             associateWith(declaration);
                             eAllContents.filter(typeof(KRendering)).forEach[associateWith(declaration)];
