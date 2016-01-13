@@ -577,7 +577,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 scg.nodes.filter(typeof(Fork)).forEach[
                     allNext.map[target].filter(typeof(Entry)).forEach [ entry |
                         if (entry != null) {
-                            val regionLabel = entry.getStringAnnotationValue(ANNOTATION_REGIONNAME)
+                            var label = ""
+                            if (entry.hasAnnotation(ANNOTATION_LABEL)) {
+                                label = entry.getStringAnnotationValue(ANNOTATION_LABEL)
+                            } else {
+                                label = entry.getStringAnnotationValue(ANNOTATION_REGIONNAME)
+                            }
+                            val regionLabel = label
                             entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY, null) => [
                             	var text = ""
                                 val threadPathType = threadTypes.get(entry)
