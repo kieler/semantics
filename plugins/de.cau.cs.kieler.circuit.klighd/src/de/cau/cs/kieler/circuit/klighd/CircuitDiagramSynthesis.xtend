@@ -62,7 +62,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 		// add ports to actor
 		for (port : actor.ports) {
-			val kPort = port.createPort().associateWith(port)
+			val kPort = port.port.associateWith(port)
 			actorNode.ports += kPort => [
 
 				it.setPortSize(5, 2);
@@ -82,36 +82,12 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			]
 		}
 
-		// create all the inner actors 
+		// create all inner actors 
 		actor.innerActors.forEach [
 			it.transformActor(actorNode);
 		]
 
-//		// create links
-//		for (link : actor.innerLinks) {
-//			actorNode.outgoingEdges += link.createEdge => [
-//				switch (link.source) {
-//					Actor:
-//						it.source = link.source.node
-//					Port: {
-//						it.source = link.source.eContainer.node;
-//						it.sourcePort = link.source.port
-//					}
-//				}
-//
-//				switch (link.target) {
-//					Actor:
-//						it.target = link.target.node
-//					Port: {
-//						it.target = link.target.eContainer.node;
-//						it.targetPort = link.target.port
-//					}
-//				}
-//				it.addRoundedBendsPolyline(3).addJunctionPointDecorator;
-//
-//			]
-//		}
-//	}
+
 //		draw the edges for each link
 		actor.innerLinks.forEach [ link |
 			createEdge().associateWith(link) => [
@@ -137,54 +113,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			]
 
 		]
-// actor.ports.forEach [ port |
-//			port.outgoingLinks.forEach [ link |
-//				val edge = link.createEdge().associateWith(link)
-//				edge.addPolyline(2).addHeadArrowDecorator();
-//
-//				switch (link.source) {
-//					Actor:
-//						edge.source = link.source.node
-//					Port: {
-//						edge.source = link.source.eContainer.node;
-//						edge.sourcePort = link.source.port
-//					}
-//				}
-//
-//				switch (link.target) {
-//					Actor:
-//						edge.target = link.target.node
-//					Port: {
-//						edge.target = link.target.eContainer.node;
-//						edge.targetPort = link.target.port
-//					}
-//				}it.addRoundedBendsPolyline(3).addJunctionPointDecorator;
-//			]
-//		]
-/////////////////////////////////////////////################################################
-//}
-//	def void transformLink(Link link, KNode parent) {
-//
-//		val edge = link.createEdge().associateWith(link)
-//
-//		switch (link.source) {
-//			Actor:
-//				edge.source = link.source.node
-//			Port: {
-//				edge.source = link.source.eContainer.node;
-//				edge.sourcePort = link.source.port
-//			}
-//		}
-//
-//		switch (link.target) {
-//			Actor:
-//				edge.target = link.target.node
-//			Port: {
-//				edge.target = link.target.eContainer.node;
-//				edge.targetPort = link.target.port
-//			}
-//		}
-/////////////////////////////////////////////################################################
+
 }
 
 }

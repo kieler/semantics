@@ -17,7 +17,7 @@ class AndActorSynthesis implements IDrawableActor  {
     
 	
 	override draw(Actor actor) {
-		val KNode andNode = createNode();
+		val KNode andNode = actor.node
 		
 		andNode.setNodeSize(40, 40);
 		andNode.addInsideBottomCenteredNodeLabel("&", KlighdConstants.DEFAULT_FONT_SIZE,

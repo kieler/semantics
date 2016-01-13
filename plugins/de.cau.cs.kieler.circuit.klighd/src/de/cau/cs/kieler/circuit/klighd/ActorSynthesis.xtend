@@ -43,7 +43,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	override KNode transform(Actor actor) {
 
 		val Boolean atomicActor = !(actor.innerActors.toList.length > 0)
-		var actorNode = createNode();
+		var actorNode = actor.node; /////getNode nicht createNode()
 
 		// if actor is a gate create it otherwise draw a simple frame
 		if (atomicActor) {
