@@ -13,12 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.validation;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.validation.Check;
 
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
@@ -70,85 +67,6 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     
     public static final SCChartsExtension sCChartExtension = new SCChartsExtension();
 
-    @Override
-    protected List<EPackage> getEPackages() {
-        List<EPackage> result = new ArrayList<EPackage>();
-         result.add(de.cau.cs.kieler.sccharts.SCChartsPackage.eINSTANCE);
-        return result;
-    }
-
-    
-    // -------------------------------------------------------------------------
-    
-    /**
-     * Check if there is exactly ONE initial state per region.
-     *
-     * @param region the region
-     */
-//    @Check
-//    public void checkInitialState(final de.cau.cs.kieler.sccharts.ControlflowRegion region) {
-//        // Do not consider the root region == SCChart
-//        if (region.getParentState() != null) {
-//            // check if parent state has declared any REAL region not only a
-//            // dummy region for entry/during/exit actions or suspends
-//            de.cau.cs.kieler.sccharts.State parentState = region.getParentState();
-//            int foundInitial = 0;
-//            if ((parentState.getLocalActions().size() > 0) && (parentState.getRegions().size() == 1)
-//                    && parentState.getRegions().get(0).getStates().size() == 0
-//                    && (parentState.getRegions().get(0).getId() == null
-//                        || parentState.getRegions().get(0).getId().equals(""))) {
-//                foundInitial = 1;
-//            }
-//            for (de.cau.cs.kieler.sccharts.State state : region.getStates()) {
-//                if (state.isInitial()) {
-//                    foundInitial++;
-//                }
-//            }
-//            if (foundInitial == 0) {
-//                error(REGION_NO_INITIAL_STATE, region, null, -1);
-//            } else if (foundInitial > 1) {
-//                error(REGION_TWO_MANY_INITIAL_STATES, region, null, -1);
-//            }
-//        }
-//    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * A state with a termination transition should have final states in all its
-     * inner regions.
-     *
-     * @param state the state
-     */
- // FIXME: dataflow
-//    @Check
-//    public void checkFinalStates(final de.cau.cs.kieler.sccharts.State state) {
-//        // Only consider macro states
-//        if (state.getRegions().size() > 0) {
-//            boolean foundTermination = false;
-//            for (Transition transition : state.getOutgoingTransitions()) {
-//                if (transition.getType() == TransitionType.TERMINATION) {
-//                    foundTermination = true;
-//                    break;
-//                }
-//            }
-//            if (foundTermination) {
-//                // Now test for every region
-//                for (Region region : state.getRegions()) {
-//                    boolean foundFinal = false;
-//                    for (de.cau.cs.kieler.sccharts.State innerState : region.getStates()) {
-//                        if (innerState.isFinal()) {
-//                            foundFinal = true;
-//                            break;
-//                        }
-//                    }
-//                    if (!foundFinal) {
-//                        warning(REGION_NO_FINAL_STATE, region, null, -1);
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     // -------------------------------------------------------------------------
 
@@ -184,29 +102,6 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
         } 
     }
 
-    // -------------------------------------------------------------------------    
-    
-//    // Must ensure not to loop forever when having cycles in the model
-//    ArrayList<de.cau.cs.kieler.sccharts.State> visited = new ArrayList<de.cau.cs.kieler.sccharts.State>();
-//    
-//    private boolean checkReachableStates(final de.cau.cs.kieler.sccharts.State originalState, final de.cau.cs.kieler.sccharts.State state) {
-//        if (visited.contains(state)) {
-//            return false;
-//        }
-//        visited.add(state);
-//        if (state.isInitial()) {
-//            return true;
-//        }
-//        else {
-//            for (Transition transition : state.getIncomingTransitions()) {
-//            		if (checkReachableStates(originalState, transition.getSourceState())) {
-//                            return true;
-//            		}
-//            }
-//        }
-//        return false;
-//    }
-
     // -------------------------------------------------------------------------
 
     /**
@@ -216,16 +111,12 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      */
     @Check
     public void checkReachableStates(final de.cau.cs.kieler.sccharts.State state) {
-//        visited.clear();
         if (!sCChartExtension.isStateReachable(state)) {
            warning(STATE_NOT_REACHABLE, state, null, -1);
         }
     }
 
-    
     // -------------------------------------------------------------------------
-
-    
     // @Check
     public void checkTypeNameStartsWithCapital(
             final de.cau.cs.kieler.sccharts.State s) {
