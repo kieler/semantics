@@ -14,9 +14,7 @@ package de.cau.cs.kieler.comparison.core;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -36,8 +34,11 @@ import com.google.inject.Guice;
 import de.cau.cs.kieler.comparison.exchange.ComparisonConfig;
 
 /**
+ * Comparison class is used as a central link for all the components. Comparison uses the singleton
+ * pattern. It is used to provide extension points for compiler and test cases as well as getter for
+ * these.
+ * 
  * @author nfl
- *
  */
 public class Comparison {
 
@@ -52,6 +53,9 @@ public class Comparison {
 
     }
 
+    /**
+     * The singleton instance of this class
+     */
     private static Comparison singleton;
 
     /**
@@ -65,35 +69,47 @@ public class Comparison {
         return singleton;
     }
 
+    /**
+     * The only comparison execution
+     */
     private Job comparisonJob;
 
     /**
+     * Starts a comparison for a given configuration. Only one comparison at a time is allowed. If
+     * another comparison gets started, the first one gets canceled.
      * 
-     * @param srcFile
-     * @return
+     * @param config
+     *            configuration for the comparison
+     * @return a string to identify the completed comparison
      */
-    public String startComparison(ComparisonConfig conf) {
+    public String startComparison(ComparisonConfig config) {
 
-        String start = conf.getOutputPath() + new Date().toString() + ".JSON";
+        // Generate an identifier for this comparison
+        String start = config.getOutputPath() + new Date().toString() + ".JSON";
 
+        // Stop currently running comparison
         if (comparisonJob != null && comparisonJob.getResult() == null)
             comparisonJob.cancel();
 
-        comparisonJob = new AsynchronousComparison(conf, start);
-        comparisonJob.schedule();
+        // Initiate and start a new comparison job
+        comparisonJob = new AsynchronousComparison(config, start);
 
         return start;
     }
 
     /**
-     * 
+     * The cache for the compilers
      */
     private static HashMap<String, ICompiler> compilersCached;
 
     /**
+     * Used to get a collection of all compilers, who used an extension point to register. The
+     * collection consist of KeyValuePairs, where the value is an instance of ICompiler and the key
+     * is an identifier for this compiler as String. This method uses caching for optimization.
      * 
      * @param forceReload
-     * @return
+     *            if true, the cache will be refreshed; otherwise the cache my be used
+     * @return a HashMap with all registered compilers
      */
     public static HashMap<String, ICompiler> getCompilers(boolean forceReload) {
 
@@ -125,22 +141,30 @@ public class Comparison {
                     compilersCached.put(id, compiler);
                 }
             } catch (CoreException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                // TODO better error logging
+                System.out.println("Instantiation of compiler extention failed: "
+                        + extension.getAttribute("class"));
             }
         }
         return compilersCached;
     }
 
     /**
-     * 
+     * The cache for the test cases
      */
     private static HashMap<String, ITestcase> testcasesCached;
 
     /**
+     * Used to get a collection of all test cases. The collection consist of KeyValuePairs, where
+     * the value is an instance of ITestcase and the key is an identifier for this test case as
+     * String. This method uses caching for optimization. All test cases within
+     * de.cau.cs.kieler.comparison/testcases/ are added. Additional test case directories may be
+     * added within this method. ITestcaseProvider are used to wrap test case files together with
+     * properties into ITestcase classes.
      * 
      * @param forceReload
-     * @return
+     *            if true, the cache will be refreshed; otherwise the cache my be used
+     * @return a HashMap with all test cases
      */
     public static HashMap<String, ITestcase> getTestcases(boolean forceReload) {
 
@@ -151,26 +175,32 @@ public class Comparison {
         // Clear the cache
         testcasesCached = new HashMap<String, ITestcase>();
 
+        // All files that may contain test cases or are test cases
         ArrayList<File> files = new ArrayList<File>();
 
+        // Add the default folder (de.cau.cs.kieler.comparison/testcases/) as test case folder
         try {
             URL url = new URL("platform:/plugin/de.cau.cs.kieler.comparison/testcases/");
             files.add(new File(FileLocator.resolve(url).toURI()));
         } catch (IOException | URISyntaxException e) {
             // should never happen
+            // TODO better error logging
+            System.out.println("Test case folder could not be resolved.");
             e.printStackTrace();
         }
 
+        // All ITestcaseProvider used while iterating through the files
         Collection<ITestcaseProvider> providers = getTestcaseProviders(false).values();
+        // All extensions the providers can handle
         Collection<String> extensions = new ArrayList<String>();
-
         for (ITestcaseProvider provider : providers) {
             String ext = provider.getExtension().toLowerCase();
             if (!extensions.contains(ext))
                 extensions.add(ext);
         }
-        FileFilter filter = new FileFilter() {
 
+        // Filter used while iterating through the files
+        FileFilter filter = new FileFilter() {
             @Override
             public boolean accept(File pathname) {
                 if (pathname.isDirectory())
@@ -187,39 +217,61 @@ public class Comparison {
             }
         };
 
+        // A collection of all ITestcase created by the providers
         Collection<ITestcase> allTestcases = new ArrayList<ITestcase>();
 
+        // Iterate trough the file list and search for files, which are handled by any provider
         while (files.size() > 0) {
             File file = files.remove(0);
+            // If the current file is a directory, add all its containing files to the list
             if (file.isDirectory()) {
                 files.addAll(Arrays.asList(file.listFiles(filter)));
-            } else {
+            }
+            // Try to create a ITestcase for the current file with the given providers
+            else {
+                // Used to answer the question: Did any provider successfully create a ITestcase?
                 boolean parsed = false;
+                // Try each provider
                 for (ITestcaseProvider provider : providers) {
-                    String ext = provider.getExtension();
+                    // extensions are not handled case sensitive
+                    String ext = provider.getExtension().toLowerCase();
                     String filePath = file.getAbsolutePath();
-                    if (filePath.substring(filePath.length() - ext.length()).toLowerCase()
-                            .equals(ext)) {
+                    int fileLength = filePath.length();
+                    int index = fileLength - ext.length();
+                    // Check if the provider can handle the current file extension
+                    if (index >= 0 && index < fileLength
+                            && filePath.substring(index).toLowerCase().equals(ext)) {
+                        // Try to create new test cases with the current provider
                         Collection<ITestcase> newTestcases = provider.createTestcases(filePath);
+                        // If the provider created new test cases, add them to the list of test
+                        // cases
                         if (newTestcases != null && newTestcases.size() > 0) {
                             insertTestcases(allTestcases, newTestcases);
                             parsed = true;
                         }
                     }
                 }
+                // If no provider created a test case for the current file, notify the user
                 if (!parsed) {
                     // TODO better error logging
                     System.out.println("No ITestcaseProvider could be found for the File ("
-                            + file.getAbsolutePath() + ") or it could not be parsed into ITestcase!");
+                            + file.getAbsolutePath()
+                            + ") or it could not be parsed into ITestcase!");
                 }
             }
         }
 
+        // Add all newly created test cases to the cache
+        // Ever since using multiple provider multiple test cases with the same path to a test case
+        // could exist. These are getting merged into a single testcase.
         for (ITestcase test : allTestcases) {
             ITestcase cached = testcasesCached.get(test.getTestcase());
+            // If no ITestcase with the current path exists in the cache, add the current test case
             if (cached == null) {
                 testcasesCached.put(test.getTestcase(), test);
-            } else {
+            }
+            // Else try to merge the two test cases into the cached one
+            else {
                 mergeTestcases(cached, test);
             }
         }
@@ -248,17 +300,22 @@ public class Comparison {
         if (from == null)
             return;
 
+        // Insert all the ITestcase from one list to another
         for (ITestcase newTest : from) {
             String testPath = newTest.getTestcase();
             boolean inserted = false;
+            // Check all test cases in the first list for possible merging
             for (ITestcase existingTest : into) {
                 if (existingTest.getTestcase().equals(testPath)) {
+                    // If a test case with the same path already exists within the first list, try
+                    // to merge the two cases into the one already contained within the list
                     if (mergeTestcases(existingTest, newTest)) {
                         inserted = true;
                     }
                     break;
                 }
             }
+            // If the test case did not get merged with another one, add itself to the list
             if (!inserted) {
                 into.add(newTest);
             }
@@ -266,23 +323,33 @@ public class Comparison {
     }
 
     /**
-     * @param first
-     * @param second
+     * Tries to merge the second test case into the first one. This can only be done successfully,
+     * if both test cases have the same file path, Language and identifier. In that case both lists
+     * of properties are getting merged into a single one.
+     * 
+     * @param first the first test case to merge into
+     * @param second the second test case to merge from
+     * @return true, if the merge was successful; false otherwise
      */
     private static boolean mergeTestcases(ITestcase first, ITestcase second) {
-
+        // Only merge the test cases if both have the same file path ...
         if (first.getTestcase().equals(second.getTestcase())) {
+            // ... and the same Language
             if (first.getLanguage() != second.getLanguage()) {
                 // TODO better error logging
                 System.out.println("ITestcase (" + second.getID() + ", " + second.getTestcase()
                         + ") could not be merged with an existing testcase: "
                         + "Language is not the same");
-            } else if (!first.getID().equals(second.getID())) {
+            } 
+            // ... and the same ID
+            else if (!first.getID().equals(second.getID())) {
                 // TODO better error logging
                 System.out.println("ITestcase (" + second.getID() + ", " + second.getTestcase()
                         + ") could not be merged with an existing testcase: "
                         + "ID is not the same");
-            } else {
+            } 
+            // All requirements met, therefore insert the properties of the second into the first one
+            else {
                 insertProperties(first.getProperties(), second.getProperties());
                 return true;
             }
@@ -312,14 +379,18 @@ public class Comparison {
     }
 
     /**
-     * 
+     * The cache for the test case provider
      */
     private static HashMap<String, ITestcaseProvider> testcaseProvidersCached;
 
     /**
+     * Used to get a collection of all test case providers. The collection consist of KeyValuePairs, where
+     * the value is an instance of ITestcaseProvider and the key is an identifier for this provider as
+     * String. This method uses caching for optimization. 
      * 
      * @param forceReload
-     * @return
+     *            if true, the cache will be refreshed; otherwise the cache my be used
+     * @return a HashMap with all test cases
      */
     public static HashMap<String, ITestcaseProvider> getTestcaseProviders(boolean forceReload) {
         // Return the cache if there is any and not forced to reload
@@ -351,8 +422,9 @@ public class Comparison {
                     testcaseProvidersCached.put(id, provider);
                 }
             } catch (CoreException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                // TODO better error logging
+                System.out.println("Instantiation of test case provider extention failed: "
+                        + extension.getAttribute("class"));
             }
         }
         return testcaseProvidersCached;

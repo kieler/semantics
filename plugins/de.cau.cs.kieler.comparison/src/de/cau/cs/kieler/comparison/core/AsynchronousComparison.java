@@ -14,7 +14,6 @@ package de.cau.cs.kieler.comparison.core;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
@@ -34,14 +33,21 @@ import de.cau.cs.kieler.comparison.measuring.CompSizeMeasuring;
 import de.cau.cs.kieler.comparison.measuring.CompSpeedMeasuring;
 
 /**
+ * AsynchronousComparison extends the Job class and is used to execute the comparison between
+ * compilers. This job schedules itself and needs a ComparisonConfig and an identification string to
+ * be created.
+ * 
  * @author nfl
- *
  */
 public class AsynchronousComparison extends Job {
 
     /**
+     * Creates and schedules a comparison job.
+     * 
+     * @param config
+     *            the configuration for the comparison
      * @param comparison
-     * @param name
+     *            the identifier for the comparison
      */
     public AsynchronousComparison(ComparisonConfig config, String comparison) {
         super("Asynchronous Comparison Job");
@@ -49,9 +55,17 @@ public class AsynchronousComparison extends Job {
         setUser(true);
         this.config = config;
         this.comparison = comparison;
+        this.schedule();
     }
 
+    /**
+     * The configuration to run the comparison with.
+     */
     private ComparisonConfig config;
+
+    /**
+     * A String, which is used to identify the comparison.
+     */
     private String comparison;
 
     /**
@@ -59,19 +73,26 @@ public class AsynchronousComparison extends Job {
      */
     @Override
     protected IStatus run(IProgressMonitor monitor) {
-
+        // the compilers, which are used within the comparison
         Collection<ICompiler> compilers = config.getCompilers();
+        // the testcases, which are used within the comparison
         Collection<ITestcase> testcases = config.getTestcases();
+        // the path to outputs like compilations
         String outputPath = config.getOutputPath() + "compilationResults/";
+        // the amount of compilations each compiler has to do
         int compAmount = config.getCompareCompSpeedAmount();
         if (!config.compareCompSpeed() || compAmount < 1)
             compAmount = 1;
+        // the amount of executions each compilation has to be run
         int execAmount = config.getCompareExecSpeedAmount();
         if (!config.compareExecSpeed() || execAmount < 1)
             execAmount = 1;
 
+        // the IDataHandler is used to save the comparison results
         IDataHandler dataHandler = DataHandler.getDataHandler();
 
+        // estimation of work, which has to be done within the comparison; used in the progress
+        // monitor
         int totalWork = compilers.size() * testcases.size();
         if (config.compareCompSize())
             totalWork *= compAmount + 1;
@@ -80,9 +101,10 @@ public class AsynchronousComparison extends Job {
         monitor.beginTask("Compiler Comparison", totalWork);
 
         String compilation = null;
+        // each compiler has to compile each testcase
         for (ICompiler comp : compilers) {
             for (ITestcase test : testcases) {
-                // compare comp speed
+                // compare compilation speed
                 for (int i = 0; i < compAmount; i++) {
                     monitor.subTask(comp.getID() + " compiling " + test.getID() + " : " + (i + 1)
                             + "/" + compAmount);
@@ -97,16 +119,21 @@ public class AsynchronousComparison extends Job {
                         // TODO suppress compiler console output
                         compilation = comp.compile(test.getTestcase(), outputPath);
                     } catch (CompilationException e) {
+                        // something went wrong, save the error message as result anyway
                         dataHandler.serialize(comparison, new CompError(comp.getID(), test.getID(),
                                 e.getMessage()));
                         monitor.worked(1);
+                        // continue with other testcases / compilers
                         continue;
                     }
                     long compTime = System.currentTimeMillis() - compStart;
+                    // save the compilation speed
                     dataHandler.serialize(comparison,
                             new CompSpeedMeasuring(comp.getID(), test.getID(), compTime));
 
                     monitor.worked(1);
+                    // if the comparison got cancled within the progress monitor,
+                    // react to it and cancel this comparison job
                     if (monitor.isCanceled()) {
                         monitor.done();
                         return new Status(IStatus.CANCEL, Activator.PLUGIN_ID,
@@ -114,7 +141,7 @@ public class AsynchronousComparison extends Job {
                     }
                 }
 
-                // compare size
+                // compare compilation size
                 if (config.compareCompSize() && compilation != null) {
                     BufferedReader br = null;
                     try {
@@ -122,9 +149,9 @@ public class AsynchronousComparison extends Job {
                         File file = new File(compilation);
                         dataHandler.serialize(comparison,
                                 new CompSizeMeasuring(comp.getID(), test.getID(), file.length()));
-                        
+
                         // measure file size in line of code
-                        br = new BufferedReader(new FileReader(file)); 
+                        br = new BufferedReader(new FileReader(file));
                         int i = 0;
                         while (br.readLine() != null) {
                             i++;
@@ -132,12 +159,15 @@ public class AsynchronousComparison extends Job {
                         dataHandler.serialize(comparison,
                                 new CompLoCMeasuring(comp.getID(), test.getID(), i));
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        // LoC measuring failed
+                        dataHandler.serialize(comparison, new CompError(comp.getID(), test.getID(),
+                                "LoC measuring failed."));
                     } finally {
                         try {
-                            br.close();
+                            if (br != null)
+                                br.close();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            // not much to do in this case, except maybe logging
                         }
                         monitor.worked(1);
                     }
@@ -146,7 +176,7 @@ public class AsynchronousComparison extends Job {
         }
 
         // TODO execution
-        // input traces contain the file src file extension,
+        // input traces contain the src file extension,
         // e.g. /abro.sct and /abro.sct.in
 
         monitor.done();
