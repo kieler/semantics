@@ -91,8 +91,8 @@ public class AsynchronousComparison extends Job {
         // the IDataHandler is used to save the comparison results
         IDataHandler dataHandler = DataHandler.getDataHandler();
 
-        // estimation of work, which has to be done within the comparison; used in the progress
-        // monitor
+        // estimation of work, which has to be done within the comparison;
+        // used in the progress monitor
         int totalWork = compilers.size() * testcases.size();
         if (config.compareCompSize())
             totalWork *= compAmount + 1;

@@ -578,7 +578,7 @@ public class StartComparisonDialog extends Dialog {
         for (int i = 0; i < lstCompilerSelection.getSelectionCount(); i++) {
             ICompiler comp = map.get(selection[i]);
             if (comp == null) {
-                // TODO besser machen
+                // TODO better error logging
                 System.out.println("Compiler " + selection[i] + " not found!");
                 continue;
             }
@@ -594,13 +594,19 @@ public class StartComparisonDialog extends Dialog {
         String[] selection = lstTestcaseSelection.getSelection();
         testcases = new ArrayList<ITestcase>();
         for (int i = 0; i < lstTestcaseSelection.getSelectionCount(); i++) {
-            ITestcase test = map.get(selection[i]);
-            if (test == null) {
-                // TODO besser machen
+            boolean found = false;
+            for (ITestcase test : map.values()) {
+                if (selection[i].equals(test.getID())) {
+                    testcases.add(test);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                // TODO better error logging
                 System.out.println("Testcase " + selection[i] + " not found!");
                 continue;
             }
-            testcases.add(test);
         }
     }
 
