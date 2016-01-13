@@ -80,7 +80,7 @@ import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.s.DataDependency
 import de.cau.cs.kieler.sccharts.s.DependencyGraph
@@ -151,7 +151,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     extension KExpressionsValuedObjectExtensions
     
     @Inject
-    extension SCChartsSerializeExtension
+    extension SCChartsSerializeHRExtension
     
     @Inject 
     extension SCGDepExtension

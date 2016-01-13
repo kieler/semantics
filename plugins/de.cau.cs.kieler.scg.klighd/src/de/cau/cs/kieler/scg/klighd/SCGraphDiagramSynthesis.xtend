@@ -18,7 +18,6 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kgraph.KEdge
@@ -40,11 +39,15 @@ import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
+import de.cau.cs.kieler.kico.CompilationResult
+import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.kiml.options.PortAlignment
 import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortSide
+import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import de.cau.cs.kieler.klay.layered.properties.Properties
@@ -57,7 +60,9 @@ import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
@@ -70,36 +75,24 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Write_Write
-import de.cau.cs.kieler.scg.klighd.analyzer.AnalysesVisualization
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
+import java.util.Set
 import javax.inject.Inject
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.ThreadPathType
-import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.kico.KiCoProperties
-import java.util.Set
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
-import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.core.krendering.Colors
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
-import de.cau.cs.kieler.klay.layered.properties.InternalProperties
-import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.ControlDependency
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeHumanReadableExtensions
-import de.cau.cs.kieler.scg.extensions.SCGSerializeHumanReadableExtensions
-import de.cau.cs.kieler.kiml.options.PortAlignment
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -185,7 +178,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     extension SCGDeclarationExtensions
     
     @Inject
-    extension SCGSerializeHumanReadableExtensions
+    extension SCGSerializeHRExtensions
 
     // -------------------------------------------------------------------------
     // -- KlighD Options

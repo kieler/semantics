@@ -107,7 +107,7 @@ class S2C {
     /*                                                                           */
     /* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
     /* Copyright 2014 by                                                         */
-    /* + Kiel University                                  */
+    /* + Kiel University                                                         */
     /*   + Department of Computer Science                                        */
     /*     + Real-Time and Embedded Systems Group                                */
     /*                                                                           */

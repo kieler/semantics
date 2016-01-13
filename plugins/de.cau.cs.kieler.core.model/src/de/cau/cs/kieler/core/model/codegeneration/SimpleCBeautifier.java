@@ -261,9 +261,9 @@ public class SimpleCBeautifier {
      */
     public static String beautify(String text, String indentPart) throws NoSuchFieldException,
             SecurityException, IllegalArgumentException, IllegalAccessException {
-
+        
         StringBuilder modifiedOutput = new StringBuilder();
-
+        
         int indent = 0;
 
         boolean stringMode = false;
@@ -307,11 +307,25 @@ public class SimpleCBeautifier {
                 break;
             }
         }
-
+        
         final int len = chars.length;
         for (int i = 0; i < len; i++) {
             char character = chars[i];
 
+            //////////////////////// Get last / next character if available
+            char nextCharacter = '.';
+            if (i + 1 < len) {
+                nextCharacter = chars[i + 1];
+            }
+            
+            // Last character that has been added to the modified output. 
+            char lastCharacter = '.';
+            int outputLength = modifiedOutput.length();
+            if (outputLength > 0) {
+                lastCharacter = modifiedOutput.charAt(outputLength - 1);
+            }
+            
+            //////////////////////// Bracket count
             if (!stringMode) {
                 if (character == '(') {
                     brackets++;
@@ -320,17 +334,14 @@ public class SimpleCBeautifier {
                     brackets--;
                 }
             }
-
+            
+            /////////////////////// Update flag
             if (nextSpaceBefore) {
                 nextSpaceBefore = false;
                 spaceBefore = true;
             }
 
-            // Comment handling start
-            char nextCharacter = '.';
-            if (i + 1 < len) {
-                nextCharacter = chars[i + 1];
-            }
+            //////////////////////// Comment handling start
             if (character == '/' && nextCharacter == '*') {
                 longComment = true;
             } else if (character == '/' && nextCharacter == '/' && !longComment) {
@@ -359,7 +370,7 @@ public class SimpleCBeautifier {
             }
             // Comment handling end
 
-            // handle strings
+            //////////////////////// Handle strings
             if (character == '"' && !stringMode) {
                 stringMode = true;
             }
@@ -371,8 +382,9 @@ public class SimpleCBeautifier {
                 modifiedOutput.append(character);
                 continue;
             }
-
-            // eliminate superfluous space characters
+            // String handling end
+            
+            //////////////////////// Eliminate superfluous space characters
             if (character == ' ') {
                 boolean found = false;
                 for (char noSpaceBeforeCharacter : noSpaceBeforeCharacters) {
@@ -382,27 +394,26 @@ public class SimpleCBeautifier {
                     }
                 }
                 if (found) {
-                    i++; // skip space
-                    character = nextCharacter;
-                    if (i + 1 < len) {
-                        nextCharacter = chars[i + 1];
-                    }
+                    // Skip unwanted space
+                    continue;
                 }
             }
-            if (nextCharacter == ' ') {
+            if (character == ' ') {
                 boolean found = false;
                 for (char noSpaceAfterCharacter : noSpaceAfterCharacters) {
-                    if (character == noSpaceAfterCharacter) {
-                        nextSpaceBefore = true;
+                    if (lastCharacter == noSpaceAfterCharacter) {
                         found = true;
                         break;
                     }
                 }
                 if (found) {
-                    i++; // skip space
+                    // Skip unwanted space
+                    continue;
                 }
             }
-
+            // Superflous space handling end 
+            
+            /////////////////////////// Line break handling
             if (character == '\n' || character == '\r') {
                 // if (c > 2 && text.substring(c - 2, c).equals("*/")) {
                 // modifiedOutput += "\n";
@@ -450,6 +461,8 @@ public class SimpleCBeautifier {
                 spaceBefore = false;
                 modifiedOutput.append(character);
             }
+            // End of line break handling
+            
         }
 
         return modifiedOutput.toString();

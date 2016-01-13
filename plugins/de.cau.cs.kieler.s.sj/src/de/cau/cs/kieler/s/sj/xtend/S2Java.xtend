@@ -117,7 +117,7 @@ class S2Java {
     /*                                                                           */
     /* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
     /* Copyright 2014 by                                                         */
-    /* + Kiel University                                  */
+    /* + Kiel University                                                         */
     /*   + Department of Computer Science                                        */
     /*     + Real-Time and Embedded Systems Group                                */
     /*                                                                           */
@@ -259,6 +259,9 @@ class S2Java {
    def dispatch expand(ValueType valueType) {
        if (valueType == ValueType::BOOL) {
            return '''boolean'''
+       }
+       else if (valueType == ValueType::STRING) {
+           return '''String'''
        }
        else {
            return '''«valueType»'''

@@ -64,8 +64,7 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
         // highlight the annotation keys (names) like 'layouter' according to
         //   AnnotationsHighlightingConfiguration.ANNOTATION_KEY
         if (grammarElement == g.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
-                || grammarElement == g.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_2_0()
-                || grammarElement == g.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_3_1_0()
+                || grammarElement == g.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
                 || grammarElement == g.getQuotedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
                 || grammarElement == g.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0()
                 || grammarElement == g.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0()
@@ -86,14 +85,15 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
         
         // highlight the annotation value according to
         //   AnnotationsHighlightingConfiguration.COMMENT_ANNOTATION
-//        if (grammarElement == g.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_2_0()
-//                || grammarElement == g.getTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0()
-//                || grammarElement == g.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()
-//                || grammarElement == g.getKeyIntValueAnnotationAccess().getValueIntegerParserRuleCall_2_0()
-//                || grammarElement == g.getKeyFloatValueAnnotationAccess().getValueFloategerParserRuleCall_2_0()) {
-//            acceptor.addPosition(node.getOffset(), node.getLength(),
-//                    AnnotationsHighlightingConfiguration.COMMENT_ANNOTATION);
-//        }
+        if (grammarElement == g.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_2_0()
+                || grammarElement == g.getKeyStringValueAnnotationAccess().getValuesEStringParserRuleCall_3_1_0()
+                || grammarElement == g.getTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0()
+                || grammarElement == g.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()
+                || grammarElement == g.getKeyIntValueAnnotationAccess().getValueIntegerParserRuleCall_2_0()
+                || grammarElement == g.getKeyFloatValueAnnotationAccess().getValueFloategerParserRuleCall_2_0()) {
+            acceptor.addPosition(node.getOffset(), node.getLength(),
+                    AnnotationsHighlightingConfiguration.COMMENT_ANNOTATION);
+        }
 
         // CHECKSTYLEON LineLength
     }
