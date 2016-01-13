@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2015 by
+ * Copyright 2016 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -16,38 +16,26 @@ import java.util.Collection;
 
 /**
  * @author nfl
- *
  */
-public interface ICompiler {
+public interface ITestcaseProvider {
 
     /**
      * 
      * @return
      */
     public String getID();
-
+    
     /**
      * 
      * @return
      */
-    public Language getSrcLanguage();
-
+    public String getExtension();
+    
     /**
      * 
-     * @return
+     * @param filePath
+     * @return ITestcase, if the given file could be parsed into a testcase; null otherwise
      */
-    public Language getTrgLanguage();
-
-    /**
-     * 
-     * @return
-     */
-    public String compile(String srcFile, String outputPath) throws CompilationException;
-
-
-    /**
-     * 
-     * @return
-     */
-    public Collection<String> getFeasibleProperties();
+    public Collection<ITestcase> createTestcases(String filePath);
+//    public ITestcase createTestcase(String filePath);
 }

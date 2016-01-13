@@ -32,7 +32,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.comparison.core.Comparison;
-import de.cau.cs.kieler.comparison.exchanges.ComparisonConfig;
+import de.cau.cs.kieler.comparison.exchange.ComparisonConfig;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view shows data obtained
@@ -48,7 +48,7 @@ import de.cau.cs.kieler.comparison.exchanges.ComparisonConfig;
  * 
  * @author nfl
  */
-public class DataView extends ViewPart {
+public class ComparisonDataView extends ViewPart {
 
     /**
      * The ID of the view as specified by the extension.
@@ -62,11 +62,11 @@ public class DataView extends ViewPart {
     /**
      * The constructor.
      */
-    public DataView() {
+    public ComparisonDataView() {
     }
     
     static final String[] TITLES = {"Criteria", "Compiler", "Testcase", "Results"};
-    static final int[] WIDTH = {150, 300, 150, 300};
+    static final int[] WIDTH = {200, 300, 250, 300};
 
     /**
      * This is a callback that will allow us to create the viewer and initialize it.
@@ -87,8 +87,8 @@ public class DataView extends ViewPart {
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
         
-        viewer.setLabelProvider(new DataViewLabelProvider());
-        viewer.setContentProvider(new DataViewContentProvider());
+        viewer.setLabelProvider(new ComparisonDataViewLabelProvider());
+        viewer.setContentProvider(new ComparisonDataViewContentProvider());
         viewer.setInput(getViewSite());
 
         // Create the help context id for the viewer's control
@@ -104,7 +104,7 @@ public class DataView extends ViewPart {
         menuMgr.setRemoveAllWhenShown(true);
         menuMgr.addMenuListener(new IMenuListener() {
             public void menuAboutToShow(final IMenuManager manager) {
-                DataView.this.fillContextMenu(manager);
+                ComparisonDataView.this.fillContextMenu(manager);
             }
         });
         Menu menu = menuMgr.createContextMenu(viewer.getControl());
@@ -160,7 +160,9 @@ public class DataView extends ViewPart {
         fileDialog.setFilterExtensions(new String[] { "*.JSON" });
         fileDialog.setFilterNames(new String[] { "Comparison Results(*.JSON)" });
         
-        viewer.setContentProvider(new DataViewContentProvider(fileDialog.open()));
+        String open = fileDialog.open();
+        if (open != null && open != "")
+            loadComparisonResult(open);
     }
 
     private void initiateComparison(){
@@ -181,7 +183,8 @@ public class DataView extends ViewPart {
         
         Comparison comparison = Comparison.getComparison();
         String comp = comparison.startComparison(conf);
-        viewer.setContentProvider(new DataViewContentProvider(comp));
+        
+        // TODO loadComparisonResult(comp);
     }
 
     /**
@@ -189,5 +192,13 @@ public class DataView extends ViewPart {
      */
     public void setFocus() {
         viewer.getControl().setFocus();
+    }
+    
+    /**
+     * 
+     * @param comp
+     */
+    private void loadComparisonResult(String comp) {
+        viewer.setContentProvider(new ComparisonDataViewContentProvider(comp));        
     }
 }

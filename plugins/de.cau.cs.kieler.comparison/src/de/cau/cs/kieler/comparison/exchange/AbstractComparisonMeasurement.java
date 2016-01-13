@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.comparison.exchanges;
+package de.cau.cs.kieler.comparison.exchange;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.comparison.measurings.IMeasuring;
+import de.cau.cs.kieler.comparison.measuring.IMeasuring;
 
 /**
  * @author nfl

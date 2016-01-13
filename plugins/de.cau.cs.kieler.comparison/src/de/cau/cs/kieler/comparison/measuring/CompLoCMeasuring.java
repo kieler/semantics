@@ -10,26 +10,29 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.comparison.measurings;
+package de.cau.cs.kieler.comparison.measuring;
 
 
 /**
  * @author nfl
  *
  */
-public class CompSpeedMeasuring implements IMeasuring {
+public class CompLoCMeasuring implements IMeasuring {
 
     private String compiler;
     private String testcase;
-    private long speed;
+    private int size;
     
     /**
+     * @param size 
+     * @param testcase 
+     * @param compiler 
      * 
      */
-    public CompSpeedMeasuring(String comp, String test, long speed) {        
-        this.compiler = comp;
-        this.testcase = test;
-        this.speed = speed;
+    public CompLoCMeasuring(String compiler, String testcase, int size) {
+        this.compiler = compiler;
+        this.testcase = testcase;
+        this.setSize(size);
     }
 
     /**
@@ -47,21 +50,13 @@ public class CompSpeedMeasuring implements IMeasuring {
     public String getTestcase() {
         return testcase;
     }
-    
-    /**
-     * 
-     * @return
-     */
-    public long getSpeed(){
-        return speed;
-    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public String getCriteria() {
-        return "Compilation Speed (ms)";
+        return "Compilation Size (LoC)";
     }
 
     /**
@@ -79,10 +74,17 @@ public class CompSpeedMeasuring implements IMeasuring {
     }
 
     /**
-     * @param speed the speed to set
+     * @return the size
      */
-    public void setSpeed(long speed) {
-        this.speed = speed;
+    public int getSize() {
+        return size;
+    }
+
+    /**
+     * @param size the size to set
+     */
+    public void setSize(int size) {
+        this.size = size;
     }
 
     /**
@@ -90,6 +92,6 @@ public class CompSpeedMeasuring implements IMeasuring {
      */
     @Override
     public String getMeasuringData() {
-        return ""+speed;
+        return ""+size;
     }
 }

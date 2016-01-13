@@ -12,11 +12,15 @@
  */
 package de.cau.cs.kieler.comparison.compilers.kico;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
 import de.cau.cs.kieler.comparison.core.CompilationException;
 import de.cau.cs.kieler.comparison.core.ICompiler;
+import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
+import de.cau.cs.kieler.comparison.core.LanguageProperties;
 
 /**
  * @author nfl
@@ -60,5 +64,17 @@ public class KiCoEsterel2C implements ICompiler {
             e.printStackTrace();
         }
         return srcFile;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Collection<String> getFeasibleProperties() {
+        // TODO getFeasibleProperties 
+        Collection<String> ret = new ArrayList<String>();
+        ret.add(LanguageProperties.CYCLIC);
+        ret.add(LanguageProperties.DETERMINISTIC);
+        return ret;
     }
 }

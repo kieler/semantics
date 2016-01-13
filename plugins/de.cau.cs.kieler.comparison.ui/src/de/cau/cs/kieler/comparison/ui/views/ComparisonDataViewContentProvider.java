@@ -17,13 +17,13 @@ import org.eclipse.jface.viewers.Viewer;
 
 import de.cau.cs.kieler.comparison.datahandler.DataHandler;
 import de.cau.cs.kieler.comparison.datahandler.IDataHandler;
-import de.cau.cs.kieler.comparison.exchanges.AbstractComparisonMeasurement;
+import de.cau.cs.kieler.comparison.exchange.AbstractComparisonMeasurement;
 
 /**
  * @author nfl
  *
  */
-public class DataViewContentProvider implements IStructuredContentProvider {
+public class ComparisonDataViewContentProvider implements IStructuredContentProvider {
 
     private String filePath;
     
@@ -31,14 +31,14 @@ public class DataViewContentProvider implements IStructuredContentProvider {
      * 
      * @param filePath filePath for the model to display
      */
-    public DataViewContentProvider(final String filePath){
+    public ComparisonDataViewContentProvider(final String filePath){
         this.filePath = filePath;
     }
 
     /**
      * 
      */
-    public DataViewContentProvider() {
+    public ComparisonDataViewContentProvider() {
         // TODO Auto-generated constructor stub
     }
 

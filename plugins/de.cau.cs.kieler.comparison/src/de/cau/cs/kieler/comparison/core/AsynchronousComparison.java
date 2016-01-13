@@ -12,7 +12,11 @@
  */
 package de.cau.cs.kieler.comparison.core;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Collection;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -23,10 +27,11 @@ import org.eclipse.core.runtime.jobs.Job;
 import de.cau.cs.kieler.comparison.Activator;
 import de.cau.cs.kieler.comparison.datahandler.DataHandler;
 import de.cau.cs.kieler.comparison.datahandler.IDataHandler;
-import de.cau.cs.kieler.comparison.exchanges.ComparisonConfig;
-import de.cau.cs.kieler.comparison.measurings.CompError;
-import de.cau.cs.kieler.comparison.measurings.CompSizeMeasuring;
-import de.cau.cs.kieler.comparison.measurings.CompSpeedMeasuring;
+import de.cau.cs.kieler.comparison.exchange.ComparisonConfig;
+import de.cau.cs.kieler.comparison.measuring.CompError;
+import de.cau.cs.kieler.comparison.measuring.CompLoCMeasuring;
+import de.cau.cs.kieler.comparison.measuring.CompSizeMeasuring;
+import de.cau.cs.kieler.comparison.measuring.CompSpeedMeasuring;
 
 /**
  * @author nfl
@@ -57,7 +62,7 @@ public class AsynchronousComparison extends Job {
 
         Collection<ICompiler> compilers = config.getCompilers();
         Collection<ITestcase> testcases = config.getTestcases();
-        String outputPath = config.getOutputPath();
+        String outputPath = config.getOutputPath() + "compilationResults/";
         int compAmount = config.getCompareCompSpeedAmount();
         if (!config.compareCompSpeed() || compAmount < 1)
             compAmount = 1;
@@ -67,7 +72,11 @@ public class AsynchronousComparison extends Job {
 
         IDataHandler dataHandler = DataHandler.getDataHandler();
 
-        int totalWork = compilers.size() * testcases.size() * (compAmount + 1);
+        int totalWork = compilers.size() * testcases.size();
+        if (config.compareCompSize())
+            totalWork *= compAmount + 1;
+        else
+            totalWork *= compAmount;
         monitor.beginTask("Compiler Comparison", totalWork);
 
         String compilation = null;
@@ -75,11 +84,16 @@ public class AsynchronousComparison extends Job {
             for (ITestcase test : testcases) {
                 // compare comp speed
                 for (int i = 0; i < compAmount; i++) {
-                    monitor.subTask(comp.getID() + " - " + test.getID() + " - " + (i + 1) + "/"
-                            + compAmount);
+                    monitor.subTask(comp.getID() + " compiling " + test.getID() + " : " + (i + 1)
+                            + "/" + compAmount);
 
                     long compStart = System.currentTimeMillis();
                     try {
+                        // create sub folder for compilation results
+                        File folder = new File(outputPath);
+                        if (!folder.exists() && !folder.mkdirs())
+                            throw new CompilationException(
+                                    "Comparison failed: Could not create output into given path.");
                         // TODO suppress compiler console output
                         compilation = comp.compile(test.getTestcase(), outputPath);
                     } catch (CompilationException e) {
@@ -102,19 +116,38 @@ public class AsynchronousComparison extends Job {
 
                 // compare size
                 if (config.compareCompSize() && compilation != null) {
+                    BufferedReader br = null;
                     try {
-                        File f = new File(compilation);
+                        // measure file size in bytes
+                        File file = new File(compilation);
                         dataHandler.serialize(comparison,
-                                new CompSizeMeasuring(comp.getID(), test.getID(), f.length()));
-                    } catch (SecurityException e) {
+                                new CompSizeMeasuring(comp.getID(), test.getID(), file.length()));
+                        
+                        // measure file size in line of code
+                        br = new BufferedReader(new FileReader(file)); 
+                        int i = 0;
+                        while (br.readLine() != null) {
+                            i++;
+                        }
+                        dataHandler.serialize(comparison,
+                                new CompLoCMeasuring(comp.getID(), test.getID(), i));
+                    } catch (IOException e) {
                         e.printStackTrace();
+                    } finally {
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        monitor.worked(1);
                     }
-                    monitor.worked(1);
                 }
             }
         }
 
         // TODO execution
+        // input traces contain the file src file extension,
+        // e.g. /abro.sct and /abro.sct.in
 
         monitor.done();
 

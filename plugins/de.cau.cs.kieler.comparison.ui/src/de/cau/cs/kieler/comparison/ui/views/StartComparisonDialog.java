@@ -12,8 +12,11 @@
  */
 package de.cau.cs.kieler.comparison.ui.views;
 
+import java.beans.FeatureDescriptor;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -23,8 +26,11 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -59,6 +65,7 @@ public class StartComparisonDialog extends Dialog {
     private Button checkBoxCompSpeed;
     private Button checkBoxExecSpeed;
     private Button checkBoxCompSize;
+    private Button checkBoxFeasTestcases;
     private Text txtCompAmount;
     private Text txtExecAmount;
     private Combo cmbSrcLng;
@@ -72,8 +79,10 @@ public class StartComparisonDialog extends Dialog {
     private boolean execSpeed;
     private boolean compSpeed;
     private boolean compSize;
-    private Collection<ICompiler> compilers;
-    private Collection<ITestcase> testcases;
+    private Collection<ICompiler> compilers = new ArrayList<ICompiler>();
+    private Collection<ITestcase> testcases = new ArrayList<ITestcase>();
+    private Collection<String> cachedCompilers = new ArrayList<String>();
+    private ArrayList<String> cachedFilteredTestcases = new ArrayList<String>();
     private String outputPath;
 
     /**
@@ -110,14 +119,14 @@ public class StartComparisonDialog extends Dialog {
     public int getExecAmount() {
         return execAmount;
     }
-    
+
     /**
      * @return the compiler
      */
     public Collection<ICompiler> getCompilers() {
         return compilers;
     }
-    
+
     /**
      * @return the compiler
      */
@@ -152,57 +161,76 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    protected boolean isResizable() {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Point getInitialSize() {
+        return new Point(700, 600);
+    }
+
+    /**
      * @param container
      */
     private void createCompilerSelection(Composite container) {
-        
+
         String[] languageStrings = getLanguageStrings(true);
-        
+
         Group grp = new Group(container, SWT.BORDER);
         GridLayout layout = new GridLayout(2, true);
         grp.setLayout(layout);
         grp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         grp.setText("Compiler Selection");
-        
+
         new Label(grp, SWT.NONE).setText("Source Language:");
-        
+
         cmbSrcLng = new Combo(grp, SWT.DROP_DOWN | SWT.BORDER | SWT.READ_ONLY);
         cmbSrcLng.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         cmbSrcLng.setItems(languageStrings);
         cmbSrcLng.select(0);
-        cmbSrcLng.addSelectionListener(new SelectionListener() {
+        cmbSrcLng.addModifyListener(new ModifyListener() {
             
             @Override
-            public void widgetSelected(SelectionEvent e) {
+            public void modifyText(ModifyEvent e) {
                 filterCompilerSelection();
-            }
-            
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                
             }
         });
 
         new Label(grp, SWT.NONE).setText("Target Language:");
-        
+
         cmbTrgLng = new Combo(grp, SWT.DROP_DOWN | SWT.BORDER | SWT.READ_ONLY);
         cmbTrgLng.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         cmbTrgLng.setItems(languageStrings);
-        cmbTrgLng.select(0);
-        cmbTrgLng.addSelectionListener(new SelectionListener() {
+        cmbTrgLng.select(0);    
+        cmbTrgLng.addModifyListener(new ModifyListener() {
             
             @Override
-            public void widgetSelected(SelectionEvent e) {
+            public void modifyText(ModifyEvent e) {
                 filterCompilerSelection();
-            }
-            
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                
             }
         });
 
         lstCompilerSelection = new List(grp, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+        lstCompilerSelection.addSelectionListener(new SelectionListener() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                saveCompilers();
+                if (checkBoxFeasTestcases.getSelection())
+                    filterTestcaseSelection();
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+
+            }
+        });
 
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         int listHeight = lstCompilerSelection.getItemHeight() * 5;
@@ -217,26 +245,24 @@ public class StartComparisonDialog extends Dialog {
     private String[] getLanguageStrings(boolean withEmpty) {
         Language[] languages = Language.values();
         String[] languageStrings;
-        if (withEmpty)
-        {
+        if (withEmpty) {
             languageStrings = new String[languages.length + 1];
             languageStrings[0] = "";
-        } 
-        else {
+        } else {
             languageStrings = new String[languages.length];
         }
-        for (int i = 0; i < languages.length; i++){
+        for (int i = 0; i < languages.length; i++) {
             languageStrings[i + (withEmpty ? 1 : 0)] = Language.values()[i].toString();
         }
         return languageStrings;
     }
-    
+
     /**
      * 
      */
     private void filterCompilerSelection() {
 
-        HashMap<String, ICompiler> registered = Comparison.getRegisteredCompilers(false);
+        HashMap<String, ICompiler> registered = Comparison.getCompilers(false);
         String srcString = cmbSrcLng.getItem(cmbSrcLng.getSelectionIndex());
         Language src = null;
         if (srcString != null && srcString != "")
@@ -245,16 +271,16 @@ public class StartComparisonDialog extends Dialog {
         Language trg = null;
         if (trgString != null && trgString != "")
             trg = Language.valueOf(trgString);
-        
+
         Collection<String> filtered = new ArrayList<String>();
-        
+
         for (Entry<String, ICompiler> kv : registered.entrySet()) {
-            if ( (kv.getValue().getSrcLanguage() == src || src == null) 
-                && (kv.getValue().getTrgLanguage() == trg || trg == null)){
+            if ((kv.getValue().getSrcLanguage() == src || src == null)
+                    && (kv.getValue().getTrgLanguage() == trg || trg == null)) {
                 filtered.add(kv.getKey());
             }
         }
-        
+
         if (lstCompilerSelection != null)
             lstCompilerSelection.setItems(filtered.toArray(new String[filtered.size()]));
     }
@@ -267,7 +293,7 @@ public class StartComparisonDialog extends Dialog {
         GridLayout layout = new GridLayout(2, true);
         grp.setLayout(layout);
         grp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        grp.setText("Testcase Selection");       
+        grp.setText("Testcase Selection");
 
         new Label(grp, SWT.NONE).setText("Language:");
 
@@ -275,46 +301,137 @@ public class StartComparisonDialog extends Dialog {
         cmbTestcase.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         cmbTestcase.setItems(getLanguageStrings(false));
         cmbTestcase.select(0);
-        cmbTestcase.addSelectionListener(new SelectionListener() {
+        cmbTestcase.addModifyListener(new ModifyListener() {
             
             @Override
+            public void modifyText(ModifyEvent e) {
+                filterTestcaseSelection();
+            }
+        });
+
+        checkBoxFeasTestcases = new Button(grp, SWT.CHECK);
+        checkBoxFeasTestcases.setText("Show feasible testcases only");
+        checkBoxFeasTestcases.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+        checkBoxFeasTestcases.addSelectionListener(new SelectionListener() {
+
+            @Override
             public void widgetSelected(SelectionEvent e) {
+                cmbTestcase.setEnabled(!checkBoxFeasTestcases.getSelection());
                 filterTestcaseSelection();
             }
 
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
-                
+
             }
         });
 
-        lstTestcaseSelection= new List(grp, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
-        
+        lstTestcaseSelection = new List(grp, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         int listHeight = lstTestcaseSelection.getItemHeight() * 6;
         gridData.heightHint = lstTestcaseSelection.computeTrim(0, 0, 0, listHeight).height;
-        lstTestcaseSelection.setLayoutData(gridData); 
+        lstTestcaseSelection.setLayoutData(gridData);
         filterTestcaseSelection();
     }
-    
+
     /**
      * 
      */
     private void filterTestcaseSelection() {
 
-        HashMap<String, ITestcase> registered = Comparison.getRegisteredTestcases(false);
-        Language lng = Language.valueOf(cmbTestcase.getItem(cmbTestcase.getSelectionIndex()));
-        
-        Collection<String> filtered = new ArrayList<String>();
-        
-        for (Entry<String, ITestcase> kv : registered.entrySet()) {
-            if (kv.getValue().getLanguage() == lng){
-                filtered.add(kv.getKey());
+        HashMap<String, ITestcase> registered = Comparison.getTestcases(false);
+
+        // show feasible only
+        if (checkBoxFeasTestcases.getSelection()) {
+            // same compiler selection as the cached one?
+            if (!checkCachedCompilers()) {
+                // initialize new caching
+                cachedFilteredTestcases = new ArrayList<String>();
+                cachedCompilers = new ArrayList<String>();
+                for (ICompiler comp : compilers) {
+                    cachedCompilers.add(comp.getID());
+                }
+
+                // filter
+                for (Entry<String, ITestcase> kv : registered.entrySet()) {
+                    boolean allCompsHandled = true;
+                    for (ICompiler comp : compilers) {
+                        ITestcase testcase = kv.getValue();
+                        if (testcase.getLanguage() == comp.getSrcLanguage()) {
+                            boolean allPropsHandled = true;
+                            if (testcase.getProperties() != null) {
+                                for (String prop : testcase.getProperties()) {
+                                    boolean propHandled = false;
+                                    if (comp.getFeasibleProperties() != null) {
+                                        for (String compProp : comp.getFeasibleProperties()) {
+                                            if (compProp.equals(prop)) {
+                                                propHandled = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (!propHandled) {
+                                        allPropsHandled = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (!allPropsHandled) {
+                                allCompsHandled = false;
+                                break;
+                            }
+                        } else {
+                            allCompsHandled = false;
+                            break;
+                        }
+                    }
+                    if (allCompsHandled) {
+                        cachedFilteredTestcases.add(kv.getValue().getID());
+                    }
+                }
+
+            }
+
+            // sort testcases alphabetically 
+            cachedFilteredTestcases.sort(new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    return o1.compareTo(o2);
+                }
+            });
+
+            lstTestcaseSelection.setItems(cachedFilteredTestcases
+                    .toArray(new String[cachedFilteredTestcases.size()]));
+        }
+        // show only matching src language
+        else {
+            // TODO sort testcases
+            Language lng = Language.valueOf(cmbTestcase.getItem(cmbTestcase.getSelectionIndex()));
+            lstTestcaseSelection.removeAll();
+            for (Entry<String, ITestcase> kv : registered.entrySet()) {
+                if (kv.getValue().getLanguage() == lng) {
+                    lstTestcaseSelection.add(kv.getValue().getID());
+                }
             }
         }
-        
-        if (lstTestcaseSelection != null)
-            lstTestcaseSelection.setItems(filtered.toArray(new String[filtered.size()]));        
+    }
+
+    /**
+     * Checks if the cached compiler / testcase selection could be used
+     * 
+     * @return true, if cached compilers are the same as the ones currently selected
+     */
+    private boolean checkCachedCompilers() {
+        if (compilers.size() != cachedCompilers.size() || compilers.size() == 0)
+            return false;
+
+        for (ICompiler comp : compilers) {
+            if (!cachedCompilers.contains(comp.getID()))
+                return false;
+        }
+
+        return true;
     }
 
     /**
@@ -327,7 +444,7 @@ public class StartComparisonDialog extends Dialog {
         grp.setLayout(layout);
         grp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
         grp.setText("Comparison Configuration");
-        
+
         // Comp Speed
         checkBoxCompSpeed = new Button(grp, SWT.CHECK);
         checkBoxCompSpeed.setText("Compare Compilation Speed");
@@ -415,11 +532,13 @@ public class StartComparisonDialog extends Dialog {
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
             }
-        }); 
-        
-        new Label(grp, SWT.NONE).setText("Output path");;
+        });
+
+        new Label(grp, SWT.NONE).setText("Output path");
+        ;
         txtOutputPath = new Text(grp, SWT.BORDER);
-        txtOutputPath.setText(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString() + "/" );
+        txtOutputPath.setText(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString()
+                + "/");
         txtOutputPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
     }
 
@@ -453,14 +572,14 @@ public class StartComparisonDialog extends Dialog {
      * 
      */
     public void saveCompilers() {
-        HashMap<String, ICompiler> map = Comparison.getRegisteredCompilers(false);
+        HashMap<String, ICompiler> map = Comparison.getCompilers(false);
         String[] selection = lstCompilerSelection.getSelection();
         compilers = new ArrayList<ICompiler>();
-        for (int i = 0; i < lstCompilerSelection.getSelectionCount(); i++){
-            ICompiler comp = map.get(selection[i]); 
+        for (int i = 0; i < lstCompilerSelection.getSelectionCount(); i++) {
+            ICompiler comp = map.get(selection[i]);
             if (comp == null) {
                 // TODO besser machen
-                System.out.println("Compiler "+selection[i]+" not found!");
+                System.out.println("Compiler " + selection[i] + " not found!");
                 continue;
             }
             compilers.add(comp);
@@ -471,18 +590,18 @@ public class StartComparisonDialog extends Dialog {
      * 
      */
     private void saveTestcases() {
-        HashMap<String, ITestcase> map = Comparison.getRegisteredTestcases(false);
+        HashMap<String, ITestcase> map = Comparison.getTestcases(false);
         String[] selection = lstTestcaseSelection.getSelection();
         testcases = new ArrayList<ITestcase>();
-        for (int i = 0; i < lstTestcaseSelection.getSelectionCount(); i++){
-            ITestcase test = map.get(selection[i]); 
+        for (int i = 0; i < lstTestcaseSelection.getSelectionCount(); i++) {
+            ITestcase test = map.get(selection[i]);
             if (test == null) {
                 // TODO besser machen
-                System.out.println("Testcase "+selection[i]+" not found!");
+                System.out.println("Testcase " + selection[i] + " not found!");
                 continue;
             }
             testcases.add(test);
-        }        
+        }
     }
 
     /**

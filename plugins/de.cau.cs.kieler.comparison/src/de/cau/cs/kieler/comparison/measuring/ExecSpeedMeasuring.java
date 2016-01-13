@@ -10,30 +10,28 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.comparison.measurings;
+package de.cau.cs.kieler.comparison.measuring;
 
 
 /**
  * @author nfl
  *
  */
-public class CompError implements IMeasuring {
+public class ExecSpeedMeasuring implements IMeasuring {
 
     private String compiler;
     private String testcase;
-    private String message;
+    private long speed;
     
     /**
-     * @param compiler
-     * @param testcase
-     * @param message
+     * 
      */
-    public CompError(String compiler, String testcase, String message) {
+    public ExecSpeedMeasuring(String compiler, String testcase, long speed) {
         this.compiler = compiler;
         this.testcase = testcase;
-        this.message = message;
+        this.speed = speed;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -49,35 +47,21 @@ public class CompError implements IMeasuring {
     public String getTestcase() {
         return testcase;
     }
+    
+    /**
+     * 
+     * @return
+     */
+    public long getSpeed(){
+        return speed;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public String getCriteria() {
-        return "Error Message";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getMeasuringData() {
-        return message;
-    }
-
-    /**
-     * @return the message
-     */
-    public String getMessage() {
-        return message;
-    }
-
-    /**
-     * @param message the message to set
-     */
-    public void setMessage(String message) {
-        this.message = message;
+        return "Execution Speed";
     }
 
     /**
@@ -94,4 +78,18 @@ public class CompError implements IMeasuring {
         this.testcase = testcase;
     }
 
+    /**
+     * @param speed the speed to set
+     */
+    public void setSpeed(long speed) {
+        this.speed = speed;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getMeasuringData() {
+        return ""+speed;
+    }
 }

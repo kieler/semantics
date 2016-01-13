@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.comparison.measurings;
+package de.cau.cs.kieler.comparison.measuring;
 
 
 /**

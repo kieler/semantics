@@ -16,10 +16,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import de.cau.cs.kieler.comparison.core.CompilationException;
 import de.cau.cs.kieler.comparison.core.ICompiler;
+import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
+import de.cau.cs.kieler.comparison.core.LanguageProperties;
 import de.cau.cs.kieler.esterel.cec.CEC;
 
 /**
@@ -57,24 +61,39 @@ public class CEC2C implements ICompiler {
      */
     @Override
     public String compile(String srcFile, String outputPath) throws CompilationException {
-        
-        String ret = "";        
-        URI src = null;        
+
+        String ret = "";
+        URI src = null;
         File out = null;
-        
+
         try {
             out = new File(outputPath + "" + srcFile.substring(srcFile.lastIndexOf("/")) + ".c");
             src = new URI(srcFile);
         } catch (URISyntaxException | NullPointerException e) {
             throw new CompilationException("Source File not found");
         }
-        
+
         try {
             ret = CEC.run(src, out, null).getPath();
-        } catch (IOException e) {            
-            throw new CompilationException("Compilation failed: " + e.getMessage().replace("\n", ""));
+        } catch (IOException e) {
+            throw new CompilationException("Compilation failed: "
+                    + e.getMessage().replace("\n", ""));
         }
-        
+
+        return ret;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Collection<String> getFeasibleProperties() {
+        // TODO getFeasibleProperties 
+        Collection<String> ret = new ArrayList<String>();
+        ret.add(LanguageProperties.CYCLIC);
+        ret.add(LanguageProperties.LOGICALLY_CORRECT);
+        ret.add(LanguageProperties.CONSTRUCTIVE);
+        ret.add(LanguageProperties.VALUED);
         return ret;
     }
 

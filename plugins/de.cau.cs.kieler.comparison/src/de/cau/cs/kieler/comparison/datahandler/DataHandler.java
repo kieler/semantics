@@ -19,8 +19,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import de.cau.cs.kieler.comparison.exchanges.AbstractComparisonMeasurement;
-import de.cau.cs.kieler.comparison.measurings.IMeasuring;
+import de.cau.cs.kieler.comparison.exchange.AbstractComparisonMeasurement;
+import de.cau.cs.kieler.comparison.measuring.IMeasuring;
 
 /**
  * @author nfl

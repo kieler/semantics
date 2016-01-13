@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.comparison.exchanges;
+package de.cau.cs.kieler.comparison.exchange;
 
 import java.util.ArrayList;
 import java.util.Collection;

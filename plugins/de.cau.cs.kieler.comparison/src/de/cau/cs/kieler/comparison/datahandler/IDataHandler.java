@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.comparison.datahandler;
 
-import de.cau.cs.kieler.comparison.exchanges.AbstractComparisonMeasurement;
-import de.cau.cs.kieler.comparison.measurings.IMeasuring;
+import de.cau.cs.kieler.comparison.exchange.AbstractComparisonMeasurement;
+import de.cau.cs.kieler.comparison.measuring.IMeasuring;
 
 /**
  * @author nfl

@@ -3,7 +3,7 @@
 <schema targetNamespace="de.cau.cs.kieler.comparison" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="de.cau.cs.kieler.comparison" id="de.cau.cs.kieler.comparison.inputgenerator" name="Comparison InputGenerator"/>
+         <meta.schema plugin="de.cau.cs.kieler.comparison" id="de.cau.cs.kieler.comparison.testcaseprovider" name="Comparison Testcase Provider"/>
       </appinfo>
       <documentation>
          [Enter description of this extension point.]
@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <choice minOccurs="0" maxOccurs="unbounded">
-            <element ref="inputGeneratorClass" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="testcaseProviderClass" minOccurs="0" maxOccurs="unbounded"/>
          </choice>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -30,15 +30,15 @@
       </complexType>
    </element>
 
-   <element name="inputGeneratorClass">
+   <element name="testcaseProviderClass">
       <complexType>
-         <attribute name="class" type="string">
+         <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.comparison.interfaces.IInputGenerator"/>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.comparison.interfaces.ITestcaseProvider"/>
                </appinfo>
             </annotation>
          </attribute>

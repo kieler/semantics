@@ -11,5 +11,5 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
 Import-Package: de.cau.cs.kieler.comparison.core,
  de.cau.cs.kieler.comparison.datahandler,
- de.cau.cs.kieler.comparison.exchanges,
+ de.cau.cs.kieler.comparison.exchange,
  org.eclipse.core.resources

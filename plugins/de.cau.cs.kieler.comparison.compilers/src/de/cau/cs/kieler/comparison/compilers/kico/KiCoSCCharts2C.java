@@ -16,6 +16,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -24,7 +26,9 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import de.cau.cs.kieler.comparison.core.CompilationException;
 import de.cau.cs.kieler.comparison.core.ICompiler;
+import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
+import de.cau.cs.kieler.comparison.core.LanguageProperties;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -104,5 +108,17 @@ public class KiCoSCCharts2C implements ICompiler {
             }            
         }
         return out.toURI().getPath();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Collection<String> getFeasibleProperties() {
+        // TODO getFeasibleProperties 
+        Collection<String> ret = new ArrayList<String>();
+        ret.add(LanguageProperties.CYCLIC);
+        ret.add(LanguageProperties.DETERMINISTIC);
+        return ret;
     }
 }

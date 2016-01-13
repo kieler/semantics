@@ -12,7 +12,7 @@
             name="Comparison Data View"
             icon="icons/sample.gif"
             category="de.cau.cs.kieler.comparison.ui"
-            class="de.cau.cs.kieler.comparison.ui.views.DataView"
+            class="de.cau.cs.kieler.comparison.ui.views.ComparisonDataView"
             id="de.cau.cs.kieler.comparison.ui.views.DataView">
       </view>
    </extension>

@@ -16,13 +16,13 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
-import de.cau.cs.kieler.comparison.exchanges.Testbench;
+import de.cau.cs.kieler.comparison.exchange.Testbench;
 
 /**
  * @author nfl
  *
  */
-public class DataViewLabelProvider implements ITableLabelProvider {
+public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
 
     /**
      * {@inheritDoc}

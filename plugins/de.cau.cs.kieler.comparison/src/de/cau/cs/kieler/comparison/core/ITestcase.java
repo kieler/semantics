@@ -12,16 +12,35 @@
  */
 package de.cau.cs.kieler.comparison.core;
 
-
+import java.util.Collection;
 
 /**
+ * 
  * @author nfl
- *
  */
 public interface ITestcase {
 
+    /**
+     * 
+     * @return
+     */
     public String getID();
+
+    /**
+     * 
+     * @return
+     */
     public Language getLanguage();
+
+    /**
+     * 
+     * @return
+     */
     public String getTestcase();
-    public String getInputTrace();
+
+    /**
+     * 
+     * @return
+     */
+    public Collection<String> getProperties();
 }
