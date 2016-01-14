@@ -40,37 +40,45 @@ import de.cau.cs.kieler.comparison.exchange.ComparisonConfig;
  * 
  * @author nfl
  */
-public class Comparison {
+public final class Comparison {
 
+    /**
+     * Identifier for the ICompiler extension point.
+     */
     public static final String COMPILER_EXTENSION_POINT_ID = "de.cau.cs.kieler.comparison.compiler";
+
+    /**
+     * Identifier for the ITestcaseProvider extension point.
+     */
     public static final String TESTCASEPROVIDER_EXTENSION_POINT_ID =
             "de.cau.cs.kieler.comparison.testcaseprovider";
 
     /**
-     * Private constructor for singleton pattern
+     * Private constructor for singleton pattern.
      */
     private Comparison() {
 
     }
 
     /**
-     * The singleton instance of this class
+     * The singleton instance of this class.
      */
     private static Comparison singleton;
 
     /**
-     * Get the singleton instance of Comparison
+     * Get the singleton instance of Comparison.
      * 
      * @return Singleton Comparison
      */
     public static Comparison getComparison() {
-        if (singleton == null)
+        if (singleton == null) {
             singleton = new Comparison();
+        }
         return singleton;
     }
 
     /**
-     * The only comparison execution
+     * The only comparison execution.
      */
     private Job comparisonJob;
 
@@ -82,14 +90,15 @@ public class Comparison {
      *            configuration for the comparison
      * @return a string to identify the completed comparison
      */
-    public String startComparison(ComparisonConfig config) {
+    public String startComparison(final ComparisonConfig config) {
 
         // Generate an identifier for this comparison
         String start = config.getOutputPath() + new Date().toString() + ".JSON";
 
         // Stop currently running comparison
-        if (comparisonJob != null && comparisonJob.getResult() == null)
+        if (comparisonJob != null && comparisonJob.getResult() == null) {
             comparisonJob.cancel();
+        }
 
         // Initiate and start a new comparison job
         comparisonJob = new AsynchronousComparison(config, start);
@@ -98,7 +107,7 @@ public class Comparison {
     }
 
     /**
-     * The cache for the compilers
+     * The cache for the compilers.
      */
     private static HashMap<String, ICompiler> compilersCached;
 
@@ -111,7 +120,7 @@ public class Comparison {
      *            if true, the cache will be refreshed; otherwise the cache my be used
      * @return a HashMap with all registered compilers
      */
-    public static HashMap<String, ICompiler> getCompilers(boolean forceReload) {
+    public static HashMap<String, ICompiler> getCompilers(final boolean forceReload) {
 
         // Return the cache if there is any and not forced to reload
         if (compilersCached != null && !forceReload) {
@@ -150,7 +159,7 @@ public class Comparison {
     }
 
     /**
-     * The cache for the test cases
+     * The cache for the test cases.
      */
     private static HashMap<String, ITestcase> testcasesCached;
 
@@ -166,7 +175,7 @@ public class Comparison {
      *            if true, the cache will be refreshed; otherwise the cache my be used
      * @return a HashMap with all test cases
      */
-    public static HashMap<String, ITestcase> getTestcases(boolean forceReload) {
+    public static HashMap<String, ITestcase> getTestcases(final boolean forceReload) {
 
         // Return the cache if there is any and not forced to reload
         if (testcasesCached != null && !forceReload) {
@@ -195,21 +204,31 @@ public class Comparison {
         Collection<String> extensions = new ArrayList<String>();
         for (ITestcaseProvider provider : providers) {
             String ext = provider.getExtension().toLowerCase();
-            if (!extensions.contains(ext))
+            if (!extensions.contains(ext)) {
                 extensions.add(ext);
+            }
         }
 
         // Filter used while iterating through the files
         FileFilter filter = new FileFilter() {
             @Override
-            public boolean accept(File pathname) {
-                if (pathname.isDirectory())
+            public boolean accept(final File pathname) {
+                if (pathname.isDirectory()) {
                     return true;
-                for (String ext : extensions) {
-                    String path = pathname.getAbsolutePath();
-                    if (path.substring(path.length() - ext.length()).toLowerCase().equals(ext))
-                        return true;
                 }
+                String path = pathname.getAbsolutePath();
+                for (String ext : extensions) {
+                    int index = path.length() - ext.length();
+                    if (0 <= index && index < path.length()
+                            && path.substring(index).toLowerCase().equals(ext.toLowerCase())) {
+                        return true;
+                    }
+                }
+                // ignore input files
+                if (path.length() > 2 && path.substring(path.length() - 3).equals(".in")) {
+                    return false;
+                }
+                
                 // TODO better error logging
                 System.out.println("No ITestcaseProvider for Testcase "
                         + pathname.getAbsolutePath() + " found.");
@@ -292,13 +311,14 @@ public class Comparison {
      * @param from
      *            the collection to insert from
      */
-    private static void insertTestcases(Collection<ITestcase> into, Collection<ITestcase> from) {
+    private static void insertTestcases(Collection<ITestcase> into, final Collection<ITestcase> from) {
         if (into == null) {
             into = from;
             return;
         }
-        if (from == null)
+        if (from == null) {
             return;
+        }
 
         // Insert all the ITestcase from one list to another
         for (ITestcase newTest : from) {
@@ -327,11 +347,13 @@ public class Comparison {
      * if both test cases have the same file path, Language and identifier. In that case both lists
      * of properties are getting merged into a single one.
      * 
-     * @param first the first test case to merge into
-     * @param second the second test case to merge from
+     * @param first
+     *            the first test case to merge into
+     * @param second
+     *            the second test case to merge from
      * @return true, if the merge was successful; false otherwise
      */
-    private static boolean mergeTestcases(ITestcase first, ITestcase second) {
+    private static boolean mergeTestcases(ITestcase first, final ITestcase second) {
         // Only merge the test cases if both have the same file path ...
         if (first.getTestcase().equals(second.getTestcase())) {
             // ... and the same Language
@@ -340,15 +362,16 @@ public class Comparison {
                 System.out.println("ITestcase (" + second.getID() + ", " + second.getTestcase()
                         + ") could not be merged with an existing testcase: "
                         + "Language is not the same");
-            } 
+            }
             // ... and the same ID
             else if (!first.getID().equals(second.getID())) {
                 // TODO better error logging
                 System.out.println("ITestcase (" + second.getID() + ", " + second.getTestcase()
                         + ") could not be merged with an existing testcase: "
                         + "ID is not the same");
-            } 
-            // All requirements met, therefore insert the properties of the second into the first one
+            }
+            // All requirements met, therefore insert the properties of the second into the first
+            // one
             else {
                 insertProperties(first.getProperties(), second.getProperties());
                 return true;
@@ -365,34 +388,36 @@ public class Comparison {
      * @param from
      *            the collection to insert from
      */
-    private static void insertProperties(Collection<String> into, Collection<String> from) {
+    private static void insertProperties(Collection<String> into, final Collection<String> from) {
         if (into == null) {
             into = from;
             return;
         }
-        if (from == null)
+        if (from == null) {
             return;
+        }
         for (String newProp : from) {
-            if (!into.contains(newProp))
+            if (!into.contains(newProp)) {
                 into.add(newProp);
+            }
         }
     }
 
     /**
-     * The cache for the test case provider
+     * The cache for the test case provider.
      */
     private static HashMap<String, ITestcaseProvider> testcaseProvidersCached;
 
     /**
-     * Used to get a collection of all test case providers. The collection consist of KeyValuePairs, where
-     * the value is an instance of ITestcaseProvider and the key is an identifier for this provider as
-     * String. This method uses caching for optimization. 
+     * Used to get a collection of all test case providers. The collection consist of KeyValuePairs,
+     * where the value is an instance of ITestcaseProvider and the key is an identifier for this
+     * provider as String. This method uses caching for optimization.
      * 
      * @param forceReload
      *            if true, the cache will be refreshed; otherwise the cache my be used
      * @return a HashMap with all test cases
      */
-    public static HashMap<String, ITestcaseProvider> getTestcaseProviders(boolean forceReload) {
+    public static HashMap<String, ITestcaseProvider> getTestcaseProviders(final boolean forceReload) {
         // Return the cache if there is any and not forced to reload
         if (testcaseProvidersCached != null && !forceReload) {
             return testcaseProvidersCached;

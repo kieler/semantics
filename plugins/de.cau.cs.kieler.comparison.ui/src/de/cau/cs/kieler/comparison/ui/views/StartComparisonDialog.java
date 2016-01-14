@@ -174,6 +174,14 @@ public class StartComparisonDialog extends Dialog {
     protected Point getInitialSize() {
         return new Point(700, 600);
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    protected void configureShell(Shell shell) {
+        super.configureShell(shell);
+        shell.setText("Compiler Comparison");
+     }
 
     /**
      * @param container
@@ -365,7 +373,7 @@ public class StartComparisonDialog extends Dialog {
                                     boolean propHandled = false;
                                     if (comp.getFeasibleProperties() != null) {
                                         for (String compProp : comp.getFeasibleProperties()) {
-                                            if (compProp.equals(prop)) {
+                                            if (compProp.toLowerCase().equals(prop.toLowerCase())) {
                                                 propHandled = true;
                                                 break;
                                             }

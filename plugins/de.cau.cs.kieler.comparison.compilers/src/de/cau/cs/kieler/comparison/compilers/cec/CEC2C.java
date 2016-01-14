@@ -91,8 +91,10 @@ public class CEC2C implements ICompiler {
         // TODO getFeasibleProperties 
         Collection<String> ret = new ArrayList<String>();
         ret.add(LanguageProperties.CYCLIC);
-        ret.add(LanguageProperties.LOGICALLY_CORRECT);
+        ret.add(LanguageProperties.ACYCLIC);
+        ret.add(LanguageProperties.NON_CONSTRUCTIVE);
         ret.add(LanguageProperties.CONSTRUCTIVE);
+        ret.add(LanguageProperties.PURE);
         ret.add(LanguageProperties.VALUED);
         return ret;
     }
