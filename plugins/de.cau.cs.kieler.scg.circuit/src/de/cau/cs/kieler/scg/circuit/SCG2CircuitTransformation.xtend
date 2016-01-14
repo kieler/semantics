@@ -19,9 +19,31 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.circuit.CircuitFactory
 import de.cau.cs.kieler.scg.Node
 import java.util.List
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.scg.features.SCGFeatures
 
-class SCG2CircuitTransformation {
+class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    
+    override getId() {
+        return CircuitTransformation::SCG2CIRCUIT_ID
+    }
+
+    override getName() {
+        return CircuitTransformation::SCG2CIRCUIT_NAME
+    }
+
+    override getProducedFeatureId() {
+        return CircuitFeatures::CIRCUIT_ID
+    }
+
+    override getRequiredFeatureIds() {
+        return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
+    }
+    
 	@Inject
 	extension SCGCoreExtensions
 

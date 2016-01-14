@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kico.feature">
+      <featureGroupClass
+            class="de.cau.cs.kieler.scg.circuit.CircuitFeatureGroup">
+      </featureGroupClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.circuit.CircuitFeature">
+      </featureClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.circuit.SCG2CircuitTransformation">
+      </productionTransformationClass>
+   </extension>
+
+</plugin>

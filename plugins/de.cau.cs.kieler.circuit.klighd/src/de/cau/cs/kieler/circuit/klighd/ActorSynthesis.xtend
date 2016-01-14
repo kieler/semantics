@@ -33,7 +33,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 	@Inject
 	LinkSynthesis linkSynthesis
-	
+
 	@Inject extension KNodeExtensions
 	@Inject extension KLabelExtensions
 	@Inject extension KRenderingExtensions
@@ -43,41 +43,48 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	override KNode transform(Actor actor) {
 
 		val Boolean atomicActor = !(actor.innerActors.toList.length > 0)
-		var actorNode = actor.node; /////getNode nicht createNode()
-
+		var actorNode = actor.node; // ///getNode nicht createNode()
 		// if actor is a gate create it otherwise draw a simple frame
 		if (atomicActor) {
-			switch (actor.type) {
-				case "AND":
-					actorNode = andActorSynthesis.draw(actor)
-				case "OR":
-					actorNode = orActorSynthesis.draw(actor)
-				case "NOT":
-					actorNode = notActorSynthesis.draw(actor)
-				case "REG":
-					actorNode = registerActorSynthesis.draw(actor)
-				default: {
-					actorNode.addRoundedRectangle(4, 4, 2)
-					actorNode.addInsideBottomLeftNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE,
-						KlighdConstants.DEFAULT_FONT_NAME)
-					actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
-						EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+			if (actor.type == null) {
+				actorNode.addRoundedRectangle(4, 4, 2)
+				actorNode.addInsideBottomLeftNodeLabel("typeIsNull", KlighdConstants.DEFAULT_FONT_SIZE,
+					KlighdConstants.DEFAULT_FONT_NAME)
+				actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
+					EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+			} else {
+				switch (actor.type) {
+					case "AND":
+						actorNode = andActorSynthesis.draw(actor)
+					case "OR":
+						actorNode = orActorSynthesis.draw(actor)
+					case "NOT":
+						actorNode = notActorSynthesis.draw(actor)
+					case "REG":
+						actorNode = registerActorSynthesis.draw(actor)
+					default: {
+						actorNode.addRoundedRectangle(4, 4, 2)
+						actorNode.addInsideBottomLeftNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE,
+							KlighdConstants.DEFAULT_FONT_NAME)
+						actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
+							EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+					}
 				}
+
 			}
 		} else {
 			// rendering for simple frame
 			actorNode.addRoundedRectangle(4, 4, 2);
-			actorNode.addInsideBottomLeftNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE,
+			actorNode.addInsideBottomLeftNodeLabel("nullTypeButNotAtomar", KlighdConstants.DEFAULT_FONT_SIZE,
 				KlighdConstants.DEFAULT_FONT_NAME);
 			actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 				EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 		}
-		
+
 //		// Transform all outgoing transitions
 //        for (link : actor.outgoingLinks) {
 //            actorNode.outgoingEdges += linkSynthesis.transformLink(link);
 //        }
-		
 		return actorNode;
 
 	}

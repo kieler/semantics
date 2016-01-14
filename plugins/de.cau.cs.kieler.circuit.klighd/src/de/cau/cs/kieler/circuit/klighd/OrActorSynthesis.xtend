@@ -17,14 +17,14 @@ class OrActorSynthesis implements IDrawableActor  {
     
 	
 	override draw(Actor actor) {
-		val KNode andNode = actor.node
+		val KNode orNode = actor.node
 		
-		andNode.setNodeSize(40, 40);
-		andNode.addInsideBottomCenteredNodeLabel("||", KlighdConstants.DEFAULT_FONT_SIZE,
+		orNode.setNodeSize(40, 40);
+		orNode.addInsideBottomCenteredNodeLabel("||", KlighdConstants.DEFAULT_FONT_SIZE,
 				KlighdConstants.DEFAULT_FONT_NAME);
 
 		
-		return andNode;
+		return orNode;
 	}
 	
 }

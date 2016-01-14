@@ -17,14 +17,14 @@ class RegisterActorSynthesis implements IDrawableActor  {
     
 	
 	override draw(Actor actor) {
-		val KNode andNode = createNode();
+		val KNode regNode = actor.node;
 		
-		andNode.setNodeSize(40, 40);
-		andNode.addInsideBottomCenteredNodeLabel("R", KlighdConstants.DEFAULT_FONT_SIZE,
+		regNode.setNodeSize(40, 40);
+		regNode.addInsideBottomCenteredNodeLabel("R", KlighdConstants.DEFAULT_FONT_SIZE,
 				KlighdConstants.DEFAULT_FONT_NAME);
 
 		
-		return andNode;
+		return regNode;
 	}
 	
 }

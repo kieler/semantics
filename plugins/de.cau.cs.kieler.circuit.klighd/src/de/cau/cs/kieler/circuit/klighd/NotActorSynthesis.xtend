@@ -17,14 +17,14 @@ class NotActorSynthesis implements IDrawableActor  {
     
 	
 	override draw(Actor actor) {
-		val KNode andNode = createNode();
+		val KNode notNode = actor.node;
 		
-		andNode.setNodeSize(40, 40);
-		andNode.addInsideBottomCenteredNodeLabel("1", KlighdConstants.DEFAULT_FONT_SIZE,
+		notNode.setNodeSize(40, 40);
+		notNode.addInsideBottomCenteredNodeLabel("1", KlighdConstants.DEFAULT_FONT_SIZE,
 				KlighdConstants.DEFAULT_FONT_NAME);
 
 		
-		return andNode;
+		return notNode;
 	}
 	
 }
