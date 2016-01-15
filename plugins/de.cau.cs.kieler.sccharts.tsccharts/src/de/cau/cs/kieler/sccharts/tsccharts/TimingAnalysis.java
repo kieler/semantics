@@ -437,9 +437,6 @@ public class TimingAnalysis extends Job {
              return new Status(IStatus.ERROR, pluginId, "Files could not be refreshed.");
          }
 
-        // Write the generated code to file
-        String codeTargetFile = uriString.replace(".sct", ".c");
-        String codeTargetFilePath = codeTargetFile.replace("file:", "");
         // Workaround for validation with David Broman's tool that does not handle chars:
         String codeInt = code.replace("char", "int");
         code = codeInt;
@@ -460,7 +457,7 @@ public class TimingAnalysis extends Job {
                 code.replace("***/\nint", "***/" + codeAdditionBuilder.toString() + "\nint");
         code = codeAdapted;
 
-        fileWriter.writeToFile(code, codeTargetFilePath);
+        fileWriter.writeToFile(code, targetCodeLocationString);
 
         // Generate the timing request file with the assumptions
         StringBuilder stringBuilder = new StringBuilder();
