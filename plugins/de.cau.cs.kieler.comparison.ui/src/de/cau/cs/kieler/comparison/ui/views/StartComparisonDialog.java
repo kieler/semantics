@@ -174,14 +174,14 @@ public class StartComparisonDialog extends Dialog {
     protected Point getInitialSize() {
         return new Point(700, 600);
     }
-    
+
     /**
      * {@inheritDoc}
      */
     protected void configureShell(Shell shell) {
         super.configureShell(shell);
         shell.setText("Compiler Comparison");
-     }
+    }
 
     /**
      * @param container
@@ -203,7 +203,7 @@ public class StartComparisonDialog extends Dialog {
         cmbSrcLng.setItems(languageStrings);
         cmbSrcLng.select(0);
         cmbSrcLng.addModifyListener(new ModifyListener() {
-            
+
             @Override
             public void modifyText(ModifyEvent e) {
                 filterCompilerSelection();
@@ -215,9 +215,9 @@ public class StartComparisonDialog extends Dialog {
         cmbTrgLng = new Combo(grp, SWT.DROP_DOWN | SWT.BORDER | SWT.READ_ONLY);
         cmbTrgLng.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         cmbTrgLng.setItems(languageStrings);
-        cmbTrgLng.select(0);    
+        cmbTrgLng.select(0);
         cmbTrgLng.addModifyListener(new ModifyListener() {
-            
+
             @Override
             public void modifyText(ModifyEvent e) {
                 filterCompilerSelection();
@@ -310,7 +310,7 @@ public class StartComparisonDialog extends Dialog {
         cmbTestcase.setItems(getLanguageStrings(false));
         cmbTestcase.select(0);
         cmbTestcase.addModifyListener(new ModifyListener() {
-            
+
             @Override
             public void modifyText(ModifyEvent e) {
                 filterTestcaseSelection();
@@ -340,6 +340,26 @@ public class StartComparisonDialog extends Dialog {
         int listHeight = lstTestcaseSelection.getItemHeight() * 6;
         gridData.heightHint = lstTestcaseSelection.computeTrim(0, 0, 0, listHeight).height;
         lstTestcaseSelection.setLayoutData(gridData);
+        // TODO remove debug listener
+        lstTestcaseSelection.addSelectionListener(new SelectionListener() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                for (String test : lstTestcaseSelection.getSelection()) {
+                    for (ITestcase testcase : Comparison.getTestcases(false).values()) {
+                        if (testcase.getID().equals(test)) {
+                            System.out.println(testcase.getTestcase() + ": "+ testcase.getProperties());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+        });
         filterTestcaseSelection();
     }
 
@@ -401,7 +421,7 @@ public class StartComparisonDialog extends Dialog {
 
             }
 
-            // sort testcases alphabetically 
+            // sort testcases alphabetically
             cachedFilteredTestcases.sort(new Comparator<String>() {
                 @Override
                 public int compare(String o1, String o2) {

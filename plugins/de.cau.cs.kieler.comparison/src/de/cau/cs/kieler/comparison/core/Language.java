@@ -14,7 +14,6 @@ package de.cau.cs.kieler.comparison.core;
 
 /**
  * @author nfl
- *
  */
 public enum Language {
 
@@ -22,5 +21,23 @@ public enum Language {
     Esterel,
     Java,
     C,
-    ExecutableCode
+    ExecutableCode;
+
+    public static Language fromExtension(String extension) throws LanguageException {
+        if (extension != null) {
+            switch (extension) {
+            case ".sct":
+                return SCCharts;
+            case ".strl":
+                return Esterel;
+            case ".java":
+                return Java;
+            case ".c":
+                return C;
+
+            default:
+            }
+        }
+        throw new LanguageException("Language could not be parsed from extension " + extension);
+    }
 }

@@ -118,7 +118,12 @@ public class KiCoSCCharts2C implements ICompiler {
         // TODO getFeasibleProperties 
         Collection<String> ret = new ArrayList<String>();
         ret.add(LanguageProperties.CYCLIC);
-        ret.add(LanguageProperties.DETERMINISTIC);
+        ret.add(LanguageProperties.ACYCLIC);
+        ret.add(LanguageProperties.NON_CONSTRUCTIVE);
+        ret.add(LanguageProperties.CONSTRUCTIVE);
+        ret.add(LanguageProperties.PURE);
+        ret.add(LanguageProperties.VALUED);
+        ret.add(LanguageProperties.SEQUENTIALLY_CONSTRUCTIVE);
         return ret;
     }
 }

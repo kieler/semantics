@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.comparison.testcaseprovider;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -44,7 +45,7 @@ public class Testcase implements ITestcase {
     }
 
     /**
-     * @param testcase the testcase to set
+     * @param testcase the test case to set
      */
     public void setTestcase(String testcase) {
         this.testcase = testcase;
@@ -87,6 +88,38 @@ public class Testcase implements ITestcase {
     @Override
     public Collection<String> getProperties() {
         return properties;
+    }
+
+    /**
+     * Creates a new Testcase without a Language from a csv String.
+     * 
+     * @param testcaseLine the test case encoded as comma separated values
+     * @param testcaseLine 
+     * @return null, if the csv string could not be parsed; the created test case otherwise
+     */
+    public static Testcase fromCsvString(String filePath, String testcaseLine) {
+
+        if (testcaseLine == null || testcaseLine.isEmpty())
+            return null;
+        
+        Testcase testcase = new Testcase();
+        String[] values = testcaseLine.split(",");
+        
+        try {
+            // TODO relative path
+            testcase.setTestcase(filePath + File.separator + values[0]);
+            testcase.setID(values[1]);
+            Collection<String> props = new ArrayList<String>();
+            for (int i = 2; i < values.length; i++) {
+                props.add(values[i]);
+            }
+            testcase.setProperties(props);            
+        } catch (IndexOutOfBoundsException e) {
+            // parsing the csv failed: return null
+            return null;
+        }
+        
+        return testcase;
     }
 
 }

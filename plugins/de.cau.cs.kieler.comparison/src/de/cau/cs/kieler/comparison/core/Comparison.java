@@ -254,14 +254,19 @@ public final class Comparison {
                 for (ITestcaseProvider provider : providers) {
                     // extensions are not handled case sensitive
                     String ext = provider.getExtension().toLowerCase();
-                    String filePath = file.getAbsolutePath();
-                    int fileLength = filePath.length();
-                    int index = fileLength - ext.length();
+                    String fileName = file.getName();
+                    int nameLength = fileName.length();
+                    int index = nameLength - ext.length();
                     // Check if the provider can handle the current file extension
-                    if (index >= 0 && index < fileLength
-                            && filePath.substring(index).toLowerCase().equals(ext)) {
+                    if (index >= 0 && index < nameLength
+                            && fileName.substring(index).toLowerCase().equals(ext)) {
+                        // Try so resolve the file path
+                        try {
+                            file = file.getCanonicalFile();
+                        } catch (IOException e) {
+                        }
                         // Try to create new test cases with the current provider
-                        Collection<ITestcase> newTestcases = provider.createTestcases(filePath);
+                        Collection<ITestcase> newTestcases = provider.createTestcases(file.getParent() ,fileName);
                         // If the provider created new test cases, add them to the list of test
                         // cases
                         if (newTestcases != null && newTestcases.size() > 0) {
@@ -312,6 +317,7 @@ public final class Comparison {
      *            the collection to insert from
      */
     private static void insertTestcases(Collection<ITestcase> into, final Collection<ITestcase> from) {
+        
         if (into == null) {
             into = from;
             return;
@@ -329,9 +335,8 @@ public final class Comparison {
                 if (existingTest.getTestcase().equals(testPath)) {
                     // If a test case with the same path already exists within the first list, try
                     // to merge the two cases into the one already contained within the list
-                    if (mergeTestcases(existingTest, newTest)) {
-                        inserted = true;
-                    }
+                    mergeTestcases(existingTest, newTest);
+                    inserted = true;
                     break;
                 }
             }
@@ -354,6 +359,7 @@ public final class Comparison {
      * @return true, if the merge was successful; false otherwise
      */
     private static boolean mergeTestcases(ITestcase first, final ITestcase second) {
+        
         // Only merge the test cases if both have the same file path ...
         if (first.getTestcase().equals(second.getTestcase())) {
             // ... and the same Language

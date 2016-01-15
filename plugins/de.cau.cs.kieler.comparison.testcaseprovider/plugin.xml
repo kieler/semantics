@@ -9,6 +9,9 @@
       <testcaseProviderClass
             class="de.cau.cs.kieler.comparison.testcaseprovider.StrlDirectoryProvider">
       </testcaseProviderClass>
+      <testcaseProviderClass
+            class="de.cau.cs.kieler.comparison.testcaseprovider.CsvTestcaseProvider">
+      </testcaseProviderClass>
    </extension>
 
 </plugin>

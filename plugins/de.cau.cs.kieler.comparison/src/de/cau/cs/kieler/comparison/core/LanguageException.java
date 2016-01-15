@@ -12,30 +12,18 @@
  */
 package de.cau.cs.kieler.comparison.core;
 
-import java.util.Collection;
-
 /**
  * @author nfl
+ *
  */
-public interface ITestcaseProvider {
+public class LanguageException extends Exception {
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6961053620099419662L;
 
-    /**
-     * 
-     * @return
-     */
-    public String getID();
-    
-    /**
-     * 
-     * @return
-     */
-    public String getExtension();
-    
-    /**
-     * 
-     * @param path
-     * @param name 
-     * @return 
-     */
-    public Collection<ITestcase> createTestcases(String path, String name);
+    public LanguageException(String message){
+        super(message);
+    }
 }
