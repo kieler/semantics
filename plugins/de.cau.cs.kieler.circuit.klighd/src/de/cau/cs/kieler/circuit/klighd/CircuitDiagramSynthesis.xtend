@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import javax.inject.Inject
 import de.cau.cs.kieler.circuit.Port
+import de.cau.cs.kieler.circuit.CircuitFactory
 
 class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
@@ -31,10 +32,19 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
 	override KNode transform(Actor model) {
+		
+		
+		
 		val root = createNode().associateWith(model);
-
-		// transformActor(model, root);
-		model.transformActor(root);
+		model.transformActor(root); //choose this if solution with two big frames is not optimal
+		
+	
+		
+//		val circActor = CircuitFactory::eINSTANCE.createActor;
+//		val ca = createNode().associateWith(circActor)
+//		root.children += ca
+//		// transformActor(model, root);
+//		model.transformActor(ca);
 
 //		val links = model.eAllContents.filter(typeof(Link)).toIterable.toList;
 //		for (link : links) {
@@ -46,10 +56,8 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	// create a KNode for an Actor
 	def void transformActor(Actor actor, KNode parent) {
 
-		// from tutorials of klighD snythesis to be sure actors already exist when links are created
-		// private def create actorNode : actor.createNode() transformActor(Actor actor, KNode parent) {
-		// actorNode.associateWith(actor);
-		// draw actors and attach it to parent
+		
+		// draw actors and attach them to parent
 		val actorNode = actorSynthesis.transform(actor) // actor.createNode().associateWith(actor)
 		parent.children += actorNode
 

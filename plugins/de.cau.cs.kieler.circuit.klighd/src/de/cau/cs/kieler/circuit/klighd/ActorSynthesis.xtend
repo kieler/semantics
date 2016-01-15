@@ -43,13 +43,22 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	override KNode transform(Actor actor) {
 
 		val Boolean atomicActor = !(actor.innerActors.toList.length > 0)
+		val hasType = !(actor.type == null)
+		val hasName = !(actor.name == null)
 		var actorNode = actor.node; // ///getNode nicht createNode()
 		// if actor is a gate create it otherwise draw a simple frame
 		if (atomicActor) {
-			if (actor.type == null) {
+			if (!hasType) {
 				actorNode.addRoundedRectangle(4, 4, 2)
 				actorNode.addInsideBottomLeftNodeLabel("typeIsNull", KlighdConstants.DEFAULT_FONT_SIZE,
 					KlighdConstants.DEFAULT_FONT_NAME)
+				if (hasName) {
+					actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
+						KlighdConstants.DEFAULT_FONT_NAME);
+				} else {
+					actorNode.addOutsideBottomLeftNodeLabel("noName", KlighdConstants.DEFAULT_FONT_SIZE,
+						KlighdConstants.DEFAULT_FONT_NAME)
+				}
 				actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 					EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 			} else {
@@ -66,6 +75,13 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 						actorNode.addRoundedRectangle(4, 4, 2)
 						actorNode.addInsideBottomLeftNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE,
 							KlighdConstants.DEFAULT_FONT_NAME)
+						if (hasName) {
+							actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
+								KlighdConstants.DEFAULT_FONT_NAME);
+						} else {
+							actorNode.addOutsideBottomLeftNodeLabel("noName", KlighdConstants.DEFAULT_FONT_SIZE,
+								KlighdConstants.DEFAULT_FONT_NAME)
+						}
 						actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 							EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 					}
@@ -77,6 +93,13 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 			actorNode.addRoundedRectangle(4, 4, 2);
 			actorNode.addInsideBottomLeftNodeLabel("nullTypeButNotAtomar", KlighdConstants.DEFAULT_FONT_SIZE,
 				KlighdConstants.DEFAULT_FONT_NAME);
+			if (hasName) {
+					actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
+						KlighdConstants.DEFAULT_FONT_NAME);
+				} else {
+					actorNode.addOutsideBottomLeftNodeLabel("noName", KlighdConstants.DEFAULT_FONT_SIZE,
+						KlighdConstants.DEFAULT_FONT_NAME)
+				}
 			actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 				EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 		}
