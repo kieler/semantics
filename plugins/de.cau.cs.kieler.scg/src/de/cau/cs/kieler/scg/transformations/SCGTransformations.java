@@ -43,7 +43,10 @@ public class SCGTransformations {
 
     public final static String SEQUENTIALIZE_ID = "scg.sequentialize";
     public final static String SEQUENTIALIZE_NAME = "Sequentialize";
-    
+
     public final static String SCPDG_ID = "scg.scpdg";
     public final static String SCPDG_NAME = "SCPDG";
+    
+    public final static String SHIZO_ID = "scg.schizo";
+    public final static String SHIZO_NAME = "Shizophrenia";
 }

@@ -33,11 +33,11 @@ class Shizo extends Feature {
     //-------------------------------------------------------------------------
 	
 	override getId() {
-		"scg.shizo"
+		return SCGFeatures::SHIZO_ID
 	}
 
     override getName() {
-        "Shizo"
+		return SCGFeatures::SHIZO_NAME
     }
 
     //-------------------------------------------------------------------------

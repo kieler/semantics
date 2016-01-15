@@ -84,7 +84,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet("scg.shizo")
+        return newHashSet(SCGFeatures::SHIZO_ID)
     }
     
     // -------------------------------------------------------------------------
