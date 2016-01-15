@@ -10,13 +10,15 @@ import org.eclipse.emf.ecore.EObject
 import java.util.Iterator
 
 /**
+ * Serialization of KExpressions in human readable form.
+ * 
  * @author ssm
  * 
  * @kieler.design 2015-06-30 proposed ssm
  * @kieler.rating 2015-06-30 proposed yellow
  *
  */
-class KExpressionsSerializeHumanReadableExtensions extends KExpressionsSerializeExtensions {	
+class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions {	
 
     protected def CharSequence humanReadable(String s) {
 //        if (s == null) {
@@ -308,33 +310,13 @@ class KExpressionsSerializeHumanReadableExtensions extends KExpressionsSerialize
         return result
     }	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
     dispatch def CharSequence serializeHR(Expression expression) {
         expression.serialize.humanReadable
     }
-    
-//    dispatch def CharSequence serializeHR(Void x) {
-//        
-//    }
 
-	dispatch def CharSequence serializeHR(EObject eObject) {
-		
+	dispatch def CharSequence serializeHR(Object object) {
+	    // Fallback on non human readable mode
+		object.serialize
 	}
 }

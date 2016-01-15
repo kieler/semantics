@@ -36,4 +36,8 @@ public class SCLRuntimeModule extends de.cau.cs.kieler.scl.AbstractSCLRuntimeMod
 
     }
     
+    public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
+        return de.cau.cs.kieler.scl.formatting.SCLValueConverter.class;
+    }   
+    
 }

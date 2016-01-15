@@ -29,6 +29,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import java.util.Iterator
 
 /**
+ * Serialization of KExpressions.
+ * 
  * @author ssm
  * 
  * @kieler.design 2014-09-04 proposed ssm

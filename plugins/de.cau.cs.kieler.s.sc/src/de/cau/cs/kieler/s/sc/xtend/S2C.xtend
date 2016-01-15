@@ -107,7 +107,7 @@ class S2C {
     /*                                                                           */
     /* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
     /* Copyright 2014 by                                                         */
-    /* + Kiel University                                  */
+    /* + Kiel University                                                         */
     /*   + Department of Computer Science                                        */
     /*     + Real-Time and Embedded Systems Group                                */
     /*                                                                           */
@@ -540,9 +540,13 @@ class S2C {
         «ENDFOR»)
     «ENDIF»
     «IF expression.operator  == OperatorType::SUB»
-        («FOR subexpression : expression.subExpressions SEPARATOR " - "»
+        «IF expression.subExpressions.size > 1»
+            («FOR subexpression : expression.subExpressions SEPARATOR " - "»
             «subexpression.expand»
-        «ENDFOR»)
+            «ENDFOR»)
+        «ELSE»
+        -«expression.subExpressions.head.expand»
+        «ENDIF»
     «ENDIF»
     «IF expression.operator  == OperatorType::MULT»
         («FOR subexpression : expression.subExpressions SEPARATOR " * "»

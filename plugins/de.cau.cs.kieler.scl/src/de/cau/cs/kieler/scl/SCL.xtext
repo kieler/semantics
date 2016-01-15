@@ -42,7 +42,7 @@ InstructionStatement returns scl::InstructionStatement:
     )
 ;
 
-Assignment returns scl::Assignment:
+Assignment returns scl::Assignment:    
     valuedObject=[kexpressions::ValuedObject]
     ('[' indices+=Expression ']')*
      "=" expression = Expression ;
