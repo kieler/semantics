@@ -116,6 +116,14 @@ public class CExecution extends AbstractExecution {
 //        if (this.isBenchmark()) {
 //            compile += " " + bundleLocation + "cycle.h ";
 //        }
+        
+        
+        // for timing - does NOT work on OSX (and also not on Windows)
+        String possibleLtrOption = " -lrt";
+        if (Benchmark.isMac()) {
+            possibleLtrOption = "";
+        }
+        
 
         if (Benchmark.isWindows()) {
             compile += " "
@@ -144,8 +152,8 @@ public class CExecution extends AbstractExecution {
                     // -m32 = 32 bit compatibility mode to prevent compiler errors on
                     // 64bit machines/architectures.
                     // + " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
-                    + " -lrt -O2 -lm  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
-            
+                    + possibleLtrOption 
+                    + " -O2 -lm  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
         }
 
 
