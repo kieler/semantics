@@ -20,6 +20,9 @@ import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,6 +40,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
@@ -400,22 +404,41 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-        String uri = null;
+        String uriString = null;
         String fileName = null;
         String fileFolder = null;
+        String fileLocationString = null;
         if (resource != null) {
             IFile file = ResourceUtil.getFile(resource);
-            uri = file.getLocationURI().toString();
+            uriString = file.getLocationURI().toString();
             fileName = file.getName();
-            fileFolder = uri.replace("file:", "");
-            fileFolder = fileFolder.replace(fileName, "");
+            fileLocationString = uriString.replace("file:", "");
+            fileFolder = fileLocationString.replace(fileName, "");
         } else {
             return new Status(IStatus.ERROR, pluginId,
                     "The resource for the given model could not be found.");
         }
+        
+        // Make sure no outdated files (.ta, .c, .ta.out) linger
+        String targetCodeLocationString = fileLocationString.replace(".sct", ".c");
+        String taFileLocationString = fileLocationString.replace(".sct", ".ta");
+        String taOutFileLocationString = fileLocationString.replace(".sct", ".ta.out");
+        try {
+           Files.deleteIfExists(Paths.get(targetCodeLocationString, ""));
+           Files.deleteIfExists(Paths.get(taFileLocationString, ""));
+           Files.deleteIfExists(Paths.get(taOutFileLocationString, ""));
+        } catch (IOException e1) {
+            System.out.println("IOException when deleting outdated timing files: \n");
+            e1.printStackTrace();
+        }
+         try {
+             ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
+         } catch (CoreException e) {
+             return new Status(IStatus.ERROR, pluginId, "Files could not be refreshed.");
+         }
 
         // Write the generated code to file
-        String codeTargetFile = uri.replace(".sct", ".c");
+        String codeTargetFile = uriString.replace(".sct", ".c");
         String codeTargetFilePath = codeTargetFile.replace("file:", "");
         // Workaround for validation with David Broman's tool that does not handle chars:
         String codeInt = code.replace("char", "int");
@@ -425,7 +448,7 @@ public class TimingAnalysis extends Job {
         StringBuilder codeAdditionBuilder = new StringBuilder();
         codeAdditionBuilder.append("\n\n/* Header file for Timing program points */"
                 + "\n#include \"../tpp.h\"");
-        String assumptionFile = uri.replace(".sct", ".asu");
+        String assumptionFile = uriString.replace(".sct", ".asu");
         String assumptionFilePath = assumptionFile.replace("file:", "");
         boolean assumptionFileFound =
                 timingAnnotationProvider.writeStubs(assumptionFilePath, codeAdditionBuilder);
@@ -491,7 +514,7 @@ public class TimingAnalysis extends Job {
                 timingAnnotationProvider.writeTimingRequests(highestInsertedTPPNumber,
                         stringBuilder);
         // .ta file string complete, write it to file
-        String requestFile = uri.replace(".sct", ".ta");
+        String requestFile = uriString.replace(".sct", ".ta");
         String requestFilePath = requestFile.replace("file:", "");
         fileWriter.writeToFile(stringBuilder.toString(), requestFilePath);
 
@@ -499,11 +522,10 @@ public class TimingAnalysis extends Job {
         String taFileName = fileName.replace(".sct", ".ta");
         String cFileName = fileName.replace(".sct", ".c");
         String command =
-                "kta ta -compile " + fileFolder + cFileName
-                        + " -tafile " + fileFolder + taFileName;
+                "kta ta -compile " + fileFolder + cFileName + " -tafile " + fileFolder + taFileName;
         // String command = "/Users/ima/shared/ptc/bin/ptc " + requestFilePath;
         try {
-            //System.out.println("Current value of PATH: \n" + System.getenv("PATH"));
+            // System.out.println("Current value of PATH: \n" + System.getenv("PATH"));
             Process pr = rt.exec(command);
             // get the timing analysis tool's console output
             BufferedReader stdInput =
@@ -547,7 +569,7 @@ public class TimingAnalysis extends Job {
         }
 
         // construct uri, where the analysis tool will deposit the response file (.ta)
-        String taFile = uri.replace(".sct", ".ta.out");
+        String taFile = uriString.replace(".sct", ".ta.out");
         String taPath = taFile.replace("file:", "");
 
         int timingInformationFetch =
@@ -636,7 +658,8 @@ public class TimingAnalysis extends Job {
                             double onePercent = overallWCET / 100.0;
                             percentage = timingvalue / onePercent;
                         }
-                        highlightRegion(region, renderingFactory, percentage, timingLabels.get(region));
+                        highlightRegion(region, renderingFactory, percentage,
+                                timingLabels.get(region));
                     }
                 }
 
@@ -645,8 +668,9 @@ public class TimingAnalysis extends Job {
         }.schedule();
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
+        // delete temporary files if not needed for debugging
         System.out.println("Interactive Timing Analysis completed (elapsed time: " + elapsedTime
-                + " ms).");
+                + " ms).");   
         return Status.OK_STATUS;
     }
 
@@ -713,7 +737,7 @@ public class TimingAnalysis extends Job {
      * @param percentage
      *            The percentage of the region's fractional WCET in relation to overall WCET
      * @param labels
-     *            The set with the timing labels of the regions of the model 
+     *            The set with the timing labels of the regions of the model
      */
     private void highlightRegion(Region region, KRenderingFactory renderingFactory,
             double percentage, Set<WeakReference<KText>> labels) {
