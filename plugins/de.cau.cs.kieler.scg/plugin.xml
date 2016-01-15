@@ -46,6 +46,9 @@
             class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformation">
       </productionTransformationClass>
       <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.ShizoTransformation">
+      </productionTransformationClass>
+      <productionTransformationClass
             class="de.cau.cs.kieler.scg.guardCreation.GuardCreator">
       </productionTransformationClass>
       <productionTransformationClass
@@ -80,6 +83,9 @@
       </featureGroupClass>
       <featureClass
             class="de.cau.cs.kieler.scg.features.SCPDG">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.features.Shizo">
       </featureClass>
    </extension>
 

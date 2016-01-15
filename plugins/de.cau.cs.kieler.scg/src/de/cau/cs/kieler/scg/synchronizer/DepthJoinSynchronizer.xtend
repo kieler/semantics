@@ -111,7 +111,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
    
     public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.depthJoin"
     
-    public static val SCHIZOPHRENIC_SUFFIX = "_s"
+    public static val SCHIZOPHRENIC_SUFFIX = "_t"
 
     // -------------------------------------------------------------------------
     // -- Synchronizer
@@ -211,6 +211,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         
         expression
     }   
+    
     
     def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
         for(vo : declaration.valuedObjects) {
