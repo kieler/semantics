@@ -103,11 +103,13 @@ public class AsynchronousComparison extends Job {
         String compilation = null;
         // each compiler has to compile each testcase
         for (ICompiler comp : compilers) {
+            String compID = comp.getID();
             for (ITestcase test : testcases) {
+                String testID = test.getID() + " (" + test.getTestcase() + ")";
                 // compare compilation speed
                 for (int i = 0; i < compAmount; i++) {
-                    monitor.subTask(comp.getID() + " compiling " + test.getID() + " : " + (i + 1)
-                            + "/" + compAmount);
+                    monitor.subTask(compID + " compiling " + testID + " : " + (i + 1) + "/"
+                            + compAmount);
 
                     long compStart = System.currentTimeMillis();
                     try {
@@ -120,16 +122,16 @@ public class AsynchronousComparison extends Job {
                         compilation = comp.compile(test.getTestcase(), outputPath);
                     } catch (CompilationException e) {
                         // something went wrong, save the error message as result anyway
-                        dataHandler.serialize(comparison, new CompError(comp.getID(), test.getID(),
-                                e.getMessage()));
+                        dataHandler.serialize(comparison,
+                                new CompError(compID, testID, e.getMessage()));
                         monitor.worked(1);
                         // continue with other testcases / compilers
                         continue;
                     }
                     long compTime = System.currentTimeMillis() - compStart;
                     // save the compilation speed
-                    dataHandler.serialize(comparison,
-                            new CompSpeedMeasuring(comp.getID(), test.getID(), compTime));
+                    dataHandler.serialize(comparison, new CompSpeedMeasuring(compID, testID,
+                            compTime));
 
                     monitor.worked(1);
                     // if the comparison got cancled within the progress monitor,
@@ -147,8 +149,8 @@ public class AsynchronousComparison extends Job {
                     try {
                         // measure file size in bytes
                         File file = new File(compilation);
-                        dataHandler.serialize(comparison,
-                                new CompSizeMeasuring(comp.getID(), test.getID(), file.length()));
+                        dataHandler.serialize(comparison, new CompSizeMeasuring(compID, testID,
+                                file.length()));
 
                         // measure file size in line of code
                         br = new BufferedReader(new FileReader(file));
@@ -156,11 +158,10 @@ public class AsynchronousComparison extends Job {
                         while (br.readLine() != null) {
                             i++;
                         }
-                        dataHandler.serialize(comparison,
-                                new CompLoCMeasuring(comp.getID(), test.getID(), i));
+                        dataHandler.serialize(comparison, new CompLoCMeasuring(compID, testID, i));
                     } catch (IOException e) {
                         // LoC measuring failed
-                        dataHandler.serialize(comparison, new CompError(comp.getID(), test.getID(),
+                        dataHandler.serialize(comparison, new CompError(compID, testID,
                                 "LoC measuring failed."));
                     } finally {
                         try {
