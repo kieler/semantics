@@ -1,4 +1,5 @@
 import lejos.nxt.*;
+import lejos.nxt.addon.*;
 import lejos.nxt.comm.RConsole;
 
 public class Main {

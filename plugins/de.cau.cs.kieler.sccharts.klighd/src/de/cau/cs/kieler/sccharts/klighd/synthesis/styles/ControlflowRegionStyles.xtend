@@ -18,17 +18,18 @@ import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.KRectangle
 import de.cau.cs.kieler.core.krendering.KText
+import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import java.util.List
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.microlayout.PlacementUtil.*
-import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * Styles for {@link ControlflowRegion}.
@@ -38,6 +39,7 @@ import de.cau.cs.kieler.klighd.util.KlighdProperties
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
+@ViewSynthesisShared
 class ControlflowRegionStyles {
 
     @Inject

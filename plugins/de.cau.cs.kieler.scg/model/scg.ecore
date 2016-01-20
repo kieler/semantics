@@ -49,6 +49,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="indices" upperBound="-1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Operator" eType="ecore:EEnum ../../de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//AssignOperator"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Fork" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="join" lowerBound="1" eType="#//Join"

@@ -262,13 +262,14 @@ public class TransformationDummyGraph {
                     if (selection.isTransformationPreferred(handlingTransformationId)) {
                         // found a preferred transformation, that is not disabled
                         transformation = handlingTransformation;
-                    } else if (containedAndHandledFeatures == null
-                            || handlingTransformation.getNotHandlesFeatures(false).isEmpty()
-                            || handlingTransformations.size() == 1
-                            || !Sets.intersection(
+                    } else if (containedAndHandledFeatures == null // This is the artificial case when the graph is build for the GUI
+                            || handlingTransformation.getNotHandlesFeatures(false).isEmpty() // If the transformation has no requirements
+                            || handlingTransformations.size() == 1 // If this transformation is the only option
+                            || !Sets.intersection( // If the transformation has requirements but they are handled
                                     handlingTransformation.getNotHandlesFeatures(false),
                                     containedAndHandledFeatures).isEmpty()) {
                         // Remember in case we do not find a preferred transformation
+                        // Last backup transformation will be taken if no transformation is preferred or selected
                         backupTransformation = handlingTransformation;
                     }
                 } else {

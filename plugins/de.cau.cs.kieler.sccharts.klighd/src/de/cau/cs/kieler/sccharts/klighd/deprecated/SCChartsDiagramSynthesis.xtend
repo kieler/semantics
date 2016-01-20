@@ -80,7 +80,7 @@ import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.s.DataDependency
 import de.cau.cs.kieler.sccharts.s.DependencyGraph
@@ -98,7 +98,7 @@ import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtensions
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
@@ -161,7 +161,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     extension KExpressionsValuedObjectExtensions
     
     @Inject
-    extension SCChartsSerializeExtension
+    extension SCChartsSerializeHRExtension
     
     @Inject 
     extension SCGDepExtension

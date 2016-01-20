@@ -65,5 +65,38 @@ class KExpressionsComplexCreateExtensions {
         }
         createSubExpression(first, second)
     }    
-    
+
+    // Create an MULT Expression and add expression as a sub expression.
+    def Expression mult(Expression expressionFirst, Expression expressionSecond) {
+        if (expressionFirst == null) {
+            return expressionSecond
+        }
+        val addExpression = createMultExpression()
+        addExpression.add(expressionFirst)
+        addExpression.add(expressionSecond)
+        addExpression
+    }
+
+    // Create an MAX Expression and add expression as a sub expression.
+    def Expression max(Expression expressionFirst, Expression expressionSecond) {
+        if (expressionFirst == null) {
+            return expressionSecond
+        }
+        val addExpression = createMaxExpression()
+        addExpression.add(expressionFirst)
+        addExpression.add(expressionSecond)
+        addExpression
+    }
+
+    // Create an MIN Expression and add expression as a sub expression.
+    def Expression min(Expression expressionFirst, Expression expressionSecond) {
+        if (expressionFirst == null) {
+            return expressionSecond
+        }
+        val addExpression = createMinExpression()
+        addExpression.add(expressionFirst)
+        addExpression.add(expressionSecond)
+        addExpression
+    }
+       
 }

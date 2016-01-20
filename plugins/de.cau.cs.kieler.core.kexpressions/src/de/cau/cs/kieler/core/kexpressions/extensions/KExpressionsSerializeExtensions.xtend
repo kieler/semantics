@@ -31,6 +31,8 @@ import java.util.List
 import de.cau.cs.kieler.core.kexpressions.Declaration
 
 /**
+ * Serialization of KExpressions.
+ * 
  * @author ssm
  * 
  * @kieler.design 2014-09-04 proposed ssm

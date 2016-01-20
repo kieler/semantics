@@ -46,6 +46,36 @@
     </@>
 </#macro>
 
+<#-- Button -->
+<#-- As input variable, sets the variable to true, iff the corresponding button on the Mindstorms brick is down.
+     The buttons are ENTER, LEFT, RIGHT.
+
+     Example for SCCharts:
+         @Wrapper Button, ENTER 
+         input bool isEnterDown; -->
+<#macro Button buttonId>
+    <@input>
+        // Button
+        scchart.${varname} = Button.${buttonId}.isDown();
+    </@>
+</#macro>
+
+<#-- TouchSensor -->
+<#-- As input variable, reads the touch sensor, that is attached to the given port.
+
+     Example for SCCharts:
+         @Wrapper TouchSensor, S3 
+         input bool isTouchSensorPressed; -->
+<#macro TouchSensor port>
+    <@init>
+        TouchSensor touchSensor${port} = new TouchSensor(SensorPort.${port});
+    </@>
+    <@input>
+        // Touch
+        scchart.${varname} = touchSensor${port}.isPressed();
+    </@>
+</#macro>
+
 <#-- LightSensor -->
 <#-- As input variable, reads the value of the light sensor, that is attached to the given port.
 
@@ -63,22 +93,6 @@
         <#else>
         scchart.${varname} = lightSensor${port}.getLightValue();
         </#if>
-    </@>
-</#macro>
-
-<#-- TouchSensor -->
-<#-- As input variable, reads the touch sensor, that is attached to the given port.
-
-     Example for SCCharts:
-         @Wrapper TouchSensor, S3 
-         input bool isTouchSensorPressed; -->
-<#macro TouchSensor port>
-    <@init>
-        TouchSensor touchSensor${port} = new TouchSensor(SensorPort.${port});
-    </@>
-    <@input>
-        // Touch
-        scchart.${varname} = touchSensor${port}.isPressed();
     </@>
 </#macro>
 
@@ -104,6 +118,60 @@
     </@>
 </#macro>
 
+<#-- RCXLamp -->
+<#-- As output variable, turns an RCX lamp on (variable is true) or off (variable is false).
+     RCX lamps can be connected to the ports A, B, C and D.
+
+     Example for SCCharts:
+         @Wrapper RCXLamp, A 
+         output bool lamp; -->
+<#macro RCXLamp port>
+    <@init>
+        RCXMotor rcxMotor${port} = new RCXMotor(MotorPort.${port});
+        // Provide base power for RCX lamp
+        rcxMotor${port}.setPower(100);
+        rcxMotor${port}.flt();
+    </@>
+    <@output>
+        // RCX lamp ${port}
+        if(scchart.${varname})
+            rcxMotor${port}.forward();
+        else
+            rcxMotor${port}.flt();
+    </@>
+</#macro>
+
+<#-- MotorSpeed -->
+<#-- As input variable, reads the speed of the motor, that is attached to the given port.
+     As output variable, sets the speed of the motor.
+     If the speed is zero and brake is true, the motor will stop nearly immediately.
+     If brake is false, the motor will only lose all power, setting it to roll / float.
+     
+     Example for SCCharts:
+         @Wrapper MotorSpeed, A
+         @Wrapper MotorSpeed, B
+         output int speed; -->
+<#macro MotorSpeed port brake='true'>
+    <@input>
+        // Motor ${port}
+        scchart.${varname} = Motor.${port}.getSpeed();
+    </@>
+    <@output>
+        // Motor ${port}
+        Motor.${port}.setSpeed(Math.abs(scchart.${varname}));
+        if(scchart.${varname} == 0)
+            <#if brake='true'>
+            Motor.${port}.stop();
+            <#else>
+            Motor.${port}.flt();
+            </#if>
+        else if(scchart.${varname} > 0)
+            Motor.${port}.forward();
+        else if(scchart.${varname} < 0)
+            Motor.${port}.backward();
+    </@>
+</#macro>
+
 <#-- MotorIsMoving -->
 <#-- As input variable, sets a boolean to true, iff the motor on the given port is moving.
      
@@ -117,37 +185,12 @@
     </@>
 </#macro>
 
-<#-- MotorSpeed -->
-<#-- As input variable, reads the speed of the motor, that is attached to the given port.
-     As output variable, sets the speed of the motor.
-     Example for SCCharts:
-         @Wrapper MotorSpeed, A
-         @Wrapper MotorSpeed, B
-         output int speed; -->
-<#macro MotorSpeed port>
-    <@input>
-        // Motor ${port}
-        scchart.${varname} = Motor.${port}.getSpeed();
-    </@>
-    <@output>
-        // Motor ${port}
-        Motor.${port}.setSpeed(scchart.${varname} > 0 ? scchart.${varname} : -scchart.${varname});
-        if(scchart.${varname} == 0)
-            Motor.${port}.stop();
-        else if(scchart.${varname} > 0)
-            Motor.${port}.forward();
-        else if(scchart.${varname} < 0)
-            Motor.${port}.backward();
-    </@>
-</#macro>
-
 <#-- MotorRotation -->
 <#-- As input variable, reads the motor rotation in degrees.
      As output variable, commands the motor, that is attached to the given port,
             to rotate the variable's value in degrees.
-        This is done only if the variable's value is unequal zero.
-        Thus, after the Mindstorms motor has received the target rotation,
-            the value of the variable should be reset back to zero. 
+        This is done only if the variable's value is unequal zero
+        and afterwards the variable is set back to zero.
      
      Example for SCCharts:
          @Wrapper MotorRotation, A
@@ -159,8 +202,10 @@
     </@>
     <@output>
         // Motor ${port}
-        if(scchart.${varname} != 0)
+        if(scchart.${varname} != 0){
             Motor.${port}.rotate(scchart.${varname}, true);
+            scchart.${varname} = 0;
+        }
     </@>
 </#macro>
 

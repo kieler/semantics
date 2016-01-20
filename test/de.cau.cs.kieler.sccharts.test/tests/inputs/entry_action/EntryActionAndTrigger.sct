@@ -6,7 +6,7 @@ scchart EntryActionAndTrigger {
     initial state A{
       entry I / O = false;
     }
-    >-> F with !I;
+    --> F with !I;
     
-    final state F;    
+    final state F;
 }

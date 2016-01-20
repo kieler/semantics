@@ -28,10 +28,6 @@
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook"
             id="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook">
       </action>
-      <action
-            class="de.cau.cs.kieler.sccharts.klighd.layout.labels.LabelMetaFocusAction"
-            id="de.cau.cs.kieler.sccharts.klighd.layout.labels.LabelMetaFocusAction">
-      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
@@ -47,17 +43,6 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.deprecated.SCChartsDiagramSynthesis"
             id="de.cau.cs.kieler.sccharts.klighd.DeprecatedSCChartsSynthesis">
       </diagramSynthesis>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kiml.layoutConfigs">
-      <semanticConfig
-            class="de.cau.cs.kieler.sccharts.Scope"
-            config="de.cau.cs.kieler.sccharts.klighd.layout.HVLayoutConfig">
-      </semanticConfig>
-      <semanticConfig
-            class="de.cau.cs.kieler.sccharts.Scope"
-            config="de.cau.cs.kieler.sccharts.klighd.layout.AnnotationsLayoutConfig">
-      </semanticConfig>
    </extension>
    <extension
          point="de.cau.cs.kieler.sccharts.klighd.hooks">
@@ -88,6 +73,16 @@
       <hook
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SynthesisAnnotationHook">
       </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LayoutHook">
+      </hook>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kiml.layoutConfigs">
+      <customConfig
+            class="de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig"
+            default="true">
+      </customConfig>
    </extension>
 
 </plugin>

@@ -16,7 +16,7 @@ package de.cau.cs.kieler.core.kexpressions.keffects.extensions
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeHumanReadableExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeHRExtensions
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect
@@ -27,14 +27,39 @@ import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /**
+ * Serialization of KEffects.
+ * 
  * @author ssm
  *
  * @kieler.design 2015-06-08 proposed ssm
  * @kieler.rating 2015-06-08 proposed yellow
  */
-class KEffectsSerializeExtensions extends KExpressionsSerializeHumanReadableExtensions {
+class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
     
-    public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionString) {
+    public def CharSequence serializeAssignOperator(AssignOperator operator) {
+        if (operator == AssignOperator::ASSIGNADD) {
+            return " += " 
+        } else 
+        if (operator == AssignOperator::ASSIGNSUB) {
+            return " -= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNMUL) {
+            return " *= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNDIV) {
+            return " /= " 
+        } else 
+        if (operator == AssignOperator::POSTFIXADD) {
+            return "++"
+        } else 
+        if (operator == AssignOperator::POSTFIXSUB) {
+            return "--"
+        }
+        
+        return " = "          
+    }
+    
+    public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
         var res = assignment.valuedObject.name
         if (!assignment.indices.nullOrEmpty) {
             for(index : assignment.indices) {
@@ -42,31 +67,12 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHumanReadableExte
             }
         }
         
-        if (assignment.operator == AssignOperator::ASSIGN) {
-            res = res + " = " 
-        } else 
-        if (assignment.operator == AssignOperator::ASSIGNADD) {
-            res = res + " += " 
-        } else 
-        if (assignment.operator == AssignOperator::ASSIGNSUB) {
-            res = res + " -= " 
-        } else 
-        if (assignment.operator == AssignOperator::ASSIGNMUL) {
-            res = res + " *= " 
-        } else 
-        if (assignment.operator == AssignOperator::ASSIGNDIV) {
-            res = res + " /= " 
-        } else 
-        if (assignment.operator == AssignOperator::POSTFIXADD) {
-            res = res + "++"
-            return res; 
-        } else 
-        if (assignment.operator == AssignOperator::POSTFIXSUB) {
-            res = res + "--"
-            return res; 
-        }  
+        res = res + assignment.operator.serializeAssignOperator
+        if (expressionStr != null) {
+            res = res + expressionStr
+        }
         
-        return res + expressionString
+        return res
     }
     
     def dispatch CharSequence serialize(Assignment assignment) {
@@ -97,43 +103,5 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHumanReadableExte
         }
         return ""
     }
-    
-    def dispatch CharSequence serializeHR(Assignment assignment) {
-        if (assignment.expression == null) {
-            assignment.serializeAssignment("")
-        } else {
-            assignment.serializeAssignment(assignment.expression.serializeHR)
-        }
-    }
-    
-    def dispatch CharSequence serializeHR(Emission emission) {
-        val objectContainer = emission.valuedObject.eContainer
-        if (objectContainer instanceof Declaration) {
-            if ((objectContainer as Declaration).type != ValueType::PURE) {
-                return (emission.valuedObject.name + "(" + emission.newValue.serializeHR + ")")             
-            } else {
-                return emission.valuedObject.name
-            }
-        } else {
-            return emission.valuedObject.name
-        }
-    }
-    
-    
-    
-//    override dispatch CharSequence serializeHR(FunctionCall functionCall) {
-//    	super.serializeHR(functionCall)
-//    }    
-//    
-//    override dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
-//    	super.serializeHR(valuedObjectReference)
-//    }
-//
-//    override dispatch CharSequence serializeHR(OperatorExpression expression) {
-//    	super.serializeHR(expression)
-//    }
-//    
-//    override dispatch CharSequence serializeHR(Expression expression) {
-//        super.serializeHR(expression)
-//    }
+
 }

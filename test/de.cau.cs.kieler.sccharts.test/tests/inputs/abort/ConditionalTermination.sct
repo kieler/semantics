@@ -8,7 +8,7 @@ scchart ConditionalTermination {
     --> A1;
     
     final state A1;
-  }>-> F immediate with I;
-   
+  }>-> F with I;
+  
   final state F;
 }

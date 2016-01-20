@@ -96,13 +96,13 @@ class S2SCALT {
    def scHeader(String outputFolderm, Program program) {
    	'''
 	/*****************************************************************************/
-	/*                 G E N E R A T E D     S C    C O D E                     */
+	/*                 G E N E R A T E D     S C    C O D E                      */
 	/*****************************************************************************/
 	/* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
 	/*                                                                           */
 	/* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
 	/* Copyright 2012 by                                                         */
-	/* + Kiel University                                  */
+	/* + Kiel University                                                         */
 	/*   + Department of Computer Science                                        */
 	/*     + Real-Time and Embedded Systems Group                                */
 	/*                                                                           */

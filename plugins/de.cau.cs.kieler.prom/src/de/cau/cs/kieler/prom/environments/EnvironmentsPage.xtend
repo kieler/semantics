@@ -142,6 +142,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      */
     private Text command
     
+    /**
+     * Combobox with all available launch shortcuts.
+     */
+    private var ComboViewer launchShortcuts
+    
     
     /**
      * The combobox with the related project wizard class name of the environment.
@@ -192,7 +197,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         val gd = new GridData(GridData.FILL_BOTH)
         // Without this height hint the tab folder sets its height to the sum of the heights of all pages.
         // This is to much. A better value would be the maximum of the heights of all pages.
-        gd.heightHint = 300
+        gd.heightHint = 380
         tabFolder.setLayoutData(gd)
         
         // Create tabs
@@ -269,6 +274,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         val input = ExtensionLookupUtil.getWizardConfigurationElements(true)
         combo.input = input
 
+//        Debug log, which wizards are currently installed 
+//        for (e : ExtensionLookupUtil.getWizardConfigurationElements(true)){
+//            System.err.println(e.getAttribute("class"))
+//        }
+        
         // Select first element as default 
         if (input != null && input.size > 0) {
             combo.selection = new StructuredSelection(input.get(0))
@@ -290,7 +300,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
 
             override selectionChanged(SelectionChangedEvent event) {
                 if(currentData != null){
-                    currentData.relatedProjectWizardClass = getSelectedProjectWizardClass()
+                    currentData.relatedProjectWizardClass = getSelectedClassNameInCombobox(relatedProjectWizard)
                     checkConsistency()
                }
             }
@@ -441,7 +451,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
                     currentData.wrapperCodeSnippetsOrigin = wrapperCodeSnippetsOrigin.text
-                    checkConsistency()    
+                    checkConsistency()
                 }
             }
         })
@@ -459,8 +469,9 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         createCommandTableComponent(comp)
         createCommandNameComponent(comp)
         createCommandComponent(comp)
+        createAssociatedLaunchShortcutComponent(comp)
         
-        comp
+        return comp
     }
     
     /**
@@ -556,6 +567,56 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         command.toolTipText = "Shell command to be executed when preceding command finished successful."
         
         UIUtil.createBrowseVariableButton(group, commandName, "Variables...")
+    }
+    
+    /**
+     * Creates the combo viewer with configuration elements that define launch shortcuts.
+     * 
+     * @param parent The parent composite
+     */
+    private def void createAssociatedLaunchShortcutComponent(Composite parent){
+        val group = UIUtil.createGroup(parent, "Associated Launch Shortcut", 2)
+        
+        val combo = new ComboViewer(group, SWT.DEFAULT)
+        launchShortcuts = combo
+        launchShortcuts.combo.toolTipText = "Launch shortcut that is started after the KiCo Compilation"
+        
+        // Fill combo
+        combo.contentProvider = ArrayContentProvider.instance
+        
+        val ArrayList<Object> input = new ArrayList<Object>()
+        input.add(StructuredSelection.EMPTY)
+        input.addAll(ExtensionLookupUtil.getLaunchShortcutConfigurationElements())
+        combo.input = input
+        
+        //Debug log, which launch shortcuts are currently installed 
+//        for (e : ExtensionLookupUtil.getLaunchShortcutConfigurationElements()){
+//            System.err.println(e.getAttribute("class"))
+//        }
+
+        // Select first element as default 
+        combo.selection = new StructuredSelection(StructuredSelection.EMPTY)
+
+        // Create label provider
+        combo.labelProvider = new LabelProvider() {
+            override String getText(Object element) {
+                if(element != null && element instanceof IConfigurationElement)
+                    return (element as IConfigurationElement).getAttribute("label")
+                else
+                    return ""
+            }
+        }
+        
+        // Selection event
+        combo.addSelectionChangedListener(new ISelectionChangedListener {
+
+            override selectionChanged(SelectionChangedEvent event) {
+                val selection = event.selection 
+                currentData.associatedLaunchShortcut = getSelectedClassNameInCombobox(launchShortcuts)
+                System.err.println(currentData.associatedLaunchShortcut)
+                checkConsistency()
+            }
+        })        
     }
     
     /**
@@ -673,6 +734,20 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             
             // Update commands
             viewer.input = data.commands
+            
+            // Select associated launch shortcut in combo viewer
+            var selectionFound=false
+            for(o : launchShortcuts.input as ArrayList<Object>){
+                if(o instanceof IConfigurationElement){
+                    System.err.println("  "+o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME)+"|"+data.associatedLaunchShortcut)
+                    if(o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME) == data.associatedLaunchShortcut) {
+                        launchShortcuts.selection = new StructuredSelection(o)
+                        selectionFound= true
+                    }
+                }
+            }
+            if(!selectionFound)
+                launchShortcuts.selection = new StructuredSelection(StructuredSelection.EMPTY)
         }
     }
     
@@ -692,18 +767,17 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
     
     /**
-     * Fetches the fully qualified class name
-     * of the selected entry in the project wizard combobox.
+     * Fetches the fully qualified class name from an IConfigurationElement
+     * that is the selected entry in a combobox.
      * 
      * @return The class name of the extension point configuration
-     * which is currently selected in the related project wizard combobox.  
+     * which is currently selected in the related combobox.  
      */
-    private def String getSelectedProjectWizardClass(){
-        val selection = relatedProjectWizard.selection as IStructuredSelection
+    private def String getSelectedClassNameInCombobox(ComboViewer viewer){
+        val selection = viewer.selection as IStructuredSelection
         if (selection != null) {
-            val obj = selection.firstElement as IConfigurationElement
-            if (obj != null) {
-                return obj.getAttribute("class")
+            if(selection.firstElement != null && selection.firstElement instanceof IConfigurationElement){
+                return (selection.firstElement as IConfigurationElement).getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME)
             }
         }
         return ""

@@ -71,7 +71,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExte
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.Scope
-
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -113,6 +113,9 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
     @Inject
     extension AnnotationsExtensions
+    
+    @Inject
+    extension KEffectsExtensions
 
     @Inject
     extension SCGDeclarationExtensions
@@ -567,6 +570,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
             val effect = transition.effects.get(0) as Effect
             if (effect instanceof de.cau.cs.kieler.core.kexpressions.keffects.Assignment) {
+                
+                assignment.operator = effect.operator
 
                 // For hostcode e.g. there is no need for a valued object - it is allowed to be null
                 val sCChartAssignment = (effect as de.cau.cs.kieler.core.kexpressions.keffects.Assignment)
@@ -575,7 +580,9 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                 }
 
                 // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
-                assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
+                if (!effect.isPostfixOperation) {
+                    assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
+                }
                 if (!sCChartAssignment.indices.nullOrEmpty) {
                     sCChartAssignment.indices.forEach [
                         assignment.indices += it.convertToSCGExpression.trace(transition, effect)

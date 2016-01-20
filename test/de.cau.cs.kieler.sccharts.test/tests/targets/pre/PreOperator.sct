@@ -3,28 +3,20 @@
 scchart PreOperator {
   int x = 1;
   int y = 0;
-  int _pre_x = 1, _aux_x = 1;
-  int _pre_x2 = 1, _aux_x2 = 1;
+  int _pre_x = 1;
+  int _cur_x = 1;
 
   initial state A
   --> B / x = x + 1;
 
   state B
-  --> A / y = pre(x);
+  --> A / y = _pre_x;
 
   region _Pre:
 
-  initial final state _Init
-  --> _Wait immediate / _aux_x = x;
+  initial state _Init
+  --> _Wait immediate / _cur_x = x;
 
   final state _Wait
-  --> _Init / _pre_x = _aux_x;
-
-  region _Pre2:
-
-  initial final state _Init2
-  --> _Wait2 immediate / _aux_x2 = x;
-
-  final state _Wait2
-  --> _Init2 / _pre_x2 = _aux_x2;
+  --> _Init / _pre_x = _cur_x;
 }

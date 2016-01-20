@@ -6,7 +6,7 @@ scchart StrongAbort {
   initial state A {
 
     initial state A0
-    --> A1 immediate with I
+    --> A1 with I
     --> A1;
 
     final state A1;
@@ -14,7 +14,7 @@ scchart StrongAbort {
     region _Ctrl:
 
     initial state _Run
-    --> _Done immediate with I;
+    --> _Done with I;
 
     final state _Done;
   }

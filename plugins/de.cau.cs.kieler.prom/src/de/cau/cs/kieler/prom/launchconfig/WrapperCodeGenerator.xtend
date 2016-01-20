@@ -60,10 +60,11 @@ class WrapperCodeGenerator {
 
     private static val declarationPhase = new CodeGenerationPhase("declaration", true, [data | true], "decl")
     private static val initializationPhase = new CodeGenerationPhase("initialization", true, [data | true], "init")
+    private static val releasePhase = new CodeGenerationPhase("release", true, [data | true], "free")
     private static val inputPhase = new CodeGenerationPhase("input", false, [data | data.isInput])
     private static val outputPhase = new CodeGenerationPhase("output", false, [data | data.isOutput])
 
-    public static var List<CodeGenerationPhase> codeGenerationPhases = #[declarationPhase, initializationPhase, inputPhase, outputPhase]
+    public static var List<CodeGenerationPhase> codeGenerationPhases = #[declarationPhase, initializationPhase, inputPhase, outputPhase, releasePhase]
 
     /**
      * Macro definitions to use <@init>, <@input>, <@output> in wrapper code snippets.

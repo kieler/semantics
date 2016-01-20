@@ -88,7 +88,7 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
         if (!state.entryActions.nullOrEmpty) {
 
             var State firstState
-            var State lastState
+            var State lastState 
             
             state.setDefaultTrace //All following states etc. will be traced to state
             

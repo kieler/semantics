@@ -48,6 +48,7 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
+import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -106,7 +107,7 @@ class S2C {
     /*                                                                           */
     /* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
     /* Copyright 2014 by                                                         */
-    /* + Kiel University                                  */
+    /* + Kiel University                                                         */
     /*   + Department of Computer Science                                        */
     /*     + Real-Time and Embedded Systems Group                                */
     /*                                                                           */
@@ -295,26 +296,41 @@ class S2C {
 
    // -------------------------------------------------------------------------   
 
-   // Expand a ASSIGNMENT instruction.
-   def dispatch CharSequence expand(Assignment assignment) {
-       if (assignment.expression instanceof FunctionCall) {
-           var returnValue = '''«assignment.expression.expand»;'''
+   def expandOperator(Assignment assignment) {
+       if (assignment.operator == AssignOperator.ASSIGNADD) return ''' +='''
+       if (assignment.operator == AssignOperator.ASSIGNSUB) return ''' -='''
+       if (assignment.operator == AssignOperator.ASSIGNMUL) return ''' *='''
+       if (assignment.operator == AssignOperator.ASSIGNDIV) return ''' /='''
+       if (assignment.operator == AssignOperator.POSTFIXADD) return '''++'''
+       if (assignment.operator == AssignOperator.POSTFIXSUB) return '''--'''
+       return ''' ='''
+   }
+
+    // Expand a ASSIGNMENT instruction.
+    def dispatch CharSequence expand(Assignment assignment) {
+        if (assignment.expression instanceof FunctionCall) {
+            var returnValue = '''«assignment.expression.expand»;'''
             if (assignment.valuedObject != null) {
                 returnValue = '''«assignment.valuedObject.expand» = ''' + returnValue
             }            
-           return returnValue 
-       }
-       else if (!assignment.indices.nullOrEmpty) {
-          var returnValue = '''«assignment.valuedObject.expand »'''
-          for (index : assignment.indices) {
-              returnValue = returnValue + '''[«index.expand»]'''
-          }
-          returnValue = returnValue + ''' = «assignment.expression.expand»;'''
-          return returnValue
-       } else {
-          return '''«assignment.valuedObject.expand » = «assignment.expression.expand»;'''
-       }
-   }   
+            return returnValue 
+        } else {
+            var returnValue = '''«assignment.valuedObject.expand»'''
+            if (!assignment.indices.nullOrEmpty) {          
+                for (index : assignment.indices) {
+                    returnValue = returnValue + '''[«index.expand»]'''
+                }
+            }
+            returnValue = returnValue + assignment.expandOperator
+            if ((assignment.operator != AssignOperator.POSTFIXADD) && 
+                (assignment.operator != AssignOperator.POSTFIXSUB)) {
+                returnValue = returnValue + ''' «assignment.expression.expand»;'''
+            } else {
+                returnValue = returnValue + ''';'''
+            }
+            return returnValue
+        }
+    }   
       
    // Expand a PAUSE instruction.
    def dispatch CharSequence expand(Pause pauseInstruction) {
@@ -524,9 +540,13 @@ class S2C {
         «ENDFOR»)
     «ENDIF»
     «IF expression.operator  == OperatorType::SUB»
-        («FOR subexpression : expression.subExpressions SEPARATOR " - "»
+        «IF expression.subExpressions.size > 1»
+            («FOR subexpression : expression.subExpressions SEPARATOR " - "»
             «subexpression.expand»
-        «ENDFOR»)
+            «ENDFOR»)
+        «ELSE»
+        -«expression.subExpressions.head.expand»
+        «ENDIF»
     «ENDIF»
     «IF expression.operator  == OperatorType::MULT»
         («FOR subexpression : expression.subExpressions SEPARATOR " * "»

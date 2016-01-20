@@ -428,6 +428,8 @@ public class KielerCompiler {
                 // resource on the fly)
                 @SuppressWarnings("unused")
                 String discard = KiCoUtil.serialize(transformedObject, context, true);
+                // Test: Only perform serialization once, testing performance improvements
+                context.setCreateDummyResource(false);
             }
             res = context.getMainResource();
         }

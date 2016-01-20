@@ -13,9 +13,11 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
+import com.google.common.base.Strings
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.prom.common.CommandData
+import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.ModelImporter
 import freemarker.template.Configuration
@@ -42,10 +44,16 @@ import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.jface.viewers.StructuredSelection
+import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
-import com.google.common.base.Strings
+import org.eclipse.core.resources.IResource
+import org.eclipse.debug.internal.ui.views.console.ProcessConsole
+import org.eclipse.ui.PlatformUI
+import org.eclipse.ui.console.IConsoleConstants
+import org.eclipse.ui.console.IConsoleView
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -88,6 +96,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val ATTR_WRAPPER_CODE_TEMPLATE = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.template"
     public static val ATTR_WRAPPER_CODE_SNIPPETS = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.snippets"
 
+    public static val ATTR_ASSOCIATED_LAUNCH_SHORTCUT = "de.cau.cs.kieler.prom.launchconfig.main.associated.launch.shortcut"
+
     // Variable names
     public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
 
@@ -119,6 +129,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     private String wrapperCodeSnippetDirectory
 
     private List<CommandData> commands
+    private String associatedLaunchShortcut
 
     private String targetLanguageFileExtension
 
@@ -127,7 +138,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     private Job wrapperCodeJob;
 
     // Message console
-    private static val CONSOLE_NAME = "Project Launch"
+    private static val CONSOLE_NAME = "KiCo Compilation"
     private MessageConsole console;
     private MessageConsoleStream consoleStream;
 
@@ -142,11 +153,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         this.monitor = monitor
 
         // Init console for errors and messages
-        if (console == null || consoleStream == null) {
-            console = findConsole(CONSOLE_NAME)
-            consoleStream = console.newMessageStream()
-        }
-        console.clearConsole()
+        clearConsole()
 
         // Get data from config.
         loadSettingsFromConfiguration()
@@ -168,14 +175,46 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             compileJob.join()
             wrapperCodeJob.join()
 
-            // Execute commands only if the other jobs succeded  
+            // Proceed only if the other jobs succeded  
             if (compileJob.result.code == IStatus.OK && wrapperCodeJob.result.code == IStatus.OK) {
+                // Run associated launch shortcut
+                runAssociatedLauchShortcut()
+                
+                // Execute command list 
                 getExecuteCommandsJob().schedule()
             }
+            
+            // Refresh output directory for files
+            project.getFolder(BUILD_DIRECTORY).refreshLocal(IResource.DEPTH_INFINITE, monitor)
         } else {
-            consoleStream.println("Project of launch configuration '" + configuration.name +
+            writeToConsole("Project of launch configuration '" + configuration.name +
                 "' does not exist.\n");
         }
+    }
+
+    private def void runAssociatedLauchShortcut() {
+        // Nothing to do
+        if(Strings.isNullOrEmpty(mainFile) || Strings.isNullOrEmpty(associatedLaunchShortcut)) {
+            return;
+        }
+        
+        // Start associated launch shortcut on compiled main file
+        val compiledMainPath = new Path(computeTargetPath(mainFile, true))
+        val compiledMainFile = project.getFile(compiledMainPath)
+        val selection = new StructuredSelection(compiledMainFile)
+        val shortcut = ExtensionLookupUtil.getLaunchShortcut(associatedLaunchShortcut);
+        
+        if(shortcut == null) {
+            throw new Exception("The associated launch shortcut "+associatedLaunchShortcut+
+                                " for the launch configuration '"+configuration.name +"' could not be instantiated.")
+        }
+        
+        // There is an "invalid thread access" exception if this asyncExec is not used.
+        Display.getDefault().asyncExec(new Runnable() {
+           override run() {
+              shortcut.launch(selection, mode)
+           }
+       })
     }
 
     /**
@@ -199,7 +238,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     }
                 } catch (Exception e) {
                     // Remove this try-catch to notify the user with a popup window.
-                    consoleStream.println(e.message + "\n")
+                    writeToConsole(e.message + "\n")
                     return Status.CANCEL_STATUS
                 }
 
@@ -230,7 +269,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     generator.generateWrapperCode(files)
 
                 } catch (Exception e) {
-                    consoleStream.println(e.message + "\n")
+                    writeToConsole(e.message + "\n")
                     return Status.CANCEL_STATUS
                 }
 
@@ -256,7 +295,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     executor.execute(commands)
                     return Status.OK_STATUS
                 } catch (Exception e) {
-                    consoleStream.println(e.message + "\n")
+                    writeToConsole(e.message + "\n")
                     return Status.CANCEL_STATUS
                 }
             }
@@ -285,10 +324,12 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             val result = KielerCompiler.compile(context)
 
             // Flush compilation result to target
-            if (result.string != null && result.string != "") {
+            if (Strings.isNullOrEmpty(result.allErrors) && Strings.isNullOrEmpty(result.allWarnings) && !Strings.isNullOrEmpty(result.string) ) {
                 saveCompilationResult(result.string, computeTargetPath(data.projectRelativePath, false))
             } else {
-                var errorMessage = "Compilation of '" + data.name + "' failed:\n\n" + result.allErrors
+                var errorMessage = "Compilation of '" + data.name + "' failed:\n\n" +
+                                   Strings.nullToEmpty(result.allErrors) + "\n" +
+                                   Strings.nullToEmpty(result.allWarnings)
 
                 throw new Exception(errorMessage)
             }
@@ -391,6 +432,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         // Load shell commands
         commands = CommandData.loadAllFromConfiguration(configuration)
+        
+        // Load associated launch shortcut
+        associatedLaunchShortcut = configuration.getAttribute(ATTR_ASSOCIATED_LAUNCH_SHORTCUT, "")
     }
 
     /**
@@ -476,17 +520,44 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @param name The name of a message console to be found or created
      * @return The found or newly created message console
      */
-    private def MessageConsole findConsole(String name) {
-        val plugin = ConsolePlugin.getDefault();
-        val conMan = plugin.getConsoleManager();
-        val existing = conMan.getConsoles();
-        for (var i = 0; i < existing.length; i++)
-            if (name.equals(existing.get(i).getName()))
-                return existing.get(i) as MessageConsole;
+    private def MessageConsole findOrCreateConsole(String name) {
+        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
+        val existingConsoles = consoleManager.getConsoles();
+        for (var i = 0; i < existingConsoles.length; i++)
+            if (name.equals(existingConsoles.get(i).getName()))
+                return existingConsoles.get(i) as MessageConsole;
 
         // No console found, so create a new one.
         val myConsole = new MessageConsole(name, null);
-        conMan.addConsoles(#[myConsole]);
+        consoleManager.addConsoles(#[myConsole]);
         return myConsole;
+    }
+    
+    private def void writeToConsole(String message){
+        // If there is nothing to write, we are done immediately.
+        if(Strings.isNullOrEmpty(message))
+            return;
+        
+        // Ensure the console exists.
+        initializeConsole()
+        
+        // Print message
+        consoleStream.println(message)
+        
+        // Bring console to front
+        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
+        consoleManager.showConsoleView(console)
+    }
+    
+    private def void clearConsole() {
+        initializeConsole()
+        console.clearConsole()
+    }
+    
+    private def void initializeConsole() {
+        if (console == null || consoleStream == null) {
+            console = findOrCreateConsole(CONSOLE_NAME)
+            consoleStream = console.newMessageStream()
+        }
     }
 }

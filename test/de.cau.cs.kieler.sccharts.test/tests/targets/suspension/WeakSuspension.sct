@@ -1,25 +1,6 @@
-
+// The weak suspend is WIP.
+// This target file has to be updated after the transformation works correctly.
 @Transformation WEAKSUSPEND
 scchart WeakSuspension {
-  input bool WS;
-  input bool I;
-  bool _weakSuspend = false;
-  int _stateEnum;
-  during / _weakSuspend = WS;
-
-  initial state A {
-    entry !_weakSuspend / _stateEnum = 0;
-  }
-  --> B immediate with I
-  --> _WS immediate with _weakSuspend;
-
-  state B {
-    entry !_weakSuspend / _stateEnum = 1;
-  }
-  --> A with !I
-  --> _WS immediate with _weakSuspend;
-
-  state _WS
-  --> A immediate deferred with _stateEnum == 0
-  --> B immediate deferred with _stateEnum == 1;
+  initial state dummy;
 }

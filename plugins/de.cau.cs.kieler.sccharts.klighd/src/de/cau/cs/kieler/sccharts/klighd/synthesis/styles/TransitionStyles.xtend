@@ -20,6 +20,7 @@ import de.cau.cs.kieler.core.krendering.KDecoratorPlacementData
 import de.cau.cs.kieler.core.krendering.KPolyline
 import de.cau.cs.kieler.core.krendering.KSpline
 import de.cau.cs.kieler.core.krendering.LineStyle
+import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
@@ -38,6 +39,7 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
+@ViewSynthesisShared
 class TransitionStyles {
 
     // -------------------------------------------------------------------------

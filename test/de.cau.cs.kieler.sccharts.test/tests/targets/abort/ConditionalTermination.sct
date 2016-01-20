@@ -10,7 +10,7 @@ scchart ConditionalTermination {
     region _Ctrl:
 
     initial state _Run
-    --> _Done immediate with _termRegion && I;
+    --> _Done with _termRegion && I;
 
     final state _Done;
 

@@ -98,6 +98,20 @@ class SCGCoreExtensions {
         }
         myBlock
     }
+    
+    /** 
+     * Retrieves the scheduling block containing a given node.
+     * 
+     * @param node
+     *          an arbitrary node
+     * @return Returns the scheduling block containing the node. May return null.
+     */
+    def SchedulingBlock schedulingBlock(Node node, List<SchedulingBlock> schedulingBlocks) {
+        for (sb : schedulingBlocks ) {
+            if (sb.nodes.contains(node)) { return sb }
+        }
+        return null
+    }    
    
     /**
      * Retrieves the basic block of a scheduling block.

@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sccharts.text.sct.validation
 
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import org.eclipse.xtext.validation.Check
@@ -27,6 +26,11 @@ class SctValidator extends SctJavaValidator {
     
     extension SCChartsExtension = sCChartExtension;
     
+    /**
+     * Check if there is exactly ONE initial state per region.
+     *
+     * @param region the region
+     */
     @Check
     public def void checkInitialState(ControlflowRegion region) {
         // Do not consider the root region == SCChart
@@ -54,14 +58,26 @@ class SctValidator extends SctJavaValidator {
         }
     }
     
+    /**
+     * A state with a termination transition should have final states in all its
+     * inner regions. 
+     * A simple state with a termination transition must have inner behaviour or no termination transition at all.
+     * 
+     * @param state the state
+     */
     @Check
     public def void checkFinalStates(de.cau.cs.kieler.sccharts.State state) {
-        // Only consider macro states
-        if (state.getRegions().size() > 0) {
-            val foundTermination = !state.outgoingTransitions.filter[ type == TransitionType.TERMINATION ].empty
-            if (foundTermination) {
-                // Now test for every region
-                for (region : state.regions.filter(ControlflowRegion)) {
+        // Check if state has termination transition
+        val foundTermination = !state.outgoingTransitions.filter[ type == TransitionType.TERMINATION ].empty
+        if (foundTermination) {
+            // Assert inner behaviour
+            val regions = state.regions.filter(ControlflowRegion)
+            if(regions.isEmpty) {
+                error(NO_REGION, state, null, -1);
+            }
+            // Now test for every region
+            if (state.localActions.nullOrEmpty) {
+                for (region : regions) {
                     val foundFinal = !region.states.filter[ isFinal ].empty
                     if (!foundFinal) {
                         warning(REGION_NO_FINAL_STATE, region, null, -1);
@@ -69,12 +85,7 @@ class SctValidator extends SctJavaValidator {
                 }
             }
         }
-    } 
-    
-    @Check
-    public def void checkConstInitializationInStates(Scope scope) {
-        scope.declarations.forEach[ it.checkConstInitialization ]
-    }   
+    }
     
     /**
      * Checks if the given state has any strong abort transitions with lower priority than non-strong-abort transitions-

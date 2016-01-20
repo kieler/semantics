@@ -22,29 +22,27 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Absolute Write Read</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */
 public class AbsoluteWrite_ReadImpl extends DataDependencyImpl implements AbsoluteWrite_Read {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected AbsoluteWrite_ReadImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return ScgPackage.Literals.ABSOLUTE_WRITE_READ;
-	}
+        return ScgPackage.Literals.ABSOLUTE_WRITE_READ;
+    }
 
 } //AbsoluteWrite_ReadImpl

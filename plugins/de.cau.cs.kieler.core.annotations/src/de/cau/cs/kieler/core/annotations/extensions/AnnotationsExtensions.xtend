@@ -7,6 +7,7 @@ import de.cau.cs.kieler.core.annotations.StringAnnotation
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.annotations.CommentAnnotation
 import java.util.List
+import de.cau.cs.kieler.core.annotations.TypedStringAnnotation
 
 /**
  * Annotations extensions
@@ -16,12 +17,13 @@ import java.util.List
 class AnnotationsExtensions {
 	
 	def public Annotation getAnnotation(Annotatable annotatable, String name) {
-		annotatable.annotations.filter[ it.name == name ]?.head
+		annotatable.getAnnotations(name)?.head
 	} 
 
     def public Iterable<Annotation> getAnnotations(Annotatable annotatable, String name) {
-        annotatable.annotations.filter[ it.name == name ]
+        annotatable.getAllAnnotations(name)
     } 
+	
 	
 	def public String getStringAnnotationValue(Annotatable annotatable, String name) {
 		val annotation = annotatable.getAnnotation(name)
@@ -42,17 +44,16 @@ class AnnotationsExtensions {
 		]
 	}
 		
-		
 	def public void copyAnnotations(Annotatable source, Annotatable target) {
 	    source.annotations.forEach[
 	        target.annotations += it.copy
 	    ]
 	}
 	
-	
 	def public boolean hasAnnotation(Annotatable annotatable, String name) {
 		!annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter[ it.name == name].empty
 	}
+	
 	
 	def public boolean hasCommentAnnotation(Annotatable annotatable) {
 	   !annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter(typeof(CommentAnnotation)).empty    
@@ -61,4 +62,17 @@ class AnnotationsExtensions {
 	def public List<CommentAnnotation> getCommentAnnotations(Annotatable annotatable) {
 	    annotatable.annotations.filter(typeof(CommentAnnotation)).toList
 	}
+	
+	
+	def public boolean hasTypedAnnotation(Annotatable annotatable) {
+       !annotatable.annotations.nullOrEmpty && !annotatable.typedAnnotations.empty    
+    }
+    
+    def public List<TypedStringAnnotation> getTypedAnnotations(Annotatable annotatable) {
+        annotatable.annotations.filter(typeof(TypedStringAnnotation)).toList
+    }
+    
+    def public List<TypedStringAnnotation> getTypedAnnotations(Annotatable annotatable, String name) {
+        annotatable.getAllAnnotations(name).filter(typeof(TypedStringAnnotation)).toList
+    }
 }
