@@ -1,0 +1,21 @@
+
+@Transformation ENTRY
+scchart EntryAction {
+  output bool O;
+
+  initial state A {
+
+    region _Entry:
+
+    initial state _Init
+    --> _Done immediate / O = false;
+
+    final state _Done;
+  }
+  >-> _Exit;
+
+  final state F;
+
+  state _Exit
+  >-> F;
+}

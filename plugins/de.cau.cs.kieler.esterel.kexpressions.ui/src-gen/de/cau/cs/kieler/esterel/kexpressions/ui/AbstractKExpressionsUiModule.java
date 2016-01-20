@@ -4,14 +4,13 @@
  */
 package de.cau.cs.kieler.esterel.kexpressions.ui;
 
-import org.eclipse.xtext.ui.DefaultUiModule;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Manual modifications go to {de.cau.cs.kieler.esterel.kexpressions.ui.KExpressionsUiModule}
  */
 @SuppressWarnings("all")
-public abstract class AbstractKExpressionsUiModule extends DefaultUiModule {
+public abstract class AbstractKExpressionsUiModule extends org.eclipse.xtext.ui.DefaultUiModule {
 	
 	public AbstractKExpressionsUiModule(AbstractUIPlugin plugin) {
 		super(plugin);

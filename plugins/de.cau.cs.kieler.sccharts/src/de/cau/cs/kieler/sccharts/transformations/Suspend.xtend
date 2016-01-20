@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
@@ -25,6 +24,10 @@ import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Suspend Transformation.
@@ -60,8 +63,17 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
 
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions   
+    
     @Inject
     extension SCChartsExtension
 
@@ -100,13 +112,13 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
             val notSuspendTrigger = not(suspendTrigger)
             val immediateSuspension = suspension.isImmediate;
 
-            val suspendFlag = state.createVariable(GENERATED_PREFIX + "enabled").setTypeBool.uniqueName
+            val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName
             suspendFlag.setInitialValue(TRUE)
 
             // Do not consider other suspends as actions
             val allInnerActions = state.allContainedActions.filter(e|!(e instanceof SuspendAction))
             for (action : allInnerActions) {
-                action.setTrigger(action.trigger.and2(suspendFlag.reference))
+                action.setTrigger(action.trigger.and(suspendFlag.reference))
             }
 
             // add during action AFTER modifying allInnerActions so that we

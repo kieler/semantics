@@ -47,15 +47,15 @@ public class SctFormatter extends ActionsFormatter {
         // Suppress any space between 'region' and ':'
         c.setLinewrap(2).before(f.getControlflowRegionAccess().getRegionKeyword_2());
 //        c.setLinewrap(2).before(f.getTheRootRegionAccess().getRegionKeyword_4_1());
-        c.setLinewrap(2).before(f.getSingleControlflowRegionAccess().getRegionKeyword_1_1());
-        c.setNoSpace().before(f.getControlflowRegionAccess().getColonKeyword_6());
-        c.setLinewrap().after(f.getControlflowRegionAccess().getColonKeyword_6());
+//        c.setLinewrap(2).before(f.getSingleControlflowRegionAccess().getRegionKeyword_1_1());
+        c.setNoSpace().before(f.getControlflowRegionAccess().getColonKeyword_5());
+        c.setLinewrap().after(f.getControlflowRegionAccess().getColonKeyword_5());
 //
 //        c.setNoSpace().before(f.getTheRootRegionAccess().getColonKeyword_4_4());
 //        c.setLinewrap().after(f.getTheRootRegionAccess().getColonKeyword_4_4());
 
-        c.setNoSpace().before(f.getSingleControlflowRegionAccess().getColonKeyword_1_5());
-        c.setLinewrap().after(f.getSingleControlflowRegionAccess().getColonKeyword_1_5());
+//        c.setNoSpace().before(f.getSingleControlflowRegionAccess().getColonKeyword_1_4());
+//        c.setLinewrap().after(f.getSingleControlflowRegionAccess().getColonKeyword_1_4());
         
 //        /*
 //         *  STATE
@@ -89,19 +89,10 @@ public class SctFormatter extends ActionsFormatter {
         c.setLinewrap().after(f.getDeclarationRule());
 
         /*
-         * TEXTUAL CODE
-         */
-
-        c.setLinewrap().after(f.getTextualCodeRule());
-        //c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_8());
-        c.setNoSpace().before(f.getTextualCodeAccess().getSemicolonKeyword_1());
-
-        
-        /*
          * DECLARATIONS
          */
 //        c.setNoSpace().before(f.getValuedObjectAccess().getSemicolonKeyword_9());
-        c.setNoSpace().before(f.getDeclarationAccess().getSemicolonKeyword_4());
+        c.setNoSpace().before(f.getDeclarationAccess().getSemicolonKeyword_8());
         
 
         
@@ -114,9 +105,9 @@ public class SctFormatter extends ActionsFormatter {
 //        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_3_3_1_0_2_2_0());
 //        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_3_3_1_0_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
 //        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_3_3_1_0_2_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
-        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_3_3_0_1_2_0());
-        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_3_3_0_1_0_0()); 
-        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_3_3_0_1_2_0());
+        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_7_2_2_0());
+        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_7_2_0()); 
+        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_7_2_2_0());
         c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_8());
 
     }

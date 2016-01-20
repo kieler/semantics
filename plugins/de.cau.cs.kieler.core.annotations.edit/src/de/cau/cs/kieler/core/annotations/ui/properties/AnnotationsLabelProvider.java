@@ -101,12 +101,12 @@ public class AnnotationsLabelProvider extends BaseLabelProvider implements ITabl
             case TYPED_STRING:
                 TypedStringAnnotation tsa = (TypedStringAnnotation) annotation;
                 if (tsa.getType() != null) {
-                    return tsa.getValue() + " (" + tsa.getType() + ")";
+                    return tsa.getValues().get(0) + " (" + tsa.getType() + ")";
                 } else {
-                    return tsa.getValue();
+                    return tsa.getValues().get(0);
                 }
             case STRING:
-                return ((StringAnnotation) annotation).getValue();
+                return ((StringAnnotation) annotation).getValues().get(0);
             case INT:
                 return Integer.toString(((IntAnnotation) annotation).getValue());
             case BOOLEAN:

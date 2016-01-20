@@ -16,14 +16,20 @@ package de.cau.cs.kieler.s.sim.xtend
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Abort
+import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.s.s.Await
 import de.cau.cs.kieler.s.s.Emit
 import de.cau.cs.kieler.s.s.Fork
 import de.cau.cs.kieler.s.s.Halt
+import de.cau.cs.kieler.s.s.HostCodeInstruction
 import de.cau.cs.kieler.s.s.If
 import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.Join
+import de.cau.cs.kieler.s.s.LocalSignal
 import de.cau.cs.kieler.s.s.Pause
 import de.cau.cs.kieler.s.s.Prio
 import de.cau.cs.kieler.s.s.Program
@@ -31,16 +37,9 @@ import de.cau.cs.kieler.s.s.SFactory
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
-import de.cau.cs.kieler.s.s.HostCodeInstruction
-//import org.eclipse.xtend.util.stdlib.CloningExtensions
-
 import de.cau.cs.kieler.s.sim.SSimPlugin
-import de.cau.cs.kieler.s.s.LocalSignal
-import de.cau.cs.kieler.s.s.Assignment
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.s.extensions.SExtension
 
 /**
  * Transformation of S code into S code that is
@@ -61,13 +60,16 @@ import de.cau.cs.kieler.s.extensions.SExtension
 class S2Simulation {
     
     @Inject
-    extension KExpressionsExtension    
+    extension KExpressionsValuedObjectExtensions    
+
+    @Inject
+    extension KExpressionsDeclarationExtensions    
 
     @Inject
     extension SExtension 
     
          // General method to create the enriched S simulation code.
-         def Program transform2Simulation (Program program) {
+    def Program transform2Simulation (Program program) {
          var AUXILIARY_VARIABLE_TAG = SSimPlugin::AUXILIARY_VARIABLE_TAG
                
          // Clone the complete S program 
@@ -115,15 +117,18 @@ class S2Simulation {
         ) {
                   
             // auxiliary signal
-            var auxiliarySignal = KExpressionsFactory::eINSTANCE.createValuedObject();
-            auxiliarySignal.setSignal(true);
+            val auxiliarySignal = KExpressionsFactory::eINSTANCE.createValuedObject() => [
+                name = UID
+            ]
+            createDeclaration(ValueType::PURE) => [
+                signal = true
+                input = false
+                output = true
+                attach(auxiliarySignal)
+                program.declarations += it
+            ]
+                        
             var auxiliaryEmitInstruction = SFactory::eINSTANCE.createEmit
-                  
-            // Setup the auxiliarySignal as an OUTPUT to the module
-            auxiliarySignal.setName(UID);
-            auxiliarySignal.setInput(false);
-            auxiliarySignal.setOutput(true);
-            auxiliarySignal.setType(ValueType::PURE);
             // Set the auxiliarySignal for emission 
             auxiliaryEmitInstruction.setSignal(auxiliarySignal);
             
@@ -132,7 +137,6 @@ class S2Simulation {
             
             if (container instanceof State) {
                   // Add auxiliarySignal to program
-                  program.valuedObjects.add(auxiliarySignal);
                   val stateInstruction = container as State;
                   val instructionList = stateInstruction.instructions;
                   val index = instructionList.indexOf(instruction);
@@ -140,7 +144,6 @@ class S2Simulation {
             }
             else if (container instanceof If) {
                   // Add auxiliarySignal to program
-                  program.valuedObjects.add(auxiliarySignal);
                   val ifInstruction = container as If
                   val instructionList = ifInstruction.instructions;
                   val index = instructionList.indexOf(instruction);

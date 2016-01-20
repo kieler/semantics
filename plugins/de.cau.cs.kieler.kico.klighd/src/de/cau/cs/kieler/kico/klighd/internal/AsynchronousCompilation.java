@@ -1,7 +1,7 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * http://rtsys.informatik.uni-kiel.de/kieler
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
  * + Kiel University
@@ -114,9 +114,8 @@ public class AsynchronousCompilation extends Job {
             if (tracing) {
                 context.setProperty(Tracing.ACTIVE_TRACING, true);
             }
-            // ONLY turn this on if you temporary want to SEE simulation transformations in KiCo
-            // selection view
-            context.setCreateDummyResource(false);
+            // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo selection view
+            context.setCreateDummyResource(true);
             result = KielerCompiler.compile(context);
 
             if (monitor.isCanceled()) {

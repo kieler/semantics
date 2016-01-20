@@ -21,11 +21,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LocalVariableImpl#getVar <em>Var</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LocalVariableImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

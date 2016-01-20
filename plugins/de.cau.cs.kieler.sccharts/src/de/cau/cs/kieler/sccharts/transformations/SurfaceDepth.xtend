@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
@@ -26,6 +25,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCompareExtensions
 
 /**
  * SCCharts SurfaceDepth Transformation.
@@ -61,7 +61,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCompareExtensions
 
     @Inject
     extension SCChartsExtension
@@ -239,7 +239,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                                 val TK1 = TK1s.get(0)
                                 val TK2 = TK2s.get(0)
                                 if ((TK1.targetState == TK2.targetState) &&
-                                    ((TK1.trigger == TK2.trigger) || (TK1.trigger.equals2(TK2.trigger)))) {
+                                    ((TK1.trigger == TK2.trigger) || (TK1.trigger.equals(TK2.trigger)))) {
                                     stateAfterDepth = K1
 
                                     //System.out.println("new stateAfterDepth:" + stateAfterDepth.id);

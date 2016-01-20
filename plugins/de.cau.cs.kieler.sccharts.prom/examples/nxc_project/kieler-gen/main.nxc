@@ -1,0 +1,34 @@
+#include "NxcModel.nxc"
+
+// Init Annotations
+        long clockCounter = 0;
+
+/**
+ * Main task. 
+ * This is executed when the program is run.
+ */
+task main() {
+
+    // Init SCChart
+    reset();
+    
+    // Tick loop
+    while(!ButtonPressed(BTNLEFT, false)){
+    
+        // Update input annotations
+        // Clock
+        clock = false;
+        if ( clockCounter + 500 < CurrentTick() ){
+            clockCounter= CurrentTick();
+            clock = true;
+        }
+        
+        // Tick
+        tick();
+
+        // Update output annotations
+        // Floodlight S3
+        SetSensorLight(S3, floodlight);
+
+    }
+}

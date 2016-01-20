@@ -1,0 +1,13 @@
+// Edge case from Semantics Meeting 2015-11-03
+@Transformation INITIALIZATION
+scchart InitializationAndEntry {
+    
+    output bool O = false;
+    output bool V;
+    entry / V = O;
+
+    initial state A
+    --> B;
+    
+    final state B;
+}

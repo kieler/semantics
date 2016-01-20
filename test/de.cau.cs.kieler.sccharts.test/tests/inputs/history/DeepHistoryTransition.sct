@@ -1,0 +1,26 @@
+@Transformation HISTORY
+scchart DeepHistoryTransition {
+  input bool I;
+  output bool O;
+  
+  initial state A
+  --> B history;
+  
+  state B {
+    
+    initial state B0 {
+      initial state B00
+      --> B01;
+      
+      state B01
+      --> B00;
+    }
+    --> B1 with I;
+    
+    state B1
+    --> B2;
+    
+    state B2
+    --> B0;
+  }--> A with O;
+}

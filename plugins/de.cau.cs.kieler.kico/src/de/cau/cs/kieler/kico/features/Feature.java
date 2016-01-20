@@ -15,7 +15,7 @@ package de.cau.cs.kieler.kico.features;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -168,7 +168,7 @@ public abstract class Feature implements IFeature {
 
     private final Set<Feature> getProduceNotHandledByPathTo(Feature fromFeature,
             Feature targetFeature, boolean ignoreInherited) {
-        HashSet<Feature> returnFeatures = new HashSet<Feature>();
+        LinkedHashSet<Feature> returnFeatures = new LinkedHashSet<Feature>();
 
         // Recursion ends here, we have found a path
         if (fromFeature == targetFeature) {
@@ -274,7 +274,7 @@ public abstract class Feature implements IFeature {
         if (cachedExpandingTransformations != null) {
             return cachedExpandingTransformations;
         }
-        cachedExpandingTransformations = new HashSet<Transformation>();
+        cachedExpandingTransformations = new LinkedHashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
             if (transformation.getExpandsFeature() == this) {
                 cachedExpandingTransformations.add(transformation);
@@ -294,7 +294,7 @@ public abstract class Feature implements IFeature {
         if (cachedProducingTransformations != null) {
             return cachedProducingTransformations;
         }
-        cachedProducingTransformations = new HashSet<Transformation>();
+        cachedProducingTransformations = new LinkedHashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
             if (transformation.getProducesFeatures() == this) {
                 cachedProducingTransformations.add(transformation);
@@ -318,8 +318,8 @@ public abstract class Feature implements IFeature {
                 return cachedNotHandlingTransformations;
             }
         }
-        cachedNoInheritedNotHandlingTransformations = new HashSet<Transformation>();
-        cachedNotHandlingTransformations = new HashSet<Transformation>();
+        cachedNoInheritedNotHandlingTransformations = new LinkedHashSet<Transformation>();
+        cachedNotHandlingTransformations = new LinkedHashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
             for (Feature transformationNotHandlingFeature : transformation
                     .getNotHandlesFeatures(true)) {
@@ -407,7 +407,7 @@ public abstract class Feature implements IFeature {
      * @return the sets the
      */
     public static Set<Feature> resolveFeatures(Set<Feature> features) {
-        Set<Feature> resolvedFeatures = new HashSet<Feature>();
+        Set<Feature> resolvedFeatures = new LinkedHashSet<Feature>();
         for (Feature feature : features) {
             resolveFeatures(resolvedFeatures, feature, false);
         }
@@ -425,7 +425,7 @@ public abstract class Feature implements IFeature {
      * @return the sets the
      */
     public static Set<Feature> resolveFeaturesAll(Set<Feature> features) {
-        Set<Feature> resolvedFeaturesAll = new HashSet<Feature>();
+        Set<Feature> resolvedFeaturesAll = new LinkedHashSet<Feature>();
         for (Feature feature : features) {
             resolveFeatures(resolvedFeaturesAll, feature, true);
         }
@@ -472,7 +472,7 @@ public abstract class Feature implements IFeature {
         if (cachedFeatureGroups != null) {
             return cachedFeatureGroups;
         }
-        cachedFeatureGroups = new HashSet<FeatureGroup>();
+        cachedFeatureGroups = new LinkedHashSet<FeatureGroup>();
         for (Feature feature : KielerCompiler.getFeatures()) {
             if (feature.isGroup() && feature.asGroup().getFeatures().contains(this)) {
                 cachedFeatureGroups.add(feature.asGroup());
@@ -493,7 +493,7 @@ public abstract class Feature implements IFeature {
         if (cachedAllFeatureGroups != null) {
             return cachedAllFeatureGroups;
         }
-        cachedAllFeatureGroups = new HashSet<FeatureGroup>();
+        cachedAllFeatureGroups = new LinkedHashSet<FeatureGroup>();
         cachedAllFeatureGroups.addAll(getAllParentFeatureGroups(this));
 
         return cachedAllFeatureGroups;
@@ -510,7 +510,7 @@ public abstract class Feature implements IFeature {
      * @return the all parent feature groups
      */
     private Set<FeatureGroup> getAllParentFeatureGroups(Feature featureContainedByGroup) {
-        HashSet<FeatureGroup> returnSet = new HashSet<FeatureGroup>();
+        LinkedHashSet<FeatureGroup> returnSet = new LinkedHashSet<FeatureGroup>();
         for (Feature feature : KielerCompiler.getFeatures()) {
             if (feature.isGroup()
                     && feature.asGroup().getFeatures().contains(featureContainedByGroup)) {

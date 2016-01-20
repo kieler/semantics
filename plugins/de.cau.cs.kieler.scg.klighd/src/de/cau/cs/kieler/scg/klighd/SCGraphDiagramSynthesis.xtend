@@ -18,10 +18,8 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
 import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KPort
@@ -41,11 +39,15 @@ import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
+import de.cau.cs.kieler.kico.CompilationResult
+import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.kiml.options.PortAlignment
 import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortSide
+import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import de.cau.cs.kieler.klay.layered.properties.Properties
@@ -58,7 +60,9 @@ import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
@@ -71,33 +75,24 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Write_Write
-import de.cau.cs.kieler.scg.klighd.analyzer.AnalysesVisualization
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
+import java.util.Set
 import javax.inject.Inject
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.ThreadPathType
-import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.kico.KiCoProperties
-import java.util.Set
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
-import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.core.krendering.Colors
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
-import de.cau.cs.kieler.klay.layered.properties.InternalProperties
-import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.ControlDependency
-import de.cau.cs.kieler.scg.features.SCGFeatures
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -122,7 +117,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     ]
     private static val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(
         typeof(SCGKExpressionsScopeProvider));
-    private static val ISerializer serializer = guiceInjector.getInstance(typeof(ISerializer));
+//    private static val ISerializer serializer = guiceInjector.getInstance(typeof(ISerializer));
 
     // -------------------------------------------------------------------------
     // -- Extensions 
@@ -160,10 +155,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject
     extension KColorExtensions
 
-    /** Inject KExpression extension. */
-    @Inject
-    extension KExpressionsExtension
-
     /** Inject SCGraph shapes extensions. */
     @Inject
     extension AnnotationsExtensions
@@ -185,6 +176,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     /** Inject analysis extensions. */
     @Inject
     extension SCGDeclarationExtensions
+    
+    @Inject
+    extension SCGSerializeHRExtensions
 
     // -------------------------------------------------------------------------
     // -- KlighD Options
@@ -380,6 +374,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val String ANNOTATION_SEQUENTIALIZED = "sequentialized" 
     private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"   
     private static val String ANNOTATION_SCPDGTRANSFORMATION = "scpdg" 
+    private static val String ANNOTATION_LABEL = "label"
 
     /** 
 	 * Constants for hierarchical node groups
@@ -575,7 +570,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 scg.nodes.filter(typeof(Fork)).forEach[
                     allNext.map[target].filter(typeof(Entry)).forEach [ entry |
                         if (entry != null) {
-                            val regionLabel = entry.getStringAnnotationValue(ANNOTATION_REGIONNAME)
+                            var label = ""
+                            if (entry.hasAnnotation(ANNOTATION_LABEL)) {
+                                label = entry.getStringAnnotationValue(ANNOTATION_LABEL)
+                            } else {
+                                label = entry.getStringAnnotationValue(ANNOTATION_REGIONNAME)
+                            }
+                            val regionLabel = label
                             entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY, null) => [
                             	var text = ""
                                 val threadPathType = threadTypes.get(entry)
@@ -585,7 +586,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                 }
                                 
                                     addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
-                                        it.KRendering.foreground = REGIONLABEL.copy;
+                                        it.KRendering.setForeground(REGIONLABEL.copy);
                                         if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
                                     ]
                                     
@@ -614,7 +615,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private def String getTextExpressionString(Expression expression) {
         if (expression instanceof TextExpression) {
             val text = (expression as TextExpression).getText
-            return removeEnclosingQuotes(text)
+            return text
         }
         return null
     }
@@ -635,52 +636,36 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 putToLookUpWith(assignment)
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
-                // Serialize the assignment
-                // Additionally, remove unnecessary parenthesis and add spacing in line breaks.
-                if (assignment.valuedObject != null && assignment.assignment != null) {
-                    var assignmentText = serializer.serialize(assignment.assignment.copy.fix) //.removeParenthesis
-                    var valuedObjectName = assignment.valuedObject.name
-                    if (!assignment.indices.nullOrEmpty) {
-                        valuedObjectName = valuedObjectName + serializer.serializeIndices(assignment.indices)
-                    }
-                    // added by cmot (9.3.14)
-                    if (assignment.assignment instanceof TextExpression) {
-                        assignmentText = assignment.assignment.getTextExpressionString
-                    }
-                    var assignmentStr = valuedObjectName + " = " + assignmentText
-                        
-                    if (assignmentStr.contains("&") && assignmentStr.indexOf("&") != assignmentStr.lastIndexOf("&")) {
-//                        assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
-//                        assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
-                    }
-                    it.addText(assignmentStr).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
-                        if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
-                    ]
-                } else if (assignment.assignment instanceof TextExpression) {
-                    // added by cmot (9.3.14)
-                    it.addText(assignment.assignment.getTextExpressionString).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
-                        if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
-                    ]
-                } else if (assignment.assignment instanceof FunctionCall) {
-                    var assignmentText = serializer.serialize(assignment.assignment.copy.fix) //.removeParenthesis
-                    it.addText(assignmentText).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
-                        if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);    
-                    ]
+                var assignmentStr = ""
+                if (assignment.hasAnnotation(ANNOTATION_LABEL)) {
+                    assignmentStr = assignment.getStringAnnotationValue(ANNOTATION_LABEL)
+                } else {
+                    assignmentStr = serializeHR(assignment) as String
                 }
+                        
+                it.addText(assignmentStr).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
+                    if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                ]
             ]
             // Add ports for control-flow and dependency routing.
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+            node.addLayoutParam(LayoutOptions::PORT_ALIGNMENT, PortAlignment::CENTER)
+            node.addLayoutParam(LayoutOptions::PORT_SPACING, 10f)
             if (topdown()) {
-                node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
-                node.addPort(SCGPORTID_OUTGOING, 37, 24, 0, PortSide::SOUTH)
-                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 24, 0, PortSide::SOUTH)
-                node.addPort("DEBUGPORT", MINIMALWIDTH, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
+                node.addPort("dummyN", 27, 0, 1, PortSide::NORTH).setLayoutOption(LayoutOptions::PORT_INDEX, 0)                
+                node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
+                node.addPort("dummyS", 27, 0, 1, PortSide::SOUTH).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
+                node.addPort(SCGPORTID_OUTGOING, 37, 24, 0, PortSide::SOUTH).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 24, 0, PortSide::SOUTH).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
+//                node.addPort("DEBUGPORT", MINIMALWIDTH, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
             } else {
-                node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
-                node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 1, PortSide::EAST)
-                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST)
+                node.addPort("dummyN", 27, 0, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
+                node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
+                node.addPort("dummyS", 27, 0, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
+                node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
             }
         ]
     }
@@ -746,10 +731,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 putToLookUpWith(conditional)
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 // Serialize the condition in the conditional
+                var conditionalStr = ""
+                if (conditional.hasAnnotation(ANNOTATION_LABEL)) {
+                    conditionalStr = conditional.getStringAnnotationValue(ANNOTATION_LABEL)
+                } else {
+                    conditionalStr = serializeHR(conditional.condition) as String
+                }
                 if (conditional.condition != null)
                     node.KContainerRendering.addText(
 //                        serializer.serialize(conditional.condition.copy.fix).removeParenthesis).setAreaPlacementData.
-                        serializer.serialize(conditional.condition.copy.fix)).setAreaPlacementData.
+                        conditionalStr).setAreaPlacementData.
                         from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0).putToLookUpWith(conditional) => [
                             if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
@@ -759,32 +750,38 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             var switchBranch = false
             val branchAnnotation = conditional.getAnnotation(ANNOTATION_BRANCH)
             if (branchAnnotation instanceof StringAnnotation) {
-                val annotationValue = (branchAnnotation as StringAnnotation).getValue
+                val annotationValue = (branchAnnotation as StringAnnotation).getValues.head
                 if (annotationValue == "switch") {
                     switchBranch = true
                 }
             }
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+            node.addLayoutParam(LayoutOptions::PORT_ALIGNMENT, PortAlignment::CENTER)
+            node.addLayoutParam(LayoutOptions::PORT_SPACING, 10f)
             var KPort port
             if (topdown) {
-                node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
-                node.addPort(SCGPORTID_OUTGOING_ELSE, 37.5f, 24, 0, PortSide::SOUTH)
+                node.addPort("dummyN", 27, 0, 1, PortSide::NORTH).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
+                node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
+                node.addPort("dummyS", 27, 0, 1, PortSide::SOUTH).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
+                node.addPort(SCGPORTID_OUTGOING_ELSE, 37.5f, 24, 0, PortSide::SOUTH).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
                 if (switchBranch)
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 7, 12.5f, 0, PortSide::WEST)
                 else
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 68, 12.5f, 0, PortSide::EAST)
-                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 21, 1, PortSide::SOUTH)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 21, 1, PortSide::SOUTH).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
                 port.addLayoutParam(LayoutOptions::OFFSET, -1.5f)
             } else {
-                node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
-                node.addPort(SCGPORTID_OUTGOING_ELSE, 75, 12.5f, 0, PortSide::EAST)
+                node.addPort("dummyW", 27, 0, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
+                node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
+                node.addPort("dummyE", 27, 0, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
+                node.addPort(SCGPORTID_OUTGOING_ELSE, 75, 12.5f, 0, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
                 if (switchBranch)
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 37.5f, 0, 0, PortSide::NORTH)
                 else
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 37.5f, 20, 0, PortSide::SOUTH)
-                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0f)
             }
         ]
@@ -1362,8 +1359,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     if (guard.dead) {
                         expText = "<dead>"
                     } else {
-                        val exp = guard.expression.copy.fix
-                    	expText = serializer.serialize(exp)	
+                        val exp = guard.expression.copy
+                    	expText = serializeHR(exp) as String
                     }
 //                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
 					bbName = bbName + "\n" + expText                	
@@ -1389,7 +1386,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
 	                    var expText = "<null>"
 	                    if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
-        	            	expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)
+        	            	expText = serializeHR(schedulingBlock.guard.expression) as String
     	            	}	
 //        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
 						sbName = sbName + "\n" + expText       

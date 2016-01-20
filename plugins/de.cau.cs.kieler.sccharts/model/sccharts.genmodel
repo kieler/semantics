@@ -4,7 +4,7 @@
     modelDirectory="/de.cau.cs.kieler.sccharts/src" modelPluginID="de.cau.cs.kieler.sccharts"
     templateDirectory="de.cau.cs.kieler.sccharts/templates" dynamicTemplates="true"
     redirection="" modelName="SCCharts" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    complianceLevel="5.0" usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.genmodel#//keffects ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <foreignModel>sccharts.ecore</foreignModel>
   <genPackages prefix="SCCharts" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       fileExtensions="kixs" ecorePackage="sccharts.ecore#/">
@@ -29,18 +29,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Action/effects"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Action/trigger"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Action/delay"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Action/immediate"/>
       <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute sccharts.ecore#//Action/label"/>
-    </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//Assignment">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Assignment/valuedObject"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Assignment/expression"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Assignment/indices"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="sccharts.ecore#//Effect"/>
-    <genClasses ecoreClass="sccharts.ecore#//Emission">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Emission/valuedObject"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Emission/newValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Action/immediate"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//State">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//State/type"/>
@@ -52,8 +42,38 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/incomingTransitions"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//Region">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Region/states"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sccharts.ecore#//Region/parentState"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//ControlflowRegion">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//ControlflowRegion/states"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//DataflowRegion">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DataflowRegion/nodes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DataflowRegion/equations"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//Node">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Node/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Node/label"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//ReferenceNode">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//ReferenceNode/referencedScope"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//ReferenceNode/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//CallNode">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//CallNode/callReference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//CallNode/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//DefineNode">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DefineNode/inputs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DefineNode/outputs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//DefineNode/valuedObjects"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DefineNode/expressions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DefineNode/states"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//Equation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Equation/expression"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Equation/node"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Equation/valuedObject"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//Binding">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Binding/formal"/>
@@ -74,9 +94,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/referencedScope"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/bindings"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/declarations"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/for"/>
     </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//TextEffect"/>
     <genClasses image="false" ecoreClass="sccharts.ecore#//LocalAction"/>
     <genClasses ecoreClass="sccharts.ecore#//EntryAction"/>
     <genClasses ecoreClass="sccharts.ecore#//DuringAction"/>
@@ -84,11 +102,6 @@
     <genClasses ecoreClass="sccharts.ecore#//SuspendAction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//SuspendAction/weak"/>
     </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//For">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//For/loopVariable"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//For/from"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//For/to"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//For/valuedObject"/>
-    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//IterateAction"/>
   </genPackages>
 </genmodel:GenModel>

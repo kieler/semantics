@@ -96,7 +96,7 @@ public abstract class AnnotatableImpl extends EObjectImpl implements Annotatable
      */
     public Annotation getAnnotation(String name) {
         for (Annotation annotation : getAnnotations()) {
-            if (name.equals(annotation.getName())){
+            if (name.equalsIgnoreCase(annotation.getName())){
                 return annotation;
             }
         }
@@ -112,7 +112,7 @@ public abstract class AnnotatableImpl extends EObjectImpl implements Annotatable
     public EList<Annotation> getAllAnnotations(String name) {
         EList<Annotation> list = new BasicEList<Annotation>();
         for (Annotation annotation : getAnnotations()) {
-            if (name.equals(annotation.getName())){
+            if (name.equalsIgnoreCase(annotation.getName())){
                 list.add(annotation);
             }
         }

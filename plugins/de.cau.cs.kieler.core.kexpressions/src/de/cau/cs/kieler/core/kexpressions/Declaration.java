@@ -262,27 +262,27 @@ public interface Declaration extends Annotatable {
 				/**
 	 * Returns the value of the '<em><b>Host Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Host Type</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Host Type</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
 	 * @return the value of the '<em>Host Type</em>' attribute.
 	 * @see #setHostType(String)
 	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getDeclaration_HostType()
 	 * @model
 	 * @generated
 	 */
-	String getHostType();
+    String getHostType();
 
-				/**
+                /**
 	 * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.Declaration#getHostType <em>Host Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Host Type</em>' attribute.
 	 * @see #getHostType()
 	 * @generated
 	 */
-	void setHostType(String value);
+    void setHostType(String value);
 
 } // Declaration

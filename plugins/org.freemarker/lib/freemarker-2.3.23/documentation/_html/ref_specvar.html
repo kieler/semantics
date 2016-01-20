@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en" class="page-type-chapter">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>Special Variable Reference - FreeMarker Manual</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker Manual">
+<meta property="og:title" content="Special Variable Reference">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_specvar.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_specvar.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="http://schema.org/Article">
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigationHeader">Manual</a><div class="navigationHeader"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb"><li class="step-0" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="toc.html"><span itemprop="title">FreeMarker Manual</span></a></li><li class="step-1" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="ref.html"><span itemprop="title">Template Language Reference</span></a></li><li class="step-2" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="ref_specvar.html"><span itemprop="title">Special Variable Reference</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li>.spec_vars</li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker Manual","Template Language Reference","Special Variable Reference"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_directive_visit.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_reservednames.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-chapter" id="ref_specvar" itemprop="name">Special Variable Reference</h1>
+</div></div><p>Special variables are variables defined by the FreeMarker engine
+      itself. To access them, you use the
+      <code class="inline-code">.<em class="code-color">variable_name</em></code> syntax. For
+      example, you can&#39;t write simply <code class="inline-code">version</code>; you have to
+      write <code class="inline-code">.version</code>.</p>  <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+        <p>As of FreeMarker 2.3.23, you can use camel case instead of snake
+        case for special variable names, like <code class="inline-code">dataModel</code>
+        instead of <code class="inline-code">data_model</code>. But know that then withing
+        the same template, FreeMarker will enforce the usage of camel case for
+        all identifiers that are part of the template language (user defined
+        names are not affected).</p>
+        </div>
+<p>The supported special variables are:</p><ul>
+        <li>
+          <code class="inline-code">current_template_name</code><code class="inline-code"></code>:
+          The name of the template where we are now (available since
+          FreeMarker 2.3.23). This can be missing (<code class="inline-code">null</code>) if
+          the template was created on-the-fly in Java <span class="marked-for-programmers">(via <code class="inline-code">new Template(null,
+          <em class="code-color">...</em>)</code>)</span>, rather than
+          loaded from a backing store by name <span class="marked-for-programmers">(via
+          <code class="inline-code"><em class="code-color">cfg</em>.getTemplate(name,
+          <em class="code-color">...</em>)</code>)</span>. Migration
+          notice: If you replace the deprecated
+          <code class="inline-code">template_name</code> with this, note that the later is a
+          0-length string instead of missing (<code class="inline-code">null</code>) if the
+          template has no name, so you might want to write
+          <code class="inline-code">current_template_name!&#39;&#39;</code> in legacy
+          templates.
+        </li>
+
+        <li>
+          <code class="inline-code">data_model</code>: A hash that you can use to
+          access the data-model directly. That is, variables you did with
+          <code class="inline-code">global</code> directive are not visible here.
+        </li>
+
+        <li>
+          <code class="inline-code">error</code> (available since FreeMarker
+          2.3.1): This variable accessible in the body of the <a href="ref_directive_attempt.html#ref.directive.attempt"><code>recover</code>
+          directive</a>, where it stores the error message of the error we
+          recover from.
+        </li>
+
+        <li>
+          <code class="inline-code">globals</code>: A hash that you can use to access
+          the globally accessible variables: the data-model and the variables
+          created with <code class="inline-code">global</code> directive. Note that
+          variables created with <code class="inline-code">assign</code> or
+          <code class="inline-code">macro</code> are not globals, thus they never hide the
+          variables when you use <code class="inline-code">globals</code>.
+        </li>
+
+        <li>
+          <code class="inline-code">lang</code>: Returns the language part of
+          the current value of the locale setting. For example if
+          <code class="inline-code">.locale</code> is <code class="inline-code">en_US</code>, then
+          <code class="inline-code">.lang</code> is <code class="inline-code">en</code>.
+        </li>
+
+        <li>
+          <code class="inline-code">locale</code>: Returns the current value
+          of the locale setting. This is a string, for example
+          <code class="inline-code">en_US</code>. For more information about locale strings
+          <a href="ref_directive_setting.html#ref.directive.setting">see the
+          <code>setting</code> directive</a>.
+        </li>
+
+        <li>
+          <code class="inline-code">locale_object</code> (available since
+          FreeMarker 2.3.21): Returns the current value of the locale setting
+          as a <code class="inline-code">java.util.Locale</code> object, rather than as a
+          string. This meant to be used instead of <code class="inline-code">.locale</code>
+          when you want to pass it as a <code class="inline-code">java.util.Locale</code>
+          object to a Java method. (The <code class="inline-code">Locale</code> object will
+          be wrapped according the <code class="inline-code">object_wrapper</code> setting
+          value. Whether you can actually pass this value to a Java method as
+          a <code class="inline-code">Locale</code> object depends on the object wrapper,
+          but an object wrapper that let you call Java methods directly is
+          very unlikely to not support that.)
+        </li>
+
+        <li>
+          <code class="inline-code">locals</code>: A hash that you can use to access
+          the local variables (the variables created with the
+          <code class="inline-code">local</code> directive, and the parameters of
+          macro).
+        </li>
+
+        <li>
+          <code class="inline-code">main</code>: A hash that you can use to access the
+          main <a href="dgui_misc_namespace.html">namespace</a>. Note that
+          global variables like the variables of data-model are
+          <em>not</em> visible through this hash.
+        </li>
+
+        <li>
+          <code class="inline-code">main_template_name</code>: The name of the
+          top level template (available since FreeMarker 2.3.23). <span class="marked-for-programmers">(In Java, this is the template for which
+          <code class="inline-code">Template.process</code> was called.) </span>This can
+          be missing (<code class="inline-code">null</code>) if the template was created
+          on-the-fly in Java <span class="marked-for-programmers">(via <code class="inline-code">new
+          Template(null, <em class="code-color">...</em>)</code>)</span>,
+          rather than loaded from a backing store by name <span class="marked-for-programmers">(via
+          <code class="inline-code"><em class="code-color">cfg</em>.getTemplate(name,
+          <em class="code-color">...</em>)</code>)</span>. Migration
+          notice: If you replace the deprecated
+          <code class="inline-code">template_name</code> with this, note that the later is a
+          0-length string instead of missing (<code class="inline-code">null</code>) if the
+          template has no name, so you might want to write
+          <code class="inline-code">main_template_name!&#39;&#39;</code> in legacy templates.
+        </li>
+
+        <li>
+          <code class="inline-code">namespace</code>: A hash that you can use to
+          access the current <a href="dgui_misc_namespace.html">namespace</a>. Note that global
+          variables like the variables of data-model are
+          <em>not</em> visible through this hash.
+        </li>
+
+        <li>
+          <code class="inline-code">node</code> (alias <code class="inline-code">current_node</code>
+          for historical reasons): The node you are currently processing with
+          the visitor pattern (i.e. with the <a href="ref_directive_visit.html"><code>visit</code>,
+          <code>recurse</code>, ...etc. directives</a>). Also, it
+          initially stores the root node when you use the <a href="pgui_misc_ant.html">FreeMarker XML Ant task</a>.
+        </li>
+
+        <li>
+          <code class="inline-code">now</code>: Returns the current date-time.
+          Usage examples: &quot;<code class="inline-code">Page generated: ${.now}</code>&quot;,
+          &quot;<code class="inline-code">Today is ${.now?date}</code>&quot;, &quot;<code class="inline-code">The current
+          time is ${.now?time}</code>&quot;.
+        </li>
+
+        <li>
+          <code class="inline-code">output_encoding</code> (available since
+          FreeMarker 2.3.1): Returns the name of the current output charset.
+          This special variable is not existent if the framework that
+          encapsulates FreeMarker doesn&#39;t specify the output charset for
+          FreeMarker. <span class="marked-for-programmers">(Programmers can read more
+          about charset issues <a href="pgui_misc_charset.html">here...</a>)</span>
+        </li>
+
+        <li>
+          <code class="inline-code">template_name</code>: <em>Don&#39;t use
+          it, because its behavior is strange when macros are used; use
+          <code class="inline-code">current_template_name</code> or
+          <code class="inline-code">main_template_name</code> instead (see migration notices
+          there).</em> Gives the name of the main template, or if we are
+          running an included or imported template, the name of that template.
+          When calling macros, it becomes rather confusing: the macro call
+          won&#39;t change the value of this special variable, but when
+          <code class="inline-code">nested</code> is called, it changes it to the name of
+          the template that belongs to the current namespace. (Available since
+          FreeMarker 2.3.14.)
+        </li>
+
+        <li>
+          <code class="inline-code">url_escaping_charset</code> (available
+          since FreeMarker 2.3.1): If exists, it stores the name of the
+          charset that should be used for URL escaping. If this variable
+          doesn&#39;t exist that means that nobody has specified what charset
+          should be used for URL encoding yet. In this case the <a href="ref_builtins_string.html#ref_builtin_url"><code>url</code> built-in</a>
+          uses the charset specified by the <code class="inline-code">output_encoding</code>
+          special variable for URL encoding; custom mechanism may follow the
+          same logic. <span class="marked-for-programmers">(Programmers can read more
+          about charset issues <a href="pgui_misc_charset.html">here...</a>)</span>
+        </li>
+
+        <li>
+          <code class="inline-code">vars</code>: Expression
+          <code class="inline-code">.vars.foo</code> returns the same variable as expression
+          <code class="inline-code">foo</code>. It&#39;s useful if for some reasons you have to
+          use square bracket syntax, since that works only for hash sub
+          variables, so you need an artificial parent hash. For example, to
+          read a top-level variable that has a strange name that would confuse
+          FreeMarker, you can write
+          <code class="inline-code">.vars[&quot;A strange name!&quot;]</code>. Or, to access a
+          top-level variable with dynamic name given with variable
+          <code class="inline-code">varName</code> you can write
+          <code class="inline-code">.vars[varName]</code>. Note that the hash returned by
+          <code class="inline-code">.vars</code> does not support <code class="inline-code">?keys</code>
+          and <code class="inline-code">?values</code>.
+        </li>
+
+        <li>
+          <code class="inline-code">version</code>: Returns the FreeMarker
+          version number as string, for example <code class="inline-code">2.2.8</code>. This
+          can be used to check which FreeMarker version does your application
+          use, but note that this special variable does not exist prior to the
+          2.3.0 or 2.2.8 versions. The version number of non-final releases
+          contains dash and further info after the numbers, like in
+          2.3.21-nightly_20140726T151800Z.
+        </li>
+      </ul><div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_directive_visit.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_reservednames.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-07-05T14:47:00Z" title="Sunday, July 5, 2015 2:47:00 PM GMT">2015-07-05 14:47:00 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Person" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

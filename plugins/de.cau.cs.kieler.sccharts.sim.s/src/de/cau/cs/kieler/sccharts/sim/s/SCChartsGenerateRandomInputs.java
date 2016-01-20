@@ -44,10 +44,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
-import de.cau.cs.kieler.s.extensions.SExtension;
-import de.cau.cs.kieler.sccharts.ControlflowRegion;
-import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 
@@ -77,7 +74,7 @@ public class SCChartsGenerateRandomInputs implements IHandler {
     
     /** The single s / kexpression extension. */
     private static SCChartsExtension sCChartExtension = new SCChartsExtension();
-    private static KExpressionsExtension kExpressionsExtension = new KExpressionsExtension();        
+    private static KExpressionsValuedObjectExtensions kExpressionsExtension = new KExpressionsValuedObjectExtensions();        
 
     // -------------------------------------------------------------------------
 

@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.sim.c;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,7 +33,7 @@ import org.osgi.framework.Bundle;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
@@ -157,7 +156,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
     /** The single s / kexpression extension. */
 //    private static SExtension sExtension = new SExtension();
-    private static KExpressionsExtension kExpressionExtension = new KExpressionsExtension();
+    private static KExpressionsValuedObjectExtensions kExpressionValuedObjectExtensions = new KExpressionsValuedObjectExtensions();
 
     // -------------------------------------------------------------------------
 
@@ -357,16 +356,16 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
         JSONObject res = new JSONObject();
         try {
-            if (myModel != null && kExpressionExtension.getValuedObjects(myModel) != null) {
-                for (ValuedObject valuedObject : kExpressionExtension.getValuedObjects(myModel)) {
-                    if (kExpressionExtension.isInput(valuedObject)) {
-                        if (kExpressionExtension.isSignal(valuedObject)) {
+            if (myModel != null && kExpressionValuedObjectExtensions.getValuedObjects(myModel) != null) {
+                for (ValuedObject valuedObject : kExpressionValuedObjectExtensions.getValuedObjects(myModel)) {
+                    if (kExpressionValuedObjectExtensions.isInput(valuedObject)) {
+                        if (kExpressionValuedObjectExtensions.isSignal(valuedObject)) {
                             res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
                         } else {
                             res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
                         }
                     }
-                    if (kExpressionExtension.isOutput(valuedObject)) {
+                    if (kExpressionValuedObjectExtensions.isOutput(valuedObject)) {
                         String signalName = valuedObject.getName();
                         if (signalName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
                             outputStateList.add(signalName);
@@ -374,7 +373,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                                 .startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             outputTransitionList.add(signalName);
                         } else {
-                            if (kExpressionExtension.isSignal(valuedObject)) {
+                            if (kExpressionValuedObjectExtensions.isSignal(valuedObject)) {
                                 res.accumulate(signalName, JSONSignalValues.newValue(false));
                                 outputSignalList.add(signalName);
                             } else {

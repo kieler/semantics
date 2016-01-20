@@ -30,266 +30,266 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.PredecessorImpl#getBasicBlock <em>Basic Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.PredecessorImpl#getConditional <em>Conditional</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.PredecessorImpl#getBranchType <em>Branch Type</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public class PredecessorImpl extends MinimalEObjectImpl.Container implements Predecessor {
     /**
-	 * The cached value of the '{@link #getBasicBlock() <em>Basic Block</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getBasicBlock() <em>Basic Block</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getBasicBlock()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getBasicBlock()
+     * @generated
+     * @ordered
+     */
     protected BasicBlock basicBlock;
 
     /**
-	 * The cached value of the '{@link #getConditional() <em>Conditional</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getConditional() <em>Conditional</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getConditional()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getConditional()
+     * @generated
+     * @ordered
+     */
     protected Conditional conditional;
 
     /**
-	 * The default value of the '{@link #getBranchType() <em>Branch Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getBranchType() <em>Branch Type</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBranchType()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getBranchType()
+     * @generated
+     * @ordered
+     */
 	protected static final BranchType BRANCH_TYPE_EDEFAULT = BranchType.NORMAL;
 
 				/**
-	 * The cached value of the '{@link #getBranchType() <em>Branch Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getBranchType() <em>Branch Type</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBranchType()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getBranchType()
+     * @generated
+     * @ordered
+     */
 	protected BranchType branchType = BRANCH_TYPE_EDEFAULT;
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected PredecessorImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return ScgPackage.Literals.PREDECESSOR;
-	}
+        return ScgPackage.Literals.PREDECESSOR;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public BasicBlock getBasicBlock() {
-		if (basicBlock != null && basicBlock.eIsProxy()) {
-			InternalEObject oldBasicBlock = (InternalEObject)basicBlock;
-			basicBlock = (BasicBlock)eResolveProxy(oldBasicBlock);
-			if (basicBlock != oldBasicBlock) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.PREDECESSOR__BASIC_BLOCK, oldBasicBlock, basicBlock));
-			}
-		}
-		return basicBlock;
-	}
+        if (basicBlock != null && basicBlock.eIsProxy()) {
+            InternalEObject oldBasicBlock = (InternalEObject)basicBlock;
+            basicBlock = (BasicBlock)eResolveProxy(oldBasicBlock);
+            if (basicBlock != oldBasicBlock) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.PREDECESSOR__BASIC_BLOCK, oldBasicBlock, basicBlock));
+            }
+        }
+        return basicBlock;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public BasicBlock basicGetBasicBlock() {
-		return basicBlock;
-	}
+        return basicBlock;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setBasicBlock(BasicBlock newBasicBlock) {
-		BasicBlock oldBasicBlock = basicBlock;
-		basicBlock = newBasicBlock;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.PREDECESSOR__BASIC_BLOCK, oldBasicBlock, basicBlock));
-	}
+        BasicBlock oldBasicBlock = basicBlock;
+        basicBlock = newBasicBlock;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.PREDECESSOR__BASIC_BLOCK, oldBasicBlock, basicBlock));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Conditional getConditional() {
-		if (conditional != null && conditional.eIsProxy()) {
-			InternalEObject oldConditional = (InternalEObject)conditional;
-			conditional = (Conditional)eResolveProxy(oldConditional);
-			if (conditional != oldConditional) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.PREDECESSOR__CONDITIONAL, oldConditional, conditional));
-			}
-		}
-		return conditional;
-	}
+        if (conditional != null && conditional.eIsProxy()) {
+            InternalEObject oldConditional = (InternalEObject)conditional;
+            conditional = (Conditional)eResolveProxy(oldConditional);
+            if (conditional != oldConditional) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.PREDECESSOR__CONDITIONAL, oldConditional, conditional));
+            }
+        }
+        return conditional;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Conditional basicGetConditional() {
-		return conditional;
-	}
+        return conditional;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setConditional(Conditional newConditional) {
-		Conditional oldConditional = conditional;
-		conditional = newConditional;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.PREDECESSOR__CONDITIONAL, oldConditional, conditional));
-	}
+        Conditional oldConditional = conditional;
+        conditional = newConditional;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.PREDECESSOR__CONDITIONAL, oldConditional, conditional));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public BranchType getBranchType() {
-		return branchType;
-	}
+        return branchType;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setBranchType(BranchType newBranchType) {
-		BranchType oldBranchType = branchType;
-		branchType = newBranchType == null ? BRANCH_TYPE_EDEFAULT : newBranchType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.PREDECESSOR__BRANCH_TYPE, oldBranchType, branchType));
-	}
+        BranchType oldBranchType = branchType;
+        branchType = newBranchType == null ? BRANCH_TYPE_EDEFAULT : newBranchType;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.PREDECESSOR__BRANCH_TYPE, oldBranchType, branchType));
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case ScgPackage.PREDECESSOR__BASIC_BLOCK:
-				if (resolve) return getBasicBlock();
-				return basicGetBasicBlock();
-			case ScgPackage.PREDECESSOR__CONDITIONAL:
-				if (resolve) return getConditional();
-				return basicGetConditional();
-			case ScgPackage.PREDECESSOR__BRANCH_TYPE:
-				return getBranchType();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case ScgPackage.PREDECESSOR__BASIC_BLOCK:
+                if (resolve) return getBasicBlock();
+                return basicGetBasicBlock();
+            case ScgPackage.PREDECESSOR__CONDITIONAL:
+                if (resolve) return getConditional();
+                return basicGetConditional();
+            case ScgPackage.PREDECESSOR__BRANCH_TYPE:
+                return getBranchType();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case ScgPackage.PREDECESSOR__BASIC_BLOCK:
-				setBasicBlock((BasicBlock)newValue);
-				return;
-			case ScgPackage.PREDECESSOR__CONDITIONAL:
-				setConditional((Conditional)newValue);
-				return;
-			case ScgPackage.PREDECESSOR__BRANCH_TYPE:
-				setBranchType((BranchType)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case ScgPackage.PREDECESSOR__BASIC_BLOCK:
+                setBasicBlock((BasicBlock)newValue);
+                return;
+            case ScgPackage.PREDECESSOR__CONDITIONAL:
+                setConditional((Conditional)newValue);
+                return;
+            case ScgPackage.PREDECESSOR__BRANCH_TYPE:
+                setBranchType((BranchType)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case ScgPackage.PREDECESSOR__BASIC_BLOCK:
-				setBasicBlock((BasicBlock)null);
-				return;
-			case ScgPackage.PREDECESSOR__CONDITIONAL:
-				setConditional((Conditional)null);
-				return;
-			case ScgPackage.PREDECESSOR__BRANCH_TYPE:
-				setBranchType(BRANCH_TYPE_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case ScgPackage.PREDECESSOR__BASIC_BLOCK:
+                setBasicBlock((BasicBlock)null);
+                return;
+            case ScgPackage.PREDECESSOR__CONDITIONAL:
+                setConditional((Conditional)null);
+                return;
+            case ScgPackage.PREDECESSOR__BRANCH_TYPE:
+                setBranchType(BRANCH_TYPE_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case ScgPackage.PREDECESSOR__BASIC_BLOCK:
-				return basicBlock != null;
-			case ScgPackage.PREDECESSOR__CONDITIONAL:
-				return conditional != null;
-			case ScgPackage.PREDECESSOR__BRANCH_TYPE:
-				return branchType != BRANCH_TYPE_EDEFAULT;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case ScgPackage.PREDECESSOR__BASIC_BLOCK:
+                return basicBlock != null;
+            case ScgPackage.PREDECESSOR__CONDITIONAL:
+                return conditional != null;
+            case ScgPackage.PREDECESSOR__BRANCH_TYPE:
+                return branchType != BRANCH_TYPE_EDEFAULT;
+        }
+        return super.eIsSet(featureID);
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (branchType: ");
-		result.append(branchType);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (branchType: ");
+        result.append(branchType);
+        result.append(')');
+        return result.toString();
+    }
 
 } //PredecessorImpl

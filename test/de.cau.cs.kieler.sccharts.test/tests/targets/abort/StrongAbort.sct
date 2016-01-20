@@ -1,0 +1,24 @@
+
+@Transformation ABORT
+scchart StrongAbort {
+  input bool I;
+
+  initial state A {
+
+    initial state A0
+    --> A1 with I
+    --> A1;
+
+    final state A1;
+
+    region _Ctrl:
+
+    initial state _Run
+    --> _Done with I;
+
+    final state _Done;
+  }
+  >-> F immediate;
+
+  final state F;
+}

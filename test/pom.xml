@@ -20,6 +20,7 @@
 
   <modules>
     <module>de.cau.cs.kieler.semantics.test.common</module>
+    <!-- responsible: ssm  --><module>de.cau.cs.kieler.core.kexpressions.text.test</module>
     <module>de.cau.cs.kieler.sim.kiem.test</module>
     <module>de.cau.cs.kieler.sccharts.sim.c.test</module>
     
@@ -31,7 +32,7 @@
     <!--  SJ IS CURRENTLY FAILING, responsible: cmot<module>de.cau.cs.kieler.sj.test</module> -->
     <!--  KIES IS CURRENTLY FAILING, responsible: cmot <module>de.cau.cs.kieler.kies.test</module> -->
     <!--  TEXT IS CURRENTLY FAILING, responsible: chsch <module>de.cau.cs.kieler.synccharts.text.bridge.test</module> -->
-    <!-- responsible: ssm --><module>de.cau.cs.kieler.core.kexpressions.test</module>
+    <!-- responsible: ssm <module>de.cau.cs.kieler.core.kexpressions.test</module>-->
     <!-- IS CURRENTLY FAILING responsible: ssm <module>de.cau.cs.kieler.scg.test</module> -->
   </modules>
 
