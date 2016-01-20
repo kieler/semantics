@@ -140,6 +140,8 @@ public class TimingAnalysis extends Job {
 
     public static final boolean DEBUG = false;
     public static final boolean DEBUG_VERBOSE = false;
+    public static final boolean HOTSPOT_HIGHLIGHTING = true;
+    public static final boolean REGION_TIMING = true;
 
     private String pluginId = "de.cau.cs.kieler.sccharts.tsccharts";
 
@@ -180,6 +182,7 @@ public class TimingAnalysis extends Job {
 
         HashMultimap<Region, WeakReference<KText>> timingLabels = HashMultimap.create();
         HashMultimap<Region, WeakReference<KRectangle>> regionRectangles = HashMultimap.create();
+        if(REGION_TIMING){
         Iterator<EObject> graphIter =
                 ModelingUtil.eAllContentsOfType2(rootNode, KNode.class, KContainerRendering.class,
                         KRectangle.class);
@@ -201,6 +204,7 @@ public class TimingAnalysis extends Job {
                     regionRectangles.put((Region) sourceElem, new WeakReference<KRectangle>(rect));
                 }
             }
+        }
         }
         KRectangle rectangle =
                 (KRectangle) rootNode.getChildren().get(0).getData(KRoundedRectangle.class)
@@ -635,9 +639,13 @@ public class TimingAnalysis extends Job {
                         if (rep != TimingValueRepresentation.CYCLES) {
                             String newTimingResult =
                                     adaptTimingRepresentation(rep, timingResult, overallWCET);
-                            label.setText(newTimingResult);
+                            if (REGION_TIMING || region == null) {
+                                label.setText(newTimingResult);
+                            }
                         } else {
-                            label.setText(timingResult);
+                            if (REGION_TIMING || region == null) {
+                                label.setText(timingResult);
+                            }
                         }
                         // If the region belongs to the WCET path, enlarge numbers
                         if (wcpRegions.contains(region)) {
@@ -645,7 +653,7 @@ public class TimingAnalysis extends Job {
                         }
                     }
                     // If the region belongs to the WCET path, highlight, if requested by user
-                    if (highlight && wcpRegions.contains(region)) {
+                    if (highlight && HOTSPOT_HIGHLIGHTING && wcpRegions.contains(region)) {
                         // determine how much percent of the overall WCET is attributed to this
                         // region
                         double percentage = 0.0;
