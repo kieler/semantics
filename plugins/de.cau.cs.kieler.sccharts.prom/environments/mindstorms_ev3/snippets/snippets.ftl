@@ -46,6 +46,60 @@
     </@>
 </#macro>
 
+<#-- Time -->
+<#-- As input variable, contains the elapsed time since program start in milliseconds.
+
+    Example:
+    @Wrapper Time
+    input int time; -->
+<#macro Time>
+    <@init>
+        // Timestamp of program start
+        long startTime = System.currentTimeMillis();
+    </@>
+    <@input>
+        // Time
+        scchart.${varname} = new Long(System.currentTimeMillis() - startTime).intValue();
+    </@>
+</#macro>
+
+<#-- Sleep -->
+<#-- As output variable, if the variable is true,
+        blocks the running thread on the Mindstorms robot for the given time (in milliseconds).
+     
+     Example for SCCharts:
+         @Wrapper Sleep
+         output int sleepTime; -->
+<#macro Sleep>
+    <@output>
+        // Sleep
+        if(scchart.${varname} > 0) {
+            try {
+                Thread.sleep(scchart.${varname});
+            } catch (InterruptedException e) { }
+        }
+    </@>
+</#macro>
+
+<#-- Print -->
+<#-- As output variable, if the value is not an empty string, print the string to the display.
+         If autoReset is true then the string will be cleared after it has been printed. 
+         
+     Example for SCCharts:
+         @Wrapper Print
+         output string text; -->
+<#macro Print autoReset = "true">
+    <@output>
+        // Print to display
+        if(!scchart.${varname}.equals("")){
+            System.out.println(scchart.${varname});
+            <#if autoReset == "true">
+            scchart.${varname} = "";
+            </#if>
+        }
+    </@>
+</#macro>
+
 <#-- Button -->
 <#-- As input variable, sets the variable to true, iff the corresponding button on the Mindstorms brick is down.
      The buttons are ENTER, LEFT, RIGHT, UP, DOWN.
@@ -84,18 +138,21 @@
 
 <#-- LightSensor -->
 <#-- As input variable, reads the value of the light sensor, that is attached to the given port.
+     The modes are:
+         Red : Measures the intensity of a reflected red light
+         Ambient : Measures the ambient light level
 
      Example for SCCharts:
          @Wrapper LightSensor, S3
          input float light; -->
- <#macro LightSensor port>
+ <#macro LightSensor port mode = "Ambient">
     <@init>
         <@InitLightSensor port />
         float lightSensor${port}Samples[] = new float[lightSensor${port}.sampleSize()];
     </@>
     <@input>
         // Light
-        lightSensor${port}.getMode("Ambient").fetchSample(lightSensor${port}Samples, 0);
+        lightSensor${port}.getMode("${mode}").fetchSample(lightSensor${port}Samples, 0);
         scchart.${varname} = lightSensor${port}Samples[0];
     </@>
     <@release>
@@ -167,6 +224,81 @@
     </@>
 </#macro>
 
+<#-- EV3ButtonLED -->
+<#-- As output variable, set pattern of button LED.
+     Values are 0-9:
+         0: turn off button lights
+         1: static green light
+         2: static red light
+         3: static yellow light
+         4: slowly blinking green light
+         5: slowly blinking red light
+         6: slowly blinking yellow light
+         7: fast blinking green light
+         8: fast blinking red light
+         9: fast blinking yellow light
+         
+    Example for SCCharts:
+        @Wrapper EV3ButtonLED
+        output int ledPattern -->
+<#macro EV3ButtonLED>
+    <@output>
+        // Pattern for on-board LED of EV3 brick.
+        Button.LEDPattern(scchart.${varname});
+    </@>
+</#macro>
+
+<#-- Beep -->
+<#-- As output variable, plays a warning beep as long as the variable is true.
+
+     Example for SCCharts:
+         @Wrapper Beep
+         ouput bool warningBeep; -->
+<#macro Beep>
+    <@output>
+        // Play beep sound
+        if(scchart.${varname}) {
+            Sound.beep();
+        }
+    </@>
+</#macro>
+
+<#-- Buzz -->
+<#-- As output variable, plays a low buzz sound as long as the variable is true.
+
+     Example for SCCharts:
+         @Wrapper Beep
+         ouput bool warningBeep; -->
+<#macro Buzz>
+    <@output>
+        // Play buzz sound
+        if(scchart.${varname}) {
+            Sound.buzz();
+        }
+    </@>
+</#macro>
+
+<#-- BeepSequence -->
+<#-- As output variable, plays a beep sequence if the variable is true and afterwards sets the variable to false.
+     The direction of the beep sequence can either be up or down.
+     
+     Example for SCCharts:
+         @Wrapper BeepSequence, Up
+         ouput bool playBeepSequence; -->
+<#macro BeepSequence direction = "Down">
+    <@output>
+        // Play sequence of beep tones
+        if(scchart.${varname}) {
+            scchart.${varname} = false;
+            <#if direction == "Up">
+            Sound.beepSequenceUp();
+            <#elseif direction == "Down">
+            Sound.beepSequence();
+            </#if>
+        }
+    </@>
+</#macro>
+
 <#-- MotorSpeed -->
 <#-- As input variable, reads the speed of the motor, that is attached to the given port.
      As output variable, sets the speed of the motor.
@@ -188,17 +320,19 @@
     </@>
     <@output>
         // Motor ${port}
-        motor${port}.setSpeed(Math.abs(scchart.${varname}));
-        if(scchart.${varname} == 0)
-            <#if brake='true'>
-            motor${port}.stop();
-            <#else>
-            motor${port}.flt();
-            </#if>
-        else if(scchart.${varname} > 0)
-            motor${port}.forward();
-        else if(scchart.${varname} < 0)
-            motor${port}.backward();
+        if (Math.abs(scchart.${varname}) != motor${port}.getSpeed()) {
+            motor${port}.setSpeed(Math.abs(scchart.${varname}));
+            if(scchart.${varname} == 0)
+                <#if brake='true'>
+                motor${port}.stop(true);
+                <#else>
+                motor${port}.flt(true);
+                </#if>
+            else if(scchart.${varname} > 0)
+                motor${port}.forward();
+            else if(scchart.${varname} < 0)
+                motor${port}.backward();
+        }
     </@>
     <@release>
         // Motor ${port}
@@ -253,20 +387,52 @@
     </@>
 </#macro>
 
-<#-- Sleep -->
-<#-- As output variable, if the variable is true,
-        blocks the running thread on the Mindstorms robot for the given time (in milliseconds).
+<#-- Gyro -->
+<#-- As input variable, read the value of the gyro sensor at the given port.
+     
+     Possible modes are:
+         Angle : Measures the orientation of the sensor in degrees.
+         Rate : Measures the angular velocity of the sensor in (degrees / second).
+     
+     Example:
+     @Wrapper Gyro, S3, Angle
+     input float angle; -->
+<#macro Gyro port mode = "Angle">
+    <@init>
+        <@InitGyroSensor port />
+        float gyroSensor${port}Samples[] = new float[gyroSensor${port}.sampleSize()];
+    </@>
+    <@input>
+        // Gyro sensor
+        gyroSensor${port}.getMode("${mode}").fetchSample(gyroSensor${port}Samples, 0);
+        scchart.${varname} = gyroSensor${port}Samples[0];
+    </@>
+    <@release>
+        // Gyro ${port}
+        gyroSensor${port}.close();
+    </@>
+</#macro>
+
+<#-- CalibrateGyro -->
+<#-- As output variable, if the value is true, reset the gyro sensor at given port.
+     The sensor should be motionless during calibration.
+     
+     If autoReset is set to true, the reset variable is set to false automatically. 
      
      Example for SCCharts:
-         @Wrapper Sleep
-         output int sleepTime; -->
-<#macro Sleep>
+         @Wrapper CalibrateGyro, S3;
+         output bool resetGyro; -->
+<#macro CalibrateGyro port autoReset = 'true'>
+    <@init>
+        <@InitGyroSensor port />
+    </@>
     <@output>
-        // Sleep
-        if(scchart.${varname} > 0) {
-            try {
-                Thread.sleep(scchart.${varname});
-            } catch (InterruptedException e) { }
+        // Reset gyro sensor
+        if(scchart.${varname}){
+            gyroSensor${port}.reset();
+            <#if autoReset == 'true'>
+            scchart.${varname} = false;
+            </#if>
         }
     </@>
 </#macro>
@@ -295,5 +461,14 @@
         <#if !((initializedLights![])?seq_contains(port))>
         <#assign initializedLights = (initializedLights![]) + [port]>
         EV3ColorSensor lightSensor${port} = new EV3ColorSensor(SensorPort.${port});
+        </#if>
+</#macro>
+
+<#-- Auxiliary macro to initialize a gyro sensor if it is not yet initialized.
+     This macro is not meant to be used in a model file. -->
+<#macro InitGyroSensor port>
+        <#if !((initializedLights![])?seq_contains(port))>
+        <#assign initializedLights = (initializedLights![]) + [port]>
+        EV3GyroSensor gyroSensor${port} = new EV3GyroSensor(SensorPort.${port});
         </#if>
 </#macro>

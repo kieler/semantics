@@ -24,7 +24,7 @@
 <#-- As output variable, if the value is true, resets the clock with the given variable name.
      Thus the clock will wait until its full time intervall has elapsed before the clock's variable is set to true again.
 
-     If autoFalse is set to 'true', the reset variable is set to false automatically. 
+     If autoFalse is set to true, the reset variable is set to false automatically. 
 
      Note that ResetClock directly depends on the implementation of the Clock annotation.
 
@@ -39,8 +39,62 @@
         // ResetClock
         if(scchart.${varname}){
             ${clockVariable}Counter = System.currentTimeMillis();
-            <#if autoFalse = 'true'>
+            <#if autoFalse == 'true'>
             scchart.${varname} = false;
+            </#if>
+        }
+    </@>
+</#macro>
+
+<#-- Time -->
+<#-- As input variable, contains the elapsed time since program start in milliseconds.
+
+    Example:
+    @Wrapper Time
+    input int time; -->
+<#macro Time>
+    <@init>
+        // Timestamp of program start
+        long startTime = System.currentTimeMillis();
+    </@>
+    <@input>
+        // Time
+        scchart.${varname} = new Long(System.currentTimeMillis() - startTime).intValue();
+    </@>
+</#macro>
+
+<#-- Sleep -->
+<#-- As output variable, if the variable is true,
+        blocks the running thread on the Mindstorms robot for the given time (in milliseconds).
+     
+     Example for SCCharts:
+         @Wrapper Sleep
+         output int sleepTime; -->
+<#macro Sleep>
+    <@output>
+        // Sleep
+        if(scchart.${varname} > 0) {
+            try {
+                Thread.sleep(scchart.${varname});
+            } catch (InterruptedException e) { }
+        }
+    </@>
+</#macro>
+
+<#-- Print -->
+<#-- As output variable, if the value is not an empty string, print the string to the display.
+         If autoReset is true then the string will be cleared after it has been printed. 
+         
+     Example for SCCharts:
+         @Wrapper Print
+         output string text; -->
+<#macro Print autoReset = "true">
+    <@output>
+        // Print to display
+        if(!scchart.${varname}.equals("")){
+            System.out.println(scchart.${varname});
+            <#if autoReset == "true">
+            scchart.${varname} = "";
             </#if>
         }
     </@>
@@ -96,6 +150,26 @@
     </@>
 </#macro>
 
+<#-- CalibrateLightSensor -->
+<#-- As output variable, calibrates the light sensor if the variable is true.
+     A light sensor can return percent values where 0% is returned for the calibrated low value
+     and 100% is returned for the calibrated high value. 
+       
+     To calibrate, signal has to be either "High" or "Low". 
+
+     Example for SCCharts:
+         @Wrapper CalibrateLightSensor, S3, High
+         output bool calibrateWhite; -->
+ <#macro CalibrateLightSensor port signal>
+    <@output>
+        // Calibrate light sensor
+        if (scchart.${varname}) {
+            scchart.${varname} = false;
+            lightSensor${port}.calibrate${signal}();
+        }
+    </@>
+</#macro>
+
 <#-- Floodlight -->
 <#-- The Floodlight is the red lamp of a light sensor, that can be turned on and off.
      As input variable, reads the Floodlight state (on or off), that is attached to the given port.
@@ -141,6 +215,74 @@
     </@>
 </#macro>
 
+<#-- UltraSonic -->
+<#-- As an input variable, sets variable to the measured distance. 
+
+     Example for SCCharts:
+         @Wrapper UltraSonic, S1
+         input int distance;
+-->
+<#macro UltraSonic port >
+    <@init>
+        UltrasonicSensor usSensor${port} = new UltrasonicSensor(SensorPort.${port});
+    </@>
+    <@input>
+        // Ultrasonic sensor
+        scchart.${varname} = usSensor${port}.getDistance();
+    </@>
+</#macro>
+
+<#-- Beep -->
+<#-- As output variable, plays a warning beep as long as the variable is true.
+
+     Example for SCCharts:
+         @Wrapper Beep
+         ouput bool warningBeep; -->
+<#macro Beep>
+    <@output>
+        // Play beep sound
+        if(scchart.${varname}) {
+            Sound.beep();
+        }
+    </@>
+</#macro>
+
+<#-- Buzz -->
+<#-- As output variable, plays a low buzz sound as long as the variable is true.
+
+     Example for SCCharts:
+         @Wrapper Beep
+         ouput bool warningBeep; -->
+<#macro Buzz>
+    <@output>
+        // Play buzz sound
+        if(scchart.${varname}) {
+            Sound.buzz();
+        }
+    </@>
+</#macro>
+
+<#-- BeepSequence -->
+<#-- As output variable, plays a beep sequence if the variable is true and afterwards sets the variable to false.
+     The direction of the beep sequence can either be up or down.
+     
+     Example for SCCharts:
+         @Wrapper BeepSequence, Up
+         ouput bool playBeepSequence; -->
+<#macro BeepSequence direction = "Down">
+    <@output>
+        // Play sequence of beep tones
+        if(scchart.${varname}) {
+            scchart.${varname} = false;
+            <#if direction == "Up">
+            Sound.beepSequenceUp();
+            <#elseif direction == "Down">
+            Sound.beepSequence();
+            </#if>
+        }
+    </@>
+</#macro>
+
 <#-- MotorSpeed -->
 <#-- As input variable, reads the speed of the motor, that is attached to the given port.
      As output variable, sets the speed of the motor.
@@ -158,17 +300,19 @@
     </@>
     <@output>
         // Motor ${port}
-        Motor.${port}.setSpeed(Math.abs(scchart.${varname}));
-        if(scchart.${varname} == 0)
-            <#if brake='true'>
-            Motor.${port}.stop();
-            <#else>
-            Motor.${port}.flt();
-            </#if>
-        else if(scchart.${varname} > 0)
-            Motor.${port}.forward();
-        else if(scchart.${varname} < 0)
-            Motor.${port}.backward();
+        if (Math.abs(scchart.${varname}) != Motor.${port}.getSpeed()) {
+            Motor.${port}.setSpeed(Math.abs(scchart.${varname}));
+            if(scchart.${varname} == 0)
+                <#if brake='true'>
+                Motor.${port}.stop(true);
+                <#else>
+                Motor.${port}.flt(true);
+                </#if>
+            else if(scchart.${varname} > 0)
+                Motor.${port}.forward();
+            else if(scchart.${varname} < 0)
+                Motor.${port}.backward();
+        }
     </@>
 </#macro>
 
@@ -205,24 +349,6 @@
         if(scchart.${varname} != 0){
             Motor.${port}.rotate(scchart.${varname}, true);
             scchart.${varname} = 0;
-        }
-    </@>
-</#macro>
-
-<#-- Sleep -->
-<#-- As output variable, if the variable is true,
-        blocks the running thread on the Mindstorms robot for the given time (in milliseconds).
-     
-     Example for SCCharts:
-         @Wrapper Sleep
-         output int sleepTime; -->
-<#macro Sleep>
-    <@output>
-        // Sleep
-        if(scchart.${varname} > 0) {
-            try {
-                Thread.sleep(scchart.${varname});
-            } catch (InterruptedException e) { }
         }
     </@>
 </#macro>
