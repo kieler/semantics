@@ -32,5 +32,17 @@
          </enabledWhen>
       </handler>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.feature">
+      <featureClass
+            class="de.cau.cs.kieler.sccharts.tsccharts.transformation.TTPFeature">
+      </featureClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <productionTransformationClass
+            class="de.cau.cs.kieler.sccharts.tsccharts.transformation.TTPTransformation">
+      </productionTransformationClass>
+   </extension>
 
 </plugin>
