@@ -73,19 +73,35 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			val kPort = port.port.associateWith(port)
 			actorNode.ports += kPort => [
 
-				it.setPortSize(5, 2);
-				it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+				
 
 				if (port.type.startsWith("In")) {
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+									it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+									it.setPortSize(5, 2);
+				it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+					
 				} else if (port.type.startsWith("Out")) {
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
+									it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+									it.setPortSize(5, 2);
+				it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+					
 				} else if (port.type.startsWith("Sel")) {
 					it.setPortSize(2, 5);
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.SOUTH)
+									it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+									it.setPortSize(5, 2);
+				it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+					
+				} else if (port.type.startsWith("Not")){
+					//it.setPortSize(2, 5);
+					it.setLayoutOption(LayoutOptions.OFFSET, 0f);
+           			it.setPortSize(6, 6);
+					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+					it.addEllipse.setBackground("white".color).lineWidth = 1.5f;
 				}
 
-				it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
 
 			]
 		}

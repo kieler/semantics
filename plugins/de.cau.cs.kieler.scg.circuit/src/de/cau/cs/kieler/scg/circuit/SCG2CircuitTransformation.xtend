@@ -25,6 +25,10 @@ import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.circuit.Port
 import de.cau.cs.kieler.circuit.Link
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.Expression
+import javax.management.OperationsException
+import org.eclipse.emf.ecore.EObject
 
 class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
@@ -83,6 +87,8 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 		initializeCircuit(newInnerCircuit, newCircuit)
 		createInOutputs(declarations, newInnerCircuit, newCircuit)
+		
+		
 
 //		val guards = scg.guards
 //		val g = guards.head.valuedObject.name
@@ -92,20 +98,20 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		// create root object which should be the frame of the circuit
 		transformNodes2Actors(nodes, newInnerCircuit)
 		System.out.println("BANANAAAAAAAAS")
-		newCircuit.eAllContents.filter(typeof(Link)).toIterable.toList.forEach [ l |
-			System.out.println("link")
+//		newCircuit.eAllContents.filter(typeof(Link)).toIterable.toList.forEach [ l |
+//			System.out.println("link")
+//
+//		]
 
-		]
-
-		val ports = newCircuit.eAllContents.filter(typeof(Port)).toIterable.toList
-		createLinks(ports, newCircuit)
+		val ports = newInnerCircuit.eAllContents.filter(typeof(Port)).toIterable.toList
+		createLinks(ports, newInnerCircuit)
 
 		newCircuit
 
 	}
 	
 	def initializeCircuit(Actor circuit, Actor root) {
-		// because we want to have a circuit, we need to add a reset and a tick input
+		// As we want to create a circuit, we need to add a reset and a tick
 		val reset = CircuitFactory::eINSTANCE.createActor
 		reset.name = "Reset"
 		reset.type = "In"
@@ -141,10 +147,12 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		// names should be comparable. so links will link ports with same names
 		// maybe iterate over inputports or so...
 		// for each output port and each input port with the same name we want so create a link
+		
+		
 		ports.forEach [ op |
-			if (op.type == "Out") {
+			if ((op.type == "Out") || (op.type == "InOut")) {
 				ports.forEach [ ip |
-					if (((ip.type == "Sel") || (ip.type == "In")) && (op.name == ip.name)) {
+					if (((ip.type == "Sel") || (ip.type == "In") ||(ip.type == "OutIn") || ip.type == "Not") && (op.name == ip.name)) {
 
 						val link = CircuitFactory::eINSTANCE.createLink
 						link.source = op;
@@ -173,7 +181,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 					actorPort.name = name // + "_out"
 					actorPort.type = "Out"
 					circuitPort.name = name // + "_in"
-					circuitPort.type = "In"
+					circuitPort.type = "InOut"
 					actor.ports += actorPort
 					circuit.ports += circuitPort
 					root.innerActors += actor
@@ -190,7 +198,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 					actorPort.name = name // + "_in"
 					actorPort.type = "In"
 					circuitPort.name = name // + "_out"
-					circuitPort.type = "Out"
+					circuitPort.type = "OutIn"
 					actor.ports += actorPort
 					circuit.ports += circuitPort
 					root.innerActors += actor
@@ -198,6 +206,8 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 			]
 
 		]
+		for(Port p : root.ports){System.out.println("port")}
+		createLinks(root.ports, root)
 
 	}
 
@@ -232,46 +242,193 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		nodes.forEach [ n |
 
 			if (n instanceof Assignment) {
-				root.innerActors += transformAssignment(n)
+				transformAssignment(n, root)
+				//root.innerActors += transformAssignment(n)
 			} else if (n instanceof Conditional) {
 				root.innerActors += transformConditional(n)
-			}
+			} //else if(n instanceof Expression){
+//				root.innerActors += transformExpression(n)
+//			}
 
 		]
 		// root.innerActors += actor
 		root
 
 	}
-
+	
+	
 	def Actor transformConditional(Conditional conditional) {
 
 		val guardname = conditional.condition.serialize.toString
 		val actor = CircuitFactory::eINSTANCE.createActor
 
 		actor.name = "cond_" + guardname;
+		System.out.println("Conditional: " + guardname)
 
 		actor
 	}
 
-	def Actor transformAssignment(Assignment assignment) {
-		var completeAssginmentString = assignment.assignment.serialize.toString
-
-		val guardname = assignment.valuedObject.name
-		// split Assignment into Strings at spaces
-		// e.g. g10 = g2 || g9 => ["g2", "||", "g9"]
-		val String[] splittedAssignmentAt = completeAssginmentString.split("(")
-		
-		//val String[] ssplit = splittedAssignmentAt.forEach[split(")"]
-		//val String[] split = for  (splittedAssignmentAt.split(")")
+	def  transformAssignment(Assignment assignment, Actor root) {
 		
 		
-
+		
+		val completeAssginmentString = assignment.assignment.serialize.toString
 		val actor = CircuitFactory::eINSTANCE.createActor
+		val p = CircuitFactory::eINSTANCE.createPort
+		//val isAtomicAssignment = !completeAssginmentString.contains("||") || !completeAssginmentString.contains("&&")
+		
+		//val List<String> splittedAssignment = completeAssginmentString.split(" ")//("\\(|\\) (?![^(pre\\(])\\)")//("\\(|\\)|(\\&\\&)|(\\|\\|)")
+		val guardname = assignment.valuedObject.name
+		
+		val a = assignment.assignment
+		
+		if(a instanceof OperatorExpression){
+			
+			switch(a.operator){
+		
+			
+				case LOGICAL_AND: {
+					//System.out.println("AAAND " + a.getOperator)
+					actor.type = "AND"
+					
+				}
+				case LOGICAL_OR: {
+					//System.out.println("OOOR " + a.getOperator)
+					actor.type = "OR"
+				}
+			
+				case NOT: {
+					//System.out.println("found " + a.getOperator + a.subExpressions.get(0).serialize.toString)
+					//actor.type = "NOT"
+				}
+				
+				case PRE: {
+					actor.type = "REG"
+					
+				}
+				default :{
+					System.out.println("found " + a.getOperator )
+				}
+				
+			}
+			
+			for(Expression e : a.subExpressions){
+								val port = CircuitFactory::eINSTANCE.createPort
+				actor.ports += port
+				
+				if(a.operator.getName == "NOT"){
+					port.type = "Not"
+					System.out.println("created NOOOOOOT")
+				} else {
+				
+				port.type = "In"
+				
+				}
+				port.name = e.serialize.toString
+				//System.out.println("created INport " + port.name + " at " + actor.type)
+				
+				if((!(a.operator.getName == "PRE") && !(a.operator.getName == "NOT")) && (e instanceof OperatorExpression)){
+					System.out.println("call expressionTrans from Assign for : " + e.serialize.toString + " in " + a.serialize.toString )
+					transformExpressions(e, root)
+					
+					} else {
+						System.out.println("SBDVIUSBDJNVUS0000000000000000B")
+					}
+				
+				
+			}
+			
+		}
 
-		actor.type = completeAssginmentString
 		actor.name = guardname
-
-		actor
+		p.type = "Out"
+		
+		p.name = guardname
+		actor.ports += p
+		//System.out.println("created OUTport " + p.name + " at " + actor.name + " with type: " + actor.type)
+		root.innerActors += actor
 	}
-
+	
+	def transformExpressions(Expression expression, Actor root) {
+		
+		
+		
+	if(expression instanceof OperatorExpression){
+			val actor = CircuitFactory::eINSTANCE.createActor
+		val p = CircuitFactory::eINSTANCE.createPort
+			switch(expression.operator){
+		
+			
+				case LOGICAL_AND: {
+					//System.out.println("AAAND " + expression.getOperator)
+					actor.type = "AND"
+					
+				}
+				case LOGICAL_OR: {
+					//System.out.println("OOOR " + expression.getOperator)
+					actor.type = "OR"
+				}
+			
+				case NOT: {
+					//System.out.println("found " + expression.getOperator + expression.subExpressions.get(0).serialize.toString)
+					//actor.type = "NOT"
+				}
+				
+				case PRE: {
+					//System.out.println("found " + expression.getOperator + expression.subExpressions.get(0).serialize.toString)
+				}
+				default :{
+					System.out.println("found " + expression.getOperator )
+				}
+				
+			}
+			
+			for(Expression e : expression.subExpressions){
+				val port = CircuitFactory::eINSTANCE.createPort
+				actor.ports += port
+				if((e instanceof OperatorExpression)){
+					if(e.operator.getName == "NOT"){
+					port.type = "Not"
+					System.out.println("created NOOOOOOT at: " + expression.serialize.toString) 
+					port.name = e.subExpressions.head.serialize.toString
+					
+				}} else {
+				
+				
+				port.type = "In"
+				
+				port.name = e.serialize.toString
+				
+				}
+				
+				if(e instanceof OperatorExpression){
+					if(!(e.operator.getName == "PRE") && !(e.operator.getName == "NOT")){
+					transformExpressions(e, root)
+					System.out.println("call expressionTrans for : " + e.serialize.toString + " in " + expression.serialize.toString + e.operator.getName)
+					
+					} else {
+						System.out.println("SBDVIUSBDJNVUSB")
+					}
+				
+					
+					}
+			}
+			
+		
+		
+		p.type = "Out"
+		p.name = expression.serialize.toString
+		
+		actor.name = expression.serialize.toString
+		actor.ports += p
+		root.innerActors += actor
+		System.out.println("created OUTport " + p.name + " at " + actor.name + " with type: " + actor.type)
+		
+		
+		}
+		
+	}
+	
+	
+	
 }
