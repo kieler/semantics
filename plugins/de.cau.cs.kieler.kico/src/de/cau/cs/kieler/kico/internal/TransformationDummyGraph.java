@@ -265,7 +265,7 @@ public class TransformationDummyGraph {
                     } else if (containedAndHandledFeatures == null // This is the artificial case when the graph is build for the GUI
                             || handlingTransformation.getNotHandlesFeatures(false).isEmpty() // If the transformation has no requirements
                             || handlingTransformations.size() == 1 // If this transformation is the only option
-                            || !Sets.intersection( // If the transformation has requirements but they are handled
+                            || handlingTransformation.isProduction() ^ Sets.intersection( // If the transformation has requirements they must be handled or not contained
                                     handlingTransformation.getNotHandlesFeatures(false),
                                     containedAndHandledFeatures).isEmpty()) {
                         // Remember in case we do not find a preferred transformation
