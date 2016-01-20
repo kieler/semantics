@@ -589,9 +589,13 @@ class S2Java {
         «ENDFOR»)
     «ENDIF»
     «IF expression.operator  == OperatorType::SUB»
-        («FOR subexpression : expression.subExpressions SEPARATOR " - "»
+        «IF expression.subExpressions.size > 1»
+            («FOR subexpression : expression.subExpressions SEPARATOR " - "»
             «subexpression.expand»
-        «ENDFOR»)
+            «ENDFOR»)
+        «ELSE»
+        -«expression.subExpressions.head.expand»
+        «ENDIF»
     «ENDIF»
     «IF expression.operator  == OperatorType::MULT»
         («FOR subexpression : expression.subExpressions SEPARATOR " * "»

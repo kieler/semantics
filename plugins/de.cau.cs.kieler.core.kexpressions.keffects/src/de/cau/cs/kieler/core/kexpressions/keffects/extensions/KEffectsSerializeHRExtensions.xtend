@@ -51,6 +51,18 @@ class KEffectsSerializeHRExtensions extends KEffectsSerializeExtensions {
         }
     }
     
+    def dispatch CharSequence serializeHR(EList<Effect> effects) {
+        if (!effects.empty) {
+            var String label = "" 
+            for(effect : effects) {
+                label = label + effect.serializeHR as String + "; "
+            }
+            label = label.substring(0, label.length - 2)
+            return label
+        }
+        return ""
+    }    
+    
 //    override dispatch CharSequence serializeHR(FunctionCall functionCall) {
 //    	super.serializeHR(functionCall)
 //    }    

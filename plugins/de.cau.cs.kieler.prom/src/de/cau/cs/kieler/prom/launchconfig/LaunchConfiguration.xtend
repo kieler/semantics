@@ -113,6 +113,11 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     private IStringVariableManager variableManager
 
+    // Message console
+    private static val CONSOLE_NAME = "KiCo Compilation"
+    private static MessageConsole console;
+    private static MessageConsoleStream consoleStream;
+
     // Objects from launch
     private ILaunchConfiguration configuration
     private String mode
@@ -137,10 +142,25 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     private Job compileJob;
     private Job wrapperCodeJob;
 
-    // Message console
-    private static val CONSOLE_NAME = "KiCo Compilation"
-    private MessageConsole console;
-    private MessageConsoleStream consoleStream;
+    /**
+     * Writes to the console view for a KiCo launch.
+     * @param message The message to print to the console
+     */
+    public static def void writeToConsole(String message){
+        // If there is nothing to write, we are done immediately.
+        if(Strings.isNullOrEmpty(message))
+            return;
+        
+        // Ensure the console exists.
+        initializeConsole()
+        
+        // Print message
+        consoleStream.println(message)
+        
+        // Bring console to front
+        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
+        consoleManager.showConsoleView(console)
+    }
 
     /**
      * {@inheritDoc}
@@ -192,6 +212,10 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         }
     }
 
+    /**
+     * Runs the associated launch shortcut on the compiled main file.
+     * E.g. one may want to launch a file as "Java Application" after KiCo compilation finished. 
+     */
     private def void runAssociatedLauchShortcut() {
         // Nothing to do
         if(Strings.isNullOrEmpty(mainFile) || Strings.isNullOrEmpty(associatedLaunchShortcut)) {
@@ -520,7 +544,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @param name The name of a message console to be found or created
      * @return The found or newly created message console
      */
-    private def MessageConsole findOrCreateConsole(String name) {
+    private static def MessageConsole findOrCreateConsole(String name) {
         val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
         val existingConsoles = consoleManager.getConsoles();
         for (var i = 0; i < existingConsoles.length; i++)
@@ -533,28 +557,12 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         return myConsole;
     }
     
-    private def void writeToConsole(String message){
-        // If there is nothing to write, we are done immediately.
-        if(Strings.isNullOrEmpty(message))
-            return;
-        
-        // Ensure the console exists.
-        initializeConsole()
-        
-        // Print message
-        consoleStream.println(message)
-        
-        // Bring console to front
-        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
-        consoleManager.showConsoleView(console)
-    }
-    
     private def void clearConsole() {
         initializeConsole()
         console.clearConsole()
     }
     
-    private def void initializeConsole() {
+    private static def void initializeConsole() {
         if (console == null || consoleStream == null) {
             console = findOrCreateConsole(CONSOLE_NAME)
             consoleStream = console.newMessageStream()
