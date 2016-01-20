@@ -36,10 +36,9 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	protected AbstractElementAlias match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
 	protected AbstractElementAlias match_IterateAction_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q;
-	protected AbstractElementAlias match_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q;
+	protected AbstractElementAlias match_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_3__q;
 	protected AbstractElementAlias match_SuspendAction_SemicolonKeyword_5_q;
-	protected AbstractElementAlias match_Transition_DoKeyword_3_3_0_1_0_1_or_SolidusKeyword_3_3_0_1_0_0;
-	protected AbstractElementAlias match_Transition_WithKeyword_3_3_0_0_1_q;
+	protected AbstractElementAlias match_Transition_WithKeyword_7_0_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
@@ -58,10 +57,9 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 		match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
 		match_IterateAction_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getIterateActionAccess().getSemicolonKeyword_5());
 		match_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSCChartAccess().getLeftCurlyBracketKeyword_4_1_0()), new TokenAlias(false, false, grammarAccess.getSCChartAccess().getRightCurlyBracketKeyword_4_1_3()));
-		match_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSingleControlflowRegionAccess().getRegionKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getSingleControlflowRegionAccess().getColonKeyword_1_4()));
+		match_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_6_1_0()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_6_1_3()));
 		match_SuspendAction_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getSuspendActionAccess().getSemicolonKeyword_5());
-		match_Transition_DoKeyword_3_3_0_1_0_1_or_SolidusKeyword_3_3_0_1_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getTransitionAccess().getDoKeyword_3_3_0_1_0_1()), new TokenAlias(false, false, grammarAccess.getTransitionAccess().getSolidusKeyword_3_3_0_1_0_0()));
-		match_Transition_WithKeyword_3_3_0_0_1_q = new TokenAlias(false, true, grammarAccess.getTransitionAccess().getWithKeyword_3_3_0_0_1());
+		match_Transition_WithKeyword_7_0_q = new TokenAlias(false, true, grammarAccess.getTransitionAccess().getWithKeyword_7_0());
 	}
 	
 	@Override
@@ -104,14 +102,12 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 				emit_IterateAction_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q.equals(syntax))
 				emit_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q.equals(syntax))
-				emit_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_3__q.equals(syntax))
+				emit_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_SuspendAction_SemicolonKeyword_5_q.equals(syntax))
 				emit_SuspendAction_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_Transition_DoKeyword_3_3_0_1_0_1_or_SolidusKeyword_3_3_0_1_0_0.equals(syntax))
-				emit_Transition_DoKeyword_3_3_0_1_0_1_or_SolidusKeyword_3_3_0_1_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_Transition_WithKeyword_3_3_0_0_1_q.equals(syntax))
-				emit_Transition_WithKeyword_3_3_0_0_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Transition_WithKeyword_7_0_q.equals(syntax))
+				emit_Transition_WithKeyword_7_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -307,13 +303,15 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ('region' ':')?
+	 *     ('{' '}')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) (rule start)
-	 *     (rule start) (ambiguity) states+=State
+	 *     id=ID (ambiguity) ';' (rule end)
+	 *     id=ID (ambiguity) outgoingTransitions+=Transition
+	 *     label=STRING (ambiguity) ';' (rule end)
+	 *     label=STRING (ambiguity) outgoingTransitions+=Transition
 	 */
-	protected void emit_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -333,34 +331,16 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '/' | 'do'
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     deferred?='deferred' 'with'? (ambiguity) effects+=Effect
-	 *     history=HistoryType 'with'? (ambiguity) effects+=Effect
-	 *     immediate?='immediate' 'with'? (ambiguity) effects+=Effect
-	 *     targetState=[State|ID] 'with'? (ambiguity) effects+=Effect
-	 *     trigger=BoolExpression (ambiguity) effects+=Effect
-	 */
-	protected void emit_Transition_DoKeyword_3_3_0_1_0_1_or_SolidusKeyword_3_3_0_1_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
 	 *     'with'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     deferred?='deferred' (ambiguity) ('/' | 'do') effects+=Effect
 	 *     deferred?='deferred' (ambiguity) (rule end)
-	 *     history=HistoryType (ambiguity) ('/' | 'do') effects+=Effect
 	 *     history=HistoryType (ambiguity) (rule end)
-	 *     immediate?='immediate' (ambiguity) ('/' | 'do') effects+=Effect
 	 *     immediate?='immediate' (ambiguity) (rule end)
-	 *     targetState=[State|ID] (ambiguity) ('/' | 'do') effects+=Effect
+	 *     label=STRING (ambiguity) (rule end)
 	 *     targetState=[State|ID] (ambiguity) (rule end)
 	 */
-	protected void emit_Transition_WithKeyword_3_3_0_0_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Transition_WithKeyword_7_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
