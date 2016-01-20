@@ -404,6 +404,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     private CompilationResult compilationResult;
     private var Set<Node> PIL_Nodes = <Node> newHashSet
+    private var Set<Node> PIL_Entries = <Node> newHashSet
 
     /** The selected orientation */
     private int orientation;
@@ -431,7 +432,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
         if (compilationResult != null) {
             val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
-            if (PILR != null) PIL_Nodes += PILR.criticalNodes
+            if (PILR != null) {
+            	PIL_Nodes += PILR.criticalNodes
+            	PIL_Entries += PILR.entryNodes
+            	}
         }
 
         // Invoke the synthesis.
@@ -874,6 +878,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                             if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
+                if(PIL_Entries.contains(entry)) it.background = PROBLEM_COLOR
             ]
             // Add ports for control-flow routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);

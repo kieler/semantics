@@ -143,6 +143,8 @@ class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
         
         (scg.nodes.head as Entry).next.target.checkInstantaneousLoop(uncriticalPath, result.criticalNodes)
         
+        result.entryNodes = result.criticalNodes.filter(typeof(Entry))
+        
         result
     }
 	
@@ -159,4 +161,5 @@ class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
  */
 class PotentialInstantaneousLoopResult extends AbstractAnalyzerResult {
     public var Set<Node> criticalNodes = null
+    public var Iterable<Entry> entryNodes = null
 }
