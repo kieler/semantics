@@ -75,13 +75,13 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 						actorNode.addRoundedRectangle(4, 4, 2)
 						actorNode.addInsideBottomLeftNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE,
 							KlighdConstants.DEFAULT_FONT_NAME)
-						if (hasName) {
-							actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
-								KlighdConstants.DEFAULT_FONT_NAME);
-						} else {
-							actorNode.addOutsideBottomLeftNodeLabel("noName", KlighdConstants.DEFAULT_FONT_SIZE,
-								KlighdConstants.DEFAULT_FONT_NAME)
-						}
+//						if (hasName) {
+//							actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
+//								KlighdConstants.DEFAULT_FONT_NAME);
+//						} else {
+//							actorNode.addOutsideBottomLeftNodeLabel("noName", KlighdConstants.DEFAULT_FONT_SIZE,
+//								KlighdConstants.DEFAULT_FONT_NAME)
+//						}
 						actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 							EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 					}
