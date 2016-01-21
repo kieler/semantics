@@ -100,7 +100,7 @@ class KExpressionsComplexCreateExtensions {
     }
     
     // Create an EQ Expression.
-    def OperatorExpression equals(Expression first, Expression second) {
+    def OperatorExpression eq(Expression first, Expression second) {
         val equalsExpression = createEQExpression
         equalsExpression.add(first)
         equalsExpression.add(second)
