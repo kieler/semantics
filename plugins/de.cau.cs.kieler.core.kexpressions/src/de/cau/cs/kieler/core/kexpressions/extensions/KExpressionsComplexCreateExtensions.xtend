@@ -98,5 +98,14 @@ class KExpressionsComplexCreateExtensions {
         addExpression.add(expressionSecond)
         addExpression
     }
+    
+    // Create an EQ Expression.
+    def OperatorExpression equals(Expression first, Expression second) {
+        val equalsExpression = createEQExpression
+        equalsExpression.add(first)
+        equalsExpression.add(second)
+        equalsExpression
+    }
+    
        
 }
