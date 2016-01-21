@@ -29,6 +29,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import java.util.Iterator
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 
 /**
  * Serialization of KExpressions.
@@ -312,7 +313,7 @@ class KExpressionsSerializeExtensions {
     }
 
 
-   def Pair<List<String>, List<String>> serializeComponents(Declaration declaration) {
+   def Pair<List<String>, List<String>> serializeComponents(VariableDeclaration declaration) {
         val keywords = newLinkedList;
         val content = newLinkedList;
 
@@ -351,6 +352,6 @@ class KExpressionsSerializeExtensions {
 
         return new Pair(keywords, content);
     }
-    
+  
   
 }

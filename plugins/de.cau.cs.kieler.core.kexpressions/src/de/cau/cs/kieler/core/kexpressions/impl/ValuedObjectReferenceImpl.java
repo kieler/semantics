@@ -29,187 +29,187 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl#getIndices <em>Indices</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedObjectReference {
     /**
-	 * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getValuedObject()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getValuedObject()
+     * @generated
+     * @ordered
+     */
     protected ValuedObject valuedObject;
 
     /**
-	 * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getIndices()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getIndices()
+     * @generated
+     * @ordered
+     */
     protected EList<Expression> indices;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ValuedObjectReferenceImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE;
-	}
+        return KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ValuedObject getValuedObject() {
-		if (valuedObject != null && valuedObject.eIsProxy()) {
-			InternalEObject oldValuedObject = (InternalEObject)valuedObject;
-			valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
-			if (valuedObject != oldValuedObject) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, oldValuedObject, valuedObject));
-			}
-		}
-		return valuedObject;
-	}
+        if (valuedObject != null && valuedObject.eIsProxy()) {
+            InternalEObject oldValuedObject = (InternalEObject)valuedObject;
+            valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
+            if (valuedObject != oldValuedObject) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, oldValuedObject, valuedObject));
+            }
+        }
+        return valuedObject;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ValuedObject basicGetValuedObject() {
-		return valuedObject;
-	}
+        return valuedObject;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setValuedObject(ValuedObject newValuedObject) {
-		ValuedObject oldValuedObject = valuedObject;
-		valuedObject = newValuedObject;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, oldValuedObject, valuedObject));
-	}
+        ValuedObject oldValuedObject = valuedObject;
+        valuedObject = newValuedObject;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, oldValuedObject, valuedObject));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<Expression> getIndices() {
-		if (indices == null) {
-			indices = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES);
-		}
-		return indices;
-	}
+        if (indices == null) {
+            indices = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES);
+        }
+        return indices;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
-				return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
+                return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
-				if (resolve) return getValuedObject();
-				return basicGetValuedObject();
-			case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
-				return getIndices();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
+                if (resolve) return getValuedObject();
+                return basicGetValuedObject();
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
+                return getIndices();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
-				setValuedObject((ValuedObject)newValue);
-				return;
-			case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
-				getIndices().clear();
-				getIndices().addAll((Collection<? extends Expression>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
+                setValuedObject((ValuedObject)newValue);
+                return;
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
+                getIndices().clear();
+                getIndices().addAll((Collection<? extends Expression>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
-				setValuedObject((ValuedObject)null);
-				return;
-			case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
-				getIndices().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
+                setValuedObject((ValuedObject)null);
+                return;
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
+                getIndices().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
-				return valuedObject != null;
-			case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
-				return indices != null && !indices.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
+                return valuedObject != null;
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
+                return indices != null && !indices.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //ValuedObjectReferenceImpl

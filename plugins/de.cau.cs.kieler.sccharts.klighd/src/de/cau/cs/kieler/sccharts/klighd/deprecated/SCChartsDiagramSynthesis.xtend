@@ -104,6 +104,8 @@ import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -159,6 +161,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     @Inject
     extension KExpressionsValuedObjectExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
     
     @Inject
     extension SCChartsSerializeHRExtension
@@ -714,7 +719,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     }
                 }
                 if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
-                    for (tg : s.declarations) {
+                    for (tg : s.variableDeclarations) {
                         it.addRectangle => [
                             it.invisible = true;
                             it.addRectangle => [
@@ -1122,7 +1127,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     // if it's a ValuedObjectReference, it's just another variable
                     if (se instanceof ValuedObjectReference) {
                         val subVo = (se as ValuedObjectReference).valuedObject
-                        val decl = (subVo.eContainer as Declaration)
+                        val decl = (subVo.eContainer as VariableDeclaration)
                         // differ between input/output type of variable
                         if (decl.isInput) {
                             // create input node and shape
@@ -1485,13 +1490,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 LABELFONTSIZE,
                 KlighdConstants::DEFAULT_FONT_NAME
             )
-            refedScope.declarations.filter[it.input].forEach[valuedObjects.forEach[ vo|
+            refedScope.variableDeclarations.filter[it.input].forEach[valuedObjects.forEach[ vo|
                 nNode.addPort(vo.reference, PortSide::WEST) => [
                     it.createLabel(it).configureInsideCenteredNodeLabel(
                        vo.name, PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                 ]
             ]]
-            refedScope.declarations.filter[it.output].forEach[valuedObjects.forEach[ vo|
+            refedScope.variableDeclarations.filter[it.output].forEach[valuedObjects.forEach[ vo|
                 nNode.addPort(vo.reference, PortSide::EAST) => [
                     it.createLabel(it).configureInsideCenteredNodeLabel(
                        vo.name, PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -1501,7 +1506,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             // dNode is the dataflow KNode containing the reference node
             val dNode = refNode.eContainer.node
             val refInputs = <ValuedObject>newArrayList
-            refedScope.declarations.filter[it.input].forEach[
+            refedScope.variableDeclarations.filter[it.input].forEach[
                 refInputs += valuedObjects
             ]
             val refInputSize = refInputs.size

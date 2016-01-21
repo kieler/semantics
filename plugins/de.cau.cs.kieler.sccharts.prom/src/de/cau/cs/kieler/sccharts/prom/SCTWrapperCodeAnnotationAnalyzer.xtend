@@ -24,6 +24,7 @@ import de.cau.cs.kieler.prom.launchconfig.WrapperCodeAnnotationData
 import de.cau.cs.kieler.sccharts.State
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 
 /**
  * An analyzer for wrapper code annotations in SCT files.
@@ -37,7 +38,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
             val annotationDatas = new ArrayList<WrapperCodeAnnotationData>()
             
             // Iterate over model to get all annotations
-            for (decl : model.declarations) {
+            for (decl : model.declarations.filter(VariableDeclaration)) {
                 // Only consider annotations of inputs and outputs.
                 if (decl.input || decl.output) {
                     for (annotation : decl.annotations){    
@@ -66,7 +67,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
     /**
      * Fetches the data for wrapper code generation from a variable declaration of an SCT file.
      */
-    private def void initData(WrapperCodeAnnotationData data, Declaration decl){
+    private def void initData(WrapperCodeAnnotationData data, VariableDeclaration decl){
         data.input = decl.input
         data.output = decl.output
         data.varType = decl.type.literal

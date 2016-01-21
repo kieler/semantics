@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 
 /**
  * Serialization of KEffects.
@@ -81,8 +82,8 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
     
     def dispatch CharSequence serialize(Emission emission) {
         val objectContainer = emission.valuedObject.eContainer
-        if (objectContainer instanceof Declaration) {
-            if ((objectContainer as Declaration).type != ValueType::PURE) {
+        if (objectContainer instanceof VariableDeclaration) {
+            if (objectContainer.type != ValueType::PURE) {
                 return (emission.valuedObject.name + "(" + emission.newValue.serialize + ")")             
             } else {
                 return emission.valuedObject.name

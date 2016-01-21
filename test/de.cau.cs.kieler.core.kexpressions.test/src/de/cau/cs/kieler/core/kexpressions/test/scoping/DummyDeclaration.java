@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.core.kexpressions.test.scoping;
 
 import de.cau.cs.kieler.core.kexpressions.ValueType;
-import de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl;
+import de.cau.cs.kieler.core.kexpressions.impl.VariableDeclarationImpl;
 
 /**
  * This class implements a dummy scope provided declaring a bunch of dummy signals and dummy
@@ -23,7 +23,7 @@ import de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl;
  * @author ssm
  * 
  */
-public class DummyDeclaration extends DeclarationImpl {
+public class DummyDeclaration extends VariableDeclarationImpl {
 
 	public DummyDeclaration(ValueType valueType) {
 		setType(valueType);

@@ -11,10 +11,10 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Call#getParameters <em>Parameters</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getCall()
  * @model
@@ -22,19 +22,19 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Call extends Expression {
 	/**
-	 * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Parameter}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Parameter}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parameters</em>' containment reference list.
-	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getCall_Parameters()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Parameters</em>' containment reference list.
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getCall_Parameters()
+     * @model containment="true"
+     * @generated
+     */
 	EList<Parameter> getParameters();
 
 } // Call

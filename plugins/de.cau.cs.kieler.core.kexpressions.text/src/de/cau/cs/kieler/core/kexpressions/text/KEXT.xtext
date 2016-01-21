@@ -63,6 +63,10 @@ AnnotatedExpression  returns kext::AnnotatedExpression:
 // valued objects that follow.
 // Examples: const float pi = 3.14, input signal I, output bool z  
 Declaration returns kexpressions::Declaration:
+    VariableDeclaration | ReferenceDeclaration
+;
+
+VariableDeclaration returns kexpressions::VariableDeclaration:
     (annotations+=Annotation)*
 	(const?='const')?
     (input?='input')? 
@@ -71,14 +75,19 @@ Declaration returns kexpressions::Declaration:
     (((signal?='signal')? type = ValueType) | (signal?='signal')) 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
     
-DeclarationWOSemicolon returns kexpressions::Declaration:
+VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     (annotations+=Annotation)*
 	(const?='const')?
     (input?='input')? 
     (output?='output')?
     (static?='static')?
     (((signal?='signal')? type = ValueType) | (signal?='signal')) 
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ;    
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ;  
+    
+ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
+    (annotations+=Annotation)*
+    '[' reference = [kext::Identifiable|ID] ']'
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';  
 
 // Valued Object Rule
 // A valued object is identified by its name. Then, a part for its cardinalities and an initial 

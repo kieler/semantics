@@ -18,10 +18,10 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getAnnotatedExpression()
  * @model

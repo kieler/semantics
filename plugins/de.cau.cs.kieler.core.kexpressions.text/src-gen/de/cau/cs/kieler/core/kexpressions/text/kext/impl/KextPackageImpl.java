@@ -9,11 +9,13 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 
 import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
+import de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextFactory;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -50,6 +52,13 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
   private EClass annotatedExpressionEClass = null;
 
   /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass identifiableEClass = null;
+
+/**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -197,6 +206,24 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
 
   /**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getIdentifiable() {
+        return identifiableEClass;
+    }
+
+/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getIdentifiable_Id() {
+        return (EAttribute)identifiableEClass.getEStructuralFeatures().get(0);
+    }
+
+/**
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
      * @generated
      */
@@ -235,6 +262,9 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
 
         annotatedExpressionEClass = createEClass(ANNOTATED_EXPRESSION);
         createEReference(annotatedExpressionEClass, ANNOTATED_EXPRESSION__EXPRESSION);
+
+        identifiableEClass = createEClass(IDENTIFIABLE);
+        createEAttribute(identifiableEClass, IDENTIFIABLE__ID);
     }
 
   /**
@@ -272,6 +302,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
 
         // Add supertypes to classes
         annotatedExpressionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        identifiableEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
 
         // Initialize classes and features; add operations and parameters
         initEClass(kextEClass, Kext.class, "Kext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -284,6 +315,9 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
 
         initEClass(annotatedExpressionEClass, AnnotatedExpression.class, "AnnotatedExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getAnnotatedExpression_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, AnnotatedExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(identifiableEClass, Identifiable.class, "Identifiable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIdentifiable_Id(), ecorePackage.getEString(), "id", null, 0, 1, Identifiable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

@@ -49,6 +49,8 @@ import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -64,6 +66,9 @@ class S2C {
     
     @Inject
     extension KExpressionsValuedObjectExtensions    
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions       
 
     @Inject
     extension SExtension
@@ -154,7 +159,7 @@ class S2C {
 
    // Generate variables.
    def sVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
             «signal.type.expand»«signal.declaration.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
@@ -175,7 +180,7 @@ class S2C {
 
    // Generate PRE variables setter.
    def setPreVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
        «IF program.usesPre(signal) 
  			» PRE_«signal.name» = «signal.name»;«
@@ -183,7 +188,7 @@ class S2C {
    }
 
    def resetVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
        
         «IF signal.isArray»
@@ -212,7 +217,7 @@ class S2C {
        }
    }
    
-   def dispatch CharSequence expand(Declaration declaration) {
+   def dispatch CharSequence expand(VariableDeclaration declaration) {
        if (declaration.type != ValueType.HOST) {
            return null
        } else {

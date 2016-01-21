@@ -64,6 +64,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * SCCharts Extensions.
@@ -82,6 +83,9 @@ class SCChartsExtension {
 
     @Inject
     extension KExpressionsReplacementExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions       
 
     // This prefix is used for namings of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -1253,7 +1257,7 @@ class SCChartsExtension {
             return;
         }
         
-        val declarations = state.declarations.toList
+        val declarations = state.variableDeclarations
         val hierarchicalStateName = state.getHierarchicalName("LOCAL");
         for(declaration : declarations) {
             targetRootState.declarations += declaration
@@ -1291,7 +1295,7 @@ class SCChartsExtension {
         }
 
         var hierarchicalScopeName = targetScope.getHierarchicalName("local")
-        val declarations = scope.declarations.iterator.toList
+        val declarations = scope.variableDeclarations
         for(declaration : declarations) {
             targetScope.declarations.add(declaration)
             if (expose) declaration.output = true

@@ -15,11 +15,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getEntities <em>Entities</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKext()
  * @model

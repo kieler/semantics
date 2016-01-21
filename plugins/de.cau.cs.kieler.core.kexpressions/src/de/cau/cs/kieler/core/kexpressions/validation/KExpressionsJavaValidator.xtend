@@ -24,7 +24,7 @@ class KExpressionsJavaValidator extends de.cau.cs.kieler.core.kexpressions.valid
     public static val CONST_DECLARATION_EXPECTS_INITIALIZATION = "A const declaration must have an initialization part!";    
     
     @Check
-    public def void checkConstInitialization(de.cau.cs.kieler.core.kexpressions.Declaration declaration) {
+    public def void checkConstInitialization(de.cau.cs.kieler.core.kexpressions.VariableDeclaration declaration) {
         if (declaration.isConst) {
             for(vo : declaration.valuedObjects) {
                 if (vo.initialValue == null) {

@@ -63,6 +63,7 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory
             case KextPackage.KEXT: return createKext();
             case KextPackage.TEST_ENTITY: return createTestEntity();
             case KextPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
+            case KextPackage.IDENTIFIABLE: return createIdentifiable();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -102,6 +103,16 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory
     }
 
   /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Identifiable createIdentifiable() {
+        IdentifiableImpl identifiable = new IdentifiableImpl();
+        return identifiable;
+    }
+
+/**
      * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
      * @generated
