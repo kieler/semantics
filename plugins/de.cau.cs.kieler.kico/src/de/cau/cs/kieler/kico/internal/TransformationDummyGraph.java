@@ -265,9 +265,10 @@ public class TransformationDummyGraph {
                     } else if (containedAndHandledFeatures == null // This is the artificial case when the graph is build for the GUI
                             || handlingTransformation.getNotHandlesFeatures(false).isEmpty() // If the transformation has no requirements
                             || handlingTransformations.size() == 1 // If this transformation is the only option
-                            || handlingTransformation.isProduction() ^ Sets.intersection( // If the transformation has requirements they must be handled or not contained
+                            || handlingTransformation.isProduction() & !Sets.intersection( // If the production transformation has requirements they must be handled or contained
                                     handlingTransformation.getNotHandlesFeatures(false),
-                                    containedAndHandledFeatures).isEmpty()) {
+                                    containedAndHandledFeatures).isEmpty()
+                            || !handlingTransformation.isProduction() ) { // Requirements for expansion transformations are always fullfilled
                         // Remember in case we do not find a preferred transformation
                         // Last backup transformation will be taken if no transformation is preferred or selected
                         backupTransformation = handlingTransformation;
