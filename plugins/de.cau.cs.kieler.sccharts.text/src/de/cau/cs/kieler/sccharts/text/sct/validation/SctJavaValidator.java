@@ -26,6 +26,7 @@ import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.core.model.validation.CustomEValidator;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
@@ -41,7 +42,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 // Don't add new checks to this class. Use the xtend file instead!
 public class SctJavaValidator extends AbstractSctJavaValidator implements
         CustomEValidator {
-
+    
     public static final String BAD_ID = "bad_id";
 
     public static final String MISSING_PRIO = "missing_prio";
@@ -78,7 +79,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     @Check
     public void checkNoBooleanEmissions(final de.cau.cs.kieler.core.kexpressions.keffects.Emission emission) {
         if (emission.getValuedObject() != null && emission.getValuedObject().eContainer() != null && emission.getValuedObject().eContainer() instanceof Declaration) {
-            Declaration declaration = (Declaration) emission.getValuedObject().eContainer();
+            VariableDeclaration declaration = (VariableDeclaration) emission.getValuedObject().eContainer();
             if (!declaration.isSignal()) {
                 error(NON_SIGNAL_EMISSION, emission, null, -1);
             }
@@ -95,7 +96,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     @Check
     public void checkNoBooleanEmissions(final de.cau.cs.kieler.core.kexpressions.keffects.Assignment assignment) {
         if (assignment.getValuedObject() != null && assignment.getValuedObject().eContainer() != null && assignment.getValuedObject().eContainer() instanceof Declaration) {
-            Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();
+            VariableDeclaration declaration = (VariableDeclaration) assignment.getValuedObject().eContainer();
             if (declaration.isSignal()) {
                 error(NON_VARIABLE_ASSIGNMENT, assignment, null, -1);
             }
@@ -203,34 +204,11 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     @Check
     public void checkAssignmentToConst(final de.cau.cs.kieler.core.kexpressions.keffects.Assignment assignment) {
     	if (assignment.getValuedObject() != null) {
-    		Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();	
+    	    VariableDeclaration declaration = (VariableDeclaration) assignment.getValuedObject().eContainer();	
     		if (declaration.isConst()) {
     			error(ASSIGNMENT_TO_CONST, assignment, null, -1);
     		}
     	}
     }
-    
-    /**
-    *
-    * @param state the state
-    */
-   @Check
-   public void checkConstBinding(final de.cau.cs.kieler.sccharts.State state) {
-	   for(Declaration declaration : state.getDeclarations()) {
-		   if (declaration.isConst()) {
-			   for (ValuedObject valuedObject : declaration.getValuedObjects()) {
-				   Expression initialValue = valuedObject.getInitialValue();
-				   if (initialValue != null && 
-						   !(initialValue instanceof BoolValue
-						   || initialValue instanceof IntValue
-						   || initialValue instanceof FloatValue
-						   || initialValue instanceof DoubleValue
-						   || initialValue instanceof TextExpression
-						   )) {
-					   error(NO_CONST_LITERAL, valuedObject, null, -1);
-				   }
-			   }
-		   }
-	   }
-   }    
+     
 }

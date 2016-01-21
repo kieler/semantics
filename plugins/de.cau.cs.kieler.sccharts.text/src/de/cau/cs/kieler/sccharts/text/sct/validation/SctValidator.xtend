@@ -17,6 +17,16 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.DoubleValue
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * @author ssm
@@ -25,6 +35,9 @@ import org.eclipse.xtext.validation.Check
 class SctValidator extends SctJavaValidator {
     
     extension SCChartsExtension = sCChartExtension;
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
     
     /**
      * Check if there is exactly ONE initial state per region.
@@ -102,5 +115,29 @@ class SctValidator extends SctJavaValidator {
             }
         }
     } 
+    
+    /**
+    *
+    * @param state the state
+    */
+   @Check
+   public def void checkConstBinding(de.cau.cs.kieler.sccharts.State state) {
+       for(declaration : state.variableDeclarations) {
+           if (declaration.isConst) {
+               for (ValuedObject valuedObject : declaration.getValuedObjects()) {
+                   val initialValue = valuedObject.getInitialValue();
+                   if (initialValue != null && 
+                           !(initialValue instanceof BoolValue
+                           || initialValue instanceof IntValue
+                           || initialValue instanceof FloatValue
+                           || initialValue instanceof DoubleValue
+                           || initialValue instanceof TextExpression
+                           )) {
+                       error(NO_CONST_LITERAL, valuedObject, null, -1);
+                   }
+               }
+           }
+       }
+   }       
 
 }

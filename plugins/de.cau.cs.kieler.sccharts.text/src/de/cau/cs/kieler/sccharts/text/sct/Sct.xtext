@@ -38,8 +38,8 @@ SingleDataflowRegion returns sccharts::DataflowRegion:
      )
     (
         (equations += Equation) 
-        |
-        (nodes += Node) // alt: + (nodes+=Node)+
+//        |
+//        (nodes += Node) // alt: + (nodes+=Node)+
     )*
 ;
 
@@ -62,8 +62,8 @@ DataflowRegion returns sccharts::DataflowRegion:
     (declarations+=Declaration)*
     (
         (equations += Equation) 
-        |
-        (nodes+=Node) // alt: + (nodes+=Node)+
+//        |
+//        (nodes+=Node) // alt: + (nodes+=Node)+
     )*
 ;
 

@@ -39,6 +39,7 @@ import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.SimpleScope
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * This class implements to scoping for referencedScope (used in KiCoUtil.parse()) and for binding (used in the sct Xtext editor).
@@ -54,6 +55,9 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 
     @Inject
     SctQualifiedNameProvider nameProvider
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
 
     private def boolean isProxy(Object o) {
         return (o as EObject).eIsProxy()
@@ -124,7 +128,7 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
             if (obj instanceof ReferenceNode) {
                 var refNode = obj as ReferenceNode
                 val voIterable = <ValuedObject>newArrayList
-                refNode.referencedScope.declarations.forEach[
+                refNode.referencedScope.variableDeclarations.forEach[
                     if (it.output) {
                         voIterable += valuedObjects
                     }
@@ -163,7 +167,7 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         ]
         
         val voIterable = <ValuedObject>newArrayList
-        s.declarations.filter[it.output].forEach[
+        s.variableDeclarations.filter[it.output].forEach[
             voIterable += valuedObjects
         ]
 //        return Scopes.scopeFor(nodeList)
