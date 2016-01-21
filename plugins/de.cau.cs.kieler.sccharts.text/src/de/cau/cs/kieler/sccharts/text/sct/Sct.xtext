@@ -18,29 +18,18 @@ Root returns sccharts::State:
 
 SingleControlflowRegion returns sccharts::ControlflowRegion:
 	{sccharts::ControlflowRegion}
-    (
-      (annotations += Annotation)*
-      'region' (id=ID)? (label=STRING)? ':'
-      (declarations+=Declaration)*
-//      (bodyText+=TextualCode)* 
-     )?
-    (states+=State)*;
-    
+    (states+=State)+
+;
 
 // ---------------------------------------------------------------------------------------------------
 
 SingleDataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
     (
-      (annotations += Annotation)*
-      'dataflow' (id=ID)? (label=STRING)? ':'
-      (declarations+=Declaration)*
-     )
-    (
         (equations += Equation) 
         |
         (nodes += Node) // alt: + (nodes+=Node)+
-    )*
+    )+
 ;
 
 // ---------------------------------------------------------------------------------------------------
@@ -49,9 +38,9 @@ ControlflowRegion returns sccharts::ControlflowRegion:
 	{sccharts::ControlflowRegion}
     (annotations += Annotation)*
     'region' (id=ID)? (label=STRING)? ':'
-      (declarations+=Declaration)*
-    (states+=State)+;
-
+    (declarations+=Declaration)*
+    (states+=State)+
+;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -89,16 +78,15 @@ SCChart returns sccharts::State:
     (
       ('references' referencedScope = [sccharts::State|ID]
         ('bind' bindings += Binding (',' bindings += Binding)*)?
-       )
+      )
      | 
       ('{'
-            (declarations+=Declaration |
-             localActions+=LocalAction)*
+            (declarations+=Declaration | localActions+=LocalAction)*
             (
-				(regions+=SingleDataflowRegion|regions+=SingleControlflowRegion)(regions+=Region)*
-             )?
-          '}') 
-     )?
+                (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion)? (regions+=Region)*
+            )? // this rule only works correctly if it is optional
+       '}')
+    )?
 ;
 
 Region returns sccharts::Region:
@@ -136,11 +124,12 @@ State returns sccharts::State:
      | 
       ('{'
             (declarations+=Declaration | localActions+=LocalAction)*
-		    (regions+=SingleDataflowRegion|regions+=SingleControlflowRegion)(regions+=Region)*
+		    ( (regions+=SingleDataflowRegion|regions+=SingleControlflowRegion)? (regions+=Region)* )
       '}') 
-      )?
+    )?
      // The semicolon is mandatory for backtracking!
-    (outgoingTransitions+=Transition)* ';';
+    (outgoingTransitions+=Transition)* ';'
+;
 
 
 Node returns sccharts::Node:
@@ -183,17 +172,17 @@ LocalAction returns sccharts::LocalAction:
 
 Transition returns sccharts::Transition:
     (annotations += Annotation)*
-    (type=TransitionTypeLegacy | type=TransitionType) 
+    (type=TransitionType) 
     targetState=[sccharts::State|ID] 
-//	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
-	( (immediate?='immediate')? (deferred?='deferred')? (history=HistoryType)?  (
-	 (
-	   ((('with' (delay=INT)? trigger=BoolExpression)|'with')? (('/'|'do') effects+=Effect (';'effects+=Effect)*)? )
-	  |
-	   ( 'with' label=STRING )
-	  )
-	 )?)? 	
-	;
+	(immediate?='immediate')?
+	(deferred?='deferred')?
+	(history=HistoryType)?
+	(label=STRING)?
+	('with'
+	    ((delay=INT)? trigger=BoolExpression)?
+        ('/' effects+=Effect (';' effects+=Effect)*)?
+    )?
+;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -210,8 +199,5 @@ enum StateType returns sccharts::StateType:
 	NORMAL = 'normal' | CONNECTOR = 'connector' | REFERENCE = 'reference' | TEXTUAL = 'textual';
 
 enum TransitionType returns sccharts::TransitionType:
-	WEAKABORT = 'goto' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
-	
-enum TransitionTypeLegacy returns sccharts::TransitionType:
     WEAKABORT = '-->' | STRONGABORT = 'o->' | TERMINATION = '>->';
 	

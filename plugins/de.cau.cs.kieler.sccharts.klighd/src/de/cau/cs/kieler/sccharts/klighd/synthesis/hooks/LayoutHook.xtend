@@ -72,15 +72,24 @@ class LayoutHook extends SynthesisHook {
 
     /** The depth of map of the sccharts scopes in the model */
     private val depthMap = <Scope, Integer>newHashMap
+    private var Direction golbalDirection = null;
 
     override start(Scope scope, KNode node) {
         depthMap.put(scope, if(scope instanceof State) 0 else -1)
+        // Calculated depths
         scope.allScopes.filter[it != scope].forEach [
             val parentDepth = depthMap.get(it.eContainer) ?: 0
             // Increase depth only after regions because state have no layouted children
             val depth = if(it instanceof State) parentDepth + 1 else parentDepth
             depthMap.put(it, depth)
         ]
+        // Find global direction annotation
+        for (annotation : scope.getTypedAnnotations(LAYOUT_OPTIONS_ANNOTATION)) {
+            val data = LAYOUT_OPTIONS_SERVICE.getOptionDataBySuffix(annotation.type ?: "")
+            if (data != null && data.id == LayoutOptions.DIRECTION.id) {
+                golbalDirection = data.parseValue(annotation.values?.head ?: "".toLowerCase) as Direction
+            }
+        }
     }
 
     override processState(State state, KNode node) {
@@ -94,7 +103,11 @@ class LayoutHook extends SynthesisHook {
     override processRegion(Region region, KNode node) {
         // Default layout direction for controlflow region
         if (region instanceof ControlflowRegion) {
-            node.setDepthDirection(region, true, 0)
+            if (golbalDirection != null) {
+                node.setLayoutOption(LayoutOptions.DIRECTION, golbalDirection)
+            } else { // Alternating
+                node.setDepthDirection(region, true, 0)
+            }
         }
         // HV/VH Layout via annotation
         node.processAlternatingLayoutAnnotation(region)

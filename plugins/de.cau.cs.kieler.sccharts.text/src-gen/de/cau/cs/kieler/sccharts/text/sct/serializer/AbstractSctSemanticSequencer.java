@@ -359,7 +359,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
 	 *             (
 	 *                 (declarations+=Declaration | localActions+=LocalAction)* 
-	 *                 ((regions+=SingleDataflowRegion | regions+=SingleControlflowRegion) regions+=Region*)?
+	 *                 ((regions+=SingleDataflowRegion | regions+=SingleControlflowRegion)? regions+=Region*)?
 	 *             )
 	 *         )?
 	 *     )
@@ -371,7 +371,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((annotations+=Annotation* id=ID? label=STRING? declarations+=Declaration*)? states+=State*)
+	 *     states+=State+
 	 */
 	protected void sequence_SingleControlflowRegion(EObject context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -380,7 +380,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=Declaration* (equations+=Equation | nodes+=Node)*)
+	 *     (equations+=Equation | nodes+=Node)+
 	 */
 	protected void sequence_SingleDataflowRegion(EObject context, DataflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -397,7 +397,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         (
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
-	 *             ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion) regions+=Region*)
+	 *             ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion)? regions+=Region*)
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
 	 *     )
@@ -411,14 +411,13 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         (type=TransitionTypeLegacy | type=TransitionType) 
+	 *         type=TransitionType 
 	 *         targetState=[State|ID] 
-	 *         (
-	 *             immediate?='immediate'? 
-	 *             deferred?='deferred'? 
-	 *             history=HistoryType? 
-	 *             (((delay=INT? trigger=BoolExpression)? (effects+=Effect effects+=Effect*)?) | label=STRING)?
-	 *         )?
+	 *         immediate?='immediate'? 
+	 *         deferred?='deferred'? 
+	 *         history=HistoryType? 
+	 *         label=STRING? 
+	 *         ((delay=INT? trigger=BoolExpression)? (effects+=Effect effects+=Effect*)?)?
 	 *     )
 	 */
 	protected void sequence_Transition(EObject context, Transition semanticObject) {
