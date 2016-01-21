@@ -25,6 +25,9 @@ import de.cau.cs.kieler.sccharts.IterateAction
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable
 
 /**
  * @author ssm
@@ -120,21 +123,21 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
         return new Pair(keywords, content);
     }
     
-    def dispatch CharSequence serialize(Declaration declaration) {
+    def dispatch CharSequence serialize(VariableDeclaration declaration) {
         declaration.serialize(false)
     }
        
-    def dispatch CharSequence serializeHR(Declaration declaration) {
+    def dispatch CharSequence serializeHR(VariableDeclaration declaration) {
         declaration.serialize(true)
     }
     
-    private def CharSequence serialize(Declaration declaration, boolean hr) {
+    private def CharSequence serialize(VariableDeclaration declaration, boolean hr) {
         val joiner = Joiner.on(" ");
         val parts = declaration.serializeComponents(hr)
         return joiner.join(parts.key) + joiner.join(parts.value);
     }
     
-    def Pair<List<String>, List<String>> serializeComponents(Declaration declaration, boolean hr) {
+    def Pair<List<String>, List<String>> serializeComponents(VariableDeclaration declaration, boolean hr) {
         val keywords = newLinkedList;
         val content = newLinkedList;
 
@@ -201,4 +204,58 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
 
         return new Pair(keywords, content);
     }
+    
+    
+    def dispatch CharSequence serialize(ReferenceDeclaration declaration) {
+        declaration.serialize(false)
+    }
+       
+    def dispatch CharSequence serializeHR(ReferenceDeclaration declaration) {
+        declaration.serialize(true)
+    }
+    
+    private def CharSequence serialize(ReferenceDeclaration declaration, boolean hr) {
+        val joiner = Joiner.on(" ");
+        val parts = declaration.serializeComponents(hr)
+        return joiner.join(parts.key) + joiner.join(parts.value);
+    }
+    
+    def Pair<List<String>, List<String>> serializeComponents(ReferenceDeclaration declaration, boolean hr) {
+        val keywords = newLinkedList;
+        val content = newLinkedList;
+        
+        keywords += "["
+        if (declaration.reference instanceof Identifiable) {
+            keywords += (declaration.reference as Identifiable).id
+        } else {
+            keywords += declaration.reference.class.name
+        }
+        keywords += "]"
+
+        //Content
+        val voIter = declaration.valuedObjects.iterator;
+        while (voIter.hasNext) {
+            val vo = voIter.next;
+            val text = new StringBuilder();
+            if (hr) {
+                text.append(vo.serializeHR)
+            }else{
+                text.append(vo.serialize)
+            }
+            if (vo.initialValue != null) {
+                text.append(" = ");
+                if (hr) {
+                    text.append(vo.initialValue.serializeHR);
+                }else{
+                    text.append(vo.initialValue.serialize);
+                }
+            }
+            if (voIter.hasNext) {
+                text.append(",");
+            }
+            content += text.toString;
+        }
+
+        return new Pair(keywords, content);
+    }    
 }

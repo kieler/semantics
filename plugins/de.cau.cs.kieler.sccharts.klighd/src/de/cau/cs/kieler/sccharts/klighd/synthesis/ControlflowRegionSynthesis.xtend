@@ -34,6 +34,7 @@ import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -54,6 +55,9 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
     @Inject
     extension SCChartsSerializeHRExtension
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
 
     @Inject
     extension StateSynthesis
@@ -91,7 +95,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 } else {
                     addStatesAndDeclarationsArea();
                     // Add declarations
-                    for (declaration : region.declarations) {
+                    for (declaration : region.variableDeclarations) {
                         addDeclarationLabel(declaration.serializeComponents(true)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                             associateWith(declaration);
