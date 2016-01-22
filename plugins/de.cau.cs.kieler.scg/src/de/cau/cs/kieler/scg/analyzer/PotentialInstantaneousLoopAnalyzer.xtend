@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2013 by
@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
- package de.cau.cs.kieler.scg.analyzer
+package de.cau.cs.kieler.scg.analyzer
 
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Node
@@ -22,6 +22,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular analyzers are called by the scheduler
@@ -53,16 +55,18 @@ import de.cau.cs.kieler.scg.DataDependency
  * @kieler.rating 2013-12-02 proposed yellow
  */
 class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
-	
+
 	@Inject
 	extension SCGControlFlowExtensions
-	
+
+	@Inject
+	extension SCGThreadExtensions
+
 	private static val ANALYZERID = "de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoop"
-	
-    // -------------------------------------------------------------------------
-    // -- Analyzer 
-    // -------------------------------------------------------------------------
-    
+
+	// -------------------------------------------------------------------------
+	// -- Analyzer 
+	// -------------------------------------------------------------------------
 	/**
 	 * Returns the identifier string of this analysis.
 	 * 
@@ -71,95 +75,111 @@ class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
 	override getAnalysisId() {
 		return ANALYZERID
 	}
-	
-	private def boolean checkInstantaneousLoop(Node node, Set<Node> uncriticalPath, Set<Node> uncertainPath) {
-	    val previousNodes = node.allPrevious.map[ eContainer ].toList
-        val nextNodes = node.allNext.map[ target ].toList
-        
-        previousNodes += node.incoming.filter(typeof(DataDependency)).filter[concurrent == true && confluent == false].map[ target ].toList
-        nextNodes += node.eContents.filter(typeof(DataDependency)).filter[concurrent == true && confluent == false].map[ target ].toList
-	    
-	    var uncritical = true
-	    for(pn : nextNodes) {
-	        if (!uncriticalPath.contains(pn)) uncritical = false
-	    }
-	    if (node instanceof Surface) { uncritical = true }
-	    if (!uncritical) {
-            uncritical = true
-            for(pn : previousNodes) {
-                if (!uncriticalPath.contains(pn)) uncritical = false
-            }
-	    }
-	    
-	    if (uncritical) {
-            uncriticalPath += node
-	    } else {
-            uncertainPath += node
-	    }
-	    
-	    for(nn : nextNodes) {
-	        if (!uncriticalPath.contains(nn) && !uncertainPath.contains(nn)) {
-  	            nn.checkInstantaneousLoop(uncriticalPath, uncertainPath)
-            }
-	    }
-	    if (!uncritical) {
-	        uncritical = true
-	        for(pn : nextNodes) {
-                if (!uncriticalPath.contains(pn)) uncritical = false
-            }
-            if (!uncritical) {
-                uncritical = true
-                for(pn : previousNodes) {
-                    if (!uncriticalPath.contains(pn)) uncritical = false
-                }
-            }                         
-            if (uncritical) {
-                uncertainPath.remove(node)
-                uncriticalPath += node               
-            }
-	    }
-	    
-	    if (node instanceof Surface) {
-	        val surface = (node as Surface)
-	        if (surface.depth != null && surface.depth.next != null &&
-	            surface.depth.next.target != null) {
-    	        uncriticalPath += (node as Surface).depth;
-    	        if (surface.depth.next.target != surface) {
-    	           (node as Surface).depth.next.target.checkInstantaneousLoop(uncriticalPath, uncertainPath)
-	           }
-	        }
-	    }
-	    
-	    uncritical
-	}
-    
-    override analyze(SCGraph scg) {
-        val result = new PotentialInstantaneousLoopResult()
-        
-        val uncriticalPath = <Node> newHashSet
-        result.criticalNodes = <Node> newHashSet
-        
-        uncriticalPath += scg.nodes.head;
-        
-        (scg.nodes.head as Entry).next.target.checkInstantaneousLoop(uncriticalPath, result.criticalNodes)
-        
-        result.entryNodes = result.criticalNodes.filter(typeof(Entry))
-        
-        result
-    }
-	
-}
 
-/**
- * This class extends the generic analyzer result to implement a potential instantaneous loop result.<br>
- * In fact, the class is simply overridden and used to identify this kind of problems. No new 
- * methods are added.
- *  
- * @author ssm
- * @kieler.design 2013-12-02 proposed 
- * @kieler.rating 2013-12-02 proposed yellow
- */
-class PotentialInstantaneousLoopResult extends AbstractAnalyzerResult {
-    public var Set<Node> criticalNodes = null
-    public var Iterable<Entry> entryNodes = null
-}
+	private def boolean checkInstantaneousLoop(Node node, Set<Node> uncriticalPath, Set<Node> uncertainPath) {
+		val previousNodes = node.allPrevious.map[eContainer].toList
+		val nextNodes = node.allNext.map[target].toList
+
+		previousNodes +=
+			node.incoming.filter(typeof(DataDependency)).filter[concurrent == true && confluent == false].map[target].
+				toList
+        nextNodes += node.eContents.filter(typeof(DataDependency)).filter[concurrent == true && confluent == false].map [
+					target
+				].toList
+
+				var uncritical = true
+				for (pn : nextNodes) {
+					if(!uncriticalPath.contains(pn)) uncritical = false
+				}
+				if (node instanceof Surface) {
+					uncritical = true
+				}
+				if (!uncritical) {
+					uncritical = true
+					for (pn : previousNodes) {
+						if(!uncriticalPath.contains(pn)) uncritical = false
+					}
+				}
+
+				if (uncritical) {
+					uncriticalPath += node
+				} else {
+					uncertainPath += node
+				}
+
+				for (nn : nextNodes) {
+					if (!uncriticalPath.contains(nn) && !uncertainPath.contains(nn)) {
+						nn.checkInstantaneousLoop(uncriticalPath, uncertainPath)
+					}
+				}
+				if (!uncritical) {
+					uncritical = true
+					for (pn : nextNodes) {
+						if(!uncriticalPath.contains(pn)) uncritical = false
+					}
+					if (!uncritical) {
+						uncritical = true
+						for (pn : previousNodes) {
+							if(!uncriticalPath.contains(pn)) uncritical = false
+						}
+					}
+					if (uncritical) {
+						uncertainPath.remove(node)
+						uncriticalPath += node
+					}
+				}
+
+				if (node instanceof Surface) {
+					val surface = (node as Surface)
+					if (surface.depth != null && surface.depth.next != null && surface.depth.next.target != null) {
+						uncriticalPath += (node as Surface).depth;
+						if (surface.depth.next.target != surface) {
+							(node as Surface).depth.next.target.checkInstantaneousLoop(uncriticalPath, uncertainPath)
+						}
+					}
+				}
+
+				uncritical
+			}
+
+			override analyze(SCGraph scg) {
+				val result = new PotentialInstantaneousLoopResult()
+
+				val uncriticalPath = <Node>newHashSet
+				result.criticalNodes = <Node>newHashSet
+
+				uncriticalPath += scg.nodes.head;
+
+				(scg.nodes.head as Entry).next.target.checkInstantaneousLoop(uncriticalPath, result.criticalNodes)
+
+				// get outermost Entry nodes of each critical path
+				result.entryNodes = result.criticalNodes.filter(typeof(Entry)).filter [ entry |
+//        	System.out.println("Entry!!!")
+//        	val reachableNodes = <Node> newHashSet
+//        	val instantaneousPaths = entry.exit.getInstantaneousControlFlows()
+//        	for(path: instantaneousPaths){
+//        		reachableNodes.addAll(path.map[ it.target ])
+//        	}
+//        	reachableNodes.filter(typeof(Exit)).size == 0
+					entry.ancestorForks.size == 1
+				]
+
+				result
+			}
+
+		}
+
+		/**
+		 * This class extends the generic analyzer result to implement a potential instantaneous loop result.<br>
+		 * In fact, the class is simply overridden and used to identify this kind of problems. No new 
+		 * methods are added.
+		 *  
+		 * @author ssm
+		 * @kieler.design 2013-12-02 proposed 
+		 * @kieler.rating 2013-12-02 proposed yellow
+		 */
+		class PotentialInstantaneousLoopResult extends AbstractAnalyzerResult {
+			public var Set<Node> criticalNodes = null
+			public var Iterable<Entry> entryNodes = null
+		}
+		
