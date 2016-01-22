@@ -91,7 +91,6 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					it.setPortSize(2, 5);
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.SOUTH)
 									it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-									it.setPortSize(5, 2);
 				it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
 					
 				} else if (port.type.startsWith("Not")){

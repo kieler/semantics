@@ -1,36 +1,20 @@
 package de.cau.cs.kieler.scg.circuit
 
 import com.google.inject.Inject
-
-import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.circuit.Actor
-import de.cau.cs.kieler.scg.Guard
-import java.util.LinkedList
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.synchronizer.SynchronizerSelector
+import de.cau.cs.kieler.circuit.CircuitFactory
+import de.cau.cs.kieler.circuit.Port
+import de.cau.cs.kieler.core.annotations.Annotation
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.circuit.CircuitFactory
 import de.cau.cs.kieler.scg.Node
-import java.util.List
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.circuit.Port
-import de.cau.cs.kieler.circuit.Link
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.Expression
-import javax.management.OperationsException
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scg.Dependency
-import de.cau.cs.kieler.core.annotations.Annotation
+import java.util.List
 
 class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
@@ -53,147 +37,58 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
 	}
 
-	@Inject
-	extension SCGCoreExtensions
-
-	@Inject
-	extension SCGDeclarationExtensions
-
-	@Inject
-	extension SCGControlFlowExtensions
-
-	@Inject
-	extension KExpressionsValuedObjectExtensions
-
-	@Inject
-	extension KExpressionsCreateExtensions
-
-	@Inject
-	extension AnnotationsExtensions
-
-	@Inject
-	extension SynchronizerSelector
+	
 
 	@Inject
 	extension KEffectsSerializeExtensions
-	
+
 	@Inject
 	CircuitInitialization circuitInitialization
+	
+	@Inject
+	TransformToSSA transformToSSA
 
 	def transform(SCGraph scg) {
-		// val root = CircuitFactory::eINSTANCE.createActor 
-		val newCircuit = CircuitFactory::eINSTANCE.createActor
-//				root.innerActors += newCircuit
-//		
+		
+		//this is the root object which will have atomic inner actors for each in/output and 
+		//one non atomic actor containing the logic of the program
+		val root = CircuitFactory::eINSTANCE.createActor
+		
+		//this is the non atomic inner actor containing the programm's logic
 		val newInnerCircuit = CircuitFactory::eINSTANCE.createActor
-		newCircuit.innerActors += newInnerCircuit
+		
+		root.innerActors += newInnerCircuit
+		
+		//filter all declarations to initialize the circuit
 		val declarations = scg.declarations
-		
-		
-		
-		
-		initializeCircuit(newInnerCircuit, newCircuit)
-		circuitInitialization.initialize(declarations, newInnerCircuit, newCircuit)
+		//initialize circuit creates all in/outputs and a tick and reset input
+		circuitInitialization.initialize(declarations, newInnerCircuit, root)
 
-//		val guards = scg.guards
-//		val g = guards.head.valuedObject.name
-//		val exp = guards.head.expression.serialize
-		val nodes = scg.eAllContents.filter(typeof(Node)).toIterable.toList
-		//val ssaNodes = transformToSSAs(nodes)
-		transformToSSAs(nodes)
-		// create root object which should be the frame of the circuit
+		//filter all nodes and create SSAs
+		val nodes = scg.eAllContents.filter(Node).toList
+		val assignments = nodes.filter(Assignment).toList
+		
+		
+		//val ssaNodes = 
+		val ass = transformToSSA.transformAssignments2SSAs(assignments)
+		
+		//create actors of the circuit TODO: ssaNodes instead of nodes
 		transformNodes2Actors(nodes, newInnerCircuit)
 		System.out.println("BANANAAAAAAAAS")
-//		newCircuit.eAllContents.filter(typeof(Link)).toIterable.toList.forEach [ l |
+//		root.eAllContents.filter(typeof(Link)).toIterable.toList.forEach [ l |
 //			System.out.println("link")
 //
 //		]
 		val ports = newInnerCircuit.eAllContents.filter(typeof(Port)).toIterable.toList
 		createLinks(ports, newInnerCircuit)
 
-		newCircuit
+		root
 
 	}
 	
-	def transformToSSAs(List<Node> nodes) {
-		val ssaNodes = new LinkedList<Node>
-		val list = new LinkedList<String>
-		for(Node n : nodes){
-			if(n instanceof Assignment){
-				val name = n.valuedObject.name
-				if(!list.contains(name) && !name.startsWith("g")){
-				list.add(name)
-				
-				}
-				
-			} else if(n instanceof Conditional){
-				val name = n.condition.serialize.toString
-				if(!list.contains(name) && !name.startsWith("g")){
-				list.add(name)
-				
-				}
-			}
-			
-			
-		}
-		
-		for(l : list){
-			
-			System.out.println(l)
-		}
-		
-		//TODO: 
-		
-		
-		
-		
-		
-		
-		//return ssaNodes
-	}
+	
 
-	def initializeCircuit(Actor circuit, Actor root) {
-		// As we want to create a circuit, we need to add a reset and a tick
-		val reset = CircuitFactory::eINSTANCE.createActor
-		reset.name = "Reset"
-		reset.type = "In"
-		val resetPort = CircuitFactory::eINSTANCE.createPort
-		resetPort.name = reset.name
-		resetPort.type = "Out"
-
-		root.innerActors += reset
-		reset.ports += resetPort
-		val resetCircuitPort = CircuitFactory::eINSTANCE.createPort
-		resetCircuitPort.name = reset.name
-		resetCircuitPort.type = "In"
-		circuit.ports += resetCircuitPort
-		
-		val resetLink = CircuitFactory::eINSTANCE.createLink
-					resetLink.source = resetPort
-					resetLink.target = resetCircuitPort
-					root.innerLinks += resetLink
-
-		val tick = CircuitFactory::eINSTANCE.createActor
-		tick.name = "Tick"
-		tick.type = "In"
-		val tickPort = CircuitFactory::eINSTANCE.createPort
-		tickPort.name = tick.name
-		tickPort.type = "Out"
-
-		root.innerActors += tick
-		tick.ports += tickPort
-		val tickCircuitPort = CircuitFactory::eINSTANCE.createPort
-		tickCircuitPort.name = tick.name
-		tickCircuitPort.type = "In"
-		circuit.ports += tickCircuitPort
-		
-		val tickLink = CircuitFactory::eINSTANCE.createLink
-					tickLink.source = tickPort
-					tickLink.target = tickCircuitPort
-					root.innerLinks += tickLink
-
-	}
-
+	
 	def createLinks(List<Port> ports, Actor actor) {
 		// TODO: Create all links from port to port. here should be a naming converntion. 
 		// names should be comparable. so links will link ports with same names
@@ -215,65 +110,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		]
 	}
 
-	def createInOutputs(EList<Declaration> list, Actor circuit, Actor root) {
-
-		list.forEach [ d |
-			d.valuedObjects.forEach [ vo |
-				val name = (vo.name)
-				if (d.isInput) {
-					// creates InputNode
-					val actor = CircuitFactory::eINSTANCE.createActor
-					// port for InputNode |in|--->
-					val actorPort = CircuitFactory::eINSTANCE.createPort
-					// port for circuitActor -->|circuit|
-					val circuitPort = CircuitFactory::eINSTANCE.createPort
-
-					actor.type = "Input " + name
-					actorPort.name = name // + "_out"
-					actorPort.type = "Out"
-					circuitPort.name = name // + "_in"
-					circuitPort.type = "InOut"
-					actor.ports += actorPort
-					circuit.ports += circuitPort
-					root.innerActors += actor
-					
-					val link = CircuitFactory::eINSTANCE.createLink
-					link.source = actorPort
-					link.target = circuitPort
-					root.innerLinks += link
-
-				} else if (d.isOutput) {
-					// creates OutputNode
-					val actor = CircuitFactory::eINSTANCE.createActor
-					// port for OutputNode --->|out|
-					val actorPort = CircuitFactory::eINSTANCE.createPort
-					// port for circuitActor |circuit|--->
-					val circuitPort = CircuitFactory::eINSTANCE.createPort
-
-					actor.type = "output " + name
-					actorPort.name = name // + "_in"
-					actorPort.type = "In"
-					circuitPort.name = name // + "_out"
-					circuitPort.type = "OutIn"
-					actor.ports += actorPort
-					circuit.ports += circuitPort
-					root.innerActors += actor
-					
-					val link = CircuitFactory::eINSTANCE.createLink
-					link.target = actorPort
-					link.source = circuitPort
-					
-					root.innerLinks += link
-				}
-			]
-
-		]
-//		for (Port p : root.ports) {
-//			System.out.println("port")
-//		}
-//		createLinks(root.ports, root)
-
-	}
+	
 
 //	def createInOutputs(Declaration d, Actor root) {
 //		val actor = CircuitFactory::eINSTANCE.createActor 
@@ -330,9 +167,8 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		val actor = CircuitFactory::eINSTANCE.createActor
 
 		actor.name = "cond_" + guardname;
-		for(Annotation a : conditional.annotations){
-			System.out.println(a.serialize.toString)
-		}
+		
+	//	conditional.then.target.get
 		//actor.type = conditional.then.target.getA
 		System.out.println("Conditional: " + guardname)
 
@@ -369,6 +205,10 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 				}
 				case PRE: {
 					actor.type = "REG"
+					
+					addRegisterPorts(actor)
+					
+					
 
 				}
 				default: {
@@ -413,10 +253,24 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		p.name = guardname
 		actor.ports += p
 		// System.out.println("created OUTport " + p.name + " at " + actor.name + " with type: " + actor.type)
-		System.out.println("created Actor: " + actor.name + "with assignment" + completeAssginmentString)
+		//System.out.println("created Actor: " + actor.name + "with assignment" + completeAssginmentString)
 		root.innerActors += actor
 		
 		}
+	}
+	
+	def addRegisterPorts(Actor actor) {
+		val tickPort = CircuitFactory::eINSTANCE.createPort
+		val resetPort = CircuitFactory::eINSTANCE.createPort
+					
+					tickPort.type = "In"
+					tickPort.name = "Tick"
+					
+					resetPort.type = "Sel"
+					resetPort.name = "Reset"
+					
+					actor.ports.add(tickPort)
+					actor.ports.add(resetPort)
 	}
 
 	def transformExpressions(Expression expression, Actor root) {
@@ -438,6 +292,9 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 					actor.type = "NOT"
 				}
 				case PRE: {
+					actor.type = "REG"
+					
+					addRegisterPorts(actor)
 					// System.out.println("found " + expression.getOperator + expression.subExpressions.get(0).serialize.toString)
 				}
 				default: {
