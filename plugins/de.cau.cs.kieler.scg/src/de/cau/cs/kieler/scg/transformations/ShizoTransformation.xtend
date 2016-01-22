@@ -68,16 +68,16 @@ class ShizoTransformation extends AbstractProductionTransformation implements Tr
         
         
         
-        val condNodes = nodes.filter(typeof(Conditional)).toList
-        val exitAsChild = condNodes.filter(n | n.then.target instanceof Exit).toList
-		for (n: exitAsChild){
-			val surf = scg.addSurface
-			val depth = scg.addDepth
-			surf.depth = depth
-//        			surf.incoming.add()
-			depth.next = n.then
-			n.then = createControlFlow(surf)
-		}
+//        val condNodes = nodes.filter(typeof(Conditional)).toList
+//        val exitAsChild = condNodes.filter(n | n.then.target instanceof Exit).toList
+//		for (n: exitAsChild){
+//			val surf = scg.addSurface
+//			val depth = scg.addDepth
+//			surf.depth = depth
+////        			surf.incoming.add()
+//			depth.next = n.then
+//			n.then = createControlFlow(surf)
+//		}
 		scg
 	}
 	

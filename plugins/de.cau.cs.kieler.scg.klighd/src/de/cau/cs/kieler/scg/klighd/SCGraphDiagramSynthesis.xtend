@@ -946,6 +946,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                             if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
+                if(PIL_Entries.contains(exit.entry)) it.background = PROBLEM_COLOR
             ]
             // Add ports for control-flow routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
