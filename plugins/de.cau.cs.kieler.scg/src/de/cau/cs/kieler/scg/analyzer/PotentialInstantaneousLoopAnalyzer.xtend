@@ -154,13 +154,6 @@ class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
 
 				// get outermost Entry nodes of each critical path
 				result.entryNodes = result.criticalNodes.filter(typeof(Entry)).filter [ entry |
-//        	System.out.println("Entry!!!")
-//        	val reachableNodes = <Node> newHashSet
-//        	val instantaneousPaths = entry.exit.getInstantaneousControlFlows()
-//        	for(path: instantaneousPaths){
-//        		reachableNodes.addAll(path.map[ it.target ])
-//        	}
-//        	reachableNodes.filter(typeof(Exit)).size == 0
 					entry.ancestorForks.size == 1
 				]
 

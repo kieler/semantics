@@ -57,7 +57,14 @@ class ShizoTransformation extends AbstractProductionTransformation implements Tr
         
         val nodes = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.criticalNodes
         
-        val entries = nodes.filter(typeof(Entry))//.map[it.getThreadControlFlowTypes].map[it.entrySet]
+
+		/*
+		 * Thoughts:
+		 * Entry and Exit nodes do not need to be duplicated
+		 * Nested threads need a flag, as there is only one Exit
+		 * Pause only before the last exit
+		 */
+
         
 //        for (e : entries){
 //        	val filteredEntries = e.threadControlFlowTypes.filter[p1, p2| p2 == ThreadPathType::POTENTIALLY_INSTANTANEOUS].keySet
