@@ -156,15 +156,17 @@ class TransformToSSA {
 
         // check if left side is a relevant variable
         if (ssaMap.containsKey(name)) {
-
+			
+			// increment version number of variable for next usage
+            var version = ssaMap.get(name)
+            ssaMap.replace(name, version, version + 1)
+            
             val vo = createValuedObject(name + "_" + ssaMap.get(name))
             newAssignment.valuedObject = vo
 
             System.out.println("changed " + name + " to " + newAssignment.valuedObject.name)
 
-            // increment version number of variable for next usage
-            var version = ssaMap.get(name)
-            ssaMap.replace(name, version, version + 1)
+            
 
         } else {
             // don't change the name
@@ -188,7 +190,11 @@ class TransformToSSA {
             if (map.containsKey(varName)) {
                 v.valuedObject.name = varName + "_" + map.get(varName)
 
-//                System.out.println("Changed " + varName + " to " + v.valuedObject.name)
+                System.out.println("Changed " + varName + " to " + v.valuedObject.name)
+            }
+            
+           else if(varName == "_GO"){
+            	v.valuedObject.name = "g0"
             }
         ]
         expression
