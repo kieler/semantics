@@ -32,20 +32,14 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
 	override KNode transform(Actor model) {
-		
-		
-		
+
 		val root = createNode().associateWith(model);
-		model.transformActor(root); //choose this if solution with two big frames is not optimal
-		
-	
-		
+		model.transformActor(root); // choose this if solution with two big frames is not optimal
 //		val circActor = CircuitFactory::eINSTANCE.createActor;
 //		val ca = createNode().associateWith(circActor)
 //		root.children += ca
 //		// transformActor(model, root);
 //		model.transformActor(ca);
-
 //		val links = model.eAllContents.filter(typeof(Link)).toIterable.toList;
 //		for (link : links) {
 //			link.transformLink(root);
@@ -56,7 +50,6 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	// create a KNode for an Actor
 	def void transformActor(Actor actor, KNode parent) {
 
-		
 		// draw actors and attach them to parent
 		val actorNode = actorSynthesis.transform(actor) // actor.createNode().associateWith(actor)
 		parent.children += actorNode
@@ -73,43 +66,38 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			val kPort = port.port.associateWith(port)
 			actorNode.ports += kPort => [
 
-				
-
 				if (port.type.startsWith("In")) {
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
-									it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-									it.setPortSize(5, 2);
-				it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
-					
+					it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+					it.setPortSize(5, 2);
+					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+
 				} else if (port.type.startsWith("Out")) {
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
-									it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-									it.setPortSize(5, 2);
-				it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
-					
+					it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+					it.setPortSize(5, 2);
+					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+
 				} else if (port.type.startsWith("Sel")) {
 					it.setPortSize(2, 5);
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.SOUTH)
-									it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-				it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
-					
-				} else if (port.type.startsWith("Not")){
-					//it.setPortSize(2, 5);
+					it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+
+				} else if (port.type.startsWith("Not")) {
+					// it.setPortSize(2, 5);
 					it.setLayoutOption(LayoutOptions.OFFSET, 0f);
-           			it.setPortSize(6, 6);
+					it.setPortSize(6, 6);
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
 					it.addEllipse.setBackground("white".color).lineWidth = 1.5f;
 				}
-
-
-			]
+						]
 		}
 
 		// create all inner actors 
 		actor.innerActors.forEach [
 			it.transformActor(actorNode);
 		]
-
 
 //		draw the edges for each link
 		actor.innerLinks.forEach [ link |
@@ -137,7 +125,8 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 		]
 
+	}
 }
 
-}
+
 

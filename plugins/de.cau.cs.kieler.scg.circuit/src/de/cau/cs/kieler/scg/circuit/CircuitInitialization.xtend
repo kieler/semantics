@@ -16,6 +16,30 @@ class CircuitInitialization {
 
 		createInOutRegisters(declarations, newCircuit)
 
+		createConstantZeroAndOne(newCircuit)
+
+	}
+
+	def createConstantZeroAndOne(Actor actor) {
+		val const1 = CircuitFactory::eINSTANCE.createActor
+		val const1port = CircuitFactory::eINSTANCE.createPort
+		const1.name = "1"
+		const1.type = "Constant"
+		const1port.type = "Out"
+		const1port.name = "const1"
+		const1.ports += const1port
+
+		val const0 = CircuitFactory::eINSTANCE.createActor
+		val const0port = CircuitFactory::eINSTANCE.createPort
+		const0.name = "0"
+		const0.type = "Constant"
+		const0port.type = "Out"
+		const0port.name = "const0"
+		const0.ports += const0port
+
+		actor.innerActors.add(const1)
+		actor.innerActors.add(const0)
+
 	}
 
 	def initializeCircuit(Actor circuit, Actor root) {
@@ -130,28 +154,24 @@ class CircuitInitialization {
 					val regOutPort = CircuitFactory::eINSTANCE.createPort
 					regActor.type = "REG"
 					regActor.name = name
-					
+
 					regInPortClock.type = "In"
 					regInPortClock.name = "Tick"
-					
+
 					regInPortReset.type = "Sel"
 					regInPortReset.name = "Reset"
-					
+
 					regInPort.type = "In"
 					regInPort.name = name + "_in"
-					
+
 					regOutPort.type = "Out"
 					regOutPort.name = name
-
-
-
-
 
 					regActor.ports.add(regInPortClock)
 					regActor.ports.add(regInPortReset)
 					regActor.ports.add(regInPort)
 					regActor.ports.add(regOutPort)
-					
+
 					actor.innerActors.add(regActor)
 
 				}

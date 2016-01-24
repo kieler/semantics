@@ -15,6 +15,7 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.List
+import java.util.LinkedList
 
 class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
@@ -37,63 +38,53 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
 	}
 
-	
-
 	@Inject
 	extension KEffectsSerializeExtensions
 
 	@Inject
 	CircuitInitialization circuitInitialization
-	
+
 	@Inject
 	TransformToSSA transformToSSA
 
 	def transform(SCGraph scg) {
 		
-		//this is the root object which will have atomic inner actors for each in/output and 
-		//one non atomic actor containing the logic of the program
+		
+		// this is the root object which will have atomic inner actors for each in/output and 
+		// one non atomic actor containing the logic of the program
 		val root = CircuitFactory::eINSTANCE.createActor
 		
-		//this is the non atomic inner actor containing the programm's logic
+		root.name = scg.label
+		// this is the non atomic inner actor containing the programm's logic
 		val newInnerCircuit = CircuitFactory::eINSTANCE.createActor
-		
+
 		root.innerActors += newInnerCircuit
-		
-		//filter all declarations to initialize the circuit
+
+		// filter all declarations to initialize the circuit
 		val declarations = scg.declarations
-		//initialize circuit creates all in/outputs and a tick and reset input
+		// initialize circuit creates all in/outputs and a tick and reset input
 		circuitInitialization.initialize(declarations, newInnerCircuit, root)
 
-		//filter all nodes and create SSAs
+		// filter all nodes and create SSAs
 		val nodes = scg.eAllContents.filter(Node).toList
-		val assignments = nodes.filter(Assignment).toList
-		
-		
-		//val ssaNodes = 
-		val ass = transformToSSA.transformAssignments2SSAs(assignments)
-		
-		//create actors of the circuit TODO: ssaNodes instead of nodes
-		transformNodes2Actors(nodes, newInnerCircuit)
+		// val assignments = nodes.filter(Assignment).toList
+		val ssaNodes = transformToSSA.transformAssignments2SSAs(nodes)
+
+		// create actors of the circuit 
+		transformNodes2Actors(ssaNodes, newInnerCircuit)
 		System.out.println("BANANAAAAAAAAS")
-//		root.eAllContents.filter(typeof(Link)).toIterable.toList.forEach [ l |
-//			System.out.println("link")
-//
-//		]
+
+		// create links of the circuit
 		val ports = newInnerCircuit.eAllContents.filter(typeof(Port)).toIterable.toList
 		createLinks(ports, newInnerCircuit)
 
 		root
 
 	}
-	
-	
 
-	
 	def createLinks(List<Port> ports, Actor actor) {
-		// TODO: Create all links from port to port. here should be a naming converntion. 
-		// names should be comparable. so links will link ports with same names
-		// maybe iterate over inputports or so...
-		// for each output port and each input port with the same name we want so create a link
+
+		// for each output port and each input port with the same name create a link
 		ports.forEach [ op |
 			if ((op.type == "Out") || (op.type == "InOut")) {
 				ports.forEach [ ip |
@@ -109,8 +100,6 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 			}
 		]
 	}
-
-	
 
 //	def createInOutputs(Declaration d, Actor root) {
 //		val actor = CircuitFactory::eINSTANCE.createActor 
@@ -138,139 +127,261 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 //		
 //	}
 	def transformNodes2Actors(List<Node> nodes, Actor root) {
-		
-		
-		
-		// val actor = CircuitFactory::eINSTANCE.createActor
-		nodes.forEach [ n |
+
+		val assignments = new LinkedList<Assignment>
+		val conditionalBranchNodes = new LinkedList<Node>
+
+		// check whether nodes are affected by a condition
+		var condBranch = false
+		var Node endCondition
+
+		for (n : nodes) {
+			if (n == endCondition) {
+				condBranch = false
+				System.out.println("Set condition to false")
+			}
 
 			if (n instanceof Assignment) {
-				
-				transformAssignment(n, root)
+				if (!condBranch) {
+					System.out.println("Found an Assignment " + n.valuedObject.name)
+					assignments.add(n)
+
+				} else {
+					System.out.println("Found a ConditionAssignment " + n.valuedObject.name)
+					conditionalBranchNodes.add(n)
+				}
 			// root.innerActors += transformAssignment(n)
 			} else if (n instanceof Conditional) {
-				root.innerActors += transformConditional(n)
-			} // else if(n instanceof Expression){
-//				root.innerActors += transformExpression(n)
-//			}
-		]
-		// root.innerActors += actor
+//				if(n.condition.serialize.toString == endCondition){
+//					condBranch = false
+//				}
+				 System.out.println("Found a Condition " + n.condition.serialize.toString)
+				conditionalBranchNodes.add(n)
+				
+				
+				endCondition = n.^else.target
+				switch(endCondition){
+					Assignment: System.out.println("Endcondition: " + endCondition.valuedObject.name)
+					Conditional: System.out.println("Endcondition: " + endCondition.condition.serialize.toString)
+				}
+				condBranch = true
+
+			// root.innerActors += transformConditional(n)
+			}
+			}
+
+			for (a : assignments) {
+				System.out.println("ASS: " + a.valuedObject.name)
+			}
+			for (c : conditionalBranchNodes) {
+				switch (c) {
+					Assignment: System.out.println("Condass " + c.valuedObject.name)
+					Conditional: System.out.println("Cond: " + c.condition.serialize.toString)
+				}
+
+			}
+
+			for (a : assignments) {
+				transformAssignment(a, root)
+			}
+
+			// assuming nested conditional branches don't exist ////////////////     !!!!!!!!!!      /////////////////
+			transformConditionalBranch(conditionalBranchNodes, root)
+
+		
 		root
 
 	}
-	
-	
 
-	def Actor transformConditional(Conditional conditional) {
+	def transformConditionalBranch(List<Node> conditionalOrAssignment, Actor root) {
+			var String activeConditionName
+		for (coa : conditionalOrAssignment) {
+			
 
-		val guardname = conditional.condition.serialize.toString
-		val actor = CircuitFactory::eINSTANCE.createActor
+			if (coa instanceof Conditional) {
+				activeConditionName = coa.condition.serialize.toString
+				System.out.println("changed active condition to: " + activeConditionName)
+				
+			} else if (coa instanceof Assignment) {
+				val actor = CircuitFactory::eINSTANCE.createActor
 
-		actor.name = "cond_" + guardname;
-		
-	//	conditional.then.target.get
-		//actor.type = conditional.then.target.getA
-		System.out.println("Conditional: " + guardname)
+				actor.type = "MUX"
+				actor.name = coa.valuedObject.name
 
-		actor
+				val truePort = CircuitFactory::eINSTANCE.createPort
+				val falsePort = CircuitFactory::eINSTANCE.createPort
+				val selectPort = CircuitFactory::eINSTANCE.createPort
+				val outputPort = CircuitFactory::eINSTANCE.createPort
+
+				actor.ports.add(truePort)
+				actor.ports.add(falsePort)
+				actor.ports.add(selectPort)
+				actor.ports.add(outputPort)
+
+				truePort.type = "In"
+				falsePort.type = "In"
+				selectPort.type = "Sel"
+				outputPort.type = "Out"
+
+				selectPort.name = activeConditionName
+				System.out.println("sel node is: " + activeConditionName)
+				outputPort.name = coa.valuedObject.name
+
+				if (coa.assignment.serialize.toString == "true") {
+					truePort.name = "const1"
+				} else if (coa.assignment.serialize.toString == "false") {
+					truePort.name = "const0"
+				}
+				val String pred = findPredecessor(coa.valuedObject.name)
+				System.out.println("found predecessor: "+ pred + " for " + coa.valuedObject.name) 
+				falsePort.name = pred
+				root.innerActors += actor
+
+			}
+
+		}
+
 	}
 
+	def findPredecessor(String string) {
+		if (string.contains("_")) {
+			val index = string.lastIndexOf("_")
+			var String version = string.substring(index+1)
+			var int intVersion = Integer.parseInt(version.replaceAll("[\\D]", "")) //für später.. wegen vllt O1_4SSA
+			if(intVersion == 0){
+				return string.substring(0,index)
+			} else {
+				var int predVersion = intVersion - 1
+				return (string.substring(0,index) + "_" + predVersion)
+			}
+			
+		}
+	}
+
+//		val guardname = conditional.condition.serialize.toString
+//		val actor = CircuitFactory::eINSTANCE.createActor
+//
+//		actor.name = "cond_" + guardname;
+//		var nextNode = conditional.then.target
+//		var endNode = conditional.^else.target
+//
+//		switch (nextNode) {
+//			Assignment: {
+//				System.out.println("next Node ist: " + nextNode.valuedObject.name)
+//				var n = nextNode.next.target
+//				if (n instanceof Assignment) {
+//					System.out.println("overoveroveroverover" + n.valuedObject.name)
+//				}
+//			}
+//			Conditional:
+//				System.out.println("next Node ist: " + nextNode.condition.serialize.toString)
+//		}
+//
+//		switch (endNode) {
+//			Assignment: System.out.println("end Node ist: " + endNode.valuedObject.name)
+//			Conditional: System.out.println("end Node ist: " + endNode.condition.serialize.toString)
+//		}
+//		// actor.type = conditional.then.target.getA
+//		System.out.println("Conditional: " + guardname)
+//
+//		actor
+//
+//	}
+//}
 	def transformAssignment(Assignment assignment, Actor root) {
 
 		val completeAssginmentString = assignment.assignment.serialize.toString
-		
-		if((completeAssginmentString != "true") && (completeAssginmentString != "false")){
-		val actor = CircuitFactory::eINSTANCE.createActor
-		val p = CircuitFactory::eINSTANCE.createPort
-		// val isAtomicAssignment = !completeAssginmentString.contains("||") || !completeAssginmentString.contains("&&")
-		// val List<String> splittedAssignment = completeAssginmentString.split(" ")//("\\(|\\) (?![^(pre\\(])\\)")//("\\(|\\)|(\\&\\&)|(\\|\\|)")
-		val guardname = assignment.valuedObject.name
 
-		val a = assignment.assignment
+		if ((completeAssginmentString != "true") && (completeAssginmentString != "false")) {
+			val actor = CircuitFactory::eINSTANCE.createActor
+			val p = CircuitFactory::eINSTANCE.createPort
+			// val isAtomicAssignment = !completeAssginmentString.contains("||") || !completeAssginmentString.contains("&&")
+			// val List<String> splittedAssignment = completeAssginmentString.split(" ")//("\\(|\\) (?![^(pre\\(])\\)")//("\\(|\\)|(\\&\\&)|(\\|\\|)")
+			val guardname = assignment.valuedObject.name
 
-		if (a instanceof OperatorExpression) {
+			val a = assignment.assignment
 
-			switch (a.operator) {
-				case LOGICAL_AND: {
-					// System.out.println("AAAND " + a.getOperator)
-					actor.type = "AND"
+			if (a instanceof OperatorExpression) {
+
+				switch (a.operator) {
+					case LOGICAL_AND: {
+						// System.out.println("AAAND " + a.getOperator)
+						actor.type = "AND"
+
+					}
+					case LOGICAL_OR: {
+						// System.out.println("OOOR " + a.getOperator)
+						actor.type = "OR"
+					}
+					case NOT: {
+						actor.type = "NOT"
+					}
+					case PRE: {
+						actor.type = "REG"
+
+						addRegisterPorts(actor)
+
+					}
+					default: {
+						System.out.println(
+							"found " + a.getOperator.getName
+						)
+					}
+				}
+
+				for (Expression e : a.subExpressions) {
+					val port = CircuitFactory::eINSTANCE.createPort
+					actor.ports += port
+
+					if (a.operator.getName == "NOT") {
+						port.type = "Not"
+						port.name = a.subExpressions.head.serialize.toString
+
+					// System.out.println("created NOOOOOOT at: " + guardname + " with name " + port.name ) 
+					} else {
+
+						port.type = "In"
+						port.name = e.serialize.toString
+
+					}
+					// System.out.println("created INport " + port.name + " at " + actor.type)
+					if ((!(a.operator.getName == "PRE") && !(a.operator.getName == "NOT")) &&
+						(e instanceof OperatorExpression)) {
+						// System.out.println("call expressionTrans from Assign for : " + e.serialize.toString + " in " + a.serialize.toString )
+						transformExpressions(e, root)
+
+					} else {
+						// System.out.println("SBDVIUSBDJNVUS0000000000000000B")
+					}
 
 				}
-				case LOGICAL_OR: {
-					// System.out.println("OOOR " + a.getOperator)
-					actor.type = "OR"
-				}
-				case NOT:{
-					actor.type = "NOT"
-				}
-				case PRE: {
-					actor.type = "REG"
-					
-					addRegisterPorts(actor)
-					
-					
 
-				}
-				default: {
-					System.out.println(
-						"found " + a.getOperator.getName
-					)
-				}
 			}
 
-			for (Expression e : a.subExpressions) {
-				val port = CircuitFactory::eINSTANCE.createPort
-				actor.ports += port
+			actor.name = guardname
+			p.type = "Out"
 
-				if (a.operator.getName == "NOT") {
-					port.type = "Not"
-					port.name = a.subExpressions.head.serialize.toString
+			p.name = guardname
+			actor.ports += p
+			// System.out.println("created OUTport " + p.name + " at " + actor.name + " with type: " + actor.type)
+			// System.out.println("created Actor: " + actor.name + "with assignment" + completeAssginmentString)
+			root.innerActors += actor
 
-				// System.out.println("created NOOOOOOT at: " + guardname + " with name " + port.name ) 
-				} else {
-
-					port.type = "In"
-					port.name = e.serialize.toString
-
-				}
-				// System.out.println("created INport " + port.name + " at " + actor.type)
-				if ((!(a.operator.getName == "PRE") && !(a.operator.getName == "NOT")) &&
-					(e instanceof OperatorExpression)) {
-					// System.out.println("call expressionTrans from Assign for : " + e.serialize.toString + " in " + a.serialize.toString )
-					transformExpressions(e, root)
-
-				} else {
-					// System.out.println("SBDVIUSBDJNVUS0000000000000000B")
-				}
-
-			}
-
-		}
-
-		actor.name = guardname
-		p.type = "Out"
-
-		p.name = guardname
-		actor.ports += p
-		// System.out.println("created OUTport " + p.name + " at " + actor.name + " with type: " + actor.type)
-		//System.out.println("created Actor: " + actor.name + "with assignment" + completeAssginmentString)
-		root.innerActors += actor
-		
 		}
 	}
-	
+
 	def addRegisterPorts(Actor actor) {
 		val tickPort = CircuitFactory::eINSTANCE.createPort
 		val resetPort = CircuitFactory::eINSTANCE.createPort
-					
-					tickPort.type = "In"
-					tickPort.name = "Tick"
-					
-					resetPort.type = "Sel"
-					resetPort.name = "Reset"
-					
-					actor.ports.add(tickPort)
-					actor.ports.add(resetPort)
+
+		tickPort.type = "In"
+		tickPort.name = "Tick"
+
+		resetPort.type = "Sel"
+		resetPort.name = "Reset"
+
+		actor.ports.add(tickPort)
+		actor.ports.add(resetPort)
 	}
 
 	def transformExpressions(Expression expression, Actor root) {
@@ -288,14 +399,14 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 					// System.out.println("OOOR " + expression.getOperator)
 					actor.type = "OR"
 				}
-				case NOT:{
+				case NOT: {
 					actor.type = "NOT"
 				}
 				case PRE: {
 					actor.type = "REG"
-					
+
 					addRegisterPorts(actor)
-					// System.out.println("found " + expression.getOperator + expression.subExpressions.get(0).serialize.toString)
+				// System.out.println("found " + expression.getOperator + expression.subExpressions.get(0).serialize.toString)
 				}
 				default: {
 					System.out.println("found " + expression.getOperator)
@@ -310,8 +421,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 						port.type = "Not"
 						port.name = e.subExpressions.head.serialize.toString
 
-						//System.out.println("created NOOOOOOT at: " + expression.serialize.toString + " with name " + port.name)
-
+					// System.out.println("created NOOOOOOT at: " + expression.serialize.toString + " with name " + port.name)
 					}
 				} else {
 
@@ -338,8 +448,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 			actor.name = expression.serialize.toString
 			actor.ports += p
 			root.innerActors += actor
-			//System.out.println("created OUTport " + p.name + " at " + actor.name + " with type: " + actor.type)
-
+		// System.out.println("created OUTport " + p.name + " at " + actor.name + " with type: " + actor.type)
 		}
 
 	}

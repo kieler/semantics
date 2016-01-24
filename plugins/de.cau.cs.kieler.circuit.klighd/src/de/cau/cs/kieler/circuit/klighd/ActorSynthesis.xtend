@@ -29,6 +29,9 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	OrActorSynthesis orActorSynthesis
 
 	@Inject
+	MuxActorSynthesis muxActorSynthesis
+
+	@Inject
 	RegisterActorSynthesis registerActorSynthesis
 
 	@Inject
@@ -50,8 +53,8 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 		if (atomicActor) {
 			if (!hasType) {
 				actorNode.addRoundedRectangle(4, 4, 2)
-				actorNode.addInsideBottomLeftNodeLabel("typeIsNull", KlighdConstants.DEFAULT_FONT_SIZE,
-					KlighdConstants.DEFAULT_FONT_NAME)
+//				actorNode.addInsideBottomLeftNodeLabel("typeIsNull", KlighdConstants.DEFAULT_FONT_SIZE,
+//					KlighdConstants.DEFAULT_FONT_NAME)
 //				if (hasName) {
 //					actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
 //						KlighdConstants.DEFAULT_FONT_NAME);
@@ -71,7 +74,10 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 						actorNode = notActorSynthesis.draw(actor)
 					case "REG":
 						actorNode = registerActorSynthesis.draw(actor)
+					case "MUX":
+						actorNode = muxActorSynthesis.draw(actor)
 					default: {
+						
 						actorNode.addRoundedRectangle(4, 4, 2)
 						actorNode.addInsideBottomLeftNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE,
 							KlighdConstants.DEFAULT_FONT_NAME)
@@ -84,6 +90,8 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 //						}
 						actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 							EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+					
+					
 					}
 				}
 
@@ -91,8 +99,8 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 		} else {
 			// rendering for simple frame
 			actorNode.addRoundedRectangle(4, 4, 2);
-			actorNode.addInsideBottomLeftNodeLabel("nullTypeButNotAtomar", KlighdConstants.DEFAULT_FONT_SIZE,
-				KlighdConstants.DEFAULT_FONT_NAME);
+//			actorNode.addInsideBottomLeftNodeLabel("nullTypeButNotAtomar", KlighdConstants.DEFAULT_FONT_SIZE,
+//				KlighdConstants.DEFAULT_FONT_NAME);
 //			if (hasName) {
 //					actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
 //						KlighdConstants.DEFAULT_FONT_NAME);
@@ -109,12 +117,13 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 //            actorNode.outgoingEdges += linkSynthesis.transformLink(link);
 //        }
 		if (hasName) {
-					actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
-						KlighdConstants.DEFAULT_FONT_NAME);
-				} else {
-					actorNode.addOutsideBottomLeftNodeLabel("noName", KlighdConstants.DEFAULT_FONT_SIZE,
-						KlighdConstants.DEFAULT_FONT_NAME)
-				}
+			actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
+				KlighdConstants.DEFAULT_FONT_NAME);
+		} 
+//		else {
+//			actorNode.addOutsideBottomLeftNodeLabel("noName", KlighdConstants.DEFAULT_FONT_SIZE,
+//				KlighdConstants.DEFAULT_FONT_NAME)
+//		}
 		return actorNode;
 
 	}
