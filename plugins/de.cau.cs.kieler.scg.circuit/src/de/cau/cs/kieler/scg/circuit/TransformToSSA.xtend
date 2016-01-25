@@ -13,27 +13,56 @@ import java.util.LinkedList
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.Declaration
 
 class TransformToSSA {
 
     @Inject
     extension KExpressionsValuedObjectExtensions
-
-    def transformAssignments2SSAs(List<Node> nodes) {
-        // stores names of SSA variables and the latest version numbers
         val ssaMap = new HashMap<String, Integer>
-
+		val ssaPreMap = new HashMap<String, Integer>
+		
+    def transformAssignments2SSAs(List<Node> nodes, List<Declaration> declarations) {
+        // stores names of SSA variables and the latest version numbers
+		ssaMap.clear
+		ssaPreMap.clear
+		
+		
         // adds each non unique assignment to ssaMap
         filterRelevantAssignments(nodes.filter(Assignment).toList, ssaMap)
 
         // create a new node list containing the SSAs
         // this has to be done because otherwise all ssa nodes would reference the same abject 
         val ssaList = transformNodes(nodes, ssaMap);
-
+		
+		setSSApreAndOutputs(declarations)
+		
         return ssaList
 
     }
-
+	
+	def setSSApreAndOutputs(List<Declaration> declarations) {
+		for(d: declarations){
+			if(d.isOutput && !d.isInput){
+				d.valuedObjects.forEach[ vo |
+					val name = vo.name
+					val readvalue = ssaMap.get(name)
+					ssaPreMap.put(name,readvalue) 
+				]
+			}
+		}
+		
+	}
+    
+    def getSSAMap(){
+    	return ssaMap
+    }
+    
+    def getSSApreAndOutputs(){
+    	return ssaPreMap
+    }
+    
+	
     def transformNodes(List<Node> nodes, HashMap<String, Integer> ssaMap) {
         val newSSANodes = new LinkedList<Node>
         var condBranch = false
@@ -193,9 +222,9 @@ class TransformToSSA {
                 System.out.println("Changed " + varName + " to " + v.valuedObject.name)
             }
             
-           else if(varName == "_GO"){
-            	v.valuedObject.name = "g0"
-            }
+//           else if(varName == "_GO"){
+//            	v.valuedObject.name = "g0"
+//            }
         ]
         expression
     }

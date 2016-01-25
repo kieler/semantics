@@ -18,13 +18,65 @@ class CircuitInitialization {
 
 		createConstantZeroAndOne(newCircuit)
 
+		createResetAndGoRegister(newCircuit)
+
+	}
+
+	def createResetAndGoRegister(Actor actor) {
+		val localReset = CircuitFactory::eINSTANCE.createActor
+//		val localGo = CircuitFactory::eINSTANCE.createActor
+		localReset.name = "Reset_local"
+		localReset.type = "REG"
+
+//		localGo.name = "Go_local"
+//		localGo.type = "REG"
+		val localReset_reset = CircuitFactory::eINSTANCE.createPort
+		val localReset_tick = CircuitFactory::eINSTANCE.createPort
+		val localReset_out = CircuitFactory::eINSTANCE.createPort
+
+		localReset_reset.name = "Reset"
+		localReset_reset.type = "In"
+
+		localReset_tick.name = "Tick"
+		localReset_tick.type = "In"
+
+		localReset_out.name = localReset.name
+		localReset_out.type = "Out"
+
+		localReset.ports.add(localReset_reset)
+		localReset.ports.add(localReset_tick)
+		localReset.ports.add(localReset_out)
+
+//		val localGo_reset = CircuitFactory::eINSTANCE.createPort
+//		val localGo_tick = CircuitFactory::eINSTANCE.createPort
+//		val localGo_Go = CircuitFactory::eINSTANCE.createPort
+//		val localGo_out = CircuitFactory::eINSTANCE.createPort
+//		
+//		localGo_reset.name = "Reset_local"
+//		localGo_reset.type = "In"
+//		
+//		localGo_tick.name = "Tick"
+//		localGo_tick.type = "In"
+//		
+//		localGo_Go.name = "Reset"
+//		localGo_Go.type = "Sel"
+//		
+//		localGo_out.name = "_GO"
+//		localGo_out.type = "Out"
+//		
+//		localGo.ports.add(localReset_reset)
+//		localGo.ports.add(localReset_tick)
+//		localGo.ports.add(localReset_out)
+//		actor.innerActors.add(localGo)
+		actor.innerActors.add(localReset)
+
 	}
 
 	def createConstantZeroAndOne(Actor actor) {
 		val const1 = CircuitFactory::eINSTANCE.createActor
 		val const1port = CircuitFactory::eINSTANCE.createPort
 		const1.name = "1"
-		const1.type = "Constant"
+		const1.type = "vcc"
 		const1port.type = "Out"
 		const1port.name = "const1"
 		const1.ports += const1port
@@ -32,7 +84,7 @@ class CircuitInitialization {
 		val const0 = CircuitFactory::eINSTANCE.createActor
 		val const0port = CircuitFactory::eINSTANCE.createPort
 		const0.name = "0"
-		const0.type = "Constant"
+		const0.type = "gnd"
 		const0port.type = "Out"
 		const0port.name = "const0"
 		const0.ports += const0port
@@ -136,6 +188,8 @@ class CircuitInitialization {
 					link.source = circuitPort
 
 					root.innerLinks.add(link)
+
+					
 				}
 			]
 		]

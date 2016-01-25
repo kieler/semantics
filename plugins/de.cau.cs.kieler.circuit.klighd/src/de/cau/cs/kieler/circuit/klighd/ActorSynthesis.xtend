@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kiml.options.SizeConstraint
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import java.util.EnumSet
+import de.cau.cs.kieler.core.krendering.LineJoin
 
 class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject
@@ -36,6 +37,9 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 	@Inject
 	LinkSynthesis linkSynthesis
+	
+	@Inject
+    extension KColorExtensions
 
 	@Inject extension KNodeExtensions
 	@Inject extension KLabelExtensions
@@ -97,8 +101,16 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 			}
 		} else {
+			
+			if(actor.eContainer != null){
 			// rendering for simple frame
-			actorNode.addRoundedRectangle(4, 4, 2);
+			actorNode.addRoundedRectangle(4, 4, 2) =>[
+			 it.addDoubleClickAction(KlighdConstants.ACTION_COLLAPSE_EXPAND);
+			 it.shadow = "black".color
+             it.selectionBackground = "blue".color;
+             it.setBackground("gray".color);]
+             
+             }
 //			actorNode.addInsideBottomLeftNodeLabel("nullTypeButNotAtomar", KlighdConstants.DEFAULT_FONT_SIZE,
 //				KlighdConstants.DEFAULT_FONT_NAME);
 //			if (hasName) {
