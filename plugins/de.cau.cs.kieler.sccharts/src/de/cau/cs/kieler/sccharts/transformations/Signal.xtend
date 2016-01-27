@@ -142,6 +142,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
 
                 // Copy type and input/output attributes from the original signal
                 currentValueVariable.copyAttributes(signal)
+                valueVariable.copyAttributes(signal)
                 val allActions = state.eAllContents.filter(typeof(Action)).toList
                 for (Action action : allActions) {
 
