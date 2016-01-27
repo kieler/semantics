@@ -59,6 +59,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     
     public static final String NON_SIGNAL_EMISSION = "Non-signals cannot be used in an emission";
     public static final String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment";
+    public static final String VALUED_SIGNAL_NEED_COMBINE = "Valued signals must have a combine function as long as there is no dedicated transformation";
     
     public static final String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object";
     public static final String NO_CONST_LITERAL = "Const objects must be bound to literals";
