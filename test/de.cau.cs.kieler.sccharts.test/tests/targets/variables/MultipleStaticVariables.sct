@@ -4,9 +4,15 @@ scchart StaticVariables {
   int StaticVariables_null_A___x = 100;
   int StaticVariables_null_B___y = - 100;
 
-  initial state A
+  initial state A {
+
+    initial state A0;
+  }
   --> B with / StaticVariables_null_A___x = StaticVariables_null_A___x + 1;
 
-  state B
+  state B {
+
+    initial state B0;
+  }
   --> A with / StaticVariables_null_B___y = StaticVariables_null_B___y - 1;
 }

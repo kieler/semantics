@@ -3,10 +3,14 @@ scchart StaticVariables {
   
   initial state A {
     static int x = 100;
+    
+    initial state A0;
   }--> B with / x = x + 1;
   
   state B {
     static int y = -100;
+    
+    initial state B0;
   }--> A with / y = y - 1; 
   
 }
