@@ -72,7 +72,7 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
 @RunWith(typeof(ModelCollectionTestRunner))
 @BundleId("de.cau.cs.kieler.sccharts.test")
 @ModelPath("tests/inputs/**")
-//@ModelFilter("CrossReference.sct")
+//@ModelFilter("ConnectorState.sct")
 class TransformationTests {
 
     /**

@@ -1,0 +1,12 @@
+
+@Transformation STATIC
+scchart StaticVariableHierarchy {
+  int StaticVariableHierarchy_null_A___x = 100;
+
+  initial state A {
+
+    initial state A0;
+  }
+  --> A with / StaticVariableHierarchy_null_A___x =
+  StaticVariableHierarchy_null_A___x - 1;
+}

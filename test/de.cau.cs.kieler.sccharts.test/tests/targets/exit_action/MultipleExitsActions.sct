@@ -9,18 +9,18 @@ scchart MultipleExitActions {
     region _Exit:
 
     initial state _Init
-    --> _C immediate / O = false;
+    --> _C immediate with / O = false;
 
     final state _Done;
 
     connector state _C
-    --> _C2 immediate / O = true;
+    --> _C2 immediate with / O = true;
 
     connector state _C2
     --> _Done immediate with I / O = !O
     --> _Done immediate;
   }
-  >-> F;
+  --> F;
 
   final state F;
 }

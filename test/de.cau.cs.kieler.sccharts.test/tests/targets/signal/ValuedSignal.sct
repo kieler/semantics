@@ -1,0 +1,15 @@
+
+@Transformation SIGNAL
+scchart ValuedSignal {
+  bool x;
+  pure x_val;
+  pure x_curval;
+  immediate during x / x_val = x_curval;
+  immediate during / x_curval = 0;
+  immediate during / x = false;
+
+  initial state A
+  --> B with / x_curval = 3; x = x || true;
+
+  state B;
+}

@@ -5,7 +5,7 @@ scchart ValuedSignals {
   
   region R1:
 	  initial state A
-	  --> B / x(3);
+	  --> B with / x(3);
 	  
 	  final state B;
 	  

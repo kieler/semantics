@@ -1,0 +1,11 @@
+@Transformation STATIC
+scchart StaticVariable {
+
+    initial state A{
+      static int x = 0;
+      
+      initial state B;
+    }
+    --> A with / x = x+1;
+    
+}

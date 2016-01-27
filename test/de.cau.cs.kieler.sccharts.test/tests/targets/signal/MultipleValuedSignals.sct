@@ -1,6 +1,6 @@
 
 @Transformation SIGNAL
-scchart ValuedSignals {
+scchart MultipleValuedSignals {
   bool x;
   bool y;
   pure x_val;
@@ -17,7 +17,7 @@ scchart ValuedSignals {
   region R1:
 
   initial state A
-  --> B / x_curval = 3; x = x || true;
+  --> B with / x_curval = 3; x = x || true;
 
   final state B;
 

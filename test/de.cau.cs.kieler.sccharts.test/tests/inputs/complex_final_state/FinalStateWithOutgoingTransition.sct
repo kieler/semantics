@@ -1,0 +1,10 @@
+@Transformation COMPLEXFINALSTATE
+scchart FinalStateWithOutgoingTransition {
+    input bool I;    
+
+    initial state A
+    --> F;
+    
+    final state F
+    --> A with I;
+}

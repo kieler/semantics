@@ -8,17 +8,17 @@ scchart MultipleEntryActions {
     region _Entry:
 
     initial state _Init
-    --> _C immediate / O = true;
+    --> _C immediate with / O = true;
 
     final state _Done;
 
     connector state _C
-    --> _Done immediate / O = false;
+    --> _Done immediate with / O = false;
   }
   >-> _Exit;
 
   final state F;
 
   state _Exit
-  >-> F;
+  --> F;
 }

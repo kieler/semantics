@@ -1,0 +1,9 @@
+@Transformation SIGNAL
+scchart ValuedSignal {
+    signal int x;
+ 
+    initial state A
+    --> B with / x(3);
+    
+    state B;
+}

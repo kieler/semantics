@@ -1,0 +1,12 @@
+
+@Transformation STATIC
+scchart StaticVariables {
+  int StaticVariables_null_A___x = 100;
+  int StaticVariables_null_B___y = - 100;
+
+  initial state A
+  --> B with / StaticVariables_null_A___x = StaticVariables_null_A___x + 1;
+
+  state B
+  --> A with / StaticVariables_null_B___y = StaticVariables_null_B___y - 1;
+}

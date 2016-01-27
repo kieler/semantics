@@ -1,0 +1,8 @@
+
+@Transformation STATIC
+scchart StaticVariable {
+  int StaticVariable_null_A___x = 0;
+
+  initial state A
+  --> A with / StaticVariable_null_A___x = StaticVariable_null_A___x + 1;
+}
