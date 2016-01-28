@@ -22,7 +22,7 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 	}
 
 	override getProducedFeatureId() {
-		return SCGFeatures::SEQUENTIALIZE_ID
+		return CircuitFeatures::SCG2SSASCG_ID
 	}
 
 	override getRequiredFeatureIds() {

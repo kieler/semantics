@@ -36,7 +36,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 	}
 
 	override getRequiredFeatureIds() {
-		return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
+		return newHashSet(CircuitFeatures::SCG2SSASCG_ID)
 	}
 
 	@Inject
