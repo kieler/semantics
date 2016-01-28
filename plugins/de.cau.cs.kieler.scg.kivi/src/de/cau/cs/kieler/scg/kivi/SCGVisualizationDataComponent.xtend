@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2016 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.sim.visualization
+package de.cau.cs.kieler.scg.kivi
 
 import com.google.common.collect.HashMultimap
 import com.google.inject.Binder
@@ -65,10 +65,10 @@ import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.scg.features.SCGFeatures
 
 /**
- * @author ssm als
+ * @author ssm als cmot
  *
  */
-class SCGVisualizationComponent extends JSONObjectDataComponent {
+class SCGVisualizationDataComponent extends JSONObjectDataComponent {
     
     val Module configure = [Binder binder|
         binder.bindScope(typeof(ViewSynthesisShared), Scopes.SINGLETON);
@@ -152,6 +152,11 @@ class SCGVisualizationComponent extends JSONObjectDataComponent {
         false
     }
     
+    override isHistoryObserver() {
+        true
+    }
+    
+    
     override wrapup() throws KiemInitializationException {
         
         val Runnable run = [|
@@ -216,7 +221,8 @@ class SCGVisualizationComponent extends JSONObjectDataComponent {
                     if (highlighting == null) {
                         val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
                         style.setProperty(HIGHLIGHTING_MARKER, true);
-                        style.setColor(Colors::LIGHT_SEA_GREEN)
+                        //style.setColor(Colors::LIGHT_SEA_GREEN)
+                        style.setColor(Colors::LIGHT_SALMON)
                         entry.value.styles.add(style)
                     } 
                 } else {
@@ -234,7 +240,7 @@ class SCGVisualizationComponent extends JSONObjectDataComponent {
                     if (highlighting == null) {
                         val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
                         style.setProperty(HIGHLIGHTING_MARKER, true);
-                        style.setColor(Colors::YELLOW)
+                        style.setColor(Colors::RED)
                         entry.value.styles.add(style)
                     } 
                 } else {
