@@ -406,11 +406,9 @@ class DepthSynchronizer extends AbstractSynchronizer {
     override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
         var synchronizable = true
         
-        if (instantaneousFeedback) {
-            for(tpt : threadPathTypes) {
-                if (tpt == ThreadPathType::POTENTIALLY_INSTANTANEOUS) synchronizable = false
-            } 
-        }
+        for(tpt : threadPathTypes) {
+            if (tpt != ThreadPathType::DELAYED) synchronizable = false
+        } 
         
         synchronizable
     }
