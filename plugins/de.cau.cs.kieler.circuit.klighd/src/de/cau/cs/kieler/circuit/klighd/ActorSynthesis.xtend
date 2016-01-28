@@ -34,6 +34,9 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 	@Inject
 	RegisterActorSynthesis registerActorSynthesis
+	
+	@Inject 
+	FlipFlopActorSynthesis flipflopActorSynthesis
 
 	@Inject
 	extension KColorExtensions
@@ -70,6 +73,8 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 						actorNode = registerActorSynthesis.draw(actor)
 					case "MUX":
 						actorNode = muxActorSynthesis.draw(actor)
+					case "FF":
+						actorNode = flipflopActorSynthesis.draw(actor)	
 					default: {
 
 						actorNode.setNodeSize(2, 2);

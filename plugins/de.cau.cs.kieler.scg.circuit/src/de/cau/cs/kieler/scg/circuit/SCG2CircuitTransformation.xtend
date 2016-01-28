@@ -57,6 +57,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		root.name = scg.label
 		// this is the non atomic inner actor containing the programm's logic
 		val newInnerCircuit = CircuitFactory::eINSTANCE.createActor
+		val logic = CircuitFactory::eINSTANCE.createActor
 
 		root.innerActors += newInnerCircuit
 
