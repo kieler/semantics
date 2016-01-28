@@ -77,7 +77,7 @@ class OrActorSynthesis implements IDrawableActor {
 //			]
 		val orange = createKColor.setColor(209, 156, 100);
 		node.setNodeSize(30, 25);
-		val lightGrey = createKColor.setColor(224, 216, 206);
+		val customLightBlue = createKColor.setColor(226, 237, 255);
 		node.addRectangle => [
 			it.invisible = true;
 			it.lineCap = LineCap.CAP_ROUND;
@@ -96,8 +96,7 @@ class OrActorSynthesis implements IDrawableActor {
 				it.lineJoin = LineJoin.JOIN_ROUND;
 				it.addKPosition(RIGHT, 14.5f, 0, TOP, 0.5f, 0)
 				it.addKPosition(LEFT, -5f, 0, TOP, 0.5f, 0)
-				//it.addKPosition(LEFT, 0, 0, BOTTOM, 0.5f, 0)
-
+			// it.addKPosition(LEFT, 0, 0, BOTTOM, 0.5f, 0)
 			];
 			it.addPolyline => [
 				it.lineWidth = 1
@@ -122,7 +121,7 @@ class OrActorSynthesis implements IDrawableActor {
 				it.lineWidth = 1;
 				it.arcAngle = 180;
 				it.startAngle = -90;
-				it.background = lightGrey
+				it.background = customLightBlue
 				it.setAreaPlacementData.from(LEFT, -15f, 0, TOP, 0, 0).to(LEFT, 1, 0, BOTTOM, 0, 0);
 			];
 			it.addArc() => [

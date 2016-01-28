@@ -68,51 +68,38 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			actorNode.ports += kPort => [
 
 				if (port.type.startsWith("In")) {
-//					if(port.name == "Tick"){
-//					it.setLayoutOption(LayoutOptions.OFFSET, -6f);
-//					it.setPortSize(6, 6);
-//					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
-//					it.addPolygon.setBackground("black".color).lineWidth = 1.5f;
-//					} else {
-					if (port.name == "Tick") { // /TODO: still not working
-						System.out.println("TIIICKPOOOOORT")
+
+					if (port.name == "Tick") { // /TODO: still not working to place Tick ports at fixed position
 						it.setPortSize(0, 0)
 						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
-
-//						it.addRectangle => [
-//							it.invisible = true
-
-							it.addPolygon => [
-								it.lineWidth = 1
-								it.lineCap = LineCap.CAP_ROUND;
-								it.lineJoin = LineJoin.JOIN_ROUND;
-								it.background = "white".color;
-								it.selectionBackground = "gray".color;
-								it.addKPosition(LEFT, 0.5f, 0, TOP, 4, 0)
-								it.addKPosition(RIGHT, -5, 0, TOP, 0, 0.5f)
-								it.addKPosition(LEFT, 0.5f, 0, BOTTOM, 4, 0)
-
-//							]
-//							it.addRectangle => [
-//								it.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-//								it.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(LEFT, 5, 0, BOTTOM, 0, 0);
-//							]
-
+						it.addPolygon => [
+							it.lineWidth = 1
+							it.lineCap = LineCap.CAP_ROUND;
+							it.lineJoin = LineJoin.JOIN_ROUND;
+							it.background = "white".color;
+							it.selectionBackground = "gray".color;
+							it.addKPosition(LEFT, 0.5f, 0, TOP, 4, 0)
+							it.addKPosition(RIGHT, -5, 0, TOP, 0, 0.5f)
+							it.addKPosition(LEFT, 0.5f, 0, BOTTOM, 4, 0)
 						]
-
 					} else {
 						it.setPortSize(5, 2);
 						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
 						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-						// it.setPortSize(5, 2);
 						it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
 					}
-//					}
+
 				} else if (port.type.startsWith("Out")) {
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
-					it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-					it.setPortSize(5, 2);
 					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+					if(port.outgoingLinks.length == 0){
+						System.out.println("HBDAFIHBSDK")
+						it.addEllipse.setBackground("red".color).lineWidth = 0;
+						it.setPortSize(6, 6);
+					} else {
+						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+						it.setPortSize(5, 2);
+					}
 
 				} else if (port.type.startsWith("Sel")) {
 					it.setPortSize(2, 5);
@@ -125,7 +112,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					it.setLayoutOption(LayoutOptions.OFFSET, 0f);
 					it.setPortSize(6, 6);
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
-					it.addEllipse.setBackground("white".color).lineWidth = 1.5f;
+					it.addEllipse.setBackground("white".color).lineWidth = 1;
 				}
 
 			]
@@ -136,7 +123,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			it.transformActor(actorNode);
 		]
 
-//		draw the edges for each link
+		// draw the edges for each link
 		actor.innerLinks.forEach [ link |
 			createEdge().associateWith(link) => [
 				switch (link.source) {
@@ -161,6 +148,18 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			]
 
 		]
+
+		for (p : actor.ports) {
+			if (p.outgoingLinks == null) {
+				System.out.println("NO EDGE")
+				actorNode.addEllipse => [
+					it.setBackground("red".color).lineWidth = 1.5f;
+					it.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 6, 0, BOTTOM, 11, 0);
+
+				]
+
+			}
+		}
 
 	}
 }

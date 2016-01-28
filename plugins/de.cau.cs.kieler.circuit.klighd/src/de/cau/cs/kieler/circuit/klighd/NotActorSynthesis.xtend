@@ -77,8 +77,8 @@ class NotActorSynthesis implements IDrawableActor {
                 
             ];
             it.addEllipse => [
-            	it.setBackground("white".color).lineWidth = 1.5f;
-            	it.setAreaPlacementData.from(LEFT, 22, 0, TOP, 11,0).to(RIGHT, 0, 0, BOTTOM, 11,0);
+            	it.setBackground("white".color).lineWidth = 1;
+            	it.setAreaPlacementData.from(LEFT, 24, 0, TOP, 12,0).to(RIGHT, 0, 0, BOTTOM, 12,0);
             	]
         ];
     
