@@ -30,7 +30,7 @@ public class CircuitFeatures {
     public final static String CIRCUIT_NAME = "Circuit";
     
     public final static String SCG2SSASCG_ID = "scg.seqssa";
-    public final static String SCG2SSASCG_NAME = "Sequential SSA SCG";
+    public final static String SCG2SSASCG_NAME = "SSA";
 	
     
 }

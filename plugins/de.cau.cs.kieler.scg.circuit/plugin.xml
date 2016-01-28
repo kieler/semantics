@@ -18,6 +18,9 @@
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.circuit.SCG2CircuitTransformation">
       </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.circuit.SeqSSAscgTransformation">
+      </productionTransformationClass>
 
    </extension>
 
