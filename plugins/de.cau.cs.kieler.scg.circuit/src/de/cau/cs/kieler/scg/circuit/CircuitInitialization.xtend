@@ -14,7 +14,7 @@ class CircuitInitialization {
 
 		createInOutputs(declarations, newCircuit, root)
 
-		createInOutRegisters(declarations, newCircuit)
+//		createInOutRegisters(declarations, newCircuit)
 
 		createConstantZeroAndOne(newCircuit)
 
@@ -40,7 +40,7 @@ class CircuitInitialization {
 		localReset_tick.name = "Tick"
 		localReset_tick.type = "In"
 
-		localReset_out.name = localReset.name
+		localReset_out.name = localReset.name //"_GO"
 		localReset_out.type = "Out"
 
 		localReset.ports.add(localReset_reset)
@@ -152,9 +152,9 @@ class CircuitInitialization {
 					val circuitPort = CircuitFactory::eINSTANCE.createPort
 
 					actor.type = "Input " + name
-					actorPort.name = name + "_out"
+					actorPort.name = name //+ "_out"
 					actorPort.type = "Out"
-					circuitPort.name = name + "_in"
+					circuitPort.name = name //+ "_in"
 					circuitPort.type = "InOut"
 					actor.ports += actorPort
 					circuit.ports += circuitPort
@@ -174,7 +174,7 @@ class CircuitInitialization {
 					// port for circuitActor |circuit|--->
 					val circuitPort = CircuitFactory::eINSTANCE.createPort
 
-					actor.type = "output " + name
+					actor.type = "Output " + name
 					actorPort.name = name + "_in"
 					actorPort.type = "In"
 					circuitPort.name = name + "_out"
@@ -195,45 +195,45 @@ class CircuitInitialization {
 		]
 	}
 
-	def createInOutRegisters(EList<Declaration> list, Actor actor) {
-		list.forEach [ d |
-			d.valuedObjects.forEach [ vo |
-				val name = (vo.name)
-
-				if (d.isInput) {
-					val regActor = CircuitFactory::eINSTANCE.createActor
-					val regInPortClock = CircuitFactory::eINSTANCE.createPort
-					val regInPortReset = CircuitFactory::eINSTANCE.createPort
-					val regInPort = CircuitFactory::eINSTANCE.createPort
-					val regOutPort = CircuitFactory::eINSTANCE.createPort
-					regActor.type = "REG"
-					regActor.name = name
-
-					regInPortClock.type = "In"
-					regInPortClock.name = "Tick"
-
-					regInPortReset.type = "Sel"
-					regInPortReset.name = "Reset"
-
-					regInPort.type = "In"
-					regInPort.name = name + "_in"
-
-					regOutPort.type = "Out"
-					regOutPort.name = name
-
-					regActor.ports.add(regInPortClock)
-					regActor.ports.add(regInPortReset)
-					regActor.ports.add(regInPort)
-					regActor.ports.add(regOutPort)
-
-					actor.innerActors.add(regActor)
-
-				}
-
-			]
-
-		]
-
-	}
+//	def createInOutRegisters(EList<Declaration> list, Actor actor) {
+//		list.forEach [ d |
+//			d.valuedObjects.forEach [ vo |
+//				val name = (vo.name)
+//
+//				if (d.isInput) {
+//					val regActor = CircuitFactory::eINSTANCE.createActor
+//					val regInPortClock = CircuitFactory::eINSTANCE.createPort
+//					val regInPortReset = CircuitFactory::eINSTANCE.createPort
+//					val regInPort = CircuitFactory::eINSTANCE.createPort
+//					val regOutPort = CircuitFactory::eINSTANCE.createPort
+//					regActor.type = "REG"
+//					regActor.name = name
+//
+//					regInPortClock.type = "In"
+//					regInPortClock.name = "Tick"
+//
+//					regInPortReset.type = "Sel"
+//					regInPortReset.name = "Reset"
+//
+//					regInPort.type = "In"
+//					regInPort.name = name + "_in"
+//
+//					regOutPort.type = "Out"
+//					regOutPort.name = name
+//
+//					regActor.ports.add(regInPortClock)
+//					regActor.ports.add(regInPortReset)
+//					regActor.ports.add(regInPort)
+//					regActor.ports.add(regOutPort)
+//
+//					actor.innerActors.add(regActor)
+//
+//				}
+//
+//			]
+//
+//		]
+//
+//	}
 
 }

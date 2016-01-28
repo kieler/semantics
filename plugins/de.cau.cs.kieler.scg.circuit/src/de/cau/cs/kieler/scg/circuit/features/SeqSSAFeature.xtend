@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.circuit
+package de.cau.cs.kieler.scg.circuit.features
 
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.circuit.Actor
@@ -24,17 +24,17 @@ import de.cau.cs.kieler.circuit.Actor
  * @kieler.rating 2015-04-27 proposed yellow
  *
  */
-class CircuitFeature extends Feature {
+class SeqSSAFeature extends Feature {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return CircuitFeatures::CIRCUIT_ID
+        return CircuitFeatures::SCG2SSASCG_ID
     }
 
     override getName() {
-        return CircuitFeatures::CIRCUIT_NAME
+        return CircuitFeatures::SCG2SSASCG_NAME
     }
 
     // This method checks, if this feature is contained in a model

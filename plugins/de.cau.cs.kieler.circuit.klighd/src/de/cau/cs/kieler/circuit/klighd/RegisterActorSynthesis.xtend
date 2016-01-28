@@ -6,25 +6,68 @@ import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.core.krendering.KRenderingFactory
+import de.cau.cs.kieler.core.krendering.LineCap
+import de.cau.cs.kieler.core.krendering.LineJoin
 
-class RegisterActorSynthesis implements IDrawableActor  {
+class RegisterActorSynthesis implements IDrawableActor {
 	@Inject
-    extension KNodeExtensions
-	@Inject extension KLabelExtensions
-    
-    
-    
-    
-	
-	override draw(Actor actor) {
-		val KNode regNode = actor.node;
-		
-		regNode.setNodeSize(40, 40);
-		regNode.addInsideBottomCenteredNodeLabel("R", KlighdConstants.DEFAULT_FONT_SIZE,
-				KlighdConstants.DEFAULT_FONT_NAME);
+	extension KNodeExtensions
 
-		
-		return regNode;
+	@Inject
+	extension KEdgeExtensions
+
+	@Inject
+	extension KPortExtensions
+
+	@Inject
+	extension KLabelExtensions
+
+	@Inject
+	extension KRenderingExtensions
+
+	@Inject
+	extension KContainerRenderingExtensions
+
+	@Inject
+	extension KPolylineExtensions
+
+	@Inject
+	extension KColorExtensions
+
+	extension KRenderingFactory = KRenderingFactory.eINSTANCE
+
+	override draw(Actor actor) {
+		val KNode node = actor.node
+
+		node.setNodeSize(40, 40);
+
+		node.addRectangle =>
+			[
+
+				it.shadow = "black".color
+				it.selectionBackground = "green".color;
+				it.setBackground("white".color);
+				node.addInsideBottomCenteredNodeLabel("R", KlighdConstants.DEFAULT_FONT_SIZE,
+					KlighdConstants.DEFAULT_FONT_NAME);
+
+//				it.addPolyline => [
+//					it.lineWidth = 1
+//					it.lineCap = LineCap.CAP_ROUND;
+//					it.lineJoin = LineJoin.JOIN_ROUND;
+//					it.addKPosition(LEFT, 1, 0, BOTTOM, 17, 0)
+//					it.addKPosition(LEFT, 6, 0, BOTTOM, 13f, 0)
+//					it.addKPosition(LEFT, 1, 0, BOTTOM, 9f, 0)
+//				];
+			]
+
+		return node;
 	}
-	
+
 }

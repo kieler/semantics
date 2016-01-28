@@ -35,11 +35,10 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject
 	RegisterActorSynthesis registerActorSynthesis
 
-	@Inject
-	LinkSynthesis linkSynthesis
 	
+
 	@Inject
-    extension KColorExtensions
+	extension KColorExtensions
 
 	@Inject extension KNodeExtensions
 	@Inject extension KLabelExtensions
@@ -52,20 +51,14 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 		val Boolean atomicActor = !(actor.innerActors.toList.length > 0)
 		val hasType = !(actor.type == null)
 		val hasName = !(actor.name == null)
+		
+		//create KNode for actor
 		var actorNode = actor.node; // ///getNode nicht createNode()
-		// if actor is a gate create it otherwise draw a simple frame
+		
+		// if actor is a gate create it. otherwise draw a simple frame.
 		if (atomicActor) {
 			if (!hasType) {
 				actorNode.addRoundedRectangle(4, 4, 2)
-//				actorNode.addInsideBottomLeftNodeLabel("typeIsNull", KlighdConstants.DEFAULT_FONT_SIZE,
-//					KlighdConstants.DEFAULT_FONT_NAME)
-//				if (hasName) {
-//					actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
-//						KlighdConstants.DEFAULT_FONT_NAME);
-//				} else {
-//					actorNode.addOutsideBottomLeftNodeLabel("noName", KlighdConstants.DEFAULT_FONT_SIZE,
-//						KlighdConstants.DEFAULT_FONT_NAME)
-//				}
 				actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 					EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 			} else {
@@ -81,61 +74,48 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 					case "MUX":
 						actorNode = muxActorSynthesis.draw(actor)
 					default: {
-						
-						actorNode.addRoundedRectangle(4, 4, 2)
+
+						actorNode.setNodeSize(2, 2);
+
+						actorNode.addRectangle => [
+
+							it.shadow = "black".color
+							it.selectionBackground = "blue".color;
+							it.setBackground("white".color);
+						]
 						actorNode.addInsideBottomLeftNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE,
 							KlighdConstants.DEFAULT_FONT_NAME)
-//						if (hasName) {
-//							actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
-//								KlighdConstants.DEFAULT_FONT_NAME);
-//						} else {
-//							actorNode.addOutsideBottomLeftNodeLabel("noName", KlighdConstants.DEFAULT_FONT_SIZE,
-//								KlighdConstants.DEFAULT_FONT_NAME)
-//						}
 						actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 							EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-					
-					
 					}
 				}
 
 			}
 		} else {
+			// if actor is not a gate, draw a frame
+			val lightGrey = createKColor.setColor(224, 216, 206);
+			val orange = createKColor.setColor(209, 156, 100);
+			if (actor.eContainer != null) {
 			
-			if(actor.eContainer != null){
-			// rendering for simple frame
-			actorNode.addRoundedRectangle(4, 4, 2) =>[
-			 it.addDoubleClickAction(KlighdConstants.ACTION_COLLAPSE_EXPAND);
-			 it.shadow = "black".color
-             it.selectionBackground = "blue".color;
-             it.setBackground("gray".color);]
-             
-             }
-//			actorNode.addInsideBottomLeftNodeLabel("nullTypeButNotAtomar", KlighdConstants.DEFAULT_FONT_SIZE,
-//				KlighdConstants.DEFAULT_FONT_NAME);
-//			if (hasName) {
-//					actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
-//						KlighdConstants.DEFAULT_FONT_NAME);
-//				} else {
-//					actorNode.addOutsideBottomLeftNodeLabel("noName", KlighdConstants.DEFAULT_FONT_SIZE,
-//						KlighdConstants.DEFAULT_FONT_NAME)
-//				}
+				actorNode.addRoundedRectangle(4, 4, 1) => [
+					
+					it.addDoubleClickAction(KlighdConstants.ACTION_COLLAPSE_EXPAND);
+					it.shadow = "black".color
+					it.selectionBackground = orange;
+					it.setBackground(lightGrey);
+				]
+			}
+
 			actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 				EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 		}
 
-//		// Transform all outgoing transitions
-//        for (link : actor.outgoingLinks) {
-//            actorNode.outgoingEdges += linkSynthesis.transformLink(link);
-//        }
 		if (hasName) {
 			actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
 				KlighdConstants.DEFAULT_FONT_NAME);
-		} 
-//		else {
-//			actorNode.addOutsideBottomLeftNodeLabel("noName", KlighdConstants.DEFAULT_FONT_SIZE,
-//				KlighdConstants.DEFAULT_FONT_NAME)
-//		}
+		}
+
+
 		return actorNode;
 
 	}

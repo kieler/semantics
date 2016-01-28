@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.circuit;
+package de.cau.cs.kieler.scg.circuit.features;
 
 /**
  * This class lists all features of the Circuit group.
@@ -28,5 +28,9 @@ public class CircuitFeatures {
 
     public final static String CIRCUIT_ID = "circuit.basic";
     public final static String CIRCUIT_NAME = "Circuit";
+    
+    public final static String SCG2SSASCG_ID = "scg.seqssa";
+    public final static String SCG2SSASCG_NAME = "Sequential SSA SCG";
+	
     
 }

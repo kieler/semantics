@@ -4,22 +4,19 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.CircuitFactory
 import de.cau.cs.kieler.circuit.Port
-import de.cau.cs.kieler.core.annotations.Annotation
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.circuit.features.CircuitFeatures
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import java.util.List
 import java.util.LinkedList
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import java.lang.invoke.VolatileCallSite
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import java.util.Map
+import java.util.List
 
 class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
@@ -220,8 +217,13 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 				outputPort.type = "Out"
 
 				selectPort.name = activeConditionName
-				System.out.println("sel node is: " + activeConditionName)
+				System.out.println("sel node is: " + selectPort.name)
 				//outputPort.name = coa.valuedObject.name
+				if(selectPort.name == "g0"){
+					//if no condition is active, the variable has had an initial value, which has 
+					// to set at reset
+					selectPort.name = "_GO"
+				}
 
 				if (coa.assignment.serialize.toString == "true") {
 					truePort.name = "const1"

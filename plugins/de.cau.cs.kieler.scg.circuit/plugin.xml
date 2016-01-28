@@ -4,10 +4,13 @@
    <extension
          point="de.cau.cs.kieler.kico.feature">
       <featureGroupClass
-            class="de.cau.cs.kieler.scg.circuit.CircuitFeatureGroup">
+            class="de.cau.cs.kieler.scg.circuit.features.CircuitFeatureGroup">
       </featureGroupClass>
       <featureClass
-            class="de.cau.cs.kieler.scg.circuit.CircuitFeature">
+            class="de.cau.cs.kieler.scg.circuit.features.CircuitFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.circuit.features.SeqSSAFeature">
       </featureClass>
    </extension>
    <extension
@@ -15,6 +18,7 @@
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.circuit.SCG2CircuitTransformation">
       </productionTransformationClass>
+
    </extension>
 
 </plugin>

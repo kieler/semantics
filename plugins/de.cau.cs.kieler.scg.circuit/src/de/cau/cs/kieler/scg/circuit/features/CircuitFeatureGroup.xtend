@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.circuit
+package de.cau.cs.kieler.scg.circuit.features
 
 import de.cau.cs.kieler.kico.features.FeatureGroup
 
@@ -38,7 +38,7 @@ class CircuitFeatureGroup extends FeatureGroup {
     }
 
     override getFeatureIds() {
-        newHashSet(CircuitFeatures.CIRCUIT_ID)
+        newHashSet(CircuitFeatures::CIRCUIT_ID, CircuitFeatures::SCG2SSASCG_ID)
     }
     
 }

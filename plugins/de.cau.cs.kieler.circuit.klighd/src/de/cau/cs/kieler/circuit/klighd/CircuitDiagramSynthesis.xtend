@@ -18,6 +18,7 @@ import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import javax.inject.Inject
 import de.cau.cs.kieler.circuit.Port
 import de.cau.cs.kieler.circuit.CircuitFactory
+import de.cau.cs.kieler.core.krendering.LineCap
 
 class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
@@ -58,7 +59,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 		val Boolean atomicActor = actor.innerActors.empty
 
 		// rendering for edges and ports of actor
-		actorNode.setLayoutOption(LayoutOptions.EDGE_ROUTING, EdgeRouting.ORTHOGONAL);
+//		actorNode.setLayoutOption(LayoutOptions.EDGE_ROUTING, EdgeRouting.ORTHOGONAL);
 		actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
 
 		// add ports to actor
@@ -67,11 +68,46 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			actorNode.ports += kPort => [
 
 				if (port.type.startsWith("In")) {
-					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
-					it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-					it.setPortSize(5, 2);
-					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+//					if(port.name == "Tick"){
+//					it.setLayoutOption(LayoutOptions.OFFSET, -6f);
+//					it.setPortSize(6, 6);
+//					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+//					it.addPolygon.setBackground("black".color).lineWidth = 1.5f;
+//					} else {
+					if (port.name == "Tick") { // /TODO: still not working
+						System.out.println("TIIICKPOOOOORT")
+						it.setPortSize(0, 0)
+						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
 
+//						it.addRectangle => [
+//							it.invisible = true
+
+							it.addPolygon => [
+								it.lineWidth = 1
+								it.lineCap = LineCap.CAP_ROUND;
+								it.lineJoin = LineJoin.JOIN_ROUND;
+								it.background = "white".color;
+								it.selectionBackground = "gray".color;
+								it.addKPosition(LEFT, 0.5f, 0, TOP, 4, 0)
+								it.addKPosition(RIGHT, -5, 0, TOP, 0, 0.5f)
+								it.addKPosition(LEFT, 0.5f, 0, BOTTOM, 4, 0)
+
+//							]
+//							it.addRectangle => [
+//								it.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+//								it.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(LEFT, 5, 0, BOTTOM, 0, 0);
+//							]
+
+						]
+
+					} else {
+						it.setPortSize(5, 2);
+						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+						// it.setPortSize(5, 2);
+						it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+					}
+//					}
 				} else if (port.type.startsWith("Out")) {
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
 					it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
@@ -91,7 +127,8 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
 					it.addEllipse.setBackground("white".color).lineWidth = 1.5f;
 				}
-						]
+
+			]
 		}
 
 		// create all inner actors 

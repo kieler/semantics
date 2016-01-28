@@ -26,4 +26,6 @@ public class CircuitTransformation {
     public final static String SCG2CIRCUIT_ID = "scg.circuit";
     public final static String SCG2CIRCUIT_NAME = "Circuit";
     
+    public final static String SCG2SSASCG_ID = "scg.seqssa";
+    public final static String SCG2SSASCG_NAME = "Sequential SSA SCG";
 }

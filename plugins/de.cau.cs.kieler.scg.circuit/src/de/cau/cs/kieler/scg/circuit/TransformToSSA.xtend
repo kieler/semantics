@@ -175,7 +175,7 @@ class TransformToSSA {
 //      for (Assignment a : assignments) {
         val newAssignment = ScgFactory::eINSTANCE.createAssignment
 
-        // copy right side of the assignment
+        // copy right side of the assignment (expression)
         val copyExpr = a.assignment.copy
 
         val name = a.valuedObject.name
