@@ -35,8 +35,6 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject
 	RegisterActorSynthesis registerActorSynthesis
 
-	
-
 	@Inject
 	extension KColorExtensions
 
@@ -51,10 +49,9 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 		val Boolean atomicActor = !(actor.innerActors.toList.length > 0)
 		val hasType = !(actor.type == null)
 		val hasName = !(actor.name == null)
-		
-		//create KNode for actor
+
+		// create KNode for actor
 		var actorNode = actor.node; // ///getNode nicht createNode()
-		
 		// if actor is a gate create it. otherwise draw a simple frame.
 		if (atomicActor) {
 			if (!hasType) {
@@ -93,16 +90,17 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 			}
 		} else {
 			// if actor is not a gate, draw a frame
-			val lightGrey = createKColor.setColor(224, 216, 206);
+			val babyBlue = createKColor.setColor(211, 236, 252);
+			val customLightBlue = createKColor.setColor(226, 237, 255);
 			val orange = createKColor.setColor(209, 156, 100);
 			if (actor.eContainer != null) {
-			
+
 				actorNode.addRoundedRectangle(4, 4, 1) => [
-					
+
 					it.addDoubleClickAction(KlighdConstants.ACTION_COLLAPSE_EXPAND);
 					it.shadow = "black".color
 					it.selectionBackground = orange;
-					it.setBackground(lightGrey);
+					it.setBackground(customLightBlue);
 				]
 			}
 
@@ -114,7 +112,6 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 			actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
 				KlighdConstants.DEFAULT_FONT_NAME);
 		}
-
 
 		return actorNode;
 
