@@ -17,6 +17,7 @@ import de.cau.cs.kieler.scg.circuit.features.CircuitFeatures
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.LinkedList
 import java.util.List
+import de.cau.cs.kieler.kico.KielerCompilerContext
 
 class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
@@ -47,9 +48,12 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 	@Inject
 	TransformToSSA transformToSSA
+    protected var KielerCompilerContext compilerContext
 
-	def transform(SCGraph scg) {
-
+	def transform(SCGraph scg, KielerCompilerContext context) {
+		
+		compilerContext = context
+		
 		// this is the root object which will have atomic inner actors for each in/output and 
 		// one non atomic actor containing the logic of the program
 		val root = CircuitFactory::eINSTANCE.createActor
