@@ -11,6 +11,7 @@ import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
 import de.cau.cs.kieler.core.annotations.CommentAnnotation;
 import de.cau.cs.kieler.core.annotations.FloatAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
+import de.cau.cs.kieler.core.annotations.PropertyAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
@@ -88,26 +89,43 @@ public abstract class AbstractSSemanticSequencer extends KEXTSemanticSequencer {
 			case AnnotationsPackage.INT_ANNOTATION:
 				sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
 				return; 
+			case AnnotationsPackage.PROPERTY_ANNOTATION:
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getPropertyAnnotationRule() ||
+				   context == grammarAccess.getRestrictedTypeAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
+					sequence_PropertyAnnotation(context, (PropertyAnnotation) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getQuotedPropertyAnnotationRule() ||
+				   context == grammarAccess.getQuotedStringAnnotationRule()) {
+					sequence_QuotedPropertyAnnotation(context, (PropertyAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
 				   context == grammarAccess.getKeyStringValueAnnotationRule() ||
+				   context == grammarAccess.getRestrictedPropertyAnnotationRule() ||
+				   context == grammarAccess.getRestrictedTypeAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getQuotedKeyStringValueAnnotationRule() ||
-				   context == grammarAccess.getRestrictedAnnotationRule()) {
+				   context == grammarAccess.getQuotedStringAnnotationRule()) {
 					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else break;
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
-				if(context == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule() ||
-				   context == grammarAccess.getRestrictedAnnotationRule()) {
+				if(context == grammarAccess.getQuotedStringAnnotationRule() ||
+				   context == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
 					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getRestrictedPropertyAnnotationRule() ||
 				   context == grammarAccess.getTypedKeyStringValueAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
@@ -185,8 +203,17 @@ public abstract class AbstractSSemanticSequencer extends KEXTSemanticSequencer {
 				sequence_Parameter(context, (Parameter) semanticObject); 
 				return; 
 			case KExpressionsPackage.REFERENCE_DECLARATION:
-				sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
-				return; 
+				if(context == grammarAccess.getDeclarationWOSemicolonRule() ||
+				   context == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
+					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getDeclarationRule() ||
+				   context == grammarAccess.getReferenceDeclarationRule()) {
+					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
 				return; 
@@ -200,7 +227,8 @@ public abstract class AbstractSSemanticSequencer extends KEXTSemanticSequencer {
 				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 				return; 
 			case KExpressionsPackage.VARIABLE_DECLARATION:
-				if(context == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
+				if(context == grammarAccess.getDeclarationWOSemicolonRule() ||
+				   context == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
 					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}

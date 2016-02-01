@@ -7882,7 +7882,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// The different annotation sub rules are tested in order. Hence, order matters! 
 	// Annotation:
 	//	CommentAnnotation | KeyBooleanValueAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
+	//	PropertyAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaKExpressions.getAnnotationAccess();
 	}
@@ -7898,8 +7898,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	// // due to ambiguities.
 	//
 	//ValuedAnnotation returns Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | PropertyAnnotation |
+	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
 		return gaKExpressions.getValuedAnnotationAccess();
 	}
@@ -7908,24 +7908,56 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedAnnotationAccess().getRule();
 	}
 
-	//// Restiricted Annotation Rule
+	//// Restricted Type Annotation Rule
+	// // The restricted type annotation rule does not allow typed string annotations. 
 	//
-	//// The restricted annotation rules uses quoted key string annotations. You can use this rule in 
+	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
+	// RestrictedTypeAnnotation
+	//returns Annotation:
+	//	CommentAnnotation | KeyStringValueAnnotation | PropertyAnnotation | KeyBooleanValueAnnotation | KeyIntValueAnnotation
+	//	| KeyFloatValueAnnotation | TagAnnotation;
+	public AnnotationsGrammarAccess.RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
+		return gaKExpressions.getRestrictedTypeAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedTypeAnnotationRule() {
+		return getRestrictedTypeAnnotationAccess().getRule();
+	}
+
+	//// Restricted Property Annotation Rule
+	// // The restricted type annotation rule does not allow property annotations. 
+	//
+	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
+	// RestrictedPropertyAnnotation
+	//returns Annotation:
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+	//	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
+	public AnnotationsGrammarAccess.RestrictedPropertyAnnotationElements getRestrictedPropertyAnnotationAccess() {
+		return gaKExpressions.getRestrictedPropertyAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedPropertyAnnotationRule() {
+		return getRestrictedPropertyAnnotationAccess().getRule();
+	}
+
+	//// Quoted String Annotation Rule
+	//
+	//// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
 	//
 	//// derived grammars if you don't want to permit unquoted strings. 
 	//
 	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
 	//
 	//// rule and to avoid grammar ambiguities.)  
-	// RestrictedAnnotation returns Annotation:
-	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
-	//	| KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
-	public AnnotationsGrammarAccess.RestrictedAnnotationElements getRestrictedAnnotationAccess() {
-		return gaKExpressions.getRestrictedAnnotationAccess();
+	// QuotedStringAnnotation returns Annotation:
+	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | QuotedPropertyAnnotation |
+	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
+	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
+		return gaKExpressions.getQuotedStringAnnotationAccess();
 	}
 	
-	public ParserRule getRestrictedAnnotationRule() {
-		return getRestrictedAnnotationAccess().getRule();
+	public ParserRule getQuotedStringAnnotationRule() {
+		return getQuotedStringAnnotationAccess().getRule();
 	}
 
 	//// CommentAnnotation
@@ -7970,13 +8002,25 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	// // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//
 	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*;
+	//	"@" name=ExtendedID "(" type=ExtendedID ")" values+=EStringBoolean ("," values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaKExpressions.getTypedKeyStringValueAnnotationAccess();
 	}
 	
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//// PropertyValueAnnotation
+	// // e.g.: @diagram name = true   
+	// PropertyAnnotation:
+	//	"@" name=ExtendedID property=EString ":=" value=EString;
+	public AnnotationsGrammarAccess.PropertyAnnotationElements getPropertyAnnotationAccess() {
+		return gaKExpressions.getPropertyAnnotationAccess();
+	}
+	
+	public ParserRule getPropertyAnnotationRule() {
+		return getPropertyAnnotationAccess().getRule();
 	}
 
 	//// QuotedKeyStringValueAnnotation
@@ -8001,13 +8045,29 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// if they want to disallow quote-less strings in a key string annotation. 
 	// QuotedTypedKeyStringValueAnnotation
 	//returns TypedStringAnnotation:
-	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*;
+	//	"@" name=ExtendedID "(" type=ExtendedID ")" values+=STRING ("," values+=STRING)*;
 	public AnnotationsGrammarAccess.QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
 		return gaKExpressions.getQuotedTypedKeyStringValueAnnotationAccess();
 	}
 	
 	public ParserRule getQuotedTypedKeyStringValueAnnotationRule() {
 		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//// QuotedPropertyValueAnnotation
+	//
+	//// The quoted typed key string value annotation is a replacement derived grammars may use
+	//
+	//// if they want to disallow quote-less strings in a key string annotation.   
+	// QuotedPropertyAnnotation returns
+	//PropertyAnnotation:
+	//	"@" name=ExtendedID property=STRING ":=" value=STRING;
+	public AnnotationsGrammarAccess.QuotedPropertyAnnotationElements getQuotedPropertyAnnotationAccess() {
+		return gaKExpressions.getQuotedPropertyAnnotationAccess();
+	}
+	
+	public ParserRule getQuotedPropertyAnnotationRule() {
+		return getQuotedPropertyAnnotationAccess().getRule();
 	}
 
 	//// KeyBooleanValueAnnotation    

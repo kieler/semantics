@@ -22,10 +22,10 @@ package de.cau.cs.kieler.esterel.kexpressions;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.OperatorExpression#getOperator <em>Operator</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getOperatorExpression()
  * @model
@@ -33,32 +33,32 @@ package de.cau.cs.kieler.esterel.kexpressions;
  */
 public interface OperatorExpression extends ComplexExpression {
     /**
-     * Returns the value of the '<em><b>Operator</b></em>' attribute.
-     * The literals are from the enumeration {@link de.cau.cs.kieler.esterel.kexpressions.OperatorType}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Operator</b></em>' attribute.
+	 * The literals are from the enumeration {@link de.cau.cs.kieler.esterel.kexpressions.OperatorType}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Operator</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Operator</em>' attribute.
-     * @see de.cau.cs.kieler.esterel.kexpressions.OperatorType
-     * @see #setOperator(OperatorType)
-     * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getOperatorExpression_Operator()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Operator</em>' attribute.
+	 * @see de.cau.cs.kieler.esterel.kexpressions.OperatorType
+	 * @see #setOperator(OperatorType)
+	 * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getOperatorExpression_Operator()
+	 * @model
+	 * @generated
+	 */
     OperatorType getOperator();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.esterel.kexpressions.OperatorExpression#getOperator <em>Operator</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.esterel.kexpressions.OperatorExpression#getOperator <em>Operator</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Operator</em>' attribute.
-     * @see de.cau.cs.kieler.esterel.kexpressions.OperatorType
-     * @see #getOperator()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Operator</em>' attribute.
+	 * @see de.cau.cs.kieler.esterel.kexpressions.OperatorType
+	 * @see #getOperator()
+	 * @generated
+	 */
     void setOperator(OperatorType value);
 
 } // OperatorExpression

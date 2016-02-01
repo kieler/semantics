@@ -11,6 +11,7 @@ import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
 import de.cau.cs.kieler.core.annotations.CommentAnnotation;
 import de.cau.cs.kieler.core.annotations.FloatAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
+import de.cau.cs.kieler.core.annotations.PropertyAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.annotations.text.serializer.AnnotationsSemanticSequencer;
@@ -67,26 +68,43 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 			case AnnotationsPackage.INT_ANNOTATION:
 				sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
 				return; 
+			case AnnotationsPackage.PROPERTY_ANNOTATION:
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getPropertyAnnotationRule() ||
+				   context == grammarAccess.getRestrictedTypeAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
+					sequence_PropertyAnnotation(context, (PropertyAnnotation) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getQuotedPropertyAnnotationRule() ||
+				   context == grammarAccess.getQuotedStringAnnotationRule()) {
+					sequence_QuotedPropertyAnnotation(context, (PropertyAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
 				   context == grammarAccess.getKeyStringValueAnnotationRule() ||
+				   context == grammarAccess.getRestrictedPropertyAnnotationRule() ||
+				   context == grammarAccess.getRestrictedTypeAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getQuotedKeyStringValueAnnotationRule() ||
-				   context == grammarAccess.getRestrictedAnnotationRule()) {
+				   context == grammarAccess.getQuotedStringAnnotationRule()) {
 					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else break;
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
-				if(context == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule() ||
-				   context == grammarAccess.getRestrictedAnnotationRule()) {
+				if(context == grammarAccess.getQuotedStringAnnotationRule() ||
+				   context == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
 					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getRestrictedPropertyAnnotationRule() ||
 				   context == grammarAccess.getTypedKeyStringValueAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
