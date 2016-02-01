@@ -31,156 +31,156 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.annotations.impl.ContainmentAnnotationImpl#getObject <em>Object</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public class ContainmentAnnotationImpl extends AnnotationImpl implements ContainmentAnnotation {
     /**
-     * The cached value of the '{@link #getObject() <em>Object</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getObject() <em>Object</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getObject()
-     * @generated
-     * @ordered
-     */
+	 * @see #getObject()
+	 * @generated
+	 * @ordered
+	 */
     protected EObject object;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ContainmentAnnotationImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return AnnotationsPackage.Literals.CONTAINMENT_ANNOTATION;
-    }
+		return AnnotationsPackage.Literals.CONTAINMENT_ANNOTATION;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EObject getObject() {
-        return object;
-    }
+		return object;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public NotificationChain basicSetObject(EObject newObject, NotificationChain msgs) {
-        EObject oldObject = object;
-        object = newObject;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT, oldObject, newObject);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+		EObject oldObject = object;
+		object = newObject;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT, oldObject, newObject);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setObject(EObject newObject) {
-        if (newObject != object) {
-            NotificationChain msgs = null;
-            if (object != null)
-                msgs = ((InternalEObject)object).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT, null, msgs);
-            if (newObject != null)
-                msgs = ((InternalEObject)newObject).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT, null, msgs);
-            msgs = basicSetObject(newObject, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT, newObject, newObject));
-    }
+		if (newObject != object) {
+			NotificationChain msgs = null;
+			if (object != null)
+				msgs = ((InternalEObject)object).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT, null, msgs);
+			if (newObject != null)
+				msgs = ((InternalEObject)newObject).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT, null, msgs);
+			msgs = basicSetObject(newObject, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT, newObject, newObject));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT:
-                return basicSetObject(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT:
+				return basicSetObject(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT:
-                return getObject();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT:
+				return getObject();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT:
-                setObject((EObject)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT:
+				setObject((EObject)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT:
-                setObject((EObject)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT:
+				setObject((EObject)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT:
-                return object != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT:
+				return object != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //ContainmentAnnotationImpl

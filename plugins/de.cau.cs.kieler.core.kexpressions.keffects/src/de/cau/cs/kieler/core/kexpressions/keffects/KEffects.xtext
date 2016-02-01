@@ -52,7 +52,7 @@ Effect returns keffects::Effect:
 // Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
 // annotations defined in the annotations grammar.		
 Emission returns keffects::Emission:
-    (annotations+=RestrictedAnnotation)*    
+    (annotations+=QuotedStringAnnotation)*    
 	valuedObject=[kexpressions::ValuedObject] ( "(" newValue = Expression ")" )?;
 
 // Assignment Rule

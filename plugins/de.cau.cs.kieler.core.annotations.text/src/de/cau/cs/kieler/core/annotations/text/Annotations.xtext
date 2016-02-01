@@ -33,10 +33,10 @@ Annotation returns Annotation:
     KeyBooleanValueAnnotation |
     KeyStringValueAnnotation |
     TypedKeyStringValueAnnotation |
+    PropertyAnnotation |
     KeyIntValueAnnotation |
     KeyFloatValueAnnotation |
-    TagAnnotation 
-;
+    TagAnnotation;
 
 
 // Valued Annotation Rule
@@ -47,26 +47,52 @@ ValuedAnnotation returns Annotation:
     CommentAnnotation |
     KeyStringValueAnnotation |
     TypedKeyStringValueAnnotation |
+    PropertyAnnotation |    
     KeyBooleanValueAnnotation |
     KeyIntValueAnnotation |
-    KeyFloatValueAnnotation
-;
+    KeyFloatValueAnnotation;
 
 
-// Restiricted Annotation Rule
-// The restricted annotation rules uses quoted key string annotations. You can use this rule in 
-// derived grammars if you don't want to permit unquoted strings. 
-// (If you are looking for an example, the keffects grammar uses this rule for their emission
-// rule and to avoid grammar ambiguities.)  
-RestrictedAnnotation returns Annotation:
+// Restricted Type Annotation Rule
+// The restricted type annotation rule does not allow typed string annotations. 
+// You can use this rule in derived grammars if you don't want to permit typed strings. 
+RestrictedTypeAnnotation returns Annotation:
     CommentAnnotation |
-    QuotedKeyStringValueAnnotation |
-    QuotedTypedKeyStringValueAnnotation |
+    KeyStringValueAnnotation |
+    PropertyAnnotation |    
     KeyBooleanValueAnnotation |
     KeyIntValueAnnotation |
     KeyFloatValueAnnotation |
-    TagAnnotation
-;
+    TagAnnotation;
+
+
+// Restricted Property Annotation Rule
+// The restricted type annotation rule does not allow property annotations. 
+// You can use this rule in derived grammars if you don't want to permit typed strings. 
+RestrictedPropertyAnnotation returns Annotation:
+    CommentAnnotation |
+    KeyStringValueAnnotation |
+    TypedKeyStringValueAnnotation |    
+    KeyBooleanValueAnnotation |
+    KeyIntValueAnnotation |
+    KeyFloatValueAnnotation |
+    TagAnnotation;
+
+
+// Quoted String Annotation Rule
+// The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
+// derived grammars if you don't want to permit unquoted strings. 
+// (If you are looking for an example, the keffects grammar uses this rule for their emission
+// rule and to avoid grammar ambiguities.)  
+QuotedStringAnnotation returns Annotation:
+    CommentAnnotation |
+    QuotedKeyStringValueAnnotation |
+    QuotedTypedKeyStringValueAnnotation |
+    QuotedPropertyAnnotation |    
+    KeyBooleanValueAnnotation |
+    KeyIntValueAnnotation |
+    KeyFloatValueAnnotation |
+    TagAnnotation;
 
 
 // CommentAnnotation
@@ -90,7 +116,13 @@ KeyStringValueAnnotation returns StringAnnotation:
 // TypedKeyStringValueAnnotation
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringBoolean (',' values += EStringBoolean)*;
+    '@' name=ExtendedID '(' type=ExtendedID ')' values += EStringBoolean (',' values += EStringBoolean)*;
+    
+    
+// PropertyValueAnnotation
+// e.g.: @diagram name = true   
+PropertyAnnotation returns PropertyAnnotation:
+    '@' name=ExtendedID property = EString ':=' value = EString;    
 
 
 // QuotedKeyStringValueAnnotation
@@ -104,7 +136,15 @@ QuotedKeyStringValueAnnotation returns StringAnnotation:
 // The quoted typed key string value annotation is a replacement derived grammars may use
 // if they want to disallow quote-less strings in a key string annotation. 
 QuotedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
-    '@' name=ExtendedID '[' type=ExtendedID ']' values += STRING (',' values += STRING)*;
+    '@' name=ExtendedID '(' type=ExtendedID ')' values += STRING (',' values += STRING)*;
+
+
+// QuotedPropertyValueAnnotation
+// The quoted typed key string value annotation is a replacement derived grammars may use
+// if they want to disallow quote-less strings in a key string annotation.   
+QuotedPropertyAnnotation returns PropertyAnnotation:
+    '@' name=ExtendedID property = STRING ':=' value = STRING;    
+    
 
 // KeyBooleanValueAnnotation    
 // e.g.: @visible true;

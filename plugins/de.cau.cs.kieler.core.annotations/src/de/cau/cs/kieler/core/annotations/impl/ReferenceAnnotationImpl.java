@@ -30,138 +30,138 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.annotations.impl.ReferenceAnnotationImpl#getObject <em>Object</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public class ReferenceAnnotationImpl extends AnnotationImpl implements ReferenceAnnotation {
     /**
-     * The cached value of the '{@link #getObject() <em>Object</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getObject() <em>Object</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getObject()
-     * @generated
-     * @ordered
-     */
+	 * @see #getObject()
+	 * @generated
+	 * @ordered
+	 */
     protected EObject object;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ReferenceAnnotationImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return AnnotationsPackage.Literals.REFERENCE_ANNOTATION;
-    }
+		return AnnotationsPackage.Literals.REFERENCE_ANNOTATION;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EObject getObject() {
-        if (object != null && object.eIsProxy()) {
-            InternalEObject oldObject = (InternalEObject)object;
-            object = eResolveProxy(oldObject);
-            if (object != oldObject) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, AnnotationsPackage.REFERENCE_ANNOTATION__OBJECT, oldObject, object));
-            }
-        }
-        return object;
-    }
+		if (object != null && object.eIsProxy()) {
+			InternalEObject oldObject = (InternalEObject)object;
+			object = eResolveProxy(oldObject);
+			if (object != oldObject) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, AnnotationsPackage.REFERENCE_ANNOTATION__OBJECT, oldObject, object));
+			}
+		}
+		return object;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EObject basicGetObject() {
-        return object;
-    }
+		return object;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setObject(EObject newObject) {
-        EObject oldObject = object;
-        object = newObject;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, AnnotationsPackage.REFERENCE_ANNOTATION__OBJECT, oldObject, object));
-    }
+		EObject oldObject = object;
+		object = newObject;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, AnnotationsPackage.REFERENCE_ANNOTATION__OBJECT, oldObject, object));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case AnnotationsPackage.REFERENCE_ANNOTATION__OBJECT:
-                if (resolve) return getObject();
-                return basicGetObject();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case AnnotationsPackage.REFERENCE_ANNOTATION__OBJECT:
+				if (resolve) return getObject();
+				return basicGetObject();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case AnnotationsPackage.REFERENCE_ANNOTATION__OBJECT:
-                setObject((EObject)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case AnnotationsPackage.REFERENCE_ANNOTATION__OBJECT:
+				setObject((EObject)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case AnnotationsPackage.REFERENCE_ANNOTATION__OBJECT:
-                setObject((EObject)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case AnnotationsPackage.REFERENCE_ANNOTATION__OBJECT:
+				setObject((EObject)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case AnnotationsPackage.REFERENCE_ANNOTATION__OBJECT:
-                return object != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case AnnotationsPackage.REFERENCE_ANNOTATION__OBJECT:
+				return object != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //ReferenceAnnotationImpl

@@ -31,175 +31,186 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsFactory {
     /**
-     * Creates the default factory implementation.
-     * <!-- begin-user-doc -->
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static AnnotationsFactory init() {
-        try {
-            AnnotationsFactory theAnnotationsFactory = (AnnotationsFactory)EPackage.Registry.INSTANCE.getEFactory(AnnotationsPackage.eNS_URI);
-            if (theAnnotationsFactory != null) {
-                return theAnnotationsFactory;
-            }
-        }
-        catch (Exception exception) {
-            EcorePlugin.INSTANCE.log(exception);
-        }
-        return new AnnotationsFactoryImpl();
-    }
+		try {
+			AnnotationsFactory theAnnotationsFactory = (AnnotationsFactory)EPackage.Registry.INSTANCE.getEFactory(AnnotationsPackage.eNS_URI);
+			if (theAnnotationsFactory != null) {
+				return theAnnotationsFactory;
+			}
+		}
+		catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new AnnotationsFactoryImpl();
+	}
 
     /**
-     * Creates an instance of the factory.
-     * <!-- begin-user-doc -->
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public AnnotationsFactoryImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public EObject create(EClass eClass) {
-        switch (eClass.getClassifierID()) {
-            case AnnotationsPackage.ANNOTATION: return createAnnotation();
-            case AnnotationsPackage.STRING_ANNOTATION: return createStringAnnotation();
-            case AnnotationsPackage.REFERENCE_ANNOTATION: return createReferenceAnnotation();
-            case AnnotationsPackage.BOOLEAN_ANNOTATION: return createBooleanAnnotation();
-            case AnnotationsPackage.INT_ANNOTATION: return createIntAnnotation();
-            case AnnotationsPackage.FLOAT_ANNOTATION: return createFloatAnnotation();
-            case AnnotationsPackage.CONTAINMENT_ANNOTATION: return createContainmentAnnotation();
-            case AnnotationsPackage.IMPORT_ANNOTATION: return createImportAnnotation();
-            case AnnotationsPackage.TYPED_STRING_ANNOTATION: return createTypedStringAnnotation();
-            case AnnotationsPackage.COMMENT_ANNOTATION: return createCommentAnnotation();
-            default:
-                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-        }
-    }
+		switch (eClass.getClassifierID()) {
+			case AnnotationsPackage.ANNOTATION: return createAnnotation();
+			case AnnotationsPackage.STRING_ANNOTATION: return createStringAnnotation();
+			case AnnotationsPackage.REFERENCE_ANNOTATION: return createReferenceAnnotation();
+			case AnnotationsPackage.BOOLEAN_ANNOTATION: return createBooleanAnnotation();
+			case AnnotationsPackage.INT_ANNOTATION: return createIntAnnotation();
+			case AnnotationsPackage.FLOAT_ANNOTATION: return createFloatAnnotation();
+			case AnnotationsPackage.CONTAINMENT_ANNOTATION: return createContainmentAnnotation();
+			case AnnotationsPackage.IMPORT_ANNOTATION: return createImportAnnotation();
+			case AnnotationsPackage.TYPED_STRING_ANNOTATION: return createTypedStringAnnotation();
+			case AnnotationsPackage.COMMENT_ANNOTATION: return createCommentAnnotation();
+			case AnnotationsPackage.PROPERTY_ANNOTATION: return createPropertyAnnotation();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Annotation createAnnotation() {
-        AnnotationImpl annotation = new AnnotationImpl();
-        return annotation;
-    }
+		AnnotationImpl annotation = new AnnotationImpl();
+		return annotation;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public StringAnnotation createStringAnnotation() {
-        StringAnnotationImpl stringAnnotation = new StringAnnotationImpl();
-        return stringAnnotation;
-    }
+		StringAnnotationImpl stringAnnotation = new StringAnnotationImpl();
+		return stringAnnotation;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ReferenceAnnotation createReferenceAnnotation() {
-        ReferenceAnnotationImpl referenceAnnotation = new ReferenceAnnotationImpl();
-        return referenceAnnotation;
-    }
+		ReferenceAnnotationImpl referenceAnnotation = new ReferenceAnnotationImpl();
+		return referenceAnnotation;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public BooleanAnnotation createBooleanAnnotation() {
-        BooleanAnnotationImpl booleanAnnotation = new BooleanAnnotationImpl();
-        return booleanAnnotation;
-    }
+		BooleanAnnotationImpl booleanAnnotation = new BooleanAnnotationImpl();
+		return booleanAnnotation;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public IntAnnotation createIntAnnotation() {
-        IntAnnotationImpl intAnnotation = new IntAnnotationImpl();
-        return intAnnotation;
-    }
+		IntAnnotationImpl intAnnotation = new IntAnnotationImpl();
+		return intAnnotation;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public FloatAnnotation createFloatAnnotation() {
-        FloatAnnotationImpl floatAnnotation = new FloatAnnotationImpl();
-        return floatAnnotation;
-    }
+		FloatAnnotationImpl floatAnnotation = new FloatAnnotationImpl();
+		return floatAnnotation;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ContainmentAnnotation createContainmentAnnotation() {
-        ContainmentAnnotationImpl containmentAnnotation = new ContainmentAnnotationImpl();
-        return containmentAnnotation;
-    }
+		ContainmentAnnotationImpl containmentAnnotation = new ContainmentAnnotationImpl();
+		return containmentAnnotation;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ImportAnnotation createImportAnnotation() {
-        ImportAnnotationImpl importAnnotation = new ImportAnnotationImpl();
-        return importAnnotation;
-    }
+		ImportAnnotationImpl importAnnotation = new ImportAnnotationImpl();
+		return importAnnotation;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public TypedStringAnnotation createTypedStringAnnotation() {
-        TypedStringAnnotationImpl typedStringAnnotation = new TypedStringAnnotationImpl();
-        return typedStringAnnotation;
-    }
+		TypedStringAnnotationImpl typedStringAnnotation = new TypedStringAnnotationImpl();
+		return typedStringAnnotation;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public CommentAnnotation createCommentAnnotation() {
-        CommentAnnotationImpl commentAnnotation = new CommentAnnotationImpl();
-        return commentAnnotation;
-    }
+		CommentAnnotationImpl commentAnnotation = new CommentAnnotationImpl();
+		return commentAnnotation;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PropertyAnnotation createPropertyAnnotation() {
+		PropertyAnnotationImpl propertyAnnotation = new PropertyAnnotationImpl();
+		return propertyAnnotation;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public AnnotationsPackage getAnnotationsPackage() {
-        return (AnnotationsPackage)getEPackage();
-    }
+		return (AnnotationsPackage)getEPackage();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @deprecated
-     * @generated
-     */
+	 * @deprecated
+	 * @generated
+	 */
     @Deprecated
     public static AnnotationsPackage getPackage() {
-        return AnnotationsPackage.eINSTANCE;
-    }
+		return AnnotationsPackage.eINSTANCE;
+	}
 
 } //AnnotationsFactoryImpl
