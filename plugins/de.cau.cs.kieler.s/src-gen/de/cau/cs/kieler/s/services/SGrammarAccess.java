@@ -1371,8 +1371,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued objects that follow.
 	//// Examples: const float pi = 3.14, input signal I, output bool z  
 	//Declaration returns kexpressions::Declaration:
-	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
-	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
+	//	VariableDeclaration | ReferenceDeclaration;
 	public KEXTGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKEXT.getDeclarationAccess();
 	}
@@ -1381,15 +1380,37 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getDeclarationAccess().getRule();
 	}
 
-	//DeclarationWOSemicolon returns kexpressions::Declaration:
+	//VariableDeclaration returns kexpressions::VariableDeclaration:
 	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
-	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*;
-	public KEXTGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
-		return gaKEXT.getDeclarationWOSemicolonAccess();
+	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
+	public KEXTGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
+		return gaKEXT.getVariableDeclarationAccess();
 	}
 	
-	public ParserRule getDeclarationWOSemicolonRule() {
-		return getDeclarationWOSemicolonAccess().getRule();
+	public ParserRule getVariableDeclarationRule() {
+		return getVariableDeclarationAccess().getRule();
+	}
+
+	//VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
+	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
+	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*;
+	public KEXTGrammarAccess.VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
+		return gaKEXT.getVariableDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getVariableDeclarationWOSemicolonRule() {
+		return getVariableDeclarationWOSemicolonAccess().getRule();
+	}
+
+	//ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
+	//	annotations+=Annotation* "[" reference=[kext::Identifiable] "]" valuedObjects+=ValuedObject (","
+	//	valuedObjects+=ValuedObject)* ";";
+	public KEXTGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
+		return gaKEXT.getReferenceDeclarationAccess();
+	}
+	
+	public ParserRule getReferenceDeclarationRule() {
+		return getReferenceDeclarationAccess().getRule();
 	}
 
 	//// Valued Object Rule

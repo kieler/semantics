@@ -129,6 +129,32 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class DeclarationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Declaration");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cVariableDeclarationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cReferenceDeclarationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//// Declaration Rule
+		//// A declaration follows the general KIELER pattern for variable declaration. More specific:
+		//// this centralized declaration rule should replace any other declaration in drived grammars.
+		//// It may start with arbitrary many declarations followed by keywords affecting the type of the
+		//// valued objects that follow.
+		//// Examples: const float pi = 3.14, input signal I, output bool z  
+		//Declaration returns kexpressions::Declaration:
+		//	VariableDeclaration | ReferenceDeclaration;
+		@Override public ParserRule getRule() { return rule; }
+
+		//VariableDeclaration | ReferenceDeclaration
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//VariableDeclaration
+		public RuleCall getVariableDeclarationParserRuleCall_0() { return cVariableDeclarationParserRuleCall_0; }
+
+		//ReferenceDeclaration
+		public RuleCall getReferenceDeclarationParserRuleCall_1() { return cReferenceDeclarationParserRuleCall_1; }
+	}
+
+	public class VariableDeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableDeclaration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
@@ -156,13 +182,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_7_1_0 = (RuleCall)cValuedObjectsAssignment_7_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
-		//// Declaration Rule
-		//// A declaration follows the general KIELER pattern for variable declaration. More specific:
-		//// this centralized declaration rule should replace any other declaration in drived grammars.
-		//// It may start with arbitrary many declarations followed by keywords affecting the type of the
-		//// valued objects that follow.
-		//// Examples: const float pi = 3.14, input signal I, output bool z  
-		//Declaration returns kexpressions::Declaration:
+		//VariableDeclaration returns kexpressions::VariableDeclaration:
 		//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
 		//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
 		@Override public ParserRule getRule() { return rule; }
@@ -247,8 +267,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
 	}
 
-	public class DeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DeclarationWOSemicolon");
+	public class VariableDeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableDeclarationWOSemicolon");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
@@ -275,7 +295,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuedObjectsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_7_1_0 = (RuleCall)cValuedObjectsAssignment_7_1.eContents().get(0);
 		
-		//DeclarationWOSemicolon returns kexpressions::Declaration:
+		//VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
 		//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
 		//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*;
 		@Override public ParserRule getRule() { return rule; }
@@ -355,6 +375,76 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ValuedObject
 		public RuleCall getValuedObjectsValuedObjectParserRuleCall_7_1_0() { return cValuedObjectsValuedObjectParserRuleCall_7_1_0; }
+	}
+
+	public class ReferenceDeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ReferenceDeclaration");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cReferenceAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cReferenceIdentifiableCrossReference_2_0 = (CrossReference)cReferenceAssignment_2.eContents().get(0);
+		private final RuleCall cReferenceIdentifiableIDTerminalRuleCall_2_0_1 = (RuleCall)cReferenceIdentifiableCrossReference_2_0.eContents().get(1);
+		private final Keyword cRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cValuedObjectsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_4_0 = (RuleCall)cValuedObjectsAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cCommaKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_5_1_0 = (RuleCall)cValuedObjectsAssignment_5_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		
+		//ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
+		//	annotations+=Annotation* "[" reference=[kext::Identifiable] "]" valuedObjects+=ValuedObject (","
+		//	valuedObjects+=ValuedObject)* ";";
+		@Override public ParserRule getRule() { return rule; }
+
+		//annotations+=Annotation* "[" reference=[kext::Identifiable] "]" valuedObjects+=ValuedObject (","
+		//valuedObjects+=ValuedObject)* ";"
+		public Group getGroup() { return cGroup; }
+
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
+
+		//reference=[kext::Identifiable]
+		public Assignment getReferenceAssignment_2() { return cReferenceAssignment_2; }
+
+		//[kext::Identifiable]
+		public CrossReference getReferenceIdentifiableCrossReference_2_0() { return cReferenceIdentifiableCrossReference_2_0; }
+
+		//ID
+		public RuleCall getReferenceIdentifiableIDTerminalRuleCall_2_0_1() { return cReferenceIdentifiableIDTerminalRuleCall_2_0_1; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_3() { return cRightSquareBracketKeyword_3; }
+
+		//valuedObjects+=ValuedObject
+		public Assignment getValuedObjectsAssignment_4() { return cValuedObjectsAssignment_4; }
+
+		//ValuedObject
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_4_0() { return cValuedObjectsValuedObjectParserRuleCall_4_0; }
+
+		//("," valuedObjects+=ValuedObject)*
+		public Group getGroup_5() { return cGroup_5; }
+
+		//","
+		public Keyword getCommaKeyword_5_0() { return cCommaKeyword_5_0; }
+
+		//valuedObjects+=ValuedObject
+		public Assignment getValuedObjectsAssignment_5_1() { return cValuedObjectsAssignment_5_1; }
+
+		//ValuedObject
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_5_1_0() { return cValuedObjectsValuedObjectParserRuleCall_5_1_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
 	}
 
 	public class ValuedObjectElements extends AbstractParserRuleElementFinder {
@@ -438,7 +528,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	private final TestEntityElements pTestEntity;
 	private final AnnotatedExpressionElements pAnnotatedExpression;
 	private final DeclarationElements pDeclaration;
-	private final DeclarationWOSemicolonElements pDeclarationWOSemicolon;
+	private final VariableDeclarationElements pVariableDeclaration;
+	private final VariableDeclarationWOSemicolonElements pVariableDeclarationWOSemicolon;
+	private final ReferenceDeclarationElements pReferenceDeclaration;
 	private final ValuedObjectElements pValuedObject;
 	
 	private final Grammar grammar;
@@ -454,7 +546,9 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		this.pTestEntity = new TestEntityElements();
 		this.pAnnotatedExpression = new AnnotatedExpressionElements();
 		this.pDeclaration = new DeclarationElements();
-		this.pDeclarationWOSemicolon = new DeclarationWOSemicolonElements();
+		this.pVariableDeclaration = new VariableDeclarationElements();
+		this.pVariableDeclarationWOSemicolon = new VariableDeclarationWOSemicolonElements();
+		this.pReferenceDeclaration = new ReferenceDeclarationElements();
 		this.pValuedObject = new ValuedObjectElements();
 	}
 	
@@ -541,8 +635,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued objects that follow.
 	//// Examples: const float pi = 3.14, input signal I, output bool z  
 	//Declaration returns kexpressions::Declaration:
-	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
-	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
+	//	VariableDeclaration | ReferenceDeclaration;
 	public DeclarationElements getDeclarationAccess() {
 		return pDeclaration;
 	}
@@ -551,15 +644,37 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getDeclarationAccess().getRule();
 	}
 
-	//DeclarationWOSemicolon returns kexpressions::Declaration:
+	//VariableDeclaration returns kexpressions::VariableDeclaration:
 	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
-	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*;
-	public DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
-		return pDeclarationWOSemicolon;
+	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
+	public VariableDeclarationElements getVariableDeclarationAccess() {
+		return pVariableDeclaration;
 	}
 	
-	public ParserRule getDeclarationWOSemicolonRule() {
-		return getDeclarationWOSemicolonAccess().getRule();
+	public ParserRule getVariableDeclarationRule() {
+		return getVariableDeclarationAccess().getRule();
+	}
+
+	//VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
+	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
+	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*;
+	public VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
+		return pVariableDeclarationWOSemicolon;
+	}
+	
+	public ParserRule getVariableDeclarationWOSemicolonRule() {
+		return getVariableDeclarationWOSemicolonAccess().getRule();
+	}
+
+	//ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
+	//	annotations+=Annotation* "[" reference=[kext::Identifiable] "]" valuedObjects+=ValuedObject (","
+	//	valuedObjects+=ValuedObject)* ";";
+	public ReferenceDeclarationElements getReferenceDeclarationAccess() {
+		return pReferenceDeclaration;
+	}
+	
+	public ParserRule getReferenceDeclarationRule() {
+		return getReferenceDeclarationAccess().getRule();
 	}
 
 	//// Valued Object Rule

@@ -92,7 +92,7 @@ public class SctFormatter extends ActionsFormatter {
          * DECLARATIONS
          */
 //        c.setNoSpace().before(f.getValuedObjectAccess().getSemicolonKeyword_9());
-        c.setNoSpace().before(f.getDeclarationAccess().getSemicolonKeyword_8());
+        c.setNoSpace().before(f.getVariableDeclarationAccess().getSemicolonKeyword_8());
         
 
         

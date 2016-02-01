@@ -14,17 +14,18 @@ import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
-import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.Parameter;
+import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.core.kexpressions.StringValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
@@ -124,16 +125,6 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 			case KExpressionsPackage.BOOL_VALUE:
 				sequence_BoolValue(context, (BoolValue) semanticObject); 
 				return; 
-			case KExpressionsPackage.DECLARATION:
-				if(context == grammarAccess.getDeclarationWOSemicolonRule()) {
-					sequence_DeclarationWOSemicolon(context, (Declaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getDeclarationRule()) {
-					sequence_Declaration(context, (Declaration) semanticObject); 
-					return; 
-				}
-				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
 				sequence_FloatValue(context, (FloatValue) semanticObject); 
 				return; 
@@ -184,6 +175,9 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 			case KExpressionsPackage.PARAMETER:
 				sequence_Parameter(context, (Parameter) semanticObject); 
 				return; 
+			case KExpressionsPackage.REFERENCE_DECLARATION:
+				sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
+				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
 				return; 
@@ -196,6 +190,17 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 				return; 
+			case KExpressionsPackage.VARIABLE_DECLARATION:
+				if(context == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
+					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getDeclarationRule() ||
+				   context == grammarAccess.getVariableDeclarationRule()) {
+					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == KextPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case KextPackage.ANNOTATED_EXPRESSION:
@@ -222,45 +227,18 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         const?='const'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         static?='static'? 
-	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
-	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject*
-	 *     )
-	 */
-	protected void sequence_DeclarationWOSemicolon(EObject context, Declaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         const?='const'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         static?='static'? 
-	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
-	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject*
-	 *     )
-	 */
-	protected void sequence_Declaration(EObject context, Declaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
 	 *     (declarations+=Declaration* entities+=TestEntity*)
 	 */
 	protected void sequence_Kext(EObject context, Kext semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (annotations+=Annotation* reference=[Identifiable|ID] valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 */
+	protected void sequence_ReferenceDeclaration(EObject context, ReferenceDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -279,6 +257,42 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	 *     (name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         const?='const'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         static?='static'? 
+	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
+	 *     )
+	 */
+	protected void sequence_VariableDeclarationWOSemicolon(EObject context, VariableDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         const?='const'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         static?='static'? 
+	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
+	 *     )
+	 */
+	protected void sequence_VariableDeclaration(EObject context, VariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }
