@@ -1,3 +1,4 @@
+
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
@@ -36,6 +37,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExte
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtensionOLD
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -48,32 +50,45 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
     // HOTFIX DUE TO MODIFICATIONS IN SCCHARTSEXTENSION. THE FOLLOWING CODE SHOULD BE MOVED
     // BACK TO SCCHARTSEXTENSION
-    
-    def getValuedObjects(Scope scope) {
-        <ValuedObject>newLinkedList => [ ll |
-            scope.declarations.forEach[d|d.valuedObjects.forEach[ll += it]]
-        ]
-    }
-    
-    // Creates a new ValuedObject in a scope.
-    def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
-        val valuedObject = createValuedObject(valuedObjectName)
-        scope.valuedObjects.add(valuedObject)
-        valuedObject
-    }
-    
-    //===========  VARIABLES  ===========
-    // Creates a new variable ValuedObject in a Scope.
-    def ValuedObject createVariable(Scope scope, String variableName) {
-        scope.createValuedObject(variableName)
-    }
 
-    //============  SIGNALS  ============
-    // Creates a new variable ValuedObject in a Scope.
-    def ValuedObject createSignal(Scope scope, String variableName) {
-// FIXME
+    //@Inject
+    //extension KExpressionsExtensionOLD
+    
+    @Inject
+    extension SCChartsTransformationExtension
+    
+    @Inject
+    extension KExpressionsCreateExtensions
+    
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    
+    
+//    def getValuedObjects(Scope scope) {
+//        <ValuedObject>newLinkedList => [ ll |
+//            scope.declarations.forEach[d|d.valuedObjects.forEach[ll += it]]
+//        ]
+//    }
+    
+//    // Creates a new ValuedObject in a scope.
+//    def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
+//        val valuedObject = createValuedObject(valuedObjectName)
+//        scope.valuedObjects.add(valuedObject)
+//        valuedObject
+//    }
+//    
+//    //===========  VARIABLES  ===========
+//    // Creates a new variable ValuedObject in a Scope.
+//    def ValuedObject createVariable(Scope scope, String variableName) {
+//        scope.createValuedObject(variableName)
+//    }
+//
+//    //============  SIGNALS  ============
+//    // Creates a new variable ValuedObject in a Scope.
+//    def ValuedObject createSignal(Scope scope, String variableName) {
 //        scope.createValuedObject(variableName).setIsSignal
-    }
+//    }
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -100,20 +115,15 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsExtensionOLD
 
-    @Inject
-    extension KExpressionsComplexCreateExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions    
-    
-    @Inject
-    extension KExpressionsCreateExtensions    
-    
-    @Inject
-    extension KExpressionsValuedObjectExtensions   
+//    @Inject
+//    extension KExpressionsComplexCreateExtensions
+//    
+//    @Inject
+//    extension KExpressionsDeclarationExtensions    
+//    
+//    @Inject
+//    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension
@@ -141,9 +151,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
         weakSuspends.setDefaultTrace
         
         if (!weakSuspends.nullOrEmpty) {
-// FIXME            
-//            val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "wsFlag").setTypeBool.uniqueName
-            val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "wsFlag").uniqueName
+            val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "wsFlag").setTypeBool.uniqueName
             weakSuspendFlag.setInitialValue(FALSE)
 
             for (weakSuspend : weakSuspends.immutableCopy) {
@@ -160,15 +168,11 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
             for (region : state.allContainedControlflowRegions.immutableCopy) {
                 val subStates = region.states.immutableCopy
                 val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
-// FIXME
-//                val stateBookmark = state.createVariable(GENERATED_PREFIX  + region.parentState.id).setTypeInt.uniqueName
-                val stateBookmark = state.createVariable(GENERATED_PREFIX  + region.parentState.id).uniqueName
+                val stateBookmark = state.createVariable(GENERATED_PREFIX  + region.parentState.id).setTypeInt.uniqueName
                 // Set the initial value to the (original) initial state
                 stateBookmark.setInitialValue(createIntValue(0))
                 var counter = 0
-// FIXME
-//                val lastWishDone = state.createVariable(GENERATED_PREFIX + "lastWishDone").setTypeBool.uniqueName
-                val lastWishDone = state.createVariable(GENERATED_PREFIX + "lastWishDone").uniqueName
+                val lastWishDone = state.createVariable(GENERATED_PREFIX + "lastWishDone").setTypeBool.uniqueName
 
                 // In each tick reset the lastWish to FALSE
                 val resetLastWishDoneduringAction = state.createDuringAction
@@ -187,9 +191,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
                 for (subState : subStates) {
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
-// FIXME
-//                    reEnterTransition.setTrigger(stateBookmark.reference.isEqual(counter.createIntValue))
-                    reEnterTransition.setTrigger(stateBookmark.reference)
+                    reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))
                     reEnterTransition.setDeferred(true)
                     
                     val entryAction = subState.createEntryAction
@@ -222,9 +224,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
         weakSuspends.setDefaultTrace
         
         if (!weakSuspends.nullOrEmpty) {
-// FIXME
-//            val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "weakSuspend").setTypeBool.uniqueName
-            val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "weakSuspend").uniqueName
+            val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "weakSuspend").setTypeBool.uniqueName
             weakSuspendFlag.setInitialValue(FALSE)
 
             for (weakSuspend : weakSuspends.immutableCopy) {
@@ -241,16 +241,12 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
             for (region : state.allContainedControlflowRegions.immutableCopy) {
                 val subStates = region.states.immutableCopy
                 val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
-// FIXME
-//                val stateBookmark = state.createVariable(GENERATED_PREFIX  + state.id).setTypeInt.uniqueName
-                val stateBookmark = state.createVariable(GENERATED_PREFIX  + state.id).uniqueName
+                val stateBookmark = state.createVariable(GENERATED_PREFIX  + state.id).setTypeInt.uniqueName
                 var counter = 0 
 
                 for (subState : subStates) {
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
-// FIXME
-//                    reEnterTransition.setTrigger(stateBookmark.reference.isEqual(counter.createIntValue))
-                    reEnterTransition.setTrigger(stateBookmark.reference)
+                    reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))
                     reEnterTransition.setDeferred(true)
                     val entryAction = subState.createEntryAction
                     entryAction.addEffect(stateBookmark.assign(counter.createIntValue))
@@ -264,3 +260,4 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
     }
 
 }
+

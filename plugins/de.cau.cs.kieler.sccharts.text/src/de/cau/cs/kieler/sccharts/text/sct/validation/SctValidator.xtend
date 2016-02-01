@@ -85,9 +85,10 @@ class SctValidator extends SctJavaValidator {
         if (foundTermination) {
             // Assert inner behaviour
             val regions = state.regions.filter(ControlflowRegion)
-            if(regions.isEmpty) {
+            if(regions.isEmpty && state.referencedScope == null) {
                 error(NO_REGION, state, null, -1);
             }
+
             // Now test for every region
             if (state.localActions.nullOrEmpty) {
                 for (region : regions) {

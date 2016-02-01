@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.scg.kivi.SCGDataComponent"
+            class="de.cau.cs.kieler.scg.kivi.SCGVisualizationDataComponent"
             id="de.cau.cs.kieler.scg.kivi.activitydatacomponent"
             name="SCG Visualization">
       </content>

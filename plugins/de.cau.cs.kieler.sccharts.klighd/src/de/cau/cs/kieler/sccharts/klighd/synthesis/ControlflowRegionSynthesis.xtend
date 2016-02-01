@@ -119,7 +119,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             }
 
         } else {
-            node.addInvisibleContainerRendering;
+            node.addRegionFigure;
         }
 
         return node;

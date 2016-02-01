@@ -21,6 +21,7 @@ import java.util.Iterator;
 import org.eclipse.emf.common.util.AbstractTreeIterator;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Iterators;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
@@ -51,7 +52,7 @@ public final class ScopeIterator {
                     final Iterator<State> states = ((ControlflowRegion) object).getStates().iterator();
                     return states;
                 } else {
-                    return null;
+                    return Iterators.emptyIterator();
                 }
             }
 

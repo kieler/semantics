@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.State
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 
 /**
  * An analyzer for wrapper code annotations in SCT files.
@@ -32,6 +33,8 @@ import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
  * @author aas
  */
 class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer{
+    
+    private static val EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME = "Wrapper"
     
     override getAnnotations(EObject model) {
         if (model instanceof State) {
@@ -41,11 +44,19 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
             for (decl : model.declarations.filter(VariableDeclaration)) {
                 // Only consider annotations of inputs and outputs.
                 if (decl.input || decl.output) {
-                    for (annotation : decl.annotations){    
+                    for (annotation : decl.annotations) {
                         val data = new WrapperCodeAnnotationData()
                         initData(data, decl)
                         initData(data, annotation)
                         annotationDatas += data
+                    }
+                } else {
+                    // Print warning if explicit wrapper code annotation on variable
+                    // that is neither input nor output
+                    for (annotation : decl.annotations) {
+                         if(annotation.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME) {
+                             LaunchConfiguration.writeToConsole('''Warning: Variable '«getVariableName(decl)»' is neither input nor output but has an explicit wrapper code annotation.''');
+                         }
                     }
                 }
             }
@@ -63,7 +74,6 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
             return null
     }
     
-    
     /**
      * Fetches the data for wrapper code generation from a variable declaration of an SCT file.
      */
@@ -71,9 +81,19 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
         data.input = decl.input
         data.output = decl.output
         data.varType = decl.type.literal
+        data.varName = getVariableName(decl)
+    }
+    
+    /**
+     * Fetches the name of the first valued object in a declaration.
+     * @param decl The declaration
+     */
+    private def String getVariableName(Declaration decl) {
         if (decl.valuedObjects != null && !decl.valuedObjects.isEmpty) {
             val obj = decl.valuedObjects.get(0)
-            data.varName = obj.name
+            return obj.name
+        } else {
+            return "";
         }
     }
     
@@ -93,7 +113,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
             StringAnnotation: data.arguments.addAll(annotation.values)
         }
         
-        if(data.name == "Wrapper" && !data.arguments.isEmpty){
+        if(data.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME && !data.arguments.isEmpty){
             // Explicit wrapper annotation
             // -> actual snippet name is the first argument.
             data.name = data.arguments.remove(0)

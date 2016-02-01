@@ -14,17 +14,18 @@ import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
-import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.Parameter;
+import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.core.kexpressions.StringValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
@@ -131,16 +132,6 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 			case KExpressionsPackage.BOOL_VALUE:
 				sequence_BoolValue(context, (BoolValue) semanticObject); 
 				return; 
-			case KExpressionsPackage.DECLARATION:
-				if(context == grammarAccess.getDeclarationWOSemicolonRule()) {
-					sequence_DeclarationWOSemicolon(context, (Declaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getDeclarationRule()) {
-					sequence_Declaration(context, (Declaration) semanticObject); 
-					return; 
-				}
-				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
 				sequence_FloatValue(context, (FloatValue) semanticObject); 
 				return; 
@@ -191,6 +182,9 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 			case KExpressionsPackage.PARAMETER:
 				sequence_Parameter(context, (Parameter) semanticObject); 
 				return; 
+			case KExpressionsPackage.REFERENCE_DECLARATION:
+				sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
+				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
 				return; 
@@ -203,6 +197,17 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 				return; 
+			case KExpressionsPackage.VARIABLE_DECLARATION:
+				if(context == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
+					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getDeclarationRule() ||
+				   context == grammarAccess.getVariableDeclarationRule()) {
+					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == KextPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case KextPackage.ANNOTATED_EXPRESSION:
