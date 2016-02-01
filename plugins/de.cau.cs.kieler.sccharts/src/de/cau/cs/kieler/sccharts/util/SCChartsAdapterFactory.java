@@ -14,9 +14,6 @@
 package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
-
-import de.cau.cs.kieler.core.kexpressions.Call;
-import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.sccharts.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -37,12 +34,11 @@ import org.eclipse.emf.ecore.EObject;
 public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     /**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
-
-    /**
+	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+				/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -170,24 +166,8 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 				return createSCChartsAdapter();
 			}
 			@Override
-			public Adapter caseScopeReference(ScopeReference object) {
-				return createScopeReferenceAdapter();
-			}
-			@Override
-			public Adapter caseScopeCall(ScopeCall object) {
-				return createScopeCallAdapter();
-			}
-			@Override
 			public Adapter caseAnnotatable(Annotatable object) {
 				return createAnnotatableAdapter();
-			}
-			@Override
-			public Adapter caseExpression(Expression object) {
-				return createExpressionAdapter();
-			}
-			@Override
-			public Adapter caseCall(Call object) {
-				return createCallAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -476,34 +456,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.ScopeReference <em>Scope Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.sccharts.ScopeReference
-	 * @generated
-	 */
-	public Adapter createScopeReferenceAdapter() {
-		return null;
-	}
-
-				/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.ScopeCall <em>Scope Call</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.sccharts.ScopeCall
-	 * @generated
-	 */
-	public Adapter createScopeCallAdapter() {
-		return null;
-	}
-
-				/**
 	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.SCCharts <em>SC Charts</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -532,34 +484,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Expression <em>Expression</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.kexpressions.Expression
-	 * @generated
-	 */
-	public Adapter createExpressionAdapter() {
-		return null;
-	}
-
-				/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Call <em>Call</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.kexpressions.Call
-	 * @generated
-	 */
-	public Adapter createCallAdapter() {
-		return null;
-	}
-
-				/**
 	 * Creates a new adapter for the default case.
 	 * <!-- begin-user-doc -->
      * This default implementation returns null.

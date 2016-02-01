@@ -43,6 +43,7 @@ package de.cau.cs.kieler.sccharts;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getType <em>Type</em>}</li>
@@ -51,7 +52,6 @@ package de.cau.cs.kieler.sccharts;
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getSourceState <em>Source State</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition()
  * @model
@@ -60,12 +60,12 @@ package de.cau.cs.kieler.sccharts;
 public interface Transition extends Action {
     /**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+	String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-    /**
+				/**
 	 * Returns the value of the '<em><b>Priority</b></em>' attribute.
 	 * <!-- begin-user-doc -->
      * <p>

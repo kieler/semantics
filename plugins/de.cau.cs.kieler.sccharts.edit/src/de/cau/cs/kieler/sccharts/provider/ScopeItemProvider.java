@@ -18,6 +18,7 @@ import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
@@ -49,7 +50,7 @@ public class ScopeItemProvider extends AnnotatableItemProvider {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
     /**
 	 * This constructs an instance from a factory and a notifier.
@@ -93,7 +94,7 @@ public class ScopeItemProvider extends AnnotatableItemProvider {
 				 getString("_UI_Scope_id_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Scope_id_feature", "_UI_Scope_type"),
 				 SCChartsPackage.Literals.SCOPE__ID,
-				 false,
+				 true,
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
@@ -160,6 +161,7 @@ public class ScopeItemProvider extends AnnotatableItemProvider {
 			childrenFeatures.add(SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS);
 			childrenFeatures.add(SCChartsPackage.Literals.SCOPE__BINDINGS);
 			childrenFeatures.add(SCChartsPackage.Literals.SCOPE__DECLARATIONS);
+			childrenFeatures.add(SCChartsPackage.Literals.SCOPE__EXPRESSION);
 		}
 		return childrenFeatures;
 	}
@@ -211,6 +213,7 @@ public class ScopeItemProvider extends AnnotatableItemProvider {
 			case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
 			case SCChartsPackage.SCOPE__BINDINGS:
 			case SCChartsPackage.SCOPE__DECLARATIONS:
+			case SCChartsPackage.SCOPE__EXPRESSION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -262,6 +265,81 @@ public class ScopeItemProvider extends AnnotatableItemProvider {
 			(createChildParameter
 				(SCChartsPackage.Literals.SCOPE__DECLARATIONS,
 				 KExpressionsFactory.eINSTANCE.createDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__DECLARATIONS,
+				 KExpressionsFactory.eINSTANCE.createVariableDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__DECLARATIONS,
+				 KExpressionsFactory.eINSTANCE.createReferenceDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KEffectsFactory.eINSTANCE.createHostcodeEffect()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KEffectsFactory.eINSTANCE.createFunctionCallEffect()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createIntValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createFloatValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createBoolValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createStringValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createCall()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
 	}
 
     /**

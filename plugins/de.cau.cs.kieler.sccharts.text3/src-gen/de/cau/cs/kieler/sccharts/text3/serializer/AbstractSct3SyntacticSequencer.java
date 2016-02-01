@@ -35,7 +35,6 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 	protected AbstractElementAlias match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q;
 	protected AbstractElementAlias match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
 	protected AbstractElementAlias match_IterateAction_SemicolonKeyword_5_q;
-	protected AbstractElementAlias match_ScopeCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
 	protected AbstractElementAlias match_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q;
 	protected AbstractElementAlias match_State___LeftCurlyBracketKeyword_7_1_0_RightCurlyBracketKeyword_7_1_3__q;
 	protected AbstractElementAlias match_SuspendAction_SemicolonKeyword_5_q;
@@ -57,7 +56,6 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 		match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallEffectAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
 		match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
 		match_IterateAction_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getIterateActionAccess().getSemicolonKeyword_5());
-		match_ScopeCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getScopeCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
 		match_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSingleControlflowRegionAccess().getRegionKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getSingleControlflowRegionAccess().getColonKeyword_1_4()));
 		match_State___LeftCurlyBracketKeyword_7_1_0_RightCurlyBracketKeyword_7_1_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_7_1_0()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_7_1_3()));
 		match_SuspendAction_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getSuspendActionAccess().getSemicolonKeyword_5());
@@ -102,8 +100,6 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 				emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_IterateAction_SemicolonKeyword_5_q.equals(syntax))
 				emit_IterateAction_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_ScopeCall_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
-				emit_ScopeCall_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q.equals(syntax))
 				emit_SingleControlflowRegion___RegionKeyword_1_1_ColonKeyword_1_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_State___LeftCurlyBracketKeyword_7_1_0_RightCurlyBracketKeyword_7_1_3__q.equals(syntax))
@@ -122,7 +118,6 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) '<' functionName=ExtendedID
-	 *     (rule start) (ambiguity) '[' scope=[Scope|ID]
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) text=HOSTCODE
@@ -165,7 +160,6 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) '<' functionName=ExtendedID
-	 *     (rule start) (ambiguity) '[' scope=[Scope|ID]
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
@@ -292,17 +286,6 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 	 *     trigger=BoolExpression (ambiguity) (rule end)
 	 */
 	protected void emit_IterateAction_SemicolonKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     '()'?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     scope=[Scope|ID] (ambiguity) ']' (rule end)
-	 */
-	protected void emit_ScopeCall_LeftParenthesisRightParenthesisKeyword_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

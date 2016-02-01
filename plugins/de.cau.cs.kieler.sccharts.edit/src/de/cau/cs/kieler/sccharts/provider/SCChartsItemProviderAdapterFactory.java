@@ -49,7 +49,7 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
     /**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
@@ -481,29 +481,6 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
 	}
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.ScopeReference} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ScopeReferenceItemProvider scopeReferenceItemProvider;
-
-				/**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.ScopeReference}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createScopeReferenceAdapter() {
-		if (scopeReferenceItemProvider == null) {
-			scopeReferenceItemProvider = new ScopeReferenceItemProvider(this);
-		}
-
-		return scopeReferenceItemProvider;
-	}
-
-				/**
 	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.SCCharts} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -642,7 +619,6 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
 		if (exitActionItemProvider != null) exitActionItemProvider.dispose();
 		if (suspendActionItemProvider != null) suspendActionItemProvider.dispose();
 		if (iterateActionItemProvider != null) iterateActionItemProvider.dispose();
-		if (scopeReferenceItemProvider != null) scopeReferenceItemProvider.dispose();
 		if (scChartsItemProvider != null) scChartsItemProvider.dispose();
 	}
 

@@ -33,12 +33,12 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory {
     /**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-    /**
+				/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -93,8 +93,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
 			case SCChartsPackage.SUSPEND_ACTION: return createSuspendAction();
 			case SCChartsPackage.ITERATE_ACTION: return createIterateAction();
 			case SCChartsPackage.SC_CHARTS: return createSCCharts();
-			case SCChartsPackage.SCOPE_REFERENCE: return createScopeReference();
-			case SCChartsPackage.SCOPE_CALL: return createScopeCall();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -313,26 +311,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
 	}
 
     /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ScopeReference createScopeReference() {
-		ScopeReferenceImpl scopeReference = new ScopeReferenceImpl();
-		return scopeReference;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ScopeCall createScopeCall() {
-		ScopeCallImpl scopeCall = new ScopeCallImpl();
-		return scopeCall;
-	}
-
-				/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

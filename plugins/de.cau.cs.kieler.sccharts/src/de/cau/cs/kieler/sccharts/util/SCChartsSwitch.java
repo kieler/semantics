@@ -14,9 +14,6 @@
 package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
-
-import de.cau.cs.kieler.core.kexpressions.Call;
-import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.sccharts.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -40,12 +37,11 @@ import org.eclipse.emf.ecore.util.Switch;
 public class SCChartsSwitch<T> extends Switch<T> {
     /**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
-
-    /**
+	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+				/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -69,7 +65,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
@@ -244,21 +240,8 @@ public class SCChartsSwitch<T> extends Switch<T> {
 			case SCChartsPackage.SC_CHARTS: {
 				SCCharts scCharts = (SCCharts)theEObject;
 				T result = caseSCCharts(scCharts);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case SCChartsPackage.SCOPE_REFERENCE: {
-				ScopeReference scopeReference = (ScopeReference)theEObject;
-				T result = caseScopeReference(scopeReference);
-				if (result == null) result = caseExpression(scopeReference);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case SCChartsPackage.SCOPE_CALL: {
-				ScopeCall scopeCall = (ScopeCall)theEObject;
-				T result = caseScopeCall(scopeCall);
-				if (result == null) result = caseCall(scopeCall);
-				if (result == null) result = caseExpression(scopeCall);
+				if (result == null) result = caseScope(scCharts);
+				if (result == null) result = caseAnnotatable(scCharts);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -552,36 +535,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
 	}
 
     /**
-	 * Returns the result of interpreting the object as an instance of '<em>Scope Reference</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Scope Reference</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseScopeReference(ScopeReference object) {
-		return null;
-	}
-
-				/**
-	 * Returns the result of interpreting the object as an instance of '<em>Scope Call</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Scope Call</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseScopeCall(ScopeCall object) {
-		return null;
-	}
-
-				/**
 	 * Returns the result of interpreting the object as an instance of '<em>SC Charts</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -612,36 +565,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
 	}
 
     /**
-	 * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseExpression(Expression object) {
-		return null;
-	}
-
-				/**
-	 * Returns the result of interpreting the object as an instance of '<em>Call</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Call</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCall(Call object) {
-		return null;
-	}
-
-				/**
 	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * <!-- begin-user-doc -->
      * This implementation returns null;

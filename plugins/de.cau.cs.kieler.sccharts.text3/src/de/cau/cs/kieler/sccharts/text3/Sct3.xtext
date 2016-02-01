@@ -91,20 +91,7 @@ DataflowRegion returns sccharts::DataflowRegion:
     (declarations+=DeclarationWOSemicolon)*
     (
         (equations += Equation)
-        |
-        (scopeDeclarations += ScopeDeclaration)
-    )*
-;
-
-
-ScopeDeclaration returns sccharts::ScopeDeclaration:
-    {sccharts::ScopeDeclaration}
-    (annotations+=Annotation)*
-    scopeObjects += ScopeObject* 
-;
-
-ScopeObject returns sccharts::ScopeObject:
-    name=ID 'is' scope= [sccharts::Scope|ID]
+    )+
 ;
 
 
@@ -127,15 +114,15 @@ LocalAction returns sccharts::LocalAction:
 
 
 
-ScopeReference returns sccharts::ScopeReference:
-    scope=[sccharts::Scope|ID];
-
-ScopeCall returns sccharts::ScopeCall:
-    '[' scope=[sccharts::Scope|ID]
-    	(('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
-    ']'
-    ('.' valuedObject = [kexpressions::ValuedObject])
-;
+//ScopeReference returns sccharts::ScopeReference:
+//    scope=[sccharts::Scope|ID];
+//
+//ScopeCall returns sccharts::ScopeCall:
+//    '[' scope=[sccharts::Scope|ID]
+//    	(('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
+//    ']'
+//    ('.' valuedObject = [kexpressions::ValuedObject])
+//;
 
 
 Binding returns sccharts::Binding:
@@ -150,7 +137,7 @@ AtomicExpression returns kexpressions::Expression:
     | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
     | FunctionCall
-    | ScopeCall
+//    | ScopeCall
     | TextExpression;
 
 

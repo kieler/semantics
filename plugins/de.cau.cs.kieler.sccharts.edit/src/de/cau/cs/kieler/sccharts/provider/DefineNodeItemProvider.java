@@ -46,7 +46,7 @@ public class DefineNodeItemProvider extends NodeItemProvider {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
     /**
 	 * This constructs an instance from a factory and a notifier.
@@ -195,13 +195,28 @@ public class DefineNodeItemProvider extends NodeItemProvider {
 
 		newChildDescriptors.add
 			(createChildParameter
+				(SCChartsPackage.Literals.DEFINE_NODE__INPUTS,
+				 KExpressionsFactory.eINSTANCE.createVariableDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.DEFINE_NODE__INPUTS,
+				 KExpressionsFactory.eINSTANCE.createReferenceDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(SCChartsPackage.Literals.DEFINE_NODE__OUTPUTS,
 				 KExpressionsFactory.eINSTANCE.createDeclaration()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(SCChartsPackage.Literals.DEFINE_NODE__EXPRESSIONS,
-				 SCChartsFactory.eINSTANCE.createScopeReference()));
+				(SCChartsPackage.Literals.DEFINE_NODE__OUTPUTS,
+				 KExpressionsFactory.eINSTANCE.createVariableDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.DEFINE_NODE__OUTPUTS,
+				 KExpressionsFactory.eINSTANCE.createReferenceDeclaration()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -256,12 +271,17 @@ public class DefineNodeItemProvider extends NodeItemProvider {
 		newChildDescriptors.add
 			(createChildParameter
 				(SCChartsPackage.Literals.DEFINE_NODE__EXPRESSIONS,
-				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+				 KExpressionsFactory.eINSTANCE.createStringValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(SCChartsPackage.Literals.DEFINE_NODE__EXPRESSIONS,
-				 KExpressionsFactory.eINSTANCE.createStringValue()));
+				 KExpressionsFactory.eINSTANCE.createCall()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.DEFINE_NODE__EXPRESSIONS,
+				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
 
 		newChildDescriptors.add
 			(createChildParameter

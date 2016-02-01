@@ -26,6 +26,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -41,7 +42,7 @@ public class DataflowRegionItemProvider extends RegionItemProvider {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
     /**
 	 * This constructs an instance from a factory and a notifier.
@@ -64,11 +65,34 @@ public class DataflowRegionItemProvider extends RegionItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addNodesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
     /**
+	 * This adds a property descriptor for the Nodes feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNodesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DataflowRegion_nodes_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DataflowRegion_nodes_feature", "_UI_DataflowRegion_type"),
+				 SCChartsPackage.Literals.DATAFLOW_REGION__NODES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+				/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -80,7 +104,6 @@ public class DataflowRegionItemProvider extends RegionItemProvider {
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(SCChartsPackage.Literals.DATAFLOW_REGION__NODES);
 			childrenFeatures.add(SCChartsPackage.Literals.DATAFLOW_REGION__EQUATIONS);
 		}
 		return childrenFeatures;
@@ -137,7 +160,6 @@ public class DataflowRegionItemProvider extends RegionItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(DataflowRegion.class)) {
-			case SCChartsPackage.DATAFLOW_REGION__NODES:
 			case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -155,26 +177,6 @@ public class DataflowRegionItemProvider extends RegionItemProvider {
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SCChartsPackage.Literals.DATAFLOW_REGION__NODES,
-				 SCChartsFactory.eINSTANCE.createNode()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SCChartsPackage.Literals.DATAFLOW_REGION__NODES,
-				 SCChartsFactory.eINSTANCE.createReferenceNode()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SCChartsPackage.Literals.DATAFLOW_REGION__NODES,
-				 SCChartsFactory.eINSTANCE.createCallNode()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SCChartsPackage.Literals.DATAFLOW_REGION__NODES,
-				 SCChartsFactory.eINSTANCE.createDefineNode()));
 
 		newChildDescriptors.add
 			(createChildParameter
