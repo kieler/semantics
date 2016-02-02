@@ -707,9 +707,9 @@ ruleReferenceDeclaration returns [EObject current=null]
 	    }
 
 )
-)*	otherlv_1='[' 
+)*	otherlv_1='&' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getReferenceDeclarationAccess().getLeftSquareBracketKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getReferenceDeclarationAccess().getAmpersandKeyword_1());
     }
 (
 (
@@ -727,53 +727,49 @@ ruleReferenceDeclaration returns [EObject current=null]
 	}
 
 )
-)	otherlv_3=']' 
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getReferenceDeclarationAccess().getRightSquareBracketKeyword_3());
-    }
-(
+)(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_4_0()); 
+	        newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_3_0()); 
 	    }
-		lv_valuedObjects_4_0=ruleValuedObject		{
+		lv_valuedObjects_3_0=ruleValuedObject		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getReferenceDeclarationRule());
 	        }
        		add(
        			$current, 
        			"valuedObjects",
-        		lv_valuedObjects_4_0, 
+        		lv_valuedObjects_3_0, 
         		"ValuedObject");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(	otherlv_5=',' 
+)(	otherlv_4=',' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getReferenceDeclarationAccess().getCommaKeyword_5_0());
+    	newLeafNode(otherlv_4, grammarAccess.getReferenceDeclarationAccess().getCommaKeyword_4_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_5_1_0()); 
+	        newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_4_1_0()); 
 	    }
-		lv_valuedObjects_6_0=ruleValuedObject		{
+		lv_valuedObjects_5_0=ruleValuedObject		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getReferenceDeclarationRule());
 	        }
        		add(
        			$current, 
        			"valuedObjects",
-        		lv_valuedObjects_6_0, 
+        		lv_valuedObjects_5_0, 
         		"ValuedObject");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))*	otherlv_7=';' 
+))*	otherlv_6=';' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getReferenceDeclarationAccess().getSemicolonKeyword_6());
+    	newLeafNode(otherlv_6, grammarAccess.getReferenceDeclarationAccess().getSemicolonKeyword_5());
     }
 )
 ;
@@ -814,9 +810,9 @@ ruleReferenceDeclarationWOSemicolon returns [EObject current=null]
 	    }
 
 )
-)*	otherlv_1='[' 
+)*	otherlv_1='&' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getLeftSquareBracketKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAmpersandKeyword_1());
     }
 (
 (
@@ -834,45 +830,41 @@ ruleReferenceDeclarationWOSemicolon returns [EObject current=null]
 	}
 
 )
-)	otherlv_3=']' 
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getRightSquareBracketKeyword_3());
-    }
-(
+)(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_4_0()); 
+	        newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_3_0()); 
 	    }
-		lv_valuedObjects_4_0=ruleValuedObject		{
+		lv_valuedObjects_3_0=ruleValuedObject		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
 	        }
        		add(
        			$current, 
        			"valuedObjects",
-        		lv_valuedObjects_4_0, 
+        		lv_valuedObjects_3_0, 
         		"ValuedObject");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(	otherlv_5=',' 
+)(	otherlv_4=',' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getCommaKeyword_5_0());
+    	newLeafNode(otherlv_4, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getCommaKeyword_4_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_5_1_0()); 
+	        newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_4_1_0()); 
 	    }
-		lv_valuedObjects_6_0=ruleValuedObject		{
+		lv_valuedObjects_5_0=ruleValuedObject		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getReferenceDeclarationWOSemicolonRule());
 	        }
        		add(
        			$current, 
        			"valuedObjects",
-        		lv_valuedObjects_6_0, 
+        		lv_valuedObjects_5_0, 
         		"ValuedObject");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -3824,9 +3816,9 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
 	    }
 
 )
-)	otherlv_2='(' 
+)	otherlv_2='[' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
     }
 (
 (
@@ -3846,9 +3838,9 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
 	    }
 
 )
-)	otherlv_4=')' 
+)	otherlv_4=']' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
     }
 (
 (
@@ -4099,9 +4091,9 @@ ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null]
 	    }
 
 )
-)	otherlv_2='(' 
+)	otherlv_2='[' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
     }
 (
 (
@@ -4121,9 +4113,9 @@ ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null]
 	    }
 
 )
-)	otherlv_4=')' 
+)	otherlv_4=']' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
     }
 (
 (

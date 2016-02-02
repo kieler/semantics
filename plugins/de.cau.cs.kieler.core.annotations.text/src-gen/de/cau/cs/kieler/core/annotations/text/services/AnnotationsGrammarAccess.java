@@ -374,10 +374,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cTypeExtendedIDParserRuleCall_3_0 = (RuleCall)cTypeAssignment_3.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Assignment cValuesAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cValuesEStringBooleanParserRuleCall_5_0 = (RuleCall)cValuesAssignment_5.eContents().get(0);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
@@ -389,10 +389,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		// // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 		//
 		//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-		//	"@" name=ExtendedID "(" type=ExtendedID ")" values+=EStringBoolean ("," values+=EStringBoolean)*;
+		//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID "(" type=ExtendedID ")" values+=EStringBoolean ("," values+=EStringBoolean)*
+		//"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -404,8 +404,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 
-		//"("
-		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
+		//"["
+		public Keyword getLeftSquareBracketKeyword_2() { return cLeftSquareBracketKeyword_2; }
 
 		//type=ExtendedID
 		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
@@ -413,8 +413,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getTypeExtendedIDParserRuleCall_3_0() { return cTypeExtendedIDParserRuleCall_3_0; }
 
-		//")"
-		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+		//"]"
+		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 
 		//values+=EStringBoolean
 		public Assignment getValuesAssignment_5() { return cValuesAssignment_5; }
@@ -540,10 +540,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cTypeExtendedIDParserRuleCall_3_0 = (RuleCall)cTypeAssignment_3.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Assignment cValuesAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cValuesSTRINGTerminalRuleCall_5_0 = (RuleCall)cValuesAssignment_5.eContents().get(0);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
@@ -558,10 +558,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//// if they want to disallow quote-less strings in a key string annotation. 
 		// QuotedTypedKeyStringValueAnnotation
 		//returns TypedStringAnnotation:
-		//	"@" name=ExtendedID "(" type=ExtendedID ")" values+=STRING ("," values+=STRING)*;
+		//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID "(" type=ExtendedID ")" values+=STRING ("," values+=STRING)*
+		//"@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -573,8 +573,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 
-		//"("
-		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
+		//"["
+		public Keyword getLeftSquareBracketKeyword_2() { return cLeftSquareBracketKeyword_2; }
 
 		//type=ExtendedID
 		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
@@ -582,8 +582,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getTypeExtendedIDParserRuleCall_3_0() { return cTypeExtendedIDParserRuleCall_3_0; }
 
-		//")"
-		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+		//"]"
+		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 
 		//values+=STRING
 		public Assignment getValuesAssignment_5() { return cValuesAssignment_5; }
@@ -1124,7 +1124,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	// // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//
 	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-	//	"@" name=ExtendedID "(" type=ExtendedID ")" values+=EStringBoolean ("," values+=EStringBoolean)*;
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*;
 	public TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return pTypedKeyStringValueAnnotation;
 	}
@@ -1167,7 +1167,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if they want to disallow quote-less strings in a key string annotation. 
 	// QuotedTypedKeyStringValueAnnotation
 	//returns TypedStringAnnotation:
-	//	"@" name=ExtendedID "(" type=ExtendedID ")" values+=STRING ("," values+=STRING)*;
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*;
 	public QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
 		return pQuotedTypedKeyStringValueAnnotation;
 	}

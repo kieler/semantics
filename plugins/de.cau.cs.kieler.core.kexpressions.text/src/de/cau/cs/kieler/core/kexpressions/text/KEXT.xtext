@@ -89,12 +89,12 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     (annotations+=Annotation)*
-    '[' reference = [kext::Identifiable|ID] ']'
+    '&' reference = [kext::Identifiable|ID]
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
     
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     (annotations+=Annotation)*
-    '[' reference = [kext::Identifiable|ID] ']'
+    '&' reference = [kext::Identifiable|ID] 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ;       
 
 // Valued Object Rule

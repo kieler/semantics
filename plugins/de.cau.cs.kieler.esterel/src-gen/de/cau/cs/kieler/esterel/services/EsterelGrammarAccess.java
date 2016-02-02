@@ -8002,7 +8002,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	// // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//
 	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-	//	"@" name=ExtendedID "(" type=ExtendedID ")" values+=EStringBoolean ("," values+=EStringBoolean)*;
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaKExpressions.getTypedKeyStringValueAnnotationAccess();
 	}
@@ -8045,7 +8045,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// if they want to disallow quote-less strings in a key string annotation. 
 	// QuotedTypedKeyStringValueAnnotation
 	//returns TypedStringAnnotation:
-	//	"@" name=ExtendedID "(" type=ExtendedID ")" values+=STRING ("," values+=STRING)*;
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*;
 	public AnnotationsGrammarAccess.QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
 		return gaKExpressions.getQuotedTypedKeyStringValueAnnotationAccess();
 	}

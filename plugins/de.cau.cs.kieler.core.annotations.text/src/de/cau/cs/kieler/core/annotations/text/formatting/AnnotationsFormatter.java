@@ -86,11 +86,11 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
         // have no spaces in a typed string annotation
         // like "@position[de.cau.cs.kieler.core.math.KVector]"
         c.setNoSpace().before(
-                f.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_2());
+                f.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
         c.setNoSpace().after(
-                f.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_2());
+                f.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
         c.setNoSpace().before(
-                f.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_4());
+                f.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
 
         // NESTED ANNOTATIONS
         // establish correct indentations and line breaks in case of nested annotations

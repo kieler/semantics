@@ -1,11 +1,11 @@
 '#'=21
-'('=17
-')'=18
 ','=16
 '-'=22
 '.'=20
 ':='=19
 '@'=15
+'['=17
+']'=18
 RULE_ANY_OTHER=14
 RULE_BOOLEAN=5
 RULE_COMMENT_ANNOTATION=9

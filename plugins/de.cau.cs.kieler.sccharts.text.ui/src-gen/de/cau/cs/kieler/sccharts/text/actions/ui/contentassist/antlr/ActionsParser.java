@@ -92,9 +92,9 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGroup_5_0(), "rule__VariableDeclarationWOSemicolon__Group_5_0__0");
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGroup_7(), "rule__VariableDeclarationWOSemicolon__Group_7__0");
 					put(grammarAccess.getReferenceDeclarationAccess().getGroup(), "rule__ReferenceDeclaration__Group__0");
-					put(grammarAccess.getReferenceDeclarationAccess().getGroup_5(), "rule__ReferenceDeclaration__Group_5__0");
+					put(grammarAccess.getReferenceDeclarationAccess().getGroup_4(), "rule__ReferenceDeclaration__Group_4__0");
 					put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getGroup(), "rule__ReferenceDeclarationWOSemicolon__Group__0");
-					put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getGroup_5(), "rule__ReferenceDeclarationWOSemicolon__Group_5__0");
+					put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getGroup_4(), "rule__ReferenceDeclarationWOSemicolon__Group_4__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup(), "rule__ValuedObject__Group__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup_1(), "rule__ValuedObject__Group_1__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup_2(), "rule__ValuedObject__Group_2__0");
@@ -222,12 +222,12 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getValuedObjectsAssignment_7_1(), "rule__VariableDeclarationWOSemicolon__ValuedObjectsAssignment_7_1");
 					put(grammarAccess.getReferenceDeclarationAccess().getAnnotationsAssignment_0(), "rule__ReferenceDeclaration__AnnotationsAssignment_0");
 					put(grammarAccess.getReferenceDeclarationAccess().getReferenceAssignment_2(), "rule__ReferenceDeclaration__ReferenceAssignment_2");
-					put(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsAssignment_4(), "rule__ReferenceDeclaration__ValuedObjectsAssignment_4");
-					put(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsAssignment_5_1(), "rule__ReferenceDeclaration__ValuedObjectsAssignment_5_1");
+					put(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsAssignment_3(), "rule__ReferenceDeclaration__ValuedObjectsAssignment_3");
+					put(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsAssignment_4_1(), "rule__ReferenceDeclaration__ValuedObjectsAssignment_4_1");
 					put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAnnotationsAssignment_0(), "rule__ReferenceDeclarationWOSemicolon__AnnotationsAssignment_0");
 					put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceAssignment_2(), "rule__ReferenceDeclarationWOSemicolon__ReferenceAssignment_2");
-					put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsAssignment_4(), "rule__ReferenceDeclarationWOSemicolon__ValuedObjectsAssignment_4");
-					put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsAssignment_5_1(), "rule__ReferenceDeclarationWOSemicolon__ValuedObjectsAssignment_5_1");
+					put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsAssignment_3(), "rule__ReferenceDeclarationWOSemicolon__ValuedObjectsAssignment_3");
+					put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsAssignment_4_1(), "rule__ReferenceDeclarationWOSemicolon__ValuedObjectsAssignment_4_1");
 					put(grammarAccess.getValuedObjectAccess().getNameAssignment_0(), "rule__ValuedObject__NameAssignment_0");
 					put(grammarAccess.getValuedObjectAccess().getCardinalitiesAssignment_1_1(), "rule__ValuedObject__CardinalitiesAssignment_1_1");
 					put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_2_1(), "rule__ValuedObject__InitialValueAssignment_2_1");

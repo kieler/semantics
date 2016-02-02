@@ -116,7 +116,7 @@ KeyStringValueAnnotation returns StringAnnotation:
 // TypedKeyStringValueAnnotation
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-    '@' name=ExtendedID '(' type=ExtendedID ')' values += EStringBoolean (',' values += EStringBoolean)*;
+    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringBoolean (',' values += EStringBoolean)*;
     
     
 // PropertyValueAnnotation
@@ -136,7 +136,7 @@ QuotedKeyStringValueAnnotation returns StringAnnotation:
 // The quoted typed key string value annotation is a replacement derived grammars may use
 // if they want to disallow quote-less strings in a key string annotation. 
 QuotedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
-    '@' name=ExtendedID '(' type=ExtendedID ')' values += STRING (',' values += STRING)*;
+    '@' name=ExtendedID '[' type=ExtendedID ']' values += STRING (',' values += STRING)*;
 
 
 // QuotedPropertyValueAnnotation

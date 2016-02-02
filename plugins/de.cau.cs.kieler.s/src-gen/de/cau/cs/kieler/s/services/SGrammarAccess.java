@@ -1413,7 +1413,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* "[" reference=[kext::Identifiable] "]" valuedObjects+=ValuedObject (","
+	//	annotations+=Annotation* "&" reference=[kext::Identifiable] valuedObjects+=ValuedObject (","
 	//	valuedObjects+=ValuedObject)* ";";
 	public KEXTGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return gaKEXT.getReferenceDeclarationAccess();
@@ -1424,7 +1424,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* "[" reference=[kext::Identifiable] "]" valuedObjects+=ValuedObject (","
+	//	annotations+=Annotation* "&" reference=[kext::Identifiable] valuedObjects+=ValuedObject (","
 	//	valuedObjects+=ValuedObject)*;
 	public KEXTGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return gaKEXT.getReferenceDeclarationWOSemicolonAccess();
@@ -2322,7 +2322,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	// // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//
 	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-	//	"@" name=ExtendedID "(" type=ExtendedID ")" values+=EStringBoolean ("," values+=EStringBoolean)*;
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaKEXT.getTypedKeyStringValueAnnotationAccess();
 	}
@@ -2365,7 +2365,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// if they want to disallow quote-less strings in a key string annotation. 
 	// QuotedTypedKeyStringValueAnnotation
 	//returns TypedStringAnnotation:
-	//	"@" name=ExtendedID "(" type=ExtendedID ")" values+=STRING ("," values+=STRING)*;
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*;
 	public AnnotationsGrammarAccess.QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
 		return gaKEXT.getQuotedTypedKeyStringValueAnnotationAccess();
 	}

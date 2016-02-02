@@ -91,10 +91,10 @@ public class InternalAnnotationsLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:13:7: ( '(' )
-            // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:13:9: '('
+            // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:13:7: ( '[' )
+            // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:13:9: '['
             {
-            match('('); 
+            match('['); 
 
             }
 
@@ -111,10 +111,10 @@ public class InternalAnnotationsLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:14:7: ( ')' )
-            // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:14:9: ')'
+            // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:14:7: ( ']' )
+            // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:14:9: ']'
             {
-            match(')'); 
+            match(']'); 
 
             }
 
@@ -1211,9 +1211,9 @@ public class InternalAnnotationsLexer extends Lexer {
     static final String DFA20_specialS =
         "\1\0\14\uffff\1\1\14\uffff\1\2\21\uffff}>";
     static final String[] DFA20_transitionS = {
-            "\11\21\2\20\2\21\1\20\22\21\1\20\1\21\1\15\1\7\4\21\1\3\1\4"+
-            "\2\21\1\2\1\10\1\6\1\11\12\12\1\5\5\21\1\1\32\17\3\21\1\16\1"+
-            "\17\1\21\5\17\1\14\15\17\1\13\6\17\uff85\21",
+            "\11\21\2\20\2\21\1\20\22\21\1\20\1\21\1\15\1\7\10\21\1\2\1"+
+            "\10\1\6\1\11\12\12\1\5\5\21\1\1\32\17\1\3\1\21\1\4\1\16\1\17"+
+            "\1\21\5\17\1\14\15\17\1\13\6\17\uff85\21",
             "",
             "",
             "",
@@ -1303,9 +1303,9 @@ public class InternalAnnotationsLexer extends Lexer {
 
                         else if ( (LA20_0==',') ) {s = 2;}
 
-                        else if ( (LA20_0=='(') ) {s = 3;}
+                        else if ( (LA20_0=='[') ) {s = 3;}
 
-                        else if ( (LA20_0==')') ) {s = 4;}
+                        else if ( (LA20_0==']') ) {s = 4;}
 
                         else if ( (LA20_0==':') ) {s = 5;}
 
@@ -1331,7 +1331,7 @@ public class InternalAnnotationsLexer extends Lexer {
 
                         else if ( ((LA20_0>='\t' && LA20_0<='\n')||LA20_0=='\r'||LA20_0==' ') ) {s = 16;}
 
-                        else if ( ((LA20_0>='\u0000' && LA20_0<='\b')||(LA20_0>='\u000B' && LA20_0<='\f')||(LA20_0>='\u000E' && LA20_0<='\u001F')||LA20_0=='!'||(LA20_0>='$' && LA20_0<='\'')||(LA20_0>='*' && LA20_0<='+')||(LA20_0>=';' && LA20_0<='?')||(LA20_0>='[' && LA20_0<=']')||LA20_0=='`'||(LA20_0>='{' && LA20_0<='\uFFFF')) ) {s = 17;}
+                        else if ( ((LA20_0>='\u0000' && LA20_0<='\b')||(LA20_0>='\u000B' && LA20_0<='\f')||(LA20_0>='\u000E' && LA20_0<='\u001F')||LA20_0=='!'||(LA20_0>='$' && LA20_0<='+')||(LA20_0>=';' && LA20_0<='?')||LA20_0=='\\'||LA20_0=='`'||(LA20_0>='{' && LA20_0<='\uFFFF')) ) {s = 17;}
 
                         if ( s>=0 ) return s;
                         break;
