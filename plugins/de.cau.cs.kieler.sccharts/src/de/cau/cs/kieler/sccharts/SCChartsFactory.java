@@ -192,6 +192,24 @@ public interface SCChartsFactory extends EFactory {
     IterateAction createIterateAction();
 
     /**
+	 * Returns a new object of class '<em>Init Action</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Init Action</em>'.
+	 * @generated
+	 */
+	InitAction createInitAction();
+
+				/**
+	 * Returns a new object of class '<em>Final Action</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Final Action</em>'.
+	 * @generated
+	 */
+	FinalAction createFinalAction();
+
+				/**
 	 * Returns a new object of class '<em>SC Charts</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

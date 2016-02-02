@@ -481,6 +481,52 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
 	}
 
     /**
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.InitAction} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected InitActionItemProvider initActionItemProvider;
+
+				/**
+	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.InitAction}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createInitActionAdapter() {
+		if (initActionItemProvider == null) {
+			initActionItemProvider = new InitActionItemProvider(this);
+		}
+
+		return initActionItemProvider;
+	}
+
+				/**
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.FinalAction} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected FinalActionItemProvider finalActionItemProvider;
+
+				/**
+	 * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.FinalAction}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createFinalActionAdapter() {
+		if (finalActionItemProvider == null) {
+			finalActionItemProvider = new FinalActionItemProvider(this);
+		}
+
+		return finalActionItemProvider;
+	}
+
+				/**
 	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.SCCharts} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -619,6 +665,8 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
 		if (exitActionItemProvider != null) exitActionItemProvider.dispose();
 		if (suspendActionItemProvider != null) suspendActionItemProvider.dispose();
 		if (iterateActionItemProvider != null) iterateActionItemProvider.dispose();
+		if (initActionItemProvider != null) initActionItemProvider.dispose();
+		if (finalActionItemProvider != null) finalActionItemProvider.dispose();
 		if (scChartsItemProvider != null) scChartsItemProvider.dispose();
 	}
 

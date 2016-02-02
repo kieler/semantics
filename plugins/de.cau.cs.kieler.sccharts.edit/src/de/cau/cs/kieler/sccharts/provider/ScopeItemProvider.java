@@ -258,6 +258,16 @@ public class ScopeItemProvider extends AnnotatableItemProvider {
 
 		newChildDescriptors.add
 			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS,
+				 SCChartsFactory.eINSTANCE.createInitAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS,
+				 SCChartsFactory.eINSTANCE.createFinalAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(SCChartsPackage.Literals.SCOPE__BINDINGS,
 				 SCChartsFactory.eINSTANCE.createBinding()));
 

@@ -162,6 +162,14 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 				return createIterateActionAdapter();
 			}
 			@Override
+			public Adapter caseInitAction(InitAction object) {
+				return createInitActionAdapter();
+			}
+			@Override
+			public Adapter caseFinalAction(FinalAction object) {
+				return createFinalActionAdapter();
+			}
+			@Override
 			public Adapter caseSCCharts(SCCharts object) {
 				return createSCChartsAdapter();
 			}
@@ -456,6 +464,34 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.InitAction <em>Init Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.sccharts.InitAction
+	 * @generated
+	 */
+	public Adapter createInitActionAdapter() {
+		return null;
+	}
+
+				/**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.FinalAction <em>Final Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.sccharts.FinalAction
+	 * @generated
+	 */
+	public Adapter createFinalActionAdapter() {
+		return null;
+	}
+
+				/**
 	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.SCCharts <em>SC Charts</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;

@@ -115,9 +115,9 @@ public class SctTransientValueService extends DefaultTransientValueService {
         }
 
         /* suppress the 'normal' attribute of a state */
-        if (feature == SCChartsPackage.eINSTANCE.getState_Type()) {
-            return owner.eGet(feature).equals(StateType.NORMAL);
-        }
+//        if (feature == SCChartsPackage.eINSTANCE.getState_Type()) {
+//            return owner.eGet(feature).equals(StateType.NORMAL);
+//        }
 
         // /* suppress the additions introduced by uru's IValuedObject/IVariable classes */
         // if (feature == KExpressionsPackage.eINSTANCE.getIValuedObject_ChannelDescr()

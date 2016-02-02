@@ -32,6 +32,7 @@ import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
+import de.cau.cs.kieler.core.kexpressions.text.serializer.KEXTSemanticSequencer;
 import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
@@ -39,13 +40,14 @@ import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.Equation;
 import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.FinalAction;
+import de.cau.cs.kieler.sccharts.InitAction;
 import de.cau.cs.kieler.sccharts.IterateAction;
 import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.Transition;
-import de.cau.cs.kieler.sccharts.text.actions.serializer.ActionsSemanticSequencer;
 import de.cau.cs.kieler.sccharts.text3.services.Sct3GrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -56,7 +58,7 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
 
 @SuppressWarnings("all")
-public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSequencer {
+public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequencer {
 
 	@Inject
 	private Sct3GrammarAccess grammarAccess;
@@ -263,6 +265,12 @@ public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSeque
 			case SCChartsPackage.EXIT_ACTION:
 				sequence_ExitAction(context, (ExitAction) semanticObject); 
 				return; 
+			case SCChartsPackage.FINAL_ACTION:
+				sequence_FinalAction(context, (FinalAction) semanticObject); 
+				return; 
+			case SCChartsPackage.INIT_ACTION:
+				sequence_InitAction(context, (InitAction) semanticObject); 
+				return; 
 			case SCChartsPackage.ITERATE_ACTION:
 				sequence_IterateAction(context, (IterateAction) semanticObject); 
 				return; 
@@ -318,9 +326,63 @@ public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSeque
 	
 	/**
 	 * Constraint:
+	 *     (immediate?='immediate'? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
+	 */
+	protected void sequence_DuringAction(EObject context, DuringAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
+	 */
+	protected void sequence_EntryAction(EObject context, EntryAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (valuedObject=[ValuedObject|ID] expression=Expression)
 	 */
 	protected void sequence_Equation(EObject context, Equation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
+	 */
+	protected void sequence_ExitAction(EObject context, ExitAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
+	 */
+	protected void sequence_FinalAction(EObject context, FinalAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
+	 */
+	protected void sequence_InitAction(EObject context, InitAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (immediate?='immediate'? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
+	 */
+	protected void sequence_IterateAction(EObject context, IterateAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -331,13 +393,9 @@ public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSeque
 	 *         annotations+=Annotation* 
 	 *         id=ID 
 	 *         label=STRING? 
-	 *         (
-	 *             expression=Expression | 
-	 *             (
-	 *                 (declarations+=DeclarationWOSemicolon | localActions+=LocalAction)* 
-	 *                 ((regions+=SingleDataflowRegion | regions+=SingleControlflowRegion) regions+=Region*)?
-	 *             )
-	 *         )
+	 *         declarations+=DeclarationWOSemicolon* 
+	 *         localActions+=LocalAction* 
+	 *         (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion | regions+=Region*)
 	 *     )
 	 */
 	protected void sequence_RootState(EObject context, State semanticObject) {
@@ -378,20 +436,27 @@ public abstract class AbstractSct3SemanticSequencer extends ActionsSemanticSeque
 	 *         annotations+=Annotation* 
 	 *         initial?='initial'? 
 	 *         final?='final'? 
-	 *         type=StateType? 
+	 *         connector?='connector'? 
 	 *         id=ID 
 	 *         label=STRING? 
 	 *         (
-	 *             expression=Expression | 
-	 *             (
-	 *                 (declarations+=DeclarationWOSemicolon | localActions+=LocalAction)* 
-	 *                 ((regions+=SingleDataflowRegion | regions+=SingleControlflowRegion) regions+=Region*)?
-	 *             )
+	 *             declarations+=DeclarationWOSemicolon* 
+	 *             localActions+=LocalAction* 
+	 *             (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion | regions+=Region*)
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
 	 *     )
 	 */
 	protected void sequence_State(EObject context, State semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (immediate?='immediate'? weak?='weak'? trigger=BoolExpression?)
+	 */
+	protected void sequence_SuspendAction(EObject context, SuspendAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

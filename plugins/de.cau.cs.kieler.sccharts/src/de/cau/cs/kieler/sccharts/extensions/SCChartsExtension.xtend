@@ -547,22 +547,12 @@ class SCChartsExtension {
     }
 
     def State setTypeConnector(State state) {
-        state.setType(StateType::CONNECTOR);
+        state.connector = true
         state
     }
 
     def State setTypeNormal(State state) {
-        state.setType(StateType::NORMAL);
-        state
-    }
-
-    def State setTypeReference(State state) {
-        state.setType(StateType::REFERENCE);
-        state
-    }
-
-    def State setTypeTextual(State state) {
-        state.setType(StateType::TEXTUAL);
+        state.connector = false
         state
     }
 
@@ -798,7 +788,7 @@ class SCChartsExtension {
     // 1. the source state is a connector node, then the transition is always (implicityly) immediate OR
     // 2. the transition is a normal termination and has NOT trigger, then it is also (implicityly) immediate.
     def Boolean isImmediate2(Transition transition) {
-        (transition.immediate) || (transition.sourceState.type == StateType::CONNECTOR) || (transition.type ==
+        (transition.immediate) || (transition.sourceState.isConnector) || (transition.type ==
             TransitionType::TERMINATION && transition.trigger == null
         )
     }

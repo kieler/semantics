@@ -66,34 +66,12 @@ public class StateItemProvider extends ScopeItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addTypePropertyDescriptor(object);
 			addInitialPropertyDescriptor(object);
 			addFinalPropertyDescriptor(object);
+			addConnectorPropertyDescriptor(object);
 			addIncomingTransitionsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-    /**
-	 * This adds a property descriptor for the Type feature.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected void addTypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_State_type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_State_type_feature", "_UI_State_type"),
-				 SCChartsPackage.Literals.STATE__TYPE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
 	}
 
     /**
@@ -141,6 +119,28 @@ public class StateItemProvider extends ScopeItemProvider {
 	}
 
     /**
+	 * This adds a property descriptor for the Connector feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addConnectorPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_State_connector_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_State_connector_feature", "_UI_State_type"),
+				 SCChartsPackage.Literals.STATE__CONNECTOR,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+				/**
 	 * This adds a property descriptor for the Incoming Transitions feature.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -231,9 +231,9 @@ public class StateItemProvider extends ScopeItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(State.class)) {
-			case SCChartsPackage.STATE__TYPE:
 			case SCChartsPackage.STATE__INITIAL:
 			case SCChartsPackage.STATE__FINAL:
+			case SCChartsPackage.STATE__CONNECTOR:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case SCChartsPackage.STATE__REGIONS:

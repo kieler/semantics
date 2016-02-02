@@ -106,7 +106,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
     }
 
     def void transformSurfaceDepth(State state, State targetRootState) {
-        if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL &&
+        if (state.outgoingTransitions.size > 0 && !state.isConnector &&
             !state.outgoingTransitions.get(0).typeTermination &&
             (state.outgoingTransitions.get(0).trigger != null || !state.outgoingTransitions.get(0).immediate)) {
             val parentRegion = state.parentRegion;

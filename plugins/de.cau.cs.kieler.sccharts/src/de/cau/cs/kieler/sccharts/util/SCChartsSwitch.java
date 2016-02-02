@@ -237,6 +237,24 @@ public class SCChartsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case SCChartsPackage.INIT_ACTION: {
+				InitAction initAction = (InitAction)theEObject;
+				T result = caseInitAction(initAction);
+				if (result == null) result = caseLocalAction(initAction);
+				if (result == null) result = caseAction(initAction);
+				if (result == null) result = caseAnnotatable(initAction);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case SCChartsPackage.FINAL_ACTION: {
+				FinalAction finalAction = (FinalAction)theEObject;
+				T result = caseFinalAction(finalAction);
+				if (result == null) result = caseLocalAction(finalAction);
+				if (result == null) result = caseAction(finalAction);
+				if (result == null) result = caseAnnotatable(finalAction);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case SCChartsPackage.SC_CHARTS: {
 				SCCharts scCharts = (SCCharts)theEObject;
 				T result = caseSCCharts(scCharts);
@@ -535,6 +553,36 @@ public class SCChartsSwitch<T> extends Switch<T> {
 	}
 
     /**
+	 * Returns the result of interpreting the object as an instance of '<em>Init Action</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Init Action</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInitAction(InitAction object) {
+		return null;
+	}
+
+				/**
+	 * Returns the result of interpreting the object as an instance of '<em>Final Action</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Final Action</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFinalAction(FinalAction object) {
+		return null;
+	}
+
+				/**
 	 * Returns the result of interpreting the object as an instance of '<em>SC Charts</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;

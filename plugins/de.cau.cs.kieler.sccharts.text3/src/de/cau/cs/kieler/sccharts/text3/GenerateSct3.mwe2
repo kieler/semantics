@@ -21,7 +21,7 @@ Workflow {
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.genmodel"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.genmodel"
-		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.sccharts/model/sccharts.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.sccharts/model/sccharts3.genmodel"
 	}
 	
 	component = DirectoryCleaner {

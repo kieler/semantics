@@ -47,7 +47,7 @@ class Connector extends Feature {
     def isContained(State model) {
         val allStates = model.getAllContainedStatesList
         for (state : allStates) {
-            if (state.type == StateType::CONNECTOR) {
+            if (state.isConnector) {
                 return true
             }
         }

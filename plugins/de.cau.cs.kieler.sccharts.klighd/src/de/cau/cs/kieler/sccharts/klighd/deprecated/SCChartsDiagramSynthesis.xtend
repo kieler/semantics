@@ -537,7 +537,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             if (s.isInitial) {
                 node.setParent(node.parent)
             }
-            val connector = s.type == StateType::CONNECTOR;
+            val connector = s.isConnector;
             val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations(valuedObjectCache) && !s.referencedState) 17 else 8;
             var lineWidth = if(s.isInitial) 3 else 1;
             if (PAPER_BW.booleanValue || globalBWOption) {

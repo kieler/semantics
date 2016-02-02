@@ -79,7 +79,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
         //pre-evaluate type
-        val isConnector = state.type == StateType::CONNECTOR
+        val isConnector = state.isConnector
 
         // Basic state style
         switch state {

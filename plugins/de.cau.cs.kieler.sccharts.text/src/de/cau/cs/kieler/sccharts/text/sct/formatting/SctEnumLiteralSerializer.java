@@ -95,13 +95,14 @@ public class SctEnumLiteralSerializer extends EnumLiteralSerializer {
             Assignment a = (Assignment) ruleCall.eContainer();
 
             // if the feature the assignment is made to is the 'type' feature
-            if (a.getFeature().equals(SCChartsPackage.eINSTANCE.getState_Type().getName())) {
-
-                // ask the transientValueService;
-                // note that the return inverse value semantics!
-                return !transientValueService.isTransient(context,
-                        SCChartsPackage.eINSTANCE.getState_Type(), -1);
-            }
+// TODO: Is this still relevant?
+//            if (a.getFeature().equals(SCChartsPackage.eINSTANCE.getState_Type().getName())) {
+//
+//                // ask the transientValueService;
+//                // note that the return inverse value semantics!
+//                return !transientValueService.isTransient(context,
+//                        SCChartsPackage.eINSTANCE.getState_Type(), -1);
+//            }
         }
 
         return super.isValid(context, ruleCall, value, errorAcceptor);

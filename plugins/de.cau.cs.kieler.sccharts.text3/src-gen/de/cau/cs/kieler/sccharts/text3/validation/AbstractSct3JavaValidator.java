@@ -8,12 +8,12 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
 
-public class AbstractSct3JavaValidator extends de.cau.cs.kieler.sccharts.text.actions.validation.ActionsJavaValidator {
+public class AbstractSct3JavaValidator extends de.cau.cs.kieler.core.kexpressions.text.validation.KEXTJavaValidator {
 
 	@Override
 	protected List<EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>();
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/sccharts/0.1.0"));
+	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/sccharts/0.3.0"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kexpressions/0.1.2"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kext/kext"));
 	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/keffects/0.1.0"));

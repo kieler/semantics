@@ -19,9 +19,9 @@
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://kieler.cs.cau.de/sccharts/0.1.0"
+            uri="http://kieler.cs.cau.de/sccharts/0.3.0"
             class="de.cau.cs.kieler.sccharts.SCChartsPackage"
-            genModel="model/sccharts.genmodel"/>
+            genModel="model/sccharts3.genmodel"/>
    </extension>
 
      <extension
