@@ -51,60 +51,6 @@ public interface AnnotationsFactory extends EFactory {
     StringAnnotation createStringAnnotation();
 
     /**
-	 * Returns a new object of class '<em>Reference Annotation</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Reference Annotation</em>'.
-	 * @generated
-	 */
-    ReferenceAnnotation createReferenceAnnotation();
-
-    /**
-	 * Returns a new object of class '<em>Boolean Annotation</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Boolean Annotation</em>'.
-	 * @generated
-	 */
-    BooleanAnnotation createBooleanAnnotation();
-
-    /**
-	 * Returns a new object of class '<em>Int Annotation</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Int Annotation</em>'.
-	 * @generated
-	 */
-    IntAnnotation createIntAnnotation();
-
-    /**
-	 * Returns a new object of class '<em>Float Annotation</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Float Annotation</em>'.
-	 * @generated
-	 */
-    FloatAnnotation createFloatAnnotation();
-
-    /**
-	 * Returns a new object of class '<em>Containment Annotation</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Containment Annotation</em>'.
-	 * @generated
-	 */
-    ContainmentAnnotation createContainmentAnnotation();
-
-    /**
-	 * Returns a new object of class '<em>Import Annotation</em>'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Import Annotation</em>'.
-	 * @generated
-	 */
-    ImportAnnotation createImportAnnotation();
-
-    /**
 	 * Returns a new object of class '<em>Typed String Annotation</em>'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -123,15 +69,6 @@ public interface AnnotationsFactory extends EFactory {
     CommentAnnotation createCommentAnnotation();
 
     /**
-	 * Returns a new object of class '<em>Property Annotation</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Property Annotation</em>'.
-	 * @generated
-	 */
-	PropertyAnnotation createPropertyAnnotation();
-
-				/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

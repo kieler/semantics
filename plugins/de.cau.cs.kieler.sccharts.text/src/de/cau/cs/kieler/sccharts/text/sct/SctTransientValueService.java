@@ -217,22 +217,6 @@ public class SctTransientValueService extends DefaultTransientValueService {
 
         /* try not to serialize annotations that are of type unequal to StringAnnotations */
         if (feature == AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations()) {
-            if (AnnotationsPackage.eINSTANCE.getImportAnnotation()
-                    .isInstance(((Annotatable) owner).getAnnotations().get(index))) {
-                return false;
-            }
-            if (AnnotationsPackage.eINSTANCE.getBooleanAnnotation()
-                    .isInstance(((Annotatable) owner).getAnnotations().get(index))) {
-                return false;
-            }
-            if (AnnotationsPackage.eINSTANCE.getIntAnnotation()
-                    .isInstance(((Annotatable) owner).getAnnotations().get(index))) {
-                return false;
-            }
-            if (AnnotationsPackage.eINSTANCE.getFloatAnnotation()
-                    .isInstance(((Annotatable) owner).getAnnotations().get(index))) {
-                return false;
-            }
             if (AnnotationsPackage.eINSTANCE.getStringAnnotation()
                     .isInstance(((Annotatable) owner).getAnnotations().get(index))) {
                 StringAnnotation a =

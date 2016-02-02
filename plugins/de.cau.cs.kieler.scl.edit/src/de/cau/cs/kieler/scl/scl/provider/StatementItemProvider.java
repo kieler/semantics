@@ -162,36 +162,6 @@ public class StatementItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(SclPackage.Literals.STATEMENT__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createReferenceAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.STATEMENT__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createBooleanAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.STATEMENT__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createIntAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.STATEMENT__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createFloatAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.STATEMENT__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createContainmentAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.STATEMENT__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createImportAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.STATEMENT__ANNOTATIONS,
 				 AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
 
 		newChildDescriptors.add

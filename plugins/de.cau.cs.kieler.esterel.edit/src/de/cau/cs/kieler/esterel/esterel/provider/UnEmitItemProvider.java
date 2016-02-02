@@ -1,21 +1,10 @@
 /**
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- * 
- * http://www.informatik.uni-kiel.de/rtsys/kieler/
- * 
- * Copyright 2010 by
- * + Kiel University
- *   + Department of Computer Science
- *     + Real-Time and Embedded Systems Group
- * 
- * This code is provided under the terms of the Eclipse Public License (EPL).
- * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.annotations.provider;
+package de.cau.cs.kieler.esterel.esterel.provider;
 
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.annotations.PropertyAnnotation;
+import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.esterel.esterel.UnEmit;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,19 +18,19 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.annotations.PropertyAnnotation} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.esterel.esterel.UnEmit} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class PropertyAnnotationItemProvider extends AnnotationItemProvider {
+public class UnEmitItemProvider extends StatementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public PropertyAnnotationItemProvider(AdapterFactory adapterFactory) {
+	public UnEmitItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -56,26 +45,48 @@ public class PropertyAnnotationItemProvider extends AnnotationItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addPropertyPropertyDescriptor(object);
-			addValuePropertyDescriptor(object);
+			addSignalPropertyDescriptor(object);
+			addTickPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Property feature.
+	 * This adds a property descriptor for the Signal feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addPropertyPropertyDescriptor(Object object) {
+	protected void addSignalPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_PropertyAnnotation_property_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_PropertyAnnotation_property_feature", "_UI_PropertyAnnotation_type"),
-				 AnnotationsPackage.Literals.PROPERTY_ANNOTATION__PROPERTY,
+				 getString("_UI_UnEmit_signal_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_UnEmit_signal_feature", "_UI_UnEmit_type"),
+				 EsterelPackage.Literals.UN_EMIT__SIGNAL,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Tick feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTickPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_UnEmit_tick_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_UnEmit_tick_feature", "_UI_UnEmit_type"),
+				 EsterelPackage.Literals.UN_EMIT__TICK,
 				 true,
 				 false,
 				 false,
@@ -85,36 +96,14 @@ public class PropertyAnnotationItemProvider extends AnnotationItemProvider {
 	}
 
 	/**
-	 * This adds a property descriptor for the Value feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addValuePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_PropertyAnnotation_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_PropertyAnnotation_value_feature", "_UI_PropertyAnnotation_type"),
-				 AnnotationsPackage.Literals.PROPERTY_ANNOTATION__VALUE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This returns PropertyAnnotation.gif.
+	 * This returns UnEmit.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/PropertyAnnotation"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/UnEmit"));
 	}
 
 	/**
@@ -125,10 +114,10 @@ public class PropertyAnnotationItemProvider extends AnnotationItemProvider {
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((PropertyAnnotation)object).getName();
+		String label = ((UnEmit)object).getTick();
 		return label == null || label.length() == 0 ?
-			getString("_UI_PropertyAnnotation_type") :
-			getString("_UI_PropertyAnnotation_type") + " " + label;
+			getString("_UI_UnEmit_type") :
+			getString("_UI_UnEmit_type") + " " + label;
 	}
 	
 
@@ -143,9 +132,8 @@ public class PropertyAnnotationItemProvider extends AnnotationItemProvider {
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(PropertyAnnotation.class)) {
-			case AnnotationsPackage.PROPERTY_ANNOTATION__PROPERTY:
-			case AnnotationsPackage.PROPERTY_ANNOTATION__VALUE:
+		switch (notification.getFeatureID(UnEmit.class)) {
+			case EsterelPackage.UN_EMIT__TICK:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

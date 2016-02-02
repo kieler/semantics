@@ -80,36 +80,6 @@ public class AnnotationsEditingSupport extends EditingSupport {
         case STRING:
         case TYPED_STRING:
             return new TextCellEditor(parent);
-        case INT:
-            CellEditor intEditor = new TextCellEditor(parent);
-            intEditor.setValidator(new ICellEditorValidator() {
-                public String isValid(final Object value) {
-                    try {
-                        Integer.parseInt((String) value);
-                        return null;
-                    } catch (NumberFormatException exception) {
-                        return "Enter an integer number.";
-                    }
-                }
-            });
-            return intEditor;
-        case FLOAT:
-            CellEditor floatEditor = new TextCellEditor(parent);
-            floatEditor.setValidator(new ICellEditorValidator() {
-                public String isValid(final Object value) {
-                    try {
-                        Float.parseFloat((String) value);
-                        return null;
-                    } catch (NumberFormatException exception) {
-                        return "Enter a floating point number.";
-                    }
-                }
-            });
-            return floatEditor;
-        case BOOLEAN:
-            ComboBoxCellEditor boolEditor = new ComboBoxCellEditor(parent,
-                    BOOLEAN_CHOICES, SWT.READ_ONLY);
-            return boolEditor;
         default:
             return null;
         }
@@ -124,13 +94,6 @@ public class AnnotationsEditingSupport extends EditingSupport {
         case STRING:
         case TYPED_STRING:
             return ((StringAnnotation) element).getValues().get(0);
-        case INT:
-            return Integer.toString(((IntAnnotation) element).getValue());
-        case FLOAT:
-            return Float.toString(((FloatAnnotation) element).getValue());
-        case BOOLEAN:
-            return ((BooleanAnnotation) element).isValue()
-                    ? Integer.valueOf(1) : Integer.valueOf(0);
         default:
             return null;
         }

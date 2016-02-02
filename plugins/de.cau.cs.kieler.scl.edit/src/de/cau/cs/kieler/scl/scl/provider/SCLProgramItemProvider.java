@@ -171,6 +171,16 @@ public class SCLProgramItemProvider extends StatementSequenceItemProvider {
 			(createChildParameter
 				(SclPackage.Literals.SCL_PROGRAM__DECLARATIONS,
 				 KExpressionsFactory.eINSTANCE.createDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.SCL_PROGRAM__DECLARATIONS,
+				 KExpressionsFactory.eINSTANCE.createVariableDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.SCL_PROGRAM__DECLARATIONS,
+				 KExpressionsFactory.eINSTANCE.createReferenceDeclaration()));
 	}
 
 }

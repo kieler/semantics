@@ -7,11 +7,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
 import de.cau.cs.kieler.core.annotations.CommentAnnotation;
-import de.cau.cs.kieler.core.annotations.FloatAnnotation;
-import de.cau.cs.kieler.core.annotations.IntAnnotation;
-import de.cau.cs.kieler.core.annotations.PropertyAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
@@ -65,36 +61,12 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 			case AnnotationsPackage.ANNOTATION:
 				sequence_TagAnnotation(context, (Annotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.BOOLEAN_ANNOTATION:
-				sequence_KeyBooleanValueAnnotation(context, (BooleanAnnotation) semanticObject); 
-				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.FLOAT_ANNOTATION:
-				sequence_KeyFloatValueAnnotation(context, (FloatAnnotation) semanticObject); 
-				return; 
-			case AnnotationsPackage.INT_ANNOTATION:
-				sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
-				return; 
-			case AnnotationsPackage.PROPERTY_ANNOTATION:
-				if(context == grammarAccess.getAnnotationRule() ||
-				   context == grammarAccess.getPropertyAnnotationRule() ||
-				   context == grammarAccess.getRestrictedTypeAnnotationRule() ||
-				   context == grammarAccess.getValuedAnnotationRule()) {
-					sequence_PropertyAnnotation(context, (PropertyAnnotation) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getQuotedPropertyAnnotationRule() ||
-				   context == grammarAccess.getQuotedStringAnnotationRule()) {
-					sequence_QuotedPropertyAnnotation(context, (PropertyAnnotation) semanticObject); 
-					return; 
-				}
-				else break;
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
 				   context == grammarAccess.getKeyStringValueAnnotationRule() ||
-				   context == grammarAccess.getRestrictedPropertyAnnotationRule() ||
 				   context == grammarAccess.getRestrictedTypeAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
@@ -113,7 +85,6 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 					return; 
 				}
 				else if(context == grammarAccess.getAnnotationRule() ||
-				   context == grammarAccess.getRestrictedPropertyAnnotationRule() ||
 				   context == grammarAccess.getTypedKeyStringValueAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 

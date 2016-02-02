@@ -95,40 +95,12 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
 				return createStringAnnotationAdapter();
 			}
 			@Override
-			public Adapter caseReferenceAnnotation(ReferenceAnnotation object) {
-				return createReferenceAnnotationAdapter();
-			}
-			@Override
-			public Adapter caseBooleanAnnotation(BooleanAnnotation object) {
-				return createBooleanAnnotationAdapter();
-			}
-			@Override
-			public Adapter caseIntAnnotation(IntAnnotation object) {
-				return createIntAnnotationAdapter();
-			}
-			@Override
-			public Adapter caseFloatAnnotation(FloatAnnotation object) {
-				return createFloatAnnotationAdapter();
-			}
-			@Override
-			public Adapter caseContainmentAnnotation(ContainmentAnnotation object) {
-				return createContainmentAnnotationAdapter();
-			}
-			@Override
-			public Adapter caseImportAnnotation(ImportAnnotation object) {
-				return createImportAnnotationAdapter();
-			}
-			@Override
 			public Adapter caseTypedStringAnnotation(TypedStringAnnotation object) {
 				return createTypedStringAnnotationAdapter();
 			}
 			@Override
 			public Adapter caseCommentAnnotation(CommentAnnotation object) {
 				return createCommentAnnotationAdapter();
-			}
-			@Override
-			public Adapter casePropertyAnnotation(PropertyAnnotation object) {
-				return createPropertyAnnotationAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -207,90 +179,6 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.ReferenceAnnotation <em>Reference Annotation</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.ReferenceAnnotation
-	 * @generated
-	 */
-    public Adapter createReferenceAnnotationAdapter() {
-		return null;
-	}
-
-    /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.BooleanAnnotation <em>Boolean Annotation</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.BooleanAnnotation
-	 * @generated
-	 */
-    public Adapter createBooleanAnnotationAdapter() {
-		return null;
-	}
-
-    /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.IntAnnotation <em>Int Annotation</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.IntAnnotation
-	 * @generated
-	 */
-    public Adapter createIntAnnotationAdapter() {
-		return null;
-	}
-
-    /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.FloatAnnotation <em>Float Annotation</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.FloatAnnotation
-	 * @generated
-	 */
-    public Adapter createFloatAnnotationAdapter() {
-		return null;
-	}
-
-    /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation <em>Containment Annotation</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.ContainmentAnnotation
-	 * @generated
-	 */
-    public Adapter createContainmentAnnotationAdapter() {
-		return null;
-	}
-
-    /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.ImportAnnotation <em>Import Annotation</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.ImportAnnotation
-	 * @generated
-	 */
-    public Adapter createImportAnnotationAdapter() {
-		return null;
-	}
-
-    /**
 	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.TypedStringAnnotation <em>Typed String Annotation</em>}'.
 	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -319,20 +207,6 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.PropertyAnnotation <em>Property Annotation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.PropertyAnnotation
-	 * @generated
-	 */
-	public Adapter createPropertyAnnotationAdapter() {
-		return null;
-	}
-
-				/**
 	 * Creates a new adapter for the default case.
 	 * <!-- begin-user-doc -->
      * This default implementation returns null.

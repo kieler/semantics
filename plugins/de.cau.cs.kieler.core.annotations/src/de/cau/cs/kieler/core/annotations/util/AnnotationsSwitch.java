@@ -109,60 +109,6 @@ public class AnnotationsSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case AnnotationsPackage.REFERENCE_ANNOTATION: {
-				ReferenceAnnotation referenceAnnotation = (ReferenceAnnotation)theEObject;
-				T result = caseReferenceAnnotation(referenceAnnotation);
-				if (result == null) result = caseAnnotation(referenceAnnotation);
-				if (result == null) result = caseNamedObject(referenceAnnotation);
-				if (result == null) result = caseAnnotatable(referenceAnnotation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case AnnotationsPackage.BOOLEAN_ANNOTATION: {
-				BooleanAnnotation booleanAnnotation = (BooleanAnnotation)theEObject;
-				T result = caseBooleanAnnotation(booleanAnnotation);
-				if (result == null) result = caseAnnotation(booleanAnnotation);
-				if (result == null) result = caseNamedObject(booleanAnnotation);
-				if (result == null) result = caseAnnotatable(booleanAnnotation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case AnnotationsPackage.INT_ANNOTATION: {
-				IntAnnotation intAnnotation = (IntAnnotation)theEObject;
-				T result = caseIntAnnotation(intAnnotation);
-				if (result == null) result = caseAnnotation(intAnnotation);
-				if (result == null) result = caseNamedObject(intAnnotation);
-				if (result == null) result = caseAnnotatable(intAnnotation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case AnnotationsPackage.FLOAT_ANNOTATION: {
-				FloatAnnotation floatAnnotation = (FloatAnnotation)theEObject;
-				T result = caseFloatAnnotation(floatAnnotation);
-				if (result == null) result = caseAnnotation(floatAnnotation);
-				if (result == null) result = caseNamedObject(floatAnnotation);
-				if (result == null) result = caseAnnotatable(floatAnnotation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case AnnotationsPackage.CONTAINMENT_ANNOTATION: {
-				ContainmentAnnotation containmentAnnotation = (ContainmentAnnotation)theEObject;
-				T result = caseContainmentAnnotation(containmentAnnotation);
-				if (result == null) result = caseAnnotation(containmentAnnotation);
-				if (result == null) result = caseNamedObject(containmentAnnotation);
-				if (result == null) result = caseAnnotatable(containmentAnnotation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case AnnotationsPackage.IMPORT_ANNOTATION: {
-				ImportAnnotation importAnnotation = (ImportAnnotation)theEObject;
-				T result = caseImportAnnotation(importAnnotation);
-				if (result == null) result = caseAnnotation(importAnnotation);
-				if (result == null) result = caseNamedObject(importAnnotation);
-				if (result == null) result = caseAnnotatable(importAnnotation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION: {
 				TypedStringAnnotation typedStringAnnotation = (TypedStringAnnotation)theEObject;
 				T result = caseTypedStringAnnotation(typedStringAnnotation);
@@ -180,15 +126,6 @@ public class AnnotationsSwitch<T> extends Switch<T> {
 				if (result == null) result = caseAnnotation(commentAnnotation);
 				if (result == null) result = caseNamedObject(commentAnnotation);
 				if (result == null) result = caseAnnotatable(commentAnnotation);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case AnnotationsPackage.PROPERTY_ANNOTATION: {
-				PropertyAnnotation propertyAnnotation = (PropertyAnnotation)theEObject;
-				T result = casePropertyAnnotation(propertyAnnotation);
-				if (result == null) result = caseAnnotation(propertyAnnotation);
-				if (result == null) result = caseNamedObject(propertyAnnotation);
-				if (result == null) result = caseAnnotatable(propertyAnnotation);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -257,96 +194,6 @@ public class AnnotationsSwitch<T> extends Switch<T> {
 	}
 
     /**
-	 * Returns the result of interpreting the object as an instance of '<em>Reference Annotation</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Reference Annotation</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T caseReferenceAnnotation(ReferenceAnnotation object) {
-		return null;
-	}
-
-    /**
-	 * Returns the result of interpreting the object as an instance of '<em>Boolean Annotation</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Boolean Annotation</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T caseBooleanAnnotation(BooleanAnnotation object) {
-		return null;
-	}
-
-    /**
-	 * Returns the result of interpreting the object as an instance of '<em>Int Annotation</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Int Annotation</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T caseIntAnnotation(IntAnnotation object) {
-		return null;
-	}
-
-    /**
-	 * Returns the result of interpreting the object as an instance of '<em>Float Annotation</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Float Annotation</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T caseFloatAnnotation(FloatAnnotation object) {
-		return null;
-	}
-
-    /**
-	 * Returns the result of interpreting the object as an instance of '<em>Containment Annotation</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Containment Annotation</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T caseContainmentAnnotation(ContainmentAnnotation object) {
-		return null;
-	}
-
-    /**
-	 * Returns the result of interpreting the object as an instance of '<em>Import Annotation</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Import Annotation</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T caseImportAnnotation(ImportAnnotation object) {
-		return null;
-	}
-
-    /**
 	 * Returns the result of interpreting the object as an instance of '<em>Typed String Annotation</em>'.
 	 * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -377,21 +224,6 @@ public class AnnotationsSwitch<T> extends Switch<T> {
 	}
 
     /**
-	 * Returns the result of interpreting the object as an instance of '<em>Property Annotation</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Property Annotation</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T casePropertyAnnotation(PropertyAnnotation object) {
-		return null;
-	}
-
-				/**
 	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * <!-- begin-user-doc -->
      * This implementation returns null;

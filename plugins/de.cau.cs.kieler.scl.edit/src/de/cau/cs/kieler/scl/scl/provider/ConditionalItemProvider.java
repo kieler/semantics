@@ -193,17 +193,32 @@ public class ConditionalItemProvider extends StatementSequenceItemProvider {
 		newChildDescriptors.add
 			(createChildParameter
 				(SclPackage.Literals.CONDITIONAL__EXPRESSION,
-				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+				 KExpressionsFactory.eINSTANCE.createStringValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(SclPackage.Literals.CONDITIONAL__EXPRESSION,
-				 KExpressionsFactory.eINSTANCE.createStringValue()));
+				 KExpressionsFactory.eINSTANCE.createCall()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.CONDITIONAL__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(SclPackage.Literals.CONDITIONAL__DECLARATIONS,
 				 KExpressionsFactory.eINSTANCE.createDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.CONDITIONAL__DECLARATIONS,
+				 KExpressionsFactory.eINSTANCE.createVariableDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.CONDITIONAL__DECLARATIONS,
+				 KExpressionsFactory.eINSTANCE.createReferenceDeclaration()));
 
 		newChildDescriptors.add
 			(createChildParameter

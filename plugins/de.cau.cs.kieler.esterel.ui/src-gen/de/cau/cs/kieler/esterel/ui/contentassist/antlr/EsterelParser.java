@@ -91,10 +91,10 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
 					put(grammarAccess.getValuedAnnotationAccess().getAlternatives(), "rule__ValuedAnnotation__Alternatives");
 					put(grammarAccess.getRestrictedTypeAnnotationAccess().getAlternatives(), "rule__RestrictedTypeAnnotation__Alternatives");
-					put(grammarAccess.getRestrictedPropertyAnnotationAccess().getAlternatives(), "rule__RestrictedPropertyAnnotation__Alternatives");
 					put(grammarAccess.getQuotedStringAnnotationAccess().getAlternatives(), "rule__QuotedStringAnnotation__Alternatives");
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 					put(grammarAccess.getEStringBooleanAccess().getAlternatives(), "rule__EStringBoolean__Alternatives");
+					put(grammarAccess.getEStringAllTypesAccess().getAlternatives(), "rule__EStringAllTypes__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
@@ -315,15 +315,10 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup_3(), "rule__KeyStringValueAnnotation__Group_3__0");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup(), "rule__TypedKeyStringValueAnnotation__Group__0");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_6(), "rule__TypedKeyStringValueAnnotation__Group_6__0");
-					put(grammarAccess.getPropertyAnnotationAccess().getGroup(), "rule__PropertyAnnotation__Group__0");
 					put(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getGroup(), "rule__QuotedKeyStringValueAnnotation__Group__0");
 					put(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getGroup_3(), "rule__QuotedKeyStringValueAnnotation__Group_3__0");
 					put(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup(), "rule__QuotedTypedKeyStringValueAnnotation__Group__0");
 					put(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup_6(), "rule__QuotedTypedKeyStringValueAnnotation__Group_6__0");
-					put(grammarAccess.getQuotedPropertyAnnotationAccess().getGroup(), "rule__QuotedPropertyAnnotation__Group__0");
-					put(grammarAccess.getKeyBooleanValueAnnotationAccess().getGroup(), "rule__KeyBooleanValueAnnotation__Group__0");
-					put(grammarAccess.getKeyIntValueAnnotationAccess().getGroup(), "rule__KeyIntValueAnnotation__Group__0");
-					put(grammarAccess.getKeyFloatValueAnnotationAccess().getGroup(), "rule__KeyFloatValueAnnotation__Group__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup(), "rule__ExtendedID__Group__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup_1(), "rule__ExtendedID__Group_1__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup_2(), "rule__ExtendedID__Group_2__0");
@@ -659,9 +654,6 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_3(), "rule__TypedKeyStringValueAnnotation__TypeAssignment_3");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_5(), "rule__TypedKeyStringValueAnnotation__ValuesAssignment_5");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1(), "rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1");
-					put(grammarAccess.getPropertyAnnotationAccess().getNameAssignment_1(), "rule__PropertyAnnotation__NameAssignment_1");
-					put(grammarAccess.getPropertyAnnotationAccess().getPropertyAssignment_2(), "rule__PropertyAnnotation__PropertyAssignment_2");
-					put(grammarAccess.getPropertyAnnotationAccess().getValueAssignment_4(), "rule__PropertyAnnotation__ValueAssignment_4");
 					put(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameAssignment_1(), "rule__QuotedKeyStringValueAnnotation__NameAssignment_1");
 					put(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesAssignment_2(), "rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2");
 					put(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesAssignment_3_1(), "rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1");
@@ -669,15 +661,6 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeAssignment_3(), "rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3");
 					put(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesAssignment_5(), "rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5");
 					put(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1(), "rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1");
-					put(grammarAccess.getQuotedPropertyAnnotationAccess().getNameAssignment_1(), "rule__QuotedPropertyAnnotation__NameAssignment_1");
-					put(grammarAccess.getQuotedPropertyAnnotationAccess().getPropertyAssignment_2(), "rule__QuotedPropertyAnnotation__PropertyAssignment_2");
-					put(grammarAccess.getQuotedPropertyAnnotationAccess().getValueAssignment_4(), "rule__QuotedPropertyAnnotation__ValueAssignment_4");
-					put(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameAssignment_1(), "rule__KeyBooleanValueAnnotation__NameAssignment_1");
-					put(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueAssignment_2(), "rule__KeyBooleanValueAnnotation__ValueAssignment_2");
-					put(grammarAccess.getKeyIntValueAnnotationAccess().getNameAssignment_1(), "rule__KeyIntValueAnnotation__NameAssignment_1");
-					put(grammarAccess.getKeyIntValueAnnotationAccess().getValueAssignment_2(), "rule__KeyIntValueAnnotation__ValueAssignment_2");
-					put(grammarAccess.getKeyFloatValueAnnotationAccess().getNameAssignment_1(), "rule__KeyFloatValueAnnotation__NameAssignment_1");
-					put(grammarAccess.getKeyFloatValueAnnotationAccess().getValueAssignment_2(), "rule__KeyFloatValueAnnotation__ValueAssignment_2");
 				}
 			};
 		}

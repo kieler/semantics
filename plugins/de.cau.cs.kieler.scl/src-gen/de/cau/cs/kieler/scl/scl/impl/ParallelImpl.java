@@ -25,127 +25,127 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ParallelImpl#getThreads <em>Threads</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public class ParallelImpl extends MinimalEObjectImpl.Container implements Parallel {
     /**
-     * The cached value of the '{@link #getThreads() <em>Threads</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getThreads() <em>Threads</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getThreads()
-     * @generated
-     * @ordered
-     */
+	 * @see #getThreads()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<de.cau.cs.kieler.scl.scl.Thread> threads;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ParallelImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return SclPackage.Literals.PARALLEL;
-    }
+		return SclPackage.Literals.PARALLEL;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<de.cau.cs.kieler.scl.scl.Thread> getThreads() {
-        if (threads == null) {
-            threads = new EObjectContainmentEList<de.cau.cs.kieler.scl.scl.Thread>(de.cau.cs.kieler.scl.scl.Thread.class, this, SclPackage.PARALLEL__THREADS);
-        }
-        return threads;
-    }
+		if (threads == null) {
+			threads = new EObjectContainmentEList<de.cau.cs.kieler.scl.scl.Thread>(de.cau.cs.kieler.scl.scl.Thread.class, this, SclPackage.PARALLEL__THREADS);
+		}
+		return threads;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SclPackage.PARALLEL__THREADS:
-                return ((InternalEList<?>)getThreads()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SclPackage.PARALLEL__THREADS:
+				return ((InternalEList<?>)getThreads()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case SclPackage.PARALLEL__THREADS:
-                return getThreads();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case SclPackage.PARALLEL__THREADS:
+				return getThreads();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case SclPackage.PARALLEL__THREADS:
-                getThreads().clear();
-                getThreads().addAll((Collection<? extends de.cau.cs.kieler.scl.scl.Thread>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case SclPackage.PARALLEL__THREADS:
+				getThreads().clear();
+				getThreads().addAll((Collection<? extends de.cau.cs.kieler.scl.scl.Thread>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case SclPackage.PARALLEL__THREADS:
-                getThreads().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case SclPackage.PARALLEL__THREADS:
+				getThreads().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case SclPackage.PARALLEL__THREADS:
-                return threads != null && !threads.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case SclPackage.PARALLEL__THREADS:
+				return threads != null && !threads.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //ParallelImpl

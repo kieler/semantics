@@ -160,47 +160,12 @@ public class AnnotatableItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createReferenceAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createBooleanAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createIntAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createFloatAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createContainmentAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createImportAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
 				 AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
 				 AnnotationsFactory.eINSTANCE.createCommentAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createPropertyAnnotation()));
 	}
 
     /**

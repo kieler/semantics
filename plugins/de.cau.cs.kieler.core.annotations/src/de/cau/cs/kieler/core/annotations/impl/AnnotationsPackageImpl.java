@@ -80,48 +80,6 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    private EClass referenceAnnotationEClass = null;
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    private EClass booleanAnnotationEClass = null;
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    private EClass intAnnotationEClass = null;
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    private EClass floatAnnotationEClass = null;
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    private EClass containmentAnnotationEClass = null;
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    private EClass importAnnotationEClass = null;
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
     private EClass typedStringAnnotationEClass = null;
 
     /**
@@ -132,13 +90,6 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
     private EClass commentAnnotationEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass propertyAnnotationEClass = null;
-
-				/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -267,114 +218,6 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public EClass getReferenceAnnotation() {
-		return referenceAnnotationEClass;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EReference getReferenceAnnotation_Object() {
-		return (EReference)referenceAnnotationEClass.getEStructuralFeatures().get(0);
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EClass getBooleanAnnotation() {
-		return booleanAnnotationEClass;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EAttribute getBooleanAnnotation_Value() {
-		return (EAttribute)booleanAnnotationEClass.getEStructuralFeatures().get(0);
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EClass getIntAnnotation() {
-		return intAnnotationEClass;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EAttribute getIntAnnotation_Value() {
-		return (EAttribute)intAnnotationEClass.getEStructuralFeatures().get(0);
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EClass getFloatAnnotation() {
-		return floatAnnotationEClass;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EAttribute getFloatAnnotation_Value() {
-		return (EAttribute)floatAnnotationEClass.getEStructuralFeatures().get(0);
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EClass getContainmentAnnotation() {
-		return containmentAnnotationEClass;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EReference getContainmentAnnotation_Object() {
-		return (EReference)containmentAnnotationEClass.getEStructuralFeatures().get(0);
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EClass getImportAnnotation() {
-		return importAnnotationEClass;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EAttribute getImportAnnotation_ImportURI() {
-		return (EAttribute)importAnnotationEClass.getEStructuralFeatures().get(0);
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
     public EClass getTypedStringAnnotation() {
 		return typedStringAnnotationEClass;
 	}
@@ -398,33 +241,6 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 	}
 
     /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getPropertyAnnotation() {
-		return propertyAnnotationEClass;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPropertyAnnotation_Property() {
-		return (EAttribute)propertyAnnotationEClass.getEStructuralFeatures().get(0);
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPropertyAnnotation_Value() {
-		return (EAttribute)propertyAnnotationEClass.getEStructuralFeatures().get(1);
-	}
-
-				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -463,32 +279,10 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 		stringAnnotationEClass = createEClass(STRING_ANNOTATION);
 		createEAttribute(stringAnnotationEClass, STRING_ANNOTATION__VALUES);
 
-		referenceAnnotationEClass = createEClass(REFERENCE_ANNOTATION);
-		createEReference(referenceAnnotationEClass, REFERENCE_ANNOTATION__OBJECT);
-
-		booleanAnnotationEClass = createEClass(BOOLEAN_ANNOTATION);
-		createEAttribute(booleanAnnotationEClass, BOOLEAN_ANNOTATION__VALUE);
-
-		intAnnotationEClass = createEClass(INT_ANNOTATION);
-		createEAttribute(intAnnotationEClass, INT_ANNOTATION__VALUE);
-
-		floatAnnotationEClass = createEClass(FLOAT_ANNOTATION);
-		createEAttribute(floatAnnotationEClass, FLOAT_ANNOTATION__VALUE);
-
-		containmentAnnotationEClass = createEClass(CONTAINMENT_ANNOTATION);
-		createEReference(containmentAnnotationEClass, CONTAINMENT_ANNOTATION__OBJECT);
-
-		importAnnotationEClass = createEClass(IMPORT_ANNOTATION);
-		createEAttribute(importAnnotationEClass, IMPORT_ANNOTATION__IMPORT_URI);
-
 		typedStringAnnotationEClass = createEClass(TYPED_STRING_ANNOTATION);
 		createEAttribute(typedStringAnnotationEClass, TYPED_STRING_ANNOTATION__TYPE);
 
 		commentAnnotationEClass = createEClass(COMMENT_ANNOTATION);
-
-		propertyAnnotationEClass = createEClass(PROPERTY_ANNOTATION);
-		createEAttribute(propertyAnnotationEClass, PROPERTY_ANNOTATION__PROPERTY);
-		createEAttribute(propertyAnnotationEClass, PROPERTY_ANNOTATION__VALUE);
 	}
 
     /**
@@ -522,15 +316,8 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 		namedObjectEClass.getESuperTypes().add(this.getAnnotatable());
 		annotationEClass.getESuperTypes().add(this.getNamedObject());
 		stringAnnotationEClass.getESuperTypes().add(this.getAnnotation());
-		referenceAnnotationEClass.getESuperTypes().add(this.getAnnotation());
-		booleanAnnotationEClass.getESuperTypes().add(this.getAnnotation());
-		intAnnotationEClass.getESuperTypes().add(this.getAnnotation());
-		floatAnnotationEClass.getESuperTypes().add(this.getAnnotation());
-		containmentAnnotationEClass.getESuperTypes().add(this.getAnnotation());
-		importAnnotationEClass.getESuperTypes().add(this.getAnnotation());
 		typedStringAnnotationEClass.getESuperTypes().add(this.getStringAnnotation());
 		commentAnnotationEClass.getESuperTypes().add(this.getStringAnnotation());
-		propertyAnnotationEClass.getESuperTypes().add(this.getAnnotation());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(namedObjectEClass, NamedObject.class, "NamedObject", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -557,32 +344,10 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 		initEClass(stringAnnotationEClass, StringAnnotation.class, "StringAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getStringAnnotation_Values(), ecorePackage.getEString(), "values", null, 0, -1, StringAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(referenceAnnotationEClass, ReferenceAnnotation.class, "ReferenceAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getReferenceAnnotation_Object(), ecorePackage.getEObject(), null, "object", null, 1, 1, ReferenceAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(booleanAnnotationEClass, BooleanAnnotation.class, "BooleanAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getBooleanAnnotation_Value(), ecorePackage.getEBoolean(), "value", null, 1, 1, BooleanAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(intAnnotationEClass, IntAnnotation.class, "IntAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getIntAnnotation_Value(), ecorePackage.getEInt(), "value", null, 1, 1, IntAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(floatAnnotationEClass, FloatAnnotation.class, "FloatAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getFloatAnnotation_Value(), ecorePackage.getEFloat(), "value", null, 1, 1, FloatAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(containmentAnnotationEClass, ContainmentAnnotation.class, "ContainmentAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getContainmentAnnotation_Object(), ecorePackage.getEObject(), null, "object", null, 1, 1, ContainmentAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(importAnnotationEClass, ImportAnnotation.class, "ImportAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getImportAnnotation_ImportURI(), ecorePackage.getEString(), "importURI", null, 0, 1, ImportAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
 		initEClass(typedStringAnnotationEClass, TypedStringAnnotation.class, "TypedStringAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTypedStringAnnotation_Type(), ecorePackage.getEString(), "type", null, 0, 1, TypedStringAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(commentAnnotationEClass, CommentAnnotation.class, "CommentAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(propertyAnnotationEClass, PropertyAnnotation.class, "PropertyAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getPropertyAnnotation_Property(), ecorePackage.getEString(), "property", null, 0, 1, PropertyAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPropertyAnnotation_Value(), ecorePackage.getEString(), "value", null, 0, 1, PropertyAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

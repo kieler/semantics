@@ -69,15 +69,8 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
 		switch (eClass.getClassifierID()) {
 			case AnnotationsPackage.ANNOTATION: return createAnnotation();
 			case AnnotationsPackage.STRING_ANNOTATION: return createStringAnnotation();
-			case AnnotationsPackage.REFERENCE_ANNOTATION: return createReferenceAnnotation();
-			case AnnotationsPackage.BOOLEAN_ANNOTATION: return createBooleanAnnotation();
-			case AnnotationsPackage.INT_ANNOTATION: return createIntAnnotation();
-			case AnnotationsPackage.FLOAT_ANNOTATION: return createFloatAnnotation();
-			case AnnotationsPackage.CONTAINMENT_ANNOTATION: return createContainmentAnnotation();
-			case AnnotationsPackage.IMPORT_ANNOTATION: return createImportAnnotation();
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION: return createTypedStringAnnotation();
 			case AnnotationsPackage.COMMENT_ANNOTATION: return createCommentAnnotation();
-			case AnnotationsPackage.PROPERTY_ANNOTATION: return createPropertyAnnotation();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -108,66 +101,6 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public ReferenceAnnotation createReferenceAnnotation() {
-		ReferenceAnnotationImpl referenceAnnotation = new ReferenceAnnotationImpl();
-		return referenceAnnotation;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public BooleanAnnotation createBooleanAnnotation() {
-		BooleanAnnotationImpl booleanAnnotation = new BooleanAnnotationImpl();
-		return booleanAnnotation;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public IntAnnotation createIntAnnotation() {
-		IntAnnotationImpl intAnnotation = new IntAnnotationImpl();
-		return intAnnotation;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public FloatAnnotation createFloatAnnotation() {
-		FloatAnnotationImpl floatAnnotation = new FloatAnnotationImpl();
-		return floatAnnotation;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public ContainmentAnnotation createContainmentAnnotation() {
-		ContainmentAnnotationImpl containmentAnnotation = new ContainmentAnnotationImpl();
-		return containmentAnnotation;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public ImportAnnotation createImportAnnotation() {
-		ImportAnnotationImpl importAnnotation = new ImportAnnotationImpl();
-		return importAnnotation;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
     public TypedStringAnnotation createTypedStringAnnotation() {
 		TypedStringAnnotationImpl typedStringAnnotation = new TypedStringAnnotationImpl();
 		return typedStringAnnotation;
@@ -184,16 +117,6 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
 	}
 
     /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public PropertyAnnotation createPropertyAnnotation() {
-		PropertyAnnotationImpl propertyAnnotation = new PropertyAnnotationImpl();
-		return propertyAnnotation;
-	}
-
-				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated

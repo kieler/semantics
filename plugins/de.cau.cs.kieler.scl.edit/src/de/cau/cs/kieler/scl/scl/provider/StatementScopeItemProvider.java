@@ -139,6 +139,16 @@ public class StatementScopeItemProvider extends StatementSequenceItemProvider {
 			(createChildParameter
 				(SclPackage.Literals.STATEMENT_SCOPE__DECLARATIONS,
 				 KExpressionsFactory.eINSTANCE.createDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.STATEMENT_SCOPE__DECLARATIONS,
+				 KExpressionsFactory.eINSTANCE.createVariableDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.STATEMENT_SCOPE__DECLARATIONS,
+				 KExpressionsFactory.eINSTANCE.createReferenceDeclaration()));
 	}
 
 }

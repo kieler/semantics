@@ -129,144 +129,6 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
 	}
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.ReferenceAnnotation} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected ReferenceAnnotationItemProvider referenceAnnotationItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.ReferenceAnnotation}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createReferenceAnnotationAdapter() {
-		if (referenceAnnotationItemProvider == null) {
-			referenceAnnotationItemProvider = new ReferenceAnnotationItemProvider(this);
-		}
-
-		return referenceAnnotationItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.BooleanAnnotation} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected BooleanAnnotationItemProvider booleanAnnotationItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.BooleanAnnotation}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createBooleanAnnotationAdapter() {
-		if (booleanAnnotationItemProvider == null) {
-			booleanAnnotationItemProvider = new BooleanAnnotationItemProvider(this);
-		}
-
-		return booleanAnnotationItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.IntAnnotation} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected IntAnnotationItemProvider intAnnotationItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.IntAnnotation}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createIntAnnotationAdapter() {
-		if (intAnnotationItemProvider == null) {
-			intAnnotationItemProvider = new IntAnnotationItemProvider(this);
-		}
-
-		return intAnnotationItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.FloatAnnotation} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected FloatAnnotationItemProvider floatAnnotationItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.FloatAnnotation}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createFloatAnnotationAdapter() {
-		if (floatAnnotationItemProvider == null) {
-			floatAnnotationItemProvider = new FloatAnnotationItemProvider(this);
-		}
-
-		return floatAnnotationItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected ContainmentAnnotationItemProvider containmentAnnotationItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createContainmentAnnotationAdapter() {
-		if (containmentAnnotationItemProvider == null) {
-			containmentAnnotationItemProvider = new ContainmentAnnotationItemProvider(this);
-		}
-
-		return containmentAnnotationItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.ImportAnnotation} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected ImportAnnotationItemProvider importAnnotationItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.ImportAnnotation}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createImportAnnotationAdapter() {
-		if (importAnnotationItemProvider == null) {
-			importAnnotationItemProvider = new ImportAnnotationItemProvider(this);
-		}
-
-		return importAnnotationItemProvider;
-	}
-
-    /**
 	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.TypedStringAnnotation} instances.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -313,29 +175,6 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
 	}
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.PropertyAnnotation} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected PropertyAnnotationItemProvider propertyAnnotationItemProvider;
-
-				/**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.PropertyAnnotation}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createPropertyAnnotationAdapter() {
-		if (propertyAnnotationItemProvider == null) {
-			propertyAnnotationItemProvider = new PropertyAnnotationItemProvider(this);
-		}
-
-		return propertyAnnotationItemProvider;
-	}
-
-				/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -436,15 +275,8 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
     public void dispose() {
 		if (annotationItemProvider != null) annotationItemProvider.dispose();
 		if (stringAnnotationItemProvider != null) stringAnnotationItemProvider.dispose();
-		if (referenceAnnotationItemProvider != null) referenceAnnotationItemProvider.dispose();
-		if (booleanAnnotationItemProvider != null) booleanAnnotationItemProvider.dispose();
-		if (intAnnotationItemProvider != null) intAnnotationItemProvider.dispose();
-		if (floatAnnotationItemProvider != null) floatAnnotationItemProvider.dispose();
-		if (containmentAnnotationItemProvider != null) containmentAnnotationItemProvider.dispose();
-		if (importAnnotationItemProvider != null) importAnnotationItemProvider.dispose();
 		if (typedStringAnnotationItemProvider != null) typedStringAnnotationItemProvider.dispose();
 		if (commentAnnotationItemProvider != null) commentAnnotationItemProvider.dispose();
-		if (propertyAnnotationItemProvider != null) propertyAnnotationItemProvider.dispose();
 	}
 
 }

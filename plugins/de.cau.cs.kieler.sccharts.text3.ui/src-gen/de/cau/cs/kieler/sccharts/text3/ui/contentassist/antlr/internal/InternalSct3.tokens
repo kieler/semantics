@@ -1,6 +1,6 @@
 '!'=20
 '!='=50
-'#'=87
+'#'=86
 '%'=24
 '&&'=27
 '&'=19
@@ -18,11 +18,10 @@
 '-- join'=35
 '--'=33
 '-='=41
-'.'=86
+'.'=85
 '/'=74
 '/='=43
 ':'=16
-':='=85
 ';'=68
 '<'=46
 '<='=47
@@ -36,21 +35,21 @@
 'bool'=52
 'combine'=83
 'connector'=30
-'const'=93
+'const'=92
 'dataflow'=70
-'deferred'=91
+'deferred'=90
 'during'=75
 'entry'=73
 'exit'=76
 'expression'=79
-'final'=89
+'final'=88
 'float'=55
 'history'=38
 'host'=57
 'if'=66
-'immediate'=90
-'initial'=88
-'input'=94
+'immediate'=89
+'initial'=87
+'input'=93
 'int'=54
 'is'=62
 'iterate'=78
@@ -58,7 +57,7 @@
 'min'=60
 'none'=58
 'normal'=29
-'output'=95
+'output'=94
 'pre'=17
 'pure'=51
 'reference'=31
@@ -66,16 +65,16 @@
 'reset'=36
 'scchart'=61
 'shallow history'=37
-'signal'=97
+'signal'=96
 'state'=65
-'static'=96
+'static'=95
 'string'=56
 'suspend'=77
 'textual'=32
 'then'=67
 'unsigned'=53
 'val'=25
-'weak'=92
+'weak'=91
 '{'=63
 '|'=18
 '||'=26
@@ -173,4 +172,3 @@ T__93=93
 T__94=94
 T__95=95
 T__96=96
-T__97=97
