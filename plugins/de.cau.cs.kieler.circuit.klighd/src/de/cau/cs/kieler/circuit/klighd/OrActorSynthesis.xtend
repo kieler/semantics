@@ -53,6 +53,10 @@ class OrActorSynthesis implements IDrawableActor {
 //		
 //		
 //	}
+
+	var r = 0
+	var g = 0
+	var b = 0
 	override KNode draw(Actor actor) {
 		val KNode node = actor.node
 
@@ -77,7 +81,7 @@ class OrActorSynthesis implements IDrawableActor {
 //			]
 		val orange = createKColor.setColor(209, 156, 100);
 		node.setNodeSize(30, 25);
-		val customLightBlue = createKColor.setColor(226, 237, 255);
+		val customLightBlue = createKColor.setColor(r, g, b);
 		node.addRectangle => [
 			it.invisible = true;
 			it.lineCap = LineCap.CAP_ROUND;
@@ -194,6 +198,12 @@ class OrActorSynthesis implements IDrawableActor {
 		];
 
 		return node;
+	}
+	
+	def setColor(int red, int green, int blue){
+		r = red
+		g = green
+		b = blue
 	}
 
 }

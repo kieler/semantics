@@ -51,11 +51,14 @@ class RegisterActorSynthesis implements IDrawableActor {
 		node.addRectangle =>
 			[
 
-				it.shadow = "black".color
 				it.selectionBackground = "green".color;
 				it.setBackground("white".color);
 				node.addInsideBottomCenteredNodeLabel("R", KlighdConstants.DEFAULT_FONT_SIZE,
 					KlighdConstants.DEFAULT_FONT_NAME);
+					
+//				if(actor.name.startsWith("pre")){
+//					it.setRightBottomAlignedPointPlacementData(90,90,90,90)
+//				}
 
 //				it.addPolyline => [
 //					it.lineWidth = 1

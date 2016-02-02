@@ -49,7 +49,6 @@ class MuxActorSynthesis implements IDrawableActor {
 		node.addRectangle =>
 			[
 
-				it.shadow = "black".color
 				it.selectionBackground = "green".color;
 				it.setBackground("white".color);
 				node.addInsideBottomCenteredNodeLabel("MUX", KlighdConstants.DEFAULT_FONT_SIZE,

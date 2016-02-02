@@ -18,6 +18,8 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import java.util.EnumSet
 import de.cau.cs.kieler.core.krendering.LineJoin
+import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 
 class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject
@@ -46,6 +48,9 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject extension KRenderingExtensions
 
 	extension KRenderingFactory = KRenderingFactory.eINSTANCE
+	static var r = 255
+	static var g = 255
+	static var b = 90
 
 	override KNode transform(Actor actor) {
 
@@ -65,8 +70,10 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 				switch (actor.type) {
 					case "AND":
 						actorNode = andActorSynthesis.draw(actor)
-					case "OR":
-						actorNode = orActorSynthesis.draw(actor)
+					case "OR":{
+						orActorSynthesis.setColor(r,g,b)
+					
+						actorNode = orActorSynthesis.draw(actor)}
 					case "NOT":
 						actorNode = notActorSynthesis.draw(actor)
 					case "REG":
@@ -94,23 +101,29 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 			}
 		} else {
+			r = r-20
+			g = g-10
 			// if actor is not a gate, draw a frame
 			val babyBlue = createKColor.setColor(211, 236, 252);
-			val customLightBlue = createKColor.setColor(226, 237, 255);
+
+			val customLightBlue = createKColor.setColor(r, g, b);
 			val orange = createKColor.setColor(209, 156, 100);
 			if (actor.eContainer != null) {
 
 				actorNode.addRoundedRectangle(4, 4, 1) => [
-
 					it.addDoubleClickAction(KlighdConstants.ACTION_COLLAPSE_EXPAND);
 					it.shadow = "black".color
 					it.selectionBackground = orange;
 					it.setBackground(customLightBlue);
 				]
+				
+				
 			}
 
 			actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 				EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+			actorNode.addLayoutParam(Properties.NODE_PLACER,
+				NodePlacementStrategy.LINEAR_SEGMENTS);
 		}
 
 		if (hasName) {
@@ -120,5 +133,10 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 		return actorNode;
 
+	}
+	def colorReset(){
+		r = 255
+		g = 255
+		b = 90
 	}
 }

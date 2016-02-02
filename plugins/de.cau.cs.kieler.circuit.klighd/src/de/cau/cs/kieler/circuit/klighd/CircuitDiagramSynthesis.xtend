@@ -31,9 +31,12 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject extension KPolylineExtensions
 	@Inject extension KColorExtensions
 	extension KRenderingFactory = KRenderingFactory.eINSTANCE
+	
+	
 
 	override KNode transform(Actor model) {
-
+		
+		
 		val root = createNode().associateWith(model);
 		model.transformActor(root); // choose this if solution with two big frames is not optimal
 //		val circActor = CircuitFactory::eINSTANCE.createActor;
@@ -45,6 +48,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 //		for (link : links) {
 //			link.transformLink(root);
 //		}
+		actorSynthesis.colorReset
 		return root;
 	}
 
@@ -53,6 +57,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 		// draw actors and attach them to parent
 		val actorNode = actorSynthesis.transform(actor) // actor.createNode().associateWith(actor)
+		
 		parent.children += actorNode
 
 		// check if actor is a gate or an inner circuit
@@ -69,7 +74,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 				if (port.type.startsWith("In")) {
 
-					if (port.name == "Tick") { // /TODO: still not working to place Tick ports at fixed position
+					if (port.name == "Tick") { // /TODO: still not working ... place Tick ports at fixed position
 						it.setPortSize(0, 0)
 						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
 						it.addPolygon => [
@@ -93,7 +98,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
 					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
 					if(port.outgoingLinks.length == 0){
-						System.out.println("HBDAFIHBSDK")
+//						System.out.println("HBDAFIHBSDK")
 						it.addEllipse.setBackground("red".color).lineWidth = 0;
 						it.setPortSize(6, 6);
 					} else {
@@ -113,6 +118,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					it.setPortSize(6, 6);
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
 					it.addEllipse.setBackground("white".color).lineWidth = 1;
+				
 				}
 
 			]
