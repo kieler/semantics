@@ -116,6 +116,7 @@ class SctValidator extends SctJavaValidator {
      * This check can be removed if there is a transformation
      * that handles valued signals without combination function (see KISEMA-1071).   
      */
+    // TODO: (KISEMA-1071) Remove this check when there is a transformation that handles valued signals without combination function.
     @Check
     public def void checkValuedSignalHasCombinationFunction(de.cau.cs.kieler.core.kexpressions.ValuedObject valuedObject) {
         // Check if actually a valued signal
