@@ -54,6 +54,7 @@ import org.eclipse.debug.internal.ui.views.console.ProcessConsole
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.console.IConsoleConstants
 import org.eclipse.ui.console.IConsoleView
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -95,7 +96,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     public static val ATTR_WRAPPER_CODE_TEMPLATE = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.template"
     public static val ATTR_WRAPPER_CODE_SNIPPETS = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.snippets"
-
+    public static val ATTR_WRAPPER_CODE_GENERATOR = "de.cau.cs.kieler.prom.launchconfig.wrapper.generator"
+    
     public static val ATTR_ASSOCIATED_LAUNCH_SHORTCUT = "de.cau.cs.kieler.prom.launchconfig.main.associated.launch.shortcut"
 
     // Variable names
@@ -118,29 +120,49 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     private static MessageConsole console;
     private static MessageConsoleStream consoleStream;
 
-    // Objects from launch
-    private ILaunchConfiguration configuration
-    private String mode
-    private ILaunch launch
-    private IProgressMonitor monitor
-
-    // Objects loaded from configuration
-    private IProject project
-    private String mainFile
-    private List<FileCompilationData> files
-    private String targetLanguage
-    private String targetTemplate
-    private String wrapperCodeTemplate
-    private String wrapperCodeSnippetDirectory
-
-    private List<CommandData> commands
-    private String associatedLaunchShortcut
-
-    private String targetLanguageFileExtension
-
     // Jobs
     private Job compileJob;
     private Job wrapperCodeJob;
+    
+    // Objects from launch
+    @Accessors
+    private ILaunchConfiguration configuration
+    @Accessors
+    private String mode
+    @Accessors
+    private ILaunch launch
+    @Accessors
+    private IProgressMonitor monitor
+
+    // Objects loaded from configuration
+    @Accessors
+    private IProject project
+    @Accessors
+    private String mainFile
+    @Accessors
+    private List<FileCompilationData> files
+    @Accessors
+    private String targetLanguage
+    @Accessors
+    private String targetTemplate
+    @Accessors
+    private String wrapperCodeTemplate
+    @Accessors
+    private String wrapperCodeSnippetDirectory
+    @Accessors
+    private String wrapperCodeTargetLocation
+    @Accessors
+    private String wrapperCodeGenerator
+
+    @Accessors
+    private List<CommandData> commands
+    @Accessors
+    private String associatedLaunchShortcut
+
+    @Accessors
+    private String targetLanguageFileExtension
+
+
 
     /**
      * Writes to the console view for a KiCo launch.
@@ -171,6 +193,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         this.mode = mode
         this.launch = launch
         this.monitor = monitor
+        
+        // Load variable manager
+        this.variableManager = VariablesPlugin.getDefault.stringVariableManager
 
         // Init console for errors and messages
         clearConsole()
@@ -266,7 +291,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     return Status.CANCEL_STATUS
                 }
 
-                System.err.println("Compilation finished after " + (System.currentTimeMillis() - startTime) + "ms")
+                // Debug info about duration
+//                System.err.println("Compilation finished after " + (System.currentTimeMillis() - startTime) + "ms")
 
                 return Status.OK_STATUS
             }
@@ -279,26 +305,38 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @return the created job. 
      */
     private def Job getWrapperCodeGenerationJob() {
+        val launchConfig = this
+        
         return new Job("Wrapper Code Generation") {
             override protected IStatus run(IProgressMonitor monitor) {
 
                 val startTime = System.currentTimeMillis()
 
                 try {
-                    val generator = new WrapperCodeGenerator(project,
-                        variableManager.performStringSubstitution(wrapperCodeTemplate),
-                        variableManager.performStringSubstitution(wrapperCodeSnippetDirectory),
-                        computeTargetPath(variableManager.performStringSubstitution(wrapperCodeTemplate), false))
-
-                    generator.generateWrapperCode(files)
-
+                    // Create generator
+                    var IWrapperCodeGenerator generator
+                    if(!Strings.isNullOrEmpty(wrapperCodeGenerator)){
+                        val clazz = Class.forName(wrapperCodeGenerator)
+                        generator = clazz.newInstance() as IWrapperCodeGenerator
+                    } else {
+                        generator = new WrapperCodeGenerator()
+                    }
+                    
+                    // Generate code
+                    if(generator != null) {
+                        generator.launchConfiguration = launchConfig
+                        generator.generateWrapperCode(files)
+                    } else {
+                        writeToConsole("The class for wrapper code generation "+wrapperCodeGenerator+ " could not be instantiated.")
+                    }
                 } catch (Exception e) {
                     writeToConsole(e.message + "\n")
                     return Status.CANCEL_STATUS
                 }
 
-                System.err.println(
-                    "Wrapper Code generation finished after " + (System.currentTimeMillis() - startTime) + "ms")
+                // Debug info about duration
+//                System.err.println(
+//                    "Wrapper Code generation finished after " + (System.currentTimeMillis() - startTime) + "ms")
 
                 return Status.OK_STATUS
             }
@@ -311,11 +349,13 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @return the created job.
      */
     private def Job getExecuteCommandsJob() {
+        val launchConfig = this
+        
         return new Job("Command Execution") {
-
+            
             override protected run(IProgressMonitor monitor) {
                 try {
-                    val executor = new CommandExecutor(project, launch)
+                    val executor = new CommandExecutor(launchConfig)
                     executor.execute(commands)
                     return Status.OK_STATUS
                 } catch (Exception e) {
@@ -370,7 +410,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @param projectRelative Flag to specify if the computed path should be projectRelative or not
      * @return the computed path
      */
-    private def String computeTargetPath(String projectRelativePath, boolean projectRelative) {
+    public def String computeTargetPath(String projectRelativePath, boolean projectRelative) {
         // The src directory of a typical java project is not part of the relevant target path.
         // (Would be more accurate: if the first directory is a java build source folder, remove it)
         var String projectRelativeRelevantPath;
@@ -381,7 +421,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         // Remove extension
         val projectRelativeRelevantPathWithoutExtension = FilenameUtils.removeExtension(projectRelativeRelevantPath)        
-    
+     
         // Compute target path
         val projectRelativeTargetPath = BUILD_DIRECTORY + File.separator + projectRelativeRelevantPathWithoutExtension + targetLanguageFileExtension
         if(projectRelative)
@@ -451,9 +491,11 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         targetLanguageFileExtension = configuration.getAttribute(ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
 
         // Load wrapper code
-        wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
-        wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
-
+        wrapperCodeGenerator = configuration.getAttribute(ATTR_WRAPPER_CODE_GENERATOR, "")
+        wrapperCodeTemplate = variableManager.performStringSubstitution( configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "") )
+        wrapperCodeSnippetDirectory = variableManager.performStringSubstitution( configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "") )
+        wrapperCodeTargetLocation = computeTargetPath(wrapperCodeTemplate, false)
+         
         // Load shell commands
         commands = CommandData.loadAllFromConfiguration(configuration)
         
@@ -466,8 +508,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * The variables can be used for example in the commands and file paths.
      */
     private def void setVariables() {
-        variableManager = VariablesPlugin.getDefault.stringVariableManager
-
         // Set project
         setVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE, project.location.toOSString,
             "Fully qualified path to the launched application")

@@ -40,7 +40,7 @@ import org.freemarker.FreeMarkerPlugin
  * 
  * @author aas
  */
-class WrapperCodeGenerator {
+class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
 
     /**
      * The id of the extension point for wrapper code annotation analyzers.
@@ -72,70 +72,10 @@ class WrapperCodeGenerator {
     public static var String macroDefinitions = null
 
     /**
-     * The project of the launch configuration which started the generator.
-     */
-    private IProject project
-
-    /**
-     * The file path to the input template for wrapper code generation.
-     * Wrapper code will be inserted in this file's text and the output is saved in the build directory.
-     */
-    private String wrapperCodeTemplate = ""
-
-    /**
-     * The path to a directory with FreeMarker template files.
-     * Each file may contain several macro definitions for wrapper code generation.
-     */
-    private String wrapperCodeSnippetDirectory = ""
-
-    /**
-     * A file handle from the fully qualified path where the generated output will be saved.  
-     */
-    private File targetLocation
-
-    /**
-     * A file handle from the fully qualified path of the input template.
-     */
-    private File templateLocation
-
-    /**
-     *  A file handle from the fully qualified path of the snippet directory.
-     */
-    private File snippetDirectoryLocation
-
-    /**
      * The name of the last processed model
      * (e.g. the name for an SCChart).  
      */
     private String modelName = ""
-
-
-
-    /**
-     * Creates a new instance of this class and inititlizes it with the given parameters.
-     * 
-     * @param wrapperCodeTemplate File path to the wrapper code template
-     * @param wrapperCodeSnippetDirectory Directory path to the wrapper code snippet directory
-     * @param targetLocation File path where the generated output will be saved
-     */
-    new(IProject project, String wrapperCodeTemplate, String wrapperCodeSnippetDirectory, String targetLocation) {
-        this.project = project
-        this.wrapperCodeTemplate = wrapperCodeTemplate
-        this.wrapperCodeSnippetDirectory = wrapperCodeSnippetDirectory
-
-        this.targetLocation = new File(targetLocation)
-        this.templateLocation = new File(project.location + File.separator + wrapperCodeTemplate)
-        this.snippetDirectoryLocation = new File(wrapperCodeSnippetDirectory)
-
-        // If the snippet directory is not an absolute path for itself,
-        // we interpret it as a directory in the project.
-        if (!snippetDirectoryLocation.isAbsolute)
-            this.snippetDirectoryLocation = new File(project.location + File.separator + wrapperCodeSnippetDirectory)
-            
-        
-    }
-
-
 
     /**
      * Initializes the macro definitions when they are not yet initialized.
@@ -163,10 +103,10 @@ class WrapperCodeGenerator {
      * 
      * @param datas The data objects to generate wrapper code for 
      */
-    public def void generateWrapperCode(FileCompilationData... datas) {
+    override void generateWrapperCode(FileCompilationData... datas) {
 
         // Check consistency of paths
-        if (wrapperCodeTemplate != "" && wrapperCodeSnippetDirectory != "") {
+        if (launchConfiguration.wrapperCodeTemplate != "" && launchConfiguration.wrapperCodeSnippetDirectory != "") {
 
             val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
 
@@ -198,8 +138,8 @@ class WrapperCodeGenerator {
         map.put(MODEL_NAME_VARIABLE, modelName)
 
         // Inject macro calls in input template
-        FreeMarkerPlugin.newConfiguration(project.location.toOSString())
-        val template = FreeMarkerPlugin.configuration.getTemplate(wrapperCodeTemplate)
+        FreeMarkerPlugin.newConfiguration(launchConfiguration.project.location.toOSString())
+        val template = FreeMarkerPlugin.configuration.getTemplate(launchConfiguration.wrapperCodeTemplate)
 
         val writer = new StringWriter()
         template.process(map, writer)
@@ -214,6 +154,10 @@ class WrapperCodeGenerator {
      * @param templateWithMacroCalls The template text to be processed 
      */
     private def void processTemplateAndSaveOutput(String templateWithMacroCalls) {
+        var File snippetDirectoryLocation = new File(launchConfiguration.wrapperCodeSnippetDirectory)
+        if (!snippetDirectoryLocation.isAbsolute)
+            snippetDirectoryLocation = new File(launchConfiguration.project.location + File.separator + launchConfiguration.wrapperCodeSnippetDirectory)
+
         // Set the snippets directory to implicitly load the macro definitions
         FreeMarkerPlugin.newConfiguration(snippetDirectoryLocation.absolutePath)
 
@@ -223,18 +167,18 @@ class WrapperCodeGenerator {
 
         // Add implicit include of snippet definitions
         val List<File> snippetFiles = getFilesRecursive(snippetDirectoryLocation, "ftl")
-        snippetFiles.forEach [
+        for(snippetFile : snippetFiles) {
             // FreeMarker needs paths relative to the template directory.
             // We calculate this via the URI class.
-            val relativeURI = snippetDirectoryLocation.toURI().relativize(it.toURI())
+            val relativeURI = snippetDirectoryLocation.toURI().relativize(snippetFile.toURI())
             FreeMarkerPlugin.configuration.addAutoInclude(relativeURI.getPath())
-        ]
+        }
 
         // Process template with macro calls and now implicitly loaded snippet definitions.
         val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreeMarkerPlugin.configuration)
 
         // Process template and write output directly to target file
-        val writer = new FileWriter(targetLocation)
+        val writer = new FileWriter(launchConfiguration.wrapperCodeTargetLocation)
         template.process(newHashMap(), writer)
         writer.close()
     }
@@ -393,7 +337,7 @@ class WrapperCodeGenerator {
         List<WrapperCodeAnnotationData> annotationDatas) {
 
         // Load EObject from file
-        val model = ModelImporter.get(project.location.toOSString + File.separator + data.projectRelativePath)
+        val model = ModelImporter.get(launchConfiguration.project.location.toOSString + File.separator + data.projectRelativePath)
 
         if (model != null) {
             initAnalyzers()

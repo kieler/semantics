@@ -33,16 +33,7 @@ import org.eclipse.debug.core.ILaunch
  */
 class CommandExecutor {
 
-    /**
-     * The project from the launch config.
-     */
-    private var IProject project
-    
-    /**
-     * The launch in which this object has been created.
-     */
-    private var ILaunch launch
-
+    private LaunchConfiguration launchConfig
 
     /**
      * Creates a new instance of this class and sets the project and launch associated with it.
@@ -50,9 +41,8 @@ class CommandExecutor {
      * @param project The project
      * @param launch The launch
      */
-    new(IProject project, ILaunch launch){
-        this.project = project
-        this.launch = launch
+    new(LaunchConfiguration launchConfig){
+        this.launchConfig = launchConfig
     }
 
     /**
@@ -94,9 +84,9 @@ class CommandExecutor {
 
             // Run process
             val pBuilder = new ProcessBuilder(commandWithParameters)
-            pBuilder.directory(new File(project.location.toOSString))
+            pBuilder.directory(new File(launchConfig.project.location.toOSString))
             val p = pBuilder.start()
-            DebugPlugin.newProcess(launch, p, command.name)
+            DebugPlugin.newProcess(launchConfig.launch, p, command.name)
 
             // Wait until the process finished
             command.errorCode = p.waitFor()
