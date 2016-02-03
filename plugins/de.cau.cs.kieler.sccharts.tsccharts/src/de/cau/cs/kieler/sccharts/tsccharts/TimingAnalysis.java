@@ -165,7 +165,7 @@ public class TimingAnalysis extends Job {
         // region to represent the SCChart in Timing Analysis.
         Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
         scchartDummyRegion.setId("SCChartDummyRegion");
-
+        
         Resource resource = null;
         KielerCompilerContext context = viewContext.getProperty(KiCoProperties.COMPILATION_CONTEXT);
         if (context != null) {
@@ -182,7 +182,6 @@ public class TimingAnalysis extends Job {
 
         HashMultimap<Region, WeakReference<KText>> timingLabels = HashMultimap.create();
         HashMultimap<Region, WeakReference<KRectangle>> regionRectangles = HashMultimap.create();
-        if(REGION_TIMING){
         Iterator<EObject> graphIter =
                 ModelingUtil.eAllContentsOfType2(rootNode, KNode.class, KContainerRendering.class,
                         KRectangle.class);
@@ -192,9 +191,11 @@ public class TimingAnalysis extends Job {
                 KRectangle rect = (KRectangle) eObj;
                 Object sourceElem = rect.getProperty(KlighdInternalProperties.MODEL_ELEMEMT);
                 if (sourceElem instanceof Region) {
-                    KText text = KRenderingFactory.eINSTANCE.createKText();
-                    text.setText("???/???");
-                    renderingExtensions.setFontSize(text, 10);
+                        KText text = KRenderingFactory.eINSTANCE.createKText();
+                        if (REGION_TIMING) {
+                            text.setText("???/???");
+                        }
+                        renderingExtensions.setFontSize(text, 10);
                     renderingExtensions.setForegroundColor(text, 255, 0, 0);
                     renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5,
                             0, renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT,
@@ -204,7 +205,6 @@ public class TimingAnalysis extends Job {
                     regionRectangles.put((Region) sourceElem, new WeakReference<KRectangle>(rect));
                 }
             }
-        }
         }
         KRectangle rectangle =
                 (KRectangle) rootNode.getChildren().get(0).getData(KRoundedRectangle.class)
