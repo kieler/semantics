@@ -31,6 +31,7 @@ import java.io.PrintWriter
 import java.util.List
 import org.apache.commons.io.FilenameUtils
 import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
@@ -49,12 +50,9 @@ import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
-import org.eclipse.core.resources.IResource
-import org.eclipse.debug.internal.ui.views.console.ProcessConsole
-import org.eclipse.ui.PlatformUI
-import org.eclipse.ui.console.IConsoleConstants
-import org.eclipse.ui.console.IConsoleView
 import org.eclipse.xtend.lib.annotations.Accessors
+
+import static de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration.*
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -68,6 +66,11 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * It is set in the plugin.xml.
      */
     public static val LAUNCH_CONFIGURATION_TYPE_ID = "de.cau.cs.kieler.prom.launchconfig.launchConfiguration"
+
+    /**
+     * The id for the wrapper code generator extension point.
+     */
+    public static val WRAPPER_CODE_GENERATOR_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.wrapperCodeGenerator"
 
     /**
      * The variable name in the target template
@@ -163,6 +166,42 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     private String targetLanguageFileExtension
 
 
+
+    /**
+     * Initializes all variables that are used in the launch configuration if they have not been initialized yet.
+     */
+    public static def void initializeVariables() {
+        val variableManager = VariablesPlugin.getDefault.stringVariableManager
+        // Check if variables have been initialized already
+        var variable = variableManager.getValueVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE)
+        // Instantiate all variables if none yet
+        if (variable == null) {
+            // Project
+            initializeVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE,
+            "Fully qualified path to the launched application")
+    
+            // Main file
+            initializeVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE,
+                "Name of the main file of the launched application")
+            initializeVariable(LaunchConfiguration.MAIN_FILE_LOCATION_VARIABLE,
+                "Fully qualified location of the main file of the launched application")
+            initializeVariable(LaunchConfiguration.MAIN_FILE_PATH_VARIABLE,
+                "Project relative path of the main file of the launched application")
+            initializeVariable(LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
+                "Project relative path of the main file of the launched application without file extension")
+            
+            // Compiled main file
+            initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE,
+                "Name of the compiled main file of the launched application")
+            initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE,
+                "Fully qualified location of the compiled main file of the launched application")
+            initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE,
+                "Project relative path of the compiled main file of the launched application")
+            initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
+                "Project relative path of the compiled main file of the launched application without file extension")
+        }
+    }
+    
 
     /**
      * Writes to the console view for a KiCo launch.
@@ -316,8 +355,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     // Create generator
                     var IWrapperCodeGenerator generator
                     if(!Strings.isNullOrEmpty(wrapperCodeGenerator)){
-                        val clazz = Class.forName(wrapperCodeGenerator)
-                        generator = clazz.newInstance() as IWrapperCodeGenerator
+                        generator = instantiateWrapperCodeGenerator(wrapperCodeGenerator)
                     } else {
                         generator = new WrapperCodeGenerator()
                     }
@@ -341,6 +379,17 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 return Status.OK_STATUS
             }
         }
+    }
+
+    /**
+     * Instantiates a wrapper code generator with the given class name.
+     * 
+     * @param fullyQualifiedClassName The class name
+     */
+    private def IWrapperCodeGenerator instantiateWrapperCodeGenerator(String fullyQualifiedClassName) {
+        return ExtensionLookupUtil.instantiateClassFromExtension(WRAPPER_CODE_GENERATOR_EXTENSION_POINT_ID,
+                                       "generator", "class", fullyQualifiedClassName)
+                                       as IWrapperCodeGenerator
     }
 
     /**
@@ -410,7 +459,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @param projectRelative Flag to specify if the computed path should be projectRelative or not
      * @return the computed path
      */
-    public def String computeTargetPath(String projectRelativePath, boolean projectRelative) {
+    private def String computeTargetPath(String projectRelativePath, boolean projectRelative) {
         // The src directory of a typical java project is not part of the relevant target path.
         // (Would be more accurate: if the first directory is a java build source folder, remove it)
         var String projectRelativeRelevantPath;
@@ -481,7 +530,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         // Load main file
         mainFile = configuration.getAttribute(ATTR_MAIN_FILE, "")
-
+        
         // Model files to be compiled
         files = FileCompilationData.loadAllFromConfiguration(configuration)
     
@@ -509,40 +558,34 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      */
     private def void setVariables() {
         // Set project
-        setVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE, project.location.toOSString,
-            "Fully qualified path to the launched application")
+        setVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE, project.location.toOSString)
 
         // Set main file
         val mainFileName = new File(mainFile).name
-        val mainFileLocation = if(mainFileName != "") new File(project.location + File.separator + mainFile).
-                absolutePath else ""
+        val mainFileLocation = if(mainFileName != "")
+                                   new File(project.location + File.separator + mainFile).absolutePath
+                               else
+                                   ""
         val mainFilePath = mainFile
         val mainFileWithoutExtension = FilenameUtils.removeExtension(mainFileName)
-        setVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE, mainFileName,
-            "Name of the main file of the launched application")
-        setVariable(LaunchConfiguration.MAIN_FILE_LOCATION_VARIABLE, mainFileLocation,
-            "Fully qualified location of the main file of the launched application")
-        setVariable(LaunchConfiguration.MAIN_FILE_PATH_VARIABLE, mainFilePath,
-            "Project relative path of the main file of the launched application")
-        setVariable(LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainFileWithoutExtension,
-            "Project relative path of the main file of the launched application without file extension")
+        setVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE, mainFileName)
+        setVariable(LaunchConfiguration.MAIN_FILE_LOCATION_VARIABLE, mainFileLocation)
+        setVariable(LaunchConfiguration.MAIN_FILE_PATH_VARIABLE, mainFilePath)
+        setVariable(LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainFileWithoutExtension)
 
         // Set compiled main file
         val mainTarget = computeTargetPath(mainFile, true)
         val mainTargetName = new File(mainTarget).name
-        val mainTargetLocation = if(mainTargetName != "") new File(project.location + File.separator + mainTarget).
-                absolutePath else ""
+        val mainTargetLocation = if(mainTargetName != "")
+                                     new File(project.location + File.separator + mainTarget).absolutePath
+                                 else
+                                    ""
         val mainTargetPath = mainTarget
         val mainTargetWithoutExtension = FilenameUtils.removeExtension(mainTargetName)
-        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName,
-            "Name of the compiled main file of the launched application")
-        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation,
-            "Fully qualified location of the compiled main file of the launched application")
-        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE, mainTargetPath,
-            "Project relative path of the compiled main file of the launched application")
-        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
-            mainTargetWithoutExtension,
-            "Project relative path of the compiled main file of the launched application without file extension")
+        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName)
+        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation)
+        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE, mainTargetPath)
+        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainTargetWithoutExtension)
     }
 
     /**
@@ -552,15 +595,22 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @param value The variable's value
      * @param description The variable's description 
      */
-    private def void setVariable(String name, String value, String description) {
+    private def void setVariable(String name, String value) {
         var variable = variableManager.getValueVariable(name)
-        if (variable == null) {
-            variable = variableManager.newValueVariable(name, description, false, value)
-            variableManager.addVariables(#[variable])
-        } else {
-            variable.description = description
-            variable.value = value
-        }
+        variable.value = value
+    }
+    
+    /**
+     * Registers a string variable at the string variable manager.
+     * 
+     * @param name The name of the variable
+     * @param description A short description for the variable
+     */
+    private static def void initializeVariable(String name, String description) {
+        val manager = VariablesPlugin.getDefault.stringVariableManager
+        val variable = manager.newValueVariable(name, description, false, "")
+        variable.description = description
+        manager.addVariables(#[variable])
     }
 
     /**
