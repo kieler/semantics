@@ -79,9 +79,11 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		newInnerCircuit.innerActors += logicRegion
 		
 		val preRegisterRegion = CircuitFactory::eINSTANCE.createActor
+		preRegisterRegion.name = "Pre Registers"
 		newInnerCircuit.innerActors += preRegisterRegion
 		
 		val InitializationRegian = CircuitFactory::eINSTANCE.createActor
+		InitializationRegian.name = "Circuit Initialization"
 		newInnerCircuit.innerActors += InitializationRegian
 
 
@@ -89,34 +91,35 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		// filter all declarations to initialize the circuit
 		val declarations = scg.declarations.filter[isInput || isOutput].toList
 		// initialize circuit creates all in/outputs and a tick and reset input
-		circuitInitialization.initialize(declarations,InitializationRegian, logicRegion, newInnerCircuit, root)
+		circuitInitialization.initialize(declarations, InitializationRegian, logicRegion, newInnerCircuit, root)
 
-		val inputs = new LinkedList<String>
-		for(i: declarations.filter[isInput].toList){
+		val inOutPuts = new LinkedList<String>
+		for(i: declarations.filter[isInput && isOutput].toList){
 			for(vo : i.valuedObjects){
-				inputs.add(vo.name)	
+				inOutPuts.add(vo.name)	
+				System.out.println(vo.name)
 			}
 		}
 		
 		// create actors of the circuit 
 		val nodes = scg.eAllContents.filter(Node).toList
-		transformNodes2Actors(inputs, newInnerCircuit, nodes, preRegisterRegion, logicRegion, ssaMap)
+		transformNodes2Actors(inOutPuts, newInnerCircuit, nodes, preRegisterRegion, logicRegion, ssaMap)
 		
 		//cry for bananas if all actors are created
 		System.out.println("BANANAAAAAAAAS")
 		
 		initializePreRegion(preRegisterRegion)
 		
-		val ports = logicRegion.ports
-		for(p : ports){
-			System.out.println("PORTTTT: " + p.name + " has type " + p.type)
-		}
+//		val ports = logicRegion.ports
+//		for(p : ports){
+//			System.out.println("PORTTTT: " + p.name + " has type " + p.type)
+//		}
 
 		// create links for each region of the circuit
 		// this has to be done step by step..... otherwise wrong ports would be connected
 		linkCreator.rootRegion(root)
 		linkCreator.circuitRegion(newInnerCircuit)
-		linkCreator.logicRegion(logicRegion)
+		linkCreator.logicRegion(logicRegion, ssaMap)
 		linkCreator.preRegion(preRegisterRegion)
 		linkCreator.initRegion(InitializationRegian)
 		
@@ -133,13 +136,13 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		pre.ports.add(tickPort)
 		
 		resetPort.type = "InConnectorPre"
-		resetPort.name = "Reset"
+		resetPort.name = "Reset_pre"
 		pre.ports.add(resetPort)		
 	}
 	
 
 	
-	def transformNodes2Actors(LinkedList<String> inputs, Actor newCircuit, List<Node> nodes, Actor pre, Actor logic, HashMap<String, Integer> ssaMap) {
+	def transformNodes2Actors(LinkedList<String> inOutPuts, Actor newCircuit, List<Node> nodes, Actor pre, Actor logic, HashMap<String, Integer> ssaMap) {
 
 		// nodes in sequential scgs are assignments or conditionals which will be stored in lists
 		// all nodes of conditional "then" branches are stored in conditionalBranchNodes list
@@ -175,10 +178,10 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 				conditionalBranchNodes.add(n)
 
 				endCondition = n.^else.target
-				switch (endCondition) {
-					Assignment: System.out.println("Endcondition: " + endCondition.valuedObject.name)
-					Conditional: System.out.println("Endcondition: " + endCondition.condition.serialize.toString)
-				}
+//				switch (endCondition) {
+//					Assignment: System.out.println("Endcondition: " + endCondition.valuedObject.name)
+//					Conditional: System.out.println("Endcondition: " + endCondition.condition.serialize.toString)
+//				}
 				condBranch = true
 
 			// root.innerActors += transformConditional(n)
@@ -200,13 +203,13 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		}
 
 		// assuming nested conditional branches don't exist ////////////////     !!!!!!!!!!      /////////////////
-		transformConditionalBranch(inputs, conditionalBranchNodes, pre, newCircuit, logic, ssaMap)
+		transformConditionalBranch(inOutPuts, conditionalBranchNodes, pre, newCircuit, logic, ssaMap)
 
 		logic
 
 	}
 
-	def transformConditionalBranch(LinkedList<String> inputs, List<Node> conditionalsOrAssignments, Actor pre, Actor newCircuit, Actor logic,
+	def transformConditionalBranch(LinkedList<String> inOutPuts, List<Node> conditionalsOrAssignments, Actor pre, Actor newCircuit, Actor logic,
 		HashMap<String, Integer> ssaMap) {
 
 		var Boolean one = false
@@ -260,7 +263,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 				}
 
-				val String pred = findPredecessor(inputs, coa.valuedObject.name, outputPort, pre, ssaMap, logic)
+				val String pred = findPredecessor(inOutPuts, coa.valuedObject.name, outputPort, pre, ssaMap, logic)
 				System.out.println("found predecessor: " + pred + " for " + coa.valuedObject.name)
 				falsePort.name = pred
 				logic.innerActors += actor
@@ -277,45 +280,54 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 	}
 
-	def findPredecessor(LinkedList<String> inputs, String name, Port outputPort, Actor pre, HashMap<String, Integer> ssaMap, Actor logic) {
+	def findPredecessor(LinkedList<String> inOutPuts, String name, Port outputPort, Actor pre, HashMap<String, Integer> ssaMap, Actor logic) {
 
-		if (name.contains("_")) {
-			val index = name.lastIndexOf("_")
-			var String version = name.substring(index + 1)
-			var String varName = name.substring(0, index)
-			var int intVersion = Integer.parseInt(version.replaceAll("[\\D]", "")) // für später.. wegen vllt O1_4SSA
-			if (ssaMap.containsKey(varName)) {
-				if (intVersion == ssaMap.get(varName)) {
-					if(!inputs.contains(name) ){
-					outputPort.name = varName //+ "_out"
-					} else {
-						outputPort.name = name
-					}
-				} else {
-					outputPort.name = name
-				}
-
+		if (name.contains("_")) { // => true means maybe we have a SSA 
+			val index = name.lastIndexOf("_") // e.g. for O1_3_7 => 4 
+			var String version = name.substring(index + 1) //version => 7
+			var String varName = name.substring(0, index) // varName => O1_3
+			var int intVersion = Integer.parseInt(version.replaceAll("[\\D]", "")) // maybe not needed but was not sure if variables could get some more suffix
+			
+			if (ssaMap.containsKey(varName)) { // make sure the Assignment is a SSA
+			
+//				//first special case:
+//				//if this SSA has the highest version number, it's MUX output will be the output of the circuit
+//				// in this case the output port shall be named like the original variable e.g. O1_3 (see above)
+//				if (intVersion == ssaMap.get(varName)) {
+//					outputPort.name = name //+ "_out"
+//				//otherwise, there are higher versions of this variable which will need the full SSA name as input
+//				} else {
+//					outputPort.name = name
+//				}
+				outputPort.name = name
+				//second special case:
+				//it is the lowest version of this SSA
 				if (intVersion == 1) {
-					if(!inputs.contains(name) ){
-					// creates pre Actor which is a Register with input O1 and output O1_X if X is highest version of variable O1
+					//if the SSA is originally an input output variable we don't need a pre register
+					// to store it's value for the next tick  
+					if(!inOutPuts.contains(varName)){
+						System.out.println("create pre register for: " + name)
+					// creates pre actor which is a register with input O1 and output O1_X if X is highest version of variable O1
 					createPreActor(varName, logic, pre)
-					return "pre_" + varName 
+					return "pre_" + varName //the input variable will be the one coming from the generated pre register
 					
 					} else{
+						//if this is an input output variable and a SSA, 
+						//the name of the orignal variable should be used as input port name
+						// e.g. O1_3 (see above)
 						return varName
 						
-						//TODO: B_1 darf nicht B_1 als declarationheißen. das ist müll
-						//oder ich schränke bei denlinks ein, dass ports des selben actors nicht verwendet werden dürfen.
 					}
-				} else {
+				} 
+				//if we have neither the highest nor the lowest version of the SSA, simply use the version-1 
+				else {
 					var int predVersion = intVersion - 1
-
 					return ( varName + "_" + predVersion)
 				}
 
 			}
 
-		} else {
+		} else { // if this is no SSA, do nothing
 			return name
 		}
 	}
@@ -325,13 +337,12 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		val p_in = CircuitFactory::eINSTANCE.createPort
 		val p_out = CircuitFactory::eINSTANCE.createPort
 
-		addRegisterPorts(preActor)
+		addRegisterPorts(preActor, "Reset_pre")
 
 		preActor.type = "REG"
 		preActor.name = "pre_" + name // + "_1"
 		p_in.type = "In"
 		p_in.name = name //+ "_out"
-		System.out.println(p_in.name)
 		p_out.type = "Out"
 		p_out.name = "pre_" + name
 		preActor.ports += p_in
@@ -402,7 +413,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 					case PRE: {
 						actor.type = "REG"
 
-						addRegisterPorts(actor)
+						addRegisterPorts(actor, "Reset")
 
 					}
 					default: {
@@ -441,13 +452,13 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 			} // draw an actor for g0 = _GO as Go_local
 			else if (a instanceof ValuedObjectReference) {
-				addRegisterPorts(actor)
+				addRegisterPorts(actor, "Reset")
 				val inPort = CircuitFactory::eINSTANCE.createPort
 
 				actor.type = "REG"
 
 				inPort.type = "In"
-				System.out.println("FISNCIJNSDNJS:" + a.valuedObject.name + " F R O M " + assignment.valuedObject.name)
+//				System.out.println("FISNCIJNSDNJS:" + a.valuedObject.name + " F R O M " + assignment.valuedObject.name)
 				if (a.valuedObject.name == "_GO") {
 					inPort.name = "Reset_local"
 					guardname = "_GO"
@@ -472,7 +483,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		}
 	}
 
-	def addRegisterPorts(Actor actor) {
+	def addRegisterPorts(Actor actor, String reset) {
 		val tickPort = CircuitFactory::eINSTANCE.createPort
 		val resetPort = CircuitFactory::eINSTANCE.createPort
 
@@ -480,7 +491,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		tickPort.name = "Tick"
 
 		resetPort.type = "Sel"
-		resetPort.name = "Reset"
+		resetPort.name = reset
 
 		actor.ports.add(tickPort)
 		actor.ports.add(resetPort)
@@ -507,7 +518,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 				case PRE: {
 					actor.type = "REG"
 
-					addRegisterPorts(actor)
+					addRegisterPorts(actor, "Reset")
 				// System.out.println("found " + expression.getOperator + expression.subExpressions.get(0).serialize.toString)
 				}
 				default: {

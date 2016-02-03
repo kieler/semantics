@@ -20,6 +20,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 
 class SeqSSAscgTransformation extends AbstractProductionTransformation {
 
@@ -44,6 +46,12 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 
 
 	@Inject
+	extension KEffectsSerializeExtensions
+
+   @Inject 
+    extension KExpressionsDeclarationExtensions	
+    
+	@Inject
 	extension KExpressionsValuedObjectExtensions
 	val ssaMap = new HashMap<String, Integer>
 	val ssaPreMap = new HashMap<String, Integer>
@@ -54,58 +62,48 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 		ssaMap.clear
 		ssaPreMap.clear
 
-		val scgraph = scg.copy
-		System.out.println(scgraph.toString)
-
-		val nodes = scgraph.nodes
-
-		filterRelevantAssignments(nodes.filter(Assignment).toList, ssaMap)
-
-		createSSAs(scgraph, nodes)
+		//val scgraph = scg.copy
 		
-		setSSApreAndOutputs(nodes.filter(Declaration).toList)
+
+		val nodes = scg.nodes
+		
+		
+//		val declarations = scg.eAllContents.filter(Declaration).toList
+		filterRelevantAssignments(nodes.filter(Assignment).toList, ssaMap)
+		
+		createSSAs(scg, nodes)
+		
+//		setSSApreAndOutputs(scg.eAllContents.filter(Declaration).toList)
 		
 		context.compilationResult.addAuxiliaryData((new SSAMapData) => [ it.ssaMap = ssaMap ])
 		
-		return scgraph
+		return scg
 	}
 
-	def createSSAs(SCGraph scgCopy, EList<Node> nodes) {
+	def createSSAs(SCGraph scg, EList<Node> nodes) {
 
 		for (n : nodes) {
 			if (n instanceof Assignment) {
 				val name = n.valuedObject.name
 				if (ssaMap.containsKey(name)) {
-					val newNode = ScgFactory::eINSTANCE.createAssignment
 
-					
-					val copyExpr = n.assignment.copy
-					newNode.assignment = transformExpressions(copyExpr, ssaMap)
-					
+					transformExpressions(n.assignment, ssaMap)
 					val m = ssaMap.get(name)
 					ssaMap.replace(name, m, m + 1)
+					
 					val vo = createValuedObject(name + "_" + ssaMap.get(name))
-					newNode.valuedObject = vo
-				
-					val incomingLinks = n.incoming.immutableCopy
-					for (l : incomingLinks) {
-
-						l.target = newNode
-					}
-					newNode.next = n.next
-					n.replace(newNode)
-
+					
+					n.valuedObject = vo
 					
 				} else {
 					n.assignment = transformExpressions(n.assignment, ssaMap)
 				}
 			}
-
 		}
-
 	}
 
 	def setSSApreAndOutputs(List<Declaration> declarations) {
+		
 		for (d : declarations) {
 			if (d.isOutput && !d.isInput) {
 				d.valuedObjects.forEach [ vo |
@@ -113,6 +111,8 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 					val readvalue = ssaMap.get(name)
 					ssaPreMap.put(name, readvalue)
 				]
+			}
+			for(v : d.valuedObjects){
 			}
 		}
 
@@ -129,7 +129,6 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 				// insert every SSA variable into ssaMap and set its version to 0
 				if (!ssaMap.containsKey(name)) {
 					ssaMap.put(name, 0);
-					System.out.println("added " + name + " with value " + ssaMap.get(name))
 				}
 			}
 		]
@@ -141,9 +140,10 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 
 		values.forEach [ v |
 			val varName = v.valuedObject.name
+			if (map.containsKey(varName) && map.get(varName)>0) {
 
-			if (map.containsKey(varName)) {
-				v.valuedObject.name = varName + "_" + map.get(varName)
+				val vo = createValuedObject(varName + "_" + ssaMap.get(varName))
+				v.valuedObject = vo
 			}
 
 		]

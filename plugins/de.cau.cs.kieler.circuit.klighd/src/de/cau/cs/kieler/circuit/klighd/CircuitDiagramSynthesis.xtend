@@ -19,6 +19,8 @@ import javax.inject.Inject
 import de.cau.cs.kieler.circuit.Port
 import de.cau.cs.kieler.circuit.CircuitFactory
 import de.cau.cs.kieler.core.krendering.LineCap
+import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.KlighdConstants
 
 class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
@@ -30,13 +32,11 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject extension KRenderingExtensions
 	@Inject extension KPolylineExtensions
 	@Inject extension KColorExtensions
+	@Inject extension KLabelExtensions
 	extension KRenderingFactory = KRenderingFactory.eINSTANCE
-	
-	
 
 	override KNode transform(Actor model) {
-		
-		
+
 		val root = createNode().associateWith(model);
 		model.transformActor(root); // choose this if solution with two big frames is not optimal
 //		val circActor = CircuitFactory::eINSTANCE.createActor;
@@ -57,7 +57,6 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 		// draw actors and attach them to parent
 		val actorNode = actorSynthesis.transform(actor) // actor.createNode().associateWith(actor)
-		
 		parent.children += actorNode
 
 		// check if actor is a gate or an inner circuit
@@ -69,8 +68,13 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 		// add ports to actor
 		for (port : actor.ports) {
+			val isAtomic = (actor.innerActors.length == 0)
+			val isNotGate = (actor.type == "NOT")
 			val kPort = port.port.associateWith(port)
 			actorNode.ports += kPort => [
+				if (!isAtomic) {
+					it.addInsidePortLabel(port.name, 8, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
+				}
 
 				if (port.type.startsWith("In")) {
 
@@ -97,7 +101,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 				} else if (port.type.startsWith("Out")) {
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
 					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
-					if(port.outgoingLinks.length == 0){
+					if (port.outgoingLinks.length == 0) {
 //						System.out.println("HBDAFIHBSDK")
 						it.addEllipse.setBackground("red".color).lineWidth = 0;
 						it.setPortSize(6, 6);
@@ -113,12 +117,20 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
 
 				} else if (port.type.startsWith("Not")) {
-					// it.setPortSize(2, 5);
-					it.setLayoutOption(LayoutOptions.OFFSET, 0f);
-					it.setPortSize(6, 6);
-					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
-					it.addEllipse.setBackground("white".color).lineWidth = 1;
-				
+					if (isNotGate) {
+						it.setPortSize(5, 2);
+						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+						it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+					} 
+					else {
+						it.setLayoutOption(LayoutOptions.OFFSET, 0f);
+						it.setPortSize(6, 6);
+						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+						it.addEllipse.setBackground("white".color).lineWidth = 1;
+
+					}
+
 				}
 
 			]
@@ -129,7 +141,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			it.transformActor(actorNode);
 		]
 
-		// draw the edges for each link
+		// draw edges for links
 		actor.innerLinks.forEach [ link |
 			createEdge().associateWith(link) => [
 				switch (link.source) {

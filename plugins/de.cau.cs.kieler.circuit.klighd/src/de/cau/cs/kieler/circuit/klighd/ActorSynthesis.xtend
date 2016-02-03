@@ -20,6 +20,7 @@ import java.util.EnumSet
 import de.cau.cs.kieler.core.krendering.LineJoin
 import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
+import de.cau.cs.kieler.kiml.options.PortConstraints
 
 class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject
@@ -48,9 +49,9 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject extension KRenderingExtensions
 
 	extension KRenderingFactory = KRenderingFactory.eINSTANCE
-	static var r = 255
-	static var g = 255
-	static var b = 90
+	static var r = 235
+	static var g = 245
+	static var b = 245
 
 	override KNode transform(Actor actor) {
 
@@ -110,9 +111,9 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 			val orange = createKColor.setColor(209, 156, 100);
 			if (actor.eContainer != null) {
 
-				actorNode.addRoundedRectangle(4, 4, 1) => [
+				actorNode.addRoundedRectangle(4, 4, 0) => [
 					it.addDoubleClickAction(KlighdConstants.ACTION_COLLAPSE_EXPAND);
-					it.shadow = "black".color
+//					it.shadow = "black".color
 					it.selectionBackground = orange;
 					it.setBackground(customLightBlue);
 				]
@@ -124,10 +125,11 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 				EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 			actorNode.addLayoutParam(Properties.NODE_PLACER,
 				NodePlacementStrategy.LINEAR_SEGMENTS);
+			
 		}
 
 		if (hasName) {
-			actorNode.addOutsideBottomLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
+			actorNode.addOutsideTopLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
 				KlighdConstants.DEFAULT_FONT_NAME);
 		}
 
@@ -135,8 +137,8 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 	}
 	def colorReset(){
-		r = 255
-		g = 255
-		b = 90
+		r = 235
+		g = 245
+		b = 245
 	}
 }
