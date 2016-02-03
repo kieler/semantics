@@ -296,6 +296,8 @@ public class TimingAnalysis extends Job {
         }
 
         SCGraph scg = (SCGraph) compilationResult.getEObject();
+        
+        // to Transformation
         List<Tracing> tracings = compilationResult.getAuxiliaryData(Tracing.class);
         Tracing tracing = tracings.isEmpty() ? null : tracings.get(0);
 
@@ -305,12 +307,12 @@ public class TimingAnalysis extends Job {
         }
 
         // Step 2: Analyse tracing relation into a node to region mapping
-
+// to transformation end
         if (monitor.isCanceled()) {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-
+// to transformation
         Multimap<Object, Object> mapping = tracing.getMapping(scg, scchart);
         HashMap<Node, Region> nodeRegionMapping =
                 new HashMap<Node, Region>(mapping.keySet().size());
@@ -356,6 +358,8 @@ public class TimingAnalysis extends Job {
                 nodeRegionMapping.put((Node) originElement, region);
             }
         }
+        
+        // to transformation end
 
         // Step 3: Calculate timing blocks and add additional timing mark nodes into SCG
 
@@ -363,12 +367,16 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
+        
+        
+        //to transformation
         HashMap<String, Region> tppRegionMap = new HashMap<String, Region>();
 
         // insert timing program points
         int highestInsertedTPPNumber =
                 insertTPP(scg, nodeRegionMapping, tppRegionMap, scchartDummyRegion);
-
+        // to transformation end
+        
         // Step 4: Compile SCG to C code
 
         if (monitor.isCanceled()) {
@@ -922,7 +930,8 @@ public class TimingAnalysis extends Job {
 
         }
     }
-
+    
+    // goes to transformation
     /**
      * The method checks all edges of the SCG and finds edges, where source and target node are
      * associated with different regions from the original SCChart, of which the SCG is a
@@ -1032,7 +1041,9 @@ public class TimingAnalysis extends Job {
         }
         return tppCounter - 1;
     }
+    // end goes to transformation
 
+    // goes to transformation
     /**
      * This method retrieves the region the source node of the controlFlow edge given as a parameter
      * is attributed to.
@@ -1066,7 +1077,9 @@ public class TimingAnalysis extends Job {
         }
         return sourceRegion;
     }
+    // end goes to transformation
 
+    // goes to transformation
     /**
      * Creates a linked list of all controlflow edges of a sequential scg in fixed traversing order,
      * meaning top to bottom, then-branches first.
@@ -1091,7 +1104,9 @@ public class TimingAnalysis extends Job {
         traverseSequentialGraphEdges(entry, edgeList);
         return edgeList;
     }
+    // end goes to transformation
 
+    // goes to transformation
     /**
      * Recursive method to collect the edges of a sequential SCG in the traversing order top to
      * bottom, then branch first. The method relies on the special structure of the sequential SCG:
@@ -1142,7 +1157,9 @@ public class TimingAnalysis extends Job {
             }
         }
     }
+    // goes to transformation
 
+    // goes to transformation
     /**
      * Method inserts a single timing program point for interactive timing analysis in the edge
      * given as parameter controlFlow. This happens by inserting an Assignment with the TPP as text
@@ -1176,6 +1193,7 @@ public class TimingAnalysis extends Job {
         scg.getNodes().add(tpp);
         return tpp;
     }
+    // end goes to transformation
 
     // DEBUG METHODS
 
