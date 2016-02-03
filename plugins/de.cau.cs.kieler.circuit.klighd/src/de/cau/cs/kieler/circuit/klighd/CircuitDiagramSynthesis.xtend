@@ -72,6 +72,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			val isNotGate = (actor.type == "NOT")
 			val kPort = port.port.associateWith(port)
 			actorNode.ports += kPort => [
+				//it.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_RATIO)
 				if (!isAtomic) {
 					it.addInsidePortLabel(port.name, 8, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
 				}
@@ -92,6 +93,11 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 							it.addKPosition(LEFT, 0.5f, 0, BOTTOM, 4, 0)
 						]
 					} else {
+						if (port.name.startsWith("const")) {
+							it.addInsidePortLabel("Sel(1)", 8, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
+
+						}
+						
 						it.setPortSize(5, 2);
 						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
 						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
@@ -122,8 +128,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
 						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
 						it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
-					} 
-					else {
+					} else {
 						it.setLayoutOption(LayoutOptions.OFFSET, 0f);
 						it.setPortSize(6, 6);
 						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)

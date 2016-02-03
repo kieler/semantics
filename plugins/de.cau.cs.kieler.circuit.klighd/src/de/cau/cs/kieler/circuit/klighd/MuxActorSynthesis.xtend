@@ -13,6 +13,8 @@ import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
+import de.cau.cs.kieler.core.krendering.LineCap
+import de.cau.cs.kieler.core.krendering.LineJoin
 
 class MuxActorSynthesis implements IDrawableActor {
 	@Inject
@@ -44,19 +46,54 @@ class MuxActorSynthesis implements IDrawableActor {
 	override draw(Actor actor) {
 		val KNode node = actor.node
 
-		node.setNodeSize(30, 30);
+		node.setNodeSize(20, 30);
 
-		node.addRectangle =>
-			[
+		node.addRectangle => [
+			it.invisible = true;
+			it.lineCap = LineCap.CAP_ROUND;
+			it.lineCap.propagateToChildren = true
 
-				it.selectionBackground = "green".color;
-				it.setBackground("white".color);
-				node.addInsideBottomCenteredNodeLabel("MUX", KlighdConstants.DEFAULT_FONT_SIZE,
-					KlighdConstants.DEFAULT_FONT_NAME);
+			it.addRectangle => [
+				it.lineWidth = 0;
+				it.background = "white".color;
+				it.selectionBackground = "red".color;
+				it.setAreaPlacementData.from(LEFT, -0f, 0, TOP, 3, 0).to(RIGHT, 0f, 0, BOTTOM, 3, 0)
+			];
 
+			
+			
+			it.addPolygon() => [
+				it.lineWidth = 0
+				it.background = "white".color;
+				it.selectionBackground = "red".color;
+				it.addKPosition(LEFT, 0f, 0, TOP, -3, 0)
+				it.addKPosition(LEFT, 0f, 0, TOP, 3, 0f)
+				it.addKPosition(RIGHT, 0f, 0, TOP, 3f, 0)
 			]
+			
+			it.addPolygon() => [
+				it.lineWidth = 0
+				it.background = "white".color;
+				it.selectionBackground = "red".color;
+				it.addKPosition(LEFT, 0f, 0, BOTTOM, -3, 0)
+				it.addKPosition(LEFT, 0f, 0, BOTTOM, 3, 0f)
+				it.addKPosition(RIGHT, 0f, 0, BOTTOM, 3f, 0)
+			]
+			
+			it.addPolyline => [
+				it.lineWidth = 1
+				it.lineCap = LineCap.CAP_ROUND;
+				it.lineJoin = LineJoin.JOIN_ROUND;
+				it.addKPosition(LEFT, 0f, 0, BOTTOM, -3f, 0)
+				it.addKPosition(LEFT, 0, 0, TOP, -3, 0)
+				it.addKPosition(RIGHT, 0, 0, TOP, 3f, 0)
+				it.addKPosition(RIGHT, 0, 0, BOTTOM, 3f, 0)
+				it.addKPosition(LEFT, 0, 0, BOTTOM, -3, 0)
+			]
+		]
 
 		return node;
+
 	}
 
 }

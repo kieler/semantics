@@ -124,7 +124,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 			actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 				EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 			actorNode.addLayoutParam(Properties.NODE_PLACER,
-				NodePlacementStrategy.LINEAR_SEGMENTS);
+				NodePlacementStrategy.INTERACTIVE);
 			
 		}
 
