@@ -85,8 +85,8 @@ import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.s.DataDependency
 import de.cau.cs.kieler.sccharts.s.DependencyGraph
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
-import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
+//import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
+//import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import java.util.List
 import javax.inject.Provider
 import org.eclipse.emf.ecore.EObject
@@ -119,9 +119,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     // -------------------------------------------------------------------------
     // Serialization of actions (state actions and transition labels)   
-    private static val Injector i = ActionsStandaloneSetup::doSetup();
-    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
-    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
+//    private static val Injector i = Sct3StandaloneSetup::doSetup();
+//    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
+//    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
     
     // a global diagram option "@BlackWhite"
     private boolean globalBWOption = false;
@@ -728,7 +728,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
                                     0);
-                                scopeProvider.parent = s;
+//                                scopeProvider.parent = s;
                                 var declaration = "";
                                 var type = "";
                                 if (tg.type != ValueType::PURE) {
@@ -783,7 +783,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
                 }
                 if (SHOW_STATE_ACTIONS.booleanValue) {
-                    scopeProvider.parent = s;
+//                    scopeProvider.parent = s;
                     for (action : s.localActions) {
                         it.addRectangle => [
                             it.invisible = true;
@@ -898,7 +898,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 };
             ];
             if (SHOW_LABELS.booleanValue) {
-                scopeProvider.parent = t.sourceState;
+//                scopeProvider.parent = t.sourceState;
 
                 // For serialization set these flags to false to ommit them in the transition label
                 val tCopy = t.copy

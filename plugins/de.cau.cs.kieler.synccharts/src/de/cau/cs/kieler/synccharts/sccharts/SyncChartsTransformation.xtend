@@ -38,11 +38,11 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import de.cau.cs.kieler.synccharts.State
 import de.cau.cs.kieler.synccharts.TextEffect
 import de.cau.cs.kieler.synccharts.TransitionType
+import de.cau.cs.kieler.sccharts.text3.Sct3StandaloneSetup
+import de.cau.cs.kieler.sccharts.text3.scoping.Sct3ScopeProviderX
 
 /** 
  * Transforming SyncCharts into SCCharts.
@@ -65,8 +65,8 @@ class SyncChartsTransformation {
     @Inject
     extension SCChartsExtension
     
-    private static val Injector i = ActionsStandaloneSetup::doSetup();
-    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
+    private static val Injector i = Sct3StandaloneSetup::doSetup();
+    private static val Sct3ScopeProviderX scopeProvider = i.getInstance(typeof(Sct3ScopeProviderX));
     ////private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
     
     //-------------------------------------------------------------------------

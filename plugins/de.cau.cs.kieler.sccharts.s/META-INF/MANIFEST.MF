@@ -13,14 +13,13 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.104.0",
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.core.model,
- com.google.inject;bundle-version="3.0.0", 
+ com.google.inject;bundle-version="3.0.0",
  de.cau.cs.kieler.sccharts,
- de.cau.cs.kieler.sccharts.text,
- de.cau.cs.kieler.sccharts.text.ui,
  org.eclipse.xtext;bundle-version="2.3.0",
  org.eclipse.core.resources;bundle-version="3.8.1",
  de.cau.cs.kieler.s,
- de.cau.cs.kieler.s.ui
+ de.cau.cs.kieler.s.ui,
+ de.cau.cs.kieler.sccharts.text3
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.sccharts.s,
  de.cau.cs.kieler.sccharts.s.handler

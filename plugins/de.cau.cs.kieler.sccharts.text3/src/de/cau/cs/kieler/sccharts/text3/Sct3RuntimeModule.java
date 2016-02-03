@@ -8,4 +8,8 @@ package de.cau.cs.kieler.sccharts.text3;
  */
 public class Sct3RuntimeModule extends de.cau.cs.kieler.sccharts.text3.AbstractSct3RuntimeModule {
 
+	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
+		return de.cau.cs.kieler.sccharts.text3.scoping.Sct3ScopeProviderX.class;
+	}	
+	
 }

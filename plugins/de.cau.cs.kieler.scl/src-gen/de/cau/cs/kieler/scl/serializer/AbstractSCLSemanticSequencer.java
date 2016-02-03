@@ -29,6 +29,7 @@ import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
+import de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
@@ -205,6 +206,9 @@ public abstract class AbstractSCLSemanticSequencer extends KEXTSemanticSequencer
 		else if(semanticObject.eClass().getEPackage() == KextPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case KextPackage.ANNOTATED_EXPRESSION:
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
+				return; 
+			case KextPackage.KEXT_SCOPE:
+				sequence_Scope(context, (KEXTScope) semanticObject); 
 				return; 
 			case KextPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 

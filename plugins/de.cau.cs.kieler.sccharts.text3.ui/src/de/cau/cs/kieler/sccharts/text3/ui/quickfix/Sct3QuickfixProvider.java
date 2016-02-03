@@ -3,12 +3,14 @@
  */
 package de.cau.cs.kieler.sccharts.text3.ui.quickfix;
 
+import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
+
 /**
  * Custom quickfixes.
  *
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#quick-fixes
  */
-public class Sct3QuickfixProvider extends de.cau.cs.kieler.sccharts.text.sct.ui.quickfix.SctQuickfixProvider {
+public class Sct3QuickfixProvider extends DefaultQuickfixProvider {
 
 //	@Fix(MyJavaValidator.INVALID_NAME)
 //	public void capitalizeName(final Issue issue, IssueResolutionAcceptor acceptor) {

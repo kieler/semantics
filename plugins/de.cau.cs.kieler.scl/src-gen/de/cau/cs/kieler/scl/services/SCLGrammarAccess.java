@@ -910,13 +910,23 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
 	//// test entities may follow.
 	//Kext returns kext::Kext:
-	//	declarations+=Declaration* entities+=TestEntity*;
+	//	scopes+=Scope*;
 	public KEXTGrammarAccess.KextElements getKextAccess() {
 		return gaKEXT.getKextAccess();
 	}
 	
 	public ParserRule getKextRule() {
 		return getKextAccess().getRule();
+	}
+
+	//Scope returns kext::KEXTScope:
+	//	{kext::KEXTScope} ("scope" id=ID ":")? declarations+=Declaration* entities+=TestEntity*;
+	public KEXTGrammarAccess.ScopeElements getScopeAccess() {
+		return gaKEXT.getScopeAccess();
+	}
+	
+	public ParserRule getScopeRule() {
+		return getScopeAccess().getRule();
 	}
 
 	//// Test Entity Rule
@@ -983,7 +993,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
 	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
-	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*;
+	//	type=ValueType) | signal?="signal" valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*;
 	public KEXTGrammarAccess.VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
 		return gaKEXT.getVariableDeclarationWOSemicolonAccess();
 	}
@@ -1452,7 +1462,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject] ("[" indices+=Expression "]")*;
+	//	valuedObject=[ValuedObject] ("." subReference=ValuedObjectReference)? ("[" indices+=Expression "]")*;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKEXT.getValuedObjectReferenceAccess();
 	}

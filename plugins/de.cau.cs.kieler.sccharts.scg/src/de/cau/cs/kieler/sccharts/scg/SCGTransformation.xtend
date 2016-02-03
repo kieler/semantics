@@ -37,8 +37,6 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -72,6 +70,9 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtension
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.sccharts.text3.Sct3StandaloneSetup
+import de.cau.cs.kieler.sccharts.text3.scoping.Sct3ScopeProvider
+import de.cau.cs.kieler.sccharts.text3.scoping.Sct3ScopeProviderX
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -126,8 +127,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     @Inject
     extension SCGThreadExtensions
 
-    private static val Injector i = ActionsStandaloneSetup::doSetup();
-    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
+    private static val Injector i = Sct3StandaloneSetup::doSetup();
+    private static val Sct3ScopeProviderX scopeProvider = i.getInstance(typeof(Sct3ScopeProviderX));
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
 
     private val stateTypeCache = <State, Set<PatternType>>newHashMap

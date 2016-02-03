@@ -29,6 +29,7 @@ import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
+import de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
@@ -75,7 +76,6 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
 				   context == grammarAccess.getKeyStringValueAnnotationRule() ||
-				   context == grammarAccess.getRestrictedTypeAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
@@ -85,11 +85,21 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
+				else if(context == grammarAccess.getRestrictedKeyStringValueAnnotationRule() ||
+				   context == grammarAccess.getRestrictedTypeAnnotationRule()) {
+					sequence_RestrictedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
 				else break;
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
 				if(context == grammarAccess.getQuotedStringAnnotationRule() ||
 				   context == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
 					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getRestrictedTypeAnnotationRule() ||
+				   context == grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()) {
+					sequence_RestrictedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getAnnotationRule() ||
@@ -108,6 +118,10 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 				}
 				else if(context == grammarAccess.getEffectRule()) {
 					sequence_Assignment_Effect_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getDFAssignmentRule()) {
+					sequence_DFAssignment(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getPostfixEffectRule()) {
@@ -220,6 +234,9 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 			case KextPackage.ANNOTATED_EXPRESSION:
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
+			case KextPackage.KEXT_SCOPE:
+				sequence_Scope(context, (KEXTScope) semanticObject); 
+				return; 
 			case KextPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 
@@ -311,6 +328,15 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon* states+=State+)
 	 */
 	protected void sequence_ControlflowRegion(EObject context, ControlflowRegion semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=AssignOperator expression=Expression)
+	 */
+	protected void sequence_DFAssignment(EObject context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -414,7 +440,7 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     ((annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon*)? states+=State*)
+	 *     states+=State+
 	 */
 	protected void sequence_SingleControlflowRegion(EObject context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -423,7 +449,7 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon* equations+=Equation*)
+	 *     equations+=Equation+
 	 */
 	protected void sequence_SingleDataflowRegion(EObject context, DataflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -464,7 +490,7 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 	/**
 	 * Constraint:
 	 *     (
-	 *         annotations+=Annotation* 
+	 *         annotations+=RestrictedTypeAnnotation* 
 	 *         type=TransitionType 
 	 *         targetState=[State|ID] 
 	 *         immediate?='immediate'? 

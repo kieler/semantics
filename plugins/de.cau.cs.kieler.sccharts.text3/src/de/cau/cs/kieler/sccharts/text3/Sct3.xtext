@@ -51,7 +51,7 @@ State returns sccharts::State:
 // ------------------ //
 
 Transition returns sccharts::Transition:
-	annotations+=Annotation*
+	annotations+=RestrictedTypeAnnotation*
 	type=TransitionType
 	targetState=[sccharts::State|ID]
 	immediate?='immediate'?
@@ -109,48 +109,40 @@ Region returns sccharts::Region:
 
 SingleControlflowRegion returns sccharts::ControlflowRegion:
 	{sccharts::ControlflowRegion}
-    ((annotations += Annotation)*
-    	'region' (id=ID)? (label=STRING)? ':'
-    	(declarations+=DeclarationWOSemicolon)*
-    )?
-    (states+=State)*;
+    (states+=State)+;
 
 
 SingleDataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
-    ((annotations += Annotation)*
-    	'dataflow' (id=ID)? (label=STRING)? ':'
-    	(declarations+=DeclarationWOSemicolon)*
-    )
-    (equations += Equation)*;
-
-
-
+    (equations += Equation)+;
 
 
 ControlflowRegion returns sccharts::ControlflowRegion:
 	{sccharts::ControlflowRegion}
-    (annotations += Annotation)*
-    'region' (id=ID)? (label=STRING)? ':'
-    (declarations+=DeclarationWOSemicolon)*
-    (states+=State)+;
+    annotations+=Annotation*
+    'region' id=ID? label=STRING? ':'
+    declarations+=DeclarationWOSemicolon*
+    states+=State+;
 
 
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
-    (annotations += Annotation)*
-    'dataflow' (id=ID)? (label=STRING)? ':'
-    (declarations+=DeclarationWOSemicolon)*
-    (
-        (equations += Equation)
-    )+
-;
+    annotations+=Annotation*
+    'dataflow' id=ID? label=STRING? ':'
+    declarations+=DeclarationWOSemicolon*
+    equations+=Equation+;
 
 
 
-// ---------/------ //
+// ---------------- //
 //  Equation Rules  // 
 // ---------------- //
+
+DFAssignment returns keffects::Assignment:
+    annotations+=Annotation*    
+	valuedObject=[kexpressions::ValuedObject]
+	('[' indices+=Expression ']')*
+	 operator=AssignOperator expression = Expression;
 
 Equation returns sccharts::Equation:
     {sccharts::Equation}
