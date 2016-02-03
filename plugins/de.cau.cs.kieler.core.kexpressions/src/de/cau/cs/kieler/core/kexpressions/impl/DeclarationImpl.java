@@ -39,118 +39,118 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class DeclarationImpl extends AnnotatableImpl implements Declaration {
     /**
-     * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getValuedObjects()
-     * @generated
-     * @ordered
-     */
+	 * @see #getValuedObjects()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<ValuedObject> valuedObjects;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected DeclarationImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return KExpressionsPackage.Literals.DECLARATION;
-    }
+		return KExpressionsPackage.Literals.DECLARATION;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<ValuedObject> getValuedObjects() {
-        if (valuedObjects == null) {
-            valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, KExpressionsPackage.DECLARATION__VALUED_OBJECTS);
-        }
-        return valuedObjects;
-    }
+		if (valuedObjects == null) {
+			valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, KExpressionsPackage.DECLARATION__VALUED_OBJECTS);
+		}
+		return valuedObjects;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
-                return ((InternalEList<?>)getValuedObjects()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
+				return ((InternalEList<?>)getValuedObjects()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
-                return getValuedObjects();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
+				return getValuedObjects();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
-                getValuedObjects().clear();
-                getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
+				getValuedObjects().clear();
+				getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
-                getValuedObjects().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
+				getValuedObjects().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
-                return valuedObjects != null && !valuedObjects.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
+				return valuedObjects != null && !valuedObjects.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //DeclarationImpl

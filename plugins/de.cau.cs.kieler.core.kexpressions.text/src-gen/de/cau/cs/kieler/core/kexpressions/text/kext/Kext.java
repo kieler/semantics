@@ -17,8 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getDeclarations <em>Declarations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getEntities <em>Entities</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getScopes <em>Scopes</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKext()
@@ -28,35 +27,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface Kext extends EObject
 {
   /**
-     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
-     * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-     * @return the value of the '<em>Declarations</em>' containment reference list.
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKext_Declarations()
-     * @model containment="true"
-     * @generated
-     */
-  EList<Declaration> getDeclarations();
-
-  /**
-     * Returns the value of the '<em><b>Entities</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity}.
-     * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Entities</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-     * @return the value of the '<em>Entities</em>' containment reference list.
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKext_Entities()
-     * @model containment="true"
-     * @generated
-     */
-  EList<TestEntity> getEntities();
+	 * Returns the value of the '<em><b>Scopes</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Scopes</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Scopes</em>' containment reference list.
+	 * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKext_Scopes()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<KEXTScope> getScopes();
 
 } // Kext

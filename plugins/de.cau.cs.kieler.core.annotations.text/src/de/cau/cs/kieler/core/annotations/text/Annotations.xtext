@@ -50,7 +50,8 @@ ValuedAnnotation returns Annotation:
 // You can use this rule in derived grammars if you don't want to permit typed strings. 
 RestrictedTypeAnnotation returns Annotation:
     CommentAnnotation |
-    KeyStringValueAnnotation |
+    RestrictedKeyStringValueAnnotation |
+    RestrictedTypedKeyStringValueAnnotation |
     TagAnnotation;
 
 
@@ -82,12 +83,18 @@ TagAnnotation returns Annotation:
 // You may separate different values via comma.   
 KeyStringValueAnnotation returns StringAnnotation:
     '@' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
+    
+RestrictedKeyStringValueAnnotation returns StringAnnotation:
+    '@' name=ExtendedID values += EStringBoolean (',' values += EStringBoolean)*;    
 
 
 // TypedKeyStringValueAnnotation
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 TypedKeyStringValueAnnotation returns TypedStringAnnotation:
     '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringAllTypes (',' values += EStringAllTypes)*;
+
+RestrictedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+    '@' name=ExtendedID '[' type=ExtendedID ']' values += EStringBoolean (',' values += EStringBoolean)*;
     
     
 // QuotedKeyStringValueAnnotation

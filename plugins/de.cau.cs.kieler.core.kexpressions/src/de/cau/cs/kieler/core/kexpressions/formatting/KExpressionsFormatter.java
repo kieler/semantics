@@ -77,9 +77,9 @@ public class KExpressionsFormatter extends AnnotationsFormatter {
             }
         }
         
-        c.setNoSpace().before(f.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0());
-        c.setNoSpace().after(f.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0());
-        c.setNoSpace().before(f.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2());
+        c.setNoSpace().before(f.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_2_0());
+        c.setNoSpace().after(f.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_2_0());
+        c.setNoSpace().before(f.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_2_2());
         
         c.setNoSpace().after(f.getFunctionCallAccess().getLessThanSignKeyword_0());
         c.setNoSpace().before(f.getFunctionCallAccess().getGreaterThanSignKeyword_3());

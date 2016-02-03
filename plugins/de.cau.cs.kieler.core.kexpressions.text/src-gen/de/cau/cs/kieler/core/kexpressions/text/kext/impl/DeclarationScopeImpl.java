@@ -1,10 +1,11 @@
 /**
  */
-package de.cau.cs.kieler.core.kexpressions.impl;
+package de.cau.cs.kieler.core.kexpressions.text.kext.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Call;
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.kexpressions.Parameter;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
+
+import de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope;
+import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 
 import java.util.Collection;
 
@@ -20,34 +21,34 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Call</b></em>'.
+ * An implementation of the model object '<em><b>Declaration Scope</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.CallImpl#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.DeclarationScopeImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class CallImpl extends ExpressionImpl implements Call {
+public class DeclarationScopeImpl extends IdentifiableImpl implements DeclarationScope {
 	/**
-	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+	 * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getParameters()
+	 * @see #getDeclarations()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Parameter> parameters;
+	protected EList<Declaration> declarations;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected CallImpl() {
+	protected DeclarationScopeImpl() {
 		super();
 	}
 
@@ -58,7 +59,7 @@ public class CallImpl extends ExpressionImpl implements Call {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return KExpressionsPackage.Literals.CALL;
+		return KextPackage.Literals.DECLARATION_SCOPE;
 	}
 
 	/**
@@ -66,11 +67,11 @@ public class CallImpl extends ExpressionImpl implements Call {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Parameter> getParameters() {
-		if (parameters == null) {
-			parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.CALL__PARAMETERS);
+	public EList<Declaration> getDeclarations() {
+		if (declarations == null) {
+			declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, KextPackage.DECLARATION_SCOPE__DECLARATIONS);
 		}
-		return parameters;
+		return declarations;
 	}
 
 	/**
@@ -81,8 +82,8 @@ public class CallImpl extends ExpressionImpl implements Call {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case KExpressionsPackage.CALL__PARAMETERS:
-				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
+			case KextPackage.DECLARATION_SCOPE__DECLARATIONS:
+				return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -95,8 +96,8 @@ public class CallImpl extends ExpressionImpl implements Call {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case KExpressionsPackage.CALL__PARAMETERS:
-				return getParameters();
+			case KextPackage.DECLARATION_SCOPE__DECLARATIONS:
+				return getDeclarations();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -110,9 +111,9 @@ public class CallImpl extends ExpressionImpl implements Call {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case KExpressionsPackage.CALL__PARAMETERS:
-				getParameters().clear();
-				getParameters().addAll((Collection<? extends Parameter>)newValue);
+			case KextPackage.DECLARATION_SCOPE__DECLARATIONS:
+				getDeclarations().clear();
+				getDeclarations().addAll((Collection<? extends Declaration>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -126,8 +127,8 @@ public class CallImpl extends ExpressionImpl implements Call {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case KExpressionsPackage.CALL__PARAMETERS:
-				getParameters().clear();
+			case KextPackage.DECLARATION_SCOPE__DECLARATIONS:
+				getDeclarations().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -141,10 +142,10 @@ public class CallImpl extends ExpressionImpl implements Call {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case KExpressionsPackage.CALL__PARAMETERS:
-				return parameters != null && !parameters.isEmpty();
+			case KextPackage.DECLARATION_SCOPE__DECLARATIONS:
+				return declarations != null && !declarations.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //CallImpl
+} //DeclarationScopeImpl

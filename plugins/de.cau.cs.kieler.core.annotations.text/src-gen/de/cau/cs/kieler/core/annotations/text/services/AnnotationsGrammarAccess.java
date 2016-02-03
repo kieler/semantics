@@ -91,8 +91,9 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "RestrictedTypeAnnotation");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cCommentAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cKeyStringValueAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cTagAnnotationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cRestrictedKeyStringValueAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cRestrictedTypedKeyStringValueAnnotationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cTagAnnotationParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//// Restricted Type Annotation Rule
 		// // The restricted type annotation rule does not allow typed string annotations. 
@@ -100,20 +101,23 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//// You can use this rule in derived grammars if you don't want to permit typed strings. 
 		// RestrictedTypeAnnotation
 		//returns Annotation:
-		//	CommentAnnotation | KeyStringValueAnnotation | TagAnnotation;
+		//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation;
 		@Override public ParserRule getRule() { return rule; }
 
-		//CommentAnnotation | KeyStringValueAnnotation | TagAnnotation
+		//CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//CommentAnnotation
 		public RuleCall getCommentAnnotationParserRuleCall_0() { return cCommentAnnotationParserRuleCall_0; }
 
-		//KeyStringValueAnnotation
-		public RuleCall getKeyStringValueAnnotationParserRuleCall_1() { return cKeyStringValueAnnotationParserRuleCall_1; }
+		//RestrictedKeyStringValueAnnotation
+		public RuleCall getRestrictedKeyStringValueAnnotationParserRuleCall_1() { return cRestrictedKeyStringValueAnnotationParserRuleCall_1; }
+
+		//RestrictedTypedKeyStringValueAnnotation
+		public RuleCall getRestrictedTypedKeyStringValueAnnotationParserRuleCall_2() { return cRestrictedTypedKeyStringValueAnnotationParserRuleCall_2; }
 
 		//TagAnnotation
-		public RuleCall getTagAnnotationParserRuleCall_2() { return cTagAnnotationParserRuleCall_2; }
+		public RuleCall getTagAnnotationParserRuleCall_3() { return cTagAnnotationParserRuleCall_3; }
 	}
 
 	public class QuotedStringAnnotationElements extends AbstractParserRuleElementFinder {
@@ -249,6 +253,54 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getValuesEStringAllTypesParserRuleCall_3_1_0() { return cValuesEStringAllTypesParserRuleCall_3_1_0; }
 	}
 
+	public class RestrictedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "RestrictedKeyStringValueAnnotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cValuesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValuesEStringBooleanParserRuleCall_2_0 = (RuleCall)cValuesAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cValuesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cValuesEStringBooleanParserRuleCall_3_1_0 = (RuleCall)cValuesAssignment_3_1.eContents().get(0);
+		
+		//RestrictedKeyStringValueAnnotation returns StringAnnotation:
+		//	"@" name=ExtendedID values+=EStringBoolean ("," values+=EStringBoolean)*;
+		@Override public ParserRule getRule() { return rule; }
+
+		//"@" name=ExtendedID values+=EStringBoolean ("," values+=EStringBoolean)*
+		public Group getGroup() { return cGroup; }
+
+		//"@"
+		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
+
+		//name=ExtendedID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ExtendedID
+		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
+
+		//values+=EStringBoolean
+		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
+
+		//EStringBoolean
+		public RuleCall getValuesEStringBooleanParserRuleCall_2_0() { return cValuesEStringBooleanParserRuleCall_2_0; }
+
+		//("," values+=EStringBoolean)*
+		public Group getGroup_3() { return cGroup_3; }
+
+		//","
+		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+
+		//values+=EStringBoolean
+		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
+
+		//EStringBoolean
+		public RuleCall getValuesEStringBooleanParserRuleCall_3_1_0() { return cValuesEStringBooleanParserRuleCall_3_1_0; }
+	}
+
 	public class TypedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypedKeyStringValueAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -314,6 +366,70 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//EStringAllTypes
 		public RuleCall getValuesEStringAllTypesParserRuleCall_6_1_0() { return cValuesEStringAllTypesParserRuleCall_6_1_0; }
+	}
+
+	public class RestrictedTypedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "RestrictedTypedKeyStringValueAnnotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTypeExtendedIDParserRuleCall_3_0 = (RuleCall)cTypeAssignment_3.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cValuesAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cValuesEStringBooleanParserRuleCall_5_0 = (RuleCall)cValuesAssignment_5.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cCommaKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cValuesAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cValuesEStringBooleanParserRuleCall_6_1_0 = (RuleCall)cValuesAssignment_6_1.eContents().get(0);
+		
+		//RestrictedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+		//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*;
+		@Override public ParserRule getRule() { return rule; }
+
+		//"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*
+		public Group getGroup() { return cGroup; }
+
+		//"@"
+		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
+
+		//name=ExtendedID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ExtendedID
+		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_2() { return cLeftSquareBracketKeyword_2; }
+
+		//type=ExtendedID
+		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
+
+		//ExtendedID
+		public RuleCall getTypeExtendedIDParserRuleCall_3_0() { return cTypeExtendedIDParserRuleCall_3_0; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
+
+		//values+=EStringBoolean
+		public Assignment getValuesAssignment_5() { return cValuesAssignment_5; }
+
+		//EStringBoolean
+		public RuleCall getValuesEStringBooleanParserRuleCall_5_0() { return cValuesEStringBooleanParserRuleCall_5_0; }
+
+		//("," values+=EStringBoolean)*
+		public Group getGroup_6() { return cGroup_6; }
+
+		//","
+		public Keyword getCommaKeyword_6_0() { return cCommaKeyword_6_0; }
+
+		//values+=EStringBoolean
+		public Assignment getValuesAssignment_6_1() { return cValuesAssignment_6_1; }
+
+		//EStringBoolean
+		public RuleCall getValuesEStringBooleanParserRuleCall_6_1_0() { return cValuesEStringBooleanParserRuleCall_6_1_0; }
 	}
 
 	public class QuotedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -618,7 +734,9 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private final CommentAnnotationElements pCommentAnnotation;
 	private final TagAnnotationElements pTagAnnotation;
 	private final KeyStringValueAnnotationElements pKeyStringValueAnnotation;
+	private final RestrictedKeyStringValueAnnotationElements pRestrictedKeyStringValueAnnotation;
 	private final TypedKeyStringValueAnnotationElements pTypedKeyStringValueAnnotation;
+	private final RestrictedTypedKeyStringValueAnnotationElements pRestrictedTypedKeyStringValueAnnotation;
 	private final QuotedKeyStringValueAnnotationElements pQuotedKeyStringValueAnnotation;
 	private final QuotedTypedKeyStringValueAnnotationElements pQuotedTypedKeyStringValueAnnotation;
 	private final EStringElements pEString;
@@ -651,7 +769,9 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pCommentAnnotation = new CommentAnnotationElements();
 		this.pTagAnnotation = new TagAnnotationElements();
 		this.pKeyStringValueAnnotation = new KeyStringValueAnnotationElements();
+		this.pRestrictedKeyStringValueAnnotation = new RestrictedKeyStringValueAnnotationElements();
 		this.pTypedKeyStringValueAnnotation = new TypedKeyStringValueAnnotationElements();
+		this.pRestrictedTypedKeyStringValueAnnotation = new RestrictedTypedKeyStringValueAnnotationElements();
 		this.pQuotedKeyStringValueAnnotation = new QuotedKeyStringValueAnnotationElements();
 		this.pQuotedTypedKeyStringValueAnnotation = new QuotedTypedKeyStringValueAnnotationElements();
 		this.pEString = new EStringElements();
@@ -739,7 +859,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
 	// RestrictedTypeAnnotation
 	//returns Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TagAnnotation;
+	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation;
 	public RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
 		return pRestrictedTypeAnnotation;
 	}
@@ -805,6 +925,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
 
+	//RestrictedKeyStringValueAnnotation returns StringAnnotation:
+	//	"@" name=ExtendedID values+=EStringBoolean ("," values+=EStringBoolean)*;
+	public RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
+		return pRestrictedKeyStringValueAnnotation;
+	}
+	
+	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
+		return getRestrictedKeyStringValueAnnotationAccess().getRule();
+	}
+
 	//// TypedKeyStringValueAnnotation
 	// // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//
@@ -816,6 +946,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//RestrictedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*;
+	public RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
+		return pRestrictedTypedKeyStringValueAnnotation;
+	}
+	
+	public ParserRule getRestrictedTypedKeyStringValueAnnotationRule() {
+		return getRestrictedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// QuotedKeyStringValueAnnotation

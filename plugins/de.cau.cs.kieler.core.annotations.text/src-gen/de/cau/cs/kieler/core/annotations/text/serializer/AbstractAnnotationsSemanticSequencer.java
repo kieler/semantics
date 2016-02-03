@@ -38,7 +38,6 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
 				   context == grammarAccess.getKeyStringValueAnnotationRule() ||
-				   context == grammarAccess.getRestrictedTypeAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
@@ -48,11 +47,21 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
+				else if(context == grammarAccess.getRestrictedKeyStringValueAnnotationRule() ||
+				   context == grammarAccess.getRestrictedTypeAnnotationRule()) {
+					sequence_RestrictedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
 				else break;
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
 				if(context == grammarAccess.getQuotedStringAnnotationRule() ||
 				   context == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
 					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getRestrictedTypeAnnotationRule() ||
+				   context == grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()) {
+					sequence_RestrictedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getAnnotationRule() ||
@@ -98,6 +107,24 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	 *     (name=ExtendedID type=ExtendedID values+=STRING values+=STRING*)
 	 */
 	protected void sequence_QuotedTypedKeyStringValueAnnotation(EObject context, TypedStringAnnotation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ExtendedID values+=EStringBoolean values+=EStringBoolean*)
+	 */
+	protected void sequence_RestrictedKeyStringValueAnnotation(EObject context, StringAnnotation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ExtendedID type=ExtendedID values+=EStringBoolean values+=EStringBoolean*)
+	 */
+	protected void sequence_RestrictedTypedKeyStringValueAnnotation(EObject context, TypedStringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

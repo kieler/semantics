@@ -24,28 +24,28 @@ import org.eclipse.emf.ecore.EObject;
 public interface ReferenceDeclaration extends Declaration {
 
     /**
-     * Returns the value of the '<em><b>Reference</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Reference</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Reference</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Reference</em>' reference.
-     * @see #setReference(EObject)
-     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getReferenceDeclaration_Reference()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Reference</em>' reference.
+	 * @see #setReference(EObject)
+	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getReferenceDeclaration_Reference()
+	 * @model required="true"
+	 * @generated
+	 */
     EObject getReference();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration#getReference <em>Reference</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration#getReference <em>Reference</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Reference</em>' reference.
-     * @see #getReference()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Reference</em>' reference.
+	 * @see #getReference()
+	 * @generated
+	 */
     void setReference(EObject value);
 } // ReferenceDeclaration

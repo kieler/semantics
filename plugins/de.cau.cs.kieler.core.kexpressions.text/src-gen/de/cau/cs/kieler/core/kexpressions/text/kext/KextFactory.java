@@ -15,56 +15,74 @@ import org.eclipse.emf.ecore.EFactory;
 public interface KextFactory extends EFactory
 {
   /**
-     * The singleton instance of the factory.
-     * <!-- begin-user-doc -->
+	 * The singleton instance of the factory.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   KextFactory eINSTANCE = de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextFactoryImpl.init();
 
   /**
-     * Returns a new object of class '<em>Kext</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Kext</em>'.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @return a new object of class '<em>Kext</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Kext</em>'.
+	 * @generated
+	 */
   Kext createKext();
 
   /**
-     * Returns a new object of class '<em>Test Entity</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Test Entity</em>'.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @return a new object of class '<em>Test Entity</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Test Entity</em>'.
+	 * @generated
+	 */
   TestEntity createTestEntity();
 
   /**
-     * Returns a new object of class '<em>Annotated Expression</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Annotated Expression</em>'.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @return a new object of class '<em>Annotated Expression</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Annotated Expression</em>'.
+	 * @generated
+	 */
   AnnotatedExpression createAnnotatedExpression();
 
   /**
-     * Returns a new object of class '<em>Identifiable</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Identifiable</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Identifiable</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Identifiable</em>'.
+	 * @generated
+	 */
     Identifiable createIdentifiable();
 
 /**
-     * Returns the package supported by this factory.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Declaration Scope</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Declaration Scope</em>'.
+	 * @generated
+	 */
+	DeclarationScope createDeclarationScope();
+
+/**
+	 * Returns a new object of class '<em>KEXT Scope</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>KEXT Scope</em>'.
+	 * @generated
+	 */
+	KEXTScope createKEXTScope();
+
+/**
+	 * Returns the package supported by this factory.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @return the package supported by this factory.
-     * @generated
-     */
+	 * @return the package supported by this factory.
+	 * @generated
+	 */
   KextPackage getKextPackage();
 
 } //KextFactory

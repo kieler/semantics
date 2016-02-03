@@ -39,22 +39,26 @@ import "http://kieler.cs.cau.de/kext/kext" as kext
 // The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
 // test entities may follow.
 Kext returns kext::Kext:
-    (declarations += Declaration)*
-    (entities += TestEntity)*;
+	scopes+=Scope*;
+	
+Scope returns kext::KEXTScope:
+	{kext::KEXTScope} 
+	('scope' id=ID ':')?
+    declarations+=Declaration*
+    entities+=TestEntity*;
 
 // Test Entity Rule
 // A test entity is either an annotation expression or an effect.
 TestEntity returns kext::TestEntity:
-    (expression = AnnotatedExpression) |
-    (effect = Effect);
+    expression=AnnotatedExpression | effect=Effect;
 
 // Annotated Expression Rule
 // An annotated expression is declared with the keyword "expression". It may be preceded by a list
 // of annotations. The expression itself follows the keyword.
 AnnotatedExpression  returns kext::AnnotatedExpression:
-    (annotations+=Annotation)*
+    annotations+=Annotation*
     'expression'
-    (expression = Expression);
+    expression=Expression;
 
 // Declaration Rule
 // A declaration follows the general KIELER pattern for variable declaration. More specific:
@@ -70,32 +74,32 @@ DeclarationWOSemicolon returns kexpressions::Declaration:
 
 
 VariableDeclaration returns kexpressions::VariableDeclaration:
-    (annotations+=Annotation)*
-	(const?='const')?
-    (input?='input')? 
-    (output?='output')?
-    (static?='static')?
-    (((signal?='signal')? type = ValueType) | (signal?='signal')) 
+    annotations+=Annotation*
+	const?='const'?
+    input?='input'? 
+    output?='output'?
+    static?='static'?
+    ((signal?='signal'? type = ValueType) | signal?='signal') 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
     
 VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
-    (annotations+=Annotation)*
-	(const?='const')?
-    (input?='input')? 
-    (output?='output')?
-    (static?='static')?
-    (((signal?='signal')? type = ValueType) | (signal?='signal')) 
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ;  
+    annotations+=Annotation*
+	const?='const'?
+    input?='input'? 
+    output?='output'?
+    static?='static'?
+    ((signal?='signal')? type = ValueType) | (signal?='signal') 
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;  
     
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
-    (annotations+=Annotation)*
+    annotations+=Annotation*
     '&' reference = [kext::Identifiable|ID]
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
     
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
-    (annotations+=Annotation)*
+    annotations+=Annotation*
     '&' reference = [kext::Identifiable|ID] 
-    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ;       
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;       
 
 // Valued Object Rule
 // A valued object is identified by its name. Then, a part for its cardinalities and an initial 
@@ -108,5 +112,6 @@ ValuedObject returns kexpressions::ValuedObject:
     ( 'combine'
       (combineOperator = CombineOperator)
     )?;
+      
     
     

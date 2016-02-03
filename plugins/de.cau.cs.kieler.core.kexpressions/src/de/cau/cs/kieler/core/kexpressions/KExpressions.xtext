@@ -233,7 +233,9 @@ ValuedObjectTestExpression returns Expression:
 // References a valued object with arbitrary (including none) indices part.
 // Example: A, B
 ValuedObjectReference returns ValuedObjectReference:
-	valuedObject=[ValuedObject|ID] ('[' indices+=Expression ']')*;
+	valuedObject=[ValuedObject|ID]
+	('.' subReference=ValuedObjectReference)? 
+	('[' indices+=Expression ']')*;
 
 // Function Call Rule
 // Calls to functions are indicated by angle brackets. They may include a parameter list. 
