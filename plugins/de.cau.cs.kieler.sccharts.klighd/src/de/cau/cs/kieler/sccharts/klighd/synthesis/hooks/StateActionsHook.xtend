@@ -24,6 +24,7 @@ import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
@@ -50,7 +51,7 @@ class StateActionsHook extends SynthesisActionHook {
     public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.StateActionsHook";
     /** The related synthesis option */
     public static final SynthesisOption SHOW_STATE_ACTIONS = SynthesisOption.createCheckOption("State actions", true).
-        setUpdateAction(StateActionsHook.ID); // Register this action as updater
+    	setCategory(GeneralSynthesisOptions::APPEARANCE).setUpdateAction(StateActionsHook.ID); // Register this action as updater
     /** Property to save position of the container */
     private static final IProperty<Integer> INDEX = new Property<Integer>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.actions.index", 0);
