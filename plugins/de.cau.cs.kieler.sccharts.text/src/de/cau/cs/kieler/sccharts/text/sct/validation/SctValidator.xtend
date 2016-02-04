@@ -17,6 +17,9 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import org.eclipse.xtext.validation.Check
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
 
 /**
  * @author ssm
@@ -24,7 +27,11 @@ import org.eclipse.xtext.validation.Check
  */
 class SctValidator extends SctJavaValidator {
     
+    @Inject
     extension SCChartsExtension = sCChartExtension;
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions
     
     /**
      * Check if there is exactly ONE initial state per region.
@@ -72,9 +79,10 @@ class SctValidator extends SctJavaValidator {
         if (foundTermination) {
             // Assert inner behaviour
             val regions = state.regions.filter(ControlflowRegion)
-            if(regions.isEmpty) {
+            if(regions.isEmpty && state.referencedScope == null) {
                 error(NO_REGION, state, null, -1);
             }
+
             // Now test for every region
             if (state.localActions.nullOrEmpty) {
                 for (region : regions) {
@@ -103,4 +111,20 @@ class SctValidator extends SctJavaValidator {
         }
     } 
 
+    /**
+     * Checks if the given valued signal has a combination function.
+     * This check can be removed if there is a transformation
+     * that handles valued signals without combination function (see KISEMA-1071).   
+     */
+    // TODO: (KISEMA-1071) Remove this check when there is a transformation that handles valued signals without combination function.
+    @Check
+    public def void checkValuedSignalHasCombinationFunction(de.cau.cs.kieler.core.kexpressions.ValuedObject valuedObject) {
+        // Check if actually a valued signal
+        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
+            // Check if there is a combine operator
+            if(valuedObject.combineOperator == null || valuedObject.combineOperator.equals(CombineOperator.NONE)) {
+                warning(VALUED_SIGNAL_NEED_COMBINE, valuedObject, null)
+            }
+        }
+    } 
 }

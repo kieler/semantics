@@ -68,6 +68,7 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
     }
 
     //-------------------------------------------------------------------------
+
     @Inject
     extension KExpressionsCreateExtensions
 

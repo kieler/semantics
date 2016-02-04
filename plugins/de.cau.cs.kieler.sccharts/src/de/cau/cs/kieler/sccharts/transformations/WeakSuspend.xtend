@@ -36,6 +36,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExte
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtensionOLD
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -48,31 +49,45 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
     // HOTFIX DUE TO MODIFICATIONS IN SCCHARTSEXTENSION. THE FOLLOWING CODE SHOULD BE MOVED
     // BACK TO SCCHARTSEXTENSION
-    
-    def getValuedObjects(Scope scope) {
-        <ValuedObject>newLinkedList => [ ll |
-            scope.declarations.forEach[d|d.valuedObjects.forEach[ll += it]]
-        ]
-    }
-    
-    // Creates a new ValuedObject in a scope.
-    def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
-        val valuedObject = createValuedObject(valuedObjectName)
-        scope.valuedObjects.add(valuedObject)
-        valuedObject
-    }
-    
-    //===========  VARIABLES  ===========
-    // Creates a new variable ValuedObject in a Scope.
-    def ValuedObject createVariable(Scope scope, String variableName) {
-        scope.createValuedObject(variableName)
-    }
 
-    //============  SIGNALS  ============
-    // Creates a new variable ValuedObject in a Scope.
-    def ValuedObject createSignal(Scope scope, String variableName) {
-        scope.createValuedObject(variableName).setIsSignal
-    }
+    //@Inject
+    //extension KExpressionsExtensionOLD
+    
+    @Inject
+    extension SCChartsTransformationExtension
+    
+    @Inject
+    extension KExpressionsCreateExtensions
+    
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    
+    
+//    def getValuedObjects(Scope scope) {
+//        <ValuedObject>newLinkedList => [ ll |
+//            scope.declarations.forEach[d|d.valuedObjects.forEach[ll += it]]
+//        ]
+//    }
+    
+//    // Creates a new ValuedObject in a scope.
+//    def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
+//        val valuedObject = createValuedObject(valuedObjectName)
+//        scope.valuedObjects.add(valuedObject)
+//        valuedObject
+//    }
+//    
+//    //===========  VARIABLES  ===========
+//    // Creates a new variable ValuedObject in a Scope.
+//    def ValuedObject createVariable(Scope scope, String variableName) {
+//        scope.createValuedObject(variableName)
+//    }
+//
+//    //============  SIGNALS  ============
+//    // Creates a new variable ValuedObject in a Scope.
+//    def ValuedObject createSignal(Scope scope, String variableName) {
+//        scope.createValuedObject(variableName).setIsSignal
+//    }
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -99,8 +114,6 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsExtensionOLD
 
 //    @Inject
 //    extension KExpressionsComplexCreateExtensions
@@ -177,7 +190,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
                 for (subState : subStates) {
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
-                    reEnterTransition.setTrigger(stateBookmark.reference.isEqual(counter.createIntValue))
+                    reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))
                     reEnterTransition.setDeferred(true)
                     
                     val entryAction = subState.createEntryAction
@@ -232,7 +245,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
                 for (subState : subStates) {
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
-                    reEnterTransition.setTrigger(stateBookmark.reference.isEqual(counter.createIntValue))
+                    reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))
                     reEnterTransition.setDeferred(true)
                     val entryAction = subState.createEntryAction
                     entryAction.addEffect(stateBookmark.assign(counter.createIntValue))

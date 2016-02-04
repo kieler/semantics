@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2016 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -11,14 +11,13 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
- 
- package de.cau.cs.kieler.scg.kivi 
+package de.cau.cs.kieler.scg.kivi
 
 import com.google.common.collect.HashMultimap
 import com.google.inject.Binder
 import com.google.inject.Guice
-import com.google.inject.Module 
-import de.cau.cs.kieler.core.kgraph.KGraphFactory  
+import com.google.inject.Module
+import de.cau.cs.kieler.core.kgraph.KGraphFactory
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.core.krendering.KBackground
@@ -28,6 +27,7 @@ import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.core.util.Maybe
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent
@@ -59,17 +59,16 @@ import de.cau.cs.kieler.core.krendering.KText
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
-import de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer
+import de.cau.cs.kieler.scg.guardCreation.GuardCreator
+import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
+import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
-
-//import de.cau.cs.kieler.scg.guardCreation.GuardCreator
 
 /**
  * @author ssm als cmot
  *
  */
-class SCGDataComponent extends JSONObjectDataComponent {
+class SCGVisualizationDataComponent extends JSONObjectDataComponent {
     
     val Module configure = [Binder binder|
         binder.bindScope(typeof(ViewSynthesisShared), Scopes.SINGLETON);
@@ -107,45 +106,37 @@ class SCGDataComponent extends JSONObjectDataComponent {
         annotationMapping.clear
         annotationNodes.clear
         
-        for (viewPart : viewParts) {
-            val ccc = viewPart;
-            System.out.println(ccc.class);
-        }
-    
-    
-        
-        val contexts = viewParts.map[ (it as DiagramViewPart).viewer.viewContext ].filter[ inputModel instanceof SCGraph ]
+        val contexts = viewParts.map[ viewer.viewContext ].filter[ inputModel instanceof SCGraph ]
 
         val Runnable run = [|
         
             for (context : contexts) {
-                val scg = context.getInputModel() as SCGraph
-                if (scg.hasAnnotation(SimpleSequentializer::ANNOTATION_SEQUENTIALIZED)) {
+                val scg = context.inputModel as SCGraph
+                if (scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
                     for (node : scg.nodes.filter(typeof(Assignment)).filter[valuedObject != null]) {
-                        if (node.valuedObject.name.startsWith("g")) {
+                        if (node.valuedObject.name.startsWith(BasicBlockTransformation::GUARDPREFIX)) {
                             guardMapping.putAll(node.valuedObject.name,
                                 context.getTargetElements(node).filter(typeof(KRendering)))
                         }
-//                        if (node.hasAnnotation(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)) {
-//                            val guardName = node.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
-//                            
-//                            annotationMapping.putAll(guardName, context.getTargetElements(node).filter(typeof(KRendering)))
-//                            
+                        if (node.hasAnnotation(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)) {
+                            val guardName = node.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
+                            
+                            annotationMapping.putAll(guardName, context.getTargetElements(node).filter(typeof(KRendering)))
+                            
 //                            val associatedConditional = node.incoming.filter(typeof(ControlFlow)).head.eContainer as Conditional
 //                            annotationMapping.putAll(guardName, context.getTargetElements(associatedConditional).filter(typeof(KRendering)))   
-//                        }
+                        }
                     }
                 }
-
-//                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
+                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
                     for (guard : scg.guards) {
-//                        val schedulingBlock = guard.schedulingBlockLink
-//                        if (schedulingBlock != null) {
-//                            guardMapping.putAll(guard.valuedObject.name,
-//                                context.getTargetElements(schedulingBlock).filter(typeof(KRendering)))
-//                        }
+                        val schedulingBlock = guard.schedulingBlockLink
+                        if (schedulingBlock != null) {
+                            guardMapping.putAll(guard.valuedObject.name,
+                                context.getTargetElements(schedulingBlock).filter(typeof(KRendering)))
+                        }
                     }
-//                }
+                }
                 LightDiagramServices.layoutDiagram(context)
             }
         ] 
@@ -160,6 +151,11 @@ class SCGDataComponent extends JSONObjectDataComponent {
     override isProducer() {
         false
     }
+    
+    override isHistoryObserver() {
+        true
+    }
+    
     
     override wrapup() throws KiemInitializationException {
         
@@ -177,17 +173,17 @@ class SCGDataComponent extends JSONObjectDataComponent {
         
         val highlighting = <String> newHashSet
         for(key : jSONObject.keys.toIterable) {
-            if ((key as String).startsWith("g")) {
+            if ((key as String).startsWith(BasicBlockTransformation::GUARDPREFIX)) {
                 val object = jSONObject.get(key)
                 if (object instanceof JSONObject && (object as JSONObject).has("value")) {
                     val value = (object as JSONObject).get("value")
                     if ((value as Integer) != 0) {
-//                        if (key.endsWith(GuardCreator::SCHIZOPHRENIC_SUFFIX)) {
-//                            val myKey = key.substring(0,key.length-2)
-//                            highlighting += myKey                            
-//                        } else {
+                        if (key.endsWith(DepthJoinSynchronizer::SCHIZOPHRENIC_SUFFIX)) {
+                            val myKey = key.substring(0,key.length-2)
+                            highlighting += myKey                            
+                        } else {
                             highlighting += key                            
-//                        }
+                        }
                     }
                 }
             }
@@ -225,7 +221,8 @@ class SCGDataComponent extends JSONObjectDataComponent {
                     if (highlighting == null) {
                         val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
                         style.setProperty(HIGHLIGHTING_MARKER, true);
-                        style.setColor(Colors::LIGHT_SEA_GREEN)
+                        //style.setColor(Colors::LIGHT_SEA_GREEN)
+                        style.setColor(Colors::LIGHT_SALMON)
                         entry.value.styles.add(style)
                     } 
                 } else {
@@ -243,7 +240,7 @@ class SCGDataComponent extends JSONObjectDataComponent {
                     if (highlighting == null) {
                         val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
                         style.setProperty(HIGHLIGHTING_MARKER, true);
-                        style.setColor(Colors::YELLOW)
+                        style.setColor(Colors::RED)
                         entry.value.styles.add(style)
                     } 
                 } else {
@@ -257,40 +254,41 @@ class SCGDataComponent extends JSONObjectDataComponent {
         
     }
     
-//    private def KNode synthesizeConditionalAssignmentAnnotation(KNode sourceNode, Assignment assignment, SCGraph scg) {
-//        val VOName = assignment.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
-//        val VO = scg.findValuedObjectByName(VOName)
-//        val kNode = assignment.createNode(VO) => [ node |
-//            node.getData(typeof(KLayoutData)).setProperty(LayoutOptions.COMMENT_BOX, true)
-////            node.setNodeSize(75.0f, 20.0f)
-//        ]
-////            node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT) 
-//        val figure = kNode.addRectangle().setLineWidth(1.0f).background = Colors::YELLOW;
-//        val assignmentStr = sourceNode.getData(typeof(KRoundedRectangle)).children.filter(typeof(KText)).head.text
-//        figure.addText(assignmentStr).setSurroundingSpace(4, 0, 2, 0).fontSize = 8
-//        
-//        sourceNode.parent.children += kNode
-//       
-//        kNode 
-//    }    
+    private def KNode synthesizeConditionalAssignmentAnnotation(KNode sourceNode, Assignment assignment, SCGraph scg) {
+        val VOName = assignment.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
+        val VO = scg.findValuedObjectByName(VOName)
+        val kNode = assignment.createNode(VO) => [ node |
+            node.getData(typeof(KLayoutData)).setProperty(LayoutOptions.COMMENT_BOX, true)
+//            node.setNodeSize(75.0f, 20.0f)
+        ]
+//            node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT) 
+        val figure = kNode.addRectangle().setLineWidth(1.0f).background = Colors::YELLOW;
+        val assignmentStr = sourceNode.getData(typeof(KRoundedRectangle)).children.filter(typeof(KText)).head.text
+        figure.addText(assignmentStr).setSurroundingSpace(4, 0, 2, 0).fontSize = 8
+        
+        sourceNode.parent.children += kNode
+       
+        kNode 
+    }    
     
-//    private def KEdge synthesizeConditionalAssignmentLink(KNode aNode, KNode bNode) {
-//        val kEdge = createNewEdge() => [ edge |
-//            // Get and set source and target information.
-//            var sourceNode = aNode
-//            var targetNode = bNode
-//            edge.source = sourceNode
-//            edge.target = targetNode
-//            edge.sourcePort = aNode.getPort("DEBUGPORT")
-//            edge.targetPort = bNode.getPort("DEBUGPORT")            
-//
-//            edge.addPolyline(1.0f) => [
-//                it.lineStyle = LineStyle::DOT
-//                it.foreground = Colors::GRAY
-//            ]
-//            
-//        ]
-//        
-//        kEdge
-//    }       
+    private def KEdge synthesizeConditionalAssignmentLink(KNode aNode, KNode bNode) {
+        val kEdge = createNewEdge() => [ edge |
+            // Get and set source and target information.
+            var sourceNode = aNode
+            var targetNode = bNode
+            edge.source = sourceNode
+            edge.target = targetNode
+            edge.sourcePort = aNode.getPort("DEBUGPORT")
+            edge.targetPort = bNode.getPort("DEBUGPORT")            
+
+            edge.addPolyline(1.0f) => [
+                it.lineStyle = LineStyle::DOT
+                it.foreground = Colors::GRAY
+            ]
+            
+        ]
+        
+        kEdge
+    }       
+    
 }

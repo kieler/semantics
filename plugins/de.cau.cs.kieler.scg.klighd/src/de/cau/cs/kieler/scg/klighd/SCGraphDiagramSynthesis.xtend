@@ -93,6 +93,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -191,6 +192,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     /** Layout dependencies */
     private static val SynthesisOption LAYOUT_DEPENDENCIES = SynthesisOption::createCheckOption("Dependencies", false);
+
+    /** Layout separate cc */
+    private static val SynthesisOption LAYOUT_SEPARATE_CC = SynthesisOption::createCheckOption("Separate CC", false);
 
     /** Show non concurrent dependencies */
     private static val SynthesisOption SHOW_NONCONCURRENT = SynthesisOption::createCheckOption(
@@ -299,6 +303,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ALIGN_ENTRYEXIT_NODES,
             SynthesisOption::createSeparator("Layout"),
             LAYOUT_DEPENDENCIES,
+            LAYOUT_SEPARATE_CC,
             ORIENTATION
         );
     }
@@ -1246,7 +1251,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT)
         kContainer.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
         kContainer.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
-        kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
+        kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, LAYOUT_SEPARATE_CC.booleanValue);
         kContainer.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
         if (USE_ADAPTIVEZOOM.booleanValue) kContainer.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.10);
 
@@ -1286,12 +1291,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         for (tn : nodes) {
             kContainer.children += tn.node
 
-// FIXME
-//            if (nodeGrouping != NODEGROUPING_HIERARCHY)
-//                if (tn.node.getData(typeof(KShapeLayout)).getProperty(Properties::LAYER_CONSTRAINT) ==
-//                    LayerConstraint::FIRST) {
-//                        kContainer.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
-//                    }
+            if (nodeGrouping != NODEGROUPING_HIERARCHY)
+                if (tn.node.getData(typeof(KShapeLayout)).getProperty(Properties::LAYER_CONSTRAINT) ==
+                    LayerConstraint::FIRST) {
+                        kContainer.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+                    }
         }
 
         // Add the container to the original parent.
