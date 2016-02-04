@@ -53,7 +53,7 @@ import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kico.klighd.KiCoModelView;
+import de.cau.cs.kieler.klighd.ui.view.DiagramView;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
@@ -151,15 +151,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         if (!(editorInput instanceof FileEditorInput)) {
             return;
         }
-        // String id = ((FileEditorInput) editorInput).getPath().toPortableString().replace(":",
-        // "");
-        String id = KiCoModelView.ID;
-
-        DiagramViewPart viewPart = DiagramViewManager.getInstance().getView(id);
-        if (viewPart == null) {
+        
+        List<DiagramView> diagramViews = DiagramView.getDiagramViews(diagramEditor);
+        if (diagramViews.isEmpty()) {
             throw new KiemInitializationException(
                     "Model visualization not shown, cannot visualize simulation.", true, null);
         }
+        DiagramView viewPart = diagramViews.get(0);
         viewContext = viewPart.getViewer().getViewContext();
         
         Object potentionEObject = viewContext.getInputModel();

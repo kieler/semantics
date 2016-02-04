@@ -1,7 +1,7 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2014 by
  * + Kiel University
@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.editor;
+package de.cau.cs.kieler.kico.klighd.internal.model.editor;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -20,13 +20,12 @@ import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IStorageEditorInput;
 
 /**
- * Editor Input which can handle Strings as editor input without a file in as backup. If content
+ * Editor Input which can handle Strings as editor input without a file as resource. If content
  * should be persisted 'Save as' option should be used.
  * 
  * @author als
@@ -36,24 +35,30 @@ import org.eclipse.ui.IStorageEditorInput;
  */
 public class StringBasedEditorInput implements IStorageEditorInput {
 
+    /**
+     * String based Storage.
+     * 
+     * @author als
+     */
     class StringStorage implements IStorage {
-        /** string content */
-        protected String content;
-        /** read.only */
+        /** String content. */
+        private String content;
+        /** Read only flag. */
         private boolean readOnly;
-        
+
         /** The resource extension. */
         private String resourceExtension;
 
         /**
-         * Standard Constructor
+         * Standard Constructor.
          * 
          * @param content
          *            string content
          * @param readonly
          *            if editing should be enabled before saving
          */
-        public StringStorage(String content, boolean readOnly, String resourceExtension) {
+        StringStorage(final String content, final boolean readOnly,
+                final String resourceExtension) {
             super();
             this.content = content;
             this.readOnly = readOnly;
@@ -72,15 +77,14 @@ public class StringBasedEditorInput implements IStorageEditorInput {
          */
         public IPath getFullPath() {
             String num = (this.hashCode() + "").replace("-", "");
-            //URI uri = URI.createURI("dummy:/inmemory." + num + "." + resourceExtension);
-            IPath path = new Path("dummy:/inmemory/" + num + "." + resourceExtension); 
+            IPath path = new Path("dummy:/inmemory/" + num + "." + resourceExtension);
             return path;
         }
 
         /**
          * {@inheritDoc}
          */
-        public Object getAdapter(Class adapter) {
+        public Object getAdapter(final Class adapter) {
             return null;
         }
 
@@ -101,23 +105,34 @@ public class StringBasedEditorInput implements IStorageEditorInput {
         /**
          * {@inheritDoc}
          */
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (obj instanceof StringStorage) {
                 return ((StringStorage) obj).content.equals(content);
             }
             return false;
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        public int hashCode() {
+            if (content != null) {
+                return content.hashCode();
+            } else {
+                return super.hashCode();
+            }
+        }
     }
 
-    /** Editor title */
+    /** Editor title. */
     private final String name;
-    /** Editor tooltip */
+    /** Editor tooltip. */
     private final String tooltip;
-    /** Editor string content storage */
+    /** Editor string content storage. */
     private final StringStorage storage;
 
     /**
-     * Constructs editor input with given name
+     * Constructs editor input with given name.
      * 
      * @param name
      *            title text maybe null
@@ -127,8 +142,11 @@ public class StringBasedEditorInput implements IStorageEditorInput {
      *            content
      * @param readonly
      *            if editing should be enabled before saving
+     * @param resourceExtension
+     *            the resource extension of the file
      */
-    public StringBasedEditorInput(String name, String tooltip, String content, boolean readonly, String resourceExtension) {
+    public StringBasedEditorInput(final String name, final String tooltip, final String content,
+            final boolean readonly, final String resourceExtension) {
         this.name = name == null ? "Anonymous" : name;
         this.tooltip = tooltip == null ? "" : tooltip;
         this.storage = new StringStorage(content, readonly, resourceExtension);
@@ -179,18 +197,24 @@ public class StringBasedEditorInput implements IStorageEditorInput {
     /**
      * {@inheritDoc}
      */
-    public Object getAdapter(Class adapter) {
+    public Object getAdapter(final Class adapter) {
         return null;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj instanceof StringBasedEditorInput) {
             return ((StringBasedEditorInput) obj).storage.equals(storage);
         }
         return false;
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
