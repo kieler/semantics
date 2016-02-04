@@ -30,8 +30,8 @@ import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController;
 import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController.ChangeEvent;
 import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder;
 import de.cau.cs.kieler.kitt.tracing.Tracing;
-import de.cau.cs.kieler.klighd.view.model.ErrorModel;
-import de.cau.cs.kieler.klighd.view.model.MessageModel;
+import de.cau.cs.kieler.klighd.ui.view.model.ErrorModel;
+import de.cau.cs.kieler.klighd.ui.view.model.MessageModel;
 
 /**
  * This Job start an asynchronous Compilation.

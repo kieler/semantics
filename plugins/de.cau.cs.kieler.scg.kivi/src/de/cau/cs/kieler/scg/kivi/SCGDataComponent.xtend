@@ -61,7 +61,7 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
 import de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer
-import de.cau.cs.kieler.klighd.view.DiagramView
+import de.cau.cs.kieler.klighd.ui.view.DiagramView
 
 //import de.cau.cs.kieler.scg.guardCreation.GuardCreator
 
