@@ -910,7 +910,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
 	//// test entities may follow.
 	//Kext returns kext::Kext:
-	//	scopes+=Scope*;
+	//	"scope"? scopes+=Scope ("scope" scopes+=Scope)*;
 	public KEXTGrammarAccess.KextElements getKextAccess() {
 		return gaKEXT.getKextAccess();
 	}
@@ -920,7 +920,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scope returns kext::KEXTScope:
-	//	{kext::KEXTScope} ("scope" id=ID ":")? declarations+=Declaration* entities+=TestEntity*;
+	//	{kext::KEXTScope} (id=ID ":")? declarations+=Declaration* entities+=TestEntity*;
 	public KEXTGrammarAccess.ScopeElements getScopeAccess() {
 		return gaKEXT.getScopeAccess();
 	}
@@ -1822,7 +1822,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// You can use this rule in derived grammars if you don't want to permit typed strings. 
 	// RestrictedTypeAnnotation
 	//returns Annotation:
-	//	CommentAnnotation | KeyStringValueAnnotation | TagAnnotation;
+	//	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.RestrictedTypeAnnotationElements getRestrictedTypeAnnotationAccess() {
 		return gaKEXT.getRestrictedTypeAnnotationAccess();
 	}
@@ -1888,6 +1888,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
 
+	//RestrictedKeyStringValueAnnotation returns StringAnnotation:
+	//	"@" name=ExtendedID values+=EStringBoolean ("," values+=EStringBoolean)*;
+	public AnnotationsGrammarAccess.RestrictedKeyStringValueAnnotationElements getRestrictedKeyStringValueAnnotationAccess() {
+		return gaKEXT.getRestrictedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
+		return getRestrictedKeyStringValueAnnotationAccess().getRule();
+	}
+
 	//// TypedKeyStringValueAnnotation
 	// // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//
@@ -1899,6 +1909,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//RestrictedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*;
+	public AnnotationsGrammarAccess.RestrictedTypedKeyStringValueAnnotationElements getRestrictedTypedKeyStringValueAnnotationAccess() {
+		return gaKEXT.getRestrictedTypedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedTypedKeyStringValueAnnotationRule() {
+		return getRestrictedTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// QuotedKeyStringValueAnnotation

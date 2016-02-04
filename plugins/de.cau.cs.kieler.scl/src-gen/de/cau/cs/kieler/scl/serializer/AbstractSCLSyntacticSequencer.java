@@ -32,6 +32,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	protected AbstractElementAlias match_Conditional_ElseKeyword_5_0_q;
 	protected AbstractElementAlias match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q;
 	protected AbstractElementAlias match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
+	protected AbstractElementAlias match_Kext_ScopeKeyword_0_q;
 	protected AbstractElementAlias match_Thread_ThreadKeyword_1_1_q;
 	
 	@Inject
@@ -47,6 +48,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 		match_Conditional_ElseKeyword_5_0_q = new TokenAlias(false, true, grammarAccess.getConditionalAccess().getElseKeyword_5_0());
 		match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallEffectAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
 		match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
+		match_Kext_ScopeKeyword_0_q = new TokenAlias(false, true, grammarAccess.getKextAccess().getScopeKeyword_0());
 		match_Thread_ThreadKeyword_1_1_q = new TokenAlias(false, true, grammarAccess.getThreadAccess().getThreadKeyword_1_1());
 	}
 	
@@ -82,6 +84,8 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 				emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
 				emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Kext_ScopeKeyword_0_q.equals(syntax))
+				emit_Kext_ScopeKeyword_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_Thread_ThreadKeyword_1_1_q.equals(syntax))
 				emit_Thread_ThreadKeyword_1_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
@@ -223,6 +227,17 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	 *     functionName=ExtendedID (ambiguity) '>' (rule end)
 	 */
 	protected void emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'scope'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) scopes+=Scope
+	 */
+	protected void emit_Kext_ScopeKeyword_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

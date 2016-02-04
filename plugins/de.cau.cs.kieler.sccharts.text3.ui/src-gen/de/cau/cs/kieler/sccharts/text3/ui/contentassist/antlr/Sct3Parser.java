@@ -118,6 +118,8 @@ public class Sct3Parser extends AbstractContentAssistParser {
 					put(grammarAccess.getEquationAccess().getGroup_1(), "rule__Equation__Group_1__0");
 					put(grammarAccess.getBindingAccess().getGroup(), "rule__Binding__Group__0");
 					put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
+					put(grammarAccess.getKextAccess().getGroup(), "rule__Kext__Group__0");
+					put(grammarAccess.getKextAccess().getGroup_2(), "rule__Kext__Group_2__0");
 					put(grammarAccess.getScopeAccess().getGroup(), "rule__Scope__Group__0");
 					put(grammarAccess.getScopeAccess().getGroup_1(), "rule__Scope__Group_1__0");
 					put(grammarAccess.getAnnotatedExpressionAccess().getGroup(), "rule__AnnotatedExpression__Group__0");
@@ -282,8 +284,9 @@ public class Sct3Parser extends AbstractContentAssistParser {
 					put(grammarAccess.getBindingAccess().getAnnotationsAssignment_0(), "rule__Binding__AnnotationsAssignment_0");
 					put(grammarAccess.getBindingAccess().getFormalAssignment_1(), "rule__Binding__FormalAssignment_1");
 					put(grammarAccess.getBindingAccess().getActualAssignment_3(), "rule__Binding__ActualAssignment_3");
-					put(grammarAccess.getKextAccess().getScopesAssignment(), "rule__Kext__ScopesAssignment");
-					put(grammarAccess.getScopeAccess().getIdAssignment_1_1(), "rule__Scope__IdAssignment_1_1");
+					put(grammarAccess.getKextAccess().getScopesAssignment_1(), "rule__Kext__ScopesAssignment_1");
+					put(grammarAccess.getKextAccess().getScopesAssignment_2_1(), "rule__Kext__ScopesAssignment_2_1");
+					put(grammarAccess.getScopeAccess().getIdAssignment_1_0(), "rule__Scope__IdAssignment_1_0");
 					put(grammarAccess.getScopeAccess().getDeclarationsAssignment_2(), "rule__Scope__DeclarationsAssignment_2");
 					put(grammarAccess.getScopeAccess().getEntitiesAssignment_3(), "rule__Scope__EntitiesAssignment_3");
 					put(grammarAccess.getTestEntityAccess().getExpressionAssignment_0(), "rule__TestEntity__ExpressionAssignment_0");

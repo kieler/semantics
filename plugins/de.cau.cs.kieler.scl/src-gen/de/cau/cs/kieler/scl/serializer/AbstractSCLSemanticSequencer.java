@@ -73,7 +73,6 @@ public abstract class AbstractSCLSemanticSequencer extends KEXTSemanticSequencer
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
 				   context == grammarAccess.getKeyStringValueAnnotationRule() ||
-				   context == grammarAccess.getRestrictedTypeAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
@@ -83,11 +82,21 @@ public abstract class AbstractSCLSemanticSequencer extends KEXTSemanticSequencer
 					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
+				else if(context == grammarAccess.getRestrictedKeyStringValueAnnotationRule() ||
+				   context == grammarAccess.getRestrictedTypeAnnotationRule()) {
+					sequence_RestrictedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
 				else break;
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
 				if(context == grammarAccess.getQuotedStringAnnotationRule() ||
 				   context == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
 					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getRestrictedTypeAnnotationRule() ||
+				   context == grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()) {
+					sequence_RestrictedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getAnnotationRule() ||

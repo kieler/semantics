@@ -31,6 +31,7 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p;
 	protected AbstractElementAlias match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q;
 	protected AbstractElementAlias match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
+	protected AbstractElementAlias match_Kext_ScopeKeyword_0_q;
 	protected AbstractElementAlias match_State___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q;
 	
 	@Inject
@@ -45,6 +46,7 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
 		match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallEffectAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
 		match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
+		match_Kext_ScopeKeyword_0_q = new TokenAlias(false, true, grammarAccess.getKextAccess().getScopeKeyword_0());
 		match_State___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_7_0()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_7_4()));
 	}
 	
@@ -78,6 +80,8 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 				emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
 				emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Kext_ScopeKeyword_0_q.equals(syntax))
+				emit_Kext_ScopeKeyword_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_State___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q.equals(syntax))
 				emit_State___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
@@ -204,6 +208,17 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 	 *     functionName=ExtendedID (ambiguity) '>' (rule end)
 	 */
 	protected void emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'scope'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) scopes+=Scope
+	 */
+	protected void emit_Kext_ScopeKeyword_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
