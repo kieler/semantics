@@ -66,6 +66,8 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
+					put(grammarAccess.getKextAccess().getGroup(), "rule__Kext__Group__0");
+					put(grammarAccess.getKextAccess().getGroup_2(), "rule__Kext__Group_2__0");
 					put(grammarAccess.getScopeAccess().getGroup(), "rule__Scope__Group__0");
 					put(grammarAccess.getScopeAccess().getGroup_1(), "rule__Scope__Group_1__0");
 					put(grammarAccess.getAnnotatedExpressionAccess().getGroup(), "rule__AnnotatedExpression__Group__0");
@@ -154,8 +156,9 @@ public class KEXTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExtendedIDAccess().getGroup_2(), "rule__ExtendedID__Group_2__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
-					put(grammarAccess.getKextAccess().getScopesAssignment(), "rule__Kext__ScopesAssignment");
-					put(grammarAccess.getScopeAccess().getIdAssignment_1_1(), "rule__Scope__IdAssignment_1_1");
+					put(grammarAccess.getKextAccess().getScopesAssignment_1(), "rule__Kext__ScopesAssignment_1");
+					put(grammarAccess.getKextAccess().getScopesAssignment_2_1(), "rule__Kext__ScopesAssignment_2_1");
+					put(grammarAccess.getScopeAccess().getIdAssignment_1_0(), "rule__Scope__IdAssignment_1_0");
 					put(grammarAccess.getScopeAccess().getDeclarationsAssignment_2(), "rule__Scope__DeclarationsAssignment_2");
 					put(grammarAccess.getScopeAccess().getEntitiesAssignment_3(), "rule__Scope__EntitiesAssignment_3");
 					put(grammarAccess.getTestEntityAccess().getExpressionAssignment_0(), "rule__TestEntity__ExpressionAssignment_0");

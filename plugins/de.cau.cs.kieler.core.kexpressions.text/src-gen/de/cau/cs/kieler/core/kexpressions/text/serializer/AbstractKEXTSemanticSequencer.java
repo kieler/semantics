@@ -239,7 +239,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     scopes+=Scope*
+	 *     (scopes+=Scope scopes+=Scope*)
 	 */
 	protected void sequence_Kext(EObject context, Kext semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

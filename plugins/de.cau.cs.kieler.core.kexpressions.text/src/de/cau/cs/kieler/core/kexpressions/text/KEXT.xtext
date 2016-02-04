@@ -39,11 +39,13 @@ import "http://kieler.cs.cau.de/kext/kext" as kext
 // The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
 // test entities may follow.
 Kext returns kext::Kext:
-	scopes+=Scope*;
+	'scope'?
+	scopes+=Scope
+	('scope' scopes+=Scope)*;
 	
 Scope returns kext::KEXTScope:
 	{kext::KEXTScope} 
-	('scope' id=ID ':')?
+	(id=ID ':')?
     declarations+=Declaration*
     entities+=TestEntity*;
 

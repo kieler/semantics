@@ -31,6 +31,7 @@ import org.osgi.framework.Bundle;
 import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
+import de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
@@ -75,18 +76,20 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
         while ((line = br.readLine()) != null) {
             textFile.add(line);
         }
-
-        for (TestEntity entity : ((Kext) object).getEntities()) {
-            StringAnnotation checkAnnotation;
-            if (entity.getEffect() != null) {
-                checkAnnotation = (StringAnnotation) entity.getEffect().getAnnotation(KEXT_CHECK_ANNOTATION);
-            } else {
-                checkAnnotation = (StringAnnotation) entity.getExpression().getAnnotation(KEXT_CHECK_ANNOTATION);
-            }
-            if (checkAnnotation != null && checkAnnotation.getValues().size() > 0) {
-                runTestRunnerForObject(entity, checkAnnotation.getValues().get(0), (EObject) object, textFile);
-            }
-        }
+        
+		for (KEXTScope scope : ((Kext) object).getScopes()) {
+			for (TestEntity entity : scope.getEntities()) {
+				StringAnnotation checkAnnotation;
+				if (entity.getEffect() != null) {
+					checkAnnotation = (StringAnnotation) entity.getEffect().getAnnotation(KEXT_CHECK_ANNOTATION);
+				} else {
+					checkAnnotation = (StringAnnotation) entity.getExpression().getAnnotation(KEXT_CHECK_ANNOTATION);
+				}
+				if (checkAnnotation != null && checkAnnotation.getValues().size() > 0) {
+					runTestRunnerForObject(entity, checkAnnotation.getValues().get(0), (EObject) object, textFile);
+				}
+			}
+		}
     }
 	
     protected void runTestRunnerForObject(Object object, String objectName, EObject rootObject,
