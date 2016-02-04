@@ -27,13 +27,22 @@ import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook;
  *
  */
 public interface GeneralSynthesisOptions {
-
+	
+    //-- CATEGORIES --
+    
+    /** The appearance category */
+    public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("Appearance");
+    /** The debugging category */
+    public static final SynthesisOption DEBUGGING = SynthesisOption.createCategory("Debugging");
+    
+    //-- OPTIONS --
+    
     /** Option for setting the KLayLayered layout */
     public static final SynthesisOption USE_KLAY = SynthesisOption.createCheckOption("KLayLayered",
-            true);
+            true).setCategory(APPEARANCE);
 
     /** Option for enabling adaptive zoom */
     public static final SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption.createCheckOption(
-            "Adaptive Zoom", false);
+            "Adaptive Zoom", false).setCategory(APPEARANCE);
 
 }

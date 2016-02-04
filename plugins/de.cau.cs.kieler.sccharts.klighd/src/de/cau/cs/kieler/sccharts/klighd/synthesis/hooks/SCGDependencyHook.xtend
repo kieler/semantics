@@ -48,6 +48,7 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Dependency
@@ -99,7 +100,8 @@ class SCGDependencyHook extends SynthesisActionHook {
     public static final String JOB_NAME = "Calculating SCG Dependencies";
     /** The related synthesis option */
     public static final SynthesisOption SHOW_SCG_DEPENDENCIES = SynthesisOption.createCheckOption(
-        "SCG Dependencies", false).setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
+        "SCG Dependencies", false).setCategory(GeneralSynthesisOptions::DEBUGGING).
+        setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
     /** Property to store analysis results */
     private static final IProperty<List<KEdge>> DEPENDENCY_EDGES = new Property<List<KEdge>>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.dependency.edges", null);

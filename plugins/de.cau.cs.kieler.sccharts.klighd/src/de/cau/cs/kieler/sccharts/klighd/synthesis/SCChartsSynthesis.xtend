@@ -72,15 +72,22 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
 
     override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();
+        
         // Add general options
         options.addAll(USE_KLAY);//USE_ADAPTIVEZOOM
+        
         // Add options of subsyntheses
         options.addAll(stateSynthesis.displayedSynthesisOptions);
         options.addAll(transitionSynthesis.displayedSynthesisOptions);
         options.addAll(controlflowSynthesis.displayedSynthesisOptions);
         options.addAll(dataflowSynthesis.displayedSynthesisOptions);
+        
         // Add options of hooks
         hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)];
+        
+        // Add categories options
+        options.addAll(APPEARANCE, DEBUGGING)
+        
         return options.toList;
     }
 
