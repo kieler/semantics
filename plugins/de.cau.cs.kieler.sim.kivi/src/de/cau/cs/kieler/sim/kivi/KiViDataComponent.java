@@ -151,15 +151,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         if (!(editorInput instanceof FileEditorInput)) {
             return;
         }
-        // String id = ((FileEditorInput) editorInput).getPath().toPortableString().replace(":",
-        // "");
-        String id = DiagramView.ID;
-
-        DiagramViewPart viewPart = DiagramViewManager.getInstance().getView(id);
-        if (viewPart == null) {
+        
+        List<DiagramView> diagramViews = DiagramView.getDiagramViews(diagramEditor);
+        if (diagramViews.isEmpty()) {
             throw new KiemInitializationException(
                     "Model visualization not shown, cannot visualize simulation.", true, null);
         }
+        DiagramView viewPart = diagramViews.get(0);
         viewContext = viewPart.getViewer().getViewContext();
         
         Object potentionEObject = viewContext.getInputModel();
