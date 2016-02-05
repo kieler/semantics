@@ -21,6 +21,8 @@ import de.cau.cs.kieler.core.krendering.LineJoin
 import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.kiml.options.PortConstraints
+import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.core.krendering.Trigger
 
 class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject
@@ -37,22 +39,25 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 	@Inject
 	RegisterActorSynthesis registerActorSynthesis
-	
-	@Inject 
+
+	@Inject
 	FlipFlopActorSynthesis flipflopActorSynthesis
 
 	@Inject
 	extension KColorExtensions
+
+	/** Rendering factory used to instantiate KRendering instances. */
+	val renderingFactory = KRenderingFactory::eINSTANCE
 
 	@Inject extension KNodeExtensions
 	@Inject extension KLabelExtensions
 	@Inject extension KRenderingExtensions
 
 	extension KRenderingFactory = KRenderingFactory.eINSTANCE
+
 //	static var r = 215
 //	static var g = 235
 //	static var b = 245
-
 	override KNode transform(Actor actor) {
 
 		val Boolean atomicActor = !(actor.innerActors.toList.length > 0)
@@ -71,10 +76,10 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 				switch (actor.type) {
 					case "AND":
 						actorNode = andActorSynthesis.draw(actor)
-					case "OR":{
+					case "OR": {
 //						orActorSynthesis.setColor(r,g,b)
-					
-						actorNode = orActorSynthesis.draw(actor)}
+						actorNode = orActorSynthesis.draw(actor)
+					}
 					case "NOT":
 						actorNode = notActorSynthesis.draw(actor)
 					case "REG":
@@ -82,7 +87,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 					case "MUX":
 						actorNode = muxActorSynthesis.draw(actor)
 					case "FF":
-						actorNode = flipflopActorSynthesis.draw(actor)	
+						actorNode = flipflopActorSynthesis.draw(actor)
 					default: {
 
 						actorNode.setNodeSize(2, 2);
@@ -102,42 +107,84 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 			}
 		} else {
+
 //			r = r-20
 //			g = g-10
 			// if actor is not a gate, draw a frame
-			val darkBlue = createKColor.setColor(215, 235, 255);
-			val blue = createKColor.setColor(235, 245, 255);
 			if (actor.eContainer != null) {
-				
-				actorNode.addRoundedRectangle(4, 4, 0) => [
-					it.addDoubleClickAction(KlighdConstants.ACTION_COLLAPSE_EXPAND);
-//					it.shadow = "black".color
-					if(actor.name == null){
-						it.setBackground(blue);
-					} else {
-						it.setBackground(darkBlue)
-					}
-					
-				]
-				
-				
+
+				// Add a rendering for the collapsed version of this node
+				val collapsedRendering = createRegion(actorNode, actor)
+
+				collapsedRendering.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND)
+				collapsedRendering.setAreaPlacementData(
+					createKPosition(LEFT, 0, 0, TOP, 0, 0),
+					createKPosition(LEFT, 60, 0, TOP, 40, 0)
+				);
+//				collapsedRendering.setRightTopAlignedPointPlacementData(40, 40, 50, 50)
+				collapsedRendering.setBackgroundColor(100, 140, 200)
+//				collapsedRendering.setForegroundColor(255, 204, 100)
+				collapsedRendering.setProperty(KlighdProperties::COLLAPSED_RENDERING, true)
+//				collapsedRendering.lineWidth = 2
+
+				actorNode.data += collapsedRendering
+
+				// Create the rendering for the expanded version of this node
+				val expandedRendering = createRegion(actorNode, actor)
+				expandedRendering.setProperty(KlighdProperties::EXPANDED_RENDERING, true)
+				expandedRendering.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND)
+
+				actorNode.data += expandedRendering
+
+			}
+			if (hasName) {
+				actorNode.addOutsideTopLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
+					KlighdConstants.DEFAULT_FONT_NAME);
 			}
 
-			actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
-				EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
-			actorNode.addLayoutParam(Properties.NODE_PLACER,
-				NodePlacementStrategy.BRANDES_KOEPF);
-			
-		}
-
-		if (hasName) {
-			actorNode.addOutsideTopLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
-				KlighdConstants.DEFAULT_FONT_NAME);
 		}
 
 		return actorNode;
 
 	}
+
+	def createRegion(KNode actorNode, Actor actor) {
+
+		val darkBlue = createKColor.setColor(215, 235, 255);
+		val blue = createKColor.setColor(235, 245, 255);
+
+		val rendering = renderingFactory.createKRoundedRectangle() => [ rect |
+			rect.lineWidth = 0
+			if (actor.name == null) {
+				rect.setBackground(blue);
+			} else {
+				rect.setBackground(darkBlue)
+			}
+
+		]
+
+		return rendering
+	}
+//		val darkBlue = createKColor.setColor(215, 235, 255);
+//		val blue = createKColor.setColor(235, 245, 255);
+//			
+//		actorNode.addRoundedRectangle(4, 4, 0) => [
+//			it.addDoubleClickAction(KlighdConstants.ACTION_COLLAPSE_EXPAND);
+//			if (actor.name == null) {
+//				it.setBackground(blue);
+//			} else {
+//				it.setBackground(darkBlue)
+//			}
+//
+//		]
+//
+//		actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
+//			EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+//		actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.BRANDES_KOEPF);
+//		
+//		return actorNode
+//		
+//	}
 //	def colorReset(){
 //		r = 235
 //		g = 245
