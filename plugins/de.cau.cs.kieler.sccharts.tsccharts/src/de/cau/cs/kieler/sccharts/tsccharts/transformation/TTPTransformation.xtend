@@ -106,6 +106,7 @@ class TTPTransformation extends AbstractProductionTransformation
      */
     def public Object transform(SCGraph scg, KielerCompilerContext context)
     {
+        var TPPInformation tppInformation = null
         var Collection<Object> targetElements = null
         var HashMap<Region, Integer> regionDepth = null
         var HashMap<Node, Region> nodeRegionMapping = null
@@ -207,10 +208,11 @@ class TTPTransformation extends AbstractProductionTransformation
                         // insert timing program points
                         val int highestInsertedTPPNumber = insertTPP(scg, nodeRegionMapping,
                             tppRegionMap, scchartDummyRegion);
+                            
+                        // save the highest inserted TPP number and the TPP Region Mapping in auxiliary    
+                        tppInformation = new TPPInformation(highestInsertedTPPNumber, tppRegionMap);                          
+                        compilationResult.addAuxiliaryData(tppInformation);
 
-                        /*  TODO: Save the tppRegionMap somewhere for the visualization part. Note that 
-                         * this is only important, if timing information should be displayed in the view 
-                         * of the model */
                         /* write and store .ta file, include information from .asu file in the model 
                          //folder, if existent */
                         val resource = scchart.eResource
@@ -254,11 +256,13 @@ class TTPTransformation extends AbstractProductionTransformation
                                 )
                         }
                         else
-                        {
+                        {   
+                            // get path for writing .ta file
                             val uriString = file.getLocationURI().toString();
-                            val fileName = file.getName();
                             val String fileLocationString = uriString.replace("file:", "");
-                            val String fileFolder = fileLocationString.replace(fileName, "");
+                            val String taFilePath = fileLocationString.replace(".sct", ".ta")
+                            
+                            
                             // TODO: finish implementation
                             try
                             {
