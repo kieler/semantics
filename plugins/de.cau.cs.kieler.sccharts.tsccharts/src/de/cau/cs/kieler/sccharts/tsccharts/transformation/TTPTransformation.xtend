@@ -13,50 +13,41 @@
  */
 package de.cau.cs.kieler.sccharts.tsccharts.transformation
 
+import com.google.common.collect.Iterators
+import com.google.common.collect.Multimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import org.eclipse.core.runtime.Status
-import java.util.List
-import org.eclipse.core.runtime.IStatus
-import de.cau.cs.kieler.kitt.tracing.Tracing
-import de.cau.cs.kieler.kico.CompilationResult
-import de.cau.cs.kieler.sccharts.State
-import java.util.Collection
-import de.cau.cs.kieler.sccharts.tsccharts.TimingUtil
-import java.util.HashMap
-import org.eclipse.emf.ecore.EObject
-import com.google.common.collect.Multimap
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.scg.Node
-import com.google.inject.Guice
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import java.util.Iterator
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.Link
-import org.eclipse.emf.common.util.EList
-import java.util.ArrayList
-import de.cau.cs.kieler.scg.Assignment
-import java.util.LinkedList
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.klighd.util.ModelingUtil
-import de.cau.cs.kieler.scg.Entry
-import com.google.common.collect.Iterators
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.kico.CompilationResult
+import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.core.resources.IFile
-import org.eclipse.xtext.ui.util.ResourceUtil
-import org.eclipse.core.runtime.CoreException
-import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.resources.IResource
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kitt.tracing.Tracing
+import de.cau.cs.kieler.klighd.util.ModelingUtil
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.tsccharts.TimingUtil
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Link
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import java.util.ArrayList
+import java.util.Collection
+import java.util.HashMap
+import java.util.Iterator
+import java.util.LinkedList
+import java.util.List
+import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Transform a sequentialized SCG to a sequentialized SCG with timing program points.
@@ -208,75 +199,15 @@ class TTPTransformation extends AbstractProductionTransformation
                         // insert timing program points
                         val int highestInsertedTPPNumber = insertTPP(scg, nodeRegionMapping,
                             tppRegionMap, scchartDummyRegion);
-                            
-                        // save the highest inserted TPP number and the TPP Region Mapping in auxiliary    
-                        tppInformation = new TPPInformation(highestInsertedTPPNumber, tppRegionMap);                          
-                        compilationResult.addAuxiliaryData(tppInformation);
 
-                        /* write and store .ta file, include information from .asu file in the model 
-                         //folder, if existent */
-                        val resource = scchart.eResource
-                        if (resource == null)
-                        {
-                            System.out.
-                                println(
-                                    "\n TPP transformation could not write .ta file. No resource for original scchart could be found.\n"
-                                )
-                        }
-                        else
-                        {
-                            writeTaFile(highestInsertedTPPNumber, resource);
-                        }
+                        // save the highest inserted TPP number and the TPP Region Mapping in auxiliary    
+                        tppInformation = new TPPInformation(highestInsertedTPPNumber, tppRegionMap);
+                        compilationResult.addAuxiliaryData(tppInformation);
 
                         // Mark scg with feature
                         scg.addAnnotation(TimingAnalysisTransformations::TTP_FEATURE_ID, "")
 
                         return scg
-                    }
-
-                    /**
-                     * The method writes a basic .ta (timing analysis request) file for interactive 
-                     * timing analysis and stores it in the folder of the main model. 
-                     * If the folder contains an .asu file, the 
-                     * content of that file will be transferred to the .ta file.
-                     * 
-                     * @param numberofTPP
-                     *      The highest number of any TPP inserted in the associated scg
-                     * @param resource
-                     *      The eResource of the original model
-                     */
-                    def private writeTaFile(int i, Resource resource)
-                    {
-                        val IFile file = ResourceUtil.getFile(resource);
-                        if (file == null)
-                        {
-                            System.out.
-                                println(
-                                    "\n TPP transformation could not write .ta file. No file for original scchart could be found.\n"
-                                )
-                        }
-                        else
-                        {   
-                            // get path for writing .ta file
-                            val uriString = file.getLocationURI().toString();
-                            val String fileLocationString = uriString.replace("file:", "");
-                            val String taFilePath = fileLocationString.replace(".sct", ".ta")
-                            
-                            
-                            // TODO: finish implementation
-                            try
-                            {
-                                ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
-                                    IResource.DEPTH_INFINITE, null);
-                            }
-                            catch (CoreException e)
-                            {
-                                System.out.
-                                    println(
-                                        "Files could not be refreshed after writing .ta file in TPP transformation."
-                                    );
-                            }
-                        }
                     }
 
                     /**
