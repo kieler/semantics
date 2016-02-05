@@ -257,6 +257,41 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.core.kexpressions.keffects"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.kexpressions.keffects.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.kexpressions.keffects.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.kexpressions.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.kexpressions.text.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="de.cau.cs.kieler.core.kexpressions.ui"
          download-size="0"
          install-size="0"
@@ -367,6 +402,13 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.prom"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="true"/>
 
    <plugin
          id="de.cau.cs.kieler.s"
@@ -551,6 +593,13 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.sccharts.prom"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="true"/>         
+
+   <plugin
          id="de.cau.cs.kieler.sccharts.s"
          download-size="0"
          install-size="0"
@@ -728,5 +777,12 @@ litigation.
          download-size="0"
          install-size="0"
          version="0.0.0"/>
+
+   <plugin
+         id="org.freemarker"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="true"/>         
 
 </feature>

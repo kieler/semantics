@@ -84,6 +84,6 @@ abstract class AbstractGuardCreator extends AbstractProductionTransformation {
         createValuedObject(GOGUARDNAME) => [
             scg.declarations += createBoolDeclaration.attach(it)    
         ]
-    }	
-	
+    }
+
 }

@@ -74,8 +74,15 @@
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SynthesisAnnotationHook">
       </hook>
       <hook
-            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LayoutAnnotationHook">
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LayoutHook">
       </hook>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kiml.layoutConfigs">
+      <customConfig
+            class="de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig"
+            default="true">
+      </customConfig>
    </extension>
 
 </plugin>

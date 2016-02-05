@@ -1,13 +1,9 @@
 @Transformation DURING
 scchart DuringAction {
-	input bool I;
 	output bool O;
 
-    initial state A{
+    initial state A{ 
       during / O = true;
-      immediate during / O = true;   
-      during I / O = true;
-      immediate during / O = false;
       
       initial state A0
       --> A1;

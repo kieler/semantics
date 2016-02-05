@@ -280,6 +280,9 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
                 it.assignment = assignment.expression.copyExpression
                 it.valuedObject = assignment.valuedObject.copyValuedObject
                 it.controlFlowTarget(incoming)
+                for(annotation : (assignment.eContainer as InstructionStatement).annotations) {
+                    it.annotations += annotation.copy
+                }
             ]
             controlFlows += node.createControlFlow
         ]
@@ -296,6 +299,9 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
                     [continue.controlFlows += it.controlFlows]
                 conditional.elseStatements.transform(scg, it.createControlFlow.toList) =>
                     [continue.controlFlows += it.controlFlows]
+                for(annotation : (conditional.eContainer as InstructionStatement).annotations) {
+                    it.annotations += annotation.copy
+                }
             ]
         ]
     }

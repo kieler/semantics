@@ -22,6 +22,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.labels.LabelFocusSelectionListener
 import de.cau.cs.kieler.sccharts.klighd.synthesis.labels.LabelShorteningStrategies
 
@@ -41,26 +42,33 @@ class LabelShorteningHook extends SynthesisActionHook {
 
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook";
+    
+    /** The sub category for the label management */
+    public static final SynthesisOption LABEL_MANAGEMENT_CATEGORY = SynthesisOption.createCategory("Label Management", false).
+        setCategory(GeneralSynthesisOptions::APPEARANCE)
     /** The synthesis option to generally hide/show labels */
     public static final SynthesisOption HIDE_LABELS = SynthesisOption.createCheckOption("Hide Transition Labels",
-        false).setUpdateAction(LabelShorteningHook.ID); // Register this action as updater
+        false).setCategory(LABEL_MANAGEMENT_CATEGORY).setUpdateAction(LabelShorteningHook.ID); // Register this action as updater
     /** The synthesis option to shorten labels */
-    public static val SynthesisOption SHORTEN_LABEL_STRATEGY = SynthesisOption::createChoiceOption("Shorten Labels",
-        LabelShorteningStrategies.values, LabelShorteningStrategies.NO).setUpdateAction(LabelShorteningHook.ID) // Register this action as updater
+    public static val SynthesisOption SHORTEN_LABEL_STRATEGY = SynthesisOption::createChoiceOption("Strategy",
+        LabelShorteningStrategies.values, LabelShorteningStrategies.NO).setCategory(LABEL_MANAGEMENT_CATEGORY).
+        setUpdateAction(LabelShorteningHook.ID) // Register this action as updater
     /** The synthesis option for fixed shorten labels value */
     public static val SynthesisOption SHORTEN_LABEL_WIDTH = SynthesisOption::createRangeOption("Shortening Width",
-        0, 200, 2, 200).setUpdateAction(LabelShorteningHook.ID) // Register this action as updater
+        0, 200, 2, 200).setCategory(LABEL_MANAGEMENT_CATEGORY).
+        setUpdateAction(LabelShorteningHook.ID) // Register this action as updater
     /** The listener for handling label focusing */
     private static val LabelFocusSelectionListener labelFocusSelectionListener = new LabelFocusSelectionListener();
 
     override getDisplayedSynthesisOptions() {
-        return newLinkedList(SHORTEN_LABEL_STRATEGY, SHORTEN_LABEL_WIDTH);
+        return newLinkedList(LABEL_MANAGEMENT_CATEGORY, SHORTEN_LABEL_STRATEGY, SHORTEN_LABEL_WIDTH);
         // HIDE_LABELS currently disabled because label shortening is better
     }
 
     override start(Scope scope, KNode node) {
         // activate label focusing
-        usedContext.viewer.contextViewer.addSelectionChangedListener(labelFocusSelectionListener);
+        // FIXME this does not work for nested (side-by-side) synthesis because view is null
+        usedContext.viewer?.contextViewer?.addSelectionChangedListener(labelFocusSelectionListener);
         // configure
         node.configureLabelManagement();
     }

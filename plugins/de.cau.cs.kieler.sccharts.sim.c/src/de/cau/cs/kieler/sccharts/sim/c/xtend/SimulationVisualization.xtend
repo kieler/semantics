@@ -13,19 +13,18 @@
  */
 package de.cau.cs.kieler.sccharts.sim.c.xtend
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import de.cau.cs.kieler.sccharts.sim.c.SCChartsSimCPlugin
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.transformations.SCChartsTransformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import com.google.common.collect.Sets
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 
 /**
  * This class handles the<BR>
@@ -65,15 +64,12 @@ class SimulationVisualization extends AbstractExpansionTransformation {
 
     @Inject
     extension KExpressionsCreateExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
 
     @Inject
     extension SCChartsExtension
+
+    @Inject
+    extension SCChartsTransformationExtension
 
     //-------------------------------------------------------------------------
     //--         S I M U L A T I O N    V I S U A L I Z A T I O N            --
@@ -153,12 +149,7 @@ class SimulationVisualization extends AbstractExpansionTransformation {
 
     // Transform a transition as described in 1.
     def void transformSimulationVisualizationTransition(Transition transition, State targetRootState, String UID) {
-            val active = createValuedObject(UID).uniqueName
-            createBoolDeclaration => [
-                input = true
-                attach(active)
-                targetRootState.declarations += it
-            ]
+            val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
             
             // Add action - TRUE iff this transition is taken
             transition.addAssignment(active.assignRelative(TRUE));
@@ -179,12 +170,7 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     // New visualization of active states with immediate during actions
     def void transformSimulationVisualizationState(State state, State targetRootState, String UID) {
         if (!state.isRootState && !state.hasInnerStatesOrControlflowRegions) {
-            val active = createValuedObject(UID).uniqueName
-            createBoolDeclaration => [
-                input = true
-                attach(active)
-                targetRootState.declarations += it
-            ]
+            val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
             
             if (!state.final) {
                 // Add during action - TRUE iff this state is active

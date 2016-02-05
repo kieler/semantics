@@ -30,6 +30,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtension
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 
 /**
  * SCCharts Abort WTO Transformation. This may require an advanced SCG compiler that can handle depth join.
@@ -75,11 +76,14 @@ class AbortWTO extends AbstractExpansionTransformation {
     @Inject
     extension KExpressionsDeclarationExtensions    
     
-    @Inject
-    extension KExpressionsValuedObjectExtensions   
+//    @Inject
+//    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension
+
+    @Inject
+    extension SCChartsTransformationExtension
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -156,8 +160,8 @@ class AbortWTO extends AbstractExpansionTransformation {
                 for (transition : outgoingTransitions) {
 
                     // Create a new _transitionTrigger valuedObject
-                    val transitionTriggerVariable = state.parentRegion.parentState.createValuedObject(
-                        GENERATED_PREFIX + "trig", createBoolDeclaration).uniqueNameCached(nameCache)
+                    val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
+                        GENERATED_PREFIX + "trig").setTypeBool.uniqueNameCached(nameCache)
                     state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                     if (transition.typeStrongAbort) {
@@ -184,7 +188,7 @@ class AbortWTO extends AbstractExpansionTransformation {
                         mainState.regions.add(region)
                         val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").
                             uniqueNameCached(nameCache)
-                        val termVariable = state.createValuedObject(GENERATED_PREFIX + "termRegion", createBoolDeclaration).
+                        val termVariable = state.createVariable(GENERATED_PREFIX + "termRegion").setTypeBool.
                             uniqueNameCached(nameCache)
                         mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeTermination
                         if (terminationTrigger != null) {
@@ -376,8 +380,8 @@ class AbortWTO extends AbstractExpansionTransformation {
                 for (transition : outgoingTransitions) {
 
                     // Create a new _transitionTrigger valuedObject
-                    val transitionTriggerVariable = state.parentRegion.parentState.createValuedObject(
-                        GENERATED_PREFIX + "trig", createBoolDeclaration).uniqueName
+                    val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
+                        GENERATED_PREFIX + "trig").setTypeBool.uniqueName
                     state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                     if (transition.typeStrongAbort) {
@@ -401,7 +405,7 @@ class AbortWTO extends AbstractExpansionTransformation {
                         val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueName
                         mainState.regions.add(region)
                         val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueName
-                        val termVariable = state.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).uniqueName
+                        val termVariable = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
                         mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeTermination
                         if (terminationTrigger != null) {
                             terminationTrigger = terminationTrigger.and(termVariable.reference)

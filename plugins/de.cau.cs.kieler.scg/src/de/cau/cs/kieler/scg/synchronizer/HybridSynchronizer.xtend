@@ -25,6 +25,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.scg.Fork
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -130,7 +131,7 @@ class HybridSynchronizer extends AbstractSynchronizer {
         
 	}
     
-    override isSynchronizable(Iterable<ThreadPathType> threadPathTypes) {
+    override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
     

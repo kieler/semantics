@@ -224,7 +224,9 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                 debug("")
 
             for (ref : VOR) {
+                debug(indent + "Testing VOR " + ref.name, false)
                 if (!placedVOs.contains(ref)) {
+                    debug(" not placed.")
 
                     //					val tpGuard = guardCache.get(ref)
                     val vorSBList = schedulingBlockVOCache.get(ref)
@@ -233,10 +235,23 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                             sb.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, indent + "  ")
                         }
                     } else {
-                        addGuardBeforeScheduledBlock += guardVOCache.get(ref)
+                        // This usually happens to empty guards
+                        debug(indent + ref.name + " has no associated scheduling block!")
+                        val guard = guardVOCache.get(ref)
+                        addGuardBeforeScheduledBlock += guard
                         placedVOs += ref
+                        
+                        // Add the guarded scheduling blocks to the list of needed scheduling blocks
+                        guard.expression.eAllContents.filter(ValuedObjectReference).forEach[
+                            if (!it.valuedObject.name.equals(AbstractGuardCreator.GOGUARDNAME)) {
+                                SBs += schedulingBlockVOCache.get(it.valuedObject)
+                            }
+                        ]
                     }
+                } else {
+                    debug(" placed.")
                 }
+                
             }
             
             for(sb : SBs) {

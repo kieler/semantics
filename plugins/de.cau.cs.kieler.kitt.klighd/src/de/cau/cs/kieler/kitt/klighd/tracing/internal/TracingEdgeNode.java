@@ -322,7 +322,7 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
                     Collection<PNodeController<?>> pNodeControllers =
                             renderingControler.getPNodeController((KRendering) elem);
                     if (!pNodeControllers.isEmpty()) {
-                        return pNodeControllers.iterator().next().getNode();
+                        return pNodeControllers.iterator().next().getNode().asPNode();
                     }
                 }
             }

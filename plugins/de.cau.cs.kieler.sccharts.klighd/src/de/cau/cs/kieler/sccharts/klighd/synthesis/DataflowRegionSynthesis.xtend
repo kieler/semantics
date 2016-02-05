@@ -55,12 +55,12 @@ import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.Node
 import de.cau.cs.kieler.sccharts.ReferenceNode
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.ShadowHook
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.ShadowHook
 
 /**
  * Transforms {@link DataflowRegion} into {@link KNode} diagram elements.
@@ -104,7 +104,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     extension ControlflowRegionStyles
     
     @Inject
-    extension SCChartsSerializeExtension
+    extension SCChartsSerializeHRExtension
     
     @Inject
     extension StateSynthesis
@@ -132,7 +132,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 // Add declarations
                 // TODO display declaration otherwise
                 for (declaration : region.declarations) {
-                    addDeclarationLabel(declaration.serializeComponents) => [
+                    addDeclarationLabel(declaration.serializeComponents(true)) => [
                         setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                         associateWith(declaration);
                         children.forEach[associateWith(declaration)];

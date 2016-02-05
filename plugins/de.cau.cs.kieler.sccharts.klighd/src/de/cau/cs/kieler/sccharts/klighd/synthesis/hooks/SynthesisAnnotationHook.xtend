@@ -16,13 +16,16 @@ import de.cau.cs.kieler.core.annotations.Annotation
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.krendering.KRendering
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
-import java.util.HashMap
 import java.util.List
 import java.util.Map.Entry
 
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension java.lang.Character.*
 
 /**
@@ -36,7 +39,7 @@ class SynthesisAnnotationHook extends SynthesisHook {
 
     // Annotation Keyword
     /** The annotation keyword for setting synthesis options */
-    public static final String SYNTHESIS_OPTIONS_ANNOTATION = "synthesis";
+    public static final String SYNTHESIS_OPTIONS_ANNOTATION = "diagram";
 
     /** Strings accepted as true as option value */
     public static final List<String> POSITIVE_BOOLEAN_VALUES = newImmutableList("true", "on", "checked");
@@ -44,9 +47,17 @@ class SynthesisAnnotationHook extends SynthesisHook {
     /** Strings accepted as false as option value */
     public static final List<String> NEGATIVE_BOOLEAN_VALUES = newImmutableList("false", "off", "unchecked");
 
-    /** Mapping synthesis options by their accessible name */
-    val nameOptionMap = new HashMap<String, SynthesisOption>();
+    /** The annotation keyword for setting region in collapsed mode */
+    public static final String COLLAPSED_ANNOTATION = "collapse";
+    
+    /** The annotation keyword for setting region in expanded mode */
+    public static final String EXPAND_ANNOTATION = "expand";
 
+    /** Mapping synthesis options by their accessible name */
+    val nameOptionMap = <String, SynthesisOption>newHashMap;
+    /** The previous values of the options set by annotation */
+    val restoreOptionMap = <SynthesisOption, Object>newHashMap;
+        
     override getPriority() {
         return 100;
     }
@@ -55,6 +66,25 @@ class SynthesisAnnotationHook extends SynthesisHook {
         initializeNameOptionMap();
         // Configure synthesis options via annotation
         source.getAllAnnotations(SYNTHESIS_OPTIONS_ANNOTATION).forEach[processSynthesisOptionAnnotation];
+    }
+    
+    override finish(Scope source, KNode node) {
+        // restore previous values
+        for (optionValuePair : restoreOptionMap.entrySet) {
+            usedContext.configureOption(optionValuePair.key, optionValuePair.value)
+        }
+    }
+    
+    override processRegion(Region region, KNode node) {
+        if (node.data.filter(KRendering).size > 1) {
+            for (anno : region.annotations) {
+                if (anno.name.equalsIgnoreCase(COLLAPSED_ANNOTATION)) {
+                    node.setLayoutOption(KlighdProperties::EXPAND, false)
+                } else if (anno.name.equalsIgnoreCase(EXPAND_ANNOTATION)) {
+                    node.setLayoutOption(KlighdProperties::EXPAND, true)
+                }
+            }
+        }
     }
 
     /** Processes an annotation a sets the specified synthesis option */
@@ -70,7 +100,9 @@ class SynthesisAnnotationHook extends SynthesisHook {
         if (!name.nullOrEmpty && !value.nullOrEmpty) {
             for (Entry<String, SynthesisOption> entry : nameOptionMap.entrySet) {
                 if (entry.key.startsWith(name)) {
-                    setOption(entry.value, value);
+                    val option = entry.value
+                    restoreOptionMap.put(option, usedContext.getOptionValue(option))
+                    setOption(option , value);
                 }
             }
         }

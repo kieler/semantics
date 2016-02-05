@@ -26,11 +26,13 @@ import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
-import de.cau.cs.kieler.klighd.IAction.ActionResult
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
@@ -43,8 +45,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.ui.progress.UIJob
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook.*
-import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
-import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 
 /**
  * Highlights the SCCharts elements lying on a illegal loop in SCG.
@@ -66,7 +66,7 @@ class SCGLoopHook extends SynthesisActionHook {
     public static final String JOB_NAME = "Calculating SCG Loops";
     /** The related synthesis option. */
     public static final SynthesisOption SHOW_SCG_LOOPS = SynthesisOption.createCheckOption("SCG Loops", false).
-        setUpdateAction(SCGLoopHook.ID); // Add this action as updater
+        setCategory(GeneralSynthesisOptions::DEBUGGING).setUpdateAction(SCGLoopHook.ID); // Add this action as updater
     /** Property to store analysis results. */
     private static final IProperty<List<KRendering>> LOOP_ELEMENTS = new Property<List<KRendering>>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.loops.elements", null);

@@ -15,21 +15,23 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.krendering.KRendering
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
+import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -49,7 +51,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     extension SCChartsExtension
 
     @Inject
-    extension SCChartsSerializeExtension
+    extension SCChartsSerializeHRExtension
 
     @Inject
     extension TransitionSynthesis
@@ -69,6 +71,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
         node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
         node.setLayoutOption(LayoutOptions::SPACING, 1f);
+        node.setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
         node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
         //pre-evaluate type
@@ -121,24 +124,19 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
             // Add declarations
             for (declaration : state.declarations) {
-                node.addDeclarationLabel(declaration.serializeComponents) => [
+                node.addDeclarationLabel(declaration.serializeComponents(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                     associateWith(declaration);
-                    children.forEach[associateWith(declaration)];
+                    eAllContents.filter(KRendering).forEach[associateWith(declaration)];
                 ]
             }
 
             // Add actions
             for (action : state.localActions) {
-                // TODO Maybe improve string representation
-//                text = text.replace("'", "")
-//                if (text.length > 1 && text.substring(text.length - 1, text.length).equals(";")) {
-//                    text = text.substring(0, text.length - 1)
-//                }
-                node.addActionLabel(action.serializeComponents) => [
+                node.addActionLabel(action.serializeComponents(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                     associateWith(action);
-                    children.forEach[associateWith(action)];
+                    eAllContents.filter(KRendering).forEach[associateWith(action)];
                 ]
             }
 
