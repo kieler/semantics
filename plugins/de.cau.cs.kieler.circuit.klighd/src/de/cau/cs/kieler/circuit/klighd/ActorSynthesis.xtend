@@ -49,9 +49,9 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject extension KRenderingExtensions
 
 	extension KRenderingFactory = KRenderingFactory.eINSTANCE
-	static var r = 235
-	static var g = 245
-	static var b = 245
+//	static var r = 215
+//	static var g = 235
+//	static var b = 245
 
 	override KNode transform(Actor actor) {
 
@@ -72,7 +72,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 					case "AND":
 						actorNode = andActorSynthesis.draw(actor)
 					case "OR":{
-						orActorSynthesis.setColor(r,g,b)
+//						orActorSynthesis.setColor(r,g,b)
 					
 						actorNode = orActorSynthesis.draw(actor)}
 					case "NOT":
@@ -102,20 +102,22 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 			}
 		} else {
-			r = r-20
-			g = g-10
+//			r = r-20
+//			g = g-10
 			// if actor is not a gate, draw a frame
-			val babyBlue = createKColor.setColor(211, 236, 252);
-
-			val customLightBlue = createKColor.setColor(r, g, b);
-			val orange = createKColor.setColor(209, 156, 100);
+			val darkBlue = createKColor.setColor(215, 235, 255);
+			val blue = createKColor.setColor(235, 245, 255);
 			if (actor.eContainer != null) {
-
+				
 				actorNode.addRoundedRectangle(4, 4, 0) => [
 					it.addDoubleClickAction(KlighdConstants.ACTION_COLLAPSE_EXPAND);
 //					it.shadow = "black".color
-					it.selectionBackground = orange;
-					it.setBackground(customLightBlue);
+					if(actor.name == null){
+						it.setBackground(blue);
+					} else {
+						it.setBackground(darkBlue)
+					}
+					
 				]
 				
 				
@@ -124,7 +126,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 			actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT,
 				EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 			actorNode.addLayoutParam(Properties.NODE_PLACER,
-				NodePlacementStrategy.INTERACTIVE);
+				NodePlacementStrategy.BRANDES_KOEPF);
 			
 		}
 
@@ -136,9 +138,9 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 		return actorNode;
 
 	}
-	def colorReset(){
-		r = 235
-		g = 245
-		b = 245
-	}
+//	def colorReset(){
+//		r = 235
+//		g = 245
+//		b = 245
+//	}
 }

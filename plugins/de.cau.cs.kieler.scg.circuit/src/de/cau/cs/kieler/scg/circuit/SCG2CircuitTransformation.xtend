@@ -76,7 +76,7 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 		root.innerActors += newInnerCircuit
 		
 		val logicRegion = CircuitFactory::eINSTANCE.createActor
-		logicRegion.name = "Programm Logic"
+		logicRegion.name = "Program Logic"
 		newInnerCircuit.innerActors += logicRegion
 		
 		val preRegisterRegion = CircuitFactory::eINSTANCE.createActor

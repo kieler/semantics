@@ -48,7 +48,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 //		for (link : links) {
 //			link.transformLink(root);
 //		}
-		actorSynthesis.colorReset
+//		actorSynthesis.colorReset
 		return root;
 	}
 

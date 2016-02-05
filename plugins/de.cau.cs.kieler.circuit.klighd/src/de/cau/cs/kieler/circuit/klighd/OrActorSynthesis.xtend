@@ -54,9 +54,10 @@ class OrActorSynthesis implements IDrawableActor {
 //		
 //	}
 
-	var r = 0
-	var g = 0
-	var b = 0
+//	var r = 0
+//	var g = 0
+//	var b = 0
+
 	override KNode draw(Actor actor) {
 		val KNode node = actor.node
 
@@ -79,9 +80,10 @@ class OrActorSynthesis implements IDrawableActor {
 //					KlighdConstants.DEFAULT_FONT_NAME);
 //
 //			]
-		val orange = createKColor.setColor(209, 156, 100);
+			val darkBlue = createKColor.setColor(215, 235, 255);
+
 		node.setNodeSize(30, 25);
-		val customLightBlue = createKColor.setColor(r, g, b);
+		
 		node.addRectangle => [
 			it.invisible = true;
 			it.lineCap = LineCap.CAP_ROUND;
@@ -125,7 +127,7 @@ class OrActorSynthesis implements IDrawableActor {
 				it.lineWidth = 1;
 				it.arcAngle = 180;
 				it.startAngle = -90;
-				it.background = customLightBlue
+				it.background = darkBlue
 				it.setAreaPlacementData.from(LEFT, -15f, 0, TOP, 0, 0).to(LEFT, 1, 0, BOTTOM, 0, 0);
 			];
 			it.addArc() => [
@@ -167,12 +169,12 @@ class OrActorSynthesis implements IDrawableActor {
 
 			]
 			it.addPolyline() => [
-				it.addKPosition(LEFT, 26.2f, 0, BOTTOM, 6.5f, 0);
+				it.addKPosition(LEFT, 26f, 0, BOTTOM, 6.5f, 0);
 				it.addKPosition(RIGHT, 0, 0, TOP, 0, 0.5f)
 
 			]
 			it.addPolyline() => [
-				it.addKPosition(LEFT, 26.2f, 0, TOP, 6.5f, 0);
+				it.addKPosition(LEFT, 26f, 0, TOP, 6.5f, 0);
 				it.addKPosition(RIGHT, 0, 0, BOTTOM, 0, 0.5f)
 
 			]
@@ -200,10 +202,10 @@ class OrActorSynthesis implements IDrawableActor {
 		return node;
 	}
 	
-	def setColor(int red, int green, int blue){
-		r = red
-		g = green
-		b = blue
-	}
+//	def setColor(int red, int green, int blue){
+//		r = red
+//		g = green
+//		b = blue
+//	}
 
 }
