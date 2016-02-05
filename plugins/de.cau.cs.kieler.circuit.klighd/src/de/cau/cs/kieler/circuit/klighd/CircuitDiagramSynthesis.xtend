@@ -94,7 +94,14 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 						]
 					} else {
 						if (port.name.startsWith("const")) {
-							it.addInsidePortLabel("Sel(1)", 8, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
+							
+							it.addInsidePortLabel("Sel(1)", 8, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port) =>[
+//							it.setLayoutOptions(LayoutOptions.SPACING )
+							
+							]
+							
+								
+							
 
 						}
 						
