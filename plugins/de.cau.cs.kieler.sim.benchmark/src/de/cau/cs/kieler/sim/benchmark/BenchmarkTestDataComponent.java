@@ -58,8 +58,8 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
     /** The Constant KIEM_PROPERTY_MAX. */
     private static final int KIEM_PROPERTY_MAX = 5;
     private static final String KIEM_PROPERTY_NAME_MARKER = "Benchmark Marker";
-    private static final String KIEM_PROPERTY_NAME_ABSOLUTETOLERANCE = "Number of Runs";
-    private static final String KIEM_PROPERTY_NAME_RELATIVETOLERANCE = "Benchmark Marker";
+    private static final String KIEM_PROPERTY_NAME_ABSOLUTETOLERANCE = "Absolute Tolreance";
+    private static final String KIEM_PROPERTY_NAME_RELATIVETOLERANCE = "Relative Tolerance";
     private static final String KIEM_PROPERTY_NAME_CONSOLIDATETICKS = "Consolidate Ticks";
     private static final String KIEM_PROPERTY_NAME_CMDLINEOUTPUTINPUT = "Cmd Line Output/Input";
     private static final int KIEM_PROPERTY_MARKER = 0;
