@@ -44,6 +44,11 @@ public interface ICompiler {
      */
     public String compile(String srcFile, String outputPath) throws CompilationException;
 
+    /**
+     * 
+     * @return
+     */
+    public int getCompilationOffset();
 
     /**
      * 

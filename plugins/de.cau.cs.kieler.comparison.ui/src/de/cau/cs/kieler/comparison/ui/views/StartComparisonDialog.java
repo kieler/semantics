@@ -14,6 +14,7 @@ package de.cau.cs.kieler.comparison.ui.views;
 
 import java.beans.FeatureDescriptor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,9 +38,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -47,6 +50,9 @@ import de.cau.cs.kieler.comparison.core.Comparison;
 import de.cau.cs.kieler.comparison.core.ICompiler;
 import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
+import de.cau.cs.kieler.comparison.exchange.KBestMeasuringParameteres;
+import de.cau.cs.kieler.comparison.exchange.IMeasuringParameters;
+import de.cau.cs.kieler.comparison.exchange.StandardMeasuringParameters;
 
 /**
  * @author nfl
@@ -63,40 +69,49 @@ public class StartComparisonDialog extends Dialog {
 
     private Button okayButton;
     private Button checkBoxCompSpeed;
-    private Button checkBoxExecSpeed;
-    private Button checkBoxCompSize;
-    private Button checkBoxFeasTestcases;
+    private Combo cmbCompilationMeasuring;
     private Text txtCompAmount;
+    private Text txtCompKBestK;
+    private Text txtCompKBestEpsilon;
+    private Text txtCompKBestM;
+    private IMeasuringParameters compSpeedParams;
+    private boolean compSpeed;
+
+    private Button checkBoxExecSpeed;
     private Text txtExecAmount;
+    private int execAmount = 1;
+    private boolean execSpeed;
+
+    private Button checkBoxCompSize;
+    private boolean compSize;
+
+    private Collection<ICompiler> compilers = new ArrayList<ICompiler>();
+    private Collection<String> cachedCompilers = new ArrayList<String>();
     private Combo cmbSrcLng;
     private Combo cmbTrgLng;
     private List lstCompilerSelection;
+
+    private Collection<ITestcase> testcases = new ArrayList<ITestcase>();
+    private ArrayList<String> cachedFilteredTestcases = new ArrayList<String>();
     private Combo cmbTestcase;
     private List lstTestcaseSelection;
-    private Text txtOutputPath;
-    private int compAmount = 1;
-    private int execAmount = 1;
-    private boolean execSpeed;
-    private boolean compSpeed;
-    private boolean compSize;
-    private Collection<ICompiler> compilers = new ArrayList<ICompiler>();
-    private Collection<ITestcase> testcases = new ArrayList<ITestcase>();
-    private Collection<String> cachedCompilers = new ArrayList<String>();
-    private ArrayList<String> cachedFilteredTestcases = new ArrayList<String>();
-    private String outputPath;
+    private Button checkBoxFeasTestcases;
 
-    /**
-     * @return the execSpeed
-     */
-    public boolean compareExecSpeed() {
-        return execSpeed;
-    }
+    private Text txtOutputPath;
+    private String outputPath;
 
     /**
      * @return the compSpeed
      */
     public boolean compareCompSpeed() {
         return compSpeed;
+    }
+
+    /**
+     * @return the execSpeed
+     */
+    public boolean compareExecSpeed() {
+        return execSpeed;
     }
 
     /**
@@ -107,10 +122,10 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
-     * @return the compAmount
+     * @return the compSpeedParams
      */
-    public int getCompAmount() {
-        return compAmount;
+    public IMeasuringParameters getCompSpeedParams() {
+        return compSpeedParams;
     }
 
     /**
@@ -283,8 +298,10 @@ public class StartComparisonDialog extends Dialog {
         Collection<String> filtered = new ArrayList<String>();
 
         for (Entry<String, ICompiler> kv : registered.entrySet()) {
-            if ((kv.getValue().getSrcLanguage() == src || src == null)
-                    && (kv.getValue().getTrgLanguage() == trg || trg == null)) {
+            if ((src == null || kv.getValue().getSrcLanguage() == null || kv.getValue()
+                    .getSrcLanguage() == src)
+                    && (trg == null || kv.getValue().getTrgLanguage() == null || kv.getValue()
+                            .getTrgLanguage() == trg)) {
                 filtered.add(kv.getKey());
             }
         }
@@ -348,7 +365,8 @@ public class StartComparisonDialog extends Dialog {
                 for (String test : lstTestcaseSelection.getSelection()) {
                     for (ITestcase testcase : Comparison.getTestcases(false).values()) {
                         if (testcase.getID().equals(test)) {
-                            System.out.println(testcase.getTestcase() + ": "+ testcase.getProperties());
+                            System.out.println(testcase.getTestcase() + ": "
+                                    + testcase.getProperties());
                         }
                     }
                 }
@@ -356,7 +374,6 @@ public class StartComparisonDialog extends Dialog {
 
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
-                // TODO Auto-generated method stub
 
             }
         });
@@ -386,7 +403,8 @@ public class StartComparisonDialog extends Dialog {
                     boolean allCompsHandled = true;
                     for (ICompiler comp : compilers) {
                         ITestcase testcase = kv.getValue();
-                        if (testcase.getLanguage() == comp.getSrcLanguage()) {
+                        if (testcase.getLanguage() == comp.getSrcLanguage()
+                                || comp.getSrcLanguage() == null) {
                             boolean allPropsHandled = true;
                             if (testcase.getProperties() != null) {
                                 for (String prop : testcase.getProperties()) {
@@ -421,32 +439,39 @@ public class StartComparisonDialog extends Dialog {
 
             }
 
-            // sort testcases alphabetically
-            cachedFilteredTestcases.sort(new Comparator<String>() {
-                @Override
-                public int compare(String o1, String o2) {
-                    return o1.compareTo(o2);
-                }
-            });
-
-            lstTestcaseSelection.setItems(cachedFilteredTestcases
-                    .toArray(new String[cachedFilteredTestcases.size()]));
+            cachedFilteredTestcases.sort(new StringComparator());
+            lstTestcaseSelection.setItems(cachedFilteredTestcases.toArray(new String[0]));
         }
         // show only matching src language
         else {
-            // TODO sort testcases
             Language lng = Language.valueOf(cmbTestcase.getItem(cmbTestcase.getSelectionIndex()));
-            lstTestcaseSelection.removeAll();
+            ArrayList<String> selection = new ArrayList<String>();
             for (Entry<String, ITestcase> kv : registered.entrySet()) {
                 if (kv.getValue().getLanguage() == lng) {
-                    lstTestcaseSelection.add(kv.getValue().getID());
+                    selection.add(kv.getValue().getID());
                 }
             }
+            selection.sort(new StringComparator());
+            lstTestcaseSelection.setItems(selection.toArray(new String[0]));
         }
     }
 
     /**
-     * Checks if the cached compiler / testcase selection could be used
+     * Natural order of String.
+     */
+    private class StringComparator implements Comparator<String> {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int compare(String o1, String o2) {
+            return o1.compareTo(o2);
+        }
+    }
+
+    /**
+     * Checks if the cached compiler / test case selection could be used
      * 
      * @return true, if cached compilers are the same as the ones currently selected
      */
@@ -468,21 +493,23 @@ public class StartComparisonDialog extends Dialog {
     private void createConfigurationSelection(Composite container) {
 
         Group grp = new Group(container, SWT.BORDER);
-        GridLayout layout = new GridLayout(2, true);
-        grp.setLayout(layout);
-        grp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+        grp.setLayout(new GridLayout(6, false));
+        grp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 6, 1));
         grp.setText("Comparison Configuration");
 
         // Comp Speed
         checkBoxCompSpeed = new Button(grp, SWT.CHECK);
         checkBoxCompSpeed.setText("Compare Compilation Speed");
-        checkBoxCompSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        checkBoxCompSpeed.setSelection(true);
+        checkBoxCompSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
         checkBoxCompSpeed.addSelectionListener(new SelectionListener() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
                 txtCompAmount.setEnabled(checkBoxCompSpeed.getSelection());
+                txtCompKBestK.setEnabled(checkBoxCompSpeed.getSelection());
+                txtCompKBestEpsilon.setEnabled(checkBoxCompSpeed.getSelection());
+                txtCompKBestM.setEnabled(checkBoxCompSpeed.getSelection());
+                
                 checkOkayButton();
             }
 
@@ -491,29 +518,107 @@ public class StartComparisonDialog extends Dialog {
             }
         });
 
-        txtCompAmount = new Text(grp, SWT.BORDER);
-        txtCompAmount.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        txtCompAmount.setText(Integer.toString(compAmount));
-        txtCompAmount.setEnabled(checkBoxCompSpeed.getSelection());
-        txtCompAmount.addModifyListener(new ModifyListener() {
+        // Combo selection for different measurements
+        // since parameter fields can not be created dynamically,
+        // there is no need to add option dynamically (for example using extension points)
+        cmbCompilationMeasuring = new Combo(grp, SWT.DROP_DOWN | SWT.BORDER | SWT.READ_ONLY);
+        cmbCompilationMeasuring
+                .setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
+        cmbCompilationMeasuring.add(StandardMeasuringParameters.getID());
+        cmbCompilationMeasuring.add(KBestMeasuringParameteres.getID());
 
+        // Standard measuring
+        Label lblCompAmount = new Label(grp, SWT.NONE);
+        lblCompAmount.setText("Amount:");
+        lblCompAmount.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
+
+        txtCompAmount = new Text(grp, SWT.BORDER);
+        txtCompAmount.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+        txtCompAmount.setText(Integer.toString(1));
+
+        cmbCompilationMeasuring.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(ModifyEvent e) {
-                Text textWidget = (Text) e.getSource();
-                int compText;
-                try {
-                    compText = Integer.parseInt(textWidget.getText());
-                } catch (NumberFormatException nfe) {
-                    compText = 1;
+                if (cmbCompilationMeasuring.getItem(cmbCompilationMeasuring.getSelectionIndex())
+                        .equals(StandardMeasuringParameters.getID())) {
+                    ((GridData) lblCompAmount.getLayoutData()).exclude = false;
+                    ((GridData) txtCompAmount.getLayoutData()).exclude = false;
+                    lblCompAmount.setVisible(true);
+                    txtCompAmount.setVisible(true);
+                } else {
+                    ((GridData) lblCompAmount.getLayoutData()).exclude = true;
+                    ((GridData) txtCompAmount.getLayoutData()).exclude = true;
+                    lblCompAmount.setVisible(false);
+                    txtCompAmount.setVisible(false);
                 }
-                compAmount = compText;
+                container.layout();
             }
         });
+
+        // K-best measuring
+        Label lblCompKBestK = new Label(grp, SWT.NONE);
+        lblCompKBestK.setText("K:");
+        lblCompKBestK.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        txtCompKBestK = new Text(grp, SWT.BORDER);
+        txtCompKBestK.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        txtCompKBestK.setText(Integer.toString(1));
+
+        Label lblCompKBestEpsilon = new Label(grp, SWT.NONE);
+        lblCompKBestEpsilon.setText("epsilon:");
+        lblCompKBestEpsilon.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        txtCompKBestEpsilon = new Text(grp, SWT.BORDER);
+        txtCompKBestEpsilon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        txtCompKBestEpsilon.setText("0.01");
+
+        Label lblCompKBestM = new Label(grp, SWT.NONE);
+        lblCompKBestM.setText("M:");
+        lblCompKBestM.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        txtCompKBestM = new Text(grp, SWT.BORDER);
+        txtCompKBestM.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        txtCompKBestM.setText(Integer.toString(1));
+
+        cmbCompilationMeasuring.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent e) {
+                if (cmbCompilationMeasuring.getItem(cmbCompilationMeasuring.getSelectionIndex())
+                        .equals(KBestMeasuringParameteres.getID())) {
+                    ((GridData) lblCompKBestK.getLayoutData()).exclude = false;
+                    ((GridData) lblCompKBestEpsilon.getLayoutData()).exclude = false;
+                    ((GridData) lblCompKBestM.getLayoutData()).exclude = false;
+                    ((GridData) txtCompKBestK.getLayoutData()).exclude = false;
+                    ((GridData) txtCompKBestEpsilon.getLayoutData()).exclude = false;
+                    ((GridData) txtCompKBestM.getLayoutData()).exclude = false;
+                    lblCompKBestK.setVisible(true);
+                    lblCompKBestEpsilon.setVisible(true);
+                    lblCompKBestM.setVisible(true);
+                    txtCompKBestK.setVisible(true);
+                    txtCompKBestEpsilon.setVisible(true);
+                    txtCompKBestM.setVisible(true);
+                } else {
+                    ((GridData) lblCompKBestK.getLayoutData()).exclude = true;
+                    ((GridData) lblCompKBestEpsilon.getLayoutData()).exclude = true;
+                    ((GridData) lblCompKBestM.getLayoutData()).exclude = true;
+                    ((GridData) txtCompKBestK.getLayoutData()).exclude = true;
+                    ((GridData) txtCompKBestEpsilon.getLayoutData()).exclude = true;
+                    ((GridData) txtCompKBestM.getLayoutData()).exclude = true;
+                    lblCompKBestK.setVisible(false);
+                    lblCompKBestEpsilon.setVisible(false);
+                    lblCompKBestM.setVisible(false);
+                    txtCompKBestK.setVisible(false);
+                    txtCompKBestEpsilon.setVisible(false);
+                    txtCompKBestM.setVisible(false);
+                }
+                container.layout();
+            }
+        });
+        
+        cmbCompilationMeasuring.select(0);
+        checkBoxCompSpeed.setSelection(true);
 
         // Exec Speed
         checkBoxExecSpeed = new Button(grp, SWT.CHECK);
         checkBoxExecSpeed.setText("Compare Execution Speed");
-        checkBoxExecSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        checkBoxExecSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
         checkBoxExecSpeed.addSelectionListener(new SelectionListener() {
 
             @Override
@@ -528,7 +633,7 @@ public class StartComparisonDialog extends Dialog {
         });
 
         txtExecAmount = new Text(grp, SWT.BORDER);
-        txtExecAmount.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        txtExecAmount.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
         txtExecAmount.setText(Integer.toString(execAmount));
         txtExecAmount.setEnabled(checkBoxExecSpeed.getSelection());
         txtExecAmount.addModifyListener(new ModifyListener() {
@@ -549,7 +654,7 @@ public class StartComparisonDialog extends Dialog {
         // Comp Size
         checkBoxCompSize = new Button(grp, SWT.CHECK);
         checkBoxCompSize.setText("Compare Compilation Size");
-        checkBoxCompSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+        checkBoxCompSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 6, 1));
         checkBoxCompSize.addSelectionListener(new SelectionListener() {
 
             @Override
@@ -567,7 +672,7 @@ public class StartComparisonDialog extends Dialog {
         txtOutputPath = new Text(grp, SWT.BORDER);
         txtOutputPath.setText(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString()
                 + "/");
-        txtOutputPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        txtOutputPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 5, 1));
     }
 
     /**
@@ -575,11 +680,49 @@ public class StartComparisonDialog extends Dialog {
      */
     @Override
     protected void okPressed() {
-        try {
-            compAmount = Integer.parseInt(txtCompAmount.getText());
-        } catch (NumberFormatException nfe) {
-            compAmount = 1;
+        String selectedCompParams =
+                cmbCompilationMeasuring.getItem(cmbCompilationMeasuring.getSelectionIndex());
+        if (selectedCompParams.equals(StandardMeasuringParameters.getID())) {
+            int compAmount = 1;
+            try {
+                compAmount = Integer.parseInt(txtCompAmount.getText());
+            } catch (NumberFormatException nfe) {
+                // TODO String could not be parsed into int
+            }
+            compSpeedParams = new StandardMeasuringParameters(compAmount);
+        } else if (selectedCompParams.equals(KBestMeasuringParameteres.getID())) {
+            int K = 1;
+            double epsilon = 0;
+            int M = 1;
+
+            try {
+                K = Integer.parseInt(txtCompKBestK.getText());
+            } catch (NumberFormatException nfe) {
+                // String could not be parsed to int
+                // TODO better error logging
+                System.out.println("Int K: String could not be parsed to int.");
+            }
+            try {
+                epsilon = Double.parseDouble(txtCompKBestEpsilon.getText());
+            } catch (NumberFormatException nfe) {
+                // String could not be parsed to double
+                // TODO better error logging
+                System.out.println("Double epsilon: String could not be parsed to double.");
+            }
+            try {
+                M = Integer.parseInt(txtCompKBestM.getText());
+            } catch (NumberFormatException nfe) {
+                // String could not be parsed to int
+                // TODO better error logging
+                System.out.println("Int M: String could not be parsed to int.");
+            }
+            compSpeedParams = new KBestMeasuringParameteres(K, epsilon, M);
+        } else {
+            // no valid / known measuring selected
+            // TODO better error logging
+            System.out.println("No valid / known method for compilation measuring selected");
         }
+
         try {
             execAmount = Integer.parseInt(txtExecAmount.getText());
         } catch (NumberFormatException nfe) {

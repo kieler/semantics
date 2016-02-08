@@ -99,4 +99,13 @@ public class CEC2C implements ICompiler {
         return ret;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getCompilationOffset() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
 }

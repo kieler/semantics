@@ -21,6 +21,11 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
@@ -75,7 +80,7 @@ public class ComparisonDataView extends ViewPart {
     }
 
     static final String[] TITLES = { "Criteria", "Compiler", "Testcase", "Results" };
-    static final int[] WIDTH = { 200, 300, 250, 300 };
+    static final int[] WIDTH = { 200, 150, 350, 200 };
     private int sortBy = -1;
 
     /**
@@ -102,6 +107,7 @@ public class ComparisonDataView extends ViewPart {
         viewer.setInput(getViewSite());
 
         viewer.setComparator(new TestbenchComparator());
+        viewer.addDoubleClickListener(new InfoDoubleClickListener());
 
         // Create the help context id for the viewer's control
         PlatformUI.getWorkbench().getHelpSystem()
@@ -174,6 +180,35 @@ public class ComparisonDataView extends ViewPart {
             }
         };
     }
+    
+    private class InfoDoubleClickListener implements IDoubleClickListener{        
+        @Override
+        public void doubleClick(DoubleClickEvent event) {
+            ISelection sel = event.getSelection();
+            if (sel instanceof IStructuredSelection && !sel.isEmpty()) {
+                IStructuredSelection struct = (IStructuredSelection) sel;
+                if (struct.getFirstElement() instanceof Testbench) {
+                    Testbench bench = (Testbench) struct.getFirstElement();
+                    String title = "Comparison measurement";
+                    String infoText = "";
+                    infoText += "Compiler: \n" + bench.getCompiler();
+                    infoText += "\n\nTest case: \n" + bench.getTestcase();
+                    infoText += "\n\nCriteria: \n" + bench.getCriteria();
+                    if (bench.getData() != null && !bench.getData().isEmpty()) {
+                        infoText += "\n\nMeasuring";
+                        if (bench.getData().size() > 1) {
+                            infoText += "s (" + bench.getData().size() + ")";
+                        }
+                        infoText += ":";
+                        for (String data : bench.getData()) {
+                            infoText += "\n" + data;
+                        }
+                    }
+                    MessageDialog.openInformation(viewer.getControl().getShell(), title, infoText);
+                }
+            }
+        }
+    }
 
     private void contributeToActionBars() {
         IActionBars bars = getViewSite().getActionBars();
@@ -225,7 +260,7 @@ public class ComparisonDataView extends ViewPart {
         conf.setCompareExecSpeed(dialog.compareExecSpeed());
         conf.setCompareExecSpeedAmount(dialog.getExecAmount());
         conf.setCompareCompSpeed(dialog.compareCompSpeed());
-        conf.setCompareCompSpeedAmount(dialog.getCompAmount());
+        conf.setCompareCompParameters(dialog.getCompSpeedParams());
         conf.setCompareCompSize(dialog.compareCompSize());
         conf.setCompilers(dialog.getCompilers());
         conf.setTestcases(dialog.getTestcases());

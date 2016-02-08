@@ -190,11 +190,29 @@ public final class Comparison {
         // Add the default folder (de.cau.cs.kieler.comparison/testcases/) as test case folder
         try {
             URL url = new URL("platform:/plugin/de.cau.cs.kieler.comparison/testcases/");
-            files.add(new File(FileLocator.resolve(url).toURI()));
+            files.add(new File(FileLocator.resolve(url).toURI()).getCanonicalFile());
         } catch (IOException | URISyntaxException e) {
             // should never happen
             // TODO better error logging
             System.out.println("Test case folder could not be resolved.");
+            e.printStackTrace();
+        }
+
+        // Add SCCharts test folder
+        try {
+            URL baseUrl =
+                    FileLocator.resolve(new URL("platform:/plugin/de.cau.cs.kieler.comparison/"));
+            URL url =
+                    new URL(baseUrl.toString()
+                            + "../../test/de.cau.cs.kieler.sccharts.sim.c.test/testdata-simple/");
+            files.add(new File(FileLocator.resolve(url).toURI()).getCanonicalFile());
+
+            url = new URL(baseUrl.toString()
+                            + "../../test/de.cau.cs.kieler.sccharts.sim.c.test/testdata-advanced/");
+            files.add(new File(FileLocator.resolve(url).toURI()).getCanonicalFile());
+        } catch (IOException | URISyntaxException e) {
+            // TODO better error logging
+            System.out.println("SCCharts test case folder could not be resolved.");
             e.printStackTrace();
         }
 
@@ -228,7 +246,7 @@ public final class Comparison {
                 if (path.length() > 2 && path.substring(path.length() - 3).equals(".in")) {
                     return false;
                 }
-                
+
                 // TODO better error logging
                 System.out.println("No ITestcaseProvider for Testcase "
                         + pathname.getAbsolutePath() + " found.");
@@ -260,15 +278,10 @@ public final class Comparison {
                     // Check if the provider can handle the current file extension
                     if (index >= 0 && index < nameLength
                             && fileName.substring(index).toLowerCase().equals(ext)) {
-                        // Try so resolve the file path
-                        try {
-                            file = file.getCanonicalFile();
-                        } catch (IOException e) {
-                        }
                         // Try to create new test cases with the current provider
-                        Collection<ITestcase> newTestcases = provider.createTestcases(file.getParent() ,fileName);
-                        // If the provider created new test cases, add them to the list of test
-                        // cases
+                        Collection<ITestcase> newTestcases =
+                                provider.createTestcases(file.getParent(), fileName);
+                        // If the provider creates new test cases, add them to the list of test cases
                         if (newTestcases != null && newTestcases.size() > 0) {
                             insertTestcases(allTestcases, newTestcases);
                             parsed = true;
@@ -317,7 +330,7 @@ public final class Comparison {
      *            the collection to insert from
      */
     private static void insertTestcases(Collection<ITestcase> into, final Collection<ITestcase> from) {
-        
+
         if (into == null) {
             into = from;
             return;
@@ -359,7 +372,7 @@ public final class Comparison {
      * @return true, if the merge was successful; false otherwise
      */
     private static boolean mergeTestcases(ITestcase first, final ITestcase second) {
-        
+
         // Only merge the test cases if both have the same file path ...
         if (first.getTestcase().equals(second.getTestcase())) {
             // ... and the same Language

@@ -29,6 +29,7 @@ public class Testcase implements ITestcase {
     private Language language;
     private String testcase;
     private Collection<String> properties = new ArrayList<String>();
+    private Collection<String> dependencies = new ArrayList<String>();
     
     /**
      * @param id the id to set
@@ -56,6 +57,13 @@ public class Testcase implements ITestcase {
      */
     public void setProperties(Collection<String> properties) {
         this.properties = properties;
+    }
+
+    /**
+     * @param dependencies the dependencies to set
+     */
+    public void setDependencies(Collection<String> dependencies) {
+        this.dependencies = dependencies;
     }
 
     /**
@@ -91,6 +99,13 @@ public class Testcase implements ITestcase {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public Collection<String> getDependencies() {
+        return dependencies;
+    }
+
+    /**
      * Creates a new Testcase without a Language from a csv String.
      * 
      * @param testcaseLine the test case encoded as comma separated values
@@ -121,5 +136,4 @@ public class Testcase implements ITestcase {
         
         return testcase;
     }
-
 }

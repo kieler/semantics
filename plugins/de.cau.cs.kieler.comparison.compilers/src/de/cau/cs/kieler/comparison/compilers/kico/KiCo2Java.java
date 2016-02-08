@@ -26,14 +26,14 @@ import de.cau.cs.kieler.comparison.core.LanguageProperties;
  * @author nfl
  *
  */
-public class KiCoSCCharts2Java implements ICompiler {
+public class KiCo2Java implements ICompiler {
 
     /**
      * {@inheritDoc}
      */
     @Override
     public String getID() {
-        return "KiCo - SCCharts to Java";
+        return "KiCo - * to Java";
     }
 
     /**
@@ -41,7 +41,7 @@ public class KiCoSCCharts2Java implements ICompiler {
      */
     @Override
     public Language getSrcLanguage() {
-        return Language.SCCharts;
+        return null;
     }
 
     /**
@@ -76,5 +76,13 @@ public class KiCoSCCharts2Java implements ICompiler {
         ret.add(LanguageProperties.CYCLIC);
         ret.add(LanguageProperties.DETERMINISTIC);
         return ret;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getCompilationOffset() {
+        return 0;
     }
 }

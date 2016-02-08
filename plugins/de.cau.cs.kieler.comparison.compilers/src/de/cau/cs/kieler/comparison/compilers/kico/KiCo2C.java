@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import de.cau.cs.kieler.comparison.core.CompilationException;
 import de.cau.cs.kieler.comparison.core.ICompiler;
-import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
 import de.cau.cs.kieler.comparison.core.LanguageProperties;
 import de.cau.cs.kieler.kico.CompilationResult;
@@ -37,14 +36,14 @@ import de.cau.cs.kieler.kico.KielerCompilerContext;
  * @author nfl
  *
  */
-public class KiCoSCCharts2C implements ICompiler {
+public class KiCo2C implements ICompiler {
 
     /**
      * {@inheritDoc}
      */
     @Override
     public String getID() {
-        return "KiCo - SCCharts to C";
+        return "KiCo - * to C";
     }
 
     /**
@@ -52,7 +51,7 @@ public class KiCoSCCharts2C implements ICompiler {
      */
     @Override
     public Language getSrcLanguage() {
-        return Language.SCCharts;
+        return null;
     }
 
     /**
@@ -72,19 +71,22 @@ public class KiCoSCCharts2C implements ICompiler {
         URI uri = null;
         try {
             uri = URI.createFileURI(srcFile);
-        } catch (AssertionError e) {
-            throw new CompilationException("Source File not found");
+        } catch (IllegalArgumentException e) {
+            throw new CompilationException("Unable to load source file");
         }        
         
         // Get the resource
         Resource resource = new ResourceSetImpl().getResource(uri, true);
-        if(resource.getContents().isEmpty())
-            throw new CompilationException("Unable to load source file");
+        if(resource == null || resource.getContents() == null || resource.getContents().isEmpty())
+            throw new CompilationException("Unable to load EObject from source file");
         
         EObject eobj = resource.getContents().get(0);
         
-        KielerCompilerContext context = new KielerCompilerContext("!T_SIMULATIONVISUALIZATION, T_s.c", eobj); 
+        KielerCompilerContext context = new KielerCompilerContext("!T_SIMULATIONVISUALIZATION, !T_ESTERELSIMULATIONVISUALIZATION, T_s.c", eobj); 
         context.setAdvancedSelect(true);
+        
+        // TODO dependencies
+        
         CompilationResult compResult = KielerCompiler.compile(context);
         if(compResult.getAllErrors() != null && ! compResult.getAllErrors().isEmpty())
             throw new CompilationException("Compilation failed: " + compResult.getAllErrors().toString().replace("\n", ""));
@@ -125,5 +127,13 @@ public class KiCoSCCharts2C implements ICompiler {
         ret.add(LanguageProperties.VALUED);
         ret.add(LanguageProperties.SEQUENTIALLY_CONSTRUCTIVE);
         return ret;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getCompilationOffset() {
+        return 0;
     }
 }

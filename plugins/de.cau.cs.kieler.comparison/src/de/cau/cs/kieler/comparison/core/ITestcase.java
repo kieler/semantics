@@ -43,4 +43,10 @@ public interface ITestcase {
      * @return
      */
     public Collection<String> getProperties();
+
+    /**
+     * 
+     * @return
+     */
+    public Collection<String> getDependencies();
 }
