@@ -12,12 +12,9 @@ import de.cau.cs.kieler.core.krendering.KRendering
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.core.util.Maybe
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.SCGraph
+
 import de.cau.cs.kieler.circuit.Actor
-import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
-import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation
+
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException
@@ -31,7 +28,6 @@ import org.json.JSONObject
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import com.google.inject.Scopes
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
@@ -45,11 +41,7 @@ import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.krendering.KRectangle
 import de.cau.cs.kieler.core.krendering.KText
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.guardCreation.GuardCreator
-import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
-import de.cau.cs.kieler.scg.features.SCGFeatures
+
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
 
 
@@ -65,7 +57,6 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
     
     
     extension AnnotationsExtensions = injector.getInstance(typeof(AnnotationsExtensions))
-    extension SCGDeclarationExtensions = injector.getInstance(typeof(SCGDeclarationExtensions))
     extension KRenderingExtensions = injector.getInstance(typeof(KRenderingExtensions))
     extension KNodeExtensions = injector.getInstance(typeof(KNodeExtensions))
     extension KEdgeExtensions = injector.getInstance(typeof(KEdgeExtensions))
@@ -101,8 +92,8 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
         	for(context : contexts){
         		val circuit = context.inputModel as Actor
         		if(circuit.innerActors != null ){
-        			for(actor : circuit.eAllContents.filter(Actor).filter[innerActors == null].toList){
-        				System.out.println(actor.name)
+        			for(actor : circuit.eAllContents.filter(Actor).toList){
+        				System.out.println(actor.name + "+++++++++++++++++++++++++++-----++++++++++++++++++++++++++++")
         				if(actor.name.startsWith("g")){
         					guardMapping.putAll(actor.name,context.getTargetElements(actor).filter(KRendering))
         				}
@@ -159,33 +150,23 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
     }
     
     
-    override wrapup() throws KiemInitializationException {
-        
-        val Runnable run = [|
-            for(node : annotationNodes) {
-                node.parent.children.remove(node)
-            }
-            highlight(<String> newHashSet)
-        ]
-        Display.getDefault().syncExec(run)
-        
-    }
+   
     
     override step(JSONObject jSONObject) throws KiemExecutionException {
         
         val highlighting = <String> newHashSet
         for(key : jSONObject.keys.toIterable) {
-            if ((key as String).startsWith(BasicBlockTransformation::GUARDPREFIX)) {
+            if ((key as String).startsWith("g")) {
                 val object = jSONObject.get(key)
                 if (object instanceof JSONObject && (object as JSONObject).has("value")) {
                     val value = (object as JSONObject).get("value")
                     if ((value as Integer) != 0) {
-                        if (key.endsWith(DepthJoinSynchronizer::SCHIZOPHRENIC_SUFFIX)) {
-                            val myKey = key.substring(0,key.length-2)
-                            highlighting += myKey                            
-                        } else {
+//                        if (key.endsWith(DepthJoinSynchronizer::SCHIZOPHRENIC_SUFFIX)) {
+//                            val myKey = key.substring(0,key.length-2)
+//                            highlighting += myKey                            
+//                        } else {
                             highlighting += key                            
-                        }
+//                        }
                     }
                 }
             }
@@ -256,42 +237,14 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
         
     }
     
-    private def KNode synthesizeConditionalAssignmentAnnotation(KNode sourceNode, Assignment assignment, SCGraph scg) {
-        val VOName = assignment.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
-        val VO = scg.findValuedObjectByName(VOName)
-        val kNode = assignment.createNode(VO) => [ node |
-            node.getData(typeof(KLayoutData)).setProperty(LayoutOptions.COMMENT_BOX, true)
-//            node.setNodeSize(75.0f, 20.0f)
-        ]
-//            node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT) 
-        val figure = kNode.addRectangle().setLineWidth(1.0f).background = Colors::YELLOW;
-        val assignmentStr = sourceNode.getData(typeof(KRoundedRectangle)).children.filter(typeof(KText)).head.text
-        figure.addText(assignmentStr).setSurroundingSpace(4, 0, 2, 0).fontSize = 8
-        
-        sourceNode.parent.children += kNode
-       
-        kNode 
-    }    
+     
     
-    private def KEdge synthesizeConditionalAssignmentLink(KNode aNode, KNode bNode) {
-        val kEdge = createNewEdge() => [ edge |
-            // Get and set source and target information.
-            var sourceNode = aNode
-            var targetNode = bNode
-            edge.source = sourceNode
-            edge.target = targetNode
-            edge.sourcePort = aNode.getPort("DEBUGPORT")
-            edge.targetPort = bNode.getPort("DEBUGPORT")            
+    
 
-            edge.addPolyline(1.0f) => [
-                it.lineStyle = LineStyle::DOT
-                it.foreground = Colors::GRAY
-            ]
-            
-        ]
-        
-        kEdge
-          
-    
+override wrapup() throws KiemInitializationException {
+	throw new UnsupportedOperationException("TODO: auto-generated method stub")
 }
+
+
+
 }
