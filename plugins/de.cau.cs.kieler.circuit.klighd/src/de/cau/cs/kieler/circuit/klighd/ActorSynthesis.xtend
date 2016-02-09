@@ -137,13 +137,13 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 				actorNode.data += expandedRendering
 
 			}
-			if (hasName) {
+			
+		}
+		if (hasName) {
 				actorNode.addOutsideTopLeftNodeLabel(actor.name, KlighdConstants.DEFAULT_FONT_SIZE,
 					KlighdConstants.DEFAULT_FONT_NAME);
 			}
-
-		}
-
+		
 		return actorNode;
 
 	}

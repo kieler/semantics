@@ -1,5 +1,5 @@
-
 package de.cau.cs.kieler.scg.circuit
+
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
@@ -22,6 +22,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.core.kexpressions.ValueType
 
 class SeqSSAscgTransformation extends AbstractProductionTransformation {
 
@@ -44,13 +45,12 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 		return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
 	}
 
-
 	@Inject
 	extension KEffectsSerializeExtensions
 
-   @Inject 
-    extension KExpressionsDeclarationExtensions	
-    
+	@Inject
+	extension KExpressionsDeclarationExtensions
+
 	@Inject
 	extension KExpressionsValuedObjectExtensions
 	val ssaMap = new HashMap<String, Integer>
@@ -62,21 +62,19 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 		ssaMap.clear
 		ssaPreMap.clear
 
-		//val scgraph = scg.copy
+		// val scgraph = scg.copy
+		val nodes = scg.nodes
+
 		
 
-		val nodes = scg.nodes
-		
-		
-//		val declarations = scg.eAllContents.filter(Declaration).toList
+		// search for Assignments
 		filterRelevantAssignments(nodes.filter(Assignment).toList, ssaMap)
-		
+
 		createSSAs(scg, nodes)
-		
+
 //		setSSApreAndOutputs(scg.eAllContents.filter(Declaration).toList)
-		
-		context.compilationResult.addAuxiliaryData((new SSAMapData) => [ it.ssaMap = ssaMap ])
-		
+		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.ssaMap = ssaMap])
+
 		return scg
 	}
 
@@ -85,16 +83,32 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 		for (n : nodes) {
 			if (n instanceof Assignment) {
 				val name = n.valuedObject.name
+				val type = n.valuedObject.type
+				
 				if (ssaMap.containsKey(name)) {
 
 					transformExpressions(n.assignment, ssaMap)
 					val m = ssaMap.get(name)
 					ssaMap.replace(name, m, m + 1)
-					
+
 					val vo = createValuedObject(name + "_" + ssaMap.get(name))
+					val dec = createDeclaration()
+					dec.valuedObjects += vo
 					
+					switch (type) {
+						case BOOL: dec => [setType(ValueType::BOOL)]
+						case DOUBLE: dec => [setType(ValueType::DOUBLE)]
+						case FLOAT: dec => [setType(ValueType::FLOAT)]
+						case HOST: dec => [setType(ValueType::HOST)]
+						case INT: dec => [setType(ValueType::INT)]
+						case PURE: dec => [setType(ValueType::PURE)]
+						case STRING: dec => [setType(ValueType::STRING)]
+						case UNSIGNED: dec => [setType(ValueType::UNSIGNED)]
+					}
+
+					scg.declarations += dec
 					n.valuedObject = vo
-					
+
 				} else {
 					n.assignment = transformExpressions(n.assignment, ssaMap)
 				}
@@ -103,21 +117,21 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 	}
 
 	def setSSApreAndOutputs(List<Declaration> declarations) {
-		
+
 		for (d : declarations) {
 			if (d.isOutput && !d.isInput) {
 				d.valuedObjects.forEach [ vo |
+
 					val name = vo.name
 					val readvalue = ssaMap.get(name)
 					ssaPreMap.put(name, readvalue)
 				]
 			}
-			for(v : d.valuedObjects){
+			for (v : d.valuedObjects) {
 			}
 		}
 
 	}
-
 
 	def filterRelevantAssignments(List<Assignment> assignments, HashMap<String, Integer> ssaMap) {
 
@@ -140,7 +154,7 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 
 		values.forEach [ v |
 			val varName = v.valuedObject.name
-			if (map.containsKey(varName) && map.get(varName)>0) {
+			if (map.containsKey(varName) && map.get(varName) > 0) {
 
 				val vo = createValuedObject(varName + "_" + ssaMap.get(varName))
 				v.valuedObject = vo
@@ -154,5 +168,5 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 
 class SSAMapData extends AbstractKielerCompilerAuxiliaryData {
 	@Accessors
-	HashMap<String, Integer> ssaMap 	
+	HashMap<String, Integer> ssaMap
 }
