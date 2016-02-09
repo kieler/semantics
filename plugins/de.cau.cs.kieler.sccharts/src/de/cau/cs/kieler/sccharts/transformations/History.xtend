@@ -83,7 +83,7 @@ class History extends AbstractExpansionTransformation implements Traceable {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach [ targetState |
+        targetRootState.getAllStates.immutableCopy.forEach [ targetState |
             targetState.transformHistory(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;
