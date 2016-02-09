@@ -63,6 +63,12 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclSpecifier
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionCallExpression
+import de.cau.cs.kieler.sccharts.Scope
+import java.util.Map
+import java.util.HashMap
+import de.cau.cs.kieler.sccharts.Binding
+
 
 /**
  * @author ssm
@@ -85,6 +91,8 @@ class CDTProcessor extends AbstractProductionTransformation {
 
     var State funcGlobalState
 
+    Map<String,State> functionStates  = new HashMap<String, State>();
+    
     override String getId() {
         return CTransformations::SCCHARTS_ID;
     }
@@ -134,7 +142,7 @@ class CDTProcessor extends AbstractProductionTransformation {
             ast.children.forEach [ func | //for each function set a new region 
                 if (func instanceof CASTFunctionDefinition) {
                     val rootFunctionDefinition = func as CASTFunctionDefinition
-
+                    
                     val model = rootFunctionDefinition.transformFunction
 
                     scc.createControlflowRegion => [ state |
@@ -143,7 +151,10 @@ class CDTProcessor extends AbstractProductionTransformation {
                         root.regions += state
                         state.states += model
                     ]
-
+                    if  (model != null){
+                        functionStates.put("wasauchimmer",model)//func.children.filter(typeof(CASTFunctionDeclarator)).head.children.head.toString
+                        
+                }
                 }
             ]
         ]
@@ -242,43 +253,13 @@ class CDTProcessor extends AbstractProductionTransformation {
         stateF.regions += scc.createDataflowRegion => [
             id = "_d" + trC
         ]
+
         //Are there some new Variables in this part?
         val declarations = cs.children.filter(typeof(CASTDeclarationStatement))
         if (!declarations.empty) {
-            for (decls : declarations) {//Add them to the function root State
-                
-                val simpleDecl = decls.children.filter(typeof(CASTSimpleDeclaration)).head
-                val decl = simpleDecl.children.filter(typeof(CASTDeclarator)).head
-                if (decl != null) {
-                    decl.createDataflow(stateF)
-                
-                 
-                val iName = decl.children.head.toString
-                val intParamater = kex.createDeclaration => [
-                    type = parseCDTType(simpleDecl.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
-                    input = false
-                    funcGlobalState.declarations += it
-                ]
-
-                kex.createValuedObject => [
-                    name = iName
-                    intParamater.valuedObjects += it
-                    VOSet += it
-                ]
-
-               
-
-            //              val iName = decl.children.head.toString
-            //              val lVar = kex.createValuedObject => [
-            //                  name = iName
-            //                  VOSet += it
-            //              ]  
-            //              val init = decl.children.filter(typeof(CASTEqualsInitializer))
-            //              if (!init.empty) {
-            //                 lVar.initialValue = createIntValue(Integer.parseInt(init.head.children.head.toString))
-            //              }
-            //              globalDeclaration.valuedObjects += lVar
-            }}
+            for (decls : declarations) { //Add them to the function root State
+                decls.castdeclaration
+            }
         }
 
         var actualState = stateF
@@ -290,11 +271,12 @@ class CDTProcessor extends AbstractProductionTransformation {
                 actualState = statement.transformReturn(actualState)
             }
             if (statement instanceof CASTExpressionStatement) {
-                statement.transformExpression(actualState)
+                actualState=statement.transformExpression(actualState)
             }
             if (statement instanceof CASTForStatement) {
-                statement.transformFor(actualState)
+                actualState=statement.transformFor(actualState)
             }
+           
 
         }
 
@@ -307,7 +289,50 @@ class CDTProcessor extends AbstractProductionTransformation {
             }
         ]
 
-        stateF
+        actualState
+    }
+
+    def Declaration castdeclaration(CASTDeclarationStatement statement) {
+
+        val simpleDecl = statement.children.filter(typeof(CASTSimpleDeclaration)).head
+        val decl = simpleDecl.children.filter(typeof(CASTDeclarator)).head
+        if (decl != null) {
+            val iName = decl.children.head.toString
+            val intParamater = kex.createDeclaration => [
+                type = parseCDTType(simpleDecl.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
+                input = false
+                funcGlobalState.declarations += it
+            ]
+
+            val value = kex.createValuedObject => [
+                name = iName
+                intParamater.valuedObjects += it
+                VOSet += it
+            ]
+            val initializer = decl.children.filter(typeof(CASTEqualsInitializer)).head
+            value.initialValue = initializer.casteEqualsInitializer(
+                parseCDTType(simpleDecl.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type))
+
+            intParamater
+
+        }
+    }
+
+    def Expression casteEqualsInitializer(CASTEqualsInitializer initializer, ValueType type) {
+        if (initializer != null) {
+            if (type == ValueType::INT) {
+                val intval = kex.createIntValue
+                intval.value = Integer.parseInt(initializer.children.head.toString)
+                intval
+            } else {
+                System.out.println("test")
+                val intval = null
+                intval
+            }
+        } else {
+            null
+        }
+
     }
 
     def State transformIf(CASTIfStatement ifStatement, State state) {
@@ -359,71 +384,125 @@ class CDTProcessor extends AbstractProductionTransformation {
             state.outgoingTransitions += it
         ]
 
+        
+
+        
+        
+        
+        val trueBody = (ifs.thenClause as CASTCompoundStatement).transformCompound(trueState, trueState)
         val trueConnector = scc.createTransition => [
             targetState = connectorState
             immediate = true
-            trueState.outgoingTransitions += it
+            trueBody.outgoingTransitions += it
             type == TransitionType::TERMINATION
         ]
-
-        val falseConnector = scc.createTransition => [
+        if (ifs.elseClause != null){
+           val falseBody = (ifs.elseClause as CASTCompoundStatement).transformCompound(falseState, state)
+           val falseConnector = scc.createTransition => [
+            targetState = connectorState
+            immediate = true
+            falseBody.outgoingTransitions += it
+            type == TransitionType::TERMINATION
+        ]
+        }else{
+            val falseConnector = scc.createTransition => [
             targetState = connectorState
             immediate = true
             falseState.outgoingTransitions += it
             type == TransitionType::TERMINATION
         ]
-
-        (ifs.thenClause as CASTCompoundStatement).transformCompound(trueState, state)
-        (ifs.elseClause as CASTCompoundStatement).transformCompound(falseState, state)
-
+        }
         connectorState
     }
 
+    
     def State transformFor(CASTForStatement forStatement, State state) {
-
-        //    	    for(int i=2; i<=n; i++) {
-        //    org.eclipse.cdt.internal.core.dom.parser.c.CASTForStatement@52b20f80
-        //     org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarationStatement@2817c6ea
-        //      org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclaration@31044136
-        //       org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclSpecifier@e55595e
-        //       org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator@55e31ac
-        //        i
-        //        org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer@6b0f15f4
-        //         2
-        //     org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression@2b6a7d15
-        //      org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@5c3a03f7
-        //       i
-        //      org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@64da7c6e
-        //       n
-        //     org.eclipse.cdt.internal.core.dom.parser.c.CASTUnaryExpression@441f4d7c
-        //      org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@63182ad4
-        //       i
-        //     org.eclipse.cdt.internal.core.dom.parser.c.CASTCompoundStatement@47a3f71f
         val f = forStatement
-
-        val localDeclaration = kex.createDeclaration => [
-            type = ValueType::INT
-            state.declarations += it
-        ]
-        val iterateAction = state.createImmediateIterateAction
-
+        
+        //initializer
         val initializationExp = f.initializerStatement as CASTDeclarationStatement
-        val counterVO = initializationExp.createValuedObjectFromDeclarationStatement(true)
-        localDeclaration.valuedObjects += counterVO
-        VOSet += counterVO
+     
+        initializationExp.castdeclaration //add declaration to function head
+        //condition
+        
+        
+        val exp = f.conditionExpression
+        
+        val kExp = exp.createKExpression
 
-        val conditionExp = f.conditionExpression
-        iterateAction.trigger = conditionExp.createKExpression
-
-        val iterateExp = f.iterationExpression as CASTUnaryExpression
-        val iterateAssignment = iterateExp.createAssignment
-        iterateAction.addAssignment(iterateAssignment)
-
+        val ifState = scc.createState => [ s |
+            s.id = state.id + trC
+            s.label = s.id
+            s.setTypeConnector
+            s.regions += scc.createControlflowRegion => [
+                id = s.id + "_r"
+                label = ""
+            ]
+            state.parentRegion.states += s
+        ]
+        //Connects if to the parent
+        val ifConnector = scc.createTransition => [
+            targetState = ifState
+            immediate = true
+            state.outgoingTransitions += it
+            type == TransitionType::TERMINATION
+        ]
+        
+        val trueState = scc.createState => [ s |
+            s.id = state.id + trC + "T"
+            s.label = s.id
+            s.regions += scc.createControlflowRegion => [
+                id = s.id + "_r"
+                label = ""
+            ]
+            state.parentRegion.states += s
+        ]
+        
+        val trueTrans = scc.createTransition => [
+            targetState = trueState
+            immediate = true
+            ifState.outgoingTransitions += it
+            trigger = kExp
+        ]
+        
+        val iterateState = scc.createState =>[ s |
+            s.id = state.id + trC + "T"
+            s.label = s.id
+            s.regions += scc.createControlflowRegion => [
+                id = s.id + "_r"
+                label = ""
+            ]
+             state.parentRegion.states += s
+            ]
+            
+       
+        //iterateaction
+ 
+          
+        
+        
+        
         val body = f.body as CASTCompoundStatement
+        
 
-        body.transformCompound(state, state)
+        val bodyState=body.transformCompound(trueState, trueState)
+        val iterateExp = (f.iterationExpression as CASTBinaryExpression).createDataflow(iterateState)
+        val iterateTrans = scc.createTransition => [
+            targetState = iterateState
+            immediate = true
+            bodyState.outgoingTransitions += it
+           
+        ]
+        
+        val backTransition = scc.createTransition => [
+            targetState = ifState
+            immediate = true
+            iterateExp.outgoingTransitions += it
+            
+        ]
 
-        state
+
+        ifState
     }
 
     def ValuedObject createValuedObjectFromDeclarationStatement(CASTDeclarationStatement declaration,
@@ -465,38 +544,30 @@ class CDTProcessor extends AbstractProductionTransformation {
             s.label = s.id
             s.final = true
             state.parentRegion.states += s
-            //                s.concurrencies += scc.createRegion => [
-            //                    id = s.id + "_r"
-            //                    label = ""
-            //                ]            
-            s.regions += scc.createDataflowRegion => [
-                id = s.id + "_d"
-                label = ""
+        //                s.concurrencies += scc.createRegion => [
+        //                    id = s.id + "_r"
+        //                    label = ""
+        //                ]            
+        //            s.regions += scc.createDataflowRegion => [
+        //                id = s.id + "_d"
+        //                label = ""
+        //            ]
+        ]
+       
+            state.outgoingTransitions += scc.createTransition => [
+                targetState = returnState
+                immediate = true
             ]
-        ]
-        state.outgoingTransitions += scc.createTransition => [
-            targetState = returnState
-            immediate = true
-        ]
+        
 
-        //        val returnAssignment = scc.createAssignment => [
-        //            valuedObject = VOSet.filter[name.equals(RETURNVONAME)].head
-        //            expression = returnStatement.returnValue.createKExpression 
-        //        ]
-        val df = returnState.dataflowRegion
+        val entryact = returnState.createEntryAction
+        entryact.createAssignment(VOSet.filter[name.equals(RETURNVONAME)].head,
+            returnStatement.returnValue.createKExpression)
 
-        val eq = scc.createEquation
-        eq.valuedObject = VOSet.filter[name.equals(RETURNVONAME)].head
-        eq.expression = returnStatement.returnValue.createKExpression
-
-        df.equations += eq
-
-        //        (returnState.incomingTransitions.head.eContainer as State).createEntryAction.addAssignment(returnAssignment)
-        //        returnState.createEntryAction.addAssignment(returnAssignment)
         returnState
     }
 
-    def transformExpression(CASTExpressionStatement es, State state) {
+    def State transformExpression(CASTExpressionStatement es, State state) {
 
         //   org.eclipse.cdt.internal.core.dom.parser.c.CASTCompoundStatement@7f6adc09
         //    org.eclipse.cdt.internal.core.dom.parser.c.CASTExpressionStatement@40941439
@@ -506,25 +577,79 @@ class CDTProcessor extends AbstractProductionTransformation {
         //      org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@40a62a65
         //       n
         if (es.expression instanceof CASTBinaryExpression) {
+
             val exp = es.expression as CASTBinaryExpression
-            exp.createDataflow(state)
+            val codeState = scc.createState => [ s |
+                s.id = state.id + trC + "T"
+                s.label = s.id
+                s.regions += scc.createControlflowRegion => [
+                    id = s.id + "_r"
+                    label = ""
+                ]
+                state.parentRegion.states += s
+                val entryact = s.createEntryAction
+                entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
+                    exp.operand2.createKExpression)
+            ]
+            
+            val trans= scc.createTransition => [
+                targetState = codeState
+                immediate = true
+                //codeState.outgoingTransitions += it
+            ]
+            state.outgoingTransitions +=  trans
+            
+            return codeState
+
         }
+        
+         if (es.expression instanceof CASTFunctionCallExpression) {
+//                val codeState = scc.createState => [ s |
+//                s.id = state.id + trC + "T"
+//                s.label = s.id
+//                s.regions += scc.createControlflowRegion => [
+//                    id = s.id + "_r"
+//                    label = ""
+//                ]
+//                state.parentRegion.states += s
+//               
+//                
+//            ]
+                
+                
+                val sa= scc.createState => [s|
+                    s.id = state.id + trC + "T"
+                    s.label = s.id
+//                    s.regions += scc.createControlflowRegion => [
+//                      id = s.id + "_r"
+//                       label = ""
+//                    ]
+                ]
+                
+                sa.referencedScope = functionStates.get("wasauchimmer")
+                val bind=BindingImpl.newInstance
+                
+                bind.actual = funcGlobalState.valuedObjects.head
+                bind.formal = functionStates.get("wasauchimmer").valuedObjects.head
+                sa.bindings += bind
+                
+                
+                state.parentRegion.states += sa
+                return sa
+            }
         null
     }
 
-    def createDataflow(CASTBinaryExpression exp, State state) {
+    def State createDataflow(CASTBinaryExpression exp, State state) {
 
         //   org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression@7940791
         //    org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@77cc47a
         //     n
         //    1
-        val df = state.dataflowRegion
-
-        val eq = scc.createEquation
-        eq.valuedObject = (exp.operand1 as CASTIdExpression).createVOReference.valuedObject
-        eq.expression = exp.operand2.createKExpression
-
-        df.equations += eq
+        val entryact = state.createEntryAction
+        entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
+            exp.operand2.createKExpression)
+            state
     }
 
     def createDataflow(CASTDeclarator declarator, State state) {
@@ -533,7 +658,7 @@ class CDTProcessor extends AbstractProductionTransformation {
         //         tmp
         //         org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer@46049580
         //          org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@56f32a69
-        //           fh        
+        //           fh        createDataflow
         val iName = declarator.children.head.toString
         val lVar = kex.createValuedObject => [
             name = iName
@@ -563,11 +688,26 @@ class CDTProcessor extends AbstractProductionTransformation {
     def Expression createKExpression(IASTExpression exp) {
         if (exp instanceof CASTIdExpression) {
             return (exp as CASTIdExpression).createVOReference
+        } else if (exp instanceof CASTFunctionCallExpression) {
+            return (exp as CASTFunctionCallExpression).transformFunctionCall
         } else if (exp instanceof CASTBinaryExpression) {
             return (exp as CASTBinaryExpression).createKExpression
         } else {
             return Integer.parseInt(exp.toString).createIntValue
         }
+    }
+
+    def Expression transformFunctionCall(CASTFunctionCallExpression expression) {
+
+        val opExp = kex.createOperatorExpression
+
+        //opExp.operator = //add(expression.functionNameExpression.createKExpression)
+        //expression.arguments
+        for (IASTExpression child : expression.arguments.filter(IASTExpression)) {
+            opExp.subExpressions += createKExpression(child)
+        }
+        return opExp
+
     }
 
     def Expression createKExpression(CASTBinaryExpression exp) {
@@ -577,19 +717,40 @@ class CDTProcessor extends AbstractProductionTransformation {
         //     n
         //    1
         val opExp = kex.createOperatorExpression
-        switch exp.operator{
-            case IASTBinaryExpression::op_lessEqual:    opExp.operator = OperatorType::LEQ
-            case IASTBinaryExpression::op_greaterEqual: opExp.operator = OperatorType::GEQ
-            case IASTBinaryExpression::op_lessThan:     opExp.operator = OperatorType::LT
-            case IASTBinaryExpression::op_greaterThan:  opExp.operator = OperatorType::GT
-            case IASTBinaryExpression::op_plus:         opExp.operator = OperatorType::ADD
-            case IASTBinaryExpression::op_binaryAnd:    opExp.operator = OperatorType::AND
+        switch exp.operator {
+            case IASTBinaryExpression::op_lessEqual:
+                opExp.operator = OperatorType::LEQ
+            case IASTBinaryExpression::op_greaterEqual:
+                opExp.operator = OperatorType::GEQ
+            case IASTBinaryExpression::op_lessThan:
+                opExp.operator = OperatorType::LT
+            case IASTBinaryExpression::op_greaterThan:
+                opExp.operator = OperatorType::GT
+            case IASTBinaryExpression::op_plus:
+                opExp.operator = OperatorType::ADD
+            case IASTBinaryExpression::op_binaryAnd:
+                opExp.operator = OperatorType::AND
+            case IASTBinaryExpression::op_binaryOr:
+                opExp.operator = OperatorType::OR
+            //case IASTBinaryExpression::op_binaryXor:     opExp.operator = OperatorType::XOR
+            case IASTBinaryExpression::op_divide:
+                opExp.operator = OperatorType::DIV
+            case IASTBinaryExpression::op_minus:
+                opExp.operator = OperatorType::SUB
+            case IASTBinaryExpression::op_modulo:
+                opExp.operator = OperatorType::MOD
+            case IASTBinaryExpression::op_multiply:
+                opExp.operator = OperatorType::MULT
         }
-       
+
         for (arg : exp.children) {
             if (arg instanceof CASTIdExpression) {
                 opExp.subExpressions += (arg as CASTIdExpression).createVOReference
-            } else {
+            } else if (arg instanceof CASTFunctionCallExpression) {
+                opExp.subExpressions += kex.createOperatorExpression
+            } else if((arg instanceof CASTBinaryExpression)){
+                opExp.subExpressions += kex.createOperatorExpression
+             }else{
                 opExp.subExpressions += Integer.parseInt(arg.toString).createIntValue
             }
         }
