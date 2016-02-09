@@ -22,6 +22,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.StateSynthesis
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
@@ -52,7 +53,8 @@ class BlackWhiteModeHook extends SynthesisHook {
     extension StateSynthesis
 
     /** The related synthesis option */
-    public static final SynthesisOption PAPER_BW = SynthesisOption.createCheckOption("Paper (Black/White)", false);
+    public static final SynthesisOption PAPER_BW = SynthesisOption.createCheckOption("Paper (Black/White)", false).
+    	setCategory(GeneralSynthesisOptions::APPEARANCE);
 
     override getDisplayedSynthesisOptions() {
         return newLinkedList(PAPER_BW);

@@ -1,9 +1,9 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2014 by
+ * Copyright 2015 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -11,65 +11,58 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.model;
+package de.cau.cs.kieler.kico.klighd.internal.model;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.ListIterator;
 
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.IntermediateResult;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
+import de.cau.cs.kieler.klighd.ui.view.model.MessageModel;
 
 /**
- * This is a Wrapper for a list of KiCoModelWrapper because KLighD does not support diagram
- * synthesis on Lists properly.
+ * This is a Wrapper model for a list of models. Related to {@link ModelChainSynthesis}.
  * 
  * @author als
  * @kieler.design 2014-07-30 proposed
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-public class KiCoModelChain {
+public class ModelChain {
 
+    /** The list (chain) of models. */
     private final LinkedList<Object> models = new LinkedList<Object>();
+
+    /** The transition labels between models. */
     private final LinkedList<String> tranformations = new LinkedList<String>();
+
+    /** A map of models in the chain and a flag indicating if this model is collapsed or not. */
     private final HashMap<Object, Boolean> collapse = new HashMap<Object, Boolean>();
+
+    /**
+     * A flag indicating if this chain should be dispalyed in blank mode. Non blank mode will draw
+     * container around each model.
+     */
     private boolean blankMode = true;
 
     /**
-     * Creates a one element model chain from given model. This is used to have a fall-back
-     * synthesis for models without a own synthesis.
+     * Creates a two elemental model chain from given models representing a blank side-by-side view
+     * on both.
      * 
      * @param firstModel
      *            first model
      * @param secondModel
      *            second model
      */
-    public KiCoModelChain(final Object model) {
-        if (model == null) {
-            models.add(new KiCoMessageModel("Missing Model"));
-        } else {
-            models.add(model);
-        }
-    }
-
-    /**
-     * Creates a two element model chain from given models representing a side-by-side model.
-     * 
-     * @param firstModel
-     *            first model
-     * @param secondModel
-     *            second model
-     */
-    public KiCoModelChain(final Object firstModel, final Object secondModel) {
+    public ModelChain(final Object firstModel, final Object secondModel) {
         if (firstModel == null) {
-            models.add(new KiCoMessageModel("Missing Model"));
+            models.add(new MessageModel("Missing Model"));
         } else {
             models.add(firstModel);
         }
         if (secondModel == null) {
-            models.add(new KiCoMessageModel("Missing Model"));
+            models.add(new MessageModel("Missing Model"));
         } else {
             models.add(secondModel);
         }
@@ -78,28 +71,30 @@ public class KiCoModelChain {
     /**
      * Creates a model chain from the given compilation result containing all intermediate models.
      * 
+     * @param sourceModel
+     *            the source model
      * @param compilationResult
      *            the compilation result
      * @param modelName
      *            the name of the source model
-     * @param transformations
+     * @param selection
      *            the selected transformations
      */
-    public KiCoModelChain(Object sourceModel, final CompilationResult compilationResult, final String modelName,
-            KielerCompilerSelection selection) {
+    public ModelChain(final Object sourceModel, final CompilationResult compilationResult,
+            final String modelName, final KielerCompilerSelection selection) {
         models.add(sourceModel);
         collapse.put(sourceModel, false);
         for (IntermediateResult ir : compilationResult.getTransformationIntermediateResults()) {
             Object model = ir.getResult();
             if (model instanceof String) {
-                model = new KiCoCodePlaceHolder(modelName, (String) model);
-            } else if(model == null) {
-                model = new KiCoMessageModel("Missing Model");
+                model = new CodePlaceHolder(modelName, (String) model);
+            } else if (model == null) {
+                model = new MessageModel("Missing Model");
             }
-            if(!models.contains(model)) {
+            if (!models.contains(model)) {
                 tranformations.add(ir.getId());
                 models.add(model);
-                collapse.put(model, false);//true
+                collapse.put(model, false); // true
             }
         }
         collapse.put(models.getLast(), false);
@@ -107,7 +102,7 @@ public class KiCoModelChain {
     }
 
     /**
-     * Returns the selected model in this chain
+     * Returns the selected model in this chain.
      * 
      * @return selected model
      */
@@ -130,7 +125,7 @@ public class KiCoModelChain {
     }
 
     /**
-     * @return the tranformations
+     * @return the transformations
      */
     public LinkedList<String> getTranformations() {
         return tranformations;

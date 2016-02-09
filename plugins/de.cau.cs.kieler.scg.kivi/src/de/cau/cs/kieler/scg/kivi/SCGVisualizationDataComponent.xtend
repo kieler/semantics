@@ -25,7 +25,6 @@ import de.cau.cs.kieler.core.krendering.KRendering
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.core.util.Maybe
-import de.cau.cs.kieler.kico.klighd.KiCoModelViewManager
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
@@ -63,6 +62,7 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.guardCreation.GuardCreator
 import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.klighd.ui.view.DiagramView
 
 /**
  * @author ssm als cmot
@@ -96,7 +96,7 @@ class SCGVisualizationDataComponent extends JSONObjectDataComponent {
             return;
         }
 
-        val viewParts = KiCoModelViewManager.getInstance().getModelViews(diagramEditor)
+        val viewParts = DiagramView.getDiagramViews(diagramEditor)
         if (viewParts.empty) {
             throw new KiemInitializationException(
                     "Model visualization not shown, cannot visualize simulation.", true, null);

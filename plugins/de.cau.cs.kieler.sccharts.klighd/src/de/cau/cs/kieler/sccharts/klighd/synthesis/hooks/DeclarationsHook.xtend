@@ -21,19 +21,18 @@ import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.klighd.IAction.ActionResult
 import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 
 /**
  * Shows or hides state declarations.
@@ -63,7 +62,7 @@ class DeclarationsHook extends SynthesisActionHook {
     public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.DeclarationsHook";
     /** The related synthesis option */
     public static final SynthesisOption SHOW_DECLARATIONS = SynthesisOption.createCheckOption("Declarations", true).
-        setUpdateAction(DeclarationsHook.ID); // Add this action as updater
+        setCategory(GeneralSynthesisOptions::APPEARANCE).setUpdateAction(DeclarationsHook.ID); // Add this action as updater
     /** Property to save position of the container */
     private static final IProperty<Integer> INDEX = new Property<Integer>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.declarations.index", 0);

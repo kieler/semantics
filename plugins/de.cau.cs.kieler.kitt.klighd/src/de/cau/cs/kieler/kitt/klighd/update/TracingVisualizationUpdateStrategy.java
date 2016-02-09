@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.kitt.klighd.update;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -69,7 +70,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
     private static WeakHashMap<ContextViewer, TracingSynthesisOption.TracingMode> enabledContextViewer =
             new WeakHashMap<ContextViewer, TracingSynthesisOption.TracingMode>();
 
-    /** TracingVisualizer to apply tracing visualization to diagrams */
+    /** TracingVisualizer to apply tracing visualization to diagrams. */
     private static TracingVisualizer tracingVisualizer = Guice.createInjector(new Module() {
         // This Module is created to satisfy ViewSynthesisShared scope of used synthesis-extensions
         public void configure(Binder binder) {
@@ -77,7 +78,9 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
         }
     }).getInstance(TracingVisualizer.class);
 
-    /** Global selection listener which invokes tracing visualization for element selection tracing */
+    /**
+     * Global selection listener which invokes tracing visualization for element selection tracing.
+     */
     private static ISelectionChangedListener selectionListener = new ISelectionChangedListener() {
 
         public void selectionChanged(SelectionChangedEvent event) {
@@ -108,16 +111,14 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
 
         public void viewChanged(ViewChange change) {
             KGraphElement affectedElement = change.getAffectedElement();
-            if (affectedElement instanceof KNode
-                    && affectedElement.getData(KLayoutData.class).getProperty(
-                            TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)) {
+            if (affectedElement instanceof KNode && affectedElement.getData(KLayoutData.class)
+                    .getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)) {
                 ViewContext viewContext = change.getViewContext();
                 Set<Object> tracedModels =
                         viewContext.getProperty(InternalTracingProperties.VISIBLE_TRACED_MODELS);
                 if (tracedModels != null) {
-                    Set<Object> currentModels =
-                            tracingVisualizer.getTracedModelMap(viewContext.getViewModel(),
-                                    viewContext).keySet();
+                    Set<Object> currentModels = tracingVisualizer
+                            .getTracedModelMap(viewContext.getViewModel(), viewContext).keySet();
                     if (!Sets.symmetricDifference(tracedModels, currentModels).isEmpty()) {
                         // force recalculation of tracing edges because displayed models have
                         // changed
@@ -130,8 +131,12 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
         }
     };
 
-    /** Delegate update strategy to perform normal behavior */
+    /** Delegate update strategy to perform normal behavior. */
     private SimpleUpdateStrategy simpleDelegate = new SimpleUpdateStrategy();
+
+    /** The last input model of the ViewContext */
+    private final WeakHashMap<ViewContext, Object> lastInputModel =
+            new WeakHashMap<ViewContext, Object>();
 
     /**
      * {@inheritDoc}
@@ -146,7 +151,9 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
     public boolean requiresDiagramSynthesisReRun(ViewContext viewContext) {
         SynthesisOption option = TracingSynthesisOption.getSynthesisOption();
         // Assumption: DisplayedSynthesisOptions are already loaded into ViewContext on configuring
-        if (viewContext.getDisplayedSynthesisOptions().contains(option)) {
+        if (viewContext.getDisplayedSynthesisOptions().contains(option)
+                && lastInputModel.containsKey(viewContext)
+                && viewContext.getInputModel() == lastInputModel.get(viewContext)) {
             // Assumption: SynthesisOptions are preset earlier and there is at most one option
             // changed to its previous state
             TracingMode mode = TracingMode.getTracingMode(viewContext.getOptionValue(option));
@@ -157,6 +164,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
                 return true;
             }
         } else {
+            lastInputModel.put(viewContext, viewContext.getInputModel());
             return simpleDelegate.requiresDiagramSynthesisReRun(viewContext);
         }
     }
@@ -186,8 +194,8 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
                 viewContext.setProperty(InternalTracingProperties.VISUALIZATION_MODE,
                         TracingMode.NO_TRACING);
                 viewContext.setProperty(InternalTracingProperties.MAPPING, null);
-                viewContext
-                        .setProperty(InternalTracingProperties.DIAGRAM_EQUIVALENCE_CLASSES, null);
+                viewContext.setProperty(InternalTracingProperties.DIAGRAM_EQUIVALENCE_CLASSES,
+                        null);
             }
         }
     }
