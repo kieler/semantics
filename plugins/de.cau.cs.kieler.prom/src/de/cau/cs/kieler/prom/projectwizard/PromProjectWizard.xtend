@@ -330,7 +330,34 @@ class PromProjectWizard extends Wizard implements INewWizard {
         if(!Strings.isNullOrEmpty(env.mainFile))
             newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, env.mainFile)
         
+        // Add Xtext nature to project (e.g. for SCCharts with cross-references)
+        newlyCreatedProject.addNature("org.eclipse.xtext.ui.shared.xtextNature")
+        
         return true
+    }
+
+    /**
+     * Adds a nature to a project if the nature if not yet present.
+     * 
+     * @param project The project to add the nature to
+     * @param newNature The nature that should be added
+     */
+    protected def void addNature(IProject project, String newNature) {
+        if(!project.hasNature(newNature)) {
+            try {
+                // Get current natures of project
+                val description = project.getDescription();
+                val natures = description.getNatureIds();
+                // Extend array of current natures and add new nature
+                val newNatures = newArrayOfSize(natures.length + 1);
+                System.arraycopy(natures, 0, newNatures, 0, natures.length);
+                newNatures.set(natures.length, newNature);
+                description.setNatureIds(newNatures);
+                project.setDescription(description, null);
+             } catch (CoreException e) {
+                throw new Exception("Failed to add nature " + newNature + " to project " + project.name, e)
+             }
+         }
     }
 
     /**
