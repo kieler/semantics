@@ -168,23 +168,30 @@ class LaunchShortcut implements ILaunchShortcut {
 
         // Set main file of launch config as main file of project
         var mainFile = project.getPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER)
-        if (mainFile == null)
-            mainFile = getMainFileFromDialog()
+        if (mainFile == null) {
+            mainFile = getMainFileFromDialog()    
+        }
         config.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, mainFile)
+
+        // Set KiCo target
+        config.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, "s.c")
+        config.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, ".c")
 
         // Initialize launch config with environment
         var EnvironmentData env
         
         // Get environment from project properties if possible
         val environmentName = project.getPersistentProperty(PromPlugin.ENVIRIONMENT_QUALIFIER)
-        if (environmentName != null)
+        if (environmentName != null) {
             env = EnvironmentData.loadFromPreferenceStore(PromPlugin.^default.preferenceStore, environmentName)
-        else
-            env = getEnvironmentFromDialog()
+        } else {
+            env = getEnvironmentFromDialog()            
+        }
 
-        if (env != null)
+        if (env != null) {
             // Copy values from environment
             env.applyToLaunchConfiguration(config)
+        }
     }
 
     /**
