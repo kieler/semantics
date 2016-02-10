@@ -337,7 +337,7 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
         List<WrapperCodeAnnotationData> annotationDatas) {
 
         // Load EObject from file
-        val model = ModelImporter.get(launchConfiguration.project.location.toOSString + File.separator + data.projectRelativePath)
+        val model = new ModelImporter().get(launchConfiguration.project.location.toOSString + File.separator + data.projectRelativePath)
 
         if (model != null) {
             initAnalyzers()

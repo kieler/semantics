@@ -2,7 +2,7 @@ import lejos.nxt.*;
 import lejos.nxt.addon.*;
 import lejos.nxt.comm.RConsole;
 
-public class Main {
+public class ${file_name} {
     // Instantiate SCChart
     public static ${model_name} scchart = new ${model_name}();
     

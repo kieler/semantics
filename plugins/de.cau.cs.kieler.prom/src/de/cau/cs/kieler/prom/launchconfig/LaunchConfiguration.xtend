@@ -168,6 +168,62 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
 
     /**
+     * {@inheritDoc}
+     */
+    override void launch(ILaunchConfiguration configuration, String mode, ILaunch launch,
+        IProgressMonitor monitor) throws CoreException {
+        this.configuration = configuration
+        this.mode = mode
+        this.launch = launch
+        this.monitor = monitor
+        
+        // Load variable manager
+        this.variableManager = VariablesPlugin.getDefault.stringVariableManager
+
+        // Init console for errors and messages
+        clearConsole()
+
+        // Get data from config.
+        loadSettingsFromConfiguration()
+
+        if (project != null) {
+
+            // Set variables (e.g. launched_project_loc, main_name, main_loc, ...)
+            setVariables() 
+
+            // Remove placeholders (e.g. ${project_name}) in fields
+            resolveVariables()
+
+            // Create jobs.
+            compileJob = getCompileJob()
+            wrapperCodeJob = getWrapperCodeGenerationJob()
+
+            // Start jobs.
+            compileJob.schedule()
+            wrapperCodeJob.schedule()
+
+            // Wait for the jobs to finish.
+            compileJob.join()
+            wrapperCodeJob.join()
+
+            // Proceed only if the other jobs succeded  
+            if (compileJob.result.code == IStatus.OK && wrapperCodeJob.result.code == IStatus.OK) {
+                // Run associated launch shortcut
+                runAssociatedLauchShortcut()
+                
+                // Execute command list 
+                getExecuteCommandsJob().schedule()
+            }
+            
+            // Refresh output directory for files
+            project.getFolder(BUILD_DIRECTORY).refreshLocal(IResource.DEPTH_INFINITE, monitor)
+        } else {
+            writeToConsole("Project of launch configuration '" + configuration.name +
+                "' does not exist.\n");
+        }
+    }
+
+    /**
      * Initializes all variables that are used in the launch configuration if they have not been initialized yet.
      */
     public static def void initializeVariables() {
@@ -201,7 +257,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 "Project relative path of the compiled main file of the launched application without file extension")
         }
     }
-    
 
     /**
      * Writes to the console view for a KiCo launch.
@@ -223,59 +278,21 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         consoleManager.showConsoleView(console)
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    override void launch(ILaunchConfiguration configuration, String mode, ILaunch launch,
-        IProgressMonitor monitor) throws CoreException {
-        this.configuration = configuration
-        this.mode = mode
-        this.launch = launch
-        this.monitor = monitor
+    public static def void writeToConsole(Exception e){
+        // Write exception to console of running Eclipse
+        var text = ""
+        text += Strings.nullToEmpty(e.toString())
+        if(text.length > 0 )
+            text += ":"
+        text += Strings.nullToEmpty(e.message)
+        writeToConsole(text)
         
-        // Load variable manager
-        this.variableManager = VariablesPlugin.getDefault.stringVariableManager
-
-        // Init console for errors and messages
-        clearConsole()
-
-        // Get data from config.
-        loadSettingsFromConfiguration()
-
-        if (project != null) {
-
-            // Set variables (e.g. launched_project_loc, main_name, main_loc, ...)
-            setVariables() 
-
-            // Create jobs.
-            compileJob = getCompileJob()
-            wrapperCodeJob = getWrapperCodeGenerationJob()
-
-            // Start jobs.
-            compileJob.schedule()
-            wrapperCodeJob.schedule()
-
-            // Wait for the jobs to finish.
-            compileJob.join()
-            wrapperCodeJob.join()
-
-            // Proceed only if the other jobs succeded  
-            if (compileJob.result.code == IStatus.OK && wrapperCodeJob.result.code == IStatus.OK) {
-                // Run associated launch shortcut
-                runAssociatedLauchShortcut()
-                
-                // Execute command list 
-                getExecuteCommandsJob().schedule()
-            }
-            
-            // Refresh output directory for files
-            project.getFolder(BUILD_DIRECTORY).refreshLocal(IResource.DEPTH_INFINITE, monitor)
-        } else {
-            writeToConsole("Project of launch configuration '" + configuration.name +
-                "' does not exist.\n");
-        }
+        // Print stack trace
+        e.printStackTrace()
     }
-
+    
+    
+    
     /**
      * Runs the associated launch shortcut on the compiled main file.
      * E.g. one may want to launch a file as "Java Application" after KiCo compilation finished. 
@@ -326,7 +343,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     }
                 } catch (Exception e) {
                     // Remove this try-catch to notify the user with a popup window.
-                    writeToConsole(e.message + "\n")
+                    writeToConsole(e)
                     return Status.CANCEL_STATUS
                 }
 
@@ -344,7 +361,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @return the created job. 
      */
     private def Job getWrapperCodeGenerationJob() {
-        val launchConfig = this
+        val launchConfig = this        
         
         return new Job("Wrapper Code Generation") {
             override protected IStatus run(IProgressMonitor monitor) {
@@ -365,10 +382,10 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                         generator.launchConfiguration = launchConfig
                         generator.generateWrapperCode(files)
                     } else {
-                        writeToConsole("The class for wrapper code generation "+wrapperCodeGenerator+ " could not be instantiated.")
+                        writeToConsole("The class for wrapper code generation " + wrapperCodeGenerator+ " could not be instantiated.")
                     }
                 } catch (Exception e) {
-                    writeToConsole(e.message + "\n")
+                    writeToConsole(e)
                     return Status.CANCEL_STATUS
                 }
 
@@ -408,7 +425,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     executor.execute(commands)
                     return Status.OK_STATUS
                 } catch (Exception e) {
-                    writeToConsole(e.message + "\n")
+                    writeToConsole(e)
                     return Status.CANCEL_STATUS
                 }
             }
@@ -422,14 +439,13 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      */
     private def void compile(FileCompilationData data) {
         // Load model from file
-        val EObject model = ModelImporter.get(project.location.toOSString + File.separator + data.projectRelativePath)
+        val EObject model = new ModelImporter().get(project.location.toOSString + File.separator + data.projectRelativePath)
 
         if (model != null) {
             // Get compiler context with settings for KiCo
             // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
             // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
-            // TODO: (Bug KISEMA-1036) still requires *T_INITIALIZATION
-            val context = new KielerCompilerContext("!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, *T_INITIALIZATION, T_" + targetLanguage, model)
+            val context = new KielerCompilerContext("!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, T_" + targetLanguage, model)
             context.inplace = false
             context.advancedSelect = true
 
@@ -536,15 +552,14 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     
         // Load target
         targetLanguage = configuration.getAttribute(ATTR_TARGET_LANGUAGE, "")
-        targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
         targetLanguageFileExtension = configuration.getAttribute(ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
+        targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
 
         // Load wrapper code
         wrapperCodeGenerator = configuration.getAttribute(ATTR_WRAPPER_CODE_GENERATOR, "")
-        wrapperCodeTemplate = variableManager.performStringSubstitution( configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "") )
-        wrapperCodeSnippetDirectory = variableManager.performStringSubstitution( configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "") )
-        wrapperCodeTargetLocation = computeTargetPath(wrapperCodeTemplate, false)
-         
+        wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
+        wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
+        
         // Load shell commands
         commands = CommandData.loadAllFromConfiguration(configuration)
         
@@ -586,6 +601,15 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation)
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE, mainTargetPath)
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainTargetWithoutExtension)
+    }
+
+    /**
+     * Substitutes placeholder variables (e.g. ${project_name}) in fields with their actual value. 
+     */
+    private def void resolveVariables() {
+        wrapperCodeTemplate = variableManager.performStringSubstitution(wrapperCodeTemplate)
+        wrapperCodeSnippetDirectory = variableManager.performStringSubstitution(wrapperCodeSnippetDirectory)
+        wrapperCodeTargetLocation = computeTargetPath(wrapperCodeTemplate, false)
     }
 
     /**
