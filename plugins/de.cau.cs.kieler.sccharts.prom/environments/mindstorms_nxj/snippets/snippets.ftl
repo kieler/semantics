@@ -63,6 +63,55 @@
     </@>
 </#macro>
 
+<#-- MaxTickDuration -->
+<#-- As input variable, sets an int to the highest tick loop duration so far.
+    
+     Example for SCCharts:
+         @Wrapper MaxTickDuration
+         input int maxDuration; -->
+<#macro MaxTickDuration>
+    <@init>
+        long maxTickDurationCounter = System.currentTimeMillis();
+    </@>
+    <@input>
+        // Set max tick duration
+        if(scchart.${varname} < (System.currentTimeMillis() - maxTickDurationCounter)) {
+            scchart.${varname} =  new Long( (System.currentTimeMillis() - maxTickDurationCounter) ).intValue();
+        }
+        maxTickDurationCounter = System.currentTimeMillis();
+    </@>
+</#macro>
+
+<#-- TickDuration -->
+<#-- As output variable, waits until the tick loop duration is at least the target duration in milliseconds.
+     Furthermore the variable of the model is set to the actual duration,
+     which may be longer than the target duration.
+    
+     Note that this macro sets a variable although it is intended to be used on an output variable!
+     
+     The output variable that uses this macro should be the last in the model,
+     so that waiting for the target duration is the last action in the tick loop. 
+     
+     Example for SCCharts:
+         @Wrapper TickDuration, "50"
+         output int tickDuration; -->
+<#macro TickDuration targetMillis='0'>
+    <@init>
+        long tickDurationCounter = System.currentTimeMillis();
+    </@>
+    <@output>
+        <#if targetMillis != '0' >
+        // Wait until target duration of tick reached
+        while ( tickDurationCounter + ${targetMillis} > System.currentTimeMillis() ) {
+            // Busy waiting...
+        }
+        </#if>
+        // Set actual tick duration
+        scchart.${varname} = new Long(System.currentTimeMillis() - tickDurationCounter).intValue();
+        tickDurationCounter = System.currentTimeMillis();
+    </@>
+</#macro>
+
 <#-- Sleep -->
 <#-- As output variable, if the variable is true,
         blocks the running thread on the Mindstorms robot for the given time (in milliseconds).
@@ -91,7 +140,7 @@
 <#macro Print autoReset = "true">
     <@output>
         // Print to display
-        if(!scchart.${varname}.equals("")){
+        if(scchart.${varname} != null && !scchart.${varname}.equals("")){
             System.out.println(scchart.${varname});
             <#if autoReset == "true">
             scchart.${varname} = "";
