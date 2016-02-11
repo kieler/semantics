@@ -49,20 +49,34 @@ class Circuit2VHDL extends AbstractProductionTransformation {
     // General method to create the VHDL code
     def transform(Actor actor) {
 
-        '''ENTITY ''' + actor.name + ''' IS'''
+        '''ENTITY ''' + actor.name + ''' IS
+        ''' + 
 
         '''PORT(
         -- control
         tick: IN std_logic
         reset: IN boolean;
-        -- inputs''' + // ADD ALL INPUTS
-        '''-- outputs''' + // ADD ALL OUTPUTS
-        '''END''' + '''ARCHITECTURE behavior of ''' + actor.name + '''IS''' + '''begin
-        -- main logic''' + '''
+        -- inputs
+        ''' + 
+        //TODO: ADD ALL INPUTS HERE
+'''        -- outputs
+        ''' + 
+        //TODO: ADD ALL OUTPUTS HERE
+''');
+END ''' + actor.name + ''';
+        
+        
+        
+ARCHITECTURE behavior of ''' + actor.name + ''' IS 
+        ''' + '''
+        begin
+                -- main logic
+        ''' + '''
             «FOR innerActor : actor.eAllContents.filter(Actor).toList»
                 «innerActor.transformChilds»
             «ENDFOR»
-        ''' + '''end behavior'''
+        ''' + '''
+        end behavior'''
     }
 
     // -------------------------------------------------------------------------   
