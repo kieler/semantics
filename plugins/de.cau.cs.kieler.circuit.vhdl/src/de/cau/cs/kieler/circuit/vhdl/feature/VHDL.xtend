@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2015 by
+ * Copyright 2016 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -11,35 +11,36 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.circuit.features
+package de.cau.cs.kieler.circuit.vhdl.feature
 
-import de.cau.cs.kieler.kico.features.FeatureGroup
+import de.cau.cs.kieler.kico.features.Feature
+import de.cau.cs.kieler.circuit.vhdl.feature.VHDLFeature
 
 /**
- * Circuit Feature Group.
+ * VHDL Feature.
  * 
- * @author als
- * @kieler.design 2015-04-27 proposed 
- * @kieler.rating 2015-04-27 proposed yellow
+ * @author cmot
+ * @kieler.design 2016-02-11 proposed 
+ * @kieler.rating 2016-02-11 proposed yellow
  *
  */
-class CircuitFeatureGroup extends FeatureGroup {
+class VHDL extends Feature {
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
-    
     override getId() {
-        return CircuitFeatures::CIRCUIT_GROUP_ID
+        return VHDLFeature::VHDL_ID
     }
 
     override getName() {
-        return CircuitFeatures::CIRCUIT_GROUP_NAME
+        return VHDLFeature::VHDL_NAME
     }
 
-    override getFeatureIds() {
-        // TODO: Move Features/Featuregroups/IDs to kieler.circuit
-        newHashSet(CircuitFeatures::CIRCUIT_ID, CircuitFeatures::SCG2SSASCG_ID, "VHDL")
+    // This method checks, if this feature is contained in a model
+    def isContained(String targetCode) {
+
+        //TODO: maybe find a better criteria than just instance check for string to determine if it is target code
+        return true
     }
-    
 }
