@@ -113,7 +113,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
     protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
     protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
 
-    public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.surface"
+    public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.depthJoin2"
 
     // -------------------------------------------------------------------------
     // -- Synchronizer

@@ -154,7 +154,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 			setOperator(OperatorType::LOGICAL_OR)
 		]
 
-		data.createEmptyExpressions(terminationExpression, join.fork, scg)
+		data.createEmptyExpressions(terminationExpression)
 		data.createGuardExpression(terminationExpression)
 //        data.guardExpression.expression = FALSE
 //		data.fixEmptyExpressions.fixSynchronizerExpression
@@ -182,7 +182,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	}
 
 	protected def SynchronizerData createEmptyExpressions(SynchronizerData data,
-		OperatorExpression terminationExpression, Fork fork, SCGraph scg) {
+		OperatorExpression terminationExpression) {
 		// Count the exit nodes. The counter is used for enumerating the empty expressions.        
 		var exitNodeCount = 0
 
