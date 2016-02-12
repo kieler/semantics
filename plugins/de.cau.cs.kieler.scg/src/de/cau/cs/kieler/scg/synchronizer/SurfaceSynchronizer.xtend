@@ -38,6 +38,8 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsReplacementExtensions
 import de.cau.cs.kieler.core.kexpressions.impl.KExpressionsFactoryImpl
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -106,9 +108,6 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	@Inject
 	extension KEffectsSerializeExtensions
 
-	@Inject
-	extension KExpressionsReplacementExtensions
-
 	protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
 	protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
 
@@ -169,17 +168,17 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 			debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " +
 				newGuard.expression.serialize)
 		}
-		System.err.println("Fork Guard: " + join.fork.cachedSchedulingBlock.guard.valuedObject.serialize)
-		val unfolded = unfoldExp(data.guardExpression.expression, join.fork.cachedSchedulingBlock.guard, scg)
-		System.err.println("new Exp: " + unfolded.serialize)
-
-		val replacerVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-		val replacerVO = KExpressionsFactory::eINSTANCE.createValuedObject
-		replacerVO.name = "false"
-		replacerVOR.valuedObject = replacerVO
-		System.err.println("replaced: " +
-			replace(unfolded, join.fork.cachedSchedulingBlock.guard.valuedObject, replacerVOR).serialize)
-		data.guard.expression = unfolded
+//		System.err.println("Fork Guard: " + join.fork.cachedSchedulingBlock.guard.valuedObject.serialize)
+//		val unfolded = unfoldExp(data.guardExpression.expression, join.fork.cachedSchedulingBlock.guard, scg)
+//		System.err.println("new Exp: " + unfolded.serialize)
+//
+//		val replacerVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+//		val replacerVO = KExpressionsFactory::eINSTANCE.createValuedObject
+//		replacerVO.name = "false"
+//		replacerVOR.valuedObject = replacerVO
+//		System.err.println("replaced: " +
+//			replace(unfolded, join.fork.cachedSchedulingBlock.guard.valuedObject, replacerVOR).serialize)
+//		data.guard.expression = unfolded
 	}
 
 	protected def SynchronizerData createEmptyExpressions(SynchronizerData data,
@@ -265,10 +264,13 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 					// Add the newly created expression to the empty expression and link the thread exit object field
 					// to the guard of the exit node. This enables further processors to identify the block responsible
 					// for the creation of the empty expression. 
-					emptyExp.expression = expression
+					emptyExp.expression = expression.unfoldExp(data.join.fork.cachedSchedulingBlock.guard, scg)
 					// emptyExp.threadExitObject = exitSB.guard
 					emptyExp.threadExitObject = exitSB.guard.valuedObject
 
+					System.err.println(
+						"Created " + emptyExp.valuedObject.name + " with " + emptyExp.expression.serialize +
+							" replacing " + expression.serialize)
 					// Subsequently, add the newly created empty expression to the list of empty expressions
 					// in the guard expression of the synchronizer.
 					data.guardExpression.emptyExpressions.add(emptyExp)
@@ -305,19 +307,18 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 			} else {
 				newExp.subExpressions.add(exp.subExpressions.head.unfoldExp(upperBound, scg))
 			}
-
-			return newExp
+			return optimize(newExp)
 
 		} else if (exp instanceof ValuedObjectReference) {
 			val newVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
 
 			// If it is the upper bound or a _cond, return a copy
 			if (exp.valuedObject == upperBound.valuedObject) {
-				val replacerVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-				val replacerVO = KExpressionsFactory::eINSTANCE.createValuedObject
-				replacerVO.name = "false"
-				replacerVOR.valuedObject = replacerVO
-				return replacerVOR
+				val replacingValObjRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+				val replacingValObj = KExpressionsFactory::eINSTANCE.createValuedObject
+				replacingValObj.name = "false"
+				replacingValObjRef.valuedObject = replacingValObj
+				return replacingValObjRef
 			}
 			if (exp.valuedObject.name.startsWith("_cond")) {
 				newVOR.valuedObject = exp.valuedObject
@@ -333,6 +334,26 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 				return unfoldExp(guardExp, upperBound, scg)
 			}
 		}
+	}
+
+	def Expression optimize(OperatorExpression newExp) {
+		if (newExp.operator == OperatorType::LOGICAL_OR) {
+			newExp.subExpressions.removeAll(newExp.subExpressions.filter [
+				(it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject.name == "false")
+			])
+			return newExp
+		} else if (newExp.operator == OperatorType::LOGICAL_AND) {
+			if (!newExp.subExpressions.filter [
+				(it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject.name == "false")
+			].isEmpty) {
+				val replacerVO = KExpressionsFactory::eINSTANCE.createValuedObject
+				replacerVO.name = "false"
+				val replacerVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+				replacerVOR.valuedObject = replacerVO
+				return replacerVOR
+			}
+		}
+		return newExp
 	}
 
 	protected def SynchronizerData createGuardExpression(SynchronizerData data,
