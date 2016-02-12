@@ -264,13 +264,10 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 					// Add the newly created expression to the empty expression and link the thread exit object field
 					// to the guard of the exit node. This enables further processors to identify the block responsible
 					// for the creation of the empty expression. 
-					emptyExp.expression = expression.unfoldExp(data.join.fork.cachedSchedulingBlock.guard, scg)
+					emptyExp.expression = expression
 					// emptyExp.threadExitObject = exitSB.guard
 					emptyExp.threadExitObject = exitSB.guard.valuedObject
 
-					System.err.println(
-						"Created " + emptyExp.valuedObject.name + " with " + emptyExp.expression.serialize +
-							" replacing " + expression.serialize)
 					// Subsequently, add the newly created empty expression to the list of empty expressions
 					// in the guard expression of the synchronizer.
 					data.guardExpression.emptyExpressions.add(emptyExp)
@@ -284,76 +281,6 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 		}
 
 		data
-	}
-
-	private def Expression unfoldExp(Expression exp, Guard upperBound, SCGraph scg) {
-		if (exp instanceof OperatorExpression) {
-			if (exp.operator == OperatorType::PRE) {
-				// Copy PRE
-				val preExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
-				preExp.operator = OperatorType::PRE
-				val subExpValObj = (exp.subExpressions.head as ValuedObjectReference).valuedObject
-				val newVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-				newVOR.valuedObject = subExpValObj
-				preExp.subExpressions.add(newVOR)
-				return preExp
-			}
-
-			// Create a new, unfolded expression
-			val newExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
-			newExp.operator = exp.operator
-			if (exp.subExpressions.size > 1) {
-				exp.subExpressions.forEach[newExp.subExpressions.add(it.unfoldExp(upperBound, scg))]
-			} else {
-				newExp.subExpressions.add(exp.subExpressions.head.unfoldExp(upperBound, scg))
-			}
-			return optimize(newExp)
-
-		} else if (exp instanceof ValuedObjectReference) {
-			val newVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-
-			// If it is the upper bound or a _cond, return a copy
-			if (exp.valuedObject == upperBound.valuedObject) {
-				val replacingValObjRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-				val replacingValObj = KExpressionsFactory::eINSTANCE.createValuedObject
-				replacingValObj.name = "false"
-				replacingValObjRef.valuedObject = replacingValObj
-				return replacingValObjRef
-			}
-			if (exp.valuedObject.name.startsWith("_cond")) {
-				newVOR.valuedObject = exp.valuedObject
-				return newVOR
-			}
-
-			// Get the guard expression and unfold it
-			val guardExp = scg.guards.filter[it.valuedObject.name == exp.valuedObject.name].head.expression
-			if (guardExp == null) {
-				newVOR.valuedObject = exp.valuedObject
-				return newVOR
-			} else {
-				return unfoldExp(guardExp, upperBound, scg)
-			}
-		}
-	}
-
-	def Expression optimize(OperatorExpression newExp) {
-		if (newExp.operator == OperatorType::LOGICAL_OR) {
-			newExp.subExpressions.removeAll(newExp.subExpressions.filter [
-				(it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject.name == "false")
-			])
-			return newExp
-		} else if (newExp.operator == OperatorType::LOGICAL_AND) {
-			if (!newExp.subExpressions.filter [
-				(it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject.name == "false")
-			].isEmpty) {
-				val replacerVO = KExpressionsFactory::eINSTANCE.createValuedObject
-				replacerVO.name = "false"
-				val replacerVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-				replacerVOR.valuedObject = replacerVO
-				return replacerVOR
-			}
-		}
-		return newExp
 	}
 
 	protected def SynchronizerData createGuardExpression(SynchronizerData data,
