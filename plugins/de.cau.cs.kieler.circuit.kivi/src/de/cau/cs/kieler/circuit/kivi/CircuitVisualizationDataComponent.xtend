@@ -9,6 +9,8 @@ import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.core.krendering.KBackground
 import de.cau.cs.kieler.core.krendering.KRendering
+import de.cau.cs.kieler.core.krendering.KContainerRendering
+
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.core.util.Maybe
@@ -52,6 +54,11 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.circuit.Actor
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.sim.kivi.KiViDataComponent
+import de.cau.cs.kieler.core.krendering.KStyle
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.krendering.KContainerRendering
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * @author ssm als cmot
@@ -72,11 +79,8 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	extension KPortExtensions = injector.getInstance(typeof(KPortExtensions))
 	extension KContainerRenderingExtensions = injector.getInstance(typeof(KContainerRenderingExtensions))
 
-	val HashMultimap<String, EObject> guardActorMapping = HashMultimap.create
-	val HashMultimap<String, KRendering> guardMapping = HashMultimap.create
-	val HashMultimap<String, KRendering> annotationMapping = HashMultimap.create
+	val HashMultimap<String, KNode> guardActorMapping = HashMultimap.create
 
-	val annotationNodes = <KNode>newHashSet
 
 	override initialize() throws KiemInitializationException {
 
@@ -92,11 +96,8 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		}
 
 		guardActorMapping.clear
-		guardMapping.clear
-		annotationMapping.clear
-		annotationNodes.clear
+		
 
-		val contextsSCG = viewParts.map[viewer.viewContext].filter[inputModel instanceof SCGraph]
 		val contextsCirc = viewParts.map[viewer.viewContext].filter[inputModel instanceof Actor]
 
 		val Runnable run = [|
@@ -105,59 +106,18 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				System.out.println(context.getNode().toString)
 				val circuit = context.inputModel as Actor
 				for (node : circuit.eAllContents.filter(Actor).toList) {
-					
+
 					if (node.name != null && node.name.startsWith("g")) {
 						System.out.println("put sth into guardActorMapping: " + node.name)
-						System.out.println(context.getTargetElements(node))
-						guardActorMapping.putAll(node.name, context.getTargetElements(node))
-						for(e : guardMapping.entries){
-									System.out.println("----" + e)
-								}
-					}
-				}
-			}
-			for (context : contextsSCG) {
-
-				val scg = context.inputModel as SCGraph
-				if (scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
-					System.out.println("scghasanno-------------------------------++++++++!!!!!!!!!!!!!")
-
-					for (node : scg.nodes.filter(typeof(Assignment)).filter[valuedObject != null]) {
-//						System.out.println("HHH" + node.annotations)
-						if (node.valuedObject.name.startsWith(BasicBlockTransformation::GUARDPREFIX)) {
-							guardMapping.putAll(node.valuedObject.name,
-								context.getTargetElements(node).filter(typeof(KRendering)))
-//								for(e : guardMapping.entries){
-//									System.out.println(e)
-//								}
-						}
-						if (node.hasAnnotation(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)) {
-							val guardName = node.getStringAnnotationValue(
-								AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
-
-							annotationMapping.putAll(guardName,
-								context.getTargetElements(node).filter(typeof(KRendering)))
-
-//                            val associatedConditional = node.incoming.filter(typeof(ControlFlow)).head.eContainer as Conditional
-//                            annotationMapping.putAll(guardName, context.getTargetElements(associatedConditional).filter(typeof(KRendering)))   
+						//System.out.println(context.getTargetElements(node))
+						guardActorMapping.putAll(node.name, context.getTargetElements(node).filter(KNode))
+						for (e : guardActorMapping.entries) {
+							System.out.println("entry: " + e.key + " with value " + e.value)
 						}
 					}
 				}
-				if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-					for (guard : scg.guards) {
-						val schedulingBlock = guard.schedulingBlockLink
-						if (schedulingBlock != null) {
-							guardMapping.putAll(guard.valuedObject.name,
-								context.getTargetElements(schedulingBlock).filter(typeof(KRendering)))
-						}
-					}
-				}
-				LightDiagramServices.layoutDiagram(context)
 			}
-			for(e : guardActorMapping.keys){
-				System.out.println(e)
-			}
-		]
+					]
 		Display.getDefault().syncExec(run)
 
 	}
@@ -178,9 +138,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		System.out.println("wrapup-------------------------------++++++++!!!!!!!!!!!!!")
 
 		val Runnable run = [|
-			for (node : annotationNodes) {
-				node.parent.children.remove(node)
-			}
+			
 			highlight(<String>newHashSet)
 
 		]
@@ -209,7 +167,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				}
 			}
 		}
-		for(a : guardActorMapping.entries){
+		for (a : guardActorMapping.entries) {
 			System.out.println("huhuhuhuhhuhuhuhuhu11uhiuqhdnc wJOW")
 		}
 		for (h : highlighting) {
@@ -231,36 +189,53 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		Display.getDefault().syncExec(run)
 		return maybe.get();
 	}
+	
+	
+       
 
-	protected static val HIGHLIGHTING_MARKER = new Property<Boolean>("de.cau.cs.kieler.scg.sim.guardHighlighting",
-		false);
+	protected static val HIGHLIGHTING_MARKER = new Property<Object>("highlighting");
 
 	protected def void highlight(Set<String> guards) {
+		
+		val KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
+			style2.setProperty(HIGHLIGHTING_MARKER, CircuitVisualizationDataComponent.this)
 
 		val Runnable run = [|
 			System.out.println("highlighting-------------------------------++++++++!!!!!!!!!!!!!")
 
-			for (entry : guardMapping.entries) {
-
-				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
-
-				// check if style is already present
-				if (guards.contains(entry.key)) {
-					System.out.println("highlighting of guard-------------------------------++++++++!!!!!!!!!!!!!")
-					if (highlighting == null) {
-						val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
-						style.setProperty(HIGHLIGHTING_MARKER, true);
-						// style.setColor(Colors::LIGHT_SEA_GREEN)
-						style.setColor(Colors::LIGHT_SALMON)
-						entry.value.styles.add(style)
-					}
-				} else {
-					if (highlighting != null) {
-						entry.value.styles.remove(highlighting)
-					}
-				}
-			}
+//			for (entry : guardMapping.entries) {
+//
+//				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
+//
+//				// check if style is already present
+//				if (guards.contains(entry.key)) {
+//					System.out.println("highlighting of guard-------------------------------++++++++!!!!!!!!!!!!!")
+//					if (highlighting == null) {
+//						val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
+//						style.setProperty(HIGHLIGHTING_MARKER, true);
+//						// style.setColor(Colors::LIGHT_SEA_GREEN)
+//						style.setColor(Colors::LIGHT_SALMON)
+//						entry.value.styles.add(style)
+//					}
+//				} else {
+//					if (highlighting != null) {
+//						entry.value.styles.remove(highlighting)
+//					}
+//				}
+//			}
 			System.out.println("111-------------------------------++++++++!!!!!!!!!!!!!")
+			for(entry : guardActorMapping.entries){
+				val value = entry.value
+				val KContainerRendering kgelem = value.getData(KContainerRendering)
+				val children = kgelem.children
+				for(c : children){
+					c.getStyles().add(EcoreUtil.copy(style2))
+				}
+//				val kgelem = value.getData.filter(KRendering)
+				System.out.println(kgelem.toString)
+				kgelem.getStyles().add(EcoreUtil.copy(style2));
+			
+			}
 //			for (entry : guardActorMapping.entries) {
 //				System.out.println("NONONONONON-------------------------------++++++++!!!!!!!!!!!!!")
 ////				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
@@ -278,24 +253,24 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 //					}
 //				}
 //			}
-			for (entry : annotationMapping.entries) {
-
-				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
-
-				// check if style is already present
-				if (guards.contains(entry.key)) {
-					if (highlighting == null) {
-						val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
-						style.setProperty(HIGHLIGHTING_MARKER, true);
-						style.setColor(Colors::RED)
-						entry.value.styles.add(style)
-					}
-				} else {
-					if (highlighting != null) {
-						entry.value.styles.remove(highlighting)
-					}
-				}
-			}
+//			for (entry : annotationMapping.entries) {
+//
+//				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
+//
+//				// check if style is already present
+//				if (guards.contains(entry.key)) {
+//					if (highlighting == null) {
+//						val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
+//						style.setProperty(HIGHLIGHTING_MARKER, true);
+//						style.setColor(Colors::RED)
+//						entry.value.styles.add(style)
+//					}
+//				} else {
+//					if (highlighting != null) {
+//						entry.value.styles.remove(highlighting)
+//					}
+//				}
+//			}
 		]
 		Display.getDefault().syncExec(run)
 
@@ -339,3 +314,4 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	}
 
 }
+

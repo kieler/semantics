@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class CircuitKiviPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "de.cau.cs.circuit.kivi"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "de.cau.cs.kieler.circuit.kivi"; //$NON-NLS-1$
 
 	// The shared instance
 	private static CircuitKiviPlugin plugin;

@@ -52,7 +52,7 @@ class AndActorSynthesis extends AbstractDiagramSynthesis<Actor> implements IDraw
 
 	override draw(Actor actor) {
 		val KNode node = actor.node
-
+		
 //		node.setNodeSize(30, 30);
 //
 //		node.addRectangle =>
@@ -74,7 +74,7 @@ class AndActorSynthesis extends AbstractDiagramSynthesis<Actor> implements IDraw
 //                       .setLayoutOption(LayoutOptions.OFFSET, -1f);
 //        
 		node.addRectangle => [
-			associateWith(actor)
+		
 			it.invisible = true;
 
 			it.addRectangle => [
@@ -82,7 +82,7 @@ class AndActorSynthesis extends AbstractDiagramSynthesis<Actor> implements IDraw
 				it.background = "white".color;
 				it.selectionBackground = "red".color;
 				it.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 14f, 0, BOTTOM, 0, 0)
-				associateWith(actor)
+			
 			];
 
 			it.addPolyline => [
@@ -93,7 +93,6 @@ class AndActorSynthesis extends AbstractDiagramSynthesis<Actor> implements IDraw
 				it.addKPosition(LEFT, 0, 0, TOP, 0.5f, 0)
 				it.addKPosition(LEFT, 0, 0, BOTTOM, 0.5f, 0)
 				it.addKPosition(RIGHT, 14.5f, 0, BOTTOM, 0.5f, 0)
-				associateWith(actor)
 			];
 
 			it.addArc() => [
@@ -104,10 +103,10 @@ class AndActorSynthesis extends AbstractDiagramSynthesis<Actor> implements IDraw
 				it.arcAngle = 180;
 				it.startAngle = -90;
 				it.setAreaPlacementData.from(LEFT, 1, 0, TOP, 0, 0);
-				associateWith(actor)
 			];
 			
 		];
+		
 		return node;
 	}
 	
