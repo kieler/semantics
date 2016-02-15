@@ -62,6 +62,26 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
      */
     @ValueConverter(rule = "EString")
     public IValueConverter<String> convertEString() {
+    	return genericStringValueConverter();
+    }
+
+    @ValueConverter(rule = "EStringBoolean")
+    public IValueConverter<String> convertEStringBoolean() {
+    	return genericStringValueConverter();
+    }
+
+    @ValueConverter(rule = "EStringAllTypes")
+    public IValueConverter<String> convertEStringAllTypes() {
+    	return genericStringValueConverter();
+    }
+    
+    
+    @ValueConverter(rule = "STRING")
+    public IValueConverter<String> convertSTRING() {
+    	return genericStringValueConverter();
+    }
+    
+    private IValueConverter<String> genericStringValueConverter() {
         return new IValueConverter<String>() {
 
             public String toValue(final String string, final INode node) {
@@ -87,6 +107,7 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
                 return res;
             }
         };
+
     }
     
     /**
