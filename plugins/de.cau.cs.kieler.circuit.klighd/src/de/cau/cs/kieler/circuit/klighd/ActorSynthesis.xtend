@@ -65,7 +65,8 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 		val hasName = !(actor.name == null)
 
 		// create KNode for actor
-		var actorNode = actor.node; // ///getNode nicht createNode()
+		var KNode actorNode = actor.node; // ///getNode nicht createNode()
+//		actorNode.associateWith(actor)
 		// if actor is a gate create it. otherwise draw a simple frame.
 		if (atomicActor) {
 			if (!hasType) {
