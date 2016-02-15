@@ -284,7 +284,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
+	 *     (annotations+=QuotedStringAnnotation* name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
