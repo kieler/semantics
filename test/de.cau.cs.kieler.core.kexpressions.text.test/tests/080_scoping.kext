@@ -1,0 +1,58 @@
+/* KEXT Test File for scoping
+ * 
+ * @author ssm
+ * @date 2016-02-10
+ */
+ 
+bool globalBool;
+ 
+scope HandleA {
+	bool @alias "AInHandleA" A;
+
+	@check ^scope.handleA.assignAToGlobal
+	@aliasCheck A, AInHandleA
+	globalBool = A
+
+	@check ^scope.handleA.HandleAA
+	@aliasCheck A, AInHandleA
+	A = A
+}
+
+scope HandleB {
+	bool @alias "AInHandleB" A;
+	bool @alias "BInHandleB" B;
+
+	@check ^scope.handleB.assignAToGlobal
+	@aliasCheck A, AInHandleB
+	globalBool = A
+
+	@check ^scope.handleB.assignBToGlobal
+	@aliasCheck B, BInHandleB
+	globalBool = B
+
+	@check ^scope.handleB.HandleBA
+	@aliasCheck A, AInHandleB
+	A = A
+	
+	scope SubHandleC {
+		bool @alias "CInSubHandleC" C;
+		
+		@check ^scope.handleB.subHandleC.assignCToGlobal
+		@aliasCheck C, CInSubHandleC
+		globalBool = C
+		
+		@check ^scope.handleB.subHandleC.assignBToGlobal
+		@aliasCheck B, BInHandleB
+		globalBool = B
+		
+		@check ^scope.handleB.subHandleC.assignAToGlobal
+		@aliasCheck B, AInHandleB
+		globalBool = A
+
+		@check ^scope.handleB.subHandleC.assignCToA
+		@aliasCheck A, AInHandleB
+		@aliasCheck C, CInSubHandleC
+		A = C
+		
+	}
+}
