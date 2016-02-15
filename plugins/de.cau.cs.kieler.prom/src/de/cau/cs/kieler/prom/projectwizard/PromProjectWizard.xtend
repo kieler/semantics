@@ -250,9 +250,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
                 // Prepare initial content
                 var InputStream initialContentStream = null
                 if(!Strings.isNullOrEmpty(env.mainFileOrigin)){
-                    val fileName = new File(resolvedMainFilePath).name
-                    val fileNameWithoutExtension = FilenameUtils.removeExtension(fileName)
-                    initialContentStream = PromPlugin.getInputStream(env.mainFileOrigin, #{"${file_name}" -> fileNameWithoutExtension})
+                    initialContentStream = PromPlugin.getInputStream(env.mainFileOrigin, null)
                 }
                 
                 // Create resource
@@ -298,17 +296,20 @@ class PromProjectWizard extends Wizard implements INewWizard {
 
             try {
                 if (wrapperEnv.wrapperCodeSnippetsOrigin.trim().startsWith("platform:")) {
-                    // Fill folder with files from plug-in
+                    // Fill folder with files from plugin
                     val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.wrapperCodeSnippetsDirectory)
                     initializeSnippetsFromDirectoryOfPlatformURL(snippetsDirectory, wrapperEnv.wrapperCodeSnippetsOrigin)
-                    
-                } else {
+                } else if(!Strings.isNullOrEmpty(wrapperEnv.wrapperCodeSnippetsOrigin)){
+                    // Copy directory from file system
                     val source = new File(wrapperEnv.wrapperCodeSnippetsOrigin)
                     val target = new File(newlyCreatedProject.location + File.separator + wrapperEnv.wrapperCodeSnippetsDirectory)
                     
                     FileUtils.copyDirectory(source, target)
+                } else {
+                    // Create empty directory 
+                    val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.wrapperCodeSnippetsDirectory)
+                    createResource(snippetsDirectory, null);
                 }
-                
             } catch (Exception e) {
                 MessageDialog.openError(shell, "Error", "The default content for the snippet directory could not be loaded from\n"
                             + "'"+wrapperEnv.wrapperCodeSnippetsOrigin+"'.\n"
@@ -342,7 +343,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
     }
 
     /**
-     * Adds a nature to a project if the nature if not yet present.
+     * Adds a nature to a project if the nature is not yet present.
      * 
      * @param project The project to add the nature to
      * @param newNature The nature that should be added

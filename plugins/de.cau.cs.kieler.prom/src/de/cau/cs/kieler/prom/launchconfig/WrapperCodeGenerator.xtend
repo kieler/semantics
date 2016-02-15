@@ -58,6 +58,12 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
      */
     private static val MODEL_NAME_VARIABLE = "model_name"    
 
+    /**
+     * A template variable which is replaced with the name of the file (without file extension)
+     * that is created during wrapper code generation.
+     */
+    private static val FILE_NAME_VARIABLE = "file_name"
+
     private static val declarationPhase = new CodeGenerationPhase("declaration", true, [data | true], "decl")
     private static val initializationPhase = new CodeGenerationPhase("initialization", true, [data | true], "init")
     private static val releasePhase = new CodeGenerationPhase("release", true, [data | true], "free")
@@ -135,8 +141,15 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
 
         // Create macro calls from annotations
         val map = getMacroCalls(annotationDatas)
+        
+        // Add name of model 
         map.put(MODEL_NAME_VARIABLE, modelName)
-
+        
+        // Add name of output file 
+        val fileName = new File(launchConfiguration.wrapperCodeTargetLocation).name
+        val fileNameWithoutExtension = FilenameUtils.removeExtension(fileName)
+        map.put(FILE_NAME_VARIABLE, fileNameWithoutExtension)
+        
         // Inject macro calls in input template
         FreeMarkerPlugin.newConfiguration(launchConfiguration.project.location.toOSString())
         val template = FreeMarkerPlugin.configuration.getTemplate(launchConfiguration.wrapperCodeTemplate)
