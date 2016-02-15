@@ -75,12 +75,6 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
     	return genericStringValueConverter();
     }
     
-    
-    @ValueConverter(rule = "STRING")
-    public IValueConverter<String> convertSTRING() {
-    	return genericStringValueConverter();
-    }
-    
     private IValueConverter<String> genericStringValueConverter() {
         return new IValueConverter<String>() {
 
