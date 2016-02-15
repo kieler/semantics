@@ -59,6 +59,7 @@ import de.cau.cs.kieler.core.krendering.KStyle
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.krendering.KContainerRendering
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.core.krendering.KForeground
 
 /**
  * @author ssm als cmot
@@ -79,8 +80,8 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	extension KPortExtensions = injector.getInstance(typeof(KPortExtensions))
 	extension KContainerRenderingExtensions = injector.getInstance(typeof(KContainerRenderingExtensions))
 
-	val HashMultimap<String, KNode> guardActorMapping = HashMultimap.create
-
+	val HashMultimap<String, KRendering> guardActorMapping = HashMultimap.create
+	val HashMultimap<String, KRendering> linkMapping = HashMultimap.create
 
 	override initialize() throws KiemInitializationException {
 
@@ -96,7 +97,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		}
 
 		guardActorMapping.clear
-		
+		linkMapping.clear
 
 		val contextsCirc = viewParts.map[viewer.viewContext].filter[inputModel instanceof Actor]
 
@@ -109,15 +110,35 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
 					if (node.name != null && node.name.startsWith("g")) {
 						System.out.println("put sth into guardActorMapping: " + node.name)
-						//System.out.println(context.getTargetElements(node))
-						guardActorMapping.putAll(node.name, context.getTargetElements(node).filter(KNode))
-						for (e : guardActorMapping.entries) {
-							System.out.println("entry: " + e.key + " with value " + e.value)
+						// System.out.println(context.getTargetElements(node))
+						val frame = context.getTargetElement(node, KNode)
+						val KContainerRendering kgelem = frame.getData(KContainerRendering)
+						val shape = frame.getData.filter(KRendering)
+						val children = kgelem.children
+						System.out.println(children + "HIHIHIHHI")
+						guardActorMapping.putAll(node.name, children)
+						guardActorMapping.putAll(node.name, shape)
+
+						val links = node.ports.filter[type.startsWith("Out")].head.outgoingLinks
+						for (l : links) {
+							val link = context.getTargetElement(l, KEdge)
+							val rend = link.getData.filter(KRendering).head
+							linkMapping.put(node.name, rend)//context.getTargetElement(l, KEdge))
 						}
 					}
+
 				}
+
 			}
-					]
+
+			for (e : guardActorMapping.entries) {
+				System.out.println("entry: " + e.key + " with value " + e.value)
+			}
+
+			for (l : linkMapping.entries) {
+				System.out.println("ENTRY: " + l.key + " with value " + l.value)
+			}
+		]
 		Display.getDefault().syncExec(run)
 
 	}
@@ -138,7 +159,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		System.out.println("wrapup-------------------------------++++++++!!!!!!!!!!!!!")
 
 		val Runnable run = [|
-			
+
 			highlight(<String>newHashSet)
 
 		]
@@ -167,11 +188,9 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				}
 			}
 		}
-		for (a : guardActorMapping.entries) {
-			System.out.println("huhuhuhuhhuhuhuhuhu11uhiuqhdnc wJOW")
-		}
+
 		for (h : highlighting) {
-			System.out.println(h)
+			System.out.println(h + " shall be highlighted")
 		}
 		highlight(highlighting)
 
@@ -189,88 +208,72 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		Display.getDefault().syncExec(run)
 		return maybe.get();
 	}
-	
-	
-       
 
-	protected static val HIGHLIGHTING_MARKER = new Property<Object>("highlighting");
+	protected static val HIGHLIGHTING_MARKER = new Property<Boolean>("highlighting", false);
 
 	protected def void highlight(Set<String> guards) {
-		
-		val KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
-			style2.setProperty(HIGHLIGHTING_MARKER, CircuitVisualizationDataComponent.this)
 
+//		val KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
+//		style2.setProperty(HIGHLIGHTING_MARKER, CircuitVisualizationDataComponent.this)
 		val Runnable run = [|
 			System.out.println("highlighting-------------------------------++++++++!!!!!!!!!!!!!")
 
-//			for (entry : guardMapping.entries) {
-//
-//				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
-//
-//				// check if style is already present
-//				if (guards.contains(entry.key)) {
-//					System.out.println("highlighting of guard-------------------------------++++++++!!!!!!!!!!!!!")
-//					if (highlighting == null) {
-//						val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
-//						style.setProperty(HIGHLIGHTING_MARKER, true);
-//						// style.setColor(Colors::LIGHT_SEA_GREEN)
-//						style.setColor(Colors::LIGHT_SALMON)
-//						entry.value.styles.add(style)
-//					}
-//				} else {
-//					if (highlighting != null) {
-//						entry.value.styles.remove(highlighting)
-//					}
+
+			for (entry : guardActorMapping.entries) {
+				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
+//				val value = entry.value
+//				val KContainerRendering kgelem = value.getData(KContainerRendering)
+//				val children = kgelem.children
+//				for (c : children) {
+//					c.getStyles().add(EcoreUtil.copy(style2))
 //				}
-//			}
-			System.out.println("111-------------------------------++++++++!!!!!!!!!!!!!")
-			for(entry : guardActorMapping.entries){
-				val value = entry.value
-				val KContainerRendering kgelem = value.getData(KContainerRendering)
-				val children = kgelem.children
-				for(c : children){
-					c.getStyles().add(EcoreUtil.copy(style2))
-				}
 //				val kgelem = value.getData.filter(KRendering)
-				System.out.println(kgelem.toString)
-				kgelem.getStyles().add(EcoreUtil.copy(style2));
-			
+				if (guards.contains(entry.key)) {
+					if (highlighting == null) {
+						System.out.println("highlighted: " + entry.key)
+						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
+						style.setProperty(HIGHLIGHTING_MARKER, true);
+						style.setColor(Colors::RED)
+						entry.value.styles.add(style)
+					}
+				} else {
+					if (!guards.contains(entry.key) && highlighting != null) {
+						System.out.println("UNNNhighlighted: " + entry.key)
+						entry.value.styles.remove(highlighting)
+					}
+				}
+
 			}
-//			for (entry : guardActorMapping.entries) {
-//				System.out.println("NONONONONON-------------------------------++++++++!!!!!!!!!!!!!")
-////				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
-//				// check if style is already present
-//				if (guards.contains(entry.key)) {
-////					if (highlighting == null) {
-//						val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
-//						style.setProperty(HIGHLIGHTING_MARKER, true);
-//						style.setColor(Colors::RED)
-//						entry.value.styles.add(style)
-//					}
-//				} else {
-//					if (highlighting != null) {
-//						entry.value.styles.remove(highlighting)
-//					}
+			
+			
+			
+			for (entry : linkMapping.entries) {
+				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
+//				val value = entry.value
+//				val KContainerRendering kgelem = value.getData(KContainerRendering)
+//				val children = kgelem.children
+//				for (c : children) {
+//					c.getStyles().add(EcoreUtil.copy(style2))
 //				}
-//			}
-//			for (entry : annotationMapping.entries) {
-//
-//				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
-//
-//				// check if style is already present
-//				if (guards.contains(entry.key)) {
-//					if (highlighting == null) {
-//						val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
-//						style.setProperty(HIGHLIGHTING_MARKER, true);
-//						style.setColor(Colors::RED)
-//						entry.value.styles.add(style)
-//					}
-//				} else {
-//					if (highlighting != null) {
-//						entry.value.styles.remove(highlighting)
-//					}
-//				}
-//			}
+//				val kgelem = value.getData.filter(KRendering)
+				if (guards.contains(entry.key)) {
+					if (highlighting == null) {
+						System.out.println("highlighted: " + entry.key)
+						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
+						style.setProperty(HIGHLIGHTING_MARKER, true);
+						style.setColor(Colors::RED)
+						entry.value.styles.add(style)
+					}
+				} else {
+					if (!guards.contains(entry.key) && highlighting != null) {
+						System.out.println("UNNNhighlighted: " + entry.key)
+						entry.value.styles.remove(highlighting)
+					}
+				}
+
+			}
+			
+
 		]
 		Display.getDefault().syncExec(run)
 
