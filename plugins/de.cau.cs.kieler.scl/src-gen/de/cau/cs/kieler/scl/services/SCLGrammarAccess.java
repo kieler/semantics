@@ -1029,7 +1029,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
 	//// Examples: array[10], initial = false, z = 0 combine max
 	//ValuedObject returns kexpressions::ValuedObject:
-	//	name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
+	//	annotations+=QuotedStringAnnotation* name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine"
+	//	combineOperator=CombineOperator)?;
 	public KEXTGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKEXT.getValuedObjectAccess();
 	}
