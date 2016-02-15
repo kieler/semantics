@@ -77,18 +77,23 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
             textFile.add(line.trim());
         }
         
-		for (KEXTScope scope : ((Kext) object).getScopes()) {
-			for (TestEntity entity : scope.getEntities()) {
-				StringAnnotation checkAnnotation;
-				if (entity.getEffect() != null) {
-					checkAnnotation = (StringAnnotation) entity.getEffect().getAnnotation(KEXT_CHECK_ANNOTATION);
-				} else {
-					checkAnnotation = (StringAnnotation) entity.getExpression().getAnnotation(KEXT_CHECK_ANNOTATION);
-				}
-				if (checkAnnotation != null && checkAnnotation.getValues().size() > 0) {
-					runTestRunnerForObject(entity, checkAnnotation.getValues().get(0), (EObject) object, textFile);
-				}
+        runTestRunnerForScope(((Kext) object).getScopes().get(0), object, textFile);
+    }
+    
+    protected void runTestRunnerForScope(KEXTScope scope, Object object, List<String> textFile) throws Throwable {
+		for (TestEntity entity : scope.getEntities()) {
+			StringAnnotation checkAnnotation;
+			if (entity.getEffect() != null) {
+				checkAnnotation = (StringAnnotation) entity.getEffect().getAnnotation(KEXT_CHECK_ANNOTATION);
+			} else {
+				checkAnnotation = (StringAnnotation) entity.getExpression().getAnnotation(KEXT_CHECK_ANNOTATION);
 			}
+			if (checkAnnotation != null && checkAnnotation.getValues().size() > 0) {
+				runTestRunnerForObject(entity, checkAnnotation.getValues().get(0), (EObject) object, textFile);
+			}
+		}
+		for (KEXTScope subScope : scope.getScopes()) {
+			runTestRunnerForScope(subScope, object, textFile);
 		}
     }
 	
