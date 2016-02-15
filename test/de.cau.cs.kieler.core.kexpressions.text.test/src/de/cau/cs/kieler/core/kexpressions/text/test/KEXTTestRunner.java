@@ -74,7 +74,7 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         List<String> textFile = Lists.newArrayList();
         while ((line = br.readLine()) != null) {
-            textFile.add(line);
+            textFile.add(line.trim());
         }
         
 		for (KEXTScope scope : ((Kext) object).getScopes()) {
