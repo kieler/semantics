@@ -47,7 +47,7 @@ scope HandleB {
 		
 		@check ^scope.handleB.subHandleC.assignAToGlobal
 		@aliasCheck B, AInHandleB
-		globalBool = A
+		globalBool = A 
 
 		@check ^scope.handleB.subHandleC.assignCToA
 		@aliasCheck A, AInHandleB
