@@ -16,6 +16,10 @@ package de.cau.cs.kieler.core.kexpressions.text.test;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +27,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
+import org.junit.Test;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
@@ -30,11 +35,13 @@ import org.osgi.framework.Bundle;
 
 import com.google.common.collect.Lists;
 
+import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
+import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.StopOnFailure;
 
 /**
  * @author ssm
@@ -43,6 +50,12 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
  * 
  */
 public class KEXTTestRunner extends ModelCollectionTestRunner {
+	
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    public @interface RequiredAnnotation {
+    	String value() default "";
+    }	
 
     public static String KEXT_CHECK_ANNOTATION = "check";
     
@@ -156,7 +169,37 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
         protected Statement methodInvoker(final FrameworkMethod method,
                 final Object testClassInstance) {
             return new KEXTInvokeMethodOnModel(method, testClassInstance, this.model, this.data);
+        }    
+        
+        protected List<FrameworkMethod> computeTestMethods() {
+        	List<FrameworkMethod> testMethods = new ArrayList<FrameworkMethod>(); 
+        	for(FrameworkMethod method : getTestClass().getAnnotatedMethods(Test.class)) {
+        		RequiredAnnotation requiredAnnotation = method.getAnnotation(RequiredAnnotation.class);
+        		boolean methodIsOk = true;
+        		if (requiredAnnotation != null) {
+        			if (this.model instanceof TestEntity) {
+        				List<Annotation> annotations;
+        				if (((TestEntity) this.model).getEffect() != null) {
+        					annotations = ((TestEntity) this.model).getEffect().getAnnotations();
+        				} else {
+        					annotations = ((TestEntity) this.model).getExpression().getAnnotations();
+        				}
+        				methodIsOk = false;
+        				for(Annotation annotation : annotations) {
+        					if (annotation.getName().equals(requiredAnnotation.value())) {
+        						methodIsOk = true;
+        					}
+        				}
+        			}
+        		}
+        		if (methodIsOk) {
+        			testMethods.add(method);
+        		}
+        	}
+        	
+            return testMethods;
         }        
+        
     }
     
     protected static class KEXTInvokeMethodOnModel extends Statement {
