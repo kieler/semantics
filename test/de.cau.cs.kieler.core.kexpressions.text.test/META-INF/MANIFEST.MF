@@ -16,4 +16,9 @@ Require-Bundle: de.cau.cs.kieler.core.kexpressions,
  org.eclipse.core.runtime;bundle-version="3.10.0",
  de.cau.cs.kieler.core.kexpressions.keffects,
  org.apache.commons.io;bundle-version="2.0.1",
- org.eclipse.core.resources
+ org.eclipse.core.resources,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib
+
