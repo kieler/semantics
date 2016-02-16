@@ -100,7 +100,7 @@ public abstract class AbstractSct3RuntimeModule extends org.eclipse.xtext.servic
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
 	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
-		return de.cau.cs.kieler.sccharts.text3.scoping.Sct3ScopeProvider.class;
+		return org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
