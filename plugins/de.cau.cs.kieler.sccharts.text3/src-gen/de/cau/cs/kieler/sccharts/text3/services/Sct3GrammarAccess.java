@@ -1828,7 +1828,7 @@ public class Sct3GrammarAccess extends AbstractGrammarElementFinder {
 	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
 	//// test entities may follow.
 	//Kext returns kext::Kext:
-	//	"scope"? scopes+=Scope ("scope" scopes+=Scope)*;
+	//	scopes+=RootScope;
 	public KEXTGrammarAccess.KextElements getKextAccess() {
 		return gaKEXT.getKextAccess();
 	}
@@ -1837,8 +1837,18 @@ public class Sct3GrammarAccess extends AbstractGrammarElementFinder {
 		return getKextAccess().getRule();
 	}
 
+	//RootScope returns kext::KEXTScope:
+	//	{kext::KEXTScope} declarations+=Declaration* entities+=TestEntity* ("scope" scopes+=Scope)*;
+	public KEXTGrammarAccess.RootScopeElements getRootScopeAccess() {
+		return gaKEXT.getRootScopeAccess();
+	}
+	
+	public ParserRule getRootScopeRule() {
+		return getRootScopeAccess().getRule();
+	}
+
 	//Scope returns kext::KEXTScope:
-	//	{kext::KEXTScope} (id=ID ":")? declarations+=Declaration* entities+=TestEntity*;
+	//	{kext::KEXTScope} id=ID? "{" declarations+=Declaration* entities+=TestEntity* ("scope" scopes+=Scope)* "}";
 	public KEXTGrammarAccess.ScopeElements getScopeAccess() {
 		return gaKEXT.getScopeAccess();
 	}

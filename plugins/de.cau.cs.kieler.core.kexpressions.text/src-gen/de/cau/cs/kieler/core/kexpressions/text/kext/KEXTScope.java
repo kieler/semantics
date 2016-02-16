@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope#getEntities <em>Entities</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope#getScopes <em>Scopes</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKEXTScope()
@@ -36,5 +37,21 @@ public interface KEXTScope extends DeclarationScope {
 	 * @generated
 	 */
 	EList<TestEntity> getEntities();
+
+	/**
+	 * Returns the value of the '<em><b>Scopes</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Scopes</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Scopes</em>' containment reference list.
+	 * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKEXTScope_Scopes()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<KEXTScope> getScopes();
 
 } // KEXTScope

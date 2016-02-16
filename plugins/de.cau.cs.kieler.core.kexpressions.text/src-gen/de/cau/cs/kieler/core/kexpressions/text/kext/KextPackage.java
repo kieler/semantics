@@ -68,24 +68,6 @@ public interface KextPackage extends EPackage
   int KEXT = 0;
 
   /**
-	 * The feature id for the '<em><b>Scopes</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int KEXT__SCOPES = 0;
-
-		/**
-	 * The number of structural features of the '<em>Kext</em>' class.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-  int KEXT_FEATURE_COUNT = 1;
-
-  /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.TestEntityImpl <em>Test Entity</em>}' class.
 	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -96,33 +78,6 @@ public interface KextPackage extends EPackage
   int TEST_ENTITY = 1;
 
   /**
-	 * The feature id for the '<em><b>Effect</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-  int TEST_ENTITY__EFFECT = 0;
-
-  /**
-	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-  int TEST_ENTITY__EXPRESSION = 1;
-
-  /**
-	 * The number of structural features of the '<em>Test Entity</em>' class.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-  int TEST_ENTITY_FEATURE_COUNT = 2;
-
-  /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.AnnotatedExpressionImpl <em>Annotated Expression</em>}' class.
 	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -131,34 +86,6 @@ public interface KextPackage extends EPackage
 	 * @generated
 	 */
   int ANNOTATED_EXPRESSION = 2;
-
-  /**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-  int ANNOTATED_EXPRESSION__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-
-  /**
-	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-  int ANNOTATED_EXPRESSION__EXPRESSION = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
-
-  /**
-	 * The number of structural features of the '<em>Annotated Expression</em>' class.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-  int ANNOTATED_EXPRESSION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
-
 
   /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.IdentifiableImpl <em>Identifiable</em>}' class.
@@ -292,13 +219,130 @@ public interface KextPackage extends EPackage
 	int KEXT_SCOPE__ENTITIES = DECLARATION_SCOPE_FEATURE_COUNT + 0;
 
 /**
+	 * The feature id for the '<em><b>Scopes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEXT_SCOPE__SCOPES = DECLARATION_SCOPE_FEATURE_COUNT + 1;
+
+/**
 	 * The number of structural features of the '<em>KEXT Scope</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int KEXT_SCOPE_FEATURE_COUNT = DECLARATION_SCOPE_FEATURE_COUNT + 1;
+	int KEXT_SCOPE_FEATURE_COUNT = DECLARATION_SCOPE_FEATURE_COUNT + 2;
+
+/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEXT__ANNOTATIONS = KEXT_SCOPE__ANNOTATIONS;
+
+/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEXT__ID = KEXT_SCOPE__ID;
+
+/**
+	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEXT__DECLARATIONS = KEXT_SCOPE__DECLARATIONS;
+
+/**
+	 * The feature id for the '<em><b>Entities</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEXT__ENTITIES = KEXT_SCOPE__ENTITIES;
+
+/**
+	 * The feature id for the '<em><b>Scopes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+int KEXT__SCOPES = KEXT_SCOPE__SCOPES;
+
+/**
+	 * The number of structural features of the '<em>Kext</em>' class.
+	 * <!-- begin-user-doc -->
+ * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+int KEXT_FEATURE_COUNT = KEXT_SCOPE_FEATURE_COUNT + 0;
+
+/**
+	 * The feature id for the '<em><b>Effect</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+ * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+int TEST_ENTITY__EFFECT = 0;
+
+/**
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+ * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+int TEST_ENTITY__EXPRESSION = 1;
+
+/**
+	 * The number of structural features of the '<em>Test Entity</em>' class.
+	 * <!-- begin-user-doc -->
+ * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+int TEST_ENTITY_FEATURE_COUNT = 2;
+
+/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+ * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+int ANNOTATED_EXPRESSION__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+/**
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+ * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+int ANNOTATED_EXPRESSION__EXPRESSION = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+/**
+	 * The number of structural features of the '<em>Annotated Expression</em>' class.
+	 * <!-- begin-user-doc -->
+ * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+int ANNOTATED_EXPRESSION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
 
 /**
@@ -312,17 +356,6 @@ public interface KextPackage extends EPackage
   EClass getKext();
 
   /**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getScopes <em>Scopes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Scopes</em>'.
-	 * @see de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getScopes()
-	 * @see #getKext()
-	 * @generated
-	 */
-	EReference getKext_Scopes();
-
-		/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity <em>Test Entity</em>}'.
 	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -439,6 +472,17 @@ public interface KextPackage extends EPackage
 	EReference getKEXTScope_Entities();
 
 /**
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope#getScopes <em>Scopes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Scopes</em>'.
+	 * @see de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope#getScopes()
+	 * @see #getKEXTScope()
+	 * @generated
+	 */
+	EReference getKEXTScope_Scopes();
+
+/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -472,14 +516,6 @@ public interface KextPackage extends EPackage
     EClass KEXT = eINSTANCE.getKext();
 
     /**
-		 * The meta object literal for the '<em><b>Scopes</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference KEXT__SCOPES = eINSTANCE.getKext_Scopes();
-
-				/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.TestEntityImpl <em>Test Entity</em>}' class.
 		 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -576,6 +612,14 @@ public interface KextPackage extends EPackage
 		 * @generated
 		 */
 		EReference KEXT_SCOPE__ENTITIES = eINSTANCE.getKEXTScope_Entities();
+
+				/**
+		 * The meta object literal for the '<em><b>Scopes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference KEXT_SCOPE__SCOPES = eINSTANCE.getKEXTScope_Scopes();
 
   }
 

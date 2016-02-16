@@ -216,8 +216,15 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
 			case KextPackage.KEXT_SCOPE:
-				sequence_Scope(context, (KEXTScope) semanticObject); 
-				return; 
+				if(context == grammarAccess.getRootScopeRule()) {
+					sequence_RootScope(context, (KEXTScope) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getScopeRule()) {
+					sequence_Scope(context, (KEXTScope) semanticObject); 
+					return; 
+				}
+				else break;
 			case KextPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 
@@ -239,7 +246,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (scopes+=Scope scopes+=Scope*)
+	 *     scopes+=RootScope
 	 */
 	protected void sequence_Kext(EObject context, Kext semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -266,7 +273,16 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (id=ID? declarations+=Declaration* entities+=TestEntity*)
+	 *     (declarations+=Declaration* entities+=TestEntity* scopes+=Scope*)
+	 */
+	protected void sequence_RootScope(EObject context, KEXTScope semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (id=ID? declarations+=Declaration* entities+=TestEntity* scopes+=Scope*)
 	 */
 	protected void sequence_Scope(EObject context, KEXTScope semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

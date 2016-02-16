@@ -22,14 +22,8 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class KextElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Kext");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cScopeKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cScopesAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cScopesScopeParserRuleCall_1_0 = (RuleCall)cScopesAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cScopeKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cScopesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cScopesScopeParserRuleCall_2_1_0 = (RuleCall)cScopesAssignment_2_1.eContents().get(0);
+		private final Assignment cScopesAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cScopesRootScopeParserRuleCall_0 = (RuleCall)cScopesAssignment.eContents().get(0);
 		
 		/// **
 		// * @author ssm
@@ -46,80 +40,126 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
 		//// test entities may follow.
 		//Kext returns kext::Kext:
-		//	"scope"? scopes+=Scope ("scope" scopes+=Scope)*;
+		//	scopes+=RootScope;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"scope"? scopes+=Scope ("scope" scopes+=Scope)*
+		//scopes+=RootScope
+		public Assignment getScopesAssignment() { return cScopesAssignment; }
+
+		//RootScope
+		public RuleCall getScopesRootScopeParserRuleCall_0() { return cScopesRootScopeParserRuleCall_0; }
+	}
+
+	public class RootScopeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "RootScope");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cKEXTScopeAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_1_0 = (RuleCall)cDeclarationsAssignment_1.eContents().get(0);
+		private final Assignment cEntitiesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cEntitiesTestEntityParserRuleCall_2_0 = (RuleCall)cEntitiesAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cScopeKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cScopesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cScopesScopeParserRuleCall_3_1_0 = (RuleCall)cScopesAssignment_3_1.eContents().get(0);
+		
+		//RootScope returns kext::KEXTScope:
+		//	{kext::KEXTScope} declarations+=Declaration* entities+=TestEntity* ("scope" scopes+=Scope)*;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{kext::KEXTScope} declarations+=Declaration* entities+=TestEntity* ("scope" scopes+=Scope)*
 		public Group getGroup() { return cGroup; }
 
-		//"scope"?
-		public Keyword getScopeKeyword_0() { return cScopeKeyword_0; }
+		//{kext::KEXTScope}
+		public Action getKEXTScopeAction_0() { return cKEXTScopeAction_0; }
 
-		//scopes+=Scope
-		public Assignment getScopesAssignment_1() { return cScopesAssignment_1; }
+		//declarations+=Declaration*
+		public Assignment getDeclarationsAssignment_1() { return cDeclarationsAssignment_1; }
 
-		//Scope
-		public RuleCall getScopesScopeParserRuleCall_1_0() { return cScopesScopeParserRuleCall_1_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_1_0() { return cDeclarationsDeclarationParserRuleCall_1_0; }
+
+		//entities+=TestEntity*
+		public Assignment getEntitiesAssignment_2() { return cEntitiesAssignment_2; }
+
+		//TestEntity
+		public RuleCall getEntitiesTestEntityParserRuleCall_2_0() { return cEntitiesTestEntityParserRuleCall_2_0; }
 
 		//("scope" scopes+=Scope)*
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_3() { return cGroup_3; }
 
 		//"scope"
-		public Keyword getScopeKeyword_2_0() { return cScopeKeyword_2_0; }
+		public Keyword getScopeKeyword_3_0() { return cScopeKeyword_3_0; }
 
 		//scopes+=Scope
-		public Assignment getScopesAssignment_2_1() { return cScopesAssignment_2_1; }
+		public Assignment getScopesAssignment_3_1() { return cScopesAssignment_3_1; }
 
 		//Scope
-		public RuleCall getScopesScopeParserRuleCall_2_1_0() { return cScopesScopeParserRuleCall_2_1_0; }
+		public RuleCall getScopesScopeParserRuleCall_3_1_0() { return cScopesScopeParserRuleCall_3_1_0; }
 	}
 
 	public class ScopeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scope");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cKEXTScopeAction_0 = (Action)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Assignment cIdAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
-		private final RuleCall cIdIDTerminalRuleCall_1_0_0 = (RuleCall)cIdAssignment_1_0.eContents().get(0);
-		private final Keyword cColonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Assignment cDeclarationsAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cDeclarationsDeclarationParserRuleCall_2_0 = (RuleCall)cDeclarationsAssignment_2.eContents().get(0);
-		private final Assignment cEntitiesAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cEntitiesTestEntityParserRuleCall_3_0 = (RuleCall)cEntitiesAssignment_3.eContents().get(0);
+		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cIdIDTerminalRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cDeclarationsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_3_0 = (RuleCall)cDeclarationsAssignment_3.eContents().get(0);
+		private final Assignment cEntitiesAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cEntitiesTestEntityParserRuleCall_4_0 = (RuleCall)cEntitiesAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cScopeKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cScopesAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cScopesScopeParserRuleCall_5_1_0 = (RuleCall)cScopesAssignment_5_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Scope returns kext::KEXTScope:
-		//	{kext::KEXTScope} (id=ID ":")? declarations+=Declaration* entities+=TestEntity*;
+		//	{kext::KEXTScope} id=ID? "{" declarations+=Declaration* entities+=TestEntity* ("scope" scopes+=Scope)* "}";
 		@Override public ParserRule getRule() { return rule; }
 
-		//{kext::KEXTScope} (id=ID ":")? declarations+=Declaration* entities+=TestEntity*
+		//{kext::KEXTScope} id=ID? "{" declarations+=Declaration* entities+=TestEntity* ("scope" scopes+=Scope)* "}"
 		public Group getGroup() { return cGroup; }
 
 		//{kext::KEXTScope}
 		public Action getKEXTScopeAction_0() { return cKEXTScopeAction_0; }
 
-		//(id=ID ":")?
-		public Group getGroup_1() { return cGroup_1; }
-
-		//id=ID
-		public Assignment getIdAssignment_1_0() { return cIdAssignment_1_0; }
+		//id=ID?
+		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
 
 		//ID
-		public RuleCall getIdIDTerminalRuleCall_1_0_0() { return cIdIDTerminalRuleCall_1_0_0; }
+		public RuleCall getIdIDTerminalRuleCall_1_0() { return cIdIDTerminalRuleCall_1_0; }
 
-		//":"
-		public Keyword getColonKeyword_1_1() { return cColonKeyword_1_1; }
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 
 		//declarations+=Declaration*
-		public Assignment getDeclarationsAssignment_2() { return cDeclarationsAssignment_2; }
+		public Assignment getDeclarationsAssignment_3() { return cDeclarationsAssignment_3; }
 
 		//Declaration
-		public RuleCall getDeclarationsDeclarationParserRuleCall_2_0() { return cDeclarationsDeclarationParserRuleCall_2_0; }
+		public RuleCall getDeclarationsDeclarationParserRuleCall_3_0() { return cDeclarationsDeclarationParserRuleCall_3_0; }
 
 		//entities+=TestEntity*
-		public Assignment getEntitiesAssignment_3() { return cEntitiesAssignment_3; }
+		public Assignment getEntitiesAssignment_4() { return cEntitiesAssignment_4; }
 
 		//TestEntity
-		public RuleCall getEntitiesTestEntityParserRuleCall_3_0() { return cEntitiesTestEntityParserRuleCall_3_0; }
+		public RuleCall getEntitiesTestEntityParserRuleCall_4_0() { return cEntitiesTestEntityParserRuleCall_4_0; }
+
+		//("scope" scopes+=Scope)*
+		public Group getGroup_5() { return cGroup_5; }
+
+		//"scope"
+		public Keyword getScopeKeyword_5_0() { return cScopeKeyword_5_0; }
+
+		//scopes+=Scope
+		public Assignment getScopesAssignment_5_1() { return cScopesAssignment_5_1; }
+
+		//Scope
+		public RuleCall getScopesScopeParserRuleCall_5_1_0() { return cScopesScopeParserRuleCall_5_1_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
 	}
 
 	public class TestEntityElements extends AbstractParserRuleElementFinder {
@@ -678,6 +718,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	private final KextElements pKext;
+	private final RootScopeElements pRootScope;
 	private final ScopeElements pScope;
 	private final TestEntityElements pTestEntity;
 	private final AnnotatedExpressionElements pAnnotatedExpression;
@@ -699,6 +740,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaKEffects = gaKEffects;
 		this.pKext = new KextElements();
+		this.pRootScope = new RootScopeElements();
 		this.pScope = new ScopeElements();
 		this.pTestEntity = new TestEntityElements();
 		this.pAnnotatedExpression = new AnnotatedExpressionElements();
@@ -753,7 +795,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
 	//// test entities may follow.
 	//Kext returns kext::Kext:
-	//	"scope"? scopes+=Scope ("scope" scopes+=Scope)*;
+	//	scopes+=RootScope;
 	public KextElements getKextAccess() {
 		return pKext;
 	}
@@ -762,8 +804,18 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		return getKextAccess().getRule();
 	}
 
+	//RootScope returns kext::KEXTScope:
+	//	{kext::KEXTScope} declarations+=Declaration* entities+=TestEntity* ("scope" scopes+=Scope)*;
+	public RootScopeElements getRootScopeAccess() {
+		return pRootScope;
+	}
+	
+	public ParserRule getRootScopeRule() {
+		return getRootScopeAccess().getRule();
+	}
+
 	//Scope returns kext::KEXTScope:
-	//	{kext::KEXTScope} (id=ID ":")? declarations+=Declaration* entities+=TestEntity*;
+	//	{kext::KEXTScope} id=ID? "{" declarations+=Declaration* entities+=TestEntity* ("scope" scopes+=Scope)* "}";
 	public ScopeElements getScopeAccess() {
 		return pScope;
 	}

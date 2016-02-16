@@ -1486,6 +1486,94 @@ ruleSExpression returns [EObject current=null]
 
 
 
+// Entry rule entryRuleRootScope
+entryRuleRootScope returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getRootScopeRule()); }
+	 iv_ruleRootScope=ruleRootScope 
+	 { $current=$iv_ruleRootScope.current; } 
+	 EOF 
+;
+
+// Rule RootScope
+ruleRootScope returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getRootScopeAccess().getKEXTScopeAction_0(),
+            $current);
+    }
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getRootScopeAccess().getDeclarationsDeclarationParserRuleCall_1_0()); 
+	    }
+		lv_declarations_1_0=ruleDeclaration		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getRootScopeRule());
+	        }
+       		add(
+       			$current, 
+       			"declarations",
+        		lv_declarations_1_0, 
+        		"Declaration");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)*(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getRootScopeAccess().getEntitiesTestEntityParserRuleCall_2_0()); 
+	    }
+		lv_entities_2_0=ruleTestEntity		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getRootScopeRule());
+	        }
+       		add(
+       			$current, 
+       			"entities",
+        		lv_entities_2_0, 
+        		"TestEntity");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)*(	otherlv_3='scope' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getRootScopeAccess().getScopeKeyword_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getRootScopeAccess().getScopesScopeParserRuleCall_3_1_0()); 
+	    }
+		lv_scopes_4_0=ruleScope		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getRootScopeRule());
+	        }
+       		add(
+       			$current, 
+       			"scopes",
+        		lv_scopes_4_0, 
+        		"Scope");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*)
+;
+
+
+
+
+
 // Entry rule entryRuleScope
 entryRuleScope returns [EObject current=null] 
 	:
@@ -1509,11 +1597,11 @@ ruleScope returns [EObject current=null]
             grammarAccess.getScopeAccess().getKEXTScopeAction_0(),
             $current);
     }
-)((
+)(
 (
 		lv_id_1_0=RULE_ID
 		{
-			newLeafNode(lv_id_1_0, grammarAccess.getScopeAccess().getIdIDTerminalRuleCall_1_0_0()); 
+			newLeafNode(lv_id_1_0, grammarAccess.getScopeAccess().getIdIDTerminalRuleCall_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1527,14 +1615,14 @@ ruleScope returns [EObject current=null]
 	    }
 
 )
-)	otherlv_2=':' 
+)?	otherlv_2='{' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getScopeAccess().getColonKeyword_1_1());
+    	newLeafNode(otherlv_2, grammarAccess.getScopeAccess().getLeftCurlyBracketKeyword_2());
     }
-)?(
+(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getScopeAccess().getDeclarationsDeclarationParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getScopeAccess().getDeclarationsDeclarationParserRuleCall_3_0()); 
 	    }
 		lv_declarations_3_0=ruleDeclaration		{
 	        if ($current==null) {
@@ -1552,7 +1640,7 @@ ruleScope returns [EObject current=null]
 )*(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getScopeAccess().getEntitiesTestEntityParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getScopeAccess().getEntitiesTestEntityParserRuleCall_4_0()); 
 	    }
 		lv_entities_4_0=ruleTestEntity		{
 	        if ($current==null) {
@@ -1567,7 +1655,33 @@ ruleScope returns [EObject current=null]
 	    }
 
 )
-)*)
+)*(	otherlv_5='scope' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getScopeAccess().getScopeKeyword_5_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getScopeAccess().getScopesScopeParserRuleCall_5_1_0()); 
+	    }
+		lv_scopes_6_0=ruleScope		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getScopeRule());
+	        }
+       		add(
+       			$current, 
+       			"scopes",
+        		lv_scopes_6_0, 
+        		"Scope");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*	otherlv_7='}' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getScopeAccess().getRightCurlyBracketKeyword_6());
+    }
+)
 ;
 
 

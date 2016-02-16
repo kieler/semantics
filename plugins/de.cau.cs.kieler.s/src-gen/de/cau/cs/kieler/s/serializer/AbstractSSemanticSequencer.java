@@ -225,8 +225,15 @@ public abstract class AbstractSSemanticSequencer extends KEXTSemanticSequencer {
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
 			case KextPackage.KEXT_SCOPE:
-				sequence_Scope(context, (KEXTScope) semanticObject); 
-				return; 
+				if(context == grammarAccess.getRootScopeRule()) {
+					sequence_RootScope(context, (KEXTScope) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getScopeRule()) {
+					sequence_Scope(context, (KEXTScope) semanticObject); 
+					return; 
+				}
+				else break;
 			case KextPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 

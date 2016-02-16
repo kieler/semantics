@@ -74,6 +74,10 @@ public class KextSwitch<T> extends Switch<T>
 			case KextPackage.KEXT: {
 				Kext kext = (Kext)theEObject;
 				T result = caseKext(kext);
+				if (result == null) result = caseKEXTScope(kext);
+				if (result == null) result = caseDeclarationScope(kext);
+				if (result == null) result = caseIdentifiable(kext);
+				if (result == null) result = caseAnnotatable(kext);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

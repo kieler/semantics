@@ -152,15 +152,6 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
 
   /**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getKext_Scopes() {
-		return (EReference)kextEClass.getEStructuralFeatures().get(0);
-	}
-
-		/**
-	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -265,6 +256,15 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
 
 /**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getKEXTScope_Scopes() {
+		return (EReference)kextScopeEClass.getEStructuralFeatures().get(1);
+	}
+
+/**
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -294,7 +294,6 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
 
 		// Create classes and their features
 		kextEClass = createEClass(KEXT);
-		createEReference(kextEClass, KEXT__SCOPES);
 
 		testEntityEClass = createEClass(TEST_ENTITY);
 		createEReference(testEntityEClass, TEST_ENTITY__EFFECT);
@@ -311,6 +310,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
 
 		kextScopeEClass = createEClass(KEXT_SCOPE);
 		createEReference(kextScopeEClass, KEXT_SCOPE__ENTITIES);
+		createEReference(kextScopeEClass, KEXT_SCOPE__SCOPES);
 	}
 
   /**
@@ -347,6 +347,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		kextEClass.getESuperTypes().add(this.getKEXTScope());
 		annotatedExpressionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
 		identifiableEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
 		declarationScopeEClass.getESuperTypes().add(this.getIdentifiable());
@@ -354,7 +355,6 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(kextEClass, Kext.class, "Kext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getKext_Scopes(), this.getKEXTScope(), null, "scopes", null, 0, -1, Kext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(testEntityEClass, TestEntity.class, "TestEntity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTestEntity_Effect(), theKEffectsPackage.getEffect(), null, "effect", null, 0, 1, TestEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -371,6 +371,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage
 
 		initEClass(kextScopeEClass, KEXTScope.class, "KEXTScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getKEXTScope_Entities(), this.getTestEntity(), null, "entities", null, 0, -1, KEXTScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getKEXTScope_Scopes(), this.getKEXTScope(), null, "scopes", null, 0, -1, KEXTScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

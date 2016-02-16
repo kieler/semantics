@@ -8,6 +8,7 @@ import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -15,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -27,6 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.KEXTScopeImpl#getEntities <em>Entities</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.KEXTScopeImpl#getScopes <em>Scopes</em>}</li>
  * </ul>
  *
  * @generated
@@ -41,6 +44,16 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
 	 * @ordered
 	 */
 	protected EList<TestEntity> entities;
+
+	/**
+	 * The cached value of the '{@link #getScopes() <em>Scopes</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getScopes()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<KEXTScope> scopes;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -78,11 +91,25 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<KEXTScope> getScopes() {
+		if (scopes == null) {
+			scopes = new EObjectContainmentEList<KEXTScope>(KEXTScope.class, this, KextPackage.KEXT_SCOPE__SCOPES);
+		}
+		return scopes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case KextPackage.KEXT_SCOPE__ENTITIES:
 				return ((InternalEList<?>)getEntities()).basicRemove(otherEnd, msgs);
+			case KextPackage.KEXT_SCOPE__SCOPES:
+				return ((InternalEList<?>)getScopes()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -97,6 +124,8 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
 		switch (featureID) {
 			case KextPackage.KEXT_SCOPE__ENTITIES:
 				return getEntities();
+			case KextPackage.KEXT_SCOPE__SCOPES:
+				return getScopes();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -114,6 +143,10 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
 				getEntities().clear();
 				getEntities().addAll((Collection<? extends TestEntity>)newValue);
 				return;
+			case KextPackage.KEXT_SCOPE__SCOPES:
+				getScopes().clear();
+				getScopes().addAll((Collection<? extends KEXTScope>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -129,6 +162,9 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
 			case KextPackage.KEXT_SCOPE__ENTITIES:
 				getEntities().clear();
 				return;
+			case KextPackage.KEXT_SCOPE__SCOPES:
+				getScopes().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -143,6 +179,8 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
 		switch (featureID) {
 			case KextPackage.KEXT_SCOPE__ENTITIES:
 				return entities != null && !entities.isEmpty();
+			case KextPackage.KEXT_SCOPE__SCOPES:
+				return scopes != null && !scopes.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
