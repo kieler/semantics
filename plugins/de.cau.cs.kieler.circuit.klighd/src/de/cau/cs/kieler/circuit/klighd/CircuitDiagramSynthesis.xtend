@@ -57,6 +57,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 		// draw actors and attach them to parent
 		val actorNode = actorSynthesis.transform(actor) // actor.createNode().associateWith(actor)
+		actorNode.associateWith(actor)
 		parent.children += actorNode
 
 		// check if actor is a gate or an inner circuit
@@ -72,6 +73,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			val isNotGate = (actor.type == "NOT")
 			val kPort = port.port.associateWith(port)
 			actorNode.ports += kPort => [
+				it.associateWith(port)
 				//it.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_RATIO)
 				if (!isAtomic) {
 					it.addInsidePortLabel(port.name, 8, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)

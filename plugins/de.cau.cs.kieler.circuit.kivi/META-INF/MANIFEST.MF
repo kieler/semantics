@@ -2,9 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Kivi
 Bundle-SymbolicName: de.cau.cs.kieler.circuit.kivi;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.circuit.kivi.CircuitKiviPlugin
-Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.ide;bundle-version="3.6.0",
@@ -14,12 +13,12 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.ecore;bundle-version="2.6.0",
  com.google.guava;bundle-version="8.0.0",
  de.cau.cs.kieler.core,
+ de.cau.cs.kieler.circuit,
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.sim.kivi,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent,
  org.eclipse.xtext.ui;bundle-version="2.4.2",
  de.cau.cs.kieler.scg,
- de.cau.cs.kieler.circuit,
  org.eclipse.xtend.lib,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.core.krendering,
@@ -31,4 +30,3 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.klighd.kivi
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-

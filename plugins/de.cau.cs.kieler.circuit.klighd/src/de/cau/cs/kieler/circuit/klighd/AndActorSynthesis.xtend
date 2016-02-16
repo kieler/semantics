@@ -18,8 +18,12 @@ import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.core.krendering.LineCap
 import de.cau.cs.kieler.core.krendering.LineJoin
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 
-class AndActorSynthesis implements IDrawableActor {
+class AndActorSynthesis extends AbstractDiagramSynthesis<Actor> implements IDrawableActor  {
+	
+
+	
 	@Inject
 	extension KNodeExtensions
 
@@ -48,7 +52,7 @@ class AndActorSynthesis implements IDrawableActor {
 
 	override draw(Actor actor) {
 		val KNode node = actor.node
-
+		
 //		node.setNodeSize(30, 30);
 //
 //		node.addRectangle =>
@@ -70,6 +74,7 @@ class AndActorSynthesis implements IDrawableActor {
 //                       .setLayoutOption(LayoutOptions.OFFSET, -1f);
 //        
 		node.addRectangle => [
+		
 			it.invisible = true;
 
 			it.addRectangle => [
@@ -77,6 +82,7 @@ class AndActorSynthesis implements IDrawableActor {
 				it.background = "white".color;
 				it.selectionBackground = "red".color;
 				it.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 14f, 0, BOTTOM, 0, 0)
+			
 			];
 
 			it.addPolyline => [
@@ -98,8 +104,14 @@ class AndActorSynthesis implements IDrawableActor {
 				it.startAngle = -90;
 				it.setAreaPlacementData.from(LEFT, 1, 0, TOP, 0, 0);
 			];
+			
 		];
+		
 		return node;
+	}
+	
+	override transform(Actor model) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 
 }
