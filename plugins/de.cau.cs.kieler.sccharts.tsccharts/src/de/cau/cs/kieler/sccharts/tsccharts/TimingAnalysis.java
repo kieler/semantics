@@ -76,6 +76,7 @@ import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.VerticalAlignment;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KielerCompiler;
@@ -92,6 +93,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.FileWriter;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.RequestType;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.TimingRequestResult;
+import de.cau.cs.kieler.sccharts.tsccharts.transformation.TTPFeature;
+import de.cau.cs.kieler.sccharts.tsccharts.transformation.TimingAnalysisTransformations;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scg.ControlFlow;
@@ -104,6 +107,7 @@ import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.features.SCGFeatures;
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures;
 import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
+import de.cau.cs.kieler.sccharts.tsccharts.transformation.TPPInformation;
 
 /**
  * @author ima, als
@@ -274,7 +278,7 @@ public class TimingAnalysis extends Job {
         final KRenderingFactory renderingFactory = KRenderingFactory.eINSTANCE;
         KielerCompilerContext context =
                 new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID
-                        + ",*T_ABORT,*T_scg.basicblock.sc,*T_NOSIMULATIONVISUALIZATION", scchart);
+                        + ",*T_ABORT,*T_scg.basicblock.sc,*T_NOSIMULATIONVISUALIZATION,T_scg.ttp", scchart);
         context.setProperty(Tracing.ACTIVE_TRACING, true);
         context.setAdvancedSelect(true);
         CompilationResult compilationResult = KielerCompiler.compile(context);
@@ -296,93 +300,114 @@ public class TimingAnalysis extends Job {
         }
 
         SCGraph scg = (SCGraph) compilationResult.getEObject();
+     
+       // get the auxiliary data on Timing Program Points
+       int highestInsertedTPPNumber = -1;
+       HashMap<String, Region> tppRegionMap = null;
+       List<TPPInformation> tppInformations = compilationResult.getAuxiliaryData(TPPInformation.class);
+       TPPInformation tppInformation = tppInformations.isEmpty()? null : tppInformations.get(0);
+       if (tppInformation != null) {
+           highestInsertedTPPNumber = tppInformation.getHighestInsertedTPPNumber();
+           tppRegionMap = tppInformation.getTPPRegionMapping();
+       } else {
+           return new Status(IStatus.ERROR, pluginId, "The TPP insertion yielded no auxiliary information.");
+       }
+      
+        
+        // just testing the TPPTransformation, can be removed.
+        
+//        KielerCompilerContext testContextTPP = new KielerCompilerContext(TimingAnalysisTransformations.TTP_FEATURE_ID, scg);
+//        CompilationResult ttpSCG = KielerCompiler.compile(testContextTPP);
+//        SCGraph testSCG = (SCGraph) ttpSCG.getEObject();
+        
+        // testing TPPTransformation testing end
         
         // to Transformation
-        List<Tracing> tracings = compilationResult.getAuxiliaryData(Tracing.class);
-        Tracing tracing = tracings.isEmpty() ? null : tracings.get(0);
+//        List<Tracing> tracings = compilationResult.getAuxiliaryData(Tracing.class);
+//        Tracing tracing = tracings.isEmpty() ? null : tracings.get(0);
+//
+//        if (tracing == null) {
+//            return new Status(IStatus.ERROR, pluginId,
+//                    "The tracing is not activated for the given model.");
+//        }
 
-        if (tracing == null) {
-            return new Status(IStatus.ERROR, pluginId,
-                    "The tracing is not activated for the given model.");
-        }
-
-        // Step 2: Analyse tracing relation into a node to region mapping
-// to transformation end
-        if (monitor.isCanceled()) {
-            // Stop as soon as possible when job canceled
-            return Status.CANCEL_STATUS;
-        }
-// to transformation
-        Multimap<Object, Object> mapping = tracing.getMapping(scg, scchart);
-        HashMap<Node, Region> nodeRegionMapping =
-                new HashMap<Node, Region>(mapping.keySet().size());
-        HashMap<Region, Integer> regionDepth = TimingUtil.createRegionDepthMap(scchart);
-        for (Object originElement : mapping.keySet()) {
-            if (originElement instanceof Node) {
-                Collection<Object> targetElements = mapping.get(originElement);
-                Region region = null;
-                int depth = -1;
-                for (Object targetObj : targetElements) {
-                    EObject targetElement = (EObject) targetObj;
-                    /*
-                     * If the associated element is NOT a macro state (refinement due to entry node
-                     * mappings in tracing in combination with guards) a region is searched to
-                     * associate this node to. Except the macro state is the only associated
-                     * element.
-                     */
-                    if (!(targetElement instanceof State && (scchartsExtension
-                            .hasInnerStatesOrControlflowRegions((State) targetElement)))
-                            || targetElements.size() == 1) {
-                        while (targetElement != null) {
-                            if (targetElement instanceof Region) {
-                                Region newRegionCandidate = (Region) targetElement;
-                                int candidateDepth = regionDepth.get(newRegionCandidate);
-                                /*
-                                 * If new region candidate has a strictly greater depth than the
-                                 * current region the new candidate becomes the region this node is
-                                 * associated with. Otherwise the region is contained in the new
-                                 * candidate and is ignored. Assumption: No node is mapped to
-                                 * elements in parallel Regions
-                                 */
-                                if (candidateDepth > depth) {
-                                    region = newRegionCandidate;
-                                    depth = candidateDepth;
-                                }
-                                break;
-                            } else {
-                                targetElement = targetElement.eContainer();
-                            }
-                        }
-                    }
-                }
-                nodeRegionMapping.put((Node) originElement, region);
-            }
-        }
-        
-        // to transformation end
-
-        // Step 3: Calculate timing blocks and add additional timing mark nodes into SCG
-
-        if (monitor.isCanceled()) {
-            // Stop as soon as possible when job canceled
-            return Status.CANCEL_STATUS;
-        }
-        
-        
-        //to transformation
-        HashMap<String, Region> tppRegionMap = new HashMap<String, Region>();
-
-        // insert timing program points
-        int highestInsertedTPPNumber =
-                insertTPP(scg, nodeRegionMapping, tppRegionMap, scchartDummyRegion);
-        // to transformation end
-        
-        // Step 4: Compile SCG to C code
-
-        if (monitor.isCanceled()) {
-            // Stop as soon as possible when job canceled
-            return Status.CANCEL_STATUS;
-        }
+//        // Step 2: Analyse tracing relation into a node to region mapping
+//// to transformation end
+//        if (monitor.isCanceled()) {
+//            // Stop as soon as possible when job canceled
+//            return Status.CANCEL_STATUS;
+//        }
+//// to transformation
+//        Multimap<Object, Object> mapping = tracing.getMapping(scg, scchart);
+//        HashMap<Node, Region> nodeRegionMapping =
+//                new HashMap<Node, Region>(mapping.keySet().size());
+//        HashMap<Region, Integer> regionDepth = TimingUtil.createRegionDepthMap(scchart);
+//        for (Object originElement : mapping.keySet()) {
+//            if (originElement instanceof Node) {
+//                Collection<Object> targetElements = mapping.get(originElement);
+//                Region region = null;
+//                int depth = -1;
+//                for (Object targetObj : targetElements) {
+//                    EObject targetElement = (EObject) targetObj;
+//                    /*
+//                     * If the associated element is NOT a macro state (refinement due to entry node
+//                     * mappings in tracing in combination with guards) a region is searched to
+//                     * associate this node to. Except the macro state is the only associated
+//                     * element.
+//                     */
+//                    if (!(targetElement instanceof State && (scchartsExtension
+//                            .hasInnerStatesOrControlflowRegions((State) targetElement)))
+//                            || targetElements.size() == 1) {
+//                        while (targetElement != null) {
+//                            if (targetElement instanceof Region) {
+//                                Region newRegionCandidate = (Region) targetElement;
+//                                int candidateDepth = regionDepth.get(newRegionCandidate);
+//                                /*
+//                                 * If new region candidate has a strictly greater depth than the
+//                                 * current region the new candidate becomes the region this node is
+//                                 * associated with. Otherwise the region is contained in the new
+//                                 * candidate and is ignored. Assumption: No node is mapped to
+//                                 * elements in parallel Regions
+//                                 */
+//                                if (candidateDepth > depth) {
+//                                    region = newRegionCandidate;
+//                                    depth = candidateDepth;
+//                                }
+//                                break;
+//                            } else {
+//                                targetElement = targetElement.eContainer();
+//                            }
+//                        }
+//                    }
+//                }
+//                nodeRegionMapping.put((Node) originElement, region);
+//            }
+//        }
+//        
+//        // to transformation end
+//
+//        // Step 3: Calculate timing blocks and add additional timing mark nodes into SCG
+//
+//        if (monitor.isCanceled()) {
+//            // Stop as soon as possible when job canceled
+//            return Status.CANCEL_STATUS;
+//        }
+//        
+//        
+//        //to transformation
+//        HashMap<String, Region> tppRegionMap = new HashMap<String, Region>();
+//
+//        // insert timing program points
+//        int highestInsertedTPPNumber =
+//                insertTPP(scg, nodeRegionMapping, tppRegionMap, scchartDummyRegion);
+//        // to transformation end
+//        
+//        // Step 4: Compile SCG to C code
+//
+//        if (monitor.isCanceled()) {
+//            // Stop as soon as possible when job canceled
+//            return Status.CANCEL_STATUS;
+//        }
 
         context =
                 new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID + ","
@@ -407,8 +432,8 @@ public class TimingAnalysis extends Job {
         }
 
         String code = compilationResult.getString();
-        // // Debug, might be removed
-        // System.out.print(code);
+         // Debug, can be removed
+         System.out.print(code);
 
         // Step 5: Send C code to timing analyzer
 
@@ -589,6 +614,7 @@ public class TimingAnalysis extends Job {
             return new Status(IStatus.ERROR, pluginId,
                     "An IO error occurred while timing information was retrieved from file.");
         }
+      
         // calculate timing values for all regions and store a list of regions that belong to the
         // WCET path in wcpRegions for special display
         wcpRegions =
@@ -602,9 +628,10 @@ public class TimingAnalysis extends Job {
             return Status.CANCEL_STATUS;
         }
 
-        if (DEBUG) {
-            debugTracing(nodeRegionMapping);
-        }
+        // nodeRegionMapping has moved to Transformation
+//        if (DEBUG) {
+//            debugTracing(nodeRegionMapping);
+//        }
 
         // Changing diagram should be in UI thread (maybe ask chsch)
         new UIJob("Inserting timing data") {

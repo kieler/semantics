@@ -48,6 +48,8 @@ import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+
 
 /**
  * Transform a sequentialized SCG to a sequentialized SCG with timing program points.
@@ -86,8 +88,9 @@ class TTPTransformation extends AbstractProductionTransformation
 
     // -------------------------------------------------------------------------   
     @Inject
+ 
     extension AnnotationsExtensions
-    extension SCChartsExtension
+//    extension SCChartsExtension
 
     /**
      * Transform add TTPs to the sequentialized SCG. Write basic .ta file.
@@ -97,6 +100,7 @@ class TTPTransformation extends AbstractProductionTransformation
      */
     def public Object transform(SCGraph scg, KielerCompilerContext context)
     {
+        //var isState = false
         var TPPInformation tppInformation = null
         var Collection<Object> targetElements = null
         var HashMap<Region, Integer> regionDepth = null
@@ -149,12 +153,16 @@ class TTPTransformation extends AbstractProductionTransformation
                             for (Object targetObj : targetElements)
                             {
                                 var EObject targetElement = targetObj as EObject;
-                                /*
-                                 * If the associated element is NOT a macro state (refinement due to entry node
-                                 * mappings in tracing in combination with guards) a region is searched to
-                                 * associate this node to. Except the macro state is the only associated
-                                 * element.
-                                 */
+                                
+                                // debug, may be removed
+//                                isState = targetElement instanceof State;
+//                                if (isState) {
+//                                    var State targetElementAsState = targetElement as State
+//                                    var test = targetElementAsState.final
+//                                    var isCompound = targetElementAsState.hasInnerStatesOrControlflowRegions
+//                                }
+//                                
+                                
                                 if (!(targetElement instanceof State &&
                                     ((targetElement as State).hasInnerStatesOrControlflowRegions)) ||
                                         targetElements.size() == 1)
@@ -209,6 +217,17 @@ class TTPTransformation extends AbstractProductionTransformation
 
                         return scg
                     }
+                    
+                     def boolean hasInnerStatesOrControlflowRegions(State state) {
+                          return (( state.regions != null && state.regions.size != 0 && state.controlflowRegionsNotEmpty))
+                     }
+                     
+                      def boolean controlflowRegionsNotEmpty(State state) {
+        for (r : state.regions.filter(ControlflowRegion)) {
+            if(r.states.size > 0) return true
+        }
+        false
+    }
 
                     /**
                      * The method checks all edges of the SCG and finds edges, where source and target node are
