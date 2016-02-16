@@ -53,6 +53,33 @@ class CircuitInitialization {
 		init.ports.add(initOutPort)
 		
 		
+		//_Go local Signal 
+		val goRegister = CircuitFactory::eINSTANCE.createActor
+		val goRegInTick = CircuitFactory::eINSTANCE.createPort
+		val goRegInResetLocal = CircuitFactory::eINSTANCE.createPort
+		val goRegSelReset = CircuitFactory::eINSTANCE.createPort
+		val goRegOut = CircuitFactory::eINSTANCE.createPort
+		
+		goRegister.type = "REG"
+		goRegister.name = "_GO"
+		logic.innerActors += goRegister
+		
+		goRegInTick.type = "In"
+		goRegInTick.name = "Tick"
+		goRegister.ports += goRegInTick
+		
+		goRegInResetLocal.type = "In"
+		goRegInResetLocal.name = "Reset_local"
+		goRegister.ports += goRegInResetLocal
+		
+		goRegSelReset.type = "Sel"
+		goRegSelReset.name = "Reset"
+		goRegister.ports += goRegSelReset
+		
+		goRegOut.type = "Out"
+		goRegOut.name = "_GO"
+		goRegister.ports += goRegOut
+		
 		
 		
 		
@@ -67,7 +94,7 @@ class CircuitInitialization {
 		
 		val orGate = CircuitFactory::eINSTANCE.createActor
 		orGate.type = "OR"
-		orGate.name = "Reset_pre" //this gate will reset all pre registers while reset and first tick 
+		orGate.name = "Reset_pre" //this gate will reset all pre registers in case of reset and first tick 
 		init.innerActors += orGate
 		
 		val orInReset = CircuitFactory::eINSTANCE.createPort

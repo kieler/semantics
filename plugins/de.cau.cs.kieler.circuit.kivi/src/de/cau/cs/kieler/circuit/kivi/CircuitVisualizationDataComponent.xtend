@@ -60,6 +60,8 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.krendering.KContainerRendering
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.core.krendering.KForeground
+import de.cau.cs.kieler.circuit.Link
+import de.cau.cs.kieler.circuit.Port
 
 /**
  * @author ssm als cmot
@@ -106,25 +108,42 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				System.out.println("circuit-------------------------------++++++++!!!!!!!!!!!!!")
 				System.out.println(context.getNode().toString)
 				val circuit = context.inputModel as Actor
-				for (node : circuit.eAllContents.filter(Actor).toList) {
-
-					if (node.name != null && node.name.startsWith("g")) {
-						System.out.println("put sth into guardActorMapping: " + node.name)
-						// System.out.println(context.getTargetElements(node))
-						val frame = context.getTargetElement(node, KNode)
-						val KContainerRendering kgelem = frame.getData(KContainerRendering)
-						val shape = frame.getData.filter(KRendering)
-						val children = kgelem.children
-						System.out.println(children + "HIHIHIHHI")
-						guardActorMapping.putAll(node.name, children)
-						guardActorMapping.putAll(node.name, shape)
-
-						val links = node.ports.filter[type.startsWith("Out")].head.outgoingLinks
-						for (l : links) {
-							val link = context.getTargetElement(l, KEdge)
-							val rend = link.getData.filter(KRendering).head
-							linkMapping.put(node.name, rend)//context.getTargetElement(l, KEdge))
+				val logic = circuit.eAllContents.filter(Actor).filter[name == "Program Logic"].head
+				
+				for (link : circuit.eAllContents.filter(Link).toList){
+					val l = context.getTargetElement(link, KEdge)
+					val rend = l.getData.filter(KRendering).head
+					val sourcePort = link.source
+					if(sourcePort instanceof Port){
+					linkMapping.put(sourcePort.name, rend) 
+					}
+					
+				}
+				for (node : logic.eAllContents.filter(Actor).toList) {
+					System.out.println("HUHUHUHU")
+					val atomicActor = !(node.innerActors.toList.length > 0)
+					if (atomicActor) {
+						if (node.name != null && node.name.startsWith("g")) {
+							System.out.println("put sth into guardActorMapping: " + node.name)
+							// System.out.println(context.getTargetElements(node))
+							val frame = context.getTargetElement(node, KNode)
+							val KContainerRendering kgelem = frame.getData(KContainerRendering)
+							val shape = frame.getData.filter(KRendering)
+							val children = kgelem.children
+							System.out.println(children + "HIHIHIHHI")
+							guardActorMapping.putAll(node.name, children)
+							guardActorMapping.putAll(node.name, shape)
 						}
+
+//						val outPort = node.ports.filter[type.startsWith("Out")].head
+//						val links = outPort.outgoingLinks
+//						for (l : links) {
+//							System.out.println(l.toString + " form " + node.name)
+//							val link = context.getTargetElement(l, KEdge)
+//							val rend = link.getData.filter(KRendering).head
+//							linkMapping.put(node.name, rend) // context.getTargetElement(l, KEdge))
+//						}
+
 					}
 
 				}
@@ -171,11 +190,14 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		System.out.println("step-------------------------------++++++++!!!!!!!!!!!!!")
 		val highlighting = <String>newHashSet
 		for (key : jSONObject.keys.toIterable) {
+
+			// //check for active guards in this tick
+			System.out.println("JSONObject ist: " + key.toString + " with value: " + jSONObject.get(key).toString)
 			if ((key as String).startsWith(BasicBlockTransformation::GUARDPREFIX)) {
 				val object = jSONObject.get(key)
 				if (object instanceof JSONObject && (object as JSONObject).has("value")) {
 					val value = (object as JSONObject).get("value")
-
+					System.out.println("value value is " + value.toString)
 					if ((value as Integer) != 0) {
 						if (key.endsWith(DepthJoinSynchronizer::SCHIZOPHRENIC_SUFFIX)) {
 
@@ -185,6 +207,17 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 							highlighting += key
 						}
 					}
+				}
+			} // ////check for InputSignals which are true for this tick
+			else {
+				val object = jSONObject.get(key)
+				if (object instanceof JSONObject && (object as JSONObject).has("present")) {
+					val value = (object as JSONObject).get("present")
+					if ((value as Boolean)) {
+						highlighting += key
+
+					}
+
 				}
 			}
 		}
@@ -218,7 +251,6 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		val Runnable run = [|
 			System.out.println("highlighting-------------------------------++++++++!!!!!!!!!!!!!")
 
-
 			for (entry : guardActorMapping.entries) {
 				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
 //				val value = entry.value
@@ -233,7 +265,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 						System.out.println("highlighted: " + entry.key)
 						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
 						style.setProperty(HIGHLIGHTING_MARKER, true);
-						style.setColor(Colors::RED)
+						style.setColor(Colors::GREEN)
 						entry.value.styles.add(style)
 					}
 				} else {
@@ -244,9 +276,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				}
 
 			}
-			
-			
-			
+
 			for (entry : linkMapping.entries) {
 				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
 //				val value = entry.value
@@ -261,7 +291,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 						System.out.println("highlighted: " + entry.key)
 						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
 						style.setProperty(HIGHLIGHTING_MARKER, true);
-						style.setColor(Colors::RED)
+						style.setColor(Colors::GREEN)
 						entry.value.styles.add(style)
 					}
 				} else {
@@ -272,7 +302,6 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				}
 
 			}
-			
 
 		]
 		Display.getDefault().syncExec(run)

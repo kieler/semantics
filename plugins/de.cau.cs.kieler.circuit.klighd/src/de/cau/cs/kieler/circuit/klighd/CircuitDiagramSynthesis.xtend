@@ -21,6 +21,10 @@ import de.cau.cs.kieler.circuit.CircuitFactory
 import de.cau.cs.kieler.core.krendering.LineCap
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.klay.layered.properties.EdgeLabelSideSelection
+import de.cau.cs.kieler.kiml.options.PortLabelPlacement
+import de.cau.cs.kieler.kiml.options.Direction
 
 class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
@@ -54,19 +58,20 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 	// create a KNode for an Actor
 	def void transformActor(Actor actor, KNode parent) {
-
+		
 		// draw actors and attach them to parent
 		val actorNode = actorSynthesis.transform(actor) // actor.createNode().associateWith(actor)
 		actorNode.associateWith(actor)
 		parent.children += actorNode
-
+		
 		// check if actor is a gate or an inner circuit
 		val Boolean atomicActor = actor.innerActors.empty
 
 		// rendering for edges and ports of actor
 //		actorNode.setLayoutOption(LayoutOptions.EDGE_ROUTING, EdgeRouting.ORTHOGONAL);
 		actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
-
+		actorNode.setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.INSIDE);
+		actorNode.setLayoutOption(LayoutOptions.DIRECTION, Direction.RIGHT)
 		// add ports to actor
 		for (port : actor.ports) {
 			val isAtomic = (actor.innerActors.length == 0)
@@ -97,8 +102,8 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					} else {
 						if (port.name.startsWith("const")) {
 							
-							it.addInsidePortLabel("Sel(1)", 8, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port) =>[
-//							it.setLayoutOptions(LayoutOptions.SPACING )
+							it.addInsidePortLabel("Sel(1)", 5, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port) =>[
+//							it.setLayoutOptions(LayoutOptions.SPACING , Spacing)
 							
 							]
 							
@@ -183,7 +188,6 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 		for (p : actor.ports) {
 			if (p.outgoingLinks == null) {
-				System.out.println("NO EDGE")
 				actorNode.addEllipse => [
 					it.setBackground("red".color).lineWidth = 1.5f;
 					it.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 6, 0, BOTTOM, 11, 0);

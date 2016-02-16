@@ -246,11 +246,11 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 				selectPort.name = activeConditionName
 //				System.out.println("sel node is: " + selectPort.name)
 				// outputPort.name = coa.valuedObject.name
-				if (selectPort.name == "g0") {
-					// if no condition is active, the variable has an initial value, which has 
-					// to be set at reset
-					selectPort.name = "_GO"
-				}
+//				if (selectPort.name == "g0") {
+//					// if no condition is active, the variable has an initial value, which has 
+//					// to be set at reset
+//					selectPort.name = "_GO"
+//				}
 
 				if (coa.assignment.serialize.toString == "true") {
 					truePort.name = "const1"
@@ -460,13 +460,10 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 				inPort.type = "In"
 //				System.out.println("FISNCIJNSDNJS:" + a.valuedObject.name + " F R O M " + assignment.valuedObject.name)
-				if (a.valuedObject.name == "_GO") {
-					inPort.name = "Reset_local"
-					guardname = "_GO"
-				} else {
+				
 					inPort.name = a.valuedObject.name
 //					guardname = "hallo"				
-				}
+				
 				actor.ports.add(inPort)
 
 			}
@@ -530,10 +527,11 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 			for (Expression e : expression.subExpressions) {
 				val port = CircuitFactory::eINSTANCE.createPort
 				actor.ports += port
-				if ((e instanceof OperatorExpression)) {
+				if (e instanceof OperatorExpression) {
 					if (e.operator.getName == "NOT") {
 						port.type = "Not"
 						port.name = e.subExpressions.head.serialize.toString
+						System.out.println(e.toString + e.subExpressions.head.serialize.toString + "QQQQQQQQQQQQQQQQQQQQ")
 
 					// System.out.println("created NOOOOOOT at: " + expression.serialize.toString + " with name " + port.name)
 					}
