@@ -42,7 +42,7 @@ import de.cau.cs.kieler.synccharts.State
 import de.cau.cs.kieler.synccharts.TextEffect
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.sccharts.text3.Sct3StandaloneSetup
-import de.cau.cs.kieler.sccharts.text3.scoping.Sct3ScopeProviderX
+import de.cau.cs.kieler.sccharts.text3.scoping.Sct3ScopeProvider
 
 /** 
  * Transforming SyncCharts into SCCharts.
@@ -66,7 +66,7 @@ class SyncChartsTransformation {
     extension SCChartsExtension
     
     private static val Injector i = Sct3StandaloneSetup::doSetup();
-    private static val Sct3ScopeProviderX scopeProvider = i.getInstance(typeof(Sct3ScopeProviderX));
+    private static val Sct3ScopeProvider scopeProvider = i.getInstance(typeof(Sct3ScopeProvider));
     ////private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
     
     //-------------------------------------------------------------------------

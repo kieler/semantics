@@ -100,7 +100,7 @@ public abstract class AbstractSCLRuntimeModule extends org.eclipse.xtext.service
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
 	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
-		return org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider.class;
+		return de.cau.cs.kieler.scl.scoping.SCLScopeProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment

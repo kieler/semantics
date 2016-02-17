@@ -1759,11 +1759,11 @@ public class InternalSct3Lexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19576:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19576:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19546:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19546:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
             match('\''); 
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19576:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19546:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop1:
             do {
                 int alt1=3;
@@ -1779,7 +1779,7 @@ public class InternalSct3Lexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19576:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19546:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1795,7 +1795,7 @@ public class InternalSct3Lexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19576:64: ~ ( ( '\\\\' | '\\'' ) )
+            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19546:64: ~ ( ( '\\\\' | '\\'' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1832,12 +1832,12 @@ public class InternalSct3Lexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19578:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19578:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19548:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19548:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19578:33: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19548:33: ( options {greedy=false; } : . )*
             loop2:
             do {
                 int alt2=2;
@@ -1862,7 +1862,7 @@ public class InternalSct3Lexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19578:61: .
+            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19548:61: .
             	    {
             	    matchAny(); 
 
@@ -1892,8 +1892,8 @@ public class InternalSct3Lexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19580:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19580:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19550:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19550:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -1906,7 +1906,7 @@ public class InternalSct3Lexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19580:31: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19550:31: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -1931,7 +1931,7 @@ public class InternalSct3Lexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19580:59: .
+            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19550:59: .
             	    {
             	    matchAny(); 
 
@@ -1959,8 +1959,8 @@ public class InternalSct3Lexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19582:22: ( '0' .. '9' )
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19582:24: '0' .. '9'
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19552:22: ( '0' .. '9' )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19552:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -1977,10 +1977,10 @@ public class InternalSct3Lexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19584:10: ( ( RULE_NUMBER )+ )
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19584:12: ( RULE_NUMBER )+
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19554:10: ( ( RULE_NUMBER )+ )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19554:12: ( RULE_NUMBER )+
             {
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19584:12: ( RULE_NUMBER )+
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19554:12: ( RULE_NUMBER )+
             int cnt4=0;
             loop4:
             do {
@@ -1994,7 +1994,7 @@ public class InternalSct3Lexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19584:12: RULE_NUMBER
+            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19554:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -2026,17 +2026,17 @@ public class InternalSct3Lexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             int alt12=2;
             alt12 = dfa12.predict(input);
             switch (alt12) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:15: ( RULE_NUMBER )+
+                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:15: ( RULE_NUMBER )+
                     int cnt5=0;
                     loop5:
                     do {
@@ -2050,7 +2050,7 @@ public class InternalSct3Lexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:15: RULE_NUMBER
+                    	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2067,7 +2067,7 @@ public class InternalSct3Lexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:32: ( RULE_NUMBER )*
+                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:32: ( RULE_NUMBER )*
                     loop6:
                     do {
                         int alt6=2;
@@ -2080,7 +2080,7 @@ public class InternalSct3Lexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:32: RULE_NUMBER
+                    	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2092,7 +2092,7 @@ public class InternalSct3Lexer extends Lexer {
                         }
                     } while (true);
 
-                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -2101,7 +2101,7 @@ public class InternalSct3Lexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -2112,7 +2112,7 @@ public class InternalSct3Lexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:56: ( '+' | '-' )?
+                            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:56: ( '+' | '-' )?
                             int alt7=2;
                             int LA7_0 = input.LA(1);
 
@@ -2138,7 +2138,7 @@ public class InternalSct3Lexer extends Lexer {
 
                             }
 
-                            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:67: ( RULE_NUMBER )+
+                            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:67: ( RULE_NUMBER )+
                             int cnt8=0;
                             loop8:
                             do {
@@ -2152,7 +2152,7 @@ public class InternalSct3Lexer extends Lexer {
 
                                 switch (alt8) {
                             	case 1 :
-                            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:67: RULE_NUMBER
+                            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -2174,7 +2174,7 @@ public class InternalSct3Lexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:82: ( 'f' )?
+                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:82: ( 'f' )?
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
@@ -2183,7 +2183,7 @@ public class InternalSct3Lexer extends Lexer {
                     }
                     switch (alt10) {
                         case 1 :
-                            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:82: 'f'
+                            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:82: 'f'
                             {
                             match('f'); 
 
@@ -2196,9 +2196,9 @@ public class InternalSct3Lexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:87: ( RULE_NUMBER )+ 'f'
+                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:87: ( RULE_NUMBER )+
+                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:87: ( RULE_NUMBER )+
                     int cnt11=0;
                     loop11:
                     do {
@@ -2212,7 +2212,7 @@ public class InternalSct3Lexer extends Lexer {
 
                         switch (alt11) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19586:87: RULE_NUMBER
+                    	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19556:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2251,10 +2251,10 @@ public class InternalSct3Lexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19588:14: ( ( 'true' | 'false' ) )
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19588:16: ( 'true' | 'false' )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19558:14: ( ( 'true' | 'false' ) )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19558:16: ( 'true' | 'false' )
             {
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19588:16: ( 'true' | 'false' )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19558:16: ( 'true' | 'false' )
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -2272,7 +2272,7 @@ public class InternalSct3Lexer extends Lexer {
             }
             switch (alt13) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19588:17: 'true'
+                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19558:17: 'true'
                     {
                     match("true"); 
 
@@ -2280,7 +2280,7 @@ public class InternalSct3Lexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19588:24: 'false'
+                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19558:24: 'false'
                     {
                     match("false"); 
 
@@ -2306,11 +2306,11 @@ public class InternalSct3Lexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19590:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19590:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19560:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19560:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19590:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19560:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
             loop14:
             do {
                 int alt14=3;
@@ -2326,7 +2326,7 @@ public class InternalSct3Lexer extends Lexer {
 
                 switch (alt14) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19590:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19560:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -2342,7 +2342,7 @@ public class InternalSct3Lexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19590:61: ~ ( ( '\\\\' | '\"' ) )
+            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19560:61: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2379,10 +2379,10 @@ public class InternalSct3Lexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19592:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19592:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19562:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19562:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19592:11: ( '^' )?
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19562:11: ( '^' )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -2391,7 +2391,7 @@ public class InternalSct3Lexer extends Lexer {
             }
             switch (alt15) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19592:11: '^'
+                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19562:11: '^'
                     {
                     match('^'); 
 
@@ -2409,7 +2409,7 @@ public class InternalSct3Lexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19592:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19562:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop16:
             do {
                 int alt16=2;
@@ -2458,12 +2458,12 @@ public class InternalSct3Lexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19594:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19594:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19564:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19564:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19594:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19564:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop17:
             do {
                 int alt17=2;
@@ -2476,7 +2476,7 @@ public class InternalSct3Lexer extends Lexer {
 
                 switch (alt17) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19594:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19564:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2496,7 +2496,7 @@ public class InternalSct3Lexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19594:40: ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19564:40: ( ( '\\r' )? '\\n' )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -2505,9 +2505,9 @@ public class InternalSct3Lexer extends Lexer {
             }
             switch (alt19) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19594:41: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19564:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19594:41: ( '\\r' )?
+                    // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19564:41: ( '\\r' )?
                     int alt18=2;
                     int LA18_0 = input.LA(1);
 
@@ -2516,7 +2516,7 @@ public class InternalSct3Lexer extends Lexer {
                     }
                     switch (alt18) {
                         case 1 :
-                            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19594:41: '\\r'
+                            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19564:41: '\\r'
                             {
                             match('\r'); 
 
@@ -2548,10 +2548,10 @@ public class InternalSct3Lexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19596:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19596:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19566:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19566:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19596:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19566:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt20=0;
             loop20:
             do {
@@ -2605,8 +2605,8 @@ public class InternalSct3Lexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19598:16: ( . )
-            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19598:18: .
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19568:16: ( . )
+            // ../de.cau.cs.kieler.sccharts.text3.ui/src-gen/de/cau/cs/kieler/sccharts/text3/ui/contentassist/antlr/internal/InternalSct3.g:19568:18: .
             {
             matchAny(); 
 
@@ -3312,7 +3312,7 @@ public class InternalSct3Lexer extends Lexer {
             this.transition = DFA12_transition;
         }
         public String getDescription() {
-            return "19586:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
+            return "19556:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
         }
     }
     static final String DFA21_eotS =

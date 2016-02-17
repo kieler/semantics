@@ -1423,7 +1423,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
 	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
-	//	type=ValueType) | signal?="signal" valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*;
+	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)*;
 	public KEXTGrammarAccess.VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
 		return gaKEXT.getVariableDeclarationWOSemicolonAccess();
 	}

@@ -95,7 +95,7 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     input?='input'? 
     output?='output'?
     static?='static'?
-    ((signal?='signal')? type = ValueType) | (signal?='signal') 
+    ((signal?='signal'? type = ValueType) | signal?='signal') 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;  
     
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:

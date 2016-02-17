@@ -72,7 +72,6 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.text3.Sct3StandaloneSetup
 import de.cau.cs.kieler.sccharts.text3.scoping.Sct3ScopeProvider
-import de.cau.cs.kieler.sccharts.text3.scoping.Sct3ScopeProviderX
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -128,7 +127,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     extension SCGThreadExtensions
 
     private static val Injector i = Sct3StandaloneSetup::doSetup();
-    private static val Sct3ScopeProviderX scopeProvider = i.getInstance(typeof(Sct3ScopeProviderX));
+    private static val Sct3ScopeProvider scopeProvider = i.getInstance(typeof(Sct3ScopeProvider));
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
 
     private val stateTypeCache = <State, Set<PatternType>>newHashMap
@@ -566,7 +565,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             val transition = state.outgoingTransitions.get(0)
             assignment.trace(state, transition)
             transition.setDefaultTrace
-            scopeProvider.parent = transition.sourceState
+//            scopeProvider.parent = transition.sourceState
 
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
             val effect = transition.effects.get(0) as Effect
@@ -597,10 +596,10 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional
             state.map(conditional)
-            scopeProvider.parent = state
+//            scopeProvider.parent = state
             val transition = state.outgoingTransitions.get(0)
             conditional.trace(state, transition)
-            scopeProvider.parent = transition.sourceState
+//            scopeProvider.parent = transition.sourceState
 
             // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
             conditional.setCondition(transition.trigger.convertToSCGExpression.trace(transition))

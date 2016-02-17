@@ -428,7 +428,7 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 	 *         label=STRING? 
 	 *         declarations+=DeclarationWOSemicolon* 
 	 *         localActions+=LocalAction* 
-	 *         (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion | regions+=Region*)
+	 *         (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
 	 *     )
 	 */
 	protected void sequence_RootState(EObject context, State semanticObject) {
@@ -475,7 +475,7 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 	 *         (
 	 *             declarations+=DeclarationWOSemicolon* 
 	 *             localActions+=LocalAction* 
-	 *             (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion | regions+=Region*)
+	 *             (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
 	 *     )

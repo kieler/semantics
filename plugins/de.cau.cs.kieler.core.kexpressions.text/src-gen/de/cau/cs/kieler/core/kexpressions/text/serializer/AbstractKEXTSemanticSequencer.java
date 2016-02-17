@@ -310,16 +310,14 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	/**
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             annotations+=Annotation* 
-	 *             const?='const'? 
-	 *             input?='input'? 
-	 *             output?='output'? 
-	 *             static?='static'? 
-	 *             signal?='signal'? 
-	 *             type=ValueType
-	 *         ) | 
-	 *         (signal?='signal' valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *         annotations+=Annotation* 
+	 *         const?='const'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         static?='static'? 
+	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
 	 *     )
 	 */
 	protected void sequence_VariableDeclarationWOSemicolon(EObject context, VariableDeclaration semanticObject) {

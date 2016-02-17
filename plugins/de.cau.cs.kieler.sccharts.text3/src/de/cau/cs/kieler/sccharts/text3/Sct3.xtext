@@ -28,7 +28,7 @@ RootState returns sccharts::State:
 	'{'
 		declarations+=DeclarationWOSemicolon*
 		localActions+=LocalAction*
-		(regions+=SingleDataflowRegion | regions+=SingleControlflowRegion | regions+=Region*)
+		(regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
 	'}';
     
 
@@ -41,7 +41,7 @@ State returns sccharts::State:
 	('{'
 		declarations+=DeclarationWOSemicolon*
 		localActions+=LocalAction*
-		(regions+=SingleDataflowRegion | regions+=SingleControlflowRegion | regions+=Region*)
+		(regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
 	'}')?
 	outgoingTransitions+=Transition*;
     
