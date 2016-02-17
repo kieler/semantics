@@ -20,6 +20,15 @@ expression <printf("Hallo Welt!")>
 @check functionCall.basic.parameter.^string
 expression <printf("%s", S)>
 
+@check functionCall.nested
+expression <srand(<time()>)>
+
+@check functionCall.nested.^string
+expression <printf("%s", <getValue()>)>
+
+
+
+
 @check functionCall.returnValue
 B = <scanf("")>
 
@@ -29,8 +38,10 @@ B = <scanf("%d", &I)>
 @check functionCall.returnValue.parameter.byPureOutput
 B = <scanf("%d", !&I)>
 
-@check functionCall.nested
-expression <srand(<time()>)>
+@check functionCall.returnValue.parameter.byReference.nested
+B = <scanf("%d", <getValue()>)>
 
-@check functionCall.nested.^string
-expression <printf("%s", <getValue()>)>
+@check functionCall.returnValue.parameter.byPureOutput.hostcode
+B = <scanf("%d", !&'x')>
+
+
