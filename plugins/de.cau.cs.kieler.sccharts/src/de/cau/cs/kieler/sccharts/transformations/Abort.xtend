@@ -333,6 +333,8 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                       // Take the original trigger here (before for the actual ABORT in the main region take a copy, also for the watcher take a copy
                       transition.setTrigger2(transition.trigger)
                   }
+                } else {
+                    transition.setTrigger(null);
                 } 
 
                 transition.setTypeWeakAbort
