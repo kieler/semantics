@@ -13,16 +13,16 @@
  */
 package de.cau.cs.kieler.prom.common
 
-import com.google.inject.Inject
-import java.util.ArrayList
+import java.io.File
+import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IResource
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.Path
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.EcoreUtil2
-import org.eclipse.xtext.resource.IResourceDescription
+import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
-import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
 
 /** 
  * Auxilary class to load an EObject from a fully qualified file path.
@@ -31,32 +31,46 @@ import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
  */
 class ModelImporter {
     
-//    @Inject
-//    private ResourceDescriptionsProvider resourceDescriptionsProvider;
-    
     /**
-     * Loads an EObject from a file path.
+     * Loads an EObject from a file path without cross-references.
+     * 
      * Other plug-ins have to take care that they register their DSL for EMF.
      * 
      * @param fullPath The fully qualified path to a file
      * @return the loaded EObject
      */
-    public def EObject get(String fullPath) {
+    public static def EObject load(String fullPath) {
+        return load(fullPath, false)
+    }
+    
+    /**
+     * Loads an EObject from a file path, optionally with cross-references to other models resolved.
+     * Resolving of cross-references works only if the referenced files are in the same project
+     * and have the same file extension.
+     * 
+     * @param fullPath The fully qualified path to a file that shall be loaded
+     * @param resolveReferences Flag that indicated whether cross-references to other files in the project shall be resolved
+     * @return the loaded EObject 
+     */
+    public static def EObject load(String fullPath, boolean resolveReferences) {
         
         val uri = URI.createFileURI(fullPath);
         
-        val resSet = new XtextResourceSet();
-        resSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+        val resourceSet = new XtextResourceSet();
         
+        val uri2 = URI.createFileURI("/home/aas/Proggen/Java/kieler-dev/runtime-KIELERTest/Ref/Referenced1062.sct")
+        resourceSet.getResource(uri2, true);
+        
+        // Collect possibly referenced resources and resolve references
+        if(resolveReferences){
+            resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE)
+            collectPossiblyReferencedResources(fullPath, resourceSet)
+        }
+
         // Get the resource
-        val resource = resSet.getResource(uri, true);
-
-        EcoreUtil2.resolveAll(resource)
-
-//        resSet.getResource(URI.createFileURI("/home/aas/Proggen/Java/kieler-dev/runtime-KIELERTest/Ref/Referenced1062.sct"), true);
-//        collectReferencedResources(resource)
-//        collectReferencedResources2(resource)
+        val resource = resourceSet.getResource(uri, true);
         
+        // Return EObject from resource
         if(!resource.getContents().isEmpty) {
             return resource.getContents().get(0)
         } else {
@@ -64,44 +78,46 @@ class ModelImporter {
         }
     }
     
-//    public static def collectReferencedResources(Resource resource) {
-//        // get the resource set
-//        val resourceSet = resource.getResourceSet();
-//
-//        // search for other resources containing referenced objects
-//        val resources = new ArrayList<Resource>();
-//        resources.add(resource);
-//        for(r : resources){
-//            for(var contents = r.getAllContents(); contents.hasNext(); ) {
-//                for(Object refObject : contents.next().eCrossReferences()) {                    
-//                    val eObject = refObject as EObject;
-//                    val otherResource = eObject.eResource();
-//                    if(otherResource != null && !resources.contains(otherResource)){
-//                        System.err.println("referenced Resource:"+otherResource)
-//                        
-////                        resources.add(otherResource);
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    
-//    public def collectReferencedResources2(Resource resource) {
-//        val resourceSet = resource.getResourceSet();
-//        println(resourceDescriptionsProvider)
-//        if(resourceDescriptionsProvider == null){
-//            System.err.println("Not injected")
-//            resourceDescriptionsProvider = new ResourceDescriptionsProvider();
-//        }
-//        val iRD = resourceDescriptionsProvider.getResourceDescriptions(resourceSet);
-//        System.err.println("YAY")
-//        
-//        for(IResourceDescription resourceDescription : iRD.getAllResourceDescriptions()) {
-//            System.out.println(resourceDescription.getReferenceDescriptions()); //Prints an empty set
-//            val iRefD = resourceDescription.getReferenceDescriptions();
-//            for(ref : iRefD) {
-//                System.out.println(ref);
-//            }
-//        }
-//    }
+    /**
+     * Searches in the project of the model file for files with the same file extension as the given model file.
+     * All findings are added to the resource that, such that they can be resolved when loading the model file.
+     * 
+     * @param modelFileLocation Fully qualified path to a model file
+     * @param resourceSet The ResourceSet to which possible references should be added
+     */
+    private static def collectPossiblyReferencedResources(String modelFileLocation, ResourceSet resourceSet) {      
+        val modelFile = getFile(modelFileLocation)
+        if(modelFile.exists) {
+            val fileExtensionOfModelFiles = modelFile.fileExtension
+            // Search in project for other files with the model file extension
+            // and add them to the resource set.
+            val project = modelFile.project
+            for(IResource res : project.members) {
+                val fileExtension = res.fileExtension
+                if(fileExtension != null && fileExtension.equals(fileExtensionOfModelFiles) ){
+                    val location = res.location.toOSString
+                    // Don't add resource of model file that shall be loaded
+                    if(!modelFileLocation.equals(location)) {
+                        val uri = URI.createFileURI(res.location.toOSString)
+                        resourceSet.getResource(uri, true)
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Creates a file handle to a resource in the Eclipse workspace from an absolute file path.
+     * 
+     * @param fullPath The fully qualified file path to a resource in the Eclipse workspace.
+     * @return the loaded file handle
+     */
+    private static def IFile getFile(String fullPath) {
+        // The separator at the end is important for URI.deresolve(...)
+        val workspaceURI = URI.createFileURI(ResourcesPlugin.workspace.root.location.toOSString + File.separator)
+        val absoluteURI = URI.createFileURI(fullPath)
+        // Make absolute file location relative w.r.t. workspace location
+        val relativeURI = absoluteURI.deresolve(workspaceURI)
+        return ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(relativeURI.toFileString))   
+    }
 }

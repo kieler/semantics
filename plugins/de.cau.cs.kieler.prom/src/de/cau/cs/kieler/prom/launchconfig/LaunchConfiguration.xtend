@@ -439,7 +439,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      */
     private def void compile(FileCompilationData data) {
         // Load model from file
-        val EObject model = new ModelImporter().get(project.location.toOSString + File.separator + data.projectRelativePath)
+        val EObject model = ModelImporter.load(project.location.toOSString + File.separator + data.projectRelativePath, true)
 
         if (model != null) {
             // Get compiler context with settings for KiCo
