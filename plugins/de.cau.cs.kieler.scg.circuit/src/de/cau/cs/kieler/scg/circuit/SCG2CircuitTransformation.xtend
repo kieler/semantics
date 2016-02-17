@@ -213,7 +213,6 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 				}
 
 				val String pred = findPredecessor(inOutPuts, coa.valuedObject.name, outputPort, pre, ssaMap, logic)
-				System.out.println("found predecessor: " + pred + " for " + coa.valuedObject.name)
 				falsePort.name = pred
 				logic.innerActors += actor
 
@@ -254,7 +253,6 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 					// if the SSA is originally an input output variable we don't need a pre register
 					// to store it's value for the next tick  
 					if (!inOutPuts.contains(varName)) {
-						System.out.println("create pre register for: " + name)
 						// creates pre actor which is a register with input O1 and output O1_X if X is highest version of variable O1
 						createPreActor(varName, logic, pre)
 						return "pre_" + varName // the input variable will be the one coming from the generated pre register
@@ -346,10 +344,9 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 					actor.type = "AND"
 				case LOGICAL_OR:
 					actor.type = "OR"
-				case NOT:{
+				case NOT:
 					actor.type = "NOT"
-					System.out.println("Not at assignment: " + actor.name + " = " + expr.serialize.toString)
-						}
+						
 				case PRE: {
 					actor.type = "REG"
 					addRegisterPorts(actor, "Reset")
@@ -361,7 +358,6 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 			// the created actor gate gX needs an input port for each subExpression
 			for (Expression subexpr : expr.subExpressions) {
-//				System.out.println("subexpression ===>" + subexpr.serialize.toString + " at " + expr.serialize.toString)
 				val port = CircuitFactory::eINSTANCE.createPort
 				actor.ports += port
 				port.type = "In"
@@ -411,10 +407,8 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 						actor.type = "AND"
 					case LOGICAL_OR:
 						actor.type = "OR"
-					case NOT:{
+					case NOT:
 						actor.type = "NOT"
-						System.out.println("Not at expression: " + actor.name )
-						}
 					case PRE: {
 						actor.type = "REG"
 						addRegisterPorts(actor, "Reset")
