@@ -324,7 +324,9 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        mainFile.toolTipText = "Default main file name in project wizard"
+        mainFile.toolTipText = "Project relative path to main file of the project.\n"
+            + "The file is created on project setup.\n"
+            + "The path may contain placeholders such as ${project_name}."
         
         // Create main file origin text field
         UIUtil.createLabel(group, "Main file origin")
@@ -339,7 +341,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        mainFileOrigin.toolTipText = "Path to resource (file system or platform) with default content for main file"
+        mainFileOrigin.toolTipText = "Absolute path to resource (file system or platform) with default content for main file"
     }
 
     /**
@@ -406,8 +408,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        targetTemplate.toolTipText = "Template for the compiled output.\nUse ${" +
-            LaunchConfiguration.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
+        targetTemplate.toolTipText = "Path to a template file for the compiled output.\n"
+        + "Use ${" + LaunchConfiguration.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
     }
     
     /**
@@ -428,7 +430,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        wrapperCodeTemplate.toolTipText = "Template where wrapper code is inserted"
+        wrapperCodeTemplate.toolTipText = "Path to a template of a file, which will contain wrapper code.\n.\n"
+            + "The path may contain placeholders such as ${" + LaunchConfiguration.MAIN_FILE_NAME_VARIABLE + "}."
         
         // Create snippets directory control
         wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory", EnumSet.of(UIUtil.Buttons.NONE))
@@ -455,7 +458,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        wrapperCodeSnippetsOrigin.toolTipText = "Directory path (file system or platform) with default content for snippets directory when creating a new project"
+        wrapperCodeSnippetsOrigin.toolTipText = "Directory path (file system or platform) with defaul content\n"
+            + "for a snippet directory when creating a new project"
     }
 
     /**
@@ -564,7 +568,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        command.toolTipText = "Shell command to be executed when preceding command finished successful."
+        command.toolTipText = "Shell command to be executed when the preceding commands finished successfully."
         
         UIUtil.createBrowseVariableButton(group, commandName, "Variables...")
     }
@@ -613,7 +617,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             override selectionChanged(SelectionChangedEvent event) {
                 val selection = event.selection 
                 currentData.associatedLaunchShortcut = getSelectedClassNameInCombobox(launchShortcuts)
-                System.err.println(currentData.associatedLaunchShortcut)
                 checkConsistency()
             }
         })        
@@ -739,7 +742,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             var selectionFound=false
             for(o : launchShortcuts.input as ArrayList<Object>){
                 if(o instanceof IConfigurationElement){
-                    System.err.println("  "+o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME)+"|"+data.associatedLaunchShortcut)
                     if(o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME) == data.associatedLaunchShortcut) {
                         launchShortcuts.selection = new StructuredSelection(o)
                         selectionFound= true

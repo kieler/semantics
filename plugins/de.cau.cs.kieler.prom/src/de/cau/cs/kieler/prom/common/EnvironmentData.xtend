@@ -132,7 +132,11 @@ class EnvironmentData extends ConfigurationSerializableData {
     @Accessors
     protected String associatedLaunchShortcut = ""
     
-    
+    /**
+     * The class name of an implementation that generates wrapper code.
+     */
+    @Accessors
+    protected String wrapperCodeGenerator = ""
     
     
     /**
@@ -263,6 +267,7 @@ class EnvironmentData extends ConfigurationSerializableData {
         config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, wrapperCodeTemplate)
         config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, wrapperCodeSnippetsDirectory)
         config.setAttribute(LaunchConfiguration.ATTR_ASSOCIATED_LAUNCH_SHORTCUT, associatedLaunchShortcut)
+        config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_GENERATOR, wrapperCodeGenerator)
         
         CommandData.saveAllToConfiguration(config, commands)    
     }

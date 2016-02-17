@@ -50,9 +50,6 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
      * @return  The default environment for Mindstorms NXT running leJOS.
      */
     private static def EnvironmentData getMindstormsNXJDefaultEnvironment(){
-        var linuxCommandsEnabled = Platform.OS.equals(Platform.OS_LINUX) || Platform.OS.equals(Platform.OS_MACOSX) || Platform.OS.equals(Platform.OS_SOLARIS)
-        var windowsCommandsEnabled = !linuxCommandsEnabled
-        
         var env = new EnvironmentData("Mindstorms NXJ")
         
         env.targetLanguage = "s.java"
@@ -63,30 +60,11 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         env.wrapperCodeSnippetsDirectory = "snippets/mindstorms_nxj"
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/snippets"
         
-        /*
-        // Commands for Windows (these are active by default)
-        // On Windows the file to be executed is a batch script (.bat extension) and the separator for the classpath is a secmicolon.
-        env.commands.add(new CommandData("Compile on Windows",
-        '''${nxj.home}/bin/nxjc.bat -cp "${nxj.home}/lib;src;«LaunchConfiguration.BUILD_DIRECTORY»" "${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}"''',
-        windowsCommandsEnabled))
-        env.commands.add(new CommandData("Deploy and Run on Windows",
-        '''${nxj.home}/bin/nxj.bat -r -cp "${nxj.home}/lib;src;«LaunchConfiguration.BUILD_DIRECTORY»" -o "${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}.nxj" ${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}''',
-        windowsCommandsEnabled))
-        
-        // Commands for Linux / Mac
-        // On Linux/Mac the file to be executed is has no extension and the separator for the classpath is a colon.
-        env.commands.add(new CommandData("Compile on Linux and Mac",
-        '''${nxj.home}/bin/nxjc -cp "${nxj.home}/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" "${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}"''',
-        linuxCommandsEnabled))
-        env.commands.add(new CommandData("Deploy and Run on Linux and Mac",
-        '''${nxj.home}/bin/nxj -r -cp "${nxj.home}/lib:src:«LaunchConfiguration.BUILD_DIRECTORY»" -o "${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}.nxj" ${«LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE»}''',
-        linuxCommandsEnabled))
-        */
         env.associatedLaunchShortcut = "org.lejos.nxt.ldt.launch.LaunchNXTShortcut"
         
         env.relatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
         
-        env.mainFile = "src/Main.ftl"
+        env.mainFile = "src/${project_name}Main.ftl"
         env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/Main.ftl"
         
         return env
@@ -111,7 +89,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         
         env.relatedProjectWizardClass = "org.lejos.ev3.ldt.wizard.NewEV3Project"
         
-        env.mainFile = "src/Main.ftl"
+        env.mainFile = "src/${project_name}Main.ftl"
         env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/Main.ftl"
         
         return env
