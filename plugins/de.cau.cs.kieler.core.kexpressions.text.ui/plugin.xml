@@ -311,7 +311,7 @@
     <extension
           point="de.cau.cs.kieler.klighd.ui.view.editor">
        <editor
-             controllerID="de.cau.cs.kieler.klighd.ui.view.controllers.XtextChangeUpdateController"
+             controllerID="de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController"
              editorID="de.cau.cs.kieler.core.kexpressions.text.KEXT">
        </editor>
     </extension>
