@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.freemarker.FreeMarkerPlugin
+import com.google.common.base.Strings
 
 /**
  * This class generates wrapper code for models.
@@ -84,35 +85,14 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
     private String modelName = ""
 
     /**
-     * Initializes the macro definitions when they are not yet initialized.
-     * Afterwards they are returned.
-     * 
-     * @return the macro definitions of assignment macros such as <@input>
-     */
-    private def String getOrInitializeMacroDefinitions() {
-        // Initialize if not done yet
-        if(macroDefinitions == null){
-            macroDefinitions = ""
-            
-            for(phase : codeGenerationPhases ){
-                for(macro : phase.macros){
-                    macroDefinitions += macro.freeMarkerDefinition
-                    macroDefinitions += "\n"
-                }                
-            }
-        }
-        return macroDefinitions
-    }
-
-    /**
      * Generates and saves the wrapper code for a list of files.
      * 
      * @param datas The data objects to generate wrapper code for 
      */
     override void generateWrapperCode(FileCompilationData... datas) {
 
-        // Check consistency of paths
-        if (launchConfiguration.wrapperCodeTemplate != "" && launchConfiguration.wrapperCodeSnippetDirectory != "") {
+        // Check consistency of path
+        if (!Strings.isNullOrEmpty(launchConfiguration.wrapperCodeTemplate)) {
 
             val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
 
@@ -167,26 +147,30 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
      * @param templateWithMacroCalls The template text to be processed 
      */
     private def void processTemplateAndSaveOutput(String templateWithMacroCalls) {
-        var File snippetDirectoryLocation = new File(launchConfiguration.wrapperCodeSnippetDirectory)
-        if (!snippetDirectoryLocation.isAbsolute)
-            snippetDirectoryLocation = new File(launchConfiguration.project.location + File.separator + launchConfiguration.wrapperCodeSnippetDirectory)
-
-        // Set the snippets directory to implicitly load the macro definitions
-        FreeMarkerPlugin.newConfiguration(snippetDirectoryLocation.absolutePath)
-
-        // Add implicit include of assignment macros such as <@init> and <@output>
-        FreeMarkerPlugin.stringTemplateLoader.putTemplate("assignmentMacros", getOrInitializeMacroDefinitions() )
-        FreeMarkerPlugin.configuration.addAutoInclude("assignmentMacros")
-
-        // Add implicit include of snippet definitions
-        val List<File> snippetFiles = getFilesRecursive(snippetDirectoryLocation, "ftl")
-        for(snippetFile : snippetFiles) {
-            // FreeMarker needs paths relative to the template directory.
-            // We calculate this via the URI class.
-            val relativeURI = snippetDirectoryLocation.toURI().relativize(snippetFile.toURI())
-            FreeMarkerPlugin.configuration.addAutoInclude(relativeURI.getPath())
+        
+        // Load snippet definitions
+        if(!Strings.isNullOrEmpty(launchConfiguration.wrapperCodeSnippetDirectory)) {
+            var File snippetDirectoryLocation = new File(launchConfiguration.wrapperCodeSnippetDirectory)
+            if (!snippetDirectoryLocation.isAbsolute)
+                snippetDirectoryLocation = new File(launchConfiguration.project.location + File.separator + launchConfiguration.wrapperCodeSnippetDirectory)
+                
+            // Set the snippets directory to implicitly load the macro definitions
+            FreeMarkerPlugin.newConfiguration(snippetDirectoryLocation.absolutePath)
+    
+            // Add implicit include of assignment macros such as <@init> and <@output>
+            FreeMarkerPlugin.stringTemplateLoader.putTemplate("assignmentMacros", getOrInitializeMacroDefinitions() )
+            FreeMarkerPlugin.configuration.addAutoInclude("assignmentMacros")
+    
+            // Add implicit include of snippet definitions
+            val List<File> snippetFiles = getFilesRecursive(snippetDirectoryLocation, "ftl")
+            for(snippetFile : snippetFiles) {
+                // FreeMarker needs paths relative to the template directory.
+                // We calculate this via the URI class.
+                val relativeURI = snippetDirectoryLocation.toURI().relativize(snippetFile.toURI())
+                FreeMarkerPlugin.configuration.addAutoInclude(relativeURI.getPath())
+            }
         }
-
+        
         // Process template with macro calls and now implicitly loaded snippet definitions.
         val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreeMarkerPlugin.configuration)
 
@@ -196,6 +180,27 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
         writer.close()
     }
 
+    /**
+     * Initializes the macro definitions when they are not yet initialized.
+     * Afterwards they are returned.
+     * 
+     * @return the macro definitions of assignment macros such as <@input>
+     */
+    private def String getOrInitializeMacroDefinitions() {
+        // Initialize if not done yet
+        if(macroDefinitions == null){
+            macroDefinitions = ""
+            
+            for(phase : codeGenerationPhases ){
+                for(macro : phase.macros){
+                    macroDefinitions += macro.freeMarkerDefinition
+                    macroDefinitions += "\n"
+                }                
+            }
+        }
+        return macroDefinitions
+    }
+    
     /**
      * Creates macro calls from wrapper code annotation datas.
      * 
