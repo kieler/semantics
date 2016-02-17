@@ -18,7 +18,7 @@ package de.cau.cs.kieler.core.kexpressions.text.validation;
  *
  * see http://www.eclipse.org/Xtext/documentation.html#validation
  */
-public class KEXTJavaValidator extends de.cau.cs.kieler.core.kexpressions.text.validation.AbstractKEXTJavaValidator {
+public class KEXTJavaValidator extends KEXTJavaValidatorX {
 
 
 }
