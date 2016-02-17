@@ -63,10 +63,7 @@ import de.cau.cs.kieler.core.krendering.KForeground
 import de.cau.cs.kieler.circuit.Link
 import de.cau.cs.kieler.circuit.Port
 
-/**
- * @author ssm als cmot
- * 
- */
+
 class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
 	val Module configure = [ Binder binder |
@@ -120,30 +117,16 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 					
 				}
 				for (node : logic.eAllContents.filter(Actor).toList) {
-					System.out.println("HUHUHUHU")
 					val atomicActor = !(node.innerActors.toList.length > 0)
 					if (atomicActor) {
 						if (node.name != null && node.name.startsWith("g")) {
-							System.out.println("put sth into guardActorMapping: " + node.name)
-							// System.out.println(context.getTargetElements(node))
 							val frame = context.getTargetElement(node, KNode)
 							val KContainerRendering kgelem = frame.getData(KContainerRendering)
 							val shape = frame.getData.filter(KRendering)
 							val children = kgelem.children
-							System.out.println(children + "HIHIHIHHI")
 							guardActorMapping.putAll(node.name, children)
 							guardActorMapping.putAll(node.name, shape)
 						}
-
-//						val outPort = node.ports.filter[type.startsWith("Out")].head
-//						val links = outPort.outgoingLinks
-//						for (l : links) {
-//							System.out.println(l.toString + " form " + node.name)
-//							val link = context.getTargetElement(l, KEdge)
-//							val rend = link.getData.filter(KRendering).head
-//							linkMapping.put(node.name, rend) // context.getTargetElement(l, KEdge))
-//						}
-
 					}
 
 				}

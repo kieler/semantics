@@ -8,12 +8,26 @@ import org.eclipse.emf.common.util.EList
 
 class CircuitInitialization {
 
-	def initialize(List<Declaration> declarations, Actor init, Actor logic, Actor newCircuit, Actor root) {
+	def initialize(List<Declaration> declarations, Actor pre, Actor init, Actor logic, Actor newCircuit, Actor root) {
 		
 		createLocalResetAndGo(init, logic)
 		
 		createInAndOutputs(declarations, init, logic, newCircuit, root)
+		
+		initializePreRegion(pre)
 
+	}
+	def initializePreRegion(Actor pre) {
+		val tickPort = CircuitFactory::eINSTANCE.createPort
+		val resetPort = CircuitFactory::eINSTANCE.createPort
+
+		tickPort.type = "InConnectorPre"
+		tickPort.name = "Tick"
+		pre.ports.add(tickPort)
+
+		resetPort.type = "InConnectorPre"
+		resetPort.name = "Reset_pre"
+		pre.ports.add(resetPort)
 	}
 	
 	def createLocalResetAndGo(Actor init, Actor logic) {
