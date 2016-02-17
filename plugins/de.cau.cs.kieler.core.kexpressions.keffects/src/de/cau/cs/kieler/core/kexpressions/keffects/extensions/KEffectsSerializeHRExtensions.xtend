@@ -13,13 +13,12 @@
  */
 package de.cau.cs.kieler.core.kexpressions.keffects.extensions
 
-import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 
 /**
  * Serialization of KEffects in human readable form.

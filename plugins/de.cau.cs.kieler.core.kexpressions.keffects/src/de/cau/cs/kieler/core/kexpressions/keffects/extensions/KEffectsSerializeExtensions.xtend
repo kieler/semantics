@@ -50,6 +50,18 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         if (operator == AssignOperator::ASSIGNDIV) {
             return " /= " 
         } else 
+        if (operator == AssignOperator::ASSIGNMOD) {
+            return " %= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNAND) {
+            return " &= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNOR) {
+            return " |= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNXOR) {
+            return " ^= " 
+        } else 
         if (operator == AssignOperator::POSTFIXADD) {
             return "++"
         } else 
