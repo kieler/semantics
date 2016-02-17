@@ -67,6 +67,38 @@ public enum AssignOperator implements Enumerator {
 	 * @ordered
 	 */
     ASSIGNDIV(4, "ASSIGNDIV", "ASSIGNDIV"), /**
+	 * The '<em><b>ASSIGNMOD</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ASSIGNMOD_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	ASSIGNMOD(5, "ASSIGNMOD", "ASSIGNMOD"), /**
+	 * The '<em><b>ASSIGNAND</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ASSIGNAND_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	ASSIGNAND(6, "ASSIGNAND", "ASSIGNAND"), /**
+	 * The '<em><b>ASSIGNOR</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ASSIGNOR_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	ASSIGNOR(7, "ASSIGNOR", "ASSIGNOR"), /**
+	 * The '<em><b>ASSIGNXOR</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ASSIGNXOR_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	ASSIGNXOR(8, "ASSIGNXOR", "ASSIGNXOR"), /**
 	 * The '<em><b>POSTFIXADD</b></em>' literal object.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -74,7 +106,7 @@ public enum AssignOperator implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-    POSTFIXADD(5, "POSTFIXADD", "POSTFIXADD"), /**
+    POSTFIXADD(9, "POSTFIXADD", "POSTFIXADD"), /**
 	 * The '<em><b>POSTFIXSUB</b></em>' literal object.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -82,7 +114,7 @@ public enum AssignOperator implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-    POSTFIXSUB(6, "POSTFIXSUB", "POSTFIXSUB");
+    POSTFIXSUB(10, "POSTFIXSUB", "POSTFIXSUB");
 
     /**
 	 * The '<em><b>ASSIGN</b></em>' literal value.
@@ -160,6 +192,66 @@ public enum AssignOperator implements Enumerator {
     public static final int ASSIGNDIV_VALUE = 4;
 
     /**
+	 * The '<em><b>ASSIGNMOD</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>ASSIGNMOD</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #ASSIGNMOD
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ASSIGNMOD_VALUE = 5;
+
+				/**
+	 * The '<em><b>ASSIGNAND</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>ASSIGNAND</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #ASSIGNAND
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ASSIGNAND_VALUE = 6;
+
+				/**
+	 * The '<em><b>ASSIGNOR</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>ASSIGNOR</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #ASSIGNOR
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ASSIGNOR_VALUE = 7;
+
+				/**
+	 * The '<em><b>ASSIGNXOR</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>ASSIGNXOR</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #ASSIGNXOR
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ASSIGNXOR_VALUE = 8;
+
+				/**
 	 * The '<em><b>POSTFIXADD</b></em>' literal value.
 	 * <!-- begin-user-doc -->
      * <p>
@@ -172,7 +264,7 @@ public enum AssignOperator implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-    public static final int POSTFIXADD_VALUE = 5;
+    public static final int POSTFIXADD_VALUE = 9;
 
     /**
 	 * The '<em><b>POSTFIXSUB</b></em>' literal value.
@@ -187,7 +279,7 @@ public enum AssignOperator implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-    public static final int POSTFIXSUB_VALUE = 6;
+    public static final int POSTFIXSUB_VALUE = 10;
 
     /**
 	 * An array of all the '<em><b>Assign Operator</b></em>' enumerators.
@@ -202,6 +294,10 @@ public enum AssignOperator implements Enumerator {
 			ASSIGNSUB,
 			ASSIGNMUL,
 			ASSIGNDIV,
+			ASSIGNMOD,
+			ASSIGNAND,
+			ASSIGNOR,
+			ASSIGNXOR,
 			POSTFIXADD,
 			POSTFIXSUB,
 		};
@@ -218,6 +314,8 @@ public enum AssignOperator implements Enumerator {
 	 * Returns the '<em><b>Assign Operator</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+	 * @param literal the literal.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
     public static AssignOperator get(String literal) {
@@ -234,6 +332,8 @@ public enum AssignOperator implements Enumerator {
 	 * Returns the '<em><b>Assign Operator</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+	 * @param name the name.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
     public static AssignOperator getByName(String name) {
@@ -250,6 +350,8 @@ public enum AssignOperator implements Enumerator {
 	 * Returns the '<em><b>Assign Operator</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+	 * @param value the integer value.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
     public static AssignOperator get(int value) {
@@ -259,6 +361,10 @@ public enum AssignOperator implements Enumerator {
 			case ASSIGNSUB_VALUE: return ASSIGNSUB;
 			case ASSIGNMUL_VALUE: return ASSIGNMUL;
 			case ASSIGNDIV_VALUE: return ASSIGNDIV;
+			case ASSIGNMOD_VALUE: return ASSIGNMOD;
+			case ASSIGNAND_VALUE: return ASSIGNAND;
+			case ASSIGNOR_VALUE: return ASSIGNOR;
+			case ASSIGNXOR_VALUE: return ASSIGNXOR;
 			case POSTFIXADD_VALUE: return POSTFIXADD;
 			case POSTFIXSUB_VALUE: return POSTFIXSUB;
 		}

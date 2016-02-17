@@ -394,16 +394,26 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cASSIGNMULAsteriskEqualsSignKeyword_3_0 = (Keyword)cASSIGNMULEnumLiteralDeclaration_3.eContents().get(0);
 		private final EnumLiteralDeclaration cASSIGNDIVEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
 		private final Keyword cASSIGNDIVSolidusEqualsSignKeyword_4_0 = (Keyword)cASSIGNDIVEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNMODEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cASSIGNMODPercentSignEqualsSignKeyword_5_0 = (Keyword)cASSIGNMODEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNANDEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cASSIGNANDAmpersandEqualsSignKeyword_6_0 = (Keyword)cASSIGNANDEnumLiteralDeclaration_6.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNOREnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
+		private final Keyword cASSIGNORVerticalLineEqualsSignKeyword_7_0 = (Keyword)cASSIGNOREnumLiteralDeclaration_7.eContents().get(0);
+		private final EnumLiteralDeclaration cASSIGNXOREnumLiteralDeclaration_8 = (EnumLiteralDeclaration)cAlternatives.eContents().get(8);
+		private final Keyword cASSIGNXORCircumflexAccentEqualsSignKeyword_8_0 = (Keyword)cASSIGNXOREnumLiteralDeclaration_8.eContents().get(0);
 		
 		//// ---------------- //
 		////  KEffects Enums  // 
 		//// ---------------- //
 		//// Assign Operator Enum    
 		//enum AssignOperator returns keffects::AssignOperator:
-		//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+		//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMOD="%=" | ASSIGNAND="&=" |
+		//	ASSIGNOR="|=" | ASSIGNXOR="^=";
 		public EnumRule getRule() { return rule; }
 
-		//ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/="
+		//ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMOD="%=" | ASSIGNAND="&=" |
+		//ASSIGNOR="|=" | ASSIGNXOR="^="
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ASSIGN="="
@@ -435,6 +445,30 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"/="
 		public Keyword getASSIGNDIVSolidusEqualsSignKeyword_4_0() { return cASSIGNDIVSolidusEqualsSignKeyword_4_0; }
+
+		//ASSIGNMOD="%="
+		public EnumLiteralDeclaration getASSIGNMODEnumLiteralDeclaration_5() { return cASSIGNMODEnumLiteralDeclaration_5; }
+
+		//"%="
+		public Keyword getASSIGNMODPercentSignEqualsSignKeyword_5_0() { return cASSIGNMODPercentSignEqualsSignKeyword_5_0; }
+
+		//ASSIGNAND="&="
+		public EnumLiteralDeclaration getASSIGNANDEnumLiteralDeclaration_6() { return cASSIGNANDEnumLiteralDeclaration_6; }
+
+		//"&="
+		public Keyword getASSIGNANDAmpersandEqualsSignKeyword_6_0() { return cASSIGNANDAmpersandEqualsSignKeyword_6_0; }
+
+		//ASSIGNOR="|="
+		public EnumLiteralDeclaration getASSIGNOREnumLiteralDeclaration_7() { return cASSIGNOREnumLiteralDeclaration_7; }
+
+		//"|="
+		public Keyword getASSIGNORVerticalLineEqualsSignKeyword_7_0() { return cASSIGNORVerticalLineEqualsSignKeyword_7_0; }
+
+		//ASSIGNXOR="^="
+		public EnumLiteralDeclaration getASSIGNXOREnumLiteralDeclaration_8() { return cASSIGNXOREnumLiteralDeclaration_8; }
+
+		//"^="
+		public Keyword getASSIGNXORCircumflexAccentEqualsSignKeyword_8_0() { return cASSIGNXORCircumflexAccentEqualsSignKeyword_8_0; }
 	}
 
 	public class PostfixOperatorElements extends AbstractEnumRuleElementFinder {
@@ -624,7 +658,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------- //
 	//// Assign Operator Enum    
 	//enum AssignOperator returns keffects::AssignOperator:
-	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMOD="%=" | ASSIGNAND="&=" |
+	//	ASSIGNOR="|=" | ASSIGNXOR="^=";
 	public AssignOperatorElements getAssignOperatorAccess() {
 		return unknownRuleAssignOperator;
 	}

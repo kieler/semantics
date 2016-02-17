@@ -355,6 +355,10 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 		addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNSUB);
 		addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNMUL);
 		addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNDIV);
+		addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNMOD);
+		addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNAND);
+		addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNOR);
+		addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNXOR);
 		addEEnumLiteral(assignOperatorEEnum, AssignOperator.POSTFIXADD);
 		addEEnumLiteral(assignOperatorEEnum, AssignOperator.POSTFIXSUB);
 

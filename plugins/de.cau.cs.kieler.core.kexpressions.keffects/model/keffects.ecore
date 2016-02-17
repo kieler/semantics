@@ -26,7 +26,11 @@
     <eLiterals name="ASSIGNSUB" value="2"/>
     <eLiterals name="ASSIGNMUL" value="3"/>
     <eLiterals name="ASSIGNDIV" value="4"/>
-    <eLiterals name="POSTFIXADD" value="5"/>
-    <eLiterals name="POSTFIXSUB" value="6"/>
+    <eLiterals name="ASSIGNMOD" value="5" literal="ASSIGNMOD"/>
+    <eLiterals name="ASSIGNAND" value="6"/>
+    <eLiterals name="ASSIGNOR" value="7" literal="ASSIGNOR"/>
+    <eLiterals name="ASSIGNXOR" value="8"/>
+    <eLiterals name="POSTFIXADD" value="9"/>
+    <eLiterals name="POSTFIXSUB" value="10"/>
   </eClassifiers>
 </ecore:EPackage>
