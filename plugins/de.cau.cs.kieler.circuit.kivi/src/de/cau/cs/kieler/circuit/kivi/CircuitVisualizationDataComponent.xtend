@@ -209,12 +209,12 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		for (key : jSONObject.keys.toIterable) {
 
 			// //check for active guards in this tick
-			System.out.println("JSONObject ist: " + key.toString + " with value: " + jSONObject.get(key).toString)
+			System.out.println("JSONObject is: " + key.toString + " with value: " + jSONObject.get(key).toString)
 			if ((key as String).startsWith(BasicBlockTransformation::GUARDPREFIX)) {
 				val object = jSONObject.get(key)
 				if (object instanceof JSONObject && (object as JSONObject).has("value")) {
 					val value = (object as JSONObject).get("value")
-					System.out.println("value value is " + value.toString)
+					
 					if ((value as Integer) != 0) {
 						if (key.endsWith(DepthJoinSynchronizer::SCHIZOPHRENIC_SUFFIX)) {
 
@@ -225,11 +225,13 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 						}
 					}
 				}
-			} // ////check for Input or Output Signals which are true for this tick
+			} // ////check for Input Signals which are true for this tick.....or Output if you remove has"value
 			else {
 				val object = jSONObject.get(key)
-				if (object instanceof JSONObject && (object as JSONObject).has("present")) { //!(object as JSONObject).has("value")
+				if (object instanceof JSONObject && (object as JSONObject).has("present") && !(object as JSONObject).has("value")) { 
+				
 					val value = (object as JSONObject).get("present")
+						
 					if ((value as Boolean)) {
 						highlighting += key
 					} else {
@@ -254,7 +256,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		jSONObject
 	}
 	
-	def addAndOrGatesToHighlight(HashSet<String> highlighting) {
+	def void addAndOrGatesToHighlight(HashSet<String> highlighting) {
 		
 		//flag to check if something new happened 
 		var boolean oneMore = false
@@ -275,7 +277,6 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		//store name of "active" and gate
 		var key = new String
 		val length = andInPortMapping.entries.length
-		System.out.println(length)
 		var cnt = 1
 		for(and : andInPortMapping.entries){
 			if(key == ""){ //only happens if this for section starts
@@ -291,7 +292,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 			// if this is not the first entry of the list, check if its the same and gate as before
 			// afterwards check if all former ports were marked for highlighting
 			else if (key == and.key && allPorts){
-				//if this port is not ment to be highlighted, the containing and gate shall not be highlighted
+				//if this port is not meant to be highlighted, the containing and gate shall not be highlighted
 				if(!highlighting.contains(and.value.name)){
 					allPorts = false
 				}
@@ -359,7 +360,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 //				val kgelem = value.getData.filter(KRendering)
 				if (highlights.contains(entry.key)) {
 					if (highlighting == null) {
-						System.out.println("highlighted: " + entry.key)
+//						System.out.println("highlighted: " + entry.key)
 						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
 						style.setProperty(HIGHLIGHTING_MARKER, true);
 						style.setColor(Colors::RED)
@@ -367,7 +368,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 					}
 				} else {
 					if (!highlights.contains(entry.key) && highlighting != null) {
-						System.out.println("UNNNhighlighted: " + entry.key)
+//						System.out.println("UNNNhighlighted: " + entry.key)
 						entry.value.styles.remove(highlighting)
 					}
 				}
@@ -386,7 +387,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 //				val kgelem = value.getData.filter(KRendering)
 				if (highlights.contains(entry.key)) {
 					if (highlighting == null) {
-						System.out.println("highlighted: " + entry.key)
+//						System.out.println("highlighted: " + entry.key)
 						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
 						style.setProperty(HIGHLIGHTING_MARKER, true);
 						style.setColor(Colors::GREEN)
@@ -394,7 +395,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 					}
 				} else {
 					if (!highlights.contains(entry.key) && highlighting != null) {
-						System.out.println("UNNNhighlighted: " + entry.key)
+//						System.out.println("UNNNhighlighted: " + entry.key)
 						entry.value.styles.remove(highlighting)
 					}
 				}

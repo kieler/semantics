@@ -20,6 +20,7 @@ import java.util.List
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.core.kexpressions.BoolValue
 
 class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
@@ -201,12 +202,16 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 				selectPort.name = activeConditionName
 				if (coa.assignment.serialize.toString == "true") {
-					truePort.name = "const1"
-					one = true
+					truePort.name = "const1_" + actor.name
+					circuitInitialization.createConstantOne(logic, truePort.name)
+//					one = true
 				} else if (coa.assignment.serialize.toString == "false") {
-					truePort.name = "const0"
-					zero = true
+					truePort.name = "const0_" + actor.name
+					circuitInitialization.createConstantZero(logic, truePort.name)
+//					zero = true
 				} else {
+					truePort.name = coa.assignment.serialize.toString
+					transformExpressions(coa.assignment, logic)
 					System.out.println("no boolean assignment at :" + coa.valuedObject.name + "assignment is: " +
 						coa.assignment.serialize.toString)
 
@@ -219,12 +224,12 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 			}
 
 		}
-		if (one) {
-			circuitInitialization.createConstantOne(logic)
-		}
-		if (zero) {
-			circuitInitialization.createConstantZero(logic)
-		}
+//		if (one) {
+//			circuitInitialization.createConstantOne(logic)
+//		}
+//		if (zero) {
+//			circuitInitialization.createConstantZero(logic)
+//		}
 
 	}
 
@@ -428,10 +433,22 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 					if (subExpr instanceof OperatorExpression) {
 						transformExpressions(subExpr, logic)
 					}
+					else if ( subExpr instanceof BoolValue){
+						switch(subExpr.value.toString){
+							case "true" : {
+								port.name = "const1_" + expr.serialize.toString
+								circuitInitialization.createConstantOne(logic, port.name)
+							} 
+							case "false":{
+								port.name = "const0_" + expr.serialize.toString
+								circuitInitialization.createConstantZero(logic, port.name)
+							}
+							
+						}
+					}
 				}
 			}
 		}
-
 	}
 	
 
