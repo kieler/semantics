@@ -4,13 +4,13 @@
    <extension
          point="de.cau.cs.kieler.kico.feature">
       <featureClass
-            class="de.cau.cs.kieler.circuit.vhdl.feature.VHDL">
+            class="de.cau.cs.kieler.scg.vhdl.feature.VHDL">
       </featureClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
       <productionTransformationClass
-            class="de.cau.cs.kieler.circuit.transformation.Circuit2VHDL">
+            class="de.cau.cs.kieler.scg.vhdl.transformation.SSASCG2VHDL">
       </productionTransformationClass>
 
    </extension>
