@@ -264,8 +264,8 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
                 updateLaunchConfigurationDialog()
             }
         })
-        targetTemplate.toolTipText = "Template for the compiled output.\nUse ${" +
-            LaunchConfiguration.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
+        targetTemplate.toolTipText = "Template for the compiled output.\n"
+            + "Use ${" + LaunchConfiguration.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
     }
 
     /**
@@ -284,7 +284,8 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
                 updateLaunchConfigurationDialog()
             }
         })
-        wrapperCodeTemplate.toolTipText = "Template where wrapper code is inserted"
+        wrapperCodeTemplate.toolTipText =  "Path to a template of a file, which will contain wrapper code.\n"
+            + "The path may contain placeholders such as ${" + LaunchConfiguration.MAIN_FILE_NAME_VARIABLE + "}."
 
         // Create control for directory with snippet definitions
         wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory",

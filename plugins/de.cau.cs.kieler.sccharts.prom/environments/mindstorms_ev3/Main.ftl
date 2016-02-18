@@ -5,7 +5,7 @@ import lejos.hardware.port.*;
 import lejos.hardware.sensor.*;
 import lejos.robotics.*;
 
-public class Main {
+public class ${file_name} {
     // Instantiate SCChart
     public static ${model_name} scchart = new ${model_name}();
     

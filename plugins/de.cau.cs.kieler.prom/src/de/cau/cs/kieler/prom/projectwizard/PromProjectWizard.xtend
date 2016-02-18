@@ -41,8 +41,10 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
 import org.eclipse.xtext.util.StringInputStream
+import org.eclipse.core.variables.VariablesPlugin
+import org.eclipse.core.runtime.QualifiedName
 
-/**
+/**op
  * Wizard implementation wich creates a project
  * and optionally initializes it by using enviroments.
  * Shows a main page to set the environment and with which files the new project should be initialized.
@@ -223,7 +225,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
             
         } catch (Exception e) {
             MessageDialog.openError(shell, "Error", "The model file '"+modelFileNameWithoutExtension+"' could not be created.\n"
-                + "Check the container path and file name.");
+                + "Please check the environment settings in the preferences and enter a valid file path.");
 
             return false
         }
@@ -243,17 +245,20 @@ class PromProjectWizard extends Wizard implements INewWizard {
         val env = mainPage.selectedEnvironment
         try {
             if(!Strings.isNullOrEmpty(env.mainFile)){
+                val resolvedMainFilePath = VariablesPlugin.getDefault().stringVariableManager.performStringSubstitution(env.mainFile)
+                
                 // Prepare initial content
                 var InputStream initialContentStream = null
                 if(!Strings.isNullOrEmpty(env.mainFileOrigin)){
-                    val fileName = new File(env.mainFile).name
-                    val fileNameWithoutExtension = FilenameUtils.removeExtension(fileName)
-                    initialContentStream = PromPlugin.getInputStream(env.mainFileOrigin, #{"${name}" -> fileNameWithoutExtension})
+                    initialContentStream = PromPlugin.getInputStream(env.mainFileOrigin, null)
                 }
                 
                 // Create resource
-                val fileHanlde = newlyCreatedProject.getFile(env.mainFile)
+                val fileHanlde = newlyCreatedProject.getFile(resolvedMainFilePath)
                 createResource(fileHanlde, initialContentStream)
+                
+                // Remember created main file in project properties
+                newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, resolvedMainFilePath)
             }
             
             return true
@@ -261,7 +266,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
         } catch(Exception e) {
             MessageDialog.openError(shell, "Error", "The default content for the main file could not be loaded from\n"
                 + "'"+env.mainFileOrigin+"'.\n"
-                + "Check the environment settings in the preferences.");
+                + "Please check the environment settings in the preferences and enter a valid file path.");
             
             return false;
         }
@@ -291,21 +296,24 @@ class PromProjectWizard extends Wizard implements INewWizard {
 
             try {
                 if (wrapperEnv.wrapperCodeSnippetsOrigin.trim().startsWith("platform:")) {
-                    // Fill folder with files from plug-in
+                    // Fill folder with files from plugin
                     val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.wrapperCodeSnippetsDirectory)
                     initializeSnippetsFromDirectoryOfPlatformURL(snippetsDirectory, wrapperEnv.wrapperCodeSnippetsOrigin)
-                    
-                } else {
+                } else if(!Strings.isNullOrEmpty(wrapperEnv.wrapperCodeSnippetsOrigin)){
+                    // Copy directory from file system
                     val source = new File(wrapperEnv.wrapperCodeSnippetsOrigin)
                     val target = new File(newlyCreatedProject.location + File.separator + wrapperEnv.wrapperCodeSnippetsDirectory)
                     
                     FileUtils.copyDirectory(source, target)
+                } else {
+                    // Create empty directory 
+                    val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.wrapperCodeSnippetsDirectory)
+                    createResource(snippetsDirectory, null);
                 }
-                
             } catch (Exception e) {
                 MessageDialog.openError(shell, "Error", "The default content for the snippet directory could not be loaded from\n"
                             + "'"+wrapperEnv.wrapperCodeSnippetsOrigin+"'.\n"
-                            + "Check the environment settings in the preferences.");
+                            + "Please check the environment settings in the preferences and enter a valid directory path.");
                             
                 return false
             }
@@ -322,15 +330,40 @@ class PromProjectWizard extends Wizard implements INewWizard {
      * @return true if it ended sucessfully. false otherwise.
      */
     protected def boolean initializeProjectProperties(){
-        // Used environment name
+        // Remember name of used environment.
         val env = mainPage.getSelectedEnvironment()
         newlyCreatedProject.setPersistentProperty(PromPlugin.ENVIRIONMENT_QUALIFIER, env.name)
         
-        // Created main file
-        if(!Strings.isNullOrEmpty(env.mainFile))
-            newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, env.mainFile)
+        // The main file property is set in createMainFile().
+        
+        // Add Xtext nature to project (e.g. for SCCharts with cross-references)
+        newlyCreatedProject.addNature("org.eclipse.xtext.ui.shared.xtextNature")
         
         return true
+    }
+
+    /**
+     * Adds a nature to a project if the nature is not yet present.
+     * 
+     * @param project The project to add the nature to
+     * @param newNature The nature that should be added
+     */
+    protected def void addNature(IProject project, String newNature) {
+        if(!project.hasNature(newNature)) {
+            try {
+                // Get current natures of project
+                val description = project.getDescription();
+                val natures = description.getNatureIds();
+                // Extend array of current natures and add new nature
+                val newNatures = newArrayOfSize(natures.length + 1);
+                System.arraycopy(natures, 0, newNatures, 0, natures.length);
+                newNatures.set(natures.length, newNature);
+                description.setNatureIds(newNatures);
+                project.setDescription(description, null);
+             } catch (CoreException e) {
+                throw new Exception("Failed to add nature " + newNature + " to project " + project.name, e)
+             }
+         }
     }
 
     /**
@@ -480,7 +513,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
             // Output an error message
             MessageDialog.openError(shell, "Project Wizard Not Found", "The project wizard '"+fullyQualifiedClassName+"'\n"
                 + "of the selected environment could not be loaded.\n"
-                + "Ensure that required plug-ins are installed and check the environment preferences."
+                + "Please install all required plugins."
             )
         }
     }
