@@ -60,11 +60,10 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.krendering.KContainerRendering
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.core.krendering.KForeground
+import de.cau.cs.kieler.circuit.Link
+import de.cau.cs.kieler.circuit.Port
+import java.util.HashSet
 
-/**
- * @author ssm als cmot
- * 
- */
 class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
 	val Module configure = [ Binder binder |
@@ -80,8 +79,13 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	extension KPortExtensions = injector.getInstance(typeof(KPortExtensions))
 	extension KContainerRenderingExtensions = injector.getInstance(typeof(KContainerRenderingExtensions))
 
+	val HashMultimap<String, Port> muxSelPortMapping = HashMultimap.create
+	val HashMultimap<String, Port> orInPortMapping = HashMultimap.create
+	val HashMultimap<String, Port> andInPortMapping = HashMultimap.create
+	val HashMultimap<String, KRendering> actorMapping = HashMultimap.create
 	val HashMultimap<String, KRendering> guardActorMapping = HashMultimap.create
 	val HashMultimap<String, KRendering> linkMapping = HashMultimap.create
+	val HashMultimap<String, KRendering> nonGuardActorMapping = HashMultimap.create
 
 	override initialize() throws KiemInitializationException {
 
@@ -96,8 +100,13 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				null);
 		}
 
+		muxSelPortMapping.clear
+		orInPortMapping.clear
+		andInPortMapping.clear
+		actorMapping.clear
 		guardActorMapping.clear
 		linkMapping.clear
+		nonGuardActorMapping.clear
 
 		val contextsCirc = viewParts.map[viewer.viewContext].filter[inputModel instanceof Actor]
 
@@ -106,38 +115,62 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				System.out.println("circuit-------------------------------++++++++!!!!!!!!!!!!!")
 				System.out.println(context.getNode().toString)
 				val circuit = context.inputModel as Actor
-				for (node : circuit.eAllContents.filter(Actor).toList) {
+				val logic = circuit.eAllContents.filter(Actor).filter[name == "Program Logic"].head
 
-					if (node.name != null && node.name.startsWith("g")) {
-						System.out.println("put sth into guardActorMapping: " + node.name)
-						// System.out.println(context.getTargetElements(node))
+				// store all links of the circuit
+				for (link : circuit.eAllContents.filter(Link).toList) {
+					val l = context.getTargetElement(link, KEdge)
+					val rend = l.getData.filter(KRendering).head
+					val sourcePort = link.source
+					if (sourcePort instanceof Port) {
+						linkMapping.put(sourcePort.name, rend)
+					}
+
+				}
+
+				// store all actors of circuits logic
+				for (node : logic.eAllContents.filter(Actor).toList) {
+					val atomicActor = !(node.innerActors.toList.length > 0)
+					if (atomicActor && (node.name != null)) {
+
+						// get kRendering information for each actor
 						val frame = context.getTargetElement(node, KNode)
 						val KContainerRendering kgelem = frame.getData(KContainerRendering)
 						val shape = frame.getData.filter(KRendering)
 						val children = kgelem.children
-						System.out.println(children + "HIHIHIHHI")
-						guardActorMapping.putAll(node.name, children)
-						guardActorMapping.putAll(node.name, shape)
+						actorMapping.putAll(node.name, children)
+						actorMapping.putAll(node.name, shape)
 
-						val links = node.ports.filter[type.startsWith("Out")].head.outgoingLinks
-						for (l : links) {
-							val link = context.getTargetElement(l, KEdge)
-							val rend = link.getData.filter(KRendering).head
-							linkMapping.put(node.name, rend)//context.getTargetElement(l, KEdge))
+						// store guradActors
+						if (node.name.startsWith("g")) {
+							guardActorMapping.putAll(node.name, children)
+							guardActorMapping.putAll(node.name, shape)
+						} // store MUX actors
+						else if (node.type != null){
+							switch(node.type){
+								case "MUX" : muxSelPortMapping.putAll(node.name, node.ports.filter[type == "Sel"])
+								case "OR"  : orInPortMapping.putAll(node.name, node.ports.filter[type == "In"])
+								case "AND" : andInPortMapping.putAll(node.name, node.ports.filter[type == "In"])
+							}
+						} // store the other actors
+						else {
+							guardActorMapping.putAll(node.name, children)
+							guardActorMapping.putAll(node.name, shape)
 						}
+
 					}
 
 				}
 
 			}
 
-			for (e : guardActorMapping.entries) {
-				System.out.println("entry: " + e.key + " with value " + e.value)
-			}
-
-			for (l : linkMapping.entries) {
-				System.out.println("ENTRY: " + l.key + " with value " + l.value)
-			}
+//			for (e : guardActorMapping.entries) {
+//				System.out.println("entry: " + e.key + " with value " + e.value)
+//			}
+//
+//			for (l : linkMapping.entries) {
+//				System.out.println("ENTRY: " + l.key + " with value " + l.value)
+//			}
 		]
 		Display.getDefault().syncExec(run)
 
@@ -167,15 +200,21 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
 	}
 
+	/**
+	 * Filter all informations to name those KGraph elements which shall be highlighted 
+	 */
 	override step(JSONObject jSONObject) throws KiemExecutionException {
 		System.out.println("step-------------------------------++++++++!!!!!!!!!!!!!")
 		val highlighting = <String>newHashSet
 		for (key : jSONObject.keys.toIterable) {
+
+			// //check for active guards in this tick
+			System.out.println("JSONObject is: " + key.toString + " with value: " + jSONObject.get(key).toString)
 			if ((key as String).startsWith(BasicBlockTransformation::GUARDPREFIX)) {
 				val object = jSONObject.get(key)
 				if (object instanceof JSONObject && (object as JSONObject).has("value")) {
 					val value = (object as JSONObject).get("value")
-
+					
 					if ((value as Integer) != 0) {
 						if (key.endsWith(DepthJoinSynchronizer::SCHIZOPHRENIC_SUFFIX)) {
 
@@ -186,18 +225,188 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 						}
 					}
 				}
+			} // ////check for Input Signals which are true for this tick.....or Output if you remove has"value
+			else {
+				val object = jSONObject.get(key)
+				if (object instanceof JSONObject && (object as JSONObject).has("present") && !(object as JSONObject).has("value")) { 
+				
+					val value = (object as JSONObject).get("present")
+						
+					if ((value as Boolean)) {
+						highlighting += key
+					} else {
+						// e.g.: !A is true
+						highlighting += "!" + key
+					}
+
+				}
 			}
 		}
-
+		
+		addMuxToHighlight(highlighting)
+		
+		addAndOrGatesToHighlight(highlighting)
+		
 		for (h : highlighting) {
 			System.out.println(h + " shall be highlighted")
 		}
+
 		highlight(highlighting)
 
 		jSONObject
 	}
+	
+	def void addAndOrGatesToHighlight(HashSet<String> highlighting) {
+		
+		//flag to check if something new happened 
+		var boolean oneMore = false
+		
+		//add OR 
+		for(or : orInPortMapping.entries){
+			if(highlighting.contains(or.value.name)){
+				oneMore = true
+				highlighting += or.key
+			}
+		}
+		
+		//add AND
+		
+		//flag to check if all previous ports of this and gate were highlighted
+		var allPorts = false
+		
+		//store name of "active" and gate
+		var key = new String
+		val length = andInPortMapping.entries.length
+		var cnt = 1
+		for(and : andInPortMapping.entries){
+			if(key == ""){ //only happens if this for section starts
+				key = and.key
+				
+				//check if this port is highlighted
+				if(highlighting.contains(and.value.name)){
+					allPorts = true 
+				} else{
+					allPorts = false
+				}
+			}
+			// if this is not the first entry of the list, check if its the same and gate as before
+			// afterwards check if all former ports were marked for highlighting
+			else if (key == and.key && allPorts){
+				//if this port is not meant to be highlighted, the containing and gate shall not be highlighted
+				if(!highlighting.contains(and.value.name)){
+					allPorts = false
+				}
+			}
+			
+			//if this is not the first entry on the list, and this entry has another key, as the one before,
+			//check, if all ports of the former gate got a "1" . If so, add the former actor to highlighting list
+			else if(key != and.key){
+				if(allPorts){
+					highlighting += key
+					oneMore = true
+				} 
+				key = and.key
+				if(!highlighting.contains(and.value.name)){
+					allPorts = false
+				}
+			}
+			
+			if(cnt == length && allPorts){
+				highlighting += key
+			}
+			cnt += 1 
+		}
+		
+		//this time something happened in here.. maybe we should check if this affects another gate
+		if(oneMore){
+			oneMore = false
+			addAndOrGatesToHighlight(highlighting)
+		}
+	}
+	
+	def addMuxToHighlight(HashSet<String> highlighting) {
+	
+		for(m : muxSelPortMapping.entries){
+			if(highlighting.contains(m.value.name)){
+				highlighting += m.key
+			}
+		}
+		
+		
+	}
 
-	protected def IEditorPart getActiveEditor() {
+
+
+	protected static val HIGHLIGHTING_MARKER = new Property<Boolean>("highlighting", false);
+
+	protected def void highlight(Set<String> highlights) {
+
+//		val KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
+//		style2.setProperty(HIGHLIGHTING_MARKER, CircuitVisualizationDataComponent.this)
+		val Runnable run = [|
+			System.out.println("highlighting-------------------------------++++++++!!!!!!!!!!!!!")
+			
+			
+			
+			//highlight guard actors
+			for (entry : actorMapping.entries) {
+				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
+//				val value = entry.value
+//				val KContainerRendering kgelem = value.getData(KContainerRendering)
+//				val children = kgelem.children
+//				for (c : children) {
+//					c.getStyles().add(EcoreUtil.copy(style2))
+//				}
+//				val kgelem = value.getData.filter(KRendering)
+				if (highlights.contains(entry.key)) {
+					if (highlighting == null) {
+//						System.out.println("highlighted: " + entry.key)
+						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
+						style.setProperty(HIGHLIGHTING_MARKER, true);
+						style.setColor(Colors::RED)
+						entry.value.styles.add(style)
+					}
+				} else {
+					if (!highlights.contains(entry.key) && highlighting != null) {
+//						System.out.println("UNNNhighlighted: " + entry.key)
+						entry.value.styles.remove(highlighting)
+					}
+				}
+
+			}
+			
+			///highlight links
+			for (entry : linkMapping.entries) {
+				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
+//				val value = entry.value
+//				val KContainerRendering kgelem = value.getData(KContainerRendering)
+//				val children = kgelem.children
+//				for (c : children) {
+//					c.getStyles().add(EcoreUtil.copy(style2))
+//				}
+//				val kgelem = value.getData.filter(KRendering)
+				if (highlights.contains(entry.key)) {
+					if (highlighting == null) {
+//						System.out.println("highlighted: " + entry.key)
+						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
+						style.setProperty(HIGHLIGHTING_MARKER, true);
+						style.setColor(Colors::GREEN)
+						entry.value.styles.add(style)
+					}
+				} else {
+					if (!highlights.contains(entry.key) && highlighting != null) {
+//						System.out.println("UNNNhighlighted: " + entry.key)
+						entry.value.styles.remove(highlighting)
+					}
+				}
+
+			}
+
+		]
+		Display.getDefault().syncExec(run)
+
+	}
+		protected def IEditorPart getActiveEditor() {
 		val Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();
 		val Runnable run = [|
 			val IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
@@ -208,113 +417,5 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		Display.getDefault().syncExec(run)
 		return maybe.get();
 	}
-
-	protected static val HIGHLIGHTING_MARKER = new Property<Boolean>("highlighting", false);
-
-	protected def void highlight(Set<String> guards) {
-
-//		val KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
-//		style2.setProperty(HIGHLIGHTING_MARKER, CircuitVisualizationDataComponent.this)
-		val Runnable run = [|
-			System.out.println("highlighting-------------------------------++++++++!!!!!!!!!!!!!")
-
-
-			for (entry : guardActorMapping.entries) {
-				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
-//				val value = entry.value
-//				val KContainerRendering kgelem = value.getData(KContainerRendering)
-//				val children = kgelem.children
-//				for (c : children) {
-//					c.getStyles().add(EcoreUtil.copy(style2))
-//				}
-//				val kgelem = value.getData.filter(KRendering)
-				if (guards.contains(entry.key)) {
-					if (highlighting == null) {
-						System.out.println("highlighted: " + entry.key)
-						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-						style.setProperty(HIGHLIGHTING_MARKER, true);
-						style.setColor(Colors::RED)
-						entry.value.styles.add(style)
-					}
-				} else {
-					if (!guards.contains(entry.key) && highlighting != null) {
-						System.out.println("UNNNhighlighted: " + entry.key)
-						entry.value.styles.remove(highlighting)
-					}
-				}
-
-			}
-			
-			
-			
-			for (entry : linkMapping.entries) {
-				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
-//				val value = entry.value
-//				val KContainerRendering kgelem = value.getData(KContainerRendering)
-//				val children = kgelem.children
-//				for (c : children) {
-//					c.getStyles().add(EcoreUtil.copy(style2))
-//				}
-//				val kgelem = value.getData.filter(KRendering)
-				if (guards.contains(entry.key)) {
-					if (highlighting == null) {
-						System.out.println("highlighted: " + entry.key)
-						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-						style.setProperty(HIGHLIGHTING_MARKER, true);
-						style.setColor(Colors::RED)
-						entry.value.styles.add(style)
-					}
-				} else {
-					if (!guards.contains(entry.key) && highlighting != null) {
-						System.out.println("UNNNhighlighted: " + entry.key)
-						entry.value.styles.remove(highlighting)
-					}
-				}
-
-			}
-			
-
-		]
-		Display.getDefault().syncExec(run)
-
-	}
-
-	private def KNode synthesizeConditionalAssignmentAnnotation(KNode sourceNode, Assignment assignment, SCGraph scg) {
-		val VOName = assignment.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
-		val VO = scg.findValuedObjectByName(VOName)
-		val kNode = assignment.createNode(VO) => [ node |
-			node.getData(typeof(KLayoutData)).setProperty(LayoutOptions.COMMENT_BOX, true)
-//            node.setNodeSize(75.0f, 20.0f)
-		]
-//            node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT) 
-		val figure = kNode.addRectangle().setLineWidth(1.0f).background = Colors::YELLOW;
-		val assignmentStr = sourceNode.getData(typeof(KRoundedRectangle)).children.filter(typeof(KText)).head.text
-		figure.addText(assignmentStr).setSurroundingSpace(4, 0, 2, 0).fontSize = 8
-
-		sourceNode.parent.children += kNode
-
-		kNode
-	}
-
-	private def KEdge synthesizeConditionalAssignmentLink(KNode aNode, KNode bNode) {
-		val kEdge = createNewEdge() => [ edge |
-			// Get and set source and target information.
-			var sourceNode = aNode
-			var targetNode = bNode
-			edge.source = sourceNode
-			edge.target = targetNode
-			edge.sourcePort = aNode.getPort("DEBUGPORT")
-			edge.targetPort = bNode.getPort("DEBUGPORT")
-
-			edge.addPolyline(1.0f) => [
-				it.lineStyle = LineStyle::DOT
-				it.foreground = Colors::GRAY
-			]
-
-		]
-
-		kEdge
-	}
-
 }
 

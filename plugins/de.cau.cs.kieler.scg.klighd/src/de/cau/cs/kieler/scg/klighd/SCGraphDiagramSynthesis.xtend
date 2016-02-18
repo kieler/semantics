@@ -1291,11 +1291,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         for (tn : nodes) {
             kContainer.children += tn.node
 
-            if (nodeGrouping != NODEGROUPING_HIERARCHY)
-                if (tn.node.getData(typeof(KShapeLayout)).getProperty(Properties::LAYER_CONSTRAINT) ==
-                    LayerConstraint::FIRST) {
-                        kContainer.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
-                    }
+// FIXME: this doesnt work properly. See KIPRA-1788.
+// The boxed first layer feature should be implemented in the new synthesis.
+//            if (nodeGrouping != NODEGROUPING_HIERARCHY)
+//                if (tn.node.getData(typeof(KShapeLayout)).getProperty(Properties::LAYER_CONSTRAINT) ==
+//                    LayerConstraint::FIRST) {
+//                        kContainer.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+//                    }
         }
 
         // Add the container to the original parent.

@@ -23,6 +23,7 @@ import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.core.krendering.Trigger
+import de.cau.cs.kieler.klay.layered.properties.EdgeLabelSideSelection
 
 class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject
@@ -120,7 +121,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 				collapsedRendering.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND)
 				collapsedRendering.setAreaPlacementData(
 					createKPosition(LEFT, 0, 0, TOP, 0, 0),
-					createKPosition(LEFT, 60, 0, TOP, 40, 0)
+					createKPosition(LEFT, 80, 0, TOP, 50, 0)
 				);
 //				collapsedRendering.setRightTopAlignedPointPlacementData(40, 40, 50, 50)
 				collapsedRendering.setBackgroundColor(100, 140, 200)
@@ -133,6 +134,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 				// Create the rendering for the expanded version of this node
 				val expandedRendering = createRegion(actorNode, actor)
 				expandedRendering.setProperty(KlighdProperties::EXPANDED_RENDERING, true)
+				expandedRendering.setProperty(Properties.EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.SMART)
 				expandedRendering.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND)
 
 				actorNode.data += expandedRendering

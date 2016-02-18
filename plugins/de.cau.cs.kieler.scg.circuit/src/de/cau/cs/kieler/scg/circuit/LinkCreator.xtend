@@ -17,7 +17,7 @@ class LinkCreator {
 		
 		val ports = pre.eAllContents.filter(Port).toList
 		for (p : ports) {
-			if (p.type == "In" || p.type == "Sel") {
+			if (p.type.startsWith("In") || p.type == "Sel") {
 				for (op : ports) {
 					if (op.type == "InConnectorPre" && p.name == op.name) {
 						val link = CircuitFactory::eINSTANCE.createLink
@@ -43,7 +43,7 @@ class LinkCreator {
 	def initRegion(Actor init) {
 		val ports = init.eAllContents.filter(Port).toList
 		for (p : ports) {
-			if (p.type == "In" || p.type == "Sel") {
+			if (p.type.startsWith("In") || p.type == "Sel") {
 				for (op : ports) {
 					if ((op.type == "InConnectorInit" || op.type == "Out") && p.name == op.name && p.eContainer != op.eContainer) {
 						val link = CircuitFactory::eINSTANCE.createLink
@@ -82,7 +82,7 @@ class LinkCreator {
 		for (p : portList) {
 			if (p.type == "Out") {
 				portList.forEach [ ip |
-					if ((ip.type == "In" || ip.type == "Sel" || ip.type == "Not" || ip.type == "OutConnectorLogic") &&
+					if ((ip.type.startsWith("In") || ip.type == "Sel" || ip.type == "Not" || ip.type == "OutConnectorLogic") &&
 						p.name == ip.name && p.eContainer != ip.eContainer) {
 						val link = CircuitFactory::eINSTANCE.createLink
 						link.source = p;
@@ -94,7 +94,7 @@ class LinkCreator {
 				]
 			}
 
-			if (p.type == "In" || p.type == "Sel" || p.type == "Not") {
+			if (p.type.startsWith("In") || p.type == "Sel" || p.type == "Not") {
 				portList.forEach [ op |
 					if ((op.type == "InConnectorLogic") && p.name == op.name && p.eContainer != op.eContainer) {
 						val link = CircuitFactory::eINSTANCE.createLink
@@ -115,7 +115,7 @@ class LinkCreator {
 						link.source = ic;
 						link.target = oc;
 						logic.innerLinks += link
-						System.out.println("connected" + ic.name + " with " + oc.name)
+
 					}
 
 				]
@@ -130,7 +130,6 @@ class LinkCreator {
 						link.source = ic;
 						link.target = oc;
 						logic.innerLinks += link
-						System.out.println("RRRconnected" + ic.name + " with " + oc.name)
 					}
 
 				]
@@ -156,7 +155,6 @@ class LinkCreator {
 
 		for (p : ports) {
 			if (p.type == "OutConnectorInit" || p.type == "OutConnectorPre") {
-				System.out.println(p.name)
 				ports.forEach [ ip |
 					if ((ip.type == "InConnectorLogic" || ip.type == "InConnectorPre" )&& p.name == ip.name) {
 						val link = CircuitFactory::eINSTANCE.createLink
@@ -217,7 +215,7 @@ class LinkCreator {
 
 				]
 			}
-			if (p.type == "In") {
+			if (p.type.startsWith("In")) {
 				portList.forEach [ op |
 					if (op.type == "OutConnectorCircuit" && p.name == op.name) {
 						val link = CircuitFactory::eINSTANCE.createLink

@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.scg.Conditional
 
 class SeqSSAscgTransformation extends AbstractProductionTransformation {
 
@@ -84,9 +85,9 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 			if (n instanceof Assignment) {
 				val name = n.valuedObject.name
 				val type = n.valuedObject.type
-				
+								
 				if (ssaMap.containsKey(name)) {
-
+					
 					transformExpressions(n.assignment, ssaMap)
 					val m = ssaMap.get(name)
 					ssaMap.replace(name, m, m + 1)
@@ -110,7 +111,8 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 					n.valuedObject = vo
 
 				} else {
-					n.assignment = transformExpressions(n.assignment, ssaMap)
+					val expr = n.assignment
+					n.assignment = transformExpressions(expr, ssaMap)
 				}
 			}
 		}
@@ -149,18 +151,31 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 	}
 
 	def Expression transformExpressions(Expression expression, HashMap<String, Integer> map) {
-
+		
+		if(expression instanceof ValuedObjectReference){
+			val varName = expression.valuedObject.name
+			
+			if (map.containsKey(varName) && map.get(varName) > 0) {
+				val vo = createValuedObject(varName + "_" + ssaMap.get(varName))
+				
+				expression.valuedObject = vo
+			}
+			
+		}
+		else{
 		val values = expression.eAllContents.filter(ValuedObjectReference)
-
 		values.forEach [ v |
 			val varName = v.valuedObject.name
+			
 			if (map.containsKey(varName) && map.get(varName) > 0) {
-
 				val vo = createValuedObject(varName + "_" + ssaMap.get(varName))
+				
 				v.valuedObject = vo
 			}
 
 		]
+		
+		}
 		expression
 	}
 
