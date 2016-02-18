@@ -195,8 +195,8 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 				actor.ports.add(selectPort)
 				actor.ports.add(outputPort)
 
-				truePort.type = "In"
-				falsePort.type = "In"
+				truePort.type = "In_1"
+				falsePort.type = "In_0"
 				selectPort.type = "Sel"
 				outputPort.type = "Out"
 
@@ -212,8 +212,6 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 				} else {
 					truePort.name = coa.assignment.serialize.toString
 					transformExpressions(coa.assignment, logic)
-					System.out.println("no boolean assignment at :" + coa.valuedObject.name + "assignment is: " +
-						coa.assignment.serialize.toString)
 
 				}
 

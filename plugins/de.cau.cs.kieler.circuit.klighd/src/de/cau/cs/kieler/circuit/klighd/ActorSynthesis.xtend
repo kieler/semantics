@@ -121,7 +121,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 				collapsedRendering.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND)
 				collapsedRendering.setAreaPlacementData(
 					createKPosition(LEFT, 0, 0, TOP, 0, 0),
-					createKPosition(LEFT, 60, 0, TOP, 40, 0)
+					createKPosition(LEFT, 80, 0, TOP, 50, 0)
 				);
 //				collapsedRendering.setRightTopAlignedPointPlacementData(40, 40, 50, 50)
 				collapsedRendering.setBackgroundColor(100, 140, 200)
