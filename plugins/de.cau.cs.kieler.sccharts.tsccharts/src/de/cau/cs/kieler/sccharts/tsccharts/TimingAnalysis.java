@@ -20,9 +20,7 @@ import java.lang.ref.WeakReference;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,20 +39,12 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ui.progress.UIJob;
-import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.Sets;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
-import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.Colors;
 import de.cau.cs.kieler.core.krendering.HorizontalAlignment;
@@ -86,15 +76,7 @@ import de.cau.cs.kieler.sccharts.tsccharts.handler.FileWriter;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.RequestType;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.TimingRequestResult;
 import de.cau.cs.kieler.sccharts.tsccharts.transformation.TPPInformation;
-import de.cau.cs.kieler.scg.Assignment;
-import de.cau.cs.kieler.scg.Conditional;
-import de.cau.cs.kieler.scg.ControlFlow;
-import de.cau.cs.kieler.scg.Entry;
-import de.cau.cs.kieler.scg.Exit;
-import de.cau.cs.kieler.scg.Link;
-import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
-import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.features.SCGFeatures;
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures;
 import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
@@ -781,14 +763,9 @@ public class TimingAnalysis extends Job {
             Region currentRegion = regionIterator.next();
             if (!(currentRegion == null)) {
                 // Possibly we have to mark this region as part of the WCET path (WCP)
-                boolean keyPresent = flatValues.containsKey(currentRegion);
-                Integer flatValue = flatValues.get(currentRegion);
                 String label = flatValues.get(currentRegion) + " / "
                         + deepValues.get(currentRegion);
                 regionLabelStringMap.put(currentRegion, label);
-                if (!keyPresent) {
-                    System.out.println("Key not present.");
-                }
             } else {
                 Integer WCRT = 0;
                 Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();
@@ -863,336 +840,73 @@ public class TimingAnalysis extends Job {
 
         }
     }
-    
-    // goes to transformation
-    /**
-     * The method checks all edges of the SCG and finds edges, where source and target node are
-     * associated with different regions from the original SCChart, of which the SCG is a
-     * compilation result. This means, the method determines, at which edges of the SCG a context
-     * switch between threads happens (which is determined with the help of a map provided by
-     * tracing). Into those edges, it inserts Assignment nodes with a Timing Program Point (TPP) for
-     * the interface of Interactive Timing Analysis.
-     * 
-     * @param scg
-     *            A sequential SCG, into which timing program points are to be inserted.
-     * @param nodeRegionMapping
-     *            A map determined by tracing, which relates the nodes of a sequential SCG with
-     *            regions of the corresponding SCChart.
-     * @param tppRegionMap
-     *            A map, into which the method stores the related region for each TPP (which will be
-     *            the one corresponding to the thread, to which the context is switched a the
-     *            location where the TPP is inserted.
-     * @param scchartDummyRegion
-     * @param debugNodeList
-     * @return returns -1, if the TPP-insertion ran into a problem else the highest inserted TPP
-     *         number
-     */
-    private int insertTPP(SCGraph scg, HashMap<Node, Region> nodeRegionMapping,
-            HashMap<String, Region> tppRegionMap, Region scchartDummyRegion) {
-        // Get all edges of the sequential scg
-        // get the SCG nodes in fixed traversing order (top to bottom, then branch first)
-        LinkedList<ControlFlow> edgeList = getEdgesInFixedTraversingOrder(scg);
-        Iterator<ControlFlow> edgeListIterator = edgeList.iterator();
-        ArrayList<Link> redirectedEdges = new ArrayList<Link>();
-        // insertion starts with TPP(1);
-        Integer tppCounter = 1;
-        // Preprocessing step: Assign the first Region to the entry TPP
-        ControlFlow firstEdge = edgeList.getFirst();
-        Region firstSourceRegion =
-                getSourceRegion(firstEdge, nodeRegionMapping, scchartDummyRegion);
-        tppRegionMap.put("entry", firstSourceRegion);
-        while (edgeListIterator.hasNext()) {
-            if (tppCounter == 13) {
-                // avoid a TPP with the number 13, as this one has a special meaning for the timing
-                // analysis tool prototype
-                tppCounter = 1 + tppCounter;
-            }
-            ControlFlow currentEdge = edgeListIterator.next();
-            Node edgeTarget = currentEdge.getTarget();
-            // get the region the target node of the edge stems from
-            Region targetRegion = nodeRegionMapping.get(edgeTarget);
-            if (targetRegion == null) {
-                // It is normal that nodes of the SCG get mapped to null, if they are considered to
-                // belong to the scchart but not to one of its regions, for the timing analysis,
-                // they are attributed to a dummy region representing all parts of the scchart that
-                // does not belong to a region (thus enabling us to keep track of the timing for
-                // those
-                // parts
-                targetRegion = scchartDummyRegion;
-            }
-            Region sourceRegion =
-                    getSourceRegion(currentEdge, nodeRegionMapping, scchartDummyRegion);
-            // // get the region the source node of the edge stems from
-            // EObject edgeEContainer = currentEdge.eContainer();
-            // Node sourceNode = null;
-            // if (edgeEContainer instanceof Node) {
-            // sourceNode = (Node) edgeEContainer;
-            // } else {
-            // // source node of edge could not be determined
-            // return -1;
-            // }
-            // Region sourceRegion = nodeRegionMapping.get(sourceNode);
-            // if (sourceRegion == null) {
-            // // Nodes that do not belong to a region are attributed to the scchart dummy region
-            // sourceRegion = scchartDummyRegion;
-            // }
-            // check if the mapping has yielded a complete answer
-            if ((targetRegion != null) && (sourceRegion != null)) {
-                // check for a context switch, in any other case nothing will be done
-                if (!(sourceRegion.equals(targetRegion))) {
-                    // also, if this edge has been visited before, there is nothing to do (important
-                    // for edges that have the same target node as other edges)
-                    if (!(redirectedEdges.contains(currentEdge))) {
-                        // now this edge is processed, record that
-                        redirectedEdges.add(currentEdge);
-                        // insert tpp node, keep it for the redirection of other edges
-                        Assignment tpp =
-                                insertSingleTPP(scg, currentEdge, tppCounter, redirectedEdges);
-                        // Save which Region starts at this TPP value
-                        tppRegionMap.put((tppCounter).toString(), targetRegion);
-                        tppCounter = tppCounter + 1;
-                        // make sure that all edges that also point to the same target node as the
-                        // current edge did before redirection are redirected to the TPP as well
-                        EList<Link> targetIncomingEdges = edgeTarget.getIncoming();
-                        if (targetIncomingEdges.size() > 1) {
-                            Iterator<Link> targetIncomingIterator = targetIncomingEdges.iterator();
-                            while (targetIncomingIterator.hasNext()) {
-                                Link redirectionLink = targetIncomingIterator.next();
-                                if ((!(currentEdge.equals(redirectionLink)))
-                                        && (!(redirectedEdges.contains(redirectionLink)))) {
-                                    redirectionLink.setTarget(tpp);
-                                    redirectedEdges.add(redirectionLink);
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-                // a mapping for at least one of the nodes could not be determined
-                System.out.println("A mapping for at least one node of an edge cannot be found.");
-            }
-        }
-        return tppCounter - 1;
-    }
-    // end goes to transformation
 
-    // goes to transformation
-    /**
-     * This method retrieves the region the source node of the controlFlow edge given as a parameter
-     * is attributed to.
-     * 
-     * @param nodeRegionMapping
-     *            The given mapping of nodes to regions
-     * @param scchartDummyRegion
-     *            The dummy region representing the SCChart itself (for not all elements can
-     *            attributed to regions of the SCChart and are then attributed to the SCChart, resp.
-     *            its dummy region)
-     * @param controlFlow
-     *            The edge for which the start node region ist to be determined
-     * @return Returns the Region the source node of the controlFlow edge belongs to. Returns null,
-     *         if the edge container is no Node.
-     */
-    private Region getSourceRegion(ControlFlow controlFlow,
-            HashMap<Node, Region> nodeRegionMapping, Region scchartDummyRegion) {
-        // get the region the source node of the edge stems from
-        EObject edgeEContainer = controlFlow.eContainer();
-        Node sourceNode = null;
-        if (edgeEContainer instanceof Node) {
-            sourceNode = (Node) edgeEContainer;
-        } else {
-            // source node of edge could not be determined
-            return null;
-        }
-        Region sourceRegion = nodeRegionMapping.get(sourceNode);
-        if (sourceRegion == null) {
-            // Nodes that do not belong to a region are attributed to the scchart dummy region
-            sourceRegion = scchartDummyRegion;
-        }
-        return sourceRegion;
-    }
-    // end goes to transformation
+   
 
-    // goes to transformation
-    /**
-     * Creates a linked list of all controlflow edges of a sequential scg in fixed traversing order,
-     * meaning top to bottom, then-branches first.
-     * 
-     * @param The
-     *            sequential SCG
-     * @return The linked list with all controlflow edges in the graph traversal order top to
-     *         bottom, then branches first.
-     */
-    private LinkedList<ControlFlow> getEdgesInFixedTraversingOrder(SCGraph scg) {
-        LinkedList<ControlFlow> edgeList = new LinkedList<ControlFlow>();
-        // Find start entry node
-        Iterator<Entry> entryIter =
-                Iterators.filter(ModelingUtil.eAllContentsOfType2(scg, Node.class), Entry.class);
-        Node entry = null;
-        while (entryIter.hasNext()) {
-            Entry currentEntry = entryIter.next();
-            if (currentEntry.getIncoming().size() == 0) {
-                entry = (Node) currentEntry;
-            }
-        }
-        traverseSequentialGraphEdges(entry, edgeList);
-        return edgeList;
-    }
-    // end goes to transformation
-
-    // goes to transformation
-    /**
-     * Recursive method to collect the edges of a sequential SCG in the traversing order top to
-     * bottom, then branch first. The method relies on the special structure of the sequential SCG:
-     * there are no nested conditionals and only the then branches of a conditional have content.
-     * Assumes that there are no empty then branches.
-     * 
-     * @param currentNode
-     *            The sequential SCG entry node, else the currentNode
-     * @param edgeList
-     *            The list to add the edges in traversing order, empty in initial call
-     */
-    private void traverseSequentialGraphEdges(Node currentNode, LinkedList<ControlFlow> edgeList) {
-        // There is only one Entry node in a sequential SCG, this is the start call
-        if (currentNode instanceof Entry) {
-            ControlFlow outgoingEdge = ((Entry) currentNode).getNext();
-            edgeList.add(outgoingEdge);
-            traverseSequentialGraphEdges(outgoingEdge.getTarget(), edgeList);
-        } else {
-            // There is only one Exit node in a sequential SCG, if we reach it, we are finished.
-            if (currentNode instanceof Exit) {
-                return;
-            } else {
-                if (currentNode instanceof Conditional) {
-                    // We do then branch first order
-                    ControlFlow thenEdge = ((Conditional) currentNode).getThen();
-                    edgeList.add(thenEdge);
-                    traverseSequentialGraphEdges(thenEdge.getTarget(), edgeList);
-                } else {
-                    if (currentNode instanceof Assignment) {
-                        ControlFlow outgoingEdge = ((Assignment) currentNode).getNext();
-                        edgeList.add(outgoingEdge);
-                        // check whether this node ends a then branch, if so, add the else edge to
-                        // the
-                        // list also
-                        EList<Link> targetIncomingList = outgoingEdge.getTarget().getIncoming();
-                        if (targetIncomingList.size() > 1) {
-                            Iterator<Link> incomingEdgeIterator = targetIncomingList.iterator();
-                            while (incomingEdgeIterator.hasNext()) {
-                                Link currentLink = incomingEdgeIterator.next();
-                                if (!(currentLink == outgoingEdge)) {
-                                    edgeList.add((ControlFlow) currentLink);
-                                }
-                            }
-                        }
-                        traverseSequentialGraphEdges(outgoingEdge.getTarget(), edgeList);
-                    }
-                }
-            }
-        }
-    }
-    // goes to transformation
-
-    // goes to transformation
-    /**
-     * Method inserts a single timing program point for interactive timing analysis in the edge
-     * given as parameter controlFlow. This happens by inserting an Assignment with the TPP as text
-     * expression as new target of the edge and connecting it by a new edge with the original target
-     * of the edge.
-     * 
-     * @param controlFlow
-     *            The edge, into which the TPP node is to be inserted.
-     * @param tppNumber
-     *            The number of the TPP to be created, for example the 2 in 'TPP(2);'
-     * @param redirectedEdges
-     *            The list of already redirectedEdges, into which the newly created edge has to be
-     *            inserted to keep it from being redirected again
-     * @return The Assignment wit the TPP
-     */
-    private Assignment insertSingleTPP(SCGraph scg, ControlFlow controlFlow, int tppNumber,
-            ArrayList<Link> redirectedEdges) {
-        // make target reachable via a new edge
-        Node target = controlFlow.getTarget();
-        ControlFlow newEdge = ScgFactory.eINSTANCE.createControlFlow();
-        redirectedEdges.add(newEdge);
-        newEdge.setTarget(target);
-        // prepare assignment node with the tpp
-        Assignment tpp = ScgFactory.eINSTANCE.createAssignment();
-        TextExpression tppText = KExpressionsFactory.eINSTANCE.createTextExpression();
-        tppText.setText("TPP(" + tppNumber + ")");
-        tpp.setAssignment(tppText);
-        // insert the new assignment node in the edge
-        tpp.setNext(newEdge);
-        controlFlow.setTarget(tpp);
-        scg.getNodes().add(tpp);
-        return tpp;
-    }
-    // end goes to transformation
-
-    // DEBUG METHODS
-
-    private void debugTracing(HashMap<Node, Region> nodeRegionMapping) {
-        // get all regions
-        Set<Region> regions = new HashSet<Region>(nodeRegionMapping.values());
-        regions.addAll(Arrays.asList((Iterators.toArray(
-                Iterators.filter(scchart.eAllContents(), Region.class), Region.class))));
-
-        for (Region r : regions) {
-            String regionID = r == null ? "root" : r.getId();
-            if (regionID == null) {
-                State parentState = r.getParentState();
-                regionID =
-                        parentState.getId() + parentState.getLabel()
-                                + parentState.getRegions().indexOf(r) + r.getLabel();
-            } else if (r != null) {
-                regionID += r.getLabel();
-            }
-            Pair<String, String> pair =
-                    new Pair<String, String>((scchart.getId() + scchart.getLabel()), regionID);
-            Set<String> prev = debugTracingHistory.get(pair);
-
-            Set<String> results = new HashSet<String>();
-            for (java.util.Map.Entry<Node, Region> entry : nodeRegionMapping.entrySet()) {
-                if (entry.getValue() == r) {
-                    results.add(nodeToString(entry.getKey()));
-                }
-            }
-
-            if (prev == null) {
-                debugTracingHistory.put(pair, results);
-            } else if (results.size() != prev.size()
-                    || !Sets.symmetricDifference(results, prev).isEmpty()) {
-                String message = "Error: Tracing produced inconsistent mappings over multiple run";
-                String fails =
-                        "Errornous nodes of region '" + regionID + "': "
-                                + Joiner.on(",").join(Sets.symmetricDifference(results, prev));
-                StatusManager.getManager().handle(
-                        new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
-                                new Throwable(fails)), StatusManager.LOG);
-                StatusManager.getManager().handle(
-                        new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
-                                new Throwable(fails)), StatusManager.SHOW);
-            }
-
-            if (DEBUG_VERBOSE) {
-                timingResults.put(r, Joiner.on(",").join(results) + "[" + results.size() + "]");
-            }
-        }
-    }
-
-    private String nodeToString(Node node) {
-        if (node instanceof Assignment) {
-            ValuedObject vo = ((Assignment) node).getValuedObject();
-            if (vo != null) {
-                return "Ass:" + vo.getName();
-            } else {
-                return "Hostcode";
-            }
-        } else if (node instanceof Conditional) {
-            return "Cond:"
-                    + ((ValuedObjectReference) ((Conditional) node).getCondition())
-                            .getValuedObject().getName();
-        } else {
-            return node.eClass().getName();
-        }
-    }
+//    // DEBUG METHODS
+//
+//    private void debugTracing(HashMap<Node, Region> nodeRegionMapping) {
+//        // get all regions
+//        Set<Region> regions = new HashSet<Region>(nodeRegionMapping.values());
+//        regions.addAll(Arrays.asList((Iterators.toArray(
+//                Iterators.filter(scchart.eAllContents(), Region.class), Region.class))));
+//
+//        for (Region r : regions) {
+//            String regionID = r == null ? "root" : r.getId();
+//            if (regionID == null) {
+//                State parentState = r.getParentState();
+//                regionID =
+//                        parentState.getId() + parentState.getLabel()
+//                                + parentState.getRegions().indexOf(r) + r.getLabel();
+//            } else if (r != null) {
+//                regionID += r.getLabel();
+//            }
+//            Pair<String, String> pair =
+//                    new Pair<String, String>((scchart.getId() + scchart.getLabel()), regionID);
+//            Set<String> prev = debugTracingHistory.get(pair);
+//
+//            Set<String> results = new HashSet<String>();
+//            for (java.util.Map.Entry<Node, Region> entry : nodeRegionMapping.entrySet()) {
+//                if (entry.getValue() == r) {
+//                    results.add(nodeToString(entry.getKey()));
+//                }
+//            }
+//
+//            if (prev == null) {
+//                debugTracingHistory.put(pair, results);
+//            } else if (results.size() != prev.size()
+//                    || !Sets.symmetricDifference(results, prev).isEmpty()) {
+//                String message = "Error: Tracing produced inconsistent mappings over multiple run";
+//                String fails =
+//                        "Errornous nodes of region '" + regionID + "': "
+//                                + Joiner.on(",").join(Sets.symmetricDifference(results, prev));
+//                StatusManager.getManager().handle(
+//                        new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
+//                                new Throwable(fails)), StatusManager.LOG);
+//                StatusManager.getManager().handle(
+//                        new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
+//                                new Throwable(fails)), StatusManager.SHOW);
+//            }
+//
+//            if (DEBUG_VERBOSE) {
+//                timingResults.put(r, Joiner.on(",").join(results) + "[" + results.size() + "]");
+//            }
+//        }
+//    }
+//    private String nodeToString(Node node) {
+//        if (node instanceof Assignment) {
+//            ValuedObject vo = ((Assignment) node).getValuedObject();
+//            if (vo != null) {
+//                return "Ass:" + vo.getName();
+//            } else {
+//                return "Hostcode";
+//            }
+//        } else if (node instanceof Conditional) {
+//            return "Cond:"
+//                    + ((ValuedObjectReference) ((Conditional) node).getCondition())
+//                            .getValuedObject().getName();
+//        } else {
+//            return node.eClass().getName();
+//        }
+//    }
 }
