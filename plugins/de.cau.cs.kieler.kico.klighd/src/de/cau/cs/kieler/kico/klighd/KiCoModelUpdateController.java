@@ -832,7 +832,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 }
             }
 
-            // public compilation result if exists
+            // publish compilation result if exists
             if (currentCompilationResult != null) {
                 publishCurrentModelInformation(model, currentCompilationResult);
                 properties.setProperty(KiCoProperties.COMPILATION_RESULT, currentCompilationResult);
@@ -909,7 +909,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     private void publishCurrentModelInformation(final Object model,
             final CompilationResult compilationResult) {
-        if (getDiagramView().isLinkedWithActiveEditor()) {
+        if (!pinToggleAction.isChecked() && getDiagramView().getEditor().getSite().getPage().getActiveEditor() == getDiagramView().getEditor()) {
             boolean is_placeholder = model instanceof ErrorModel || model instanceof MessageModel
                     || model instanceof CodePlaceHolder;
             boolean is_chain = model instanceof ModelChain;
