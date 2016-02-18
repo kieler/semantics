@@ -29,6 +29,7 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis
 import de.cau.cs.kieler.sccharts.tsccharts.TimingUtil
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -48,8 +49,6 @@ import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis
 
 /**
  * Transform a sequentialized SCG to a sequentialized SCG with timing program points.
@@ -88,19 +87,19 @@ class TTPTransformation extends AbstractProductionTransformation
 
     // -------------------------------------------------------------------------   
     @Inject
- 
     extension AnnotationsExtensions
-//    extension SCChartsExtension
+
+    @Inject
+    extension SCChartsExtension
 
     /**
-     * Transform add TTPs to the sequentialized SCG. Write basic .ta file.
+     * Transform add TTPs to the sequentialized SCG.
      * 
      * @param scg the SCG
      * @return the SCG with TTP
      */
     def public Object transform(SCGraph scg, KielerCompilerContext context)
     {
-        //var isState = false
         var TPPInformation tppInformation = null
         var Collection<Object> targetElements = null
         var HashMap<Region, Integer> regionDepth = null
@@ -108,7 +107,6 @@ class TTPTransformation extends AbstractProductionTransformation
         var mappingSize = 0 as int
         var Multimap<Object, Object> mapping = null
         var State scchart = null
-        var EObject transformationObject = null
         var Tracing tracing = null
         var List<Tracing> tracings = null
         var CompilationResult compilationResult = null
@@ -134,7 +132,7 @@ class TTPTransformation extends AbstractProductionTransformation
                 throw new KielerCompilerException(TimingAnalysisTransformations::TTP_ID,
                     TimingAnalysisTransformations::TTP_ID, "TPP Transformation was not successful./n" +
                         "The original SCChart was not determined.")
-            }
+                    }
                     mapping = tracing.getMapping(scg, scchart);
                     mappingSize = mapping.keySet().size();
                     nodeRegionMapping = new HashMap<Node, Region>(mappingSize);
@@ -149,16 +147,6 @@ class TTPTransformation extends AbstractProductionTransformation
                             for (Object targetObj : targetElements)
                             {
                                 var EObject targetElement = targetObj as EObject;
-                                
-                                // debug, may be removed
-//                                isState = targetElement instanceof State;
-//                                if (isState) {
-//                                    var State targetElementAsState = targetElement as State
-//                                    var test = targetElementAsState.final
-//                                    var isCompound = targetElementAsState.hasInnerStatesOrControlflowRegions
-//                                }
-//                                
-                                
                                 if (!(targetElement instanceof State &&
                                     ((targetElement as State).hasInnerStatesOrControlflowRegions)) ||
                                         targetElements.size() == 1)
@@ -213,17 +201,6 @@ class TTPTransformation extends AbstractProductionTransformation
 
                         return scg
                     }
-                    
-                     def boolean hasInnerStatesOrControlflowRegions(State state) {
-                          return (( state.regions != null && state.regions.size != 0 && state.controlflowRegionsNotEmpty))
-                     }
-                     
-                      def boolean controlflowRegionsNotEmpty(State state) {
-        for (r : state.regions.filter(ControlflowRegion)) {
-            if(r.states.size > 0) return true
-        }
-        false
-    }
 
                     /**
                      * The method checks all edges of the SCG and finds edges, where source and target node are

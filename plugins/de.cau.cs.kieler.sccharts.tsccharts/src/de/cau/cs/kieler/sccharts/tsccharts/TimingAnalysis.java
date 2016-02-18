@@ -14,18 +14,13 @@
 package de.cau.cs.kieler.sccharts.tsccharts;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -40,7 +35,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
@@ -53,9 +47,7 @@ import org.eclipse.xtext.ui.util.ResourceUtil;
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterators;
-import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
@@ -78,7 +70,6 @@ import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.core.util.Pair;
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KielerCompiler;
@@ -91,12 +82,10 @@ import de.cau.cs.kieler.klighd.util.ModelingUtil;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.FileWriter;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.RequestType;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.TimingRequestResult;
-import de.cau.cs.kieler.sccharts.tsccharts.transformation.TTPFeature;
-import de.cau.cs.kieler.sccharts.tsccharts.transformation.TimingAnalysisTransformations;
+import de.cau.cs.kieler.sccharts.tsccharts.transformation.TPPInformation;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scg.ControlFlow;
@@ -109,7 +98,6 @@ import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.features.SCGFeatures;
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures;
 import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
-import de.cau.cs.kieler.sccharts.tsccharts.transformation.TPPInformation;
 
 /**
  * @author ima, als
@@ -123,9 +111,25 @@ public class TimingAnalysis extends Job {
     public static final IProperty<State> INPUT_SCCHART = new Property<State>(
             "de.cau.cs.kieler.timing.input.scchart", null);
     
+    public static final boolean DEBUG = false;
+    public static final boolean DEBUG_VERBOSE = false;
+    
+    /** 
+     * Switch on/of highlighting.
+     */
+    public static final boolean HOTSPOT_HIGHLIGHTING = true;
+    public static final boolean REGION_TIMING = true;
+    
+    /**
+     * Megahertz for which the the milliseconds are calculated from the processor cycles.
+     */
     private static int MEGAHERTZ = 200;
-    private static boolean FRACTIONAL = true;
-
+    
+    /**
+     * Enumeration for the possible representations of timing values in the interactive timing analysis.
+     * @author ima
+     *
+     */
     public enum TimingValueRepresentation {
         PERCENT, CYCLES, MILLISECONDS;
 
@@ -149,25 +153,40 @@ public class TimingAnalysis extends Job {
 
     private static HashMap<Pair<String, String>, Set<String>> debugTracingHistory =
             new HashMap<Pair<String, String>, Set<String>>();
-
-    public static final boolean DEBUG = false;
-    public static final boolean DEBUG_VERBOSE = false;
-    public static final boolean HOTSPOT_HIGHLIGHTING = true;
-    public static final boolean REGION_TIMING = true;
-
     private String pluginId = "de.cau.cs.kieler.sccharts.tsccharts";
-
     private FileWriter fileWriter = new FileWriter();
-
     private Resource resource;
-
     private TimingAnnotationProvider timingAnnotationProvider = new TimingAnnotationProvider();
-
     // no side effects on runtime, so static OK here
-    private static KRenderingExtensions renderingExtensions = new KRenderingExtensions();
-    private static SCChartsExtension scchartsExtension = Guice.createInjector().getInstance(
-            SCChartsExtension.class);
+    private static KRenderingExtensions renderingExtensions = new KRenderingExtensions(); 
+    private State scchart;
+    private HashMultimap<Region, WeakReference<KText>> timingLabels;
+    private HashMap<Region, String> timingResults;
+    private Region scchartDummyRegion;
+    private HashMultimap<Region, WeakReference<KRectangle>> regionRectangles;
+    private ArrayList<Region> wcpRegions = new ArrayList<Region>();
+    private TimingValueRepresentation rep;
+    private boolean highlight;
 
+   
+    /* Private Constructor. This class is not meant to be instantiated other than by the
+     * static startAnalysis method.
+     */
+    private TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels,
+            Region scchartDummyRegion, Resource resource,
+            HashMultimap<Region, WeakReference<KRectangle>> regionRectangles, boolean highlight,
+            TimingValueRepresentation rep) {
+        super("Timing Analysis");
+        this.scchart = rootState;
+        this.timingLabels = regionLabels;
+        this.timingResults = new HashMap<Region, String>();
+        this.scchartDummyRegion = scchartDummyRegion;
+        this.resource = resource;
+        this.regionRectangles = regionRectangles;
+        this.highlight = highlight;
+        this.rep = rep;
+    }
+    
     public static void startAnalysis(State rootState, KNode rootNode, ViewContext viewContext,
             boolean highlight, TimingValueRepresentation rep) {
         // It is normal that some nodes of the SCG will be mapped to null, because they belong to
@@ -234,39 +253,7 @@ public class TimingAnalysis extends Job {
         new TimingAnalysis(rootState, timingLabels, scchartDummyRegion, resource, regionRectangles,
                 highlight, rep).schedule();
     }
-
-    private State scchart;
-    private HashMultimap<Region, WeakReference<KText>> timingLabels;
-    private HashMap<Region, String> timingResults;
-    private Region scchartDummyRegion;
-    private HashMultimap<Region, WeakReference<KRectangle>> regionRectangles;
-    private ArrayList<Region> wcpRegions = new ArrayList<Region>();
-    private TimingValueRepresentation rep;
-    private boolean highlight;
-
-    /**
-     * @param name
-     * @param rootState
-     * @param scchartDummyRegion
-     * @param regionRectangles
-     * @param highlight
-     * @param rep
-     * @param rootNode
-     */
-    public TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels,
-            Region scchartDummyRegion, Resource resource,
-            HashMultimap<Region, WeakReference<KRectangle>> regionRectangles, boolean highlight,
-            TimingValueRepresentation rep) {
-        super("Timing Analysis");
-        this.scchart = rootState;
-        this.timingLabels = regionLabels;
-        this.timingResults = new HashMap<Region, String>();
-        this.scchartDummyRegion = scchartDummyRegion;
-        this.resource = resource;
-        this.regionRectangles = regionRectangles;
-        this.highlight = highlight;
-        this.rep = rep;
-    }
+    
 
     /**
      * {@inheritDoc}
@@ -321,102 +308,6 @@ public class TimingAnalysis extends Job {
        } else {
            return new Status(IStatus.ERROR, pluginId, "The TPP insertion yielded no auxiliary information.");
        }
-      
-        
-        // just testing the TPPTransformation, can be removed.
-        
-//        KielerCompilerContext testContextTPP = new KielerCompilerContext(TimingAnalysisTransformations.TTP_FEATURE_ID, scg);
-//        CompilationResult ttpSCG = KielerCompiler.compile(testContextTPP);
-//        SCGraph testSCG = (SCGraph) ttpSCG.getEObject();
-        
-        // testing TPPTransformation testing end
-        
-        // to Transformation
-//        List<Tracing> tracings = compilationResult.getAuxiliaryData(Tracing.class);
-//        Tracing tracing = tracings.isEmpty() ? null : tracings.get(0);
-//
-//        if (tracing == null) {
-//            return new Status(IStatus.ERROR, pluginId,
-//                    "The tracing is not activated for the given model.");
-//        }
-
-//        // Step 2: Analyse tracing relation into a node to region mapping
-//// to transformation end
-//        if (monitor.isCanceled()) {
-//            // Stop as soon as possible when job canceled
-//            return Status.CANCEL_STATUS;
-//        }
-//// to transformation
-//        Multimap<Object, Object> mapping = tracing.getMapping(scg, scchart);
-//        HashMap<Node, Region> nodeRegionMapping =
-//                new HashMap<Node, Region>(mapping.keySet().size());
-//        HashMap<Region, Integer> regionDepth = TimingUtil.createRegionDepthMap(scchart);
-//        for (Object originElement : mapping.keySet()) {
-//            if (originElement instanceof Node) {
-//                Collection<Object> targetElements = mapping.get(originElement);
-//                Region region = null;
-//                int depth = -1;
-//                for (Object targetObj : targetElements) {
-//                    EObject targetElement = (EObject) targetObj;
-//                    /*
-//                     * If the associated element is NOT a macro state (refinement due to entry node
-//                     * mappings in tracing in combination with guards) a region is searched to
-//                     * associate this node to. Except the macro state is the only associated
-//                     * element.
-//                     */
-//                    if (!(targetElement instanceof State && (scchartsExtension
-//                            .hasInnerStatesOrControlflowRegions((State) targetElement)))
-//                            || targetElements.size() == 1) {
-//                        while (targetElement != null) {
-//                            if (targetElement instanceof Region) {
-//                                Region newRegionCandidate = (Region) targetElement;
-//                                int candidateDepth = regionDepth.get(newRegionCandidate);
-//                                /*
-//                                 * If new region candidate has a strictly greater depth than the
-//                                 * current region the new candidate becomes the region this node is
-//                                 * associated with. Otherwise the region is contained in the new
-//                                 * candidate and is ignored. Assumption: No node is mapped to
-//                                 * elements in parallel Regions
-//                                 */
-//                                if (candidateDepth > depth) {
-//                                    region = newRegionCandidate;
-//                                    depth = candidateDepth;
-//                                }
-//                                break;
-//                            } else {
-//                                targetElement = targetElement.eContainer();
-//                            }
-//                        }
-//                    }
-//                }
-//                nodeRegionMapping.put((Node) originElement, region);
-//            }
-//        }
-//        
-//        // to transformation end
-//
-//        // Step 3: Calculate timing blocks and add additional timing mark nodes into SCG
-//
-//        if (monitor.isCanceled()) {
-//            // Stop as soon as possible when job canceled
-//            return Status.CANCEL_STATUS;
-//        }
-//        
-//        
-//        //to transformation
-//        HashMap<String, Region> tppRegionMap = new HashMap<String, Region>();
-//
-//        // insert timing program points
-//        int highestInsertedTPPNumber =
-//                insertTPP(scg, nodeRegionMapping, tppRegionMap, scchartDummyRegion);
-//        // to transformation end
-//        
-//        // Step 4: Compile SCG to C code
-//
-//        if (monitor.isCanceled()) {
-//            // Stop as soon as possible when job canceled
-//            return Status.CANCEL_STATUS;
-//        }
 
         context =
                 new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID + ","
