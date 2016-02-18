@@ -118,15 +118,26 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				val logic = circuit.eAllContents.filter(Actor).filter[name == "Program Logic"].head
 
 				// store all links of the circuit
-				for (link : circuit.eAllContents.filter(Link).toList) {
+				logic.eAllContents.filter(Link).forEach[link |
 					val l = context.getTargetElement(link, KEdge)
+					if(l != null){
 					val rend = l.getData.filter(KRendering).head
 					val sourcePort = link.source
 					if (sourcePort instanceof Port) {
 						linkMapping.put(sourcePort.name, rend)
 					}
-
-				}
+					
+					}
+				] 
+//				(link : logic.eAllContents.filter(Link)) {
+//					val l = context.getTargetElement(link, KEdge)
+//					val rend = l.getData.filter(KRendering).head
+//					val sourcePort = link.source
+//					if (sourcePort instanceof Port) {
+//						linkMapping.put(sourcePort.name, rend)
+//					}
+//
+//				}
 
 				// store all actors of circuits logic
 				for (node : logic.eAllContents.filter(Actor).toList) {

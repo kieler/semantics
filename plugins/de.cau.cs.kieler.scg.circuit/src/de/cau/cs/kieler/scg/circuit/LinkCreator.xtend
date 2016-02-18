@@ -150,7 +150,7 @@ class LinkCreator {
 			portList += ports
 		}
 		
-		val ports = portList.filter[name != "Tick" && name != "Reset"]
+		val ports = portList//.filter[name != "Tick" && name != "Reset"]
 		
 
 		for (p : ports) {

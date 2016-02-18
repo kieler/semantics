@@ -31,6 +31,7 @@ import java.util.EnumSet
 import de.cau.cs.kieler.circuit.Link
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 
 class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
@@ -48,24 +49,47 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	// -------------------------------------------------------------------------
 	// -- KlighD Options
 	// -------------------------------------------------------------------------
-	/** Show Tick */
-	private static val SynthesisOption SHOW_TICK = SynthesisOption::createCheckOption("Tick Wires", false);
+	/** Show Not-Gates */
+	private static val SynthesisOption SHOW_NOT = SynthesisOption::createCheckOption("Not-Gates", true);
 
 	/** Show Tick */
-	private static val SynthesisOption SHOW_ALL_REGIONS = SynthesisOption::createCheckOption("Show Entire Circuit",
-		false);
+	private static val SynthesisOption SHOW_TICK = SynthesisOption::createCheckOption("Tick Wires", false);
 
 	/** Show Reset */
 	private static val SynthesisOption SHOW_RESET = SynthesisOption::createCheckOption("Reset Wires", false);
 
-	/** Show Not-Gates */
-	private static val SynthesisOption SHOW_NOT = SynthesisOption::createCheckOption("Not-Gates", true);
+	/** Show Circuit */
+	private static val SynthesisOption SHOW_ALL_REGIONS = SynthesisOption::createCheckOption("Show Entire Circuit",
+		false);
+	
+	/** Diargram */
+	private static val SynthesisOption BRANDES_KOEPF = SynthesisOption::createCheckOption("Brandes Koepf",
+		true);
+	
+	/** Show Circuit */
+	private static val SynthesisOption INTERACTIVE = SynthesisOption::createCheckOption("Interactive",
+		false);
+	
+	/** Show Circuit */
+	private static val SynthesisOption LINEAR_SEGMENTS = SynthesisOption::createCheckOption("Linear Segments",
+		false);
+	
+	/** Show Circuit */
+	private static val SynthesisOption NETWORK_SIMPLEX = SynthesisOption::createCheckOption("Network Simplex",
+		false);
+	
+	/** Show Circuit */
+	private static val SynthesisOption SIMPLE = SynthesisOption::createCheckOption("Simple",
+		false);
 
-	/** Show Pre Region */
-	private static val SynthesisOption SHOW_PRE_REGION = SynthesisOption::createCheckOption("PreRegion", false);
-
-	/** Show Init Region */
-	private static val SynthesisOption SHOW_INIT_REGION = SynthesisOption::createCheckOption("Initialization", false);
+//	/** Show PreRegister Region */
+//	private static val SynthesisOption SHOW_PRE_REGION = SynthesisOption::createCheckOption("PreRegion", false);
+//
+//	/** Show Initialization Region */
+//	private static val SynthesisOption SHOW_INIT_REGION = SynthesisOption::createCheckOption("Initialization", false);
+//
+//	/** Show Program Logic Region */
+//	private static val SynthesisOption SHOW_LOGIC_REGION = SynthesisOption::createCheckOption("Program Logic", true);
 
 	/**  
 	 * Returns a list of KlighD visualization options. Called by KlighD.
@@ -75,12 +99,16 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	override public getDisplayedSynthesisOptions() {
 		return newLinkedList(
 			SynthesisOption::createSeparator("Visibility"),
+			SHOW_NOT,
 			SHOW_TICK,
 			SHOW_RESET,
-			SHOW_NOT,
-			SHOW_PRE_REGION,
-			SHOW_INIT_REGION,
-			SHOW_ALL_REGIONS
+			SHOW_ALL_REGIONS,
+			SynthesisOption::createSeparator("Node Placement"),
+			BRANDES_KOEPF,
+			INTERACTIVE,
+			LINEAR_SEGMENTS,
+			NETWORK_SIMPLEX,
+			SIMPLE
 		)
 	}
 
@@ -92,11 +120,12 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			return root;
 		} else {
 			val logic = model.eAllContents.filter(Actor).filter[name == "Program Logic"].head
-			System.out.println(logic.name)
 			val rootLogic = createNode().associateWith(logic)
 			logic.transformActor(rootLogic);
 			return rootLogic;
-		}
+			
+			}
+		
 	}
 
 	// create a KNode for an Actor
@@ -114,8 +143,17 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 //		actorNode.setLayoutOption(LayoutOptions.EDGE_ROUTING, EdgeRouting.ORTHOGONAL);
 		actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
 		actorNode.setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.INSIDE);
-		actorNode.setLayoutOption(LayoutOptions.DIRECTION, Direction.RIGHT)
-
+		actorNode.setLayoutOption(LayoutOptions.DIRECTION, Direction.RIGHT);
+		
+		if(BRANDES_KOEPF.booleanValue){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.BRANDES_KOEPF);}
+		if(INTERACTIVE.booleanValue){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.INTERACTIVE);}
+		if(LINEAR_SEGMENTS.booleanValue){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.LINEAR_SEGMENTS);}
+		if(NETWORK_SIMPLEX.booleanValue){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.NETWORK_SIMPLEX);}
+		if(SIMPLE.booleanValue){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.SIMPLE);}
+		
+		
+		
+		
 		// add ports to actor
 		for (port : actor.ports) {
 			val isAtomic = (actor.innerActors.length == 0)
@@ -151,9 +189,13 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					}
 
 					if (port.type == "In_1") {
+						actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
 						it.addInsidePortLabel("Sel(1)", 5, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
+						it.setLayoutOption(LayoutOptions.PORT_INDEX, 1)
 					} else if (port.type == "In_0") {
+						actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
 						it.addInsidePortLabel("Sel(0)", 5, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
+						it.setLayoutOption(LayoutOptions.PORT_INDEX, 0)
 					}
 
 				} else if (port.type.startsWith("Out")) {
@@ -233,22 +275,21 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			}
 		}
 
-		if (!(SHOW_INIT_REGION.booleanValue)) {
-			if (actor.name == "Circuit Initialization") {
-				actorNode.setLayoutOption(KlighdProperties::EXPAND, false)
-			}
+//		if (!(SHOW_INIT_REGION.booleanValue)) {
+		if (actor.name == "Circuit Initialization") {
+			actorNode.setLayoutOption(KlighdProperties::EXPAND, false)
+		}
+//		}
+//		if (!(SHOW_PRE_REGION.booleanValue)) {
+		if (actor.name == "Pre Registers") {
+			actorNode.setLayoutOption(KlighdProperties::EXPAND, false)
+//			}
 		}
 
-		if (!(SHOW_PRE_REGION.booleanValue)) {
-			if (actor.name == "Pre Registers") {
-				actorNode.setLayoutOption(KlighdProperties::EXPAND, false)
-			}
-		}
-		
-		if(!(SHOW_ALL_REGIONS.booleanValue)){
-			if(actor.name == "Program Logic"){
-			actorNode.setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.OUTSIDE);
-			
+		if (!(SHOW_ALL_REGIONS.booleanValue)) {
+			if (actor.name == "Program Logic") {
+				actorNode.setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.OUTSIDE);
+
 			}
 		}
 
