@@ -75,6 +75,8 @@ import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.VerticalAlignment;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
+import de.cau.cs.kieler.core.properties.IProperty;
+import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData;
 import de.cau.cs.kieler.kico.CompilationResult;
@@ -115,6 +117,12 @@ import de.cau.cs.kieler.sccharts.tsccharts.transformation.TPPInformation;
  */
 public class TimingAnalysis extends Job {
 
+    /**
+     * Stores the original input SCChart.
+     */
+    public static final IProperty<State> INPUT_SCCHART = new Property<State>(
+            "de.cau.cs.kieler.timing.input.scchart", null);
+    
     private static int MEGAHERTZ = 200;
     private static boolean FRACTIONAL = true;
 
@@ -280,6 +288,7 @@ public class TimingAnalysis extends Job {
                 new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID
                         + ",*T_ABORT,*T_scg.basicblock.sc,*T_NOSIMULATIONVISUALIZATION,T_scg.ttp", scchart);
         context.setProperty(Tracing.ACTIVE_TRACING, true);
+        context.setProperty(INPUT_SCCHART, scchart);
         context.setAdvancedSelect(true);
         CompilationResult compilationResult = KielerCompiler.compile(context);
 
@@ -296,7 +305,7 @@ public class TimingAnalysis extends Job {
                     System.out.println(currentError.getMessage() + "\n");
                 }
             }
-            return new Status(IStatus.ERROR, pluginId, "SCG sequentialization failed.");
+            return new Status(IStatus.ERROR, pluginId, "SCG sequentialization failed. (ITA)");
         }
 
         SCGraph scg = (SCGraph) compilationResult.getEObject();
@@ -428,7 +437,7 @@ public class TimingAnalysis extends Job {
                     System.out.println(currentError.getMessage() + "\n");
                 }
             }
-            return new Status(IStatus.ERROR, pluginId, "The code generation failed.");
+            return new Status(IStatus.ERROR, pluginId, "The code generation failed. (ITA)");
         }
 
         String code = compilationResult.getString();
@@ -881,8 +890,14 @@ public class TimingAnalysis extends Job {
             Region currentRegion = regionIterator.next();
             if (!(currentRegion == null)) {
                 // Possibly we have to mark this region as part of the WCET path (WCP)
-                regionLabelStringMap.put(currentRegion, flatValues.get(currentRegion) + " / "
-                        + deepValues.get(currentRegion));
+                boolean keyPresent = flatValues.containsKey(currentRegion);
+                Integer flatValue = flatValues.get(currentRegion);
+                String label = flatValues.get(currentRegion) + " / "
+                        + deepValues.get(currentRegion);
+                regionLabelStringMap.put(currentRegion, label);
+                if (!keyPresent) {
+                    System.out.println("Key not present.");
+                }
             } else {
                 Integer WCRT = 0;
                 Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();

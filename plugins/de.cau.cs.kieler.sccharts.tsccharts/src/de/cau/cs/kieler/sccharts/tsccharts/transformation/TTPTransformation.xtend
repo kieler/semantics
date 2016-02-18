@@ -49,7 +49,7 @@ import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-
+import de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis
 
 /**
  * Transform a sequentialized SCG to a sequentialized SCG with timing program points.
@@ -128,17 +128,13 @@ class TTPTransformation extends AbstractProductionTransformation
             }
 
             // Analyse tracing relation into a node to region mapping
-            transformationObject = context.getTransformationObject
-            if (transformationObject instanceof State)
-            {
-                scchart = transformationObject as State
-            }
-            else
+            scchart = context.getProperty(TimingAnalysis.INPUT_SCCHART)
+            if (scchart == null)
             {
                 throw new KielerCompilerException(TimingAnalysisTransformations::TTP_ID,
                     TimingAnalysisTransformations::TTP_ID, "TPP Transformation was not successful./n" +
                         "The original SCChart was not determined.")
-                    }
+            }
                     mapping = tracing.getMapping(scg, scchart);
                     mappingSize = mapping.keySet().size();
                     nodeRegionMapping = new HashMap<Node, Region>(mappingSize);
