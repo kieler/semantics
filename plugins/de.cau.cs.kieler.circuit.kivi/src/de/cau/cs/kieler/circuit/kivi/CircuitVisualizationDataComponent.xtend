@@ -63,6 +63,7 @@ import de.cau.cs.kieler.core.krendering.KForeground
 import de.cau.cs.kieler.circuit.Link
 import de.cau.cs.kieler.circuit.Port
 import java.util.HashSet
+import java.util.LinkedList
 
 class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
@@ -79,14 +80,19 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	extension KPortExtensions = injector.getInstance(typeof(KPortExtensions))
 	extension KContainerRenderingExtensions = injector.getInstance(typeof(KContainerRenderingExtensions))
 
+	// port maps
 	val HashMultimap<String, Port> muxSelPortMapping = HashMultimap.create
 	val HashMultimap<String, Port> orInPortMapping = HashMultimap.create
 	val HashMultimap<String, Port> andInPortMapping = HashMultimap.create
+
+	// actor maps
 	val HashMultimap<String, KRendering> actorMapping = HashMultimap.create
 	val HashMultimap<String, KRendering> guardActorMapping = HashMultimap.create
-	val HashMultimap<String, KRendering> linkMapping = HashMultimap.create
-	val HashMultimap<String, KRendering> nonGuardActorMapping = HashMultimap.create
+	val LinkedList<String> muxActors = new LinkedList<String>
 
+	val HashMultimap<String, KRendering> linkMapping = HashMultimap.create
+
+//	val LinkedList<String> otherActorMapping = new LinkedList<String>
 	override initialize() throws KiemInitializationException {
 
 		val diagramEditor = getActiveEditor();
@@ -105,74 +111,88 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		andInPortMapping.clear
 		actorMapping.clear
 		guardActorMapping.clear
+		muxActors.clear
 		linkMapping.clear
-		nonGuardActorMapping.clear
-
+//		otherActorMapping.clear
 		val contextsCirc = viewParts.map[viewer.viewContext].filter[inputModel instanceof Actor]
 
 		val Runnable run = [|
 			for (context : contextsCirc) {
 				System.out.println("circuit-------------------------------++++++++!!!!!!!!!!!!!")
-				System.out.println(context.getNode().toString)
+//				System.out.println(context.getNode().toString)
 				val circuit = context.inputModel as Actor
-				val logic = circuit.eAllContents.filter(Actor).filter[name == "Program Logic"].head
-
+//				val logic = circuit.eAllContents.filter(Actor).filter[name == "Program Logic"].head
 				// store all links of the circuit
-				logic.eAllContents.filter(Link).forEach[link |
+				circuit.eAllContents.filter(Link).forEach [ link |
 					val l = context.getTargetElement(link, KEdge)
-					if(l != null){
-					val rend = l.getData.filter(KRendering).head
-					val sourcePort = link.source
-					if (sourcePort instanceof Port) {
-						linkMapping.put(sourcePort.name, rend)
+					if (l != null) {
+						val rend = l.getData.filter(KRendering).head
+						val sourcePort = link.source
+						if (sourcePort instanceof Port) {
+							linkMapping.put(sourcePort.name, rend)
+						}
+
 					}
-					
-					}
-				] 
-//				(link : logic.eAllContents.filter(Link)) {
-//					val l = context.getTargetElement(link, KEdge)
-//					val rend = l.getData.filter(KRendering).head
-//					val sourcePort = link.source
-//					if (sourcePort instanceof Port) {
-//						linkMapping.put(sourcePort.name, rend)
-//					}
-//
-//				}
+				]
 
 				// store all actors of circuits logic
-				for (node : logic.eAllContents.filter(Actor).toList) {
+				for (node : circuit.eAllContents.filter(Actor).toList) {
 					val atomicActor = !(node.innerActors.toList.length > 0)
 					if (atomicActor && (node.name != null)) {
 
 						// get kRendering information for each actor
 						val frame = context.getTargetElement(node, KNode)
-						val KContainerRendering kgelem = frame.getData(KContainerRendering)
-						val shape = frame.getData.filter(KRendering)
-						val children = kgelem.children
-						actorMapping.putAll(node.name, children)
-						actorMapping.putAll(node.name, shape)
+						if (frame != null) {
+							val KContainerRendering kgelem = frame.getData(KContainerRendering)
+							val shape = frame.getData.filter(KRendering)
+							val children = kgelem.children.filter[id == "highlightable"]
+							actorMapping.putAll(node.name, children)
+							actorMapping.putAll(node.name, shape)
 
-						// store guradActors
-						if (node.name.startsWith("g")) {
-							guardActorMapping.putAll(node.name, children)
-							guardActorMapping.putAll(node.name, shape)
-						} // store MUX actors
-						else if (node.type != null){
-							switch(node.type){
-								case "MUX" : muxSelPortMapping.putAll(node.name, node.ports.filter[type == "Sel"])
-								case "OR"  : orInPortMapping.putAll(node.name, node.ports.filter[type == "In"])
-								case "AND" : andInPortMapping.putAll(node.name, node.ports.filter[type == "In"])
-							}
-						} // store the other actors
-						else {
-							guardActorMapping.putAll(node.name, children)
-							guardActorMapping.putAll(node.name, shape)
+							// store guradActors
+							if (node.name.startsWith("g")) {
+								guardActorMapping.putAll(node.name, children)
+								guardActorMapping.putAll(node.name, shape)
+							} // store logical gate actors and corresponding ports
+							else if (node.type != null) {
+								switch (node.type) {
+									case "MUX": {
+										muxSelPortMapping.putAll(node.name, node.ports.filter[type == "Sel"])
+										muxActors.add(node.name)
+									}
+									case "OR": {
+										orInPortMapping.putAll(node.name, node.ports.filter[type == "In"])
+//										otherActorMapping.add(node.name)
+									}
+									case "AND": {
+										andInPortMapping.putAll(node.name, node.ports.filter[type == "In"])
+//										otherActorMapping.add(node.name)
+									}
+								}
+							} // store the other actors
+//							else {
+//								otherActorMapping.add(node.name)
+//
+//							}
 						}
-
 					}
 
 				}
 
+			}
+
+			// highlight GO signal
+			for (entry : actorMapping.get("_GO")) {
+				val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
+				style.setProperty(HIGHLIGHTING_MARKER, true);
+				style.setColor(Colors::LIGHT_SALMON)
+				entry.styles.add(style)
+			}
+			for (link : linkMapping.get("_GO")) {
+				val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
+				style.setProperty(HIGHLIGHTING_MARKER, true);
+				style.setColor(Colors::LIGHT_SALMON)
+				link.styles.add(style)
 			}
 
 //			for (e : guardActorMapping.entries) {
@@ -220,12 +240,12 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		for (key : jSONObject.keys.toIterable) {
 
 			// //check for active guards in this tick
-			System.out.println("JSONObject is: " + key.toString + " with value: " + jSONObject.get(key).toString)
+//			System.out.println("JSONObject is: " + key.toString + " with value: " + jSONObject.get(key).toString)
 			if ((key as String).startsWith(BasicBlockTransformation::GUARDPREFIX)) {
 				val object = jSONObject.get(key)
 				if (object instanceof JSONObject && (object as JSONObject).has("value")) {
 					val value = (object as JSONObject).get("value")
-					
+
 					if ((value as Integer) != 0) {
 						if (key.endsWith(DepthJoinSynchronizer::SCHIZOPHRENIC_SUFFIX)) {
 
@@ -239,10 +259,11 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 			} // ////check for Input Signals which are true for this tick.....or Output if you remove has"value
 			else {
 				val object = jSONObject.get(key)
-				if (object instanceof JSONObject && (object as JSONObject).has("present") && !(object as JSONObject).has("value")) { 
-				
+				if (object instanceof JSONObject && (object as JSONObject).has("present") &&
+					!(object as JSONObject).has("value")) {
+
 					val value = (object as JSONObject).get("present")
-						
+
 					if ((value as Boolean)) {
 						highlighting += key
 					} else {
@@ -253,11 +274,11 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				}
 			}
 		}
-		
+
 		addMuxToHighlight(highlighting)
-		
-		addAndOrGatesToHighlight(highlighting)
-		
+
+//		addAndOrGatesToHighlight(highlighting)
+
 		for (h : highlighting) {
 			System.out.println(h + " shall be highlighted")
 		}
@@ -266,102 +287,97 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
 		jSONObject
 	}
-	
+
 	def void addAndOrGatesToHighlight(HashSet<String> highlighting) {
-		
-		//flag to check if something new happened 
+
+		// flag to check if something new happened 
 		var boolean oneMore = false
-		
-		//add OR 
-		for(or : orInPortMapping.entries){
-			if(highlighting.contains(or.value.name)){
+
+		// add OR 
+		for (or : orInPortMapping.entries) {
+			if (highlighting.contains(or.value.name)) {
 				oneMore = true
 				highlighting += or.key
 			}
 		}
-		
-		//add AND
-		
-		//flag to check if all previous ports of this and gate were highlighted
+
+		// add AND
+		// flag to check if all previous ports of this and gate were highlighted
 		var allPorts = false
-		
-		//store name of "active" and gate
+
+		// store name of "active" and gate
 		var key = new String
 		val length = andInPortMapping.entries.length
 		var cnt = 1
-		for(and : andInPortMapping.entries){
-			if(key == ""){ //only happens if this for section starts
+		for (and : andInPortMapping.entries) {
+			if (key == "") { // only happens if this for section starts
 				key = and.key
-				
-				//check if this port is highlighted
-				if(highlighting.contains(and.value.name)){
-					allPorts = true 
-				} else{
+
+				// check if this port is highlighted
+				if (highlighting.contains(and.value.name)) {
+					allPorts = true
+				} else {
 					allPorts = false
 				}
-			}
-			// if this is not the first entry of the list, check if its the same and gate as before
+			} // if this is not the first entry of the list, check if its the same and gate as before
 			// afterwards check if all former ports were marked for highlighting
-			else if (key == and.key && allPorts){
-				//if this port is not meant to be highlighted, the containing and gate shall not be highlighted
-				if(!highlighting.contains(and.value.name)){
+			else if (key == and.key && allPorts) {
+				// if this port is not meant to be highlighted, the containing and gate shall not be highlighted
+				if (!highlighting.contains(and.value.name)) {
 					allPorts = false
 				}
-			}
-			
-			//if this is not the first entry on the list, and this entry has another key, as the one before,
-			//check, if all ports of the former gate got a "1" . If so, add the former actor to highlighting list
-			else if(key != and.key){
-				if(allPorts){
+			} // if this is not the first entry on the list, and this entry has another key, as the one before,
+			// check, if all ports of the former gate got a "1" . If so, add the former actor to highlighting list
+			else if (key != and.key) {
+				if (allPorts) {
 					highlighting += key
 					oneMore = true
-				} 
+				}
 				key = and.key
-				if(!highlighting.contains(and.value.name)){
+				if (!highlighting.contains(and.value.name)) {
 					allPorts = false
 				}
 			}
-			
-			if(cnt == length && allPorts){
+
+			if (cnt == length && allPorts) {
 				highlighting += key
 			}
-			cnt += 1 
+			cnt += 1
 		}
-		
-		//this time something happened in here.. maybe we should check if this affects another gate
-		if(oneMore){
+
+		// this time something happened in here.. maybe we should check if this affects another gate
+		if (oneMore) {
 			oneMore = false
 			addAndOrGatesToHighlight(highlighting)
 		}
 	}
-	
+
 	def addMuxToHighlight(HashSet<String> highlighting) {
-	
-		for(m : muxSelPortMapping.entries){
-			if(highlighting.contains(m.value.name)){
+
+		for (m : muxSelPortMapping.entries) {
+			if (highlighting.contains(m.value.name)) {
 				highlighting += m.key
 			}
 		}
-		
-		
+
 	}
 
-
-
 	protected static val HIGHLIGHTING_MARKER = new Property<Boolean>("highlighting", false);
+	protected static val GRAYLIGHTING_MARKER = new Property<Boolean>("graylighting", false);
 
 	protected def void highlight(Set<String> highlights) {
 
 //		val KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
 //		style2.setProperty(HIGHLIGHTING_MARKER, CircuitVisualizationDataComponent.this)
 		val Runnable run = [|
+
 			System.out.println("highlighting-------------------------------++++++++!!!!!!!!!!!!!")
-			
-			
-			
-			//highlight guard actors
+
+			// highlight actors
 			for (entry : actorMapping.entries) {
 				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
+				val graylighting = entry.value.styles.findFirst[getProperty(GRAYLIGHTING_MARKER)]
+
 //				val value = entry.value
 //				val KContainerRendering kgelem = value.getData(KContainerRendering)
 //				val children = kgelem.children
@@ -371,24 +387,46 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 //				val kgelem = value.getData.filter(KRendering)
 				if (highlights.contains(entry.key)) {
 					if (highlighting == null) {
+
+						System.out.println("highlighting " + entry.value)
+						// MUX highlighting
+						if (muxActors.contains(entry.key)) {
+							val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
+							style.setProperty(HIGHLIGHTING_MARKER, true);
+							style.setColor(Colors::RED)
+							entry.value.styles.add(style)
+						} else {
+
 //						System.out.println("highlighted: " + entry.key)
-						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-						style.setProperty(HIGHLIGHTING_MARKER, true);
-						style.setColor(Colors::RED)
-						entry.value.styles.add(style)
+							val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
+							style.setProperty(HIGHLIGHTING_MARKER, true);
+							style.setColor(Colors::LIGHT_SALMON)
+							entry.value.styles.add(style)
+
+						}
 					}
 				} else {
+					if (!highlights.contains(entry.key) && graylighting != null) {
+						entry.value.styles.remove(graylighting)
+					}
 					if (!highlights.contains(entry.key) && highlighting != null) {
 //						System.out.println("UNNNhighlighted: " + entry.key)
 						entry.value.styles.remove(highlighting)
+
+						val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
+						style.setProperty(GRAYLIGHTING_MARKER, true);
+						style.setColor(Colors::GRAY)
+						entry.value.styles.add(style)
+
 					}
 				}
-
 			}
-			
-			///highlight links
+
+			// /highlight links
 			for (entry : linkMapping.entries) {
 				val highlighting = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
+				val graylighting = entry.value.styles.findFirst[getProperty(GRAYLIGHTING_MARKER)]
+
 //				val value = entry.value
 //				val KContainerRendering kgelem = value.getData(KContainerRendering)
 //				val children = kgelem.children
@@ -401,23 +439,35 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 //						System.out.println("highlighted: " + entry.key)
 						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
 						style.setProperty(HIGHLIGHTING_MARKER, true);
-						style.setColor(Colors::GREEN)
+						style.setColor(Colors::LIGHT_SALMON)
 						entry.value.styles.add(style)
 					}
 				} else {
+					if (!highlights.contains(entry.key) && graylighting != null) {
+						entry.value.styles.remove(graylighting)
+					}
 					if (!highlights.contains(entry.key) && highlighting != null) {
 //						System.out.println("UNNNhighlighted: " + entry.key)
 						entry.value.styles.remove(highlighting)
+
+						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
+						style.setProperty(GRAYLIGHTING_MARKER, true);
+
+						style.setColor(Colors::GRAY)
+						entry.value.styles.add(style)
+
 					}
 				}
-
 			}
+
+			
 
 		]
 		Display.getDefault().syncExec(run)
 
 	}
-		protected def IEditorPart getActiveEditor() {
+
+	protected def IEditorPart getActiveEditor() {
 		val Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();
 		val Runnable run = [|
 			val IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();

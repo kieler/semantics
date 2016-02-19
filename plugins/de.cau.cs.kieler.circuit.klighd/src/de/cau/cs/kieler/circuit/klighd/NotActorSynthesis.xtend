@@ -66,6 +66,7 @@ class NotActorSynthesis implements IDrawableActor {
         node.addRectangle => [
             it.invisible = true
             it.addPolygon => [
+            	it.id = "highlightable"
                 it.lineWidth = 1
                 it.lineCap = LineCap.CAP_ROUND;
                 it.lineJoin = LineJoin.JOIN_ROUND;
@@ -77,6 +78,7 @@ class NotActorSynthesis implements IDrawableActor {
                 
             ];
             it.addEllipse => [
+            	it.id = "highlightable"
             	it.setBackground("white".color).lineWidth = 1;
             	it.setAreaPlacementData.from(LEFT, 24, 0, TOP, 12,0).to(RIGHT, 0, 0, BOTTOM, 12,0);
             	]

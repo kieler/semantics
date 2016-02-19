@@ -90,6 +90,7 @@ class OrActorSynthesis implements IDrawableActor {
 			it.lineCap.propagateToChildren = true
 
 			it.addRectangle => [
+				it.id = "highlightable"
 				it.lineWidth = 0;
 				it.background = "white".color;
 				it.selectionBackground = "red".color;
@@ -97,6 +98,7 @@ class OrActorSynthesis implements IDrawableActor {
 			];
 
 			it.addPolyline => [
+				
 				it.lineWidth = 1
 				it.lineCap = LineCap.CAP_ROUND;
 				it.lineJoin = LineJoin.JOIN_ROUND;
@@ -131,6 +133,7 @@ class OrActorSynthesis implements IDrawableActor {
 				it.setAreaPlacementData.from(LEFT, -15f, 0, TOP, 0, 0).to(LEFT, 1, 0, BOTTOM, 0, 0);
 			];
 			it.addArc() => [
+				it.id = "highlightable"
 				it.lineWidth = 1
 				it.lineCap = LineCap.CAP_ROUND;
 				it.background = "white".color;
@@ -160,6 +163,7 @@ class OrActorSynthesis implements IDrawableActor {
 ////                it.setAreaPlacementData.from(LEFT, -30, 0, TOP, 0,0).to(RIGHT, 0f, 0, BOTTOM, 0f,0);
 //			];
 			it.addPolygon() => [
+				it.id = "highlightable"
 				it.lineWidth = 0
 				it.background = "white".color;
 				it.selectionBackground = "red".color;

@@ -50,7 +50,7 @@ class FlipFlopActorSynthesis implements IDrawableActor {
 
 		node.addRectangle =>
 			[
-
+				it.id = "highlightable"
 				it.selectionBackground = "green".color;
 				it.setBackground("white".color);
 				node.addInsideBottomCenteredNodeLabel("FF", KlighdConstants.DEFAULT_FONT_SIZE,

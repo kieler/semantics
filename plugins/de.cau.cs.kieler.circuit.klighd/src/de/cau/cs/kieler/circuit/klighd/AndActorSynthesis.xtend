@@ -78,6 +78,7 @@ class AndActorSynthesis extends AbstractDiagramSynthesis<Actor> implements IDraw
 			it.invisible = true;
 
 			it.addRectangle => [
+				it.id = "highlightable"
 				it.lineWidth = 0;
 				it.background = "white".color;
 				it.selectionBackground = "red".color;
@@ -86,6 +87,7 @@ class AndActorSynthesis extends AbstractDiagramSynthesis<Actor> implements IDraw
 			];
 
 			it.addPolyline => [
+				it.id = "highlightable"
 				it.lineWidth = 1
 				it.lineCap = LineCap.CAP_ROUND;
 				it.lineJoin = LineJoin.JOIN_ROUND;
@@ -96,6 +98,7 @@ class AndActorSynthesis extends AbstractDiagramSynthesis<Actor> implements IDraw
 			];
 
 			it.addArc() => [
+				it.id = "highlightable"
 				it.lineWidth = 1
 				it.lineCap = LineCap.CAP_ROUND;
 				it.background = "white".color;

@@ -32,6 +32,7 @@ import de.cau.cs.kieler.circuit.Link
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
+import de.cau.cs.kieler.kiml.options.EdgeType
 
 class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
@@ -315,9 +316,9 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					it.targetPort = link.target.port
 				}
 			}
-			it.addRoundedBendsPolyline(3).addJunctionPointDecorator;
-
-		]
+			it.addRoundedBendsPolyline(10).addJunctionPointDecorator;
+			
+			]
 
 	}
 
