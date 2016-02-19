@@ -1666,6 +1666,34 @@ finally {
 
 
 
+// Entry rule entryRuleQualifiedID
+entryRuleQualifiedID 
+:
+{ before(grammarAccess.getQualifiedIDRule()); }
+	 ruleQualifiedID
+{ after(grammarAccess.getQualifiedIDRule()); } 
+	 EOF 
+;
+
+// Rule QualifiedID
+ruleQualifiedID
+    @init {
+		int stackSize = keepStackSize();
+    }
+	:
+(
+{ before(grammarAccess.getQualifiedIDAccess().getGroup()); }
+(rule__QualifiedID__Group__0)
+{ after(grammarAccess.getQualifiedIDAccess().getGroup()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
 // Entry rule entryRuleInteger
 entryRuleInteger 
 :
@@ -10937,6 +10965,130 @@ finally {
 
 
 
+rule__QualifiedID__Group__0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__QualifiedID__Group__0__Impl
+	rule__QualifiedID__Group__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__QualifiedID__Group__0__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getQualifiedIDAccess().getIDTerminalRuleCall_0()); }
+	RULE_ID
+{ after(grammarAccess.getQualifiedIDAccess().getIDTerminalRuleCall_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__QualifiedID__Group__1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__QualifiedID__Group__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__QualifiedID__Group__1__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getQualifiedIDAccess().getGroup_1()); }
+(rule__QualifiedID__Group_1__0)*
+{ after(grammarAccess.getQualifiedIDAccess().getGroup_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
+
+
+
+rule__QualifiedID__Group_1__0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__QualifiedID__Group_1__0__Impl
+	rule__QualifiedID__Group_1__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__QualifiedID__Group_1__0__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getQualifiedIDAccess().getFullStopKeyword_1_0()); }
+
+	'.' 
+
+{ after(grammarAccess.getQualifiedIDAccess().getFullStopKeyword_1_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__QualifiedID__Group_1__1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__QualifiedID__Group_1__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__QualifiedID__Group_1__1__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getQualifiedIDAccess().getIDTerminalRuleCall_1_1()); }
+	RULE_ID
+{ after(grammarAccess.getQualifiedIDAccess().getIDTerminalRuleCall_1_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
+
+
+
 rule__Integer__Group__0
     @init {
 		int stackSize = keepStackSize();
@@ -11663,8 +11815,8 @@ rule__ReferenceDeclaration__ReferenceAssignment_2
 (
 { before(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableCrossReference_2_0()); }
 (
-{ before(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableIDTerminalRuleCall_2_0_1()); }
-	RULE_ID{ after(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableIDTerminalRuleCall_2_0_1()); }
+{ before(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableQualifiedIDParserRuleCall_2_0_1()); }
+	ruleQualifiedID{ after(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableQualifiedIDParserRuleCall_2_0_1()); }
 )
 { after(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableCrossReference_2_0()); }
 )
@@ -11727,8 +11879,8 @@ rule__ReferenceDeclarationWOSemicolon__ReferenceAssignment_2
 (
 { before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableCrossReference_2_0()); }
 (
-{ before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableIDTerminalRuleCall_2_0_1()); }
-	RULE_ID{ after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableIDTerminalRuleCall_2_0_1()); }
+{ before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableQualifiedIDParserRuleCall_2_0_1()); }
+	ruleQualifiedID{ after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableQualifiedIDParserRuleCall_2_0_1()); }
 )
 { after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableCrossReference_2_0()); }
 )

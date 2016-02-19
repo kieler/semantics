@@ -76,6 +76,7 @@ public class KextSwitch<T> extends Switch<T>
 				T result = caseKext(kext);
 				if (result == null) result = caseKEXTScope(kext);
 				if (result == null) result = caseDeclarationScope(kext);
+				if (result == null) result = caseReferenceable(kext);
 				if (result == null) result = caseIdentifiable(kext);
 				if (result == null) result = caseAnnotatable(kext);
 				if (result == null) result = defaultCase(theEObject);
@@ -104,8 +105,6 @@ public class KextSwitch<T> extends Switch<T>
 			case KextPackage.DECLARATION_SCOPE: {
 				DeclarationScope declarationScope = (DeclarationScope)theEObject;
 				T result = caseDeclarationScope(declarationScope);
-				if (result == null) result = caseIdentifiable(declarationScope);
-				if (result == null) result = caseAnnotatable(declarationScope);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -113,8 +112,17 @@ public class KextSwitch<T> extends Switch<T>
 				KEXTScope kextScope = (KEXTScope)theEObject;
 				T result = caseKEXTScope(kextScope);
 				if (result == null) result = caseDeclarationScope(kextScope);
+				if (result == null) result = caseReferenceable(kextScope);
 				if (result == null) result = caseIdentifiable(kextScope);
 				if (result == null) result = caseAnnotatable(kextScope);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case KextPackage.REFERENCEABLE: {
+				Referenceable referenceable = (Referenceable)theEObject;
+				T result = caseReferenceable(referenceable);
+				if (result == null) result = caseIdentifiable(referenceable);
+				if (result == null) result = caseAnnotatable(referenceable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -212,6 +220,21 @@ public class KextSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	public T caseKEXTScope(KEXTScope object) {
+		return null;
+	}
+
+/**
+	 * Returns the result of interpreting the object as an instance of '<em>Referenceable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Referenceable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseReferenceable(Referenceable object) {
 		return null;
 	}
 

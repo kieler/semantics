@@ -1931,7 +1931,7 @@ public class Sct3GrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* "&" reference=[kext::Identifiable] valuedObjects+=ValuedObject (","
+	//	annotations+=Annotation* "&" reference=[kext::Identifiable|QualifiedID] valuedObjects+=ValuedObject (","
 	//	valuedObjects+=ValuedObject)* ";";
 	public KEXTGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return gaKEXT.getReferenceDeclarationAccess();
@@ -1942,7 +1942,7 @@ public class Sct3GrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* "&" reference=[kext::Identifiable] valuedObjects+=ValuedObject (","
+	//	annotations+=Annotation* "&" reference=[kext::Identifiable|QualifiedID] valuedObjects+=ValuedObject (","
 	//	valuedObjects+=ValuedObject)*;
 	public KEXTGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return gaKEXT.getReferenceDeclarationWOSemicolonAccess();
@@ -2070,7 +2070,8 @@ public class Sct3GrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------- //
 	//// Assign Operator Enum    
 	//enum AssignOperator returns keffects::AssignOperator:
-	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=" | ASSIGNMOD="%=" | ASSIGNAND="&=" |
+	//	ASSIGNOR="|=" | ASSIGNXOR="^=";
 	public KEffectsGrammarAccess.AssignOperatorElements getAssignOperatorAccess() {
 		return gaKEXT.getAssignOperatorAccess();
 	}
@@ -2393,7 +2394,8 @@ public class Sct3GrammarAccess extends AbstractGrammarElementFinder {
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject] ("." subReference=ValuedObjectReference)? ("[" indices+=Expression "]")*;
+	//	valuedObject=[ValuedObject|QualifiedID] //	('.' subReference=ValuedObjectReference)? 
+	//	("[" indices+=Expression "]")*;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKEXT.getValuedObjectReferenceAccess();
 	}
@@ -2930,6 +2932,16 @@ public class Sct3GrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getExtendedIDRule() {
 		return getExtendedIDAccess().getRule();
+	}
+
+	//QualifiedID returns ecore::EString:
+	//	ID ("." ID)*;
+	public AnnotationsGrammarAccess.QualifiedIDElements getQualifiedIDAccess() {
+		return gaKEXT.getQualifiedIDAccess();
+	}
+	
+	public ParserRule getQualifiedIDRule() {
+		return getQualifiedIDAccess().getRule();
 	}
 
 	//// Integer

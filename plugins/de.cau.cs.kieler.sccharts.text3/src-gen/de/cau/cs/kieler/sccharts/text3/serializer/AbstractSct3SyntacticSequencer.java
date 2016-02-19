@@ -94,7 +94,7 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=BOOLEAN
-	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|ID]
+	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|QualifiedID]
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_3_0_a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -140,7 +140,7 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) value=FLOAT
 	 *     (rule start) (ambiguity) value=INT
 	 *     (rule start) (ambiguity) value=STRING
-	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|ID]
+	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|QualifiedID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_3_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

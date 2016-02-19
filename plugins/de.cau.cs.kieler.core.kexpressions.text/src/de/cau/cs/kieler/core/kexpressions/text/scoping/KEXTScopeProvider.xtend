@@ -22,6 +22,13 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable
+import java.util.Set
+import de.cau.cs.kieler.core.kexpressions.text.kext.Referenceable
 
 /**
  * @author ssm
@@ -34,7 +41,11 @@ import org.eclipse.xtext.scoping.Scopes
 		// This scope should trigger on every instance of a valued object reference!
 		if (context instanceof ValuedObjectReference) {
 			return getScopeForValuedObjectReference(context, reference)
-		} else if (reference == KEffectsPackage.Literals.ASSIGNMENT__VALUED_OBJECT) {
+		} else if (context instanceof ReferenceDeclaration) {
+			return getScopeForReferenceDeclaration(context, reference)			
+		} 
+		
+		else if (reference == KEffectsPackage.Literals.ASSIGNMENT__VALUED_OBJECT) {
 			return getScopeForValuedObject(context, reference)
 		} else if (reference == KEffectsPackage.Literals.EMISSION__VALUED_OBJECT) {
 			return getScopeForValuedObject(context, reference)
@@ -43,8 +54,26 @@ import org.eclipse.xtext.scoping.Scopes
 	}
 	
 	protected def IScope getScopeForValuedObjectReference(EObject context, EReference reference) {
+ 	if (reference.eContainer instanceof ValuedObjectReference) {
+			val parentVOR = reference.eContainer as ValuedObjectReference
+			val declaration = parentVOR.valuedObject.eContainer as Declaration
+			if (declaration instanceof ReferenceDeclaration) {
+				return Scopes.scopeFor(<ValuedObject> newArrayList(declaration.valuedObjects))
+			}
+		}
 		return context.getScopeHierarchical(reference)
 	}
+	
+	protected def IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {
+ 		if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE) {
+ 			val candidates = <Identifiable> newArrayList
+			val declaration = context
+			if (declaration instanceof ReferenceDeclaration) {
+				return Scopes.scopeFor(<ValuedObject> newArrayList(declaration.valuedObjects))
+			}
+		}
+		return context.getScopeHierarchical(reference)
+	}	
 	
 	protected def IScope getScopeForValuedObject(EObject context, EReference reference) {
 		return context.getScopeHierarchical(reference)
@@ -72,6 +101,22 @@ import org.eclipse.xtext.scoping.Scopes
 			if (eO instanceof DeclarationScope) return eO 
 		}
 		return null
+	}
+	
+	protected def Set<Identifiable> getIdentifiables(EObject eObject) {
+		<Identifiable> newHashSet => [ set | 
+			val ids = eObject.eContents.filter(Identifiable).toSet
+			ids.forEach[ set += it.getIdentifiables ]
+			set += ids	
+		]
+	}
+
+	protected def Set<Identifiable> getReferenceables(EObject eObject) {
+		<Identifiable> newHashSet => [ set | 
+			val ids = eObject.eContents.filter(Referenceable).toSet
+			ids.forEach[ set += it.getIdentifiables ]
+			set += ids	
+		]
 	}
 
 }

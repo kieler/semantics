@@ -98,32 +98,14 @@ public interface KextPackage extends EPackage
     int IDENTIFIABLE = 3;
 
 /**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.ReferenceableImpl <em>Referenceable</em>}' class.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.ReferenceableImpl
+	 * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getReferenceable()
 	 * @generated
-	 * @ordered
 	 */
-    int IDENTIFIABLE__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-
-/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int IDENTIFIABLE__ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
-
-/**
-	 * The number of structural features of the '<em>Identifiable</em>' class.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int IDENTIFIABLE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
-
+	int REFERENCEABLE = 6;
 
 /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.DeclarationScopeImpl <em>Declaration Scope</em>}' class.
@@ -136,31 +118,13 @@ public interface KextPackage extends EPackage
 	int DECLARATION_SCOPE = 4;
 
 /**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DECLARATION_SCOPE__ANNOTATIONS = IDENTIFIABLE__ANNOTATIONS;
-
-/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DECLARATION_SCOPE__ID = IDENTIFIABLE__ID;
-
-/**
 	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DECLARATION_SCOPE__DECLARATIONS = IDENTIFIABLE_FEATURE_COUNT + 0;
+	int DECLARATION_SCOPE__DECLARATIONS = 0;
 
 /**
 	 * The number of structural features of the '<em>Declaration Scope</em>' class.
@@ -169,7 +133,7 @@ public interface KextPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DECLARATION_SCOPE_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 1;
+	int DECLARATION_SCOPE_FEATURE_COUNT = 1;
 
 
 /**
@@ -183,24 +147,6 @@ public interface KextPackage extends EPackage
 	int KEXT_SCOPE = 5;
 
 /**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int KEXT_SCOPE__ANNOTATIONS = DECLARATION_SCOPE__ANNOTATIONS;
-
-/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int KEXT_SCOPE__ID = DECLARATION_SCOPE__ID;
-
-/**
 	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -210,13 +156,31 @@ public interface KextPackage extends EPackage
 	int KEXT_SCOPE__DECLARATIONS = DECLARATION_SCOPE__DECLARATIONS;
 
 /**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEXT_SCOPE__ANNOTATIONS = DECLARATION_SCOPE_FEATURE_COUNT + 0;
+
+/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEXT_SCOPE__ID = DECLARATION_SCOPE_FEATURE_COUNT + 1;
+
+/**
 	 * The feature id for the '<em><b>Entities</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int KEXT_SCOPE__ENTITIES = DECLARATION_SCOPE_FEATURE_COUNT + 0;
+	int KEXT_SCOPE__ENTITIES = DECLARATION_SCOPE_FEATURE_COUNT + 2;
 
 /**
 	 * The feature id for the '<em><b>Scopes</b></em>' containment reference list.
@@ -225,7 +189,7 @@ public interface KextPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int KEXT_SCOPE__SCOPES = DECLARATION_SCOPE_FEATURE_COUNT + 1;
+	int KEXT_SCOPE__SCOPES = DECLARATION_SCOPE_FEATURE_COUNT + 3;
 
 /**
 	 * The number of structural features of the '<em>KEXT Scope</em>' class.
@@ -234,7 +198,16 @@ public interface KextPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int KEXT_SCOPE_FEATURE_COUNT = DECLARATION_SCOPE_FEATURE_COUNT + 2;
+	int KEXT_SCOPE_FEATURE_COUNT = DECLARATION_SCOPE_FEATURE_COUNT + 4;
+
+/**
+	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KEXT__DECLARATIONS = KEXT_SCOPE__DECLARATIONS;
 
 /**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -253,15 +226,6 @@ public interface KextPackage extends EPackage
 	 * @ordered
 	 */
 	int KEXT__ID = KEXT_SCOPE__ID;
-
-/**
-	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int KEXT__DECLARATIONS = KEXT_SCOPE__DECLARATIONS;
 
 /**
 	 * The feature id for the '<em><b>Entities</b></em>' containment reference list.
@@ -343,6 +307,60 @@ int ANNOTATED_EXPRESSION__EXPRESSION = AnnotationsPackage.ANNOTATABLE_FEATURE_CO
 	 * @ordered
 	 */
 int ANNOTATED_EXPRESSION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int IDENTIFIABLE__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int IDENTIFIABLE__ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+/**
+	 * The number of structural features of the '<em>Identifiable</em>' class.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int IDENTIFIABLE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCEABLE__ANNOTATIONS = IDENTIFIABLE__ANNOTATIONS;
+
+/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCEABLE__ID = IDENTIFIABLE__ID;
+
+/**
+	 * The number of structural features of the '<em>Referenceable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCEABLE_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 0;
 
 
 /**
@@ -483,6 +501,16 @@ int ANNOTATED_EXPRESSION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_
 	EReference getKEXTScope_Scopes();
 
 /**
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Referenceable <em>Referenceable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Referenceable</em>'.
+	 * @see de.cau.cs.kieler.core.kexpressions.text.kext.Referenceable
+	 * @generated
+	 */
+	EClass getReferenceable();
+
+/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -620,6 +648,16 @@ int ANNOTATED_EXPRESSION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_
 		 * @generated
 		 */
 		EReference KEXT_SCOPE__SCOPES = eINSTANCE.getKEXTScope_Scopes();
+
+				/**
+		 * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.ReferenceableImpl <em>Referenceable</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.ReferenceableImpl
+		 * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getReferenceable()
+		 * @generated
+		 */
+		EClass REFERENCEABLE = eINSTANCE.getReferenceable();
 
   }
 

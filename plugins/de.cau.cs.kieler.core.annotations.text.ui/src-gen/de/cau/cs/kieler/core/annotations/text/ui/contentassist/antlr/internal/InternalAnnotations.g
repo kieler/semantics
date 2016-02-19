@@ -400,6 +400,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleInteger
 entryRuleInteger 
 :
@@ -2259,6 +2261,8 @@ rule__ExtendedID__Group_2__1__Impl
 finally {
 	restoreStackSize(stackSize);
 }
+
+
 
 
 

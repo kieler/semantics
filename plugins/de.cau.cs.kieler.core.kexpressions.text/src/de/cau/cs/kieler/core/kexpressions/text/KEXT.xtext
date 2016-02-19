@@ -98,14 +98,17 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     ((signal?='signal'? type = ValueType) | signal?='signal') 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;  
     
+NamespaceID returns ecore::EString:
+  ID (':' ID)*;    
+    
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
-    '&' reference = [kext::Identifiable|ID]
+    '&' reference = [kext::Identifiable|NamespaceID]
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
     
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
-    '&' reference = [kext::Identifiable|ID] 
+    '&' reference = [kext::Identifiable|NamespaceID] 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;       
 
 // Valued Object Rule

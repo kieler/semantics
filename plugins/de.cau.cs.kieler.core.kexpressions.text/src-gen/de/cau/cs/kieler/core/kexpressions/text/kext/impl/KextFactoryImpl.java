@@ -66,6 +66,7 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory
 			case KextPackage.IDENTIFIABLE: return createIdentifiable();
 			case KextPackage.DECLARATION_SCOPE: return createDeclarationScope();
 			case KextPackage.KEXT_SCOPE: return createKEXTScope();
+			case KextPackage.REFERENCEABLE: return createReferenceable();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -132,6 +133,16 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory
 	public KEXTScope createKEXTScope() {
 		KEXTScopeImpl kextScope = new KEXTScopeImpl();
 		return kextScope;
+	}
+
+/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Referenceable createReferenceable() {
+		ReferenceableImpl referenceable = new ReferenceableImpl();
+		return referenceable;
 	}
 
 /**

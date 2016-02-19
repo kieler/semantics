@@ -5,6 +5,7 @@ package de.cau.cs.kieler.core.kexpressions.text.kext;
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,7 +23,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface DeclarationScope extends Identifiable {
+public interface DeclarationScope extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.

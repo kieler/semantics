@@ -77,6 +77,15 @@ public interface KextFactory extends EFactory
 	KEXTScope createKEXTScope();
 
 /**
+	 * Returns a new object of class '<em>Referenceable</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Referenceable</em>'.
+	 * @generated
+	 */
+	Referenceable createReferenceable();
+
+/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

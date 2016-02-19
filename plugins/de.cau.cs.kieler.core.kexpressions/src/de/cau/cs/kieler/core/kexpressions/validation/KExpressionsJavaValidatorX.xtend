@@ -19,7 +19,7 @@ import org.eclipse.xtext.validation.Check
  * @author ssm
  *
  */
-class KExpressionsJavaValidator extends de.cau.cs.kieler.core.kexpressions.validation.AbstractKExpressionsJavaValidator {
+class KExpressionsJavaValidatorX extends de.cau.cs.kieler.core.kexpressions.validation.AbstractKExpressionsJavaValidator {
 
     public static val CONST_DECLARATION_EXPECTS_INITIALIZATION = "A const declaration must have an initialization part!";    
     

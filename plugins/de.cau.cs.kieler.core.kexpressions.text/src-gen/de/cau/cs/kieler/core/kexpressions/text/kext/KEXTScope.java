@@ -21,7 +21,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface KEXTScope extends DeclarationScope {
+public interface KEXTScope extends DeclarationScope, Referenceable {
 	/**
 	 * Returns the value of the '<em><b>Entities</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity}.

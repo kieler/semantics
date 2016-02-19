@@ -255,7 +255,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* reference=[Identifiable|ID] valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *     (annotations+=Annotation* reference=[Identifiable|QualifiedID] valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 */
 	protected void sequence_ReferenceDeclarationWOSemicolon(EObject context, ReferenceDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -264,7 +264,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* reference=[Identifiable|ID] valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *     (annotations+=Annotation* reference=[Identifiable|QualifiedID] valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 */
 	protected void sequence_ReferenceDeclaration(EObject context, ReferenceDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

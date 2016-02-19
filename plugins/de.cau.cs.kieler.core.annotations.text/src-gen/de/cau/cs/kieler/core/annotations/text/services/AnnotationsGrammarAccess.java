@@ -680,6 +680,34 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getINTTerminalRuleCall_2_1() { return cINTTerminalRuleCall_2_1; }
 	}
 
+	public class QualifiedIDElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "QualifiedID");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		
+		//QualifiedID returns ecore::EString:
+		//	ID ("." ID)*;
+		@Override public ParserRule getRule() { return rule; }
+
+		//ID ("." ID)*
+		public Group getGroup() { return cGroup; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+
+		//("." ID)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"."
+		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
+	}
+
 	public class IntegerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Integer");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -743,6 +771,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private final EStringBooleanElements pEStringBoolean;
 	private final EStringAllTypesElements pEStringAllTypes;
 	private final ExtendedIDElements pExtendedID;
+	private final QualifiedIDElements pQualifiedID;
 	private final IntegerElements pInteger;
 	private final FloategerElements pFloateger;
 	private final TerminalRule tCOMMENT_ANNOTATION;
@@ -778,6 +807,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pEStringBoolean = new EStringBooleanElements();
 		this.pEStringAllTypes = new EStringAllTypesElements();
 		this.pExtendedID = new ExtendedIDElements();
+		this.pQualifiedID = new QualifiedIDElements();
 		this.pInteger = new IntegerElements();
 		this.pFloateger = new FloategerElements();
 		this.tCOMMENT_ANNOTATION = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "COMMENT_ANNOTATION");
@@ -1036,6 +1066,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getExtendedIDRule() {
 		return getExtendedIDAccess().getRule();
+	}
+
+	//QualifiedID returns ecore::EString:
+	//	ID ("." ID)*;
+	public QualifiedIDElements getQualifiedIDAccess() {
+		return pQualifiedID;
+	}
+	
+	public ParserRule getQualifiedIDRule() {
+		return getQualifiedIDAccess().getRule();
 	}
 
 	//// Integer

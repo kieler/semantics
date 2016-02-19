@@ -1535,6 +1535,16 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getExtendedIDAccess().getRule();
 	}
 
+	//QualifiedID returns ecore::EString:
+	//	ID ("." ID)*;
+	public AnnotationsGrammarAccess.QualifiedIDElements getQualifiedIDAccess() {
+		return gaKExpressions.getQualifiedIDAccess();
+	}
+	
+	public ParserRule getQualifiedIDRule() {
+		return getQualifiedIDAccess().getRule();
+	}
+
 	//// Integer
 	// // The integer rule extends the EInt terminal by an optional sign for negative numbers.
 	// Integer returns
