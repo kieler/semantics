@@ -221,7 +221,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                 }
             }
         })
-        command.toolTipText = "Shell command to be executed when preceding command finished successful."
+        command.toolTipText = "Shell command to be executed when the preceding commands finished successfully."
         
         // Create buttons
         val comp = UIUtil.createComposite(group, 2, GridData.HORIZONTAL_ALIGN_END)

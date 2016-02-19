@@ -115,7 +115,8 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
                 updateLaunchConfigurationDialog()
             }
         })
-        mainFile.toolTipText = "Variables ${main_name}, ${compiled_main_path} etc. are set using this path"
+        mainFile.toolTipText = "Path to the main file of this project.\n"
+            + "The placeholders ${main_name}, ${compiled_main_path}, etc. are set using this path."
     }
     
     /**
