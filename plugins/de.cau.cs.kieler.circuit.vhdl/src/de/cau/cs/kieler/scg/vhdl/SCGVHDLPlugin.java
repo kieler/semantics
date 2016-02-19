@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.circuit.vhdl;
+package de.cau.cs.kieler.scg.vhdl;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -6,18 +6,18 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class CircuitVHDLPlugin extends AbstractUIPlugin {
+public class SCGVHDLPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.circuit.vhdl"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "de.cau.cs.kieler.scg.vhdl"; //$NON-NLS-1$
 
 	// The shared instance
-	private static CircuitVHDLPlugin plugin;
+	private static SCGVHDLPlugin plugin;
 	
 	/**
 	 * The constructor
 	 */
-	public CircuitVHDLPlugin() {
+	public SCGVHDLPlugin() {
 	}
 
 	/*
@@ -43,7 +43,7 @@ public class CircuitVHDLPlugin extends AbstractUIPlugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static CircuitVHDLPlugin getDefault() {
+	public static SCGVHDLPlugin getDefault() {
 		return plugin;
 	}
 

@@ -11,14 +11,14 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.circuit.vhdl.feature
+package de.cau.cs.kieler.scg.vhdl.feature
 
 import de.cau.cs.kieler.kico.features.Feature
-import de.cau.cs.kieler.circuit.vhdl.feature.VHDLFeature
+import de.cau.cs.kieler.scg.vhdl.feature.VHDLFeature
 
 /**
  * VHDL Feature.
- * 
+ *  
  * @author cmot
  * @kieler.design 2016-02-11 proposed 
  * @kieler.rating 2016-02-11 proposed yellow
