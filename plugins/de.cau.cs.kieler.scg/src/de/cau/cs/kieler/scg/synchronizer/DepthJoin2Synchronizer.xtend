@@ -158,11 +158,10 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 			setOperator(OperatorType::LOGICAL_OR)
 		]
 
-		data.createEmptyExpressions(terminationExpression, join.fork)
+		data.createEmptyExpressions(terminationExpression, join.fork, scg)
 		for (emptyExpression : data.guardExpression.emptyExpressions) {
 			emptyExpression.expression = unfoldExp(emptyExpression.expression, join.fork.cachedSchedulingBlock.guard,
 				scg)
-			System.err.println(emptyExpression.expression.serialize)
 		}
 //		terminationExpression = terminationExpression.unfoldExp(join.fork.cachedSchedulingBlock.guard, scg) as OperatorExpression
 		data.createGuardExpression(terminationExpression)
@@ -208,11 +207,6 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 
 			// If it is the upper bound return false
 			if (exp.valuedObject == upperBound.valuedObject) {
-//				val replacingValObjRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-//				val replacingValObj = FALSE()
-//				KExpressionsFactory::eINSTANCE.createValuedObject
-//				replacingValObj.name = "false"
-//				replacingValObjRef.valuedObject = replacingValObj
 				return FALSE()
 			}
 			// return copy of _conds
@@ -258,7 +252,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 
 
 	protected def SynchronizerData createEmptyExpressions(SynchronizerData data,
-		OperatorExpression terminationExpression, Fork fork) {
+		OperatorExpression terminationExpression, Fork fork, SCGraph scg) {
 		// Count the exit nodes. The counter is used for enumerating the empty expressions.        
 		var exitNodeCount = 0
 
@@ -353,6 +347,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 				// terminationExpr.subExpressions.add(exitSB.guard.reference)
 				terminationExpression.subExpressions.add(exitSB.guard.valuedObject.reference)
 			}
+			exit.cachedSchedulingBlock.guard.expression = unfoldExp(exit.cachedSchedulingBlock.guard.expression, fork.cachedSchedulingBlock.guard, scg)
 		}
 
 		data
