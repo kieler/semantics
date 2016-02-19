@@ -168,17 +168,6 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 			debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " +
 				newGuard.expression.serialize)
 		}
-//		System.err.println("Fork Guard: " + join.fork.cachedSchedulingBlock.guard.valuedObject.serialize)
-//		val unfolded = unfoldExp(data.guardExpression.expression, join.fork.cachedSchedulingBlock.guard, scg)
-//		System.err.println("new Exp: " + unfolded.serialize)
-//
-//		val replacerVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-//		val replacerVO = KExpressionsFactory::eINSTANCE.createValuedObject
-//		replacerVO.name = "false"
-//		replacerVOR.valuedObject = replacerVO
-//		System.err.println("replaced: " +
-//			replace(unfolded, join.fork.cachedSchedulingBlock.guard.valuedObject, replacerVOR).serialize)
-//		data.guard.expression = unfolded
 	}
 
 	protected def SynchronizerData createEmptyExpressions(SynchronizerData data,
