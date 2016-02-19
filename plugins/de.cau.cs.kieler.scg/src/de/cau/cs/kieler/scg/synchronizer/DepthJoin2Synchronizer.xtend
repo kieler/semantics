@@ -1,5 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+<<<<<<< HEAD
  * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
