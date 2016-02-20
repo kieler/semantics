@@ -316,7 +316,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					it.targetPort = link.target.port
 				}
 			}
-			it.addRoundedBendsPolyline(10).addJunctionPointDecorator;
+			it.addRoundedBendsPolyline(3).addJunctionPointDecorator;
 			
 			]
 

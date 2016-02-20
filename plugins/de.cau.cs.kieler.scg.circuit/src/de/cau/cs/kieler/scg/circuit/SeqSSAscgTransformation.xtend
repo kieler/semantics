@@ -24,6 +24,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExte
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 class SeqSSAscgTransformation extends AbstractProductionTransformation {
 
@@ -55,88 +56,216 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 	@Inject
 	extension KExpressionsValuedObjectExtensions
 	val ssaMap = new HashMap<String, Integer>
-	val ssaPreMap = new HashMap<String, Integer>
 
-	def transform(SCGraph scg, KielerCompilerContext context) {
+	var SCGraph scg
+	var valuedObjectReferences = new HashMap<String, ValuedObject>
+
+//	val ssaPreMap = new HashMap<String, Integer>
+	def transform(SCGraph scgraph, KielerCompilerContext context) {
+
+		valuedObjectReferences.clear
+		scg = scgraph
 
 		// stores names of SSA variables and the latest version numbers
 		ssaMap.clear
-		ssaPreMap.clear
-
+//		ssaPreMap.clear
 		// val scgraph = scg.copy
 		val nodes = scg.nodes
 
-		
-
 		// search for Assignments
-		filterRelevantAssignments(nodes.filter(Assignment).toList, ssaMap)
+		filterRelevantAssignments(nodes.filter(Assignment).toList)
 
-		createSSAs(scg, nodes)
+		for (b : valuedObjectReferences.entrySet) {
+			System.out.println(b.key + " has value " + b.value)
+		}
+
+		createSSAs(nodes)
 
 //		setSSApreAndOutputs(scg.eAllContents.filter(Declaration).toList)
-		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.ssaMap = ssaMap])
-
+//		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.ssaMap = ssaMap])
 		return scg
 	}
 
-	def createSSAs(SCGraph scg, EList<Node> nodes) {
+	def createSSAs(EList<Node> nodes) {
 
-		for (n : nodes) {
-			if (n instanceof Assignment) {
-				val name = n.valuedObject.name
-				val type = n.valuedObject.type
-								
-				if (ssaMap.containsKey(name)) {
-					
-					transformExpressions(n.assignment, ssaMap)
-					val m = ssaMap.get(name)
-					ssaMap.replace(name, m, m + 1)
+		var activeConditional = false
+		var Node endCondition
+		for (n : nodes.immutableCopy) {
+			if (n == endCondition) {
+				activeConditional = false
+			}
 
-					val vo = createValuedObject(name + "_" + ssaMap.get(name))
-					val dec = createDeclaration()
-					dec.valuedObjects += vo
-					
-					switch (type) {
-						case BOOL: dec => [setType(ValueType::BOOL)]
-						case DOUBLE: dec => [setType(ValueType::DOUBLE)]
-						case FLOAT: dec => [setType(ValueType::FLOAT)]
-						case HOST: dec => [setType(ValueType::HOST)]
-						case INT: dec => [setType(ValueType::INT)]
-						case PURE: dec => [setType(ValueType::PURE)]
-						case STRING: dec => [setType(ValueType::STRING)]
-						case UNSIGNED: dec => [setType(ValueType::UNSIGNED)]
-					}
+			if (n instanceof Conditional) {
+				if (!activeConditional) {
+					activeConditional = true
+					endCondition = n.^else.target
 
-					scg.declarations += dec
-					n.valuedObject = vo
+					System.out.println("i found a condition " + n.condition.serialize.toString)
+					transformConditionalNodes(n, n, n, endCondition)
 
-				} else {
-					val expr = n.assignment
-					n.assignment = transformExpressions(expr, ssaMap)
+				}
+			} else if (n instanceof Assignment) {
+
+				if (!activeConditional) {
+					System.out.println("i found an assignment " + n.valuedObject.name)
+					transformAssignmentNodes(n)
 				}
 			}
+
+//			
+//			else if (n instanceof Assignment) {
+//				
+//				if (!activeConditional) {
+//					val name = n.valuedObject.name
+//					val type = n.valuedObject.type
+//
+//					if (ssaMap.containsKey(name)) {
+//
+//						transformExpressions(n.assignment, ssaMap)
+//						val m = ssaMap.get(name)
+//						ssaMap.replace(name, m, m + 1)
+//
+//						val vo = createValuedObject(name + "_" + ssaMap.get(name))
+//						val dec = createDeclaration()
+//						dec.valuedObjects += vo
+//
+//						switch (type) {
+//							case BOOL: dec => [setType(ValueType::BOOL)]
+//							case DOUBLE: dec => [setType(ValueType::DOUBLE)]
+//							case FLOAT: dec => [setType(ValueType::FLOAT)]
+//							case HOST: dec => [setType(ValueType::HOST)]
+//							case INT: dec => [setType(ValueType::INT)]
+//							case PURE: dec => [setType(ValueType::PURE)]
+//							case STRING: dec => [setType(ValueType::STRING)]
+//							case UNSIGNED: dec => [setType(ValueType::UNSIGNED)]
+//						}
+//
+//						scg.declarations += dec
+//						n.valuedObject = vo
+//
+//					} else {
+//						val expr = n.assignment
+//						n.assignment = transformExpressions(expr, ssaMap)//				Das ist natuerlich ziemlich interessant! :)
+//					}
+//
+//				}
+//				
+//			}
 		}
 	}
 
-	def setSSApreAndOutputs(List<Declaration> declarations) {
+	def void transformConditionalNodes(Conditional sourceConditional, Node predecessorNodeThen,
+		Node predecessorNodeElse, Node target) {
 
-		for (d : declarations) {
-			if (d.isOutput && !d.isInput) {
-				d.valuedObjects.forEach [ vo |
+		var Node thisNode
 
-					val name = vo.name
-					val readvalue = ssaMap.get(name)
-					ssaPreMap.put(name, readvalue)
-				]
+		if (predecessorNodeThen instanceof Conditional) {
+			thisNode = predecessorNodeThen.then.target
+		}
+		if (predecessorNodeThen instanceof Assignment) {
+			thisNode = predecessorNodeThen.next.target
+		}
+		if (thisNode instanceof Conditional) {
+			transformConditionalNodes(thisNode, thisNode, thisNode, thisNode.^else.target)
+		} else if (thisNode instanceof Assignment) {
+			val name = thisNode.valuedObject.name
+			val isSSArelevant = ssaMap.containsKey(name)
+			val storeVO = valuedObjectReferences.get(name)
+
+			transformAssignmentNodes(thisNode)
+
+			if (isSSArelevant) {
+
+				val newNode = ScgFactory::eINSTANCE.createAssignment
+
+				newNode.valuedObject = thisNode.valuedObject
+
+				newNode.assignment = storeVO.reference
+
+				scg.nodes += newNode
+
+				if (predecessorNodeElse instanceof Conditional) {
+					predecessorNodeElse.^else.target = newNode
+				} else if (predecessorNodeElse instanceof Assignment) {
+					predecessorNodeElse.next.target = newNode
+				}
+
+				val newLink = ScgFactory::eINSTANCE.createControlFlow
+				newLink.target = target
+
+				newNode.next = newLink
+
+				if (!(thisNode.next == target)) {
+					System.out.println("11")
+
+					transformConditionalNodes(sourceConditional, thisNode, newNode, target)
+				}
+
 			}
-			for (v : d.valuedObjects) {
+
+			if (!(thisNode.next == target)) {
+
+				transformConditionalNodes(sourceConditional, thisNode, predecessorNodeElse, target)
 			}
 		}
 
 	}
 
-	def filterRelevantAssignments(List<Assignment> assignments, HashMap<String, Integer> ssaMap) {
+	def transformAssignmentNodes(Assignment n) {
+		val name = n.valuedObject.name
+		val type = n.valuedObject.type
 
+		if (ssaMap.containsKey(name)) {
+
+			transformExpressions(n.assignment)
+			val m = ssaMap.get(name)
+			ssaMap.replace(name, m, m + 1)
+
+			val vo = createValuedObject(name + "_" + ssaMap.get(name))
+			val dec = createDeclaration()
+			dec.valuedObjects += vo
+
+			switch (type) {
+				case BOOL: dec => [setType(ValueType::BOOL)]
+				case DOUBLE: dec => [setType(ValueType::DOUBLE)]
+				case FLOAT: dec => [setType(ValueType::FLOAT)]
+				case HOST: dec => [setType(ValueType::HOST)]
+				case INT: dec => [setType(ValueType::INT)]
+				case PURE: dec => [setType(ValueType::PURE)]
+				case STRING: dec => [setType(ValueType::STRING)]
+				case UNSIGNED: dec => [setType(ValueType::UNSIGNED)]
+			}
+
+			scg.declarations += dec
+			n.valuedObject = vo
+
+			valuedObjectReferences.replace(name, vo)
+
+		} else {
+			val expr = n.assignment
+			n.assignment = transformExpressions(expr)
+		}
+
+	}
+
+//	def setSSApreAndOutputs(List<Declaration> declarations) {
+//
+//		for (d : declarations) {
+//			if (d.isOutput && !d.isInput) {
+//				d.valuedObjects.forEach [ vo |
+//
+//					val name = vo.name
+//					val readvalue = ssaMap.get(name)
+//					ssaPreMap.put(name, readvalue)
+//				]
+//			}
+//			for (v : d.valuedObjects) {
+//			}
+//		}
+//
+//	}
+	def filterRelevantAssignments(List<Assignment> assignments) {
+//TODO: klären, ob man hier auf inlut, output oder beides nicht testen muss
 		assignments.forEach [ a |
 			val name = a.valuedObject.name
 			// gx and _condgx are unique 
@@ -145,36 +274,36 @@ class SeqSSAscgTransformation extends AbstractProductionTransformation {
 				// insert every SSA variable into ssaMap and set its version to 0
 				if (!ssaMap.containsKey(name)) {
 					ssaMap.put(name, 0);
+
+					valuedObjectReferences.put(name, a.valuedObject)
 				}
+
 			}
 		]
 	}
 
-	def Expression transformExpressions(Expression expression, HashMap<String, Integer> map) {
-		
-		if(expression instanceof ValuedObjectReference){
+	def Expression transformExpressions(Expression expression) {
+
+		if (expression instanceof ValuedObjectReference) {
 			val varName = expression.valuedObject.name
-			
-			if (map.containsKey(varName) && map.get(varName) > 0) {
-				val vo = createValuedObject(varName + "_" + ssaMap.get(varName))
-				
-				expression.valuedObject = vo
-			}
-			
-		}
-		else{
-		val values = expression.eAllContents.filter(ValuedObjectReference)
-		values.forEach [ v |
-			val varName = v.valuedObject.name
-			
-			if (map.containsKey(varName) && map.get(varName) > 0) {
-				val vo = createValuedObject(varName + "_" + ssaMap.get(varName))
-				
-				v.valuedObject = vo
+
+			if (ssaMap.containsKey(varName) && ssaMap.get(varName) > 0) {
+//				val vo = createValuedObject(varName + "_" + ssaMap.get(varName))
+				expression.valuedObject = valuedObjectReferences.get(varName)
 			}
 
-		]
-		
+		} else {
+			val values = expression.eAllContents.filter(ValuedObjectReference)
+			values.forEach [ v |
+				val varName = v.valuedObject.name
+
+				if (ssaMap.containsKey(varName) && ssaMap.get(varName) > 0) {
+//					val vo = createValuedObject(varName + "_" + ssaMap.get(varName))
+					v.valuedObject = valuedObjectReferences.get(varName)
+				}
+
+			]
+
 		}
 		expression
 	}
