@@ -22,7 +22,7 @@ import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 
-class SCG2CircuitTransformation extends AbstractProductionTransformation {
+class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 	// -------------------------------------------------------------------------
 	// --                 K I C O      C O N F I G U R A T I O N              --
@@ -62,6 +62,11 @@ class SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 		// this map stores SSA variables and their highest version number
 		val ssaMap = context.compilationResult.getAuxiliaryData(SSAMapData).head.ssaMap
+		
+		
+		for(n : scg.nodes){
+			System.out.println(n.toString)
+		}
 
 		/** root object which will have atomic inner actors for each in/output 
 		 * and one non atomic actor (newInnerCircuit) containing actors for:
