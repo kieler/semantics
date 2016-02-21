@@ -31,239 +31,239 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.FunctionCallEffectImpl#getFunctionName <em>Function Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.FunctionCallEffectImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public class FunctionCallEffectImpl extends EffectImpl implements FunctionCallEffect {
 	/**
-     * The default value of the '{@link #getFunctionName() <em>Function Name</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getFunctionName() <em>Function Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getFunctionName()
-     * @generated
-     * @ordered
-     */
+	 * @see #getFunctionName()
+	 * @generated
+	 * @ordered
+	 */
 	protected static final String FUNCTION_NAME_EDEFAULT = null;
 
 	/**
-     * The cached value of the '{@link #getFunctionName() <em>Function Name</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getFunctionName() <em>Function Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getFunctionName()
-     * @generated
-     * @ordered
-     */
+	 * @see #getFunctionName()
+	 * @generated
+	 * @ordered
+	 */
 	protected String functionName = FUNCTION_NAME_EDEFAULT;
 
 	/**
-     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getParameters()
-     * @generated
-     * @ordered
-     */
+	 * @see #getParameters()
+	 * @generated
+	 * @ordered
+	 */
 	protected EList<Parameter> parameters;
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected FunctionCallEffectImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return KEffectsPackage.Literals.FUNCTION_CALL_EFFECT;
-    }
+		return KEffectsPackage.Literals.FUNCTION_CALL_EFFECT;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public String getFunctionName() {
-        return functionName;
-    }
+		return functionName;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setFunctionName(String newFunctionName) {
-        String oldFunctionName = functionName;
-        functionName = newFunctionName;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME, oldFunctionName, functionName));
-    }
+		String oldFunctionName = functionName;
+		functionName = newFunctionName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME, oldFunctionName, functionName));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EList<Parameter> getParameters() {
-        if (parameters == null) {
-            parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS);
-        }
-        return parameters;
-    }
+		if (parameters == null) {
+			parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS);
+		}
+		return parameters;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
-                return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
+				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
-                return getFunctionName();
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
-                return getParameters();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
+				return getFunctionName();
+			case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
+				return getParameters();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
-                setFunctionName((String)newValue);
-                return;
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
-                getParameters().clear();
-                getParameters().addAll((Collection<? extends Parameter>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
+				setFunctionName((String)newValue);
+				return;
+			case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
+				getParameters().clear();
+				getParameters().addAll((Collection<? extends Parameter>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
-                setFunctionName(FUNCTION_NAME_EDEFAULT);
-                return;
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
-                getParameters().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
+				setFunctionName(FUNCTION_NAME_EDEFAULT);
+				return;
+			case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
+				getParameters().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
-                return FUNCTION_NAME_EDEFAULT == null ? functionName != null : !FUNCTION_NAME_EDEFAULT.equals(functionName);
-            case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
-                return parameters != null && !parameters.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME:
+				return FUNCTION_NAME_EDEFAULT == null ? functionName != null : !FUNCTION_NAME_EDEFAULT.equals(functionName);
+			case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS:
+				return parameters != null && !parameters.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-        if (baseClass == Expression.class) {
-            switch (derivedFeatureID) {
-                default: return -1;
-            }
-        }
-        if (baseClass == FunctionCall.class) {
-            switch (derivedFeatureID) {
-                case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME: return KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME;
-                case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS: return KExpressionsPackage.FUNCTION_CALL__PARAMETERS;
-                default: return -1;
-            }
-        }
-        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-    }
+		if (baseClass == Expression.class) {
+			switch (derivedFeatureID) {
+				default: return -1;
+			}
+		}
+		if (baseClass == FunctionCall.class) {
+			switch (derivedFeatureID) {
+				case KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME: return KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME;
+				case KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS: return KExpressionsPackage.FUNCTION_CALL__PARAMETERS;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-        if (baseClass == Expression.class) {
-            switch (baseFeatureID) {
-                default: return -1;
-            }
-        }
-        if (baseClass == FunctionCall.class) {
-            switch (baseFeatureID) {
-                case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME: return KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME;
-                case KExpressionsPackage.FUNCTION_CALL__PARAMETERS: return KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS;
-                default: return -1;
-            }
-        }
-        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-    }
+		if (baseClass == Expression.class) {
+			switch (baseFeatureID) {
+				default: return -1;
+			}
+		}
+		if (baseClass == FunctionCall.class) {
+			switch (baseFeatureID) {
+				case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME: return KEffectsPackage.FUNCTION_CALL_EFFECT__FUNCTION_NAME;
+				case KExpressionsPackage.FUNCTION_CALL__PARAMETERS: return KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (functionName: ");
-        result.append(functionName);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (functionName: ");
+		result.append(functionName);
+		result.append(')');
+		return result.toString();
+	}
 
 } //FunctionCallEffectImpl
