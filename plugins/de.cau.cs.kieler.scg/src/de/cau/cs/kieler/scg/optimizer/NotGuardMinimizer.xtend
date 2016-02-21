@@ -41,9 +41,9 @@ class NotGuardMinimizer extends AbstractOptimizer {
     
     override optimize(SCGraph scg) {
         scg.nodes.filter(typeof(Assignment)).forEach[
-            if ((it.assignment instanceof OperatorExpression) &&
-                ((it.assignment as OperatorExpression).operator == OperatorType::NOT) &&
-                ((it.assignment as OperatorExpression).subExpressions.head instanceof ValuedObject)
+            if ((it.expression instanceof OperatorExpression) &&
+                ((it.expression as OperatorExpression).operator == OperatorType::NOT) &&
+                ((it.expression as OperatorExpression).subExpressions.head instanceof ValuedObject)
             ) {
                 val replacementExpression = createNotExpression
                 replacementExpression.subExpressions.add((it as OperatorExpression).subExpressions.head)
@@ -58,7 +58,7 @@ class NotGuardMinimizer extends AbstractOptimizer {
 //            ]
             scg.eAllContents.filter(typeof(ValuedObjectReference)).filter[ it.valuedObject == key ].forEach[
                 if (it.eContainer instanceof Assignment) {
-                    (it.eContainer as Assignment).assignment = notGuardMapping.get(key).copy
+                    (it.eContainer as Assignment).expression = notGuardMapping.get(key).copy
                 } else if (it.eContainer instanceof Conditional) {
                     (it.eContainer as Conditional).condition = notGuardMapping.get(key).copy
                 } else if (it.eContainer instanceof OperatorExpression) {

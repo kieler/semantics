@@ -182,22 +182,22 @@ class SCG2S extends AbstractProductionTransformation {
             sAssignment.valuedObject = valuedObjectMapping.get(assignment.valuedObject)
 // TODO: VERIFY removal of fixHostCode            
 //            val expression = assignment.assignment.copyExpression.fixHostCode     
-            if (assignment.assignment != null) {       
-                val expression = assignment.assignment.copyExpression
+            if (assignment.expression != null) {       
+                val expression = assignment.expression.copyExpression
                 sAssignment.expression = expression
             }
             for (index : assignment.indices) {
                 sAssignment.indices += index.copyExpression
             }
             instructions += sAssignment
-        } else if (assignment.assignment instanceof TextExpression) {
+        } else if (assignment.expression instanceof TextExpression) {
 
             // This is the case when the valuedObject is null
-            val hostCode = (assignment.assignment as TextExpression).text //.copy.fixHostCode as TextExpression
+            val hostCode = (assignment.expression as TextExpression).text //.copy.fixHostCode as TextExpression
             instructions += hostCode.createHostCode
-        } else if (assignment.assignment instanceof FunctionCall) {
+        } else if (assignment.expression instanceof FunctionCall) {
             val sAssignment = SFactory::eINSTANCE.createAssignment.trace(assignment)
-            sAssignment.expression = assignment.assignment.copyExpression
+            sAssignment.expression = assignment.expression.copyExpression
             instructions += sAssignment
         }
 

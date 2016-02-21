@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.provider;
 
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory;
 import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
@@ -155,6 +156,16 @@ public class ConditionalItemProvider extends NodeItemProvider {
 			(createChildParameter
 				(ScgPackage.Literals.CONDITIONAL__ELSE,
 				 ScgFactory.eINSTANCE.createControlFlow()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgPackage.Literals.CONDITIONAL__CONDITION,
+				 KEffectsFactory.eINSTANCE.createHostcodeEffect()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgPackage.Literals.CONDITIONAL__CONDITION,
+				 KEffectsFactory.eINSTANCE.createFunctionCallEffect()));
 
 		newChildDescriptors.add
 			(createChildParameter

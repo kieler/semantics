@@ -97,9 +97,9 @@ class InstantaneousSynchronizer extends AbstractSynchronizer {
 		
         val exitNodes = join.allPrevious.map[ eContainer as Exit ]
         
-        data.guardExpression.valuedObject = joinSB.guard.valuedObject
+        data.guardExpression.valuedObject = joinSB.guards.head.valuedObject
                 
-        data.guardExpression.expression = exitNodes.head.getCachedSchedulingBlock.guard.valuedObject.reference
+        data.guardExpression.expression = exitNodes.head.getCachedSchedulingBlock.guards.head.valuedObject.reference
         
         guard.expression = data.guardExpression.expression
 

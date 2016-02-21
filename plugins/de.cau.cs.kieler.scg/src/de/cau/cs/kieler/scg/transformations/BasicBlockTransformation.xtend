@@ -190,8 +190,8 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
                 for (SchedulingBlock sb : bb.schedulingBlocks) {
                     val nodes = sb.nodes;
                     sb.trace(nodes);
-                    sb.guard?.trace(nodes);
-                    sb.guard?.valuedObject?.trace(nodes);
+                    sb.guards.head?.trace(nodes);
+                    sb.guards.head?.valuedObject?.trace(nodes);
                     bb.trace(nodes);
                     bb.predecessors.trace(nodes);
                 }
@@ -435,7 +435,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
          */ 
         if (nodeList.head instanceof Depth) { 
         	basicBlock.depthBlock = true
-        	basicBlock.preGuard = predecessorBlocks.head.schedulingBlocks.head.guard.valuedObject
+        	basicBlock.preGuard = predecessorBlocks.head.schedulingBlocks.head.guards.head.valuedObject
         	predecessorBlocks.clear
         }
         /** If the block begins with a join node, mark the block as synchronizer block. */
@@ -451,7 +451,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         // Add all scheduling blocks as described in the introduction of this function.
         basicBlock.schedulingBlocks += scg.createSchedulingBlocks(nodeList, basicBlock, guard)
         for (sb : basicBlock.schedulingBlocks) {
-            basicBlockGuardCache.put(sb.guard.valuedObject, basicBlock)
+            basicBlockGuardCache.put(sb.guards.head.valuedObject, basicBlock)
         }
         // Add all predecessors. To do this createPredecessors creates a list with predecessor objects.
         basicBlock.predecessors.addAll(predecessorBlocks.createPredecessors(basicBlock))
@@ -517,10 +517,9 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
                 scg.guards += newGuard
                 
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
-                block.guard = newGuard
+                block.guards += newGuard
                 block.label = newGuard.valuedObject.name
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
-                newGuard.schedulingBlockLink = block
             }
             // Add the node to the scheduling block.
             block.nodes.add(node)

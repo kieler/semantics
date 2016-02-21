@@ -214,13 +214,13 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	            	 * valued objects in the SCG. 
 	            	 */
 	            	 val graph = data.join.graph
-	            	while (graph.guardExists(exitSB.guard.valuedObject.name + '_e' + exitNodeCount)) {
+	            	while (graph.guardExists(exitSB.guards.head.valuedObject.name + '_e' + exitNodeCount)) {
 	            	    exitNodeCount = exitNodeCount + 1
 	            	} 
 	            	 
 	      			val emptyExp = new EmptyExpression()  
 	      			emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
-	      			emptyExp.valuedObject.name = exitSB.guard.valuedObject.name + '_e' + exitNodeCount
+	      			emptyExp.valuedObject.name = exitSB.guards.head.valuedObject.name + '_e' + exitNodeCount
 	//      			emptyExp.valuedObject.type = ValueType::BOOL
 	      			data.valuedObjects.add(emptyExp.valuedObject)
 	
@@ -236,19 +236,19 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 		            	val subExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
 	    	        	subExpression.setOperator(OperatorType::LOGICAL_OR)
 	//        	    	threadSurfaces.forEach[subExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
-	                    threadSurfaces.forEach[subExpression.subExpressions.add(it.getCachedSchedulingBlock.guard.valuedObject.reference)]
+	                    threadSurfaces.forEach[subExpression.subExpressions.add(it.getCachedSchedulingBlock.guards.head.valuedObject.reference)]
 		            	expression.subExpressions.add(subExpression)
 	            	} else {
 	            		// Otherwise, add a reference to the surface block directly.
 	//                    expression.subExpressions.add(threadSurfaces.head.schedulingBlock.guard.reference)
-	                    expression.subExpressions.add(threadSurfaces.head.getCachedSchedulingBlock.guard.valuedObject.reference)
+	                    expression.subExpressions.add(threadSurfaces.head.getCachedSchedulingBlock.guards.head.valuedObject.reference)
 	            	}
 	            	// Add the newly created expression to the empty expression and link the thread exit object field
 	            	// to the guard of the exit node. This enables further processors to identify the block responsible
 	            	// for the creation of the empty expression. 
 	            	emptyExp.expression = expression
 	//            	emptyExp.threadExitObject = exitSB.guard
-	                emptyExp.threadExitObject = exitSB.guard.valuedObject
+	                emptyExp.threadExitObject = exitSB.guards.head.valuedObject
 	            
 	            	// Subsequently, add the newly created empty expression to the list of empty expressions
 	            	// in the guard expression of the synchronizer.
@@ -258,7 +258,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	           	// For each exit node, add the guard of the scheduling block of the exit node to the termination expression.
 	           	// At least one thread must be exited in this tick to trigger the synchronizer.
 	//            terminationExpr.subExpressions.add(exitSB.guard.reference)
-	            terminationExpression.subExpressions.add(exitSB.guard.valuedObject.reference)
+	            terminationExpression.subExpressions.add(exitSB.guards.head.valuedObject.reference)
 	        }
         }
         

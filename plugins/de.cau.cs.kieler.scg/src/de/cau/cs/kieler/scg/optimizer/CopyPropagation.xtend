@@ -109,7 +109,10 @@ class CopyPropagation extends AbstractOptimizer {
 
         
         scg.guards.filter[ expression instanceof ValuedObjectReference ].forEach[
-            if (valuedObject.name.contains(GUARDPREFIX) && (reverseDependencyMap.get(it.schedulingBlockLink).size == 0)) {
+            if (valuedObject.name.contains(GUARDPREFIX)
+// FIXME: Verify removal of scheduling link            	 
+//            	&& (reverseDependencyMap.get(it.schedulingBlockLink).size == 0)
+            ) {
                 assignmentReferences.put(it.valuedObject, (expression as ValuedObjectReference).valuedObject)
                 debug("CP: " + it.valuedObject.name + " = " + (expression as ValuedObjectReference).valuedObject.name)
             }    
@@ -119,7 +122,8 @@ class CopyPropagation extends AbstractOptimizer {
         
         val toDelete = <Guard> newArrayList // make this a set for final review!
         
-        for (guard : scg.guards.filter[!isDead]) {
+// FIXME: Verify removal of dead guard flag
+        for (guard : scg.guards /*.filter[!isDead]*/) {
             if (guard.valuedObject.name.equals("g0")) {
                 debug("1")
             }
@@ -184,7 +188,8 @@ class CopyPropagation extends AbstractOptimizer {
         	if (deleteList.contains(newGuard)) {
         		newGuard = newGuard.relink(deleteList, "  ")
         	}
-        	guard.schedulingBlockLink.guard = newGuard
+// FIXME: Verify removal of scheduling block link        	
+//        	guard.schedulingBlockLink.guard = newGuard
         	reverseGuardMap.put(guard.valuedObject, newGuard)
 //			replacementMap.put(guard, newGuard)
         	return newGuard

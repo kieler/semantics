@@ -182,8 +182,9 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
         
         scg.copyDeclarations(newSCG)
        	val guardDeclaration = createDeclaration => [ setType(ValueType::BOOL); it.volatile = true; newSCG.declarations += it ]
-       	System.out.println("dead guards: "+scg.guards.filter[dead].size)
-        scg.guards.filter[!dead].forEach[ g |
+// FIXME: Verify removal of dead guard flag
+//       	System.out.println("dead guards: "+scg.guards.filter[dead].size)
+        scg.guards/*.filter[!dead]*/.forEach[ g |
             val vo = createValuedObject(g.valuedObject.name) => [ guardDeclaration.valuedObjects += it ]
             g.valuedObject.addToValuedObjectMapping(vo)
             
@@ -266,7 +267,7 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
 
 			val guards = <Guard> newArrayList
 			guards += scheduleBlock.additionalGuards
-			guards += sBlock.guard 
+			guards += sBlock.guards.head
 
 			for (guard : guards) {
 //				System.out.println("Sequentializing guard " + guard.valuedObject.name)
@@ -278,7 +279,7 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
     			    	if(scheduleBlock.additionalGuards.contains(guard) && guard.valuedObject.name.startsWith("_cond")){
     			    	    val conditionalSchedulingBlockGuardName = guard.valuedObject.name.substring(5);
     			    	    for (sb : schedule.scheduleBlocks) {
-                                if(sb.schedulingBlock.guard.valuedObject.name.equals(conditionalSchedulingBlockGuardName)) {
+                                if(sb.schedulingBlock.guards.head.valuedObject.name.equals(conditionalSchedulingBlockGuardName)) {
                                     assignment2.trace(sb.schedulingBlock.nodes.filter(Conditional));
                                 }
                             }
@@ -313,7 +314,7 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
     		{
     			// Create a conditional and set a reference of the guard as condition.
     			val conditional = ScgFactory::eINSTANCE.createConditional.trace(sBlock)
-                conditional.condition = sBlock.guard.valuedObject.reference.copySCGExpression
+                conditional.condition = sBlock.guards.head.valuedObject.reference.copySCGExpression
 //                if (sb.schizophrenic) {
 //                    conditional.condition = scg.fixSchizophrenicExpression(conditional.condition)
 //                }
@@ -336,7 +337,7 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
                     nodeCache.add(conditionalAssignment)
     				nextControlFlow = ScgFactory::eINSTANCE.createControlFlow.trace(assignment)
     				conditionalAssignment.next = nextControlFlow
-    				conditionalAssignment.createStringAnnotation(ANNOTATION_CONDITIONALASSIGNMENT, sBlock.guard.valuedObject.name)
+    				conditionalAssignment.createStringAnnotation(ANNOTATION_CONDITIONALASSIGNMENT, sBlock.guards.head.valuedObject.name)
     			}
     			nextControlFlows.add(nextControlFlow)
     			
@@ -358,7 +359,7 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
     protected def Assignment copySCGNode(Assignment assignment, SCGraph target) {
     	ScgFactory::eINSTANCE.createAssignment => [
     	    it.trace(assignment)
-            it.assignment = assignment.assignment.copySCGExpression
+            it.expression = assignment.expression.copySCGExpression
             it.operator = assignment.operator
             it.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL;
             for(index : assignment.indices) {	
@@ -372,7 +373,7 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
     ) {
         // Then, copy the expression of the guard to the newly created assignment.
         assignment.valuedObject = guard.valuedObject.getValuedObjectCopyWNULL
-        assignment.assignment = guard.expression.copySCGExpression
+        assignment.expression = guard.expression.copySCGExpression
         
 		nextControlFlows.forEach[ target = assignment ]
 		nextControlFlows.clear

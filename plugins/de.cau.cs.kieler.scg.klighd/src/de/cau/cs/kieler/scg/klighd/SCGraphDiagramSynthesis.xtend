@@ -1357,17 +1357,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK, basicBlock).associateWith(basicBlock)
                 bbContainerList.put(basicBlock, bbContainer)
 //                val bbName = serializer.serialize(bb.guards.head.reference)
-                var bbName = basicBlock.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
+                var bbName = basicBlock.schedulingBlocks.head.guards.head.valuedObject.name //reference.valuedObject.name
                 
                 if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-                    val guard = basicBlock.schedulingBlocks.head.guard
+                    val guard = basicBlock.schedulingBlocks.head.guards.head
                     var String expText
-                    if (guard.dead) {
-                        expText = "<dead>"
-                    } else {
+// FIXME: Verify removal of dead guard flag                    
+//                    if (guard.dead) {
+//                        expText = "<dead>"
+//                    } else {
                         val exp = guard.expression.copy
                     	expText = serializeHR(exp) as String
-                    }
+//                    }
 //                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
 					bbName = bbName + "\n" + expText                	
                 }
@@ -1383,16 +1384,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                      if (!schedulingBlock.label.nullOrEmpty) {
                          sbName = schedulingBlock.label + " "
                      }
-                     if (schedulingBlock.guard != null) { 
-                         if (schedulingBlock.guard.valuedObject.name != schedulingBlock.label) {
-                            sbName = sbName + "(" + schedulingBlock.guard.valuedObject.name + ")"//reference.valuedObject.name
+                     if (schedulingBlock.guards.head != null) { 
+                         if (schedulingBlock.guards.head.valuedObject.name != schedulingBlock.label) {
+                            sbName = sbName + "(" + schedulingBlock.guards.head.valuedObject.name + ")"//reference.valuedObject.name
                          }
                      }
 
 	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
 	                    var expText = "<null>"
-	                    if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
-        	            	expText = serializeHR(schedulingBlock.guard.expression) as String
+	                    if (schedulingBlock.guards.head != null && !schedulingBlock.basicBlock.deadBlock) {
+        	            	expText = serializeHR(schedulingBlock.guards.head.expression) as String
     	            	}	
 //        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
 						sbName = sbName + "\n" + expText       
@@ -1454,10 +1455,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         usBlocks -= it.schedulingBlock
 //                    } 
                 ]
-                for(deadGuard : scg.guards.filter[ dead ]) {
-                    val deadBlocks = usBlocks.filter[ e | e.guard == deadGuard].toList
-                    usBlocks -= deadBlocks
-                }
+// FIXME: Verify removal of dead guard flag                
+//                for(deadGuard : scg.guards.filter[ dead ]) {
+//                    val deadBlocks = usBlocks.filter[ e | e.guard == deadGuard].toList
+//                    usBlocks -= deadBlocks
+//                }
                 usBlocks.forEach [
                     val node = schedulingBlockMapping.get(it)
                     node.getData(typeof(KRoundedRectangle)) => [

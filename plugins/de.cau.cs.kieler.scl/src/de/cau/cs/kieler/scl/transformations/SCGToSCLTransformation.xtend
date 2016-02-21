@@ -144,7 +144,7 @@ class SCGToSCLTransformation {
         val statement = SclFactory::eINSTANCE.createInstructionStatement
         statement.instruction = SclFactory::eINSTANCE.createAssignment => [
             it.valuedObject = assignment.valuedObject.copyValuedObject
-            it.expression = assignment.assignment.copyExpression
+            it.expression = assignment.expression.copyExpression
         ]
         sSeq.statements.add(statement)
         assignment.next.target.transform(sSeq)

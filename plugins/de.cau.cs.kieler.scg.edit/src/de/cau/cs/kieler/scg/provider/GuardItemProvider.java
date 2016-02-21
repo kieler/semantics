@@ -16,6 +16,8 @@ package de.cau.cs.kieler.scg.provider;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory;
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.scg.Guard;
 import de.cau.cs.kieler.scg.ScgPackage;
 
@@ -24,20 +26,11 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -47,13 +40,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class GuardItemProvider 
-    extends ItemProviderAdapter
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends NodeItemProvider {
     /**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -75,51 +62,26 @@ public class GuardItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addSchizophrenicPropertyDescriptor(object);
-			addSchedulingBlockLinkPropertyDescriptor(object);
-			addOriginalObjectPropertyDescriptor(object);
-			addSequentializePropertyDescriptor(object);
-			addDeadPropertyDescriptor(object);
+			addValuedObjectPropertyDescriptor(object);
+			addOperatorPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
     /**
-	 * This adds a property descriptor for the Schizophrenic feature.
+	 * This adds a property descriptor for the Valued Object feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addSchizophrenicPropertyDescriptor(Object object) {
+	protected void addValuedObjectPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Guard_schizophrenic_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Guard_schizophrenic_feature", "_UI_Guard_type"),
-				 ScgPackage.Literals.GUARD__SCHIZOPHRENIC,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-				/**
-	 * This adds a property descriptor for the Scheduling Block Link feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addSchedulingBlockLinkPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Guard_schedulingBlockLink_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Guard_schedulingBlockLink_feature", "_UI_Guard_type"),
-				 ScgPackage.Literals.GUARD__SCHEDULING_BLOCK_LINK,
+				 getString("_UI_Assignment_valuedObject_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Assignment_valuedObject_feature", "_UI_Assignment_type"),
+				 KEffectsPackage.Literals.ASSIGNMENT__VALUED_OBJECT,
 				 true,
 				 false,
 				 true,
@@ -129,72 +91,28 @@ public class GuardItemProvider
 	}
 
 				/**
-	 * This adds a property descriptor for the Original Object feature.
+	 * This adds a property descriptor for the Operator feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addOriginalObjectPropertyDescriptor(Object object) {
+	protected void addOperatorPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Guard_originalObject_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Guard_originalObject_feature", "_UI_Guard_type"),
-				 ScgPackage.Literals.GUARD__ORIGINAL_OBJECT,
+				 getString("_UI_Assignment_operator_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Assignment_operator_feature", "_UI_Assignment_type"),
+				 KEffectsPackage.Literals.ASSIGNMENT__OPERATOR,
 				 true,
 				 false,
-				 true,
-				 null,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
 	}
 
 				/**
-	 * This adds a property descriptor for the Sequentialize feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addSequentializePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Guard_sequentialize_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Guard_sequentialize_feature", "_UI_Guard_type"),
-				 ScgPackage.Literals.GUARD__SEQUENTIALIZE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-				/**
-	 * This adds a property descriptor for the Dead feature.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected void addDeadPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Guard_dead_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Guard_dead_feature", "_UI_Guard_type"),
-				 ScgPackage.Literals.GUARD__DEAD,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-                /**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -206,8 +124,8 @@ public class GuardItemProvider
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ScgPackage.Literals.GUARD__VALUED_OBJECT);
-			childrenFeatures.add(ScgPackage.Literals.GUARD__EXPRESSION);
+			childrenFeatures.add(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION);
+			childrenFeatures.add(KEffectsPackage.Literals.ASSIGNMENT__INDICES);
 		}
 		return childrenFeatures;
 	}
@@ -245,7 +163,7 @@ public class GuardItemProvider
     @Override
     public String getText(Object object) {
 		Guard guard = (Guard)object;
-		return getString("_UI_Guard_type") + " " + guard.isSchizophrenic();
+		return getString("_UI_Guard_type") + " " + guard.isIsInitial();
 	}
     
 
@@ -261,13 +179,11 @@ public class GuardItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Guard.class)) {
-			case ScgPackage.GUARD__SCHIZOPHRENIC:
-			case ScgPackage.GUARD__SEQUENTIALIZE:
-			case ScgPackage.GUARD__DEAD:
+			case ScgPackage.GUARD__OPERATOR:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case ScgPackage.GUARD__VALUED_OBJECT:
 			case ScgPackage.GUARD__EXPRESSION:
+			case ScgPackage.GUARD__INDICES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -287,69 +203,146 @@ public class GuardItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgPackage.Literals.GUARD__VALUED_OBJECT,
-				 KExpressionsFactory.eINSTANCE.createValuedObject()));
+				(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
+				 KEffectsFactory.eINSTANCE.createHostcodeEffect()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgPackage.Literals.GUARD__EXPRESSION,
+				(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
+				 KEffectsFactory.eINSTANCE.createFunctionCallEffect()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
 				 KExpressionsFactory.eINSTANCE.createExpression()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgPackage.Literals.GUARD__EXPRESSION,
+				(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
 				 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgPackage.Literals.GUARD__EXPRESSION,
+				(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
 				 KExpressionsFactory.eINSTANCE.createValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgPackage.Literals.GUARD__EXPRESSION,
+				(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
 				 KExpressionsFactory.eINSTANCE.createIntValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgPackage.Literals.GUARD__EXPRESSION,
+				(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
 				 KExpressionsFactory.eINSTANCE.createFloatValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgPackage.Literals.GUARD__EXPRESSION,
+				(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
 				 KExpressionsFactory.eINSTANCE.createBoolValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgPackage.Literals.GUARD__EXPRESSION,
+				(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
 				 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgPackage.Literals.GUARD__EXPRESSION,
+				(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
 				 KExpressionsFactory.eINSTANCE.createTextExpression()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgPackage.Literals.GUARD__EXPRESSION,
+				(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
 				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgPackage.Literals.GUARD__EXPRESSION,
+				(KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createStringValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+				 KEffectsFactory.eINSTANCE.createHostcodeEffect()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+				 KEffectsFactory.eINSTANCE.createFunctionCallEffect()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+				 KExpressionsFactory.eINSTANCE.createExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+				 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+				 KExpressionsFactory.eINSTANCE.createValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+				 KExpressionsFactory.eINSTANCE.createIntValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+				 KExpressionsFactory.eINSTANCE.createFloatValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+				 KExpressionsFactory.eINSTANCE.createBoolValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+				 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+				 KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+				 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(KEffectsPackage.Literals.ASSIGNMENT__INDICES,
 				 KExpressionsFactory.eINSTANCE.createStringValue()));
 	}
 
     /**
-	 * Return the resource locator for this item provider's resources.
+	 * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    @Override
-    public ResourceLocator getResourceLocator() {
-		return ScgEditPlugin.INSTANCE;
+	@Override
+	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
+		Object childFeature = feature;
+		Object childObject = child;
+
+		boolean qualify =
+			childFeature == KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION ||
+			childFeature == KEffectsPackage.Literals.ASSIGNMENT__INDICES;
+
+		if (qualify) {
+			return getString
+				("_UI_CreateChild_text2",
+				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+		}
+		return super.getCreateChildText(owner, feature, child, selection);
 	}
 
 }

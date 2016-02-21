@@ -165,12 +165,12 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 
             val neededNodes = <Node>newHashSet
 
-            if (schedulingBlock.guard.expression instanceof ValuedObjectReference) {
-                VOR += (schedulingBlock.guard.expression as ValuedObjectReference).valuedObject
+            if (schedulingBlock.guards.head.expression instanceof ValuedObjectReference) {
+                VOR += (schedulingBlock.guards.head.expression as ValuedObjectReference).valuedObject
             } else {
-                if (schedulingBlock.guard.expression instanceof OperatorExpression &&
-                    (schedulingBlock.guard.expression as OperatorExpression).operator != OperatorType::PRE) {
-                    schedulingBlock.guard.expression.eAllContents.filter(typeof(ValuedObjectReference)).map[
+                if (schedulingBlock.guards.head.expression instanceof OperatorExpression &&
+                    (schedulingBlock.guards.head.expression as OperatorExpression).operator != OperatorType::PRE) {
+                    schedulingBlock.guards.head.expression.eAllContents.filter(typeof(ValuedObjectReference)).map[
                         valuedObject].forEach[VOR += it]
                     for (vo : VOR) {
                         if (vo.name.startsWith(AbstractGuardCreator::CONDITIONAL_EXPRESSION_PREFIX))
@@ -187,7 +187,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                     for (dependency : dependencies) {
                         if (dependency.concurrent && !dependency.confluent) {
                             val sb = schedulingBlockCache.get(dependency.eContainer)
-                            debug(sb.label + " (" + sb.guard.valuedObject.name + ")", false)
+                            debug(sb.label + " (" + sb.guards.head.valuedObject.name + ")", false)
                             neededNodes += dependency.target
 
                             // TODO: VERIFY!
@@ -198,7 +198,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                             //                                    System.out.print(" using " + schizoGuard.head.valuedObject.name)			                        
                             //			                    }
                             //			                } else {
-                            VOR += sb.guard.valuedObject
+                            VOR += sb.guards.head.valuedObject
                             SBs += sb
 
                         //  			                }
@@ -319,7 +319,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                 ]
 
                 schedule += scheduleBlock
-                placedVOs += schedulingBlock.guard.valuedObject
+                placedVOs += schedulingBlock.guards.head.valuedObject
                 placedSBs += schedulingBlock
                 remainingSchedulingBlocks -= schedulingBlock
             }
@@ -381,7 +381,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
         scg.basicBlocks.filter[!isDeadBlock].forEach [
             allSchedulingBlocks.addAll(schedulingBlocks)
             for (sb : schedulingBlocks) {
-                val vo = sb.guard.valuedObject
+                val vo = sb.guards.head.valuedObject
                 if (schedulingBlockVOCache.keySet.contains(vo)) {
                     val sbSet = schedulingBlockVOCache.get(vo)
                     sbSet += sb

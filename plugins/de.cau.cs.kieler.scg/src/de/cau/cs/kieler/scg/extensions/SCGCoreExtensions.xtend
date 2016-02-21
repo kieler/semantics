@@ -172,7 +172,7 @@ class SCGCoreExtensions {
     def SchedulingBlock getSchedulingBlock(Iterable<BasicBlock> basicBlocks, ValuedObject valuedObject) {
         for(bb : basicBlocks) {
             for(sb : bb.schedulingBlocks) {
-                if (sb.guard.valuedObject == valuedObject) {
+                if (sb.guards.head.valuedObject == valuedObject) {
                     return sb
                 }
             }

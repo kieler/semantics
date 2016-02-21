@@ -111,7 +111,7 @@ class SCGDeclarationExtensions {
     def SchedulingBlock findSchedulingBlockByVO(SCGraph scg, ValuedObject valuedObject) {
         for(bb : scg.basicBlocks) {
             for(sb : bb.schedulingBlocks) {
-                if (sb.guard.valuedObject == valuedObject) return sb
+                if (sb.guards.head.valuedObject == valuedObject) return sb
             }
         }
         return null

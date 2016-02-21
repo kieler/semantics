@@ -172,7 +172,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         
         // Generate a data basis for the subsequent analysis. 
         val allAssignments = scg.nodes.filter(typeof(Assignment))  
-        val assignments = allAssignments.filter[ valuedObject != null || assignment instanceof FunctionCall ].toList //.immutableCopy
+        val assignments = allAssignments.filter[ valuedObject != null || expression instanceof FunctionCall ].toList //.immutableCopy
         val conditionals = scg.nodes.filter(typeof(Conditional)).filter[ condition != null ].toList //.immutableCopy
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for dependency: Nodes (time elapsed: "+(time / 1000)+"s).")  
@@ -223,10 +223,10 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         
         // Generate the valued object cache for assignments.
         assignments.forEach[ assignment |
-            if (assignment.assignment != null) {
-        	   val references = assignment.assignment.eAllContents.filter(typeof(ValuedObjectReference)).toList
-        	   if (assignment.assignment instanceof ValuedObjectReference) {
-        	        references += assignment.assignment as ValuedObjectReference
+            if (assignment.expression != null) {
+        	   val references = assignment.expression.eAllContents.filter(typeof(ValuedObjectReference)).toList
+        	   if (assignment.expression instanceof ValuedObjectReference) {
+        	        references += assignment.expression as ValuedObjectReference
        	        }
         	   val valuedObjects = <ValuedObject> newArrayList => [ v | 
         	        references.forEach[ v += it.valuedObject ]; 
@@ -437,8 +437,8 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     	
     	if (assignment.operator != AssignOperator.ASSIGN) return true
     	
-        assignment.assignment instanceof OperatorExpression &&
-        assignment.assignment.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |
+        assignment.expression instanceof OperatorExpression &&
+        assignment.expression.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |
             e.valuedObject == assignment.valuedObject ].size > 0
     }
     
@@ -463,21 +463,21 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     private def boolean isReader(Assignment asg1, Assignment asg2) {
     	// Returns true if the ValuedObject is referenced directly in the expression or
     	// if the object is part of a more complex expression.
-    	if (asg1.assignment == null || asg2.assignment == null) return false
-    	if (asg1.assignment instanceof FunctionCall) {
-    	    for(par : (asg1.assignment as FunctionCall).parameters) {
+    	if (asg1.expression == null || asg2.expression == null) return false
+    	if (asg1.expression instanceof FunctionCall) {
+    	    for(par : (asg1.expression as FunctionCall).parameters) {
     	        if (par.expression.isReader(asg2)) return true
     	    }
     	    return false    
     	} else {
-    	    (asg1.assignment as Expression).isReader(asg2)
+    	    (asg1.expression as Expression).isReader(asg2)
         }
     }
         
     private def boolean isReader(Conditional cond, Assignment asg2) {
     	// Returns true if the ValuedObject is referenced directly in the expression or
     	// if the object is part of a more complex expression.
-        if (asg2.assignment == null) return false
+        if (asg2.expression == null) return false
         if (cond.condition instanceof FunctionCall) {
             for(par : (cond.condition as FunctionCall).parameters) {
                 if (par.expression.isReader(asg2)) return true
@@ -549,16 +549,16 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
      */
     private def boolean areConfluent(Assignment asg1, Assignment asg2) {
     	// If both assignments assign boolean values, check them.
-        if (asg1.assignment instanceof BoolValue && asg2.assignment instanceof BoolValue &&
-            (asg1.assignment as BoolValue).value == (asg2.assignment as BoolValue).value
+        if (asg1.expression instanceof BoolValue && asg2.expression instanceof BoolValue &&
+            (asg1.expression as BoolValue).value == (asg2.expression as BoolValue).value
         ) return true
         // If both assignments assign integer values, check them. 
-        if (asg1.assignment instanceof IntValue && asg2.assignment instanceof IntValue &&
-            (asg1.assignment as IntValue).value == (asg2.assignment as IntValue).value
+        if (asg1.expression instanceof IntValue && asg2.expression instanceof IntValue &&
+            (asg1.expression as IntValue).value == (asg2.expression as IntValue).value
         ) return true
         // If both assignments assign objects, check them.
-        if (asg1.assignment instanceof ValuedObjectReference && asg2.assignment instanceof ValuedObjectReference &&
-            (asg1.assignment as ValuedObjectReference).valuedObject == (asg2.assignment as ValuedObjectReference).valuedObject
+        if (asg1.expression instanceof ValuedObjectReference && asg2.expression instanceof ValuedObjectReference &&
+            (asg1.expression as ValuedObjectReference).valuedObject == (asg2.expression as ValuedObjectReference).valuedObject
         ) return true
 
         
@@ -566,12 +566,12 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     }
     
     private def boolean isSameScalar(Assignment asg1, Assignment asg2) {
-        if (asg1.assignment instanceof FunctionCall && !(asg2.assignment instanceof FunctionCall)) {
+        if (asg1.expression instanceof FunctionCall && !(asg2.expression instanceof FunctionCall)) {
             return asg2.isSameScalar(asg1)
         }
         
-        if (asg2.assignment instanceof FunctionCall) {
-            for(par : (asg2.assignment as FunctionCall).parameters) {
+        if (asg2.expression instanceof FunctionCall) {
+            for(par : (asg2.expression as FunctionCall).parameters) {
                 if (par.callByReference) {
                     val refs = par.expression.getAllReferences
                     for(ref : refs) {
@@ -598,8 +598,8 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     }
     
     private def boolean isSameScalar(ValuedObjectReference vor1, Assignment asg2) {
-        if (asg2.assignment instanceof FunctionCall) {
-            for(par : (asg2.assignment as FunctionCall).parameters) {
+        if (asg2.expression instanceof FunctionCall) {
+            for(par : (asg2.expression as FunctionCall).parameters) {
                 val refs = par.expression.getAllReferences
                 for(ref : refs) {
                     if (vor1.isSameScalar(ref)) return true

@@ -149,7 +149,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 
-        data.guardExpression.valuedObject = joinSB.guard.valuedObject
+        data.guardExpression.valuedObject = joinSB.guards.head.valuedObject
 
         // Create a new expression that determines if at least on thread exits in this tick instance.
         // At first this simple scheduler assumes that the fork node spawns more than one thread.
@@ -192,9 +192,10 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
                     
                         val newGuard = ScgFactory::eINSTANCE.createGuard
                         newGuard.valuedObject = newValuedObject
-                        newGuard.schedulingBlockLink = originalGuard.schedulingBlockLink
-                        newGuard.schizophrenic = true
-                        newGuard.originalObject += originalGuard.originalObject
+// FIXME: Verify removal                        
+//                        newGuard.schedulingBlockLink = originalGuard.schedulingBlockLink
+//                        newGuard.schizophrenic = true
+//                        newGuard.originalObject += originalGuard.originalObject
                         scg.guards += newGuard
                     
                         vor.valuedObject = newGuard.valuedObject 
@@ -220,10 +221,11 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
     } 
     
     private def boolean isOnCriticalPath(Guard guard, Set<Node> pilData) {
-        if (guard.schedulingBlockLink == null) return false
-        for(n : guard.schedulingBlockLink.nodes) {
-            if (pilData.contains(n)) return true
-        }
+// FIXME: FIXME!    	
+//        if (guard.schedulingBlockLink == null) return false
+//        for(n : guard.schedulingBlockLink.nodes) {
+//            if (pilData.contains(n)) return true
+//        }
         return false
     } 
     

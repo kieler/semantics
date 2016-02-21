@@ -190,9 +190,9 @@ class SimpleSequentializer extends AbstractSequentializer {
         	basicBlockList += it
         	predecessorList += it.predecessors
             schedulingBlocks.forEach[
-                val vo = createValuedObject(it.guard.valuedObject.name) 
+                val vo = createValuedObject(it.guards.head.valuedObject.name) 
                     => [ guardDeclaration.valuedObjects += it ]
-                it.guard.valuedObject.addToValuedObjectMapping(vo)
+                it.guards.head.valuedObject.addToValuedObjectMapping(vo)
                 // Create the scheduling cache on the fly.
         		it.nodes.forEach[ node | schedulingBlockCache.put(node, it) ]
             ]
@@ -324,7 +324,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     
     protected def Assignment copySCGNode(Assignment assignment, SCGraph target) {
     	ScgFactory::eINSTANCE.createAssignment => [
-            it.assignment = assignment.assignment.copySCGExpression
+            it.expression = assignment.expression.copySCGExpression
             it.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL;
             for(index : assignment.indices) {	
                 indices += index.copySCGExpression
@@ -372,7 +372,7 @@ class SimpleSequentializer extends AbstractSequentializer {
 //            ]
 //        ]        
         // Then, copy the expression of the guard to the newly created assignment.
-        assignment.assignment = guardExpression.expression.copySCGExpression    
+        assignment.expression = guardExpression.expression.copySCGExpression    
         assignment
     }    
     
@@ -399,11 +399,11 @@ class SimpleSequentializer extends AbstractSequentializer {
         val assignment = ScgFactory::eINSTANCE.createAssignment
         
         if (!scheduledBlock.schizophrenic) {
-            assignment.valuedObject = scheduledBlock.schedulingBlock.guard.valuedObject.getValuedObjectCopy
+            assignment.valuedObject = scheduledBlock.schedulingBlock.guards.head.valuedObject.getValuedObjectCopy
         } else {
-            var ValuedObject vo = scg.findValuedObjectByName(scheduledBlock.schedulingBlock.guard.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+            var ValuedObject vo = scg.findValuedObjectByName(scheduledBlock.schedulingBlock.guards.head.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
             if (vo == null) {
-                vo = createValuedObject(scheduledBlock.schedulingBlock.guard.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+                vo = createValuedObject(scheduledBlock.schedulingBlock.guards.head.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
                 schizoDeclaration.valuedObjects += vo
                 assignment.valuedObject = vo
             }
@@ -447,7 +447,7 @@ class SimpleSequentializer extends AbstractSequentializer {
                 if (joinData.synchronizerId == DepthJoinSynchronizer::SYNCHRONIZER_ID ||
                 	scheduledBlock.schizophrenic
                 ) {
-                    assignment.assignment = scg.fixSchizophrenicExpression(assignment.assignment)
+                    assignment.expression = scg.fixSchizophrenicExpression(assignment.expression)
                 }
             } else {
                 /**
@@ -485,7 +485,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         nextControlFlows.add(assignment.next)
         
         if (scheduledBlock.schizophrenic) {
-            assignment.assignment = scg.fixSchizophrenicExpression(assignment.assignment)
+            assignment.expression = scg.fixSchizophrenicExpression(assignment.expression)
         }
             
         // Add the assignment to the SCG.
@@ -504,7 +504,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     
     protected def GuardExpression createGoBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
         new GuardExpression => [
-            valuedObject = schedulingBlock.guard.valuedObject
+            valuedObject = schedulingBlock.guards.head.valuedObject
             expression = scg.findValuedObjectByName(GOGUARDNAME).reference
         ]
     }
@@ -521,7 +521,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     
     protected def GuardExpression createDepthBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
         new GuardExpression => [
-            valuedObject = schedulingBlock.guard.valuedObject
+            valuedObject = schedulingBlock.guards.head.valuedObject
             expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                 setOperator(OperatorType::PRE)
                 subExpressions.add(schedulingBlock.basicBlock.preGuard.reference)
@@ -566,7 +566,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         val basicBlock = scheduledBlock.schedulingBlock.basicBlock
         
         val gExpr = new GuardExpression;
-        gExpr.valuedObject = scheduledBlock.schedulingBlock.guard.valuedObject
+        gExpr.valuedObject = scheduledBlock.schedulingBlock.guards.head.valuedObject
         
         val relevantPredecessors = <Predecessor> newHashSet
         if (scheduledBlock.schizophrenic) {
@@ -624,8 +624,8 @@ class SimpleSequentializer extends AbstractSequentializer {
             if (scheduledBlock.schizophrenic && scheduledBlock.schedulingBlock.basicBlock.entryBlock) {
                 expression = FALSE
             } else {
-                valuedObject = scheduledBlock.schedulingBlock.guard.valuedObject
-                expression = scheduledBlock.schedulingBlock.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+                valuedObject = scheduledBlock.schedulingBlock.guards.head.valuedObject
+                expression = scheduledBlock.schedulingBlock.basicBlock.schedulingBlocks.head.guards.head.valuedObject.reference
             }
         ]
     }
@@ -645,21 +645,21 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected def Expression predecessorExpression(Predecessor predecessor, SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
         // Return a solely reference as expression if the predecessor is not a conditional
         if (predecessor.branchType == BranchType::NORMAL) {
-            return predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+            return predecessor.basicBlock.schedulingBlocks.head.guards.head.valuedObject.reference
         }
         // If we are in the true branch of the predecessor, combine the predecessor guard reference with
         // the condition of the conditional and return the expression.
         else if (predecessor.branchType == BranchType::TRUEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
             expression.setOperator(OperatorType::LOGICAL_AND)
-            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guards.head.valuedObject.reference
             expression.subExpressions += predecessor.conditional.condition.copy
             
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
             val twin = predecessor.getSchedulingBlockTwin(BranchType::ELSEBRANCH, schedule, scg)
             if (predecessorTwinMark.contains(twin)) {
-                expression.subExpressions.add(0, twin.guard.valuedObject.reference.negate)
+                expression.subExpressions.add(0, twin.guards.head.valuedObject.reference.negate)
             } 
             predecessorTwinMark.add(schedulingBlock)
             
@@ -670,14 +670,14 @@ class SimpleSequentializer extends AbstractSequentializer {
         else if (predecessor.branchType == BranchType::ELSEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
             expression.setOperator(OperatorType::LOGICAL_AND)
-            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guards.head.valuedObject.reference
             expression.subExpressions += predecessor.conditional.condition.copy.negate
 
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
             val twin = predecessor.getSchedulingBlockTwin(BranchType::TRUEBRANCH, schedule, scg)
             if (predecessorTwinMark.contains(twin)) {
-                expression.subExpressions.add(0, twin.guard.valuedObject.reference.negate)
+                expression.subExpressions.add(0, twin.guards.head.valuedObject.reference.negate)
             } 
             predecessorTwinMark.add(schedulingBlock)
 

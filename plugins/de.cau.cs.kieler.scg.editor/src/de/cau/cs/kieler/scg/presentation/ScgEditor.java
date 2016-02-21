@@ -169,6 +169,7 @@ import de.cau.cs.kieler.scg.provider.ScgItemProviderAdapterFactory;
 
 import de.cau.cs.kieler.core.annotations.provider.AnnotationsItemProviderAdapterFactory;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.provider.KEffectsItemProviderAdapterFactory;
 import de.cau.cs.kieler.core.kexpressions.provider.KExpressionsItemProviderAdapterFactory;
 
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
@@ -718,6 +719,7 @@ public class ScgEditor
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ScgItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new AnnotationsItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new KEffectsItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new KExpressionsItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
@@ -966,7 +968,7 @@ public class ScgEditor
 	 * @generated
 	 */
     public void createModel() {
-		URI resourceURI = EditUIUtil.getURI(getEditorInput());
+		URI resourceURI = EditUIUtil.getURI(getEditorInput(), editingDomain.getResourceSet().getURIConverter());
 		Exception exception = null;
 		Resource resource = null;
 		try {
@@ -994,10 +996,11 @@ public class ScgEditor
 	 * @generated
 	 */
     public Diagnostic analyzeResourceProblems(Resource resource, Exception exception) {
-		if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty()) {
+		boolean hasErrors = !resource.getErrors().isEmpty();
+		if (hasErrors || !resource.getWarnings().isEmpty()) {
 			BasicDiagnostic basicDiagnostic =
 				new BasicDiagnostic
-					(Diagnostic.ERROR,
+					(hasErrors ? Diagnostic.ERROR : Diagnostic.WARNING,
 					 "de.cau.cs.kieler.scg.editor",
 					 0,
 					 getString("_UI_CreateModelError_message", resource.getURI()),

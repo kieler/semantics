@@ -48,163 +48,163 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class ScheduleBlockImpl extends MinimalEObjectImpl.Container implements ScheduleBlock {
 	/**
-     * The cached value of the '{@link #getSchedulingBlock() <em>Scheduling Block</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getSchedulingBlock() <em>Scheduling Block</em>}' reference.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getSchedulingBlock()
-     * @generated
-     * @ordered
-     */
+	 * @see #getSchedulingBlock()
+	 * @generated
+	 * @ordered
+	 */
 	protected SchedulingBlock schedulingBlock;
 
 	/**
-     * The cached value of the '{@link #getAdditionalGuards() <em>Additional Guards</em>}' reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getAdditionalGuards() <em>Additional Guards</em>}' reference list.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getAdditionalGuards()
-     * @generated
-     * @ordered
-     */
+	 * @see #getAdditionalGuards()
+	 * @generated
+	 * @ordered
+	 */
 	protected EList<Guard> additionalGuards;
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected ScheduleBlockImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return ScgPackage.Literals.SCHEDULE_BLOCK;
-    }
+		return ScgPackage.Literals.SCHEDULE_BLOCK;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public SchedulingBlock getSchedulingBlock() {
-        if (schedulingBlock != null && schedulingBlock.eIsProxy()) {
-            InternalEObject oldSchedulingBlock = (InternalEObject)schedulingBlock;
-            schedulingBlock = (SchedulingBlock)eResolveProxy(oldSchedulingBlock);
-            if (schedulingBlock != oldSchedulingBlock) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.SCHEDULE_BLOCK__SCHEDULING_BLOCK, oldSchedulingBlock, schedulingBlock));
-            }
-        }
-        return schedulingBlock;
-    }
+		if (schedulingBlock != null && schedulingBlock.eIsProxy()) {
+			InternalEObject oldSchedulingBlock = (InternalEObject)schedulingBlock;
+			schedulingBlock = (SchedulingBlock)eResolveProxy(oldSchedulingBlock);
+			if (schedulingBlock != oldSchedulingBlock) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.SCHEDULE_BLOCK__SCHEDULING_BLOCK, oldSchedulingBlock, schedulingBlock));
+			}
+		}
+		return schedulingBlock;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public SchedulingBlock basicGetSchedulingBlock() {
-        return schedulingBlock;
-    }
+		return schedulingBlock;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public void setSchedulingBlock(SchedulingBlock newSchedulingBlock) {
-        SchedulingBlock oldSchedulingBlock = schedulingBlock;
-        schedulingBlock = newSchedulingBlock;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.SCHEDULE_BLOCK__SCHEDULING_BLOCK, oldSchedulingBlock, schedulingBlock));
-    }
+		SchedulingBlock oldSchedulingBlock = schedulingBlock;
+		schedulingBlock = newSchedulingBlock;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.SCHEDULE_BLOCK__SCHEDULING_BLOCK, oldSchedulingBlock, schedulingBlock));
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EList<Guard> getAdditionalGuards() {
-        if (additionalGuards == null) {
-            additionalGuards = new EObjectResolvingEList<Guard>(Guard.class, this, ScgPackage.SCHEDULE_BLOCK__ADDITIONAL_GUARDS);
-        }
-        return additionalGuards;
-    }
+		if (additionalGuards == null) {
+			additionalGuards = new EObjectResolvingEList<Guard>(Guard.class, this, ScgPackage.SCHEDULE_BLOCK__ADDITIONAL_GUARDS);
+		}
+		return additionalGuards;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ScgPackage.SCHEDULE_BLOCK__SCHEDULING_BLOCK:
-                if (resolve) return getSchedulingBlock();
-                return basicGetSchedulingBlock();
-            case ScgPackage.SCHEDULE_BLOCK__ADDITIONAL_GUARDS:
-                return getAdditionalGuards();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case ScgPackage.SCHEDULE_BLOCK__SCHEDULING_BLOCK:
+				if (resolve) return getSchedulingBlock();
+				return basicGetSchedulingBlock();
+			case ScgPackage.SCHEDULE_BLOCK__ADDITIONAL_GUARDS:
+				return getAdditionalGuards();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ScgPackage.SCHEDULE_BLOCK__SCHEDULING_BLOCK:
-                setSchedulingBlock((SchedulingBlock)newValue);
-                return;
-            case ScgPackage.SCHEDULE_BLOCK__ADDITIONAL_GUARDS:
-                getAdditionalGuards().clear();
-                getAdditionalGuards().addAll((Collection<? extends Guard>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case ScgPackage.SCHEDULE_BLOCK__SCHEDULING_BLOCK:
+				setSchedulingBlock((SchedulingBlock)newValue);
+				return;
+			case ScgPackage.SCHEDULE_BLOCK__ADDITIONAL_GUARDS:
+				getAdditionalGuards().clear();
+				getAdditionalGuards().addAll((Collection<? extends Guard>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case ScgPackage.SCHEDULE_BLOCK__SCHEDULING_BLOCK:
-                setSchedulingBlock((SchedulingBlock)null);
-                return;
-            case ScgPackage.SCHEDULE_BLOCK__ADDITIONAL_GUARDS:
-                getAdditionalGuards().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case ScgPackage.SCHEDULE_BLOCK__SCHEDULING_BLOCK:
+				setSchedulingBlock((SchedulingBlock)null);
+				return;
+			case ScgPackage.SCHEDULE_BLOCK__ADDITIONAL_GUARDS:
+				getAdditionalGuards().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ScgPackage.SCHEDULE_BLOCK__SCHEDULING_BLOCK:
-                return schedulingBlock != null;
-            case ScgPackage.SCHEDULE_BLOCK__ADDITIONAL_GUARDS:
-                return additionalGuards != null && !additionalGuards.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case ScgPackage.SCHEDULE_BLOCK__SCHEDULING_BLOCK:
+				return schedulingBlock != null;
+			case ScgPackage.SCHEDULE_BLOCK__ADDITIONAL_GUARDS:
+				return additionalGuards != null && !additionalGuards.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //ScheduleBlockImpl

@@ -581,7 +581,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
                 // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
                 if (!effect.isPostfixOperation) {
-                    assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
+                    assignment.setExpression(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
                 }
                 if (!sCChartAssignment.indices.nullOrEmpty) {
                     sCChartAssignment.indices.forEach [
@@ -589,9 +589,9 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                     ]
                 }
             } else if (effect instanceof HostcodeEffect) {
-                assignment.setAssignment((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
+                assignment.setExpression((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof FunctionCallEffect) {
-                assignment.setAssignment((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
+                assignment.setExpression((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional

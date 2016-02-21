@@ -236,6 +236,11 @@ public class SCGraphItemProvider extends AnnotatableItemProvider {
 
 		newChildDescriptors.add
 			(createChildParameter
+				(ScgPackage.Literals.SC_GRAPH__NODES,
+				 ScgFactory.eINSTANCE.createGuard()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(ScgPackage.Literals.SC_GRAPH__DECLARATIONS,
 				 KExpressionsFactory.eINSTANCE.createDeclaration()));
 
@@ -253,6 +258,29 @@ public class SCGraphItemProvider extends AnnotatableItemProvider {
 			(createChildParameter
 				(ScgPackage.Literals.SC_GRAPH__GUARDS,
 				 ScgFactory.eINSTANCE.createGuard()));
+	}
+
+	/**
+	 * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
+		Object childFeature = feature;
+		Object childObject = child;
+
+		boolean qualify =
+			childFeature == ScgPackage.Literals.SC_GRAPH__NODES ||
+			childFeature == ScgPackage.Literals.SC_GRAPH__GUARDS;
+
+		if (qualify) {
+			return getString
+				("_UI_CreateChild_text2",
+				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+		}
+		return super.getCreateChildText(owner, feature, child, selection);
 	}
 
 	/**

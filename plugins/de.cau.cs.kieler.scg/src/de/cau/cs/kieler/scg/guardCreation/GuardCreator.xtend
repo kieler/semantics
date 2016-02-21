@@ -205,16 +205,17 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
         schedulingBlockGuardCache.clear
         for (basicBlock : scg.basicBlocks) {
             if (basicBlock.isDeadBlock) {
-                for (schedulingBlock : basicBlock.schedulingBlocks) {
-                    schedulingBlock.guard.dead = true
-                }
+// FIXME: Removed dead flag in guards
+//                for (schedulingBlock : basicBlock.schedulingBlocks) {
+//                    schedulingBlock.guard.dead = true
+//                }
             } else {
                 predecessorList += basicBlock.predecessors
                 for (schedulingBlock : basicBlock.schedulingBlocks) {
                     schedulingBlocks += schedulingBlock
                     for (node : schedulingBlock.nodes) {
                         schedulingBlockCache.put(node, schedulingBlock)
-                        schedulingBlockGuardCache.put(schedulingBlock.guard, schedulingBlock)
+                        schedulingBlockGuardCache.put(schedulingBlock.guards.head, schedulingBlock)
                     }
                 }
             }
@@ -233,13 +234,14 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
             val conditional = p.conditional
             if (conditional != null && !conditionalGuards.keySet.contains(conditional)) {
                 val newVO = KExpressionsFactory::eINSTANCE.createValuedObject
-                newVO.name = CONDITIONAL_EXPRESSION_PREFIX + p.basicBlock.schedulingBlocks.head.guard.valuedObject.name
+                newVO.name = CONDITIONAL_EXPRESSION_PREFIX + p.basicBlock.schedulingBlocks.head.guards.head.valuedObject.name
 
                 val newGuard = ScgFactory::eINSTANCE.createGuard
                 newGuard.valuedObject = newVO
                 newGuard.expression = conditional.condition.copy
-                newGuard.sequentialize = false
-                newGuard.schedulingBlockLink = p.basicBlock.schedulingBlocks.head
+// FIXME: Verify removal of sequentialize flag and scheduling block link
+//                newGuard.sequentialize = false
+//                newGuard.schedulingBlockLink = p.basicBlock.schedulingBlocks.head
                 scg.guards += newGuard
 
                 conditionalGuards.put(conditional, newGuard)
@@ -253,7 +255,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
         System.out.println("Preparation for guard creation finished (time elapsed: " + (time / 1000) + "s).")
 
         for (schedulingBlock : schedulingBlocks) {
-            schedulingBlock.guard.createGuardEquation(schedulingBlock, scg)
+            schedulingBlock.guards.head.createGuardEquation(schedulingBlock, scg)
         }
         
         val CopyPropagation copyPropagation = 
@@ -507,12 +509,13 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
         val newGuards = synchronizer.newGuards
 
         //        newSchizoGuards += newGuards
-        for (ng : newGuards) {
-            val sb = ng.schedulingBlockLink
-            if (sb != null) {
-                ng.createGuardEquation(sb, scg)
-            }
-        }
+// FIXME: Verify removal of unowned guards
+//        for (ng : newGuards) {
+//            val sb = ng.schedulingBlockLink
+//            if (sb != null) {
+//                ng.createGuardEquation(sb, scg)
+//            }
+//        }
     }
 
     // --- CREATE GUARDS: STANDARD BLOCK 
@@ -521,11 +524,12 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
         val basicBlock = schedulingBlock.basicBlock
 
         val relevantPredecessors = <Predecessor>newHashSet
-        if (guard.schizophrenic) {
-            relevantPredecessors += basicBlock.predecessors.filter[!it.basicBlock.entryBlock]
-        } else {
+// FIXME: Verify removal of schizophrenic flag        
+//        if (guard.schizophrenic) {
+//            relevantPredecessors += basicBlock.predecessors.filter[!it.basicBlock.entryBlock]
+//        } else {
             relevantPredecessors += basicBlock.predecessors
-        }
+//        }
 
         // If there are more than one predecessor, create an operator expression and connect them via OR.
         if (relevantPredecessors.size > 1) {
@@ -552,7 +556,8 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
             * If we reach this point, the basic block contains no predecessor information but is not marked as go block.
             * This is not supported by this scheduler: throw an exception. 
             */
-            if (!basicBlock.deadBlock && !guard.schizophrenic) {
+// FIXME: Verify removal of schizophrenic guard
+            if (!basicBlock.deadBlock /* && !guard.schizophrenic*/) {
                 throw new UnsupportedSCGException("Cannot handle standard guard without predecessor information!")
             } else {
                 guard.expression = FALSE
@@ -564,11 +569,12 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
     protected def void createSubsequentSchedulingBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock,
         SCGraph scg) {
         guard.setDefaultTrace
-        if (guard.schizophrenic && schedulingBlock.basicBlock.entryBlock) {
-            guard.expression = FALSE
-        } else {
-            guard.expression = schedulingBlock.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
-        }
+// FIXME: Verify removal of schizphrenic flag
+//        if (guard.schizophrenic && schedulingBlock.basicBlock.entryBlock) {
+//            guard.expression = FALSE
+//        } else {
+            guard.expression = schedulingBlock.basicBlock.schedulingBlocks.head.guards.head.valuedObject.reference
+//        }
     }
 
     /**
@@ -588,21 +594,21 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
         guard.setDefaultTrace
         // Return a solely reference as expression if the predecessor is not a conditional
         if (predecessor.branchType == BranchType::NORMAL) {
-            return predecessor.basicBlock.schedulingBlocks.last.guard.valuedObject.reference
+            return predecessor.basicBlock.schedulingBlocks.last.guards.head.valuedObject.reference
         }
         // If we are in the true branch of the predecessor, combine the predecessor guard reference with
         // the condition of the conditional and return the expression.
         else if (predecessor.branchType == BranchType::TRUEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
             expression.setOperator(OperatorType::LOGICAL_AND)
-            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guard.valuedObject.reference
+            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guards.head.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference
 
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
             val twin = predecessor.getSchedulingBlockTwin(BranchType::ELSEBRANCH, scg)
             if (predecessorTwinMark.contains(twin)) {
-                val twinVOR = twin.guard.valuedObject.reference
+                val twinVOR = twin.guards.head.valuedObject.reference
 
             //            	guard.volatile += twinVOR.valuedObject
             //                expression.subExpressions.add(0, twinVOR.negate)
@@ -616,14 +622,14 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
         else if (predecessor.branchType == BranchType::ELSEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
             expression.setOperator(OperatorType::LOGICAL_AND)
-            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guard.valuedObject.reference
+            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guards.head.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference.negate
 
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
             val twin = predecessor.getSchedulingBlockTwin(BranchType::TRUEBRANCH, scg)
             if (predecessorTwinMark.contains(twin)) {
-                val twinVOR = twin.guard.valuedObject.reference
+                val twinVOR = twin.guards.head.valuedObject.reference
 
             //            	guard.volatile += twinVOR.valuedObject
             //                expression.subExpressions.add(0, twinVOR.negate)
