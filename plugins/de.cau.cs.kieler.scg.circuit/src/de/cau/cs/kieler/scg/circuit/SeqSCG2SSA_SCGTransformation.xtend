@@ -62,15 +62,17 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 	val ssaMap = new HashMap<String, Integer>
 
 	val valuedObjectList = new HashMap<String, ValuedObject>
-	val valuedObjectOriginalOutputs = new HashMap<String, ValuedObject>
+	val originalOutputs = new HashMap<String, ValuedObject>
 	val outputOccurenceCounter = new HashMap<String, Integer>
+	val conditionalEndNodes = new HashMap<Conditional,Node>
 
 //	val ssaPreMap = new HashMap<String, Integer>
 	def transform(SCGraph scg, KielerCompilerContext context) {
 
 		valuedObjectList.clear
-		valuedObjectOriginalOutputs.clear
+		originalOutputs.clear
 		outputOccurenceCounter.clear
+		conditionalEndNodes.clear
 
 		// stores names of SSA variables and the latest version numbers
 		ssaMap.clear
@@ -83,8 +85,14 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 		createSSAs(entry.next.target, scg)
 
-		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.ssaMap = ssaMap])
 
+		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.conditionalEndNodes = conditionalEndNodes])
+
+		for(s : conditionalEndNodes.entrySet){
+		System.out.println(s.key.toString + " Fhas " + s.value.toString)
+		
+		}
+		
 		return scg
 	}
 
@@ -97,6 +105,7 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 				createSSAs(n.next.target, scg)
 			} else if (n instanceof Conditional) {
 				val target = n.^else.target
+				conditionalEndNodes.put(n,target)
 				transformConditionalNodes(n, n, n, n.^else.target, scg)
 				createSSAs(target, scg)
 			}
@@ -249,7 +258,7 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 					valuedObjectList.put(name, a.valuedObject)
 					if (a.valuedObject.isOutput && !a.valuedObject.isInput) {
-						valuedObjectOriginalOutputs.put(name, a.valuedObject)
+						originalOutputs.put(name, a.valuedObject)
 					}
 				}
 
@@ -289,5 +298,5 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 class SSAMapData extends AbstractKielerCompilerAuxiliaryData {
 	@Accessors
-	HashMap<String, Integer> ssaMap
+	HashMap<Conditional, Node> conditionalEndNodes
 }

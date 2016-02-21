@@ -70,7 +70,7 @@ class LinkCreator {
 	
 	
 	/*  Creates links for LogicRegion */
-	def logicRegion(Actor logic, HashMap<String, Integer> ssaMap) {
+	def logicRegion(Actor logic) {
 		var LinkedList<Port> portList = new LinkedList<Port>
 		portList += logic.ports
 
@@ -106,36 +106,36 @@ class LinkCreator {
 			}
 		}
 
-		for (oc : portList.filter[type == "OutConnectorLogic"]) {
-			if (oc.incomingLinks.length == 0) {
-				// search for SSA which is meant to be the output
-				portList.forEach [ ic |
-					if (ic.type == "Out" && ic.name == oc.name + "_" + ssaMap.get(oc.name)) {
-						val link = CircuitFactory::eINSTANCE.createLink
-						link.source = ic;
-						link.target = oc;
-						logic.innerLinks += link
-
-					}
-
-				]
-			}
-		}
-		for (oc : portList.filter[type == "OutConnectorLogic"]) {
-			if (oc.incomingLinks.length == 0) {
-				// in this case, the variable was not changed by the program. e.g A in ABO
-				portList.forEach [ ic |
-					if ((ic.type == "InConnectorLogic") && oc.name == ic.name) {
-						val link = CircuitFactory::eINSTANCE.createLink
-						link.source = ic;
-						link.target = oc;
-						logic.innerLinks += link
-					}
-
-				]
-
-			}
-		}
+//		for (oc : portList.filter[type == "OutConnectorLogic"]) {
+//			if (oc.incomingLinks.length == 0) {
+//				// search for SSA which is meant to be the output
+//				portList.forEach [ ic |
+//					if (ic.type == "Out" && ic.name == oc.name + "_" + ssaMap.get(oc.name)) {
+//						val link = CircuitFactory::eINSTANCE.createLink
+//						link.source = ic;
+//						link.target = oc;
+//						logic.innerLinks += link
+//
+//					}
+//
+//				]
+//			}
+//		}
+//		for (oc : portList.filter[type == "OutConnectorLogic"]) {
+//			if (oc.incomingLinks.length == 0) {
+//				// in this case, the variable was not changed by the program. e.g A in ABO
+//				portList.forEach [ ic |
+//					if ((ic.type == "InConnectorLogic") && oc.name == ic.name) {
+//						val link = CircuitFactory::eINSTANCE.createLink
+//						link.source = ic;
+//						link.target = oc;
+//						logic.innerLinks += link
+//					}
+//
+//				]
+//
+//			}
+//		}
 
 	}
 	
