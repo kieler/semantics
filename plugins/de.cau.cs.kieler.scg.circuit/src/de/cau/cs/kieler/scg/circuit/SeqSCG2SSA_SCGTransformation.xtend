@@ -88,10 +88,6 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.conditionalEndNodes = conditionalEndNodes])
 
-		for(s : conditionalEndNodes.entrySet){
-		System.out.println(s.key.toString + " Fhas " + s.value.toString)
-		
-		}
 		
 		return scg
 	}
@@ -149,7 +145,7 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 				newNode.valuedObject = thisNode.valuedObject
 
 				// if this is the first SSA variable of an Output x, use pre(x)
-				if (storeVO.isOutput && !storeVO.isInput && (ssaMap.get(name) == 1)) {
+				if (!storeVO.isInput && (ssaMap.get(name) == 1)) {
 					val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
 					expression.setOperator(OperatorType::PRE)
 
@@ -241,7 +237,7 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 			val name = a.valuedObject.name
 			// gx and _condgx are unique 
 			if (!(name.startsWith("g") || (name.startsWith("_")))) {
-				if (a.valuedObject.isOutput && !a.valuedObject.isInput) {
+				if (!a.valuedObject.isInput) {
 					if (outputOccurenceCounter.containsKey(name)) {
 						val m = outputOccurenceCounter.get(name)
 						outputOccurenceCounter.replace(name, m, m + 1)
@@ -257,7 +253,7 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 					ssaMap.put(name, 0);
 
 					valuedObjectList.put(name, a.valuedObject)
-					if (a.valuedObject.isOutput && !a.valuedObject.isInput) {
+					if (!a.valuedObject.isInput) {
 						originalOutputs.put(name, a.valuedObject)
 					}
 				}
