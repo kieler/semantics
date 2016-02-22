@@ -30,11 +30,13 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.scg.GuardDependency
 
 /** 
  * @author ssm
@@ -103,7 +105,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
          * basic blocks.
          */
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
-        	annotations += createStringAnnotation(SCGFeatures.SEQUENTIALIZE_ID, SCGFeatures.SEQUENTIALIZE_NAME)
+        	annotations += createStringAnnotation(SCGFeatures.GUARDS_ID, SCGFeatures.GUARDS_NAME)
         	label = scg.label
         ]
         
@@ -126,6 +128,17 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         	]
         }
         
+		for(node : scg.nodes.filter[ dependencies.size > 0]) {
+			val sourceAssignment = VAMap.get(valuedObjectMap.get(node.schedulingBlock.guards.head.valuedObject))
+			for(dependency : node.dependencies) {
+				val targetAssignment = VAMap.get(valuedObjectMap.get(dependency.target.schedulingBlock.guards.head.valuedObject))
+				dependency.copy => [
+					sourceAssignment.dependencies += it
+					it.target = targetAssignment
+				]
+			}
+		}
+        
         for(guard : GAMap.keySet) {
 			val assignment = GAMap.get(guard)
 			val VORs = assignment.expression.getAllReferences.filter[ 
@@ -140,14 +153,14 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 			}
         }
         
-//        for (basicBlock : scg.basicBlocks) {
-//        	val headSB = basicBlock.schedulingBlocks.head
-//			val headGuard = headSB.guards.head
-//			for (predecessor : basicBlock.predecessors) {
-//				val predecessorGuard = predecessor.basicBlock.schedulingBlocks.last.guards.head
-//				predecessorGuard.createExpressionDependency(headGuard, GAMap)
-//			}
-//		}
+		for(schedulingBlock : scg.schedulingBlocks) {
+			for(assignment : schedulingBlock.nodes.filter(Assignment)) {
+				val newAssignment = assignment.copySCGAssignment(valuedObjectMap)
+				val guardAssignment = VAMap.get(valuedObjectMap.get(schedulingBlock.guards.head.valuedObject))
+				newSCG.nodes += newAssignment
+				guardAssignment.createGuardDependency(newAssignment)
+			}						
+		}
 
         newSCG     	
     }
@@ -161,6 +174,13 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
     
     private def ExpressionDependency createExpressionDependency(Assignment source, Assignment target) {
     	ScgFactory::eINSTANCE.createExpressionDependency => [ 
+    		source.dependencies += it
+    		it.target = target
+    	]
+    }
+
+    private def GuardDependency createGuardDependency(Assignment source, Assignment target) {
+    	ScgFactory::eINSTANCE.createGuardDependency => [ 
     		source.dependencies += it
     		it.target = target
     	]

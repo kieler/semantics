@@ -384,7 +384,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val String ANNOTATION_REGIONNAME = "regionName"
     private static val String ANNOTATION_SEQUENTIALIZED = "sequentialized" 
     private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"   
-    private static val String ANNOTATION_SCPDGTRANSFORMATION = "scpdg" 
+    private static val String ANNOTATION_SCPDGTRANSFORMATION = "scpdg"
     private static val String ANNOTATION_LABEL = "label"
 
     /** 
@@ -419,12 +419,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private var Set<Node> PIL_Nodes = <Node> newHashSet
 
     /** The selected orientation */
-    private int orientation;
+    private int orientation
     
     private int sequentializedSCGCounter = 0
     
-    private SCGraph SCGraph;
-    protected boolean isSCPDG;
+    private SCGraph SCGraph
+    protected boolean isSCPDG
+    protected boolean isGuardSCG
 
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
@@ -473,6 +474,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Set root node and layout options.
             rootNode = node
             isSCPDG = scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)
+            isGuardSCG = scg.hasAnnotation(SCGFeatures::GUARDS_ID) 
             if(ORIENTATION.objectValue == "Left-Right") orientation = ORIENTATION_LANDSCAPE else orientation = ORIENTATION_PORTRAIT
             if (topdown)
                 node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
@@ -1222,14 +1224,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             	]            	
             }
             // If dependency edges are layouted, use the dependency ports to attach the edges.
-            if ((LAYOUT_DEPENDENCIES.booleanValue) || (isSCPDG)) {
+            if ((LAYOUT_DEPENDENCIES.booleanValue) || (isSCPDG) || (isGuardSCG)) {
                 edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
                 edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)
             } else {
-
                 // Otherwise, add NO_LAYOUT as layout option to trigger node-to-node hierarchy-crossover
                 // drawing.
-                edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
+              	edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
             }
         ]
 

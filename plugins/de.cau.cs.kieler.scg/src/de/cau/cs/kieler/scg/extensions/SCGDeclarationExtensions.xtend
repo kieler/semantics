@@ -24,6 +24,8 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.ScgFactory
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -198,6 +200,19 @@ class SCGDeclarationExtensions {
         
         // Return the new expression.
         newExpression
-    }    
+    }   
+    
+    def Assignment copySCGAssignment(Assignment assignment, 
+    	HashMap<ValuedObject, ValuedObject> map
+    ) {
+    	ScgFactory::eINSTANCE.createAssignment => [ s |
+    		s.valuedObject = assignment.valuedObject.getValuedObjectCopy(map)
+    		s.expression = assignment.expression.copySCGExpression(map)
+    		s.operator = assignment.operator
+    		assignment.indices.forEach[
+    			s.indices += it.copySCGExpression(map)
+    		] 
+    	]
+    } 
 
 }

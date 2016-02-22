@@ -517,7 +517,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
                 block.guards += newGuard
                 block.label = newGuard.valuedObject.name
-                block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
+                block.dependencies.addAll(node.incoming.filter(Dependency))
             }
             // Add the node to the scheduling block.
             block.nodes.add(node)
