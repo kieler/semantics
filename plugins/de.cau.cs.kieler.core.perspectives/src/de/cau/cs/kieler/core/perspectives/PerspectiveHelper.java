@@ -33,7 +33,7 @@ public class PerspectiveHelper {
     /** A big view. */
     static final float BIG = 0.7f;
 
-    static final String VIEW_KLIGHD = "de.cau.cs.kieler.kico.klighd.view"; //$NON-NLS-1$
+    static final String VIEW_KLIGHD = "de.cau.cs.kieler.klighd.ui.view.diagram"; //$NON-NLS-1$
     static final String VIEW_KICO = "de.cau.cs.kieler.kico.selection"; //$NON-NLS-1$
     static final String VIEW_KIEM = "de.cau.cs.kieler.sim.kiem.view"; //$NON-NLS-1$
     static final String VIEW_KIEM_TABLE = "de.cau.cs.kieler.sim.table.view"; //$NON-NLS-1$

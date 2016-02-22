@@ -399,6 +399,13 @@
              priority="100">
        </editor>
     </extension>
+    <extension
+          point="de.cau.cs.kieler.klighd.ui.view.editor">
+       <editor
+             controllerID="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
+             editorID="de.cau.cs.kieler.scl.SCL">
+       </editor>
+    </extension>
     <!--<extension
           point="de.cau.cs.kieler.kico.ui.transformation">
        <editor

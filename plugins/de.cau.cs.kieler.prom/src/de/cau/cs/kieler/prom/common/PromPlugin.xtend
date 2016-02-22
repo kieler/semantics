@@ -23,6 +23,8 @@ import org.eclipse.core.runtime.QualifiedName
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
+import org.eclipse.core.variables.VariablesPlugin
+import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -50,7 +52,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
     /**
      * The constructor
      */
-    new(){
+    new() {
     }
 
     /*
@@ -60,6 +62,9 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
     override void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this
+        
+        // Initialize the variables that can be used in the launch configuration
+        LaunchConfiguration.initializeVariables()
     }
 
     /*

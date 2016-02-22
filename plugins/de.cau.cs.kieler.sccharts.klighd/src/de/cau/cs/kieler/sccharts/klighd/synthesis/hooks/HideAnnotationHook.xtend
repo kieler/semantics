@@ -16,17 +16,14 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.Annotatable
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
-import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 
@@ -54,7 +51,7 @@ class HideAnnotationHook extends SynthesisHook {
 
     /** The related synthesis option */
     public static final SynthesisOption SHOW_HIDDEN_ELEMENTS = SynthesisOption.createCheckOption("Show hidden Elements",
-        false);
+        false).setCategory(GeneralSynthesisOptions::APPEARANCE);
 
     override getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_HIDDEN_ELEMENTS);

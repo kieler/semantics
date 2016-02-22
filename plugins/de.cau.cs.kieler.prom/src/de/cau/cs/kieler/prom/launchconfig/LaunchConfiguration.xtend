@@ -31,6 +31,7 @@ import java.io.PrintWriter
 import java.util.List
 import org.apache.commons.io.FilenameUtils
 import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
@@ -49,11 +50,9 @@ import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
-import org.eclipse.core.resources.IResource
-import org.eclipse.debug.internal.ui.views.console.ProcessConsole
-import org.eclipse.ui.PlatformUI
-import org.eclipse.ui.console.IConsoleConstants
-import org.eclipse.ui.console.IConsoleView
+import org.eclipse.xtend.lib.annotations.Accessors
+
+import static de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration.*
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -67,6 +66,11 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * It is set in the plugin.xml.
      */
     public static val LAUNCH_CONFIGURATION_TYPE_ID = "de.cau.cs.kieler.prom.launchconfig.launchConfiguration"
+
+    /**
+     * The id for the wrapper code generator extension point.
+     */
+    public static val WRAPPER_CODE_GENERATOR_EXTENSION_POINT_ID = "de.cau.cs.kieler.prom.wrapperCodeGenerator"
 
     /**
      * The variable name in the target template
@@ -95,7 +99,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     public static val ATTR_WRAPPER_CODE_TEMPLATE = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.template"
     public static val ATTR_WRAPPER_CODE_SNIPPETS = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.snippets"
-
+    public static val ATTR_WRAPPER_CODE_GENERATOR = "de.cau.cs.kieler.prom.launchconfig.wrapper.generator"
+    
     public static val ATTR_ASSOCIATED_LAUNCH_SHORTCUT = "de.cau.cs.kieler.prom.launchconfig.main.associated.launch.shortcut"
 
     // Variable names
@@ -118,49 +123,49 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     private static MessageConsole console;
     private static MessageConsoleStream consoleStream;
 
-    // Objects from launch
-    private ILaunchConfiguration configuration
-    private String mode
-    private ILaunch launch
-    private IProgressMonitor monitor
-
-    // Objects loaded from configuration
-    private IProject project
-    private String mainFile
-    private List<FileCompilationData> files
-    private String targetLanguage
-    private String targetTemplate
-    private String wrapperCodeTemplate
-    private String wrapperCodeSnippetDirectory
-
-    private List<CommandData> commands
-    private String associatedLaunchShortcut
-
-    private String targetLanguageFileExtension
-
     // Jobs
     private Job compileJob;
     private Job wrapperCodeJob;
+    
+    // Objects from launch
+    @Accessors
+    private ILaunchConfiguration configuration
+    @Accessors
+    private String mode
+    @Accessors
+    private ILaunch launch
+    @Accessors
+    private IProgressMonitor monitor
 
-    /**
-     * Writes to the console view for a KiCo launch.
-     * @param message The message to print to the console
-     */
-    public static def void writeToConsole(String message){
-        // If there is nothing to write, we are done immediately.
-        if(Strings.isNullOrEmpty(message))
-            return;
-        
-        // Ensure the console exists.
-        initializeConsole()
-        
-        // Print message
-        consoleStream.println(message)
-        
-        // Bring console to front
-        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
-        consoleManager.showConsoleView(console)
-    }
+    // Objects loaded from configuration
+    @Accessors
+    private IProject project
+    @Accessors
+    private String mainFile
+    @Accessors
+    private List<FileCompilationData> files
+    @Accessors
+    private String targetLanguage
+    @Accessors
+    private String targetTemplate
+    @Accessors
+    private String wrapperCodeTemplate
+    @Accessors
+    private String wrapperCodeSnippetDirectory
+    @Accessors
+    private String wrapperCodeTargetLocation
+    @Accessors
+    private String wrapperCodeGenerator
+
+    @Accessors
+    private List<CommandData> commands
+    @Accessors
+    private String associatedLaunchShortcut
+
+    @Accessors
+    private String targetLanguageFileExtension
+
+
 
     /**
      * {@inheritDoc}
@@ -171,6 +176,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         this.mode = mode
         this.launch = launch
         this.monitor = monitor
+        
+        // Load variable manager
+        this.variableManager = VariablesPlugin.getDefault.stringVariableManager
 
         // Init console for errors and messages
         clearConsole()
@@ -182,6 +190,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
             // Set variables (e.g. launched_project_loc, main_name, main_loc, ...)
             setVariables() 
+
+            // Remove placeholders (e.g. ${project_name}) in fields
+            resolveVariables()
 
             // Create jobs.
             compileJob = getCompileJob()
@@ -212,6 +223,76 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         }
     }
 
+    /**
+     * Initializes all variables that are used in the launch configuration if they have not been initialized yet.
+     */
+    public static def void initializeVariables() {
+        val variableManager = VariablesPlugin.getDefault.stringVariableManager
+        // Check if variables have been initialized already
+        var variable = variableManager.getValueVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE)
+        // Instantiate all variables if none yet
+        if (variable == null) {
+            // Project
+            initializeVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE,
+            "Fully qualified path to the launched application")
+    
+            // Main file
+            initializeVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE,
+                "Name of the main file of the launched application")
+            initializeVariable(LaunchConfiguration.MAIN_FILE_LOCATION_VARIABLE,
+                "Fully qualified location of the main file of the launched application")
+            initializeVariable(LaunchConfiguration.MAIN_FILE_PATH_VARIABLE,
+                "Project relative path of the main file of the launched application")
+            initializeVariable(LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
+                "Project relative path of the main file of the launched application without file extension")
+            
+            // Compiled main file
+            initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE,
+                "Name of the compiled main file of the launched application")
+            initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE,
+                "Fully qualified location of the compiled main file of the launched application")
+            initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE,
+                "Project relative path of the compiled main file of the launched application")
+            initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
+                "Project relative path of the compiled main file of the launched application without file extension")
+        }
+    }
+
+    /**
+     * Writes to the console view for a KiCo launch.
+     * @param message The message to print to the console
+     */
+    public static def void writeToConsole(String message){
+        // If there is nothing to write, we are done immediately.
+        if(Strings.isNullOrEmpty(message))
+            return;
+        
+        // Ensure the console exists.
+        initializeConsole()
+        
+        // Print message
+        consoleStream.println(message)
+        
+        // Bring console to front
+        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
+        consoleManager.showConsoleView(console)
+    }
+
+    public static def void writeToConsole(Exception e){
+        // Write exception to console of running Eclipse
+        var text = ""
+        text += Strings.nullToEmpty(e.toString())
+        if(text.length > 0 )
+            text += ":"
+        text += Strings.nullToEmpty(e.message)
+        writeToConsole(text)
+        
+        // Print stack trace
+        e.printStackTrace()
+    }
+    
+    
+    
     /**
      * Runs the associated launch shortcut on the compiled main file.
      * E.g. one may want to launch a file as "Java Application" after KiCo compilation finished. 
@@ -262,11 +343,12 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                     }
                 } catch (Exception e) {
                     // Remove this try-catch to notify the user with a popup window.
-                    writeToConsole(e.message + "\n")
+                    writeToConsole(e)
                     return Status.CANCEL_STATUS
                 }
 
-                System.err.println("Compilation finished after " + (System.currentTimeMillis() - startTime) + "ms")
+                // Debug info about duration
+//                System.err.println("Compilation finished after " + (System.currentTimeMillis() - startTime) + "ms")
 
                 return Status.OK_STATUS
             }
@@ -279,30 +361,52 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @return the created job. 
      */
     private def Job getWrapperCodeGenerationJob() {
+        val launchConfig = this        
+        
         return new Job("Wrapper Code Generation") {
             override protected IStatus run(IProgressMonitor monitor) {
 
                 val startTime = System.currentTimeMillis()
 
                 try {
-                    val generator = new WrapperCodeGenerator(project,
-                        variableManager.performStringSubstitution(wrapperCodeTemplate),
-                        variableManager.performStringSubstitution(wrapperCodeSnippetDirectory),
-                        computeTargetPath(variableManager.performStringSubstitution(wrapperCodeTemplate), false))
-
-                    generator.generateWrapperCode(files)
-
+                    // Create generator
+                    var IWrapperCodeGenerator generator
+                    if(!Strings.isNullOrEmpty(wrapperCodeGenerator)){
+                        generator = instantiateWrapperCodeGenerator(wrapperCodeGenerator)
+                    } else {
+                        generator = new WrapperCodeGenerator()
+                    }
+                    
+                    // Generate code
+                    if(generator != null) {
+                        generator.launchConfiguration = launchConfig
+                        generator.generateWrapperCode(files)
+                    } else {
+                        writeToConsole("The class for wrapper code generation " + wrapperCodeGenerator+ " could not be instantiated.")
+                    }
                 } catch (Exception e) {
-                    writeToConsole(e.message + "\n")
+                    writeToConsole(e)
                     return Status.CANCEL_STATUS
                 }
 
-                System.err.println(
-                    "Wrapper Code generation finished after " + (System.currentTimeMillis() - startTime) + "ms")
+                // Debug info about duration
+//                System.err.println(
+//                    "Wrapper Code generation finished after " + (System.currentTimeMillis() - startTime) + "ms")
 
                 return Status.OK_STATUS
             }
         }
+    }
+
+    /**
+     * Instantiates a wrapper code generator with the given class name.
+     * 
+     * @param fullyQualifiedClassName The class name
+     */
+    private def IWrapperCodeGenerator instantiateWrapperCodeGenerator(String fullyQualifiedClassName) {
+        return ExtensionLookupUtil.instantiateClassFromExtension(WRAPPER_CODE_GENERATOR_EXTENSION_POINT_ID,
+                                       "generator", "class", fullyQualifiedClassName)
+                                       as IWrapperCodeGenerator
     }
 
     /**
@@ -311,15 +415,17 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @return the created job.
      */
     private def Job getExecuteCommandsJob() {
+        val launchConfig = this
+        
         return new Job("Command Execution") {
-
+            
             override protected run(IProgressMonitor monitor) {
                 try {
-                    val executor = new CommandExecutor(project, launch)
+                    val executor = new CommandExecutor(launchConfig)
                     executor.execute(commands)
                     return Status.OK_STATUS
                 } catch (Exception e) {
-                    writeToConsole(e.message + "\n")
+                    writeToConsole(e)
                     return Status.CANCEL_STATUS
                 }
             }
@@ -333,14 +439,13 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      */
     private def void compile(FileCompilationData data) {
         // Load model from file
-        val EObject model = ModelImporter.get(project.location.toOSString + File.separator + data.projectRelativePath)
+        val EObject model = ModelImporter.load(project.location.toOSString + File.separator + data.projectRelativePath, true)
 
         if (model != null) {
             // Get compiler context with settings for KiCo
             // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
             // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
-            // TODO: (Bug KISEMA-1036) still requires *T_INITIALIZATION
-            val context = new KielerCompilerContext("!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, *T_INITIALIZATION, T_" + targetLanguage, model)
+            val context = new KielerCompilerContext("!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, T_" + targetLanguage, model)
             context.inplace = false
             context.advancedSelect = true
 
@@ -381,7 +486,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         // Remove extension
         val projectRelativeRelevantPathWithoutExtension = FilenameUtils.removeExtension(projectRelativeRelevantPath)        
-    
+     
         // Compute target path
         val projectRelativeTargetPath = BUILD_DIRECTORY + File.separator + projectRelativeRelevantPathWithoutExtension + targetLanguageFileExtension
         if(projectRelative)
@@ -441,19 +546,20 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         // Load main file
         mainFile = configuration.getAttribute(ATTR_MAIN_FILE, "")
-
+        
         // Model files to be compiled
         files = FileCompilationData.loadAllFromConfiguration(configuration)
     
         // Load target
         targetLanguage = configuration.getAttribute(ATTR_TARGET_LANGUAGE, "")
-        targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
         targetLanguageFileExtension = configuration.getAttribute(ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
+        targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
 
         // Load wrapper code
-        wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
+        wrapperCodeGenerator = configuration.getAttribute(ATTR_WRAPPER_CODE_GENERATOR, "")
         wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
-
+        wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
+        
         // Load shell commands
         commands = CommandData.loadAllFromConfiguration(configuration)
         
@@ -466,43 +572,44 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * The variables can be used for example in the commands and file paths.
      */
     private def void setVariables() {
-        variableManager = VariablesPlugin.getDefault.stringVariableManager
-
         // Set project
-        setVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE, project.location.toOSString,
-            "Fully qualified path to the launched application")
+        setVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE, project.location.toOSString)
 
         // Set main file
         val mainFileName = new File(mainFile).name
-        val mainFileLocation = if(mainFileName != "") new File(project.location + File.separator + mainFile).
-                absolutePath else ""
+        val mainFileLocation = if(mainFileName != "")
+                                   new File(project.location + File.separator + mainFile).absolutePath
+                               else
+                                   ""
         val mainFilePath = mainFile
         val mainFileWithoutExtension = FilenameUtils.removeExtension(mainFileName)
-        setVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE, mainFileName,
-            "Name of the main file of the launched application")
-        setVariable(LaunchConfiguration.MAIN_FILE_LOCATION_VARIABLE, mainFileLocation,
-            "Fully qualified location of the main file of the launched application")
-        setVariable(LaunchConfiguration.MAIN_FILE_PATH_VARIABLE, mainFilePath,
-            "Project relative path of the main file of the launched application")
-        setVariable(LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainFileWithoutExtension,
-            "Project relative path of the main file of the launched application without file extension")
+        setVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE, mainFileName)
+        setVariable(LaunchConfiguration.MAIN_FILE_LOCATION_VARIABLE, mainFileLocation)
+        setVariable(LaunchConfiguration.MAIN_FILE_PATH_VARIABLE, mainFilePath)
+        setVariable(LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainFileWithoutExtension)
 
         // Set compiled main file
         val mainTarget = computeTargetPath(mainFile, true)
         val mainTargetName = new File(mainTarget).name
-        val mainTargetLocation = if(mainTargetName != "") new File(project.location + File.separator + mainTarget).
-                absolutePath else ""
+        val mainTargetLocation = if(mainTargetName != "")
+                                     new File(project.location + File.separator + mainTarget).absolutePath
+                                 else
+                                    ""
         val mainTargetPath = mainTarget
         val mainTargetWithoutExtension = FilenameUtils.removeExtension(mainTargetName)
-        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName,
-            "Name of the compiled main file of the launched application")
-        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation,
-            "Fully qualified location of the compiled main file of the launched application")
-        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE, mainTargetPath,
-            "Project relative path of the compiled main file of the launched application")
-        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
-            mainTargetWithoutExtension,
-            "Project relative path of the compiled main file of the launched application without file extension")
+        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName)
+        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation)
+        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE, mainTargetPath)
+        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainTargetWithoutExtension)
+    }
+
+    /**
+     * Substitutes placeholder variables (e.g. ${project_name}) in fields with their actual value. 
+     */
+    private def void resolveVariables() {
+        wrapperCodeTemplate = variableManager.performStringSubstitution(wrapperCodeTemplate)
+        wrapperCodeSnippetDirectory = variableManager.performStringSubstitution(wrapperCodeSnippetDirectory)
+        wrapperCodeTargetLocation = computeTargetPath(wrapperCodeTemplate, false)
     }
 
     /**
@@ -512,15 +619,22 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @param value The variable's value
      * @param description The variable's description 
      */
-    private def void setVariable(String name, String value, String description) {
+    private def void setVariable(String name, String value) {
         var variable = variableManager.getValueVariable(name)
-        if (variable == null) {
-            variable = variableManager.newValueVariable(name, description, false, value)
-            variableManager.addVariables(#[variable])
-        } else {
-            variable.description = description
-            variable.value = value
-        }
+        variable.value = value
+    }
+    
+    /**
+     * Registers a string variable at the string variable manager.
+     * 
+     * @param name The name of the variable
+     * @param description A short description for the variable
+     */
+    private static def void initializeVariable(String name, String description) {
+        val manager = VariablesPlugin.getDefault.stringVariableManager
+        val variable = manager.newValueVariable(name, description, false, "")
+        variable.description = description
+        manager.addVariables(#[variable])
     }
 
     /**

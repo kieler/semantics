@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.freemarker.FreeMarkerPlugin
+import com.google.common.base.Strings
 
 /**
  * This class generates wrapper code for models.
@@ -40,7 +41,7 @@ import org.freemarker.FreeMarkerPlugin
  * 
  * @author aas
  */
-class WrapperCodeGenerator {
+class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
 
     /**
      * The id of the extension point for wrapper code annotation analyzers.
@@ -58,6 +59,12 @@ class WrapperCodeGenerator {
      */
     private static val MODEL_NAME_VARIABLE = "model_name"    
 
+    /**
+     * A template variable which is replaced with the name of the file (without file extension)
+     * that is created during wrapper code generation.
+     */
+    private static val FILE_NAME_VARIABLE = "file_name"
+
     private static val declarationPhase = new CodeGenerationPhase("declaration", true, [data | true], "decl")
     private static val initializationPhase = new CodeGenerationPhase("initialization", true, [data | true], "init")
     private static val releasePhase = new CodeGenerationPhase("release", true, [data | true], "free")
@@ -72,101 +79,20 @@ class WrapperCodeGenerator {
     public static var String macroDefinitions = null
 
     /**
-     * The project of the launch configuration which started the generator.
-     */
-    private IProject project
-
-    /**
-     * The file path to the input template for wrapper code generation.
-     * Wrapper code will be inserted in this file's text and the output is saved in the build directory.
-     */
-    private String wrapperCodeTemplate = ""
-
-    /**
-     * The path to a directory with FreeMarker template files.
-     * Each file may contain several macro definitions for wrapper code generation.
-     */
-    private String wrapperCodeSnippetDirectory = ""
-
-    /**
-     * A file handle from the fully qualified path where the generated output will be saved.  
-     */
-    private File targetLocation
-
-    /**
-     * A file handle from the fully qualified path of the input template.
-     */
-    private File templateLocation
-
-    /**
-     *  A file handle from the fully qualified path of the snippet directory.
-     */
-    private File snippetDirectoryLocation
-
-    /**
      * The name of the last processed model
      * (e.g. the name for an SCChart).  
      */
     private String modelName = ""
-
-
-
-    /**
-     * Creates a new instance of this class and inititlizes it with the given parameters.
-     * 
-     * @param wrapperCodeTemplate File path to the wrapper code template
-     * @param wrapperCodeSnippetDirectory Directory path to the wrapper code snippet directory
-     * @param targetLocation File path where the generated output will be saved
-     */
-    new(IProject project, String wrapperCodeTemplate, String wrapperCodeSnippetDirectory, String targetLocation) {
-        this.project = project
-        this.wrapperCodeTemplate = wrapperCodeTemplate
-        this.wrapperCodeSnippetDirectory = wrapperCodeSnippetDirectory
-
-        this.targetLocation = new File(targetLocation)
-        this.templateLocation = new File(project.location + File.separator + wrapperCodeTemplate)
-        this.snippetDirectoryLocation = new File(wrapperCodeSnippetDirectory)
-
-        // If the snippet directory is not an absolute path for itself,
-        // we interpret it as a directory in the project.
-        if (!snippetDirectoryLocation.isAbsolute)
-            this.snippetDirectoryLocation = new File(project.location + File.separator + wrapperCodeSnippetDirectory)
-            
-        
-    }
-
-
-
-    /**
-     * Initializes the macro definitions when they are not yet initialized.
-     * Afterwards they are returned.
-     * 
-     * @return the macro definitions of assignment macros such as <@input>
-     */
-    private def String getOrInitializeMacroDefinitions() {
-        // Initialize if not done yet
-        if(macroDefinitions == null){
-            macroDefinitions = ""
-            
-            for(phase : codeGenerationPhases ){
-                for(macro : phase.macros){
-                    macroDefinitions += macro.freeMarkerDefinition
-                    macroDefinitions += "\n"
-                }                
-            }
-        }
-        return macroDefinitions
-    }
 
     /**
      * Generates and saves the wrapper code for a list of files.
      * 
      * @param datas The data objects to generate wrapper code for 
      */
-    public def void generateWrapperCode(FileCompilationData... datas) {
+    override void generateWrapperCode(FileCompilationData... datas) {
 
-        // Check consistency of paths
-        if (wrapperCodeTemplate != "" && wrapperCodeSnippetDirectory != "") {
+        // Check consistency of path
+        if (!Strings.isNullOrEmpty(launchConfiguration.wrapperCodeTemplate)) {
 
             val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
 
@@ -195,11 +121,18 @@ class WrapperCodeGenerator {
 
         // Create macro calls from annotations
         val map = getMacroCalls(annotationDatas)
+        
+        // Add name of model 
         map.put(MODEL_NAME_VARIABLE, modelName)
-
+        
+        // Add name of output file 
+        val fileName = new File(launchConfiguration.wrapperCodeTargetLocation).name
+        val fileNameWithoutExtension = FilenameUtils.removeExtension(fileName)
+        map.put(FILE_NAME_VARIABLE, fileNameWithoutExtension)
+        
         // Inject macro calls in input template
-        FreeMarkerPlugin.newConfiguration(project.location.toOSString())
-        val template = FreeMarkerPlugin.configuration.getTemplate(wrapperCodeTemplate)
+        FreeMarkerPlugin.newConfiguration(launchConfiguration.project.location.toOSString())
+        val template = FreeMarkerPlugin.configuration.getTemplate(launchConfiguration.wrapperCodeTemplate)
 
         val writer = new StringWriter()
         template.process(map, writer)
@@ -214,31 +147,60 @@ class WrapperCodeGenerator {
      * @param templateWithMacroCalls The template text to be processed 
      */
     private def void processTemplateAndSaveOutput(String templateWithMacroCalls) {
-        // Set the snippets directory to implicitly load the macro definitions
-        FreeMarkerPlugin.newConfiguration(snippetDirectoryLocation.absolutePath)
-
-        // Add implicit include of assignment macros such as <@init> and <@output>
-        FreeMarkerPlugin.stringTemplateLoader.putTemplate("assignmentMacros", getOrInitializeMacroDefinitions() )
-        FreeMarkerPlugin.configuration.addAutoInclude("assignmentMacros")
-
-        // Add implicit include of snippet definitions
-        val List<File> snippetFiles = getFilesRecursive(snippetDirectoryLocation, "ftl")
-        snippetFiles.forEach [
-            // FreeMarker needs paths relative to the template directory.
-            // We calculate this via the URI class.
-            val relativeURI = snippetDirectoryLocation.toURI().relativize(it.toURI())
-            FreeMarkerPlugin.configuration.addAutoInclude(relativeURI.getPath())
-        ]
-
+        
+        // Load snippet definitions
+        if(!Strings.isNullOrEmpty(launchConfiguration.wrapperCodeSnippetDirectory)) {
+            var File snippetDirectoryLocation = new File(launchConfiguration.wrapperCodeSnippetDirectory)
+            if (!snippetDirectoryLocation.isAbsolute)
+                snippetDirectoryLocation = new File(launchConfiguration.project.location + File.separator + launchConfiguration.wrapperCodeSnippetDirectory)
+                
+            // Set the snippets directory to implicitly load the macro definitions
+            FreeMarkerPlugin.newConfiguration(snippetDirectoryLocation.absolutePath)
+    
+            // Add implicit include of assignment macros such as <@init> and <@output>
+            FreeMarkerPlugin.stringTemplateLoader.putTemplate("assignmentMacros", getOrInitializeMacroDefinitions() )
+            FreeMarkerPlugin.configuration.addAutoInclude("assignmentMacros")
+    
+            // Add implicit include of snippet definitions
+            val List<File> snippetFiles = getFilesRecursive(snippetDirectoryLocation, "ftl")
+            for(snippetFile : snippetFiles) {
+                // FreeMarker needs paths relative to the template directory.
+                // We calculate this via the URI class.
+                val relativeURI = snippetDirectoryLocation.toURI().relativize(snippetFile.toURI())
+                FreeMarkerPlugin.configuration.addAutoInclude(relativeURI.getPath())
+            }
+        }
+        
         // Process template with macro calls and now implicitly loaded snippet definitions.
         val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreeMarkerPlugin.configuration)
 
         // Process template and write output directly to target file
-        val writer = new FileWriter(targetLocation)
+        val writer = new FileWriter(launchConfiguration.wrapperCodeTargetLocation)
         template.process(newHashMap(), writer)
         writer.close()
     }
 
+    /**
+     * Initializes the macro definitions when they are not yet initialized.
+     * Afterwards they are returned.
+     * 
+     * @return the macro definitions of assignment macros such as <@input>
+     */
+    private def String getOrInitializeMacroDefinitions() {
+        // Initialize if not done yet
+        if(macroDefinitions == null){
+            macroDefinitions = ""
+            
+            for(phase : codeGenerationPhases ){
+                for(macro : phase.macros){
+                    macroDefinitions += macro.freeMarkerDefinition
+                    macroDefinitions += "\n"
+                }                
+            }
+        }
+        return macroDefinitions
+    }
+    
     /**
      * Creates macro calls from wrapper code annotation datas.
      * 
@@ -393,7 +355,7 @@ class WrapperCodeGenerator {
         List<WrapperCodeAnnotationData> annotationDatas) {
 
         // Load EObject from file
-        val model = ModelImporter.get(project.location.toOSString + File.separator + data.projectRelativePath)
+        val model = ModelImporter.load(launchConfiguration.project.location.toOSString + File.separator + data.projectRelativePath, true)
 
         if (model != null) {
             initAnalyzers()

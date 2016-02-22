@@ -2,7 +2,7 @@
 <#-- As output variable, delays the execution in milliseconds of the variable value.
 
      Example for SCCharts:
-         @Wrapper Delay 
+         @Wrapper Delay
          output int delay = 500; -->
 <#macro Delay>
     <@declaration>
@@ -34,7 +34,7 @@
 <#-- As output variable, sets the value of the given IO pin to HIGH (variable is true) or LOW (variable is false).
 
      Example for SCCharts:
-         @Wrapper DigitalWrite 13
+         @Wrapper DigitalWrite, "13"
          output bool pinState = true; -->
 <#macro DigitalWrite port>
     <@declaration>
@@ -58,7 +58,7 @@
      Otherwise it will be true.
 
      Example for SCCharts:
-         @Wrapper DigitalRead 10
+         @Wrapper DigitalRead, "10"
          input bool pinState; -->
 <#macro DigitalRead port>
     <@declaration>
@@ -77,7 +77,7 @@
      Voltage from 0V to 5V is linearly mapped to an integer value from 0 to 1023.  
 
      Example for SCCharts:
-         @Wrapper AnalogRead A1
+         @Wrapper AnalogRead, A1
          input int pinValue; -->
 <#macro AnalogRead port>
     <@declaration>
@@ -96,7 +96,7 @@
      Integers from 0 to 1023 are linearly mapped to an pseudo voltage 0V to 5V.  
 
      Example for SCCharts:
-         @Wrapper AnalogWrite A1
+         @Wrapper AnalogWrite, A1
          output int pinValue = 512; -->
 <#macro AnalogWrite port>
     <@declaration>
@@ -105,7 +105,7 @@
     <@init>
         pinMode(${port}, OUTPUT);
     </@>
-    <@input>
+    <@output>
         analogWrite(${port}, ${varname});
     </@>
 </#macro>

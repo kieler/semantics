@@ -2,7 +2,7 @@ import lejos.nxt.*;
 import lejos.nxt.addon.*;
 import lejos.nxt.comm.RConsole;
 
-public class Main {
+public class ${file_name} {
     // Instantiate SCChart
     public static ${model_name} scchart = new ${model_name}();
     
@@ -17,7 +17,7 @@ public class Main {
 ${inits}
 
         // Init SCChart
-        println("running...");
+        System.out.println("running...");
         scchart.reset();
         
         // Tick loop
@@ -35,21 +35,5 @@ ${outputs}
         }
         
         RConsole.close();
-    }
-    
-    /**
-     * Prints text for debugging.
-     * If the RConsole is opened, the text is printed to the RConsole.
-     * Otherwise the text is printed to the Mindstorms display.
-     * 
-     * You can use this method as hostcode in your model file.
-     * 
-     * @param text The text to be printed
-     */
-    public static void println(String text){
-        if(RConsole.isOpen())
-            RConsole.println(text);
-        else
-            System.out.println(text);
     }
 }

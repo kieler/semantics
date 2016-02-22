@@ -20,6 +20,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 
 /**
  * Removes shadows.
@@ -37,7 +38,7 @@ class ShadowHook extends SynthesisHook {
     
     /** The related synthesis option */
     public static final SynthesisOption SHOW_SHADOW = SynthesisOption.createCheckOption("Shadow",
-            true);
+            true).setCategory(GeneralSynthesisOptions::APPEARANCE);
 
     override getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SHADOW)
