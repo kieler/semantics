@@ -395,6 +395,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val int NODEGROUPING_HIERARCHY = 0
     private static val int NODEGROUPING_BASICBLOCK = 1
     private static val int NODEGROUPING_SCHEDULINGBLOCK = 2
+    private static val int NODEGROUPING_GUARDBLOCK = 3
 
     /** Constants for the graph orientation */
     private static val int ORIENTATION_PORTRAIT = 0
@@ -619,6 +620,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             // Draw analysis visualization if present.
             scg.synthesizeAnalyses
+            
+            if (SHOW_HIERARCHY.booleanValue) {
+                scg.nodes.filter(Assignment).filter[ dependencies.filter(GuardDependency).size > 0].forEach[
+                	val allNodes = it.dependencies.filter(GuardDependency).map[ target ].toList
+                	allNodes.createHierarchy(NODEGROUPING_GUARDBLOCK, null)
+                ]
+            }
         ]
     }
 
@@ -1290,7 +1298,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if (USE_ADAPTIVEZOOM.booleanValue) kContainer.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.10);
 
         if (nodeGrouping == NODEGROUPING_HIERARCHY) {
-//            kContainer.addLayoutParam(LayoutOptions::SPACING, 25.0f)
             kContainer.addRoundedRectangle(5, 5, 0)
             kContainer.KRendering.foreground = SCCHARTSBLUE.copy;
             kContainer.KRendering.foreground.alpha = Math.round(HIERARCHY_TRANSPARENCY.objectValue as Float)
@@ -1298,7 +1305,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background.alpha = Math.round(HIERARCHY_TRANSPARENCY.objectValue as Float)
         }
         if (nodeGrouping == NODEGROUPING_BASICBLOCK) {
-//            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
                 lineStyle = LineStyle::SOLID
                 associateWith(contextObject)
@@ -1309,7 +1315,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background.alpha = Math.round(0f)
         }
         if (nodeGrouping == NODEGROUPING_SCHEDULINGBLOCK) {
-//            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
                 lineStyle = LineStyle::SOLID
                 associateWith(contextObject)
@@ -1318,6 +1323,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.foreground.alpha = Math.round(255f)
             kContainer.KRendering.background = SCCHARTSBLUE.copy;
             kContainer.KRendering.background.alpha = Math.round(0f)
+        }
+        if (nodeGrouping == NODEGROUPING_GUARDBLOCK) {
+            kContainer.addRoundedRectangle(1, 1, 1) => [
+                lineStyle = LineStyle::SOLID
+                associateWith(contextObject)
+            ]
+            kContainer.KRendering.foreground = DEPENDENCY_GUARD.copy;
+            kContainer.KRendering.foreground.alpha = Math.round(255f)
+            kContainer.KRendering.background = DEPENDENCY_GUARD.copy;
+            kContainer.KRendering.background.alpha = Math.round(80f)
         }
 
         // Add the nodes to the container.
