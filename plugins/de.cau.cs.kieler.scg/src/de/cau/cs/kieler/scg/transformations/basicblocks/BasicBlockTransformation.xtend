@@ -44,6 +44,8 @@ import java.util.List
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.scg.Guard
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -91,7 +93,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
     // -------------------------------------------------------------------------
     
     @Inject
-    extension SCGCoreExtensions
+    extension KExpressionsDeclarationExtensions
     
     @Inject
     extension SCGControlFlowExtensions
@@ -115,6 +117,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
     protected val processedNodes = <Node> newHashSet
     protected val basicBlockNodeMapping = new HashMap<Node, BasicBlock>
     protected val basicBlockGuardCache = new HashMap<ValuedObject, BasicBlock>
+    protected val guardCache = <Guard> newArrayList
     
     
     // -------------------------------------------------------------------------
@@ -132,18 +135,11 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
      * 			if the first node of the SCG is not an entry node.
      */
     public def SCGraph transform(SCGraph scg) {
-        // KiCo does this check via feature isContained
-        //if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
-        //    || scg.hasAnnotation(BasicBlockTransformation::ANNOTATION_BASICBLOCKTRANSFORMATION)
-        //    || !scg.basicBlocks.empty
-        //) {
-        //    return scg
-        //}
-        
         // Since KiCo may use the transformation instance several times, we must clear the caches manually. 
         processedNodes.clear     
         basicBlockNodeMapping.clear
         basicBlockGuardCache.clear
+        guardCache.clear
         
         // Timestamp for performance information. Should be moved to the KiCo interface globally.
         System.out.println("Nodes: " + scg.nodes.size)  
@@ -174,7 +170,6 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
                 if (bb.synchronizerBlock) {
                     bb.deadBlock = bb.predecessors.map[basicBlock].filter[deadBlock].size > 0
                 } else if (bb.depthBlock) {
-//                    bb.deadBlock = basicBlockCache.getSchedulingBlock(bb.preGuard).basicBlock.deadBlock
                     bb.deadBlock = basicBlockGuardCache.get(bb.preGuard).deadBlock
                 } else {
                     bb.deadBlock = bb.predecessors.map[basicBlock].filter[!deadBlock].size == 0
@@ -182,6 +177,11 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
             }
         }
         scg.basicBlocks += basicBlockCache
+        // Add all cached guards to the SCG and create a boolean declaration for their VOs.
+        scg.guards += guardCache
+        scg.declarations += createBoolDeclaration => [ declaration | 
+        	guardCache.forEach[ guard | declaration.valuedObjects += guard.valuedObject ]
+        ]
         val time2 = (System.currentTimeMillis - timestamp2) as float
         System.out.println("Dead block processing finished (time elapsed: "+(time2 / 1000)+"s).")            
         
@@ -507,15 +507,12 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
 			        } else {
         				sbGuard.name = guard.name + (96 + schedulingBlocks.size + 1) as char
        				}
-                    
-        			// ALWAYS use the guard of the basic block
-//        			guard = basicBlock.guard
                 }
                 // Create a new scheduling block, add all incoming dependencies of the node to the block for caching purposes
                 // and store a reference of the guard.
                 val newGuard = ScgFactory::eINSTANCE.createGuard
                 newGuard.valuedObject = sbGuard;
-                scg.guards += newGuard
+                guardCache += newGuard
                 
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
                 block.guards += newGuard
