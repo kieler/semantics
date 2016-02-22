@@ -40,16 +40,16 @@
    <extension
          point="de.cau.cs.kieler.kico.transformation">
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.DependencyTransformation">
+            class="de.cau.cs.kieler.scg.transformations.dependencies.DependencyTransformation">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformation">
+            class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.guardCreation.GuardCreator">
+            class="de.cau.cs.kieler.scg.transformations.guards.GuardCreator">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.schedulers.GuardScheduler">
+            class="de.cau.cs.kieler.scg.transformations.schedulers.GuardScheduler">
       </productionTransformationClass>
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.transformations.sequentializer.GuardSequentializer">
