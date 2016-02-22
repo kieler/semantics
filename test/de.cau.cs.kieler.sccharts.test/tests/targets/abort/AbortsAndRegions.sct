@@ -31,12 +31,14 @@ scchart AbortsAndRegions {
       region A:
 
       initial state A1
-      --> A3 immediate with I == 0 || I == 1
+      --> A3 immediate with I == 1
+      --> A3 with I == 0
       --> A2
       --> A3 immediate with _trig || I == 3;
 
       state A2
-      --> A3 immediate with I == 0 || I == 1
+      --> A3 immediate with I == 1
+      --> A3 with I == 0
       --> A3 immediate
       --> A3 immediate with _trig || I == 3;
 
@@ -53,12 +55,14 @@ scchart AbortsAndRegions {
       region B:
 
       initial state B1
-      --> B3 immediate with I == 0 || I == 1
+      --> B3 immediate with I == 1
+      --> B3 with I == 0
       --> B2 immediate
       --> B3 immediate with _trig || I == 3;
 
       state B2
-      --> B3 immediate with I == 0 || I == 1
+      --> B3 immediate with I == 1
+      --> B3 with I == 0
       --> B3
       --> B3 immediate with _trig || I == 3;
 
@@ -88,5 +92,5 @@ scchart AbortsAndRegions {
   --> W1 with I == 2 / O = 2
   --> W2 immediate with I == 3 / O = 3
   --> T1 with I == 4 / O = 4
-  --> T2 immediate with I == 5 / O = 5;
+  --> T2 immediate with / O = 5;
 }

@@ -53,15 +53,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter
 
-// TODO: Remove debug output from KiCo (transformation chain, required time for compilation) -> silent mode?
-// TODO: (Bug KISEMA-995) KiCo needs to be deterministic. Otherwise some tests will fail because an alternative compilation result is compared with a prototype.
-
-// TODO: Models that compile wrongly:
-// (Bug KISEMA-987) WeakSuspension
-
-// TODO: Models that do not compile or throw errors when saved:
-// (Bug KISEMA-1031) ExitActionAndTrigger
-
 /** 
  * Testing class that performs two tests -- both for every SCT model.
  * The first test compiles specific transformation features and compares the resulting output with prototypes for the transformation.
@@ -154,11 +145,11 @@ class TransformationTests {
 
             // Compile via KiCo
             // Per default KiCo tries to compile for visualization such that we disable this manually.
-           
-            // TODO: (Bug KISEMA-1036) Without the explicit usage of *T_INITIALIZATION there is the error message
-            // '!MESSAGE Error building a graph: Feature 'INITIALIZATION' is selected but no (enabled) transformation handling this feature is found. Also no disabled transformation is found as a fallback. This is a serious error. Building compile graph aborted. Solutions: 1. Do not select this feature or 2. do not disabled transformations hat can handle this feature or 3. register another transformation that can handle this feature.' 
+            
+            // TODO: KiCo needs to be deterministic to compare the compilation result and target model.
+            // So we explicitly disable the ABORTWTO transformations. 
             val context = new KielerCompilerContext(
-                "!T_SIMULATIONVISUALIZATION, T_" + targetTransformationName, model)
+                "!T_SIMULATIONVISUALIZATION, !ABORTWTO, T_" + targetTransformationName, model)
             context.setAdvancedSelect(true)
 
             // Run KiCo

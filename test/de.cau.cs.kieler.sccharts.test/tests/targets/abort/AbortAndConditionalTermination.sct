@@ -40,5 +40,5 @@ scchart AbortAndConditionalTermination {
 
   connector state _C
   --> F1 with I == 0 / O = 0
-  --> F2 immediate with I == 1 / O = 1;
+  --> F2 immediate with / O = 1;
 }
