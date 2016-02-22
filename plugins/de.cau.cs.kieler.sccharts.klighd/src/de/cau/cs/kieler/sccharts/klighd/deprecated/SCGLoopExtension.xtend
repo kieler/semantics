@@ -26,11 +26,11 @@ import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.core.krendering.KPolyline
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
+import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 
 /**
  * @author als

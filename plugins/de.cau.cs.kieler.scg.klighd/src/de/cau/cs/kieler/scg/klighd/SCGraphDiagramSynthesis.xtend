@@ -75,7 +75,6 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Write_Write
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
@@ -83,7 +82,6 @@ import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
@@ -94,6 +92,8 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
+import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.transformations.guards.AbstractGuardCreator
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of

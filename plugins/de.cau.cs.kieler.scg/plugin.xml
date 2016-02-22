@@ -52,7 +52,7 @@
             class="de.cau.cs.kieler.scg.schedulers.GuardScheduler">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.sequentializer.GuardSequentializer">
+            class="de.cau.cs.kieler.scg.transformations.sequentializer.GuardSequentializer">
       </productionTransformationClass>
    </extension>
    <extension
