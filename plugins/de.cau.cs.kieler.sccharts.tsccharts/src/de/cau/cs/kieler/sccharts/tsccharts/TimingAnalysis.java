@@ -548,7 +548,7 @@ public class TimingAnalysis extends Job {
     }
 
     /**
-     * Writes a timing assumption file for the given C-code and SCChart. Reads a timing assumption
+     * Writes a timing request file for the given C-code and SCChart. Reads a timing assumption
      * file from a given location and concatenates its content with automatically generated state
      * information and and timing requests for the fractional time value between each pair of
      * consecutive timing program points.
