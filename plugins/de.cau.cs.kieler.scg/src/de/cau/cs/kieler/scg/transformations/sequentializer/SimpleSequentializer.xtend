@@ -143,6 +143,8 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected var Declaration schizoDeclaration = null
     protected var Set<Node> pilData = null
     protected var SynchronizerData joinData = null
+    
+    protected HashMap<ValuedObject, ValuedObject> valuedObjectMap = null
          
                
     // -------------------------------------------------------------------------
@@ -183,7 +185,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
 		val predecessorList = <Predecessor> newArrayList
 		val basicBlockList = <BasicBlock> newArrayList
-        scg.copyDeclarations(newSCG)
+        valuedObjectMap = scg.copyDeclarations(newSCG)
        	val guardDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
        	newSCG.declarations += guardDeclaration
         scg.basicBlocks.forEach[
@@ -192,13 +194,13 @@ class SimpleSequentializer extends AbstractSequentializer {
             schedulingBlocks.forEach[
                 val vo = createValuedObject(it.guards.head.valuedObject.name) 
                     => [ guardDeclaration.valuedObjects += it ]
-                it.guards.head.valuedObject.addToValuedObjectMapping(vo)
+                it.guards.head.valuedObject.addToValuedObjectMapping(vo, valuedObjectMap)
                 // Create the scheduling cache on the fly.
         		it.nodes.forEach[ node | schedulingBlockCache.put(node, it) ]
             ]
         ]
         val vo = newSCG.createGOSignal
-        vo.addToValuedObjectMapping(vo)
+        vo.addToValuedObjectMapping(vo, valuedObjectMap)
         
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for sequentialization: caches finished (time elapsed: "+(time / 1000)+"s).")          
@@ -324,10 +326,10 @@ class SimpleSequentializer extends AbstractSequentializer {
     
     protected def Assignment copySCGNode(Assignment assignment, SCGraph target) {
     	ScgFactory::eINSTANCE.createAssignment => [
-            it.expression = assignment.expression.copySCGExpression
-            it.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL;
+            it.expression = assignment.expression.copySCGExpression(valuedObjectMap)
+            it.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL(valuedObjectMap)
             for(index : assignment.indices) {	
-                indices += index.copySCGExpression
+                indices += index.copySCGExpression(valuedObjectMap)
             }
         ]
     } 
@@ -372,7 +374,7 @@ class SimpleSequentializer extends AbstractSequentializer {
 //            ]
 //        ]        
         // Then, copy the expression of the guard to the newly created assignment.
-        assignment.expression = guardExpression.expression.copySCGExpression    
+        assignment.expression = guardExpression.expression.copySCGExpression(valuedObjectMap)    
         assignment
     }    
     
@@ -399,7 +401,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         val assignment = ScgFactory::eINSTANCE.createAssignment
         
         if (!scheduledBlock.schizophrenic) {
-            assignment.valuedObject = scheduledBlock.schedulingBlock.guards.head.valuedObject.getValuedObjectCopy
+            assignment.valuedObject = scheduledBlock.schedulingBlock.guards.head.valuedObject.getValuedObjectCopy(valuedObjectMap)
         } else {
             var ValuedObject vo = scg.findValuedObjectByName(scheduledBlock.schedulingBlock.guards.head.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
             if (vo == null) {

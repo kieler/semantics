@@ -16,36 +16,25 @@ package de.cau.cs.kieler.scg.transformations.guards
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.BasicBlock
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Guard
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Predecessor
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.Schedule
-import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
-import java.util.HashMap
-import java.util.List
-import java.util.Set
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerData
-import org.eclipse.emf.ecore.EObject
+import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.ExpressionDependency
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
 
 /** 
  * @author ssm
@@ -126,9 +115,55 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         hostcodeAnnotations.forEach[
             newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
-        scg.copyDeclarations(newSCG)
+        val valuedObjectMap = scg.copyDeclarations(newSCG)
+        val GAMap = <Guard, Assignment> newHashMap
+        val VAMap = <ValuedObject, Assignment> newHashMap
+        for(guard : scg.guards) {
+        	guard.createAssignment(valuedObjectMap) => [
+        		newSCG.nodes += it
+        		GAMap.put(guard, it)
+        		VAMap.put(it.valuedObject, it)
+        	]
+        }
+        
+        for(guard : GAMap.keySet) {
+			val assignment = GAMap.get(guard)
+			val VORs = assignment.expression.getAllReferences.filter[ 
+				!(it.eContainer instanceof OperatorExpression) ||
+				(it.eContainer as OperatorExpression).operator != OperatorType::PRE
+			]
+			for(reference : VORs) {
+				val sourceAssignment = VAMap.get(reference.valuedObject)
+				if (sourceAssignment != null) {
+					sourceAssignment.createExpressionDependency(assignment)
+				}
+			}
+        }
+        
+//        for (basicBlock : scg.basicBlocks) {
+//        	val headSB = basicBlock.schedulingBlocks.head
+//			val headGuard = headSB.guards.head
+//			for (predecessor : basicBlock.predecessors) {
+//				val predecessorGuard = predecessor.basicBlock.schedulingBlocks.last.guards.head
+//				predecessorGuard.createExpressionDependency(headGuard, GAMap)
+//			}
+//		}
 
         newSCG     	
+    }
+    
+    private def Assignment createAssignment(Guard guard, HashMap<ValuedObject, ValuedObject> map) {
+    	ScgFactory::eINSTANCE.createAssignment => [
+    		valuedObject = guard.valuedObject.getValuedObjectCopy(map)
+    		expression = guard.expression.copySCGExpression(map)
+    	]
+    }
+    
+    private def ExpressionDependency createExpressionDependency(Assignment source, Assignment target) {
+    	ScgFactory::eINSTANCE.createExpressionDependency => [ 
+    		source.dependencies += it
+    		it.target = target
+    	]
     }
 				
 }

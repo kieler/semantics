@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.scg;
 
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.scg.Guard;
+import java.util.HashMap;
 
 /**
  * <!-- begin-user-doc -->

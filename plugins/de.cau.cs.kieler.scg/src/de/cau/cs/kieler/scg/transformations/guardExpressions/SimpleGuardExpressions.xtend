@@ -50,6 +50,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerSelector
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -129,6 +130,9 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
 
     @Inject
     extension KExpressionsCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
 
     @Inject
     extension AnnotationsExtensions
@@ -198,6 +202,9 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         scg.createGOSignal
 
         conditionalGuards.clear
+        val conditionalDeclaration = createBoolDeclaration => [ 
+        	scg.declarations += it
+        ]
 
         //        newSchizoGuards.clear
         schedulingBlocks.clear
@@ -245,6 +252,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
                 scg.guards += newGuard
 
                 conditionalGuards.put(conditional, newGuard)
+                conditionalDeclaration.valuedObjects += newVO
                 debug(
                     "Generated NEW conditional guard " + newGuard.valuedObject.name + " with expression " +
                         newGuard.expression.serialize)
@@ -258,7 +266,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             schedulingBlock.guards.head.createGuardEquation(schedulingBlock, scg)
         }
         
-        val copyPropagation = typeof(CopyPropagation).inject    
+//        val copyPropagation = typeof(CopyPropagation).inject    
 // FIXME: temporary disabled
 // needs further efficiency improvements and bug-fixing in conditional nodes       
 //        copyPropagation.optimize(scg)         

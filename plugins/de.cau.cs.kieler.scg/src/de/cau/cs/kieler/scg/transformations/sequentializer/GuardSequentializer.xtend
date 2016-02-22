@@ -132,6 +132,7 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
     protected val schedulingBlockGuardCache = <Guard, Set<SchedulingBlock>> newHashMap
          
 	protected val placedGuards = <Guard> newHashSet
+	protected var HashMap<ValuedObject, ValuedObject> valuedObjectMap = null
                
     // -------------------------------------------------------------------------
     // -- Sequentializer
@@ -178,13 +179,13 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
         schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
         
         
-        scg.copyDeclarations(newSCG)
+        valuedObjectMap = scg.copyDeclarations(newSCG)
        	val guardDeclaration = createDeclaration => [ setType(ValueType::BOOL); it.volatile = true; newSCG.declarations += it ]
 // FIXME: Verify removal of dead guard flag
 //       	System.out.println("dead guards: "+scg.guards.filter[dead].size)
         scg.guards/*.filter[!dead]*/.forEach[ g |
             val vo = createValuedObject(g.valuedObject.name) => [ guardDeclaration.valuedObjects += it ]
-            g.valuedObject.addToValuedObjectMapping(vo)
+            g.valuedObject.addToValuedObjectMapping(vo, valuedObjectMap)
             
             val newHashSet = <SchedulingBlock> newHashSet
             schedulingBlockGuardCache.put(g, newHashSet)
@@ -312,7 +313,7 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
     		{
     			// Create a conditional and set a reference of the guard as condition.
     			val conditional = ScgFactory::eINSTANCE.createConditional.trace(sBlock)
-                conditional.condition = sBlock.guards.head.valuedObject.reference.copySCGExpression
+                conditional.condition = sBlock.guards.head.valuedObject.reference.copySCGExpression(valuedObjectMap)
 //                if (sb.schizophrenic) {
 //                    conditional.condition = scg.fixSchizophrenicExpression(conditional.condition)
 //                }
@@ -357,11 +358,11 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
     protected def Assignment copySCGNode(Assignment assignment, SCGraph target) {
     	ScgFactory::eINSTANCE.createAssignment => [
     	    it.trace(assignment)
-            it.expression = assignment.expression.copySCGExpression
+            it.expression = assignment.expression.copySCGExpression(valuedObjectMap)
             it.operator = assignment.operator
-            it.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL;
+            it.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL(valuedObjectMap)
             for(index : assignment.indices) {	
-                indices += index.copySCGExpression
+                indices += index.copySCGExpression(valuedObjectMap)
             }
         ]
     } 
@@ -370,8 +371,8 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
         List<ControlFlow> nextControlFlows, SCGraph scg, List<Node> nodeCache
     ) {
         // Then, copy the expression of the guard to the newly created assignment.
-        assignment.valuedObject = guard.valuedObject.getValuedObjectCopyWNULL
-        assignment.expression = guard.expression.copySCGExpression
+        assignment.valuedObject = guard.valuedObject.getValuedObjectCopyWNULL(valuedObjectMap)
+        assignment.expression = guard.expression.copySCGExpression(valuedObjectMap)
         
 		nextControlFlows.forEach[ target = assignment ]
 		nextControlFlows.clear

@@ -94,6 +94,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
+import de.cau.cs.kieler.scg.ExpressionDependency
+import de.cau.cs.kieler.scg.GuardDependency
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -347,6 +349,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 255; it.green = 0; it.blue = 0;]
     private static val KColor DEPENDENCY_CONTROL = RENDERING_FACTORY.createKColor() =>
         [it.red = 0; it.green = 192; it.blue = 192;]
+    private static val KColor DEPENDENCY_EXPRESSION = RENDERING_FACTORY.createKColor() =>
+        [it.red = 168; it.green = 128; it.blue = 96;]
+    private static val KColor DEPENDENCY_GUARD = RENDERING_FACTORY.createKColor() =>
+        [it.red = 240; it.green = 128; it.blue = 128;]
     private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor() =>
         [it.red = 255; it.green = 0; it.blue = 0;]
     private static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor() =>
@@ -1198,6 +1204,22 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 	it.lineStyle = LineStyle::DOT
                 	it.addArrowDecorator
             	]
+            }
+            else if (dependency instanceof ExpressionDependency) {
+	            edge.addRoundedBendsPolyline(8, 2) => [
+    	            // ... and use the predefined color for the different dependency types.    
+        	        it.foreground = DEPENDENCY_EXPRESSION.copy
+                	it.lineStyle = LineStyle::SOLID
+                	it.addArrowDecorator
+            	]            	
+            }
+            else if (dependency instanceof GuardDependency) {
+	            edge.addRoundedBendsPolyline(8, 2) => [
+    	            // ... and use the predefined color for the different dependency types.    
+        	        it.foreground = DEPENDENCY_GUARD.copy
+                	it.lineStyle = LineStyle::DASHDOTDOT
+                	it.addArrowDecorator
+            	]            	
             }
             // If dependency edges are layouted, use the dependency ports to attach the edges.
             if ((LAYOUT_DEPENDENCIES.booleanValue) || (isSCPDG)) {
