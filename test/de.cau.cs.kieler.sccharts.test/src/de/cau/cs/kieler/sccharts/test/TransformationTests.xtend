@@ -26,7 +26,6 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
 import java.io.PrintStream
 import java.util.Collections
 import java.util.List
-import org.apache.commons.io.FilenameUtils
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.compare.Diff
@@ -51,12 +50,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter
 
 /** 
- * Testing class that performs two tests -- both for every SCT model.
- * The first test compiles specific transformation features and compares the resulting output with prototypes for the transformation.
- * The second test compiles each input model to Java code. 
+ * Transformation tests.
+ * The input model is compiled with a specific transformation
+ * and the resulting output compared with a prototype for the transformation.
  * 
  * @author aas
  */
@@ -64,7 +62,7 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
 @BundleId("de.cau.cs.kieler.sccharts.test")
 @ModelPath("tests/inputs/**")
 //@ModelFilter("ConnectorState.sct")
-class TransformationTests {
+class TransformationTests extends SCChartsTestBase {
 
     /**
      * Project relative path to the input models of the tests.
@@ -94,12 +92,15 @@ class TransformationTests {
      * The EMFCompare object that can compare to SCCharts.  
      */
     static val comparator = createEMFComparator()
-
+    
 
     /*******************************************************************************************
      * Transformation test (Extended SCCharts)
      */
-     
+    new(EObject model) {
+        super(model)
+    }
+    
     /** 
      * This test method uses specific transformation features to compile a model.
      * The compilation transformation that is used is fetched from an annotation directly in the model file. 
@@ -111,17 +112,12 @@ class TransformationTests {
      * @author aas
      */
     @Test
-    def public void transformationResultAsExpected(EObject model, String modelPath) {
-        val isDebug = false
-
-        // Normalize path
-        val relativePath = Util.stripSlashes(modelPath)
-        val modelFile = FilenameUtils.getName(relativePath)
+    def public void transformationResultAsExpected() {
         // Calc prototype file for test and compilation result for test
-        val targetFile = relativePath.replaceFirst(TransformationTests.INPUT_MODELS_FOLDER, TransformationTests.TARGET_FOLDER)
-        val compilationResultFile = relativePath.replaceFirst(TransformationTests.INPUT_MODELS_FOLDER, COMPILATION_RESULT_FOLDER)
+        val targetFile = modelPath.replaceFirst(TransformationTests.INPUT_MODELS_FOLDER, TransformationTests.TARGET_FOLDER)
+        val compilationResultFile = modelPath.replaceFirst(TransformationTests.INPUT_MODELS_FOLDER, COMPILATION_RESULT_FOLDER)
         if (model instanceof State) {
-            println("------------------ SCT:" + modelFile)
+            println("------------------ SCT:" + modelName)
 
             // Get required transformation from annotation in model
             var String targetTransformationName = null
@@ -137,7 +133,7 @@ class TransformationTests {
             // Check that the transformation is defined and
             // skip tests on files without transformation.
             if (targetTransformationName == null) {
-                throw new IllegalArgumentException("Target transformation was not found in model file " + modelFile)
+                throw new IllegalArgumentException("Target transformation was not found in model file " + modelName)
             } else if(targetTransformationName == "NONE") {
                 // Ignore this test model
                 return;
@@ -156,7 +152,7 @@ class TransformationTests {
             val result = KielerCompiler.compile(context)
             val resultModel = result.getEObject()
             if (resultModel == null) {
-                throw new IllegalArgumentException("KIELER Compiler was not able to compile input model " + modelFile)
+                throw new IllegalArgumentException("KIELER Compiler was not able to compile input model " + modelName)
             }
 
             // Serialize model to human readable text
@@ -183,22 +179,19 @@ class TransformationTests {
             val comparison = comparator.compare(scope)
 
             // Print out all matches
-            if (isDebug) {
-                printMatches(comparison.matches, 0, true)
-            }
-
+//                printMatches(comparison.matches, 0, true)
             val differences = comparison.getDifferences()
 
             // Check results
             val int differencesSize = differences.size()
             if (differencesSize > 0) {
                 printDifferences(differences, System.err,
-                    "Differences when compiling " + modelFile + ": " + differencesSize)
-                Assert.fail("Transformation of model file " + modelFile + " results in unexpected model")
+                    "Differences when compiling " + modelName + ": " + differencesSize)
+                Assert.fail("Transformation of model file " + modelName + " results in unexpected model")
             }
 
         } else {
-            throw new IllegalArgumentException("Model " + modelFile + " could not be cast to an SCChart.")
+            throw new IllegalArgumentException("Model " + modelName + " could not be cast to an SCChart.")
         }
     }
 
