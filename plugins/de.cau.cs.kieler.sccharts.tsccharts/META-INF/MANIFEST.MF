@@ -25,5 +25,6 @@ Bundle-ActivationPolicy: lazy
 Import-Package: de.cau.cs.kieler.kico,
  de.cau.cs.kieler.sccharts.scg,
  de.cau.cs.kieler.scg.s.transformations
-Export-Package: de.cau.cs.kieler.sccharts.tsccharts
+Export-Package: de.cau.cs.kieler.sccharts.tsccharts,
+ de.cau.cs.kieler.sccharts.tsccharts.transformation
 
