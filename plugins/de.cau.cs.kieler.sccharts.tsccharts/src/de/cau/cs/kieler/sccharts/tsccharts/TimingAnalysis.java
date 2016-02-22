@@ -92,23 +92,25 @@ public class TimingAnalysis extends Job {
      */
     public static final IProperty<State> INPUT_SCCHART = new Property<State>(
             "de.cau.cs.kieler.timing.input.scchart", null);
-    
+
     public static final boolean DEBUG = false;
     public static final boolean DEBUG_VERBOSE = false;
-    
-    /** 
+
+    /**
      * Switch on/of highlighting.
      */
     public static final boolean HOTSPOT_HIGHLIGHTING = true;
     public static final boolean REGION_TIMING = true;
-    
+
     /**
      * Megahertz for which the the milliseconds are calculated from the processor cycles.
      */
     private static int MEGAHERTZ = 200;
-    
+
     /**
-     * Enumeration for the possible representations of timing values in the interactive timing analysis.
+     * Enumeration for the possible representations of timing values in the interactive timing
+     * analysis.
+     * 
      * @author ima
      *
      */
@@ -140,7 +142,7 @@ public class TimingAnalysis extends Job {
     private Resource resource;
     private TimingAnnotationProvider timingAnnotationProvider = new TimingAnnotationProvider();
     // no side effects on runtime, so static OK here
-    private static KRenderingExtensions renderingExtensions = new KRenderingExtensions(); 
+    private static KRenderingExtensions renderingExtensions = new KRenderingExtensions();
     private State scchart;
     private HashMultimap<Region, WeakReference<KText>> timingLabels;
     private HashMap<Region, String> timingResults;
@@ -150,14 +152,14 @@ public class TimingAnalysis extends Job {
     private TimingValueRepresentation rep;
     private boolean highlight;
 
-   
-    /* Private Constructor. This class is not meant to be instantiated other than by the
-     * static startAnalysis method.
+    /*
+     * Private Constructor. This class is not meant to be instantiated other than by the static
+     * startAnalysis method.
      */
-    private TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels,
-            Region scchartDummyRegion, Resource resource,
-            HashMultimap<Region, WeakReference<KRectangle>> regionRectangles, boolean highlight,
-            TimingValueRepresentation rep) {
+    private TimingAnalysis(State rootState,
+            HashMultimap<Region, WeakReference<KText>> regionLabels, Region scchartDummyRegion,
+            Resource resource, HashMultimap<Region, WeakReference<KRectangle>> regionRectangles,
+            boolean highlight, TimingValueRepresentation rep) {
         super("Timing Analysis");
         this.scchart = rootState;
         this.timingLabels = regionLabels;
@@ -168,7 +170,7 @@ public class TimingAnalysis extends Job {
         this.highlight = highlight;
         this.rep = rep;
     }
-    
+
     public static void startAnalysis(State rootState, KNode rootNode, ViewContext viewContext,
             boolean highlight, TimingValueRepresentation rep) {
         // It is normal that some nodes of the SCG will be mapped to null, because they belong to
@@ -178,7 +180,7 @@ public class TimingAnalysis extends Job {
         // region to represent the SCChart in Timing Analysis.
         Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
         scchartDummyRegion.setId("SCChartDummyRegion");
-        
+
         Resource resource = null;
         KielerCompilerContext context = viewContext.getProperty(KiCoProperties.COMPILATION_CONTEXT);
         if (context != null) {
@@ -204,11 +206,11 @@ public class TimingAnalysis extends Job {
                 KRectangle rect = (KRectangle) eObj;
                 Object sourceElem = rect.getProperty(KlighdInternalProperties.MODEL_ELEMEMT);
                 if (sourceElem instanceof Region) {
-                        KText text = KRenderingFactory.eINSTANCE.createKText();
-                        if (REGION_TIMING) {
-                            text.setText("???/???");
-                        }
-                        renderingExtensions.setFontSize(text, 10);
+                    KText text = KRenderingFactory.eINSTANCE.createKText();
+                    if (REGION_TIMING) {
+                        text.setText("???/???");
+                    }
+                    renderingExtensions.setFontSize(text, 10);
                     renderingExtensions.setForegroundColor(text, 255, 0, 0);
                     renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5,
                             0, renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT,
@@ -235,7 +237,6 @@ public class TimingAnalysis extends Job {
         new TimingAnalysis(rootState, timingLabels, scchartDummyRegion, resource, regionRectangles,
                 highlight, rep).schedule();
     }
-    
 
     /**
      * {@inheritDoc}
@@ -255,7 +256,8 @@ public class TimingAnalysis extends Job {
         final KRenderingFactory renderingFactory = KRenderingFactory.eINSTANCE;
         KielerCompilerContext context =
                 new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID
-                        + ",*T_ABORT,*T_scg.basicblock.sc,*T_NOSIMULATIONVISUALIZATION,T_scg.ttp", scchart);
+                        + ",*T_ABORT,*T_scg.basicblock.sc,*T_NOSIMULATIONVISUALIZATION,T_scg.ttp",
+                        scchart);
         context.setProperty(Tracing.ACTIVE_TRACING, true);
         context.setProperty(INPUT_SCCHART, scchart);
         context.setAdvancedSelect(true);
@@ -278,18 +280,20 @@ public class TimingAnalysis extends Job {
         }
 
         SCGraph scg = (SCGraph) compilationResult.getEObject();
-     
-       // get the auxiliary data on Timing Program Points
-       int highestInsertedTPPNumber = -1;
-       HashMap<String, Region> tppRegionMap = null;
-       List<TPPInformation> tppInformations = compilationResult.getAuxiliaryData(TPPInformation.class);
-       TPPInformation tppInformation = tppInformations.isEmpty()? null : tppInformations.get(0);
-       if (tppInformation != null) {
-           highestInsertedTPPNumber = tppInformation.getHighestInsertedTPPNumber();
-           tppRegionMap = tppInformation.getTPPRegionMapping();
-       } else {
-           return new Status(IStatus.ERROR, pluginId, "The TPP insertion yielded no auxiliary information.");
-       }
+
+        // get the auxiliary data on Timing Program Points
+        int highestInsertedTPPNumber = -1;
+        HashMap<String, Region> tppRegionMap = null;
+        List<TPPInformation> tppInformations =
+                compilationResult.getAuxiliaryData(TPPInformation.class);
+        TPPInformation tppInformation = tppInformations.isEmpty() ? null : tppInformations.get(0);
+        if (tppInformation != null) {
+            highestInsertedTPPNumber = tppInformation.getHighestInsertedTPPNumber();
+            tppRegionMap = tppInformation.getTPPRegionMapping();
+        } else {
+            return new Status(IStatus.ERROR, pluginId,
+                    "The TPP insertion yielded no auxiliary information.");
+        }
 
         context =
                 new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID + ","
@@ -314,8 +318,8 @@ public class TimingAnalysis extends Job {
         }
 
         String code = compilationResult.getString();
-         // Debug, can be removed
-         System.out.print(code);
+        // Debug, can be removed
+        System.out.print(code);
 
         // Step 5: Send C code to timing analyzer
 
@@ -337,24 +341,24 @@ public class TimingAnalysis extends Job {
             return new Status(IStatus.ERROR, pluginId,
                     "The resource for the given model could not be found.");
         }
-        
+
         // Make sure no outdated files (.ta, .c, .ta.out) linger
         String targetCodeLocationString = fileLocationString.replace(".sct", ".c");
         String taFileLocationString = fileLocationString.replace(".sct", ".ta");
         String taOutFileLocationString = fileLocationString.replace(".sct", ".ta.out");
         try {
-           Files.deleteIfExists(Paths.get(targetCodeLocationString, ""));
-           Files.deleteIfExists(Paths.get(taFileLocationString, ""));
-           Files.deleteIfExists(Paths.get(taOutFileLocationString, ""));
+            Files.deleteIfExists(Paths.get(targetCodeLocationString, ""));
+            Files.deleteIfExists(Paths.get(taFileLocationString, ""));
+            Files.deleteIfExists(Paths.get(taOutFileLocationString, ""));
         } catch (IOException e1) {
             System.out.println("IOException when deleting outdated timing files: \n");
             e1.printStackTrace();
         }
-         try {
-             ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
-         } catch (CoreException e) {
-             return new Status(IStatus.ERROR, pluginId, "Files could not be refreshed.");
-         }
+        try {
+            ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
+        } catch (CoreException e) {
+            return new Status(IStatus.ERROR, pluginId, "Files could not be refreshed.");
+        }
 
         // Workaround for validation with David Broman's tool that does not handle chars:
         String codeInt = code.replace("char", "int");
@@ -378,61 +382,8 @@ public class TimingAnalysis extends Job {
 
         fileWriter.writeToFile(code, targetCodeLocationString);
 
-        // Generate the timing request file with the assumptions
-        StringBuilder stringBuilder = new StringBuilder();
-        // In any case we will ask for the analysis of the tick function
-        stringBuilder.append("Function tick\nInitFunction reset\nState _GO");
-        // Declare the state variables (corresponding to the registers, this is about execution
-        // states)
-        StringTokenizer codeTokenizer = new StringTokenizer(code);
-        while (codeTokenizer.hasMoreTokens()) {
-            String currentToken = codeTokenizer.nextToken();
-            if (currentToken.startsWith("PRE")) {
-                currentToken = currentToken.replace(";", "");
-                stringBuilder.append("\nState " + currentToken);
-            }
-            if (currentToken.startsWith("reset")) {
-                break;
-            }
-        }
-        // Get the inputs for which we want to have globalvar assumptions
-        // Note that at the moment we will generate globalvar assumptions automatically only for
-        // boolean
-        // inputs, others have to be specified in the .asu file
-        // // First, add an assumption line for _GO, which will always be there, we treat it
-        // analogously to
-        // // environment inputs (as opposed to states)
-        // stringBuilder.append("\nGlobalVar _GO 0..1");
-        EList<Declaration> declarationList = scchart.getDeclarations();
-        Iterator<Declaration> declarationListIterator = declarationList.iterator();
-        while (declarationListIterator.hasNext()) {
-            Declaration currentDeclaration = declarationListIterator.next();
-            if (currentDeclaration.isInput()) {
-                ValueType type = currentDeclaration.getType();
-                if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
-                    stringBuilder.append("\nGlobalVar "
-                            + currentDeclaration.getValuedObjects().get(0).getName() + " 0..1");
-                }
-            }
-        }
-        // read (optional) additional assumptions and timing assumptions for called functions into
-        // the
-        // assumptions file
-        boolean assumptionFilePresent =
-                timingAnnotationProvider.getAssumptions(assumptionFilePath, stringBuilder);
-        if (!assumptionFilePresent) {
-            System.out
-                    .println("An associated assumption file for this model was not found. No timing "
-                            + "assumptions for called functions available.");
-        }
-        // write timing requests appended to the assumptionString
         LinkedList<TimingRequestResult> resultList =
-                timingAnnotationProvider.writeTimingRequests(highestInsertedTPPNumber,
-                        stringBuilder);
-        // .ta file string complete, write it to file
-        String requestFile = uriString.replace(".sct", ".ta");
-        String requestFilePath = requestFile.replace("file:", "");
-        fileWriter.writeToFile(stringBuilder.toString(), requestFilePath);
+                generateTimingRequestFile(code, scchart, uriString, highestInsertedTPPNumber);
 
         Runtime rt = Runtime.getRuntime();
         String taFileName = fileName.replace(".sct", ".ta");
@@ -496,7 +447,7 @@ public class TimingAnalysis extends Job {
             return new Status(IStatus.ERROR, pluginId,
                     "An IO error occurred while timing information was retrieved from file.");
         }
-      
+
         // calculate timing values for all regions and store a list of regions that belong to the
         // WCET path in wcpRegions for special display
         wcpRegions =
@@ -511,9 +462,9 @@ public class TimingAnalysis extends Job {
         }
 
         // nodeRegionMapping has moved to Transformation
-//        if (DEBUG) {
-//            debugTracing(nodeRegionMapping);
-//        }
+        // if (DEBUG) {
+        // debugTracing(nodeRegionMapping);
+        // }
 
         // Changing diagram should be in UI thread (maybe ask chsch)
         new UIJob("Inserting timing data") {
@@ -592,8 +543,94 @@ public class TimingAnalysis extends Job {
         long elapsedTime = stopTime - startTime;
         // delete temporary files if not needed for debugging
         System.out.println("Interactive Timing Analysis completed (elapsed time: " + elapsedTime
-                + " ms).");   
+                + " ms).");
         return Status.OK_STATUS;
+    }
+
+    /**
+     * Writes a timing assumption file for the given C-code and SCChart. Reads a timing assumption
+     * file from a given location and concatenates its content with automatically generated state
+     * information and and timing requests for the fractional time value between each pair of
+     * consecutive timing program points.
+     * 
+     * 
+     * @param code
+     *            The code in C language as String with inserted Timing Program Points.
+     * @param scchart
+     *            The SCChart represented by the code given as State.
+     * @param uriString
+     *            The location of the .sct file of the scchart given as an uri String
+     *            representation.
+     * @param highestInsertedTPPNumber
+     *            The highest number of any TPP inserted in the code.
+     * @return Returns the list of TimingRequestResults prepared for storing the analysis results
+     */
+    public static LinkedList<TimingRequestResult> generateTimingRequestFile(String code,
+            State scchart, String uriString, int highestInsertedTPPNumber) {
+        FileWriter assumptionFileWriter = new FileWriter();
+        TimingAnnotationProvider assumptionTimingAnnotationProvider =
+                new TimingAnnotationProvider();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // In any case we will ask for the analysis of the tick function
+        stringBuilder.append("Function tick\nInitFunction reset\nState _GO");
+        // Declare the state variables (corresponding to the registers, this is about execution
+        // states)
+        StringTokenizer codeTokenizer = new StringTokenizer(code);
+        while (codeTokenizer.hasMoreTokens()) {
+            String currentToken = codeTokenizer.nextToken();
+            if (currentToken.startsWith("PRE")) {
+                currentToken = currentToken.replace(";", "");
+                stringBuilder.append("\nState " + currentToken);
+            }
+            if (currentToken.startsWith("reset")) {
+                break;
+            }
+        }
+        // Get the inputs for which we want to have globalvar assumptions
+        // Note that at the moment we will generate globalvar assumptions automatically only for
+        // boolean
+        // inputs, others have to be specified in the .asu file
+        // // First, add an assumption line for _GO, which will always be there, we treat it
+        // analogously to
+        // // environment inputs (as opposed to states)
+        // stringBuilder.append("\nGlobalVar _GO 0..1");
+        EList<Declaration> declarationList = scchart.getDeclarations();
+        Iterator<Declaration> declarationListIterator = declarationList.iterator();
+        while (declarationListIterator.hasNext()) {
+            Declaration currentDeclaration = declarationListIterator.next();
+            if (currentDeclaration.isInput()) {
+                ValueType type = currentDeclaration.getType();
+                if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
+                    stringBuilder.append("\nGlobalVar "
+                            + currentDeclaration.getValuedObjects().get(0).getName() + " 0..1");
+                }
+            }
+        }
+        // read (optional) additional assumptions and timing assumptions for called functions into
+        // the
+        // assumptions file
+        String assumptionFile = uriString.replace(".sct", ".asu");
+        String assumptionFilePath = assumptionFile.replace("file:", "");
+        boolean assumptionFilePresent =
+                assumptionTimingAnnotationProvider
+                        .getAssumptions(assumptionFilePath, stringBuilder);
+        if (!assumptionFilePresent) {
+            System.out
+                    .println("An associated assumption file for this model was not found. No timing "
+                            + "assumptions for called functions available.");
+        }
+        System.out.println(stringBuilder.toString());
+        // write timing requests appended to the assumptionString
+        LinkedList<TimingRequestResult> resultList =
+                assumptionTimingAnnotationProvider.writeTimingRequests(highestInsertedTPPNumber,
+                        stringBuilder);
+        // .ta file string complete, write it to file
+        String requestFile = uriString.replace(".sct", ".ta");
+        String requestFilePath = requestFile.replace("file:", "");
+        System.out.println(stringBuilder.toString());
+        assumptionFileWriter.writeToFile(stringBuilder.toString(), requestFilePath);
+        return resultList;
     }
 
     /**
@@ -763,8 +800,8 @@ public class TimingAnalysis extends Job {
             Region currentRegion = regionIterator.next();
             if (!(currentRegion == null)) {
                 // Possibly we have to mark this region as part of the WCET path (WCP)
-                String label = flatValues.get(currentRegion) + " / "
-                        + deepValues.get(currentRegion);
+                String label =
+                        flatValues.get(currentRegion) + " / " + deepValues.get(currentRegion);
                 regionLabelStringMap.put(currentRegion, label);
             } else {
                 Integer WCRT = 0;
@@ -841,72 +878,70 @@ public class TimingAnalysis extends Job {
         }
     }
 
-   
-
-//    // DEBUG METHODS
-//
-//    private void debugTracing(HashMap<Node, Region> nodeRegionMapping) {
-//        // get all regions
-//        Set<Region> regions = new HashSet<Region>(nodeRegionMapping.values());
-//        regions.addAll(Arrays.asList((Iterators.toArray(
-//                Iterators.filter(scchart.eAllContents(), Region.class), Region.class))));
-//
-//        for (Region r : regions) {
-//            String regionID = r == null ? "root" : r.getId();
-//            if (regionID == null) {
-//                State parentState = r.getParentState();
-//                regionID =
-//                        parentState.getId() + parentState.getLabel()
-//                                + parentState.getRegions().indexOf(r) + r.getLabel();
-//            } else if (r != null) {
-//                regionID += r.getLabel();
-//            }
-//            Pair<String, String> pair =
-//                    new Pair<String, String>((scchart.getId() + scchart.getLabel()), regionID);
-//            Set<String> prev = debugTracingHistory.get(pair);
-//
-//            Set<String> results = new HashSet<String>();
-//            for (java.util.Map.Entry<Node, Region> entry : nodeRegionMapping.entrySet()) {
-//                if (entry.getValue() == r) {
-//                    results.add(nodeToString(entry.getKey()));
-//                }
-//            }
-//
-//            if (prev == null) {
-//                debugTracingHistory.put(pair, results);
-//            } else if (results.size() != prev.size()
-//                    || !Sets.symmetricDifference(results, prev).isEmpty()) {
-//                String message = "Error: Tracing produced inconsistent mappings over multiple run";
-//                String fails =
-//                        "Errornous nodes of region '" + regionID + "': "
-//                                + Joiner.on(",").join(Sets.symmetricDifference(results, prev));
-//                StatusManager.getManager().handle(
-//                        new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
-//                                new Throwable(fails)), StatusManager.LOG);
-//                StatusManager.getManager().handle(
-//                        new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
-//                                new Throwable(fails)), StatusManager.SHOW);
-//            }
-//
-//            if (DEBUG_VERBOSE) {
-//                timingResults.put(r, Joiner.on(",").join(results) + "[" + results.size() + "]");
-//            }
-//        }
-//    }
-//    private String nodeToString(Node node) {
-//        if (node instanceof Assignment) {
-//            ValuedObject vo = ((Assignment) node).getValuedObject();
-//            if (vo != null) {
-//                return "Ass:" + vo.getName();
-//            } else {
-//                return "Hostcode";
-//            }
-//        } else if (node instanceof Conditional) {
-//            return "Cond:"
-//                    + ((ValuedObjectReference) ((Conditional) node).getCondition())
-//                            .getValuedObject().getName();
-//        } else {
-//            return node.eClass().getName();
-//        }
-//    }
+    // // DEBUG METHODS
+    //
+    // private void debugTracing(HashMap<Node, Region> nodeRegionMapping) {
+    // // get all regions
+    // Set<Region> regions = new HashSet<Region>(nodeRegionMapping.values());
+    // regions.addAll(Arrays.asList((Iterators.toArray(
+    // Iterators.filter(scchart.eAllContents(), Region.class), Region.class))));
+    //
+    // for (Region r : regions) {
+    // String regionID = r == null ? "root" : r.getId();
+    // if (regionID == null) {
+    // State parentState = r.getParentState();
+    // regionID =
+    // parentState.getId() + parentState.getLabel()
+    // + parentState.getRegions().indexOf(r) + r.getLabel();
+    // } else if (r != null) {
+    // regionID += r.getLabel();
+    // }
+    // Pair<String, String> pair =
+    // new Pair<String, String>((scchart.getId() + scchart.getLabel()), regionID);
+    // Set<String> prev = debugTracingHistory.get(pair);
+    //
+    // Set<String> results = new HashSet<String>();
+    // for (java.util.Map.Entry<Node, Region> entry : nodeRegionMapping.entrySet()) {
+    // if (entry.getValue() == r) {
+    // results.add(nodeToString(entry.getKey()));
+    // }
+    // }
+    //
+    // if (prev == null) {
+    // debugTracingHistory.put(pair, results);
+    // } else if (results.size() != prev.size()
+    // || !Sets.symmetricDifference(results, prev).isEmpty()) {
+    // String message = "Error: Tracing produced inconsistent mappings over multiple run";
+    // String fails =
+    // "Errornous nodes of region '" + regionID + "': "
+    // + Joiner.on(",").join(Sets.symmetricDifference(results, prev));
+    // StatusManager.getManager().handle(
+    // new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
+    // new Throwable(fails)), StatusManager.LOG);
+    // StatusManager.getManager().handle(
+    // new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
+    // new Throwable(fails)), StatusManager.SHOW);
+    // }
+    //
+    // if (DEBUG_VERBOSE) {
+    // timingResults.put(r, Joiner.on(",").join(results) + "[" + results.size() + "]");
+    // }
+    // }
+    // }
+    // private String nodeToString(Node node) {
+    // if (node instanceof Assignment) {
+    // ValuedObject vo = ((Assignment) node).getValuedObject();
+    // if (vo != null) {
+    // return "Ass:" + vo.getName();
+    // } else {
+    // return "Hostcode";
+    // }
+    // } else if (node instanceof Conditional) {
+    // return "Cond:"
+    // + ((ValuedObjectReference) ((Conditional) node).getCondition())
+    // .getValuedObject().getName();
+    // } else {
+    // return node.eClass().getName();
+    // }
+    // }
 }

@@ -49,6 +49,7 @@ import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource;
 
 /**
  * Transform a sequentialized SCG to a sequentialized SCG with timing program points.
@@ -198,7 +199,6 @@ class TTPTransformation extends AbstractProductionTransformation
 
                         // Mark scg with feature
                         scg.addAnnotation(TimingAnalysisTransformations::TTP_FEATURE_ID, "")
-
                         return scg
                     }
 
