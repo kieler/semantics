@@ -4,7 +4,7 @@ scchart PreOperator {
   int y = 0;
   
   initial state A
-  --> B / x = x + 1;
+  --> B with / x = x + 1;
    
   state B
   --> A with / y = pre(x);

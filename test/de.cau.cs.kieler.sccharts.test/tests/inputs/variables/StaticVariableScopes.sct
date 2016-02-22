@@ -1,16 +1,16 @@
 @Transformation STATIC
-scchart StaticVariables {
+scchart StaticVariableScopes {
   
   initial state A {
     static int x = 100;
     
     initial state A0;
-  }--> B / x = x + 1;
+  }--> B with / x = x + 1;
   
   state B {
     static int x = -100;
     
     initial state B0;
-  }--> A / x = x - 1; 
+  }--> A with / x = x - 1; 
   
 }
