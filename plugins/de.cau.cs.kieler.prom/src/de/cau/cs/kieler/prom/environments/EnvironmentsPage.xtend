@@ -615,7 +615,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         combo.addSelectionChangedListener(new ISelectionChangedListener {
 
             override selectionChanged(SelectionChangedEvent event) {
-                val selection = event.selection 
                 currentData.associatedLaunchShortcut = getSelectedClassNameInCombobox(launchShortcuts)
                 checkConsistency()
             }

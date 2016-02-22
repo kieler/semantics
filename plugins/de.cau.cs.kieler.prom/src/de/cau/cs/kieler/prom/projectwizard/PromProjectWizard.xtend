@@ -21,7 +21,6 @@ import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.io.File
 import java.io.InputStream
 import org.apache.commons.io.FileUtils
-import org.apache.commons.io.FilenameUtils
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IProject
@@ -30,6 +29,7 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.FileLocator
 import org.eclipse.core.runtime.Platform
+import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.dialogs.MessageDialog
@@ -41,8 +41,6 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
 import org.eclipse.xtext.util.StringInputStream
-import org.eclipse.core.variables.VariablesPlugin
-import org.eclipse.core.runtime.QualifiedName
 
 /**op
  * Wizard implementation wich creates a project
