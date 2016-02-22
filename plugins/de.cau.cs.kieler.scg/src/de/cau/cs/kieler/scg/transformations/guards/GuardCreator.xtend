@@ -258,11 +258,10 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
             schedulingBlock.guards.head.createGuardEquation(schedulingBlock, scg)
         }
         
-        val CopyPropagation copyPropagation = 
-            Guice.createInjector().getInstance(typeof(CopyPropagation))    
+        val copyPropagation = typeof(CopyPropagation).inject    
 // FIXME: temporary disabled
 // needs further efficiency improvements and bug-fixing in conditional nodes       
-        copyPropagation.optimize(scg)         
+//        copyPropagation.optimize(scg)         
         
         scg     	
     }

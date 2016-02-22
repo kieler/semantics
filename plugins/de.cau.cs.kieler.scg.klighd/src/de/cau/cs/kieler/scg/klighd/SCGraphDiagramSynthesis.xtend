@@ -1356,20 +1356,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 basicBlock.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
                 val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK, basicBlock).associateWith(basicBlock)
                 bbContainerList.put(basicBlock, bbContainer)
-//                val bbName = serializer.serialize(bb.guards.head.reference)
-                var bbName = basicBlock.schedulingBlocks.head.guards.head.valuedObject.name //reference.valuedObject.name
+                var bbName = basicBlock.schedulingBlocks.head.guards.head.valuedObject.name 
                 
                 if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
                     val guard = basicBlock.schedulingBlocks.head.guards.head
                     var String expText
-// FIXME: Verify removal of dead guard flag                    
-//                    if (guard.dead) {
-//                        expText = "<dead>"
-//                    } else {
+                    if (basicBlock.deadBlock) {
+                        expText = "<null>"
+                    } else {
                         val exp = guard.expression.copy
                     	expText = serializeHR(exp) as String
-//                    }
-//                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
+                    }
 					bbName = bbName + "\n" + expText                	
                 }
                 
@@ -1379,7 +1376,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 for (schedulingBlock : basicBlock.schedulingBlocks) {
                     val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK, schedulingBlock).associateWith(schedulingBlock)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
-//                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
                      var sbName = "<null>"
                      if (!schedulingBlock.label.nullOrEmpty) {
                          sbName = schedulingBlock.label + " "
@@ -1395,7 +1391,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	                    if (schedulingBlock.guards.head != null && !schedulingBlock.basicBlock.deadBlock) {
         	            	expText = serializeHR(schedulingBlock.guards.head.expression) as String
     	            	}	
-//        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
 						sbName = sbName + "\n" + expText       
 					}
             	    

@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import com.google.inject.Guice
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -258,6 +259,10 @@ class SCGCoreExtensions {
         eObject == null
     }
     
+    
+    def inject(Class<? extends Object> clazz) {
+    	Guice.createInjector().getInstance(clazz) 
+    }
     
 }
 
