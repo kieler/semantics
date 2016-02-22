@@ -93,7 +93,7 @@ import org.eclipse.xtext.serializer.ISerializer
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
-import de.cau.cs.kieler.scg.transformations.guards.AbstractGuardCreator
+import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -1358,7 +1358,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 bbContainerList.put(basicBlock, bbContainer)
                 var bbName = basicBlock.schedulingBlocks.head.guards.head.valuedObject.name 
                 
-                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
+                if (scg.hasAnnotation(AbstractGuardExpressions::ANNOTATION_GUARDCREATOR)) {
                     val guard = basicBlock.schedulingBlocks.head.guards.head
                     var String expText
                     if (basicBlock.deadBlock) {
@@ -1386,7 +1386,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                          }
                      }
 
-	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
+	                if (scg.hasAnnotation(AbstractGuardExpressions::ANNOTATION_GUARDCREATOR)) {
 	                    var expText = "<null>"
 	                    if (schedulingBlock.guards.head != null && !schedulingBlock.basicBlock.deadBlock) {
         	            	expText = serializeHR(schedulingBlock.guards.head.expression) as String

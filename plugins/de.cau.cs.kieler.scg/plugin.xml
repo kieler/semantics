@@ -46,7 +46,7 @@
             class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.guards.GuardCreator">
+            class="de.cau.cs.kieler.scg.transformations.guardExpressions.SimpleGuardExpression">
       </productionTransformationClass>
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.transformations.schedulers.GuardScheduler">

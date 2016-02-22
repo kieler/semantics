@@ -70,7 +70,7 @@ class DelayAwareScheduler extends SimpleScheduler {
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::GUARD_ID)
+        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
     }
     
     // -------------------------------------------------------------------------

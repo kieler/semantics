@@ -162,7 +162,7 @@ class SCGLoopHook extends SynthesisActionHook {
         SourceModelTrackingAdapter tracking) {
 
         // TODO This transformation selection should be sensitive to the user selection in KiCoSelectionView regarding its editor
-        val context = new KielerCompilerContext(SCGFeatures.GUARD_ID +
+        val context = new KielerCompilerContext(SCGFeatures.GUARD_EXPRESSIONS_ID +
             ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION",
             scc);
         context.setProperty(Tracing.ACTIVE_TRACING, true);

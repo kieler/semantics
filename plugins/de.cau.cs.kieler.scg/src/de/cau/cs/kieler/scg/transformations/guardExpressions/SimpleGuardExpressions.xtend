@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.transformations.guards
+package de.cau.cs.kieler.scg.transformations.guardExpressions
 
 import com.google.inject.Guice
 import com.google.inject.Inject
@@ -69,7 +69,7 @@ import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerSelector
  * @kieler.design 2013-12-05 proposed 
  * @kieler.rating 2013-12-05 proposed yellow
  */
-class GuardCreator extends AbstractGuardCreator implements Traceable {
+class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceable {
     
         
     //-------------------------------------------------------------------------
@@ -77,15 +77,15 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
     //-------------------------------------------------------------------------
     
     override getId() {
-        return SCGTransformations::GUARD_ID
+        return SCGTransformations::GUARD_EXPRESSIONS_ID
     }
 
     override getName() {
-        return SCGTransformations::GUARD_NAME
+        return SCGTransformations::GUARD_EXPRESSIONS_NAME
     }
 
     override getProducedFeatureId() {
-        return SCGFeatures::GUARD_ID
+        return SCGFeatures::GUARD_EXPRESSIONS_ID
     }
 
     override getRequiredFeatureIds() {

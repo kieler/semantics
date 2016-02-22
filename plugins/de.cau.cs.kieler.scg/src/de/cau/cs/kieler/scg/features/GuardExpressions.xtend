@@ -32,11 +32,11 @@ class Guard extends Feature {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCGFeatures::GUARD_ID
+        return SCGFeatures::GUARD_EXPRESSIONS_ID
     }
 
     override getName() {
-        return SCGFeatures::GUARD_NAME
+        return SCGFeatures::GUARD_EXPRESSIONS_NAME
     }
 
     //-------------------------------------------------------------------------
@@ -45,6 +45,6 @@ class Guard extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(SCGraph scg) {
-        return scg.hasAnnotation(SCGFeatures::GUARD_ID)
+        return scg.hasAnnotation(SCGFeatures::GUARD_EXPRESSIONS_ID)
     }
 }

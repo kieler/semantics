@@ -39,7 +39,7 @@ import java.util.List
 import java.util.Set
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.transformations.guards.AbstractGuardCreator
+import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -77,7 +77,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::GUARD_ID)
+        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
     }
 
     //-------------------------------------------------------------------------
@@ -173,7 +173,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                     schedulingBlock.guards.head.expression.eAllContents.filter(typeof(ValuedObjectReference)).map[
                         valuedObject].forEach[VOR += it]
                     for (vo : VOR) {
-                        if (vo.name.startsWith(AbstractGuardCreator::CONDITIONAL_EXPRESSION_PREFIX))
+                        if (vo.name.startsWith(AbstractGuardExpressions::CONDITIONAL_EXPRESSION_PREFIX))
                             lastVOs += vo
                     }
                     VOR -= lastVOs
@@ -243,7 +243,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                         
                         // Add the guarded scheduling blocks to the list of needed scheduling blocks
                         guard.expression.eAllContents.filter(ValuedObjectReference).forEach[
-                            if (!it.valuedObject.name.equals(AbstractGuardCreator.GOGUARDNAME)) {
+                            if (!it.valuedObject.name.equals(AbstractGuardExpressions.GOGUARDNAME)) {
                                 SBs += schedulingBlockVOCache.get(it.valuedObject)
                             }
                         ]

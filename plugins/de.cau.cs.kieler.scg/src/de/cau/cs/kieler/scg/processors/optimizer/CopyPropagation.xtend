@@ -29,7 +29,7 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.scg.transformations.guards.AbstractGuardCreator
+import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 
 /**
  * @author ssm
@@ -86,7 +86,7 @@ class CopyPropagation extends AbstractOptimizer {
             reverseGuardMap.put(valuedObject, it)
         ]
         
-        val goGuardVO = scg.findValuedObjectByName(AbstractGuardCreator.GOGUARDNAME)
+        val goGuardVO = scg.findValuedObjectByName(AbstractGuardExpressions.GOGUARDNAME)
         assignmentReferences.put(goGuardVO, goGuardVO)        
         
         val schedulingBlocks = <SchedulingBlock> newArrayList => [ list | 

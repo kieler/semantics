@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.transformations.guards
+package de.cau.cs.kieler.scg.transformations.guardExpressions
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
@@ -42,7 +42,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExt
  * @kieler.rating 2013-01-21 proposed yellow
  */
 
-abstract class AbstractGuardCreator extends AbstractProductionTransformation {
+abstract class AbstractGuardExpressions extends AbstractProductionTransformation {
         
     @Inject
     extension KExpressionsDeclarationExtensions
