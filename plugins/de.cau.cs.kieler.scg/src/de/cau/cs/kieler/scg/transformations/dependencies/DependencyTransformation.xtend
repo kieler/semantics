@@ -190,7 +190,6 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         // Therefore, we travel through the nodes of each entry node and if its an assignment or a conditional
         // we add the node to the thread node cache. 
         val threadNodeMap = getAllThreadNodes(scg.nodes.head as Entry)
-        val rootEntryNode = scg.nodes.head as Entry
         for(entry : threadNodeMap.keySet) { 
             // If the entry node has incoming flows, it also has a fork node.
         	var Fork fork = null
