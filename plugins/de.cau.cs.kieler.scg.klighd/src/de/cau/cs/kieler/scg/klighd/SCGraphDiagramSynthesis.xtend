@@ -1225,8 +1225,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             // If dependency edges are layouted, use the dependency ports to attach the edges.
             if ((LAYOUT_DEPENDENCIES.booleanValue) || (isSCPDG) || (isGuardSCG)) {
-                edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
-                edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)
+            	if (isGuardSCG) {
+            		edge.sourcePort = sourceNode.addHelperPort(edge.hashCode.toString, PortSide::SOUTH)
+            		edge.targetPort = targetNode.addHelperPort(edge.hashCode.toString, PortSide::NORTH)
+            		if (dependency instanceof GuardDependency) {
+	            		targetNode => [
+	            			val polyline = it.getData(typeof(KRoundedRectangle)).foreground = DEPENDENCY_GUARD.copy
+	                		polyline.foreground.propagateToChildren = true
+	            		]
+            		}
+            	} else {
+                	edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
+                	edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)
+                }
             } else {
                 // Otherwise, add NO_LAYOUT as layout option to trigger node-to-node hierarchy-crossover
                 // drawing.
@@ -1651,6 +1662,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 polyline.lineWidth.propagateToChildren = true
             ]]
     }
+    
+    def Node colorNode(Node node, KColor color) {
+        node => [
+            getNode => [
+                val polyline = it.getData(typeof(KRoundedRectangle)).foreground = color.copy
+                polyline.foreground.propagateToChildren = true
+            ]]
+    }
 
     // -------------------------------------------------------------------------
     // -- Helper: Ports 
@@ -1672,6 +1691,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     def KPort addHelperPort(KNode node, String mapping) {
         node.createPort(mapping) => [
+            node.ports += it
+        ]
+    }
+    
+    def KPort addHelperPort(KNode node, String mapping, PortSide side) {
+        node.createPort(mapping) => [
+        	it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
             node.ports += it
         ]
     }
