@@ -19,24 +19,24 @@ import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.scg.SCGraph
 
 /**
- * SCG Guard Expressions Feature.
+ * SCG Guards Feature.
  * 
  * @author ssm
  * @kieler.design 2016-02-22 proposed 
  * @kieler.rating 2016-02-22 proposed yellow
  *
  */
-class GuardExpressions extends Feature {
+class Guards extends Feature {
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCGFeatures::GUARD_EXPRESSIONS_ID
+        return SCGFeatures::GUARDS_ID
     }
 
     override getName() {
-        return SCGFeatures::GUARD_EXPRESSIONS_NAME
+        return SCGFeatures::GUARDS_NAME
     }
 
     //-------------------------------------------------------------------------
@@ -45,6 +45,6 @@ class GuardExpressions extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(SCGraph scg) {
-        return scg.hasAnnotation(SCGFeatures::GUARD_EXPRESSIONS_ID)
+        return scg.hasAnnotation(SCGFeatures::GUARDS_ID)
     }
 }

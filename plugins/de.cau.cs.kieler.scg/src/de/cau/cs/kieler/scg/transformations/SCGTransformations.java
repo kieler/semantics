@@ -37,6 +37,9 @@ public class SCGTransformations {
     
     public final static String GUARD_EXPRESSIONS_ID = "scg.guardExpressions";
     public final static String GUARD_EXPRESSIONS_NAME = "Expressions";
+    
+    public final static String GUARDS_ID = "scg.guards";
+    public final static String GUARDS_NAME = "Guards";    
 
     public final static String SCHEDULING_ID = "scg.scheduling";
     public final static String SCHEDULING_NAME = "Scheduling";

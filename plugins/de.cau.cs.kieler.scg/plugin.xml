@@ -46,7 +46,10 @@
             class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.guardExpressions.SimpleGuardExpression">
+            class="de.cau.cs.kieler.scg.transformations.guardExpressions.SimpleGuardExpressions">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.guards.SimpleGuardTransformation">
       </productionTransformationClass>
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.transformations.schedulers.GuardScheduler">
@@ -64,7 +67,10 @@
             class="de.cau.cs.kieler.scg.features.BasicBlock">
       </featureClass>
       <featureClass
-            class="de.cau.cs.kieler.scg.features.Guard">
+            class="de.cau.cs.kieler.scg.features.Guards">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.features.GuardExpressions">
       </featureClass>
       <featureClass
             class="de.cau.cs.kieler.scg.features.Scheduling">

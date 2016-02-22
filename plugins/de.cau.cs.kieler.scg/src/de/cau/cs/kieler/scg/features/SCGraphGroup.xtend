@@ -33,7 +33,15 @@ class SCGraphGroup extends FeatureGroup {
     }
 
     override getFeatureIds() {
-        newHashSet(SCGFeatures::BASIC_ID, SCGFeatures::DEPENDENCY_ID, SCGFeatures::BASICBLOCK_ID, SCGFeatures::GUARD_EXPRESSIONS_ID, SCGFeatures::SCHEDULING_ID, SCGFeatures::SEQUENTIALIZE_ID)
+        newHashSet(
+        	SCGFeatures::BASIC_ID, 
+        	SCGFeatures::DEPENDENCY_ID, 
+        	SCGFeatures::BASICBLOCK_ID, 
+        	SCGFeatures::GUARD_EXPRESSIONS_ID, 
+        	SCGFeatures::GUARDS_ID,
+        	SCGFeatures::SCHEDULING_ID, 
+        	SCGFeatures::SEQUENTIALIZE_ID
+        )
     }
     
 }
