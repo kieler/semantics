@@ -40,6 +40,7 @@ import java.util.Set
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
+import java.util.Map
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -116,7 +117,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
     // -- Globals 
     // -------------------------------------------------------------------------
     protected val topologicalSortVisited = <SchedulingBlock>newHashSet
-    protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
+    protected var Map<Node, SchedulingBlock> schedulingBlockCache = null 
     protected val schedulingBlockVOCache = <ValuedObject, Set<SchedulingBlock>>newHashMap
     protected val allSchedulingBlocks = <SchedulingBlock>newHashSet
     protected var int schedulingBlockCount
@@ -377,7 +378,8 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
         schedulingBlockCache.clear
         allSchedulingBlocks.clear
         schedulingBlockVOCache.clear
-        scg.createSchedulingBlockCache(schedulingBlockCache)
+        schedulingBlockCache = scg.createSchedulingBlockCache
+        schedulingBlockCount = schedulingBlockCache.size
         scg.basicBlocks.filter[!isDeadBlock].forEach [
             allSchedulingBlocks.addAll(schedulingBlocks)
             for (sb : schedulingBlocks) {

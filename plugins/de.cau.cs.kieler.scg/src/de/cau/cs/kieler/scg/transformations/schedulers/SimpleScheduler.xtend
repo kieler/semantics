@@ -30,6 +30,7 @@ import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
+import java.util.Map
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -66,7 +67,7 @@ abstract class SimpleScheduler extends AbstractScheduler implements Traceable {
     // -------------------------------------------------------------------------
    
     protected val topologicalSortVisited = <SchedulingBlock> newHashSet 
-    protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
+    protected var Map<Node, SchedulingBlock> schedulingBlockCache = null
     protected var int schedulingBlockCount
     
     protected val placedBlocks = <SchedulingBlock> newHashSet 
@@ -199,7 +200,8 @@ abstract class SimpleScheduler extends AbstractScheduler implements Traceable {
         // Create and fill a list for all scheduling blocks.
         val schedulingConstraints = scg.orderSchedulingBlocks
         
-        schedulingBlockCount = scg.createSchedulingBlockCache(schedulingBlockCache)
+        schedulingBlockCache = scg.createSchedulingBlockCache
+        schedulingBlockCount = schedulingBlockCache.size
         
         val sBlockList = <ScheduledBlock> newLinkedList
         var schedulable = scg.createSchedule(sBlockList, schedulingConstraints, context)

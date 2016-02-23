@@ -206,7 +206,7 @@ class SCGDeclarationExtensions {
     	HashMap<ValuedObject, ValuedObject> map
     ) {
     	ScgFactory::eINSTANCE.createAssignment => [ s |
-    		s.valuedObject = assignment.valuedObject.getValuedObjectCopy(map)
+    		s.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL(map)
     		s.expression = assignment.expression.copySCGExpression(map)
     		s.operator = assignment.operator
     		assignment.indices.forEach[

@@ -39,6 +39,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 
 /** 
  * @author ssm
@@ -80,7 +81,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
     extension SCGDeclarationExtensions
          
     @Inject 
-    extension KExpressionsDeclarationExtensions	
+    extension SCGCacheExtensions	
 
     @Inject 
     extension KExpressionsValuedObjectExtensions 
@@ -120,13 +121,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
             newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
         val valuedObjectMap = scg.copyDeclarations(newSCG)
-        
-		for(valuedObject : scg.valuedObjects) {
-			if (valuedObject.name.startsWith("_c"))
-				System.out.println(valuedObject)
-		}
-        
-        
+        val schedulingBlockCache = scg.createSchedulingBlockCache
         val GAMap = <Guard, Assignment> newHashMap
         val VAMap = <ValuedObject, Assignment> newHashMap
         
@@ -141,11 +136,11 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         
         // Copy node dependencies
 		for(node : scg.nodes.filter[ dependencies.size > 0]) {
-			val sourceAssignment = VAMap.get(valuedObjectMap.get(node.schedulingBlock.guards.head.valuedObject))
+			val sourceAssignment = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(node).guards.head.valuedObject))
 			for(dependency : node.dependencies) {
 				var Assignment ta = null
 				if (node instanceof Assignment) {
-					ta = VAMap.get(valuedObjectMap.get(dependency.target.schedulingBlock.guards.head.valuedObject))
+					ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject))
 				} else if (node instanceof Conditional) {
 					ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject))
 				}
@@ -158,28 +153,9 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 				}
 			}
 		}
-		
-//		for(key : valuedObjectMap.keySet) {
-//			if (key.name.startsWith("_c"))
-//				System.out.println(key + " : "+valuedObjectMap.get(key))
-//		}
-
-		// Copy control dependencies		
-//		for(schedulingBlock : scg.schedulingBlocks.filter[ dependencies.filter(ControlDependency).size > 0]) {
-//			val sourceAssignment = VAMap.get(valuedObjectMap.get(schedulingBlock.guards.head.valuedObject))
-//			for(dependency : schedulingBlock.dependencies.filter(ControlDependency)) {
-//				System.out.println("Dep: " + (dependency.target as Guard).valuedObject)
-//				val originalVO = (dependency.target as Guard).valuedObject
-//				val newVO = valuedObjectMap.get(originalVO)
-//				val targetAssignment = VAMap.get(newVO)
-//				dependency.copy => [
-//					sourceAssignment.dependencies += it
-//					it.target = targetAssignment
-//				]
-//			}
-//		}
-        
+       
         // Create expression dependencies
+        System.out.println("Creating expression dependencies...")
         for(guard : GAMap.keySet) {
 			val assignment = GAMap.get(guard)
 			val VORs = assignment.expression.getAllReferences.filter[ 
@@ -203,13 +179,13 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 				newSCG.nodes += newAssignment
 				guardAssignment.createGuardDependency(newAssignment)
 				AAMap.put(assignment, newAssignment)
-			}						
+			}		
 		}
 		
 		// Restore sequential order in guarded assignments
 		for (assignment : AAMap.keySet) {
 			if ((assignment.next.target instanceof Assignment) &&
-			(assignment.schedulingBlock == assignment.next.target.schedulingBlock)) {
+			(schedulingBlockCache.get(assignment) == schedulingBlockCache.get(assignment.next.target))) {
 				ScgFactory::eINSTANCE.createControlFlow => [
 					AAMap.get(assignment).next = it
 					it.target = AAMap.get(assignment.next.target as Assignment)

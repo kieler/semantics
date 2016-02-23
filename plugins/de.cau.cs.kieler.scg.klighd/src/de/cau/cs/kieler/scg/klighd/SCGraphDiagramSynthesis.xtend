@@ -624,7 +624,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (SHOW_HIERARCHY.booleanValue) {
                 scg.nodes.filter(Assignment).filter[ dependencies.filter(GuardDependency).size > 0].forEach[
                 	val allNodes = it.dependencies.filter(GuardDependency).map[ target ].toList
-                	allNodes.createHierarchy(NODEGROUPING_GUARDBLOCK, null)
+                	val kContainer = allNodes.createHierarchy(NODEGROUPING_GUARDBLOCK, null)
+                	for(edge : kContainer.outgoingEdges.immutableCopy) {
+                		edge.targetPort.remove
+                		edge.remove
+                	}
+                	while(kContainer.incomingEdges.size > 1) {
+                		val edge = kContainer.incomingEdges.get(1)
+                		edge.targetPort.remove
+                		kContainer.incomingEdges -= edge
+                		edge.remove
+                	}
+                	kContainer.incomingEdges.head.getData(typeof(KRoundedBendsPolyline)).addArrowDecorator
                 ]
             }
         ]
@@ -1136,7 +1147,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     sourceObj.node.ports += it
                 ]
             } else {
-                edge.sourcePort = sourceNode.getPort(outgoingPortId)
+            	if (isGuardSCG) {
+    				edge.sourcePort = sourceNode.addHelperPort(edge.hashCode.toString, PortSide::SOUTH)        		
+            	} else {
+	                edge.sourcePort = sourceNode.getPort(outgoingPortId)
+                }
             }
             // If the target is a join node, create a new port for this control flow and attach it.
             // Otherwise, use the default incoming port.
@@ -1152,7 +1167,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     targetObj.node.ports += it
                 ]
             } else {
-                edge.targetPort = targetNode.getPort(SCGPORTID_INCOMING)
+            	if (isGuardSCG) {
+    				edge.targetPort = targetNode.addHelperPort(edge.hashCode.toString, PortSide::NORTH)        		
+            	} else {
+            		edge.targetPort = targetNode.getPort(SCGPORTID_INCOMING)
+          		}
             }
             // Finally, draw the solid edge and add a decorator.
             edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
