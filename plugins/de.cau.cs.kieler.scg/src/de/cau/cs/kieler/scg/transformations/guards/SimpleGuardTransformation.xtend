@@ -149,11 +149,13 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 				} else if (node instanceof Conditional) {
 					ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject))
 				}
-				val targetAssignment = ta
-				dependency.copy => [
-					sourceAssignment.dependencies += it
-					it.target = targetAssignment
-				]
+				if (ta != null) {
+					val targetAssignment = ta
+					dependency.copy => [
+						sourceAssignment.dependencies += it
+						it.target = targetAssignment
+					]
+				}
 			}
 		}
 		
