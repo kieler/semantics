@@ -255,7 +255,12 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
                 conditionalDeclaration.valuedObjects += newVO
                 debug(
                     "Generated NEW conditional guard " + newGuard.valuedObject.name + " with expression " +
-                        newGuard.expression.serialize)
+                        newGuard.expression.serialize + ", " + newGuard.valuedObject)
+                        
+                ScgFactory::eINSTANCE.createControlDependency => [
+	                conditional.dependencies += it
+	                it.target = newGuard
+                ] 
             }
         ]
 
@@ -610,6 +615,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             expression.setOperator(OperatorType::LOGICAL_AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guards.head.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference
+            debug("Referencing " + conditionalGuards.get(predecessor.conditional).valuedObject)
 
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
@@ -631,6 +637,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             expression.setOperator(OperatorType::LOGICAL_AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guards.head.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference.negate
+			debug("Referencing " + conditionalGuards.get(predecessor.conditional).valuedObject)
 
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
@@ -700,7 +707,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     }*/
     def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
         for (vo : declaration.valuedObjects) {
-            if(vo.name == name) return vo
+            if(vo.name.equals(name)) return vo
         }
         return null
     }

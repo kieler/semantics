@@ -59,7 +59,7 @@ abstract class AbstractGuardExpressions extends AbstractProductionTransformation
     
     public static val ANNOTATION_GUARDCREATOR = "guardCreator" 
     
-    public static val CONDITIONAL_EXPRESSION_PREFIX = "_cond"
+    public static val CONDITIONAL_EXPRESSION_PREFIX = "_c"
     
     
     // -------------------------------------------------------------------------
