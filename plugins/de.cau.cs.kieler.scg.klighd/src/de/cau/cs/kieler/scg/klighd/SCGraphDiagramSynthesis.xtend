@@ -669,7 +669,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 ]
             ]
             // Add ports for control-flow and dependency routing.
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+            if (isGuardSCG) {
+            	node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE)
+            } else {
+	            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+            }
             node.addLayoutParam(LayoutOptions::PORT_ALIGNMENT, PortAlignment::CENTER)
             node.addLayoutParam(LayoutOptions::PORT_SPACING, 10f)
             if (topdown()) {
