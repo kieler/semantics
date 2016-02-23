@@ -10,40 +10,12 @@ import java.util.HashMap
 class LinkCreator {
 	
 	
-	//TODO: tick und reset sollen nicht mehr verbunden werden
-
-	/*  Creates links for preRegion */
-	def preRegion(Actor pre) {
-		
-		val ports = pre.eAllContents.filter(Port).toList
-		for (p : ports) {
-			if (p.type.startsWith("In") || p.type == "Sel") {
-				for (op : ports) {
-					if (op.type == "InConnectorPre" && p.name == op.name) {
-						val link = CircuitFactory::eINSTANCE.createLink
-						link.source = op
-						link.target = p
-						pre.innerLinks.add(link)
-					}
-				}
-			} else if (p.type == "Out") {
-				for (ip : ports) {
-					if (ip.type == "OutConnectorPre" && p.name == ip.name) {
-						val link = CircuitFactory::eINSTANCE.createLink
-						link.source = p
-						link.target = ip
-						pre.innerLinks.add(link)
-					}
-				}
-			}
-		}
-	}
 	
 	/*  Creates links for InitializationRegion */
 	def initRegion(Actor init) {
 		val ports = init.eAllContents.filter(Port).toList
 		for (p : ports) {
-			if (p.type.startsWith("In") || p.type == "Sel") {
+			if (p.type == "In" || p.type == "Sel") {
 				for (op : ports) {
 					if ((op.type == "InConnectorInit" || op.type == "Out") && p.name == op.name && p.eContainer != op.eContainer) {
 						val link = CircuitFactory::eINSTANCE.createLink
@@ -55,7 +27,7 @@ class LinkCreator {
 				}
 			} else if (p.type == "Out") {
 				for (ip : ports) {
-					if (ip.type == "OutConnectorInit" && p.name == ip.name) {
+					if (ip.type == "OutConnectorInit" && p.name == ip.name && p.eContainer != ip.eContainer) {
 						val link = CircuitFactory::eINSTANCE.createLink
 						link.source = p
 						link.target = ip
@@ -105,58 +77,26 @@ class LinkCreator {
 				]
 			}
 		}
-
-//		for (oc : portList.filter[type == "OutConnectorLogic"]) {
-//			if (oc.incomingLinks.length == 0) {
-//				// search for SSA which is meant to be the output
-//				portList.forEach [ ic |
-//					if (ic.type == "Out" && ic.name == oc.name + "_" + ssaMap.get(oc.name)) {
-//						val link = CircuitFactory::eINSTANCE.createLink
-//						link.source = ic;
-//						link.target = oc;
-//						logic.innerLinks += link
-//
-//					}
-//
-//				]
-//			}
-//		}
-//		for (oc : portList.filter[type == "OutConnectorLogic"]) {
-//			if (oc.incomingLinks.length == 0) {
-//				// in this case, the variable was not changed by the program. e.g A in ABO
-//				portList.forEach [ ic |
-//					if ((ic.type == "InConnectorLogic") && oc.name == ic.name) {
-//						val link = CircuitFactory::eINSTANCE.createLink
-//						link.source = ic;
-//						link.target = oc;
-//						logic.innerLinks += link
-//					}
-//
-//				]
-//
-//			}
-//		}
-
 	}
 	
-	/*  Creates links to connect Regions within the circuit */
+	/*  Create links to connect Regions within the circuit */
 	def circuitRegion(Actor circuit) {
 
-		var LinkedList<Port> portList = new LinkedList<Port>
-		portList += circuit.ports
+		var LinkedList<Port> ports = new LinkedList<Port>
+		ports += circuit.ports
 
 		for (a : circuit.innerActors) {
-			val ports = a.ports
-			portList += ports
+			val por = a.ports
+			ports += por
 		}
 		
-		val ports = portList//.filter[name != "Tick" && name != "Reset"]
+//		val ports = portList//.filter[name != "Tick" && name != "Reset"]
 		
 
 		for (p : ports) {
-			if (p.type == "OutConnectorInit" || p.type == "OutConnectorPre") {
+			if (p.type == "OutConnectorInit") {
 				ports.forEach [ ip |
-					if ((ip.type == "InConnectorLogic" || ip.type == "InConnectorPre" )&& p.name == ip.name) {
+					if ((ip.type == "InConnectorLogic")&& p.name == ip.name) {
 						val link = CircuitFactory::eINSTANCE.createLink
 						link.source = p;
 						link.target = ip
@@ -164,21 +104,21 @@ class LinkCreator {
 					}
 				]
 			}
-			if (p.type == "InConnectorCircuit") {
-				ports.forEach [ op | 
-					if ((op.type == "InConnectorInit" || op.type == "InConnectorPre") && p.name == op.name) {
-						val link = CircuitFactory::eINSTANCE.createLink
-						link.source = p;
-						link.target = op
-						circuit.innerLinks += link
-
-					}
-
-				]
-			}
+//			if (p.type == "InConnectorCircuit") {
+//				ports.forEach [ op | 
+//					if ((op.type == "InConnectorInit") && p.name == op.name) {
+//						val link = CircuitFactory::eINSTANCE.createLink
+//						link.source = p;
+//						link.target = op
+//						circuit.innerLinks += link
+//
+//					}
+//
+//				]
+//			}
 			if (p.type == "OutConnectorLogic") {
 				ports.forEach [ op |
-					if ((op.type == "OutConnectorCircuit" || op.type == "InConnectorPre" ) && p.name == op.name) {
+					if ((op.type == "In") && p.name == op.name) {
 						val link = CircuitFactory::eINSTANCE.createLink
 						link.source = p;
 						link.target = op
@@ -188,47 +128,21 @@ class LinkCreator {
 
 				]
 			}
-
-		}
-
-	}
-
-	def rootRegion(Actor root) {
-		var LinkedList<Port> portList = new LinkedList<Port>
-
-		for (a : root.innerActors) {
-			val ports = a.ports
-			portList += ports
-
-		}
-
-		for (p : portList) {
-			if (p.type == "Out") {
-				portList.forEach [ ip |
-					if (ip.type == "InConnectorCircuit" && p.name == ip.name) {
-						val link = CircuitFactory::eINSTANCE.createLink
-						link.source = p;
-						link.target = ip
-						root.innerLinks += link
-
-					}
-
-				]
-			}
-			if (p.type.startsWith("In")) {
-				portList.forEach [ op |
-					if (op.type == "OutConnectorCircuit" && p.name == op.name) {
+			if(p.type == "InConnectorInit"){
+				ports.forEach[op |
+					if((op.type == "Out") && p.name == op.name){
 						val link = CircuitFactory::eINSTANCE.createLink
 						link.source = op;
-						link.target = p;
-						root.innerLinks += link
-
+						link.target = p
+						circuit.innerLinks += link
 					}
-
 				]
 			}
 
 		}
+
 	}
+
+	
 
 }

@@ -33,6 +33,10 @@ import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.kiml.options.EdgeType
+import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.core.krendering.KForeground
+import de.cau.cs.kieler.core.krendering.Colors
+import de.cau.cs.kieler.core.kgraph.KPort
 
 class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
@@ -67,19 +71,19 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	private static val SynthesisOption BRANDES_KOEPF = SynthesisOption::createCheckOption("Brandes Koepf",
 		true);
 	
-	/** Show Circuit */
+	/** Use interactive node placement*/
 	private static val SynthesisOption INTERACTIVE = SynthesisOption::createCheckOption("Interactive",
 		false);
 	
-	/** Show Circuit */
+	/** Use linear segments node placement */
 	private static val SynthesisOption LINEAR_SEGMENTS = SynthesisOption::createCheckOption("Linear Segments",
 		false);
 	
-	/** Show Circuit */
+	/** Use network simplex node placement */
 	private static val SynthesisOption NETWORK_SIMPLEX = SynthesisOption::createCheckOption("Network Simplex",
 		false);
 	
-	/** Show Circuit */
+	/** Use simple node placement */
 	private static val SynthesisOption SIMPLE = SynthesisOption::createCheckOption("Simple",
 		false);
 
@@ -128,6 +132,9 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			}
 		
 	}
+	
+	protected static val String HIGHLIGHTING_MARKER = new String
+	
 
 	// create a KNode for an Actor
 	def void transformActor(Actor actor, KNode parent) {
@@ -191,11 +198,11 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 					if (port.type == "In_1") {
 						actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
-						it.addInsidePortLabel("Sel(1)", 5, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
+						it.addInsidePortLabel("1", 5, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
 						it.setLayoutOption(LayoutOptions.PORT_INDEX, 1)
 					} else if (port.type == "In_0") {
 						actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
-						it.addInsidePortLabel("Sel(0)", 5, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
+//						it.addInsidePortLabel("Sel(0)", 5, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
 						it.setLayoutOption(LayoutOptions.PORT_INDEX, 0)
 					}
 
@@ -246,7 +253,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 				createLink(l)
 			} else if (!(SHOW_TICK.booleanValue) && !(SHOW_RESET.booleanValue)) {
 				val s = l.source as Port
-				if (!(s.name == "Tick") && !(s.name == "Reset")) {
+				if (!(s.name == "Tick") &&  !(s.name == "Reset_pre")) {
 					createLink(l)
 				}
 			} else if (!SHOW_TICK.booleanValue) {
@@ -257,7 +264,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 			} else if (!SHOW_RESET.booleanValue) {
 				val s = l.source as Port
-				if (!(s.name == "Reset")) {
+				if (!(s.name == "Reset_pre")) {
 					createLink(l)
 				}
 
@@ -276,16 +283,10 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			}
 		}
 
-//		if (!(SHOW_INIT_REGION.booleanValue)) {
 		if (actor.name == "Circuit Initialization") {
 			actorNode.setLayoutOption(KlighdProperties::EXPAND, false)
 		}
-//		}
-//		if (!(SHOW_PRE_REGION.booleanValue)) {
-		if (actor.name == "Pre Registers") {
-			actorNode.setLayoutOption(KlighdProperties::EXPAND, false)
-//			}
-		}
+
 
 		if (!(SHOW_ALL_REGIONS.booleanValue)) {
 			if (actor.name == "Program Logic") {
@@ -293,8 +294,31 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 			}
 		}
+		
+//		createKAction() => [			
+//			it.actionId = HIGHLIGHTING_MARKER
+//			val ports = actorNode.ports
+//			for(p : ports){										
+//				for(e : p.edges){					
+//					if(e.targetPort == p){
+//						System.out.println(actor.name)
+//					val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
+//					style.setColor(Colors::RED)
+//					e.KRendering.styles.add(style)
+//					
+//					}
+//				}
+//			}
+//			
+//			
+//			
+//		]
+//		if(atomicActor){
+//			actorNode.KRendering.addSingleClickAction(HIGHLIGHTING_MARKER)
+//		}
 
 	}
+	
 
 	def createLink(Link link) {
 
@@ -316,7 +340,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					it.targetPort = link.target.port
 				}
 			}
-			it.addRoundedBendsPolyline(3).addJunctionPointDecorator;
+			it.addRoundedBendsPolyline(3,1).addJunctionPointDecorator;
 			
 			]
 

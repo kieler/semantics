@@ -8,27 +8,27 @@ import org.eclipse.emf.common.util.EList
 
 class CircuitInitialization {
 
-	def initialize(List<Declaration> declarations, Actor pre, Actor init, Actor logic, Actor newCircuit, Actor root) {
+	def initialize(List<Declaration> declarations, Actor init, Actor logic, Actor newCircuit) {
 		
 		createLocalResetAndGo(init, logic)
 		
-		createInAndOutputs(declarations, init, logic, newCircuit, root)
+		createInAndOutputs(declarations, init, logic, newCircuit)
 		
-		initializePreRegion(pre)
+//		initializePreRegion(pre)
 
 	}
-	def initializePreRegion(Actor pre) {
-		val tickPort = CircuitFactory::eINSTANCE.createPort
-		val resetPort = CircuitFactory::eINSTANCE.createPort
-
-		tickPort.type = "InConnectorPre"
-		tickPort.name = "Tick"
-		pre.ports.add(tickPort)
-
-		resetPort.type = "InConnectorPre"
-		resetPort.name = "Reset_pre"
-		pre.ports.add(resetPort)
-	}
+//	def initializePreRegion(Actor pre) {
+//		val tickPort = CircuitFactory::eINSTANCE.createPort
+//		val resetPort = CircuitFactory::eINSTANCE.createPort
+//
+//		tickPort.type = "InConnectorPre"
+//		tickPort.name = "Tick"
+//		pre.ports.add(tickPort)
+//
+//		resetPort.type = "InConnectorPre"
+//		resetPort.name = "Reset_pre"
+//		pre.ports.add(resetPort)
+//	}
 	
 	def createLocalResetAndGo(Actor init, Actor logic) {
 //		drawInputRegister("Reset_local", init)
@@ -68,37 +68,8 @@ class CircuitInitialization {
 		
 		
 		//_Go local Signal 
-		val goRegister = CircuitFactory::eINSTANCE.createActor
-		val goRegInTick = CircuitFactory::eINSTANCE.createPort
-		val goRegInResetLocal = CircuitFactory::eINSTANCE.createPort
-		val goRegSelReset = CircuitFactory::eINSTANCE.createPort
-		val goRegOut = CircuitFactory::eINSTANCE.createPort
-		
-		goRegister.type = "REG"
-		goRegister.name = "_GO"
-		logic.innerActors += goRegister
-		
-		goRegInTick.type = "In"
-		goRegInTick.name = "Tick"
-		goRegister.ports += goRegInTick
-		
-		goRegInResetLocal.type = "In"
-		goRegInResetLocal.name = "Reset_local"
-		goRegister.ports += goRegInResetLocal
-		
-		goRegSelReset.type = "Sel"
-		goRegSelReset.name = "Reset"
-		goRegister.ports += goRegSelReset
-		
-		goRegOut.type = "Out"
-		goRegOut.name = "_GO"
-		goRegister.ports += goRegOut
-		
-		
-		
-		
-		
-		
+		logic.innerActors += createRegister("g0", "Reset" , "Reset_local")
+
 		
 		val LocalResetLogicPort = CircuitFactory::eINSTANCE.createPort
 		LocalResetLogicPort.name = "Reset_local"
@@ -137,29 +108,32 @@ class CircuitInitialization {
 
 	// ////////////////////////////////////////////////////////////////////
 	// create nodes for each in- and output and
-	// an input tick node and an input reset node
+	// one input tick node and one input reset node
 	//
 	// for each input: create one register in InitilizationRegion
 	// //////////////////////////////////////////////////////////////////// 
-	def createInAndOutputs(List<Declaration> list, Actor init, Actor logic, Actor circuit, Actor root) {
+	def createInAndOutputs(List<Declaration> list, Actor init, Actor logic, Actor circuit) {
 		// inserts in- and output Nodes of circuit
 		list.forEach [ d |
 			d.valuedObjects.forEach [ vo |
 				val name = (vo.name)
-
 				if (d.isInput) {
 					// creates InputNode
 					val actor = CircuitFactory::eINSTANCE.createActor
 					val port = CircuitFactory::eINSTANCE.createPort
 					actor.type = "Input " + name
-					root.innerActors += actor
+					actor.name = name
+					circuit.innerActors += actor
 					
 					port.type = "Out"
 					port.name = name
 					actor.ports.add(port)
 					
-					drawInputRegister(name, init)
-					createInConnectorPorts(name, init, logic, circuit)
+					init.innerActors += createRegister(name, "Reset", name)
+					createConnectorPorts(init,name,"InConnectorInit")
+					createConnectorPorts(init,name,"OutConnectorInit")
+					createConnectorPorts(logic,name,"InConnectorLogic")
+					
 				}
 				if (d.isOutput) {
 					// creates OutputNode
@@ -167,115 +141,35 @@ class CircuitInitialization {
 					val port = CircuitFactory::eINSTANCE.createPort
 					
 					actor.type = "Output " + name
-					root.innerActors += actor
+					actor.name = name
+					circuit.innerActors += actor
 					
 					port.type = "In"
 					port.name = name
 					actor.ports.add(port)
 					
-					createOutConnectorPorts(name, logic, circuit)
+					createConnectorPorts(logic,name,"OutConnectorLogic")
 
 				}
 			]
 		]
-		// now add reset...
-		val reset = CircuitFactory::eINSTANCE.createActor
-		reset.type = "Reset"
-		val resetPort = CircuitFactory::eINSTANCE.createPort
-		resetPort.name = "Reset"
-		resetPort.type = "Out"
-		root.innerActors += reset
-		reset.ports += resetPort
-
-		createInConnectorPorts("Reset", init, logic, circuit)
-
-		// ...and tick
-		val tick = CircuitFactory::eINSTANCE.createActor
-		tick.type = "Tick"
-		val tickPort = CircuitFactory::eINSTANCE.createPort
-		tickPort.name = "Tick"
-		tickPort.type = "Out"
-		root.innerActors += tick
-		tick.ports += tickPort
-
-		createInConnectorPorts("Tick", init, logic, circuit)
+		createConnectorPorts(init, "Reset", "InConnectorInit")
+		createConnectorPorts(logic, "Reset", "InConnectorLogic")
+		
+		createConnectorPorts(init, "Tick", "InConnectorInit")
+		createConnectorPorts(logic, "Tick", "InConnectorLogic")
+		
+		createConnectorPorts(logic, "Reset_pre", "InConnectorLogic")
 
 	}
 
-	def createInConnectorPorts(String name, Actor init, Actor logic, Actor circuit) {
-
-		// connection port for circuit
-		val circuitPort = CircuitFactory::eINSTANCE.createPort
-		circuitPort.name = name
-		circuitPort.type = "InConnectorCircuit"
-		circuit.ports.add(circuitPort)
-
-		// connection port for logic region
-		val logicPort = CircuitFactory::eINSTANCE.createPort
-		logicPort.name = name
-		logicPort.type = "InConnectorLogic"
-		logic.ports.add(logicPort)
-
-		// connection port for init region
-		val initPort = CircuitFactory::eINSTANCE.createPort
-		initPort.name = name
-		initPort.type = "InConnectorInit"
-		init.ports.add(initPort)
-	}
-
-	def createOutConnectorPorts(String name, Actor logic, Actor circuit) {
-		// connection port for circuit
-		val circuitPort = CircuitFactory::eINSTANCE.createPort
-		circuitPort.name = name
-		circuitPort.type = "OutConnectorCircuit"
-		circuit.ports.add(circuitPort)
-
-		// connection port for logic region
-		val logicPort = CircuitFactory::eINSTANCE.createPort
-		logicPort.name = name
-		logicPort.type = "OutConnectorLogic"
-		logic.ports.add(logicPort)
-
-	}
 
 	def drawInputRegister(String name, Actor init) {
-		val regActor = CircuitFactory::eINSTANCE.createActor
-		val regInPortTick = CircuitFactory::eINSTANCE.createPort
-		val regInPortReset = CircuitFactory::eINSTANCE.createPort
-		val regInPort = CircuitFactory::eINSTANCE.createPort
-		val regOutPort = CircuitFactory::eINSTANCE.createPort
-
-		regActor.type = "REG"
-		regActor.name = name
-
-		regInPortTick.type = "In"
-		regInPortTick.name = "Tick"
-
-		regInPortReset.type = "Sel"
-		regInPortReset.name = "Reset"
-
-		regInPort.type = "In"
-		regInPort.name = name
-		regOutPort.type = "Out"
-		regOutPort.name = name
-		regActor.ports.add(regInPortTick)
-		regActor.ports.add(regInPortReset)
-		regActor.ports.add(regInPort)
-		regActor.ports.add(regOutPort)
-
-		init.innerActors.add(regActor)
-
-		// add ports to initialziatonRegion 
-//		val initInPort = CircuitFactory::eINSTANCE.createPort
-//		initInPort.name = name
-//		initInPort.type = "InConnectorInit"
-//
-		val initOutPort = CircuitFactory::eINSTANCE.createPort
-		initOutPort.name = name
-		initOutPort.type = "OutConnectorInit"
-//
-//		init.ports.add(initInPort)
-		init.ports.add(initOutPort)
+		
+		init.innerActors += createRegister(name, "Reset", name)
+		
+		createConnectorPorts(init, name , "InConnectorInit")
+		createConnectorPorts(init, name , "OutConnectorInit")
 
 	}
 	
@@ -305,4 +199,52 @@ class CircuitInitialization {
 		actor.innerActors.add(const1)
 
 	}
+	
+	
+	def Actor createRegister(String name, String selPortName, String inPortName){
+		val register = CircuitFactory::eINSTANCE.createActor
+		
+		register.name = name
+		register.type = "REG"
+		
+		val regInPortTick = CircuitFactory::eINSTANCE.createPort
+		val regInPortReset = CircuitFactory::eINSTANCE.createPort
+		val regInPort = CircuitFactory::eINSTANCE.createPort
+		val regOutPort = CircuitFactory::eINSTANCE.createPort
+
+		regInPortTick.type = "In"
+		regInPortTick.name = "Tick"
+
+		regInPortReset.type = "Sel"
+		regInPortReset.name = selPortName
+
+		regInPort.type = "In"
+		regInPort.name = inPortName
+		regOutPort.type = "Out"
+		regOutPort.name = name
+		
+		register.ports.add(regInPortTick)
+		register.ports.add(regInPortReset)
+		register.ports.add(regInPort)
+		register.ports.add(regOutPort)
+		
+		
+		
+		return register
+	}
+	
+	def createConnectorPorts(Actor frame, String name, String type){
+		val port = CircuitFactory::eINSTANCE.createPort
+		port.name = name
+		port.type = type
+		
+		frame.ports += port
+	}
 }
+
+
+
+
+
+
+

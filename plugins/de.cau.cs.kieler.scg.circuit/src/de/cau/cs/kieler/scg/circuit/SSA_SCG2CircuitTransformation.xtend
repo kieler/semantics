@@ -24,6 +24,7 @@ import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.ScgFactory
 
 class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
@@ -70,37 +71,34 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 //		conditionalEndNodes = context.compilationResult.getAuxiliaryData(SSAMapData).head.conditionalEndNodes
 		
 
-		/** root object which will have atomic inner actors for each in/output 
-		 * and one non atomic actor (newInnerCircuit) containing actors for:
+		/** circuit object which will have atomic inner actors for each in/output 
+		 * and two non atomic actors:
 		 *  
 		 * - programm's logic (logicRegion)
-		 * - preRegisters (preRegisterRegion)
 		 * - reset, go and tick logic with input registers (InitializationRegion)
 		 * 
 		 */
-		val root = CircuitFactory::eINSTANCE.createActor
-		root.name = scg.label
 
-		val newInnerCircuit = CircuitFactory::eINSTANCE.createActor
-		root.innerActors += newInnerCircuit
+		val newCircuit = CircuitFactory::eINSTANCE.createActor
+		newCircuit.name = scg.label
 
 		val logicRegion = CircuitFactory::eINSTANCE.createActor
 		logicRegion.name = "Program Logic"
-		newInnerCircuit.innerActors += logicRegion
+		newCircuit.innerActors += logicRegion
 
-		val preRegisterRegion = CircuitFactory::eINSTANCE.createActor
-		preRegisterRegion.name = "Pre Registers"
-		newInnerCircuit.innerActors += preRegisterRegion
+//		val preRegisterRegion = CircuitFactory::eINSTANCE.createActor
+//		preRegisterRegion.name = "Pre Registers"
+//		newInnerCircuit.innerActors += preRegisterRegion
 
 		val initializationRegian = CircuitFactory::eINSTANCE.createActor
 		initializationRegian.name = "Circuit Initialization"
-		newInnerCircuit.innerActors += initializationRegian
+		newCircuit.innerActors += initializationRegian
 
 		// filter all declarations to initialize the circuit
 		val declarations = scg.declarations.filter[isInput || isOutput].toList
 		// initialize circuit creates all in/outputs and a tick and reset input
-		circuitInitialization.initialize(declarations, preRegisterRegion, initializationRegian, logicRegion,
-			newInnerCircuit, root)
+		circuitInitialization.initialize(declarations, initializationRegian, logicRegion,
+			newCircuit)
 
 		// filter every input output variable to avoid the creation of pre registers for those variables
 		val inOutPuts = new LinkedList<String>
@@ -119,13 +117,12 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 		// create links for each region of the circuit
 		// this has to be done step by step..... otherwise wrong ports would be connected
-		linkCreator.rootRegion(root)
-		linkCreator.circuitRegion(newInnerCircuit)
+		linkCreator.circuitRegion(newCircuit)
 		linkCreator.logicRegion(logicRegion)
-		linkCreator.preRegion(preRegisterRegion)
+//		linkCreator.preRegion(preRegisterRegion)
 		linkCreator.initRegion(initializationRegian)
 
-		root
+		newCircuit
 
 	}
 
@@ -135,8 +132,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 			if (n instanceof Assignment) {
 				transformAssignment(n, logic)
 				transformNodesToActors(n.next.target, logic)
-			} else if (n instanceof Conditional) {
-
+			} else if (n instanceof Conditional) {				
 				transformNodesToActors(transformConditionalNodes(n, n.then.target, n.^else.target, logic), logic)
 			}
 
@@ -145,6 +141,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 	}
 
 	def Node transformConditionalNodes(Conditional source, Node thenNode, Node elseNode, Actor logic) {
+		checkForVOassignments(source.condition)
 
 		if (elseNode instanceof Assignment) {
 			if (thenNode instanceof Conditional) {
@@ -184,8 +181,16 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 					circuitInitialization.createConstantZero(logic, truePort.name)
 //					zero = true
 				} else {
+					val exp = thenNode.assignment
+					if(exp instanceof ValuedObjectReference) {
+						voExpressions.put(thenNode.valuedObject.name, exp.valuedObject)
+						
+					} else {
+					checkForVOassignments(thenNode.assignment)
 					truePort.name = thenNode.assignment.serialize.toString
 					transformExpressions(thenNode.assignment, logic)
+					
+					}
 
 				}
 				logic.innerActors += newMUX
@@ -251,7 +256,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 					actor.type = "NOT"
 				case PRE: {
 					actor.type = "REG"
-					addRegisterPorts(actor, "Reset")
+					addRegisterPorts(actor, "Reset_pre")
 				}
 				default: {
 					System.out.println("found unknown SCG OperatorExpression: " + expr.getOperator.getName)
@@ -265,9 +270,10 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 				port.type = "In"
 				
 
-				if (!(expr.operator.getName == "PRE") && (subexpr instanceof OperatorExpression)) { // && !(a.operator.getName == "NOT"))
+				if (!(expr.operator.getName == "PRE")){//) && (subexpr instanceof OperatorExpression)) { // && !(a.operator.getName == "NOT"))
+					
 					checkForVOassignments(subexpr)
-										transformExpressions(subexpr, logic)
+					transformExpressions(subexpr, logic)
 					
 					
 
@@ -287,25 +293,44 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 		 * */
 
 		else if (expr instanceof ValuedObjectReference) {
+			if(assignment.valuedObject.name == "g0"){
+			voExpressions.put(expr.valuedObject.name, assignment.valuedObject)	
+//			System.out.println("put " + expr.valuedObject.name + " with value " + assignment.valuedObject)
+			
+			
+			} else {
 			voExpressions.put(assignment.valuedObject.name, expr.valuedObject)
-			System.out.println("put " + assignment.valuedObject.name + " with value " + expr.valuedObject.name)
+//			System.out.println("put " + assignment.valuedObject.name + " with value " + expr.valuedObject.name)
+		}	
 		}
 
 	}
 	
 	def checkForVOassignments(Expression expr) {
-		System.out.println("www")
-		val vos = expr.eAllContents.filter(ValuedObjectReference).toList
-		
-		for(vo : vos){
-							System.out.println(vo.valuedObject.name + "    pppppp------------")
-			val name = vo.valuedObject.name
+		if(expr instanceof ValuedObjectReference){
+//			System.out.println("CHECKING " + expr.valuedObject.name)
+
+			val name = expr.valuedObject.name
 			if(voExpressions.containsKey(name)){
-							System.out.println(name + " will be changed")
-			vo.valuedObject = voExpressions.get(name)
+			expr.valuedObject = voExpressions.get(name)
+			
+			}
+		} else {
+		val vos = expr.eAllContents.filter(ValuedObjectReference).toList
+
+		for(vo : vos){
+//			System.out.println("checkig " + vo.valuedObject.name)
+			val name2 = vo.valuedObject.name
+			if(voExpressions.containsKey(name2)){
+			vo.valuedObject = voExpressions.get(name2)
+//			System.out.println("changed " + name2 + " to " + vo.valuedObject.name)
 				
 //				vo.valuedObject = voExpressions.get(vo)
 //				System.out.println(vo.valuedObject.name + "RRRR")
+			}
+			
+			
+			
 			}
 		}
 	}
@@ -339,7 +364,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 						actor.type = "NOT"
 					case PRE: {
 						actor.type = "REG"
-						addRegisterPorts(actor, "Reset")
+						addRegisterPorts(actor, "Reset_pre")
 					}
 					default: {
 						System.out.println("found unknown SCG OperatorExpression: " + expr.getOperator.getName)

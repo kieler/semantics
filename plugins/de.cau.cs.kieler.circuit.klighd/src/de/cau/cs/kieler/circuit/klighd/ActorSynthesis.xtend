@@ -97,8 +97,8 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 						actorNode.addRectangle => [
 
 							it.shadow = "black".color
-							it.selectionBackground = "blue".color;
 							it.setBackground("white".color);
+							it.selectionBackground = "green".color;
 						]
 						actorNode.addInsideBottomLeftNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE,
 							KlighdConstants.DEFAULT_FONT_NAME)
@@ -163,6 +163,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 			} else {
 				rect.setBackground(darkBlue)
 			}
+//			rect.selectionBackground = "green".color
 
 		]
 
