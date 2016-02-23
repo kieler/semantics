@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.comparison.compilers.kico;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -26,14 +27,14 @@ import de.cau.cs.kieler.comparison.core.LanguageProperties;
  * @author nfl
  *
  */
-public class KiCo2Java implements ICompiler {
+public class KiCoSCCharts2Java implements ICompiler {
 
     /**
      * {@inheritDoc}
      */
     @Override
     public String getID() {
-        return "KiCo - * to Java";
+        return "KiCo - SCCharts to Java";
     }
 
     /**
@@ -41,7 +42,7 @@ public class KiCo2Java implements ICompiler {
      */
     @Override
     public Language getSrcLanguage() {
-        return null;
+        return Language.SCCharts;
     }
 
     /**
@@ -56,7 +57,8 @@ public class KiCo2Java implements ICompiler {
      * {@inheritDoc}
      */
     @Override
-    public String compile(String srcFile, String outputPath) throws CompilationException {
+    public Path compile(Path srcFile, Path outputPath) throws CompilationException {
+        // TODO all
         try {
             Thread.sleep((long)(new Random().nextDouble() * 3000));
         } catch (InterruptedException e) {

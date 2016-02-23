@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.comparison.testcaseprovider;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -27,9 +28,9 @@ public class Testcase implements ITestcase {
 
     private String id;
     private Language language;
-    private String testcase;
+    private Path path;
     private Collection<String> properties = new ArrayList<String>();
-    private Collection<String> dependencies = new ArrayList<String>();
+    private Collection<Path> dependencies = new ArrayList<Path>();
     
     /**
      * @param id the id to set
@@ -48,8 +49,8 @@ public class Testcase implements ITestcase {
     /**
      * @param testcase the test case to set
      */
-    public void setTestcase(String testcase) {
-        this.testcase = testcase;
+    public void setPath(Path path) {
+        this.path = path;
     }
 
     /**
@@ -62,7 +63,7 @@ public class Testcase implements ITestcase {
     /**
      * @param dependencies the dependencies to set
      */
-    public void setDependencies(Collection<String> dependencies) {
+    public void setDependencies(Collection<Path> dependencies) {
         this.dependencies = dependencies;
     }
 
@@ -86,8 +87,8 @@ public class Testcase implements ITestcase {
      * {@inheritDoc}
      */
     @Override
-    public String getTestcase() {
-        return testcase;
+    public Path getPath() {
+        return path;
     }
 
     /**
@@ -101,7 +102,7 @@ public class Testcase implements ITestcase {
     /**
      * {@inheritDoc}
      */
-    public Collection<String> getDependencies() {
+    public Collection<Path> getDependencies() {
         return dependencies;
     }
 
@@ -112,7 +113,7 @@ public class Testcase implements ITestcase {
      * @param testcaseLine 
      * @return null, if the csv string could not be parsed; the created test case otherwise
      */
-    public static Testcase fromCsvString(String filePath, String testcaseLine) {
+    public static Testcase fromCsvString(File file, String testcaseLine) {
 
         if (testcaseLine == null || testcaseLine.isEmpty())
             return null;
@@ -121,8 +122,7 @@ public class Testcase implements ITestcase {
         String[] values = testcaseLine.split(",");
         
         try {
-            // TODO relative path
-            testcase.setTestcase(filePath + File.separator + values[0]);
+            testcase.setPath(new File(file.getParent() + File.separator + values[0]).toPath());
             testcase.setID(values[1]);
             Collection<String> props = new ArrayList<String>();
             for (int i = 2; i < values.length; i++) {

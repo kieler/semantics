@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -52,27 +53,20 @@ public class CsvTestcaseProvider implements ITestcaseProvider {
      * {@inheritDoc}
      */
     @Override
-    public Collection<ITestcase> createTestcases(String path, String name) {
-        return createFromCsv(path, name);
-    }
-
-    /**
-     * @param path
-     * @return
-     */
-    private Collection<ITestcase> createFromCsv(String path, String name) {
+    public Collection<ITestcase> createTestcases(File file) {
         ArrayList<ITestcase> ret = new ArrayList<ITestcase>();
 
         BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(path + File.separator + name));
+        try {            
+            br = new BufferedReader(new FileReader(file));
             for (String testcaseLine = br.readLine(); testcaseLine != null; testcaseLine =
                     br.readLine()) {
-                Testcase test = Testcase.fromCsvString(path, testcaseLine);
+                Testcase test = Testcase.fromCsvString(file, testcaseLine);
                 if (test != null) {
-                    int index = test.getTestcase().lastIndexOf(".");
+                    String fileName = test.getPath().getFileName().toString();
+                    int index = fileName.lastIndexOf(".");
                     if (index != -1) {
-                        String extension = test.getTestcase().substring(index);
+                        String extension = fileName.substring(index);
                         try {
                             test.setLanguage(Language.fromExtension(extension));
                             ret.add(test);
@@ -80,7 +74,7 @@ public class CsvTestcaseProvider implements ITestcaseProvider {
                             // Language unknown
                             // TODO better error logging
                             System.out.println("Language of test case " + test.getID() + " ("
-                                    + test.getTestcase() + ") could not be parsed");
+                                    + test.getPath() + ") could not be parsed");
                         }
                     }
                 }

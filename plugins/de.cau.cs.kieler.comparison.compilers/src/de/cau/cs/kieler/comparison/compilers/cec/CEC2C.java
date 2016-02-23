@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -60,21 +61,21 @@ public class CEC2C implements ICompiler {
      * {@inheritDoc}
      */
     @Override
-    public String compile(String srcFile, String outputPath) throws CompilationException {
+    public Path compile(Path srcFile, Path outputPath) throws CompilationException {
 
-        String ret = "";
+        Path ret;
         URI src = null;
         File out = null;
 
         try {
-            out = new File(outputPath + "" + srcFile.substring(srcFile.lastIndexOf("/")) + ".c");
-            src = new URI(srcFile);
-        } catch (URISyntaxException | NullPointerException e) {
+            out = new File(outputPath.toFile(), srcFile.getFileName() + ".c");
+            src = srcFile.toUri();
+        } catch (NullPointerException e) {
             throw new CompilationException("Source File not found");
         }
 
         try {
-            ret = CEC.run(src, out, null).getPath();
+            ret = new File(CEC.run(src, out, null).toString()).toPath();
         } catch (IOException e) {
             throw new CompilationException("Compilation failed: "
                     + e.getMessage().replace("\n", ""));
@@ -107,5 +108,4 @@ public class CEC2C implements ICompiler {
         // TODO Auto-generated method stub
         return 0;
     }
-
 }

@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.comparison.core;
 
+import java.nio.file.Path;
 import java.util.Collection;
 
 /**
@@ -36,7 +37,7 @@ public interface ITestcase {
      * 
      * @return
      */
-    public String getTestcase();
+    public Path getPath();
 
     /**
      * 
@@ -48,5 +49,5 @@ public interface ITestcase {
      * 
      * @return
      */
-    public Collection<String> getDependencies();
+    public Collection<Path> getDependencies();
 }

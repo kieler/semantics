@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.comparison.ui.views;
 
 import java.beans.FeatureDescriptor;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -365,7 +366,7 @@ public class StartComparisonDialog extends Dialog {
                 for (String test : lstTestcaseSelection.getSelection()) {
                     for (ITestcase testcase : Comparison.getTestcases(false).values()) {
                         if (testcase.getID().equals(test)) {
-                            System.out.println(testcase.getTestcase() + ": "
+                            System.out.println(testcase.getPath() + ": "
                                     + testcase.getProperties());
                         }
                     }
@@ -385,7 +386,7 @@ public class StartComparisonDialog extends Dialog {
      */
     private void filterTestcaseSelection() {
 
-        HashMap<String, ITestcase> registered = Comparison.getTestcases(false);
+        HashMap<Path, ITestcase> registered = Comparison.getTestcases(false);
 
         // show feasible only
         if (checkBoxFeasTestcases.getSelection()) {
@@ -399,7 +400,7 @@ public class StartComparisonDialog extends Dialog {
                 }
 
                 // filter
-                for (Entry<String, ITestcase> kv : registered.entrySet()) {
+                for (Entry<Path, ITestcase> kv : registered.entrySet()) {
                     boolean allCompsHandled = true;
                     for (ICompiler comp : compilers) {
                         ITestcase testcase = kv.getValue();
@@ -439,19 +440,19 @@ public class StartComparisonDialog extends Dialog {
 
             }
 
-            cachedFilteredTestcases.sort(new StringComparator());
+            cachedFilteredTestcases.sort(new ReverseStringComparator());
             lstTestcaseSelection.setItems(cachedFilteredTestcases.toArray(new String[0]));
         }
         // show only matching src language
         else {
             Language lng = Language.valueOf(cmbTestcase.getItem(cmbTestcase.getSelectionIndex()));
             ArrayList<String> selection = new ArrayList<String>();
-            for (Entry<String, ITestcase> kv : registered.entrySet()) {
+            for (Entry<Path, ITestcase> kv : registered.entrySet()) {
                 if (kv.getValue().getLanguage() == lng) {
                     selection.add(kv.getValue().getID());
                 }
             }
-            selection.sort(new StringComparator());
+            selection.sort(new ReverseStringComparator());
             lstTestcaseSelection.setItems(selection.toArray(new String[0]));
         }
     }
@@ -459,7 +460,7 @@ public class StartComparisonDialog extends Dialog {
     /**
      * Natural order of String.
      */
-    private class StringComparator implements Comparator<String> {
+    private class ReverseStringComparator implements Comparator<String> {
 
         /**
          * {@inheritDoc}
@@ -761,7 +762,7 @@ public class StartComparisonDialog extends Dialog {
      * 
      */
     private void saveTestcases() {
-        HashMap<String, ITestcase> map = Comparison.getTestcases(false);
+        HashMap<Path, ITestcase> map = Comparison.getTestcases(false);
         String[] selection = lstTestcaseSelection.getSelection();
         testcases = new ArrayList<ITestcase>();
         for (int i = 0; i < lstTestcaseSelection.getSelectionCount(); i++) {

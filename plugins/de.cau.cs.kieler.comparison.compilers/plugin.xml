@@ -4,10 +4,10 @@
    <extension
          point="de.cau.cs.kieler.comparison.compiler">
       <compilerClass
-            class="de.cau.cs.kieler.comparison.compilers.kico.KiCo2C">
+            class="de.cau.cs.kieler.comparison.compilers.kico.KiCoSCCharts2C">
       </compilerClass>
       <compilerClass
-            class="de.cau.cs.kieler.comparison.compilers.kico.KiCo2Java">
+            class="de.cau.cs.kieler.comparison.compilers.kico.KiCoSCCharts2Java">
       </compilerClass>
       <compilerClass
             class="de.cau.cs.kieler.comparison.compilers.cec.CEC2C">

@@ -16,11 +16,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.PriorityQueue;
-import java.util.SortedSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -38,7 +38,6 @@ import de.cau.cs.kieler.comparison.measuring.CompError;
 import de.cau.cs.kieler.comparison.measuring.CompLoCMeasuring;
 import de.cau.cs.kieler.comparison.measuring.CompSizeMeasuring;
 import de.cau.cs.kieler.comparison.measuring.CompSpeedMeasuring;
-import de.cau.cs.kieler.comparison.measuring.ExecSpeedMeasuring;
 
 /**
  * AsynchronousComparison extends the Job class and is used to execute the comparison between
@@ -85,8 +84,6 @@ public class AsynchronousComparison extends Job {
         Collection<ICompiler> compilers = config.getCompilers();
         // the test cases, which are used within the comparison
         Collection<ITestcase> testcases = config.getTestcases();
-        // the path to outputs like compilations
-        String outputPath = config.getOutputPath() + "compilationResults/";
 
         // the IDataHandler is used to save the comparison results
         IDataHandler dataHandler = DataHandler.getDataHandler();
@@ -102,8 +99,7 @@ public class AsynchronousComparison extends Job {
                 KBestMeasuringParameteres params =
                         (KBestMeasuringParameteres) compMeasuringParameters;
                 
-                doKBestCompilation(monitor, outputPath, params.getK(),
-                        params.getEpsilon(), params.getM());
+                compileKBest(monitor, params.getK(), params.getEpsilon(), params.getM());
 
                 if (monitor.isCanceled()) {
                     monitor.done();
@@ -112,8 +108,8 @@ public class AsynchronousComparison extends Job {
             } else if (compMeasuringParameters instanceof StandardMeasuringParameters) {
                 StandardMeasuringParameters params =
                         (StandardMeasuringParameters) compMeasuringParameters;
-                doKBestCompilation(monitor, outputPath,
-                        params.getComparisonAmount(), 0, params.getComparisonAmount());
+                // K-Best with k = M results in exact k measurements no matter how close they are
+                compileKBest(monitor, params.getComparisonAmount(), 0, params.getComparisonAmount());
 
                 if (monitor.isCanceled()) {
                     monitor.done();
@@ -147,7 +143,7 @@ public class AsynchronousComparison extends Job {
      * @param m
      * 
      */
-    private void doKBestCompilation(IProgressMonitor monitor, String outputPath, int k, double epsilon, int m) {
+    private void compileKBest(IProgressMonitor monitor, int k, double epsilon, int m) {
 
         // the compilers, which are used within the comparison
         Collection<ICompiler> compilers = config.getCompilers();
@@ -160,17 +156,25 @@ public class AsynchronousComparison extends Job {
         for (ICompiler comp : compilers) {
             String compID = comp.getID();
             for (ITestcase test : testcases) {
-                String testID = test.getID() + " (" + test.getTestcase() + ")";
+                String testID = test.getID() + " (" + test.getPath() + ")";
                 monitor.subTask(compID + " compiling " + testID);
-                String compilation = null;
+                Path compilation = null;
+                // create sub folder for compilation results
+                Path tmpFolder;
+                try {
+                    tmpFolder = Files.createTempDirectory("comp");
+                } catch (IOException e) {
+                    System.out.println("Comparison failed: Could not create temporary output path.");
+                    continue;
+                }
                 // warm up caches; this result could also be used for size measuring
                 try {
-                    compilation = comp.compile(test.getTestcase(), outputPath);
+                    compilation = comp.compile(test.getPath(), tmpFolder);
                 } catch (CompilationException e) {
                     // errors will be caught within the measuring
                 }
 
-                // TODO keeping a huge PriorityQueue in RAM might influence the results
+                // Note: Keeping a huge PriorityQueue in RAM might influence the results.
                 // queue to hold the best results
                 PriorityQueue<Long> measurings = new PriorityQueue<Long>(k, new Comparator<Long>() {
 
@@ -193,14 +197,8 @@ public class AsynchronousComparison extends Job {
                         }
                         long compStart = System.currentTimeMillis();
                         try {
-                            // TODO remove old sub folder?
-                            // create sub folder for compilation results
-                            File folder = new File(outputPath);
-                            if (!folder.exists() && !folder.mkdirs())
-                                throw new CompilationException(
-                                        "Comparison failed: Could not create output into given path.");
                             // TODO suppress compiler console output
-                            compilation = comp.compile(test.getTestcase(), outputPath);
+                            compilation = comp.compile(test.getPath(), tmpFolder);
                         } catch (CompilationException e) {
                             // something went wrong, save the error message as result
                             dataHandler.serialize(comparison,
@@ -233,7 +231,7 @@ public class AsynchronousComparison extends Job {
                     BufferedReader br = null;
                     try {
                         // measure file size in bytes
-                        File file = new File(compilation);
+                        File file = compilation.toFile();
                         dataHandler.serialize(comparison, new CompSizeMeasuring(compID, testID,
                                 file.length()));
 

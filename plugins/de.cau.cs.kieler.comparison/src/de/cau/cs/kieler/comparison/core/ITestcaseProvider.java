@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.comparison.core;
 
+import java.io.File;
 import java.util.Collection;
 
 /**
@@ -37,5 +38,5 @@ public interface ITestcaseProvider {
      * @param name 
      * @return 
      */
-    public Collection<ITestcase> createTestcases(String path, String name);
+    public Collection<ITestcase> createTestcases(File file);
 }

@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.comparison.core;
 
+import java.nio.file.Path;
 import java.util.Collection;
 
 /**
@@ -42,7 +43,7 @@ public interface ICompiler {
      * 
      * @return
      */
-    public String compile(String srcFile, String outputPath) throws CompilationException;
+    public Path compile(Path srcFile, Path outputPath) throws CompilationException;
 
     /**
      * 

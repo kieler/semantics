@@ -17,6 +17,8 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -161,7 +163,7 @@ public final class Comparison {
     /**
      * The cache for the test cases.
      */
-    private static HashMap<String, ITestcase> testcasesCached;
+    private static HashMap<Path, ITestcase> testcasesCached;
 
     /**
      * Used to get a collection of all test cases. The collection consist of KeyValuePairs, where
@@ -175,14 +177,14 @@ public final class Comparison {
      *            if true, the cache will be refreshed; otherwise the cache my be used
      * @return a HashMap with all test cases
      */
-    public static HashMap<String, ITestcase> getTestcases(final boolean forceReload) {
+    public static HashMap<Path, ITestcase> getTestcases(final boolean forceReload) {
 
         // Return the cache if there is any and not forced to reload
         if (testcasesCached != null && !forceReload) {
             return testcasesCached;
         }
         // Clear the cache
-        testcasesCached = new HashMap<String, ITestcase>();
+        testcasesCached = new HashMap<Path, ITestcase>();
 
         // All files that may contain test cases or are test cases
         ArrayList<File> files = new ArrayList<File>();
@@ -207,7 +209,8 @@ public final class Comparison {
                             + "../../test/de.cau.cs.kieler.sccharts.sim.c.test/testdata-simple/");
             files.add(new File(FileLocator.resolve(url).toURI()).getCanonicalFile());
 
-            url = new URL(baseUrl.toString()
+            url =
+                    new URL(baseUrl.toString()
                             + "../../test/de.cau.cs.kieler.sccharts.sim.c.test/testdata-advanced/");
             files.add(new File(FileLocator.resolve(url).toURI()).getCanonicalFile());
         } catch (IOException | URISyntaxException e) {
@@ -279,9 +282,9 @@ public final class Comparison {
                     if (index >= 0 && index < nameLength
                             && fileName.substring(index).toLowerCase().equals(ext)) {
                         // Try to create new test cases with the current provider
-                        Collection<ITestcase> newTestcases =
-                                provider.createTestcases(file.getParent(), fileName);
-                        // If the provider creates new test cases, add them to the list of test cases
+                        Collection<ITestcase> newTestcases = provider.createTestcases(file);
+                        // If the provider creates new test cases, add them to the list of test
+                        // cases
                         if (newTestcases != null && newTestcases.size() > 0) {
                             insertTestcases(allTestcases, newTestcases);
                             parsed = true;
@@ -302,10 +305,10 @@ public final class Comparison {
         // Ever since using multiple provider multiple test cases with the same path to a test case
         // could exist. These are getting merged into a single testcase.
         for (ITestcase test : allTestcases) {
-            ITestcase cached = testcasesCached.get(test.getTestcase());
+            ITestcase cached = testcasesCached.get(test.getPath());
             // If no ITestcase with the current path exists in the cache, add the current test case
             if (cached == null) {
-                testcasesCached.put(test.getTestcase(), test);
+                testcasesCached.put(test.getPath(), test);
             }
             // Else try to merge the two test cases into the cached one
             else {
@@ -341,13 +344,13 @@ public final class Comparison {
 
         // Insert all the ITestcase from one list to another
         for (ITestcase newTest : from) {
-            String testPath = newTest.getTestcase();
+            Path testPath = newTest.getPath();
             boolean inserted = false;
             // Check all test cases in the first list for possible merging
             for (ITestcase existingTest : into) {
-                if (existingTest.getTestcase().equals(testPath)) {
-                    // If a test case with the same path already exists within the first list, try
-                    // to merge the two cases into the one already contained within the list
+                if (existingTest.getPath().equals(testPath)) {
+                    // If a test case with the same path already exists within the first list,
+                    // try to merge the two cases into the one already contained within the list
                     mergeTestcases(existingTest, newTest);
                     inserted = true;
                     break;
@@ -365,34 +368,33 @@ public final class Comparison {
      * if both test cases have the same file path, Language and identifier. In that case both lists
      * of properties are getting merged into a single one.
      * 
-     * @param first
+     * @param into
      *            the first test case to merge into
-     * @param second
+     * @param from
      *            the second test case to merge from
      * @return true, if the merge was successful; false otherwise
      */
-    private static boolean mergeTestcases(ITestcase first, final ITestcase second) {
+    private static boolean mergeTestcases(ITestcase into, final ITestcase from) {
 
         // Only merge the test cases if both have the same file path ...
-        if (first.getTestcase().equals(second.getTestcase())) {
+        if (into.getPath().equals(from.getPath())) {
             // ... and the same Language
-            if (first.getLanguage() != second.getLanguage()) {
+            if (into.getLanguage() != from.getLanguage()) {
                 // TODO better error logging
-                System.out.println("ITestcase (" + second.getID() + ", " + second.getTestcase()
+                System.out.println("ITestcase (" + from.getID() + ", " + from.getPath()
                         + ") could not be merged with an existing testcase: "
                         + "Language is not the same");
             }
             // ... and the same ID
-            else if (!first.getID().equals(second.getID())) {
+            else if (!into.getID().equals(from.getID())) {
                 // TODO better error logging
-                System.out.println("ITestcase (" + second.getID() + ", " + second.getTestcase()
+                System.out.println("ITestcase (" + from.getID() + ", " + from.getPath()
                         + ") could not be merged with an existing testcase: "
                         + "ID is not the same");
             }
-            // All requirements met, therefore insert the properties of the second into the first
-            // one
+            // All requirements met, therefore insert the properties of the second into the first one
             else {
-                insertProperties(first.getProperties(), second.getProperties());
+                insertProperties(into.getProperties(), from.getProperties());
                 return true;
             }
         }

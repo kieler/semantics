@@ -38,17 +38,17 @@ public abstract class AbstractDirectoryProvider implements ITestcaseProvider {
      * 
      * {@inheritDoc}
      */
-    public Collection<ITestcase> createTestcase(String path, String name) {
+    public Collection<ITestcase> createTestcases(File file) {
         Collection<ITestcase> ret = new ArrayList<ITestcase>();
         Testcase testcase = new Testcase();
-        testcase.setTestcase(path + File.separator + name);
+        testcase.setPath(file.toPath());
 
+        // check if the properties are valid
         Collection<String> allProps = LanguageProperties.getAllProperties();
-        // TODO platform compatibility
-        String[] splits = path.split(File.separator);
         Collection<String> properties = new ArrayList<String>();
-        for (String folder : splits)
+        for (int i = 0; i < file.toPath().getNameCount(); i++)
         {
+            String folder = file.toPath().getName(i).toString();
             for (String prop : allProps) {
                 if (prop.toLowerCase().equals(folder.toLowerCase())) {
                     properties.add(prop.toLowerCase());
@@ -56,10 +56,10 @@ public abstract class AbstractDirectoryProvider implements ITestcaseProvider {
                 }
             }
         }
-        testcase.setID(name);
+        
+        testcase.setID(file.getName());
         testcase.setProperties(properties);
         ret.add(testcase);
         return ret;
     }
-
 }

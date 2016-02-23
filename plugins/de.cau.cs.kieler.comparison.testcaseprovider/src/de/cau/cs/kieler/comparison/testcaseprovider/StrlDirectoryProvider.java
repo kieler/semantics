@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.comparison.testcaseprovider;
 
+import java.io.File;
 import java.util.Collection;
 
 import de.cau.cs.kieler.comparison.core.ITestcase;
@@ -43,11 +44,12 @@ public class StrlDirectoryProvider extends AbstractDirectoryProvider {
      * {@inheritDoc}
      */
     @Override
-    public Collection<ITestcase> createTestcases(String path, String name) {
-        Collection<ITestcase> testcases = super.createTestcase(path, name);
+    public Collection<ITestcase> createTestcases(File file) {
+        Collection<ITestcase> testcases = super.createTestcases(file);
         for (ITestcase testcase : testcases) {
+            // should always be the case, because the super class uses only Testcase
             if (testcase instanceof Testcase)
-            ((Testcase)testcase).setLanguage(Language.Esterel);
+                ((Testcase) testcase).setLanguage(Language.Esterel);
         }
         return testcases;
     }

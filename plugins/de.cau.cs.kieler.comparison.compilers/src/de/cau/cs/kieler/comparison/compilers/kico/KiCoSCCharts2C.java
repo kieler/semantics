@@ -16,6 +16,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -36,14 +37,14 @@ import de.cau.cs.kieler.kico.KielerCompilerContext;
  * @author nfl
  *
  */
-public class KiCo2C implements ICompiler {
+public class KiCoSCCharts2C implements ICompiler {
 
     /**
      * {@inheritDoc}
      */
     @Override
     public String getID() {
-        return "KiCo - * to C";
+        return "KiCo - SCCharts to C";
     }
 
     /**
@@ -51,7 +52,7 @@ public class KiCo2C implements ICompiler {
      */
     @Override
     public Language getSrcLanguage() {
-        return null;
+        return Language.SCCharts;
     }
 
     /**
@@ -66,11 +67,11 @@ public class KiCo2C implements ICompiler {
      * {@inheritDoc}
      */
     @Override
-    public String compile(String srcFile, String outputPath) throws CompilationException {        
+    public Path compile(Path srcFile, Path outputPath) throws CompilationException {        
         
         URI uri = null;
-        try {
-            uri = URI.createFileURI(srcFile);
+        try {            
+            uri = URI.createFileURI(srcFile.toString());
         } catch (IllegalArgumentException e) {
             throw new CompilationException("Unable to load source file");
         }        
@@ -85,13 +86,13 @@ public class KiCo2C implements ICompiler {
         KielerCompilerContext context = new KielerCompilerContext("!T_SIMULATIONVISUALIZATION, !T_ESTERELSIMULATIONVISUALIZATION, T_s.c", eobj); 
         context.setAdvancedSelect(true);
         
-        // TODO dependencies
+        // TODO resolve dependencies to other SCCharts
         
         CompilationResult compResult = KielerCompiler.compile(context);
         if(compResult.getAllErrors() != null && ! compResult.getAllErrors().isEmpty())
             throw new CompilationException("Compilation failed: " + compResult.getAllErrors().toString().replace("\n", ""));
         
-        File out = new File(outputPath + "" + srcFile.substring(srcFile.lastIndexOf("/")) + ".c");
+        File out = new File(outputPath.toFile(), srcFile.getFileName() + ".c");
         
         BufferedWriter bw = null;
                 
@@ -109,7 +110,7 @@ public class KiCo2C implements ICompiler {
                 e.printStackTrace();
             }            
         }
-        return out.toURI().getPath();
+        return out.toPath();
     }
 
     /**
