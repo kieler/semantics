@@ -15,25 +15,26 @@
 
 import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.extensions.ThreadPathType
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 
 /** 
@@ -67,7 +68,7 @@ import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 
 class SurfaceSynchronizer extends AbstractSynchronizer {
 
-    static final boolean DEBUG = false;
+    static final boolean DEBUG = true;
 
     def static void debug(String debugText) {
         debug(debugText, true);
@@ -89,6 +90,9 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     
     @Inject
     extension KExpressionsValuedObjectExtensions
+
+    @Inject
+    extension KExpressionsDeclarationExtensions
     
     @Inject
     extension SCGCoreExtensions
@@ -98,7 +102,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     
     @Inject
     extension SCGThreadExtensions
-
+    
     @Inject
     extension AnnotationsExtensions
     
@@ -157,12 +161,16 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         
 //		data.fixEmptyExpressions.fixSynchronizerExpression
 		
+		val emptyDeclaration = createBoolDeclaration => [
+			scg.declarations += it
+		]
 		guard.expression = data.guardExpression.expression
 		for(emptyExp : data.guardExpression.emptyExpressions) {
 			val newGuard = ScgFactory::eINSTANCE.createGuard
             newGuard.valuedObject = emptyExp.valuedObject
             newGuard.expression = emptyExp.expression
             scg.guards += newGuard
+            emptyDeclaration.valuedObjects += newGuard.valuedObject
             
             debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
 		}

@@ -35,6 +35,7 @@ import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -67,7 +68,7 @@ import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 
 class DepthSynchronizer extends AbstractSynchronizer {
 
-    static final boolean DEBUG = false;
+    static final boolean DEBUG = true;
 
     def static void debug(String debugText) {
         debug(debugText, true);
@@ -89,6 +90,9 @@ class DepthSynchronizer extends AbstractSynchronizer {
     
     @Inject
     extension KExpressionsValuedObjectExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
     
     @Inject
     extension SCGCoreExtensions
@@ -157,12 +161,16 @@ class DepthSynchronizer extends AbstractSynchronizer {
         
 		data.fixEmptyExpressions.fixSynchronizerExpression
 		
+		val emptyDeclaration = createBoolDeclaration => [
+			scg.declarations += it
+		]
 		guard.expression = data.guardExpression.expression
 		for(emptyExp : data.guardExpression.emptyExpressions) {
 			val newGuard = ScgFactory::eINSTANCE.createGuard
             newGuard.valuedObject = emptyExp.valuedObject
             newGuard.expression = emptyExp.expression
             scg.guards += newGuard
+            emptyDeclaration.valuedObjects += newGuard.valuedObject
             
             debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
 		}
