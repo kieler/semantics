@@ -186,10 +186,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 		for (assignment : AAMap.keySet) {
 			if ((assignment.next.target instanceof Assignment) &&
 			(schedulingBlockCache.get(assignment) == schedulingBlockCache.get(assignment.next.target))) {
-				ScgFactory::eINSTANCE.createControlFlow => [
-					AAMap.get(assignment).next = it
-					it.target = AAMap.get(assignment.next.target as Assignment)
-				]
+				AAMap.get(assignment).createControlDependency(AAMap.get(assignment.next.target as Assignment))
 			} 
 		}
 
@@ -216,5 +213,13 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
     		it.target = target
     	]
     }
+    
+    private def ControlDependency createControlDependency(Assignment source, Assignment target) {
+    	ScgFactory::eINSTANCE.createControlDependency => [ 
+    		source.dependencies += it
+    		it.target = target
+    	]
+    }
+    
 				
 }
