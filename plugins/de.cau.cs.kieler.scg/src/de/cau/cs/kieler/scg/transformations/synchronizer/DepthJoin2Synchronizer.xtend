@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.transformations.synchronizer
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
@@ -254,11 +255,11 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 		switch exp.operator {
 			case OperatorType::LOGICAL_OR:
 				exp.subExpressions.removeAll(exp.subExpressions.filter [
-					(it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject.name == "false")
+					(it instanceof BoolValue && (it as BoolValue).value == FALSE().value)
 				])
 			case OperatorType::LOGICAL_AND:
 				if (!exp.subExpressions.filter [
-					(it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject.name == "false")
+					(it instanceof BoolValue && (it as BoolValue).value == FALSE().value)
 				].isEmpty) {
 					return FALSE()
 				}
