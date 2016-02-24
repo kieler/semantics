@@ -635,6 +635,52 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
 	}
 
     /**
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.ExpressionDependency} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ExpressionDependencyItemProvider expressionDependencyItemProvider;
+
+				/**
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.ExpressionDependency}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createExpressionDependencyAdapter() {
+		if (expressionDependencyItemProvider == null) {
+			expressionDependencyItemProvider = new ExpressionDependencyItemProvider(this);
+		}
+
+		return expressionDependencyItemProvider;
+	}
+
+				/**
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.GuardDependency} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected GuardDependencyItemProvider guardDependencyItemProvider;
+
+				/**
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.GuardDependency}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createGuardDependencyAdapter() {
+		if (guardDependencyItemProvider == null) {
+			guardDependencyItemProvider = new GuardDependencyItemProvider(this);
+		}
+
+		return guardDependencyItemProvider;
+	}
+
+				/**
 	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Guard} instances.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -778,9 +824,11 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
 		if (basicBlockItemProvider != null) basicBlockItemProvider.dispose();
 		if (schedulingBlockItemProvider != null) schedulingBlockItemProvider.dispose();
 		if (predecessorItemProvider != null) predecessorItemProvider.dispose();
+		if (guardItemProvider != null) guardItemProvider.dispose();
 		if (scheduleBlockItemProvider != null) scheduleBlockItemProvider.dispose();
 		if (scheduleItemProvider != null) scheduleItemProvider.dispose();
-		if (guardItemProvider != null) guardItemProvider.dispose();
+		if (expressionDependencyItemProvider != null) expressionDependencyItemProvider.dispose();
+		if (guardDependencyItemProvider != null) guardDependencyItemProvider.dispose();
 	}
 
 }

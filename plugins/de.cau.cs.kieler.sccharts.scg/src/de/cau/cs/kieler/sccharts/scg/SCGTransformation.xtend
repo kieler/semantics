@@ -54,7 +54,6 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.optimizer.SuperfluousForkRemover
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
 import java.util.Set
@@ -72,6 +71,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtension
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -581,7 +581,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
                 // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
                 if (!effect.isPostfixOperation) {
-                    assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
+                    assignment.setExpression(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
                 }
                 if (!sCChartAssignment.indices.nullOrEmpty) {
                     sCChartAssignment.indices.forEach [
@@ -589,9 +589,9 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                     ]
                 }
             } else if (effect instanceof HostcodeEffect) {
-                assignment.setAssignment((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
+                assignment.setExpression((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof FunctionCallEffect) {
-                assignment.setAssignment((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
+                assignment.setExpression((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional

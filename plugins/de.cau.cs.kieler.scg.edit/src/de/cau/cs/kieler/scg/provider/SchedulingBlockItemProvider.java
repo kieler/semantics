@@ -69,7 +69,7 @@ public class SchedulingBlockItemProvider
 
 			addNodesPropertyDescriptor(object);
 			addDependenciesPropertyDescriptor(object);
-			addGuardPropertyDescriptor(object);
+			addGuardsPropertyDescriptor(object);
 			addLabelPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
@@ -120,19 +120,19 @@ public class SchedulingBlockItemProvider
 	}
 
     /**
-	 * This adds a property descriptor for the Guard feature.
+	 * This adds a property descriptor for the Guards feature.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    protected void addGuardPropertyDescriptor(Object object) {
+	protected void addGuardsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_SchedulingBlock_guard_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SchedulingBlock_guard_feature", "_UI_SchedulingBlock_type"),
-				 ScgPackage.Literals.SCHEDULING_BLOCK__GUARD,
+				 getString("_UI_SchedulingBlock_guards_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SchedulingBlock_guards_feature", "_UI_SchedulingBlock_type"),
+				 ScgPackage.Literals.SCHEDULING_BLOCK__GUARDS,
 				 true,
 				 false,
 				 true,
@@ -141,7 +141,7 @@ public class SchedulingBlockItemProvider
 				 null));
 	}
 
-    /**
+				/**
 	 * This adds a property descriptor for the Label feature.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
