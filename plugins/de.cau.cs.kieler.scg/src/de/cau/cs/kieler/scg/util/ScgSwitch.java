@@ -287,11 +287,12 @@ public class ScgSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ScgPackage.SCHEDULE_LINK: {
-				ScheduleLink scheduleLink = (ScheduleLink)theEObject;
-				T result = caseScheduleLink(scheduleLink);
-				if (result == null) result = caseLink(scheduleLink);
-				if (result == null) result = caseAnnotatable(scheduleLink);
+			case ScgPackage.SCHEDULE_DEPENDENCY: {
+				ScheduleDependency scheduleDependency = (ScheduleDependency)theEObject;
+				T result = caseScheduleDependency(scheduleDependency);
+				if (result == null) result = caseDependency(scheduleDependency);
+				if (result == null) result = caseLink(scheduleDependency);
+				if (result == null) result = caseAnnotatable(scheduleDependency);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -660,17 +661,17 @@ public class ScgSwitch<T> extends Switch<T> {
 	}
 
 				/**
-	 * Returns the result of interpreting the object as an instance of '<em>Schedule Link</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Schedule Dependency</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Schedule Link</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Schedule Dependency</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseScheduleLink(ScheduleLink object) {
+	public T caseScheduleDependency(ScheduleDependency object) {
 		return null;
 	}
 

@@ -1589,14 +1589,14 @@ public interface ScgPackage extends EPackage {
 	int GUARD_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ScheduleLinkImpl <em>Schedule Link</em>}' class.
+	 * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ScheduleDependencyImpl <em>Schedule Dependency</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.scg.impl.ScheduleLinkImpl
-	 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleLink()
+	 * @see de.cau.cs.kieler.scg.impl.ScheduleDependencyImpl
+	 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleDependency()
 	 * @generated
 	 */
-	int SCHEDULE_LINK = 25;
+	int SCHEDULE_DEPENDENCY = 25;
 
 				/**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1605,7 +1605,7 @@ public interface ScgPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCHEDULE_LINK__ANNOTATIONS = LINK__ANNOTATIONS;
+	int SCHEDULE_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
 
 				/**
 	 * The feature id for the '<em><b>Target</b></em>' reference.
@@ -1614,16 +1614,16 @@ public interface ScgPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SCHEDULE_LINK__TARGET = LINK__TARGET;
+	int SCHEDULE_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
 
 				/**
-	 * The number of structural features of the '<em>Schedule Link</em>' class.
+	 * The number of structural features of the '<em>Schedule Dependency</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SCHEDULE_LINK_FEATURE_COUNT = LINK_FEATURE_COUNT + 0;
+	int SCHEDULE_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
@@ -2328,14 +2328,14 @@ public interface ScgPackage extends EPackage {
 	EClass getGuardDependency();
 
 	/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ScheduleLink <em>Schedule Link</em>}'.
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ScheduleDependency <em>Schedule Dependency</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Schedule Link</em>'.
-	 * @see de.cau.cs.kieler.scg.ScheduleLink
+	 * @return the meta object for class '<em>Schedule Dependency</em>'.
+	 * @see de.cau.cs.kieler.scg.ScheduleDependency
 	 * @generated
 	 */
-	EClass getScheduleLink();
+	EClass getScheduleDependency();
 
 	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Guard <em>Guard</em>}'.
@@ -2948,14 +2948,14 @@ public interface ScgPackage extends EPackage {
 		EClass GUARD_DEPENDENCY = eINSTANCE.getGuardDependency();
 
 		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ScheduleLinkImpl <em>Schedule Link</em>}' class.
+		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ScheduleDependencyImpl <em>Schedule Dependency</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.scg.impl.ScheduleLinkImpl
-		 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleLink()
+		 * @see de.cau.cs.kieler.scg.impl.ScheduleDependencyImpl
+		 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleDependency()
 		 * @generated
 		 */
-		EClass SCHEDULE_LINK = eINSTANCE.getScheduleLink();
+		EClass SCHEDULE_DEPENDENCY = eINSTANCE.getScheduleDependency();
 
 		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.GuardImpl <em>Guard</em>}' class.

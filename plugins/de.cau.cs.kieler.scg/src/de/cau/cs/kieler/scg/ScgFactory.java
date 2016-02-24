@@ -249,13 +249,13 @@ public interface ScgFactory extends EFactory {
 	GuardDependency createGuardDependency();
 
 				/**
-	 * Returns a new object of class '<em>Schedule Link</em>'.
+	 * Returns a new object of class '<em>Schedule Dependency</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Schedule Link</em>'.
+	 * @return a new object of class '<em>Schedule Dependency</em>'.
 	 * @generated
 	 */
-	ScheduleLink createScheduleLink();
+	ScheduleDependency createScheduleDependency();
 
 				/**
 	 * Returns a new object of class '<em>Guard</em>'.

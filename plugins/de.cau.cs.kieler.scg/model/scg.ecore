@@ -118,5 +118,5 @@
   <eClassifiers xsi:type="ecore:EClass" name="Guard" eSuperTypes="#//Node ../../de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Assignment"/>
   <eClassifiers xsi:type="ecore:EClass" name="ExpressionDependency" eSuperTypes="#//Dependency"/>
   <eClassifiers xsi:type="ecore:EClass" name="GuardDependency" eSuperTypes="#//Dependency"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ScheduleLink" eSuperTypes="#//Link"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleDependency" eSuperTypes="#//Dependency"/>
 </ecore:EPackage>

@@ -14,24 +14,24 @@
 package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.scg.ScgPackage;
-import de.cau.cs.kieler.scg.ScheduleLink;
+import de.cau.cs.kieler.scg.ScheduleDependency;
 
 import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Schedule Link</b></em>'.
+ * An implementation of the model object '<em><b>Schedule Dependency</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class ScheduleLinkImpl extends LinkImpl implements ScheduleLink {
+public class ScheduleDependencyImpl extends DependencyImpl implements ScheduleDependency {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ScheduleLinkImpl() {
+	protected ScheduleDependencyImpl() {
 		super();
 	}
 
@@ -42,7 +42,7 @@ public class ScheduleLinkImpl extends LinkImpl implements ScheduleLink {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ScgPackage.Literals.SCHEDULE_LINK;
+		return ScgPackage.Literals.SCHEDULE_DEPENDENCY;
 	}
 
-} //ScheduleLinkImpl
+} //ScheduleDependencyImpl

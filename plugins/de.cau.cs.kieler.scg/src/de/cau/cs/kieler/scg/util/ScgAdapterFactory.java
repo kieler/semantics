@@ -182,8 +182,8 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
 				return createGuardDependencyAdapter();
 			}
 			@Override
-			public Adapter caseScheduleLink(ScheduleLink object) {
-				return createScheduleLinkAdapter();
+			public Adapter caseScheduleDependency(ScheduleDependency object) {
+				return createScheduleDependencyAdapter();
 			}
 			@Override
 			public Adapter caseAnnotatable(Annotatable object) {
@@ -554,16 +554,16 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
 	}
 
 				/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ScheduleLink <em>Schedule Link</em>}'.
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ScheduleDependency <em>Schedule Dependency</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scg.ScheduleLink
+	 * @see de.cau.cs.kieler.scg.ScheduleDependency
 	 * @generated
 	 */
-	public Adapter createScheduleLinkAdapter() {
+	public Adapter createScheduleDependencyAdapter() {
 		return null;
 	}
 

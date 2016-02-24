@@ -635,26 +635,26 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
 	}
 
 				/**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.ScheduleLink} instances.
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.ScheduleDependency} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ScheduleLinkItemProvider scheduleLinkItemProvider;
+	protected ScheduleDependencyItemProvider scheduleDependencyItemProvider;
 
 				/**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.ScheduleLink}.
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.ScheduleDependency}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createScheduleLinkAdapter() {
-		if (scheduleLinkItemProvider == null) {
-			scheduleLinkItemProvider = new ScheduleLinkItemProvider(this);
+	public Adapter createScheduleDependencyAdapter() {
+		if (scheduleDependencyItemProvider == null) {
+			scheduleDependencyItemProvider = new ScheduleDependencyItemProvider(this);
 		}
 
-		return scheduleLinkItemProvider;
+		return scheduleDependencyItemProvider;
 	}
 
 				/**
@@ -804,7 +804,7 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
 		if (guardItemProvider != null) guardItemProvider.dispose();
 		if (expressionDependencyItemProvider != null) expressionDependencyItemProvider.dispose();
 		if (guardDependencyItemProvider != null) guardDependencyItemProvider.dispose();
-		if (scheduleLinkItemProvider != null) scheduleLinkItemProvider.dispose();
+		if (scheduleDependencyItemProvider != null) scheduleDependencyItemProvider.dispose();
 	}
 
 }

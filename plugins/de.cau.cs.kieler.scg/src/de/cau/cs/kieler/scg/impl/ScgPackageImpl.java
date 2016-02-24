@@ -41,7 +41,7 @@ import de.cau.cs.kieler.scg.RelativeWrite_Read;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
-import de.cau.cs.kieler.scg.ScheduleLink;
+import de.cau.cs.kieler.scg.ScheduleDependency;
 import de.cau.cs.kieler.scg.SchedulingBlock;
 import de.cau.cs.kieler.scg.Surface;
 import de.cau.cs.kieler.scg.Write_Write;
@@ -232,7 +232,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass scheduleLinkEClass = null;
+	private EClass scheduleDependencyEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -902,8 +902,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getScheduleLink() {
-		return scheduleLinkEClass;
+	public EClass getScheduleDependency() {
+		return scheduleDependencyEClass;
 	}
 
 	/**
@@ -1043,7 +1043,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 		guardDependencyEClass = createEClass(GUARD_DEPENDENCY);
 
-		scheduleLinkEClass = createEClass(SCHEDULE_LINK);
+		scheduleDependencyEClass = createEClass(SCHEDULE_DEPENDENCY);
 
 		// Create enums
 		branchTypeEEnum = createEEnum(BRANCH_TYPE);
@@ -1106,7 +1106,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 		guardEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
 		expressionDependencyEClass.getESuperTypes().add(this.getDependency());
 		guardDependencyEClass.getESuperTypes().add(this.getDependency());
-		scheduleLinkEClass.getESuperTypes().add(this.getLink());
+		scheduleDependencyEClass.getESuperTypes().add(this.getDependency());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(scGraphEClass, SCGraph.class, "SCGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1200,7 +1200,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 		initEClass(guardDependencyEClass, GuardDependency.class, "GuardDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(scheduleLinkEClass, ScheduleLink.class, "ScheduleLink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(scheduleDependencyEClass, ScheduleDependency.class, "ScheduleDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Initialize enums and add enum literals
 		initEEnum(branchTypeEEnum, BranchType.class, "BranchType");
