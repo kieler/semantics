@@ -65,7 +65,7 @@ import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerData
  * @kieler.rating 2013-12-05 proposed yellow
  */
 
-class GuardSequentializer extends AbstractSequentializer implements Traceable {
+class GuardSequentializerV2 extends AbstractSequentializer implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -216,11 +216,13 @@ class GuardSequentializer extends AbstractSequentializer implements Traceable {
         
         // Now, call the worker method. It returns the last control flows which have to be connected to the exit node.
         val nodeCache = <Node> newLinkedList
-        val exitControlFlows = scg.schedules.head.transformSchedule(newSCG, entry.next, nodeCache)
+// FIXME: broken in scg version 3
+//        val exitControlFlows = scg.schedules.head.transformSchedule(newSCG, entry.next, nodeCache)
         
         // Create an exit node and connect the control flow. Add the node.
         val exit = ScgFactory::eINSTANCE.createExit.trace((scg.nodes.get(0) as Entry).exit)
-        exitControlFlows.forEach[ it.target = exit ]
+// FIXME: broken in scg version 3
+//        exitControlFlows.forEach[ it.target = exit ]
         nodeCache.add(exit)
         
         newSCG.nodes += nodeCache

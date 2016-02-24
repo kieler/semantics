@@ -9,8 +9,6 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="basicBlocks" upperBound="-1"
         eType="#//BasicBlock" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="schedules" upperBound="-1"
-        eType="#//Schedule" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="guards" upperBound="-1"
         eType="#//Guard" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -118,15 +116,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="branchType" eType="#//BranchType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Guard" eSuperTypes="#//Node ../../de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Assignment"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ScheduleBlock">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="schedulingBlock" eType="#//SchedulingBlock"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="additionalGuards" upperBound="-1"
-        eType="#//Guard"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Schedule">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="scheduleBlocks" upperBound="-1"
-        eType="#//ScheduleBlock" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ExpressionDependency" eSuperTypes="#//Dependency"/>
   <eClassifiers xsi:type="ecore:EClass" name="GuardDependency" eSuperTypes="#//Dependency"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleDependency" eSuperTypes="#//Dependency"/>
 </ecore:EPackage>

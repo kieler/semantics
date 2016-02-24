@@ -59,7 +59,7 @@ import java.util.Map
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-class GuardScheduler extends AbstractScheduler implements Traceable {
+class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
         
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -311,15 +311,16 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                 }
 
                 debug(indent + "  Scheduling block " + schedulingBlock.label + " placed.")
+                
+// FIXME: broken in scg version 3
+//                val scheduleBlock = ScgFactory::eINSTANCE.createScheduleBlock => [
+//                    it.schedulingBlock = schedulingBlock
+//                    if (!addGuardBeforeScheduledBlock.empty) {
+//                        it.additionalGuards.addAll(addGuardBeforeScheduledBlock)
+//                    }
+//                ]
 
-                val scheduleBlock = ScgFactory::eINSTANCE.createScheduleBlock => [
-                    it.schedulingBlock = schedulingBlock
-                    if (!addGuardBeforeScheduledBlock.empty) {
-                        it.additionalGuards.addAll(addGuardBeforeScheduledBlock)
-                    }
-                ]
-
-                schedule += scheduleBlock
+//                schedule += scheduleBlock
                 placedVOs += schedulingBlock.guards.head.valuedObject
                 placedSBs += schedulingBlock
                 remainingSchedulingBlocks -= schedulingBlock
@@ -373,7 +374,8 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
         // }
 
         // Create a new schedule using the scgsched factory.
-        val schedule = ScgFactory::eINSTANCE.createSchedule
+// FIXME: broken in scg version 3
+//        val schedule = ScgFactory::eINSTANCE.createSchedule
 
         schedulingBlockCache.clear
         allSchedulingBlocks.clear
@@ -413,7 +415,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 
         val scedList = <ScheduleBlock>newLinkedList
         var schedulable = scg.createSchedule(scedList, schedulingConstraints, context)
-        schedule.scheduleBlocks += scedList
+//        schedule.scheduleBlocks += scedList
 
         // Print out results on the console
         // and add the scheduling information to the graph.
@@ -423,10 +425,10 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                     new KielerCompilerException(getId(), getId(), "The SCG is NOT ASC-schedulable!"));
             }
             System::out.println("The SCG is NOT ASC-schedulable!")
-            scg.schedules.add(schedule)
+//            scg.schedules.add(schedule)
         } else {
             System::out.println("The SCG is ASC-schedulable.")
-            scg.schedules.add(schedule)
+//            scg.schedules.add(schedule)
         }
         
         scg.createStringAnnotation(SCGFeatures.SCHEDULING_ID, SCGFeatures.SCHEDULING_NAME);

@@ -16,30 +16,27 @@ package de.cau.cs.kieler.scg.transformations.guards
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
-
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import java.util.HashMap
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.ExpressionDependency
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.scg.GuardDependency
-import de.cau.cs.kieler.scg.ControlDependency
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
+
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /** 
  * @author ssm
@@ -82,6 +79,9 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
          
     @Inject 
     extension SCGCacheExtensions	
+    
+    @Inject 
+    extension SCGDependencyExtensions	    
 
     @Inject 
     extension KExpressionsValuedObjectExtensions 
@@ -186,10 +186,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 		for (assignment : AAMap.keySet) {
 			if ((assignment.next.target instanceof Assignment) &&
 			(schedulingBlockCache.get(assignment) == schedulingBlockCache.get(assignment.next.target))) {
-				ScgFactory::eINSTANCE.createControlFlow => [
-					AAMap.get(assignment).next = it
-					it.target = AAMap.get(assignment.next.target as Assignment)
-				]
+				AAMap.get(assignment).createControlDependency(AAMap.get(assignment.next.target as Assignment))
 			} 
 		}
 
@@ -203,18 +200,4 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
     	]
     }
     
-    private def ExpressionDependency createExpressionDependency(Assignment source, Assignment target) {
-    	ScgFactory::eINSTANCE.createExpressionDependency => [ 
-    		source.dependencies += it
-    		it.target = target
-    	]
-    }
-
-    private def GuardDependency createGuardDependency(Assignment source, Assignment target) {
-    	ScgFactory::eINSTANCE.createGuardDependency => [ 
-    		source.dependencies += it
-    		it.target = target
-    	]
-    }
-				
 }

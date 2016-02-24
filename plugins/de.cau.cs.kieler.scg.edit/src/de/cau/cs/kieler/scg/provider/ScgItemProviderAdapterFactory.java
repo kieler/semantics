@@ -589,52 +589,6 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
 	}
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.ScheduleBlock} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ScheduleBlockItemProvider scheduleBlockItemProvider;
-
-				/**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.ScheduleBlock}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createScheduleBlockAdapter() {
-		if (scheduleBlockItemProvider == null) {
-			scheduleBlockItemProvider = new ScheduleBlockItemProvider(this);
-		}
-
-		return scheduleBlockItemProvider;
-	}
-
-				/**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Schedule} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected ScheduleItemProvider scheduleItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.Schedule}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createScheduleAdapter() {
-		if (scheduleItemProvider == null) {
-			scheduleItemProvider = new ScheduleItemProvider(this);
-		}
-
-		return scheduleItemProvider;
-	}
-
-    /**
 	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.ExpressionDependency} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -678,6 +632,29 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
 		}
 
 		return guardDependencyItemProvider;
+	}
+
+				/**
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.ScheduleDependency} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ScheduleDependencyItemProvider scheduleDependencyItemProvider;
+
+				/**
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.ScheduleDependency}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createScheduleDependencyAdapter() {
+		if (scheduleDependencyItemProvider == null) {
+			scheduleDependencyItemProvider = new ScheduleDependencyItemProvider(this);
+		}
+
+		return scheduleDependencyItemProvider;
 	}
 
 				/**
@@ -825,10 +802,9 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
 		if (schedulingBlockItemProvider != null) schedulingBlockItemProvider.dispose();
 		if (predecessorItemProvider != null) predecessorItemProvider.dispose();
 		if (guardItemProvider != null) guardItemProvider.dispose();
-		if (scheduleBlockItemProvider != null) scheduleBlockItemProvider.dispose();
-		if (scheduleItemProvider != null) scheduleItemProvider.dispose();
 		if (expressionDependencyItemProvider != null) expressionDependencyItemProvider.dispose();
 		if (guardDependencyItemProvider != null) guardDependencyItemProvider.dispose();
+		if (scheduleDependencyItemProvider != null) scheduleDependencyItemProvider.dispose();
 	}
 
 }

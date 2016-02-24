@@ -238,6 +238,11 @@ public class NodeItemProvider extends AnnotatableItemProvider {
 			(createChildParameter
 				(ScgPackage.Literals.NODE__DEPENDENCIES,
 				 ScgFactory.eINSTANCE.createGuardDependency()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgPackage.Literals.NODE__DEPENDENCIES,
+				 ScgFactory.eINSTANCE.createScheduleDependency()));
 	}
 
     /**

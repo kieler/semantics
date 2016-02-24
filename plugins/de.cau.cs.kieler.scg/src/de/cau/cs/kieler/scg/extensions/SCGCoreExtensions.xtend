@@ -30,6 +30,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import com.google.inject.Guice
+import de.cau.cs.kieler.scg.ScheduleDependency
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -59,7 +60,7 @@ class SCGCoreExtensions {
     // -------------------------------------------------------------------------
    
     def boolean hasSchedulingData(SCGraph scg) {
-    	!scg.schedules.empty
+    	!scg.nodes.filter[ !dependencies.filter(ScheduleDependency).empty ].empty
     }
    
 	/**

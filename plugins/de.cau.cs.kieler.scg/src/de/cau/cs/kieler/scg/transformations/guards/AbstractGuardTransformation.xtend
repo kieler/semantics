@@ -32,15 +32,6 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExt
 
 abstract class AbstractGuardTransformation extends AbstractProductionTransformation {
     
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    
-    @Inject
-    extension KExpressionsDeclarationExtensions
-        
-    @Inject
-    extension SCGDeclarationExtensions        
-    
     // -------------------------------------------------------------------------
     // -- Constants 
     // -------------------------------------------------------------------------

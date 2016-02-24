@@ -269,18 +269,6 @@ public class ScgSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ScgPackage.SCHEDULE_BLOCK: {
-				ScheduleBlock scheduleBlock = (ScheduleBlock)theEObject;
-				T result = caseScheduleBlock(scheduleBlock);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ScgPackage.SCHEDULE: {
-				Schedule schedule = (Schedule)theEObject;
-				T result = caseSchedule(schedule);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ScgPackage.EXPRESSION_DEPENDENCY: {
 				ExpressionDependency expressionDependency = (ExpressionDependency)theEObject;
 				T result = caseExpressionDependency(expressionDependency);
@@ -296,6 +284,15 @@ public class ScgSwitch<T> extends Switch<T> {
 				if (result == null) result = caseDependency(guardDependency);
 				if (result == null) result = caseLink(guardDependency);
 				if (result == null) result = caseAnnotatable(guardDependency);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ScgPackage.SCHEDULE_DEPENDENCY: {
+				ScheduleDependency scheduleDependency = (ScheduleDependency)theEObject;
+				T result = caseScheduleDependency(scheduleDependency);
+				if (result == null) result = caseDependency(scheduleDependency);
+				if (result == null) result = caseLink(scheduleDependency);
+				if (result == null) result = caseAnnotatable(scheduleDependency);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -634,36 +631,6 @@ public class ScgSwitch<T> extends Switch<T> {
 	}
 
     /**
-	 * Returns the result of interpreting the object as an instance of '<em>Schedule Block</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Schedule Block</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseScheduleBlock(ScheduleBlock object) {
-		return null;
-	}
-
-				/**
-	 * Returns the result of interpreting the object as an instance of '<em>Schedule</em>'.
-	 * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Schedule</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-    public T caseSchedule(Schedule object) {
-		return null;
-	}
-
-    /**
 	 * Returns the result of interpreting the object as an instance of '<em>Expression Dependency</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -690,6 +657,21 @@ public class ScgSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseGuardDependency(GuardDependency object) {
+		return null;
+	}
+
+				/**
+	 * Returns the result of interpreting the object as an instance of '<em>Schedule Dependency</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Schedule Dependency</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseScheduleDependency(ScheduleDependency object) {
 		return null;
 	}
 
