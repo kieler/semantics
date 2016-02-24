@@ -122,8 +122,7 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     }
     
 	/**
-	 * {@code topologicalScheduling} generates a scheduling by applying a topological sort to the nodes 
-	 * schedule. 
+	 * {@code topologicalScheduling} generates a scheduling by applying a topological sort to the nodes. 
 	 * 
 	 * @param node
 	 * 			the actual node
@@ -134,18 +133,18 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
 	 * @return Returns nothing.
 	 */
 	protected def void topologicalScheduling(Node node, Set<Node> nodesToSchedule, LinkedHashSet<Node> schedule) {
-		// Remove this node from the set since and hence mark it as visited.
+		// Remove this node from the set and hence mark it as visited.
 		nodesToSchedule -= node
 		val dependencies = node.getSchedulingDependencies.toList
 		
-		// For all relevant dependencies, perform a topological sort if the nodes has not been visited.
+		// For all relevant dependencies, perform a topological sort if the nodes have not been visited.
 		for(dependency : dependencies) {
 			if (nodesToSchedule.contains(dependency.eContainer as Node)) {
 				topologicalScheduling(dependency.eContainer as Node, nodesToSchedule, schedule)
 			}			
 		}
 		
-		// Check if all required dependent nodes were scheduled. If not, abort.
+		// Check if all required nodes were scheduled. If not, abort.
 		for(dependency : dependencies) {
 			if (!schedule.contains(dependency.eContainer as Node)) {
 				return
