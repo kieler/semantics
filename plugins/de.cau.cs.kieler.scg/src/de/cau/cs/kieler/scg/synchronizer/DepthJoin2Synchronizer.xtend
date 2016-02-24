@@ -14,7 +14,6 @@
  */
 package de.cau.cs.kieler.scg.synchronizer
 
-import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.Expression
@@ -22,6 +21,7 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsReplacementExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
@@ -33,13 +33,12 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.sequentializer.EmptyExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -148,6 +147,8 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 		// Since we are working we completely enriched SCGs, we can use the SCG extensions 
 		// to retrieve the scheduling block of the join node in question.
 		val joinSB = join.getCachedSchedulingBlock
+		
+		val pilData = compilerContext.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.criticalNodes.toSet
 
 		// The valued object of the GuardExpression of the synchronizer is the guard of the
 		// scheduling block of the join node. 
@@ -178,6 +179,19 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 			debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " +
 				newGuard.expression.serialize)
 		}
+	}
+	
+	private def void fixSchizophrenicStmts(){
+		/*
+		 * Set schizoNodes;
+		 * 
+		 * 1. Traverse pilData for instantaneousPath(Entry,Exit)
+		 * 2. If node has only pilData ancestors which are not in schizoNodes, goto next node;
+		 * 3. Duplicate node's guard, add it to schizoNodes and modify it:
+		 * 3.1. Duplicated guard gX_s is the thread surface. Remove all depth ancestors from Exp
+		 * 3.2. Original guard gX is the thread depth. Remove all surface ancestors from Exp
+		 * 
+		 */
 	}
 
 	private def Expression unfoldExp(Expression exp, Guard upperBound, SCGraph scg) {

@@ -177,9 +177,9 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
         val timestamp = System.currentTimeMillis
         compilerContext = context
 
-//        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = Guice.createInjector().
-//            getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-//        context.compilationResult.addAuxiliaryData(potentialInstantaneousLoopAnalyzer.analyze(scg))
+        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = Guice.createInjector().
+            getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
+        context.compilationResult.addAuxiliaryData(potentialInstantaneousLoopAnalyzer.analyze(scg))
 
         //        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
         /**
