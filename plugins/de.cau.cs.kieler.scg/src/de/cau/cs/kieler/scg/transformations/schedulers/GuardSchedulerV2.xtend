@@ -59,7 +59,7 @@ import java.util.Map
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-class GuardScheduler extends AbstractScheduler implements Traceable {
+class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
         
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --

@@ -65,7 +65,7 @@ import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerData
  * @kieler.rating 2013-12-05 proposed yellow
  */
 
-class GuardSequentializer extends AbstractSequentializer implements Traceable {
+class GuardSequentializerV2 extends AbstractSequentializer implements Traceable {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --

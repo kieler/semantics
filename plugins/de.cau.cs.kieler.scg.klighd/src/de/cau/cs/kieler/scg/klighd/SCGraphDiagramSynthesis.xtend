@@ -96,6 +96,7 @@ import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.scg.GuardDependency
+import de.cau.cs.kieler.scg.ScheduleDependency
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -638,6 +639,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 	kContainer.incomingEdges.head.getData(typeof(KRoundedBendsPolyline)).addArrowDecorator
                 ]
             }
+            scg.synthesizeSchedule
         ]
     }
 
@@ -1205,6 +1207,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if((!isSCPDG) && ((!SHOW_NONCONCURRENT.booleanValue && !dataDependency.isConcurrent))) return dependency;
             if(!SHOW_CONFLUENT.booleanValue && dataDependency.confluent) return dependency;    
         }
+        if (dependency instanceof ScheduleDependency) return dependency;
 
         if(!SHOW_DEPENDENCY_WRITE_WRITE.booleanValue && dependency instanceof Write_Write) return dependency;
         if(!SHOW_DEPENDENCY_ABSWRITE_RELWRITE.booleanValue && dependency instanceof AbsoluteWrite_RelativeWrite) return dependency;
@@ -1479,66 +1482,38 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     }
                 }
         }
-
+        
+    }
+    
+    private def void synthesizeSchedule(SCGraph scg) {
         if (scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue) {
-            var Node source = null
-            var Node target = null
-            for (scheduleBlock : scg.schedules.head.scheduleBlocks) {
-                for (node : scheduleBlock.schedulingBlock.nodes) {                
-                target = node
-                if (target != null && source != null) {
-
-                    val controlFlows = source.getControlFlows(target)
-                    if (controlFlows.size > 0) {
-                        controlFlows.forEach[colorControlFlow(SCHEDULING_SCHEDULINGEDGE)]
-                        controlFlows.forEach[thickenControlFlow(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)]
-                        controlFlows.forEach[controlFlowAlpha(SCHEDULING_SCHEDULINGEDGE_ALPHA)]
-                    } else {
-                        val sourceF = source.node
-                        val targetF = target.node
-                        source.createEdge("schedule " + source.toString + target.toString) => [ edge |
-                            edge.source = sourceF
-                            edge.target = targetF
-                            edge.addRoundedBendsPolyline(8, CONTROLFLOW_SCHEDULINGEDGE_WIDTH) => [
-                                it.foreground = SCHEDULING_SCHEDULINGEDGE.copy
-                                it.foreground.alpha = SCHEDULING_SCHEDULINGEDGE_ALPHA
-                                it.addArrowDecorator
-                            ]
-                            edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
-                        ]
-                    }
-                }
-                source = target
-                }
-            }
-
-            // not schedulable blocks!
-            // TODO: draw not scheduled blocks
-            
-            if (scg.hasSchedulingData && SHOW_SCHEDULINGBLOCKS.booleanValue) {
-                val usBlocks = scg.getAllSchedulingBlocks
-                scg.schedules.head.scheduleBlocks.forEach[ 
-//                    if (!it.schizophrenic) {
-//                        val scheduledBlocks = usBlocks.filter[ e | e.guard == it].toList
-                        usBlocks -= it.schedulingBlock
-//                    } 
-                ]
-// FIXME: Verify removal of dead guard flag                
-//                for(deadGuard : scg.guards.filter[ dead ]) {
-//                    val deadBlocks = usBlocks.filter[ e | e.guard == deadGuard].toList
-//                    usBlocks -= deadBlocks
-//                }
-                usBlocks.forEach [
-                    val node = schedulingBlockMapping.get(it)
-                    node.getData(typeof(KRoundedRectangle)) => [
-                        it.lineStyle = LineStyle::SOLID
-                        it.foreground = SCHEDULING_NOTSCHEDULABLE.copy
+        	for(node : scg.nodes.filter[ !dependencies.filter(ScheduleDependency).empty ]) {
+      			val sourceKNode = node.node 
+      			val targetNode = node.dependencies.filter(ScheduleDependency).head.target
+       			val targetKNode = targetNode.node
+				val nonScheduleDependencies = node.dependencies.filter[ !(it instanceof ScheduleDependency) ].
+					filter[ target == targetNode ]
+		        		
+                if (!nonScheduleDependencies.empty) {
+                    nonScheduleDependencies.forEach[
+                    	colorDependency(SCHEDULING_SCHEDULINGEDGE)
+                    	thickenDependency(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)
+                    	dependencyAlpha(SCHEDULING_SCHEDULINGEDGE_ALPHA)
                     ]
-                    node.KRendering.background = SCHEDULING_NOTSCHEDULABLE.copy
-                    node.KRendering.background.alpha = 128
-                ]
-            }
-        }
+                } else {				        		
+	        		node.createEdge => [
+	        			it.source = sourceKNode
+	        			it.target = targetKNode
+						it.addRoundedBendsPolyline(8, CONTROLFLOW_SCHEDULINGEDGE_WIDTH) => [
+	                        it.foreground = SCHEDULING_SCHEDULINGEDGE.copy
+	                        it.foreground.alpha = SCHEDULING_SCHEDULINGEDGE_ALPHA
+	                        it.addArrowDecorator
+	                    ]
+	                    it.setLayoutOption(LayoutOptions::NO_LAYOUT, true)        			
+	        		]
+        		}
+        	}
+        }    	
     }
 
     /**
@@ -1701,6 +1676,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 polyline.lineWidth.propagateToChildren = true
             ]]
     }
+    
+    def Dependency dependencyAlpha(Dependency dependency, int alpha) {
+        dependency => [
+            allEdges.forEach [
+                val polyline = it.getData(typeof(KRoundedBendsPolyline)) => [getForeground.alpha = alpha];
+                polyline.foreground.propagateToChildren = true
+            ]]
+    }    
     
     def Node colorNode(Node node, KColor color) {
         node => [
