@@ -13,19 +13,16 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
-import de.cau.cs.kieler.scg.Guard;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Guard</b></em>'.
+ * A representation of the model object '<em><b>Schedule Link</b></em>'.
  * <!-- end-user-doc -->
  *
  *
- * @see de.cau.cs.kieler.scg.ScgPackage#getGuard()
+ * @see de.cau.cs.kieler.scg.ScgPackage#getScheduleLink()
  * @model
  * @generated
  */
-public interface Guard extends Node, Assignment {
-
-} // Guard
+public interface ScheduleLink extends Link {
+} // ScheduleLink

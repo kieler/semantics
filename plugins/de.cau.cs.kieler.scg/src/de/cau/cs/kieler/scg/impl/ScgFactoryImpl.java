@@ -80,10 +80,9 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
 			case ScgPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
 			case ScgPackage.PREDECESSOR: return createPredecessor();
 			case ScgPackage.GUARD: return createGuard();
-			case ScgPackage.SCHEDULE_BLOCK: return createScheduleBlock();
-			case ScgPackage.SCHEDULE: return createSchedule();
 			case ScgPackage.EXPRESSION_DEPENDENCY: return createExpressionDependency();
 			case ScgPackage.GUARD_DEPENDENCY: return createGuardDependency();
+			case ScgPackage.SCHEDULE_LINK: return createScheduleLink();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -344,26 +343,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ScheduleBlock createScheduleBlock() {
-		ScheduleBlockImpl scheduleBlock = new ScheduleBlockImpl();
-		return scheduleBlock;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public Schedule createSchedule() {
-		ScheduleImpl schedule = new ScheduleImpl();
-		return schedule;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ExpressionDependency createExpressionDependency() {
 		ExpressionDependencyImpl expressionDependency = new ExpressionDependencyImpl();
 		return expressionDependency;
@@ -377,6 +356,16 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
 	public GuardDependency createGuardDependency() {
 		GuardDependencyImpl guardDependency = new GuardDependencyImpl();
 		return guardDependency;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ScheduleLink createScheduleLink() {
+		ScheduleLinkImpl scheduleLink = new ScheduleLinkImpl();
+		return scheduleLink;
 	}
 
 				/**

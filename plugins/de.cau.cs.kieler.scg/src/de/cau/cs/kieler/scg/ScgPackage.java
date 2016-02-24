@@ -116,22 +116,13 @@ public interface ScgPackage extends EPackage {
 	int SC_GRAPH__BASIC_BLOCKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Schedules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SC_GRAPH__SCHEDULES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
-
-	/**
 	 * The feature id for the '<em><b>Guards</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SC_GRAPH__GUARDS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+	int SC_GRAPH__GUARDS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -140,7 +131,7 @@ public interface ScgPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SC_GRAPH__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+	int SC_GRAPH__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>SC Graph</em>' class.
@@ -149,7 +140,7 @@ public interface ScgPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SC_GRAPH_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+	int SC_GRAPH_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.NodeImpl <em>Node</em>}' class.
@@ -1433,26 +1424,6 @@ public interface ScgPackage extends EPackage {
 	int PREDECESSOR_FEATURE_COUNT = 3;
 
 	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ScheduleBlockImpl <em>Schedule Block</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.scg.impl.ScheduleBlockImpl
-	 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleBlock()
-	 * @generated
-	 */
-	int SCHEDULE_BLOCK = 23;
-
-	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ScheduleImpl <em>Schedule</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.scg.impl.ScheduleImpl
-	 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getSchedule()
-	 * @generated
-	 */
-	int SCHEDULE = 24;
-
-	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ExpressionDependencyImpl <em>Expression Dependency</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1460,7 +1431,7 @@ public interface ScgPackage extends EPackage {
 	 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getExpressionDependency()
 	 * @generated
 	 */
-	int EXPRESSION_DEPENDENCY = 25;
+	int EXPRESSION_DEPENDENCY = 23;
 
 	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.GuardDependencyImpl <em>Guard Dependency</em>}' class.
@@ -1470,7 +1441,7 @@ public interface ScgPackage extends EPackage {
 	 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getGuardDependency()
 	 * @generated
 	 */
-	int GUARD_DEPENDENCY = 26;
+	int GUARD_DEPENDENCY = 24;
 
 	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.GuardImpl <em>Guard</em>}' class.
@@ -1564,51 +1535,6 @@ public interface ScgPackage extends EPackage {
 	int GUARD_FEATURE_COUNT = NODE_FEATURE_COUNT + 4;
 
 				/**
-	 * The feature id for the '<em><b>Scheduling Block</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-				int SCHEDULE_BLOCK__SCHEDULING_BLOCK = 0;
-
-				/**
-	 * The feature id for the '<em><b>Additional Guards</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-				int SCHEDULE_BLOCK__ADDITIONAL_GUARDS = 1;
-
-				/**
-	 * The number of structural features of the '<em>Schedule Block</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-				int SCHEDULE_BLOCK_FEATURE_COUNT = 2;
-
-				/**
-	 * The feature id for the '<em><b>Schedule Blocks</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-				int SCHEDULE__SCHEDULE_BLOCKS = 0;
-
-				/**
-	 * The number of structural features of the '<em>Schedule</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-				int SCHEDULE_FEATURE_COUNT = 1;
-
-				/**
 	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1663,6 +1589,43 @@ public interface ScgPackage extends EPackage {
 	int GUARD_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ScheduleLinkImpl <em>Schedule Link</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.scg.impl.ScheduleLinkImpl
+	 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleLink()
+	 * @generated
+	 */
+	int SCHEDULE_LINK = 25;
+
+				/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE_LINK__ANNOTATIONS = LINK__ANNOTATIONS;
+
+				/**
+	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE_LINK__TARGET = LINK__TARGET;
+
+				/**
+	 * The number of structural features of the '<em>Schedule Link</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULE_LINK_FEATURE_COUNT = LINK_FEATURE_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1670,7 +1633,7 @@ public interface ScgPackage extends EPackage {
 	 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBranchType()
 	 * @generated
 	 */
-	int BRANCH_TYPE = 27;
+	int BRANCH_TYPE = 26;
 
 
 	/**
@@ -1715,17 +1678,6 @@ public interface ScgPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getSCGraph_BasicBlocks();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.SCGraph#getSchedules <em>Schedules</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Schedules</em>'.
-	 * @see de.cau.cs.kieler.scg.SCGraph#getSchedules()
-	 * @see #getSCGraph()
-	 * @generated
-	 */
-	EReference getSCGraph_Schedules();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.SCGraph#getGuards <em>Guards</em>}'.
@@ -2356,59 +2308,6 @@ public interface ScgPackage extends EPackage {
 	EAttribute getPredecessor_BranchType();
 
 	/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ScheduleBlock <em>Schedule Block</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Schedule Block</em>'.
-	 * @see de.cau.cs.kieler.scg.ScheduleBlock
-	 * @generated
-	 */
-	EClass getScheduleBlock();
-
-	/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.ScheduleBlock#getSchedulingBlock <em>Scheduling Block</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Scheduling Block</em>'.
-	 * @see de.cau.cs.kieler.scg.ScheduleBlock#getSchedulingBlock()
-	 * @see #getScheduleBlock()
-	 * @generated
-	 */
-	EReference getScheduleBlock_SchedulingBlock();
-
-	/**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scg.ScheduleBlock#getAdditionalGuards <em>Additional Guards</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Additional Guards</em>'.
-	 * @see de.cau.cs.kieler.scg.ScheduleBlock#getAdditionalGuards()
-	 * @see #getScheduleBlock()
-	 * @generated
-	 */
-	EReference getScheduleBlock_AdditionalGuards();
-
-	/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Schedule <em>Schedule</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Schedule</em>'.
-	 * @see de.cau.cs.kieler.scg.Schedule
-	 * @generated
-	 */
-	EClass getSchedule();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.Schedule#getScheduleBlocks <em>Schedule Blocks</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Schedule Blocks</em>'.
-	 * @see de.cau.cs.kieler.scg.Schedule#getScheduleBlocks()
-	 * @see #getSchedule()
-	 * @generated
-	 */
-	EReference getSchedule_ScheduleBlocks();
-
-	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ExpressionDependency <em>Expression Dependency</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2427,6 +2326,16 @@ public interface ScgPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getGuardDependency();
+
+	/**
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ScheduleLink <em>Schedule Link</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Schedule Link</em>'.
+	 * @see de.cau.cs.kieler.scg.ScheduleLink
+	 * @generated
+	 */
+	EClass getScheduleLink();
 
 	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Guard <em>Guard</em>}'.
@@ -2503,14 +2412,6 @@ public interface ScgPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SC_GRAPH__BASIC_BLOCKS = eINSTANCE.getSCGraph_BasicBlocks();
-
-		/**
-		 * The meta object literal for the '<em><b>Schedules</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference SC_GRAPH__SCHEDULES = eINSTANCE.getSCGraph_Schedules();
 
 		/**
 		 * The meta object literal for the '<em><b>Guards</b></em>' containment reference list feature.
@@ -3027,50 +2928,6 @@ public interface ScgPackage extends EPackage {
 		EAttribute PREDECESSOR__BRANCH_TYPE = eINSTANCE.getPredecessor_BranchType();
 
 		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ScheduleBlockImpl <em>Schedule Block</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.scg.impl.ScheduleBlockImpl
-		 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleBlock()
-		 * @generated
-		 */
-		EClass SCHEDULE_BLOCK = eINSTANCE.getScheduleBlock();
-
-		/**
-		 * The meta object literal for the '<em><b>Scheduling Block</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference SCHEDULE_BLOCK__SCHEDULING_BLOCK = eINSTANCE.getScheduleBlock_SchedulingBlock();
-
-		/**
-		 * The meta object literal for the '<em><b>Additional Guards</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference SCHEDULE_BLOCK__ADDITIONAL_GUARDS = eINSTANCE.getScheduleBlock_AdditionalGuards();
-
-		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ScheduleImpl <em>Schedule</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.scg.impl.ScheduleImpl
-		 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getSchedule()
-		 * @generated
-		 */
-		EClass SCHEDULE = eINSTANCE.getSchedule();
-
-		/**
-		 * The meta object literal for the '<em><b>Schedule Blocks</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference SCHEDULE__SCHEDULE_BLOCKS = eINSTANCE.getSchedule_ScheduleBlocks();
-
-		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ExpressionDependencyImpl <em>Expression Dependency</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3089,6 +2946,16 @@ public interface ScgPackage extends EPackage {
 		 * @generated
 		 */
 		EClass GUARD_DEPENDENCY = eINSTANCE.getGuardDependency();
+
+		/**
+		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ScheduleLinkImpl <em>Schedule Link</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.scg.impl.ScheduleLinkImpl
+		 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleLink()
+		 * @generated
+		 */
+		EClass SCHEDULE_LINK = eINSTANCE.getScheduleLink();
 
 		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.GuardImpl <em>Guard</em>}' class.

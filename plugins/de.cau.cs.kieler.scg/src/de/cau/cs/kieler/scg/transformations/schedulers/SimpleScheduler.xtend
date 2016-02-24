@@ -189,7 +189,8 @@ abstract class SimpleScheduler extends AbstractScheduler implements Traceable {
     override public SCGraph schedule(SCGraph scg, KielerCompilerContext context) {
 
     	// Create a new schedule using the scgsched factory.
-        val schedule = ScgFactory::eINSTANCE.createSchedule
+// FIXME: broken in scg version 3
+//        val schedule = ScgFactory::eINSTANCE.createSchedule
         
 //        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
 //            Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
@@ -214,10 +215,10 @@ abstract class SimpleScheduler extends AbstractScheduler implements Traceable {
                 context.getCompilationResult().addPostponedWarning(new KielerCompilerException(getId(), getId(), "The SCG is NOT ASC-schedulable!"));
             }
             System::out.println("The SCG is NOT ASC-schedulable!")
-            scg.schedules.add(schedule)
+//            scg.schedules.add(schedule)
         } else {
             System::out.println("The SCG is ASC-schedulable.")
-            scg.schedules.add(schedule)
+//            scg.schedules.add(schedule)
         }
         
         scg

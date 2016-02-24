@@ -225,11 +225,13 @@ class SimpleSequentializer extends AbstractSequentializer {
         
         // Now, call the worker method. It returns the last control flows which have to be connected to the exit node.
         val nodeCache = <Node> newLinkedList
-        val exitControlFlows = scg.schedules.head.transformSchedule(newSCG, entry.next, nodeCache)
+// FIXME: broken in scg version 3
+//        val exitControlFlows = scg.schedules.head.transformSchedule(newSCG, entry.next, nodeCache)
         
         // Create an exit node and connect the control flow. Add the node.
         val exit = ScgFactory::eINSTANCE.createExit
-        exitControlFlows.forEach[ it.target = exit ]
+// FIXME: broken in scg version 3
+//        exitControlFlows.forEach[ it.target = exit ]
         nodeCache.add(exit)
         
         newSCG.nodes += nodeCache

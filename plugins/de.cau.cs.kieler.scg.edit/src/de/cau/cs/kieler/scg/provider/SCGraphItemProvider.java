@@ -107,7 +107,6 @@ public class SCGraphItemProvider extends AnnotatableItemProvider {
 			childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__NODES);
 			childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__DECLARATIONS);
 			childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__BASIC_BLOCKS);
-			childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__SCHEDULES);
 			childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__GUARDS);
 		}
 		return childrenFeatures;
@@ -170,7 +169,6 @@ public class SCGraphItemProvider extends AnnotatableItemProvider {
 			case ScgPackage.SC_GRAPH__NODES:
 			case ScgPackage.SC_GRAPH__DECLARATIONS:
 			case ScgPackage.SC_GRAPH__BASIC_BLOCKS:
-			case ScgPackage.SC_GRAPH__SCHEDULES:
 			case ScgPackage.SC_GRAPH__GUARDS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -248,11 +246,6 @@ public class SCGraphItemProvider extends AnnotatableItemProvider {
 			(createChildParameter
 				(ScgPackage.Literals.SC_GRAPH__BASIC_BLOCKS,
 				 ScgFactory.eINSTANCE.createBasicBlock()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ScgPackage.Literals.SC_GRAPH__SCHEDULES,
-				 ScgFactory.eINSTANCE.createSchedule()));
 
 		newChildDescriptors.add
 			(createChildParameter
