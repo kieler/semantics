@@ -31,6 +31,8 @@ import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.ScheduleDependency
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Assignment
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -263,6 +265,16 @@ class SCGCoreExtensions {
     
     def inject(Class<? extends Object> clazz) {
     	Guice.createInjector().getInstance(clazz) 
+    }
+    
+    
+    
+    def Entry asEntry(Node node) {
+    	node as Entry
+    }
+    
+    def Assignment asAssignment(Node node) {
+    	node as Assignment
     }
     
 }

@@ -212,26 +212,6 @@ public class NodeItemProvider extends AnnotatableItemProvider {
 		newChildDescriptors.add
 			(createChildParameter
 				(ScgPackage.Literals.NODE__DEPENDENCIES,
-				 ScgFactory.eINSTANCE.createAbsoluteWrite_Read()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ScgPackage.Literals.NODE__DEPENDENCIES,
-				 ScgFactory.eINSTANCE.createRelativeWrite_Read()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ScgPackage.Literals.NODE__DEPENDENCIES,
-				 ScgFactory.eINSTANCE.createAbsoluteWrite_RelativeWrite()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ScgPackage.Literals.NODE__DEPENDENCIES,
-				 ScgFactory.eINSTANCE.createWrite_Write()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ScgPackage.Literals.NODE__DEPENDENCIES,
 				 ScgFactory.eINSTANCE.createExpressionDependency()));
 
 		newChildDescriptors.add

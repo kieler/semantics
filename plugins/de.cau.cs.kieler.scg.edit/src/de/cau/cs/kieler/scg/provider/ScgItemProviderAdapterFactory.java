@@ -428,98 +428,6 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
 	}
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.AbsoluteWrite_Read} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected AbsoluteWrite_ReadItemProvider absoluteWrite_ReadItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.AbsoluteWrite_Read}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createAbsoluteWrite_ReadAdapter() {
-		if (absoluteWrite_ReadItemProvider == null) {
-			absoluteWrite_ReadItemProvider = new AbsoluteWrite_ReadItemProvider(this);
-		}
-
-		return absoluteWrite_ReadItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.RelativeWrite_Read} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected RelativeWrite_ReadItemProvider relativeWrite_ReadItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.RelativeWrite_Read}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createRelativeWrite_ReadAdapter() {
-		if (relativeWrite_ReadItemProvider == null) {
-			relativeWrite_ReadItemProvider = new RelativeWrite_ReadItemProvider(this);
-		}
-
-		return relativeWrite_ReadItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected AbsoluteWrite_RelativeWriteItemProvider absoluteWrite_RelativeWriteItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createAbsoluteWrite_RelativeWriteAdapter() {
-		if (absoluteWrite_RelativeWriteItemProvider == null) {
-			absoluteWrite_RelativeWriteItemProvider = new AbsoluteWrite_RelativeWriteItemProvider(this);
-		}
-
-		return absoluteWrite_RelativeWriteItemProvider;
-	}
-
-    /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Write_Write} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected Write_WriteItemProvider write_WriteItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.Write_Write}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createWrite_WriteAdapter() {
-		if (write_WriteItemProvider == null) {
-			write_WriteItemProvider = new Write_WriteItemProvider(this);
-		}
-
-		return write_WriteItemProvider;
-	}
-
-    /**
 	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.BasicBlock} instances.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -787,21 +695,17 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
 		if (assignmentItemProvider != null) assignmentItemProvider.dispose();
 		if (forkItemProvider != null) forkItemProvider.dispose();
 		if (joinItemProvider != null) joinItemProvider.dispose();
-		if (linkItemProvider != null) linkItemProvider.dispose();
 		if (entryItemProvider != null) entryItemProvider.dispose();
 		if (exitItemProvider != null) exitItemProvider.dispose();
-		if (controlFlowItemProvider != null) controlFlowItemProvider.dispose();
-		if (dependencyItemProvider != null) dependencyItemProvider.dispose();
-		if (dataDependencyItemProvider != null) dataDependencyItemProvider.dispose();
-		if (controlDependencyItemProvider != null) controlDependencyItemProvider.dispose();
-		if (absoluteWrite_ReadItemProvider != null) absoluteWrite_ReadItemProvider.dispose();
-		if (relativeWrite_ReadItemProvider != null) relativeWrite_ReadItemProvider.dispose();
-		if (absoluteWrite_RelativeWriteItemProvider != null) absoluteWrite_RelativeWriteItemProvider.dispose();
-		if (write_WriteItemProvider != null) write_WriteItemProvider.dispose();
 		if (basicBlockItemProvider != null) basicBlockItemProvider.dispose();
 		if (schedulingBlockItemProvider != null) schedulingBlockItemProvider.dispose();
 		if (predecessorItemProvider != null) predecessorItemProvider.dispose();
 		if (guardItemProvider != null) guardItemProvider.dispose();
+		if (linkItemProvider != null) linkItemProvider.dispose();
+		if (controlFlowItemProvider != null) controlFlowItemProvider.dispose();
+		if (dependencyItemProvider != null) dependencyItemProvider.dispose();
+		if (dataDependencyItemProvider != null) dataDependencyItemProvider.dispose();
+		if (controlDependencyItemProvider != null) controlDependencyItemProvider.dispose();
 		if (expressionDependencyItemProvider != null) expressionDependencyItemProvider.dispose();
 		if (guardDependencyItemProvider != null) guardDependencyItemProvider.dispose();
 		if (scheduleDependencyItemProvider != null) scheduleDependencyItemProvider.dispose();

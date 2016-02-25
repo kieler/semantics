@@ -55,26 +55,26 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.scg.AbsoluteWrite_Read
-import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.DataDependencyType
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.RelativeWrite_Read
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.Write_Write
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
@@ -82,6 +82,8 @@ import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
@@ -91,12 +93,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
-import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
-import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
-import de.cau.cs.kieler.scg.ExpressionDependency
-import de.cau.cs.kieler.scg.GuardDependency
-import de.cau.cs.kieler.scg.ScheduleDependency
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -616,7 +612,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
             if (SHOW_DEPENDENCIES.booleanValue && !(LAYOUT_DEPENDENCIES.booleanValue || isSCPDG)) {
                 scg.nodes.filter(Assignment).forEach[
-                    it.dependencies.forEach[ (it as Dependency).synthesizeDependency ]
+                    it.dependencies.forEach[ synthesizeDependency ]
                 ]
             }
             // Draw analysis visualization if present.
@@ -1202,17 +1198,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private def Dependency synthesizeDependency(Dependency dependency) {
 
         // If non concurrent dependency are hidden and the given dependency is not concurrent, exit at once.
-        if(dependency instanceof DataDependency) {
-            val dataDependency = dependency as DataDependency
-            if((!isSCPDG) && ((!SHOW_NONCONCURRENT.booleanValue && !dataDependency.isConcurrent))) return dependency;
-            if(!SHOW_CONFLUENT.booleanValue && dataDependency.confluent) return dependency;    
+        if (dependency instanceof DataDependency) {
+            if((!isSCPDG) && ((!SHOW_NONCONCURRENT.booleanValue && !dependency.isConcurrent))) return dependency;
+            if(!SHOW_CONFLUENT.booleanValue && dependency.confluent) return dependency;    
         }
         if (dependency instanceof ScheduleDependency) return dependency;
-
-        if(!SHOW_DEPENDENCY_WRITE_WRITE.booleanValue && dependency instanceof Write_Write) return dependency;
-        if(!SHOW_DEPENDENCY_ABSWRITE_RELWRITE.booleanValue && dependency instanceof AbsoluteWrite_RelativeWrite) return dependency;
-        if(!SHOW_DEPENDENCY_WRITE_READ.booleanValue && dependency instanceof AbsoluteWrite_Read) return dependency;
-        if(!SHOW_DEPENDENCY_RELWRITE_READ.booleanValue && dependency instanceof RelativeWrite_Read) return dependency;
+		
+		if (dependency instanceof DataDependency) {
+	        if(!SHOW_DEPENDENCY_WRITE_WRITE.booleanValue && dependency.type == DataDependencyType.WRITE_WRITE) return dependency;
+	        if(!SHOW_DEPENDENCY_ABSWRITE_RELWRITE.booleanValue && dependency == DataDependencyType.WRITE_RELATIVEWRITE) return dependency;
+	        if(!SHOW_DEPENDENCY_WRITE_READ.booleanValue && dependency == DataDependencyType.WRITE_READ) return dependency;
+        }
 
         // Retrieve node information.
         val sourceNode = (dependency.eContainer as Node).node
@@ -1226,10 +1222,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (dependency instanceof DataDependency) {
 	            edge.addRoundedBendsPolyline(8, 2) => [
     	            // ... and use the predefined color for the different dependency types.    
-        	        if(dependency instanceof AbsoluteWrite_Read) it.foreground = DEPENDENCY_ABSWRITEREAD.copy
-            	    if(dependency instanceof RelativeWrite_Read) it.foreground = DEPENDENCY_RELWRITEREAD.copy
-                	if(dependency instanceof AbsoluteWrite_RelativeWrite) it.foreground = DEPENDENCY_ABSWRITERELWRITE.copy
-                	if(dependency instanceof Write_Write) it.foreground = DEPENDENCY_ABSWRITEABSWRITE.copy
+            	    if (dependency.type == DataDependencyType.WRITE_READ) {
+            	    	it.foreground = DEPENDENCY_ABSWRITEREAD.copy
+            	    } else 	if (dependency.type == DataDependencyType.WRITE_RELATIVEWRITE) { 
+                		it.foreground = DEPENDENCY_ABSWRITERELWRITE.copy
+               		} else if (dependency.type == DataDependencyType.WRITE_WRITE) {
+                		it.foreground = DEPENDENCY_ABSWRITEABSWRITE.copy
+               		}
                 	it.lineStyle = LineStyle::DASH
                 	it.addArrowDecorator
             	]

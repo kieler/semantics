@@ -20,6 +20,8 @@ import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.DataDependencyType
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -42,6 +44,19 @@ import de.cau.cs.kieler.scg.Node
  * @kieler.rating 2016-02-24 proposed yellow
  */
 class SCGDependencyExtensions { 
+	
+	 public def DataDependency createDataDependency(DataDependencyType type) {
+	 	ScgFactory::eINSTANCE.createDataDependency => [ 
+	 		it.type = type
+	 	]
+	 }
+
+    public def DataDependency createDataDependency(Node source, Node target, DataDependencyType type) {
+    	type.createDataDependency => [ 
+    		source.dependencies += it
+    		it.target = target
+    	]
+    }
 
     public def ExpressionDependency createExpressionDependency(Node source, Node target) {
     	ScgFactory::eINSTANCE.createExpressionDependency => [ 

@@ -58,6 +58,7 @@ public class DataDependencyItemProvider extends DependencyItemProvider {
 
 			addConcurrentPropertyDescriptor(object);
 			addConfluentPropertyDescriptor(object);
+			addTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -107,6 +108,28 @@ public class DataDependencyItemProvider extends DependencyItemProvider {
 	}
 
     /**
+	 * This adds a property descriptor for the Type feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DataDependency_type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DataDependency_type_feature", "_UI_DataDependency_type"),
+				 ScgPackage.Literals.DATA_DEPENDENCY__TYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+				/**
 	 * This returns DataDependency.gif.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -144,6 +167,7 @@ public class DataDependencyItemProvider extends DependencyItemProvider {
 		switch (notification.getFeatureID(DataDependency.class)) {
 			case ScgPackage.DATA_DEPENDENCY__CONCURRENT:
 			case ScgPackage.DATA_DEPENDENCY__CONFLUENT:
+			case ScgPackage.DATA_DEPENDENCY__TYPE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

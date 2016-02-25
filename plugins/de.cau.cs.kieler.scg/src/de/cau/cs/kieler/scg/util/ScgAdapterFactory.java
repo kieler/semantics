@@ -114,48 +114,12 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
 				return createJoinAdapter();
 			}
 			@Override
-			public Adapter caseLink(Link object) {
-				return createLinkAdapter();
-			}
-			@Override
 			public Adapter caseEntry(Entry object) {
 				return createEntryAdapter();
 			}
 			@Override
 			public Adapter caseExit(Exit object) {
 				return createExitAdapter();
-			}
-			@Override
-			public Adapter caseControlFlow(ControlFlow object) {
-				return createControlFlowAdapter();
-			}
-			@Override
-			public Adapter caseDependency(Dependency object) {
-				return createDependencyAdapter();
-			}
-			@Override
-			public Adapter caseDataDependency(DataDependency object) {
-				return createDataDependencyAdapter();
-			}
-			@Override
-			public Adapter caseControlDependency(ControlDependency object) {
-				return createControlDependencyAdapter();
-			}
-			@Override
-			public Adapter caseAbsoluteWrite_Read(AbsoluteWrite_Read object) {
-				return createAbsoluteWrite_ReadAdapter();
-			}
-			@Override
-			public Adapter caseRelativeWrite_Read(RelativeWrite_Read object) {
-				return createRelativeWrite_ReadAdapter();
-			}
-			@Override
-			public Adapter caseAbsoluteWrite_RelativeWrite(AbsoluteWrite_RelativeWrite object) {
-				return createAbsoluteWrite_RelativeWriteAdapter();
-			}
-			@Override
-			public Adapter caseWrite_Write(Write_Write object) {
-				return createWrite_WriteAdapter();
 			}
 			@Override
 			public Adapter caseBasicBlock(BasicBlock object) {
@@ -172,6 +136,26 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseGuard(Guard object) {
 				return createGuardAdapter();
+			}
+			@Override
+			public Adapter caseLink(Link object) {
+				return createLinkAdapter();
+			}
+			@Override
+			public Adapter caseControlFlow(ControlFlow object) {
+				return createControlFlowAdapter();
+			}
+			@Override
+			public Adapter caseDependency(Dependency object) {
+				return createDependencyAdapter();
+			}
+			@Override
+			public Adapter caseDataDependency(DataDependency object) {
+				return createDataDependencyAdapter();
+			}
+			@Override
+			public Adapter caseControlDependency(ControlDependency object) {
+				return createControlDependencyAdapter();
 			}
 			@Override
 			public Adapter caseExpressionDependency(ExpressionDependency object) {
@@ -424,62 +408,6 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
     public Adapter createControlDependencyAdapter() {
-		return null;
-	}
-
-    /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_Read <em>Absolute Write Read</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scg.AbsoluteWrite_Read
-	 * @generated
-	 */
-    public Adapter createAbsoluteWrite_ReadAdapter() {
-		return null;
-	}
-
-    /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.RelativeWrite_Read <em>Relative Write Read</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scg.RelativeWrite_Read
-	 * @generated
-	 */
-    public Adapter createRelativeWrite_ReadAdapter() {
-		return null;
-	}
-
-    /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite <em>Absolute Write Relative Write</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
-	 * @generated
-	 */
-    public Adapter createAbsoluteWrite_RelativeWriteAdapter() {
-		return null;
-	}
-
-    /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Write_Write <em>Write Write</em>}'.
-	 * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scg.Write_Write
-	 * @generated
-	 */
-    public Adapter createWrite_WriteAdapter() {
 		return null;
 	}
 
