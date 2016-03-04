@@ -26,10 +26,13 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExte
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsReplacementExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.SchedulingBlock
@@ -40,6 +43,7 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
+import java.util.Set
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -92,7 +96,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 	// -------------------------------------------------------------------------
 	@Inject
 	extension KExpressionsValuedObjectExtensions
-	
+
 	@Inject
 	extension KExpressionsDeclarationExtensions
 
@@ -121,6 +125,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 	protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
 
 	public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.depthJoin2"
+	private static val SCHIZO_SUFFIX = "_s"
 
 	// -------------------------------------------------------------------------
 	// -- Synchronizer
@@ -154,7 +159,6 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 
 		val pilData = compilerContext.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.
 			criticalNodes.toSet
-
 		// The valued object of the GuardExpression of the synchronizer is the guard of the
 		// scheduling block of the join node. 
 //        data.guardExpression.valuedObject = joinSB.guard.valuedObject
@@ -188,9 +192,10 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 			debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " +
 				newGuard.expression.serialize)
 		}
+		fixSchizophrenicStmts(join, pilData, scg)
 	}
 
-	private def void fixSchizophrenicStmts() {
+	private def void fixSchizophrenicStmts(Join join, Set<Node> pilData, SCGraph scg) {
 		/*
 		 * Set schizoNodes;
 		 * 
@@ -201,6 +206,88 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 		 * 3.2. Original guard gX is the thread depth. Remove all surface ancestors from Exp
 		 * 
 		 */
+		val exitNodes = <Exit>newLinkedList
+		join.allPrevious.forEach[exitNodes.add(it.eContainer as Exit)]
+		val relevantExitNodes = exitNodes.filter [
+			(it.entry.threadControlFlowTypes.containsValue(ThreadPathType::INSTANTANEOUS) ||
+				it.entry.threadControlFlowTypes.containsValue(ThreadPathType::POTENTIALLY_INSTANTANEOUS)) &&
+				pilData.contains(it)
+		]
+		
+		val schizoDeclaration = createBoolDeclaration => [
+			scg.declarations += it
+		]
+
+		for (exit : relevantExitNodes) {
+			val schizoNodes = <Node>newHashSet()
+			markSchizoNodes(schizoNodes, pilData, exit.entry)
+//			System.err.println(schizoNodes) 
+			schizoNodes.forEach [
+				val originalGuard = it.schedulingBlock.guards.head
+				val surfGuard = ScgFactory::eINSTANCE.createGuard
+				val surfValObj = KExpressionsFactory::eINSTANCE.createValuedObject
+				surfValObj.name = originalGuard.valuedObject.name + SCHIZO_SUFFIX
+
+				if (!(it.schedulingBlock.guards.head.expression instanceof ValuedObjectReference)) {
+					val origExpression = (originalGuard.expression as OperatorExpression)
+
+					val surfExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+					surfGuard.valuedObject = surfValObj
+
+					surfExpression.operator = origExpression.operator
+					origExpression.subExpressions.filter [
+						val temp = it
+						!pilData.filter [
+							it.schedulingBlock.guards.head.valuedObject == (temp as ValuedObjectReference).valuedObject
+						].isEmpty
+					].forEach [
+						val newVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+						newVOR.valuedObject = (it as ValuedObjectReference).valuedObject
+						surfExpression.subExpressions.add(newVOR)
+					]
+
+					surfGuard.expression = surfExpression
+//					it.schedulingBlock.guards.add(surfGuard)
+					debug("Generated schizophrenic guard " + surfGuard.serialize)
+					
+					origExpression.subExpressions.removeAll(origExpression.subExpressions.filter [
+						val temp = it
+						!pilData.filter [
+							it.schedulingBlock.guards.head.valuedObject == (temp as ValuedObjectReference).valuedObject
+						].isEmpty
+						&&
+						schizoNodes.filter [
+							it.schedulingBlock.guards.head.valuedObject == (temp as ValuedObjectReference).valuedObject
+						].isEmpty
+						])
+				} else {
+					val newVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+					val newValObj = KExpressionsFactory::eINSTANCE.createValuedObject
+					newValObj.name = (it.schedulingBlock.guards.head.expression as ValuedObjectReference).
+						valuedObject.name + SCHIZO_SUFFIX
+					newVOR.valuedObject = newValObj
+
+					surfGuard.valuedObject = surfValObj
+					surfGuard.expression = newVOR
+					debug("Generated schizophrenic guard " + surfGuard.serialize)
+				}
+//				scg.guards.add(surfGuard)
+				schizoDeclaration.valuedObjects += surfGuard.valuedObject
+			]
+		}
+	}
+
+	private def void markSchizoNodes(Set<Node> schizoNodes, Set<Node> pilData, Node entryPoint) {
+		// Node types: Assignment_, Conditional_, Depth_, Entry, Exit_, Fork, Join, Surface_
+		if(entryPoint instanceof Exit || entryPoint instanceof Surface) return;
+		if(schizoNodes.contains(entryPoint)) schizoNodes.add(entryPoint);
+
+		if (!entryPoint.allPrevious.filter [
+			it.eContainer instanceof Depth || schizoNodes.contains(it.eContainer as Node)
+		].isEmpty) {
+			schizoNodes.add(entryPoint)
+		}
+		entryPoint.allNext.forEach[markSchizoNodes(schizoNodes, pilData, it.target)]
 	}
 
 	private def Expression unfoldExp(Expression exp, Guard upperBound, SCGraph scg) {
@@ -219,6 +306,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 			// Create a new, unfolded expression
 			val newExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
 			newExp.operator = exp.operator
+			// TODO: Test if the cond is unnecessary
 			if (exp.subExpressions.size > 1) {
 				exp.subExpressions.forEach[newExp.subExpressions.add(it.unfoldExp(upperBound, scg))]
 			} else {
